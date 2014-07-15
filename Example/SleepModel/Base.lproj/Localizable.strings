@@ -1,0 +1,30 @@
+
+
+
+// sounds
+"sounds.title" = "Sounds";
+
+// alarm settings
+"alarm.time-range.format" = "Wake up between *%@* and *%@*";
+"alarm.update.instructions" = "*Drag* to adjust alarm time.";
+"alarm.enabled.text" = "Enabled";
+"alarm.sound.title" = "Sound";
+"alarm.title" = "Alarm";
+"alarm.state.enabled" = "Enabled";
+"alarm.state.disabled" = "Disabled";
+
+// sensors
+"sensor.temperature" = "Temperature";
+"sensor.humidity" = "Humidity";
+"sensor.particulates" = "Particulates";
+"sensor.time-range.day" = "Past 24";
+"sensor.time-range.week" = "This week";
+"sensor.comfort-zone.title" = "Comfort Zone";
+
+// measurements
+"measurement.temperature.unit" = "°";
+"measurement.percentage.unit" = "%";
+"measurement.ppm.unit" = "ppm";
+"measurement.temperature.format" = "%.f°";
+"measurement.percentage.format" = "%.f%%";
+"measurement.ppm.format" = "%.fppm";

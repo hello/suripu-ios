@@ -1,0 +1,5 @@
+#include "Pods-AttributedMarkdown.xcconfig"
+GCC_PREPROCESSOR_DEFINITIONS = COCOAPODS=1
+HEADER_SEARCH_PATHS = "${PODS_ROOT}/BuildHeaders" "${PODS_ROOT}/BuildHeaders/AttributedMarkdown" "${PODS_ROOT}/Headers" "${PODS_ROOT}/Headers/AFNetworking" "${PODS_ROOT}/Headers/AttributedMarkdown" "${PODS_ROOT}/Headers/FXKeychain" "${PODS_ROOT}/Headers/JBChartView" "${PODS_ROOT}/Headers/Kiwi" "${PODS_ROOT}/Headers/LGBluetooth" "${PODS_ROOT}/Headers/SORelativeDateTransformer" "${PODS_ROOT}/Headers/SenseKit"
+OTHER_LDFLAGS = -ObjC ${PODS_ATTRIBUTEDMARKDOWN_OTHER_LDFLAGS}
+PODS_ROOT = ${SRCROOT}

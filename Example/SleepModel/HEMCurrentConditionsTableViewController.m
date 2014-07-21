@@ -1,10 +1,13 @@
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENSensor.h>
+#import <markdown_peg.h>
 
 #import "HEMCurrentConditionsTableViewController.h"
 #import "HEMAlarmViewController.h"
+#import "HEMInsetGlyphTableViewCell.h"
 #import "HEMSensorViewController.h"
 #import "HEMColorUtils.h"
+#import "HelloStyleKit.h"
 
 static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 @interface HEMCurrentConditionsTableViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -21,31 +24,28 @@ static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsC
     self.sensors = @[
         [[SENSensor alloc] initWithDictionary:@{ @"name" : @"temperature",
                                                  @"unit" : @"CENTIGRADE",
-                                                 @"message" : @"You sleep best when the temperature is between *61° and 68°*.",
+                                                 @"condition" : @"ALERT",
+                                                 @"message" : @"You sleep best when the temperature is between *16° and 18°*.",
                                                  @"value" : @19 }],
         [[SENSensor alloc] initWithDictionary:@{ @"name" : @"humidity",
                                                  @"unit" : @"PERCENT",
+                                                 @"condition" : @"IDEAL",
                                                  @"message" : @"You sleep best when the humidity is between *60% and 71%*.",
                                                  @"value" : @76 }],
         [[SENSensor alloc] initWithDictionary:@{ @"name" : @"particulates",
                                                  @"unit" : @"PPM",
+                                                 @"condition" : @"IDEAL",
                                                  @"message" : @"Particulate counts above *600ppm* can be a problem for sleep.",
                                                  @"value" : @220 }]
     ];
     [self configureCollectionView];
-    [self configureViewBackground];
+    self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
-}
-
-- (void)configureViewBackground
-{
-    [self.view.layer insertSublayer:[HEMColorUtils layerWithBlueBackgroundGradientInFrame:self.view.bounds]
-                            atIndex:0];
 }
 
 - (void)configureCollectionView
@@ -96,31 +96,57 @@ static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsC
     }
 }
 
+- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    if (indexPath.section == 0) {
+        SENSensor* sensor = self.sensors[indexPath.row];
+        if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
+            return 114.f;
+        }
+    }
+    return 64.f;
+}
+
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
+    HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
 
     switch (indexPath.section) {
     case 0: {
         SENSensor* sensor = self.sensors[indexPath.row];
-        cell.textLabel.text = sensor.localizedName;
-        cell.detailTextLabel.text = sensor.localizedValue;
+        cell.titleLabel.text = sensor.localizedName;
+        cell.detailLabel.text = sensor.localizedValue;
+        if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
+            UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:11.0];
+            NSDictionary* attributes = @{
+                @(EMPH) : @{
+                    NSFontAttributeName : emFont,
+                },
+                @(PARA) : @{
+                    NSForegroundColorAttributeName : [UIColor darkGrayColor],
+                }
+            };
+            cell.descriptionLabel.attributedText = markdown_to_attr_string(sensor.message, 0, attributes);
+        } else {
+            cell.descriptionLabel.text = nil;
+        }
     } break;
 
     case 1: {
+        cell.descriptionLabel.text = nil;
         switch (indexPath.row) {
         case 0: {
-            cell.textLabel.text = NSLocalizedString(@"alarm.title", nil);
+            cell.titleLabel.text = NSLocalizedString(@"alarm.title", nil);
             if ([[SENAlarm savedAlarm] isOn]) {
-                cell.detailTextLabel.text = [[SENAlarm savedAlarm] localizedValue];
+                cell.detailLabel.text = [[SENAlarm savedAlarm] localizedValue];
             } else {
-                cell.detailTextLabel.text = NSLocalizedString(@"alarm.state.disabled", nil);
+                cell.detailLabel.text = NSLocalizedString(@"alarm.state.disabled", nil);
             }
         } break;
 
         case 1: {
-            cell.textLabel.text = NSLocalizedString(@"sounds.title", nil);
-            cell.detailTextLabel.text = @"";
+            cell.titleLabel.text = NSLocalizedString(@"sounds.title", nil);
+            cell.detailLabel.text = @"";
         }
         }
     }

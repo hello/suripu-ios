@@ -2,6 +2,7 @@
 #import <SenseKit/SENAlarm.h>
 #import "HEMSleepSoundTableViewController.h"
 #import "HEMColorUtils.h"
+#import "HelloStyleKit.h"
 
 static NSString* const SleepSoundCellIdentifier = @"sleepSoundCell";
 
@@ -16,13 +17,7 @@ static NSString* const SleepSoundCellIdentifier = @"sleepSoundCell";
 {
     [super viewDidLoad];
     self.possibleSleepSounds = @[ @"White Noise", @"Pink Noise", @"Ceiling Fan", @"Clothes Dryer", @"Rain", @"Ocean Waves" ];
-    [self configureViewBackground];
-}
-
-- (void)configureViewBackground
-{
-    [self.view.layer insertSublayer:[HEMColorUtils layerWithBlueBackgroundGradientInFrame:self.view.bounds]
-                            atIndex:0];
+    self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
 }
 
 #pragma mark - Table view data source

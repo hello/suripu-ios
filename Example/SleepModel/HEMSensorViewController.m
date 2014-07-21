@@ -7,6 +7,7 @@
 #import "HEMSensorViewController.h"
 #import "HEMGraphTooltipView.h"
 #import "HEMColorUtils.h"
+#import "HelloStyleKit.h"
 
 CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
 
@@ -31,15 +32,9 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self configureViewBackground];
+    self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
     [self configureGraphView];
     [self configureSensorValueViews];
-}
-
-- (void)configureViewBackground
-{
-    [self.view.layer insertSublayer:[HEMColorUtils layerWithBlueBackgroundGradientInFrame:self.view.bounds]
-                            atIndex:0];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -73,13 +68,13 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
     self.title = self.sensor.localizedName;
     self.valueLabel.text = [NSString stringWithFormat:@"%.0f", [[self.sensor value] floatValue]];
     self.unitLabel.text = [self.sensor localizedUnit];
-    UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+    UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Medium" size:14.0];
     NSDictionary* attributes = @{
         @(EMPH) : @{
             NSFontAttributeName : emFont,
         },
         @(PARA) : @{
-            NSForegroundColorAttributeName : [UIColor whiteColor],
+            NSForegroundColorAttributeName : [UIColor colorWithWhite:0.22f alpha:1.f],
         }
     };
 
@@ -91,8 +86,8 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
     if ([self.activeDataSeries isEqual:self.hourlyDataSeries])
         return;
 
-    self.hourlyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:15.0];
-    self.dailyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15.0];
+    self.hourlyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:16.0];
+    self.dailyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:16.0];
     [self animateActiveDataSeriesTo:self.hourlyDataSeries];
 }
 
@@ -101,8 +96,8 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
     if ([self.activeDataSeries isEqual:self.dailyDataSeries])
         return;
 
-    self.dailyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:15.0];
-    self.hourlyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:15.0];
+    self.dailyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:16.0];
+    self.hourlyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:16.0];
     [self animateActiveDataSeriesTo:self.dailyDataSeries];
 }
 
@@ -221,6 +216,11 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
     return lineIndex == 0;
 }
 
+- (CGFloat)lineChartView:(JBLineChartView *)lineChartView dotRadiusForLineAtLineIndex:(NSUInteger)lineIndex
+{
+    return 8.f;
+}
+
 - (BOOL)lineChartView:(JBLineChartView*)lineChartView smoothLineAtLineIndex:(NSUInteger)lineIndex
 {
     return lineIndex == 0;
@@ -235,12 +235,12 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
 
 - (UIColor*)lineChartView:(JBLineChartView*)lineChartView colorForLineAtLineIndex:(NSUInteger)lineIndex
 {
-    return [UIColor whiteColor];
+    return [UIColor grayColor];
 }
 
 - (UIColor*)lineChartView:(JBLineChartView*)lineChartView colorForDotAtHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
-    return [UIColor whiteColor];
+    return [UIColor grayColor];
 }
 
 #pragma mark selection appearance

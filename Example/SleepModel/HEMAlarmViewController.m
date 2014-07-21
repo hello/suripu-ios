@@ -16,6 +16,7 @@
 @property (weak, nonatomic) IBOutlet UILabel* alarmSoundNameLabel;
 @property (strong, nonatomic) IBOutlet UISwitch* alarmEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UILabel* wakeUpInstructionsLabel;
+@property (strong, nonatomic) CAGradientLayer* gradientLayer;
 
 @property (nonatomic) CGFloat previousLocationY;
 @end
@@ -36,8 +37,19 @@
 
 - (void)configureViewBackground
 {
-    [self.view.layer insertSublayer:[HEMColorUtils layerWithBlueBackgroundGradientInFrame:self.view.bounds]
-                            atIndex:0];
+    if (!self.gradientLayer) {
+        self.gradientLayer = [CAGradientLayer new];
+        [self.view.layer insertSublayer:self.gradientLayer atIndex:0];
+    }
+    NSInteger hour = [SENAlarm savedAlarm].hour;
+    CGFloat intensity = 0;
+    if (hour < 12) {
+        intensity = hour/11.0;
+    } else {
+        intensity = (23 - hour)/12.0;
+    }
+    intensity += [SENAlarm savedAlarm].minute / 360.f;
+    [HEMColorUtils configureLayer:self.gradientLayer withBlueBackgroundGradientInFrame:self.view.bounds intensityLevel:intensity];
 }
 
 - (void)updateViewWithAlarmSettings
@@ -51,7 +63,7 @@
     self.alarmTimeLabel.text = currentAlarmTimeText;
 
     NSString* rawText = [NSString stringWithFormat:NSLocalizedString(@"alarm.time-range.format", nil), earliestAlarmTimeText, currentAlarmTimeText];
-    UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:14.0];
+    UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Medium" size:14.0];
     NSDictionary* attributes = @{
         @(EMPH) : @{
             NSFontAttributeName : emFont,
@@ -63,6 +75,7 @@
 
     self.wakeUpInstructionsLabel.attributedText = markdown_to_attr_string(rawText, 0, attributes);
     self.alarmChangeInstructionsLabel.attributedText = markdown_to_attr_string(NSLocalizedString(@"alarm.update.instructions", nil), 0, attributes);
+    [self configureViewBackground];
 }
 
 - (NSString*)textForHour:(NSInteger)hour minute:(NSInteger)minute

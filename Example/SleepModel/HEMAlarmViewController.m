@@ -26,13 +26,31 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self configureViewBackground];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
+    NSMutableDictionary* dict = self.navigationController.navigationBar.titleTextAttributes.mutableCopy;
+    dict[NSForegroundColorAttributeName] = [UIColor whiteColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
     [self updateViewWithAlarmSettings];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self configureViewBackground];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
+    NSMutableDictionary* dict = self.navigationController.navigationBar.titleTextAttributes.mutableCopy;
+    dict[NSForegroundColorAttributeName] = [UIColor darkGrayColor];
+    self.navigationController.navigationBar.titleTextAttributes = dict;
 }
 
 - (void)configureViewBackground
@@ -44,9 +62,9 @@
     NSInteger hour = [SENAlarm savedAlarm].hour;
     CGFloat intensity = 0;
     if (hour < 12) {
-        intensity = hour/11.0;
+        intensity = hour / 11.0;
     } else {
-        intensity = (23 - hour)/12.0;
+        intensity = (23 - hour) / 12.0;
     }
     intensity += [SENAlarm savedAlarm].minute / 360.f;
     [HEMColorUtils configureLayer:self.gradientLayer withBlueBackgroundGradientInFrame:self.view.bounds intensityLevel:intensity];

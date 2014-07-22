@@ -38,12 +38,6 @@
     [self updateViewWithAlarmSettings];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    [self configureViewBackground];
-}
-
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
@@ -67,7 +61,9 @@
         intensity = (23 - hour) / 12.0;
     }
     intensity += [SENAlarm savedAlarm].minute / 360.f;
-    [HEMColorUtils configureLayer:self.gradientLayer withBlueBackgroundGradientInFrame:self.view.bounds intensityLevel:intensity];
+    CGFloat y = (self.edgesForExtendedLayout & UIRectEdgeTop) ? -(CGRectGetHeight(self.navigationController.navigationBar.frame) + CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame])) : 0;
+    CGRect frame = CGRectMake(0, y, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
+    [HEMColorUtils configureLayer:self.gradientLayer withBlueBackgroundGradientInFrame:frame intensityLevel:intensity];
 }
 
 - (void)updateViewWithAlarmSettings

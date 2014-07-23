@@ -1,5 +1,6 @@
 
 #import <SenseKit/SENAlarm.h>
+#import <SenseKit/SENSettings.h>
 #import <markdown_peg.h>
 
 #import "HEMAlarmViewController.h"
@@ -26,6 +27,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    CGFloat fontSize = [SENSettings timeFormat] == SENTimeFormat12Hour ? 60.f : 90.f;
+    self.alarmTimeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:fontSize];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -94,8 +97,10 @@
 
 - (NSString*)textForHour:(NSInteger)hour minute:(NSInteger)minute
 {
-    NSString* minuteText = minute < 10 ? [NSString stringWithFormat:@"0%ld", (long)minute] : [NSString stringWithFormat:@"%ld", (long)minute];
-    return [NSString stringWithFormat:@"%ld:%@", (long)hour, minuteText];
+    struct SENAlarmTime time;
+    time.hour = hour;
+    time.minute = minute;
+    return [SENAlarm localizedValueForTime:time];
 }
 
 #pragma mark - Actions

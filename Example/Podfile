@@ -4,7 +4,7 @@ platform :ios, '7.0'
 pod 'AttributedMarkdown', :git => 'https://github.com/dreamwieber/AttributedMarkdown.git'
 pod 'JBChartView'
 pod 'SORelativeDateTransformer'
-pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git', :commit => '3946f358d54bc1556379dd0e3a3bec36bab363bc'
+pod 'SenseKit', :path => '../../SenseKit'
 
 target 'Tests', :exclusive => true do
   pod 'Kiwi'

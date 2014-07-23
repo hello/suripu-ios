@@ -66,7 +66,7 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
 - (void)configureSensorValueViews
 {
     self.title = self.sensor.localizedName;
-    self.valueLabel.text = [NSString stringWithFormat:@"%.0f", [[self.sensor value] floatValue]];
+    self.valueLabel.text = [NSString stringWithFormat:@"%.0f", [[self.sensor valueInPreferredUnit] floatValue]];
     self.unitLabel.text = [self.sensor localizedUnit];
     UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Medium" size:14.0];
     NSDictionary* attributes = @{
@@ -201,7 +201,7 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
     if (lineIndex == 0)
         return [self.activeDataSeries[lineIndex][horizontalIndex] floatValue];
 
-    return [self.sensor.value floatValue];
+    return [self.sensor.valueInPreferredUnit floatValue];
 }
 
 #pragma mark appearance

@@ -39,6 +39,7 @@
 		8A90F9B81963701A00AFD110 /* HEMInsetGlyphTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9B61963701A00AFD110 /* HEMInsetGlyphTableViewCell.m */; };
 		8A90F9BC19637F9400AFD110 /* HEMSleepSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9BB19637F9400AFD110 /* HEMSleepSoundTableViewController.m */; };
 		8A90F9C1196485AE00AFD110 /* HEMSensorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9C0196485AE00AFD110 /* HEMSensorSpec.m */; };
+		8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -101,6 +102,8 @@
 		8A90F9BA19637F9400AFD110 /* HEMSleepSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundTableViewController.h; sourceTree = "<group>"; };
 		8A90F9BB19637F9400AFD110 /* HEMSleepSoundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundTableViewController.m; sourceTree = "<group>"; };
 		8A90F9C0196485AE00AFD110 /* HEMSensorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorSpec.m; sourceTree = "<group>"; };
+		8AC49F85197F365C00C2BD63 /* HEMSleepScoreGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepScoreGraphView.h; sourceTree = "<group>"; };
+		8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepScoreGraphView.m; sourceTree = "<group>"; };
 		DB26CF606417423497851782 /* Pods-Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.xcconfig"; path = "Pods/Pods-Tests.xcconfig"; sourceTree = "<group>"; };
 		F1BFFC8E459745C5B0578F6E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FD539145AF784DC3AA0DAF13 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -267,6 +270,8 @@
 				8A782682196B4729002882A1 /* HEMGraphTooltipView.m */,
 				8A782684196CB6C9002882A1 /* HEMSnappingFlowLayout.h */,
 				8A782685196CB6C9002882A1 /* HEMSnappingFlowLayout.m */,
+				8AC49F85197F365C00C2BD63 /* HEMSleepScoreGraphView.h */,
+				8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -446,6 +451,7 @@
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
 				8A90F9B319635CAE00AFD110 /* HEMCurrentConditionsTableViewController.m in Sources */,
 				8A90F9B81963701A00AFD110 /* HEMInsetGlyphTableViewCell.m in Sources */,
+				8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */,
 				8A90F9AF196353F600AFD110 /* HEMColorUtils.m in Sources */,
 				6003F5A7195388D20070C39A /* HEMAlarmViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,

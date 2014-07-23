@@ -41,15 +41,14 @@ DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`)
   - JBChartView
   - Kiwi
-  - SenseKit (from `git@github.com:hello/SenseKit.git`, commit `3946f358d54bc1556379dd0e3a3bec36bab363bc`)
+  - SenseKit (from `../../SenseKit`)
   - SORelativeDateTransformer
 
 EXTERNAL SOURCES:
   AttributedMarkdown:
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
   SenseKit:
-    :commit: 3946f358d54bc1556379dd0e3a3bec36bab363bc
-    :git: git@github.com:hello/SenseKit.git
+    :path: ../../SenseKit
 
 SPEC CHECKSUMS:
   AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3

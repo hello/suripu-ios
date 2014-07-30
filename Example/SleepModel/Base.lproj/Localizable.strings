@@ -1,8 +1,24 @@
 
-
+"current-conditions.title" = "Sense";
+"settings.title" = "Settings";
 
 // sounds
 "sounds.title" = "Sounds";
+
+// authentication
+"authorization.title" = "Log in";
+"authorization.no-token" = "No access token present";
+"authorization.set-url.button" = "Set URL";
+"authorization.sign-in.button" = "Sign in";
+"authorization.set-url.title" = "Update API URL";
+"authorization.set-url.message" = "Set the location of the sleep tracking API";
+"authorization.set-url.action.save" = "Save";
+"authorization.set-url.action.reset" = "Reset to Default";
+"authorization.set-url.action.cancel" = "Cancel";
+"authorization.failed-url.title" = "URL Not Recognized";
+"authorization.failed-url.message" = "The system could not understand the provided URL. Please try again.";
+"authorization.sign-in.loading-message" = "Signing in";
+"authorization.sign-in.failed.title" = "Sign in Failed";
 
 // alarm settings
 "alarm.time-range.format" = "Wake up between *%@* and *%@*";

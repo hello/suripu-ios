@@ -1,5 +1,6 @@
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENSensor.h>
+#import <SenseKit/SENAPIRoom.h>
 #import <markdown_peg.h>
 
 #import "HEMCurrentConditionsTableViewController.h"
@@ -10,9 +11,7 @@
 #import "HelloStyleKit.h"
 
 static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
-@interface HEMCurrentConditionsTableViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
-
-@property (weak, nonatomic) IBOutlet UICollectionView* collectionView;
+@interface HEMCurrentConditionsTableViewController ()
 @property (nonatomic, strong) NSArray* sensors;
 @end
 
@@ -21,6 +20,7 @@ static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsC
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.title = NSLocalizedString(@"current-conditions.title", nil);
     self.sensors = @[
         [[SENSensor alloc] initWithDictionary:@{ @"name" : @"temperature",
                                                  @"unit" : @"CENTIGRADE",
@@ -38,41 +38,21 @@ static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsC
                                                  @"message" : @"Particulate counts above *600ppm* can be a problem for sleep.",
                                                  @"value" : @220 }]
     ];
-    [self configureCollectionView];
+    [SENAPIRoom currentWithCompletion:^(id data, NSError *error) {
+        NSLog(@"data: %@", data);
+    }];
     self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
+}
+
+- (IBAction)dismissCurrentConditionsController:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self.tableView reloadData];
-}
-
-- (void)configureCollectionView
-{
-    CGSize windowSize = [[UIScreen mainScreen] bounds].size;
-    UICollectionViewFlowLayout* layout = (UICollectionViewFlowLayout*)self.collectionView.collectionViewLayout;
-    layout.itemSize = CGSizeMake(CGRectGetWidth(self.collectionView.bounds) - 40, CGRectGetHeight(self.collectionView.bounds) - 20);
-    CGFloat sideInset = floorf((windowSize.width - layout.itemSize.width) / 2);
-    layout.sectionInset = UIEdgeInsetsMake(0, sideInset, 0, sideInset);
-}
-
-#pragma mark - UICollectionViewDataSource
-
-- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView
-{
-    return 1;
-}
-
-- (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
-{
-    return 4;
-}
-
-- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView cellForItemAtIndexPath:(NSIndexPath*)indexPath
-{
-    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"insightCell" forIndexPath:indexPath];
-    return cell;
 }
 
 #pragma mark - UITableViewDataSource
@@ -89,7 +69,7 @@ static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsC
         return self.sensors.count;
 
     case 1:
-        return 2;
+        return 3;
 
     default:
         return 0;
@@ -147,9 +127,14 @@ static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsC
         case 1: {
             cell.titleLabel.text = NSLocalizedString(@"sounds.title", nil);
             cell.detailLabel.text = @"";
+        } break;
+        case 2: {
+            cell.titleLabel.text = NSLocalizedString(@"settings.title", nil);
+            cell.detailLabel.text = nil;
+            cell.descriptionLabel.text = nil;
         }
         }
-    }
+    } break;
     }
 
     return cell;
@@ -160,9 +145,9 @@ static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsC
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:[NSBundle mainBundle]];
     switch (indexPath.section) {
     case 0: {
-        UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:[NSBundle mainBundle]];
         HEMSensorViewController* controller = (HEMSensorViewController*)[storyboard instantiateViewControllerWithIdentifier:@"sensorViewController"];
         controller.sensor = self.sensors[indexPath.row];
         [self.navigationController pushViewController:controller animated:YES];
@@ -171,15 +156,18 @@ static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsC
     case 1: {
         switch (indexPath.row) {
         case 0: {
-            UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:[NSBundle mainBundle]];
             UIViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"alarmViewController"];
             [self.navigationController pushViewController:controller animated:YES];
         } break;
 
         case 1:
             break;
+        case 2: {
+            UIViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"settingsController"];
+            [self.navigationController pushViewController:controller animated:YES];
         }
-    }
+        }
+    } break;
     }
 }
 

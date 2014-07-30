@@ -78,6 +78,12 @@
 #define COCOAPODS_VERSION_MINOR_SORelativeDateTransformer 1
 #define COCOAPODS_VERSION_PATCH_SORelativeDateTransformer 10
 
+// SVProgressHUD
+#define COCOAPODS_POD_AVAILABLE_SVProgressHUD
+#define COCOAPODS_VERSION_MAJOR_SVProgressHUD 1
+#define COCOAPODS_VERSION_MINOR_SVProgressHUD 0
+#define COCOAPODS_VERSION_PATCH_SVProgressHUD 0
+
 // SenseKit
 #define COCOAPODS_POD_AVAILABLE_SenseKit
 #define COCOAPODS_VERSION_MAJOR_SenseKit 0

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="E5m-wY-ixv">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="ZsV-Zn-5IJ">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -172,7 +172,7 @@
         <!--Settings Table View Controller - Settings-->
         <scene sceneID="LfU-TZ-O3Q">
             <objects>
-                <tableViewController title="Settings" id="VKh-D9-07L" customClass="HEMSettingsTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="settingsController" title="Settings" id="VKh-D9-07L" customClass="HEMSettingsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="HIn-C5-Yij">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -317,14 +317,7 @@
                             <outlet property="delegate" destination="VKh-D9-07L" id="3un-U6-CCk"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Settings" id="Mg9-hG-VVh">
-                        <barButtonItem key="leftBarButtonItem" title="Done" id="SPu-eD-L7G">
-                            <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
-                            <connections>
-                                <action selector="doneButtonTapped:" destination="VKh-D9-07L" id="qiQ-1a-bOY"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Settings" id="Mg9-hG-VVh"/>
                     <connections>
                         <outlet property="clockStyleSegmentControl" destination="jAJ-zy-w6O" id="ISs-pp-lm6"/>
                         <outlet property="temperatureSegmentControl" destination="isJ-f0-S9q" id="iSb-Sh-C9E"/>
@@ -493,7 +486,7 @@
         <!--Current Conditions Table View Controller - Currently-->
         <scene sceneID="A0q-Da-YSX">
             <objects>
-                <tableViewController extendedLayoutIncludesOpaqueBars="YES" id="jq0-KZ-Ac0" customClass="HEMCurrentConditionsTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="currentController" extendedLayoutIncludesOpaqueBars="YES" id="jq0-KZ-Ac0" customClass="HEMCurrentConditionsTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="RmA-S0-HYv">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -501,56 +494,9 @@
                         <color key="separatorColor" white="0.81421076642335766" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <view key="tableHeaderView" contentMode="scaleToFill" id="bcG-Aw-sbz">
-                            <rect key="frame" x="0.0" y="64" width="320" height="93"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="oc8-qf-fHA">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="93"/>
-                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="ogC-y6-OKY" customClass="HEMSnappingFlowLayout">
-                                        <size key="itemSize" width="270" height="96"/>
-                                        <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                        <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                    </collectionViewFlowLayout>
-                                    <cells>
-                                        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="insightCell" id="nQP-7m-Thg">
-                                            <rect key="frame" x="0.0" y="-2" width="270" height="96"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                                <rect key="frame" x="0.0" y="0.0" width="270" height="96"/>
-                                                <autoresizingMask key="autoresizingMask"/>
-                                                <subviews>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In the last month, you have gone to sleep earlier than before, resulting in better sleep." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="190" translatesAutoresizingMaskIntoConstraints="NO" id="52c-Pc-gbE">
-                                                        <rect key="frame" x="40" y="23" width="190" height="50"/>
-                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
-                                                        <color key="textColor" white="0.22" alpha="1" colorSpace="calibratedWhite"/>
-                                                        <nil key="highlightedColor"/>
-                                                    </label>
-                                                </subviews>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            </view>
-                                            <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
-                                            <constraints>
-                                                <constraint firstAttribute="centerX" secondItem="52c-Pc-gbE" secondAttribute="centerX" id="bgh-2l-HBM"/>
-                                                <constraint firstAttribute="centerY" secondItem="52c-Pc-gbE" secondAttribute="centerY" id="uDn-W6-2J2"/>
-                                            </constraints>
-                                        </collectionViewCell>
-                                    </cells>
-                                    <connections>
-                                        <outlet property="dataSource" destination="jq0-KZ-Ac0" id="tlV-Pt-PCh"/>
-                                        <outlet property="delegate" destination="jq0-KZ-Ac0" id="vUe-ay-6qm"/>
-                                    </connections>
-                                </collectionView>
-                            </subviews>
-                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="currentConditionsCell" rowHeight="74" id="I0j-eN-KE6" customClass="HEMInsetGlyphTableViewCell">
-                                <rect key="frame" x="0.0" y="212" width="320" height="74"/>
+                                <rect key="frame" x="0.0" y="119" width="320" height="74"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="I0j-eN-KE6" id="4oW-6E-iYr">
                                     <rect key="frame" x="0.0" y="0.0" width="287" height="74"/>
@@ -618,16 +564,12 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Currently" id="WL3-Gt-K6z">
-                        <barButtonItem key="rightBarButtonItem" title="Settings" id="HYo-cd-aRh">
-                            <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="done" id="xCo-Xt-QIM">
                             <connections>
-                                <segue destination="72r-ub-C0R" kind="modal" id="VWi-aa-JOa"/>
+                                <action selector="dismissCurrentConditionsController:" destination="jq0-KZ-Ac0" id="Fhq-VG-I9t"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
-                    <connections>
-                        <outlet property="collectionView" destination="oc8-qf-fHA" id="bje-vL-SQ3"/>
-                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fjU-KE-hek" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -673,29 +615,10 @@
             </objects>
             <point key="canvasLocation" x="1467" y="-9"/>
         </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="emR-9x-8Bt">
-            <objects>
-                <tabBarController definesPresentationContext="YES" id="E5m-wY-ixv" sceneMemberID="viewController">
-                    <simulatedTabBarMetrics key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="lB2-3Y-eJT">
-                        <rect key="frame" x="129" y="330" width="163" height="49"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="PBf-9P-C9T" kind="relationship" relationship="viewControllers" id="G6P-TD-Pwr"/>
-                        <segue destination="z6S-PJ-ZkG" kind="relationship" relationship="viewControllers" id="qVG-c2-Gnf"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="VuY-HJ-ni5" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-368" y="706"/>
-        </scene>
-        <!--View Controller - Sleep Lab-->
+        <!--Sleep Summary View Controller-->
         <scene sceneID="yp7-hS-vb7">
             <objects>
-                <viewController id="z6S-PJ-ZkG" sceneMemberID="viewController">
+                <viewController id="z6S-PJ-ZkG" customClass="HEMSleepSummaryViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TTk-zO-a4D"/>
                         <viewControllerLayoutGuide type="bottom" id="4Fp-Be-aAq"/>
@@ -704,19 +627,225 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Fa-Fc-h2C" customClass="HEMSleepScoreGraphView">
-                                <rect key="frame" x="100" y="63" width="120" height="120"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Fa-Fc-h2C" customClass="HEMSleepScoreGraphView">
+                                <rect key="frame" x="100" y="140" width="120" height="120"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="120" id="ELl-DF-VZW"/>
+                                    <constraint firstAttribute="height" constant="120" id="XGg-Y6-dcl"/>
+                                </constraints>
                             </view>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="8Fj-BV-COc">
+                                <rect key="frame" x="61" y="268" width="200" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9N-Mx-OAD">
+                                <rect key="frame" x="110" y="92" width="101" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Z9N-Mx-OAD" secondAttribute="centerX" id="NuN-gy-gVQ"/>
+                            <constraint firstItem="4Fa-Fc-h2C" firstAttribute="top" secondItem="Z9N-Mx-OAD" secondAttribute="bottom" constant="19" id="OR7-Vt-K6f"/>
+                            <constraint firstAttribute="centerX" secondItem="8Fj-BV-COc" secondAttribute="centerX" constant="-0.5" id="Ocq-Qi-0Qo"/>
+                            <constraint firstItem="8Fj-BV-COc" firstAttribute="top" secondItem="4Fa-Fc-h2C" secondAttribute="bottom" constant="8" id="f22-uI-4WU"/>
+                            <constraint firstItem="Z9N-Mx-OAD" firstAttribute="top" secondItem="TTk-zO-a4D" secondAttribute="bottom" constant="28" id="gD7-ai-gGn"/>
+                            <constraint firstAttribute="centerX" secondItem="4Fa-Fc-h2C" secondAttribute="centerX" id="tzE-8x-Ehx"/>
+                        </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="v3i-sc-B7M" appends="YES" id="PCc-Zq-do0"/>
+                        </connections>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Sleep Lab" id="nGq-bo-ELh"/>
+                    <navigationItem key="navigationItem" id="k5n-OL-K19"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="sleepScoreView" destination="4Fa-Fc-h2C" id="B6e-Pe-jSz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QtY-Ne-kRg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <pinchGestureRecognizer id="v3i-sc-B7M">
+                    <connections>
+                        <action selector="pinchedHistoryView:" destination="z6S-PJ-ZkG" id="Ym7-PR-O3h"/>
+                    </connections>
+                </pinchGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="267" y="1410"/>
+            <point key="canvasLocation" x="661" y="-689"/>
+        </scene>
+        <!--Sleep History View Controller-->
+        <scene sceneID="FLt-el-bXB">
+            <objects>
+                <viewController storyboardIdentifier="sleepHistoryController" id="9Ao-cq-urb" customClass="HEMSleepHistoryViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="zSq-e2-FT0"/>
+                        <viewControllerLayoutGuide type="bottom" id="z9g-UX-Spl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="iOI-pk-vrg">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="Gk2-tf-lLi">
+                                <rect key="frame" x="106" y="45" width="109" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Days"/>
+                                    <segment title="Weeks"/>
+                                </segments>
+                            </segmentedControl>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="July 2014" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBu-FT-ARo">
+                                <rect key="frame" x="109" y="98" width="103" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="25"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="sYw-Ld-Bhs">
+                                <rect key="frame" x="0.0" y="147" width="320" height="288"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="5" id="2Od-Sd-tIX" customClass="HEMZoomingFlowLayout">
+                                    <size key="itemSize" width="100" height="287"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="timeSliceCell" id="44R-nU-0sW">
+                                        <rect key="frame" x="0.0" y="1" width="100" height="287"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="100" height="287"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="THU" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dGv-oi-2yL">
+                                                    <rect key="frame" x="33" y="20" width="35" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="12"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="13" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cjI-p9-hEA">
+                                                    <rect key="frame" x="33" y="43" width="35" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="22"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f73-P1-mzR">
+                                                    <rect key="frame" x="8" y="113" width="84" height="167"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" red="0.0" green="0.44174692209999999" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </view>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gDg-wQ-7uO" userLabel="border view">
+                                                    <rect key="frame" x="98" y="0.0" width="1" height="287"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2tY-eU-sbc" userLabel="border view">
+                                                    <rect key="frame" x="1" y="0.0" width="1" height="287"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                </view>
+                                                <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kpY-SE-mCR" customClass="HEMMiniSleepScoreGraphView">
+                                                    <rect key="frame" x="35" y="72" width="30" height="30"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                                </view>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="9Ao-cq-urb" id="Wod-qF-g9C"/>
+                                    <outlet property="delegate" destination="9Ao-cq-urb" id="cyc-c0-ASZ"/>
+                                </connections>
+                            </collectionView>
+                            <collectionView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" minimumZoomScale="0.0" maximumZoomScale="0.0" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="vsW-2e-3cS">
+                                <rect key="frame" x="0.0" y="465" width="320" height="93"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="93" id="2cy-dD-opc"/>
+                                </constraints>
+                                <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="hfq-cc-agM" customClass="HEMSnappingFlowLayout">
+                                    <size key="itemSize" width="270" height="96"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="insightCell" id="AZ6-fm-Zpt">
+                                        <rect key="frame" x="0.0" y="-2" width="270" height="96"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="270" height="96"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In the last month, you have gone to sleep earlier than before, resulting in better sleep." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="190" translatesAutoresizingMaskIntoConstraints="NO" id="ctp-sa-Lyf">
+                                                    <rect key="frame" x="40" y="23" width="190" height="50"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
+                                                    <color key="textColor" white="0.22" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="centerX" secondItem="ctp-sa-Lyf" secondAttribute="centerX" id="PIz-Dn-DEe"/>
+                                            <constraint firstAttribute="centerY" secondItem="ctp-sa-Lyf" secondAttribute="centerY" id="nIT-K1-lmQ"/>
+                                        </constraints>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="9Ao-cq-urb" id="Kl3-SM-Isb"/>
+                                    <outlet property="delegate" destination="jq0-KZ-Ac0" id="hjB-ni-Bn3"/>
+                                </connections>
+                            </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0z2-nK-bL7">
+                                <rect key="frame" x="270" y="45" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <state key="normal" title="Ⓢ">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="PBf-9P-C9T" kind="modal" id="Oat-NV-ZkE"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="sYw-Ld-Bhs" firstAttribute="leading" secondItem="iOI-pk-vrg" secondAttribute="leading" id="9C8-wt-P9A"/>
+                            <constraint firstAttribute="trailing" secondItem="vsW-2e-3cS" secondAttribute="trailing" id="9FG-Zy-bE3"/>
+                            <constraint firstItem="vsW-2e-3cS" firstAttribute="leading" secondItem="iOI-pk-vrg" secondAttribute="leading" id="9hG-fy-Xem"/>
+                            <constraint firstAttribute="centerX" secondItem="fBu-FT-ARo" secondAttribute="centerX" id="WoP-kJ-Zqd"/>
+                            <constraint firstItem="Gk2-tf-lLi" firstAttribute="top" secondItem="zSq-e2-FT0" secondAttribute="bottom" constant="25" id="XvD-P9-qzR"/>
+                            <constraint firstAttribute="centerX" secondItem="Gk2-tf-lLi" secondAttribute="centerX" constant="-0.5" id="d3x-0i-1Sb"/>
+                            <constraint firstItem="fBu-FT-ARo" firstAttribute="top" secondItem="Gk2-tf-lLi" secondAttribute="bottom" constant="25" id="dQJ-He-HMS"/>
+                            <constraint firstItem="sYw-Ld-Bhs" firstAttribute="top" secondItem="fBu-FT-ARo" secondAttribute="bottom" constant="19" id="jHl-an-RNW"/>
+                            <constraint firstAttribute="trailing" secondItem="sYw-Ld-Bhs" secondAttribute="trailing" id="p0S-lb-EmK"/>
+                            <constraint firstItem="vsW-2e-3cS" firstAttribute="top" secondItem="sYw-Ld-Bhs" secondAttribute="bottom" constant="30" id="wdf-bQ-nRC"/>
+                            <constraint firstItem="z9g-UX-Spl" firstAttribute="top" secondItem="vsW-2e-3cS" secondAttribute="bottom" constant="10" id="zP4-b3-iy2"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="historyCollectionView" destination="sYw-Ld-Bhs" id="OCM-YH-ebV"/>
+                        <outlet property="insightCollectionView" destination="vsW-2e-3cS" id="w0W-zm-0n9"/>
+                        <outlet property="timeFrameLabel" destination="fBu-FT-ARo" id="rAm-Q7-Fh4"/>
+                        <outlet property="timeScopeSegmentedControl" destination="Gk2-tf-lLi" id="jfW-DQ-uKz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3P5-UV-juu" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1068" y="-689"/>
         </scene>
         <!--Navigation Controller - Currently-->
         <scene sceneID="Zds-nv-bKj">
@@ -746,7 +875,7 @@
         <!--Navigation Controller-->
         <scene sceneID="lPQ-1w-Jov">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="72r-ub-C0R" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="settingsNavController" automaticallyAdjustsScrollViewInsets="NO" id="72r-ub-C0R" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="9Ps-SM-qiE">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -765,6 +894,25 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UlP-JJ-fni" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="266" y="706"/>
+        </scene>
+        <!--Navigation Controller - Sleep Lab-->
+        <scene sceneID="bLb-g3-um5">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="ZsV-Zn-5IJ" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Sleep Lab" id="nGq-bo-ELh"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" id="RdM-YZ-C9P">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="z6S-PJ-ZkG" kind="relationship" relationship="rootViewController" id="eqh-vz-REF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ETO-N1-yXe" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="267" y="-689"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

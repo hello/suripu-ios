@@ -1,4 +1,4 @@
-
+#import <SenseKit/SENAuthorizationService.h>
 #import "HEMAppDelegate.h"
 
 @implementation HEMAppDelegate
@@ -7,6 +7,21 @@
 {
     [self configureAppearance];
     return YES;
+}
+
+- (void)applicationDidBecomeActive:(UIApplication*)application
+{
+    if (![SENAuthorizationService isAuthorized]) {
+        [self showOnboardingFlow];
+    }
+}
+
+- (void)showOnboardingFlow
+{
+    UINavigationController* rootNavigationController = (UINavigationController*)self.window.rootViewController;
+    [rootNavigationController popToRootViewControllerAnimated:NO];
+    UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
+    [rootNavigationController presentViewController:[onboardingStoryboard instantiateInitialViewController] animated:NO completion:NULL];
 }
 
 - (void)configureAppearance

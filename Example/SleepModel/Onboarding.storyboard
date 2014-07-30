@@ -54,10 +54,10 @@
             </objects>
             <point key="canvasLocation" x="1046" y="253"/>
         </scene>
-        <!--View Controller - Log In-->
+        <!--Authentication View Controller - Log In-->
         <scene sceneID="LfI-5i-PBv">
             <objects>
-                <viewController id="5ic-x1-0Fg" sceneMemberID="viewController">
+                <viewController id="5ic-x1-0Fg" customClass="HEMAuthenticationViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Hyi-t4-E2t"/>
                         <viewControllerLayoutGuide type="bottom" id="CEY-kF-eWw"/>
@@ -86,7 +86,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="HeG-k8-xax" kind="push" id="fD6-KR-f9F"/>
+                                    <action selector="didTapLogInButton:" destination="5ic-x1-0Fg" eventType="touchUpInside" id="OFu-rz-gLw"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnm-XS-wFM">
@@ -95,14 +95,25 @@
                                 <state key="normal" title="Forgot password?">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="didTapForgotPasswordButton:" destination="5ic-x1-0Fg" eventType="touchUpInside" id="auI-sc-kfu"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.9215686917" green="0.92941182850000004" blue="0.92549026010000002" alpha="1" colorSpace="deviceRGB"/>
                     </view>
                     <navigationItem key="navigationItem" title="Log In" id="5yB-oo-XsC">
-                        <barButtonItem key="rightBarButtonItem" title="Sign Up" id="fUt-5m-LWw"/>
+                        <barButtonItem key="rightBarButtonItem" title="Sign Up" id="fUt-5m-LWw">
+                            <connections>
+                                <action selector="didTapSignUpButton:" destination="5ic-x1-0Fg" id="QKF-8Z-xpx"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <connections>
+                        <outlet property="passwordField" destination="KHe-L9-LC5" id="qMN-2a-9SY"/>
+                        <outlet property="usernameField" destination="j94-xR-D8x" id="4aC-Hm-e7a"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PCr-dK-BgT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -117,7 +128,7 @@
                         <viewControllerLayoutGuide type="bottom" id="GdX-Ok-5df"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="234-Uu-w8v">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bsS-h0-0lf" customClass="HEMActionButton">
@@ -149,7 +160,7 @@
                         <viewControllerLayoutGuide type="bottom" id="kbz-Q6-Bp4"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="E50-HK-wnd">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HYT-At-WLL" customClass="HEMActionButton">
@@ -175,9 +186,9 @@
         <!--Device Table View Controller-->
         <scene sceneID="Tu0-Wm-CEi">
             <objects>
-                <tableViewController id="HeG-k8-xax" userLabel="Device Table View Controller" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="devicePickerController" id="HeG-k8-xax" userLabel="Device Table View Controller" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="VL7-xT-rYT">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <prototypes>
@@ -216,7 +227,7 @@
                         <viewControllerLayoutGuide type="bottom" id="ELV-em-SZE"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="zuO-zM-mKG">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="srB-Es-mcI" customClass="HEMActionButton">
@@ -248,7 +259,7 @@
                         <viewControllerLayoutGuide type="bottom" id="DZq-Xa-gwX"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Q0B-wr-tBU">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7bI-Ch-qqs" customClass="HEMActionButton">
@@ -280,7 +291,7 @@
                         <viewControllerLayoutGuide type="bottom" id="YLf-PE-q4P"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="I08-01-JbX">
-                        <rect key="frame" x="0.0" y="64" width="320" height="504"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ip7-mL-18f" customClass="HEMActionButton">

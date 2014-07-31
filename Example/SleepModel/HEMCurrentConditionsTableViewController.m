@@ -116,6 +116,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
         break;
     case SENSensorUnitUnknown:
     default:
+        cell.glyphImageView.image = nil;
         break;
     }
     if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
@@ -147,11 +148,13 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
         } else {
             cell.detailLabel.text = NSLocalizedString(@"alarm.state.disabled", nil);
         }
+        cell.glyphImageView.image = nil;
     } break;
 
     case 1: {
         cell.titleLabel.text = NSLocalizedString(@"sounds.title", nil);
         cell.detailLabel.text = @"";
+        cell.glyphImageView.image = nil;
     } break;
     case 2: {
         cell.titleLabel.text = NSLocalizedString(@"settings.title", nil);

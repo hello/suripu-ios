@@ -21,10 +21,14 @@ static UIColor* _currentConditionsBackgroundColor = nil;
 static UIColor* _highSleepScoreColor = nil;
 static UIColor* _poorSleepScoreColor = nil;
 static UIColor* _averageSleepScoreColor = nil;
+static UIColor* _lightBlueColor = nil;
 
 static PCGradient* _blueBackgroundGradient = nil;
 
+static UIImage* _alarmEnabledIcon = nil;
 static UIImage* _chevronIconLeft = nil;
+static UIImage* _alarmNoteIcon = nil;
+static UIImage* _questionIcon = nil;
 static UIImage* _settingsIcon = nil;
 static UIImage* _humidityIcon = nil;
 static UIImage* _particleIcon = nil;
@@ -36,12 +40,13 @@ static UIImage* _chevronIconRight = nil;
 + (void)initialize
 {
     // Colors Initialization
-    _darkBlueColor = [UIColor colorWithRed: 0.17 green: 0.19 blue: 0.23 alpha: 1];
+    _darkBlueColor = [UIColor colorWithRed: 0.314 green: 0.325 blue: 0.529 alpha: 1];
     _mediumBlueColor = [UIColor colorWithRed: 0.184 green: 0.514 blue: 0.639 alpha: 1];
     _currentConditionsBackgroundColor = [UIColor colorWithRed: 0.902 green: 0.91 blue: 0.906 alpha: 1];
     _highSleepScoreColor = [UIColor colorWithRed: 0.368 green: 0.8 blue: 0.32 alpha: 1];
     _poorSleepScoreColor = [UIColor colorWithRed: 0.8 green: 0.339 blue: 0.32 alpha: 1];
     _averageSleepScoreColor = [UIColor colorWithRed: 0.947 green: 0.901 blue: 0.5 alpha: 1];
+    _lightBlueColor = [UIColor colorWithRed: 0.733 green: 0.851 blue: 0.929 alpha: 1];
 
     // Gradients Initialization
     CGFloat blueBackgroundGradientLocations[] = {0, 1};
@@ -57,6 +62,7 @@ static UIImage* _chevronIconRight = nil;
 + (UIColor*)highSleepScoreColor { return _highSleepScoreColor; }
 + (UIColor*)poorSleepScoreColor { return _poorSleepScoreColor; }
 + (UIColor*)averageSleepScoreColor { return _averageSleepScoreColor; }
++ (UIColor*)lightBlueColor { return _lightBlueColor; }
 
 #pragma mark Gradients
 
@@ -64,7 +70,10 @@ static UIImage* _chevronIconRight = nil;
 
 #pragma mark Images
 
++ (UIImage*)alarmEnabledIcon { return _alarmEnabledIcon ?: (_alarmEnabledIcon = [UIImage imageNamed: @"alarmEnabledIcon"]); }
 + (UIImage*)chevronIconLeft { return _chevronIconLeft ?: (_chevronIconLeft = [UIImage imageNamed: @"chevronIconLeft"]); }
++ (UIImage*)alarmNoteIcon { return _alarmNoteIcon ?: (_alarmNoteIcon = [UIImage imageNamed: @"alarmNoteIcon"]); }
++ (UIImage*)questionIcon { return _questionIcon ?: (_questionIcon = [UIImage imageNamed: @"questionIcon"]); }
 + (UIImage*)settingsIcon { return _settingsIcon ?: (_settingsIcon = [UIImage imageNamed: @"settingsIcon"]); }
 + (UIImage*)humidityIcon { return _humidityIcon ?: (_humidityIcon = [UIImage imageNamed: @"humidityIcon"]); }
 + (UIImage*)particleIcon { return _particleIcon ?: (_particleIcon = [UIImage imageNamed: @"particleIcon"]); }

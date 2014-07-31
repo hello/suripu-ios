@@ -6,6 +6,7 @@
 #import "HEMAlarmViewController.h"
 #import "HEMAlarmSoundTableViewController.h"
 #import "HEMColorUtils.h"
+#import "HelloStyleKit.h"
 
 @interface HEMAlarmViewController () <UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer* panGestureRecognizer;
@@ -29,6 +30,12 @@
     [super viewDidLoad];
     CGFloat fontSize = [SENSettings timeFormat] == SENTimeFormat12Hour ? 60.f : 90.f;
     self.alarmTimeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:fontSize];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[HelloStyleKit chevronIconLeft] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+}
+
+- (void)goBack
+{
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 - (void)viewWillAppear:(BOOL)animated

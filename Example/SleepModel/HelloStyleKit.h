@@ -23,12 +23,16 @@
 + (UIColor*)highSleepScoreColor;
 + (UIColor*)poorSleepScoreColor;
 + (UIColor*)averageSleepScoreColor;
++ (UIColor*)lightBlueColor;
 
 // Gradients
 + (PCGradient*)blueBackgroundGradient;
 
 // Images
++ (UIImage*)alarmEnabledIcon;
 + (UIImage*)chevronIconLeft;
++ (UIImage*)alarmNoteIcon;
++ (UIImage*)questionIcon;
 + (UIImage*)settingsIcon;
 + (UIImage*)humidityIcon;
 + (UIImage*)particleIcon;

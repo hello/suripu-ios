@@ -6,13 +6,14 @@
 #import <markdown_peg.h>
 
 #import "HEMSensorViewController.h"
+#import "HEMSensorGraphDataSource.h"
 #import "HEMGraphTooltipView.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 
 CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
 
-@interface HEMSensorViewController () <JBLineChartViewDataSource, JBLineChartViewDelegate>
+@interface HEMSensorViewController () <JBLineChartViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton* dailyGraphButton;
 @property (weak, nonatomic) IBOutlet UIButton* hourlyGraphButton;
@@ -22,7 +23,8 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
 @property (weak, nonatomic) IBOutlet UILabel* comfortZoneLabel;
 @property (strong, nonatomic) NSArray* hourlyDataSeries;
 @property (strong, nonatomic) NSArray* dailyDataSeries;
-@property (strong, nonatomic) NSArray* activeDataSeries;
+@property (strong, nonatomic) HEMSensorGraphDataSource* graphDataSource;
+@property (nonatomic, getter=isShowingHourlyData) BOOL showHourlyData;
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
 
 @property (nonatomic, strong) HEMGraphTooltipView* tooltipView;
@@ -33,31 +35,8 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.hourlyDataSeries = @[];
-    self.activeDataSeries = self.hourlyDataSeries;
-    [self configureGraphView];
     self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
-    [SENAPIRoom hourlyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
-        NSArray* values = [data valueForKey:@"value"];
-        BOOL shouldReload = [self.activeDataSeries isEqual:self.hourlyDataSeries];
-        self.hourlyDataSeries = values;
-        if (shouldReload) {
-            self.activeDataSeries = values;
-            [self configureGraphView];
-            [self.graphView reloadData];
-        }
-    }];
-    [SENAPIRoom dailyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
-        NSArray* values = [data valueForKey:@"value"];
-        BOOL shouldReload = [self.activeDataSeries isEqual:self.dailyDataSeries];
-        self.dailyDataSeries = values;
-        if (shouldReload) {
-            self.activeDataSeries = values;
-            [self configureGraphView];
-            [self.graphView reloadData];
-        }
-    }];
-
+    [self initializeGraphDataSource];
     [self configureSensorValueViews];
 }
 
@@ -68,10 +47,20 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
     [self fadeInGraphView];
 }
 
+- (void)initializeGraphDataSource
+{
+    self.showHourlyData = YES;
+    self.hourlyDataSeries = @[];
+    self.dailyDataSeries = @[];
+    self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:@[] forSensor:self.sensor];
+    [self configureGraphView];
+    [self refreshGraphData];
+}
+
 - (void)configureGraphView
 {
     self.graphView.delegate = self;
-    self.graphView.dataSource = self;
+    self.graphView.dataSource = self.graphDataSource;
     [self.graphView reloadData];
     self.graphView.maximumValue = (self.graphView.maximumValue ?: 0) * 1.25;
     self.graphView.minimumValue = 0;
@@ -86,6 +75,7 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
     mask.endPoint = CGPointMake(1, 0.5);
     mask.locations = @[ @(-1), @(-1), @0, @1 ];
     self.graphView.layer.mask = mask;
+    [self.graphView reloadData];
 }
 
 - (void)fadeInGraphView
@@ -114,23 +104,47 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
     self.comfortZoneInfoLabel.attributedText = markdown_to_attr_string(self.sensor.message, 0, attributes);
 }
 
+- (void)refreshGraphData
+{
+    [SENAPIRoom hourlyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
+        if (!data)
+            return;
+        NSArray* values = [data valueForKey:@"value"];
+        self.hourlyDataSeries = values;
+        if ([self isShowingHourlyData]) {
+            self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:values forSensor:self.sensor];
+            [self configureGraphView];
+        }
+    }];
+    [SENAPIRoom dailyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
+        if (!data)
+            return;
+        NSArray* values = [data valueForKey:@"value"];
+        self.dailyDataSeries = values;
+        if (![self isShowingHourlyData]) {
+            self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:values forSensor:self.sensor];
+            [self configureGraphView];
+        }
+    }];
+}
+
 - (IBAction)selectedHourlyGraph:(id)sender
 {
-    if ([self.activeDataSeries isEqual:self.hourlyDataSeries])
+    if ([self isShowingHourlyData])
         return;
 
-    self.hourlyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:16.0];
-    self.dailyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:16.0];
+    self.hourlyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:21.0];
+    self.dailyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:21.0];
     [self animateActiveDataSeriesTo:self.hourlyDataSeries];
 }
 
 - (IBAction)selectedDailyGraph:(id)sender
 {
-    if ([self.activeDataSeries isEqual:self.dailyDataSeries])
+    if (![self isShowingHourlyData])
         return;
 
-    self.dailyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:16.0];
-    self.hourlyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:16.0];
+    self.dailyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:21.0];
+    self.hourlyGraphButton.titleLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:21.0];
     [self animateActiveDataSeriesTo:self.dailyDataSeries];
 }
 
@@ -139,7 +153,8 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
     [UIView animateWithDuration:0.25 animations:^{
         self.graphView.alpha = 0;
     } completion:^(BOOL finished) {
-        self.activeDataSeries = dataSeries;
+        self.showHourlyData = dataSeries == self.hourlyDataSeries;
+        self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:dataSeries forSensor:self.sensor];
         [self.graphView reloadData];
         [UIView animateWithDuration:0.25 animations:^{
             self.graphView.alpha = 1.f;
@@ -151,7 +166,8 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
 
 - (void)lineChartView:(JBLineChartView*)lineChartView didSelectLineAtIndex:(NSUInteger)lineIndex horizontalIndex:(NSUInteger)horizontalIndex touchPoint:(CGPoint)touchPoint
 {
-    NSNumber* value = [[self.activeDataSeries objectAtIndex:0] objectAtIndex:horizontalIndex];
+    NSArray* dataSeries = ([self isShowingHourlyData] ? self.hourlyDataSeries : self.dailyDataSeries);
+    NSNumber* value = [dataSeries objectAtIndex:horizontalIndex];
     [self setTooltipVisible:YES animated:YES atTouchPoint:touchPoint];
     [self.tooltipView setTitleText:[SENSensor formatValue:value withUnit:self.sensor.unit]];
     [self.tooltipView setDetailText:[[SORelativeDateTransformer registeredTransformer] transformedValue:[NSDate dateWithTimeIntervalSinceNow:60 * 60 * horizontalIndex]]];
@@ -214,72 +230,6 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
 - (void)setTooltipVisible:(BOOL)tooltipVisible
 {
     [self setTooltipVisible:tooltipVisible animated:NO];
-}
-
-#pragma mark - JBLineChartViewDataSource
-
-- (NSUInteger)numberOfLinesInLineChartView:(JBLineChartView*)lineChartView
-{
-    return 2;
-}
-
-- (NSUInteger)lineChartView:(JBLineChartView*)lineChartView numberOfVerticalValuesAtLineIndex:(NSUInteger)lineIndex
-{
-    return self.activeDataSeries.count;
-}
-
-- (CGFloat)lineChartView:(JBLineChartView*)lineChartView verticalValueForHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
-{
-    if (lineIndex == 0)
-        return [self.activeDataSeries[horizontalIndex] floatValue];
-
-    return [self.sensor.valueInPreferredUnit floatValue];
-}
-
-#pragma mark appearance
-
-- (JBLineChartViewLineStyle)lineChartView:(JBLineChartView*)lineChartView lineStyleForLineAtLineIndex:(NSUInteger)lineIndex
-{
-    return lineIndex == 0 ? JBLineChartViewLineStyleSolid : JBLineChartViewLineStyleDashed;
-}
-
-- (BOOL)lineChartView:(JBLineChartView*)lineChartView showsDotsForLineAtLineIndex:(NSUInteger)lineIndex
-{
-    return lineIndex == 0;
-}
-
-- (CGFloat)lineChartView:(JBLineChartView*)lineChartView dotRadiusForLineAtLineIndex:(NSUInteger)lineIndex
-{
-    return 8.f;
-}
-
-- (BOOL)lineChartView:(JBLineChartView*)lineChartView smoothLineAtLineIndex:(NSUInteger)lineIndex
-{
-    return lineIndex == 0;
-}
-
-- (CGFloat)lineChartView:(JBLineChartView*)lineChartView widthForLineAtLineIndex:(NSUInteger)lineIndex
-{
-    if (lineIndex == 0)
-        return 2.f;
-    return 1.f;
-}
-
-- (UIColor*)lineChartView:(JBLineChartView*)lineChartView colorForLineAtLineIndex:(NSUInteger)lineIndex
-{
-    return [UIColor grayColor];
-}
-
-- (UIColor*)lineChartView:(JBLineChartView*)lineChartView colorForDotAtHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
-{
-    return [UIColor grayColor];
-}
-
-#pragma mark selection appearance
-
-- (CGFloat)verticalSelectionWidthForLineChartView:(JBLineChartView*)lineChartView
-{
-    return 2.f;
 }
 
 @end

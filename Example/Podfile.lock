@@ -40,7 +40,7 @@ PODS:
 
 DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`)
-  - JBChartView
+  - JBChartView (from `../../JBChartView`)
   - Kiwi
   - SenseKit (from `../../SenseKit`)
   - SORelativeDateTransformer
@@ -49,6 +49,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   AttributedMarkdown:
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
+  JBChartView:
+    :path: ../../JBChartView
   SenseKit:
     :path: ../../SenseKit
   SVProgressHUD:
@@ -59,7 +61,7 @@ SPEC CHECKSUMS:
   AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
   AttributedMarkdown: 859b637a00470b103b5fef30fd59519f3901a3ad
   FXKeychain: beb642a4218ba783507af08865eda05e9b26a612
-  JBChartView: 666486d81dd16fa0cfac7bc32b4b70d6c52e7162
+  JBChartView: 3f979441a6a41e50b7c4b98f91b256bf33625c2d
   Kiwi: 54bece5b35564d9b8e03c608d926f1a22fcfc589
   LGBluetooth: 00f37b8c29cccc1dd44d5f726b2ec4a6e91c74ec
   SenseKit: 3c11c765efb6e0213d08cc9268b0a27b123a2d59

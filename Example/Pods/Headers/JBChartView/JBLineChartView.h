@@ -1,1 +1,1 @@
-../../JBChartView/Classes/JBLineChartView.h
+../../../../../JBChartView/Classes/JBLineChartView.h

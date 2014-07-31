@@ -1,1 +1,1 @@
-../../JBChartView/Classes/JBChartView.h
+../../../../../JBChartView/Classes/JBChartView.h

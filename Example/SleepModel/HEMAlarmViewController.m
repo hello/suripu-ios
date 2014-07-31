@@ -28,6 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self setNeedsStatusBarAppearanceUpdate];
     CGFloat fontSize = [SENSettings timeFormat] == SENTimeFormat12Hour ? 60.f : 90.f;
     self.alarmTimeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:fontSize];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[HelloStyleKit chevronIconLeft] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
@@ -41,6 +42,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
     NSMutableDictionary* dict = self.navigationController.navigationBar.titleTextAttributes.mutableCopy;
     dict[NSForegroundColorAttributeName] = [UIColor whiteColor];
@@ -51,6 +53,7 @@
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
     NSMutableDictionary* dict = self.navigationController.navigationBar.titleTextAttributes.mutableCopy;
     dict[NSForegroundColorAttributeName] = [UIColor darkGrayColor];

@@ -65,6 +65,7 @@
 		8AC4A054198A070F00C2BD63 /* alarmNoteIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A050198A070F00C2BD63 /* alarmNoteIcon@2x.png */; };
 		8AC4A057198A0AE900C2BD63 /* questionIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A055198A0AE900C2BD63 /* questionIcon.png */; };
 		8AC4A058198A0AE900C2BD63 /* questionIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */; };
+		8AC4A05B198ACE4800C2BD63 /* HEMSensorGraphDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4A05A198ACE4800C2BD63 /* HEMSensorGraphDataSource.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +162,8 @@
 		8AC4A050198A070F00C2BD63 /* alarmNoteIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "alarmNoteIcon@2x.png"; path = "images/alarmNoteIcon@2x.png"; sourceTree = "<group>"; };
 		8AC4A055198A0AE900C2BD63 /* questionIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = questionIcon.png; path = images/questionIcon.png; sourceTree = "<group>"; };
 		8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "questionIcon@2x.png"; path = "images/questionIcon@2x.png"; sourceTree = "<group>"; };
+		8AC4A059198ACE4800C2BD63 /* HEMSensorGraphDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorGraphDataSource.h; sourceTree = "<group>"; };
+		8AC4A05A198ACE4800C2BD63 /* HEMSensorGraphDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorGraphDataSource.m; sourceTree = "<group>"; };
 		DB26CF606417423497851782 /* Pods-Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.xcconfig"; path = "Pods/Pods-Tests.xcconfig"; sourceTree = "<group>"; };
 		F1BFFC8E459745C5B0578F6E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FD539145AF784DC3AA0DAF13 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -381,6 +384,8 @@
 				8A90F9B219635CAE00AFD110 /* HEMCurrentConditionsTableViewController.m */,
 				8A78267519663BB1002882A1 /* HEMSensorViewController.h */,
 				8A78267619663BB1002882A1 /* HEMSensorViewController.m */,
+				8AC4A059198ACE4800C2BD63 /* HEMSensorGraphDataSource.h */,
+				8AC4A05A198ACE4800C2BD63 /* HEMSensorGraphDataSource.m */,
 			);
 			name = Sensors;
 			sourceTree = "<group>";
@@ -614,6 +619,7 @@
 				6003F59E195388D20070C39A /* HEMAppDelegate.m in Sources */,
 				8A782683196B4729002882A1 /* HEMGraphTooltipView.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
+				8AC4A05B198ACE4800C2BD63 /* HEMSensorGraphDataSource.m in Sources */,
 				8AC49F9F19832D2600C2BD63 /* HEMDevicePickerTableViewController.m in Sources */,
 				8A90F9B319635CAE00AFD110 /* HEMCurrentConditionsTableViewController.m in Sources */,
 				8A90F9B81963701A00AFD110 /* HEMInsetGlyphTableViewCell.m in Sources */,

@@ -1,49 +1,63 @@
-//
-//  HEMSleepHistoryViewController.m
-//  SleepSense
-//
-//  Created by Delisa Mason on 7/24/14.
-//  Copyright (c) 2014 Delisa Mason. All rights reserved.
-//
 
 #import "HEMSleepHistoryViewController.h"
 
-@interface HEMSleepHistoryViewController ()
+@interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UICollectionView* historyCollectionView;
+@property (weak, nonatomic) IBOutlet UICollectionView* insightCollectionView;
+@property (weak, nonatomic) IBOutlet UILabel* timeFrameLabel;
+@property (weak, nonatomic) IBOutlet UISegmentedControl* timeScopeSegmentedControl;
 @end
 
 @implementation HEMSleepHistoryViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self configureCollectionView];
 }
 
-- (void)didReceiveMemoryWarning
+- (void)configureCollectionView
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    CGSize windowSize = [[UIScreen mainScreen] bounds].size;
+    UICollectionViewFlowLayout* layout = (UICollectionViewFlowLayout*)self.insightCollectionView.collectionViewLayout;
+    layout.itemSize = CGSizeMake(CGRectGetWidth(self.insightCollectionView.bounds) - 40, CGRectGetHeight(self.insightCollectionView.bounds) - 20);
+    CGFloat sideInset = floorf((windowSize.width - layout.itemSize.width) / 2);
+    layout.sectionInset = UIEdgeInsetsMake(0, sideInset, 0, sideInset);
 }
 
-/*
-#pragma mark - Navigation
+#pragma mark - UICollectionViewDataSource
 
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView
 {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+    return 1;
 }
-*/
+
+- (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    if ([collectionView isEqual:self.insightCollectionView]) {
+        return 4;
+    }
+    return 9;
+}
+
+- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView cellForItemAtIndexPath:(NSIndexPath*)indexPath
+{
+    if ([collectionView isEqual:self.insightCollectionView]) {
+        UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"insightCell" forIndexPath:indexPath];
+        return cell;
+    }
+
+    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeSliceCell" forIndexPath:indexPath];
+    return cell;
+}
+
+#pragma mark - UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
+{
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
 
 @end

@@ -1,5 +1,6 @@
 
 #import <SenseKit/SENSensor.h>
+#import <SenseKit/SENAPIRoom.h>
 #import <SORelativeDateTransformer/SORelativeDateTransformer.h>
 #import <JBChartView/JBLineChartView.h>
 #import <markdown_peg.h>
@@ -32,8 +33,31 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
+    self.hourlyDataSeries = @[];
+    self.activeDataSeries = self.hourlyDataSeries;
     [self configureGraphView];
+    self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
+    [SENAPIRoom hourlyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
+        NSArray* values = [data valueForKey:@"value"];
+        BOOL shouldReload = [self.activeDataSeries isEqual:self.hourlyDataSeries];
+        self.hourlyDataSeries = values;
+        if (shouldReload) {
+            self.activeDataSeries = values;
+            [self configureGraphView];
+            [self.graphView reloadData];
+        }
+    }];
+    [SENAPIRoom dailyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
+        NSArray* values = [data valueForKey:@"value"];
+        BOOL shouldReload = [self.activeDataSeries isEqual:self.dailyDataSeries];
+        self.dailyDataSeries = values;
+        if (shouldReload) {
+            self.activeDataSeries = values;
+            [self configureGraphView];
+            [self.graphView reloadData];
+        }
+    }];
+
     [self configureSensorValueViews];
 }
 
@@ -41,26 +65,35 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
 {
     [super viewDidAppear:animated];
     [self.graphView reloadData];
-    [UIView animateWithDuration:0.5 animations:^{
-        self.graphView.alpha = 1.f;
-    }];
+    [self fadeInGraphView];
 }
 
 - (void)configureGraphView
 {
     self.graphView.delegate = self;
     self.graphView.dataSource = self;
-    self.graphView.alpha = 0;
-    self.dailyDataSeries = @[
-        @[ @22, @24, @24, @25, @38, @23, @24, @27, @30, @29 ]
-    ];
-    self.hourlyDataSeries = @[
-        @[ @250, @284, @280, @268, @300, @362, @580, @610, @586, @601 ]
-    ];
-    self.activeDataSeries = self.hourlyDataSeries;
     [self.graphView reloadData];
-    self.graphView.maximumValue = self.graphView.maximumValue * 1.25;
+    self.graphView.maximumValue = (self.graphView.maximumValue ?: 0) * 1.25;
     self.graphView.minimumValue = 0;
+
+    CAGradientLayer* mask = [CAGradientLayer layer];
+    mask.frame = self.graphView.bounds;
+    mask.colors = @[ (id)[UIColor whiteColor].CGColor,
+                     (id)[UIColor whiteColor].CGColor,
+                     (id)[UIColor clearColor].CGColor,
+                     (id)[UIColor clearColor].CGColor ];
+    mask.startPoint = CGPointMake(0, 0.5);
+    mask.endPoint = CGPointMake(1, 0.5);
+    mask.locations = @[ @(-1), @(-1), @0, @1 ];
+    self.graphView.layer.mask = mask;
+}
+
+- (void)fadeInGraphView
+{
+    [CATransaction begin];
+    [CATransaction setValue:@1 forKey:kCATransactionAnimationDuration];
+    ((CAGradientLayer*)self.graphView.layer.mask).locations = @[ @0, @1, @2, @2 ];
+    [CATransaction commit];
 }
 
 - (void)configureSensorValueViews
@@ -68,7 +101,7 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
     self.title = self.sensor.localizedName;
     self.valueLabel.text = [NSString stringWithFormat:@"%.0f", [[self.sensor valueInPreferredUnit] floatValue]];
     self.unitLabel.text = [self.sensor localizedUnit];
-    UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Medium" size:14.0];
+    UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Medium" size:21.0];
     NSDictionary* attributes = @{
         @(EMPH) : @{
             NSFontAttributeName : emFont,
@@ -187,19 +220,18 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
 
 - (NSUInteger)numberOfLinesInLineChartView:(JBLineChartView*)lineChartView
 {
-    return self.activeDataSeries.count + 1;
+    return 2;
 }
 
 - (NSUInteger)lineChartView:(JBLineChartView*)lineChartView numberOfVerticalValuesAtLineIndex:(NSUInteger)lineIndex
 {
-    NSArray* values = self.activeDataSeries[0];
-    return values.count;
+    return self.activeDataSeries.count;
 }
 
 - (CGFloat)lineChartView:(JBLineChartView*)lineChartView verticalValueForHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
     if (lineIndex == 0)
-        return [self.activeDataSeries[lineIndex][horizontalIndex] floatValue];
+        return [self.activeDataSeries[horizontalIndex] floatValue];
 
     return [self.sensor.valueInPreferredUnit floatValue];
 }
@@ -216,7 +248,7 @@ CGFloat const kJBBaseChartViewControllerAnimationDuration = 0.25f;
     return lineIndex == 0;
 }
 
-- (CGFloat)lineChartView:(JBLineChartView *)lineChartView dotRadiusForLineAtLineIndex:(NSUInteger)lineIndex
+- (CGFloat)lineChartView:(JBLineChartView*)lineChartView dotRadiusForLineAtLineIndex:(NSUInteger)lineIndex
 {
     return 8.f;
 }

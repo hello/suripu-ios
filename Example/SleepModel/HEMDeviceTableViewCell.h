@@ -3,7 +3,7 @@
 
 extern CGFloat const HEPDeviceTableViewCellHeight;
 
-@interface HEPDeviceTableViewCell : UITableViewCell
+@interface HEMDeviceTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel* nameLabel;
 @property (weak, nonatomic) IBOutlet UILabel* identifierLabel;

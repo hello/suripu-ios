@@ -1,31 +1,21 @@
-//
-//  HEMMiniSleepScoreGraphView.m
-//  SleepSense
-//
-//  Created by Delisa Mason on 7/24/14.
-//  Copyright (c) 2014 Delisa Mason. All rights reserved.
-//
-
+#import <stdlib.h>
 #import "HEMMiniSleepScoreGraphView.h"
+#import "HelloStyleKit.h"
+
+@interface HEMMiniSleepScoreGraphView ()
+@property (nonatomic) NSInteger sleepScore;
+@end
 
 @implementation HEMMiniSleepScoreGraphView
 
-- (id)initWithFrame:(CGRect)frame
+- (void)awakeFromNib
 {
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
+    self.sleepScore = arc4random() % 100;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    // Drawing code
+    [HelloStyleKit drawMiniSleepScoreGraphWithSleepScore:self.sleepScore];
 }
-*/
 
 @end

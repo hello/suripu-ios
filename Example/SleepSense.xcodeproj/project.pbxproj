@@ -47,6 +47,18 @@
 		8AC49F9C198305F600C2BD63 /* HEMAuthenticationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC49F9B198305F600C2BD63 /* HEMAuthenticationViewController.m */; };
 		8AC49F9F19832D2600C2BD63 /* HEMDevicePickerTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC49F9E19832D2600C2BD63 /* HEMDevicePickerTableViewController.m */; };
 		8AC49FA219832FE100C2BD63 /* HEMDeviceTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC49FA119832FE100C2BD63 /* HEMDeviceTableViewCell.m */; };
+		8AC4A0371989C36200C2BD63 /* humidityIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0311989C36200C2BD63 /* humidityIcon.png */; };
+		8AC4A0381989C36200C2BD63 /* humidityIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0321989C36200C2BD63 /* humidityIcon@2x.png */; };
+		8AC4A0391989C36200C2BD63 /* particleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0331989C36200C2BD63 /* particleIcon.png */; };
+		8AC4A03A1989C36200C2BD63 /* particleIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0341989C36200C2BD63 /* particleIcon@2x.png */; };
+		8AC4A03B1989C36200C2BD63 /* temperatureIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0351989C36200C2BD63 /* temperatureIcon.png */; };
+		8AC4A03C1989C36200C2BD63 /* temperatureIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0361989C36200C2BD63 /* temperatureIcon@2x.png */; };
+		8AC4A03F1989C5A100C2BD63 /* settingsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A03D1989C5A100C2BD63 /* settingsIcon.png */; };
+		8AC4A0401989C5A100C2BD63 /* settingsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A03E1989C5A100C2BD63 /* settingsIcon@2x.png */; };
+		8AC4A0491989D47000C2BD63 /* chevronIconLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0451989D47000C2BD63 /* chevronIconLeft.png */; };
+		8AC4A04A1989D47000C2BD63 /* chevronIconLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0461989D47000C2BD63 /* chevronIconLeft@2x.png */; };
+		8AC4A04B1989D47000C2BD63 /* chevronIconRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0471989D47000C2BD63 /* chevronIconRight.png */; };
+		8AC4A04C1989D47000C2BD63 /* chevronIconRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0481989D47000C2BD63 /* chevronIconRight@2x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -125,6 +137,18 @@
 		8AC49F9E19832D2600C2BD63 /* HEMDevicePickerTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDevicePickerTableViewController.m; sourceTree = "<group>"; };
 		8AC49FA019832FE100C2BD63 /* HEMDeviceTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDeviceTableViewCell.h; sourceTree = "<group>"; };
 		8AC49FA119832FE100C2BD63 /* HEMDeviceTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDeviceTableViewCell.m; sourceTree = "<group>"; };
+		8AC4A0311989C36200C2BD63 /* humidityIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = humidityIcon.png; path = images/humidityIcon.png; sourceTree = "<group>"; };
+		8AC4A0321989C36200C2BD63 /* humidityIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "humidityIcon@2x.png"; path = "images/humidityIcon@2x.png"; sourceTree = "<group>"; };
+		8AC4A0331989C36200C2BD63 /* particleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = particleIcon.png; path = images/particleIcon.png; sourceTree = "<group>"; };
+		8AC4A0341989C36200C2BD63 /* particleIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "particleIcon@2x.png"; path = "images/particleIcon@2x.png"; sourceTree = "<group>"; };
+		8AC4A0351989C36200C2BD63 /* temperatureIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = temperatureIcon.png; path = images/temperatureIcon.png; sourceTree = "<group>"; };
+		8AC4A0361989C36200C2BD63 /* temperatureIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "temperatureIcon@2x.png"; path = "images/temperatureIcon@2x.png"; sourceTree = "<group>"; };
+		8AC4A03D1989C5A100C2BD63 /* settingsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = settingsIcon.png; path = images/settingsIcon.png; sourceTree = "<group>"; };
+		8AC4A03E1989C5A100C2BD63 /* settingsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settingsIcon@2x.png"; path = "images/settingsIcon@2x.png"; sourceTree = "<group>"; };
+		8AC4A0451989D47000C2BD63 /* chevronIconLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chevronIconLeft.png; path = images/chevronIconLeft.png; sourceTree = "<group>"; };
+		8AC4A0461989D47000C2BD63 /* chevronIconLeft@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chevronIconLeft@2x.png"; path = "images/chevronIconLeft@2x.png"; sourceTree = "<group>"; };
+		8AC4A0471989D47000C2BD63 /* chevronIconRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chevronIconRight.png; path = images/chevronIconRight.png; sourceTree = "<group>"; };
+		8AC4A0481989D47000C2BD63 /* chevronIconRight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "chevronIconRight@2x.png"; path = "images/chevronIconRight@2x.png"; sourceTree = "<group>"; };
 		DB26CF606417423497851782 /* Pods-Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.xcconfig"; path = "Pods/Pods-Tests.xcconfig"; sourceTree = "<group>"; };
 		F1BFFC8E459745C5B0578F6E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FD539145AF784DC3AA0DAF13 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -195,6 +219,7 @@
 		6003F593195388D20070C39A /* SleepSense */ = {
 			isa = PBXGroup;
 			children = (
+				8AC4A0301989C33B00C2BD63 /* Assets */,
 				8A90F9B419636EEB00AFD110 /* Views */,
 				8A90F9B019635C7900AFD110 /* View Controllers */,
 				8A90F9A919634F0C00AFD110 /* Utilities */,
@@ -359,6 +384,25 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		8AC4A0301989C33B00C2BD63 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				8AC4A0451989D47000C2BD63 /* chevronIconLeft.png */,
+				8AC4A0461989D47000C2BD63 /* chevronIconLeft@2x.png */,
+				8AC4A0471989D47000C2BD63 /* chevronIconRight.png */,
+				8AC4A0481989D47000C2BD63 /* chevronIconRight@2x.png */,
+				8AC4A03D1989C5A100C2BD63 /* settingsIcon.png */,
+				8AC4A03E1989C5A100C2BD63 /* settingsIcon@2x.png */,
+				8AC4A0311989C36200C2BD63 /* humidityIcon.png */,
+				8AC4A0321989C36200C2BD63 /* humidityIcon@2x.png */,
+				8AC4A0331989C36200C2BD63 /* particleIcon.png */,
+				8AC4A0341989C36200C2BD63 /* particleIcon@2x.png */,
+				8AC4A0351989C36200C2BD63 /* temperatureIcon.png */,
+				8AC4A0361989C36200C2BD63 /* temperatureIcon@2x.png */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -441,12 +485,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
+				8AC4A0371989C36200C2BD63 /* humidityIcon.png in Resources */,
+				8AC4A0381989C36200C2BD63 /* humidityIcon@2x.png in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
+				8AC4A0401989C5A100C2BD63 /* settingsIcon@2x.png in Resources */,
+				8AC4A0391989C36200C2BD63 /* particleIcon.png in Resources */,
+				8AC4A03B1989C36200C2BD63 /* temperatureIcon.png in Resources */,
+				8AC4A03C1989C36200C2BD63 /* temperatureIcon@2x.png in Resources */,
 				6003F5A4195388D20070C39A /* Main_iPad.storyboard in Resources */,
+				8AC4A04A1989D47000C2BD63 /* chevronIconLeft@2x.png in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				8AC4A03F1989C5A100C2BD63 /* settingsIcon.png in Resources */,
 				8A033870197DD89C00BE8327 /* Onboarding.storyboard in Resources */,
+				8AC4A04B1989D47000C2BD63 /* chevronIconRight.png in Resources */,
+				8AC4A03A1989C36200C2BD63 /* particleIcon@2x.png in Resources */,
 				6003F5A1195388D20070C39A /* Main_iPhone.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
+				8AC4A0491989D47000C2BD63 /* chevronIconLeft.png in Resources */,
+				8AC4A04C1989D47000C2BD63 /* chevronIconRight@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,7 +10,7 @@
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 
-static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
+NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 @interface HEMCurrentConditionsTableViewController ()
 @property (nonatomic, strong) NSArray* sensors;
 @end
@@ -21,26 +21,6 @@ static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsC
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"current-conditions.title", nil);
-    self.sensors = @[
-        [[SENSensor alloc] initWithDictionary:@{ @"name" : @"temperature",
-                                                 @"unit" : @"CENTIGRADE",
-                                                 @"condition" : @"ALERT",
-                                                 @"message" : @"You sleep best when the temperature is between *16° and 18°*.",
-                                                 @"value" : @19 }],
-        [[SENSensor alloc] initWithDictionary:@{ @"name" : @"humidity",
-                                                 @"unit" : @"PERCENT",
-                                                 @"condition" : @"IDEAL",
-                                                 @"message" : @"You sleep best when the humidity is between *60% and 71%*.",
-                                                 @"value" : @76 }],
-        [[SENSensor alloc] initWithDictionary:@{ @"name" : @"particulates",
-                                                 @"unit" : @"PPM",
-                                                 @"condition" : @"IDEAL",
-                                                 @"message" : @"Particulate counts above *600ppm* can be a problem for sleep.",
-                                                 @"value" : @220 }]
-    ];
-    [SENAPIRoom currentWithCompletion:^(id data, NSError *error) {
-        NSLog(@"data: %@", data);
-    }];
     self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
 }
 
@@ -52,6 +32,20 @@ static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsC
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self refreshSensors];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSensors) name:SENSensorUpdatedNotification object:nil];
+    [SENSensor refreshCachedSensors];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)refreshSensors
+{
+    self.sensors = [SENSensor sensors];
     [self.tableView reloadData];
 }
 
@@ -89,54 +83,83 @@ static NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsC
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
+    UITableViewCell* cell = nil;
 
     switch (indexPath.section) {
+    case 0:
+        cell = [self tableView:tableView sensorCellForRowAtIndexPath:indexPath];
+        break;
+
+    case 1:
+        cell = [self tableView:tableView menuCellForRowAtIndexPath:indexPath];
+        break;
+    }
+
+    return cell;
+}
+
+- (UITableViewCell*)tableView:(UITableView*)tableView sensorCellForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
+    SENSensor* sensor = self.sensors[indexPath.row];
+    cell.titleLabel.text = sensor.localizedName;
+    cell.detailLabel.text = sensor.localizedValue;
+    switch (sensor.unit) {
+    case SENSensorUnitDegreeCentigrade:
+        cell.glyphImageView.image = [HelloStyleKit temperatureIcon];
+        break;
+    case SENSensorUnitPartsPerMillion:
+        cell.glyphImageView.image = [HelloStyleKit particleIcon];
+        break;
+    case SENSensorUnitPercent:
+        cell.glyphImageView.image = [HelloStyleKit humidityIcon];
+        break;
+    case SENSensorUnitUnknown:
+    default:
+        break;
+    }
+    if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
+        UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:11.0];
+        NSDictionary* attributes = @{
+            @(EMPH) : @{
+                NSFontAttributeName : emFont,
+            },
+            @(PARA) : @{
+                NSForegroundColorAttributeName : [UIColor darkGrayColor],
+            }
+        };
+        cell.descriptionLabel.attributedText = markdown_to_attr_string(sensor.message, 0, attributes);
+    } else {
+        cell.descriptionLabel.text = nil;
+    }
+    return cell;
+}
+
+- (UITableViewCell*)tableView:(UITableView*)tableView menuCellForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
+    cell.descriptionLabel.text = nil;
+    switch (indexPath.row) {
     case 0: {
-        SENSensor* sensor = self.sensors[indexPath.row];
-        cell.titleLabel.text = sensor.localizedName;
-        cell.detailLabel.text = sensor.localizedValue;
-        if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
-            UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:11.0];
-            NSDictionary* attributes = @{
-                @(EMPH) : @{
-                    NSFontAttributeName : emFont,
-                },
-                @(PARA) : @{
-                    NSForegroundColorAttributeName : [UIColor darkGrayColor],
-                }
-            };
-            cell.descriptionLabel.attributedText = markdown_to_attr_string(sensor.message, 0, attributes);
+        cell.titleLabel.text = NSLocalizedString(@"alarm.title", nil);
+        if ([[SENAlarm savedAlarm] isOn]) {
+            cell.detailLabel.text = [[SENAlarm savedAlarm] localizedValue];
         } else {
-            cell.descriptionLabel.text = nil;
+            cell.detailLabel.text = NSLocalizedString(@"alarm.state.disabled", nil);
         }
     } break;
 
     case 1: {
-        cell.descriptionLabel.text = nil;
-        switch (indexPath.row) {
-        case 0: {
-            cell.titleLabel.text = NSLocalizedString(@"alarm.title", nil);
-            if ([[SENAlarm savedAlarm] isOn]) {
-                cell.detailLabel.text = [[SENAlarm savedAlarm] localizedValue];
-            } else {
-                cell.detailLabel.text = NSLocalizedString(@"alarm.state.disabled", nil);
-            }
-        } break;
-
-        case 1: {
-            cell.titleLabel.text = NSLocalizedString(@"sounds.title", nil);
-            cell.detailLabel.text = @"";
-        } break;
-        case 2: {
-            cell.titleLabel.text = NSLocalizedString(@"settings.title", nil);
-            cell.detailLabel.text = nil;
-            cell.descriptionLabel.text = nil;
-        }
-        }
+        cell.titleLabel.text = NSLocalizedString(@"sounds.title", nil);
+        cell.detailLabel.text = @"";
     } break;
+    case 2: {
+        cell.titleLabel.text = NSLocalizedString(@"settings.title", nil);
+        cell.detailLabel.text = nil;
+        cell.descriptionLabel.text = nil;
+        cell.glyphImageView.image = [HelloStyleKit settingsIcon];
     }
-
+    }
     return cell;
 }
 

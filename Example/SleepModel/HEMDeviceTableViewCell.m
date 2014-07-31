@@ -1,8 +1,8 @@
 
-#import "HEPDeviceTableViewCell.h"
+#import "HEMDeviceTableViewCell.h"
 
 CGFloat const HEPDeviceTableViewCellHeight = 77.f;
 
-@implementation HEPDeviceTableViewCell
+@implementation HEMDeviceTableViewCell
 
 @end

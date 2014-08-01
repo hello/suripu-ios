@@ -1,4 +1,4 @@
-
+#import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENSettings.h>
 
 #import "HEMSettingsTableViewController.h"
@@ -49,6 +49,15 @@
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    switch (indexPath.section) {
+    case 1:
+        break;
+    case 2:
+        [SENAuthorizationService deauthorize];
+        break;
+    default:
+        break;
+    }
 }
 
 - (BOOL)tableView:(UITableView*)tableView shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath

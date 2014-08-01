@@ -61,11 +61,16 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
     }];
 }
 
-
-- (IBAction)didTapSignUpButton:(id)sender {
+- (IBAction)didTapSignUpButton:(id)sender
+{
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
+    UIViewController* signUpController = [storyboard instantiateViewControllerWithIdentifier:@"signUpViewController"];
+    //    [self.navigationController popToRootViewControllerAnimated:NO];
+    [self.navigationController pushViewController:signUpController animated:YES];
 }
 
-- (IBAction)didTapForgotPasswordButton:(UIButton *)sender {
+- (IBAction)didTapForgotPasswordButton:(UIButton*)sender
+{
 }
 
 - (IBAction)setAPIURL:(id)sender

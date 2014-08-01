@@ -6,6 +6,7 @@
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
     [self configureAppearance];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showOnboardingFlow) name:SENAuthorizationServiceDidDeauthorizeNotification object:nil];
     return YES;
 }
 
@@ -19,9 +20,12 @@
 - (void)showOnboardingFlow
 {
     UINavigationController* rootNavigationController = (UINavigationController*)self.window.rootViewController;
+    if (rootNavigationController.presentedViewController) {
+        [rootNavigationController dismissViewControllerAnimated:NO completion:NULL];
+    }
     [rootNavigationController popToRootViewControllerAnimated:NO];
     UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
-    [rootNavigationController presentViewController:[onboardingStoryboard instantiateInitialViewController] animated:NO completion:NULL];
+    [rootNavigationController presentViewController:[onboardingStoryboard instantiateInitialViewController] animated:YES completion:NULL];
 }
 
 - (void)configureAppearance

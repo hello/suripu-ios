@@ -42,7 +42,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="5ic-x1-0Fg" kind="push" id="HAn-za-XFR"/>
+                                    <segue destination="5JR-hM-9bB" kind="push" id="XHB-si-bXN"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -102,13 +102,7 @@
                         </subviews>
                         <color key="backgroundColor" red="0.9215686917" green="0.92941182850000004" blue="0.92549026010000002" alpha="1" colorSpace="deviceRGB"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Log In" id="5yB-oo-XsC">
-                        <barButtonItem key="rightBarButtonItem" title="Sign Up" id="fUt-5m-LWw">
-                            <connections>
-                                <action selector="didTapSignUpButton:" destination="5ic-x1-0Fg" id="QKF-8Z-xpx"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Log In" id="5yB-oo-XsC"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
                     <connections>
                         <outlet property="passwordField" destination="KHe-L9-LC5" id="qMN-2a-9SY"/>
@@ -117,7 +111,78 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PCr-dK-BgT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1456" y="253"/>
+            <point key="canvasLocation" x="1862" y="253"/>
+        </scene>
+        <!--Sign Up View Controller-->
+        <scene sceneID="9ON-DX-PXS">
+            <objects>
+                <viewController storyboardIdentifier="signUpViewController" id="5JR-hM-9bB" userLabel="Sign Up View Controller" customClass="HEMSignUpViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="OXF-zq-Udo"/>
+                        <viewControllerLayoutGuide type="bottom" id="AhH-RW-xFb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NOa-KQ-y5R">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6kV-fQ-HaY">
+                                <rect key="frame" x="48" y="117" width="225" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
+                                <connections>
+                                    <outlet property="delegate" destination="5JR-hM-9bB" id="mf9-Up-oEN"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m7O-Wc-YhP">
+                                <rect key="frame" x="48" y="165" width="225" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="5JR-hM-9bB" id="Th8-qt-lBV"/>
+                                </connections>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bQp-on-SM1">
+                                <rect key="frame" x="48" y="212" width="225" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="17"/>
+                                <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="5JR-hM-9bB" id="5Hp-gq-IIv"/>
+                                </connections>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q8n-JK-Ew0" customClass="HEMActionButton">
+                                <rect key="frame" x="57" y="284" width="207" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="23"/>
+                                <state key="normal" title="Sign up">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapSignUp:" destination="5JR-hM-9bB" eventType="touchUpInside" id="cal-9g-dLa"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="0.9215686917" green="0.92941182850000004" blue="0.92549026010000002" alpha="1" colorSpace="deviceRGB"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="qhq-QP-ftX">
+                        <barButtonItem key="rightBarButtonItem" title="Sign In" id="twU-qZ-ReJ">
+                            <connections>
+                                <segue destination="5ic-x1-0Fg" kind="push" id="7JK-Fg-N57"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="confirmPasswordField" destination="bQp-on-SM1" id="Vnt-Go-dEB"/>
+                        <outlet property="emailAddressField" destination="6kV-fQ-HaY" id="tRK-dJ-gDe"/>
+                        <outlet property="passwordField" destination="m7O-Wc-YhP" id="jyF-Hp-28w"/>
+                        <outlet property="signUpButton" destination="q8n-JK-Ew0" id="gDt-k5-3Ca"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Twr-BC-O7O" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1452" y="253"/>
         </scene>
         <!--Age View Controller-->
         <scene sceneID="J5f-Jz-Trm">
@@ -149,7 +214,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ffw-pv-gaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="636" y="907"/>
+            <point key="canvasLocation" x="1042" y="927"/>
         </scene>
         <!--Wifi View Controller-->
         <scene sceneID="OMH-aM-jNv">
@@ -181,7 +246,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkd-iJ-jh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2229" y="253"/>
+            <point key="canvasLocation" x="632" y="933"/>
         </scene>
         <!--Device Table View Controller-->
         <scene sceneID="Tu0-Wm-CEi">
@@ -216,7 +281,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f5J-Ag-mT1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1840" y="253"/>
+            <point key="canvasLocation" x="243" y="933"/>
         </scene>
         <!--Height View Controller-->
         <scene sceneID="eyf-lL-3vS">
@@ -248,7 +313,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="deN-hu-m5i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1046" y="913"/>
+            <point key="canvasLocation" x="1452" y="933"/>
         </scene>
         <!--Weight View Controller-->
         <scene sceneID="4cP-cg-pMo">
@@ -280,7 +345,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nuW-A8-XzF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1456" y="913"/>
+            <point key="canvasLocation" x="1862" y="933"/>
         </scene>
         <!--Location View Controller-->
         <scene sceneID="YTt-We-HoK">
@@ -309,7 +374,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NBb-hX-B6a" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1840" y="913"/>
+            <point key="canvasLocation" x="2246" y="933"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2Hn-va-LY3">
@@ -334,6 +399,7 @@
             <point key="canvasLocation" x="636" y="253"/>
         </scene>
     </scenes>
+    <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

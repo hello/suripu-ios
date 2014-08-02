@@ -10,7 +10,7 @@
 "sounds.title" = "Sounds";
 
 // authentication
-"authorization.title" = "Log in";
+"authorization.title" = "Sign in";
 "authorization.no-token" = "No access token present";
 "authorization.set-url.button" = "Set URL";
 "authorization.sign-in.button" = "Sign in";
@@ -48,3 +48,10 @@
 "measurement.temperature.format" = "%.f°";
 "measurement.percentage.format" = "%.f%%";
 "measurement.ppm.format" = "%.fppm";
+
+// actions
+"actions.cancel" = "Cancel";
+"actions.save" = "Save";
+"actions.ok" = "OK";
+"actions.sign-out" = "Sign Out";
+"status.success" = "Done!";

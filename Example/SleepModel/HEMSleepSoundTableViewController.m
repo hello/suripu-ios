@@ -1,5 +1,5 @@
 
-#import <SenseKit/SENAlarm.h>
+#import <SenseKit/SENBackgroundNoise.h>
 #import "HEMSleepSoundTableViewController.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
@@ -16,7 +16,7 @@ static NSString* const SleepSoundCellIdentifier = @"sleepSoundCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.possibleSleepSounds = @[ @"White Noise", @"Pink Noise", @"Ceiling Fan", @"Clothes Dryer", @"Rain", @"Ocean Waves" ];
+    self.possibleSleepSounds = @[ NSLocalizedString(@"noise.sound-name.none", nil), @"Ceiling Fan", @"Clothes Dryer", @"Ocean Waves", @"Pink Noise", @"Rain", @"White Noise" ];
     self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
 }
 
@@ -34,7 +34,7 @@ static NSString* const SleepSoundCellIdentifier = @"sleepSoundCell";
     NSString* sleepSoundText = [self.possibleSleepSounds objectAtIndex:indexPath.row];
     cell.textLabel.text = sleepSoundText;
 
-    if ([sleepSoundText isEqualToString:[SENAlarm savedAlarm].soundName]) {
+    if ([sleepSoundText isEqualToString:[SENBackgroundNoise savedBackgroundNoise].soundName]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -45,14 +45,16 @@ static NSString* const SleepSoundCellIdentifier = @"sleepSoundCell";
 
 #pragma mark - Table view delegate
 
-// FIXME: obvi need to store the white noise sound somewhere
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSUInteger index = [self.possibleSleepSounds indexOfObject:[SENAlarm savedAlarm].soundName];
+    NSUInteger index = [self.possibleSleepSounds indexOfObject:[SENBackgroundNoise savedBackgroundNoise].soundName];
     if (indexPath.row == index)
         return;
 
+    SENBackgroundNoise* noise = [SENBackgroundNoise savedBackgroundNoise];
+    noise.soundName = self.possibleSleepSounds[indexPath.row];
+    [noise save];
     if (index != NSNotFound) {
         NSArray* indexPaths = @[
             [NSIndexPath indexPathForRow:index inSection:0],

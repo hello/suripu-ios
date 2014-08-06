@@ -33,6 +33,11 @@
 "alarm.state.enabled" = "Enabled";
 "alarm.state.disabled" = "Disabled";
 
+// background noise
+"noise.state.enabled" = "Enabled";
+"noise.state.disabled" = "Disabled";
+"noise.sound-name.none" = "None";
+
 // sensors
 "sensor.temperature" = "Temperature";
 "sensor.humidity" = "Humidity";
@@ -40,6 +45,8 @@
 "sensor.time-range.day" = "Past 24";
 "sensor.time-range.week" = "This week";
 "sensor.comfort-zone.title" = "Comfort Zone";
+"graph-data.unavailable.short" = "No data";
+"graph-data.unavailable" = "No data available";
 
 // measurements
 "measurement.temperature.unit" = "°";

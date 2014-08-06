@@ -2,10 +2,11 @@
 #import <SenseKit/SENSensor.h>
 
 #import "HEMSensorGraphDataSource.h"
+#import "HelloStyleKit.h"
 
 @interface HEMSensorGraphDataSource ()
 
-@property (nonatomic, strong) NSArray* dataSeries;
+@property (nonatomic, strong, readwrite) NSArray* dataSeries;
 @property (nonatomic, weak) SENSensor* sensor;
 @end
 
@@ -24,7 +25,7 @@
 
 - (NSUInteger)numberOfLinesInLineChartView:(JBLineChartView*)lineChartView
 {
-    return 2;
+    return 1;
 }
 
 - (NSUInteger)lineChartView:(JBLineChartView*)lineChartView numberOfVerticalValuesAtLineIndex:(NSUInteger)lineIndex
@@ -35,7 +36,7 @@
 - (CGFloat)lineChartView:(JBLineChartView*)lineChartView verticalValueForHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
     if (lineIndex == 0)
-        return [self.dataSeries[horizontalIndex] floatValue];
+        return [[self.dataSeries[horizontalIndex] valueForKey:@"value"] floatValue];
 
     return [self.sensor.valueInPreferredUnit floatValue];
 }
@@ -49,7 +50,7 @@
 
 - (BOOL)lineChartView:(JBLineChartView*)lineChartView showsDotsForLineAtLineIndex:(NSUInteger)lineIndex
 {
-    return NO;
+    return lineIndex == 0;
 }
 
 - (CGFloat)lineChartView:(JBLineChartView*)lineChartView dotRadiusForLineAtLineIndex:(NSUInteger)lineIndex
@@ -71,19 +72,34 @@
 
 - (UIColor*)lineChartView:(JBLineChartView*)lineChartView colorForLineAtLineIndex:(NSUInteger)lineIndex
 {
-    return [UIColor grayColor];
+    return [HelloStyleKit mediumBlueColor];
 }
 
 - (UIColor*)lineChartView:(JBLineChartView*)lineChartView colorForDotAtHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
-    return [UIColor grayColor];
+    return [HelloStyleKit mediumBlueColor];
+}
+
+- (UIColor *)lineChartView:(JBLineChartView *)lineChartView fillColorForLineAtLineIndex:(NSUInteger)lineIndex
+{
+    return lineIndex == 0 ? [HelloStyleKit lightBlueColor] : [UIColor clearColor];
+}
+
+- (UIColor *)lineChartView:(JBLineChartView *)lineChartView selectionColorForDotAtHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
+{
+    return [HelloStyleKit darkBlueColor];
+}
+
+- (UIColor *)lineChartView:(JBLineChartView *)lineChartView selectionColorForLineAtLineIndex:(NSUInteger)lineIndex
+{
+    return [HelloStyleKit mediumBlueColor];
 }
 
 #pragma mark selection appearance
 
 - (CGFloat)verticalSelectionWidthForLineChartView:(JBLineChartView*)lineChartView
 {
-    return 2.f;
+    return 4.f;
 }
 
 @end

@@ -1,4 +1,5 @@
 #import <SenseKit/SENAlarm.h>
+#import <SenseKit/SENBackgroundNoise.h>
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENAPIRoom.h>
 #import <markdown_peg.h>
@@ -45,7 +46,9 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 
 - (void)refreshSensors
 {
-    self.sensors = [SENSensor sensors];
+    self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
+        return [obj1.name compare:obj2.name];
+    }];
     [self.tableView reloadData];
 }
 
@@ -153,7 +156,8 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 
     case 1: {
         cell.titleLabel.text = NSLocalizedString(@"sounds.title", nil);
-        cell.detailLabel.text = @"";
+        SENBackgroundNoise* noise = [SENBackgroundNoise savedBackgroundNoise];
+        cell.detailLabel.text = [noise isOn] ? [noise soundName] : NSLocalizedString(@"noise.state.disabled", nil);
         cell.glyphImageView.image = nil;
     } break;
     case 2: {
@@ -186,8 +190,10 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
             [self.navigationController pushViewController:controller animated:YES];
         } break;
 
-        case 1:
-            break;
+        case 1: {
+            UIViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"sleepSoundViewController"];
+            [self.navigationController pushViewController:controller animated:YES];
+        } break;
         case 2: {
             UIViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"settingsController"];
             [self.navigationController pushViewController:controller animated:YES];

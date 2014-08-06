@@ -592,7 +592,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Currently" id="WL3-Gt-K6z">
-                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="done" id="xCo-Xt-QIM">
+                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="xCo-Xt-QIM">
                             <connections>
                                 <action selector="dismissCurrentConditionsController:" destination="jq0-KZ-Ac0" id="Fhq-VG-I9t"/>
                             </connections>
@@ -606,7 +606,7 @@
         <!--Alarm Sound Table View Controller - Sound-->
         <scene sceneID="hmY-EV-EJQ">
             <objects>
-                <tableViewController id="Xlb-L4-Nd1" customClass="HEMAlarmSoundTableViewController" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="alarmSoundTableViewController" id="Xlb-L4-Nd1" customClass="HEMAlarmSoundTableViewController" sceneMemberID="viewController">
                     <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="sJF-5a-vzY">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -646,7 +646,7 @@
         <!--Sleep Summary View Controller-->
         <scene sceneID="yp7-hS-vb7">
             <objects>
-                <viewController id="z6S-PJ-ZkG" customClass="HEMSleepSummaryViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="lastNightController" id="z6S-PJ-ZkG" customClass="HEMSleepSummaryViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="TTk-zO-a4D"/>
                         <viewControllerLayoutGuide type="bottom" id="4Fp-Be-aAq"/>
@@ -655,8 +655,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="4Fa-Fc-h2C" customClass="HEMSleepScoreGraphView">
-                                <rect key="frame" x="100" y="140" width="120" height="120"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Fa-Fc-h2C" customClass="HEMSleepScoreGraphView">
+                                <rect key="frame" x="100" y="96" width="120" height="120"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
@@ -664,14 +664,14 @@
                                     <constraint firstAttribute="height" constant="120" id="XGg-Y6-dcl"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="8Fj-BV-COc">
-                                <rect key="frame" x="61" y="268" width="200" height="34"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="8Fj-BV-COc">
+                                <rect key="frame" x="61" y="224" width="200" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Last Night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9N-Mx-OAD">
-                                <rect key="frame" x="110" y="92" width="101" height="29"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9N-Mx-OAD">
+                                <rect key="frame" x="110" y="48" width="101" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
                                 <nil key="highlightedColor"/>
@@ -878,7 +878,7 @@
         <!--Navigation Controller - Currently-->
         <scene sceneID="Zds-nv-bKj">
             <objects>
-                <navigationController extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="PBf-9P-C9T" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="currentNavController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="PBf-9P-C9T" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Currently" id="ryY-D2-wft"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="EkI-Nd-Kl4">
@@ -926,7 +926,7 @@
         <!--Navigation Controller - Sleep Lab-->
         <scene sceneID="bLb-g3-um5">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="ZsV-Zn-5IJ" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="lastNightNavController" automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="ZsV-Zn-5IJ" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="Sleep Lab" id="nGq-bo-ELh"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" hidden="YES" contentMode="scaleToFill" id="RdM-YZ-C9P">

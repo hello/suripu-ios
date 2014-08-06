@@ -24,6 +24,12 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
     self.title = NSLocalizedString(@"authorization.title", nil);
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self.usernameField becomeFirstResponder];
+}
+
 - (void)showURLUpdateAlertView
 {
     UIAlertView* URLAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.set-url.title", nil)
@@ -102,6 +108,15 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 }
 
 #pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    if (self.navigationItem.rightBarButtonItem.enabled) {
+        [self didTapSignUpButton:self];
+    }
+    return YES;
+}
 
 - (BOOL)textField:(UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string
 {

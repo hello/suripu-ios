@@ -19,6 +19,7 @@
     [super viewDidLoad];
     self.title = NSLocalizedString(@"sign-up.title", nil);
     self.signUpButton.enabled = NO;
+    self.navigationItem.hidesBackButton = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -69,13 +70,13 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (void)textFieldDidBeginEditing:(UITextField*)textField
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
 {
-    if (textField == self.confirmPasswordField) {
-        textField.returnKeyType = UIReturnKeyDone;
-    } else {
-        textField.returnKeyType = UIReturnKeyNext;
+    [textField resignFirstResponder];
+    if (self.signUpButton.enabled) {
+        [self didTapSignUp:self];
     }
+    return YES;
 }
 
 - (BOOL)textField:(UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string

@@ -32,6 +32,12 @@
 		8A4B3D451992C8C800856BDE /* onboardingBackgroundImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D411992C8C800856BDE /* onboardingBackgroundImage2.png */; };
 		8A4B3D461992C8C800856BDE /* onboardingBackgroundImage2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D421992C8C800856BDE /* onboardingBackgroundImage2@2x.png */; };
 		8A4B3D491992CB4500856BDE /* HEMRoundedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D481992CB4500856BDE /* HEMRoundedTextField.m */; };
+		8A4B3D4E199308BB00856BDE /* bluetoothLogoImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4A199308BB00856BDE /* bluetoothLogoImage.png */; };
+		8A4B3D4F199308BB00856BDE /* bluetoothLogoImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4B199308BB00856BDE /* bluetoothLogoImage@2x.png */; };
+		8A4B3D50199308BB00856BDE /* wifiLogoImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4C199308BB00856BDE /* wifiLogoImage.png */; };
+		8A4B3D51199308BB00856BDE /* wifiLogoImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */; };
+		8A4B3D541993125E00856BDE /* worldMapImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D521993125D00856BDE /* worldMapImage.png */; };
+		8A4B3D551993125E00856BDE /* worldMapImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D531993125D00856BDE /* worldMapImage@2x.png */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
 		8A78267719663BB1002882A1 /* HEMSensorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A78267619663BB1002882A1 /* HEMSensorViewController.m */; };
 		8A782683196B4729002882A1 /* HEMGraphTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A782682196B4729002882A1 /* HEMGraphTooltipView.m */; };
@@ -119,6 +125,12 @@
 		8A4B3D421992C8C800856BDE /* onboardingBackgroundImage2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboardingBackgroundImage2@2x.png"; path = "images/onboardingBackgroundImage2@2x.png"; sourceTree = "<group>"; };
 		8A4B3D471992CB4500856BDE /* HEMRoundedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRoundedTextField.h; sourceTree = "<group>"; };
 		8A4B3D481992CB4500856BDE /* HEMRoundedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRoundedTextField.m; sourceTree = "<group>"; };
+		8A4B3D4A199308BB00856BDE /* bluetoothLogoImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bluetoothLogoImage.png; path = images/bluetoothLogoImage.png; sourceTree = "<group>"; };
+		8A4B3D4B199308BB00856BDE /* bluetoothLogoImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bluetoothLogoImage@2x.png"; path = "images/bluetoothLogoImage@2x.png"; sourceTree = "<group>"; };
+		8A4B3D4C199308BB00856BDE /* wifiLogoImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wifiLogoImage.png; path = images/wifiLogoImage.png; sourceTree = "<group>"; };
+		8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wifiLogoImage@2x.png"; path = "images/wifiLogoImage@2x.png"; sourceTree = "<group>"; };
+		8A4B3D521993125D00856BDE /* worldMapImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = worldMapImage.png; path = images/worldMapImage.png; sourceTree = "<group>"; };
+		8A4B3D531993125D00856BDE /* worldMapImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "worldMapImage@2x.png"; path = "images/worldMapImage@2x.png"; sourceTree = "<group>"; };
 		8A59F631198C16050005B000 /* HEMSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSignUpViewController.h; sourceTree = "<group>"; };
 		8A59F632198C16050005B000 /* HEMSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignUpViewController.m; sourceTree = "<group>"; };
 		8A78267519663BB1002882A1 /* HEMSensorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorViewController.h; sourceTree = "<group>"; };
@@ -422,28 +434,34 @@
 		8AC4A0301989C33B00C2BD63 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				8A4B3D3F1992C8C800856BDE /* onboardingBackgroundImage1.png */,
-				8A4B3D401992C8C800856BDE /* onboardingBackgroundImage1@2x.png */,
-				8A4B3D411992C8C800856BDE /* onboardingBackgroundImage2.png */,
-				8A4B3D421992C8C800856BDE /* onboardingBackgroundImage2@2x.png */,
-				8AC4A055198A0AE900C2BD63 /* questionIcon.png */,
-				8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */,
 				8AC4A04D198A070F00C2BD63 /* alarmEnabledIcon.png */,
 				8AC4A04E198A070F00C2BD63 /* alarmEnabledIcon@2x.png */,
 				8AC4A04F198A070F00C2BD63 /* alarmNoteIcon.png */,
 				8AC4A050198A070F00C2BD63 /* alarmNoteIcon@2x.png */,
+				8A4B3D4A199308BB00856BDE /* bluetoothLogoImage.png */,
+				8A4B3D4B199308BB00856BDE /* bluetoothLogoImage@2x.png */,
 				8AC4A0451989D47000C2BD63 /* chevronIconLeft.png */,
 				8AC4A0461989D47000C2BD63 /* chevronIconLeft@2x.png */,
 				8AC4A0471989D47000C2BD63 /* chevronIconRight.png */,
 				8AC4A0481989D47000C2BD63 /* chevronIconRight@2x.png */,
-				8AC4A03D1989C5A100C2BD63 /* settingsIcon.png */,
-				8AC4A03E1989C5A100C2BD63 /* settingsIcon@2x.png */,
 				8AC4A0311989C36200C2BD63 /* humidityIcon.png */,
 				8AC4A0321989C36200C2BD63 /* humidityIcon@2x.png */,
+				8A4B3D3F1992C8C800856BDE /* onboardingBackgroundImage1.png */,
+				8A4B3D401992C8C800856BDE /* onboardingBackgroundImage1@2x.png */,
+				8A4B3D411992C8C800856BDE /* onboardingBackgroundImage2.png */,
+				8A4B3D421992C8C800856BDE /* onboardingBackgroundImage2@2x.png */,
 				8AC4A0331989C36200C2BD63 /* particleIcon.png */,
 				8AC4A0341989C36200C2BD63 /* particleIcon@2x.png */,
+				8AC4A055198A0AE900C2BD63 /* questionIcon.png */,
+				8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */,
+				8AC4A03D1989C5A100C2BD63 /* settingsIcon.png */,
+				8AC4A03E1989C5A100C2BD63 /* settingsIcon@2x.png */,
 				8AC4A0351989C36200C2BD63 /* temperatureIcon.png */,
 				8AC4A0361989C36200C2BD63 /* temperatureIcon@2x.png */,
+				8A4B3D4C199308BB00856BDE /* wifiLogoImage.png */,
+				8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */,
+				8A4B3D521993125D00856BDE /* worldMapImage.png */,
+				8A4B3D531993125D00856BDE /* worldMapImage@2x.png */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -535,12 +553,15 @@
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
 				8AC4A058198A0AE900C2BD63 /* questionIcon@2x.png in Resources */,
 				8AC4A0371989C36200C2BD63 /* humidityIcon.png in Resources */,
+				8A4B3D51199308BB00856BDE /* wifiLogoImage@2x.png in Resources */,
 				8AC4A054198A070F00C2BD63 /* alarmNoteIcon@2x.png in Resources */,
 				8AC4A0381989C36200C2BD63 /* humidityIcon@2x.png in Resources */,
 				8AC4A057198A0AE900C2BD63 /* questionIcon.png in Resources */,
 				8A4B3D461992C8C800856BDE /* onboardingBackgroundImage2@2x.png in Resources */,
+				8A4B3D50199308BB00856BDE /* wifiLogoImage.png in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
 				8AC4A051198A070F00C2BD63 /* alarmEnabledIcon.png in Resources */,
+				8A4B3D4F199308BB00856BDE /* bluetoothLogoImage@2x.png in Resources */,
 				8A4B3D441992C8C800856BDE /* onboardingBackgroundImage1@2x.png in Resources */,
 				8AC4A0401989C5A100C2BD63 /* settingsIcon@2x.png in Resources */,
 				8AC4A052198A070F00C2BD63 /* alarmEnabledIcon@2x.png in Resources */,
@@ -555,12 +576,15 @@
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				8AC4A03F1989C5A100C2BD63 /* settingsIcon.png in Resources */,
 				8A033870197DD89C00BE8327 /* Onboarding.storyboard in Resources */,
+				8A4B3D4E199308BB00856BDE /* bluetoothLogoImage.png in Resources */,
 				8AC4A04B1989D47000C2BD63 /* chevronIconRight.png in Resources */,
 				8AC4A03A1989C36200C2BD63 /* particleIcon@2x.png in Resources */,
 				6003F5A1195388D20070C39A /* Main_iPhone.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
+				8A4B3D551993125E00856BDE /* worldMapImage@2x.png in Resources */,
 				8AC4A0491989D47000C2BD63 /* chevronIconLeft.png in Resources */,
 				8AC4A04C1989D47000C2BD63 /* chevronIconRight@2x.png in Resources */,
+				8A4B3D541993125E00856BDE /* worldMapImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

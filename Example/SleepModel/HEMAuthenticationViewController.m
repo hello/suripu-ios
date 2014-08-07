@@ -21,13 +21,14 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"authorization.title", nil);
+//    self.navigationItem.hidesBackButton = YES;
+//    self.title = NSLocalizedString(@"authorization.title", nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.usernameField becomeFirstResponder];
+    //    [self.usernameField becomeFirstResponder];
 }
 
 - (void)showURLUpdateAlertView
@@ -109,7 +110,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
     [textField resignFirstResponder];
     if (self.navigationItem.rightBarButtonItem.enabled) {

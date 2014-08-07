@@ -17,15 +17,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"sign-up.title", nil);
-    self.signUpButton.enabled = NO;
-    self.navigationItem.hidesBackButton = YES;
+    //    self.title = NSLocalizedString(@"sign-up.title", nil);
+//    self.signUpButton.enabled = NO;
+    //    self.navigationItem.hidesBackButton = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.nameField becomeFirstResponder];
+    //    [self.nameField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -70,7 +70,7 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (BOOL)textFieldShouldReturn:(UITextField *)textField
+- (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
     [textField resignFirstResponder];
     if (self.signUpButton.enabled) {

@@ -13,11 +13,16 @@
 - (void)applicationDidBecomeActive:(UIApplication*)application
 {
     if (![SENAuthorizationService isAuthorized]) {
-        [self showOnboardingFlow];
+        [self showOnboardingFlowAnimated:NO];
     }
 }
 
 - (void)showOnboardingFlow
+{
+    [self showOnboardingFlowAnimated:YES];
+}
+
+- (void)showOnboardingFlowAnimated:(BOOL)animated
 {
     UINavigationController* rootNavigationController = (UINavigationController*)self.window.rootViewController;
     if (rootNavigationController.presentedViewController) {
@@ -25,7 +30,7 @@
     }
     [rootNavigationController popToRootViewControllerAnimated:NO];
     UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
-    [rootNavigationController presentViewController:[onboardingStoryboard instantiateInitialViewController] animated:YES completion:NULL];
+    [rootNavigationController presentViewController:[onboardingStoryboard instantiateInitialViewController] animated:animated completion:NULL];
 }
 
 - (void)configureAppearance

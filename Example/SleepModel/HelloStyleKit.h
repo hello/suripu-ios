@@ -36,6 +36,9 @@
 + (UIImage*)settingsIcon;
 + (UIImage*)onboardingBackgroundImage1;
 + (UIImage*)onboardingBackgroundImage2;
++ (UIImage*)bluetoothLogoImage;
++ (UIImage*)worldMapImage;
++ (UIImage*)wifiLogoImage;
 + (UIImage*)humidityIcon;
 + (UIImage*)particleIcon;
 + (UIImage*)temperatureIcon;

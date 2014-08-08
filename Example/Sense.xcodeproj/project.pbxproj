@@ -38,6 +38,9 @@
 		8A4B3D51199308BB00856BDE /* wifiLogoImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */; };
 		8A4B3D541993125E00856BDE /* worldMapImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D521993125D00856BDE /* worldMapImage.png */; };
 		8A4B3D551993125E00856BDE /* worldMapImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D531993125D00856BDE /* worldMapImage@2x.png */; };
+		8A4B3D5D199534F000856BDE /* HEMMain_iPadStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D58199534F000856BDE /* HEMMain_iPadStoryboard.m */; };
+		8A4B3D5E199534F000856BDE /* HEMMain_iPhoneStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5A199534F000856BDE /* HEMMain_iPhoneStoryboard.m */; };
+		8A4B3D5F199534F000856BDE /* HEMOnboardingStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
 		8A78267719663BB1002882A1 /* HEMSensorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A78267619663BB1002882A1 /* HEMSensorViewController.m */; };
 		8A782683196B4729002882A1 /* HEMGraphTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A782682196B4729002882A1 /* HEMGraphTooltipView.m */; };
@@ -131,6 +134,12 @@
 		8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wifiLogoImage@2x.png"; path = "images/wifiLogoImage@2x.png"; sourceTree = "<group>"; };
 		8A4B3D521993125D00856BDE /* worldMapImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = worldMapImage.png; path = images/worldMapImage.png; sourceTree = "<group>"; };
 		8A4B3D531993125D00856BDE /* worldMapImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "worldMapImage@2x.png"; path = "images/worldMapImage@2x.png"; sourceTree = "<group>"; };
+		8A4B3D57199534F000856BDE /* HEMMain_iPadStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMain_iPadStoryboard.h; sourceTree = "<group>"; };
+		8A4B3D58199534F000856BDE /* HEMMain_iPadStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMain_iPadStoryboard.m; sourceTree = "<group>"; };
+		8A4B3D59199534F000856BDE /* HEMMain_iPhoneStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMain_iPhoneStoryboard.h; sourceTree = "<group>"; };
+		8A4B3D5A199534F000856BDE /* HEMMain_iPhoneStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMain_iPhoneStoryboard.m; sourceTree = "<group>"; };
+		8A4B3D5B199534F000856BDE /* HEMOnboardingStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingStoryboard.h; sourceTree = "<group>"; };
+		8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingStoryboard.m; sourceTree = "<group>"; };
 		8A59F631198C16050005B000 /* HEMSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSignUpViewController.h; sourceTree = "<group>"; };
 		8A59F632198C16050005B000 /* HEMSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignUpViewController.m; sourceTree = "<group>"; };
 		8A78267519663BB1002882A1 /* HEMSensorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorViewController.h; sourceTree = "<group>"; };
@@ -263,6 +272,7 @@
 				8AC4A0301989C33B00C2BD63 /* Assets */,
 				8A90F9B419636EEB00AFD110 /* Views */,
 				8A90F9B019635C7900AFD110 /* View Controllers */,
+				8A4B3D56199534DB00856BDE /* Generated Files */,
 				8A90F9A919634F0C00AFD110 /* Utilities */,
 				6003F59C195388D20070C39A /* HEMAppDelegate.h */,
 				6003F59D195388D20070C39A /* HEMAppDelegate.m */,
@@ -314,6 +324,19 @@
 				8A03386A1974AFD800BE8327 /* Podfile */,
 			);
 			name = "Project Metadata";
+			sourceTree = "<group>";
+		};
+		8A4B3D56199534DB00856BDE /* Generated Files */ = {
+			isa = PBXGroup;
+			children = (
+				8A4B3D57199534F000856BDE /* HEMMain_iPadStoryboard.h */,
+				8A4B3D58199534F000856BDE /* HEMMain_iPadStoryboard.m */,
+				8A4B3D59199534F000856BDE /* HEMMain_iPhoneStoryboard.h */,
+				8A4B3D5A199534F000856BDE /* HEMMain_iPhoneStoryboard.m */,
+				8A4B3D5B199534F000856BDE /* HEMOnboardingStoryboard.h */,
+				8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */,
+			);
+			name = "Generated Files";
 			sourceTree = "<group>";
 		};
 		8A90F9A919634F0C00AFD110 /* Utilities */ = {
@@ -672,8 +695,10 @@
 				6003F59E195388D20070C39A /* HEMAppDelegate.m in Sources */,
 				8A782683196B4729002882A1 /* HEMGraphTooltipView.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
+				8A4B3D5E199534F000856BDE /* HEMMain_iPhoneStoryboard.m in Sources */,
 				8AC4A05B198ACE4800C2BD63 /* HEMSensorGraphDataSource.m in Sources */,
 				8AC49F9F19832D2600C2BD63 /* HEMDevicePickerTableViewController.m in Sources */,
+				8A4B3D5D199534F000856BDE /* HEMMain_iPadStoryboard.m in Sources */,
 				8A90F9B319635CAE00AFD110 /* HEMCurrentConditionsTableViewController.m in Sources */,
 				8A90F9B81963701A00AFD110 /* HEMInsetGlyphTableViewCell.m in Sources */,
 				8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */,
@@ -690,6 +715,7 @@
 				8A782686196CB6C9002882A1 /* HEMSnappingFlowLayout.m in Sources */,
 				8AC49F8A1981A89D00C2BD63 /* HEMSleepHistoryViewController.m in Sources */,
 				8A78267719663BB1002882A1 /* HEMSensorViewController.m in Sources */,
+				8A4B3D5F199534F000856BDE /* HEMOnboardingStoryboard.m in Sources */,
 				8AC49FA219832FE100C2BD63 /* HEMDeviceTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

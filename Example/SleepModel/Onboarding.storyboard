@@ -207,79 +207,84 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6kV-fQ-HaY" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="48" y="213" width="225" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
-                                <connections>
-                                    <outlet property="delegate" destination="5JR-hM-9bB" id="mf9-Up-oEN"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EoV-KF-nla" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="48" y="166" width="225" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
-                                <connections>
-                                    <outlet property="delegate" destination="5JR-hM-9bB" id="N76-Kd-dlc"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m7O-Wc-YhP" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="48" y="260" width="225" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
-                                <connections>
-                                    <outlet property="delegate" destination="5JR-hM-9bB" id="Th8-qt-lBV"/>
-                                </connections>
-                            </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bQp-on-SM1" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="48" y="306" width="225" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
-                                <connections>
-                                    <outlet property="delegate" destination="5JR-hM-9bB" id="5Hp-gq-IIv"/>
-                                </connections>
-                            </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q8n-JK-Ew0" customClass="HEMActionButton">
-                                <rect key="frame" x="101" y="497" width="119" height="40"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="119" id="3ti-H7-fcH"/>
-                                    <constraint firstAttribute="height" constant="40" id="Bjq-5Z-1Hz"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                <state key="normal" title="Done">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="qC8-fd-UCX" kind="push" id="XNU-87-d7z"/>
-                                </connections>
-                            </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Full Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nu9-c7-oEJ">
-                                <rect key="frame" x="48" y="137" width="68" height="21"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <color key="textColor" red="0.23921570181846619" green="0.58039218187332153" blue="0.68235296010971069" alpha="1" colorSpace="deviceRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="First, the basics" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cY3-74-70H">
-                                <rect key="frame" x="20" y="68" width="225" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IMj-An-zoh">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <subviews>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="First, the basics" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cY3-74-70H">
+                                        <rect key="frame" x="20" y="61" width="225" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Full Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Nu9-c7-oEJ">
+                                        <rect key="frame" x="48" y="135" width="68" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                        <color key="textColor" red="0.23921570181846619" green="0.58039218187332153" blue="0.68235296010971069" alpha="1" colorSpace="deviceRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EoV-KF-nla" customClass="HEMRoundedTextField">
+                                        <rect key="frame" x="48" y="164" width="225" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="5JR-hM-9bB" id="N76-Kd-dlc"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email Address" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6kV-fQ-HaY" customClass="HEMRoundedTextField">
+                                        <rect key="frame" x="48" y="207" width="225" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="5JR-hM-9bB" id="mf9-Up-oEN"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="m7O-Wc-YhP" customClass="HEMRoundedTextField">
+                                        <rect key="frame" x="48" y="251" width="225" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="5JR-hM-9bB" id="Th8-qt-lBV"/>
+                                        </connections>
+                                    </textField>
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bQp-on-SM1" customClass="HEMRoundedTextField">
+                                        <rect key="frame" x="48" y="294" width="225" height="30"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" secureTextEntry="YES"/>
+                                        <connections>
+                                            <outlet property="delegate" destination="5JR-hM-9bB" id="5Hp-gq-IIv"/>
+                                        </connections>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q8n-JK-Ew0" customClass="HEMActionButton">
+                                        <rect key="frame" x="101" y="384" width="119" height="40"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                        <state key="normal" title="Done">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="didTapSignUp:" destination="5JR-hM-9bB" eventType="touchUpInside" id="PAA-fQ-cIN"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" red="0.9215686917" green="0.92941182850000004" blue="0.92549026010000002" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
-                            <constraint firstItem="AhH-RW-xFb" firstAttribute="top" secondItem="q8n-JK-Ew0" secondAttribute="bottom" constant="31" id="KuZ-Dt-txo"/>
+                            <constraint firstItem="IMj-An-zoh" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leading" id="B4o-Ar-vup"/>
                             <constraint firstItem="f4Q-C0-7L8" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leading" id="OKX-rp-ZVa"/>
-                            <constraint firstAttribute="centerX" secondItem="q8n-JK-Ew0" secondAttribute="centerX" constant="-0.5" id="Q3Q-be-e5o"/>
+                            <constraint firstItem="IMj-An-zoh" firstAttribute="top" secondItem="OXF-zq-Udo" secondAttribute="bottom" constant="-64" id="XEK-W9-hzB"/>
+                            <constraint firstItem="AhH-RW-xFb" firstAttribute="top" secondItem="IMj-An-zoh" secondAttribute="bottom" id="YUg-Rl-LvI"/>
                             <constraint firstItem="f4Q-C0-7L8" firstAttribute="top" secondItem="OXF-zq-Udo" secondAttribute="bottom" constant="-64" id="a2t-hl-AqF"/>
                             <constraint firstAttribute="trailing" secondItem="f4Q-C0-7L8" secondAttribute="trailing" id="fnG-hI-TTE"/>
+                            <constraint firstAttribute="trailing" secondItem="IMj-An-zoh" secondAttribute="trailing" id="gTU-G3-bKa"/>
                             <constraint firstItem="AhH-RW-xFb" firstAttribute="top" secondItem="f4Q-C0-7L8" secondAttribute="bottom" id="lGb-yg-Yqd"/>
                         </constraints>
                     </view>
@@ -289,6 +294,7 @@
                         <outlet property="emailAddressField" destination="6kV-fQ-HaY" id="tRK-dJ-gDe"/>
                         <outlet property="nameField" destination="EoV-KF-nla" id="KGo-mo-ugC"/>
                         <outlet property="passwordField" destination="m7O-Wc-YhP" id="jyF-Hp-28w"/>
+                        <outlet property="scrollView" destination="IMj-An-zoh" id="T5R-he-ahl"/>
                         <outlet property="signUpButton" destination="q8n-JK-Ew0" id="gDt-k5-3Ca"/>
                     </connections>
                 </viewController>
@@ -364,7 +370,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9wc-7i-qfp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1850" y="993"/>
+            <point key="canvasLocation" x="2432" y="561"/>
         </scene>
         <!--Age View Controller-->
         <scene sceneID="J5f-Jz-Trm">
@@ -430,12 +436,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ffw-pv-gaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2423" y="685"/>
+            <point key="canvasLocation" x="2991" y="213"/>
         </scene>
-        <!--Age View Controller-->
+        <!--Height View Controller-->
         <scene sceneID="YNj-iP-C8c">
             <objects>
-                <viewController id="uc7-01-jZi" userLabel="Age View Controller" sceneMemberID="viewController">
+                <viewController id="uc7-01-jZi" userLabel="Height View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PKP-T4-cPd"/>
                         <viewControllerLayoutGuide type="bottom" id="deH-7E-HFU"/>
@@ -496,12 +502,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8j0-DD-Qpv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2835" y="685"/>
+            <point key="canvasLocation" x="3403" y="213"/>
         </scene>
         <!--Wifi View Controller-->
         <scene sceneID="OMH-aM-jNv">
             <objects>
-                <viewController id="qC8-fd-UCX" userLabel="Wifi View Controller" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="wifiViewController" id="qC8-fd-UCX" userLabel="Wifi View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GhD-1W-lxB"/>
                         <viewControllerLayoutGuide type="bottom" id="kbz-Q6-Bp4"/>
@@ -572,7 +578,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkd-iJ-jh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1850" y="253"/>
+            <point key="canvasLocation" x="2432" y="-109"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="2Hn-va-LY3">
@@ -596,10 +602,10 @@
             </objects>
             <point key="canvasLocation" x="466" y="-87"/>
         </scene>
-        <!--Age View Controller-->
+        <!--Gender View Controller-->
         <scene sceneID="s4K-5F-Rau">
             <objects>
-                <viewController id="gpF-55-MmK" userLabel="Age View Controller" sceneMemberID="viewController">
+                <viewController id="gpF-55-MmK" userLabel="Gender View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ecZ-6f-bII"/>
                         <viewControllerLayoutGuide type="bottom" id="d85-24-UBP"/>
@@ -660,12 +666,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uPx-en-DTv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3209" y="685"/>
+            <point key="canvasLocation" x="3777" y="213"/>
         </scene>
-        <!--Age View Controller-->
+        <!--Weight View Controller-->
         <scene sceneID="ryl-Qb-DQZ">
             <objects>
-                <viewController id="f6G-Sh-hYd" userLabel="Age View Controller" sceneMemberID="viewController">
+                <viewController id="f6G-Sh-hYd" userLabel="Weight View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y9t-ip-NMT"/>
                         <viewControllerLayoutGuide type="bottom" id="hPY-my-fzC"/>
@@ -726,12 +732,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJk-Le-TAF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3593" y="685"/>
+            <point key="canvasLocation" x="4161" y="213"/>
         </scene>
-        <!--Age View Controller-->
+        <!--Location View Controller-->
         <scene sceneID="8dU-VQ-r9E">
             <objects>
-                <viewController id="KXH-dY-O28" userLabel="Age View Controller" sceneMemberID="viewController">
+                <viewController id="KXH-dY-O28" userLabel="Location View Controller" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="86E-a5-OJw"/>
                         <viewControllerLayoutGuide type="bottom" id="shs-Q7-7yt"/>
@@ -744,7 +750,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fGA-uc-vQz" userLabel="Screen View">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fGA-uc-vQz" userLabel="Screen View">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
@@ -752,7 +758,7 @@
                                         <rect key="frame" x="0.0" y="131" width="320" height="291"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVC-vN-68T">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVC-vN-68T">
                                         <rect key="frame" x="145" y="520" width="30" height="28"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
@@ -761,7 +767,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-8C-14E" customClass="HEMActionButton">
+                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-8C-14E" customClass="HEMActionButton">
                                         <rect key="frame" x="101" y="472" width="119" height="40"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <constraints>
@@ -802,10 +808,87 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IpC-eY-cSk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3964" y="685"/>
+            <point key="canvasLocation" x="4532" y="213"/>
+        </scene>
+        <!--Bluetooth View Controller-->
+        <scene sceneID="cKk-Qb-F4O">
+            <objects>
+                <viewController storyboardIdentifier="bluetoothViewController" id="cgk-PX-LxG" userLabel="Bluetooth View Controller" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="I6r-jE-jN1"/>
+                        <viewControllerLayoutGuide type="bottom" id="rNF-MR-Ds2"/>
+                    </layoutGuides>
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="f6K-qr-p0h">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="onboardingBackgroundImage1.png" translatesAutoresizingMaskIntoConstraints="NO" id="YWi-di-bn1">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2TQ-o7-Rs6" customClass="HEMActionButton">
+                                <rect key="frame" x="86" y="462" width="150" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="SwH-wy-eha"/>
+                                    <constraint firstAttribute="height" constant="40" id="jtb-y3-XeB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="I'm ready">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="qC8-fd-UCX" kind="push" id="cqW-Mi-J91"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8HN-0C-IaD">
+                                <rect key="frame" x="57" y="502" width="207" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="I don't have one">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="ezT-R8-K4n" kind="push" id="Wvr-tB-aHQ"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pair your Sense" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHT-0z-rBN">
+                                <rect key="frame" x="20" y="67" width="280" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="To get started, we need to pair your phone to Sense over bluetooth." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="243" translatesAutoresizingMaskIntoConstraints="NO" id="HQC-WI-rTG">
+                                <rect key="frame" x="20" y="109" width="243" height="64"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="18"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bluetoothLogoImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
+                                <rect key="frame" x="123" y="212" width="75" height="144"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.9215686917" green="0.92941182850000004" blue="0.92549026010000002" alpha="1" colorSpace="deviceRGB"/>
+                        <constraints>
+                            <constraint firstItem="rNF-MR-Ds2" firstAttribute="top" secondItem="2TQ-o7-Rs6" secondAttribute="bottom" constant="66" id="DVp-w0-PO4"/>
+                            <constraint firstAttribute="centerX" secondItem="2TQ-o7-Rs6" secondAttribute="centerX" constant="-0.5" id="ege-9a-Lh0"/>
+                            <constraint firstAttribute="centerY" secondItem="Awm-Mz-tO7" secondAttribute="centerY" id="w74-E9-gYP"/>
+                            <constraint firstAttribute="centerX" secondItem="Awm-Mz-tO7" secondAttribute="centerX" id="zBP-lO-Ncf"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="MWW-Jm-AdT"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hsS-E7-Lfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1828" y="253"/>
         </scene>
     </scenes>
     <resources>
+        <image name="bluetoothLogoImage.png" width="75" height="144"/>
         <image name="onboardingBackgroundImage1.png" width="960" height="587"/>
         <image name="onboardingBackgroundImage2.png" width="960" height="576"/>
         <image name="wifiLogoImage.png" width="182" height="129"/>

@@ -364,11 +364,11 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jXq-nN-8Qt">
-                                <rect key="frame" x="0.0" y="265" width="320" height="273"/>
+                                <rect key="frame" x="0.0" y="253" width="320" height="267"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eKU-VY-IW0" customClass="JBLineChartView">
-                                        <rect key="frame" x="0.0" y="11" width="320" height="249"/>
+                                        <rect key="frame" x="0.0" y="11" width="320" height="243"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                     </view>
@@ -435,10 +435,10 @@
                             <constraint firstItem="dQu-Hf-dor" firstAttribute="leading" secondItem="71w-49-Doa" secondAttribute="trailing" id="CTo-ue-faT"/>
                             <constraint firstItem="d9H-QV-uE8" firstAttribute="leading" secondItem="jXq-nN-8Qt" secondAttribute="leading" constant="20" id="Duo-f9-6lg"/>
                             <constraint firstItem="U6O-Dc-1qK" firstAttribute="leading" secondItem="d9H-QV-uE8" secondAttribute="trailing" constant="15" id="GVN-0w-08N"/>
-                            <constraint firstItem="qO8-Y0-m2N" firstAttribute="top" secondItem="jXq-nN-8Qt" secondAttribute="bottom" constant="30" id="IFR-4i-JYM"/>
+                            <constraint firstItem="qO8-Y0-m2N" firstAttribute="top" secondItem="jXq-nN-8Qt" secondAttribute="bottom" constant="48" id="IFR-4i-JYM"/>
                             <constraint firstItem="71w-49-Doa" firstAttribute="top" secondItem="JyQ-Kh-wms" secondAttribute="bottom" id="JCz-iO-Yyb"/>
                             <constraint firstAttribute="centerX" secondItem="71w-49-Doa" secondAttribute="centerX" constant="8" id="Mgq-Ef-Naq"/>
-                            <constraint firstItem="jXq-nN-8Qt" firstAttribute="top" secondItem="d9H-QV-uE8" secondAttribute="bottom" constant="30" id="THh-dp-9qN"/>
+                            <constraint firstItem="jXq-nN-8Qt" firstAttribute="top" secondItem="d9H-QV-uE8" secondAttribute="bottom" constant="18" id="THh-dp-9qN"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="dQu-Hf-dor" secondAttribute="trailing" constant="10" id="VqN-fn-5XQ"/>
                             <constraint firstAttribute="trailing" secondItem="Zkp-GN-ZQu" secondAttribute="trailing" constant="20" id="ags-ay-joq"/>
                             <constraint firstItem="d9H-QV-uE8" firstAttribute="centerY" secondItem="U6O-Dc-1qK" secondAttribute="centerY" id="fFW-dI-gz5"/>
@@ -511,6 +511,11 @@
                         <color key="separatorColor" white="0.81421076642335766" alpha="1" colorSpace="calibratedWhite"/>
                         <inset key="separatorInset" minX="30" minY="0.0" maxX="0.0" maxY="0.0"/>
                         <color key="sectionIndexColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="wUh-IN-PJb">
+                            <rect key="frame" x="0.0" y="160" width="320" height="60"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" red="0.9215686917" green="0.92941182850000004" blue="0.92549026010000002" alpha="1" colorSpace="deviceRGB"/>
+                        </view>
                         <prototypes>
                             <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="currentConditionsCell" rowHeight="74" id="I0j-eN-KE6" customClass="HEMInsetGlyphTableViewCell">
                                 <rect key="frame" x="0.0" y="86" width="320" height="74"/>
@@ -650,24 +655,25 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Fa-Fc-h2C" customClass="HEMSleepScoreGraphView">
-                                <rect key="frame" x="100" y="64" width="120" height="120"/>
+                                <rect key="frame" x="100" y="74" width="120" height="120"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="120" id="ELl-DF-VZW"/>
                                     <constraint firstAttribute="height" constant="120" id="XGg-Y6-dcl"/>
                                 </constraints>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="8Fj-BV-COc">
-                                <rect key="frame" x="61" y="192" width="200" height="34"/>
+                                <rect key="frame" x="61" y="202" width="200" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAST NIGHT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9N-Mx-OAD">
-                                <rect key="frame" x="97" y="20" width="127" height="29"/>
+                                <rect key="frame" x="114" y="55" width="92" height="19"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -675,10 +681,10 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="Z9N-Mx-OAD" secondAttribute="centerX" id="NuN-gy-gVQ"/>
-                            <constraint firstItem="4Fa-Fc-h2C" firstAttribute="top" secondItem="Z9N-Mx-OAD" secondAttribute="bottom" constant="15" id="OR7-Vt-K6f"/>
+                            <constraint firstItem="4Fa-Fc-h2C" firstAttribute="top" secondItem="Z9N-Mx-OAD" secondAttribute="bottom" id="OR7-Vt-K6f"/>
                             <constraint firstAttribute="centerX" secondItem="8Fj-BV-COc" secondAttribute="centerX" constant="-0.5" id="Ocq-Qi-0Qo"/>
                             <constraint firstItem="8Fj-BV-COc" firstAttribute="top" secondItem="4Fa-Fc-h2C" secondAttribute="bottom" constant="8" id="f22-uI-4WU"/>
-                            <constraint firstItem="Z9N-Mx-OAD" firstAttribute="top" secondItem="TTk-zO-a4D" secondAttribute="bottom" id="gD7-ai-gGn"/>
+                            <constraint firstItem="Z9N-Mx-OAD" firstAttribute="top" secondItem="TTk-zO-a4D" secondAttribute="bottom" constant="35" id="gD7-ai-gGn"/>
                             <constraint firstAttribute="centerX" secondItem="4Fa-Fc-h2C" secondAttribute="centerX" id="tzE-8x-Ehx"/>
                         </constraints>
                         <connections>
@@ -832,17 +838,6 @@
                                     <outlet property="delegate" destination="jq0-KZ-Ac0" id="hjB-ni-Bn3"/>
                                 </connections>
                             </collectionView>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0z2-nK-bL7">
-                                <rect key="frame" x="270" y="45" width="30" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                <state key="normal" title="Ⓢ">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="PBf-9P-C9T" kind="modal" id="Oat-NV-ZkE"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -880,7 +875,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="tintColor" white="0.21581318430656937" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="barTintColor" red="0.9215686917" green="0.92941182850000004" blue="0.92549026010000002" alpha="1" colorSpace="deviceRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="21"/>
                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>

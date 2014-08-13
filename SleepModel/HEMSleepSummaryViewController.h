@@ -3,5 +3,4 @@
 
 @interface HEMSleepSummaryViewController : UIViewController
 
-- (void)showPreviewContent;
 @end

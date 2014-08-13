@@ -32,13 +32,10 @@
 
 - (void)showOnboardingFlowAnimated:(BOOL)animated
 {
-    UINavigationController* rootNavigationController = (UINavigationController*)self.window.rootViewController;
-    if (rootNavigationController.presentedViewController) {
-        [rootNavigationController dismissViewControllerAnimated:NO completion:NULL];
-    }
-    [rootNavigationController popToRootViewControllerAnimated:NO];
+    FCDynamicPanesNavigationController* dynamicPanesController = (FCDynamicPanesNavigationController*)self.window.rootViewController;
+    [dynamicPanesController popViewControllerAnimated:animated];
     UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
-    [rootNavigationController presentViewController:[onboardingStoryboard instantiateInitialViewController] animated:animated completion:NULL];
+    [dynamicPanesController presentViewController:[onboardingStoryboard instantiateInitialViewController] animated:animated completion:NULL];
 }
 
 - (void)configureAppearance

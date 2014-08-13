@@ -43,7 +43,7 @@ PODS:
 
 DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`)
-  - FCDynamicPanesNavigationController
+  - FCDynamicPanesNavigationController (from `../FCDynamicPanesNavigationController`)
   - JBChartView (from `../JBChartView`)
   - Kiwi
   - SenseKit (from `../SenseKit`)
@@ -53,6 +53,8 @@ DEPENDENCIES:
 EXTERNAL SOURCES:
   AttributedMarkdown:
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
+  FCDynamicPanesNavigationController:
+    :path: ../FCDynamicPanesNavigationController
   JBChartView:
     :path: ../JBChartView
   SenseKit:
@@ -64,7 +66,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   AFNetworking: 6d7b76aa5d04c8c37daad3eef4b7e3f2a7620da3
   AttributedMarkdown: 859b637a00470b103b5fef30fd59519f3901a3ad
-  FCDynamicPanesNavigationController: 29bee0e47698a474806b03f0368981526b6212a7
+  FCDynamicPanesNavigationController: 55ee3c165a070d8d01e0b90a1029916cbcaa1b09
   FCMutableArray: 1a8dbb05952c1e9dff31d86fd366f86edce9f159
   FXKeychain: beb642a4218ba783507af08865eda05e9b26a612
   JBChartView: 3f979441a6a41e50b7c4b98f91b256bf33625c2d

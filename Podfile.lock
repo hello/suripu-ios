@@ -40,9 +40,9 @@ PODS:
 
 DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`)
-  - JBChartView (from `../../JBChartView`)
+  - JBChartView (from `../JBChartView`)
   - Kiwi
-  - SenseKit (from `../../SenseKit`)
+  - SenseKit (from `../SenseKit`)
   - SORelativeDateTransformer
   - SVProgressHUD (from `https://github.com/samvermette/SVProgressHUD.git`, commit `90e5921e0a0a782c7e06dd8d308031041c10f789`)
 
@@ -50,9 +50,9 @@ EXTERNAL SOURCES:
   AttributedMarkdown:
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
   JBChartView:
-    :path: ../../JBChartView
+    :path: ../JBChartView
   SenseKit:
-    :path: ../../SenseKit
+    :path: ../SenseKit
   SVProgressHUD:
     :commit: 90e5921e0a0a782c7e06dd8d308031041c10f789
     :git: https://github.com/samvermette/SVProgressHUD.git

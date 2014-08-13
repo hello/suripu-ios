@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/Model/SENBackgroundNoise.h
+../../../../SenseKit/Pod/Classes/Model/SENBackgroundNoise.h

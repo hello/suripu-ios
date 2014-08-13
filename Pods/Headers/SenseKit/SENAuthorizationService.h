@@ -1,1 +1,1 @@
-../../../../../SenseKit/Pod/Classes/API/SENAuthorizationService.h
+../../../../SenseKit/Pod/Classes/API/SENAuthorizationService.h

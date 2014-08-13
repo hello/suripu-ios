@@ -25,6 +25,9 @@
 + (UIColor*)averageSleepScoreColor;
 + (UIColor*)lightBlueColor;
 + (UIColor*)lightestBlueColor;
++ (UIColor*)alertSensorColor;
++ (UIColor*)idealSensorColor;
++ (UIColor*)warningSensorColor;
 
 // Gradients
 + (PCGradient*)blueBackgroundGradient;

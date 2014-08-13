@@ -5,6 +5,7 @@
 #import <markdown_peg.h>
 
 #import "HEMCurrentConditionsTableViewController.h"
+#import "HEMColoredRoundedLabel.h"
 #import "HEMAlarmViewController.h"
 #import "HEMInsetGlyphTableViewCell.h"
 #import "HEMSensorViewController.h"
@@ -108,11 +109,13 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 {
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
     if (self.sensors.count <= indexPath.row) {
+        [(HEMColoredRoundedLabel*)cell.detailLabel hideRoundedBackground];
         cell.titleLabel.text = NSLocalizedString(@"sensor.data-unavailable", nil);
         cell.detailLabel.text = nil;
         cell.glyphImageView.image = nil;
         cell.descriptionLabel.text = nil;
     } else {
+        [(HEMColoredRoundedLabel*)cell.detailLabel showRoundedBackground];
         SENSensor* sensor = self.sensors[indexPath.row];
         cell.titleLabel.text = sensor.localizedName;
         cell.detailLabel.text = sensor.localizedValue;
@@ -142,8 +145,14 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
                 }
             };
             cell.descriptionLabel.attributedText = markdown_to_attr_string(sensor.message, 0, attributes);
+            if (sensor.condition == SENSensorConditionWarning) {
+                [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[HelloStyleKit warningSensorColor]];
+            } else {
+                [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[HelloStyleKit alertSensorColor]];
+            }
         } else {
             cell.descriptionLabel.text = nil;
+            [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[HelloStyleKit idealSensorColor]];
         }
     }
 
@@ -153,6 +162,8 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 - (UITableViewCell*)tableView:(UITableView*)tableView menuCellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
+    [(HEMColoredRoundedLabel*)cell.detailLabel hideRoundedBackground];
+    [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[UIColor darkGrayColor]];
     cell.descriptionLabel.text = nil;
     switch (indexPath.row) {
     case 0: {

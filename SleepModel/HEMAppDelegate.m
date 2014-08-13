@@ -38,6 +38,8 @@
 - (void)showOnboardingFlowAnimated:(BOOL)animated
 {
     FCDynamicPanesNavigationController* dynamicPanesController = (FCDynamicPanesNavigationController*)self.window.rootViewController;
+    UINavigationController* navController = (UINavigationController*)((FCDynamicPane*)[dynamicPanesController.viewControllers firstObject]).viewController;
+    [navController popToRootViewControllerAnimated:NO];
     [dynamicPanesController popViewControllerAnimated:animated];
     UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
     [dynamicPanesController presentViewController:[onboardingStoryboard instantiateInitialViewController] animated:animated completion:NULL];

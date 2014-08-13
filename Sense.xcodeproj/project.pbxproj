@@ -44,6 +44,7 @@
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
 		8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */; };
 		8A66FC7F199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC7E199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m */; };
+		8A66FC82199BE94100922ED5 /* HEMColoredRoundedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC81199BE94100922ED5 /* HEMColoredRoundedLabel.m */; };
 		8A78267719663BB1002882A1 /* HEMSensorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A78267619663BB1002882A1 /* HEMSensorViewController.m */; };
 		8A782683196B4729002882A1 /* HEMGraphTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A782682196B4729002882A1 /* HEMGraphTooltipView.m */; };
 		8A782686196CB6C9002882A1 /* HEMSnappingFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A782685196CB6C9002882A1 /* HEMSnappingFlowLayout.m */; };
@@ -148,6 +149,8 @@
 		8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryPagingDataSource.m; sourceTree = "<group>"; };
 		8A66FC7D199BE3E800922ED5 /* HEMSleepSummaryPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryPageViewController.h; sourceTree = "<group>"; };
 		8A66FC7E199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryPageViewController.m; sourceTree = "<group>"; };
+		8A66FC80199BE94100922ED5 /* HEMColoredRoundedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMColoredRoundedLabel.h; sourceTree = "<group>"; };
+		8A66FC81199BE94100922ED5 /* HEMColoredRoundedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMColoredRoundedLabel.m; sourceTree = "<group>"; };
 		8A78267519663BB1002882A1 /* HEMSensorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorViewController.h; sourceTree = "<group>"; };
 		8A78267619663BB1002882A1 /* HEMSensorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorViewController.m; sourceTree = "<group>"; };
 		8A782681196B4729002882A1 /* HEMGraphTooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMGraphTooltipView.h; sourceTree = "<group>"; };
@@ -386,6 +389,8 @@
 				8AC49F951981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m */,
 				8AC49F85197F365C00C2BD63 /* HEMSleepScoreGraphView.h */,
 				8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */,
+				8A66FC80199BE94100922ED5 /* HEMColoredRoundedLabel.h */,
+				8A66FC81199BE94100922ED5 /* HEMColoredRoundedLabel.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -704,6 +709,7 @@
 				8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */,
 				6003F59E195388D20070C39A /* HEMAppDelegate.m in Sources */,
 				8A782683196B4729002882A1 /* HEMGraphTooltipView.m in Sources */,
+				8A66FC82199BE94100922ED5 /* HEMColoredRoundedLabel.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
 				8A4B3D5E199534F000856BDE /* HEMMain_iPhoneStoryboard.m in Sources */,
 				8A66FC7F199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m in Sources */,

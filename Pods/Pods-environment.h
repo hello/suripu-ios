@@ -54,6 +54,18 @@
 #define COCOAPODS_VERSION_MINOR_AttributedMarkdown 9
 #define COCOAPODS_VERSION_PATCH_AttributedMarkdown 2
 
+// FCDynamicPanesNavigationController
+#define COCOAPODS_POD_AVAILABLE_FCDynamicPanesNavigationController
+#define COCOAPODS_VERSION_MAJOR_FCDynamicPanesNavigationController 1
+#define COCOAPODS_VERSION_MINOR_FCDynamicPanesNavigationController 0
+#define COCOAPODS_VERSION_PATCH_FCDynamicPanesNavigationController 0
+
+// FCMutableArray
+#define COCOAPODS_POD_AVAILABLE_FCMutableArray
+#define COCOAPODS_VERSION_MAJOR_FCMutableArray 1
+#define COCOAPODS_VERSION_MINOR_FCMutableArray 0
+#define COCOAPODS_VERSION_PATCH_FCMutableArray 0
+
 // FXKeychain
 #define COCOAPODS_POD_AVAILABLE_FXKeychain
 #define COCOAPODS_VERSION_MAJOR_FXKeychain 1

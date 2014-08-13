@@ -6,25 +6,28 @@
 
 @interface HEMMain_iPhoneStoryboard : NSObject
 
-+ (UIStoryboard*)storyboard;
++(UIStoryboard *)storyboard;
 
 /** Cell Reuse Identifiers */
-+ (NSString*)sleepSoundCellReuseIdentifier;
-+ (NSString*)currentConditionsCellReuseIdentifier;
-+ (NSString*)timeSliceCellReuseIdentifier;
-+ (NSString*)insightCellReuseIdentifier;
++(NSString *)sleepSoundCellReuseIdentifier;
++(NSString *)currentConditionsCellReuseIdentifier;
++(NSString *)timeSliceCellReuseIdentifier;
++(NSString *)insightCellReuseIdentifier;
 
 /** Segue Identifiers */
-+ (NSString*)pickSoundSegueSegueIdentifier;
++(NSString *)pickSoundSegueSegueIdentifier;
 
 /** View Controllers */
-+ (UIViewController*)instantiateAlarmViewController;
-+ (UIViewController*)instantiateSettingsController;
-+ (UIViewController*)instantiateSensorViewController;
-+ (UIViewController*)instantiateSleepSoundViewController;
-+ (UIViewController*)instantiateCurrentController;
-+ (UIViewController*)instantiateAlarmSoundTableViewController;
-+ (UIViewController*)instantiateLastNightController;
-+ (UIViewController*)instantiateSleepHistoryController;
++(UIViewController *)instantiateAlarmViewController;
++(UIViewController *)instantiateSettingsController;
++(UIViewController *)instantiateSensorViewController;
++(UIViewController *)instantiateSleepSoundViewController;
++(UIViewController *)instantiateCurrentController;
++(UIViewController *)instantiateAlarmSoundTableViewController;
++(UIViewController *)instantiateLastNightController;
++(UIViewController *)instantiateSleepHistoryController;
++(UIViewController *)instantiateCurrentNavController;
++(UIViewController *)instantiateSettingsNavController;
++(UIViewController *)instantiateLastNightNavController;
 
 @end

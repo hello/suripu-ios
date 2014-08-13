@@ -35,6 +35,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     [super viewWillAppear:animated];
     [self refreshSensors];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSensors) name:SENSensorUpdatedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSensors) name:SENSensorsUpdatedNotification object:nil];
     [SENSensor refreshCachedSensors];
 }
 
@@ -63,7 +64,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 {
     switch (section) {
     case 0:
-        return self.sensors.count;
+        return self.sensors.count == 0 ? 1 : self.sensors.count;
 
     case 1:
         return 3;
@@ -76,9 +77,11 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 - (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     if (indexPath.section == 0) {
-        SENSensor* sensor = self.sensors[indexPath.row];
-        if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
-            return 114.f;
+        if (self.sensors.count > 0) {
+            SENSensor* sensor = self.sensors[indexPath.row];
+            if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
+                return 114.f;
+            }
         }
     }
     return 64.f;
@@ -104,38 +107,46 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 - (UITableViewCell*)tableView:(UITableView*)tableView sensorCellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
-    SENSensor* sensor = self.sensors[indexPath.row];
-    cell.titleLabel.text = sensor.localizedName;
-    cell.detailLabel.text = sensor.localizedValue;
-    switch (sensor.unit) {
-    case SENSensorUnitDegreeCentigrade:
-        cell.glyphImageView.image = [HelloStyleKit temperatureIcon];
-        break;
-    case SENSensorUnitPartsPerMillion:
-        cell.glyphImageView.image = [HelloStyleKit particleIcon];
-        break;
-    case SENSensorUnitPercent:
-        cell.glyphImageView.image = [HelloStyleKit humidityIcon];
-        break;
-    case SENSensorUnitUnknown:
-    default:
+    if (self.sensors.count <= indexPath.row) {
+        cell.titleLabel.text = NSLocalizedString(@"sensor.data-unavailable", nil);
+        cell.detailLabel.text = nil;
         cell.glyphImageView.image = nil;
-        break;
-    }
-    if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
-        UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:11.0];
-        NSDictionary* attributes = @{
-            @(EMPH) : @{
-                NSFontAttributeName : emFont,
-            },
-            @(PARA) : @{
-                NSForegroundColorAttributeName : [UIColor darkGrayColor],
-            }
-        };
-        cell.descriptionLabel.attributedText = markdown_to_attr_string(sensor.message, 0, attributes);
-    } else {
         cell.descriptionLabel.text = nil;
+    } else {
+        SENSensor* sensor = self.sensors[indexPath.row];
+        cell.titleLabel.text = sensor.localizedName;
+        cell.detailLabel.text = sensor.localizedValue;
+        switch (sensor.unit) {
+        case SENSensorUnitDegreeCentigrade:
+            cell.glyphImageView.image = [HelloStyleKit temperatureIcon];
+            break;
+        case SENSensorUnitPartsPerMillion:
+            cell.glyphImageView.image = [HelloStyleKit particleIcon];
+            break;
+        case SENSensorUnitPercent:
+            cell.glyphImageView.image = [HelloStyleKit humidityIcon];
+            break;
+        case SENSensorUnitUnknown:
+        default:
+            cell.glyphImageView.image = nil;
+            break;
+        }
+        if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
+            UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:11.0];
+            NSDictionary* attributes = @{
+                @(EMPH) : @{
+                    NSFontAttributeName : emFont,
+                },
+                @(PARA) : @{
+                    NSForegroundColorAttributeName : [UIColor darkGrayColor],
+                }
+            };
+            cell.descriptionLabel.attributedText = markdown_to_attr_string(sensor.message, 0, attributes);
+        } else {
+            cell.descriptionLabel.text = nil;
+        }
     }
+
     return cell;
 }
 

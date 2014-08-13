@@ -591,13 +591,7 @@
                             <outlet property="delegate" destination="jq0-KZ-Ac0" id="R3v-rz-bYQ"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Currently" id="WL3-Gt-K6z">
-                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="xCo-Xt-QIM">
-                            <connections>
-                                <action selector="dismissCurrentConditionsController:" destination="jq0-KZ-Ac0" id="Fhq-VG-I9t"/>
-                            </connections>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" title="Currently" id="WL3-Gt-K6z"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="fjU-KE-hek" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -656,7 +650,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Fa-Fc-h2C" customClass="HEMSleepScoreGraphView">
-                                <rect key="frame" x="100" y="96" width="120" height="120"/>
+                                <rect key="frame" x="100" y="64" width="120" height="120"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <constraints>
@@ -665,13 +659,13 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="8Fj-BV-COc">
-                                <rect key="frame" x="61" y="224" width="200" height="34"/>
+                                <rect key="frame" x="61" y="192" width="200" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9N-Mx-OAD">
-                                <rect key="frame" x="110" y="48" width="101" height="29"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAST NIGHT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9N-Mx-OAD">
+                                <rect key="frame" x="97" y="20" width="127" height="29"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="24"/>
                                 <nil key="highlightedColor"/>
@@ -681,10 +675,10 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="Z9N-Mx-OAD" secondAttribute="centerX" id="NuN-gy-gVQ"/>
-                            <constraint firstItem="4Fa-Fc-h2C" firstAttribute="top" secondItem="Z9N-Mx-OAD" secondAttribute="bottom" constant="19" id="OR7-Vt-K6f"/>
+                            <constraint firstItem="4Fa-Fc-h2C" firstAttribute="top" secondItem="Z9N-Mx-OAD" secondAttribute="bottom" constant="15" id="OR7-Vt-K6f"/>
                             <constraint firstAttribute="centerX" secondItem="8Fj-BV-COc" secondAttribute="centerX" constant="-0.5" id="Ocq-Qi-0Qo"/>
                             <constraint firstItem="8Fj-BV-COc" firstAttribute="top" secondItem="4Fa-Fc-h2C" secondAttribute="bottom" constant="8" id="f22-uI-4WU"/>
-                            <constraint firstItem="Z9N-Mx-OAD" firstAttribute="top" secondItem="TTk-zO-a4D" secondAttribute="bottom" constant="28" id="gD7-ai-gGn"/>
+                            <constraint firstItem="Z9N-Mx-OAD" firstAttribute="top" secondItem="TTk-zO-a4D" secondAttribute="bottom" id="gD7-ai-gGn"/>
                             <constraint firstAttribute="centerX" secondItem="4Fa-Fc-h2C" secondAttribute="centerX" id="tzE-8x-Ehx"/>
                         </constraints>
                         <connections>
@@ -694,6 +688,7 @@
                     <navigationItem key="navigationItem" id="k5n-OL-K19"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="lastNightLabel" destination="Z9N-Mx-OAD" id="1pd-aA-nx9"/>
                         <outlet property="sleepScoreView" destination="4Fa-Fc-h2C" id="B6e-Pe-jSz"/>
                     </connections>
                 </viewController>

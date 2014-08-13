@@ -1,12 +1,18 @@
 #import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENAlarm.h>
+#import <SenseKit/SENSensor.h>
+#import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
+
 #import "HEMAppDelegate.h"
+#import "HEMMain_iPhoneStoryboard.h"
 
 @implementation HEMAppDelegate
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
     [self configureAppearance];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(showOnboardingFlow) name:SENAuthorizationServiceDidDeauthorizeNotification object:nil];
+    [self registerForNotifications];
+    [self createAndShowWindow];
     return YES;
 }
 
@@ -17,8 +23,10 @@
     }
 }
 
-- (void)showOnboardingFlow
+- (void)resetAndShowOnboarding
 {
+    [SENAlarm clearSavedAlarms];
+    [SENSensor clearCachedSensors];
     [self showOnboardingFlowAnimated:YES];
 }
 
@@ -39,6 +47,23 @@
                                       forBarPosition:UIBarPositionAny
                                           barMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+}
+
+- (void)createAndShowWindow
+{
+    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    NSArray* viewControllers = @[
+        [HEMMain_iPhoneStoryboard instantiateCurrentNavController],
+        [HEMMain_iPhoneStoryboard instantiateLastNightController]
+    ];
+    FCDynamicPanesNavigationController* dynamicPanes = [[FCDynamicPanesNavigationController alloc] initWithViewControllers:viewControllers];
+    self.window.rootViewController = dynamicPanes;
+    [self.window makeKeyAndVisible];
+}
+
+- (void)registerForNotifications
+{
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetAndShowOnboarding) name:SENAuthorizationServiceDidDeauthorizeNotification object:nil];
 }
 
 @end

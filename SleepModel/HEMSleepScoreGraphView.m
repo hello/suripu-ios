@@ -16,7 +16,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    [HelloStyleKit drawSleepScoreGraphWithSleepScoreLabelText:@"SLEEP SCORE" sleepScore:self.sleepScore];
+    [HelloStyleKit drawSleepScoreGraphWithSleepScoreLabelText:@"SLEEP SCORE" sleepScore:self.sleepScore sleepScoreDateText:@"LAST NIGHT"];
 }
 
 - (void)animateScoreTo:(CGFloat)value

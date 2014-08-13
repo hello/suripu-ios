@@ -45,6 +45,7 @@
 "sensor.time-range.day" = "Past 24";
 "sensor.time-range.week" = "This week";
 "sensor.comfort-zone.title" = "Comfort Zone";
+"sensor.data-unavailable" = "Room sensor data is unavailable";
 "graph-data.unavailable.short" = "No data";
 "graph-data.unavailable" = "No data available";
 

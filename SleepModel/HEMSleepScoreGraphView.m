@@ -5,9 +5,19 @@
 @interface HEMSleepScoreGraphView ()
 
 @property (nonatomic) NSInteger sleepScore;
+@property (nonatomic, strong) NSString* sleepScoreLabelText;
+@property (nonatomic, strong) NSString* sleepScoreDateText;
 @end
 
 @implementation HEMSleepScoreGraphView
+
+- (id)initWithCoder:(NSCoder*)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder]) {
+        _sleepScoreLabelText = NSLocalizedString(@"sleep-history.score", nil);
+    }
+    return self;
+}
 
 - (void)awakeFromNib
 {
@@ -16,7 +26,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    [HelloStyleKit drawSleepScoreGraphWithSleepScoreLabelText:@"SLEEP SCORE" sleepScore:self.sleepScore sleepScoreDateText:@"LAST NIGHT"];
+    [HelloStyleKit drawSleepScoreGraphWithSleepScoreLabelText:self.sleepScoreLabelText sleepScore:self.sleepScore sleepScoreDateText:self.sleepScoreDateText];
 }
 
 - (void)animateScoreTo:(CGFloat)value
@@ -27,6 +37,33 @@
             [self setNeedsDisplay];
         });
     }
+}
+
+- (void)setSleepScore:(NSInteger)sleepScore
+{
+    if (sleepScore == _sleepScore)
+        return;
+
+    _sleepScore = sleepScore;
+    [self setNeedsDisplay];
+}
+
+- (void)setSleepScoreLabelText:(NSString*)sleepScoreLabelText
+{
+    if ([sleepScoreLabelText isEqualToString:_sleepScoreLabelText])
+        return;
+
+    _sleepScoreLabelText = sleepScoreLabelText;
+    [self setNeedsDisplay];
+}
+
+- (void)setSleepScoreDateText:(NSString*)sleepScoreDateText
+{
+    if ([sleepScoreDateText isEqualToString:_sleepScoreDateText])
+        return;
+
+    _sleepScoreDateText = sleepScoreDateText;
+    [self setNeedsDisplay];
 }
 
 @end

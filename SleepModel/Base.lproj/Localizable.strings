@@ -57,6 +57,10 @@
 "measurement.percentage.format" = "%.f%%";
 "measurement.ppm.format" = "%.fppm";
 
+// sleep history
+"sleep-history.last-night" = "LAST NIGHT";
+"sleep-history.score" = "SLEEP SCORE";
+
 // actions
 "actions.cancel" = "Cancel";
 "actions.save" = "Save";

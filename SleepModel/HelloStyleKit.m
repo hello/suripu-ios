@@ -113,16 +113,16 @@ static UIImage* _chevronIconRight = nil;
     UIColor* color = [UIColor colorWithRed: 0.866 green: 0.866 blue: 0.866 alpha: 1];
 
     //// Variable Declarations
-    UIColor* sleepScoreColor = sleepScore < 45 ? HelloStyleKit.poorSleepScoreColor : (sleepScore < 80 ? HelloStyleKit.averageSleepScoreColor : HelloStyleKit.highSleepScoreColor);
+    UIColor* sleepScoreColor = sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.idealSensorColor);
     CGFloat graphPercentageAngle = sleepScore > 0 ? (sleepScore < 100 ? 360 - sleepScore * 0.01 * 360 : 1) : 0;
     NSString* sleepScoreText = sleepScore > 0 ? (sleepScore <= 100 ? [NSString stringWithFormat: @"%ld", (NSInteger)round(sleepScore)] : @"100") : @"0";
 
     //// gray oval Drawing
     CGContextSaveGState(context);
-    CGContextTranslateCTM(context, 60.5, 56);
+    CGContextTranslateCTM(context, 87.5, 87.5);
     CGContextRotateCTM(context, -90 * M_PI / 180);
 
-    UIBezierPath* grayOvalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(-52, -51.5, 104, 103)];
+    UIBezierPath* grayOvalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(-87.5, -87.5, 175, 175)];
     [color setFill];
     [grayOvalPath fill];
 
@@ -131,18 +131,14 @@ static UIImage* _chevronIconRight = nil;
 
     //// pie oval Drawing
     CGContextSaveGState(context);
-    CGContextTranslateCTM(context, 60.5, 56);
+    CGContextTranslateCTM(context, 87.5, 87.5);
     CGContextRotateCTM(context, -90 * M_PI / 180);
 
-    CGRect pieOvalRect = CGRectMake(-52, -51.5, 104, 103);
+    CGRect pieOvalRect = CGRectMake(-87.5, -87.5, 175, 175);
     UIBezierPath* pieOvalPath = UIBezierPath.bezierPath;
-    [pieOvalPath addArcWithCenter: CGPointMake(0, 0) radius: CGRectGetWidth(pieOvalRect) / 2 startAngle: 0 * M_PI/180 endAngle: -graphPercentageAngle * M_PI/180 clockwise: YES];
-    [pieOvalPath addLineToPoint: CGPointMake(0, 0)];
+    [pieOvalPath addArcWithCenter: CGPointMake(CGRectGetMidX(pieOvalRect), CGRectGetMidY(pieOvalRect)) radius: CGRectGetWidth(pieOvalRect) / 2 startAngle: 0 * M_PI/180 endAngle: -graphPercentageAngle * M_PI/180 clockwise: YES];
+    [pieOvalPath addLineToPoint: CGPointMake(CGRectGetMidX(pieOvalRect), CGRectGetMidY(pieOvalRect))];
     [pieOvalPath closePath];
-
-    CGAffineTransform pieOvalTransform = CGAffineTransformMakeTranslation(CGRectGetMidX(pieOvalRect), CGRectGetMidY(pieOvalRect));
-    pieOvalTransform = CGAffineTransformScale(pieOvalTransform, 1, CGRectGetHeight(pieOvalRect) / CGRectGetWidth(pieOvalRect));
-    [pieOvalPath applyTransform: pieOvalTransform];
 
     [sleepScoreColor setFill];
     [pieOvalPath fill];
@@ -151,23 +147,23 @@ static UIImage* _chevronIconRight = nil;
 
 
     //// white center oval Drawing
-    UIBezierPath* whiteCenterOvalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(11.5, 7, 98, 98)];
+    UIBezierPath* whiteCenterOvalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(2, 2, 171, 171)];
     [UIColor.whiteColor setFill];
     [whiteCenterOvalPath fill];
 
 
     //// sleep score label Drawing
-    CGRect sleepScoreLabelRect = CGRectMake(20, 22, 80, 67);
+    CGRect sleepScoreLabelRect = CGRectMake(0, 13, 175, 148);
     NSMutableParagraphStyle* sleepScoreLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"HelveticaNeue-Light" size: 46], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
+    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"HelveticaNeue-Light" size: 96], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
 
     [sleepScoreText drawInRect: CGRectOffset(sleepScoreLabelRect, 0, (CGRectGetHeight(sleepScoreLabelRect) - [sleepScoreText boundingRectWithSize: sleepScoreLabelRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreLabelFontAttributes context: nil].size.height) / 2) withAttributes: sleepScoreLabelFontAttributes];
 
 
     //// sleep score text label Drawing
-    CGRect sleepScoreTextLabelRect = CGRectMake(28, 75, 64, 14);
+    CGRect sleepScoreTextLabelRect = CGRectMake(56, 133, 64, 14);
     NSMutableParagraphStyle* sleepScoreTextLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreTextLabelStyle.alignment = NSTextAlignmentCenter;
 
@@ -177,7 +173,7 @@ static UIImage* _chevronIconRight = nil;
 
 
     //// sleep score text label 2 Drawing
-    CGRect sleepScoreTextLabel2Rect = CGRectMake(29, 22, 64, 14);
+    CGRect sleepScoreTextLabel2Rect = CGRectMake(56, 31, 64, 14);
     NSMutableParagraphStyle* sleepScoreTextLabel2Style = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreTextLabel2Style.alignment = NSTextAlignmentCenter;
 
@@ -195,7 +191,7 @@ static UIImage* _chevronIconRight = nil;
     UIColor* color = [UIColor colorWithRed: 0.866 green: 0.866 blue: 0.866 alpha: 1];
 
     //// Variable Declarations
-    UIColor* sleepScoreColor = sleepScore < 45 ? HelloStyleKit.poorSleepScoreColor : (sleepScore < 80 ? HelloStyleKit.averageSleepScoreColor : HelloStyleKit.highSleepScoreColor);
+    UIColor* sleepScoreColor = sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.idealSensorColor);
     CGFloat graphPercentageAngle = sleepScore > 0 ? (sleepScore < 100 ? 360 - sleepScore * 0.01 * 360 : 1) : 0;
     NSString* sleepScoreText = sleepScore > 0 ? (sleepScore <= 100 ? [NSString stringWithFormat: @"%ld", (NSInteger)round(sleepScore)] : @"100") : @"0";
 

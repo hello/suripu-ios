@@ -42,6 +42,7 @@
 - (void)setText:(NSString*)text
 {
     self.textLabel.text = text;
+    [self invalidateIntrinsicContentSize];
 }
 
 - (NSString*)text
@@ -57,11 +58,13 @@
 - (void)hideRoundedBackground
 {
     self.roundedLayer.hidden = YES;
+    self.textLabel.textAlignment = NSTextAlignmentRight;
 }
 
 - (void)showRoundedBackground
 {
     self.roundedLayer.hidden = NO;
+    self.textLabel.textAlignment = NSTextAlignmentCenter;
 }
 
 @end

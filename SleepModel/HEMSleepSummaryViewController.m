@@ -10,13 +10,37 @@
 
 @property (weak, nonatomic) IBOutlet UILabel* lastNightLabel;
 @property (weak, nonatomic) IBOutlet HEMSleepScoreGraphView* sleepScoreView;
+@property (strong, nonatomic) NSDate* dateForNightOfSleep;
 @end
 
 @implementation HEMSleepSummaryViewController
 
++ (NSDateFormatter*)sleepDateFormatter
+{
+    static NSDateFormatter* formatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [[NSDateFormatter alloc] init];
+        formatter.dateStyle = NSDateFormatterShortStyle;
+    });
+    return formatter;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    NSString* dateText = [[HEMSleepSummaryViewController sleepDateFormatter] stringFromDate:self.dateForNightOfSleep];
+    NSString* lastNightDateText = [[HEMSleepSummaryViewController sleepDateFormatter] stringFromDate:[NSDate dateWithTimeInterval:-60 * 60 * 24 sinceDate:[NSDate date]]];
+    if ([dateText isEqualToString:lastNightDateText]) {
+        NSString* lastNightDateFormatText = NSLocalizedString(@"sleep-history.last-night", nil);
+        self.lastNightLabel.text = lastNightDateFormatText;
+        [self.sleepScoreView setSleepScoreDateText:lastNightDateFormatText];
+    } else {
+        self.lastNightLabel.text = dateText;
+        [self.sleepScoreView setSleepScoreDateText:dateText];
+    }
+
+    [self.sleepScoreView setSleepScore:arc4random() % 90];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -50,6 +74,14 @@
 - (void)willMoveToParentViewController:(UIViewController*)parent
 {
     [super willMoveToParentViewController:parent];
+}
+
+- (void)setDateForNightOfSleep:(NSDate*)date
+{
+    _dateForNightOfSleep = date;
+    NSString* dateText = [[HEMSleepSummaryViewController sleepDateFormatter] stringFromDate:date];
+    self.lastNightLabel.text = dateText;
+    [self.sleepScoreView setSleepScoreDateText:dateText];
 }
 
 - (IBAction)pinchedHistoryView:(id)sender

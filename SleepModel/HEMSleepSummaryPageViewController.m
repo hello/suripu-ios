@@ -1,0 +1,54 @@
+#import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
+
+#import "HEMSleepSummaryPageViewController.h"
+#import "HEMSleepSummaryPagingDataSource.h"
+#import "HEMMain_iPhoneStoryboard.h"
+
+@interface HEMSleepSummaryPageViewController () <FCDynamicPaneViewController>
+
+@property (nonatomic, strong) HEMSleepSummaryPagingDataSource* sleepSummaryDataSource;
+@end
+
+@implementation HEMSleepSummaryPageViewController
+
+- (id)init
+{
+    if (self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:@{}]) {
+        [self setViewControllers:@[ [HEMMain_iPhoneStoryboard instantiateLastNightController] ] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.sleepSummaryDataSource = [[HEMSleepSummaryPagingDataSource alloc] init];
+    self.dataSource = self.sleepSummaryDataSource;
+}
+
+- (void)dealloc
+{
+    self.sleepSummaryDataSource = nil;
+}
+
+- (void)viewDidPop
+{
+    self.dataSource = nil;
+    for (UIViewController* viewController in self.viewControllers) {
+        if ([viewController respondsToSelector:@selector(viewDidPop)]) {
+            [(UIViewController<FCDynamicPaneViewController>*)viewController viewDidPop];
+        }
+    }
+}
+
+- (void)viewDidPush
+{
+    for (UIViewController* viewController in self.viewControllers) {
+        if ([viewController respondsToSelector:@selector(viewDidPush)]) {
+            [(UIViewController<FCDynamicPaneViewController>*)viewController viewDidPush];
+        }
+    }
+    self.dataSource = self.sleepSummaryDataSource;
+}
+
+@end

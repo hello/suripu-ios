@@ -42,6 +42,8 @@
 		8A4B3D5E199534F000856BDE /* HEMMain_iPhoneStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5A199534F000856BDE /* HEMMain_iPhoneStoryboard.m */; };
 		8A4B3D5F199534F000856BDE /* HEMOnboardingStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
+		8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */; };
+		8A66FC7F199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC7E199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m */; };
 		8A78267719663BB1002882A1 /* HEMSensorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A78267619663BB1002882A1 /* HEMSensorViewController.m */; };
 		8A782683196B4729002882A1 /* HEMGraphTooltipView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A782682196B4729002882A1 /* HEMGraphTooltipView.m */; };
 		8A782686196CB6C9002882A1 /* HEMSnappingFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A782685196CB6C9002882A1 /* HEMSnappingFlowLayout.m */; };
@@ -142,6 +144,10 @@
 		8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingStoryboard.m; sourceTree = "<group>"; };
 		8A59F631198C16050005B000 /* HEMSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSignUpViewController.h; sourceTree = "<group>"; };
 		8A59F632198C16050005B000 /* HEMSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignUpViewController.m; sourceTree = "<group>"; };
+		8A66FC7A199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryPagingDataSource.h; sourceTree = "<group>"; };
+		8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryPagingDataSource.m; sourceTree = "<group>"; };
+		8A66FC7D199BE3E800922ED5 /* HEMSleepSummaryPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryPageViewController.h; sourceTree = "<group>"; };
+		8A66FC7E199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryPageViewController.m; sourceTree = "<group>"; };
 		8A78267519663BB1002882A1 /* HEMSensorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorViewController.h; sourceTree = "<group>"; };
 		8A78267619663BB1002882A1 /* HEMSensorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorViewController.m; sourceTree = "<group>"; };
 		8A782681196B4729002882A1 /* HEMGraphTooltipView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMGraphTooltipView.h; sourceTree = "<group>"; };
@@ -400,6 +406,10 @@
 			children = (
 				8AC49F881981A89D00C2BD63 /* HEMSleepHistoryViewController.h */,
 				8AC49F891981A89D00C2BD63 /* HEMSleepHistoryViewController.m */,
+				8A66FC7D199BE3E800922ED5 /* HEMSleepSummaryPageViewController.h */,
+				8A66FC7E199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m */,
+				8A66FC7A199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.h */,
+				8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */,
 				8AC49F8B1981B00900C2BD63 /* HEMSleepSummaryViewController.h */,
 				8AC49F8C1981B00900C2BD63 /* HEMSleepSummaryViewController.m */,
 			);
@@ -696,6 +706,7 @@
 				8A782683196B4729002882A1 /* HEMGraphTooltipView.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
 				8A4B3D5E199534F000856BDE /* HEMMain_iPhoneStoryboard.m in Sources */,
+				8A66FC7F199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m in Sources */,
 				8AC4A05B198ACE4800C2BD63 /* HEMSensorGraphDataSource.m in Sources */,
 				8AC49F9F19832D2600C2BD63 /* HEMDevicePickerTableViewController.m in Sources */,
 				8A4B3D5D199534F000856BDE /* HEMMain_iPadStoryboard.m in Sources */,
@@ -706,6 +717,7 @@
 				6003F5A7195388D20070C39A /* HEMAlarmViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				8A90F9BC19637F9400AFD110 /* HEMSleepSoundTableViewController.m in Sources */,
+				8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */,
 				8A4B3D491992CB4500856BDE /* HEMRoundedTextField.m in Sources */,
 				8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */,
 				8A90F9AC196350D200AFD110 /* HelloStyleKit.m in Sources */,

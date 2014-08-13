@@ -23,6 +23,7 @@
 {
     [super viewWillAppear:animated];
     self.lastNightLabel.alpha = 0.f;
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewDidPop

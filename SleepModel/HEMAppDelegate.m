@@ -4,7 +4,12 @@
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 
 #import "HEMAppDelegate.h"
+#import "HEMSleepSummaryPageViewController.h"
 #import "HEMMain_iPhoneStoryboard.h"
+
+@interface HEMAppDelegate ()
+
+@end
 
 @implementation HEMAppDelegate
 
@@ -49,9 +54,10 @@
 - (void)createAndShowWindow
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+
     NSArray* viewControllers = @[
         [HEMMain_iPhoneStoryboard instantiateCurrentNavController],
-        [HEMMain_iPhoneStoryboard instantiateLastNightController]
+        [[HEMSleepSummaryPageViewController alloc] init]
     ];
     FCDynamicPanesNavigationController* dynamicPanes = [[FCDynamicPanesNavigationController alloc] initWithViewControllers:viewControllers];
     self.window.rootViewController = dynamicPanes;

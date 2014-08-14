@@ -70,7 +70,7 @@
         
         CGFloat offset = index == 0 ? 10 : 0;
         CGPoint imagePoint = CGPointMake(CGRectGetMinX(sensorRect) + offset, CGRectGetMidY(sensorRect) - (sensorImage.size.height / 2));
-        [sensorImage drawAtPoint:imagePoint];
+        [sensorImage drawAtPoint:imagePoint blendMode:kCGBlendModeNormal alpha:0.5f];
         
         CGPoint textPoint = CGPointMake(sensorImage.size.width + 10 + imagePoint.x, CGRectGetMidY(sensorRect) - (textSize.height / 2));
         [formattedValue drawAtPoint:textPoint withAttributes:textAttributes];

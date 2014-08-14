@@ -65,9 +65,19 @@
 "measurement.kg.format" = "%ldkg";
 "measurement.lb.format" = "%ldlbs";
 
+// sleep events
+"sleep-event.type.awake.name" = "Woke up";
+"sleep-event.type.sleep.name" = "Fell asleep";
+"sleep-event.type.light.name" = "Light disturbance";
+"sleep-event.type.noise.name" = "Noise disturbance";
+
 // sleep history
 "sleep-history.last-night" = "LAST NIGHT";
 "sleep-history.score" = "SLEEP SCORE";
+"sleep-history.depth.awake" = "Awake";
+"sleep-history.depth.light" = "Light sleep";
+"sleep-history.depth.medium" = "Medium sleep";
+"sleep-history.depth.deep" = "Deep sleep";
 
 // actions
 "actions.cancel" = "Cancel";

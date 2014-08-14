@@ -62,13 +62,16 @@
     NSDictionary* textAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Light" size:25] };
     __block CGFloat previousXOffset = 0;
     [self.sensorData enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSDictionary* obj, BOOL* stop) {
-        CGRect sensorRect = CGRectMake(index * segmentWidth, 0, segmentWidth, CGRectGetHeight(rect));
         UIImage* sensorImage = [self imageForSensorWithName:key];
+        NSString* formattedValue = [SENSensor formatValue:obj[@"value"] withUnit:[SENSensor unitFromValue:obj[@"unit"]]];
+        CGSize textSize = [formattedValue sizeWithAttributes:textAttributes];
+        CGFloat contentHeight =  MAX(sensorImage.size.height, textSize.height);
+        CGRect sensorRect = CGRectMake(previousXOffset + 10.f, CGRectGetHeight(rect) - contentHeight - 5.f, segmentWidth, contentHeight);
+        
         CGFloat offset = index == 0 ? 10 : 0;
         CGPoint imagePoint = CGPointMake(CGRectGetMinX(sensorRect) + offset, CGRectGetMidY(sensorRect) - (sensorImage.size.height / 2));
         [sensorImage drawAtPoint:imagePoint];
-        NSString* formattedValue = [SENSensor formatValue:obj[@"value"] withUnit:[SENSensor unitFromValue:obj[@"unit"]]];
-        CGSize textSize = [formattedValue sizeWithAttributes:textAttributes];
+        
         CGPoint textPoint = CGPointMake(sensorImage.size.width + 10 + imagePoint.x, CGRectGetMidY(sensorRect) - (textSize.height / 2));
         [formattedValue drawAtPoint:textPoint withAttributes:textAttributes];
         previousXOffset = textPoint.x + textSize.width;

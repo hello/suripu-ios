@@ -6,7 +6,8 @@
 #import "HelloStyleKit.h"
 
 CGFloat const HEMSleepHistoryViewPadding = 20.f;
-CGFloat const HEMSleepHistoryViewSensorsHeight = 45.f;
+CGFloat const HEMSleepHistoryViewSensorsHeight = 60.f;
+CGFloat const HEMSleepHistoryViewEventStripWidth = 25.f;
 
 @interface HEMSleepHistoryView ()
 
@@ -14,6 +15,7 @@ CGFloat const HEMSleepHistoryViewSensorsHeight = 45.f;
 @property (nonatomic) NSTimeInterval endInterval;
 @property (nonatomic) NSTimeInterval secondsPerPoint;
 @property (nonatomic, strong) NSArray* dataSlices;
+@property (nonatomic, strong) NSArray* maskLayers;
 @property (nonatomic, strong) NSDateFormatter* dateFormatter;
 @property (nonatomic, strong) HEMSensorValuesView* sensorValuesView;
 @end
@@ -42,7 +44,24 @@ CGFloat const HEMSleepHistoryViewSensorsHeight = 45.f;
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
 {
     UITouch* touch = [[touches allObjects] lastObject];
-    NSTimeInterval timeAtTouch = [self timeIntervalAtYOffset:[touch locationInView:self].y];
+    [self updateSensorsForTouch:touch];
+}
+
+- (void)touchesMoved:(NSSet*)touches withEvent:(UIEvent*)event
+{
+    UITouch* touch = [[touches allObjects] lastObject];
+    [self updateSensorsForTouch:touch];
+}
+
+- (void)touchesEnded:(NSSet*)touches withEvent:(UIEvent*)event
+{
+    UITouch* touch = [[touches allObjects] lastObject];
+    [self updateSensorsForTouch:touch];
+}
+
+- (void)updateSensorsForTouch:(UITouch*)touch
+{
+    NSTimeInterval timeAtTouch = ABS([self timeIntervalAtYOffset:[touch locationInView:self].y]);
     for (NSDictionary* dataSlice in self.dataSlices) {
         NSTimeInterval startTimeInterval = [dataSlice[@"timestamp"] doubleValue] / 1000;
         NSTimeInterval endTimeInterval = [dataSlice[@"duration"] doubleValue] / 1000 + startTimeInterval;
@@ -62,11 +81,34 @@ CGFloat const HEMSleepHistoryViewSensorsHeight = 45.f;
 {
     [super layoutSubviews];
     self.sensorValuesView.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), HEMSleepHistoryViewSensorsHeight);
+
+    if (!self.maskLayers) {
+        CALayer* topLayer = [[CALayer alloc] init];
+        CALayer* leadingLayer = [[CALayer alloc] init];
+        CALayer* trailingLayer = [[CALayer alloc] init];
+        CALayer* bottomLayer = [[CALayer alloc] init];
+        CGColorRef backgroundColor = [UIColor colorWithWhite:1.f alpha:0.7f].CGColor;
+        topLayer.frame = CGRectMake(0, HEMSleepHistoryViewSensorsHeight, CGRectGetWidth(self.bounds), HEMSleepHistoryViewPadding);
+        leadingLayer.frame = CGRectMake(0, HEMSleepHistoryViewSensorsHeight + HEMSleepHistoryViewPadding, HEMSleepHistoryViewPadding, self.contentHeight);
+        trailingLayer.frame = CGRectMake(HEMSleepHistoryViewPadding + HEMSleepHistoryViewEventStripWidth, HEMSleepHistoryViewPadding + HEMSleepHistoryViewSensorsHeight, CGRectGetWidth(self.bounds) - HEMSleepHistoryViewPadding - HEMSleepHistoryViewEventStripWidth, self.contentHeight);
+        bottomLayer.frame = CGRectMake(0, self.contentHeight + HEMSleepHistoryViewPadding + HEMSleepHistoryViewSensorsHeight, CGRectGetWidth(self.bounds), HEMSleepHistoryViewPadding);
+        topLayer.backgroundColor = backgroundColor;
+        trailingLayer.backgroundColor = backgroundColor;
+        leadingLayer.backgroundColor = backgroundColor;
+        bottomLayer.backgroundColor = backgroundColor;
+        [self.layer addSublayer:topLayer];
+        [self.layer addSublayer:bottomLayer];
+        [self.layer addSublayer:trailingLayer];
+        [self.layer addSublayer:leadingLayer];
+        self.maskLayers = @[ topLayer, bottomLayer, trailingLayer, leadingLayer ];
+    }
 }
 
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextSetFillColorWithColor(ctx, [HelloStyleKit currentConditionsBackgroundColor].CGColor);
+    CGContextFillRect(ctx, rect);
     for (NSDictionary* dataSlice in self.dataSlices) {
         NSTimeInterval sliceStartInterval = [dataSlice[@"timestamp"] doubleValue] / 1000;
         NSTimeInterval sliceEndInterval = sliceStartInterval + ([dataSlice[@"duration"] doubleValue] / 1000);
@@ -88,9 +130,9 @@ CGFloat const HEMSleepHistoryViewSensorsHeight = 45.f;
     dateForCurrentHour = [gregorian dateFromComponents:dateComponents];
     NSDictionary* textAttributes = @{
         NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue" size:8],
-        NSForegroundColorAttributeName : [UIColor grayColor]
+        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.f alpha:0.8]
     };
-    CGFloat xOffset = CGRectGetWidth(self.bounds) * 0.75f;
+    CGFloat xOffset = CGRectGetWidth(self.bounds) * 0.85f;
     while ([dateForCurrentHour timeIntervalSince1970] < self.endInterval) {
         CGFloat yOffset = [self yOffsetForTimeInterval:[dateForCurrentHour timeIntervalSince1970]];
         CGContextMoveToPoint(ctx, HEMSleepHistoryViewPadding, yOffset);
@@ -108,12 +150,12 @@ CGFloat const HEMSleepHistoryViewSensorsHeight = 45.f;
 
 - (CGFloat)yOffsetForTimeInterval:(NSTimeInterval)interval
 {
-    return (interval - self.startInterval) / self.secondsPerPoint + HEMSleepHistoryViewPadding + HEMSleepHistoryViewSensorsHeight;
+    return floorf((interval - self.startInterval) / self.secondsPerPoint + HEMSleepHistoryViewPadding + HEMSleepHistoryViewSensorsHeight);
 }
 
 - (NSTimeInterval)timeIntervalAtYOffset:(CGFloat)yOffset
 {
-    return (yOffset - HEMSleepHistoryViewPadding - HEMSleepHistoryViewSensorsHeight - (self.startInterval / self.secondsPerPoint)) * self.secondsPerPoint;
+    return (yOffset - HEMSleepHistoryViewPadding - HEMSleepHistoryViewSensorsHeight + (self.startInterval / self.secondsPerPoint)) * self.secondsPerPoint;
 }
 
 - (CGFloat)xOffsetForSleepDepth:(NSInteger)sleepDepth
@@ -140,6 +182,11 @@ CGFloat const HEMSleepHistoryViewSensorsHeight = 45.f;
     }
 }
 
+- (CGFloat)contentHeight
+{
+    return (CGRectGetHeight(self.bounds) - (HEMSleepHistoryViewPadding * 2) - HEMSleepHistoryViewSensorsHeight);
+}
+
 - (void)setDataSlices:(NSArray*)dataSlices
 {
     NSArray* sortedSlices = [dataSlices sortedArrayUsingComparator:^NSComparisonResult(NSDictionary* obj1, NSDictionary* obj2) {
@@ -148,7 +195,7 @@ CGFloat const HEMSleepHistoryViewSensorsHeight = 45.f;
     self.startInterval = [[sortedSlices firstObject][@"timestamp"] doubleValue] / 1000;
     self.endInterval = ([[sortedSlices lastObject][@"timestamp"] doubleValue] + [[sortedSlices lastObject][@"duration"] doubleValue]) / 1000;
     CGFloat duration = (self.endInterval - self.startInterval);
-    self.secondsPerPoint = duration / (CGRectGetHeight(self.bounds) - (HEMSleepHistoryViewPadding * 2) - HEMSleepHistoryViewSensorsHeight);
+    self.secondsPerPoint = duration / self.contentHeight;
     _dataSlices = sortedSlices;
     [self.sensorValuesView updateWithSensorData:[_dataSlices firstObject][@"sensors"]];
     [self setNeedsDisplay];
@@ -156,16 +203,16 @@ CGFloat const HEMSleepHistoryViewSensorsHeight = 45.f;
 
 - (void)bootstrap
 {
-    NSMutableArray* slices = [[NSMutableArray alloc] initWithCapacity:80];
+    NSMutableArray* slices = [[NSMutableArray alloc] initWithCapacity:40];
     CGFloat startTimeMillis = ([[NSDate date] timeIntervalSince1970] * 1000);
     CGFloat previousDuration = 0;
-    for (int i = 0; i < 80; i++) {
+    for (int i = 0; i < 40; i++) {
         CGFloat timestamp = startTimeMillis + previousDuration;
-        CGFloat duration = (arc4random() % 12) * 100000;
+        CGFloat duration = (arc4random() % 20) * 100000;
         [slices addObject:@{
             @"timestamp" : @(timestamp),
             @"duration" : @(duration),
-            @"sleep_depth" : @(ceilf(arc4random() % 3)),
+            @"sleep_depth" : @(floorf(arc4random() % 3) + 1),
             @"sensors" : @{
                 @"temperature" : @{
                     @"value" : @(arc4random() % 33),

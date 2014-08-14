@@ -43,10 +43,10 @@ PODS:
 
 DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`)
-  - FCDynamicPanesNavigationController (from `../FCDynamicPanesNavigationController`)
-  - JBChartView (from `../JBChartView`)
+  - FCDynamicPanesNavigationController (from `git@github.com:hello/FCDynamicPanesNavigationController.git`)
+  - JBChartView (from `git@github.com:hello/JBChartView.git`)
   - Kiwi
-  - SenseKit (from `../SenseKit`)
+  - SenseKit (from `git@github.com:hello/SenseKit.git`)
   - SORelativeDateTransformer
   - SVProgressHUD (from `https://github.com/samvermette/SVProgressHUD.git`, commit `90e5921e0a0a782c7e06dd8d308031041c10f789`)
 
@@ -54,11 +54,11 @@ EXTERNAL SOURCES:
   AttributedMarkdown:
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
   FCDynamicPanesNavigationController:
-    :path: ../FCDynamicPanesNavigationController
+    :git: git@github.com:hello/FCDynamicPanesNavigationController.git
   JBChartView:
-    :path: ../JBChartView
+    :git: git@github.com:hello/JBChartView.git
   SenseKit:
-    :path: ../SenseKit
+    :git: git@github.com:hello/SenseKit.git
   SVProgressHUD:
     :commit: 90e5921e0a0a782c7e06dd8d308031041c10f789
     :git: https://github.com/samvermette/SVProgressHUD.git

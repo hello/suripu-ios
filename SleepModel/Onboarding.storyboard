@@ -837,6 +837,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PfP-cZ-xmv"/>
+                    <connections>
+                        <outlet property="weightPickerView" destination="sz6-qB-XQ1" id="cuv-Jy-o0J"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJk-Le-TAF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -845,7 +848,7 @@
         <!--Location View Controller-->
         <scene sceneID="8dU-VQ-r9E">
             <objects>
-                <viewController id="KXH-dY-O28" userLabel="Location View Controller" sceneMemberID="viewController">
+                <viewController id="KXH-dY-O28" userLabel="Location View Controller" customClass="HEMLocationFinderViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="86E-a5-OJw"/>
                         <viewControllerLayoutGuide type="bottom" id="shs-Q7-7yt"/>
@@ -858,44 +861,43 @@
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fGA-uc-vQz" userLabel="Screen View">
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fGA-uc-vQz" userLabel="Screen View">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="worldMapImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-9r-AQZ">
-                                        <rect key="frame" x="0.0" y="131" width="320" height="291"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVC-vN-68T">
-                                        <rect key="frame" x="145" y="520" width="30" height="28"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                        <state key="normal" title="Skip">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-8C-14E" customClass="HEMActionButton">
-                                        <rect key="frame" x="101" y="472" width="119" height="40"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="sSm-FW-Kol"/>
-                                            <constraint firstAttribute="width" constant="119" id="tse-nm-Y92"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                        <state key="normal" title="Set Location">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                    </button>
-                                </subviews>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.38" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="SVC-vN-68T" secondAttribute="centerX" id="1MQ-8A-DSN"/>
-                                    <constraint firstAttribute="bottom" secondItem="SVC-vN-68T" secondAttribute="bottom" constant="20" id="9kU-PD-D0X"/>
-                                    <constraint firstItem="SVC-vN-68T" firstAttribute="top" secondItem="Sdf-8C-14E" secondAttribute="bottom" constant="8" id="O62-pS-Hx9"/>
-                                </constraints>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="worldMapImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-9r-AQZ">
+                                <rect key="frame" x="-78" y="166" width="476" height="237"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVC-vN-68T">
+                                <rect key="frame" x="145" y="500" width="30" height="28"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="Skip">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="skipRequestingLocation:" destination="KXH-dY-O28" eventType="touchUpInside" id="8Yl-rE-iXb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-8C-14E" customClass="HEMActionButton">
+                                <rect key="frame" x="100" y="450" width="119" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="sSm-FW-Kol"/>
+                                    <constraint firstAttribute="width" constant="119" id="tse-nm-Y92"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="Set Location">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="requestLocation:" destination="KXH-dY-O28" eventType="touchUpInside" id="feE-fg-p0R"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Where are you?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zaK-X5-Jnp">
                                 <rect key="frame" x="20" y="61" width="280" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -906,10 +908,12 @@
                         </subviews>
                         <color key="backgroundColor" red="0.9215686917" green="0.92941182850000004" blue="0.92549026010000002" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
-                            <constraint firstItem="fGA-uc-vQz" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leading" id="67V-e8-n2f"/>
-                            <constraint firstItem="shs-Q7-7yt" firstAttribute="top" secondItem="fGA-uc-vQz" secondAttribute="bottom" id="7Yl-AW-kWk"/>
-                            <constraint firstItem="fGA-uc-vQz" firstAttribute="top" secondItem="86E-a5-OJw" secondAttribute="bottom" constant="-64" id="BIp-GE-zpS"/>
-                            <constraint firstAttribute="trailing" secondItem="fGA-uc-vQz" secondAttribute="trailing" id="m88-ZP-AHA"/>
+                            <constraint firstAttribute="centerY" secondItem="sEE-9r-AQZ" secondAttribute="centerY" constant="-0.5" id="5iI-S1-A26"/>
+                            <constraint firstAttribute="centerX" secondItem="Sdf-8C-14E" secondAttribute="centerX" constant="0.5" id="KMG-sr-gvx"/>
+                            <constraint firstItem="shs-Q7-7yt" firstAttribute="top" secondItem="SVC-vN-68T" secondAttribute="bottom" constant="40" id="O7A-hA-ncP"/>
+                            <constraint firstItem="SVC-vN-68T" firstAttribute="top" secondItem="Sdf-8C-14E" secondAttribute="bottom" constant="10" id="ZTM-6i-aFy"/>
+                            <constraint firstAttribute="centerX" secondItem="sEE-9r-AQZ" secondAttribute="centerX" id="txX-4k-C9R"/>
+                            <constraint firstAttribute="centerX" secondItem="SVC-vN-68T" secondAttribute="centerX" id="xtD-1F-7CF"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="j8Z-os-nU5"/>

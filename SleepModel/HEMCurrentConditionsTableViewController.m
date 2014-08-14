@@ -114,7 +114,9 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
         cell.detailLabel.text = nil;
         cell.glyphImageView.image = nil;
         cell.descriptionLabel.text = nil;
+        cell.disclosureImageView.hidden = YES;
     } else {
+        cell.disclosureImageView.hidden = NO;
         [(HEMColoredRoundedLabel*)cell.detailLabel showRoundedBackground];
         SENSensor* sensor = self.sensors[indexPath.row];
         cell.titleLabel.text = sensor.localizedName;
@@ -165,6 +167,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     [(HEMColoredRoundedLabel*)cell.detailLabel hideRoundedBackground];
     [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[UIColor darkGrayColor]];
     cell.descriptionLabel.text = nil;
+    cell.disclosureImageView.hidden = NO;
     switch (indexPath.row) {
     case 0: {
         cell.titleLabel.text = NSLocalizedString(@"alarm.title", nil);
@@ -194,15 +197,22 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 
 #pragma mark - UITableViewDelegate
 
+- (BOOL)tableView:(UITableView*)tableView shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    return !(indexPath.section == 0 && self.sensors.count == 0);
+}
+
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:[NSBundle mainBundle]];
     switch (indexPath.section) {
     case 0: {
-        HEMSensorViewController* controller = (HEMSensorViewController*)[storyboard instantiateViewControllerWithIdentifier:@"sensorViewController"];
-        controller.sensor = self.sensors[indexPath.row];
-        [self.navigationController pushViewController:controller animated:YES];
+        if (self.sensors.count > indexPath.row) {
+            HEMSensorViewController* controller = (HEMSensorViewController*)[storyboard instantiateViewControllerWithIdentifier:@"sensorViewController"];
+            controller.sensor = self.sensors[indexPath.row];
+            [self.navigationController pushViewController:controller animated:YES];
+        }
     } break;
 
     case 1: {

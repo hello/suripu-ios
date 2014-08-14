@@ -586,6 +586,7 @@
                                 <connections>
                                     <outlet property="descriptionLabel" destination="Poc-rG-WgZ" id="gk1-jh-Oxa"/>
                                     <outlet property="detailLabel" destination="TES-xs-u6w" id="Kmc-8z-hdv"/>
+                                    <outlet property="disclosureImageView" destination="GJw-vF-WxK" id="wTq-g9-D9a"/>
                                     <outlet property="glyphImageView" destination="4nj-nW-uMl" id="2uF-N3-Iza"/>
                                     <outlet property="titleLabel" destination="EJv-zH-aeq" id="ky9-li-iKp"/>
                                 </connections>

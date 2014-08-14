@@ -28,6 +28,10 @@
 + (UIColor*)alertSensorColor;
 + (UIColor*)idealSensorColor;
 + (UIColor*)warningSensorColor;
++ (UIColor*)lightSleepColor;
++ (UIColor*)intermediateSleepColor;
++ (UIColor*)deepSleepColor;
++ (UIColor*)awakeSleepColor;
 
 // Gradients
 + (PCGradient*)blueBackgroundGradient;

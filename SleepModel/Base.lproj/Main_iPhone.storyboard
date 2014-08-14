@@ -655,38 +655,60 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Fa-Fc-h2C" customClass="HEMSleepScoreGraphView">
-                                <rect key="frame" x="73" y="74" width="175" height="175"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8vM-Gj-Qhm">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Fa-Fc-h2C" customClass="HEMSleepScoreGraphView">
+                                        <rect key="frame" x="73" y="74" width="175" height="175"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="175" id="ELl-DF-VZW"/>
+                                            <constraint firstAttribute="height" constant="175" id="XGg-Y6-dcl"/>
+                                        </constraints>
+                                    </view>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="8Fj-BV-COc">
+                                        <rect key="frame" x="61" y="257" width="200" height="34"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAST NIGHT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9N-Mx-OAD">
+                                        <rect key="frame" x="114" y="55" width="92" height="19"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <view contentMode="scaleToFill" placeholderIntrinsicWidth="320" placeholderIntrinsicHeight="568" translatesAutoresizingMaskIntoConstraints="NO" id="GQK-mP-6tx" customClass="HEMSleepHistoryView">
+                                        <rect key="frame" x="0.0" y="299" width="320" height="568"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="175" id="ELl-DF-VZW"/>
-                                    <constraint firstAttribute="height" constant="175" id="XGg-Y6-dcl"/>
+                                    <constraint firstItem="GQK-mP-6tx" firstAttribute="leading" secondItem="8vM-Gj-Qhm" secondAttribute="leading" id="3HH-5q-68X"/>
+                                    <constraint firstAttribute="centerX" secondItem="8Fj-BV-COc" secondAttribute="centerX" constant="-1" id="7MN-nS-mfO"/>
+                                    <constraint firstItem="Z9N-Mx-OAD" firstAttribute="top" secondItem="8vM-Gj-Qhm" secondAttribute="top" constant="55" id="Asz-WN-Dad"/>
+                                    <constraint firstAttribute="centerX" secondItem="4Fa-Fc-h2C" secondAttribute="centerX" constant="-0.5" id="KMz-BX-662"/>
+                                    <constraint firstItem="GQK-mP-6tx" firstAttribute="top" secondItem="8Fj-BV-COc" secondAttribute="bottom" constant="8" id="UFU-4O-qA3"/>
+                                    <constraint firstItem="8Fj-BV-COc" firstAttribute="top" secondItem="4Fa-Fc-h2C" secondAttribute="bottom" constant="8" id="Zre-nU-rQG"/>
+                                    <constraint firstAttribute="bottom" secondItem="GQK-mP-6tx" secondAttribute="bottom" id="izD-Tp-97m"/>
+                                    <constraint firstAttribute="trailing" secondItem="GQK-mP-6tx" secondAttribute="trailing" id="jmO-Xo-BRM"/>
+                                    <constraint firstAttribute="centerX" secondItem="Z9N-Mx-OAD" secondAttribute="centerX" id="uXX-qR-EZd"/>
+                                    <constraint firstItem="4Fa-Fc-h2C" firstAttribute="top" secondItem="Z9N-Mx-OAD" secondAttribute="bottom" id="yeo-qR-wO7"/>
                                 </constraints>
-                            </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="8Fj-BV-COc">
-                                <rect key="frame" x="61" y="257" width="200" height="34"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="14"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAST NIGHT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Z9N-Mx-OAD">
-                                <rect key="frame" x="114" y="55" width="92" height="19"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="Z9N-Mx-OAD" secondAttribute="centerX" id="NuN-gy-gVQ"/>
-                            <constraint firstItem="4Fa-Fc-h2C" firstAttribute="top" secondItem="Z9N-Mx-OAD" secondAttribute="bottom" id="OR7-Vt-K6f"/>
-                            <constraint firstAttribute="centerX" secondItem="8Fj-BV-COc" secondAttribute="centerX" constant="-0.5" id="Ocq-Qi-0Qo"/>
-                            <constraint firstItem="8Fj-BV-COc" firstAttribute="top" secondItem="4Fa-Fc-h2C" secondAttribute="bottom" constant="8" id="f22-uI-4WU"/>
-                            <constraint firstItem="Z9N-Mx-OAD" firstAttribute="top" secondItem="TTk-zO-a4D" secondAttribute="bottom" constant="35" id="gD7-ai-gGn"/>
-                            <constraint firstAttribute="centerX" secondItem="4Fa-Fc-h2C" secondAttribute="centerX" id="tzE-8x-Ehx"/>
+                            <constraint firstItem="8vM-Gj-Qhm" firstAttribute="top" secondItem="TTk-zO-a4D" secondAttribute="bottom" constant="-20" id="BDD-fe-5yg"/>
+                            <constraint firstAttribute="trailing" secondItem="8vM-Gj-Qhm" secondAttribute="trailing" id="XdA-fh-Ke2"/>
+                            <constraint firstItem="4Fp-Be-aAq" firstAttribute="top" secondItem="8vM-Gj-Qhm" secondAttribute="bottom" id="fQc-ne-JXC"/>
+                            <constraint firstItem="8vM-Gj-Qhm" firstAttribute="leading" secondItem="HaG-J8-2J6" secondAttribute="leading" id="yPx-Gr-SGp"/>
                         </constraints>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="v3i-sc-B7M" appends="YES" id="PCc-Zq-do0"/>
@@ -696,6 +718,8 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="lastNightLabel" destination="Z9N-Mx-OAD" id="1pd-aA-nx9"/>
+                        <outlet property="scrollView" destination="8vM-Gj-Qhm" id="qIX-bR-3Lu"/>
+                        <outlet property="sleepHistoryView" destination="GQK-mP-6tx" id="YdN-0k-sT4"/>
                         <outlet property="sleepScoreView" destination="4Fa-Fc-h2C" id="B6e-Pe-jSz"/>
                     </connections>
                 </viewController>

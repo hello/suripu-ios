@@ -26,6 +26,10 @@ static UIColor* _lightestBlueColor = nil;
 static UIColor* _alertSensorColor = nil;
 static UIColor* _idealSensorColor = nil;
 static UIColor* _warningSensorColor = nil;
+static UIColor* _lightSleepColor = nil;
+static UIColor* _intermediateSleepColor = nil;
+static UIColor* _deepSleepColor = nil;
+static UIColor* _awakeSleepColor = nil;
 
 static PCGradient* _blueBackgroundGradient = nil;
 
@@ -60,6 +64,10 @@ static UIImage* _chevronIconRight = nil;
     _alertSensorColor = [UIColor colorWithRed: 0.957 green: 0.486 blue: 0.125 alpha: 1];
     _idealSensorColor = [UIColor colorWithRed: 0.267 green: 0.847 blue: 0.455 alpha: 1];
     _warningSensorColor = [UIColor colorWithRed: 0.957 green: 0.22 blue: 0.133 alpha: 1];
+    _lightSleepColor = [UIColor colorWithRed: 0.416 green: 0.675 blue: 0.988 alpha: 1];
+    _intermediateSleepColor = [UIColor colorWithRed: 0.302 green: 0.588 blue: 0.941 alpha: 1];
+    _deepSleepColor = [UIColor colorWithRed: 0.153 green: 0.435 blue: 0.851 alpha: 1];
+    _awakeSleepColor = [UIColor colorWithRed: 0.32 green: 0.356 blue: 0.8 alpha: 0];
 
     // Gradients Initialization
     CGFloat blueBackgroundGradientLocations[] = {0, 1};
@@ -80,6 +88,10 @@ static UIImage* _chevronIconRight = nil;
 + (UIColor*)alertSensorColor { return _alertSensorColor; }
 + (UIColor*)idealSensorColor { return _idealSensorColor; }
 + (UIColor*)warningSensorColor { return _warningSensorColor; }
++ (UIColor*)lightSleepColor { return _lightSleepColor; }
++ (UIColor*)intermediateSleepColor { return _intermediateSleepColor; }
++ (UIColor*)deepSleepColor { return _deepSleepColor; }
++ (UIColor*)awakeSleepColor { return _awakeSleepColor; }
 
 #pragma mark Gradients
 

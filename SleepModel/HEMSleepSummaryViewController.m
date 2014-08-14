@@ -4,10 +4,13 @@
 #import "HEMSleepSummaryViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepScoreGraphView.h"
+#import "HEMSleepHistoryView.h"
 #import "HelloStyleKit.h"
 
 @interface HEMSleepSummaryViewController () <FCDynamicPaneViewController>
 
+@property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
+@property (weak, nonatomic) IBOutlet HEMSleepHistoryView* sleepHistoryView;
 @property (weak, nonatomic) IBOutlet UILabel* lastNightLabel;
 @property (weak, nonatomic) IBOutlet HEMSleepScoreGraphView* sleepScoreView;
 @property (strong, nonatomic) NSDate* dateForNightOfSleep;
@@ -29,6 +32,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
     NSString* dateText = [[HEMSleepSummaryViewController sleepDateFormatter] stringFromDate:self.dateForNightOfSleep];
     NSString* lastNightDateText = [[HEMSleepSummaryViewController sleepDateFormatter] stringFromDate:[NSDate dateWithTimeInterval:-60 * 60 * 24 sinceDate:[NSDate date]]];
     if ([dateText isEqualToString:lastNightDateText]) {
@@ -52,8 +56,10 @@
 
 - (void)viewDidPop
 {
+    self.scrollView.scrollEnabled = NO;
     [UIView animateWithDuration:0.5f animations:^{
         self.lastNightLabel.alpha = 1.f;
+        self.scrollView.contentOffset = CGPointMake(0, 0);
         self.view.backgroundColor = [HelloStyleKit lightestBlueColor];
     }];
 }
@@ -64,6 +70,7 @@
         self.lastNightLabel.alpha = 0.f;
         self.view.backgroundColor = [UIColor whiteColor];
     }];
+    self.scrollView.scrollEnabled = YES;
 }
 
 - (void)didMoveToParentViewController:(UIViewController*)parent

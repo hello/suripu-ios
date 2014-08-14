@@ -66,7 +66,7 @@
         NSString* formattedValue = [SENSensor formatValue:obj[@"value"] withUnit:[SENSensor unitFromValue:obj[@"unit"]]];
         CGSize textSize = [formattedValue sizeWithAttributes:textAttributes];
         CGFloat contentHeight =  MAX(sensorImage.size.height, textSize.height);
-        CGRect sensorRect = CGRectMake(previousXOffset + 10.f, CGRectGetHeight(rect) - contentHeight - 5.f, segmentWidth, contentHeight);
+        CGRect sensorRect = CGRectMake(previousXOffset + 10.f, CGRectGetHeight(rect) - contentHeight - 10.f, segmentWidth, contentHeight);
         
         CGFloat offset = index == 0 ? 10 : 0;
         CGPoint imagePoint = CGPointMake(CGRectGetMinX(sensorRect) + offset, CGRectGetMidY(sensorRect) - (sensorImage.size.height / 2));

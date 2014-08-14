@@ -48,6 +48,10 @@ static UIImage* _wifiLogoImage = nil;
 static UIImage* _humidityIcon = nil;
 static UIImage* _particleIcon = nil;
 static UIImage* _temperatureIcon = nil;
+static UIImage* _lightEventIcon = nil;
+static UIImage* _noiseEventIcon = nil;
+static UIImage* _sleepEventIcon = nil;
+static UIImage* _wakeupEventIcon = nil;
 static UIImage* _chevronIconRight = nil;
 
 #pragma mark Initialization
@@ -116,6 +120,10 @@ static UIImage* _chevronIconRight = nil;
 + (UIImage*)humidityIcon { return _humidityIcon ?: (_humidityIcon = [UIImage imageNamed: @"humidityIcon"]); }
 + (UIImage*)particleIcon { return _particleIcon ?: (_particleIcon = [UIImage imageNamed: @"particleIcon"]); }
 + (UIImage*)temperatureIcon { return _temperatureIcon ?: (_temperatureIcon = [UIImage imageNamed: @"temperatureIcon"]); }
++ (UIImage*)lightEventIcon { return _lightEventIcon ?: (_lightEventIcon = [UIImage imageNamed: @"lightEventIcon"]); }
++ (UIImage*)noiseEventIcon { return _noiseEventIcon ?: (_noiseEventIcon = [UIImage imageNamed: @"noiseEventIcon"]); }
++ (UIImage*)sleepEventIcon { return _sleepEventIcon ?: (_sleepEventIcon = [UIImage imageNamed: @"sleepEventIcon"]); }
++ (UIImage*)wakeupEventIcon { return _wakeupEventIcon ?: (_wakeupEventIcon = [UIImage imageNamed: @"wakeupEventIcon"]); }
 + (UIImage*)chevronIconRight { return _chevronIconRight ?: (_chevronIconRight = [UIImage imageNamed: @"chevronIconRight"]); }
 
 #pragma mark Drawing Methods

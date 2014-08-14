@@ -52,6 +52,10 @@
 + (UIImage*)humidityIcon;
 + (UIImage*)particleIcon;
 + (UIImage*)temperatureIcon;
++ (UIImage*)lightEventIcon;
++ (UIImage*)noiseEventIcon;
++ (UIImage*)sleepEventIcon;
++ (UIImage*)wakeupEventIcon;
 + (UIImage*)chevronIconRight;
 
 // Drawing Methods

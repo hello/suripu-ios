@@ -68,6 +68,14 @@
 		8A90F9BC19637F9400AFD110 /* HEMSleepSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9BB19637F9400AFD110 /* HEMSleepSoundTableViewController.m */; };
 		8A90F9C1196485AE00AFD110 /* HEMSensorSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9C0196485AE00AFD110 /* HEMSensorSpec.m */; };
 		8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB33FE5199D3F710046188F /* HEMLocationFinderViewController.m */; };
+		8AB33FEF199D56C20046188F /* lightEventIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AB33FE7199D56C20046188F /* lightEventIcon.png */; };
+		8AB33FF0199D56C20046188F /* lightEventIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AB33FE8199D56C20046188F /* lightEventIcon@2x.png */; };
+		8AB33FF1199D56C20046188F /* noiseEventIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AB33FE9199D56C20046188F /* noiseEventIcon.png */; };
+		8AB33FF2199D56C20046188F /* noiseEventIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AB33FEA199D56C20046188F /* noiseEventIcon@2x.png */; };
+		8AB33FF3199D56C20046188F /* sleepEventIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AB33FEB199D56C20046188F /* sleepEventIcon.png */; };
+		8AB33FF4199D56C20046188F /* sleepEventIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AB33FEC199D56C20046188F /* sleepEventIcon@2x.png */; };
+		8AB33FF5199D56C20046188F /* wakeupEventIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AB33FED199D56C20046188F /* wakeupEventIcon.png */; };
+		8AB33FF6199D56C20046188F /* wakeupEventIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AB33FEE199D56C20046188F /* wakeupEventIcon@2x.png */; };
 		8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */; };
 		8AC49F8A1981A89D00C2BD63 /* HEMSleepHistoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC49F891981A89D00C2BD63 /* HEMSleepHistoryViewController.m */; };
 		8AC49F8D1981B00900C2BD63 /* HEMSleepSummaryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC49F8C1981B00900C2BD63 /* HEMSleepSummaryViewController.m */; };
@@ -201,6 +209,14 @@
 		8A90F9C0196485AE00AFD110 /* HEMSensorSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorSpec.m; sourceTree = "<group>"; };
 		8AB33FE4199D3F710046188F /* HEMLocationFinderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationFinderViewController.h; sourceTree = "<group>"; };
 		8AB33FE5199D3F710046188F /* HEMLocationFinderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationFinderViewController.m; sourceTree = "<group>"; };
+		8AB33FE7199D56C20046188F /* lightEventIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightEventIcon.png; path = images/lightEventIcon.png; sourceTree = "<group>"; };
+		8AB33FE8199D56C20046188F /* lightEventIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightEventIcon@2x.png"; path = "images/lightEventIcon@2x.png"; sourceTree = "<group>"; };
+		8AB33FE9199D56C20046188F /* noiseEventIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = noiseEventIcon.png; path = images/noiseEventIcon.png; sourceTree = "<group>"; };
+		8AB33FEA199D56C20046188F /* noiseEventIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "noiseEventIcon@2x.png"; path = "images/noiseEventIcon@2x.png"; sourceTree = "<group>"; };
+		8AB33FEB199D56C20046188F /* sleepEventIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sleepEventIcon.png; path = images/sleepEventIcon.png; sourceTree = "<group>"; };
+		8AB33FEC199D56C20046188F /* sleepEventIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sleepEventIcon@2x.png"; path = "images/sleepEventIcon@2x.png"; sourceTree = "<group>"; };
+		8AB33FED199D56C20046188F /* wakeupEventIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wakeupEventIcon.png; path = images/wakeupEventIcon.png; sourceTree = "<group>"; };
+		8AB33FEE199D56C20046188F /* wakeupEventIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wakeupEventIcon@2x.png"; path = "images/wakeupEventIcon@2x.png"; sourceTree = "<group>"; };
 		8AC49F85197F365C00C2BD63 /* HEMSleepScoreGraphView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepScoreGraphView.h; sourceTree = "<group>"; };
 		8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepScoreGraphView.m; sourceTree = "<group>"; };
 		8AC49F881981A89D00C2BD63 /* HEMSleepHistoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepHistoryViewController.h; sourceTree = "<group>"; };
@@ -406,24 +422,24 @@
 				8AC49F901981DC5B00C2BD63 /* Collection View Layouts */,
 				8A033871197DDA9700BE8327 /* HEMActionButton.h */,
 				8A033872197DDA9700BE8327 /* HEMActionButton.m */,
+				8A66FC80199BE94100922ED5 /* HEMColoredRoundedLabel.h */,
+				8A66FC81199BE94100922ED5 /* HEMColoredRoundedLabel.m */,
 				8AC49FA019832FE100C2BD63 /* HEMDeviceTableViewCell.h */,
 				8AC49FA119832FE100C2BD63 /* HEMDeviceTableViewCell.m */,
-				8A4B3D471992CB4500856BDE /* HEMRoundedTextField.h */,
-				8A4B3D481992CB4500856BDE /* HEMRoundedTextField.m */,
 				8A782681196B4729002882A1 /* HEMGraphTooltipView.h */,
 				8A782682196B4729002882A1 /* HEMGraphTooltipView.m */,
 				8A90F9B51963701A00AFD110 /* HEMInsetGlyphTableViewCell.h */,
 				8A90F9B61963701A00AFD110 /* HEMInsetGlyphTableViewCell.m */,
 				8AC49F941981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.h */,
 				8AC49F951981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m */,
-				8AC49F85197F365C00C2BD63 /* HEMSleepScoreGraphView.h */,
-				8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */,
-				8A66FC80199BE94100922ED5 /* HEMColoredRoundedLabel.h */,
-				8A66FC81199BE94100922ED5 /* HEMColoredRoundedLabel.m */,
-				8A66FC83199C035500922ED5 /* HEMSleepHistoryView.h */,
-				8A66FC84199C035500922ED5 /* HEMSleepHistoryView.m */,
+				8A4B3D471992CB4500856BDE /* HEMRoundedTextField.h */,
+				8A4B3D481992CB4500856BDE /* HEMRoundedTextField.m */,
 				8A66FC86199C3F3900922ED5 /* HEMSensorValuesView.h */,
 				8A66FC87199C3F3900922ED5 /* HEMSensorValuesView.m */,
+				8A66FC83199C035500922ED5 /* HEMSleepHistoryView.h */,
+				8A66FC84199C035500922ED5 /* HEMSleepHistoryView.m */,
+				8AC49F85197F365C00C2BD63 /* HEMSleepScoreGraphView.h */,
+				8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -515,6 +531,14 @@
 		8AC4A0301989C33B00C2BD63 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				8AB33FE7199D56C20046188F /* lightEventIcon.png */,
+				8AB33FE8199D56C20046188F /* lightEventIcon@2x.png */,
+				8AB33FE9199D56C20046188F /* noiseEventIcon.png */,
+				8AB33FEA199D56C20046188F /* noiseEventIcon@2x.png */,
+				8AB33FEB199D56C20046188F /* sleepEventIcon.png */,
+				8AB33FEC199D56C20046188F /* sleepEventIcon@2x.png */,
+				8AB33FED199D56C20046188F /* wakeupEventIcon.png */,
+				8AB33FEE199D56C20046188F /* wakeupEventIcon@2x.png */,
 				8AC4A04D198A070F00C2BD63 /* alarmEnabledIcon.png */,
 				8AC4A04E198A070F00C2BD63 /* alarmEnabledIcon@2x.png */,
 				8AC4A04F198A070F00C2BD63 /* alarmNoteIcon.png */,
@@ -636,14 +660,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
+				8AB33FF0199D56C20046188F /* lightEventIcon@2x.png in Resources */,
+				8AB33FF6199D56C20046188F /* wakeupEventIcon@2x.png in Resources */,
 				8AC4A058198A0AE900C2BD63 /* questionIcon@2x.png in Resources */,
 				8AC4A0371989C36200C2BD63 /* humidityIcon.png in Resources */,
 				8A4B3D51199308BB00856BDE /* wifiLogoImage@2x.png in Resources */,
 				8AC4A054198A070F00C2BD63 /* alarmNoteIcon@2x.png in Resources */,
 				8AC4A0381989C36200C2BD63 /* humidityIcon@2x.png in Resources */,
+				8AB33FF4199D56C20046188F /* sleepEventIcon@2x.png in Resources */,
 				8AC4A057198A0AE900C2BD63 /* questionIcon.png in Resources */,
+				8AB33FF1199D56C20046188F /* noiseEventIcon.png in Resources */,
 				8A4B3D461992C8C800856BDE /* onboardingBackgroundImage2@2x.png in Resources */,
 				8A4B3D50199308BB00856BDE /* wifiLogoImage.png in Resources */,
+				8AB33FF5199D56C20046188F /* wakeupEventIcon.png in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
 				8AC4A051198A070F00C2BD63 /* alarmEnabledIcon.png in Resources */,
 				8A4B3D4F199308BB00856BDE /* bluetoothLogoImage@2x.png in Resources */,
@@ -659,11 +688,14 @@
 				8AC4A03B1989C36200C2BD63 /* temperatureIcon.png in Resources */,
 				8AC4A03C1989C36200C2BD63 /* temperatureIcon@2x.png in Resources */,
 				6003F5A4195388D20070C39A /* Main_iPad.storyboard in Resources */,
+				8AB33FEF199D56C20046188F /* lightEventIcon.png in Resources */,
 				8AC4A04A1989D47000C2BD63 /* chevronIconLeft@2x.png in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
+				8AB33FF2199D56C20046188F /* noiseEventIcon@2x.png in Resources */,
 				8AC4A03F1989C5A100C2BD63 /* settingsIcon.png in Resources */,
 				8A033870197DD89C00BE8327 /* Onboarding.storyboard in Resources */,
 				8A4B3D4E199308BB00856BDE /* bluetoothLogoImage.png in Resources */,
+				8AB33FF3199D56C20046188F /* sleepEventIcon.png in Resources */,
 				8AC4A04B1989D47000C2BD63 /* chevronIconRight.png in Resources */,
 				8A66FC95199D24FF00922ED5 /* maleIcon.png in Resources */,
 				8A66FC93199D24FF00922ED5 /* femaleIcon.png in Resources */,

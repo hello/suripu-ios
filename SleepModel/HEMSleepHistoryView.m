@@ -6,8 +6,8 @@
 #import "HelloStyleKit.h"
 
 CGFloat const HEMSleepHistoryViewPadding = 20.f;
-CGFloat const HEMSleepHistoryViewSensorsHeight = 60.f;
-CGFloat const HEMSleepHistoryViewEventStripWidth = 25.f;
+CGFloat const HEMSleepHistoryViewSensorsHeight = 70.f;
+CGFloat const HEMSleepHistoryViewEventStripWidth = 22.f;
 
 @interface HEMSleepHistoryView ()
 
@@ -15,6 +15,7 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 25.f;
 @property (nonatomic) NSTimeInterval endInterval;
 @property (nonatomic) NSTimeInterval secondsPerPoint;
 @property (nonatomic, strong) NSArray* dataSlices;
+@property (nonatomic, strong) NSArray* sleepEvents;
 @property (nonatomic, strong) NSArray* maskLayers;
 @property (nonatomic, strong) NSDateFormatter* dateFormatter;
 @property (nonatomic, strong) HEMSensorValuesView* sensorValuesView;
@@ -40,6 +41,13 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 25.f;
 {
     [self bootstrap];
 }
+
+- (void)dealloc
+{
+    _maskLayers = nil;
+}
+
+#pragma mark - Touch Events
 
 - (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
 {
@@ -72,9 +80,16 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 25.f;
     }
 }
 
+#pragma mark - Layout
+
 - (CGSize)intrinsicContentSize
 {
     return [UIScreen mainScreen].bounds.size;
+}
+
+- (CGFloat)contentHeight
+{
+    return (CGRectGetHeight(self.bounds) - (HEMSleepHistoryViewPadding * 2) - HEMSleepHistoryViewSensorsHeight);
 }
 
 - (void)layoutSubviews
@@ -82,6 +97,12 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 25.f;
     [super layoutSubviews];
     self.sensorValuesView.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), HEMSleepHistoryViewSensorsHeight);
 
+    [self layoutAlphaMask];
+    [self layoutSleepEvents];
+}
+
+- (void)layoutAlphaMask
+{
     if (!self.maskLayers) {
         CALayer* topLayer = [[CALayer alloc] init];
         CALayer* leadingLayer = [[CALayer alloc] init];
@@ -96,13 +117,53 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 25.f;
         trailingLayer.backgroundColor = backgroundColor;
         leadingLayer.backgroundColor = backgroundColor;
         bottomLayer.backgroundColor = backgroundColor;
-        [self.layer addSublayer:topLayer];
-        [self.layer addSublayer:bottomLayer];
-        [self.layer addSublayer:trailingLayer];
-        [self.layer addSublayer:leadingLayer];
+        [self.layer insertSublayer:topLayer atIndex:0];
+        [self.layer insertSublayer:bottomLayer atIndex:0];
+        [self.layer insertSublayer:trailingLayer atIndex:0];
+        [self.layer insertSublayer:leadingLayer atIndex:0];
         self.maskLayers = @[ topLayer, bottomLayer, trailingLayer, leadingLayer ];
     }
 }
+
+- (void)layoutSleepEvents
+{
+    for (UIView* subview in self.subviews) {
+        if ([subview isKindOfClass:[UIButton class]]) {
+            [subview removeFromSuperview];
+        }
+    }
+    for (NSDictionary* event in self.sleepEvents) {
+        UIImage* image = nil;
+        if ([event[@"type"] isEqualToString:@"AWAKE"]) {
+            image = [HelloStyleKit wakeupEventIcon];
+        } else if ([event[@"type"] isEqualToString:@"SLEEP"]) {
+            image = [HelloStyleKit sleepEventIcon];
+        } else if ([event[@"type"] isEqualToString:@"LIGHT"]) {
+            image = [HelloStyleKit lightEventIcon];
+        } else if ([event[@"type"] isEqualToString:@"NOISE"]) {
+            image = [HelloStyleKit noiseEventIcon];
+        } else {
+            continue;
+        }
+        CGFloat yOffset = [self yOffsetForTimeInterval:[event[@"timestamp"] doubleValue] / 1000];
+        CGRect buttonFrame = CGRectMake(HEMSleepHistoryViewPadding,
+                                        yOffset - (HEMSleepHistoryViewEventStripWidth / 2),
+                                        HEMSleepHistoryViewEventStripWidth,
+                                        HEMSleepHistoryViewEventStripWidth);
+        UIButton* button = [[UIButton alloc] initWithFrame:buttonFrame];
+        [button setImage:image forState:UIControlStateNormal];
+        button.contentMode = UIViewContentModeCenter;
+        button.backgroundColor = [UIColor whiteColor];
+        button.layer.borderColor = [HelloStyleKit intermediateSleepColor].CGColor;
+        button.layer.borderWidth = 2.f;
+        button.layer.cornerRadius = HEMSleepHistoryViewEventStripWidth / 2;
+        button.layer.shadowOpacity = 0;
+
+        [self addSubview:button];
+    }
+}
+
+#pragma mark - Custom Drawing
 
 - (void)drawRect:(CGRect)rect
 {
@@ -182,11 +243,6 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 25.f;
     }
 }
 
-- (CGFloat)contentHeight
-{
-    return (CGRectGetHeight(self.bounds) - (HEMSleepHistoryViewPadding * 2) - HEMSleepHistoryViewSensorsHeight);
-}
-
 - (void)setDataSlices:(NSArray*)dataSlices
 {
     NSArray* sortedSlices = [dataSlices sortedArrayUsingComparator:^NSComparisonResult(NSDictionary* obj1, NSDictionary* obj2) {
@@ -201,13 +257,15 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 25.f;
     [self setNeedsDisplay];
 }
 
+#pragma mark - Fake Data Generation
+
 - (void)bootstrap
 {
     NSMutableArray* slices = [[NSMutableArray alloc] initWithCapacity:40];
     CGFloat startTimeMillis = ([[NSDate date] timeIntervalSince1970] * 1000);
-    CGFloat previousDuration = 0;
+    CGFloat totalDuration = 0;
     for (int i = 0; i < 40; i++) {
-        CGFloat timestamp = startTimeMillis + previousDuration;
+        CGFloat timestamp = startTimeMillis + totalDuration;
         CGFloat duration = (arc4random() % 20) * 100000;
         [slices addObject:@{
             @"timestamp" : @(timestamp),
@@ -228,9 +286,28 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 25.f;
                 },
             }
         }];
-        previousDuration += duration;
+        totalDuration += duration;
     }
-    [self setDataSlices:slices];
+    NSInteger eventCount = arc4random() % 6;
+    NSMutableArray* events = [[NSMutableArray alloc] initWithCapacity:eventCount];
+    [events addObject:@{ @"timestamp" : @(startTimeMillis),
+                         @"type" : @"AWAKE",
+                         @"message" : @"You woke up!",
+                         @"duration" : @0 }];
+    for (int i = 0; i < eventCount; i++) {
+        CGFloat duration = (arc4random() % 10) * 10000;
+        NSString* message = [NSString stringWithFormat:@"Something unexplainable occurred for %.f seconds.", duration / 1000];
+        [events addObject:@{ @"timestamp" : @(startTimeMillis + ((arc4random() % 280) * 125000 + 360000)),
+                             @"type" : @[ @"LIGHT", @"NOISE" ][arc4random() % 2],
+                             @"message" : message,
+                             @"duration" : @(duration) }];
+    }
+    [events addObject:@{ @"timestamp" : @(startTimeMillis + totalDuration),
+                         @"type" : @"SLEEP",
+                         @"message" : @"You fell asleep a little late today",
+                         @"duration" : @0 }];
+    self.sleepEvents = events;
+    self.dataSlices = slices;
 }
 
 @end

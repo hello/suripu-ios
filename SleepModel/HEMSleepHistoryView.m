@@ -1,9 +1,12 @@
 
 #import <SenseKit/SENSettings.h>
+
 #import "HEMSleepHistoryView.h"
+#import "HEMSensorValuesView.h"
 #import "HelloStyleKit.h"
 
 CGFloat const HEMSleepHistoryViewPadding = 20.f;
+CGFloat const HEMSleepHistoryViewSensorsHeight = 45.f;
 
 @interface HEMSleepHistoryView ()
 
@@ -12,6 +15,7 @@ CGFloat const HEMSleepHistoryViewPadding = 20.f;
 @property (nonatomic) NSTimeInterval secondsPerPoint;
 @property (nonatomic, strong) NSArray* dataSlices;
 @property (nonatomic, strong) NSDateFormatter* dateFormatter;
+@property (nonatomic, strong) HEMSensorValuesView* sensorValuesView;
 @end
 
 @implementation HEMSleepHistoryView
@@ -23,6 +27,9 @@ CGFloat const HEMSleepHistoryViewPadding = 20.f;
         _startInterval = _endInterval - (60 * 60 * 8);
         _dateFormatter = [[NSDateFormatter alloc] init];
         _dateFormatter.dateFormat = [SENSettings timeFormat] == SENTimeFormat12Hour ? @"h:mm a" : @"H:mm";
+        _sensorValuesView = [[HEMSensorValuesView alloc] init];
+        [self addSubview:_sensorValuesView];
+        [self setUserInteractionEnabled:YES];
     }
     return self;
 }
@@ -32,9 +39,29 @@ CGFloat const HEMSleepHistoryViewPadding = 20.f;
     [self bootstrap];
 }
 
+- (void)touchesBegan:(NSSet*)touches withEvent:(UIEvent*)event
+{
+    UITouch* touch = [[touches allObjects] lastObject];
+    NSTimeInterval timeAtTouch = [self timeIntervalAtYOffset:[touch locationInView:self].y];
+    for (NSDictionary* dataSlice in self.dataSlices) {
+        NSTimeInterval startTimeInterval = [dataSlice[@"timestamp"] doubleValue] / 1000;
+        NSTimeInterval endTimeInterval = [dataSlice[@"duration"] doubleValue] / 1000 + startTimeInterval;
+        if (timeAtTouch >= startTimeInterval && timeAtTouch <= endTimeInterval) {
+            [self.sensorValuesView updateWithSensorData:dataSlice[@"sensors"]];
+            return;
+        }
+    }
+}
+
 - (CGSize)intrinsicContentSize
 {
     return [UIScreen mainScreen].bounds.size;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    self.sensorValuesView.frame = CGRectMake(0, 0, CGRectGetWidth(self.bounds), HEMSleepHistoryViewSensorsHeight);
 }
 
 - (void)drawRect:(CGRect)rect
@@ -81,8 +108,12 @@ CGFloat const HEMSleepHistoryViewPadding = 20.f;
 
 - (CGFloat)yOffsetForTimeInterval:(NSTimeInterval)interval
 {
-    CGFloat y = (interval - self.startInterval) / self.secondsPerPoint + HEMSleepHistoryViewPadding;
-    return y;
+    return (interval - self.startInterval) / self.secondsPerPoint + HEMSleepHistoryViewPadding + HEMSleepHistoryViewSensorsHeight;
+}
+
+- (NSTimeInterval)timeIntervalAtYOffset:(CGFloat)yOffset
+{
+    return (yOffset - HEMSleepHistoryViewPadding - HEMSleepHistoryViewSensorsHeight - (self.startInterval / self.secondsPerPoint)) * self.secondsPerPoint;
 }
 
 - (CGFloat)xOffsetForSleepDepth:(NSInteger)sleepDepth
@@ -117,8 +148,9 @@ CGFloat const HEMSleepHistoryViewPadding = 20.f;
     self.startInterval = [[sortedSlices firstObject][@"timestamp"] doubleValue] / 1000;
     self.endInterval = ([[sortedSlices lastObject][@"timestamp"] doubleValue] + [[sortedSlices lastObject][@"duration"] doubleValue]) / 1000;
     CGFloat duration = (self.endInterval - self.startInterval);
-    self.secondsPerPoint = duration / CGRectGetHeight(self.bounds);
+    self.secondsPerPoint = duration / (CGRectGetHeight(self.bounds) - (HEMSleepHistoryViewPadding * 2) - HEMSleepHistoryViewSensorsHeight);
     _dataSlices = sortedSlices;
+    [self.sensorValuesView updateWithSensorData:[_dataSlices firstObject][@"sensors"]];
     [self setNeedsDisplay];
 }
 
@@ -134,6 +166,20 @@ CGFloat const HEMSleepHistoryViewPadding = 20.f;
             @"timestamp" : @(timestamp),
             @"duration" : @(duration),
             @"sleep_depth" : @(ceilf(arc4random() % 3)),
+            @"sensors" : @{
+                @"temperature" : @{
+                    @"value" : @(arc4random() % 33),
+                    @"unit" : @"c"
+                },
+                @"humidity" : @{
+                    @"value" : @(arc4random() % 100),
+                    @"unit" : @"%"
+                },
+                @"particulates" : @{
+                    @"value" : @(arc4random() % 700),
+                    @"unit" : @"ppm"
+                },
+            }
         }];
         previousDuration += duration;
     }

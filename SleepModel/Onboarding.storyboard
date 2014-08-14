@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="76N-fh-i49">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="5056" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="uc7-01-jZi">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="3733"/>
     </dependencies>
@@ -375,7 +375,7 @@
         <!--Age View Controller-->
         <scene sceneID="J5f-Jz-Trm">
             <objects>
-                <viewController id="R0p-kB-1qZ" userLabel="Age View Controller" sceneMemberID="viewController">
+                <viewController id="R0p-kB-1qZ" userLabel="Age View Controller" customClass="HEMAgePickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CiX-HD-SQL"/>
                         <viewControllerLayoutGuide type="bottom" id="GdX-Ok-5df"/>
@@ -393,8 +393,17 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.38" colorSpace="calibratedRGB"/>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="What is your age?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znD-8e-Xes">
-                                <rect key="frame" x="20" y="61" width="280" height="34"/>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gNl-Rw-59y">
+                                <rect key="frame" x="0.0" y="175" width="320" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="R0p-kB-1qZ" id="4pn-5K-xP0"/>
+                                    <outlet property="delegate" destination="R0p-kB-1qZ" id="yAe-d6-Qvl"/>
+                                </connections>
+                            </pickerView>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is your age?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znD-8e-Xes">
+                                <rect key="frame" x="20" y="61" width="218" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -416,23 +425,22 @@
                                     <segue destination="uc7-01-jZi" kind="push" id="Hwb-Ab-nOP"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="FRn-e4-8V0" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="48" y="198" width="225" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
-                                <connections>
-                                    <outlet property="delegate" destination="5JR-hM-9bB" id="5d7-0T-a3o"/>
-                                </connections>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" red="0.9215686917" green="0.92941182850000004" blue="0.92549026010000002" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
+                            <constraint firstItem="znD-8e-Xes" firstAttribute="top" secondItem="CiX-HD-SQL" secondAttribute="bottom" constant="41" id="ExI-2g-qFx"/>
+                            <constraint firstItem="gNl-Rw-59y" firstAttribute="top" secondItem="znD-8e-Xes" secondAttribute="bottom" constant="80" id="SFc-Tt-enx"/>
+                            <constraint firstItem="znD-8e-Xes" firstAttribute="leading" secondItem="234-Uu-w8v" secondAttribute="leading" constant="20" id="XvW-wL-46v"/>
+                            <constraint firstAttribute="trailing" secondItem="gNl-Rw-59y" secondAttribute="trailing" id="jCS-q2-lpb"/>
+                            <constraint firstItem="gNl-Rw-59y" firstAttribute="leading" secondItem="234-Uu-w8v" secondAttribute="leading" id="knc-sM-LWo"/>
                             <constraint firstItem="GdX-Ok-5df" firstAttribute="top" secondItem="h1g-YQ-7bC" secondAttribute="bottom" constant="44" id="vzE-mL-Nkw"/>
                             <constraint firstAttribute="centerX" secondItem="h1g-YQ-7bC" secondAttribute="centerX" constant="-0.5" id="zGd-JP-Tk7"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kZr-Gj-zOB"/>
+                    <connections>
+                        <outlet property="agePickerView" destination="gNl-Rw-59y" id="MXX-XY-Jzj"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ffw-pv-gaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -441,7 +449,7 @@
         <!--Height View Controller-->
         <scene sceneID="YNj-iP-C8c">
             <objects>
-                <viewController id="uc7-01-jZi" userLabel="Height View Controller" sceneMemberID="viewController">
+                <viewController id="uc7-01-jZi" userLabel="Height View Controller" customClass="HEMHeightPickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PKP-T4-cPd"/>
                         <viewControllerLayoutGuide type="bottom" id="deH-7E-HFU"/>
@@ -459,8 +467,20 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.38" colorSpace="calibratedRGB"/>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="How tall are you?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iyM-PD-FTT">
-                                <rect key="frame" x="20" y="61" width="280" height="34"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="TaC-ou-PiE">
+                                <rect key="frame" x="72" y="125" width="175" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <segments>
+                                    <segment title="Centimeters"/>
+                                    <segment title="Inches"/>
+                                </segments>
+                                <color key="tintColor" white="1" alpha="0.75" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <action selector="updateUnitFormat:" destination="uc7-01-jZi" eventType="valueChanged" id="Gkl-Gp-hcE"/>
+                                </connections>
+                            </segmentedControl>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How tall are you?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iyM-PD-FTT">
+                                <rect key="frame" x="20" y="61" width="209" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -482,23 +502,34 @@
                                     <segue destination="gpF-55-MmK" kind="push" id="1Y3-7o-tzF"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="swF-Ap-gPW" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="48" y="198" width="225" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="piW-Oq-Pd0">
+                                <rect key="frame" x="0.0" y="183" width="320" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="delegate" destination="5JR-hM-9bB" id="4FE-ZY-phq"/>
+                                    <outlet property="dataSource" destination="uc7-01-jZi" id="Rf2-g9-qcs"/>
+                                    <outlet property="delegate" destination="uc7-01-jZi" id="9JW-kH-tNO"/>
                                 </connections>
-                            </textField>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="0.9215686917" green="0.92941182850000004" blue="0.92549026010000002" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
+                            <constraint firstItem="TaC-ou-PiE" firstAttribute="top" secondItem="iyM-PD-FTT" secondAttribute="bottom" constant="30" id="6FL-sz-nax"/>
                             <constraint firstItem="deH-7E-HFU" firstAttribute="top" secondItem="M0L-MG-dGi" secondAttribute="bottom" constant="44" id="J2U-LZ-uhx"/>
+                            <constraint firstItem="iyM-PD-FTT" firstAttribute="top" secondItem="PKP-T4-cPd" secondAttribute="bottom" constant="41" id="WJJ-GV-qAx"/>
                             <constraint firstAttribute="centerX" secondItem="M0L-MG-dGi" secondAttribute="centerX" constant="-0.5" id="WOd-UZ-BSq"/>
+                            <constraint firstAttribute="trailing" secondItem="piW-Oq-Pd0" secondAttribute="trailing" id="WPT-OB-IC2"/>
+                            <constraint firstItem="iyM-PD-FTT" firstAttribute="leading" secondItem="6rG-bz-NdY" secondAttribute="leading" constant="20" id="Z1T-9f-T5d"/>
+                            <constraint firstAttribute="centerX" secondItem="TaC-ou-PiE" secondAttribute="centerX" constant="0.5" id="ZBk-AL-YzE"/>
+                            <constraint firstItem="piW-Oq-Pd0" firstAttribute="leading" secondItem="6rG-bz-NdY" secondAttribute="leading" id="twk-ht-jsZ"/>
+                            <constraint firstItem="piW-Oq-Pd0" firstAttribute="top" secondItem="TaC-ou-PiE" secondAttribute="bottom" constant="30" id="w94-vq-84V"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Ue0-6d-1pL"/>
+                    <connections>
+                        <outlet property="heightPickerView" destination="piW-Oq-Pd0" id="tab-lw-f7f"/>
+                        <outlet property="unitFormatSegmentControl" destination="TaC-ou-PiE" id="xfb-kZ-kBw"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8j0-DD-Qpv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -605,7 +636,7 @@
         <!--Gender View Controller-->
         <scene sceneID="s4K-5F-Rau">
             <objects>
-                <viewController id="gpF-55-MmK" userLabel="Gender View Controller" sceneMemberID="viewController">
+                <viewController id="gpF-55-MmK" userLabel="Gender View Controller" customClass="HEMGenderPickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ecZ-6f-bII"/>
                         <viewControllerLayoutGuide type="bottom" id="d85-24-UBP"/>
@@ -623,8 +654,64 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.38" colorSpace="calibratedRGB"/>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="What is your gender?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S9f-tS-yQg">
-                                <rect key="frame" x="20" y="61" width="280" height="34"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMR-u0-kGh">
+                                <rect key="frame" x="58" y="237" width="30" height="46"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="femaleIcon.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setGenderAsFemale:" destination="gpF-55-MmK" eventType="touchUpInside" id="bll-Gp-u7B"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A6X-Ja-RGS">
+                                <rect key="frame" x="141" y="240" width="39" height="40"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" image="maleIcon.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setGenderAsMale:" destination="gpF-55-MmK" eventType="touchUpInside" id="KeP-f4-nRY"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Im-vl-hQo">
+                                <rect key="frame" x="48" y="333" width="49" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="Female">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setGenderAsFemale:" destination="gpF-55-MmK" eventType="touchUpInside" id="7aK-Ya-lBR"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F1J-He-hsq">
+                                <rect key="frame" x="144" y="333" width="33" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="Male">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setGenderAsMale:" destination="gpF-55-MmK" eventType="touchUpInside" id="bdz-tS-cJB"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wme-m1-g9S">
+                                <rect key="frame" x="224" y="333" width="38" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="Other">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="setGenderAsOther:" destination="gpF-55-MmK" eventType="touchUpInside" id="ANm-XA-ZKv"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is your gender?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="S9f-tS-yQg">
+                                <rect key="frame" x="20" y="61" width="258" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -646,23 +733,39 @@
                                     <segue destination="f6G-Sh-hYd" kind="push" id="mON-XM-R2k"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SgC-g4-xPG" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="48" y="198" width="225" height="30"/>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kcS-lE-b2D" userLabel="Line">
+                                <rect key="frame" x="224" y="366" width="38" height="1"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
-                                <connections>
-                                    <outlet property="delegate" destination="5JR-hM-9bB" id="BDz-qd-DlR"/>
-                                </connections>
-                            </textField>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" red="0.9215686917" green="0.92941182850000004" blue="0.92549026010000002" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
+                            <constraint firstItem="F1J-He-hsq" firstAttribute="centerY" secondItem="3Im-vl-hQo" secondAttribute="centerY" id="1qv-f2-67B"/>
+                            <constraint firstItem="S9f-tS-yQg" firstAttribute="top" secondItem="ecZ-6f-bII" secondAttribute="bottom" constant="41" id="9VW-bQ-Kxg"/>
+                            <constraint firstItem="F1J-He-hsq" firstAttribute="centerX" secondItem="A6X-Ja-RGS" secondAttribute="centerX" constant="0.5" id="C1h-MS-bb4"/>
+                            <constraint firstItem="F1J-He-hsq" firstAttribute="leading" secondItem="3Im-vl-hQo" secondAttribute="trailing" constant="47" id="G0B-81-qxh"/>
+                            <constraint firstItem="F1J-He-hsq" firstAttribute="top" secondItem="A6X-Ja-RGS" secondAttribute="bottom" constant="53" id="JRk-s9-z4Z"/>
                             <constraint firstAttribute="centerX" secondItem="gMf-fl-V5h" secondAttribute="centerX" constant="-0.5" id="SKB-xc-oOV"/>
+                            <constraint firstItem="Wme-m1-g9S" firstAttribute="leading" secondItem="F1J-He-hsq" secondAttribute="trailing" constant="47" id="TUW-6t-3u8"/>
+                            <constraint firstAttribute="centerX" secondItem="F1J-He-hsq" secondAttribute="centerX" id="UBg-3Q-8od"/>
+                            <constraint firstItem="F1J-He-hsq" firstAttribute="top" secondItem="S9f-tS-yQg" secondAttribute="bottom" constant="238" id="iYO-Zo-XfC"/>
+                            <constraint firstItem="S9f-tS-yQg" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leading" constant="20" id="jHg-2u-Bs6"/>
+                            <constraint firstItem="3Im-vl-hQo" firstAttribute="top" secondItem="qMR-u0-kGh" secondAttribute="bottom" constant="50" id="ngv-n0-puD"/>
                             <constraint firstItem="d85-24-UBP" firstAttribute="top" secondItem="gMf-fl-V5h" secondAttribute="bottom" constant="44" id="qTR-nX-xSy"/>
+                            <constraint firstItem="qMR-u0-kGh" firstAttribute="centerX" secondItem="3Im-vl-hQo" secondAttribute="centerX" constant="0.5" id="sCV-6e-2rZ"/>
+                            <constraint firstItem="F1J-He-hsq" firstAttribute="centerY" secondItem="Wme-m1-g9S" secondAttribute="centerY" id="zTl-AQ-lTL"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Cax-Ie-yFe"/>
+                    <connections>
+                        <outlet property="femaleIconButton" destination="qMR-u0-kGh" id="KLU-4s-MTD"/>
+                        <outlet property="femaleTitleButton" destination="3Im-vl-hQo" id="4NV-pS-mbd"/>
+                        <outlet property="lineView" destination="kcS-lE-b2D" id="pZs-9m-a7r"/>
+                        <outlet property="maleIconButton" destination="A6X-Ja-RGS" id="h1Q-Wu-Y0e"/>
+                        <outlet property="maleTitleButton" destination="F1J-He-hsq" id="arl-cl-XdC"/>
+                        <outlet property="otherTitleButton" destination="Wme-m1-g9S" id="Gvd-xb-zh1"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uPx-en-DTv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -671,7 +774,7 @@
         <!--Weight View Controller-->
         <scene sceneID="ryl-Qb-DQZ">
             <objects>
-                <viewController id="f6G-Sh-hYd" userLabel="Weight View Controller" sceneMemberID="viewController">
+                <viewController id="f6G-Sh-hYd" userLabel="Weight View Controller" customClass="HEMWeightPickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y9t-ip-NMT"/>
                         <viewControllerLayoutGuide type="bottom" id="hPY-my-fzC"/>
@@ -689,7 +792,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.38" colorSpace="calibratedRGB"/>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="What is your weight?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vca-9S-Db1">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is your weight?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vca-9S-Db1">
                                 <rect key="frame" x="20" y="61" width="253" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
@@ -712,19 +815,24 @@
                                     <segue destination="KXH-dY-O28" kind="push" id="v0W-US-KYY"/>
                                 </connections>
                             </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="cWT-cW-qe4" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="48" y="198" width="225" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no"/>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sz6-qB-XQ1">
+                                <rect key="frame" x="0.0" y="183" width="320" height="162"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <connections>
-                                    <outlet property="delegate" destination="5JR-hM-9bB" id="dRa-As-cqG"/>
+                                    <outlet property="dataSource" destination="f6G-Sh-hYd" id="8So-UL-jGa"/>
+                                    <outlet property="delegate" destination="f6G-Sh-hYd" id="RPw-YL-Rag"/>
                                 </connections>
-                            </textField>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" red="0.9215686917" green="0.92941182850000004" blue="0.92549026010000002" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
+                            <constraint firstItem="Vca-9S-Db1" firstAttribute="leading" secondItem="DnN-fi-uxz" secondAttribute="leading" constant="20" id="DuG-Ik-jCR"/>
+                            <constraint firstAttribute="trailing" secondItem="sz6-qB-XQ1" secondAttribute="trailing" id="Sfl-wW-bfZ"/>
                             <constraint firstAttribute="centerX" secondItem="vwe-Kd-JLe" secondAttribute="centerX" constant="-0.5" id="Sgj-ND-RQT"/>
+                            <constraint firstItem="sz6-qB-XQ1" firstAttribute="leading" secondItem="DnN-fi-uxz" secondAttribute="leading" id="ZfG-IB-Rvr"/>
+                            <constraint firstItem="Vca-9S-Db1" firstAttribute="top" secondItem="y9t-ip-NMT" secondAttribute="bottom" constant="41" id="qgE-fQ-1wA"/>
+                            <constraint firstItem="sz6-qB-XQ1" firstAttribute="top" secondItem="Vca-9S-Db1" secondAttribute="bottom" constant="88" id="uE6-5l-XSM"/>
                             <constraint firstItem="hPY-my-fzC" firstAttribute="top" secondItem="vwe-Kd-JLe" secondAttribute="bottom" constant="44" id="wNE-uO-B7z"/>
                         </constraints>
                     </view>
@@ -889,6 +997,8 @@
     </scenes>
     <resources>
         <image name="bluetoothLogoImage.png" width="75" height="144"/>
+        <image name="femaleIcon.png" width="30" height="46"/>
+        <image name="maleIcon.png" width="39" height="40"/>
         <image name="onboardingBackgroundImage1.png" width="960" height="587"/>
         <image name="onboardingBackgroundImage2.png" width="960" height="576"/>
         <image name="wifiLogoImage.png" width="182" height="129"/>

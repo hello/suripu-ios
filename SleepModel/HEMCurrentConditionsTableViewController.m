@@ -52,6 +52,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
         return [obj1.name compare:obj2.name];
     }];
     [self.tableView reloadData];
+    [self.view layoutIfNeeded];
 }
 
 #pragma mark - UITableViewDataSource

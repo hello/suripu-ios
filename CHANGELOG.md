@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.0.0.6
+
+Fixes:
+
+* Sign up view pans correctly to show all fields under the keyboard
+* Lines should no longer appear on top of sensor information after signing up/in
+* Minimum password length is now 3 (Sorry, Tim!)
+* Sensor messages should no longer overlap the values
+* Tapping the sign up button multiple times no longer sends multiple requests
+* Alarm should no longer flicker while changing the time
+
+New Stuff:
+
+* Signing in without filling in all fields probably shows dialogs with hints
+* User information (like age, weight, etc) can be updated from settings
+
+Issues:
+
+* Close sleep events get squished in the graph
+* Pulling the sleep graph view up and down is difficult
+* After updating user information in settings, the user is not returned to the settings view
+
 ## 1.0.0.5
 
 Fixes:

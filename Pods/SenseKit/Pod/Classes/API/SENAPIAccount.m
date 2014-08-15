@@ -12,8 +12,7 @@ NSString* const SENAPIAccountPropertyAge = @"age";
 NSString* const SENAPIAccountPropertyTimezone = @"tz";
 NSString* const SENAPIAccountPropertySignature = @"sig";
 
-NSString* const SENAPIAccountCreateEndpoint = @"account";
-NSString* const SENAPIAccountUpdateEndpoint = @"account/update";
+NSString* const SENAPIAccountEndpoint = @"account";
 
 @implementation SENAPIAccount
 
@@ -29,7 +28,7 @@ NSString* const SENAPIAccountUpdateEndpoint = @"account/update";
         params[SENAPIAccountPropertyName] = name;
     params[SENAPIAccountPropertyTimezone] = @([[NSTimeZone localTimeZone] secondsFromGMT] * 1000);
 
-    NSString* URLPath = [NSString stringWithFormat:@"%@?sig=%@", SENAPIAccountCreateEndpoint, @"xxx"];
+    NSString* URLPath = [NSString stringWithFormat:@"%@?sig=%@", SENAPIAccountEndpoint, @"xxx"];
 
     [[SENAPIClient HTTPSessionManager] POST:URLPath parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
         completionBlock(responseObject, task.error);
@@ -49,7 +48,7 @@ NSString* const SENAPIAccountUpdateEndpoint = @"account/update";
     if (weightInKilograms)
         params[SENAPIAccountPropertyWeight] = weightInKilograms;
 
-    [[SENAPIClient HTTPSessionManager] POST:SENAPIAccountUpdateEndpoint parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
+    [[SENAPIClient HTTPSessionManager] PUT:SENAPIAccountEndpoint parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
         completionBlock(responseObject, task.error);
     } failure:^(NSURLSessionDataTask* task, NSError* error) {
         completionBlock(nil, error);

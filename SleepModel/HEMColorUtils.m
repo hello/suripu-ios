@@ -4,20 +4,8 @@
 
 @implementation HEMColorUtils
 
-+ (CAGradientLayer*)layerWithBlueBackgroundGradientInFrame:(CGRect)frame
-{
-    CAGradientLayer* gradient = [CAGradientLayer layer];
-    gradient.frame = frame;
-    gradient.colors = @[ (id)[[HelloStyleKit darkBlueColor] CGColor],
-                         (id)[[HelloStyleKit lightBlueColor] CGColor],
-                         (id)[[HelloStyleKit darkBlueColor] CGColor] ];
-    gradient.locations = @[ @0, @1, @1 ];
-    return gradient;
-}
-
 + (void)configureLayer:(CAGradientLayer*)gradient
-    withBlueBackgroundGradientInFrame:(CGRect)frame
-                       intensityLevel:(CGFloat)level
+    withIntensityLevel:(CGFloat)level
 {
     UIColor* topColor = [UIColor colorWithHue:0.658
                                    saturation:MIN(MAX(level * 0.4,0.15),1)
@@ -27,7 +15,6 @@
                                       saturation:MIN(MAX(level * 0.5, 0.1),1)
                                       brightness:MIN(MAX(level * 1.5, 0.3),1)
                                            alpha:1.f];
-    gradient.frame = frame;
     gradient.colors = @[ (id)[topColor CGColor],
                          (id)[bottomColor CGColor],
                          (id)[topColor CGColor] ];

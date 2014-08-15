@@ -331,7 +331,7 @@
         <!--More About You View Controller-->
         <scene sceneID="MLI-rC-BIe">
             <objects>
-                <viewController id="ezT-R8-K4n" userLabel="More About You View Controller" sceneMemberID="viewController">
+                <viewController id="ezT-R8-K4n" userLabel="More About You View Controller" customClass="HEMUserDataIntroViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DDQ-wG-B8c"/>
                         <viewControllerLayoutGuide type="bottom" id="bQ4-fe-iRl"/>
@@ -382,6 +382,9 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="skipUserDataCollection:" destination="ezT-R8-K4n" eventType="touchUpInside" id="r7P-op-rdB"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -401,7 +404,7 @@
         <!--Age View Controller-->
         <scene sceneID="J5f-Jz-Trm">
             <objects>
-                <viewController id="R0p-kB-1qZ" userLabel="Age View Controller" customClass="HEMAgePickerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ageViewController" id="R0p-kB-1qZ" userLabel="Age View Controller" customClass="HEMAgePickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CiX-HD-SQL"/>
                         <viewControllerLayoutGuide type="bottom" id="GdX-Ok-5df"/>
@@ -590,7 +593,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="ezT-R8-K4n" kind="push" id="RFf-l2-R7j"/>
+                                    <segue destination="ezT-R8-K4n" kind="push" id="cF6-md-vls"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rjz-M4-Lxs">
@@ -602,7 +605,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="ezT-R8-K4n" kind="push" id="dQw-hP-VyL"/>
+                                    <segue destination="ezT-R8-K4n" kind="push" id="Cmg-7P-1oO"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Connect to WIFI" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvl-uZ-ZRh">
@@ -989,7 +992,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="ezT-R8-K4n" kind="push" id="Wvr-tB-aHQ"/>
+                                    <segue destination="ezT-R8-K4n" kind="push" id="vLh-tB-o8g"/>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Pair your Sense" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHT-0z-rBN">
@@ -1041,6 +1044,6 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="dQw-hP-VyL"/>
+        <segue reference="cF6-md-vls"/>
     </inferredMetricsTieBreakers>
 </document>

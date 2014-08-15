@@ -14,6 +14,7 @@
 
 /** View Controllers */
 +(UIViewController *)instantiateSignUpViewController;
++(UIViewController *)instantiateAgeViewController;
 +(UIViewController *)instantiateWifiViewController;
 +(UIViewController *)instantiateBluetoothViewController;
 

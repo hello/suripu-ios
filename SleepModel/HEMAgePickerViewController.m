@@ -1,12 +1,6 @@
-//
-//  HEMAgePickerViewController.m
-//  Sense
-//
-//  Created by Delisa Mason on 8/14/14.
-//  Copyright (c) 2014 Delisa Mason. All rights reserved.
-//
 
 #import "HEMAgePickerViewController.h"
+#import "HEMUserDataCache.h"
 
 @interface HEMAgePickerViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -14,15 +8,6 @@
 @end
 
 @implementation HEMAgePickerViewController
-
-- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -50,13 +35,19 @@
 
 - (NSAttributedString*)pickerView:(UIPickerView*)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", (long)row + 1] attributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }];
+    return [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", [self ageForRow:row]] attributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }];
+}
+
+- (long)ageForRow:(NSInteger)row
+{
+    return (long)row + 1;
 }
 
 #pragma mark - UIPickerViewDelegate
 
 - (void)pickerView:(UIPickerView*)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    [[HEMUserDataCache sharedUserDataCache] setAge:@([self ageForRow:row])];
 }
 
 @end

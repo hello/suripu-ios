@@ -1,5 +1,9 @@
 
 #import "HEMWeightPickerViewController.h"
+#import "HEMUserDataCache.h"
+
+CGFloat const HEMWeightPickerPoundsPerKilogram = 2.20462f;
+CGFloat const HEMWeightPickerKilogramsPerPound = 0.453592f;
 
 @interface HEMWeightPickerViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 
@@ -65,16 +69,34 @@
 
 - (void)pickerView:(UIPickerView*)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    if (component == 1 && !([self isUsingImperial] == (row == 1))) {
+    if (component == 0) {
+        NSInteger value = 0;
+        if ([self isUsingImperial]) {
+            value = [self valueInKilograms:row];
+        } else {
+            value = row;
+        }
+        [[HEMUserDataCache sharedUserDataCache] setWeightInKilograms:@(value)];
+    } else if (component == 1 && !([self isUsingImperial] == (row == 1))) {
         self.usingImperial = (row == 1);
         NSInteger selectedRow = [self.weightPickerView selectedRowInComponent:0];
         if ([self isUsingImperial]) {
-            selectedRow = ceilf(selectedRow * 2.20462);
+            selectedRow = [self valueInPounds:selectedRow];
         } else {
-            selectedRow = floorf(selectedRow * 0.453592f);
+            selectedRow = [self valueInKilograms:selectedRow];
         }
         [self.weightPickerView selectRow:selectedRow inComponent:0 animated:NO];
     }
+}
+
+- (NSInteger)valueInPounds:(NSInteger)value
+{
+    return ceilf(value * HEMWeightPickerPoundsPerKilogram);
+}
+
+- (NSInteger)valueInKilograms:(NSInteger)value
+{
+    return floorf(value * HEMWeightPickerKilogramsPerPound);
 }
 
 - (CGFloat)pickerView:(UIPickerView*)pickerView widthForComponent:(NSInteger)component

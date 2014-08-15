@@ -204,9 +204,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="isJ-f0-S9q">
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="isJ-f0-S9q">
                                                     <rect key="frame" x="175" y="8" width="125" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="125" id="DYr-Ej-faC"/>
+                                                    </constraints>
                                                     <segments>
                                                         <segment title="°C"/>
                                                         <segment title="°F"/>
@@ -216,13 +219,19 @@
                                                         <action selector="temperatureFormatChanged:" destination="VKh-D9-07L" eventType="valueChanged" id="J8w-7H-hkt"/>
                                                     </connections>
                                                 </segmentedControl>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Temperature Style" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="01z-98-VTY">
-                                                    <rect key="frame" x="20" y="11" width="139" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature Style" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="01z-98-VTY">
+                                                    <rect key="frame" x="20" y="11" width="127" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstItem="01z-98-VTY" firstAttribute="leading" secondItem="ePa-MY-Czh" secondAttribute="leading" constant="20" id="DhC-Qg-Sb9"/>
+                                                <constraint firstAttribute="trailing" secondItem="isJ-f0-S9q" secondAttribute="trailing" constant="20" id="Iyr-1V-xDr"/>
+                                                <constraint firstAttribute="centerY" secondItem="isJ-f0-S9q" secondAttribute="centerY" constant="-0.5" id="Jyq-Rg-x5V"/>
+                                                <constraint firstAttribute="centerY" secondItem="01z-98-VTY" secondAttribute="centerY" id="ef4-ZZ-ZmE"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="9t3-9c-kkL">
@@ -232,9 +241,12 @@
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jAJ-zy-w6O">
+                                                <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="jAJ-zy-w6O">
                                                     <rect key="frame" x="175" y="8" width="125" height="29"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="125" id="sZx-d4-F8O"/>
+                                                    </constraints>
                                                     <segments>
                                                         <segment title="24-hour"/>
                                                         <segment title="12-hour"/>
@@ -244,13 +256,43 @@
                                                         <action selector="clockStyleChanged:" destination="VKh-D9-07L" eventType="valueChanged" id="ImP-Kf-zvl"/>
                                                     </connections>
                                                 </segmentedControl>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Clock Style" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWW-mo-cB1">
-                                                    <rect key="frame" x="20" y="11" width="88" height="21"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clock Style" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xWW-mo-cB1">
+                                                    <rect key="frame" x="20" y="11" width="80" height="21"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="jAJ-zy-w6O" secondAttribute="centerY" constant="-0.5" id="2jS-TQ-SdC"/>
+                                                <constraint firstItem="xWW-mo-cB1" firstAttribute="leading" secondItem="Fr7-JX-lXi" secondAttribute="leading" constant="20" id="JoZ-rt-pLK"/>
+                                                <constraint firstAttribute="trailing" secondItem="jAJ-zy-w6O" secondAttribute="trailing" constant="20" id="Ye5-TT-up3"/>
+                                                <constraint firstAttribute="centerY" secondItem="xWW-mo-cB1" secondAttribute="centerY" id="rv3-Or-4o1"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                            <tableViewSection headerTitle="" id="Xgb-ll-9YR">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="ara-Gf-pPU">
+                                        <rect key="frame" x="0.0" y="207" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ara-Gf-pPU" id="gFl-Z0-EwT">
+                                            <rect key="frame" x="0.0" y="0.0" width="287" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update User Information" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xAT-24-y3V">
+                                                    <rect key="frame" x="20" y="11" width="172" height="21"/>
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Thin" family="Helvetica Neue" pointSize="17"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="xAT-24-y3V" firstAttribute="leading" secondItem="gFl-Z0-EwT" secondAttribute="leading" constant="20" id="GNE-Fp-RdI"/>
+                                                <constraint firstAttribute="centerY" secondItem="xAT-24-y3V" secondAttribute="centerY" id="Voo-Ua-0EA"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                 </cells>
@@ -258,7 +300,7 @@
                             <tableViewSection headerTitle="Devices" id="Qp0-jZ-Ewt">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="75" id="Ezx-Vv-lLt">
-                                        <rect key="frame" x="0.0" y="235" width="320" height="75"/>
+                                        <rect key="frame" x="0.0" y="299" width="320" height="75"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Ezx-Vv-lLt" id="zQX-aC-b0l">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="74"/>
@@ -281,7 +323,7 @@
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" rowHeight="41" id="v48-Ak-PlA">
-                                        <rect key="frame" x="0.0" y="310" width="320" height="41"/>
+                                        <rect key="frame" x="0.0" y="374" width="320" height="41"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="v48-Ak-PlA" id="1Us-Nf-QR6">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="40"/>
@@ -306,7 +348,7 @@
                             <tableViewSection headerTitle="" id="7wL-Er-cUi">
                                 <cells>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="5YI-nY-gfI">
-                                        <rect key="frame" x="0.0" y="371" width="320" height="44"/>
+                                        <rect key="frame" x="0.0" y="435" width="320" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="5YI-nY-gfI" id="gin-1B-6CU">
                                             <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>

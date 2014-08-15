@@ -1,5 +1,6 @@
 
 #import "HEMLocationFinderViewController.h"
+#import "HEMUserDataCache.h"
 
 @interface HEMLocationFinderViewController ()
 
@@ -15,11 +16,22 @@
 
 - (IBAction)requestLocation:(id)sender
 {
+    [self uploadCollectedData];
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (IBAction)skipRequestingLocation:(id)sender
 {
+    [self uploadCollectedData];
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void)uploadCollectedData
+{
+    [HEMUserDataCache updateAccountWithSharedUserDataWithCompletion:^(NSError* error) {
+        if (error) {
+            NSLog(@"OH NOES: %@", error);
+        }
+    }];
 }
 @end

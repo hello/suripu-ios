@@ -7,6 +7,7 @@
 
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMonboarding = @"Onboarding";
+static NSString *const _HEMageViewController = @"ageViewController";
 static NSString *const _HEMbluetoothViewController = @"bluetoothViewController";
 static NSString *const _HEMsignUpViewController = @"signUpViewController";
 static NSString *const _HEMwifiViewController = @"wifiViewController";
@@ -21,6 +22,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 
 /** View Controllers */
 +(UIViewController *)instantiateSignUpViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsignUpViewController]; }
++(UIViewController *)instantiateAgeViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMageViewController]; }
 +(UIViewController *)instantiateWifiViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwifiViewController]; }
 +(UIViewController *)instantiateBluetoothViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbluetoothViewController]; }
 

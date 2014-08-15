@@ -1,6 +1,9 @@
 #import <SenseKit/SENSettings.h>
 
 #import "HEMHeightPickerViewController.h"
+#import "HEMUserDataCache.h"
+
+CGFloat const HEMHeightPickerCentimetersPerInch = 2.54f;
 
 @interface HEMHeightPickerViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
 @property (weak, nonatomic) IBOutlet UISegmentedControl* unitFormatSegmentControl;
@@ -84,6 +87,15 @@
 
 - (void)pickerView:(UIPickerView*)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
+    CGFloat centimeters = 0;
+    if ([self isUsingImperial]) {
+        NSInteger feet = [pickerView selectedRowInComponent:0];
+        NSInteger inches = [pickerView selectedRowInComponent:1];
+        centimeters = ((feet * 12.f) + inches) * HEMHeightPickerCentimetersPerInch;
+    } else {
+        centimeters = (CGFloat)[pickerView selectedRowInComponent : 0];
+    }
+    [[HEMUserDataCache sharedUserDataCache] setHeightInCentimeters:@(centimeters)];
 }
 
 - (CGFloat)pickerView:(UIPickerView*)pickerView widthForComponent:(NSInteger)component

@@ -2,6 +2,7 @@
 #import <SenseKit/SENSettings.h>
 
 #import "HEMSettingsTableViewController.h"
+#import "HEMOnboardingStoryboard.h"
 
 @interface HEMSettingsTableViewController ()
 
@@ -50,9 +51,15 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch (indexPath.section) {
-    case 1:
-        break;
+    case 1: {
+        if (indexPath.row == 0) {
+            UIViewController* startController = [HEMOnboardingStoryboard instantiateAgeViewController];
+            [self.navigationController pushViewController:startController animated:YES];
+        }
+    } break;
     case 2:
+        break;
+    case 3:
         [SENAuthorizationService deauthorize];
         break;
     default:

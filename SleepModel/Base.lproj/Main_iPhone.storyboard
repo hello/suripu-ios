@@ -584,8 +584,8 @@
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="749" text="description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="205" translatesAutoresizingMaskIntoConstraints="NO" id="Poc-rG-WgZ">
-                                            <rect key="frame" x="55" y="45" width="205" height="29"/>
+                                        <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="749" text="description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="176" translatesAutoresizingMaskIntoConstraints="NO" id="Poc-rG-WgZ">
+                                            <rect key="frame" x="55" y="45" width="176" height="29"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                             <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -612,8 +612,8 @@
                                     <constraints>
                                         <constraint firstItem="EJv-zH-aeq" firstAttribute="leading" secondItem="Poc-rG-WgZ" secondAttribute="leading" id="1PV-03-o1W"/>
                                         <constraint firstItem="EJv-zH-aeq" firstAttribute="leading" secondItem="4oW-6E-iYr" secondAttribute="leading" constant="55" id="4bR-Hq-UiB"/>
-                                        <constraint firstAttribute="trailing" secondItem="Poc-rG-WgZ" secondAttribute="trailing" constant="60" id="C1B-XC-cDf"/>
                                         <constraint firstItem="GJw-vF-WxK" firstAttribute="leading" secondItem="TES-xs-u6w" secondAttribute="trailing" constant="14" id="CSb-QZ-LvT"/>
+                                        <constraint firstItem="TES-xs-u6w" firstAttribute="leading" secondItem="Poc-rG-WgZ" secondAttribute="trailing" constant="2" id="HDS-Tc-51u"/>
                                         <constraint firstItem="4nj-nW-uMl" firstAttribute="leading" secondItem="4oW-6E-iYr" secondAttribute="leading" constant="7" id="KFa-KC-nXr"/>
                                         <constraint firstItem="Poc-rG-WgZ" firstAttribute="top" secondItem="EJv-zH-aeq" secondAttribute="bottom" constant="-2" id="L3z-8L-iMX"/>
                                         <constraint firstAttribute="centerY" secondItem="GJw-vF-WxK" secondAttribute="centerY" id="PgE-tH-5sb"/>

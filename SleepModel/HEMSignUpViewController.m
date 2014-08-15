@@ -21,7 +21,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.signUpButton.enabled = NO;
     [self registerForKeyboardNotifications];
     //    self.navigationItem.hidesBackButton = YES;
 }
@@ -29,17 +28,14 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //    [self.nameField becomeFirstResponder];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.nameField becomeFirstResponder];
 }
 
 - (IBAction)didTapSignUp:(id)sender
 {
+    if (![self validateFieldValuesAndShowAlert:YES])
+        return;
+
     NSString* emailAddress = self.emailAddressField.text;
     NSString* password = self.passwordField.text;
     __weak typeof(self) weakSelf = self;
@@ -50,13 +46,13 @@
                               completion:^(NSDictionary* data, NSError* error) {
                                   typeof(self) strongSelf = weakSelf;
                                   if (error) {
-                                      [strongSelf presentAlertForError:error];
+                                      [strongSelf presentErrorAlertWithMessage:error.localizedDescription];
                                       return;
                                   }
                                   // show loading screen for "signing in"
                                   [SENAuthorizationService authorizeWithUsername:emailAddress password:password callback:^(NSError *error) {
                                       if (error) {
-                                          [strongSelf presentAlertForError:error];
+                                          [strongSelf presentErrorAlertWithMessage:error.localizedDescription];
                                           // show sign in view? retry?
                                           return;
                                       }
@@ -197,43 +193,36 @@
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
     [textField resignFirstResponder];
-    if (self.signUpButton.enabled) {
+    if ([self validateFieldValuesAndShowAlert:NO]) {
         [self didTapSignUp:self];
     }
     return YES;
 }
 
-- (BOOL)textField:(UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string
+- (BOOL)validateFieldValuesAndShowAlert:(BOOL)shouldShowAlert
 {
-    NSString* newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    if (textField == self.nameField) {
-        self.signUpButton.enabled = [self isValidName:newText]
-                                    && [self isValidEmailAddress:self.emailAddressField.text]
-                                    && [self isValidPassword:self.passwordField.text]
-                                    && [self.passwordField.text isEqualToString:self.confirmPasswordField.text];
-    } else if (textField == self.emailAddressField) {
-        self.signUpButton.enabled = [self isValidName:self.nameField.text]
-                                    && [self isValidEmailAddress:newText]
-                                    && [self isValidPassword:self.passwordField.text]
-                                    && [self.passwordField.text isEqualToString:self.confirmPasswordField.text];
-    } else if (textField == self.passwordField) {
-        self.signUpButton.enabled = [self isValidName:self.nameField.text]
-                                    && [self isValidEmailAddress:self.emailAddressField.text]
-                                    && [self isValidPassword:newText]
-                                    && [newText isEqualToString:self.confirmPasswordField.text];
-    } else if (textField == self.confirmPasswordField) {
-        self.signUpButton.enabled = [self isValidName:self.nameField.text]
-                                    && [self isValidEmailAddress:self.emailAddressField.text]
-                                    && [self isValidPassword:newText]
-                                    && [newText isEqualToString:self.passwordField.text];
+    NSString* errorMessage = nil;
+    if (![self isValidName:self.nameField.text]) {
+        errorMessage = NSLocalizedString(@"sign-up.error.name-length", nil);
+    } else if (![self isValidEmailAddress:self.emailAddressField.text]) {
+        errorMessage = NSLocalizedString(@"sign-up.error.email-invalid", nil);
+    } else if (![self isValidPassword:self.passwordField.text]) {
+        errorMessage = NSLocalizedString(@"sign-up.error.password-length", nil);
+    } else if (![self.passwordField.text isEqualToString:self.confirmPasswordField.text]) {
+        errorMessage = NSLocalizedString(@"sign-up.error.password-match", nil);
+    } else {
+        return YES;
     }
-    return YES;
+    if (errorMessage && shouldShowAlert) {
+        [self presentErrorAlertWithMessage:errorMessage];
+    }
+    return NO;
 }
 
-- (void)presentAlertForError:(NSError*)error
+- (void)presentErrorAlertWithMessage:(NSString*)message
 {
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)
-                                message:error.localizedDescription
+                                message:message
                                delegate:nil
                       cancelButtonTitle:nil
                       otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];

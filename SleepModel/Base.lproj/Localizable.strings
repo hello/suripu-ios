@@ -1,15 +1,21 @@
 
 "current-conditions.title" = "Sense";
 
+// sign up
 "sign-up.title" = "Sign Up";
+"sign-up.error.password-length" = "Your password must be at least 3 characters.";
+"sign-up.error.password-match" = "The password entered into the confirmation field does not match.";
+"sign-up.error.name-length" = "You must give a name.";
+"sign-up.error.email-invalid" = "Your email address was not recognized.";
+"sign-up.error.conflict" = "The provided email address is already attached to an account.";
 
-
+// settings
 "settings.title" = "Settings";
 
 // sounds
 "sounds.title" = "Sounds";
 
-// authentication
+// authentication/sign in
 "authorization.title" = "Sign in";
 "authorization.no-token" = "No access token present";
 "authorization.set-url.button" = "Set URL";
@@ -23,6 +29,7 @@
 "authorization.failed-url.message" = "The system could not understand the provided URL. Please try again.";
 "authorization.sign-in.loading-message" = "Signing in";
 "authorization.sign-in.failed.title" = "Sign in Failed";
+"authorization.sign-in.failed.message" = "The provided email address and password were not recognized. Please try again.";
 
 // alarm settings
 "alarm.time-range.format" = "Wake up between *%@* and *%@*";

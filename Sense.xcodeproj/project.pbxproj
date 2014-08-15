@@ -494,12 +494,12 @@
 				8A66FC98199D295F00922ED5 /* HEMGenderPickerViewController.m */,
 				8A66FC8C199D17C000922ED5 /* HEMHeightPickerViewController.h */,
 				8A66FC8D199D17C000922ED5 /* HEMHeightPickerViewController.m */,
+				8AB33FE4199D3F710046188F /* HEMLocationFinderViewController.h */,
+				8AB33FE5199D3F710046188F /* HEMLocationFinderViewController.m */,
 				8A59F631198C16050005B000 /* HEMSignUpViewController.h */,
 				8A59F632198C16050005B000 /* HEMSignUpViewController.m */,
 				8A66FC9A199D308B00922ED5 /* HEMWeightPickerViewController.h */,
 				8A66FC9B199D308B00922ED5 /* HEMWeightPickerViewController.m */,
-				8AB33FE4199D3F710046188F /* HEMLocationFinderViewController.h */,
-				8AB33FE5199D3F710046188F /* HEMLocationFinderViewController.m */,
 			);
 			name = Onboarding;
 			sourceTree = "<group>";

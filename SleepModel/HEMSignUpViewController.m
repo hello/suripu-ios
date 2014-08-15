@@ -74,7 +74,7 @@
 
 - (BOOL)isValidPassword:(NSString*)password
 {
-    return password.length > 3;
+    return password.length >= 3;
 }
 
 - (BOOL)isValidEmailAddress:(NSString*)emailAddress

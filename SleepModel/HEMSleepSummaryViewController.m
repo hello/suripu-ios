@@ -100,7 +100,7 @@
 
 - (IBAction)pinchedHistoryView:(id)sender
 {
-    //    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:[NSBundle mainBundle]];
+    //    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     //    HEMSleepHistoryViewController* controller = (HEMSleepHistoryViewController*)[storyboard instantiateViewControllerWithIdentifier:@"sleepHistoryController"];
     //    [self presentViewController:controller animated:YES completion:NULL];
 }

@@ -3,7 +3,7 @@
 #import "HEMSleepSummaryPageViewController.h"
 #import "HEMSleepSummaryViewController.h"
 #import "HEMSleepSummaryPagingDataSource.h"
-#import "HEMMain_iPhoneStoryboard.h"
+#import "HEMMainStoryboard.h"
 
 @interface HEMSleepSummaryPageViewController () <FCDynamicPaneViewController>
 
@@ -15,7 +15,7 @@
 - (id)init
 {
     if (self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:@{}]) {
-        HEMSleepSummaryViewController* controller = (HEMSleepSummaryViewController*)[HEMMain_iPhoneStoryboard instantiateLastNightController];
+        HEMSleepSummaryViewController* controller = (HEMSleepSummaryViewController*)[HEMMainStoryboard instantiateLastNightController];
         [controller setDateForNightOfSleep:[NSDate dateWithTimeInterval:-(60 * 60 * 24)sinceDate:[NSDate date]]];
         [self setViewControllers:@[ controller ] direction:UIPageViewControllerNavigationDirectionForward animated:NO completion:nil];
     }

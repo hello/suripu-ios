@@ -5,7 +5,7 @@
 #import "HEMSignUpViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMHTTPErrorHandler.h"
+#import "HEMOnboardingHTTPErrorHandler.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
@@ -50,7 +50,7 @@
                               completion:^(NSDictionary* data, NSError* error) {
                                   typeof(self) strongSelf = weakSelf;
                                   if (error) {
-                                      [HEMHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
+                                      [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
                                       strongSelf.signingUp = NO;
                                       return;
                                   }
@@ -58,7 +58,7 @@
                                   [SENAuthorizationService authorizeWithUsername:emailAddress password:password callback:^(NSError *signInError) {
                                       strongSelf.signingUp = NO;
                                       if (signInError) {
-                                          [HEMHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
+                                          [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
                                           
                                           // TODO: show sign in view? retry?
                                           return;

@@ -1,6 +1,6 @@
 
 #import "HEMSleepSummaryPagingDataSource.h"
-#import "HEMMain_iPhoneStoryboard.h"
+#import "HEMMainStoryboard.h"
 #import "HEMSleepSummaryViewController.h"
 
 @implementation HEMSleepSummaryPagingDataSource
@@ -21,7 +21,7 @@
 
 - (UIViewController*)sleepSummaryControllerWithTimeIntervalOffset:(NSTimeInterval)offset fromReferenceDate:(NSDate*)date
 {
-    HEMSleepSummaryViewController* controller = (HEMSleepSummaryViewController*)[HEMMain_iPhoneStoryboard instantiateLastNightController];
+    HEMSleepSummaryViewController* controller = (HEMSleepSummaryViewController*)[HEMMainStoryboard instantiateLastNightController];
     NSDate* nextViewControllerDate = [NSDate dateWithTimeInterval:offset sinceDate:date];
     [controller setDateForNightOfSleep:nextViewControllerDate];
     return controller;

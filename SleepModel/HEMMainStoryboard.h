@@ -1,10 +1,10 @@
 //
-// HEMMain_iPhoneStoryboard.h
+// HEMMainStoryboard.h
 // File generated using Ovaltine
 
 #import <Foundation/Foundation.h>
 
-@interface HEMMain_iPhoneStoryboard : NSObject
+@interface HEMMainStoryboard : NSObject
 
 +(UIStoryboard *)storyboard;
 

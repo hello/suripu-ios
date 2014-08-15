@@ -206,7 +206,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main_iPhone" bundle:[NSBundle mainBundle]];
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     switch (indexPath.section) {
     case 0: {
         if (self.sensors.count > indexPath.row) {

@@ -1,12 +1,12 @@
 //
-// HEMMain_iPhoneStoryboard.m
+// HEMMainStoryboard.m
 // File generated using Ovaltine
 
 #import <UIKit/UIKit.h>
-#import "HEMMain_iPhoneStoryboard.h"
+#import "HEMMainStoryboard.h"
 
 static UIStoryboard *_storyboard = nil;
-static NSString *const _HEMmain_iPhone = @"Main_iPhone";
+static NSString *const _HEMMain = @"Main";
 static NSString *const _HEMalarmSoundTableViewController = @"alarmSoundTableViewController";
 static NSString *const _HEMalarmViewController = @"alarmViewController";
 static NSString *const _HEMcurrentConditionsCell = @"currentConditionsCell";
@@ -24,9 +24,9 @@ static NSString *const _HEMsleepSoundCell = @"sleepSoundCell";
 static NSString *const _HEMsleepSoundViewController = @"sleepSoundViewController";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 
-@implementation HEMMain_iPhoneStoryboard
+@implementation HEMMainStoryboard
 
-+(UIStoryboard *)storyboard { return _storyboard ?: (_storyboard = [UIStoryboard storyboardWithName:_HEMmain_iPhone bundle:[NSBundle mainBundle]]); }
++(UIStoryboard *)storyboard { return _storyboard ?: (_storyboard = [UIStoryboard storyboardWithName:_HEMMain bundle:[NSBundle mainBundle]]); }
 
 /** Cell Reuse Identifiers */
 +(NSString *)sleepSoundCellReuseIdentifier { return _HEMsleepSoundCell; }

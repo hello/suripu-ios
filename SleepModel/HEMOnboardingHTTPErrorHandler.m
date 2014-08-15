@@ -1,7 +1,7 @@
 #import <AFNetworking/AFURLResponseSerialization.h>
-#import "HEMHTTPErrorHandler.h"
+#import "HEMOnboardingHTTPErrorHandler.h"
 
-@implementation HEMHTTPErrorHandler
+@implementation HEMOnboardingHTTPErrorHandler
 
 + (void)showAlertForHTTPError:(NSError*)error withTitle:(NSString*)errorTitle
 {

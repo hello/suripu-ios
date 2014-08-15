@@ -4,7 +4,7 @@
 #import <SenseKit/SENAPIClient.h>
 
 #import "HEMAuthenticationViewController.h"
-#import "HEMHTTPErrorHandler.h"
+#import "HEMOnboardingHTTPErrorHandler.h"
 
 static NSInteger const HEPURLAlertButtonIndexSave = 1;
 static NSInteger const HEPURLAlertButtonIndexReset = 2;
@@ -58,7 +58,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
         strongSelf.navigationItem.rightBarButtonItem.enabled = YES;
         [SVProgressHUD dismiss];
         if (error) {
-            [HEMHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)];
+            [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)];
             return;
         }
         [strongSelf.navigationController dismissViewControllerAnimated:YES completion:NULL];

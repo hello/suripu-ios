@@ -8,15 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		2109C3418ADD4BA6824507C6 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = FD539145AF784DC3AA0DAF13 /* libPods.a */; };
-		36F85FE8F5D2476B8538E418 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 282466F648014EC697B8A1D3 /* libPods-Tests.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F598195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F596195388D20070C39A /* InfoPlist.strings */; };
 		6003F59A195388D20070C39A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F599195388D20070C39A /* main.m */; };
 		6003F59E195388D20070C39A /* HEMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F59D195388D20070C39A /* HEMAppDelegate.m */; };
-		6003F5A1195388D20070C39A /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6003F59F195388D20070C39A /* Main_iPhone.storyboard */; };
-		6003F5A4195388D20070C39A /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A2195388D20070C39A /* Main_iPad.storyboard */; };
+		6003F5A1195388D20070C39A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6003F59F195388D20070C39A /* Main.storyboard */; };
 		6003F5A7195388D20070C39A /* HEMAlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5A6195388D20070C39A /* HEMAlarmViewController.m */; };
 		6003F5A9195388D20070C39A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5A8195388D20070C39A /* Images.xcassets */; };
 		6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F5AF195388D20070C39A /* XCTest.framework */; };
@@ -38,13 +36,14 @@
 		8A4B3D51199308BB00856BDE /* wifiLogoImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */; };
 		8A4B3D541993125E00856BDE /* worldMapImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D521993125D00856BDE /* worldMapImage.png */; };
 		8A4B3D551993125E00856BDE /* worldMapImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D531993125D00856BDE /* worldMapImage@2x.png */; };
-		8A4B3D5D199534F000856BDE /* HEMMain_iPadStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D58199534F000856BDE /* HEMMain_iPadStoryboard.m */; };
-		8A4B3D5E199534F000856BDE /* HEMMain_iPhoneStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5A199534F000856BDE /* HEMMain_iPhoneStoryboard.m */; };
+		8A4B3D5E199534F000856BDE /* HEMMainStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5A199534F000856BDE /* HEMMainStoryboard.m */; };
 		8A4B3D5F199534F000856BDE /* HEMOnboardingStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
 		8A660120199E9C5B007E6167 /* HEMUserDataIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66011F199E9C5B007E6167 /* HEMUserDataIntroViewController.m */; };
 		8A660123199E9CF9007E6167 /* HEMUserDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A660122199E9CF9007E6167 /* HEMUserDataCache.m */; };
-		8A660126199EB99E007E6167 /* HEMHTTPErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A660125199EB99E007E6167 /* HEMHTTPErrorHandler.m */; };
+		8A660126199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A660125199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m */; };
+		8A66013A199EBF87007E6167 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 8A660138199EBF87007E6167 /* CHANGELOG.md */; };
+		8A66013B199EBF87007E6167 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8A660139199EBF87007E6167 /* README.md */; };
 		8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */; };
 		8A66FC7F199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC7E199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m */; };
 		8A66FC82199BE94100922ED5 /* HEMColoredRoundedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC81199BE94100922ED5 /* HEMColoredRoundedLabel.m */; };
@@ -119,7 +118,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		282466F648014EC697B8A1D3 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58A195388D20070C39A /* Sense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -127,11 +125,9 @@
 		6003F595195388D20070C39A /* Sense-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Sense-Info.plist"; sourceTree = "<group>"; };
 		6003F597195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		6003F599195388D20070C39A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		6003F59B195388D20070C39A /* SleepModel-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SleepModel-Prefix.pch"; sourceTree = "<group>"; };
 		6003F59C195388D20070C39A /* HEMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMAppDelegate.h; sourceTree = "<group>"; };
 		6003F59D195388D20070C39A /* HEMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HEMAppDelegate.m; sourceTree = "<group>"; };
-		6003F5A0195388D20070C39A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		6003F5A3195388D20070C39A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
+		6003F5A0195388D20070C39A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		6003F5A5195388D20070C39A /* HEMAlarmViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMAlarmViewController.h; sourceTree = "<group>"; };
 		6003F5A6195388D20070C39A /* HEMAlarmViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmViewController.m; sourceTree = "<group>"; };
 		6003F5A8195388D20070C39A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -140,8 +136,7 @@
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
-		78FAC73F32804258984DCF1D /* libPods-SleepModel.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SleepModel.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		8A03386A1974AFD800BE8327 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		8A03386A1974AFD800BE8327 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; fileEncoding = 4; name = Podfile; path = ../Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		8A03386C197DD2D300BE8327 /* HEMSettingsTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSettingsTableViewController.h; sourceTree = "<group>"; };
 		8A03386D197DD2D300BE8327 /* HEMSettingsTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsTableViewController.m; sourceTree = "<group>"; };
 		8A03386F197DD89C00BE8327 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
@@ -159,10 +154,8 @@
 		8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wifiLogoImage@2x.png"; path = "images/wifiLogoImage@2x.png"; sourceTree = "<group>"; };
 		8A4B3D521993125D00856BDE /* worldMapImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = worldMapImage.png; path = images/worldMapImage.png; sourceTree = "<group>"; };
 		8A4B3D531993125D00856BDE /* worldMapImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "worldMapImage@2x.png"; path = "images/worldMapImage@2x.png"; sourceTree = "<group>"; };
-		8A4B3D57199534F000856BDE /* HEMMain_iPadStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMain_iPadStoryboard.h; sourceTree = "<group>"; };
-		8A4B3D58199534F000856BDE /* HEMMain_iPadStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMain_iPadStoryboard.m; sourceTree = "<group>"; };
-		8A4B3D59199534F000856BDE /* HEMMain_iPhoneStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMain_iPhoneStoryboard.h; sourceTree = "<group>"; };
-		8A4B3D5A199534F000856BDE /* HEMMain_iPhoneStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMain_iPhoneStoryboard.m; sourceTree = "<group>"; };
+		8A4B3D59199534F000856BDE /* HEMMainStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMainStoryboard.h; sourceTree = "<group>"; };
+		8A4B3D5A199534F000856BDE /* HEMMainStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMainStoryboard.m; sourceTree = "<group>"; };
 		8A4B3D5B199534F000856BDE /* HEMOnboardingStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingStoryboard.h; sourceTree = "<group>"; };
 		8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingStoryboard.m; sourceTree = "<group>"; };
 		8A59F631198C16050005B000 /* HEMSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSignUpViewController.h; sourceTree = "<group>"; };
@@ -171,8 +164,10 @@
 		8A66011F199E9C5B007E6167 /* HEMUserDataIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUserDataIntroViewController.m; sourceTree = "<group>"; };
 		8A660121199E9CF9007E6167 /* HEMUserDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUserDataCache.h; sourceTree = "<group>"; };
 		8A660122199E9CF9007E6167 /* HEMUserDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUserDataCache.m; sourceTree = "<group>"; };
-		8A660124199EB99E007E6167 /* HEMHTTPErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHTTPErrorHandler.h; sourceTree = "<group>"; };
-		8A660125199EB99E007E6167 /* HEMHTTPErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHTTPErrorHandler.m; sourceTree = "<group>"; };
+		8A660124199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingHTTPErrorHandler.h; sourceTree = "<group>"; };
+		8A660125199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingHTTPErrorHandler.m; sourceTree = "<group>"; };
+		8A660138199EBF87007E6167 /* CHANGELOG.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CHANGELOG.md; sourceTree = "<group>"; };
+		8A660139199EBF87007E6167 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		8A66FC7A199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryPagingDataSource.h; sourceTree = "<group>"; };
 		8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryPagingDataSource.m; sourceTree = "<group>"; };
 		8A66FC7D199BE3E800922ED5 /* HEMSleepSummaryPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryPageViewController.h; sourceTree = "<group>"; };
@@ -286,7 +281,6 @@
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				36F85FE8F5D2476B8538E418 /* libPods-Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -296,7 +290,6 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
-				60FF7A9C1954A5C5007DD14C /* Project Metadata */,
 				6003F593195388D20070C39A /* Sense */,
 				6003F5B5195388D20070C39A /* Tests */,
 				6003F58C195388D20070C39A /* Frameworks */,
@@ -322,8 +315,6 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				78FAC73F32804258984DCF1D /* libPods-SleepModel.a */,
-				282466F648014EC697B8A1D3 /* libPods-Tests.a */,
 				FD539145AF784DC3AA0DAF13 /* libPods.a */,
 			);
 			name = Frameworks;
@@ -332,15 +323,15 @@
 		6003F593195388D20070C39A /* Sense */ = {
 			isa = PBXGroup;
 			children = (
-				8AC4A0301989C33B00C2BD63 /* Assets */,
-				8A90F9B419636EEB00AFD110 /* Views */,
-				8A90F9B019635C7900AFD110 /* View Controllers */,
+				8AC49F8E1981B90600C2BD63 /* Alarm */,
+				8AC49F971982DE4D00C2BD63 /* Onboarding */,
+				8AC49F981982DE5E00C2BD63 /* Sensors */,
+				8AC49F8F1981B92100C2BD63 /* Sleep Metrics */,
+				8AC49F991982DE7000C2BD63 /* Settings */,
 				8A4B3D56199534DB00856BDE /* Generated Files */,
-				8A90F9A919634F0C00AFD110 /* Utilities */,
 				6003F59C195388D20070C39A /* HEMAppDelegate.h */,
 				6003F59D195388D20070C39A /* HEMAppDelegate.m */,
-				6003F59F195388D20070C39A /* Main_iPhone.storyboard */,
-				6003F5A2195388D20070C39A /* Main_iPad.storyboard */,
+				6003F59F195388D20070C39A /* Main.storyboard */,
 				8A03386F197DD89C00BE8327 /* Onboarding.storyboard */,
 				6003F5A8195388D20070C39A /* Images.xcassets */,
 				6003F594195388D20070C39A /* Supporting Files */,
@@ -352,11 +343,13 @@
 		6003F594195388D20070C39A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				6003F595195388D20070C39A /* Sense-Info.plist */,
+				8A660138199EBF87007E6167 /* CHANGELOG.md */,
 				6003F596195388D20070C39A /* InfoPlist.strings */,
-				6003F599195388D20070C39A /* main.m */,
-				6003F59B195388D20070C39A /* SleepModel-Prefix.pch */,
 				8A90F9A819630C3800AFD110 /* Localizable.strings */,
+				6003F599195388D20070C39A /* main.m */,
+				8A03386A1974AFD800BE8327 /* Podfile */,
+				8A660139199EBF87007E6167 /* README.md */,
+				6003F595195388D20070C39A /* Sense-Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -381,126 +374,26 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		60FF7A9C1954A5C5007DD14C /* Project Metadata */ = {
-			isa = PBXGroup;
-			children = (
-				8A03386A1974AFD800BE8327 /* Podfile */,
-			);
-			name = "Project Metadata";
-			sourceTree = "<group>";
-		};
 		8A4B3D56199534DB00856BDE /* Generated Files */ = {
 			isa = PBXGroup;
 			children = (
-				8A4B3D57199534F000856BDE /* HEMMain_iPadStoryboard.h */,
-				8A4B3D58199534F000856BDE /* HEMMain_iPadStoryboard.m */,
-				8A4B3D59199534F000856BDE /* HEMMain_iPhoneStoryboard.h */,
-				8A4B3D5A199534F000856BDE /* HEMMain_iPhoneStoryboard.m */,
+				8A90F9AA196350D200AFD110 /* HelloStyleKit.h */,
+				8A90F9AB196350D200AFD110 /* HelloStyleKit.m */,
+				8A4B3D59199534F000856BDE /* HEMMainStoryboard.h */,
+				8A4B3D5A199534F000856BDE /* HEMMainStoryboard.m */,
 				8A4B3D5B199534F000856BDE /* HEMOnboardingStoryboard.h */,
 				8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */,
 			);
 			name = "Generated Files";
 			sourceTree = "<group>";
 		};
-		8A90F9A919634F0C00AFD110 /* Utilities */ = {
+		8A660129199EBCD0007E6167 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				8A90F9AA196350D200AFD110 /* HelloStyleKit.h */,
-				8A90F9AB196350D200AFD110 /* HelloStyleKit.m */,
-				8A90F9AD196353F600AFD110 /* HEMColorUtils.h */,
-				8A90F9AE196353F600AFD110 /* HEMColorUtils.m */,
-				8A660121199E9CF9007E6167 /* HEMUserDataCache.h */,
-				8A660122199E9CF9007E6167 /* HEMUserDataCache.m */,
-				8A660124199EB99E007E6167 /* HEMHTTPErrorHandler.h */,
-				8A660125199EB99E007E6167 /* HEMHTTPErrorHandler.m */,
-			);
-			name = Utilities;
-			sourceTree = "<group>";
-		};
-		8A90F9B019635C7900AFD110 /* View Controllers */ = {
-			isa = PBXGroup;
-			children = (
-				8AC49F8E1981B90600C2BD63 /* Alarm */,
-				8AC49F971982DE4D00C2BD63 /* Onboarding */,
-				8AC49F981982DE5E00C2BD63 /* Sensors */,
-				8AC49F991982DE7000C2BD63 /* Settings */,
-				8AC49F8F1981B92100C2BD63 /* Sleep Metrics */,
-			);
-			name = "View Controllers";
-			sourceTree = "<group>";
-		};
-		8A90F9B419636EEB00AFD110 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				8AC49F901981DC5B00C2BD63 /* Collection View Layouts */,
-				8A033871197DDA9700BE8327 /* HEMActionButton.h */,
-				8A033872197DDA9700BE8327 /* HEMActionButton.m */,
-				8A66FC80199BE94100922ED5 /* HEMColoredRoundedLabel.h */,
-				8A66FC81199BE94100922ED5 /* HEMColoredRoundedLabel.m */,
-				8AC49FA019832FE100C2BD63 /* HEMDeviceTableViewCell.h */,
-				8AC49FA119832FE100C2BD63 /* HEMDeviceTableViewCell.m */,
-				8A782681196B4729002882A1 /* HEMGraphTooltipView.h */,
-				8A782682196B4729002882A1 /* HEMGraphTooltipView.m */,
-				8A90F9B51963701A00AFD110 /* HEMInsetGlyphTableViewCell.h */,
-				8A90F9B61963701A00AFD110 /* HEMInsetGlyphTableViewCell.m */,
-				8AC49F941981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.h */,
-				8AC49F951981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m */,
-				8A4B3D471992CB4500856BDE /* HEMRoundedTextField.h */,
-				8A4B3D481992CB4500856BDE /* HEMRoundedTextField.m */,
-				8A66FC86199C3F3900922ED5 /* HEMSensorValuesView.h */,
-				8A66FC87199C3F3900922ED5 /* HEMSensorValuesView.m */,
-				8A66FC83199C035500922ED5 /* HEMSleepHistoryView.h */,
-				8A66FC84199C035500922ED5 /* HEMSleepHistoryView.m */,
-				8AC49F85197F365C00C2BD63 /* HEMSleepScoreGraphView.h */,
-				8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		8AC49F8E1981B90600C2BD63 /* Alarm */ = {
-			isa = PBXGroup;
-			children = (
-				8A90F99C196225A100AFD110 /* HEMAlarmSoundTableViewController.h */,
-				8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */,
-				6003F5A5195388D20070C39A /* HEMAlarmViewController.h */,
-				6003F5A6195388D20070C39A /* HEMAlarmViewController.m */,
-			);
-			name = Alarm;
-			sourceTree = "<group>";
-		};
-		8AC49F8F1981B92100C2BD63 /* Sleep Metrics */ = {
-			isa = PBXGroup;
-			children = (
-				8AC49F881981A89D00C2BD63 /* HEMSleepHistoryViewController.h */,
-				8AC49F891981A89D00C2BD63 /* HEMSleepHistoryViewController.m */,
-				8A66FC7D199BE3E800922ED5 /* HEMSleepSummaryPageViewController.h */,
-				8A66FC7E199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m */,
-				8A66FC7A199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.h */,
-				8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */,
-				8AC49F8B1981B00900C2BD63 /* HEMSleepSummaryViewController.h */,
-				8AC49F8C1981B00900C2BD63 /* HEMSleepSummaryViewController.m */,
-			);
-			name = "Sleep Metrics";
-			sourceTree = "<group>";
-		};
-		8AC49F901981DC5B00C2BD63 /* Collection View Layouts */ = {
-			isa = PBXGroup;
-			children = (
-				8A782684196CB6C9002882A1 /* HEMSnappingFlowLayout.h */,
-				8A782685196CB6C9002882A1 /* HEMSnappingFlowLayout.m */,
-				8AC49F911981DC8C00C2BD63 /* HEMZoomingFlowLayout.h */,
-				8AC49F921981DC8C00C2BD63 /* HEMZoomingFlowLayout.m */,
-			);
-			name = "Collection View Layouts";
-			sourceTree = "<group>";
-		};
-		8AC49F971982DE4D00C2BD63 /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				8A66FC89199D115D00922ED5 /* HEMAgePickerViewController.h */,
-				8A66FC8A199D115D00922ED5 /* HEMAgePickerViewController.m */,
 				8AC49F9A198305F600C2BD63 /* HEMAuthenticationViewController.h */,
 				8AC49F9B198305F600C2BD63 /* HEMAuthenticationViewController.m */,
+				8A66FC89199D115D00922ED5 /* HEMAgePickerViewController.h */,
+				8A66FC8A199D115D00922ED5 /* HEMAgePickerViewController.m */,
 				8AC49F9D19832D2600C2BD63 /* HEMDevicePickerTableViewController.h */,
 				8AC49F9E19832D2600C2BD63 /* HEMDevicePickerTableViewController.m */,
 				8A66FC97199D295F00922ED5 /* HEMGenderPickerViewController.h */,
@@ -516,10 +409,66 @@
 				8A66FC9A199D308B00922ED5 /* HEMWeightPickerViewController.h */,
 				8A66FC9B199D308B00922ED5 /* HEMWeightPickerViewController.m */,
 			);
-			name = Onboarding;
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		8AC49F981982DE5E00C2BD63 /* Sensors */ = {
+		8A66012A199EBCFE007E6167 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				8A4B3D4A199308BB00856BDE /* bluetoothLogoImage.png */,
+				8A4B3D4B199308BB00856BDE /* bluetoothLogoImage@2x.png */,
+				8A66FC8F199D24FF00922ED5 /* femaleIcon.png */,
+				8A66FC90199D24FF00922ED5 /* femaleIcon@2x.png */,
+				8A66FC91199D24FF00922ED5 /* maleIcon.png */,
+				8A66FC92199D24FF00922ED5 /* maleIcon@2x.png */,
+				8A4B3D3F1992C8C800856BDE /* onboardingBackgroundImage1.png */,
+				8A4B3D401992C8C800856BDE /* onboardingBackgroundImage1@2x.png */,
+				8A4B3D411992C8C800856BDE /* onboardingBackgroundImage2.png */,
+				8A4B3D421992C8C800856BDE /* onboardingBackgroundImage2@2x.png */,
+				8A4B3D4C199308BB00856BDE /* wifiLogoImage.png */,
+				8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */,
+				8A4B3D521993125D00856BDE /* worldMapImage.png */,
+				8A4B3D531993125D00856BDE /* worldMapImage@2x.png */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		8A66012B199EBD0E007E6167 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8A660121199E9CF9007E6167 /* HEMUserDataCache.h */,
+				8A660122199E9CF9007E6167 /* HEMUserDataCache.m */,
+				8A660124199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.h */,
+				8A660125199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		8A66012C199EBD48007E6167 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8A90F99C196225A100AFD110 /* HEMAlarmSoundTableViewController.h */,
+				8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */,
+				6003F5A5195388D20070C39A /* HEMAlarmViewController.h */,
+				6003F5A6195388D20070C39A /* HEMAlarmViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		8A66012D199EBD64007E6167 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				8AC4A04D198A070F00C2BD63 /* alarmEnabledIcon.png */,
+				8AC4A04E198A070F00C2BD63 /* alarmEnabledIcon@2x.png */,
+				8AC4A04F198A070F00C2BD63 /* alarmNoteIcon.png */,
+				8AC4A050198A070F00C2BD63 /* alarmNoteIcon@2x.png */,
+				8AC4A055198A0AE900C2BD63 /* questionIcon.png */,
+				8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		8A66012E199EBD90007E6167 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
 				8A90F9B119635CAE00AFD110 /* HEMCurrentConditionsTableViewController.h */,
@@ -529,21 +478,42 @@
 				8AC4A059198ACE4800C2BD63 /* HEMSensorGraphDataSource.h */,
 				8AC4A05A198ACE4800C2BD63 /* HEMSensorGraphDataSource.m */,
 			);
-			name = Sensors;
+			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		8AC49F991982DE7000C2BD63 /* Settings */ = {
+		8A66012F199EBD95007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				8A03386C197DD2D300BE8327 /* HEMSettingsTableViewController.h */,
-				8A03386D197DD2D300BE8327 /* HEMSettingsTableViewController.m */,
-				8A90F9BA19637F9400AFD110 /* HEMSleepSoundTableViewController.h */,
-				8A90F9BB19637F9400AFD110 /* HEMSleepSoundTableViewController.m */,
+				8AC4A0451989D47000C2BD63 /* chevronIconLeft.png */,
+				8AC4A0461989D47000C2BD63 /* chevronIconLeft@2x.png */,
+				8AC4A0471989D47000C2BD63 /* chevronIconRight.png */,
+				8AC4A0481989D47000C2BD63 /* chevronIconRight@2x.png */,
+				8AC4A0311989C36200C2BD63 /* humidityIcon.png */,
+				8AC4A0321989C36200C2BD63 /* humidityIcon@2x.png */,
+				8AC4A0331989C36200C2BD63 /* particleIcon.png */,
+				8AC4A0341989C36200C2BD63 /* particleIcon@2x.png */,
+				8AC4A0351989C36200C2BD63 /* temperatureIcon.png */,
+				8AC4A0361989C36200C2BD63 /* temperatureIcon@2x.png */,
 			);
-			name = Settings;
+			name = Assets;
 			sourceTree = "<group>";
 		};
-		8AC4A0301989C33B00C2BD63 /* Assets */ = {
+		8A660130199EBDDE007E6167 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8AC49F881981A89D00C2BD63 /* HEMSleepHistoryViewController.h */,
+				8AC49F891981A89D00C2BD63 /* HEMSleepHistoryViewController.m */,
+				8A66FC7D199BE3E800922ED5 /* HEMSleepSummaryPageViewController.h */,
+				8A66FC7E199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m */,
+				8A66FC7A199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.h */,
+				8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */,
+				8AC49F8B1981B00900C2BD63 /* HEMSleepSummaryViewController.h */,
+				8AC49F8C1981B00900C2BD63 /* HEMSleepSummaryViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		8A660131199EBDFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
 				8AB33FE7199D56C20046188F /* lightEventIcon.png */,
@@ -554,40 +524,140 @@
 				8AB33FEC199D56C20046188F /* sleepEventIcon@2x.png */,
 				8AB33FED199D56C20046188F /* wakeupEventIcon.png */,
 				8AB33FEE199D56C20046188F /* wakeupEventIcon@2x.png */,
-				8AC4A04D198A070F00C2BD63 /* alarmEnabledIcon.png */,
-				8AC4A04E198A070F00C2BD63 /* alarmEnabledIcon@2x.png */,
-				8AC4A04F198A070F00C2BD63 /* alarmNoteIcon.png */,
-				8AC4A050198A070F00C2BD63 /* alarmNoteIcon@2x.png */,
-				8A4B3D4A199308BB00856BDE /* bluetoothLogoImage.png */,
-				8A4B3D4B199308BB00856BDE /* bluetoothLogoImage@2x.png */,
-				8AC4A0451989D47000C2BD63 /* chevronIconLeft.png */,
-				8AC4A0461989D47000C2BD63 /* chevronIconLeft@2x.png */,
-				8AC4A0471989D47000C2BD63 /* chevronIconRight.png */,
-				8AC4A0481989D47000C2BD63 /* chevronIconRight@2x.png */,
-				8A66FC8F199D24FF00922ED5 /* femaleIcon.png */,
-				8A66FC90199D24FF00922ED5 /* femaleIcon@2x.png */,
-				8AC4A0311989C36200C2BD63 /* humidityIcon.png */,
-				8AC4A0321989C36200C2BD63 /* humidityIcon@2x.png */,
-				8A66FC91199D24FF00922ED5 /* maleIcon.png */,
-				8A66FC92199D24FF00922ED5 /* maleIcon@2x.png */,
-				8A4B3D3F1992C8C800856BDE /* onboardingBackgroundImage1.png */,
-				8A4B3D401992C8C800856BDE /* onboardingBackgroundImage1@2x.png */,
-				8A4B3D411992C8C800856BDE /* onboardingBackgroundImage2.png */,
-				8A4B3D421992C8C800856BDE /* onboardingBackgroundImage2@2x.png */,
-				8AC4A0331989C36200C2BD63 /* particleIcon.png */,
-				8AC4A0341989C36200C2BD63 /* particleIcon@2x.png */,
-				8AC4A055198A0AE900C2BD63 /* questionIcon.png */,
-				8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */,
-				8AC4A03D1989C5A100C2BD63 /* settingsIcon.png */,
-				8AC4A03E1989C5A100C2BD63 /* settingsIcon@2x.png */,
-				8AC4A0351989C36200C2BD63 /* temperatureIcon.png */,
-				8AC4A0361989C36200C2BD63 /* temperatureIcon@2x.png */,
-				8A4B3D4C199308BB00856BDE /* wifiLogoImage.png */,
-				8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */,
-				8A4B3D521993125D00856BDE /* worldMapImage.png */,
-				8A4B3D531993125D00856BDE /* worldMapImage@2x.png */,
 			);
 			name = Assets;
+			sourceTree = "<group>";
+		};
+		8A660132199EBE37007E6167 /* Assets */ = {
+			isa = PBXGroup;
+			children = (
+				8AC4A03D1989C5A100C2BD63 /* settingsIcon.png */,
+				8AC4A03E1989C5A100C2BD63 /* settingsIcon@2x.png */,
+			);
+			name = Assets;
+			sourceTree = "<group>";
+		};
+		8A660133199EBE5E007E6167 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8A033871197DDA9700BE8327 /* HEMActionButton.h */,
+				8A033872197DDA9700BE8327 /* HEMActionButton.m */,
+				8A4B3D471992CB4500856BDE /* HEMRoundedTextField.h */,
+				8A4B3D481992CB4500856BDE /* HEMRoundedTextField.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		8A660134199EBE9F007E6167 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8A782681196B4729002882A1 /* HEMGraphTooltipView.h */,
+				8A782682196B4729002882A1 /* HEMGraphTooltipView.m */,
+				8A66FC80199BE94100922ED5 /* HEMColoredRoundedLabel.h */,
+				8A66FC81199BE94100922ED5 /* HEMColoredRoundedLabel.m */,
+				8A90F9B51963701A00AFD110 /* HEMInsetGlyphTableViewCell.h */,
+				8A90F9B61963701A00AFD110 /* HEMInsetGlyphTableViewCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		8A660135199EBEB8007E6167 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8A782684196CB6C9002882A1 /* HEMSnappingFlowLayout.h */,
+				8A782685196CB6C9002882A1 /* HEMSnappingFlowLayout.m */,
+				8AC49F911981DC8C00C2BD63 /* HEMZoomingFlowLayout.h */,
+				8AC49F921981DC8C00C2BD63 /* HEMZoomingFlowLayout.m */,
+				8AC49F941981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.h */,
+				8AC49F951981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m */,
+				8A66FC86199C3F3900922ED5 /* HEMSensorValuesView.h */,
+				8A66FC87199C3F3900922ED5 /* HEMSensorValuesView.m */,
+				8A66FC83199C035500922ED5 /* HEMSleepHistoryView.h */,
+				8A66FC84199C035500922ED5 /* HEMSleepHistoryView.m */,
+				8AC49F85197F365C00C2BD63 /* HEMSleepScoreGraphView.h */,
+				8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		8A660136199EBED2007E6167 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				8AC49FA019832FE100C2BD63 /* HEMDeviceTableViewCell.h */,
+				8AC49FA119832FE100C2BD63 /* HEMDeviceTableViewCell.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		8A660137199EBF13007E6167 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				8A90F9AD196353F600AFD110 /* HEMColorUtils.h */,
+				8A90F9AE196353F600AFD110 /* HEMColorUtils.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+		8A90F9B019635C7900AFD110 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				8A03386C197DD2D300BE8327 /* HEMSettingsTableViewController.h */,
+				8A03386D197DD2D300BE8327 /* HEMSettingsTableViewController.m */,
+				8A90F9BA19637F9400AFD110 /* HEMSleepSoundTableViewController.h */,
+				8A90F9BB19637F9400AFD110 /* HEMSleepSoundTableViewController.m */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		8AC49F8E1981B90600C2BD63 /* Alarm */ = {
+			isa = PBXGroup;
+			children = (
+				8A660137199EBF13007E6167 /* Utilities */,
+				8A66012D199EBD64007E6167 /* Assets */,
+				8A66012C199EBD48007E6167 /* View Controllers */,
+			);
+			name = Alarm;
+			sourceTree = "<group>";
+		};
+		8AC49F8F1981B92100C2BD63 /* Sleep Metrics */ = {
+			isa = PBXGroup;
+			children = (
+				8A660135199EBEB8007E6167 /* Views */,
+				8A660131199EBDFE007E6167 /* Assets */,
+				8A660130199EBDDE007E6167 /* View Controllers */,
+			);
+			name = "Sleep Metrics";
+			sourceTree = "<group>";
+		};
+		8AC49F971982DE4D00C2BD63 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				8A66012A199EBCFE007E6167 /* Assets */,
+				8A66012B199EBD0E007E6167 /* Utilities */,
+				8A660129199EBCD0007E6167 /* View Controllers */,
+				8A660133199EBE5E007E6167 /* Views */,
+			);
+			name = Onboarding;
+			sourceTree = "<group>";
+		};
+		8AC49F981982DE5E00C2BD63 /* Sensors */ = {
+			isa = PBXGroup;
+			children = (
+				8A66012F199EBD95007E6167 /* Assets */,
+				8A66012E199EBD90007E6167 /* View Controllers */,
+				8A660134199EBE9F007E6167 /* Views */,
+			);
+			name = Sensors;
+			sourceTree = "<group>";
+		};
+		8AC49F991982DE7000C2BD63 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				8A660132199EBE37007E6167 /* Assets */,
+				8A90F9B019635C7900AFD110 /* View Controllers */,
+				8A660136199EBED2007E6167 /* Views */,
+			);
+			name = Settings;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -680,6 +750,7 @@
 				8AC4A058198A0AE900C2BD63 /* questionIcon@2x.png in Resources */,
 				8AC4A0371989C36200C2BD63 /* humidityIcon.png in Resources */,
 				8A4B3D51199308BB00856BDE /* wifiLogoImage@2x.png in Resources */,
+				8A66013B199EBF87007E6167 /* README.md in Resources */,
 				8AC4A054198A070F00C2BD63 /* alarmNoteIcon@2x.png in Resources */,
 				8AC4A0381989C36200C2BD63 /* humidityIcon@2x.png in Resources */,
 				8AB33FF4199D56C20046188F /* sleepEventIcon@2x.png in Resources */,
@@ -687,6 +758,7 @@
 				8AB33FF1199D56C20046188F /* noiseEventIcon.png in Resources */,
 				8A4B3D461992C8C800856BDE /* onboardingBackgroundImage2@2x.png in Resources */,
 				8A4B3D50199308BB00856BDE /* wifiLogoImage.png in Resources */,
+				8A66013A199EBF87007E6167 /* CHANGELOG.md in Resources */,
 				8AB33FF5199D56C20046188F /* wakeupEventIcon.png in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
 				8AC4A051198A070F00C2BD63 /* alarmEnabledIcon.png in Resources */,
@@ -702,7 +774,6 @@
 				8AC4A053198A070F00C2BD63 /* alarmNoteIcon.png in Resources */,
 				8AC4A03B1989C36200C2BD63 /* temperatureIcon.png in Resources */,
 				8AC4A03C1989C36200C2BD63 /* temperatureIcon@2x.png in Resources */,
-				6003F5A4195388D20070C39A /* Main_iPad.storyboard in Resources */,
 				8AB33FEF199D56C20046188F /* lightEventIcon.png in Resources */,
 				8AC4A04A1989D47000C2BD63 /* chevronIconLeft@2x.png in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
@@ -715,7 +786,7 @@
 				8A66FC95199D24FF00922ED5 /* maleIcon.png in Resources */,
 				8A66FC93199D24FF00922ED5 /* femaleIcon.png in Resources */,
 				8AC4A03A1989C36200C2BD63 /* particleIcon@2x.png in Resources */,
-				6003F5A1195388D20070C39A /* Main_iPhone.storyboard in Resources */,
+				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				8A4B3D551993125E00856BDE /* worldMapImage@2x.png in Resources */,
 				8AC4A0491989D47000C2BD63 /* chevronIconLeft.png in Resources */,
@@ -811,21 +882,20 @@
 				8A66FC82199BE94100922ED5 /* HEMColoredRoundedLabel.m in Sources */,
 				8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
-				8A4B3D5E199534F000856BDE /* HEMMain_iPhoneStoryboard.m in Sources */,
+				8A4B3D5E199534F000856BDE /* HEMMainStoryboard.m in Sources */,
 				8A66FC8E199D17C000922ED5 /* HEMHeightPickerViewController.m in Sources */,
 				8A66FC7F199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m in Sources */,
 				8A660123199E9CF9007E6167 /* HEMUserDataCache.m in Sources */,
 				8AC4A05B198ACE4800C2BD63 /* HEMSensorGraphDataSource.m in Sources */,
 				8AC49F9F19832D2600C2BD63 /* HEMDevicePickerTableViewController.m in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMAgePickerViewController.m in Sources */,
-				8A4B3D5D199534F000856BDE /* HEMMain_iPadStoryboard.m in Sources */,
 				8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */,
 				8A90F9B319635CAE00AFD110 /* HEMCurrentConditionsTableViewController.m in Sources */,
 				8A90F9B81963701A00AFD110 /* HEMInsetGlyphTableViewCell.m in Sources */,
 				8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */,
 				8A90F9AF196353F600AFD110 /* HEMColorUtils.m in Sources */,
 				8A66FC9C199D308B00922ED5 /* HEMWeightPickerViewController.m in Sources */,
-				8A660126199EB99E007E6167 /* HEMHTTPErrorHandler.m in Sources */,
+				8A660126199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m in Sources */,
 				8A66FC85199C035500922ED5 /* HEMSleepHistoryView.m in Sources */,
 				6003F5A7195388D20070C39A /* HEMAlarmViewController.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,
@@ -874,20 +944,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		6003F59F195388D20070C39A /* Main_iPhone.storyboard */ = {
+		6003F59F195388D20070C39A /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				6003F5A0195388D20070C39A /* Base */,
 			);
-			name = Main_iPhone.storyboard;
-			sourceTree = "<group>";
-		};
-		6003F5A2195388D20070C39A /* Main_iPad.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				6003F5A3195388D20070C39A /* Base */,
-			);
-			name = Main_iPad.storyboard;
+			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
 		6003F5B8195388D20070C39A /* InfoPlist.strings */ = {

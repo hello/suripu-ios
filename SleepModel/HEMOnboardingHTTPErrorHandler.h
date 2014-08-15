@@ -1,7 +1,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HEMHTTPErrorHandler : NSObject
+@interface HEMOnboardingHTTPErrorHandler : NSObject
 
 /**
  *  Show an alert with a message based on the content of the error

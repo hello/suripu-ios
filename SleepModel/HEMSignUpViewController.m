@@ -13,7 +13,6 @@
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
 @property (weak, nonatomic) IBOutlet UITextField* confirmPasswordField;
 @property (weak, nonatomic) IBOutlet UITextField* nameField;
-@property (strong, nonatomic) UITextField* activeField;
 @property (weak, nonatomic) IBOutlet HEMActionButton* signUpButton;
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
 @property (nonatomic, getter=isSigningUp) BOOL signingUp;
@@ -87,27 +86,17 @@
 
 #pragma mark - UITextFieldDelegate
 
-- (void)textFieldDidBeginEditing:(UITextField*)textField
-{
-    self.activeField = textField;
-}
-
-- (void)textFieldDidEndEditing:(UITextField*)textField
-{
-    self.activeField = nil;
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
     if ([textField isEqual:self.nameField]) {
         [self.emailAddressField becomeFirstResponder];
-        [self scrollToTextField:textField];
+        [self scrollToTextField:self.emailAddressField];
     } else if ([textField isEqual:self.emailAddressField]) {
         [self.passwordField becomeFirstResponder];
-        [self scrollToTextField:textField];
+        [self scrollToTextField:self.passwordField];
     } else if ([textField isEqual:self.passwordField]) {
         [self.confirmPasswordField becomeFirstResponder];
-        [self scrollToTextField:textField];
+        [self scrollToTextField:self.confirmPasswordField];
     } else if ([textField isEqual:self.confirmPasswordField]) {
         [self.scrollView setContentOffset:CGPointZero animated:YES];
         [textField resignFirstResponder];
@@ -117,6 +106,11 @@
     }
 
     return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self scrollToTextField:textField];
 }
 
 - (void)scrollToTextField:(UITextField*)textField

@@ -13,8 +13,10 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 @property (weak, nonatomic) IBOutlet UITextField* usernameField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
 
+@property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView* activityIndicatorView;
 @property (strong, nonatomic) IBOutlet UIView* view;
+@property (nonatomic, getter=isSigningIn) BOOL signingIn;
 @end
 
 @implementation HEMAuthenticationViewController
@@ -22,14 +24,13 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    //    self.navigationItem.hidesBackButton = YES;
     //    self.title = NSLocalizedString(@"authorization.title", nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    //    [self.usernameField becomeFirstResponder];
+    [self.usernameField becomeFirstResponder];
 }
 
 - (void)showURLUpdateAlertView
@@ -46,16 +47,24 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
     [URLAlertView show];
 }
 
+- (BOOL)validateInputValues
+{
+    return self.usernameField.text.length > 0 && self.passwordField.text.length > 0;
+}
+
 #pragma mark - Actions
 
 - (IBAction)didTapLogInButton:(id)sender
 {
-    self.navigationItem.rightBarButtonItem.enabled = NO;
+    if ([self isSigningIn] || ![self validateInputValues])
+        return;
+
+    self.signingIn = YES;
     [SVProgressHUD showWithStatus:NSLocalizedString(@"authorization.sign-in.loading-message", nil) maskType:SVProgressHUDMaskTypeBlack];
     __weak typeof(self) weakSelf = self;
     [SENAuthorizationService authorizeWithUsername:self.usernameField.text password:self.passwordField.text callback:^(NSError* error) {
         typeof(self) strongSelf = weakSelf;
-        strongSelf.navigationItem.rightBarButtonItem.enabled = YES;
+        strongSelf.signingIn = NO;
         [SVProgressHUD dismiss];
         if (error) {
             [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)];
@@ -107,27 +116,30 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 #pragma mark - UITextFieldDelegate
 
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self scrollToTextField:textField];
+}
+
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
-    [textField resignFirstResponder];
-    if (self.navigationItem.rightBarButtonItem.enabled) {
-        [self didTapSignUpButton:self];
+    if ([textField isEqual:self.usernameField]) {
+        [self.passwordField becomeFirstResponder];
+        [self scrollToTextField:self.passwordField];
+    } else {
+        [self.scrollView setContentOffset:CGPointZero animated:YES];
+        [textField resignFirstResponder];
+        if ([self validateInputValues]) {
+            [self didTapSignUpButton:self];
+        }
     }
+
     return YES;
 }
 
-- (BOOL)textField:(UITextField*)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString*)string
+- (void)scrollToTextField:(UITextField*)textField
 {
-    NSString* newText = [textField.text stringByReplacingCharactersInRange:range withString:string];
-    UITextField* otherField;
-    if ([textField isEqual:self.usernameField]) {
-        otherField = self.passwordField;
-    } else {
-        otherField = self.usernameField;
-    }
-    self.navigationItem.rightBarButtonItem.enabled = newText.length > 0 && otherField.text.length > 0;
-
-    return YES;
+    [self.scrollView setContentOffset:CGPointMake(0, CGRectGetMinY(textField.frame) - CGRectGetMinY(self.usernameField.frame)) animated:YES];
 }
 
 @end

@@ -204,6 +204,10 @@
     if (state == FCDynamicPaneStateRoot) {
         self.swipeEnabled = NO;
     }
+    
+    if (state == _state) {
+        return;
+    }
 
     if (state == FCDynamicPaneStateRoot) {
         self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);

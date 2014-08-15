@@ -14,6 +14,7 @@
 @property (strong, nonatomic) UITextField* activeField;
 @property (weak, nonatomic) IBOutlet HEMActionButton* signUpButton;
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
+@property (nonatomic, getter=isSigningUp) BOOL signingUp;
 @end
 
 @implementation HEMSignUpViewController
@@ -33,9 +34,10 @@
 
 - (IBAction)didTapSignUp:(id)sender
 {
-    if (![self validateFieldValuesAndShowAlert:YES])
+    if ([self isSigningUp] || ![self validateFieldValuesAndShowAlert:YES])
         return;
 
+    self.signingUp = YES;
     NSString* emailAddress = self.emailAddressField.text;
     NSString* password = self.passwordField.text;
     __weak typeof(self) weakSelf = self;
@@ -47,12 +49,15 @@
                                   typeof(self) strongSelf = weakSelf;
                                   if (error) {
                                       [strongSelf presentErrorAlertWithMessage:error.localizedDescription];
+                                      strongSelf.signingUp = NO;
                                       return;
                                   }
                                   // show loading screen for "signing in"
                                   [SENAuthorizationService authorizeWithUsername:emailAddress password:password callback:^(NSError *signInError) {
+                                      strongSelf.signingUp = NO;
                                       if (signInError) {
                                           [strongSelf presentErrorAlertWithMessage:signInError.localizedDescription];
+                                          
                                           // show sign in view? retry?
                                           return;
                                       }

@@ -68,7 +68,7 @@
 {
     [UIView animateWithDuration:0.1f animations:^{
         self.lastNightLabel.alpha = 0.f;
-        self.view.backgroundColor = [UIColor whiteColor];
+        self.view.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.f];
     }];
     self.scrollView.scrollEnabled = YES;
 }

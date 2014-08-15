@@ -30,7 +30,7 @@
 - (void)_configureLayout
 {
     self.clearsContextBeforeDrawing = YES;
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.f];
 }
 
 - (void)updateWithSensorData:(NSDictionary*)sensorData

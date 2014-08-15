@@ -135,6 +135,7 @@ static UIImage* _chevronIconRight = nil;
 
     //// Color Declarations
     UIColor* color = [UIColor colorWithRed: 0.866 green: 0.866 blue: 0.866 alpha: 1];
+    UIColor* color3 = [UIColor colorWithRed: 0.97 green: 0.97 blue: 0.97 alpha: 1];
 
     //// Variable Declarations
     UIColor* sleepScoreColor = sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.idealSensorColor);
@@ -172,7 +173,7 @@ static UIImage* _chevronIconRight = nil;
 
     //// white center oval Drawing
     UIBezierPath* whiteCenterOvalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(2, 2, 171, 171)];
-    [UIColor.whiteColor setFill];
+    [color3 setFill];
     [whiteCenterOvalPath fill];
 
 

@@ -69,11 +69,11 @@
     NSInteger hour = [SENAlarm savedAlarm].hour;
     CGFloat intensity = 0;
     if (hour < 12) {
-        intensity = hour / 11.0;
+        intensity = hour / 11.f;
     } else {
-        intensity = (23 - hour) / 12.0;
+        intensity = (23 - hour) / 12.f;
     }
-    intensity += [SENAlarm savedAlarm].minute / 360.f;
+    intensity += [SENAlarm savedAlarm].minute / 3600.f;
     CGFloat y = (self.edgesForExtendedLayout & UIRectEdgeTop) ? -(CGRectGetHeight(self.navigationController.navigationBar.frame) + CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame])) : 0;
     CGRect frame = CGRectMake(0, y, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
     [HEMColorUtils configureLayer:self.gradientLayer withBlueBackgroundGradientInFrame:frame intensityLevel:intensity];

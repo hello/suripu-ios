@@ -64,18 +64,31 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 22.f;
 - (void)updateSensorsForTouch:(UITouch*)touch
 {
     NSTimeInterval timeAtTouch = ABS([self timeIntervalAtYOffset:[touch locationInView:self].y]);
+    NSDictionary* dataSlice = [self dataSliceForTimeInterval:timeAtTouch];
+    if (dataSlice) {
+        [self.sensorValuesView updateWithSensorData:dataSlice[@"sensors"]];
+    }
+}
+
+- (NSDictionary*)dataSliceForTimeInterval:(NSTimeInterval)timeInterval
+{
     for (NSDictionary* dataSlice in self.dataSlices) {
         NSTimeInterval startTimeInterval = [dataSlice[@"timestamp"] doubleValue] / 1000;
         NSTimeInterval endTimeInterval = [dataSlice[@"duration"] doubleValue] / 1000 + startTimeInterval;
-        if (timeAtTouch >= startTimeInterval && timeAtTouch <= endTimeInterval) {
-            [self.sensorValuesView updateWithSensorData:dataSlice[@"sensors"]];
-            return;
+        if (timeInterval >= startTimeInterval && timeInterval <= endTimeInterval) {
+            return dataSlice;
         }
     }
+    return nil;
 }
 
 - (void)handleSleepEvent:(UIButton*)button
 {
+    NSTimeInterval interval = [self timeIntervalAtYOffset:CGRectGetMidY(button.frame)];
+    NSDictionary* dataSlice = [self dataSliceForTimeInterval:interval];
+    if (dataSlice) {
+        [self.sensorValuesView updateWithSensorData:dataSlice[@"sensors"]];
+    }
 }
 
 #pragma mark - Layout
@@ -106,6 +119,7 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 22.f;
         }
     }
     for (NSDictionary* event in self.sleepEvents) {
+        NSDictionary* dataSlice = [self dataSliceForTimeInterval:[event[@"timestamp"] doubleValue] / 1000];
         UIImage* image = nil;
         if ([event[@"type"] isEqualToString:@"awake"]) {
             image = [HelloStyleKit wakeupEventIcon];
@@ -127,7 +141,11 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 22.f;
         [button setImage:image forState:UIControlStateNormal];
         button.contentMode = UIViewContentModeCenter;
         button.backgroundColor = [UIColor whiteColor];
-        button.layer.borderColor = [HelloStyleKit intermediateSleepColor].CGColor;
+        if (dataSlice) {
+            button.layer.borderColor = [self colorForSleepDepth:[dataSlice[@"sleep_depth"] integerValue]].CGColor;
+        } else {
+            button.layer.borderColor = [HelloStyleKit intermediateSleepColor].CGColor;
+        }
         button.layer.borderWidth = 2.f;
         button.layer.cornerRadius = HEMSleepHistoryViewEventStripWidth / 2;
         button.layer.shadowOpacity = 0;
@@ -143,6 +161,7 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 22.f;
 {
     [self drawSleepDepthInRect:rect];
     [self drawSaturationOverlayInRect:rect];
+    [self drawShadowGradientInRect:rect];
     [self drawHourMarkersInRect:rect];
     [self drawSleepEventTimeMarkersInRect:rect];
 }
@@ -229,9 +248,35 @@ CGFloat const HEMSleepHistoryViewEventStripWidth = 22.f;
     }
 }
 
+- (void)drawShadowGradientInRect:(CGRect)rect
+{
+    CGFloat colors[] = {
+        0.91, 0.92, 0.92, 1.0,
+        0.902, 0.91, 0.906, 0.0,
+    };
+    CGRect shadowRect = CGRectMake(0, HEMSleepHistoryViewSensorsHeight, CGRectGetWidth(rect), 10.f);
+    CGColorSpaceRef baseSpace = CGColorSpaceCreateDeviceRGB();
+    CGGradientRef gradient = CGGradientCreateWithColorComponents(baseSpace, colors, NULL, 2);
+    CGColorSpaceRelease(baseSpace), baseSpace = NULL;
+
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    CGContextSaveGState(context);
+    CGContextAddRect(context, shadowRect);
+    CGContextClip(context);
+
+    CGPoint startPoint = CGPointMake(CGRectGetMinX(shadowRect), CGRectGetMinY(shadowRect));
+    CGPoint endPoint = CGPointMake(CGRectGetMinX(shadowRect), CGRectGetMaxY(shadowRect));
+
+    CGContextDrawLinearGradient(context, gradient, startPoint, endPoint, 0);
+    CGGradientRelease(gradient), gradient = NULL;
+
+    CGContextRestoreGState(context);
+}
+
 - (CGFloat)yOffsetForTimeInterval:(NSTimeInterval)interval
 {
-    return floorf((interval - self.startInterval) / self.secondsPerPoint + HEMSleepHistoryViewPadding + HEMSleepHistoryViewSensorsHeight);
+    return ceilf((interval - self.startInterval) / self.secondsPerPoint + HEMSleepHistoryViewPadding + HEMSleepHistoryViewSensorsHeight);
 }
 
 - (NSTimeInterval)timeIntervalAtYOffset:(CGFloat)yOffset

@@ -1,9 +1,11 @@
 
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAuthorizationService.h>
+
 #import "HEMSignUpViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMHTTPErrorHandler.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
@@ -41,24 +43,24 @@
     NSString* emailAddress = self.emailAddressField.text;
     NSString* password = self.passwordField.text;
     __weak typeof(self) weakSelf = self;
-    // show loading screen for "signing up"
+    // TODO: show loading screen for "signing up"
     [SENAPIAccount createAccountWithName:self.nameField.text
                             emailAddress:emailAddress
                                 password:password
                               completion:^(NSDictionary* data, NSError* error) {
                                   typeof(self) strongSelf = weakSelf;
                                   if (error) {
-                                      [strongSelf presentErrorAlertWithMessage:error.localizedDescription];
+                                      [HEMHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
                                       strongSelf.signingUp = NO;
                                       return;
                                   }
-                                  // show loading screen for "signing in"
+                                  // TODO: show loading screen for "signing in"
                                   [SENAuthorizationService authorizeWithUsername:emailAddress password:password callback:^(NSError *signInError) {
                                       strongSelf.signingUp = NO;
                                       if (signInError) {
-                                          [strongSelf presentErrorAlertWithMessage:signInError.localizedDescription];
+                                          [HEMHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
                                           
-                                          // show sign in view? retry?
+                                          // TODO: show sign in view? retry?
                                           return;
                                       }
                                       [strongSelf.navigationController pushViewController:[HEMOnboardingStoryboard instantiateBluetoothViewController] animated:YES];
@@ -137,18 +139,13 @@
         return YES;
     }
     if (errorMessage && shouldShowAlert) {
-        [self presentErrorAlertWithMessage:errorMessage];
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)
+                                    message:errorMessage
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
     }
     return NO;
-}
-
-- (void)presentErrorAlertWithMessage:(NSString*)message
-{
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)
-                                message:message
-                               delegate:nil
-                      cancelButtonTitle:nil
-                      otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
 }
 
 @end

@@ -4,6 +4,7 @@
 #import <SenseKit/SENAPIClient.h>
 
 #import "HEMAuthenticationViewController.h"
+#import "HEMHTTPErrorHandler.h"
 
 static NSInteger const HEPURLAlertButtonIndexSave = 1;
 static NSInteger const HEPURLAlertButtonIndexReset = 2;
@@ -11,8 +12,8 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 @interface HEMAuthenticationViewController () <UIAlertViewDelegate>
 @property (weak, nonatomic) IBOutlet UITextField* usernameField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView* activityIndicatorView;
 
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView* activityIndicatorView;
 @property (strong, nonatomic) IBOutlet UIView* view;
 @end
 
@@ -21,8 +22,8 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-//    self.navigationItem.hidesBackButton = YES;
-//    self.title = NSLocalizedString(@"authorization.title", nil);
+    //    self.navigationItem.hidesBackButton = YES;
+    //    self.title = NSLocalizedString(@"authorization.title", nil);
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -57,11 +58,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
         strongSelf.navigationItem.rightBarButtonItem.enabled = YES;
         [SVProgressHUD dismiss];
         if (error) {
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)
-                                        message:error.localizedDescription
-                                       delegate:nil
-                              cancelButtonTitle:nil
-                              otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
+            [HEMHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)];
             return;
         }
         [strongSelf.navigationController dismissViewControllerAnimated:YES completion:NULL];

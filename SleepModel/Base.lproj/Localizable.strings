@@ -3,11 +3,13 @@
 
 // sign up
 "sign-up.title" = "Sign Up";
+"sign-up.failed.title" = "Sign Up Failed";
 "sign-up.error.password-length" = "Your password must be at least 3 characters.";
 "sign-up.error.password-match" = "The password entered into the confirmation field does not match.";
 "sign-up.error.name-length" = "You must give a name.";
 "sign-up.error.email-invalid" = "Your email address was not recognized.";
 "sign-up.error.conflict" = "The provided email address is already attached to an account.";
+"sign-up.error.generic" = "Something went wrong. Please try again.";
 
 // settings
 "settings.title" = "Settings";

@@ -50,9 +50,9 @@
                                       return;
                                   }
                                   // show loading screen for "signing in"
-                                  [SENAuthorizationService authorizeWithUsername:emailAddress password:password callback:^(NSError *error) {
-                                      if (error) {
-                                          [strongSelf presentErrorAlertWithMessage:error.localizedDescription];
+                                  [SENAuthorizationService authorizeWithUsername:emailAddress password:password callback:^(NSError *signInError) {
+                                      if (signInError) {
+                                          [strongSelf presentErrorAlertWithMessage:signInError.localizedDescription];
                                           // show sign in view? retry?
                                           return;
                                       }

@@ -14,6 +14,7 @@
 @property (weak, nonatomic) IBOutlet UILabel* lastNightLabel;
 @property (weak, nonatomic) IBOutlet HEMSleepScoreGraphView* sleepScoreView;
 @property (strong, nonatomic) NSDate* dateForNightOfSleep;
+@property (nonatomic) UIStatusBarStyle oldBarStyle;
 @end
 
 @implementation HEMSleepSummaryViewController
@@ -56,21 +57,27 @@
 
 - (void)viewDidPop
 {
+    [[UIApplication sharedApplication] setStatusBarStyle:self.oldBarStyle];
     self.scrollView.scrollEnabled = NO;
     [UIView animateWithDuration:0.5f animations:^{
         self.lastNightLabel.alpha = 1.f;
         self.scrollView.contentOffset = CGPointMake(0, 0);
         self.view.backgroundColor = [HelloStyleKit lightestBlueColor];
     }];
+    self.oldBarStyle = UIStatusBarStyleLightContent;
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (void)viewDidPush
 {
+    self.oldBarStyle = [UIApplication sharedApplication].statusBarStyle;
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     [UIView animateWithDuration:0.1f animations:^{
         self.lastNightLabel.alpha = 0.f;
         self.view.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.f];
     }];
     self.scrollView.scrollEnabled = YES;
+    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (void)didMoveToParentViewController:(UIViewController*)parent

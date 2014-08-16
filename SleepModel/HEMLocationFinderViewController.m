@@ -1,5 +1,6 @@
 
 #import "HEMLocationFinderViewController.h"
+#import "HEMSettingsTableViewController.h"
 #import "HEMUserDataCache.h"
 
 @interface HEMLocationFinderViewController ()
@@ -17,12 +18,23 @@
 - (IBAction)requestLocation:(id)sender
 {
     [self uploadCollectedData];
-    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+    [self dismissDataCollectionFlow];
 }
 
 - (IBAction)skipRequestingLocation:(id)sender
 {
     [self uploadCollectedData];
+    [self dismissDataCollectionFlow];
+}
+
+- (void)dismissDataCollectionFlow
+{
+    for (UIViewController* viewController in self.navigationController.viewControllers) {
+        if ([viewController isKindOfClass:[HEMSettingsTableViewController class]]) {
+            [self.navigationController popToViewController:viewController animated:YES];
+            return;
+        }
+    }
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 

@@ -194,11 +194,24 @@
 {
     UIViewController* currentTestingViewController = self.parentViewController;
 
-    while (![currentTestingViewController isKindOfClass:[FCDynamicPanesNavigationController class]]) {
+    while (![currentTestingViewController isKindOfClass:[FCDynamicPanesNavigationController class]] && currentTestingViewController != nil) {
         currentTestingViewController = currentTestingViewController.parentViewController;
     }
 
     return (FCDynamicPanesNavigationController*)currentTestingViewController;
+}
+
+- (UIPanGestureRecognizer*)panePanGestureRecognizer
+{
+    for (FCDynamicPane* pane in [self panesNavigationController].viewControllers) {
+        UIViewController* viewController = pane.viewController;
+        if (viewController == self
+            || ([viewController isKindOfClass:[UINavigationController class]] && [[(UINavigationController*)viewController viewControllers] containsObject:self])
+            || ([viewController isKindOfClass:[UIPageViewController class]] && [[(UIPageViewController*)viewController viewControllers] containsObject:self])) {
+            return pane.panGestureRecognizer;
+        }
+    }
+    return nil;
 }
 
 @end

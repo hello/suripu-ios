@@ -11,7 +11,6 @@
     BOOL _isOutOfScreen;
 }
 
-@property (nonatomic) UIView* gestureView;
 @property (nonatomic) UIPanGestureRecognizer* panGestureRecognizer;
 @property (nonatomic) UITapGestureRecognizer* tapGestureRecognizer;
 @property (nonatomic) FCDynamicPanesNavigationController* panesNavigationController;
@@ -102,22 +101,12 @@
     [super willMoveToParentViewController:parent];
     [self addChildViewController:_viewController];
     [self.view addSubview:_viewController.view];
-    if (!self.gestureView) {
-        CGRect baseRect = CGRectMake(0, 0, CGRectGetWidth(_viewController.view.bounds), 80.f);
-        self.gestureView = [[UIView alloc] initWithFrame:CGRectInset(baseRect, 60.f, 0)];
-        self.gestureView.backgroundColor = [UIColor clearColor];
-        [self.view addSubview:self.gestureView];
-    }
-
     self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapHandle:)];
     self.tapGestureRecognizer.cancelsTouchesInView = NO;
 
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panHandle:)];
     self.panGestureRecognizer.cancelsTouchesInView = NO;
-    self.panGestureRecognizer.delegate = self;
-    self.tapGestureRecognizer.delegate = self;
-    [self.gestureView addGestureRecognizer:self.panGestureRecognizer];
-    //    [self.gestureView addGestureRecognizer:self.tapGestureRecognizer];
+    [_viewController.view addGestureRecognizer:self.panGestureRecognizer];
 }
 
 - (void)didMoveToParentViewController:(UIViewController*)parent
@@ -204,7 +193,7 @@
     if (state == FCDynamicPaneStateRoot) {
         self.swipeEnabled = NO;
     }
-    
+
     if (state == _state) {
         return;
     }
@@ -247,9 +236,9 @@
     if (_swipeEnabled != swipeEnabled) {
         _swipeEnabled = swipeEnabled;
         if (!swipeEnabled) {
-            [self.gestureView removeGestureRecognizer:self.panGestureRecognizer];
+            [_viewController.view removeGestureRecognizer:self.panGestureRecognizer];
         } else {
-            [self.gestureView addGestureRecognizer:self.panGestureRecognizer];
+            [_viewController.view addGestureRecognizer:self.panGestureRecognizer];
         }
     }
 }

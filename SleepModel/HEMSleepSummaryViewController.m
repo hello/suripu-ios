@@ -7,7 +7,7 @@
 #import "HEMSleepHistoryView.h"
 #import "HelloStyleKit.h"
 
-@interface HEMSleepSummaryViewController () <FCDynamicPaneViewController>
+@interface HEMSleepSummaryViewController () <FCDynamicPaneViewController, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
 @property (weak, nonatomic) IBOutlet HEMSleepHistoryView* sleepHistoryView;
@@ -34,18 +34,7 @@
 {
     [super viewDidLoad];
     self.scrollView.translatesAutoresizingMaskIntoConstraints = NO;
-    NSString* dateText = [[HEMSleepSummaryViewController sleepDateFormatter] stringFromDate:self.dateForNightOfSleep];
-    NSString* lastNightDateText = [[HEMSleepSummaryViewController sleepDateFormatter] stringFromDate:[NSDate dateWithTimeInterval:-60 * 60 * 24 sinceDate:[NSDate date]]];
-    if ([dateText isEqualToString:lastNightDateText]) {
-        NSString* lastNightDateFormatText = NSLocalizedString(@"sleep-history.last-night", nil);
-        self.lastNightLabel.text = lastNightDateFormatText;
-        [self.sleepScoreView setSleepScoreDateText:lastNightDateFormatText];
-    } else {
-        self.lastNightLabel.text = dateText;
-        [self.sleepScoreView setSleepScoreDateText:dateText];
-    }
-
-    [self.sleepScoreView setSleepScore:arc4random() % 90];
+    [self updateTextForDate];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -70,6 +59,7 @@
 
 - (void)viewDidPush
 {
+    [self configureGestureRecognizers];
     self.oldBarStyle = [UIApplication sharedApplication].statusBarStyle;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     [UIView animateWithDuration:0.1f animations:^{
@@ -78,16 +68,6 @@
     }];
     self.scrollView.scrollEnabled = YES;
     [self setNeedsStatusBarAppearanceUpdate];
-}
-
-- (void)didMoveToParentViewController:(UIViewController*)parent
-{
-    [super didMoveToParentViewController:parent];
-}
-
-- (void)willMoveToParentViewController:(UIViewController*)parent
-{
-    [super willMoveToParentViewController:parent];
 }
 
 - (void)setDateForNightOfSleep:(NSDate*)date
@@ -103,6 +83,42 @@
     //    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
     //    HEMSleepHistoryViewController* controller = (HEMSleepHistoryViewController*)[storyboard instantiateViewControllerWithIdentifier:@"sleepHistoryController"];
     //    [self presentViewController:controller animated:YES completion:NULL];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch
+{
+    return self.scrollView.contentOffset.y == 0;
+}
+
+- (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UISwipeGestureRecognizer*)otherGestureRecognizer
+{
+    return YES;
+}
+
+#pragma mark - Configuration
+
+- (void)updateTextForDate
+{
+    NSString* dateText = [[HEMSleepSummaryViewController sleepDateFormatter] stringFromDate:self.dateForNightOfSleep];
+    NSString* lastNightDateText = [[HEMSleepSummaryViewController sleepDateFormatter] stringFromDate:[NSDate dateWithTimeInterval:-60 * 60 * 24 sinceDate:[NSDate date]]];
+    if ([dateText isEqualToString:lastNightDateText]) {
+        NSString* lastNightDateFormatText = NSLocalizedString(@"sleep-history.last-night", nil);
+        self.lastNightLabel.text = lastNightDateFormatText;
+        [self.sleepScoreView setSleepScoreDateText:lastNightDateFormatText];
+    } else {
+        self.lastNightLabel.text = dateText;
+        [self.sleepScoreView setSleepScoreDateText:dateText];
+    }
+
+    [self.sleepScoreView setSleepScore:arc4random() % 90];
+}
+
+- (void)configureGestureRecognizers
+{
+    self.panePanGestureRecognizer.delegate = self;
 }
 
 @end

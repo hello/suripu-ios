@@ -74,14 +74,6 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
     }];
 }
 
-- (IBAction)didTapSignUpButton:(id)sender
-{
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
-    UIViewController* signUpController = [storyboard instantiateViewControllerWithIdentifier:@"signUpViewController"];
-    //    [self.navigationController popToRootViewControllerAnimated:NO];
-    [self.navigationController pushViewController:signUpController animated:YES];
-}
-
 - (IBAction)didTapForgotPasswordButton:(UIButton*)sender
 {
 }
@@ -116,7 +108,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 #pragma mark - UITextFieldDelegate
 
-- (void)textFieldDidBeginEditing:(UITextField *)textField
+- (void)textFieldDidBeginEditing:(UITextField*)textField
 {
     [self scrollToTextField:textField];
 }
@@ -130,7 +122,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
         [self.scrollView setContentOffset:CGPointZero animated:YES];
         [textField resignFirstResponder];
         if ([self validateInputValues]) {
-            [self didTapSignUpButton:self];
+            [self didTapLogInButton:self];
         }
     }
 

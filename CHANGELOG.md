@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.0.7
+
+Fixes:
+
+* Pulling the sleep graph view up and down should be much easier
+* Sign up view shouldn't appear during sign in
+* After updating user information in settings, the user is returned to the settings view
+
+Issues:
+
+* Close sleep events get squished in the graph
+
 ## 1.0.0.6
 
 Fixes:

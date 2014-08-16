@@ -89,7 +89,7 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch
 {
-    return self.scrollView.contentOffset.y == 0;
+    return self.scrollView.contentOffset.y < 5.f;
 }
 
 - (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer

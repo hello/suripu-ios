@@ -24,7 +24,7 @@
 {
     [super viewDidLoad];
     self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) * 1.5f);
-    //    self.navigationItem.hidesBackButton = YES;
+//        self.navigationItem.hidesBackButton = YES;
 }
 
 - (void)viewWillAppear:(BOOL)animated

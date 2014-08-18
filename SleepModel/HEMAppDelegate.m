@@ -6,6 +6,7 @@
 #import "HEMAppDelegate.h"
 #import "HEMSleepSummaryPageViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMProgressController.h"
 
 @interface HEMAppDelegate ()
 
@@ -41,8 +42,11 @@
     UINavigationController* navController = (UINavigationController*)((FCDynamicPane*)[dynamicPanesController.viewControllers firstObject]).viewController;
     [navController popToRootViewControllerAnimated:NO];
     [dynamicPanesController popViewControllerAnimated:animated];
+    
     UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
-    [dynamicPanesController presentViewController:[onboardingStoryboard instantiateInitialViewController] animated:animated completion:NULL];
+    UIViewController* rootController = [onboardingStoryboard instantiateInitialViewController];
+    HEMProgressController* progressController = [[HEMProgressController alloc] initWithRootViewController:rootController];
+    [dynamicPanesController presentViewController:progressController animated:animated completion:NULL];
 }
 
 - (void)configureAppearance

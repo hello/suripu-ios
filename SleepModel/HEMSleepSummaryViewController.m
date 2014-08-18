@@ -30,6 +30,11 @@
     return formatter;
 }
 
+- (void)dealloc
+{
+    self.panePanGestureRecognizer.delegate = nil;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -42,6 +47,19 @@
     [super viewWillAppear:animated];
     self.lastNightLabel.alpha = 0.f;
     self.view.backgroundColor = [UIColor whiteColor];
+    self.panePanGestureRecognizer.delegate = self;
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    self.panePanGestureRecognizer.delegate = self;
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    self.panePanGestureRecognizer.delegate = nil;
 }
 
 - (void)viewDidPop
@@ -59,7 +77,7 @@
 
 - (void)viewDidPush
 {
-    [self configureGestureRecognizers];
+    self.panePanGestureRecognizer.delegate = self;
     self.oldBarStyle = [UIApplication sharedApplication].statusBarStyle;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     [UIView animateWithDuration:0.1f animations:^{
@@ -89,7 +107,7 @@
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch
 {
-    return self.scrollView.contentOffset.y < 5.f;
+    return self.scrollView.contentOffset.y < 20.f;
 }
 
 - (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer
@@ -114,11 +132,6 @@
     }
 
     [self.sleepScoreView setSleepScore:arc4random() % 90];
-}
-
-- (void)configureGestureRecognizers
-{
-    self.panePanGestureRecognizer.delegate = self;
 }
 
 @end

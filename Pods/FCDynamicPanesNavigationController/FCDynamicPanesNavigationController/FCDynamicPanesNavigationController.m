@@ -18,44 +18,35 @@
 
 @implementation FCDynamicPanesNavigationController
 
-- (id)initWithNibName:(NSString*)nibNameOrNil bundle:(NSBundle*)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization
-    }
-    return self;
-}
-
 - (id)init
 {
-    self = [super init];
-    if (!self) {
-        return nil;
+    if (self = [super init]) {
+        _viewControllers = [[FCMutableArray alloc] initWithDelegate:self];
+        _paneSwitchingEnabled = YES;
     }
-    _viewControllers = [[FCMutableArray alloc] initWithDelegate:self];
-    _paneSwitchingEnabled = YES;
+
     return self;
 }
 
 - (id)initWithRootViewController:(UIViewController*)viewController
 {
     self = [self initWithViewControllers:@[ viewController ]];
-    if (!self) {
-        return nil;
-    }
     return self;
 }
 
 - (id)initWithViewControllers:(NSArray*)viewControllers
 {
-    self = [super init];
-    if (!self) {
-        return nil;
+    if (self = [super init]) {
+        _viewControllers = [[FCMutableArray alloc] initWithDelegate:self];
+        [_viewControllers addObjectsFromArray:viewControllers];
     }
-    _viewControllers = [[FCMutableArray alloc] initWithDelegate:self];
-    [_viewControllers addObjectsFromArray:viewControllers];
+
     return self;
+}
+
+- (void)dealloc
+{
+    _viewControllers = nil;
 }
 
 - (void)pushViewController:(UIViewController*)viewController retracted:(BOOL)retracted
@@ -110,7 +101,7 @@
     } else {
         FCDynamicPane* includingViewController = ((FCDynamicPane*)[array objectAtIndex:[array indexOfObject:object] - 1]);
         UIView* includingView = includingViewController.view;
-        object.view.frame = CGRectMake(0, TILE_Y, object.view.frame.size.width, object.view.frame.size.height);
+        object.view.frame = CGRectMake(0, 0, object.view.frame.size.width, object.view.frame.size.height);
 
         [object removeFromParentViewController];
         [includingViewController addChildViewController:object];
@@ -118,7 +109,10 @@
         [includingView bringSubviewToFront:object.view];
         [object didMoveToParentViewController:includingViewController];
 
-        object.state = FCDynamicPaneStateRetracted;
+        object.state = FCDynamicPaneStateActive;
+        if ([object.viewController respondsToSelector:@selector(viewDidPush)]) {
+            [(UIViewController<FCDynamicPaneViewController>*)object.viewController viewDidPush];
+        }
     }
 }
 
@@ -139,7 +133,7 @@
             [childPane.view removeFromSuperview];
             [childPane willMoveToParentViewController:nil];
             [childPane removeFromParentViewController];
-            childPane.view.frame = CGRectMake(0, [array indexOfObject:pane] ? [UIScreen mainScreen].bounds.size.height : 0, childPane.view.frame.size.width, childPane.view.frame.size.height);
+            childPane.view.frame = CGRectMake(0, 0, childPane.view.frame.size.width, childPane.view.frame.size.height);
             [pane.parentViewController.view addSubview:childPane.view];
             [pane.parentViewController addChildViewController:childPane];
             [childPane didMoveToParentViewController:pane.parentViewController];

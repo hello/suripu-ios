@@ -19,8 +19,8 @@
 
 @interface UIViewController (FCDynamicPanesNavigationController)
 
-@property (nonatomic, readonly) FCDynamicPanesNavigationController* panesNavigationController;
-@property (nonatomic, readonly) UIPanGestureRecognizer* panePanGestureRecognizer;
+- (FCDynamicPanesNavigationController*)panesNavigationController;
+- (UIPanGestureRecognizer*)panePanGestureRecognizer;
 @end
 
 @interface FCDynamicPanesNavigationController : UIViewController <FCMutableArrayDelegate, FCDynamicPaneDelegate>

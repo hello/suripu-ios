@@ -39,6 +39,12 @@
     return self;
 }
 
+- (void)dealloc
+{
+    _panGestureRecognizer.delegate = nil;
+    _panGestureRecognizer = nil;
+}
+
 #pragma mark - Gestures
 
 - (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer
@@ -223,6 +229,11 @@
             [(UIViewController<FCDynamicPaneViewController>*)self.viewController viewDidPop];
         }
     } else if (state == FCDynamicPaneStateActive) {
+        self.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2 + TILE_Y);
+        self.attachmentBehavior.damping = 0.4f;
+        self.attachmentBehavior.frequency = 2.0f;
+        self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);
+        [self.behavior addChildBehavior:self.attachmentBehavior];
         if ([self.viewController respondsToSelector:@selector(viewDidPush)]) {
             [(UIViewController<FCDynamicPaneViewController>*)self.viewController viewDidPush];
         }

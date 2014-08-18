@@ -16,7 +16,7 @@ CGFloat const HEMHeightPickerCentimetersPerInch = 2.54f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    NSString* currentLocaleIdentifier = [[NSLocale currentLocale] identifier];
+    NSString* currentLocaleIdentifier = [[NSLocale currentLocale] localeIdentifier];
     self.usingImperial = [currentLocaleIdentifier isEqualToString:@"en_US"] || [currentLocaleIdentifier isEqualToString:@"en_GB"];
     [self setDefaultValues];
 }

@@ -11,7 +11,7 @@ NSString* const SENSettingsDidUpdateNotification = @"SENSettingsDidUpdateNotific
 {
     NSInteger timeFormat = [[NSUserDefaults standardUserDefaults] integerForKey:SENSettingsTimeFormat];
     if (timeFormat == 0) {
-        if ([[[NSLocale currentLocale] identifier] isEqualToString:@"en_US"]) {
+        if ([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_US"]) {
             timeFormat = SENTimeFormat12Hour;
         } else {
             timeFormat = SENTimeFormat24Hour;
@@ -25,7 +25,7 @@ NSString* const SENSettingsDidUpdateNotification = @"SENSettingsDidUpdateNotific
 {
     NSInteger tempFormat = [[NSUserDefaults standardUserDefaults] integerForKey:SENSettingsTemperatureFormat];
     if (tempFormat == 0) {
-        if ([[[NSLocale currentLocale] identifier] isEqualToString:@"en_US"]) {
+        if ([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_US"]) {
             tempFormat = SENTemperatureFormatFahrenheit;
         } else {
             tempFormat = SENTemperatureFormatCentigrade;

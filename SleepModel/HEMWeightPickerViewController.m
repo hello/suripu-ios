@@ -21,7 +21,7 @@ CGFloat const HEMWeightPickerKilogramsPerPound = 0.453592f;
 
 - (void)configurePicker
 {
-    NSString* currentLocaleIdentifier = [[NSLocale currentLocale] identifier];
+    NSString* currentLocaleIdentifier = [[NSLocale currentLocale] localeIdentifier];
     self.usingImperial = [currentLocaleIdentifier isEqualToString:@"en_US"] || [currentLocaleIdentifier isEqualToString:@"en_GB"];
     if ([self isUsingImperial]) {
         [self.weightPickerView selectRow:1

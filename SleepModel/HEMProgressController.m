@@ -126,6 +126,10 @@
 
 #pragma mark - UIScrollViewDelegate
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.view endEditing:NO];
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     
     CGFloat boundWidth = CGRectGetWidth([scrollView bounds]);
@@ -160,14 +164,20 @@
     controllerFrame.origin.x = contentSize.width;
     contentSize.width += CGRectGetWidth(controller.view.bounds);
     [controller.view setFrame:controllerFrame];
-    [controller.view setBackgroundColor:[UIColor clearColor]];
+    
+    _prevScrollOffset = controllerFrame.origin.x;
+    // if there are bg images set for the flow, then the only way
+    // to actually see them is to have the controller's view be
+    // transparent
+    if ([_bgImageNames count] > 0) {
+        [controller.view setBackgroundColor:[UIColor clearColor]];
+    }
+    
     [_contentScrollView setContentSize:contentSize];
     
     [self addChildViewController:controller];
     [_contentScrollView addSubview:[controller view]];
     [controller didMoveToParentViewController:self];
-    
-    _prevScrollOffset = controllerFrame.origin.x;
     
     [_contentScrollView setContentOffset:controllerFrame.origin animated:animated];
     [_previousPercentages addObject:@(progress)];

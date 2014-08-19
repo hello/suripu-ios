@@ -11,7 +11,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField* emailAddressField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
-@property (weak, nonatomic) IBOutlet UITextField* confirmPasswordField;
 @property (weak, nonatomic) IBOutlet UITextField* nameField;
 @property (weak, nonatomic) IBOutlet HEMActionButton* signUpButton;
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
@@ -95,9 +94,6 @@
         [self.passwordField becomeFirstResponder];
         [self scrollToTextField:self.passwordField];
     } else if ([textField isEqual:self.passwordField]) {
-        [self.confirmPasswordField becomeFirstResponder];
-        [self scrollToTextField:self.confirmPasswordField];
-    } else if ([textField isEqual:self.confirmPasswordField]) {
         [self.scrollView setContentOffset:CGPointZero animated:YES];
         [textField resignFirstResponder];
         if ([self validateFieldValuesAndShowAlert:NO]) {
@@ -127,8 +123,6 @@
         errorMessage = NSLocalizedString(@"sign-up.error.email-invalid", nil);
     } else if (![self isValidPassword:self.passwordField.text]) {
         errorMessage = NSLocalizedString(@"sign-up.error.password-length", nil);
-    } else if (![self.passwordField.text isEqualToString:self.confirmPasswordField.text]) {
-        errorMessage = NSLocalizedString(@"sign-up.error.password-match", nil);
     } else {
         return YES;
     }

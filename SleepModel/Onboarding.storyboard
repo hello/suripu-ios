@@ -696,9 +696,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="ezT-R8-K4n" kind="push" id="cF6-md-vls"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rjz-M4-Lxs">
                                 <rect key="frame" x="57" y="502" width="207" height="40"/>
@@ -707,9 +704,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="ezT-R8-K4n" kind="push" id="Cmg-7P-1oO"/>
-                                </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Connect to WIFI" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvl-uZ-ZRh">
                                 <rect key="frame" x="23" y="65" width="274" height="34"/>
@@ -1142,7 +1136,7 @@
         <image name="bluetoothLogoImage.png" width="75" height="144"/>
         <image name="femaleIcon.png" width="30" height="46"/>
         <image name="maleIcon.png" width="39" height="40"/>
-        <image name="onboardingBackgroundImage1.png" width="443" height="587"/>
+        <image name="onboardingBackgroundImage1.png" width="476" height="585"/>
         <image name="onboardingBackgroundImage2.png" width="635" height="576"/>
         <image name="wifiLogoImage.png" width="182" height="129"/>
         <image name="worldMapImage.png" width="476" height="237"/>
@@ -1155,8 +1149,5 @@
             <size key="landscapeSize" width="568" height="320"/>
         </simulatedScreenMetrics>
     </simulatedMetricsContainer>
-    <inferredMetricsTieBreakers>
-        <segue reference="cF6-md-vls"/>
-    </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -13,8 +13,11 @@
 @property (nonatomic, strong, readonly) UIViewController* rootViewController;
 @property (nonatomic, strong) UIColor* tintColor;
 
-- (id)initWithRootViewController:(UIViewController*)controller;
+- (id)initWithRootViewController:(UIViewController*)controller
+            backgroundImageNames:(NSArray*)imageNames;
 - (void)pushViewController:(UIViewController*)controller
-                  animated:(BOOL)animated completion:(void(^)(void))completion;
+                  progress:(float)progress
+                  animated:(BOOL)animated
+                completion:(void(^)(void))completion;
 
 @end

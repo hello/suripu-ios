@@ -1,5 +1,5 @@
 //
-//  HEMWelcomeViewController.h
+//  HEMOnboardingController.h
 //  Sense
 //
 //  Created by Jimmy Lu on 8/18/14.
@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HEMOnboardingController.h"
 
-@interface HEMWelcomeViewController : HEMOnboardingController
+@interface HEMOnboardingController : UIViewController
 
 @end

@@ -30,7 +30,7 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.nameField becomeFirstResponder];
+//    [self.nameField becomeFirstResponder];
 }
 
 - (IBAction)didTapSignUp:(id)sender

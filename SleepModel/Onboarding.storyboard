@@ -46,9 +46,6 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <segue destination="5JR-hM-9bB" kind="push" id="jgi-Xx-Yg5"/>
-                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mzi-h2-eRA">
                                 <rect key="frame" x="93" y="501" width="135" height="40"/>
@@ -298,14 +295,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboardingBackgroundImage1.png" translatesAutoresizingMaskIntoConstraints="NO" id="f4Q-C0-7L8">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                            </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IMj-An-zoh">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IMj-An-zoh">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <subviews>
-                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First, the basics" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cY3-74-70H">
-                                        <rect key="frame" x="20" y="61" width="190" height="34"/>
+                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="First, the basics" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cY3-74-70H">
+                                        <rect key="frame" x="22" y="61" width="190" height="34"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -390,14 +384,10 @@
                         <constraints>
                             <constraint firstItem="IMj-An-zoh" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leading" id="B4o-Ar-vup"/>
                             <constraint firstItem="AhH-RW-xFb" firstAttribute="top" secondItem="IMj-An-zoh" secondAttribute="bottom" id="MDL-5z-lqt"/>
-                            <constraint firstItem="f4Q-C0-7L8" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leading" id="OKX-rp-ZVa"/>
                             <constraint firstItem="IMj-An-zoh" firstAttribute="top" secondItem="OXF-zq-Udo" secondAttribute="bottom" constant="-64" id="XEK-W9-hzB"/>
-                            <constraint firstItem="f4Q-C0-7L8" firstAttribute="top" secondItem="OXF-zq-Udo" secondAttribute="bottom" constant="-64" id="a2t-hl-AqF"/>
                             <constraint firstAttribute="centerX" secondItem="q8n-JK-Ew0" secondAttribute="centerX" constant="0.5" id="d0Z-zY-f6D"/>
-                            <constraint firstAttribute="trailing" secondItem="f4Q-C0-7L8" secondAttribute="trailing" id="fnG-hI-TTE"/>
                             <constraint firstAttribute="trailing" secondItem="IMj-An-zoh" secondAttribute="trailing" id="gTU-G3-bKa"/>
                             <constraint firstItem="AhH-RW-xFb" firstAttribute="top" secondItem="q8n-JK-Ew0" secondAttribute="bottom" constant="30" id="kPl-fM-RpX"/>
-                            <constraint firstItem="AhH-RW-xFb" firstAttribute="top" secondItem="f4Q-C0-7L8" secondAttribute="bottom" id="lGb-yg-Yqd"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qhq-QP-ftX"/>
@@ -1069,8 +1059,8 @@
         <image name="bluetoothLogoImage.png" width="75" height="144"/>
         <image name="femaleIcon.png" width="30" height="46"/>
         <image name="maleIcon.png" width="39" height="40"/>
-        <image name="onboardingBackgroundImage1.png" width="960" height="587"/>
-        <image name="onboardingBackgroundImage2.png" width="960" height="576"/>
+        <image name="onboardingBackgroundImage1.png" width="443" height="587"/>
+        <image name="onboardingBackgroundImage2.png" width="635" height="576"/>
         <image name="wifiLogoImage.png" width="182" height="129"/>
         <image name="worldMapImage.png" width="476" height="237"/>
     </resources>

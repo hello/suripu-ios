@@ -43,9 +43,11 @@
     [navController popToRootViewControllerAnimated:NO];
     [dynamicPanesController popViewControllerAnimated:animated];
     
+    NSArray* onboardingBgImageNames = @[@"onboardingBackgroundImage1.png", @"onboardingBackgroundImage2.png"];
     UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
     UIViewController* rootController = [onboardingStoryboard instantiateInitialViewController];
-    HEMProgressController* progressController = [[HEMProgressController alloc] initWithRootViewController:rootController];
+    HEMProgressController* progressController = [[HEMProgressController alloc] initWithRootViewController:rootController
+                                                                                     backgroundImageNames:onboardingBgImageNames];
     [dynamicPanesController presentViewController:progressController animated:animated completion:NULL];
 }
 

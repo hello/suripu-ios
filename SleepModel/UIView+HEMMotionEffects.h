@@ -1,5 +1,5 @@
 //
-//  HEMWelcomeViewController.h
+//  UIView+HEMMotionEffects.h
 //  Sense
 //
 //  Created by Jimmy Lu on 8/18/14.
@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HEMOnboardingController.h"
 
-@interface HEMWelcomeViewController : HEMOnboardingController
+@interface UIView (HEMMotionEffects)
+
+- (void)add3DEffectWithBorder:(CGFloat)border;
 
 @end

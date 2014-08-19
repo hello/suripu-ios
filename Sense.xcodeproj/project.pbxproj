@@ -105,6 +105,8 @@
 		8AC4A05B198ACE4800C2BD63 /* HEMSensorGraphDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4A05A198ACE4800C2BD63 /* HEMSensorGraphDataSource.m */; };
 		BF59264319A29BCB002EE2C8 /* HEMProgressController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF59264219A29BCB002EE2C8 /* HEMProgressController.m */; };
 		BF59264619A2B0A7002EE2C8 /* HEMWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF59264519A2B0A7002EE2C8 /* HEMWelcomeViewController.m */; };
+		BFABE74A19A2CC6000AB2F0F /* HEMOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABE74919A2CC6000AB2F0F /* HEMOnboardingController.m */; };
+		BFABE75219A2E70A00AB2F0F /* UIView+HEMMotionEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */; };
 		D12BBDB2950F47EDA9F85F68 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -261,6 +263,11 @@
 		BF59264219A29BCB002EE2C8 /* HEMProgressController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMProgressController.m; sourceTree = "<group>"; };
 		BF59264419A2B0A7002EE2C8 /* HEMWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWelcomeViewController.h; sourceTree = "<group>"; };
 		BF59264519A2B0A7002EE2C8 /* HEMWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWelcomeViewController.m; sourceTree = "<group>"; };
+		BFABE74819A2CC6000AB2F0F /* HEMOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingController.h; sourceTree = "<group>"; };
+		BFABE74919A2CC6000AB2F0F /* HEMOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingController.m; sourceTree = "<group>"; };
+		BFABE74B19A2CD8C00AB2F0F /* HEMOnboardingController+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HEMOnboardingController+Protected.h"; sourceTree = "<group>"; };
+		BFABE75019A2E70A00AB2F0F /* UIView+HEMMotionEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HEMMotionEffects.h"; sourceTree = "<group>"; };
+		BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HEMMotionEffects.m"; sourceTree = "<group>"; };
 		DB26CF606417423497851782 /* Pods-Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.xcconfig"; path = "Pods/Pods-Tests.xcconfig"; sourceTree = "<group>"; };
 		F1BFFC8E459745C5B0578F6E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FD539145AF784DC3AA0DAF13 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -330,6 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				8AC49F8E1981B90600C2BD63 /* Alarm */,
+				BFABE74E19A2E6C900AB2F0F /* Common */,
 				8AC49F971982DE4D00C2BD63 /* Onboarding */,
 				8AC49F981982DE5E00C2BD63 /* Sensors */,
 				8AC49F8F1981B92100C2BD63 /* Sleep Metrics */,
@@ -416,6 +424,9 @@
 				BF59264219A29BCB002EE2C8 /* HEMProgressController.m */,
 				BF59264419A2B0A7002EE2C8 /* HEMWelcomeViewController.h */,
 				BF59264519A2B0A7002EE2C8 /* HEMWelcomeViewController.m */,
+				BFABE74819A2CC6000AB2F0F /* HEMOnboardingController.h */,
+				BFABE74919A2CC6000AB2F0F /* HEMOnboardingController.m */,
+				BFABE74B19A2CD8C00AB2F0F /* HEMOnboardingController+Protected.h */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -668,6 +679,23 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		BFABE74E19A2E6C900AB2F0F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				BFABE74F19A2E6D900AB2F0F /* Utilities */,
+			);
+			name = Common;
+			sourceTree = "<group>";
+		};
+		BFABE74F19A2E6D900AB2F0F /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				BFABE75019A2E70A00AB2F0F /* UIView+HEMMotionEffects.h */,
+				BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -881,6 +909,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFABE74A19A2CC6000AB2F0F /* HEMOnboardingController.m in Sources */,
 				8AC49F9C198305F600C2BD63 /* HEMAuthenticationViewController.m in Sources */,
 				8AC49F8D1981B00900C2BD63 /* HEMSleepSummaryViewController.m in Sources */,
 				8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */,
@@ -912,6 +941,7 @@
 				8A90F9BC19637F9400AFD110 /* HEMSleepSoundTableViewController.m in Sources */,
 				8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */,
 				8A66FC88199C3F3900922ED5 /* HEMSensorValuesView.m in Sources */,
+				BFABE75219A2E70A00AB2F0F /* UIView+HEMMotionEffects.m in Sources */,
 				8A4B3D491992CB4500856BDE /* HEMRoundedTextField.m in Sources */,
 				8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */,
 				8A90F9AC196350D200AFD110 /* HelloStyleKit.m in Sources */,

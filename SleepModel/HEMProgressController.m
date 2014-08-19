@@ -18,7 +18,7 @@
 @property (nonatomic, strong) NSArray* bgImageNames;
 @property (nonatomic, strong) UIProgressView* progressView;
 @property (nonatomic, strong) NSMutableArray* previousPercentages;
-@property (nonatomic, assign) CGFloat prevScrollOffset;
+@property (nonatomic, assign) CGFloat prevStartScrollOffsetX;
 
 @end
 
@@ -28,8 +28,8 @@
             backgroundImageNames:(NSArray*)imageNames {
     self = [super init];
     if (self) {
-        _bgImageNames = imageNames;
-        _rootViewController = controller;
+        [self setBgImageNames:imageNames];
+        [self setRootViewController:controller];
     }
     return self;
 }
@@ -44,20 +44,20 @@
 }
 
 - (void)setupCache {
-    _prevScrollOffset = -1.0f;
-    _previousPercentages = [NSMutableArray array];
+    [self setPrevStartScrollOffsetX:0.0f];
+    [self setPreviousPercentages:[NSMutableArray array]];
 }
 
 - (void)setupContentScrollView {
-    _contentScrollView = [[UIScrollView alloc] initWithFrame:[[self view] bounds]];
-    [_contentScrollView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-    [_contentScrollView setPagingEnabled:YES];
-    [_contentScrollView setShowsHorizontalScrollIndicator:NO];
-    [_contentScrollView setShowsVerticalScrollIndicator:NO];
-    [_contentScrollView setBackgroundColor:[UIColor clearColor]];
-    [_contentScrollView setDelegate:self];
-    [_contentScrollView setBounces:NO];
-    [self.view addSubview:_contentScrollView];
+    [self setContentScrollView:[[UIScrollView alloc] initWithFrame:[[self view] bounds]]];
+    [[self contentScrollView] setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+    [[self contentScrollView] setPagingEnabled:YES];
+    [[self contentScrollView] setShowsHorizontalScrollIndicator:NO];
+    [[self contentScrollView] setShowsVerticalScrollIndicator:NO];
+    [[self contentScrollView] setBackgroundColor:[UIColor clearColor]];
+    [[self contentScrollView] setDelegate:self];
+    [[self contentScrollView] setBounces:NO];
+    [self.view addSubview:[self contentScrollView]];
 }
 
 - (void)setupProgressView {
@@ -67,67 +67,66 @@
     progressFrame.origin.y = CGRectGetHeight(bounds) - CGRectGetHeight(progressFrame);
     progressFrame.size.width = CGRectGetWidth(bounds);
     
-    _progressView = [[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar];
-    [_progressView setFrame:progressFrame];
-    [_progressView setTintColor:[HelloStyleKit mediumBlueColor]];
-    [_progressView setProgress:0.0f];
-    [self.view addSubview:_progressView];
+    [self setProgressView:[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar]];
+    [[self progressView] setFrame:progressFrame];
+    [[self progressView] setTintColor:[HelloStyleKit mediumBlueColor]];
+    [[self progressView] setProgress:0.0f];
+    [self.view addSubview:[self progressView]];
 }
 
 - (void)setupBgImages {
-    if ([_bgImageNames count] > 0) {
-        _bgScrollView = [[UIScrollView alloc] initWithFrame:[[self view] bounds]];
-        [_bgScrollView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-        [_bgScrollView setShowsHorizontalScrollIndicator:NO];
-        [_bgScrollView setShowsVerticalScrollIndicator:NO];
+    if ([[self bgImageNames] count] > 0) {
+        [self setBgScrollView:[[UIScrollView alloc] initWithFrame:[[self view] bounds]]];
+        [[self bgScrollView] setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+        [[self bgScrollView] setShowsHorizontalScrollIndicator:NO];
+        [[self bgScrollView] setShowsVerticalScrollIndicator:NO];
         
-        CGSize contentSize = [_bgScrollView contentSize];
+        CGSize contentSize = [[self bgScrollView] contentSize];
         UIImage* bgImage = nil;
         UIImageView* bgImageView = nil;
         
-        for (NSString* imageName in _bgImageNames) {
+        for (NSString* imageName in [self bgImageNames]) {
             bgImage = [UIImage imageNamed:imageName];
             if (bgImage) {
                 CGRect imageFrame = CGRectZero;
                 imageFrame.origin.x = contentSize.width;
                 imageFrame.size.width = bgImage.size.width;
-                imageFrame.size.height = CGRectGetHeight(_bgScrollView.bounds);
+                imageFrame.size.height = CGRectGetHeight([self bgScrollView].bounds);
                 bgImageView = [[UIImageView alloc] initWithFrame:imageFrame];
                 bgImageView.contentMode = UIViewContentModeCenter;
                 [bgImageView setImage:bgImage];
                 [bgImageView add3DEffectWithBorder:10.0f];
-                [_bgScrollView addSubview:bgImageView];
+                [[self bgScrollView] addSubview:bgImageView];
                 
                 contentSize.width += CGRectGetWidth(imageFrame);
             }
         }
         
-        [_bgScrollView setContentSize:contentSize];
-        [self.view addSubview:_bgScrollView];
+        [[self bgScrollView] setContentSize:contentSize];
+        [self.view addSubview:[self bgScrollView]];
     }
 }
 
 - (void)setupRootViewController {
-    if (_rootViewController != nil) {
-        float progress = 0.0f;
-        [_previousPercentages addObject:@(progress)];
-        [self pushViewController:_rootViewController progress:progress animated:NO completion:nil];
+    if ([self rootViewController] != nil) {
+        [self pushViewController:[self rootViewController] progress:0.0f animated:NO completion:nil];
     }
 }
 
 - (void)updateProgress:(float)progress animated:(BOOL)animated{
-    CGFloat fullContentWidth = [_bgScrollView contentSize].width;
-    CGFloat movableWidth = MAX(0, fullContentWidth - (CGRectGetWidth([_bgScrollView bounds])*2));
-    CGPoint contentOffset = [_bgScrollView contentOffset];
+    CGFloat fullContentWidth = [[self bgScrollView] contentSize].width;
+    CGFloat movableWidth = MAX(0, fullContentWidth - (CGRectGetWidth([[self bgScrollView] bounds])*2));
+    CGPoint contentOffset = [[self bgScrollView] contentOffset];
     contentOffset.x = ceilf(movableWidth * progress);
-    [_bgScrollView setContentOffset:contentOffset animated:animated];
-    [_progressView setProgress:progress animated:animated];
+    [[self bgScrollView] setContentOffset:contentOffset animated:animated];
+    [[self progressView] setProgress:progress animated:animated];
 }
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
     [self.view endEditing:NO];
+    [self setPrevStartScrollOffsetX:[scrollView contentOffset].x];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -137,16 +136,21 @@
     CGFloat currentControllerOffset = (numberOfChildren-1) * boundWidth;
     CGFloat prevControllerOffset = currentControllerOffset - boundWidth;
     
-    float percentageScrolled = (scrollView.contentOffset.x - prevControllerOffset)/boundWidth;
-    float actualPercentage = [[_previousPercentages lastObject] floatValue] * percentageScrolled;
+    float currentPercentage = [[[self previousPercentages] lastObject] floatValue];
+    float prevPercentage = numberOfChildren > 1 ? [[[self previousPercentages] objectAtIndex:numberOfChildren-2] floatValue] : 0.0f;
+    float diff = currentPercentage - prevPercentage;
+    float percentageScrolled = ([scrollView contentOffset].x - prevControllerOffset)/boundWidth;
+    float actualPercentage = prevPercentage + (diff*percentageScrolled);
     [self updateProgress:actualPercentage animated:NO];
     
-    if (scrollView.contentOffset.x == prevControllerOffset
-        && scrollView.contentOffset.x < _prevScrollOffset) {
+    if ([scrollView contentOffset].x <= prevControllerOffset
+        && [scrollView contentOffset].x < [self prevStartScrollOffsetX]) {
         [self popViewController];
     }
-    
-    _prevScrollOffset = scrollView.contentOffset.x;
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self setPrevStartScrollOffsetX:[scrollView contentOffset].x];
 }
 
 #pragma mark - managing child controllers
@@ -157,35 +161,34 @@
                 completion:(void(^)(void))completion {
     
     if (controller == nil) return;
+    [self.view endEditing:NO];
     
-    CGSize contentSize = [_contentScrollView contentSize];
+    CGSize contentSize = [[self contentScrollView] contentSize];
+    [self setPrevStartScrollOffsetX:contentSize.width - CGRectGetWidth([_contentScrollView bounds])];
     
     CGRect controllerFrame = controller.view.frame;
     controllerFrame.origin.x = contentSize.width;
     contentSize.width += CGRectGetWidth(controller.view.bounds);
     [controller.view setFrame:controllerFrame];
-    
-    _prevScrollOffset = controllerFrame.origin.x;
+
     // if there are bg images set for the flow, then the only way
     // to actually see them is to have the controller's view be
     // transparent
-    if ([_bgImageNames count] > 0) {
+    if ([[self bgImageNames] count] > 0) {
         [controller.view setBackgroundColor:[UIColor clearColor]];
     }
     
-    [_contentScrollView setContentSize:contentSize];
+    [[self contentScrollView] setContentSize:contentSize];
     
     [self addChildViewController:controller];
-    [_contentScrollView addSubview:[controller view]];
+    [[self contentScrollView] addSubview:[controller view]];
     [controller didMoveToParentViewController:self];
     
-    [_contentScrollView setContentOffset:controllerFrame.origin animated:animated];
-    [_previousPercentages addObject:@(progress)];
+    [[self contentScrollView] setContentOffset:controllerFrame.origin animated:animated];
+    [[self previousPercentages] addObject:@(progress)];
     [self updateProgress:progress animated:animated];
     
     if (completion) completion();
-    
-    NSLog(@"pushed view controller");
 }
 
 - (void)popViewController {
@@ -195,24 +198,22 @@
         [lastController.view removeFromSuperview];
         [lastController didMoveToParentViewController:nil];
         
-        CGSize contentSize = [_contentScrollView contentSize];
+        CGSize contentSize = [[self contentScrollView] contentSize];
         contentSize.width -= CGRectGetWidth([[lastController view] bounds]);
-        [_contentScrollView setContentSize:contentSize];
+        [[self contentScrollView] setContentSize:contentSize];
         
-        NSNumber* previousPercentage = [_previousPercentages lastObject];
+        NSNumber* previousPercentage = [[self previousPercentages] lastObject];
         if (previousPercentage != nil) {
-            [_previousPercentages removeLastObject];
-            [self updateProgress:[[_previousPercentages lastObject] floatValue] animated:NO];
+            [[self previousPercentages] removeLastObject];
+            [self updateProgress:[[[self previousPercentages] lastObject] floatValue] animated:NO];
         }
-        
-        NSLog(@"popped view controller");
     }
 }
 
 #pragma mark - clean up
 
 - (void)dealloc {
-    [_contentScrollView setDelegate:nil];
+    [[self contentScrollView] setDelegate:nil];
 }
 
 @end

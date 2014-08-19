@@ -1,6 +1,7 @@
 
 #import <UIKit/UIKit.h>
+#import "HEMOnboardingController.h"
 
-@interface HEMSignUpViewController : UIViewController
+@interface HEMSignUpViewController : HEMOnboardingController
 
 @end

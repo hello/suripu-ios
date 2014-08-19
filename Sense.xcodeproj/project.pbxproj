@@ -107,6 +107,7 @@
 		BF59264619A2B0A7002EE2C8 /* HEMWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF59264519A2B0A7002EE2C8 /* HEMWelcomeViewController.m */; };
 		BFABE74A19A2CC6000AB2F0F /* HEMOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABE74919A2CC6000AB2F0F /* HEMOnboardingController.m */; };
 		BFABE75219A2E70A00AB2F0F /* UIView+HEMMotionEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */; };
+		BFD5643D19A3F31B002E461E /* HEMBluetoothViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMBluetoothViewController.m */; };
 		D12BBDB2950F47EDA9F85F68 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -268,6 +269,8 @@
 		BFABE74B19A2CD8C00AB2F0F /* HEMOnboardingController+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HEMOnboardingController+Protected.h"; sourceTree = "<group>"; };
 		BFABE75019A2E70A00AB2F0F /* UIView+HEMMotionEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HEMMotionEffects.h"; sourceTree = "<group>"; };
 		BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HEMMotionEffects.m"; sourceTree = "<group>"; };
+		BFD5643B19A3F31B002E461E /* HEMBluetoothViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBluetoothViewController.h; sourceTree = "<group>"; };
+		BFD5643C19A3F31B002E461E /* HEMBluetoothViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBluetoothViewController.m; sourceTree = "<group>"; };
 		DB26CF606417423497851782 /* Pods-Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.xcconfig"; path = "Pods/Pods-Tests.xcconfig"; sourceTree = "<group>"; };
 		F1BFFC8E459745C5B0578F6E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FD539145AF784DC3AA0DAF13 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -427,6 +430,8 @@
 				BFABE74819A2CC6000AB2F0F /* HEMOnboardingController.h */,
 				BFABE74919A2CC6000AB2F0F /* HEMOnboardingController.m */,
 				BFABE74B19A2CD8C00AB2F0F /* HEMOnboardingController+Protected.h */,
+				BFD5643B19A3F31B002E461E /* HEMBluetoothViewController.h */,
+				BFD5643C19A3F31B002E461E /* HEMBluetoothViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -941,6 +946,7 @@
 				8A90F9BC19637F9400AFD110 /* HEMSleepSoundTableViewController.m in Sources */,
 				8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */,
 				8A66FC88199C3F3900922ED5 /* HEMSensorValuesView.m in Sources */,
+				BFD5643D19A3F31B002E461E /* HEMBluetoothViewController.m in Sources */,
 				BFABE75219A2E70A00AB2F0F /* UIView+HEMMotionEffects.m in Sources */,
 				8A4B3D491992CB4500856BDE /* HEMRoundedTextField.m in Sources */,
 				8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */,

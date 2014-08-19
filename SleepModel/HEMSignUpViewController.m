@@ -6,9 +6,13 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingHTTPErrorHandler.h"
+#import "HEMOnboardingController+Protected.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *passwordLabel;
 @property (weak, nonatomic) IBOutlet UITextField* emailAddressField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
 @property (weak, nonatomic) IBOutlet UITextField* nameField;
@@ -22,31 +26,43 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) * 1.5f);
-//        self.navigationItem.hidesBackButton = YES;
+    [self listenForKeyboardNotifications];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-//    [self.nameField becomeFirstResponder];
+#pragma mark - Keyboard Mangement
+
+- (void)listenForKeyboardNotifications {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(keyboardWillDisappear:)
+                   name:UIKeyboardWillHideNotification
+                 object:nil];
 }
+
+- (void)keyboardWillDisappear:(NSNotification*)notification {
+    [self.scrollView setContentOffset:CGPointZero animated:YES];
+}
+
+#pragma mark - Sign Up
 
 - (IBAction)didTapSignUp:(id)sender
 {
-    if ([self isSigningUp] || ![self validateFieldValuesAndShowAlert:YES])
+    if ([self isSigningUp] || ![self validateFieldValuesAndShowAlert:YES]) {
         return;
+    }
 
     self.signingUp = YES;
     NSString* emailAddress = self.emailAddressField.text;
     NSString* password = self.passwordField.text;
     __weak typeof(self) weakSelf = self;
-    // TODO: show loading screen for "signing up"
+//    // TODO: show loading screen for "signing up"
     [SENAPIAccount createAccountWithName:self.nameField.text
                             emailAddress:emailAddress
                                 password:password
                               completion:^(NSDictionary* data, NSError* error) {
                                   typeof(self) strongSelf = weakSelf;
+                                  if (!strongSelf) return;
+                                  
                                   if (error) {
                                       [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
                                       strongSelf.signingUp = NO;
@@ -61,9 +77,13 @@
                                           // TODO: show sign in view? retry?
                                           return;
                                       }
-                                      [strongSelf.navigationController pushViewController:[HEMOnboardingStoryboard instantiateBluetoothViewController] animated:YES];
+                                      [strongSelf toNextScreen];
                                   }];
                               }];
+}
+
+- (void)toNextScreen {
+    [self pushViewController:[HEMOnboardingStoryboard instantiateBluetoothViewController] progress:2/9.0f];
 }
 
 #pragma mark - Field Validation
@@ -81,6 +101,18 @@
 - (BOOL)isValidEmailAddress:(NSString*)emailAddress
 {
     return [emailAddress rangeOfString:@"@"].location != NSNotFound;
+}
+
+- (UILabel*)labelForTextField:(UITextField*)textField {
+    UILabel* label = nil;
+    if ([textField isEqual:[self nameField]]) {
+        label = [self nameLabel];
+    } else if ([textField isEqual:[self emailAddressField]]) {
+        label = [self emailLabel];
+    } else if ([textField isEqual:[self passwordField]]) {
+        label = [self passwordLabel];
+    }
+    return label;
 }
 
 #pragma mark - UITextFieldDelegate
@@ -101,6 +133,12 @@
         }
     }
 
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString* nextText = [[textField text] stringByReplacingCharactersInRange:range withString:string];
+    [[self labelForTextField:textField] setHidden:[nextText length] == 0];
     return YES;
 }
 

@@ -367,12 +367,12 @@ NSString* const HEMSleepHistoryViewEventStorageKey = @"HEMSleepHistoryViewEventS
 
 - (CGFloat)yOffsetForTimeInterval:(NSTimeInterval)interval
 {
-    return (interval - self.startInterval) / self.secondsPerPoint + HEMSleepHistoryViewVerticalPadding + HEMSleepHistoryViewSensorsHeight;
+    return (self.endInterval - interval) / self.secondsPerPoint + HEMSleepHistoryViewVerticalPadding + HEMSleepHistoryViewSensorsHeight;
 }
 
 - (NSTimeInterval)timeIntervalAtYOffset:(CGFloat)yOffset
 {
-    return (yOffset - HEMSleepHistoryViewVerticalPadding - HEMSleepHistoryViewSensorsHeight + (self.startInterval / self.secondsPerPoint)) * self.secondsPerPoint;
+    return (yOffset - HEMSleepHistoryViewVerticalPadding - HEMSleepHistoryViewSensorsHeight - (self.endInterval / self.secondsPerPoint)) * -self.secondsPerPoint;
 }
 
 - (CGFloat)xOffsetForSleepDepth:(NSInteger)sleepDepth
@@ -424,8 +424,8 @@ NSString* const HEMSleepHistoryViewEventStorageKey = @"HEMSleepHistoryViewEventS
 - (void)resetDetailViewLocation
 {
     if (self.sleepEvents.count > 0 && self.dataSlices.count > 0) {
-        [self showDetailsForDataSlice:[self.dataSlices firstObject]
-                            atYOffset:[self yOffsetForTimeInterval:[self timeIntervalForEvent:[self.sleepEvents firstObject]]]
+        [self showDetailsForDataSlice:[self.dataSlices lastObject]
+                            atYOffset:[self yOffsetForTimeInterval:[self timeIntervalForEvent:[self.sleepEvents lastObject]]]
                              animated:NO];
     }
 }

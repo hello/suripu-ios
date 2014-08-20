@@ -25,6 +25,7 @@
 		8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A03386D197DD2D300BE8327 /* HEMSettingsTableViewController.m */; };
 		8A033870197DD89C00BE8327 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A03386F197DD89C00BE8327 /* Onboarding.storyboard */; };
 		8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A033872197DDA9700BE8327 /* HEMActionButton.m */; };
+		8A27818419A29100007A214D /* HEMSleepDataDetailView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A27818319A29100007A214D /* HEMSleepDataDetailView.m */; };
 		8A4B3D431992C8C800856BDE /* onboardingBackgroundImage1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D3F1992C8C800856BDE /* onboardingBackgroundImage1.png */; };
 		8A4B3D441992C8C800856BDE /* onboardingBackgroundImage1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D401992C8C800856BDE /* onboardingBackgroundImage1@2x.png */; };
 		8A4B3D451992C8C800856BDE /* onboardingBackgroundImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D411992C8C800856BDE /* onboardingBackgroundImage2.png */; };
@@ -67,6 +68,7 @@
 		8A90F9B319635CAE00AFD110 /* HEMCurrentConditionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9B219635CAE00AFD110 /* HEMCurrentConditionsTableViewController.m */; };
 		8A90F9B81963701A00AFD110 /* HEMInsetGlyphTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9B61963701A00AFD110 /* HEMInsetGlyphTableViewCell.m */; };
 		8A90F9BC19637F9400AFD110 /* HEMSleepSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9BB19637F9400AFD110 /* HEMSleepSoundTableViewController.m */; };
+		8AAEECBC19A431E1006517C4 /* HEMSleepEventButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AAEECBB19A431E1006517C4 /* HEMSleepEventButton.m */; };
 		8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB33FE5199D3F710046188F /* HEMLocationFinderViewController.m */; };
 		8AB33FEF199D56C20046188F /* lightEventIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AB33FE7199D56C20046188F /* lightEventIcon.png */; };
 		8AB33FF0199D56C20046188F /* lightEventIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AB33FE8199D56C20046188F /* lightEventIcon@2x.png */; };
@@ -142,6 +144,8 @@
 		8A03386F197DD89C00BE8327 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		8A033871197DDA9700BE8327 /* HEMActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActionButton.h; sourceTree = "<group>"; };
 		8A033872197DDA9700BE8327 /* HEMActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMActionButton.m; sourceTree = "<group>"; };
+		8A27818219A29100007A214D /* HEMSleepDataDetailView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepDataDetailView.h; sourceTree = "<group>"; };
+		8A27818319A29100007A214D /* HEMSleepDataDetailView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepDataDetailView.m; sourceTree = "<group>"; };
 		8A4B3D3F1992C8C800856BDE /* onboardingBackgroundImage1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = onboardingBackgroundImage1.png; path = images/onboardingBackgroundImage1.png; sourceTree = "<group>"; };
 		8A4B3D401992C8C800856BDE /* onboardingBackgroundImage1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboardingBackgroundImage1@2x.png"; path = "images/onboardingBackgroundImage1@2x.png"; sourceTree = "<group>"; };
 		8A4B3D411992C8C800856BDE /* onboardingBackgroundImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = onboardingBackgroundImage2.png; path = images/onboardingBackgroundImage2.png; sourceTree = "<group>"; };
@@ -209,6 +213,8 @@
 		8A90F9B61963701A00AFD110 /* HEMInsetGlyphTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsetGlyphTableViewCell.m; sourceTree = "<group>"; };
 		8A90F9BA19637F9400AFD110 /* HEMSleepSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundTableViewController.h; sourceTree = "<group>"; };
 		8A90F9BB19637F9400AFD110 /* HEMSleepSoundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundTableViewController.m; sourceTree = "<group>"; };
+		8AAEECBA19A431E1006517C4 /* HEMSleepEventButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepEventButton.h; sourceTree = "<group>"; };
+		8AAEECBB19A431E1006517C4 /* HEMSleepEventButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepEventButton.m; sourceTree = "<group>"; };
 		8AB33FE4199D3F710046188F /* HEMLocationFinderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationFinderViewController.h; sourceTree = "<group>"; };
 		8AB33FE5199D3F710046188F /* HEMLocationFinderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationFinderViewController.m; sourceTree = "<group>"; };
 		8AB33FE7199D56C20046188F /* lightEventIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightEventIcon.png; path = images/lightEventIcon.png; sourceTree = "<group>"; };
@@ -562,18 +568,22 @@
 		8A660135199EBEB8007E6167 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8A782684196CB6C9002882A1 /* HEMSnappingFlowLayout.h */,
-				8A782685196CB6C9002882A1 /* HEMSnappingFlowLayout.m */,
-				8AC49F911981DC8C00C2BD63 /* HEMZoomingFlowLayout.h */,
-				8AC49F921981DC8C00C2BD63 /* HEMZoomingFlowLayout.m */,
 				8AC49F941981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.h */,
 				8AC49F951981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m */,
 				8A66FC86199C3F3900922ED5 /* HEMSensorValuesView.h */,
 				8A66FC87199C3F3900922ED5 /* HEMSensorValuesView.m */,
+				8A27818219A29100007A214D /* HEMSleepDataDetailView.h */,
+				8A27818319A29100007A214D /* HEMSleepDataDetailView.m */,
+				8AAEECBA19A431E1006517C4 /* HEMSleepEventButton.h */,
+				8AAEECBB19A431E1006517C4 /* HEMSleepEventButton.m */,
 				8A66FC83199C035500922ED5 /* HEMSleepHistoryView.h */,
 				8A66FC84199C035500922ED5 /* HEMSleepHistoryView.m */,
 				8AC49F85197F365C00C2BD63 /* HEMSleepScoreGraphView.h */,
 				8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */,
+				8A782684196CB6C9002882A1 /* HEMSnappingFlowLayout.h */,
+				8A782685196CB6C9002882A1 /* HEMSnappingFlowLayout.m */,
+				8AC49F911981DC8C00C2BD63 /* HEMZoomingFlowLayout.h */,
+				8AC49F921981DC8C00C2BD63 /* HEMZoomingFlowLayout.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -879,6 +889,7 @@
 				8A782683196B4729002882A1 /* HEMGraphTooltipView.m in Sources */,
 				8A66FC82199BE94100922ED5 /* HEMColoredRoundedLabel.m in Sources */,
 				8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */,
+				8A27818419A29100007A214D /* HEMSleepDataDetailView.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
 				8A4B3D5E199534F000856BDE /* HEMMainStoryboard.m in Sources */,
 				8A66FC8E199D17C000922ED5 /* HEMHeightPickerViewController.m in Sources */,
@@ -891,6 +902,7 @@
 				8A90F9B319635CAE00AFD110 /* HEMCurrentConditionsTableViewController.m in Sources */,
 				8A90F9B81963701A00AFD110 /* HEMInsetGlyphTableViewCell.m in Sources */,
 				8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */,
+				8AAEECBC19A431E1006517C4 /* HEMSleepEventButton.m in Sources */,
 				8A90F9AF196353F600AFD110 /* HEMColorUtils.m in Sources */,
 				8A66FC9C199D308B00922ED5 /* HEMWeightPickerViewController.m in Sources */,
 				8A660126199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m in Sources */,

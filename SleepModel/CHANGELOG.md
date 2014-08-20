@@ -1,5 +1,15 @@
 # Changelog
 
+#  1.0.0.8
+
+Fixes:
+
+* Fix for crash when swiping rapidly through days in sleep history
+
+New Stuff:
+
+* Tapping in the sleep history graph now shows an indicator for the time and event details
+
 ## 1.0.0.6
 
 Fixes:

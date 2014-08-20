@@ -19,11 +19,6 @@
     return self;
 }
 
-- (void)awakeFromNib
-{
-    [self animateScoreTo:90];
-}
-
 - (void)drawRect:(CGRect)rect
 {
     [HelloStyleKit drawSleepScoreGraphWithSleepScoreLabelText:self.sleepScoreLabelText sleepScore:self.sleepScore sleepScoreDateText:self.sleepScoreDateText];

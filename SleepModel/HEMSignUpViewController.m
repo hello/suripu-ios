@@ -7,6 +7,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingHTTPErrorHandler.h"
 #import "HelloStyleKit.h"
+#import "NSString+Email.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
@@ -50,42 +51,45 @@
     if ([self isSigningUp] || ![self validateFieldValuesAndShowAlert:YES]) {
         return;
     }
-
     UIViewController* bluetoothController = [HEMOnboardingStoryboard instantiateBluetoothViewController];
     [[self navigationController] setViewControllers:@[bluetoothController] animated:YES];
+
+    self.signingUp = YES;
+    NSString* emailAddress = self.emailAddressField.text;
+    NSString* password = self.passwordField.text;
+    [[self signUpButton] showActivity];
     
-//    self.signingUp = YES;
-//    NSString* emailAddress = self.emailAddressField.text;
-//    NSString* password = self.passwordField.text;
-//    __weak typeof(self) weakSelf = self;
-////    // TODO: show loading screen for "signing up"
-//    [SENAPIAccount createAccountWithName:self.nameField.text
-//                            emailAddress:emailAddress
-//                                password:password
-//                              completion:^(NSDictionary* data, NSError* error) {
-//                                  typeof(self) strongSelf = weakSelf;
-//                                  if (!strongSelf) return;
-//                                  
-//                                  if (error) {
-//                                      [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
-//                                      strongSelf.signingUp = NO;
-//                                      return;
-//                                  }
-//                                  // TODO: show loading screen for "signing in"
-//                                  [SENAuthorizationService authorizeWithUsername:emailAddress password:password callback:^(NSError *signInError) {
-//                                      strongSelf.signingUp = NO;
-//                                      if (signInError) {
-//                                          [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
-//                                          
-//                                          // TODO: show sign in view? retry?
-//                                          return;
-//                                      }
-//                                      
-//                                      // we need to replace the root view controller with this controller so user cannot go back to sign up again
-//                                      UIViewController* bluetoothController = [HEMOnboardingStoryboard instantiateBluetoothViewController];
-//                                      [[strongSelf navigationController] setViewControllers:@[bluetoothController] animated:YES];
-//                                  }];
-//                              }];
+    __weak typeof(self) weakSelf = self;
+    [SENAPIAccount createAccountWithName:self.nameField.text
+                            emailAddress:emailAddress
+                                password:password
+                              completion:^(NSDictionary* data, NSError* error) {
+                                  typeof(self) strongSelf = weakSelf;
+                                  if (!strongSelf) return;
+                                  
+                                  if (error) {
+                                      [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
+                                      [strongSelf stopSigningUp];
+                                      return;
+                                  }
+
+                                  [SENAuthorizationService authorizeWithUsername:emailAddress password:password callback:^(NSError *signInError) {
+                                      [strongSelf stopSigningUp];
+                                      if (signInError) {
+                                          [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
+                                          // TODO: show sign in view? retry?
+                                          return;
+                                      }
+                                      // we need to replace the root view controller with this controller so user cannot go back to sign up again
+                                      UIViewController* bluetoothController = [HEMOnboardingStoryboard instantiateBluetoothViewController];
+                                      [[strongSelf navigationController] setViewControllers:@[bluetoothController] animated:YES];
+                                  }];
+                              }];
+}
+
+- (void)stopSigningUp {
+    self.signingUp = NO;
+    [[self signUpButton] stopActivity];
 }
 
 #pragma mark - Field Validation
@@ -100,10 +104,7 @@
     return password.length >= 3;
 }
 
-- (BOOL)isValidEmailAddress:(NSString*)emailAddress
-{
-    return [emailAddress rangeOfString:@"@"].location != NSNotFound;
-}
+// email validated through NSString+Email
 
 - (UILabel*)labelForTextField:(UITextField*)textField {
     UILabel* label = nil;
@@ -159,7 +160,7 @@
     NSString* errorMessage = nil;
     if (![self isValidName:self.nameField.text]) {
         errorMessage = NSLocalizedString(@"sign-up.error.name-length", nil);
-    } else if (![self isValidEmailAddress:self.emailAddressField.text]) {
+    } else if (![self.emailAddressField.text isValidEmail]) {
         errorMessage = NSLocalizedString(@"sign-up.error.email-invalid", nil);
     } else if (![self isValidPassword:self.passwordField.text]) {
         errorMessage = NSLocalizedString(@"sign-up.error.password-length", nil);

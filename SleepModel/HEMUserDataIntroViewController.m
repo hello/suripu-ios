@@ -1,9 +1,11 @@
-
+#import <QuartzCore/QuartzCore.h>
 #import "HEMUserDataIntroViewController.h"
+#import "UIView+HEMMotionEffects.h"
 
 @interface HEMUserDataIntroViewController ()
 
 @property (nonatomic, strong) UIColor* originalNavTintColor;
+@property (weak, nonatomic) IBOutlet UIImageView *bgImageView;
 
 @end
 
@@ -13,6 +15,7 @@
 {
     [super viewDidLoad];
     [self setOriginalNavTintColor:[[[self navigationController] navigationBar] tintColor]];
+    [[self bgImageView] add3DEffectWithBorder:10.0f];
 }
 
 -(void)viewWillAppear:(BOOL)animated {

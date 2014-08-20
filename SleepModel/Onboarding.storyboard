@@ -425,11 +425,11 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboardingBackgroundImage2.png" translatesAutoresizingMaskIntoConstraints="NO" id="xGH-1d-jkJ">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboardingBackgroundImage2.png" translatesAutoresizingMaskIntoConstraints="NO" id="xGH-1d-jkJ">
+                                <rect key="frame" x="-10" y="-10" width="340" height="608"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="568" id="HAt-py-NFQ"/>
-                                    <constraint firstAttribute="width" constant="320" id="bY0-qi-mu4"/>
+                                    <constraint firstAttribute="height" constant="608" id="HAt-py-NFQ"/>
+                                    <constraint firstAttribute="width" constant="340" id="bY0-qi-mu4"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="59R-yf-Q1G">
@@ -500,13 +500,16 @@
                             <constraint firstItem="45s-Pz-c3A" firstAttribute="top" secondItem="DDQ-wG-B8c" secondAttribute="bottom" constant="8" id="QCi-ke-A41"/>
                             <constraint firstAttribute="centerX" secondItem="59R-yf-Q1G" secondAttribute="centerX" id="RvQ-0t-Cx8"/>
                             <constraint firstAttribute="centerX" secondItem="vcC-x2-B8z" secondAttribute="centerX" id="iRm-lE-nmY"/>
-                            <constraint firstAttribute="centerY" secondItem="xGH-1d-jkJ" secondAttribute="centerY" id="mes-e6-H9j"/>
+                            <constraint firstAttribute="centerY" secondItem="xGH-1d-jkJ" secondAttribute="centerY" constant="-10" id="mes-e6-H9j"/>
                             <constraint firstItem="Nkf-eQ-SM0" firstAttribute="top" secondItem="vcC-x2-B8z" secondAttribute="top" constant="-52" id="xgH-vj-kwo"/>
                             <constraint firstItem="Nkf-eQ-SM0" firstAttribute="top" secondItem="DDQ-wG-B8c" secondAttribute="bottom" constant="402" id="yKJ-v4-EwT"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="g6m-uq-Vy2"/>
                     <nil key="simulatedTopBarMetrics"/>
+                    <connections>
+                        <outlet property="bgImageView" destination="xGH-1d-jkJ" id="Zpt-87-QyX"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9wc-7i-qfp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -712,6 +715,9 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="connectWifi:" destination="qC8-fd-UCX" eventType="touchUpInside" id="2fS-5x-gp9"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rjz-M4-Lxs">
                                 <rect key="frame" x="57" y="474" width="207" height="40"/>
@@ -1133,7 +1139,7 @@
         <image name="femaleIcon.png" width="30" height="46"/>
         <image name="maleIcon.png" width="39" height="40"/>
         <image name="onboardingBackgroundImage1.png" width="350" height="587"/>
-        <image name="onboardingBackgroundImage2.png" width="320" height="576"/>
+        <image name="onboardingBackgroundImage2.png" width="350" height="576"/>
         <image name="wifiLogoImage.png" width="182" height="129"/>
         <image name="worldMapImage.png" width="476" height="237"/>
     </resources>
@@ -1146,7 +1152,7 @@
         </simulatedScreenMetrics>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="nwQ-el-edZ"/>
+        <segue reference="mO6-0R-vRY"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

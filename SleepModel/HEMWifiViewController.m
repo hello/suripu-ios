@@ -25,4 +25,8 @@
     [super viewDidLoad];
 }
 
+- (IBAction)connectWifi:(id)sender {
+    NSLog(@"WARNING: this hasn't been implemented!");
+}
+
 @end

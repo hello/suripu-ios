@@ -4,6 +4,7 @@
 #import "HEMSleepHistoryView.h"
 #import "HEMSensorValuesView.h"
 #import "HEMSleepDataDetailView.h"
+#import "HEMSleepEventButton.h"
 #import "HelloStyleKit.h"
 
 CGFloat const HEMSleepHistoryViewHorizontalPadding = 20.f;
@@ -200,18 +201,15 @@ NSString* const HEMSleepHistoryViewEventStorageKey = @"HEMSleepHistoryViewEventS
                                         yOffset - (HEMSleepHistoryViewEventStripWidth / 2),
                                         HEMSleepHistoryViewEventStripWidth,
                                         HEMSleepHistoryViewEventStripWidth);
-        UIButton* button = [[UIButton alloc] initWithFrame:buttonFrame];
+        HEMSleepEventButton* button = [[HEMSleepEventButton alloc] initWithFrame:buttonFrame];
         [button setImage:image forState:UIControlStateNormal];
         button.contentMode = UIViewContentModeCenter;
-        button.backgroundColor = [UIColor whiteColor];
         button.tag = [self identifierForEvent:event];
         if (dataSlice) {
             button.layer.borderColor = [self colorForSleepDepth:[dataSlice[@"sleep_depth"] integerValue]].CGColor;
         } else {
             button.layer.borderColor = [HelloStyleKit intermediateSleepColor].CGColor;
         }
-        button.layer.borderWidth = 2.f;
-        button.layer.cornerRadius = HEMSleepHistoryViewEventStripWidth / 2;
         button.layer.shadowOpacity = 0;
         if (i > 0 && i < self.sleepEvents.count - 1) {
             button.layer.transform = CATransform3DMakeScale(0.8, 0.8, 1.f);
@@ -504,10 +502,10 @@ NSString* const HEMSleepHistoryViewEventStorageKey = @"HEMSleepHistoryViewEventS
 
 - (void)bootstrap
 {
-    NSMutableArray* slices = [[NSMutableArray alloc] initWithCapacity:40];
+    NSMutableArray* slices = [[NSMutableArray alloc] initWithCapacity:30];
     CGFloat startTimeMillis = (([[NSDate date] timeIntervalSince1970] - 10 * 60 * 60) * 1000);
     CGFloat totalDuration = 0;
-    for (int i = 0; i < 40; i++) {
+    for (int i = 0; i < 30; i++) {
         CGFloat timestamp = startTimeMillis + totalDuration;
         CGFloat duration = (arc4random() % 20) * 100000;
         [slices addObject:@{

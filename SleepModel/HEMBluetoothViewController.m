@@ -7,8 +7,8 @@
 //
 
 #import "HEMBluetoothViewController.h"
-#import "HEMOnboardingController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMActionButton.h"
 
 @interface HEMBluetoothViewController()
 
@@ -22,11 +22,16 @@
 
 @implementation HEMBluetoothViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [[self navigationController] popToViewController:self animated:NO];
+}
+
 #pragma mark - Actions
 
 - (IBAction)pair:(id)sender {
-    NSLog(@"pair");
-    [self pushViewController:[HEMOnboardingStoryboard instantiateWifiViewController] progress:3/9.0f];
+    // TODO (jimmy): actually do the pairing!
+    [self performSegueWithIdentifier:@"wifi" sender:self];
 }
 
 - (IBAction)skip:(id)sender {

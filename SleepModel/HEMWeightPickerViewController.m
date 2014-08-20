@@ -62,7 +62,7 @@ CGFloat const HEMWeightPickerKilogramsPerPound = 0.453592f;
     } else {
         contentString = NSLocalizedString(@"measurement.lb.unit", nil);
     }
-    return [[NSAttributedString alloc] initWithString:contentString attributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }];
+    return [[NSAttributedString alloc] initWithString:contentString attributes:@{ NSForegroundColorAttributeName : [UIColor blackColor] }];
 }
 
 #pragma mark - UIPickerViewDelegate

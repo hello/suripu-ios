@@ -1,5 +1,5 @@
 //
-//  HEMBluetoothViewController.h
+//  HEMWifiViewController.h
 //  Sense
 //
 //  Created by Jimmy Lu on 8/19/14.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HEMBluetoothViewController : UIViewController
+@interface HEMWifiViewController : UIViewController
 
 @end

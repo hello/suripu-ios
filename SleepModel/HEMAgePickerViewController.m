@@ -35,7 +35,7 @@
 
 - (NSAttributedString*)pickerView:(UIPickerView*)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    return [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", [self ageForRow:row]] attributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }];
+    return [[NSAttributedString alloc] initWithString:[NSString stringWithFormat:@"%ld", [self ageForRow:row]] attributes:@{ NSForegroundColorAttributeName : [UIColor blackColor] }];
 }
 
 - (long)ageForRow:(NSInteger)row

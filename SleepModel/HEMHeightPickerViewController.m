@@ -80,7 +80,7 @@ CGFloat const HEMHeightPickerCentimetersPerInch = 2.54f;
             contentString = NSLocalizedString(@"measurement.cm.unit", nil);
         }
     }
-    return [[NSAttributedString alloc] initWithString:contentString attributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }];
+    return [[NSAttributedString alloc] initWithString:contentString attributes:@{ NSForegroundColorAttributeName : [UIColor blackColor] }];
 }
 
 #pragma mark - UIPickerViewDelegate

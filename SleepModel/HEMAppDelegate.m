@@ -6,7 +6,8 @@
 #import "HEMAppDelegate.h"
 #import "HEMSleepSummaryPageViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMProgressController.h"
+#import "HEMProgressNavigationController.h"
+#import "HEMWelcomeViewController.h"
 
 @interface HEMAppDelegate ()
 
@@ -43,12 +44,13 @@
     [navController popToRootViewControllerAnimated:NO];
     [dynamicPanesController popViewControllerAnimated:animated];
     
-    NSArray* onboardingBgImageNames = @[@"onboardingBackgroundImage1.png", @"onboardingBackgroundImage2.png"];
     UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
     UIViewController* rootController = [onboardingStoryboard instantiateInitialViewController];
-    HEMProgressController* progressController = [[HEMProgressController alloc] initWithRootViewController:rootController
-                                                                                     backgroundImageNames:onboardingBgImageNames];
-    [dynamicPanesController presentViewController:progressController animated:animated completion:NULL];
+    if ([rootController isKindOfClass:[HEMProgressNavigationController class]]) {
+        HEMProgressNavigationController* pNav = (HEMProgressNavigationController*)rootController;
+        [pNav setNumberOfScreens:9];
+    }
+    [dynamicPanesController presentViewController:rootController animated:animated completion:NULL];
 }
 
 - (void)configureAppearance

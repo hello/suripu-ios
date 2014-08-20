@@ -539,7 +539,11 @@ NSString* const HEMSleepHistoryViewEventStorageKey = @"HEMSleepHistoryViewEventS
     for (int i = 0; i < eventCount; i++) {
         CGFloat duration = (arc4random() % 10) * 10000;
         NSString* message = [NSString stringWithFormat:@"Something unexplainable occurred for %.f seconds.", duration / 1000];
-        [events addObject:@{ @"timestamp" : @(startTimeMillis + ((arc4random() % 280) * 125000 + 360000)),
+        NSTimeInterval startTime = startTimeMillis + ((arc4random() % 280) * 125000 + 360000);
+        if (startTime > startTimeMillis + totalDuration) {
+            continue;
+        }
+        [events addObject:@{ @"timestamp" : @(startTime),
                              @"type" : @[ @"light", @"noise" ][arc4random() % 2],
                              @"message" : message,
                              @"duration" : @(duration),

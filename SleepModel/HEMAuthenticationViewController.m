@@ -5,17 +5,22 @@
 
 #import "HEMAuthenticationViewController.h"
 #import "HEMOnboardingHTTPErrorHandler.h"
+#import "HEMActionButton.h"
+#import "UIViewController+Keyboard.h"
 
 static NSInteger const HEPURLAlertButtonIndexSave = 1;
 static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 @interface HEMAuthenticationViewController () <UIAlertViewDelegate>
+@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *passwordLabel;
 @property (weak, nonatomic) IBOutlet UITextField* usernameField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
 
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView* activityIndicatorView;
-@property (strong, nonatomic) IBOutlet UIView* view;
+@property (weak, nonatomic) IBOutlet HEMActionButton *signInButton;
+@property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
+
 @property (nonatomic, getter=isSigningIn) BOOL signingIn;
 @end
 
@@ -25,12 +30,6 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 {
     [super viewDidLoad];
     //    self.title = NSLocalizedString(@"authorization.title", nil);
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.usernameField becomeFirstResponder];
 }
 
 - (void)showURLUpdateAlertView
@@ -52,26 +51,51 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
     return self.usernameField.text.length > 0 && self.passwordField.text.length > 0;
 }
 
-#pragma mark - Actions
+- (void)enableControls:(BOOL)enable {
+    [[self forgotPasswordButton] setEnabled:enable];
+    [[self usernameField] setEnabled:enable];
+    [[self passwordField] setEnabled:enable];
+}
 
-- (IBAction)didTapLogInButton:(id)sender
-{
-    if ([self isSigningIn] || ![self validateInputValues])
+- (void)showActivity {
+    [[self signInButton] showActivity];
+    [self enableControls:NO];
+}
+
+- (void)stopSigningIn {
+    self.signingIn = NO;
+    [[self signInButton] stopActivity];
+    [self enableControls:YES];
+}
+
+- (void)signIn {
+    if ([self isSigningIn]) {
         return;
-
+    }
+    
     self.signingIn = YES;
-    [SVProgressHUD showWithStatus:NSLocalizedString(@"authorization.sign-in.loading-message", nil) maskType:SVProgressHUDMaskTypeBlack];
+    //    [SVProgressHUD showWithStatus:NSLocalizedString(@"authorization.sign-in.loading-message", nil) maskType:SVProgressHUDMaskTypeBlack];
     __weak typeof(self) weakSelf = self;
     [SENAuthorizationService authorizeWithUsername:self.usernameField.text password:self.passwordField.text callback:^(NSError* error) {
         typeof(self) strongSelf = weakSelf;
-        strongSelf.signingIn = NO;
-        [SVProgressHUD dismiss];
+        if (!strongSelf) return;
+        
+        [strongSelf stopSigningIn];
         if (error) {
             [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)];
             return;
         }
         [strongSelf.navigationController dismissViewControllerAnimated:YES completion:NULL];
     }];
+}
+
+#pragma mark - Actions
+
+- (IBAction)didTapLogInButton:(id)sender {
+    if ([self validateInputValues]) {
+        [self showActivity];
+        [self signIn];
+    }
 }
 
 - (IBAction)didTapForgotPasswordButton:(UIButton*)sender
@@ -84,6 +108,16 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 }
 
 #pragma mark - UIAlertViewDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString* nextText = [[textField text] stringByReplacingCharactersInRange:range withString:string];
+    if ([textField isEqual:[self usernameField]]) {
+        [[self usernameLabel] setHidden:[nextText length] == 0];
+    } else if ([textField isEqual:[self passwordField]]) {
+        [[self passwordLabel] setHidden:[nextText length] == 0];
+    }
+    return YES;
+}
 
 - (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -122,7 +156,15 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
         [self.scrollView setContentOffset:CGPointZero animated:YES];
         [textField resignFirstResponder];
         if ([self validateInputValues]) {
-            [self didTapLogInButton:self];
+            __weak typeof(self) weakSelf = self;
+            [self actAfterKeyboardDismissed:^{
+                __strong typeof(weakSelf) strongSelf = self;
+                if (strongSelf) {
+                    [strongSelf showActivity];
+                    [strongSelf signIn];
+                }
+            }];
+            
         }
     }
 

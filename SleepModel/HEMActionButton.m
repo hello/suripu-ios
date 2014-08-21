@@ -64,6 +64,8 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
     [self setEnabled:NO];
     
     [UIView animateWithDuration:0.25f
+                          delay:0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          CGRect bounds = [self bounds];
                          bounds.size.width = size;
@@ -78,14 +80,19 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
 }
 
 - (void)stopActivity {
+    if (![self showingActivity]) return;
+    
     [[self activityView] stopAnimating];
     [UIView animateWithDuration:0.25f
+                          delay:0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
                          [self setFrame:[self originalFrame]];
                          [[self layer] setCornerRadius:kHEMActionCornerRadius];
                      }
                      completion:^(BOOL finished) {
                          [self setShowingActivity:NO];
+                         [[self activityView] setHidden:YES];
                          [self setTitle:[self originalTitle] forState:UIControlStateNormal];
                          [self setTitle:[self originalTitle] forState:UIControlStateDisabled];
                          [self setEnabled:YES];

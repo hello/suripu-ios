@@ -113,6 +113,7 @@
 		BFEAA0AB19A52017002FBD44 /* onboardingBackgroundImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0A919A52017002FBD44 /* onboardingBackgroundImage2.png */; };
 		BFEAA0AC19A52017002FBD44 /* onboardingBackgroundImage2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0AA19A52017002FBD44 /* onboardingBackgroundImage2@2x.png */; };
 		BFEAA0B219A54859002FBD44 /* NSString+Email.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0B119A54859002FBD44 /* NSString+Email.m */; };
+		BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */; };
 		D12BBDB2950F47EDA9F85F68 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -283,6 +284,8 @@
 		BFEAA0AA19A52017002FBD44 /* onboardingBackgroundImage2@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboardingBackgroundImage2@2x.png"; path = "images/onboardingBackgroundImage2@2x.png"; sourceTree = "<group>"; };
 		BFEAA0B019A54859002FBD44 /* NSString+Email.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Email.h"; sourceTree = "<group>"; };
 		BFEAA0B119A54859002FBD44 /* NSString+Email.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Email.m"; sourceTree = "<group>"; };
+		BFEAA0B319A55E01002FBD44 /* UIViewController+Keyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIViewController+Keyboard.h"; sourceTree = "<group>"; };
+		BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIViewController+Keyboard.m"; sourceTree = "<group>"; };
 		DB26CF606417423497851782 /* Pods-Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.xcconfig"; path = "Pods/Pods-Tests.xcconfig"; sourceTree = "<group>"; };
 		F1BFFC8E459745C5B0578F6E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FD539145AF784DC3AA0DAF13 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -715,6 +718,8 @@
 				BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */,
 				BFEAA0B019A54859002FBD44 /* NSString+Email.h */,
 				BFEAA0B119A54859002FBD44 /* NSString+Email.m */,
+				BFEAA0B319A55E01002FBD44 /* UIViewController+Keyboard.h */,
+				BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -969,6 +974,7 @@
 				8AAEECBC19A431E1006517C4 /* HEMSleepEventButton.m in Sources */,
 				8A90F9AF196353F600AFD110 /* HEMColorUtils.m in Sources */,
 				8A66FC9C199D308B00922ED5 /* HEMWeightPickerViewController.m in Sources */,
+				BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */,
 				8A660126199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m in Sources */,
 				8A66FC85199C035500922ED5 /* HEMSleepHistoryView.m in Sources */,
 				BFACC71319A4085300FC77EE /* HEMProgressNavigationController.m in Sources */,

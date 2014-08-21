@@ -20,7 +20,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setCurrentScreenCount:1];
+    [self setCurrentScreenCount:0];
     [self setupProgressBar];
 }
 
@@ -39,6 +39,8 @@
 }
 
 - (void)updateProgress:(BOOL)animated {
+    if ([self numberOfScreens] < 2) return;
+    
     if (![[self progressView] isHidden] && [self numberOfScreens] > 0) {
         [[self progressView] setProgress:[self currentScreenCount]/(float)[self numberOfScreens]
                                 animated:animated];
@@ -83,10 +85,6 @@
     [super setViewControllers:viewControllers animated:animated];
     [self setCurrentScreenCount:[self currentScreenCount] + [viewControllers count]];
     [self updateProgress:animated];
-}
-
-- (void)dealloc {
-    NSLog(@"controller was removed!");
 }
 
 @end

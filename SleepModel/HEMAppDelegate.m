@@ -6,8 +6,6 @@
 #import "HEMAppDelegate.h"
 #import "HEMSleepSummaryPageViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMProgressNavigationController.h"
-#import "HEMWelcomeViewController.h"
 
 @interface HEMAppDelegate ()
 
@@ -46,10 +44,6 @@
     
     UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
     UIViewController* rootController = [onboardingStoryboard instantiateInitialViewController];
-    if ([rootController isKindOfClass:[HEMProgressNavigationController class]]) {
-        HEMProgressNavigationController* pNav = (HEMProgressNavigationController*)rootController;
-        [pNav setNumberOfScreens:9];
-    }
     [dynamicPanesController presentViewController:rootController animated:animated completion:NULL];
 }
 

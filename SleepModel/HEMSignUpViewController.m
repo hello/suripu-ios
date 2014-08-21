@@ -68,35 +68,38 @@
 #pragma mark - Sign Up
 
 - (void)signup {
-    NSString* emailAddress = self.emailAddressField.text;
-    NSString* password = self.passwordField.text;
-
-    __weak typeof(self) weakSelf = self;
-    [SENAPIAccount createAccountWithName:self.nameField.text
-                            emailAddress:emailAddress
-                                password:password
-                              completion:^(NSDictionary* data, NSError* error) {
-                                  typeof(self) strongSelf = weakSelf;
-                                  if (!strongSelf) return;
-                                  
-                                  if (error) {
-                                      [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
-                                      [strongSelf stopActivity];
-                                      return;
-                                  }
-                                  
-                                  [SENAuthorizationService authorizeWithUsername:emailAddress password:password callback:^(NSError *signInError) {
-                                      [strongSelf stopActivity];
-                                      if (signInError) {
-                                          [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
-                                          // TODO: show sign in view? retry?
-                                          return;
-                                      }
-                                      // we need to replace the root view controller with this controller so user cannot go back to sign up again
-                                      UIViewController* bluetoothController = [HEMOnboardingStoryboard instantiateBluetoothViewController];
-                                      [[strongSelf navigationController] setViewControllers:@[bluetoothController] animated:YES];
-                                  }];
-                              }];
+    UIViewController* bluetoothController = [HEMOnboardingStoryboard instantiateBluetoothViewController];
+    [[self navigationController] setViewControllers:@[bluetoothController] animated:YES];
+    
+//    NSString* emailAddress = self.emailAddressField.text;
+//    NSString* password = self.passwordField.text;
+//
+//    __weak typeof(self) weakSelf = self;
+//    [SENAPIAccount createAccountWithName:self.nameField.text
+//                            emailAddress:emailAddress
+//                                password:password
+//                              completion:^(NSDictionary* data, NSError* error) {
+//                                  typeof(self) strongSelf = weakSelf;
+//                                  if (!strongSelf) return;
+//                                  
+//                                  if (error) {
+//                                      [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
+//                                      [strongSelf stopActivity];
+//                                      return;
+//                                  }
+//                                  
+//                                  [SENAuthorizationService authorizeWithUsername:emailAddress password:password callback:^(NSError *signInError) {
+//                                      [strongSelf stopActivity];
+//                                      if (signInError) {
+//                                          [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
+//                                          // TODO: show sign in view? retry?
+//                                          return;
+//                                      }
+//                                      // we need to replace the root view controller with this controller so user cannot go back to sign up again
+//                                      UIViewController* bluetoothController = [HEMOnboardingStoryboard instantiateBluetoothViewController];
+//                                      [[strongSelf navigationController] setViewControllers:@[bluetoothController] animated:YES];
+//                                  }];
+//                              }];
 }
 
 - (IBAction)didTapSignUp:(id)sender {

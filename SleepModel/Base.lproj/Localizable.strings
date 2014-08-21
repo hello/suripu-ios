@@ -61,6 +61,7 @@
 // measurements
 "measurement.temperature.unit" = "°";
 "measurement.percentage.unit" = "%";
+"measurement.or" = "or";
 "measurement.ppm.unit" = "ppm";
 "measurement.cm.unit" = "cm";
 "measurement.kg.unit" = "kg";

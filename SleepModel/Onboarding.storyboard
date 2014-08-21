@@ -810,7 +810,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMR-u0-kGh">
-                                <rect key="frame" x="58" y="237" width="30" height="46"/>
+                                <rect key="frame" x="58" y="225" width="30" height="46"/>
                                 <state key="normal" image="femaleIcon.png">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -820,7 +820,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A6X-Ja-RGS">
-                                <rect key="frame" x="141" y="240" width="39" height="40"/>
+                                <rect key="frame" x="141" y="228" width="39" height="40"/>
                                 <state key="normal" image="maleIcon.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -829,7 +829,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Im-vl-hQo">
-                                <rect key="frame" x="48" y="333" width="49" height="30"/>
+                                <rect key="frame" x="48" y="321" width="49" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Female">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -840,7 +840,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F1J-He-hsq">
-                                <rect key="frame" x="144" y="333" width="33" height="30"/>
+                                <rect key="frame" x="144" y="321" width="33" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Male">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -851,7 +851,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wme-m1-g9S">
-                                <rect key="frame" x="224" y="333" width="38" height="30"/>
+                                <rect key="frame" x="224" y="321" width="38" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Other">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -887,7 +887,7 @@
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kcS-lE-b2D" userLabel="Line">
-                                <rect key="frame" x="224" y="366" width="38" height="1"/>
+                                <rect key="frame" x="224" y="354" width="38" height="1"/>
                                 <color key="backgroundColor" red="0.37647058823529411" green="0.58039215686274503" blue="1" alpha="1" colorSpace="deviceRGB"/>
                             </view>
                         </subviews>
@@ -901,7 +901,7 @@
                             <constraint firstAttribute="centerX" secondItem="gMf-fl-V5h" secondAttribute="centerX" constant="-0.5" id="SKB-xc-oOV"/>
                             <constraint firstItem="Wme-m1-g9S" firstAttribute="leading" secondItem="F1J-He-hsq" secondAttribute="trailing" constant="47" id="TUW-6t-3u8"/>
                             <constraint firstAttribute="centerX" secondItem="F1J-He-hsq" secondAttribute="centerX" id="UBg-3Q-8od"/>
-                            <constraint firstItem="F1J-He-hsq" firstAttribute="top" secondItem="S9f-tS-yQg" secondAttribute="bottom" constant="271" id="iYO-Zo-XfC"/>
+                            <constraint firstItem="F1J-He-hsq" firstAttribute="top" secondItem="S9f-tS-yQg" secondAttribute="bottom" constant="259" id="iYO-Zo-XfC"/>
                             <constraint firstItem="S9f-tS-yQg" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leading" constant="23" id="jHg-2u-Bs6"/>
                             <constraint firstItem="3Im-vl-hQo" firstAttribute="top" secondItem="qMR-u0-kGh" secondAttribute="bottom" constant="50" id="ngv-n0-puD"/>
                             <constraint firstItem="d85-24-UBP" firstAttribute="top" secondItem="gMf-fl-V5h" secondAttribute="bottom" constant="44" id="qTR-nX-xSy"/>
@@ -1011,7 +1011,7 @@
                                 <color key="textColor" red="0.25882352939999997" green="0.25882352939999997" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="worldMapImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-9r-AQZ">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="mapIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-9r-AQZ">
                                 <rect key="frame" x="-78" y="166" width="476" height="237"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVC-vN-68T">
@@ -1175,10 +1175,10 @@
         <image name="bluetoothLogoImage.png" width="75" height="144"/>
         <image name="femaleIcon.png" width="30" height="46"/>
         <image name="maleIcon.png" width="39" height="40"/>
+        <image name="mapIcon.png" width="476" height="237"/>
         <image name="onboardingBackgroundImage1.png" width="350" height="587"/>
         <image name="onboardingBackgroundImage2.png" width="350" height="576"/>
         <image name="wifiLogoImage.png" width="182" height="129"/>
-        <image name="worldMapImage.png" width="476" height="237"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>

@@ -33,8 +33,6 @@
 		8A4B3D4F199308BB00856BDE /* bluetoothLogoImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4B199308BB00856BDE /* bluetoothLogoImage@2x.png */; };
 		8A4B3D50199308BB00856BDE /* wifiLogoImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4C199308BB00856BDE /* wifiLogoImage.png */; };
 		8A4B3D51199308BB00856BDE /* wifiLogoImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */; };
-		8A4B3D541993125E00856BDE /* worldMapImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D521993125D00856BDE /* worldMapImage.png */; };
-		8A4B3D551993125E00856BDE /* worldMapImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D531993125D00856BDE /* worldMapImage@2x.png */; };
 		8A4B3D5E199534F000856BDE /* HEMMainStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5A199534F000856BDE /* HEMMainStoryboard.m */; };
 		8A4B3D5F199534F000856BDE /* HEMOnboardingStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
@@ -117,6 +115,8 @@
 		BFEAA0BB19A578EE002FBD44 /* HEMLocationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0BA19A578EE002FBD44 /* HEMLocationCenter.m */; };
 		BFEAA0BD19A57A89002FBD44 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */; };
 		BFEAA0C319A58137002FBD44 /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0C219A58137002FBD44 /* NSString+UUID.m */; };
+		BFEAA0C619A65E54002FBD44 /* mapIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0C419A65E54002FBD44 /* mapIcon.png */; };
+		BFEAA0C719A65E54002FBD44 /* mapIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */; };
 		D12BBDB2950F47EDA9F85F68 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -166,8 +166,6 @@
 		8A4B3D4B199308BB00856BDE /* bluetoothLogoImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bluetoothLogoImage@2x.png"; path = "images/bluetoothLogoImage@2x.png"; sourceTree = "<group>"; };
 		8A4B3D4C199308BB00856BDE /* wifiLogoImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wifiLogoImage.png; path = images/wifiLogoImage.png; sourceTree = "<group>"; };
 		8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wifiLogoImage@2x.png"; path = "images/wifiLogoImage@2x.png"; sourceTree = "<group>"; };
-		8A4B3D521993125D00856BDE /* worldMapImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = worldMapImage.png; path = images/worldMapImage.png; sourceTree = "<group>"; };
-		8A4B3D531993125D00856BDE /* worldMapImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "worldMapImage@2x.png"; path = "images/worldMapImage@2x.png"; sourceTree = "<group>"; };
 		8A4B3D59199534F000856BDE /* HEMMainStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMainStoryboard.h; sourceTree = "<group>"; };
 		8A4B3D5A199534F000856BDE /* HEMMainStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMainStoryboard.m; sourceTree = "<group>"; };
 		8A4B3D5B199534F000856BDE /* HEMOnboardingStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingStoryboard.h; sourceTree = "<group>"; };
@@ -294,6 +292,8 @@
 		BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		BFEAA0C119A58137002FBD44 /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
 		BFEAA0C219A58137002FBD44 /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
+		BFEAA0C419A65E54002FBD44 /* mapIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapIcon.png; path = images/mapIcon.png; sourceTree = "<group>"; };
+		BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mapIcon@2x.png"; path = "images/mapIcon@2x.png"; sourceTree = "<group>"; };
 		DB26CF606417423497851782 /* Pods-Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.xcconfig"; path = "Pods/Pods-Tests.xcconfig"; sourceTree = "<group>"; };
 		F1BFFC8E459745C5B0578F6E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FD539145AF784DC3AA0DAF13 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -461,6 +461,8 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BFEAA0C419A65E54002FBD44 /* mapIcon.png */,
+				BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */,
 				BFEAA0A919A52017002FBD44 /* onboardingBackgroundImage2.png */,
 				BFEAA0AA19A52017002FBD44 /* onboardingBackgroundImage2@2x.png */,
 				BFACC71419A41CFE00FC77EE /* whitenavbar.png */,
@@ -475,8 +477,6 @@
 				8A4B3D401992C8C800856BDE /* onboardingBackgroundImage1@2x.png */,
 				8A4B3D4C199308BB00856BDE /* wifiLogoImage.png */,
 				8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */,
-				8A4B3D521993125D00856BDE /* worldMapImage.png */,
-				8A4B3D531993125D00856BDE /* worldMapImage@2x.png */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -872,15 +872,15 @@
 				8AB33FF3199D56C20046188F /* sleepEventIcon.png in Resources */,
 				8AC4A04B1989D47000C2BD63 /* chevronIconRight.png in Resources */,
 				8A66FC95199D24FF00922ED5 /* maleIcon.png in Resources */,
+				BFEAA0C619A65E54002FBD44 /* mapIcon.png in Resources */,
+				BFEAA0C719A65E54002FBD44 /* mapIcon@2x.png in Resources */,
 				8A66FC93199D24FF00922ED5 /* femaleIcon.png in Resources */,
 				8AC4A03A1989C36200C2BD63 /* particleIcon@2x.png in Resources */,
 				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
-				8A4B3D551993125E00856BDE /* worldMapImage@2x.png in Resources */,
 				8AC4A0491989D47000C2BD63 /* chevronIconLeft.png in Resources */,
 				BFACC71619A41CFE00FC77EE /* whitenavbar.png in Resources */,
 				8AC4A04C1989D47000C2BD63 /* chevronIconRight@2x.png in Resources */,
-				8A4B3D541993125E00856BDE /* worldMapImage.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

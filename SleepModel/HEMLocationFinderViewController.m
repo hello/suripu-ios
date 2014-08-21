@@ -49,6 +49,7 @@
                 NSLog(@"got lat %f, long %f, accuracy %f", lat, lon, accuracy);
                 // TODO (jimmy): where to put this data?
                 [strongSelf setLocationTxId:nil];
+                [strongSelf finish];
             }
             return NO;
         } failure:^BOOL(NSError *error) {

@@ -107,19 +107,25 @@ static NSString* const kHEMLocationErrorDomain = @"is.hello.location";
 - (void)locationManager:(CLLocationManager *)manager didUpdateLocations:(NSArray *)locations {
     if ([[self successBlocks] count] == 0)  return;
     CLLocation* latestLocation = [locations lastObject];
-    NSArray* blocks = [[self successBlocks] allValues];
-    for (HEMLocationSuccessBlock block in blocks) {
-        block(latestLocation.coordinate.latitude,
-              latestLocation.coordinate.longitude,
-              latestLocation.horizontalAccuracy);
+    NSArray* tokens = [[self successBlocks] allKeys];
+    for (NSString* token in tokens) {
+        HEMLocationSuccessBlock block = [[self successBlocks] valueForKey:token];
+        if (!block(latestLocation.coordinate.latitude,
+                   latestLocation.coordinate.longitude,
+                   latestLocation.horizontalAccuracy)) {
+            [self stopLocatingFor:token];
+        }
     }
 }
 
 - (void)locationManager:(CLLocationManager *)manager didFailWithError:(NSError *)error {
     if ([[self failureBlocks] count] == 0)  return;
-    NSArray* blocks = [[self failureBlocks] allValues];
-    for (HEMLocationFailureBlock block in blocks) {
-        block(error);
+    NSArray* tokens = [[self failureBlocks] allKeys];
+    for (NSString* token in tokens) {
+        HEMLocationFailureBlock block = [[self failureBlocks] valueForKey:token];
+        if (!block(error)) {
+            [self stopLocatingFor:token];
+        }
     }
 }
 

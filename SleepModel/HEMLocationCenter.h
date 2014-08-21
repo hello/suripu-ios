@@ -13,8 +13,8 @@ typedef enum {
     HEMLocationErrorCodeNotEnabled = -11
 } HEMLocationErrorCode;
 
-typedef void(^HEMLocationSuccessBlock)(double lat, double lan, double accuracy);
-typedef void(^HEMLocationFailureBlock)(NSError* error);
+typedef BOOL(^HEMLocationSuccessBlock)(double lat, double lon, double accuracy);
+typedef BOOL(^HEMLocationFailureBlock)(NSError* error);
 
 @interface HEMLocationCenter : NSObject <CLLocationManagerDelegate>
 

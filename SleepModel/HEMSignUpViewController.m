@@ -100,7 +100,7 @@
 }
 
 - (IBAction)didTapSignUp:(id)sender {
-    if ([self validateFieldValuesAndShowAlert:NO]) {
+    if ([self validateFieldValuesAndShowAlert:NO] && ![self isSigningUp]) {
         [self showActivity];
         [self signup];
     }
@@ -123,7 +123,7 @@
             __weak typeof(self) weakSelf = self;
             [self actAfterKeyboardDismissed:^{
                 __strong typeof(weakSelf) strongSelf = self;
-                if (strongSelf) {
+                if (strongSelf && ![strongSelf isSigningUp]) {
                     [strongSelf showActivity];
                     [strongSelf signup];
                 }

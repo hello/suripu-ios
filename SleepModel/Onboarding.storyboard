@@ -55,7 +55,7 @@
                                             <constraint firstAttribute="width" constant="256" id="bz3-eY-j77"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="18"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="words" autocorrectionType="no" returnKeyType="next"/>
+                                        <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
                                         <connections>
                                             <outlet property="delegate" destination="5ic-x1-0Fg" id="5ij-6d-cn5"/>
                                         </connections>

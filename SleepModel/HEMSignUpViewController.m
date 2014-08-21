@@ -100,7 +100,7 @@
 }
 
 - (IBAction)didTapSignUp:(id)sender {
-    if ([self validateFieldValuesAndShowAlert:NO] && ![self isSigningUp]) {
+    if ([self validateFieldValuesAndShowAlert:YES] && ![self isSigningUp]) {
         [self showActivity];
         [self signup];
     }
@@ -119,7 +119,7 @@
     } else if ([textField isEqual:self.passwordField]) {
         [self.scrollView setContentOffset:CGPointZero animated:YES];
         [textField resignFirstResponder];
-        if ([self validateFieldValuesAndShowAlert:NO]) {
+        if ([self validateFieldValuesAndShowAlert:YES]) {
             __weak typeof(self) weakSelf = self;
             [self actAfterKeyboardDismissed:^{
                 __strong typeof(weakSelf) strongSelf = self;
@@ -189,7 +189,7 @@
         return YES;
     }
     if (errorMessage && shouldShowAlert) {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"sign-up.failed.title", nil)
                                     message:errorMessage
                                    delegate:nil
                           cancelButtonTitle:nil

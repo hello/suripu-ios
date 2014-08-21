@@ -3,7 +3,7 @@
 //  Sense
 //
 //  Created by Jimmy Lu on 8/19/14.
-//  Copyright (c) 2014 Delisa Mason. All rights reserved.
+//  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
 
 #import "HEMProgressNavigationController.h"

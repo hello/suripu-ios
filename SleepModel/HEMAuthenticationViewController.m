@@ -21,7 +21,6 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 @property (weak, nonatomic) IBOutlet HEMActionButton *signInButton;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 
-@property (nonatomic, getter=isSigningIn) BOOL signingIn;
 @end
 
 @implementation HEMAuthenticationViewController
@@ -63,17 +62,11 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 }
 
 - (void)stopSigningIn {
-    self.signingIn = NO;
     [[self signInButton] stopActivity];
     [self enableControls:YES];
 }
 
 - (void)signIn {
-    if ([self isSigningIn]) {
-        return;
-    }
-    
-    self.signingIn = YES;
     //    [SVProgressHUD showWithStatus:NSLocalizedString(@"authorization.sign-in.loading-message", nil) maskType:SVProgressHUDMaskTypeBlack];
     __weak typeof(self) weakSelf = self;
     [SENAuthorizationService authorizeWithUsername:self.usernameField.text password:self.passwordField.text callback:^(NSError* error) {

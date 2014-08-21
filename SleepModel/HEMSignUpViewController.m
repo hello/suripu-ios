@@ -45,22 +45,6 @@
     [self.scrollView setContentOffset:CGPointZero animated:YES];
 }
 
-- (void)showActivityWhenKeyboardDismissed {
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    __weak typeof(self) weakSelf = self;
-    __block id observer =
-    [center addObserverForName:UIKeyboardDidHideNotification
-                        object:nil
-                         queue:[NSOperationQueue mainQueue]
-                    usingBlock:^(NSNotification *note) {
-                        [[NSNotificationCenter defaultCenter] removeObserver:observer];
-                        __strong typeof(weakSelf) strongSelf = weakSelf;
-                        if (strongSelf) {
-                            [strongSelf showActivity];
-                        }
-                    }];
-}
-
 #pragma mark - Activity
 
 - (void)enableControls:(BOOL)enable {
@@ -84,10 +68,6 @@
 #pragma mark - Sign Up
 
 - (void)signup {
-    if ([self isSigningUp]) {
-        return;
-    }
-    
     NSString* emailAddress = self.emailAddressField.text;
     NSString* password = self.passwordField.text;
 

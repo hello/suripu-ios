@@ -9,22 +9,15 @@
 
 @implementation HEMAgePickerViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self.agePickerView selectRow:29 inComponent:0 animated:NO];
 }
 
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
-}
 
 #pragma mark - UIPickerViewDataSource
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView*)pickerView
-{
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView*)pickerView {
     return 1;
 }
 

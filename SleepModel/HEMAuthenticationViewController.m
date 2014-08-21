@@ -70,7 +70,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 - (void)signIn {
     [self setSigningIn:YES];
-    //    [SVProgressHUD showWithStatus:NSLocalizedString(@"authorization.sign-in.loading-message", nil) maskType:SVProgressHUDMaskTypeBlack];
+
     __weak typeof(self) weakSelf = self;
     [SENAuthorizationService authorizeWithUsername:self.usernameField.text password:self.passwordField.text callback:^(NSError* error) {
         typeof(self) strongSelf = weakSelf;
@@ -94,8 +94,8 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
     }
 }
 
-- (IBAction)didTapForgotPasswordButton:(UIButton*)sender
-{
+- (IBAction)didTapForgotPasswordButton:(UIButton*)sender {
+    NSLog(@"WARNING: this has not been implemented!");
 }
 
 - (IBAction)setAPIURL:(id)sender

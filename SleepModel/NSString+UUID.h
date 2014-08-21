@@ -10,6 +10,11 @@
 
 @interface NSString (UUID)
 
+//
+// Generate a universally unique identifier
+//
+// @return uuid generated
+//
 + (NSString*)uuid;
 
 @end

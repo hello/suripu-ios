@@ -80,8 +80,8 @@
                                   if (!strongSelf) return;
                                   
                                   if (error) {
-                                      [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
                                       [strongSelf stopActivity];
+                                      [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
                                       return;
                                   }
                                   

@@ -56,7 +56,7 @@
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
                 [strongSelf stopActivity];
-                // TODO (jimmy): show an error!
+                [strongSelf showLocationError:error];
                 [strongSelf setLocationTxId:nil];
             }
             return NO;
@@ -64,7 +64,7 @@
     
     if (error != nil) {
         [self stopActivity];
-        // TODO (jimmy): show error
+        [self showLocationError:error];
     }
 }
 
@@ -93,6 +93,36 @@
         }
     }];
 }
+
+#pragma mark - Alerts
+
+- (NSString*)errorMessageForLocationError:(NSError*)error {
+    NSString* errorMessage = nil;
+    switch ([error code]) {
+        case HEMLocationErrorCodeNotAuthorized:
+        case HEMLocationErrorCodeNotEnabled: {
+            errorMessage = NSLocalizedString(@"location.error.not-enabled", nil);
+            break;
+        }
+        default: {
+            errorMessage = NSLocalizedString(@"location.error.weak-signal", nil);
+            break;
+        }
+    }
+    return errorMessage;
+}
+
+- (void)showLocationError:(NSError*)error {
+    NSString* errorMessage = [self errorMessageForLocationError:error];
+    NSString* title = NSLocalizedString(@"location.error.title", nil);
+    [[[UIAlertView alloc] initWithTitle:title
+                                message:errorMessage
+                               delegate:nil
+                      cancelButtonTitle:nil
+                      otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
+}
+
+#pragma mark - Clean Up
 
 - (void)dealloc {
     if ([self locationTxId] != nil) {

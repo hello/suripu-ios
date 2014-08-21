@@ -11,6 +11,11 @@
 "sign-up.error.conflict" = "The provided email address is already attached to an account.";
 "sign-up.error.generic" = "Something went wrong. Please try again.";
 
+// location
+"location.error.title" = "Unknown Location";
+"location.error.not-enabled" = "You have denied access to, or disabled, Location Services.  You can change this preference inside the Settings app.";
+"location.error.weak-signal" = "We were unable to obtain your location.  Try moving to a different location and try again.";
+
 // settings
 "settings.title" = "Settings";
 

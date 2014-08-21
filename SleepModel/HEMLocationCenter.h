@@ -18,10 +18,40 @@ typedef BOOL(^HEMLocationFailureBlock)(NSError* error);
 
 @interface HEMLocationCenter : NSObject <CLLocationManagerDelegate>
 
+//
+// Allocate, if not already, a singleton instance of HEMLocationCenter and returns
+// it initialized
+//
 + (id)sharedCenter;
+
+//
+// Locate the current device, returning the lat/long/accuracy to the success callback
+// passed in.  If location service is not authorized or enabled, a locationError will
+// be set upon return of the call, in which case the blocks will not be called and a
+// "token" will not be returned.  If location is enabled, it will proceed to start
+// the service and return to you a token, in which you should hold on to as a way to
+// stop location service upon deallocation, if not already stopped.
+//
+// In the callbacks, returning NO will stop the service for this particular transaction.
+// If all transactions are cleared / stopped, the service will completely stop
+//
+// @param locationError: service restriction error
+// @param success: callback when location data is available.  will call multiple times,
+//                 unless told otherwise
+// @param failure: called if location data is enabled / authorized, but failed to obtain
+//                 data
+// @return token to be used to stop the transaction / service
+//
 - (NSString*)locate:(NSError**)locationError
             success:(HEMLocationSuccessBlock)success
             failure:(HEMLocationFailureBlock)failure;
-- (void)stopLocatingFor:(NSString*)distinctId;
+
+//
+// Stop location service for the particular transaction using the unique token provided
+// when locate:success:failure was called.
+//
+// @param token: token that uniquely maps to the locate:success:failure call
+//
+- (void)stopLocatingFor:(NSString*)token;
 
 @end

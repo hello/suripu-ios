@@ -25,7 +25,7 @@
                                     <constraint firstAttribute="width" constant="320" id="iUw-mO-X8p"/>
                                 </constraints>
                             </view>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8F9-nO-uxM">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" showsHorizontalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8F9-nO-uxM">
                                 <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                                 <subviews>
                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sign in" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Fcs-EL-Ys6">
@@ -82,66 +82,64 @@
                                             <outlet property="delegate" destination="5ic-x1-0Fg" id="ARy-yc-hta"/>
                                         </connections>
                                     </textField>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4MF-GM-hUc" customClass="HEMActionButton">
-                                        <rect key="frame" x="95" y="392" width="130" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="hDZ-5Z-OIg"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                        <state key="normal" title="Sign in">
-                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="didTapLogInButton:" destination="5ic-x1-0Fg" eventType="touchUpInside" id="OFu-rz-gLw"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnm-XS-wFM">
-                                        <rect key="frame" x="95" y="438" width="130" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="1hv-mu-uyM"/>
-                                            <constraint firstAttribute="width" constant="130" id="4PC-Nf-O5x"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                        <state key="normal" title="Forgot password?">
-                                            <color key="titleColor" red="0.25882352939999997" green="0.25882352939999997" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="didTapForgotPasswordButton:" destination="5ic-x1-0Fg" eventType="touchUpInside" id="auI-sc-kfu"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="504" id="0eO-vn-AUw"/>
-                                    <constraint firstItem="Lnm-XS-wFM" firstAttribute="top" secondItem="4MF-GM-hUc" secondAttribute="bottom" constant="6" id="0gY-TD-NM0"/>
-                                    <constraint firstAttribute="bottom" secondItem="4MF-GM-hUc" secondAttribute="bottom" constant="72" id="22I-3n-yMq"/>
                                     <constraint firstAttribute="centerX" secondItem="hPf-UR-a80" secondAttribute="centerX" id="312-9J-d6P"/>
-                                    <constraint firstAttribute="centerX" secondItem="Lnm-XS-wFM" secondAttribute="centerX" id="50j-wf-qd7"/>
                                     <constraint firstItem="hPf-UR-a80" firstAttribute="top" secondItem="8F9-nO-uxM" secondAttribute="top" constant="212" id="G4T-Yl-WGq"/>
-                                    <constraint firstItem="4MF-GM-hUc" firstAttribute="trailing" secondItem="Lnm-XS-wFM" secondAttribute="trailing" id="H0c-lt-9Tg"/>
                                     <constraint firstAttribute="centerX" secondItem="Fcs-EL-Ys6" secondAttribute="centerX" id="HK5-nN-tyb"/>
                                     <constraint firstItem="gMo-0B-UJM" firstAttribute="top" secondItem="8F9-nO-uxM" secondAttribute="top" constant="124" id="HgD-Fh-UFo"/>
                                     <constraint firstAttribute="width" constant="320" id="K6z-3E-Tug"/>
-                                    <constraint firstItem="4MF-GM-hUc" firstAttribute="leading" secondItem="Lnm-XS-wFM" secondAttribute="leading" id="KqG-QX-V6W"/>
                                     <constraint firstItem="Fcs-EL-Ys6" firstAttribute="top" secondItem="8F9-nO-uxM" secondAttribute="top" constant="4" id="RX2-s5-WQP"/>
                                     <constraint firstAttribute="centerX" secondItem="7G7-0Y-QJd" secondAttribute="centerX" id="Xg2-XY-x1f"/>
                                     <constraint firstItem="Sfx-mA-FU0" firstAttribute="top" secondItem="8F9-nO-uxM" secondAttribute="top" constant="96" id="foj-fO-oam"/>
-                                    <constraint firstAttribute="trailing" secondItem="4MF-GM-hUc" secondAttribute="trailing" constant="95" id="hIH-W3-wu7"/>
-                                    <constraint firstItem="Lnm-XS-wFM" firstAttribute="top" secondItem="8F9-nO-uxM" secondAttribute="top" constant="438" id="mdI-C6-Vdr"/>
                                     <constraint firstItem="7G7-0Y-QJd" firstAttribute="top" secondItem="8F9-nO-uxM" secondAttribute="top" constant="184" id="oM5-zW-c0M"/>
                                     <constraint firstAttribute="centerX" secondItem="Sfx-mA-FU0" secondAttribute="centerX" id="pcV-2e-u0J"/>
                                     <constraint firstAttribute="centerX" secondItem="gMo-0B-UJM" secondAttribute="centerX" id="wlK-N0-HDL"/>
                                 </constraints>
                             </scrollView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4MF-GM-hUc" customClass="HEMActionButton">
+                                <rect key="frame" x="95" y="461" width="130" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="130" id="Kq4-JC-vl2"/>
+                                    <constraint firstAttribute="height" constant="40" id="hDZ-5Z-OIg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="Sign in">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapLogInButton:" destination="5ic-x1-0Fg" eventType="touchUpInside" id="OFu-rz-gLw"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Lnm-XS-wFM">
+                                <rect key="frame" x="95" y="513" width="130" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="1hv-mu-uyM"/>
+                                    <constraint firstAttribute="width" constant="130" id="4PC-Nf-O5x"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                <state key="normal" title="Forgot password?">
+                                    <color key="titleColor" red="0.25882352939999997" green="0.25882352939999997" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapForgotPasswordButton:" destination="5ic-x1-0Fg" eventType="touchUpInside" id="auI-sc-kfu"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="8F9-nO-uxM" firstAttribute="top" secondItem="Hyi-t4-E2t" secondAttribute="bottom" id="3wE-4F-2vD"/>
+                            <constraint firstAttribute="centerX" secondItem="4MF-GM-hUc" secondAttribute="centerX" id="MX1-Qp-0fE"/>
+                            <constraint firstItem="CEY-kF-eWw" firstAttribute="top" secondItem="4MF-GM-hUc" secondAttribute="bottom" constant="67" id="Y3E-I7-Vhp"/>
+                            <constraint firstItem="CEY-kF-eWw" firstAttribute="top" secondItem="Lnm-XS-wFM" secondAttribute="bottom" constant="25" id="b4A-bx-Vks"/>
                             <constraint firstItem="LYk-l0-Gqe" firstAttribute="top" secondItem="Hyi-t4-E2t" secondAttribute="bottom" id="bZY-xa-IPs"/>
                             <constraint firstAttribute="centerX" secondItem="8F9-nO-uxM" secondAttribute="centerX" id="k1D-qn-5kM"/>
                             <constraint firstAttribute="centerX" secondItem="LYk-l0-Gqe" secondAttribute="centerX" id="w90-Zk-MSx"/>
+                            <constraint firstAttribute="centerX" secondItem="Lnm-XS-wFM" secondAttribute="centerX" id="zPP-ue-e4s"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="5yB-oo-XsC"/>

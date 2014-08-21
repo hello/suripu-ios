@@ -21,6 +21,8 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 @property (weak, nonatomic) IBOutlet HEMActionButton *signInButton;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 
+@property (assign, nonatomic) BOOL signingIn;
+
 @end
 
 @implementation HEMAuthenticationViewController
@@ -61,19 +63,20 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
     [self enableControls:NO];
 }
 
-- (void)stopSigningIn {
+- (void)stopActivity {
     [[self signInButton] stopActivity];
     [self enableControls:YES];
 }
 
 - (void)signIn {
+    [self setSigningIn:YES];
     //    [SVProgressHUD showWithStatus:NSLocalizedString(@"authorization.sign-in.loading-message", nil) maskType:SVProgressHUDMaskTypeBlack];
     __weak typeof(self) weakSelf = self;
     [SENAuthorizationService authorizeWithUsername:self.usernameField.text password:self.passwordField.text callback:^(NSError* error) {
         typeof(self) strongSelf = weakSelf;
         if (!strongSelf) return;
-        
-        [strongSelf stopSigningIn];
+        [strongSelf setSigningIn:NO];
+        [strongSelf stopActivity];
         if (error) {
             [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)];
             return;
@@ -85,7 +88,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 #pragma mark - Actions
 
 - (IBAction)didTapLogInButton:(id)sender {
-    if ([self validateInputValues]) {
+    if ([self validateInputValues] && ![self signingIn]) {
         [self showActivity];
         [self signIn];
     }
@@ -152,7 +155,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
             __weak typeof(self) weakSelf = self;
             [self actAfterKeyboardDismissed:^{
                 __strong typeof(weakSelf) strongSelf = self;
-                if (strongSelf) {
+                if (strongSelf && ![strongSelf signingIn]) {
                     [strongSelf showActivity];
                     [strongSelf signIn];
                 }

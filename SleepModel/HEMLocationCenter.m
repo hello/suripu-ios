@@ -73,7 +73,7 @@ static NSString* const kHEMLocationErrorDomain = @"is.hello.location";
                                 userInfo:nil];
     }
 
-    error = [self checkAuthorizationError];
+    if (error == nil) error = [self checkAuthorizationError];
     if (error != nil) {
         if (locationError != NULL) {
             *locationError = error;

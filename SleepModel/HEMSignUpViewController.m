@@ -44,8 +44,9 @@
 }
 
 - (void)adjustConstraintsForIPhone4 {
+    CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
     CGFloat scrollYOrigin = CGRectGetMinY([[self scrollView] frame]);
-    [[self scrollViewHeightConstraint] setConstant:480-scrollYOrigin];
+    [[self scrollViewHeightConstraint] setConstant:screenHeight-scrollYOrigin];
     
     CGFloat vSpaceDiff = -30.0f;
     [self updateConstraint:[self fNameLabelVSpaceConstraint] withDiff:vSpaceDiff];

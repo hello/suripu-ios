@@ -1,6 +1,7 @@
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMSignUpViewController : UIViewController
+@interface HEMSignUpViewController : HEMBaseController
 
 @end

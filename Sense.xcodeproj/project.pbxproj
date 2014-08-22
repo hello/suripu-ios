@@ -117,6 +117,7 @@
 		BFEAA0C619A65E54002FBD44 /* mapIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0C419A65E54002FBD44 /* mapIcon.png */; };
 		BFEAA0C719A65E54002FBD44 /* mapIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */; };
 		BFEAA0CA19A66746002FBD44 /* HEMValueSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0C919A66746002FBD44 /* HEMValueSliderView.m */; };
+		BFEAA0CD19A6D9E6002FBD44 /* HEMBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0CC19A6D9E6002FBD44 /* HEMBaseController.m */; };
 		D12BBDB2950F47EDA9F85F68 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -294,6 +295,9 @@
 		BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mapIcon@2x.png"; path = "images/mapIcon@2x.png"; sourceTree = "<group>"; };
 		BFEAA0C819A66746002FBD44 /* HEMValueSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMValueSliderView.h; sourceTree = "<group>"; };
 		BFEAA0C919A66746002FBD44 /* HEMValueSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMValueSliderView.m; sourceTree = "<group>"; };
+		BFEAA0CB19A6D9E6002FBD44 /* HEMBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBaseController.h; sourceTree = "<group>"; };
+		BFEAA0CC19A6D9E6002FBD44 /* HEMBaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBaseController.m; sourceTree = "<group>"; };
+		BFEAA0CE19A6D9F8002FBD44 /* HEMBaseController+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HEMBaseController+Protected.h"; sourceTree = "<group>"; };
 		DB26CF606417423497851782 /* Pods-Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.xcconfig"; path = "Pods/Pods-Tests.xcconfig"; sourceTree = "<group>"; };
 		F1BFFC8E459745C5B0578F6E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
 		FD539145AF784DC3AA0DAF13 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -743,6 +747,9 @@
 			children = (
 				BFACC71119A4085300FC77EE /* HEMProgressNavigationController.h */,
 				BFACC71219A4085300FC77EE /* HEMProgressNavigationController.m */,
+				BFEAA0CB19A6D9E6002FBD44 /* HEMBaseController.h */,
+				BFEAA0CC19A6D9E6002FBD44 /* HEMBaseController.m */,
+				BFEAA0CE19A6D9F8002FBD44 /* HEMBaseController+Protected.h */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -973,6 +980,7 @@
 				8A27818419A29100007A214D /* HEMSleepDataDetailView.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
 				BFACC71A19A4282A00FC77EE /* HEMWifiViewController.m in Sources */,
+				BFEAA0CD19A6D9E6002FBD44 /* HEMBaseController.m in Sources */,
 				8A4B3D5E199534F000856BDE /* HEMMainStoryboard.m in Sources */,
 				BFEAA0A819A51DCF002FBD44 /* HEMWelcomeViewController.m in Sources */,
 				8A66FC8E199D17C000922ED5 /* HEMHeightPickerViewController.m in Sources */,

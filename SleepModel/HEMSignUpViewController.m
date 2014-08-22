@@ -2,13 +2,16 @@
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAuthorizationService.h>
 
+#import "NSString+Email.h"
+
+#import "UIViewController+Keyboard.h"
+
 #import "HEMSignUpViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingHTTPErrorHandler.h"
+#import "HEMBaseController+Protected.h"
 #import "HelloStyleKit.h"
-#import "NSString+Email.h"
-#import "UIViewController+Keyboard.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
@@ -20,15 +23,37 @@
 @property (weak, nonatomic) IBOutlet UITextField* nameField;
 @property (weak, nonatomic) IBOutlet HEMActionButton* signUpButton;
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fNameLabelVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fNameFieldVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *emailLabelVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *emailFieldVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passLabelVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passFieldVSpaceConstraint;
+
 @property (nonatomic, getter=isSigningUp) BOOL signingUp;
+
 @end
 
 @implementation HEMSignUpViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self listenForKeyboardNotifications];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    CGFloat scrollYOrigin = CGRectGetMinY([[self scrollView] frame]);
+    [[self scrollViewHeightConstraint] setConstant:480-scrollYOrigin];
+    
+    CGFloat vSpaceDiff = -30.0f;
+    [self updateConstraint:[self fNameLabelVSpaceConstraint] withDiff:vSpaceDiff];
+    [self updateConstraint:[self fNameFieldVSpaceConstraint] withDiff:vSpaceDiff];
+    [self updateConstraint:[self emailLabelVSpaceConstraint] withDiff:vSpaceDiff];
+    [self updateConstraint:[self emailFieldVSpaceConstraint] withDiff:vSpaceDiff];
+    [self updateConstraint:[self passLabelVSpaceConstraint] withDiff:vSpaceDiff];
+    [self updateConstraint:[self passFieldVSpaceConstraint] withDiff:vSpaceDiff];
 }
 
 #pragma mark - Keyboard Mangement

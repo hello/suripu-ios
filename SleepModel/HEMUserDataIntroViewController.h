@@ -1,6 +1,7 @@
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMUserDataIntroViewController : UIViewController
+@interface HEMUserDataIntroViewController : HEMBaseController
 
 @end

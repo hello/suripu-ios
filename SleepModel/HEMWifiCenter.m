@@ -15,7 +15,6 @@
     NSDictionary* info = nil;
     for (NSString *interface in interfaces) {
         id networkInfo = (__bridge id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)interface);
-        NSLog(@"network info class %@", NSStringFromClass([networkInfo class]));
         if ([networkInfo isKindOfClass:[NSDictionary class]] && [networkInfo count] >0) {
             info = networkInfo;
             break;

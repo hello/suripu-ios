@@ -737,8 +737,6 @@
 				BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */,
 				BFEAA0B019A54859002FBD44 /* NSString+Email.h */,
 				BFEAA0B119A54859002FBD44 /* NSString+Email.m */,
-				BFEAA0B319A55E01002FBD44 /* UIViewController+Keyboard.h */,
-				BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */,
 				BFEAA0B919A578EE002FBD44 /* HEMLocationCenter.h */,
 				BFEAA0BA19A578EE002FBD44 /* HEMLocationCenter.m */,
 				BF5E443519A7AA3D00278A2F /* HEMWifiCenter.h */,
@@ -755,6 +753,8 @@
 				BFEAA0CB19A6D9E6002FBD44 /* HEMBaseController.h */,
 				BFEAA0CC19A6D9E6002FBD44 /* HEMBaseController.m */,
 				BFEAA0CE19A6D9F8002FBD44 /* HEMBaseController+Protected.h */,
+				BFEAA0B319A55E01002FBD44 /* UIViewController+Keyboard.h */,
+				BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";

@@ -2,105 +2,61 @@
 
 #import "HEMHeightPickerViewController.h"
 #import "HEMUserDataCache.h"
+#import "HEMValueSliderView.h"
 
 CGFloat const HEMHeightPickerCentimetersPerInch = 2.54f;
+static NSInteger HEMMaxHeightInFeet = 9;
 
-@interface HEMHeightPickerViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
-@property (weak, nonatomic) IBOutlet UISegmentedControl* unitFormatSegmentControl;
+@interface HEMHeightPickerViewController () <HEMValueSliderDelegate>
+
 @property (nonatomic, getter=isUsingImperial) BOOL usingImperial;
-@property (weak, nonatomic) IBOutlet UIPickerView* heightPickerView;
+@property (weak, nonatomic) IBOutlet HEMValueSliderView *heightSliderView;
+@property (assign, nonatomic) NSInteger numberOfRows;
+@property (weak, nonatomic) IBOutlet UILabel *mainHeightLabel;
+@property (weak, nonatomic) IBOutlet UILabel *otherHeightLabel;
+
 @end
 
 @implementation HEMHeightPickerViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    NSString* currentLocaleIdentifier = [[NSLocale currentLocale] localeIdentifier];
-    self.usingImperial = [currentLocaleIdentifier isEqualToString:@"en_US"] || [currentLocaleIdentifier isEqualToString:@"en_GB"];
-    [self setDefaultValues];
+    [self setNumberOfRows:HEMMaxHeightInFeet+1]; // include 0
+    [[self heightSliderView] reload];
+    [[self heightSliderView] setToValue:HEMMaxHeightInFeet - (5 + (8/12.0f))];
 }
 
-- (void)setDefaultValues
-{
-    if ([self isUsingImperial]) {
-        self.unitFormatSegmentControl.selectedSegmentIndex = 1;
-        [self.heightPickerView selectRow:5 inComponent:0 animated:NO];
-        [self.heightPickerView selectRow:8 inComponent:1 animated:NO];
-    } else {
-        self.unitFormatSegmentControl.selectedSegmentIndex = 0;
-        [self.heightPickerView selectRow:160 inComponent:0 animated:NO];
+#pragma mark - HEMValueSliderDelegate
+
+- (NSInteger)numberOfRowsInSliderView:(HEMValueSliderView *)sliderView {
+    return [self numberOfRows];
+}
+
+- (NSNumber*)sliderView:(HEMValueSliderView *)sliderView numberForRow:(NSInteger)row {
+    return @([self numberOfRows]-row-1); // show numbers in reverse
+}
+
+- (float)incrementalValuePerRowInSliderView:(HEMValueSliderView *)sliderView {
+    return -1; // it's in reverse
+}
+
+- (void)sliderView:(HEMValueSliderView *)sliderView didScrollToValue:(float)value {
+    NSInteger inches = (int)(roundf((value - (long)floorf(value))*12));
+    NSInteger feet = (int)floorf(value);
+    NSInteger cm = value * 12 * HEMHeightPickerCentimetersPerInch;
+    
+    if (inches == 12) {
+        inches = 0;
+        feet += 1;
     }
-}
-
-- (IBAction)updateUnitFormat:(UISegmentedControl*)sender
-{
-    self.usingImperial = sender.selectedSegmentIndex == 1;
-    [self.heightPickerView reloadAllComponents];
-    [self setDefaultValues];
-}
-
-#pragma mark - UIPickerViewDataSource
-
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView*)pickerView
-{
-    return 2;
-}
-
-- (NSInteger)pickerView:(UIPickerView*)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    if ([self isUsingImperial]) {
-        if (component == 0) {
-            return 9;
-        } else {
-            return 12;
-        }
-    } else {
-        if (component == 0) {
-            return 275;
-        } else {
-            return 1;
-        }
-    }
-}
-
-- (NSAttributedString*)pickerView:(UIPickerView*)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    NSString* contentString = nil;
-    if ([self isUsingImperial]) {
-        if (component == 0) {
-            contentString = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)row];
-        } else {
-            contentString = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)row];
-        }
-    } else {
-        if (component == 0) {
-            contentString = [NSString stringWithFormat:@"%ld", (long)row + 1];
-        } else {
-            contentString = NSLocalizedString(@"measurement.cm.unit", nil);
-        }
-    }
-    return [[NSAttributedString alloc] initWithString:contentString attributes:@{ NSForegroundColorAttributeName : [UIColor whiteColor] }];
-}
-
-#pragma mark - UIPickerViewDelegate
-
-- (void)pickerView:(UIPickerView*)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    CGFloat centimeters = 0;
-    if ([self isUsingImperial]) {
-        NSInteger feet = [pickerView selectedRowInComponent:0];
-        NSInteger inches = [pickerView selectedRowInComponent:1];
-        centimeters = ((feet * 12.f) + inches) * HEMHeightPickerCentimetersPerInch;
-    } else {
-        centimeters = (CGFloat)[pickerView selectedRowInComponent : 0];
-    }
-    [[HEMUserDataCache sharedUserDataCache] setHeightInCentimeters:@(centimeters)];
-}
-
-- (CGFloat)pickerView:(UIPickerView*)pickerView widthForComponent:(NSInteger)component
-{
-    return 80.f;
+    
+    NSString* feetFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)feet];
+    NSString* inchFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)inches];
+    NSString* cmFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cm];
+    [[self mainHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat]];
+    [[self otherHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"measurement.or", nil), cmFormat]];
+    
+    [[HEMUserDataCache sharedUserDataCache] setHeightInCentimeters:@(cm)];
 }
 
 @end

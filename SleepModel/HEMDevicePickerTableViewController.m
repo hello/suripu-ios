@@ -125,7 +125,7 @@ static NSString* const pillCellIdentifier = @"pillCell";
     LGPeripheral* device = [self deviceAtIndexPath:indexPath];
     cell.nameLabel.text = device.cbPeripheral.name;
     cell.identifierLabel.text = device.UUIDString;
-    cell.signalStrengthLabel.text = nil; //[NSString stringWithFormat:NSLocalizedString(@"picker.peripheral.rssi.format", nil), self.discoveredDevicesRSSI[indexPath.row]];
+    cell.signalStrengthLabel.text = nil;
     return cell;
 }
 

@@ -41,8 +41,10 @@
     UINavigationController* navController = (UINavigationController*)((FCDynamicPane*)[dynamicPanesController.viewControllers firstObject]).viewController;
     [navController popToRootViewControllerAnimated:NO];
     [dynamicPanesController popViewControllerAnimated:animated];
+    
     UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
-    [dynamicPanesController presentViewController:[onboardingStoryboard instantiateInitialViewController] animated:animated completion:NULL];
+    UIViewController* rootController = [onboardingStoryboard instantiateInitialViewController];
+    [dynamicPanesController presentViewController:rootController animated:animated completion:NULL];
 }
 
 - (void)configureAppearance

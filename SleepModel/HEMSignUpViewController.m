@@ -2,69 +2,178 @@
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAuthorizationService.h>
 
+#import "NSString+Email.h"
+
+#import "UIViewController+Keyboard.h"
+
 #import "HEMSignUpViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingHTTPErrorHandler.h"
+#import "HEMBaseController+Protected.h"
+#import "HelloStyleKit.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *nameLabel;
+@property (weak, nonatomic) IBOutlet UILabel *emailLabel;
+@property (weak, nonatomic) IBOutlet UILabel *passwordLabel;
 @property (weak, nonatomic) IBOutlet UITextField* emailAddressField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
-@property (weak, nonatomic) IBOutlet UITextField* confirmPasswordField;
 @property (weak, nonatomic) IBOutlet UITextField* nameField;
 @property (weak, nonatomic) IBOutlet HEMActionButton* signUpButton;
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scrollViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fNameLabelVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fNameFieldVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *emailLabelVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *emailFieldVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passLabelVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passFieldVSpaceConstraint;
+
 @property (nonatomic, getter=isSigningUp) BOOL signingUp;
+
 @end
 
 @implementation HEMSignUpViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    self.scrollView.contentSize = CGSizeMake(CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds) * 1.5f);
-    //    self.navigationItem.hidesBackButton = YES;
+    [self listenForKeyboardNotifications];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-    [self.nameField becomeFirstResponder];
+- (void)adjustConstraintsForIPhone4 {
+    CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
+    CGFloat scrollYOrigin = CGRectGetMinY([[self scrollView] frame]);
+    [[self scrollViewHeightConstraint] setConstant:screenHeight-scrollYOrigin];
+    
+    CGFloat vSpaceDiff = -30.0f;
+    [self updateConstraint:[self fNameLabelVSpaceConstraint] withDiff:vSpaceDiff];
+    [self updateConstraint:[self fNameFieldVSpaceConstraint] withDiff:vSpaceDiff];
+    [self updateConstraint:[self emailLabelVSpaceConstraint] withDiff:vSpaceDiff];
+    [self updateConstraint:[self emailFieldVSpaceConstraint] withDiff:vSpaceDiff];
+    [self updateConstraint:[self passLabelVSpaceConstraint] withDiff:vSpaceDiff];
+    [self updateConstraint:[self passFieldVSpaceConstraint] withDiff:vSpaceDiff];
 }
 
-- (IBAction)didTapSignUp:(id)sender
-{
-    if ([self isSigningUp] || ![self validateFieldValuesAndShowAlert:YES])
-        return;
+#pragma mark - Keyboard Mangement
 
+- (void)listenForKeyboardNotifications {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(keyboardWillDisappear:)
+                   name:UIKeyboardWillHideNotification
+                 object:nil];
+}
+
+- (void)keyboardWillDisappear:(NSNotification*)notification {
+    [self.scrollView setContentOffset:CGPointZero animated:YES];
+}
+
+#pragma mark - Activity
+
+- (void)enableControls:(BOOL)enable {
+    [[self nameField] setEnabled:enable];
+    [[self emailAddressField] setEnabled:enable];
+    [[self passwordField] setEnabled:enable];
+}
+
+- (void)showActivity {
     self.signingUp = YES;
+    [self enableControls:NO];
+    [[self signUpButton] showActivity];
+}
+
+- (void)stopActivity {
+    self.signingUp = NO;
+    [self enableControls:YES];
+    [[self signUpButton] stopActivity];
+}
+
+#pragma mark - Sign Up
+
+- (void)signup {
     NSString* emailAddress = self.emailAddressField.text;
     NSString* password = self.passwordField.text;
+
     __weak typeof(self) weakSelf = self;
-    // TODO: show loading screen for "signing up"
     [SENAPIAccount createAccountWithName:self.nameField.text
                             emailAddress:emailAddress
                                 password:password
                               completion:^(NSDictionary* data, NSError* error) {
                                   typeof(self) strongSelf = weakSelf;
+                                  if (!strongSelf) return;
+                                  
                                   if (error) {
+                                      [strongSelf stopActivity];
                                       [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
-                                      strongSelf.signingUp = NO;
                                       return;
                                   }
-                                  // TODO: show loading screen for "signing in"
+                                  
                                   [SENAuthorizationService authorizeWithUsername:emailAddress password:password callback:^(NSError *signInError) {
-                                      strongSelf.signingUp = NO;
+                                      [strongSelf stopActivity];
                                       if (signInError) {
                                           [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
-                                          
                                           // TODO: show sign in view? retry?
                                           return;
                                       }
-                                      [strongSelf.navigationController pushViewController:[HEMOnboardingStoryboard instantiateBluetoothViewController] animated:YES];
+                                      // we need to replace the root view controller with this controller so user cannot go back to sign up again
+                                      UIViewController* bluetoothController = [HEMOnboardingStoryboard instantiateBluetoothViewController];
+                                      [[strongSelf navigationController] setViewControllers:@[bluetoothController] animated:YES];
                                   }];
                               }];
+}
+
+- (IBAction)didTapSignUp:(id)sender {
+    if ([self validateFieldValuesAndShowAlert:YES] && ![self isSigningUp]) {
+        [self showActivity];
+        [self signup];
+    }
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField*)textField
+{
+    if ([textField isEqual:self.nameField]) {
+        [self.emailAddressField becomeFirstResponder];
+        [self scrollToTextField:self.emailAddressField];
+    } else if ([textField isEqual:self.emailAddressField]) {
+        [self.passwordField becomeFirstResponder];
+        [self scrollToTextField:self.passwordField];
+    } else if ([textField isEqual:self.passwordField]) {
+        [self.scrollView setContentOffset:CGPointZero animated:YES];
+        [textField resignFirstResponder];
+        if ([self validateFieldValuesAndShowAlert:YES]) {
+            __weak typeof(self) weakSelf = self;
+            [self actAfterKeyboardDismissed:^{
+                __strong typeof(weakSelf) strongSelf = self;
+                if (strongSelf && ![strongSelf isSigningUp]) {
+                    [strongSelf showActivity];
+                    [strongSelf signup];
+                }
+            }];
+        }
+    }
+
+    return YES;
+}
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+    NSString* nextText = [[textField text] stringByReplacingCharactersInRange:range withString:string];
+    [[self labelForTextField:textField] setHidden:[nextText length] == 0];
+    return YES;
+}
+
+- (void)textFieldDidBeginEditing:(UITextField *)textField
+{
+    [self scrollToTextField:textField];
+}
+
+- (void)scrollToTextField:(UITextField*)textField
+{
+    [self.scrollView setContentOffset:CGPointMake(0, CGRectGetMinY(textField.frame) - CGRectGetMinY(self.nameField.frame)) animated:YES];
 }
 
 #pragma mark - Field Validation
@@ -79,43 +188,18 @@
     return password.length >= 3;
 }
 
-- (BOOL)isValidEmailAddress:(NSString*)emailAddress
-{
-    return [emailAddress rangeOfString:@"@"].location != NSNotFound;
-}
+// email validated through NSString+Email
 
-#pragma mark - UITextFieldDelegate
-
-- (BOOL)textFieldShouldReturn:(UITextField*)textField
-{
-    if ([textField isEqual:self.nameField]) {
-        [self.emailAddressField becomeFirstResponder];
-        [self scrollToTextField:self.emailAddressField];
-    } else if ([textField isEqual:self.emailAddressField]) {
-        [self.passwordField becomeFirstResponder];
-        [self scrollToTextField:self.passwordField];
-    } else if ([textField isEqual:self.passwordField]) {
-        [self.confirmPasswordField becomeFirstResponder];
-        [self scrollToTextField:self.confirmPasswordField];
-    } else if ([textField isEqual:self.confirmPasswordField]) {
-        [self.scrollView setContentOffset:CGPointZero animated:YES];
-        [textField resignFirstResponder];
-        if ([self validateFieldValuesAndShowAlert:NO]) {
-            [self didTapSignUp:self];
-        }
+- (UILabel*)labelForTextField:(UITextField*)textField {
+    UILabel* label = nil;
+    if ([textField isEqual:[self nameField]]) {
+        label = [self nameLabel];
+    } else if ([textField isEqual:[self emailAddressField]]) {
+        label = [self emailLabel];
+    } else if ([textField isEqual:[self passwordField]]) {
+        label = [self passwordLabel];
     }
-
-    return YES;
-}
-
-- (void)textFieldDidBeginEditing:(UITextField *)textField
-{
-    [self scrollToTextField:textField];
-}
-
-- (void)scrollToTextField:(UITextField*)textField
-{
-    [self.scrollView setContentOffset:CGPointMake(0, CGRectGetMinY(textField.frame) - CGRectGetMinY(self.nameField.frame)) animated:YES];
+    return label;
 }
 
 - (BOOL)validateFieldValuesAndShowAlert:(BOOL)shouldShowAlert
@@ -123,23 +207,25 @@
     NSString* errorMessage = nil;
     if (![self isValidName:self.nameField.text]) {
         errorMessage = NSLocalizedString(@"sign-up.error.name-length", nil);
-    } else if (![self isValidEmailAddress:self.emailAddressField.text]) {
+    } else if (![self.emailAddressField.text isValidEmail]) {
         errorMessage = NSLocalizedString(@"sign-up.error.email-invalid", nil);
     } else if (![self isValidPassword:self.passwordField.text]) {
         errorMessage = NSLocalizedString(@"sign-up.error.password-length", nil);
-    } else if (![self.passwordField.text isEqualToString:self.confirmPasswordField.text]) {
-        errorMessage = NSLocalizedString(@"sign-up.error.password-match", nil);
     } else {
         return YES;
     }
     if (errorMessage && shouldShowAlert) {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"sign-up.failed.title", nil)
                                     message:errorMessage
                                    delegate:nil
                           cancelButtonTitle:nil
                           otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
     }
     return NO;
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

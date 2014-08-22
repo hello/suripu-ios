@@ -101,6 +101,7 @@
 		8AC4A057198A0AE900C2BD63 /* questionIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A055198A0AE900C2BD63 /* questionIcon.png */; };
 		8AC4A058198A0AE900C2BD63 /* questionIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */; };
 		8AC4A05B198ACE4800C2BD63 /* HEMSensorGraphDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4A05A198ACE4800C2BD63 /* HEMSensorGraphDataSource.m */; };
+		BF5E443719A7AA3D00278A2F /* HEMWifiCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5E443619A7AA3D00278A2F /* HEMWifiCenter.m */; };
 		BFABE75219A2E70A00AB2F0F /* UIView+HEMMotionEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */; };
 		BFACC71319A4085300FC77EE /* HEMProgressNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFACC71219A4085300FC77EE /* HEMProgressNavigationController.m */; };
 		BFACC71619A41CFE00FC77EE /* whitenavbar.png in Resources */ = {isa = PBXBuildFile; fileRef = BFACC71419A41CFE00FC77EE /* whitenavbar.png */; };
@@ -270,6 +271,8 @@
 		8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "questionIcon@2x.png"; path = "images/questionIcon@2x.png"; sourceTree = "<group>"; };
 		8AC4A059198ACE4800C2BD63 /* HEMSensorGraphDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorGraphDataSource.h; sourceTree = "<group>"; };
 		8AC4A05A198ACE4800C2BD63 /* HEMSensorGraphDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorGraphDataSource.m; sourceTree = "<group>"; };
+		BF5E443519A7AA3D00278A2F /* HEMWifiCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiCenter.h; sourceTree = "<group>"; };
+		BF5E443619A7AA3D00278A2F /* HEMWifiCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWifiCenter.m; sourceTree = "<group>"; };
 		BFABE75019A2E70A00AB2F0F /* UIView+HEMMotionEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HEMMotionEffects.h"; sourceTree = "<group>"; };
 		BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HEMMotionEffects.m"; sourceTree = "<group>"; };
 		BFACC71119A4085300FC77EE /* HEMProgressNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMProgressNavigationController.h; sourceTree = "<group>"; };
@@ -738,6 +741,8 @@
 				BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */,
 				BFEAA0B919A578EE002FBD44 /* HEMLocationCenter.h */,
 				BFEAA0BA19A578EE002FBD44 /* HEMLocationCenter.m */,
+				BF5E443519A7AA3D00278A2F /* HEMWifiCenter.h */,
+				BF5E443619A7AA3D00278A2F /* HEMWifiCenter.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1013,6 +1018,7 @@
 				8A90F9AC196350D200AFD110 /* HelloStyleKit.m in Sources */,
 				8AC49F931981DC8C00C2BD63 /* HEMZoomingFlowLayout.m in Sources */,
 				8AC49F961981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m in Sources */,
+				BF5E443719A7AA3D00278A2F /* HEMWifiCenter.m in Sources */,
 				8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */,
 				8A782686196CB6C9002882A1 /* HEMSnappingFlowLayout.m in Sources */,
 				8AC49F8A1981A89D00C2BD63 /* HEMSleepHistoryViewController.m in Sources */,

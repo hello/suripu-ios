@@ -34,8 +34,4 @@
     [self performSegueWithIdentifier:@"wifi" sender:self];
 }
 
-- (IBAction)skip:(id)sender {
-    NSLog(@"skip");
-}
-
 @end

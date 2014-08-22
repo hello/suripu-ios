@@ -114,7 +114,6 @@
 		BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */; };
 		BFEAA0BB19A578EE002FBD44 /* HEMLocationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0BA19A578EE002FBD44 /* HEMLocationCenter.m */; };
 		BFEAA0BD19A57A89002FBD44 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */; };
-		BFEAA0C319A58137002FBD44 /* NSString+UUID.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0C219A58137002FBD44 /* NSString+UUID.m */; };
 		BFEAA0C619A65E54002FBD44 /* mapIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0C419A65E54002FBD44 /* mapIcon.png */; };
 		BFEAA0C719A65E54002FBD44 /* mapIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */; };
 		BFEAA0CA19A66746002FBD44 /* HEMValueSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0C919A66746002FBD44 /* HEMValueSliderView.m */; };
@@ -291,8 +290,6 @@
 		BFEAA0B919A578EE002FBD44 /* HEMLocationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationCenter.h; sourceTree = "<group>"; };
 		BFEAA0BA19A578EE002FBD44 /* HEMLocationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationCenter.m; sourceTree = "<group>"; };
 		BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		BFEAA0C119A58137002FBD44 /* NSString+UUID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UUID.h"; sourceTree = "<group>"; };
-		BFEAA0C219A58137002FBD44 /* NSString+UUID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UUID.m"; sourceTree = "<group>"; };
 		BFEAA0C419A65E54002FBD44 /* mapIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapIcon.png; path = images/mapIcon.png; sourceTree = "<group>"; };
 		BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mapIcon@2x.png"; path = "images/mapIcon@2x.png"; sourceTree = "<group>"; };
 		BFEAA0C819A66746002FBD44 /* HEMValueSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMValueSliderView.h; sourceTree = "<group>"; };
@@ -737,8 +734,6 @@
 				BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */,
 				BFEAA0B919A578EE002FBD44 /* HEMLocationCenter.h */,
 				BFEAA0BA19A578EE002FBD44 /* HEMLocationCenter.m */,
-				BFEAA0C119A58137002FBD44 /* NSString+UUID.h */,
-				BFEAA0C219A58137002FBD44 /* NSString+UUID.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -980,7 +975,6 @@
 				BFACC71A19A4282A00FC77EE /* HEMWifiViewController.m in Sources */,
 				8A4B3D5E199534F000856BDE /* HEMMainStoryboard.m in Sources */,
 				BFEAA0A819A51DCF002FBD44 /* HEMWelcomeViewController.m in Sources */,
-				BFEAA0C319A58137002FBD44 /* NSString+UUID.m in Sources */,
 				8A66FC8E199D17C000922ED5 /* HEMHeightPickerViewController.m in Sources */,
 				8A66FC7F199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m in Sources */,
 				8A660123199E9CF9007E6167 /* HEMUserDataCache.m in Sources */,

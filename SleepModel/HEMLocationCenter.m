@@ -7,7 +7,6 @@
 //
 #import <CoreLocation/CoreLocation.h>
 #import "HEMLocationCenter.h"
-#import "NSString+UUID.h"
 
 static NSString* const kHEMLocationErrorDomain = @"is.hello.location";
 
@@ -80,7 +79,7 @@ static NSString* const kHEMLocationErrorDomain = @"is.hello.location";
             *locationError = error;
         }
     } else {
-        uuid = [NSString uuid];
+        uuid = [[NSUUID UUID] UUIDString];
         if (success) {
             [[self successBlocks] setValue:[success copy] forKey:uuid];
         }

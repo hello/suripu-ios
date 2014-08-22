@@ -10,12 +10,12 @@
 
 @interface NSString (Email)
 
-//
-// Simple convenience method to check whether or not this string
-// is a valid email address
-//
-// @return YES if valid email, NO otherwise
-//
+/**
+ * Simple convenience method to check whether or not this string
+ * is a valid email address
+ *
+ * @return YES if valid email, NO otherwise
+ */
 - (BOOL)isValidEmail;
 
 @end

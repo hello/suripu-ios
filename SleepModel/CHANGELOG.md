@@ -1,6 +1,13 @@
 # Changelog
 
-#  1.0.0.8
+## 1.0.0.9
+
+New Stuff:
+
+* Onboarding flow, complete with custom controls!
+* Location storage through onboarding
+
+## 1.0.0.8
 
 Fixes:
 

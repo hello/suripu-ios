@@ -30,7 +30,7 @@
     [super viewDidLoad];
     [self setNeedsStatusBarAppearanceUpdate];
     CGFloat fontSize = [SENSettings timeFormat] == SENTimeFormat12Hour ? 60.f : 90.f;
-    self.alarmTimeLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:fontSize];
+    self.alarmTimeLabel.font = [UIFont fontWithName:@"Agile-Thin" size:fontSize];
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[HelloStyleKit chevronIconLeft] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
 }
 
@@ -90,7 +90,7 @@
     self.alarmTimeLabel.text = currentAlarmTimeText;
 
     NSString* rawText = [NSString stringWithFormat:NSLocalizedString(@"alarm.time-range.format", nil), earliestAlarmTimeText, currentAlarmTimeText];
-    UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Medium" size:14.0];
+    UIFont* emFont = [UIFont fontWithName:@"Agile-Medium" size:14.0];
     NSDictionary* attributes = @{
         @(EMPH) : @{
             NSFontAttributeName : emFont,

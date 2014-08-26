@@ -16,7 +16,7 @@
         CGFloat labelHeight = 14;
         CGFloat labelWidth = ceil(CGRectGetWidth(frame));
         _topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 2, labelWidth, labelHeight)];
-        _topLabel.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:12];
+        _topLabel.font = [UIFont fontWithName:@"Agile-Medium" size:12];
         _topLabel.backgroundColor = [UIColor clearColor];
         _topLabel.textColor = [UIColor whiteColor];
         _topLabel.adjustsFontSizeToFitWidth = YES;
@@ -25,7 +25,7 @@
         [self addSubview:_topLabel];
 
         _bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, labelHeight, labelWidth, labelHeight)];
-        _bottomLabel.font = [UIFont fontWithName:@"HelveticaNeue-Thin" size:12];
+        _bottomLabel.font = [UIFont fontWithName:@"Agile-Thin" size:12];
         _bottomLabel.backgroundColor = [UIColor clearColor];
         _bottomLabel.textColor = [UIColor whiteColor];
         _bottomLabel.adjustsFontSizeToFitWidth = YES;

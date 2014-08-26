@@ -138,7 +138,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
             break;
         }
         if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
-            UIFont* emFont = [UIFont fontWithName:@"HelveticaNeue-Bold" size:11.0];
+            UIFont* emFont = [UIFont fontWithName:@"Agile-Bold" size:11.0];
             NSDictionary* attributes = @{
                 @(EMPH) : @{
                     NSFontAttributeName : emFont,

@@ -1,1 +1,0 @@
-../../SenseKit/Pod/Classes/API/SENAPIClient.h

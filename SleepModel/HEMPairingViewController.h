@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "HEMBaseController.h"
 
-@interface HEMBluetoothViewController : HEMBaseController
+@interface HEMPairingViewController : HEMBaseController
 
 @end

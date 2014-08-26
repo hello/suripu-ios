@@ -1111,7 +1111,7 @@
         <!--Bluetooth View Controller-->
         <scene sceneID="cKk-Qb-F4O">
             <objects>
-                <viewController storyboardIdentifier="bluetoothViewController" id="cgk-PX-LxG" userLabel="Bluetooth View Controller" customClass="HEMBluetoothViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="bluetoothViewController" id="cgk-PX-LxG" userLabel="Bluetooth View Controller" customClass="HEMPairingViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="I6r-jE-jN1"/>
                         <viewControllerLayoutGuide type="bottom" id="rNF-MR-Ds2"/>
@@ -1166,7 +1166,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="pair:" destination="cgk-PX-LxG" eventType="touchUpInside" id="jXZ-1d-3LB"/>
+                                    <action selector="enablePairing:" destination="cgk-PX-LxG" eventType="touchUpInside" id="Kvt-hJ-N0l"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8HN-0C-IaD">

@@ -107,7 +107,7 @@
 		BFACC71619A41CFE00FC77EE /* whitenavbar.png in Resources */ = {isa = PBXBuildFile; fileRef = BFACC71419A41CFE00FC77EE /* whitenavbar.png */; };
 		BFACC71719A41CFE00FC77EE /* whitenavbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFACC71519A41CFE00FC77EE /* whitenavbar@2x.png */; };
 		BFACC71A19A4282A00FC77EE /* HEMWifiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFACC71919A4282A00FC77EE /* HEMWifiViewController.m */; };
-		BFD5643D19A3F31B002E461E /* HEMBluetoothViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMBluetoothViewController.m */; };
+		BFD5643D19A3F31B002E461E /* HEMPairingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMPairingViewController.m */; };
 		BFEAA0A819A51DCF002FBD44 /* HEMWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */; };
 		BFEAA0AB19A52017002FBD44 /* onboardingBackgroundImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0A919A52017002FBD44 /* onboardingBackgroundImage2.png */; };
 		BFEAA0AC19A52017002FBD44 /* onboardingBackgroundImage2@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0AA19A52017002FBD44 /* onboardingBackgroundImage2@2x.png */; };
@@ -281,8 +281,8 @@
 		BFACC71519A41CFE00FC77EE /* whitenavbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whitenavbar@2x.png"; path = "images/whitenavbar@2x.png"; sourceTree = "<group>"; };
 		BFACC71819A4282A00FC77EE /* HEMWifiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiViewController.h; sourceTree = "<group>"; };
 		BFACC71919A4282A00FC77EE /* HEMWifiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWifiViewController.m; sourceTree = "<group>"; };
-		BFD5643B19A3F31B002E461E /* HEMBluetoothViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBluetoothViewController.h; sourceTree = "<group>"; };
-		BFD5643C19A3F31B002E461E /* HEMBluetoothViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBluetoothViewController.m; sourceTree = "<group>"; };
+		BFD5643B19A3F31B002E461E /* HEMPairingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPairingViewController.h; sourceTree = "<group>"; };
+		BFD5643C19A3F31B002E461E /* HEMPairingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPairingViewController.m; sourceTree = "<group>"; };
 		BFEAA0A619A51DCF002FBD44 /* HEMWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWelcomeViewController.h; sourceTree = "<group>"; };
 		BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWelcomeViewController.m; sourceTree = "<group>"; };
 		BFEAA0A919A52017002FBD44 /* onboardingBackgroundImage2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = onboardingBackgroundImage2.png; path = images/onboardingBackgroundImage2.png; sourceTree = "<group>"; };
@@ -457,8 +457,8 @@
 				8A66011F199E9C5B007E6167 /* HEMUserDataIntroViewController.m */,
 				8A66FC9A199D308B00922ED5 /* HEMWeightPickerViewController.h */,
 				8A66FC9B199D308B00922ED5 /* HEMWeightPickerViewController.m */,
-				BFD5643B19A3F31B002E461E /* HEMBluetoothViewController.h */,
-				BFD5643C19A3F31B002E461E /* HEMBluetoothViewController.m */,
+				BFD5643B19A3F31B002E461E /* HEMPairingViewController.h */,
+				BFD5643C19A3F31B002E461E /* HEMPairingViewController.m */,
 				BFACC71819A4282A00FC77EE /* HEMWifiViewController.h */,
 				BFACC71919A4282A00FC77EE /* HEMWifiViewController.m */,
 			);
@@ -1011,7 +1011,7 @@
 				8A90F9BC19637F9400AFD110 /* HEMSleepSoundTableViewController.m in Sources */,
 				8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */,
 				8A66FC88199C3F3900922ED5 /* HEMSensorValuesView.m in Sources */,
-				BFD5643D19A3F31B002E461E /* HEMBluetoothViewController.m in Sources */,
+				BFD5643D19A3F31B002E461E /* HEMPairingViewController.m in Sources */,
 				BFABE75219A2E70A00AB2F0F /* UIView+HEMMotionEffects.m in Sources */,
 				8A4B3D491992CB4500856BDE /* HEMRoundedTextField.m in Sources */,
 				8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */,

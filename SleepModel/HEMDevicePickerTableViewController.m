@@ -14,7 +14,7 @@ static NSString* const pillCellIdentifier = @"pillCell";
 
 @property (nonatomic, strong) NSArray* discoveredDevices;
 @property (nonatomic, strong) NSMutableArray* discoveredDevicesRSSI;
-@property (nonatomic, strong) SENPeripheralManager* deviceManager;
+@property (nonatomic, strong) SENPillManager* deviceManager;
 @property (nonatomic, strong) UIActivityIndicatorView* searchIndicatorView;
 @property (nonatomic, strong) NSIndexPath* selectedDeviceIndexPath;
 @property (nonatomic, getter=isScanningForServices) BOOL scanningForServices;
@@ -161,10 +161,10 @@ static NSString* const pillCellIdentifier = @"pillCell";
         nickname = peripheral.cbPeripheral.name;
     }
 
-    SENDevice* device = [[SENDevice alloc] initWithName:peripheral.cbPeripheral.name nickname:nickname identifier:peripheral.UUIDString];
-    [SENDeviceService addDevice:device];
+    SENPill* device = [[SENPill alloc] initWithName:peripheral.cbPeripheral.name nickname:nickname identifier:peripheral.UUIDString];
+    [SENPillService addDevice:device];
     if (!self.deviceManager || ![self.deviceManager.peripheral isEqual:peripheral])
-        self.deviceManager = [[SENPeripheralManager alloc] initWithPeripheral:peripheral];
+        self.deviceManager = [[SENPillManager alloc] initWithPeripheral:peripheral];
     [self dismissFromView];
 }
 

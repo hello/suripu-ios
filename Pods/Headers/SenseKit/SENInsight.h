@@ -1,0 +1,1 @@
+../../SenseKit/Pod/Classes/Model/SENInsight.h

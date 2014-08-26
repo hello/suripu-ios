@@ -46,7 +46,7 @@ DEPENDENCIES:
   - FCDynamicPanesNavigationController (from `git@github.com:hello/FCDynamicPanesNavigationController.git`)
   - JBChartView (from `git@github.com:hello/JBChartView.git`)
   - Kiwi
-  - SenseKit (from `git@github.com:hello/SenseKit.git`, branch `jimmy/sense-api`)
+  - SenseKit (from `git@github.com:hello/SenseKit.git`)
   - SORelativeDateTransformer
   - SVProgressHUD (from `https://github.com/samvermette/SVProgressHUD.git`, commit `90e5921e0a0a782c7e06dd8d308031041c10f789`)
 
@@ -58,7 +58,6 @@ EXTERNAL SOURCES:
   JBChartView:
     :git: git@github.com:hello/JBChartView.git
   SenseKit:
-    :branch: jimmy/sense-api
     :git: git@github.com:hello/SenseKit.git
   SVProgressHUD:
     :commit: 90e5921e0a0a782c7e06dd8d308031041c10f789

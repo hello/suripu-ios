@@ -699,13 +699,22 @@
                                     <outlet property="delegate" destination="uc7-01-jZi" id="ElR-iZ-e6Q"/>
                                 </connections>
                             </view>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="doubleArrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="9RP-yj-mMV">
+                                <rect key="frame" x="143" y="295" width="35" height="63"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="63" id="guU-n2-n5e"/>
+                                    <constraint firstAttribute="width" constant="35" id="qZK-AX-UhM"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="uXe-Qh-ePF" secondAttribute="centerX" id="2PA-8D-fwL"/>
+                            <constraint firstItem="9RP-yj-mMV" firstAttribute="top" secondItem="Pks-KU-Mi1" secondAttribute="bottom" constant="50" id="7MK-JO-VYZ"/>
                             <constraint firstAttribute="centerX" secondItem="6X3-cZ-M1A" secondAttribute="centerX" id="9Td-J6-2ln"/>
                             <constraint firstAttribute="centerX" secondItem="nEX-5L-qND" secondAttribute="centerX" id="Afn-LU-XxU"/>
                             <constraint firstItem="deH-7E-HFU" firstAttribute="top" secondItem="M0L-MG-dGi" secondAttribute="bottom" constant="44" id="J2U-LZ-uhx"/>
+                            <constraint firstAttribute="centerX" secondItem="9RP-yj-mMV" secondAttribute="centerX" constant="-0.5" id="KDC-xN-yY2"/>
                             <constraint firstAttribute="centerY" secondItem="6X3-cZ-M1A" secondAttribute="centerY" constant="-21" id="MdG-gU-xsg"/>
                             <constraint firstItem="iyM-PD-FTT" firstAttribute="top" secondItem="PKP-T4-cPd" secondAttribute="bottom" constant="8" id="WJJ-GV-qAx"/>
                             <constraint firstAttribute="centerX" secondItem="M0L-MG-dGi" secondAttribute="centerX" constant="-0.5" id="WOd-UZ-BSq"/>
@@ -1220,6 +1229,7 @@
     </scenes>
     <resources>
         <image name="bluetoothLogoImage.png" width="75" height="144"/>
+        <image name="doubleArrow.png" width="35" height="63"/>
         <image name="femaleIcon.png" width="30" height="46"/>
         <image name="maleIcon.png" width="39" height="40"/>
         <image name="mapIcon.png" width="476" height="237"/>

@@ -42,6 +42,11 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
     [self updateConstraint:[self readyVSpaceConstraint] withDiff:diff];
 }
 
+- (void)stopActivity {
+    [[self readyButton] stopActivity];
+    [[self noSenseButton] setEnabled:YES];
+}
+
 #pragma mark - Actions
 
 - (IBAction)enablePairing:(id)sender {
@@ -66,13 +71,11 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
         // TODO (jimmy): what to do when more than 1 sense is detected?
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            [[strongSelf readyButton] stopActivity];
-            [[strongSelf noSenseButton] setEnabled:YES];
-            
             if ([senses count] > 0) {
                 [strongSelf enablePairingMode:[senses firstObject]];
                 DLog(@"sense found, %@", [strongSelf sense]);
             } else {
+                [strongSelf stopActivity];
                 [strongSelf showNoSenseFoundAlert];
             }
         }
@@ -85,6 +88,7 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
 
 - (void)enablePairingMode:(SENSense*)sense {
     if (sense) {
+        __weak typeof(self) weakSelf = self;
         // TODO (jimmy): show next steps, but that requires some design
         // decisions.  will speak with Kevin when he comes in
         [self setSense:sense];
@@ -92,8 +96,16 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
         [[self manager] enablePairingMode:YES
                                   success:^(id response) {
                                       DLog(@"pairing mode on");
+                                      __strong typeof(weakSelf) strongSelf = weakSelf;
+                                      if (strongSelf) {
+                                          [strongSelf stopActivity];
+                                      }
                                   } failure:^(NSError *error) {
                                       DLog(@"failed to enable code");
+                                      __strong typeof(weakSelf) strongSelf = weakSelf;
+                                      if (strongSelf) {
+                                          [strongSelf stopActivity];
+                                      }
                                   }];
     }
 }

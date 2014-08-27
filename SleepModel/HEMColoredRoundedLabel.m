@@ -19,7 +19,7 @@
         _textLabel = [[UILabel alloc] init];
         _textLabel.textAlignment = NSTextAlignmentCenter;
         _textLabel.backgroundColor = [UIColor clearColor];
-        _textLabel.font = [UIFont fontWithName:@"HelveticaNeue" size:18.f];
+        _textLabel.font = [UIFont fontWithName:@"Agile-Light" size:18.f];
         [self addSubview:_textLabel];
         [self.layer insertSublayer:_roundedLayer atIndex:0];
     }

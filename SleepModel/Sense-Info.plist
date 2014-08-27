@@ -24,6 +24,29 @@
 	<string>1.0.0.9</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Agile-Black.otf</string>
+		<string>Agile-BlackItalic.otf</string>
+		<string>Agile-Bold.otf</string>
+		<string>Agile-BoldItalic.otf</string>
+		<string>Agile-Book.otf</string>
+		<string>Agile-BookItalic.otf</string>
+		<string>Agile-Extrabold.otf</string>
+		<string>Agile-ExtraboldItalic.otf</string>
+		<string>Agile-Extralight.otf</string>
+		<string>Agile-ExtralightItalic.otf</string>
+		<string>Agile-Fat.otf</string>
+		<string>Agile-FatItalic.otf</string>
+		<string>Agile-Hairline.otf</string>
+		<string>Agile-HairlineItalic.otf</string>
+		<string>Agile-Light.otf</string>
+		<string>Agile-LightItalic.otf</string>
+		<string>Agile-Medium.otf</string>
+		<string>Agile-MediumItalic.otf</string>
+		<string>Agile-ThinItalic.otf</string>
+		<string>Agile-Thin.otf</string>
+	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

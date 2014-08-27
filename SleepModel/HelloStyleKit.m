@@ -182,7 +182,7 @@ static UIImage* _chevronIconRight = nil;
     NSMutableParagraphStyle* sleepScoreLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"HelveticaNeue-Light" size: 96], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
+    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Agile-Light" size: 96], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
 
     [sleepScoreText drawInRect: CGRectOffset(sleepScoreLabelRect, 0, (CGRectGetHeight(sleepScoreLabelRect) - [sleepScoreText boundingRectWithSize: sleepScoreLabelRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreLabelFontAttributes context: nil].size.height) / 2) withAttributes: sleepScoreLabelFontAttributes];
 
@@ -192,7 +192,7 @@ static UIImage* _chevronIconRight = nil;
     NSMutableParagraphStyle* sleepScoreTextLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreTextLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreTextLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"HelveticaNeue-Light" size: 9.5], NSForegroundColorAttributeName: UIColor.grayColor, NSParagraphStyleAttributeName: sleepScoreTextLabelStyle};
+    NSDictionary* sleepScoreTextLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Agile-Light" size: 9.5], NSForegroundColorAttributeName: UIColor.grayColor, NSParagraphStyleAttributeName: sleepScoreTextLabelStyle};
 
     [sleepScoreLabelText drawInRect: CGRectOffset(sleepScoreTextLabelRect, 0, (CGRectGetHeight(sleepScoreTextLabelRect) - [sleepScoreLabelText boundingRectWithSize: sleepScoreTextLabelRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreTextLabelFontAttributes context: nil].size.height) / 2) withAttributes: sleepScoreTextLabelFontAttributes];
 
@@ -202,7 +202,7 @@ static UIImage* _chevronIconRight = nil;
     NSMutableParagraphStyle* sleepScoreTextLabel2Style = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreTextLabel2Style.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreTextLabel2FontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"HelveticaNeue-Light" size: 9.5], NSForegroundColorAttributeName: UIColor.grayColor, NSParagraphStyleAttributeName: sleepScoreTextLabel2Style};
+    NSDictionary* sleepScoreTextLabel2FontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Agile-Light" size: 9.5], NSForegroundColorAttributeName: UIColor.grayColor, NSParagraphStyleAttributeName: sleepScoreTextLabel2Style};
 
     [sleepScoreDateText drawInRect: CGRectOffset(sleepScoreTextLabel2Rect, 0, (CGRectGetHeight(sleepScoreTextLabel2Rect) - [sleepScoreDateText boundingRectWithSize: sleepScoreTextLabel2Rect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreTextLabel2FontAttributes context: nil].size.height) / 2) withAttributes: sleepScoreTextLabel2FontAttributes];
 }
@@ -260,7 +260,7 @@ static UIImage* _chevronIconRight = nil;
     NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     textStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"HelveticaNeue-Light" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
+    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Agile-Light" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
 
     [sleepScoreText drawInRect: textRect withAttributes: textFontAttributes];
 }

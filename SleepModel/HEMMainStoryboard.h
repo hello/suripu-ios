@@ -24,10 +24,10 @@
 +(UIViewController *)instantiateSleepSoundViewController;
 +(UIViewController *)instantiateCurrentController;
 +(UIViewController *)instantiateAlarmSoundTableViewController;
-+(UIViewController *)instantiateLastNightController;
++(UIViewController *)instantiateSleepGraphController;
 +(UIViewController *)instantiateSleepHistoryController;
 +(UIViewController *)instantiateCurrentNavController;
 +(UIViewController *)instantiateSettingsNavController;
-+(UIViewController *)instantiateLastNightNavController;
++(UIViewController *)instantiateSleepGraphNavController;
 
 @end

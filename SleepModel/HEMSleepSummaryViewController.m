@@ -7,7 +7,7 @@
 #import "HEMSleepHistoryView.h"
 #import "HelloStyleKit.h"
 
-@interface HEMSleepSummaryViewController () <FCDynamicPaneViewController, UIGestureRecognizerDelegate>
+@interface HEMSleepSummaryViewController () <FCDynamicPaneDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
 @property (weak, nonatomic) IBOutlet HEMSleepHistoryView* sleepHistoryView;

@@ -11,6 +11,10 @@
 "sign-up.error.conflict" = "The provided email address is already attached to an account.";
 "sign-up.error.generic" = "Something went wrong. Please try again.";
 
+// pairing with sense
+"pairing.failed.title" = "Paring Failed";
+"pairing.error.sense-not-found" = "Sense was not detected.  Ensure Sense is on and near by your device.";
+
 // location
 "location.error.title" = "Unknown Location";
 "location.error.not-enabled" = "You have denied access to, or disabled, Location Services.  You can change this preference inside the Settings app.";

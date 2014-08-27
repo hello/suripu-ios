@@ -1,7 +1,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface SENDevice : NSObject <NSCoding>
+@interface SENPill : NSObject <NSCoding>
 
 @property (nonatomic, strong, readonly) NSString* identifier;
 @property (nonatomic, strong, readonly) NSString* name;

@@ -1,9 +1,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class SENDevice;
+@class SENPill;
 
-@interface SENDeviceService : NSObject
+@interface SENPillService : NSObject
 
 + (BOOL)hasDevices;
 
@@ -17,21 +17,21 @@
  *
  *  @param device device to add
  */
-+ (void)addDevice:(SENDevice*)device;
++ (void)addDevice:(SENPill*)device;
 
 /**
  *  Remove a given device from the disk store
  *
  *  @param device device to remove
  */
-+ (void)removeDevice:(SENDevice*)device;
++ (void)removeDevice:(SENPill*)device;
 
 /**
  *  Update a cached device with new data
  *
  *  @param device device to update
  */
-+ (void)updateDevice:(SENDevice*)device;
++ (void)updateDevice:(SENPill*)device;
 
 /**
  *  Store a given array of device objects, removing the existing store
@@ -52,6 +52,6 @@
  *
  *  @return a matching device
  */
-+ (SENDevice*)deviceWithIdentifier:(NSString*)identifier;
++ (SENPill*)deviceWithIdentifier:(NSString*)identifier;
 
 @end

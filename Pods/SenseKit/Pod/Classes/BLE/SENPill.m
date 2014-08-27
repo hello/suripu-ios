@@ -1,5 +1,5 @@
 
-#import "SENDevice.h"
+#import "SENPill.h"
 
 static NSString* const IDENTIFIER_KEY = @"identifier";
 static NSString* const NICKNAME_KEY = @"nickname";
@@ -7,7 +7,7 @@ static NSString* const NAME_KEY = @"name";
 static NSString* const RECORDING_KEY = @"recordingData";
 static NSString* const DATE_KEY = @"date";
 
-@implementation SENDevice
+@implementation SENPill
 
 - (instancetype)initWithName:(NSString*)name nickname:(NSString*)nickname identifier:(NSString*)identifier
 {

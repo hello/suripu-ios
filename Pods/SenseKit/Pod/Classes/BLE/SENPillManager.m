@@ -2,9 +2,9 @@
 #import <CoreBluetooth/CoreBluetooth.h>
 #import <LGBluetooth/LGBluetooth.h>
 
-#import "SENPeripheralManager.h"
-#import "SENDeviceService.h"
-#import "SENDevice.h"
+#import "SENPillManager.h"
+#import "SENPillService.h"
+#import "SENPill.h"
 #import "SENDateUtils.h"
 #import "SENPacketUtils.h"
 
@@ -19,12 +19,12 @@ static NSString* const SENDeviceCharacteristicDayDateTime = @"2A0A";
 static NSString* const SENDeviceCharacteristicFFAA = @"FFAA";
 static NSInteger const BLE_MAX_PACKET_SIZE = 20;
 
-@interface SENPeripheralManager ()
+@interface SENPillManager ()
 @property (nonatomic, getter=shouldDisconnectPeripheral) BOOL disconnectPeripheral;
 @property (nonatomic, strong, readwrite) LGPeripheral* peripheral;
 @end
 
-@implementation SENPeripheralManager
+@implementation SENPillManager
 
 - (instancetype)initWithPeripheral:(LGPeripheral*)peripheral
 {
@@ -137,6 +137,7 @@ static NSInteger const BLE_MAX_PACKET_SIZE = 20;
 
 - (void)startDataCollectionWithCompletion:(SENDeviceErrorBlock)completionBlock
 {
+    
     [self toggleDataCollection:YES withCompletion:completionBlock];
 }
 
@@ -292,16 +293,16 @@ static NSInteger const BLE_MAX_PACKET_SIZE = 20;
 
 - (void)updateDeviceWithDataRecordingState:(BOOL)isRecordingData
 {
-    SENDevice* device = [SENDeviceService deviceWithIdentifier:self.peripheral.UUIDString];
+    SENPill* device = [SENPillService deviceWithIdentifier:self.peripheral.UUIDString];
     device.recordingData = isRecordingData;
-    [SENDeviceService updateDevice:device];
+    [SENPillService updateDevice:device];
 }
 
 - (void)updateDeviceWithDate:(NSDate*)date
 {
-    SENDevice* device = [SENDeviceService deviceWithIdentifier:self.peripheral.UUIDString];
+    SENPill* device = [SENPillService deviceWithIdentifier:self.peripheral.UUIDString];
     device.date = date;
-    [SENDeviceService updateDevice:device];
+    [SENPillService updateDevice:device];
 }
 
 #pragma mark Peripheral filtering

@@ -1,17 +1,17 @@
 
-#import "SENDeviceService.h"
-#import "SENDevice.h"
+#import "SENPillService.h"
+#import "SENPill.h"
 
 static NSString* const SENDeviceServiceArchiveKey = @"SENDeviceArchive";
 
-@implementation SENDeviceService
+@implementation SENPillService
 
 + (BOOL)hasDevices
 {
     return [self archivedDevices].count > 0;
 }
 
-+ (void)addDevice:(SENDevice*)device
++ (void)addDevice:(SENPill*)device
 {
     if (!device)
         return;
@@ -22,18 +22,18 @@ static NSString* const SENDeviceServiceArchiveKey = @"SENDeviceArchive";
     }
 }
 
-+ (void)removeDevice:(SENDevice*)device
++ (void)removeDevice:(SENPill*)device
 {
     if (!device)
         return;
-    NSArray* devices = [[self archivedDevices] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(SENDevice* evaluatedObject, NSDictionary* bindings) {
+    NSArray* devices = [[self archivedDevices] filteredArrayUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(SENPill* evaluatedObject, NSDictionary* bindings) {
 
         return ![evaluatedObject.identifier isEqual:device.identifier];
                                                                            }]];
     [self archiveDevices:devices];
 }
 
-+ (void)updateDevice:(SENDevice*)device
++ (void)updateDevice:(SENPill*)device
 {
     if (!device)
         return;
@@ -57,9 +57,9 @@ static NSString* const SENDeviceServiceArchiveKey = @"SENDeviceArchive";
     [NSKeyedArchiver archiveRootObject:devices toFile:[self archivedDevicesPath]];
 }
 
-+ (SENDevice*)deviceWithIdentifier:(NSString*)identifier
++ (SENPill*)deviceWithIdentifier:(NSString*)identifier
 {
-    for (SENDevice* device in [self archivedDevices]) {
+    for (SENPill* device in [self archivedDevices]) {
         if ([[device.identifier uppercaseString] isEqualToString:[identifier uppercaseString]]) {
             return device;
         }

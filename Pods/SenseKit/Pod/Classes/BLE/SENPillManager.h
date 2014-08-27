@@ -14,7 +14,7 @@ extern NSString* const SENDeviceServiceFFA0;
  */
 extern NSString* const SENDeviceManagerDidWriteCurrentTimeNotification;
 
-@interface SENPeripheralManager : NSObject
+@interface SENPillManager : NSObject
 
 - (instancetype)initWithPeripheral:(LGPeripheral*)peripheral;
 

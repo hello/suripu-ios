@@ -1,4 +1,6 @@
 
-#import "SENDevice.h"
-#import "SENDeviceService.h"
-#import "SENPeripheralManager.h"
+#import "SENPill.h"
+#import "SENPillService.h"
+#import "SENPillManager.h"
+#import "SENSense.h"
+#import "SENSenseManager.h"

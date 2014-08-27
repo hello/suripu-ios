@@ -40,6 +40,7 @@
 		8A4B3D51199308BB00856BDE /* wifiLogoImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */; };
 		8A4B3D5E199534F000856BDE /* HEMMainStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5A199534F000856BDE /* HEMMainStoryboard.m */; };
 		8A4B3D5F199534F000856BDE /* HEMOnboardingStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */; };
+		8A54029F19AE299B00FC6085 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A54029E19AE299B00FC6085 /* Crashlytics.framework */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
 		8A660120199E9C5B007E6167 /* HEMUserDataIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66011F199E9C5B007E6167 /* HEMUserDataIntroViewController.m */; };
 		8A660123199E9CF9007E6167 /* HEMUserDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A660122199E9CF9007E6167 /* HEMUserDataCache.m */; };
@@ -217,6 +218,7 @@
 		8A4B3D5A199534F000856BDE /* HEMMainStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMainStoryboard.m; sourceTree = "<group>"; };
 		8A4B3D5B199534F000856BDE /* HEMOnboardingStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingStoryboard.h; sourceTree = "<group>"; };
 		8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingStoryboard.m; sourceTree = "<group>"; };
+		8A54029E19AE299B00FC6085 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		8A59F631198C16050005B000 /* HEMSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSignUpViewController.h; sourceTree = "<group>"; };
 		8A59F632198C16050005B000 /* HEMSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignUpViewController.m; sourceTree = "<group>"; };
 		8A66011E199E9C5B007E6167 /* HEMUserDataIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUserDataIntroViewController.h; sourceTree = "<group>"; };
@@ -398,6 +400,7 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
+				8A54029F19AE299B00FC6085 /* Crashlytics.framework in Frameworks */,
 				2109C3418ADD4BA6824507C6 /* libPods.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -440,6 +443,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				8A54029E19AE299B00FC6085 /* Crashlytics.framework */,
 				BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
@@ -932,6 +936,7 @@
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
 				352ECF48FC214905A51E01BC /* Copy Pods Resources */,
+				8A54029D19AE296200FC6085 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -1125,6 +1130,20 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		8A54029D19AE296200FC6085 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "./Crashlytics.framework/run f464ccd280d3e5730dcdaa9b64d1d108694ee9a9 35f0d55941e354ab4a649263be6989de4091964ef497cac0f540e85e6fa471ee";
 			showEnvVarsInLog = 0;
 		};
 		C2DAFDFE628B4AE1A8B7C294 /* Copy Pods Resources */ = {
@@ -1365,6 +1384,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SleepModel/Sense-Prefix.pch";
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
@@ -1384,6 +1407,10 @@
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "SleepModel/Sense-Prefix.pch";
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";

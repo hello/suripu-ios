@@ -2,6 +2,7 @@
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENSensor.h>
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
+#import <Crashlytics/Crashlytics.h>
 
 #import "HEMAppDelegate.h"
 #import "HEMSleepSummaryPageViewController.h"
@@ -18,6 +19,9 @@
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];
+#ifndef DEBUG
+    [Crashlytics startWithAPIKey:@"f464ccd280d3e5730dcdaa9b64d1d108694ee9a9"];
+#endif
     return YES;
 }
 
@@ -41,7 +45,7 @@
     UINavigationController* navController = (UINavigationController*)((FCDynamicPane*)[dynamicPanesController.viewControllers firstObject]).viewController;
     [navController popToRootViewControllerAnimated:NO];
     [dynamicPanesController popViewControllerAnimated:animated];
-    
+
     UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
     UIViewController* rootController = [onboardingStoryboard instantiateInitialViewController];
     [dynamicPanesController presentViewController:rootController animated:animated completion:NULL];

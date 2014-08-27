@@ -479,10 +479,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="59R-yf-Q1G">
-                                <rect key="frame" x="23" y="76" width="274" height="116"/>
+                                <rect key="frame" x="23" y="76" width="274" height="111"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="274" id="UXh-uI-uya"/>
-                                    <constraint firstAttribute="height" constant="116" id="h8k-W4-awK"/>
+                                    <constraint firstAttribute="height" constant="111" id="h8k-W4-awK"/>
                                 </constraints>
                                 <attributedString key="attributedText">
                                     <fragment content="To get an accurate picture of the quality of your sleep, we'll need more info about you, like your age, weight, or height.">
@@ -496,7 +496,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nkf-eQ-SM0" customClass="HEMActionButton">
-                                <rect key="frame" x="101" y="464" width="119" height="40"/>
+                                <rect key="frame" x="100" y="484" width="119" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="h7l-hz-ffA"/>
                                     <constraint firstAttribute="width" constant="119" id="ydw-nQ-dRs"/>
@@ -511,7 +511,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcC-x2-B8z">
-                                <rect key="frame" x="96" y="516" width="128" height="28"/>
+                                <rect key="frame" x="96" y="530" width="128" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="128" id="oHK-QY-0ax"/>
                                     <constraint firstAttribute="height" constant="28" id="vLy-Vh-MyN"/>
@@ -530,13 +530,13 @@
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="xGH-1d-jkJ" secondAttribute="centerX" id="Cai-vw-klD"/>
                             <constraint firstAttribute="centerX" secondItem="45s-Pz-c3A" secondAttribute="centerX" id="QZV-8N-8QG"/>
-                            <constraint firstItem="bQ4-fe-iRl" firstAttribute="top" secondItem="Nkf-eQ-SM0" secondAttribute="bottom" constant="64" id="Ssg-RG-yaZ"/>
                             <constraint firstItem="59R-yf-Q1G" firstAttribute="top" secondItem="45s-Pz-c3A" secondAttribute="bottom" constant="14" id="V2G-3g-np9"/>
+                            <constraint firstAttribute="centerX" secondItem="Nkf-eQ-SM0" secondAttribute="centerX" constant="0.5" id="V7G-FM-eG5"/>
+                            <constraint firstItem="bQ4-fe-iRl" firstAttribute="top" secondItem="vcC-x2-B8z" secondAttribute="bottom" constant="10" id="VTH-gt-80u"/>
                             <constraint firstAttribute="centerX" secondItem="59R-yf-Q1G" secondAttribute="centerX" id="aBB-YW-0mZ"/>
+                            <constraint firstAttribute="centerX" secondItem="vcC-x2-B8z" secondAttribute="centerX" id="dTC-MG-As0"/>
                             <constraint firstItem="45s-Pz-c3A" firstAttribute="top" secondItem="DDQ-wG-B8c" secondAttribute="bottom" constant="8" id="ehG-nc-URj"/>
-                            <constraint firstAttribute="centerX" secondItem="vcC-x2-B8z" secondAttribute="centerX" id="gbO-6L-HGb"/>
-                            <constraint firstAttribute="centerX" secondItem="Nkf-eQ-SM0" secondAttribute="centerX" constant="-0.5" id="ikV-qx-0lL"/>
-                            <constraint firstItem="vcC-x2-B8z" firstAttribute="top" secondItem="Nkf-eQ-SM0" secondAttribute="bottom" constant="12" id="nCK-yq-uWN"/>
+                            <constraint firstItem="bQ4-fe-iRl" firstAttribute="top" secondItem="Nkf-eQ-SM0" secondAttribute="bottom" constant="44" id="kOG-si-7Yz"/>
                             <constraint firstAttribute="centerY" secondItem="xGH-1d-jkJ" secondAttribute="centerY" constant="-10" id="s43-O5-Gem"/>
                         </constraints>
                     </view>
@@ -544,7 +544,6 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="bgImageView" destination="xGH-1d-jkJ" id="Zpt-87-QyX"/>
-                        <outlet property="goButtonBotSpaceConstraint" destination="Ssg-RG-yaZ" id="Pg3-Hj-i4c"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9wc-7i-qfp" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1111,11 +1110,127 @@
                     <connections>
                         <outlet property="locationButton" destination="Sdf-8C-14E" id="amY-FG-Snl"/>
                         <outlet property="skipButton" destination="SVC-vN-68T" id="uU0-2Z-vGM"/>
+                        <segue destination="51x-x3-qVm" kind="push" identifier="next" id="7R6-5C-JKc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IpC-eY-cSk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4441" y="1226"/>
+        </scene>
+        <!--Sleep QuestionFYI View Controller-->
+        <scene sceneID="OXX-v8-SMA">
+            <objects>
+                <viewController id="51x-x3-qVm" customClass="HEMSleepQuestionFYIViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cQu-gD-PYX"/>
+                        <viewControllerLayoutGuide type="bottom" id="aav-CX-AnH"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="S7X-MY-swD">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense learns" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aBF-6d-YUy">
+                                <rect key="frame" x="23" y="28" width="274" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="GYI-z9-mNP"/>
+                                    <constraint firstAttribute="width" constant="274" id="IdA-zA-Q18"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
+                                <color key="textColor" red="0.25882352939999997" green="0.25882352939999997" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="phoneWithEmoticons.png" translatesAutoresizingMaskIntoConstraints="NO" id="ZLl-tn-bOG">
+                                <rect key="frame" x="65" y="324" width="191" height="244"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="244" id="OAK-kb-wsL"/>
+                                    <constraint firstAttribute="width" constant="191" id="PDU-Dy-DZj"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OQa-Fj-ztF" customClass="HEMActionButton">
+                                <rect key="frame" x="100" y="484" width="119" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="119" id="0oH-je-GyD"/>
+                                    <constraint firstAttribute="height" constant="40" id="Ef4-gM-ZPB"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="Okay">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="okay:" destination="51x-x3-qVm" eventType="touchUpInside" id="Vjl-cN-xKE"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="UgB-Qw-jcX">
+                                <rect key="frame" x="23" y="70" width="274" height="130"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="ZCU-2b-axL"/>
+                                    <constraint firstAttribute="width" constant="274" id="kWS-7A-Pfa"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment>
+                                        <string key="content">From time to time, Sense will ask you a question about your sleep.  Over time, Morpheus get's to know you better, and uses this data to determine precisely your</string>
+                                        <attributes>
+                                            <color key="NSColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="15" name="HelveticaNeue-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" ">
+                                        <attributes>
+                                            <color key="NSColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="11" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="Comfort Zone">
+                                        <attributes>
+                                            <color key="NSColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="15" name="HelveticaNeue-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content=" ">
+                                        <attributes>
+                                            <color key="NSColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="17" name="HelveticaNeue"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2"/>
+                                        </attributes>
+                                    </fragment>
+                                    <fragment content="- that is, the conditions under which you sleep best.">
+                                        <attributes>
+                                            <color key="NSColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="15" name="HelveticaNeue-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.2"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="UgB-Qw-jcX" secondAttribute="centerX" id="245-YF-JcB"/>
+                            <constraint firstItem="UgB-Qw-jcX" firstAttribute="top" secondItem="aBF-6d-YUy" secondAttribute="bottom" constant="8" id="3hX-XP-Ek8"/>
+                            <constraint firstItem="aav-CX-AnH" firstAttribute="top" secondItem="OQa-Fj-ztF" secondAttribute="bottom" constant="44" id="H20-6m-woO"/>
+                            <constraint firstAttribute="centerX" secondItem="aBF-6d-YUy" secondAttribute="centerX" id="etB-rd-pFd"/>
+                            <constraint firstItem="aBF-6d-YUy" firstAttribute="top" secondItem="cQu-gD-PYX" secondAttribute="bottom" constant="8" id="fuN-Ku-bla"/>
+                            <constraint firstAttribute="centerX" secondItem="OQa-Fj-ztF" secondAttribute="centerX" constant="0.5" id="jOJ-mU-wmH"/>
+                            <constraint firstAttribute="centerX" secondItem="ZLl-tn-bOG" secondAttribute="centerX" constant="-0.5" id="jl8-em-xix"/>
+                            <constraint firstItem="aav-CX-AnH" firstAttribute="top" secondItem="ZLl-tn-bOG" secondAttribute="bottom" id="l5y-dB-kSU"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="ohh-sa-9m0"/>
+                    <connections>
+                        <outlet property="bgImageView" destination="ZLl-tn-bOG" id="AQy-Lo-rbS"/>
+                        <outlet property="fyiLabel" destination="UgB-Qw-jcX" id="E7H-Gg-W0k"/>
+                        <outlet property="okayButton" destination="OQa-Fj-ztF" id="CeR-je-kJE"/>
+                        <outlet property="titleLabel" destination="aBF-6d-YUy" id="ghG-Xn-t7s"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wAu-h6-XSN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4870" y="1227"/>
         </scene>
         <!--Bluetooth View Controller-->
         <scene sceneID="cKk-Qb-F4O">
@@ -1235,6 +1350,7 @@
         <image name="mapIcon.png" width="476" height="237"/>
         <image name="onboardingBackgroundImage1.png" width="350" height="587"/>
         <image name="onboardingBackgroundImage2.png" width="350" height="576"/>
+        <image name="phoneWithEmoticons.png" width="191" height="244"/>
         <image name="wifiLogoImage.png" width="182" height="129"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

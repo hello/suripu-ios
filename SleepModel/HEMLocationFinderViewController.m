@@ -23,7 +23,7 @@
 
 - (void)finish {
     [self uploadCollectedData];
-    [self dismissDataCollectionFlow];
+    [self next];
 }
 
 - (void)showActivity {
@@ -71,18 +71,11 @@
 - (IBAction)skipRequestingLocation:(id)sender
 {
     [self uploadCollectedData];
-    [self dismissDataCollectionFlow];
+    [self next];
 }
 
-- (void)dismissDataCollectionFlow
-{
-    for (UIViewController* viewController in self.navigationController.viewControllers) {
-        if ([viewController isKindOfClass:[HEMSettingsTableViewController class]]) {
-            [self.navigationController popToViewController:viewController animated:YES];
-            return;
-        }
-    }
-    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+- (void)next {
+    [self performSegueWithIdentifier:@"next" sender:self];
 }
 
 - (void)uploadCollectedData

@@ -94,6 +94,8 @@
 #pragma mark - Sign Up
 
 - (void)signup {
+//    UIViewController* bluetoothController = [HEMOnboardingStoryboard instantiateBluetoothViewController];
+//    [[self navigationController] setViewControllers:@[bluetoothController] animated:YES];
     NSString* emailAddress = self.emailAddressField.text;
     NSString* password = self.passwordField.text;
     

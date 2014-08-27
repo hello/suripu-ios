@@ -10,9 +10,15 @@
 
 
 
-
+/** Segue Identifiers */
++(NSString *)signupSegueIdentifier;
++(NSString *)setupSegueIdentifier;
++(NSString *)moreSegueIdentifier;
++(NSString *)skipSegueIdentifier;
++(NSString *)wifiSegueIdentifier;
 
 /** View Controllers */
++(UIViewController *)instantiateWelcomeViewController;
 +(UIViewController *)instantiateSignUpViewController;
 +(UIViewController *)instantiateAgeViewController;
 +(UIViewController *)instantiateWifiViewController;

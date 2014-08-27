@@ -204,9 +204,10 @@ static UIFont* HEMSensorViewRegularFont;
     NSString* toolTipText = value == 0
                                 ? NSLocalizedString(@"graph-data.unavailable.short", nil)
                                 : [SENSensor formatValue:@(value) withUnit:self.sensor.unit];
+    NSTimeInterval timeInterval = ([dataPoint[@"datetime"] doubleValue] / 1000) + ([dataPoint[@"offset_millis"] doubleValue] / 1000);
     [self setTooltipVisible:YES animated:YES atTouchPoint:touchPoint];
     [self.tooltipView setTitleText:toolTipText];
-    [self.tooltipView setDetailText:[[SORelativeDateTransformer registeredTransformer] transformedValue:[NSDate dateWithTimeIntervalSince1970:([dataPoint[@"datetime"] floatValue] / 1000)]]];
+    [self.tooltipView setDetailText:[[SORelativeDateTransformer registeredTransformer] transformedValue:[NSDate dateWithTimeIntervalSince1970:timeInterval]]];
 }
 
 - (void)didUnselectLineInLineChartView:(JBLineChartView*)lineChartView

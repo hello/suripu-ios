@@ -201,7 +201,8 @@
         UIViewController* viewController = pane.viewController;
         if (viewController == self
             || ([viewController isKindOfClass:[UINavigationController class]] && [[(UINavigationController*)viewController viewControllers] containsObject:self])
-            || ([viewController isKindOfClass:[UIPageViewController class]] && [[(UIPageViewController*)viewController viewControllers] containsObject:self])) {
+            || ([viewController isKindOfClass:[UIPageViewController class]] && [[(UIPageViewController*)viewController viewControllers] containsObject:self])
+            || [[viewController childViewControllers] containsObject:self]) {
             return pane.panGestureRecognizer;
         }
     }

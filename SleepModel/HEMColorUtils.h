@@ -13,6 +13,15 @@
     withIntensityLevel:(CGFloat)level;
 
 /**
+ * Configures a dynimically-colored gradient layer with a brightness and
+ * saturation value that varies based on the hour of the day
+ *
+ * @param gradient: the gradient layer to configure
+ * @param hour: hour of the day
+ */
++ (void)configureLayer:(CAGradientLayer*)gradient forHourOfDay:(NSInteger)hour;
+
+/**
  *  Returns the corresponding color style for the depth of sleep between
  *  0 (awake) and 3 (deep sleep)
  *

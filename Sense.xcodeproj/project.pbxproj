@@ -47,7 +47,6 @@
 		8A66013A199EBF87007E6167 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = 8A660138199EBF87007E6167 /* CHANGELOG.md */; };
 		8A66013B199EBF87007E6167 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8A660139199EBF87007E6167 /* README.md */; };
 		8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */; };
-		8A66FC7F199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC7E199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m */; };
 		8A66FC82199BE94100922ED5 /* HEMColoredRoundedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC81199BE94100922ED5 /* HEMColoredRoundedLabel.m */; };
 		8A66FC85199C035500922ED5 /* HEMMiniSleepHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC84199C035500922ED5 /* HEMMiniSleepHistoryView.m */; };
 		8A66FC8B199D115D00922ED5 /* HEMAgePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC8A199D115D00922ED5 /* HEMAgePickerViewController.m */; };
@@ -144,6 +143,8 @@
 		BFACC71619A41CFE00FC77EE /* whitenavbar.png in Resources */ = {isa = PBXBuildFile; fileRef = BFACC71419A41CFE00FC77EE /* whitenavbar.png */; };
 		BFACC71719A41CFE00FC77EE /* whitenavbar@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFACC71519A41CFE00FC77EE /* whitenavbar@2x.png */; };
 		BFACC71A19A4282A00FC77EE /* HEMWifiViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFACC71919A4282A00FC77EE /* HEMWifiViewController.m */; };
+		BFAE0B1119AE3B790021EC0D /* HEMSlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAE0B1019AE3B790021EC0D /* HEMSlideViewController.m */; };
+		BFAE0B1419AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAE0B1319AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m */; };
 		BFD5643D19A3F31B002E461E /* HEMPairingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMPairingViewController.m */; };
 		BFEAA0A819A51DCF002FBD44 /* HEMWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */; };
 		BFEAA0AB19A52017002FBD44 /* onboardingBackgroundImage2.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0A919A52017002FBD44 /* onboardingBackgroundImage2.png */; };
@@ -229,8 +230,6 @@
 		8A660139199EBF87007E6167 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		8A66FC7A199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryPagingDataSource.h; sourceTree = "<group>"; };
 		8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryPagingDataSource.m; sourceTree = "<group>"; };
-		8A66FC7D199BE3E800922ED5 /* HEMSleepSummaryPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryPageViewController.h; sourceTree = "<group>"; };
-		8A66FC7E199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryPageViewController.m; sourceTree = "<group>"; };
 		8A66FC80199BE94100922ED5 /* HEMColoredRoundedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMColoredRoundedLabel.h; sourceTree = "<group>"; };
 		8A66FC81199BE94100922ED5 /* HEMColoredRoundedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMColoredRoundedLabel.m; sourceTree = "<group>"; };
 		8A66FC83199C035500922ED5 /* HEMMiniSleepHistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMiniSleepHistoryView.h; sourceTree = "<group>"; };
@@ -364,6 +363,11 @@
 		BFACC71519A41CFE00FC77EE /* whitenavbar@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "whitenavbar@2x.png"; path = "images/whitenavbar@2x.png"; sourceTree = "<group>"; };
 		BFACC71819A4282A00FC77EE /* HEMWifiViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiViewController.h; sourceTree = "<group>"; };
 		BFACC71919A4282A00FC77EE /* HEMWifiViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWifiViewController.m; sourceTree = "<group>"; };
+		BFAE0B0F19AE3B790021EC0D /* HEMSlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSlideViewController.h; sourceTree = "<group>"; };
+		BFAE0B1019AE3B790021EC0D /* HEMSlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSlideViewController.m; sourceTree = "<group>"; };
+		BFAE0B1219AE57FA0021EC0D /* HEMSleepSummarySlideViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummarySlideViewController.h; sourceTree = "<group>"; };
+		BFAE0B1319AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummarySlideViewController.m; sourceTree = "<group>"; };
+		BFB5611019AE7C9000A44B9F /* HEMSlideViewController+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HEMSlideViewController+Protected.h"; sourceTree = "<group>"; };
 		BFD5643B19A3F31B002E461E /* HEMPairingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPairingViewController.h; sourceTree = "<group>"; };
 		BFD5643C19A3F31B002E461E /* HEMPairingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPairingViewController.m; sourceTree = "<group>"; };
 		BFEAA0A619A51DCF002FBD44 /* HEMWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWelcomeViewController.h; sourceTree = "<group>"; };
@@ -652,10 +656,10 @@
 				8AA8D93919AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m */,
 				8AC49F881981A89D00C2BD63 /* HEMSleepHistoryViewController.h */,
 				8AC49F891981A89D00C2BD63 /* HEMSleepHistoryViewController.m */,
-				8A66FC7D199BE3E800922ED5 /* HEMSleepSummaryPageViewController.h */,
-				8A66FC7E199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m */,
 				8A66FC7A199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.h */,
 				8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */,
+				BFAE0B1219AE57FA0021EC0D /* HEMSleepSummarySlideViewController.h */,
+				BFAE0B1319AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -916,6 +920,9 @@
 				BFEAA0CE19A6D9F8002FBD44 /* HEMBaseController+Protected.h */,
 				BFEAA0B319A55E01002FBD44 /* UIViewController+Keyboard.h */,
 				BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */,
+				BFAE0B0F19AE3B790021EC0D /* HEMSlideViewController.h */,
+				BFAE0B1019AE3B790021EC0D /* HEMSlideViewController.m */,
+				BFB5611019AE7C9000A44B9F /* HEMSlideViewController+Protected.h */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1170,11 +1177,11 @@
 				8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */,
 				6003F59E195388D20070C39A /* HEMAppDelegate.m in Sources */,
 				8A660120199E9C5B007E6167 /* HEMUserDataIntroViewController.m in Sources */,
+				BFAE0B1119AE3B790021EC0D /* HEMSlideViewController.m in Sources */,
 				8A782683196B4729002882A1 /* HEMGraphTooltipView.m in Sources */,
 				8A66FC82199BE94100922ED5 /* HEMColoredRoundedLabel.m in Sources */,
 				8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */,
 				BF5E445319AD4B3900278A2F /* HEMSleepQuestionFYIViewController.m in Sources */,
-				8A27818419A29100007A214D /* HEMSleepDataDetailView.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
 				BFACC71A19A4282A00FC77EE /* HEMWifiViewController.m in Sources */,
 				BFEAA0CD19A6D9E6002FBD44 /* HEMBaseController.m in Sources */,
@@ -1183,7 +1190,6 @@
 				8AA8D94019AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m in Sources */,
 				8AA8D93719ABE76C00349FD0 /* HEMSensorDataHeaderClockContainerView.m in Sources */,
 				8A66FC8E199D17C000922ED5 /* HEMHeightPickerViewController.m in Sources */,
-				8A66FC7F199BE3E800922ED5 /* HEMSleepSummaryPageViewController.m in Sources */,
 				8A660123199E9CF9007E6167 /* HEMUserDataCache.m in Sources */,
 				8AC4A05B198ACE4800C2BD63 /* HEMSensorGraphDataSource.m in Sources */,
 				8AC49F9F19832D2600C2BD63 /* HEMDevicePickerTableViewController.m in Sources */,
@@ -1212,6 +1218,7 @@
 				BFABE75219A2E70A00AB2F0F /* UIView+HEMMotionEffects.m in Sources */,
 				8A4B3D491992CB4500856BDE /* HEMRoundedTextField.m in Sources */,
 				8A1743BB19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m in Sources */,
+				BFAE0B1419AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m in Sources */,
 				8A1743CA19A8170C001E3C15 /* HEMLinedCollectionViewCell.m in Sources */,
 				8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */,
 				8A90F9AC196350D200AFD110 /* HelloStyleKit.m in Sources */,
@@ -1370,7 +1377,7 @@
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Sense;
-				PROVISIONING_PROFILE = "5f30cfec-e3fa-4c25-8d7e-076b0a5e03a4";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1389,7 +1396,7 @@
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Sense;
-				PROVISIONING_PROFILE = "5f30cfec-e3fa-4c25-8d7e-076b0a5e03a4";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

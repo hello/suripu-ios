@@ -67,16 +67,10 @@
         [self.view.layer insertSublayer:self.gradientLayer atIndex:0];
     }
     NSInteger hour = [SENAlarm savedAlarm].hour;
-    CGFloat intensity = 0;
-    if (hour < 12) {
-        intensity = hour / 11.f;
-    } else {
-        intensity = (23 - hour) / 12.f;
-    }
 //    intensity += [SENAlarm savedAlarm].minute * 0.000005;
     CGFloat y = (self.edgesForExtendedLayout & UIRectEdgeTop) ? -(CGRectGetHeight(self.navigationController.navigationBar.frame) + CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame])) : 0;
     self.gradientLayer.frame = CGRectMake(0, y, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
-    [HEMColorUtils configureLayer:self.gradientLayer withIntensityLevel:intensity];
+    [HEMColorUtils configureLayer:self.gradientLayer forHourOfDay:hour];
 }
 
 - (void)updateViewWithAlarmSettings

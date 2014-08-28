@@ -21,6 +21,16 @@
     gradient.locations = @[ @0, @1, @1 ];
 }
 
++ (void)configureLayer:(CAGradientLayer*)gradient forHourOfDay:(NSInteger)hour {
+    CGFloat intensity = 0;
+    if (hour < 12) {
+        intensity = hour / 11.f;
+    } else {
+        intensity = (23 - hour) / 12.f;
+    }
+    [self configureLayer:gradient withIntensityLevel:intensity];
+}
+
 + (UIColor*)colorForSleepDepth:(NSUInteger)sleepDepth
 {
     switch (sleepDepth) {

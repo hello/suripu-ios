@@ -4,8 +4,9 @@
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 
 #import "HEMAppDelegate.h"
-#import "HEMSleepSummaryPageViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSleepSummarySlideViewController.h"
+#import "HEMSleepGraphCollectionViewController.h"
 
 @interface HEMAppDelegate ()
 
@@ -58,11 +59,12 @@
 - (void)createAndShowWindow
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
+    
     NSArray* viewControllers = @[
         [HEMMainStoryboard instantiateCurrentNavController],
-        [[HEMSleepSummaryPageViewController alloc] init]
+        [[HEMSleepSummarySlideViewController alloc] init]
     ];
+
     FCDynamicPanesNavigationController* dynamicPanes = [[FCDynamicPanesNavigationController alloc] initWithViewControllers:viewControllers];
     self.window.rootViewController = dynamicPanes;
     [self.window makeKeyAndVisible];

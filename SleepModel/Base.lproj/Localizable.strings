@@ -105,6 +105,7 @@
 "sleep-history.depth.light" = "Light sleep";
 "sleep-history.depth.medium" = "Medium sleep";
 "sleep-history.depth.deep" = "Deep sleep";
+"sleep-history.no-data" = "There is no information available about the selected date.";
 
 // actions
 "actions.cancel" = "Cancel";

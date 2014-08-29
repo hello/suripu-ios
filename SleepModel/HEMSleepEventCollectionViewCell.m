@@ -10,7 +10,7 @@
 
 - (void)setExpanded:(BOOL)expanded
 {
-    self.eventMessageLabel.hidden = !(_expanded = expanded);
+    self.eventMessageLabel.hidden = self.playButton.hidden = !(_expanded = expanded);
     [self setNeedsDisplay];
     [self setNeedsLayout];
 }

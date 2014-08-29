@@ -2,6 +2,7 @@
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <SenseKit/SENSettings.h>
 #import <SenseKit/SENSensor.h>
+
 #import "HEMSleepGraphCollectionViewController.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepSegmentCollectionViewCell.h"
@@ -21,17 +22,19 @@
 
 @implementation HEMSleepGraphCollectionViewController
 
-static CGFloat const HEMSleepHistoryViewSensorViewHeight = 65.f;
-static CGFloat const HEMSleepHistoryViewEventMinimumHeight = 55.f;
-static CGFloat const HEMSleepHistoryViewEventMaximumHeight = 95.f;
-static CGFloat const HEMSleepHistoryViewNumberOfHoursOnscreen = 4.f;
 static CGFloat const HEMSleepSummaryCellHeight = 300.f;
+static CGFloat const HEMSleepHistoryGraphViewHeight = 260.f;
+static CGFloat const HEMSleepGraphCollectionViewSensorViewHeight = 65.f;
+static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 55.f;
+static CGFloat const HEMSleepGraphCollectionViewEventLightHeight = 95.f;
+static CGFloat const HEMSleepGraphCollectionViewEventMaximumHeight = 165.f;
+static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
-                                                                        sleepData:[HEMFakeDataGenerator sleepDataForDate:self.dateForNightOfSleep]];
+                                                                                  sleepData:[HEMFakeDataGenerator sleepDataForDate:self.dateForNightOfSleep]];
     self.collectionView.dataSource = self.dataSource;
     self.collectionView.delegate = self;
     self.collectionView.collectionViewLayout = [HEMSleepGraphCollectionViewFlowLayout new];
@@ -132,21 +135,25 @@ static CGFloat const HEMSleepSummaryCellHeight = 300.f;
     case HEMSleepGraphCollectionViewSegmentSection: {
         NSDictionary* sleepData = [self.dataSource sleepSegmentForIndexPath:indexPath];
 
-        CGFloat durationHeight = ([sleepData[@"duration"] doubleValue] / 1000 / 3600) * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepHistoryViewNumberOfHoursOnscreen);
+        CGFloat durationHeight = ([sleepData[@"duration"] doubleValue] / 1000 / 3600) * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
         if ([sleepData[@"type"] isEqualToString:@"none"]) {
             return CGSizeMake(width, durationHeight);
         } else {
             if ([self.dataSource eventCellAtIndexPathIsExpanded:indexPath]) {
-                return CGSizeMake(width, HEMSleepHistoryViewEventMaximumHeight);
+                if ([sleepData[@"type"] isEqualToString:@"noise"]) {
+                    return CGSizeMake(width, HEMSleepGraphCollectionViewEventMaximumHeight);
+                }
+                return CGSizeMake(width, HEMSleepGraphCollectionViewEventLightHeight);
             } else {
-                return CGSizeMake(width, MAX(durationHeight, HEMSleepHistoryViewEventMinimumHeight));
+                return CGSizeMake(width, MAX(durationHeight, HEMSleepGraphCollectionViewEventMinimumHeight));
             }
         }
     }
 
     case HEMSleepGraphCollectionViewHistorySection:
+        return CGSizeMake(width, HEMSleepHistoryGraphViewHeight);
     default:
-        return CGSizeMake(width, HEMSleepHistoryViewEventMinimumHeight);
+        return CGSizeMake(width, HEMSleepGraphCollectionViewEventMinimumHeight);
     }
 }
 
@@ -159,7 +166,7 @@ static CGFloat const HEMSleepSummaryCellHeight = 300.f;
 {
     switch (section) {
     case HEMSleepGraphCollectionViewSegmentSection:
-        return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMSleepHistoryViewSensorViewHeight);
+        return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMSleepGraphCollectionViewSensorViewHeight);
 
     default:
         return CGSizeZero;

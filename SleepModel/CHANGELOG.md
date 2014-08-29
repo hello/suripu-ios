@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.0.10
+
+Fixes:
+
+* Historical sensor data should be in the correct timezone
+
+New Stuff:
+
+* Smooth and animated transition between sleep data timelines, similar to the Chrome app
+* Make sleep timeline text bigger and sleep events expandable
+* New font
+
 ## 1.0.0.9
 
 New Stuff:

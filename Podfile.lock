@@ -37,7 +37,11 @@ PODS:
     - FXKeychain
   - SenseKit/BLE (0.1.0):
     - LGBluetooth
+    - SHSProtoBuf
   - SenseKit/Model (0.1.0)
+  - SHSProtoBuf (0.9):
+    - SHSProtoBuf/non-arc
+  - SHSProtoBuf/non-arc (0.9)
   - SORelativeDateTransformer (1.1.10)
   - SVProgressHUD (1.0)
 
@@ -46,7 +50,8 @@ DEPENDENCIES:
   - FCDynamicPanesNavigationController (from `git@github.com:hello/FCDynamicPanesNavigationController.git`)
   - JBChartView (from `git@github.com:hello/JBChartView.git`)
   - Kiwi
-  - SenseKit (from `git@github.com:hello/SenseKit.git`)
+  - SenseKit (from `../SenseKit`)
+  - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
   - SORelativeDateTransformer
   - SVProgressHUD (from `https://github.com/samvermette/SVProgressHUD.git`, commit `90e5921e0a0a782c7e06dd8d308031041c10f789`)
 
@@ -58,7 +63,9 @@ EXTERNAL SOURCES:
   JBChartView:
     :git: git@github.com:hello/JBChartView.git
   SenseKit:
-    :git: git@github.com:hello/SenseKit.git
+    :path: ../SenseKit
+  SHSProtoBuf:
+    :git: git@github.com:hello/protobuf-objc.git
   SVProgressHUD:
     :commit: 90e5921e0a0a782c7e06dd8d308031041c10f789
     :git: https://github.com/samvermette/SVProgressHUD.git
@@ -72,7 +79,8 @@ SPEC CHECKSUMS:
   JBChartView: 3f979441a6a41e50b7c4b98f91b256bf33625c2d
   Kiwi: 54bece5b35564d9b8e03c608d926f1a22fcfc589
   LGBluetooth: 00f37b8c29cccc1dd44d5f726b2ec4a6e91c74ec
-  SenseKit: 3c11c765efb6e0213d08cc9268b0a27b123a2d59
+  SenseKit: ba88776b71bc7983b5a1497f3e273e825231f85a
+  SHSProtoBuf: 62a02d425f5dbee00d057bae65d76f0f01737410
   SORelativeDateTransformer: de7936811c9988af8e129a097af48c828f933f5f
   SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
 

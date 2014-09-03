@@ -105,14 +105,23 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
                                       __strong typeof(weakSelf) strongSelf = weakSelf;
                                       if (strongSelf) {
                                           [strongSelf stopActivity];
+                                          [strongSelf showPairingErrorAlert];
                                       }
                                   }];
     }
 }
 
 - (void)showNoSenseFoundAlert {
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"pariing.failed.title", nil)
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"pairing.failed.title", nil)
                                 message:NSLocalizedString(@"pairing.error.sense-not-found", nil)
+                               delegate:nil
+                      cancelButtonTitle:nil
+                      otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
+}
+
+- (void)showPairingErrorAlert {
+    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"pairing.failed.title", nil)
+                                message:NSLocalizedString(@"pairing.error.could-not-enable", nil)
                                delegate:nil
                       cancelButtonTitle:nil
                       otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];

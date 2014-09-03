@@ -12,8 +12,9 @@
 "sign-up.error.generic" = "Something went wrong. Please try again.";
 
 // pairing with sense
-"pairing.failed.title" = "Paring Failed";
+"pairing.failed.title" = "Pairing Failed";
 "pairing.error.sense-not-found" = "Sense was not detected.  Ensure Sense is on and near by your device.";
+"pairing.error.could-not-enable" = "Unable to enable pairing mode.  Sense may not be ready.  Try again.";
 
 // location
 "location.error.title" = "Unknown Location";

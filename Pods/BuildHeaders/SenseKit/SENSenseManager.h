@@ -1,1 +1,1 @@
-../../SenseKit/Pod/Classes/BLE/SENSenseManager.h
+../../../../SenseKit/Pod/Classes/BLE/SENSenseManager.h

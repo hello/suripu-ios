@@ -1,0 +1,1 @@
+../../../SHSProtoBuf/src/runtime/Classes/ExtensionRegistry.h

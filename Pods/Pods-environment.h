@@ -84,6 +84,18 @@
 #define COCOAPODS_VERSION_MINOR_LGBluetooth 1
 #define COCOAPODS_VERSION_PATCH_LGBluetooth 4
 
+// SHSProtoBuf
+#define COCOAPODS_POD_AVAILABLE_SHSProtoBuf
+#define COCOAPODS_VERSION_MAJOR_SHSProtoBuf 0
+#define COCOAPODS_VERSION_MINOR_SHSProtoBuf 9
+#define COCOAPODS_VERSION_PATCH_SHSProtoBuf 0
+
+// SHSProtoBuf/non-arc
+#define COCOAPODS_POD_AVAILABLE_SHSProtoBuf_non_arc
+#define COCOAPODS_VERSION_MAJOR_SHSProtoBuf_non_arc 0
+#define COCOAPODS_VERSION_MINOR_SHSProtoBuf_non_arc 9
+#define COCOAPODS_VERSION_PATCH_SHSProtoBuf_non_arc 0
+
 // SORelativeDateTransformer
 #define COCOAPODS_POD_AVAILABLE_SORelativeDateTransformer
 #define COCOAPODS_VERSION_MAJOR_SORelativeDateTransformer 1

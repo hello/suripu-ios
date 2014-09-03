@@ -9,6 +9,7 @@
 #import "HEMWifiViewController.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMOnboardingStoryboard.h"
 
 @interface HEMWifiViewController()
 
@@ -37,6 +38,8 @@
 
 - (IBAction)connectWifi:(id)sender {
     NSLog(@"WARNING: this hasn't been implemented!");
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard pillSegueIdentifier]
+                              sender:nil];
 }
 
 @end

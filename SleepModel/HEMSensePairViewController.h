@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "HEMBaseController.h"
 
-@interface HEMPairingViewController : HEMBaseController
+@interface HEMSensePairViewController : HEMBaseController
 
 @end

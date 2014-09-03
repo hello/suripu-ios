@@ -4,6 +4,7 @@
 #import "HEMUserDataCache.h"
 #import "HEMLocationCenter.h"
 #import "HEMActionButton.h"
+#import "HEMOnboardingStoryboard.h"
 
 @interface HEMLocationFinderViewController ()
 
@@ -14,17 +15,6 @@
 @end
 
 @implementation HEMLocationFinderViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)finish {
-    [self uploadCollectedData];
-    [self next];
-}
 
 - (void)showActivity {
     [[self skipButton] setEnabled:NO];
@@ -49,7 +39,8 @@
                 NSLog(@"got lat %f, long %f, accuracy %f", lat, lon, accuracy);
                 // TODO (jimmy): where to put this data?
                 [strongSelf setLocationTxId:nil];
-                [strongSelf finish];
+                [strongSelf uploadCollectedData];
+                [strongSelf next];
             }
             return NO;
         } failure:^BOOL(NSError *error) {
@@ -68,14 +59,14 @@
     }
 }
 
-- (IBAction)skipRequestingLocation:(id)sender
-{
+- (IBAction)skipRequestingLocation:(id)sender {
     [self uploadCollectedData];
     [self next];
 }
 
 - (void)next {
-    [self performSegueWithIdentifier:@"next" sender:self];
+    UIViewController* questionIntroVC = [HEMOnboardingStoryboard instantiateSleepQuestionIntroViewController];
+    [[self navigationController] setViewControllers:@[questionIntroVC] animated:YES];
 }
 
 - (void)uploadCollectedData

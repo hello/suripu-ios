@@ -452,7 +452,7 @@
         <!--More About You View Controller-->
         <scene sceneID="MLI-rC-BIe">
             <objects>
-                <viewController id="ezT-R8-K4n" userLabel="More About You View Controller" customClass="HEMUserDataIntroViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="dataIntroViewController" id="ezT-R8-K4n" userLabel="More About You View Controller" customClass="HEMUserDataIntroViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="DDQ-wG-B8c"/>
                         <viewControllerLayoutGuide type="bottom" id="bQ4-fe-iRl"/>
@@ -782,7 +782,7 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HYT-At-WLL" customClass="HEMActionButton">
-                                <rect key="frame" x="86" y="422" width="150" height="40"/>
+                                <rect key="frame" x="86" y="452" width="150" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="KQc-c4-rSc"/>
                                     <constraint firstAttribute="width" constant="150" id="QBe-nN-1J0"/>
@@ -796,29 +796,12 @@
                                     <action selector="connectWifi:" destination="qC8-fd-UCX" eventType="touchUpInside" id="2fS-5x-gp9"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rjz-M4-Lxs">
-                                <rect key="frame" x="57" y="474" width="207" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="4EV-yP-fWf"/>
-                                    <constraint firstAttribute="width" constant="207" id="Z3b-T7-t5Q"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="12"/>
-                                <state key="normal" title="Skip">
-                                    <color key="titleColor" red="0.25882352939999997" green="0.25882352939999997" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="ezT-R8-K4n" kind="push" identifier="more" id="nwQ-el-edZ"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="HYT-At-WLL" firstAttribute="top" secondItem="Rhq-rf-zuM" secondAttribute="bottom" constant="92" id="B4a-bL-v79"/>
-                            <constraint firstAttribute="centerX" secondItem="Rjz-M4-Lxs" secondAttribute="centerX" constant="-0.5" id="LT3-74-jfc"/>
+                            <constraint firstItem="HYT-At-WLL" firstAttribute="top" secondItem="Rhq-rf-zuM" secondAttribute="bottom" constant="122" id="B4a-bL-v79"/>
                             <constraint firstAttribute="centerX" secondItem="Rhq-rf-zuM" secondAttribute="centerX" id="Wro-jv-mkJ"/>
                             <constraint firstAttribute="centerX" secondItem="4PT-Jb-KBo" secondAttribute="centerX" id="aPn-aL-F0K"/>
-                            <constraint firstItem="Rjz-M4-Lxs" firstAttribute="top" secondItem="HYT-At-WLL" secondAttribute="bottom" constant="12" id="eE9-AE-ik9"/>
                             <constraint firstItem="4PT-Jb-KBo" firstAttribute="top" secondItem="gvl-uZ-ZRh" secondAttribute="bottom" constant="12" id="hRv-2I-Nn1"/>
                             <constraint firstItem="gvl-uZ-ZRh" firstAttribute="top" secondItem="GhD-1W-lxB" secondAttribute="bottom" constant="8" id="rCw-AA-AIY"/>
                             <constraint firstItem="Rhq-rf-zuM" firstAttribute="top" secondItem="4PT-Jb-KBo" secondAttribute="bottom" constant="77" id="tUd-yV-d4M"/>
@@ -832,16 +815,106 @@
                         <outlet property="logoVSpaceConstraint" destination="tUd-yV-d4M" id="u1x-Bf-Sy7"/>
                         <outlet property="shareCredentialsButton" destination="HYT-At-WLL" id="Jvx-hd-I5y"/>
                         <outlet property="shareVSpaceConstraint" destination="B4a-bL-v79" id="Wl3-J9-wGm"/>
-                        <outlet property="skipButton" destination="Rjz-M4-Lxs" id="RkW-GA-3cF"/>
                         <outlet property="subtitleLabel" destination="4PT-Jb-KBo" id="SkV-pq-mrC"/>
                         <outlet property="titleLabel" destination="gvl-uZ-ZRh" id="fLo-xO-ZeJ"/>
                         <outlet property="view" destination="E50-HK-wnd" id="l6c-lF-vh7"/>
                         <outlet property="wifiLogoView" destination="Rhq-rf-zuM" id="cKh-jh-cup"/>
+                        <segue destination="4s2-Gt-ovZ" kind="push" identifier="pill" id="H9n-wH-Bun"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkd-iJ-jh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2190" y="409"/>
+        </scene>
+        <!--Pill Pair View Controller-->
+        <scene sceneID="Eoe-Ki-OxF">
+            <objects>
+                <viewController id="4s2-Gt-ovZ" customClass="HEMPillPairViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="SS5-15-dp3"/>
+                        <viewControllerLayoutGuide type="bottom" id="ccb-Ef-kXd"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="lwn-in-ftH">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pair your Sleep Pill" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ded-Ea-3CR">
+                                <rect key="frame" x="23" y="28" width="274" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="CqR-lo-Ump"/>
+                                    <constraint firstAttribute="width" constant="274" id="S6r-MX-Huw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
+                                <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="dQE-eQ-cvY">
+                                <rect key="frame" x="23" y="76" width="274" height="80"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="274" id="Ksm-l5-0YQ"/>
+                                    <constraint firstAttribute="height" constant="80" id="uGz-4f-iRz"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="To measure your movements, we'll need to pair with your Pill.  Make sure it's nearby and tap below when ready.">
+                                        <attributes>
+                                            <color key="NSColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="16" name="HelveticaNeue-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sleep_pill.png" translatesAutoresizingMaskIntoConstraints="NO" id="k3x-K0-1su">
+                                <rect key="frame" x="99" y="236" width="122" height="125"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="125" id="bRp-yH-j8w"/>
+                                    <constraint firstAttribute="width" constant="122" id="lM8-be-k02"/>
+                                </constraints>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cxf-NO-tVI" customClass="HEMActionButton">
+                                <rect key="frame" x="85" y="452" width="150" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="QbD-4k-dom"/>
+                                    <constraint firstAttribute="width" constant="150" id="aRH-j3-tne"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="I'm ready">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="enablePairing:" destination="cgk-PX-LxG" eventType="touchUpInside" id="aFM-gR-CZP"/>
+                                    <action selector="pairPill:" destination="4s2-Gt-ovZ" eventType="touchUpInside" id="Hc3-Oa-6se"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="Cxf-NO-tVI" secondAttribute="centerX" id="21X-Lf-34i"/>
+                            <constraint firstAttribute="centerX" secondItem="ded-Ea-3CR" secondAttribute="centerX" id="BhS-QL-b4T"/>
+                            <constraint firstItem="Cxf-NO-tVI" firstAttribute="top" secondItem="SS5-15-dp3" secondAttribute="bottom" constant="432" id="PZK-Es-urH"/>
+                            <constraint firstAttribute="centerX" secondItem="dQE-eQ-cvY" secondAttribute="centerX" id="WoN-sm-019"/>
+                            <constraint firstItem="dQE-eQ-cvY" firstAttribute="top" secondItem="ded-Ea-3CR" secondAttribute="bottom" constant="14" id="eWd-Jy-FGx"/>
+                            <constraint firstAttribute="centerX" secondItem="k3x-K0-1su" secondAttribute="centerX" id="fMx-if-rjc"/>
+                            <constraint firstItem="ded-Ea-3CR" firstAttribute="top" secondItem="SS5-15-dp3" secondAttribute="bottom" constant="8" id="rUe-t9-SRX"/>
+                            <constraint firstItem="k3x-K0-1su" firstAttribute="top" secondItem="dQE-eQ-cvY" secondAttribute="bottom" constant="80" id="wcA-EZ-Y7I"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="rMe-eX-uln"/>
+                    <connections>
+                        <outlet property="pillImageVSpaceConstraint" destination="wcA-EZ-Y7I" id="6Uq-3b-OKG"/>
+                        <outlet property="pillImageView" destination="k3x-K0-1su" id="84m-Gk-xBq"/>
+                        <outlet property="readyButton" destination="Cxf-NO-tVI" id="k82-ki-q1D"/>
+                        <outlet property="readyButtonVSpaceConstraint" destination="PZK-Es-urH" id="F9R-yV-drj"/>
+                        <outlet property="subtitleLabel" destination="dQE-eQ-cvY" id="CUW-63-6Ks"/>
+                        <outlet property="titleLabel" destination="ded-Ea-3CR" id="XiG-6d-2MM"/>
+                        <segue destination="ezT-R8-K4n" kind="push" identifier="dataIntro" id="nrK-aH-Age"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Z94-uI-D3y" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2643" y="409"/>
         </scene>
         <!--Gender View Controller-->
         <scene sceneID="s4K-5F-Rau">
@@ -1110,7 +1183,7 @@
                     <connections>
                         <outlet property="locationButton" destination="Sdf-8C-14E" id="amY-FG-Snl"/>
                         <outlet property="skipButton" destination="SVC-vN-68T" id="uU0-2Z-vGM"/>
-                        <segue destination="51x-x3-qVm" kind="push" identifier="next" id="7R6-5C-JKc"/>
+                        <segue destination="51x-x3-qVm" kind="push" identifier="sleepQuestionIntro" id="7R6-5C-JKc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IpC-eY-cSk" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1120,7 +1193,7 @@
         <!--Sleep QuestionFYI View Controller-->
         <scene sceneID="OXX-v8-SMA">
             <objects>
-                <viewController id="51x-x3-qVm" customClass="HEMSleepQuestionFYIViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="sleepQuestionIntroViewController" id="51x-x3-qVm" customClass="HEMSleepQuestionFYIViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="cQu-gD-PYX"/>
                         <viewControllerLayoutGuide type="bottom" id="aav-CX-AnH"/>
@@ -1235,7 +1308,7 @@
         <!--Bluetooth View Controller-->
         <scene sceneID="cKk-Qb-F4O">
             <objects>
-                <viewController storyboardIdentifier="bluetoothViewController" id="cgk-PX-LxG" userLabel="Bluetooth View Controller" customClass="HEMPairingViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="bluetoothViewController" id="cgk-PX-LxG" userLabel="Bluetooth View Controller" customClass="HEMSensePairViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="I6r-jE-jN1"/>
                         <viewControllerLayoutGuide type="bottom" id="rNF-MR-Ds2"/>
@@ -1252,23 +1325,6 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="HQC-WI-rTG">
-                                <rect key="frame" x="23" y="76" width="274" height="53"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="274" id="3kh-7T-CM5"/>
-                                    <constraint firstAttribute="height" constant="53" id="KJf-Gi-rTV"/>
-                                </constraints>
-                                <attributedString key="attributedText">
-                                    <fragment content="To get started, we need to pair your phone to Sense over bluetooth.">
-                                        <attributes>
-                                            <color key="NSColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="17" name="HelveticaNeue-Light"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bluetoothLogoImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
@@ -1308,6 +1364,23 @@
                                     <segue destination="ezT-R8-K4n" kind="push" identifier="skip" id="mO6-0R-vRY"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="HQC-WI-rTG">
+                                <rect key="frame" x="23" y="76" width="274" height="53"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="274" id="3kh-7T-CM5"/>
+                                    <constraint firstAttribute="height" constant="53" id="KJf-Gi-rTV"/>
+                                </constraints>
+                                <attributedString key="attributedText">
+                                    <fragment content="To get started, we need to pair your phone to Sense over bluetooth.">
+                                        <attributes>
+                                            <color key="NSColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
+                                            <font key="NSFont" size="17" name="HelveticaNeue-Light"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1351,6 +1424,7 @@
         <image name="onboardingBackgroundImage1.png" width="350" height="587"/>
         <image name="onboardingBackgroundImage2.png" width="350" height="576"/>
         <image name="phoneWithEmoticons.png" width="191" height="244"/>
+        <image name="sleep_pill.png" width="122" height="125"/>
         <image name="wifiLogoImage.png" width="182" height="129"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -1362,7 +1436,7 @@
         </simulatedScreenMetrics>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="mO6-0R-vRY"/>
+        <segue reference="nrK-aH-Age"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

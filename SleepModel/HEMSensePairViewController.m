@@ -7,14 +7,14 @@
 //
 #import <SenseKit/BLE.h>
 
-#import "HEMPairingViewController.h"
+#import "HEMSensePairViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
 
 static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523-785FEABCD123";
 
-@interface HEMPairingViewController()
+@interface HEMSensePairViewController()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
@@ -30,7 +30,7 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
 
 @end
 
-@implementation HEMPairingViewController
+@implementation HEMSensePairViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -51,7 +51,6 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
 
 - (IBAction)enablePairing:(id)sender {
     [self scanForSense];
-//    [self performSegueWithIdentifier:@"wifi" sender:self];
 }
 
 #pragma mark - Scanning
@@ -98,7 +97,9 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
                                       DLog(@"pairing mode on");
                                       __strong typeof(weakSelf) strongSelf = weakSelf;
                                       if (strongSelf) {
+                                          NSString* segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
                                           [strongSelf stopActivity];
+                                          [strongSelf performSegueWithIdentifier:segueId sender:self];
                                       }
                                   } failure:^(NSError *error) {
                                       DLog(@"failed to enable code");

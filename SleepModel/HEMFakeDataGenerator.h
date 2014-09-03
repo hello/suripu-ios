@@ -4,4 +4,5 @@
 @interface HEMFakeDataGenerator : NSObject
 
 + (NSDictionary*)sleepDataForDate:(NSDate*)date;
++ (NSArray*)summarySleepScoresFromDate:(NSDate*)date;
 @end

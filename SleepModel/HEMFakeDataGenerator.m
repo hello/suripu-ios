@@ -33,6 +33,7 @@
     ][arc4random() % 5];
     return @{
         @"date" : @([date timeIntervalSince1970] * 1000),
+        @"offset_millis" : @0,
         @"score" : @(arc4random() % 95),
         @"message" : message,
         @"segments" : [[slices reverseObjectEnumerator] allObjects]
@@ -50,25 +51,46 @@
     return @{
         @"id" : @(identifier),
         @"timestamp" : @(timestamp),
+        @"offset_millis" : @0,
         @"duration" : @(duration),
         @"sleep_depth" : @(floorf(arc4random() % 3) + 1),
         @"type" : type,
         @"message" : message,
-        @"sensors" : @{
-            @"temperature" : @{
-                @"value" : @(arc4random() % 33),
-                @"unit" : @"c"
-            },
-            @"humidity" : @{
-                @"value" : @(arc4random() % 100),
-                @"unit" : @"%"
-            },
-            @"particulates" : @{
-                @"value" : @(arc4random() % 700),
-                @"unit" : @"ppm"
-            },
-        }
+        @"sensors" : [self randomSensorData]
     };
+}
+
++ (NSDictionary*)randomSensorData
+{
+    return @{
+        @"temperature" : @{
+            @"value" : @(arc4random() % 33),
+            @"unit" : @"c"
+        },
+        @"humidity" : @{
+            @"value" : @(arc4random() % 100),
+            @"unit" : @"%"
+        },
+        @"particulates" : @{
+            @"value" : @(arc4random() % 700),
+            @"unit" : @"ppm"
+        },
+    };
+}
+
++ (NSArray*)summarySleepScoresFromDate:(NSDate*)date
+{
+    NSMutableArray* scores = [[NSMutableArray alloc] initWithCapacity:7];
+    NSTimeInterval startInterval = [date timeIntervalSince1970];
+    for (int i = 0; i < 8; i++) {
+        NSTimeInterval interval = startInterval - (i * 60 * 60 * 24);
+        [scores addObject:@{
+            @"score" : @(arc4random() % 95),
+            @"date" : @(interval * 1000),
+            @"offset_millis" : @0
+        }];
+    }
+    return scores;
 }
 
 @end

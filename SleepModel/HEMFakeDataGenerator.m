@@ -5,6 +5,10 @@
 
 + (NSDictionary*)sleepDataForDate:(NSDate*)date
 {
+    if (arc4random() % 4 == 1) {
+        return nil;
+    }
+
     NSMutableArray* slices = [[NSMutableArray alloc] initWithCapacity:40];
     CGFloat startTimeMillis = (([[NSDate date] timeIntervalSince1970] - 10 * 60 * 60) * 1000);
     CGFloat totalDuration = 0;

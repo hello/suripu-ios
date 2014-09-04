@@ -36,21 +36,22 @@
             NSInteger section = layoutAttributes.indexPath.section;
             NSInteger numberOfItemsInSection = [collectionView numberOfItemsInSection:section];
 
-            NSIndexPath* firstCellIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
-            NSIndexPath* lastCellIndexPath = [NSIndexPath indexPathForItem:MAX(0, (numberOfItemsInSection - 1)) inSection:section];
+            if (numberOfItemsInSection > 0) {
+                NSIndexPath* firstCellIndexPath = [NSIndexPath indexPathForItem:0 inSection:section];
+                NSIndexPath* lastCellIndexPath = [NSIndexPath indexPathForItem:MAX(0, (numberOfItemsInSection - 1)) inSection:section];
+                UICollectionViewLayoutAttributes* firstCellAttrs = [self layoutAttributesForItemAtIndexPath:firstCellIndexPath];
+                UICollectionViewLayoutAttributes* lastCellAttrs = [self layoutAttributesForItemAtIndexPath:lastCellIndexPath];
 
-            UICollectionViewLayoutAttributes* firstCellAttrs = [self layoutAttributesForItemAtIndexPath:firstCellIndexPath];
-            UICollectionViewLayoutAttributes* lastCellAttrs = [self layoutAttributesForItemAtIndexPath:lastCellIndexPath];
+                CGFloat headerHeight = CGRectGetHeight(layoutAttributes.frame);
+                CGPoint origin = layoutAttributes.frame.origin;
+                origin.y = MIN(MAX(contentOffset.y, (CGRectGetMinY(firstCellAttrs.frame) - headerHeight)), (CGRectGetMaxY(lastCellAttrs.frame) - headerHeight));
 
-            CGFloat headerHeight = CGRectGetHeight(layoutAttributes.frame);
-            CGPoint origin = layoutAttributes.frame.origin;
-            origin.y = MIN(MAX(contentOffset.y, (CGRectGetMinY(firstCellAttrs.frame) - headerHeight)), (CGRectGetMaxY(lastCellAttrs.frame) - headerHeight));
-
-            layoutAttributes.zIndex = 1024;
-            layoutAttributes.frame = (CGRect) {
-                .origin = origin,
-                .size = layoutAttributes.frame.size
-            };
+                layoutAttributes.zIndex = 1024;
+                layoutAttributes.frame = (CGRect) {
+                    .origin = origin,
+                    .size = layoutAttributes.frame.size
+                };
+            }
         }
     }
 

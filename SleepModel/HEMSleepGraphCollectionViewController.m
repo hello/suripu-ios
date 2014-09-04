@@ -2,6 +2,7 @@
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <SenseKit/SENSettings.h>
 #import <SenseKit/SENSensor.h>
+#import <SenseKit/SENSleepResult.h>
 
 #import "HEMSleepGraphCollectionViewController.h"
 #import "HEMSleepEventCollectionViewCell.h"
@@ -11,7 +12,6 @@
 #import "HEMSensorDataHeaderView.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HelloStyleKit.h"
-#import "HEMFakeDataGenerator.h"
 
 @interface HEMSleepGraphCollectionViewController () <UICollectionViewDelegateFlowLayout, FCDynamicPaneViewController, UIGestureRecognizerDelegate>
 
@@ -34,7 +34,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 {
     [super viewDidLoad];
     self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
-                                                                                  sleepData:[HEMFakeDataGenerator sleepDataForDate:self.dateForNightOfSleep]];
+                                                                                  sleepDate:self.dateForNightOfSleep];
     self.collectionView.dataSource = self.dataSource;
     self.collectionView.delegate = self;
     self.collectionView.collectionViewLayout = [HEMSleepGraphCollectionViewFlowLayout new];
@@ -107,14 +107,14 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    NSDictionary* sleepData = [self.dataSource sleepSegmentForIndexPath:indexPath];
-    return ![sleepData[@"type"] isEqualToString:@"none"];
+    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    return ![segment.eventType isEqualToString:@"none"];
 }
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    NSDictionary* sleepData = [self.dataSource sleepSegmentForIndexPath:indexPath];
-    return ![sleepData[@"type"] isEqualToString:@"none"];
+    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    return ![segment.eventType isEqualToString:@"none"];
 }
 
 - (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
@@ -133,14 +133,14 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
         return CGSizeMake(width, HEMSleepSummaryCellHeight);
 
     case HEMSleepGraphCollectionViewSegmentSection: {
-        NSDictionary* sleepData = [self.dataSource sleepSegmentForIndexPath:indexPath];
+        SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
 
-        CGFloat durationHeight = ([sleepData[@"duration"] doubleValue] / 1000 / 3600) * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
-        if ([sleepData[@"type"] isEqualToString:@"none"]) {
+        CGFloat durationHeight = ([segment.duration doubleValue] / 1000 / 3600) * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
+        if ([segment.eventType isEqualToString:@"none"]) {
             return CGSizeMake(width, durationHeight);
         } else {
             if ([self.dataSource eventCellAtIndexPathIsExpanded:indexPath]) {
-                if ([sleepData[@"type"] isEqualToString:@"noise"]) {
+                if ([segment.eventType isEqualToString:@"noise"]) {
                     return CGSizeMake(width, HEMSleepGraphCollectionViewEventMaximumHeight);
                 }
                 return CGSizeMake(width, HEMSleepGraphCollectionViewEventLightHeight);

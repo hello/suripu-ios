@@ -1,6 +1,8 @@
 
 #import <SenseKit/SENSettings.h>
 #import <SenseKit/SENSensor.h>
+#import <SenseKit/SENSleepResult.h>
+
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphCollectionViewController.h"
 #import "HEMAggregateGraphCollectionViewCell.h"
@@ -8,19 +10,18 @@
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepSegmentCollectionViewCell.h"
 #import "HEMSensorDataHeaderView.h"
+#import "HEMFakeDataGenerator.h"
 #import "HelloStyleKit.h"
 #import "HEMColorUtils.h"
 
 @interface HEMSleepGraphCollectionViewDataSource ()
 
-@property (nonatomic, strong) NSArray* sleepSegments;
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, weak, readwrite) HEMSensorDataHeaderView* sensorDataHeaderView;
 @property (nonatomic, strong) NSDateFormatter* timeDateFormatter;
 @property (nonatomic, strong) NSMutableArray* expandedIndexPaths;
-@property (nonatomic, strong) NSNumber* sleepScore;
-@property (nonatomic, strong) NSString* sleepMessage;
 @property (nonatomic, strong) NSDate* dateForNightOfSleep;
+@property (nonatomic, strong) SENSleepResult* sleepResult;
 @end
 
 @implementation HEMSleepGraphCollectionViewDataSource
@@ -42,20 +43,26 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
     return formatter;
 }
 
-- (instancetype)initWithCollectionView:(UICollectionView*)collectionView sleepData:(NSDictionary*)sleepData
+- (instancetype)initWithCollectionView:(UICollectionView*)collectionView sleepDate:(NSDate*)date
 {
     if (self = [super init]) {
         _collectionView = collectionView;
-        _sleepSegments = sleepData[@"segments"];
-        _sleepScore = sleepData[@"score"];
-        _sleepMessage = sleepData[@"message"];
+        _dateForNightOfSleep = date;
         _expandedIndexPaths = [NSMutableArray new];
         _timeDateFormatter = [NSDateFormatter new];
         _timeDateFormatter.dateFormat = ([SENSettings timeFormat] == SENTimeFormat12Hour) ? @"h:mm a" : @"H:mm";
-        _dateForNightOfSleep = [NSDate dateWithTimeIntervalSince1970:[sleepData[@"date"] doubleValue] / 1000];
         [self configureCollectionView];
+        [self updateDataForDate];
     }
     return self;
+}
+
+- (void)updateDataForDate
+{
+    self.sleepResult = [SENSleepResult sleepResultForDate:self.dateForNightOfSleep];
+    [self.sleepResult updateWithDictionary:[HEMFakeDataGenerator sleepDataForDate:self.dateForNightOfSleep]];
+    // todo: update data with latest from API
+    [self.collectionView reloadData];
 }
 
 - (void)configureCollectionView
@@ -105,11 +112,11 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
         if (CGRectGetMinY(cell.frame) <= contentOffsetY && CGRectGetMaxY(cell.frame) >= contentOffsetY) {
             NSIndexPath* indexPath = [self.collectionView indexPathForCell:cell];
             if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection) {
-                NSDictionary* sleepData = [self sleepSegmentForIndexPath:indexPath];
+                SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
                 CGFloat fill = contentOffsetY - CGRectGetMinY(cell.frame);
                 CGFloat total = CGRectGetMaxY(cell.frame) - CGRectGetMinY(cell.frame);
                 CGFloat ratio = fill / total;
-                [self updateSensorViewTextWithSleepData:sleepData forCellFillRatio:ratio];
+                [self updateSensorViewTextWithSleepData:segment forCellFillRatio:ratio];
             }
         }
     }
@@ -121,18 +128,29 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
  *  @param sleepData the data to use in the update
  *  @param ratio     the scale of time passed between the start and end of the data
  */
-- (void)updateSensorViewTextWithSleepData:(NSDictionary*)sleepData forCellFillRatio:(CGFloat)ratio
+- (void)updateSensorViewTextWithSleepData:(SENSleepResultSegment*)segment forCellFillRatio:(CGFloat)ratio
 {
-    NSDictionary* temperatureData = sleepData[@"sensors"][@"temperature"];
-    NSDictionary* humidityData = sleepData[@"sensors"][@"humidity"];
-    NSDictionary* particleData = sleepData[@"sensors"][@"particulates"];
-    self.sensorDataHeaderView.temperatureLabel.text = temperatureData ? [SENSensor formatValue:temperatureData[@"value"] withUnit:[SENSensor unitFromValue:temperatureData[@"unit"]]] : @"0";
-    self.sensorDataHeaderView.humidityLabel.text = humidityData ? [SENSensor formatValue:humidityData[@"value"] withUnit:[SENSensor unitFromValue:humidityData[@"unit"]]] : @"0";
-    self.sensorDataHeaderView.particulateLabel.text = particleData ? [SENSensor formatValue:particleData[@"value"] withUnit:[SENSensor unitFromValue:particleData[@"unit"]]] : @"0";
-    NSTimeInterval topInterval = [sleepData[@"timestamp"] doubleValue] / 1000;
-    NSTimeInterval bottomInterval = topInterval + ([sleepData[@"duration"] doubleValue] / 1000);
-    NSTimeInterval intervalAtContentOffsetY = bottomInterval - (ratio * (bottomInterval - topInterval));
-    self.sensorDataHeaderView.timeLabel.text = [self textForTimeInterval:intervalAtContentOffsetY];
+    if (segment) {
+        for (SENSleepResultSegmentSensor* sensor in segment.sensors) {
+            NSString* text = [SENSensor formatValue:sensor.value withUnit:[SENSensor unitFromValue:sensor.unit]];
+            if ([sensor.name isEqualToString:@"temperature"]) {
+                self.sensorDataHeaderView.temperatureLabel.text = text;
+            } else if ([sensor.name isEqualToString:@"humidity"]) {
+                self.sensorDataHeaderView.humidityLabel.text = text;
+            } else if ([sensor.name isEqualToString:@"particulates"]) {
+                self.sensorDataHeaderView.particulateLabel.text = text;
+            }
+        }
+        NSTimeInterval topInterval = [segment.date timeIntervalSince1970];
+        NSTimeInterval bottomInterval = topInterval + ([segment.duration doubleValue] / 1000);
+        NSTimeInterval intervalAtContentOffsetY = bottomInterval - (ratio * (bottomInterval - topInterval));
+        self.sensorDataHeaderView.timeLabel.text = [self textForTimeInterval:intervalAtContentOffsetY];
+    } else {
+        self.sensorDataHeaderView.temperatureLabel.text = @"0";
+        self.sensorDataHeaderView.humidityLabel.text = @"0";
+        self.sensorDataHeaderView.particulateLabel.text = @"0";
+        self.sensorDataHeaderView.timeLabel.text = @"";
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -148,7 +166,7 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
     case HEMSleepGraphCollectionViewSummarySection:
         return 1;
     case HEMSleepGraphCollectionViewSegmentSection:
-        return self.sleepSegments.count;
+        return self.sleepResult.segments.count;
     case HEMSleepGraphCollectionViewHistorySection:
         return 3; // number of weeks?
     default:
@@ -163,7 +181,7 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
         if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection) {
             headerView.hidden = NO;
             self.sensorDataHeaderView = headerView;
-            [self updateSensorViewTextWithSleepData:[self.sleepSegments firstObject] forCellFillRatio:0];
+            [self updateSensorViewTextWithSleepData:[self.sleepResult.segments firstObject] forCellFillRatio:0];
         } else {
             headerView.hidden = YES;
         }
@@ -179,8 +197,8 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
         return [self collectionView:collectionView sleepSummaryCellForItemAtIndexPath:indexPath];
     } break;
     case HEMSleepGraphCollectionViewSegmentSection: {
-        NSDictionary* sleepData = [self sleepSegmentForIndexPath:indexPath];
-        if ([sleepData[@"type"] isEqualToString:@"none"]) {
+        SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
+        if ([segment.eventType isEqualToString:@"none"]) {
             return [self collectionView:collectionView sleepSegmentCellForItemAtIndexPath:indexPath];
         } else {
             return [self collectionView:collectionView sleepEventCellForItemAtIndexPath:indexPath];
@@ -197,8 +215,8 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView sleepSummaryCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMSleepSummaryCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSummaryReuseIdentifier forIndexPath:indexPath];
-    [cell setSleepScore:[self.sleepScore integerValue]];
-    cell.messageLabel.text = self.sleepMessage;
+    [cell setSleepScore:[self.sleepResult.score integerValue]];
+    cell.messageLabel.text = self.sleepResult.message;
     NSString* dateText = [[[self class] sleepDateFormatter] stringFromDate:self.dateForNightOfSleep];
     NSString* lastNightDateText = [[[self class] sleepDateFormatter] stringFromDate:[NSDate dateWithTimeInterval:-60 * 60 * 24 sinceDate:[NSDate date]]];
     if ([dateText isEqualToString:lastNightDateText]) {
@@ -211,8 +229,8 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView sleepSegmentCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    NSDictionary* sleepData = [self sleepSegmentForIndexPath:indexPath];
-    NSUInteger sleepDepth = [sleepData[@"sleep_depth"] integerValue];
+    SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
+    NSUInteger sleepDepth = segment.sleepDepth;
     HEMSleepSegmentCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
     [cell setSegmentRatio:sleepDepth / 3.f withColor:[HEMColorUtils colorForSleepDepth:sleepDepth]];
     return cell;
@@ -220,18 +238,18 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView sleepEventCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    NSDictionary* sleepData = [self sleepSegmentForIndexPath:indexPath];
-    NSUInteger sleepDepth = [sleepData[@"sleep_depth"] integerValue];
+    SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
+    NSUInteger sleepDepth = segment.sleepDepth;
     HEMSleepEventCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepEventReuseIdentifier forIndexPath:indexPath];
     cell.eventTypeButton.layer.borderColor = [HEMColorUtils colorForSleepDepth:sleepDepth].CGColor;
     cell.eventTypeButton.layer.borderWidth = 2.f;
     cell.eventTypeButton.layer.cornerRadius = CGRectGetWidth(cell.eventTypeButton.bounds) / 2;
-    cell.eventTimeLabel.text = [self textForTimeInterval:[sleepData[@"timestamp"] doubleValue] / 1000];
-    [cell.eventTypeButton setImage:[self imageForEvent:sleepData] forState:UIControlStateNormal];
-    cell.eventMessageLabel.text = sleepData[@"message"];
-    cell.eventTitleLabel.text = [self localizedNameForSleepEvent:sleepData];
+    cell.eventTimeLabel.text = [self textForTimeInterval:[segment.date timeIntervalSince1970]];
+    [cell.eventTypeButton setImage:[self imageForEventType:segment.eventType] forState:UIControlStateNormal];
+    cell.eventMessageLabel.text = segment.message;
+    cell.eventTitleLabel.text = [self localizedNameForSleepEventType:segment.eventType];
     cell.expanded = [self eventCellAtIndexPathIsExpanded:indexPath];
-    cell.playButton.hidden = ![sleepData[@"type"] isEqualToString:@"noise"];
+    cell.playButton.hidden = ![segment.eventType isEqualToString:@"noise"];
     return cell;
 }
 
@@ -243,9 +261,9 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
 
 #pragma mark - Data Parsing
 
-- (NSDictionary*)sleepSegmentForIndexPath:(NSIndexPath*)indexPath
+- (SENSleepResultSegment*)sleepSegmentForIndexPath:(NSIndexPath*)indexPath
 {
-    return indexPath.section == HEMSleepGraphCollectionViewSegmentSection ? self.sleepSegments[indexPath.row] : nil;
+    return indexPath.section == HEMSleepGraphCollectionViewSegmentSection ? self.sleepResult.segments[indexPath.row] : nil;
 }
 
 - (NSString*)localizedSleepDepth:(NSUInteger)sleepDepth
@@ -262,9 +280,9 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
     }
 }
 
-- (NSString*)localizedNameForSleepEvent:(NSDictionary*)event
+- (NSString*)localizedNameForSleepEventType:(NSString*)eventType
 {
-    NSString* localizedFormat = [NSString stringWithFormat:@"sleep-event.type.%@.name", event[@"type"]];
+    NSString* localizedFormat = [NSString stringWithFormat:@"sleep-event.type.%@.name", eventType];
     NSString* eventName = NSLocalizedString(localizedFormat, nil);
     if ([eventName isEqualToString:localizedFormat]) {
         return nil;
@@ -272,15 +290,15 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
     return eventName;
 }
 
-- (UIImage*)imageForEvent:(NSDictionary*)event
+- (UIImage*)imageForEventType:(NSString*)eventType
 {
-    if ([event[@"type"] isEqualToString:@"awake"]) {
+    if ([eventType isEqualToString:@"awake"]) {
         return [HelloStyleKit wakeupEventIcon];
-    } else if ([event[@"type"] isEqualToString:@"sleep"]) {
+    } else if ([eventType isEqualToString:@"sleep"]) {
         return [HelloStyleKit sleepEventIcon];
-    } else if ([event[@"type"] isEqualToString:@"light"]) {
+    } else if ([eventType isEqualToString:@"light"]) {
         return [HelloStyleKit lightEventIcon];
-    } else if ([event[@"type"] isEqualToString:@"noise"]) {
+    } else if ([eventType isEqualToString:@"noise"]) {
         return [HelloStyleKit noiseEventIcon];
     }
     return nil;

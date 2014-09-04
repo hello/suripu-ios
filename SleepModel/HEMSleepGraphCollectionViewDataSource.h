@@ -2,10 +2,11 @@
 #import <Foundation/Foundation.h>
 
 @class HEMSensorDataHeaderView;
+@class SENSleepResultSegment;
 
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>
 
-- (instancetype)initWithCollectionView:(UICollectionView*)collectionView sleepData:(NSDictionary*)sleepData;
+- (instancetype)initWithCollectionView:(UICollectionView*)collectionView sleepDate:(NSDate*)date;
 
 /**
  *  Fetch the sleep data corresponding to a given index path
@@ -14,7 +15,7 @@
  *
  *  @return sleep data or nil
  */
-- (NSDictionary*)sleepSegmentForIndexPath:(NSIndexPath*)indexPath;
+- (SENSleepResultSegment*)sleepSegmentForIndexPath:(NSIndexPath*)indexPath;
 
 /**
  *  Update the text of the sensors view to reflect the sleep data at the top of the view

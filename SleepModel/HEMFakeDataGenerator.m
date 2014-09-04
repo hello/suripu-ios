@@ -50,11 +50,11 @@
     }
     return @{
         @"id" : @(identifier),
-        @"timestamp" : @(timestamp),
+        @"date" : @(timestamp),
         @"offset_millis" : @0,
         @"duration" : @(duration),
         @"sleep_depth" : @(floorf(arc4random() % 3) + 1),
-        @"type" : type,
+        @"event_type" : type,
         @"message" : message,
         @"sensors" : [self randomSensorData]
     };

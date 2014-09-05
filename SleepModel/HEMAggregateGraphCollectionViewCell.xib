@@ -12,11 +12,26 @@
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="309" height="259"/>
+                <subviews>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hU1-bj-4LL" customClass="JBLineChartView">
+                        <rect key="frame" x="0.0" y="0.0" width="309" height="259"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                 <nil key="simulatedStatusBarMetrics"/>
                 <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             </view>
+            <constraints>
+                <constraint firstItem="hU1-bj-4LL" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="K1e-Iq-Rps"/>
+                <constraint firstAttribute="bottom" secondItem="hU1-bj-4LL" secondAttribute="bottom" id="spU-9m-pcR"/>
+                <constraint firstItem="hU1-bj-4LL" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="xwI-K6-9kN"/>
+                <constraint firstAttribute="trailing" secondItem="hU1-bj-4LL" secondAttribute="trailing" id="yPA-Zc-wlk"/>
+            </constraints>
             <size key="customSize" width="309" height="259"/>
+            <connections>
+                <outlet property="chartView" destination="hU1-bj-4LL" id="31R-oM-gNv"/>
+            </connections>
             <point key="canvasLocation" x="236.5" y="439.5"/>
         </collectionViewCell>
     </objects>

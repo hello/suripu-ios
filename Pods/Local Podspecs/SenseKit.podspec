@@ -26,6 +26,7 @@ Pod::Spec.new do |s|
   
   s.subspec "Model" do |ss|
     ss.source_files = 'Pod/Classes/Model/*'
+    ss.dependency 'YapDatabase'
   end
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

@@ -23,7 +23,7 @@
 @implementation HEMSleepGraphCollectionViewController
 
 static CGFloat const HEMSleepSummaryCellHeight = 300.f;
-static CGFloat const HEMSleepHistoryGraphViewHeight = 260.f;
+static CGFloat const HEMSleepHistoryGraphViewHeight = 200.f;
 static CGFloat const HEMSleepGraphCollectionViewSensorViewHeight = 65.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 55.f;
 static CGFloat const HEMSleepGraphCollectionViewEventLightHeight = 95.f;
@@ -165,7 +165,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 - (CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
     switch (section) {
-    case HEMSleepGraphCollectionViewHistorySection:
     case HEMSleepGraphCollectionViewSegmentSection:
         return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMSleepGraphCollectionViewSensorViewHeight);
 

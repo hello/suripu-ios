@@ -5,7 +5,6 @@
 #import <JBChartView/JBLineChartView.h>
 
 #import "HEMSleepGraphCollectionViewDataSource.h"
-#import "HEMAggregateDataHeaderCellCollectionReusableView.h"
 #import "HEMSleepGraphCollectionViewController.h"
 #import "HEMAggregateGraphCollectionViewCell.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
@@ -22,6 +21,7 @@
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, weak, readwrite) HEMSensorDataHeaderView* sensorDataHeaderView;
 @property (nonatomic, strong) NSDateFormatter* timeDateFormatter;
+@property (nonatomic, strong) NSDateFormatter* rangeDateFormatter;
 @property (nonatomic, strong) NSMutableArray* expandedIndexPaths;
 @property (nonatomic, strong) NSDate* dateForNightOfSleep;
 @property (nonatomic, strong) SENSleepResult* sleepResult;
@@ -35,7 +35,6 @@ static NSString* const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
 static NSString* const aggregateGraphReuseIdentifier = @"aggregateCell";
 static NSString* const sleepEventReuseIdentifier = @"sleepEventCell";
 static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
-static NSString* const aggregateHeaderReuseIdentifier = @"aggregateHeader";
 
 + (NSDateFormatter*)sleepDateFormatter
 {
@@ -56,6 +55,8 @@ static NSString* const aggregateHeaderReuseIdentifier = @"aggregateHeader";
         _expandedIndexPaths = [NSMutableArray new];
         _timeDateFormatter = [NSDateFormatter new];
         _timeDateFormatter.dateFormat = ([SENSettings timeFormat] == SENTimeFormat12Hour) ? @"h:mm a" : @"H:mm";
+        _rangeDateFormatter = [NSDateFormatter new];
+        _rangeDateFormatter.dateFormat = @"MMM dd";
         [self configureCollectionView];
         [self updateDataForDate];
     }
@@ -77,9 +78,6 @@ static NSString* const aggregateHeaderReuseIdentifier = @"aggregateHeader";
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSensorDataHeaderView class]) bundle:bundle]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                  withReuseIdentifier:sensorDataReuseIdentifier];
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMAggregateDataHeaderCellCollectionReusableView class]) bundle:bundle]
-          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                 withReuseIdentifier:aggregateHeaderReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSleepSegmentCollectionViewCell class]) bundle:bundle]
           forCellWithReuseIdentifier:sleepSegmentReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSleepSummaryCollectionViewCell class]) bundle:bundle]
@@ -105,9 +103,10 @@ static NSString* const aggregateHeaderReuseIdentifier = @"aggregateHeader";
             }
             [result updateWithDictionary:fakeData];
             [weekAgData addObject:@{ @"value" : [NSString stringWithFormat:@"%0.f", [result.score floatValue]],
-                                     @"label" : @"" }];
+                                     @"label" : @"",
+                                     @"date" : date }];
         }
-        HEMSensorGraphDataSource* dataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:weekAgData];
+        HEMSensorGraphDataSource* dataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:[[weekAgData reverseObjectEnumerator] allObjects]];
         [agData addObject:dataSource];
     }
     self.aggregateDataSources = agData;
@@ -200,7 +199,7 @@ static NSString* const aggregateHeaderReuseIdentifier = @"aggregateHeader";
     case HEMSleepGraphCollectionViewSegmentSection:
         return self.sleepResult.segments.count;
     case HEMSleepGraphCollectionViewHistorySection:
-        return 3; // number of weeks?
+        return self.aggregateDataSources.count;
     default:
         return 0;
     }
@@ -209,15 +208,15 @@ static NSString* const aggregateHeaderReuseIdentifier = @"aggregateHeader";
 - (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView viewForSupplementaryElementOfKind:(NSString*)kind atIndexPath:(NSIndexPath*)indexPath
 {
     if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+        HEMSensorDataHeaderView* headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:sensorDataReuseIdentifier forIndexPath:indexPath];
         if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection) {
-            HEMSensorDataHeaderView* headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:sensorDataReuseIdentifier forIndexPath:indexPath];
+            headerView.hidden = self.sleepResult.segments.count == 0;
             self.sensorDataHeaderView = headerView;
             [self updateSensorViewTextWithSleepData:[self.sleepResult.segments firstObject] forCellFillRatio:0];
-            return headerView;
-        } else if (indexPath.section == HEMSleepGraphCollectionViewHistorySection) {
-            HEMAggregateDataHeaderCellCollectionReusableView* headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:aggregateHeaderReuseIdentifier forIndexPath:indexPath];
-            return headerView;
+        } else {
+            headerView.hidden = YES;
         }
+        return headerView;
     }
     return [UICollectionReusableView new];
 }
@@ -291,6 +290,10 @@ static NSString* const aggregateHeaderReuseIdentifier = @"aggregateHeader";
     HEMSensorGraphDataSource* dataSource = self.aggregateDataSources[indexPath.row];
     cell.chartView.dataSource = dataSource;
     cell.chartView.sections = dataSource.dataSeries;
+    NSArray* dates = [dataSource.dataSeries valueForKey:@"date"];
+    cell.titleLabel.text = [NSString stringWithFormat:@"%@ - %@",
+                                                      [self.rangeDateFormatter stringFromDate:[dates firstObject]],
+                                                      [self.rangeDateFormatter stringFromDate:[dates lastObject]]];
     [cell.chartView reloadData];
     [cell.chartView setNeedsDisplay];
     return cell;

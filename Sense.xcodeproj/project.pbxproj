@@ -31,8 +31,6 @@
 		8A1743C319A7BB47001E3C15 /* HEMSleepSegmentCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1743C119A7BB47001E3C15 /* HEMSleepSegmentCollectionViewCell.m */; };
 		8A1743C419A7BB47001E3C15 /* HEMSleepSegmentCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A1743C219A7BB47001E3C15 /* HEMSleepSegmentCollectionViewCell.xib */; };
 		8A1743CA19A8170C001E3C15 /* HEMLinedCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1743C919A8170C001E3C15 /* HEMLinedCollectionViewCell.m */; };
-		8A28A8FB19B9465C006135BD /* HEMAggregateDataHeaderCellCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A28A8F919B9465C006135BD /* HEMAggregateDataHeaderCellCollectionReusableView.m */; };
-		8A28A8FC19B9465C006135BD /* HEMAggregateDataHeaderCellCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A28A8FA19B9465C006135BD /* HEMAggregateDataHeaderCellCollectionReusableView.xib */; };
 		8A4B3D431992C8C800856BDE /* onboardingBackgroundImage1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D3F1992C8C800856BDE /* onboardingBackgroundImage1.png */; };
 		8A4B3D441992C8C800856BDE /* onboardingBackgroundImage1@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D401992C8C800856BDE /* onboardingBackgroundImage1@2x.png */; };
 		8A4B3D491992CB4500856BDE /* HEMRoundedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D481992CB4500856BDE /* HEMRoundedTextField.m */; };
@@ -217,9 +215,6 @@
 		8A1743C219A7BB47001E3C15 /* HEMSleepSegmentCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMSleepSegmentCollectionViewCell.xib; sourceTree = "<group>"; };
 		8A1743C819A8170C001E3C15 /* HEMLinedCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLinedCollectionViewCell.h; sourceTree = "<group>"; };
 		8A1743C919A8170C001E3C15 /* HEMLinedCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLinedCollectionViewCell.m; sourceTree = "<group>"; };
-		8A28A8F819B9465C006135BD /* HEMAggregateDataHeaderCellCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAggregateDataHeaderCellCollectionReusableView.h; sourceTree = "<group>"; };
-		8A28A8F919B9465C006135BD /* HEMAggregateDataHeaderCellCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAggregateDataHeaderCellCollectionReusableView.m; sourceTree = "<group>"; };
-		8A28A8FA19B9465C006135BD /* HEMAggregateDataHeaderCellCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMAggregateDataHeaderCellCollectionReusableView.xib; sourceTree = "<group>"; };
 		8A4B3D3F1992C8C800856BDE /* onboardingBackgroundImage1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = onboardingBackgroundImage1.png; path = images/onboardingBackgroundImage1.png; sourceTree = "<group>"; };
 		8A4B3D401992C8C800856BDE /* onboardingBackgroundImage1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboardingBackgroundImage1@2x.png"; path = "images/onboardingBackgroundImage1@2x.png"; sourceTree = "<group>"; };
 		8A4B3D471992CB4500856BDE /* HEMRoundedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRoundedTextField.h; sourceTree = "<group>"; };
@@ -787,9 +782,6 @@
 		8AA8D92619ABACC100349FD0 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				8A28A8F819B9465C006135BD /* HEMAggregateDataHeaderCellCollectionReusableView.h */,
-				8A28A8F919B9465C006135BD /* HEMAggregateDataHeaderCellCollectionReusableView.m */,
-				8A28A8FA19B9465C006135BD /* HEMAggregateDataHeaderCellCollectionReusableView.xib */,
 				8A5402A219AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.h */,
 				8A5402A319AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.m */,
 				8A5402A419AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.xib */,
@@ -1059,7 +1051,6 @@
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
 				8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */,
 				8AAEED0019A5225F006517C4 /* Agile-BookItalic.otf in Resources */,
-				8A28A8FC19B9465C006135BD /* HEMAggregateDataHeaderCellCollectionReusableView.xib in Resources */,
 				8AB33FF0199D56C20046188F /* lightEventIcon@2x.png in Resources */,
 				8AB33FF6199D56C20046188F /* wakeupEventIcon@2x.png in Resources */,
 				8AC4A058198A0AE900C2BD63 /* questionIcon@2x.png in Resources */,
@@ -1284,7 +1275,6 @@
 				8A4B3D491992CB4500856BDE /* HEMRoundedTextField.m in Sources */,
 				8A1743BB19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m in Sources */,
 				BFAE0B1419AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m in Sources */,
-				8A28A8FB19B9465C006135BD /* HEMAggregateDataHeaderCellCollectionReusableView.m in Sources */,
 				8A1743CA19A8170C001E3C15 /* HEMLinedCollectionViewCell.m in Sources */,
 				8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */,
 				8A90F9AC196350D200AFD110 /* HelloStyleKit.m in Sources */,
@@ -1391,7 +1381,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				ONLY_ACTIVE_ARCH = YES;
 				PROVISIONING_PROFILE = "";
 				SDKROOT = iphoneos;
@@ -1425,7 +1415,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 7.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PROVISIONING_PROFILE = "5f30cfec-e3fa-4c25-8d7e-076b0a5e03a4";
 				SDKROOT = iphoneos;
 				TARGETED_DEVICE_FAMILY = "1,2";

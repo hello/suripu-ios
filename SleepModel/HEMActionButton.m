@@ -9,7 +9,7 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
 
 @property (nonatomic, assign) CGRect originalFrame;
 @property (nonatomic, copy)   NSString* originalTitle;
-@property (nonatomic, assign) BOOL showingActivity;
+@property (nonatomic, assign, getter=isShowingActivity) BOOL showingActivity;
 @property (nonatomic, strong) UIActivityIndicatorView* activityView;
 
 @end
@@ -40,7 +40,7 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
 }
 
 - (void)showActivity {
-    if ([self showingActivity]) return;
+    if ([self isShowingActivity]) return;
     
     if (CGRectIsEmpty([self originalFrame])) {
         [self setOriginalFrame:[self frame]];
@@ -81,7 +81,7 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
 }
 
 - (void)stopActivity {
-    if (![self showingActivity]) return;
+    if (![self isShowingActivity]) return;
     
     [[self activityView] stopAnimating];
     [UIView animateWithDuration:0.25f

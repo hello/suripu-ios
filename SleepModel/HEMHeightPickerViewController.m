@@ -1,5 +1,5 @@
 #import <SenseKit/SENSettings.h>
-
+#import <SenseKit/SENAccount.h>
 #import "HEMHeightPickerViewController.h"
 #import "HEMUserDataCache.h"
 #import "HEMValueSliderView.h"
@@ -43,7 +43,7 @@ static NSInteger HEMMaxHeightInFeet = 9;
 - (void)sliderView:(HEMValueSliderView *)sliderView didScrollToValue:(float)value {
     NSInteger inches = (int)(roundf((value - (long)floorf(value))*12));
     NSInteger feet = (int)floorf(value);
-    NSInteger cm = value * 12 * HEMHeightPickerCentimetersPerInch;
+    NSInteger cm = ceilf(((feet * 12) + inches) * HEMHeightPickerCentimetersPerInch);
     
     if (inches == 12) {
         inches = 0;
@@ -56,7 +56,7 @@ static NSInteger HEMMaxHeightInFeet = 9;
     [[self mainHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat]];
     [[self otherHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"measurement.or", nil), cmFormat]];
     
-    [[HEMUserDataCache sharedUserDataCache] setHeightInCentimeters:@(cm)];
+    [[[HEMUserDataCache sharedUserDataCache] account] setHeight:@(cm)];
 }
 
 @end

@@ -1,6 +1,8 @@
 
 #import <Foundation/Foundation.h>
-#import <SenseKit/SENAPIAccount.h>
+
+@class SENAccount;
+@class SENSenseManager;
 
 @interface HEMUserDataCache : NSObject
 
@@ -16,13 +18,9 @@
  */
 + (void)clearSharedUserDataCache;
 
-/**
- *  Update the account of the currently authenticated user with shared data
- */
-+ (void)updateAccountWithSharedUserDataWithCompletion:(void (^)(NSError*))block;
-
 @property (nonatomic, strong) NSNumber* age;
-@property (nonatomic, strong) NSNumber* heightInCentimeters;
-@property (nonatomic, strong) NSNumber* weightInKilograms;
-@property (nonatomic) SENAPIAccountGender gender;
+
+@property (nonatomic, strong) SENAccount* account;
+@property (nonatomic, strong) SENSenseManager* senseManager;
+
 @end

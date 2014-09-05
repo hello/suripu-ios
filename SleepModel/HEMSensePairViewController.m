@@ -11,6 +11,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMUserDataCache.h"
 
 static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523-785FEABCD123";
 
@@ -25,8 +26,8 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoVSpaceConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *readyVSpaceConstraint;
 
-@property (strong, nonatomic) SENSense* sense;
 @property (strong, nonatomic) SENSenseManager* manager;
+@property (copy,   nonatomic) NSString* disconnectObserverId;
 
 @end
 
@@ -45,6 +46,32 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
 - (void)stopActivity {
     [[self readyButton] stopActivity];
     [[self noSenseButton] setEnabled:YES];
+}
+
+- (void)cacheManager {
+    [[HEMUserDataCache sharedUserDataCache] setSenseManager:[self manager]];
+}
+
+- (void)disconnectSense {
+    if ([self manager] != nil) {
+        if ([self disconnectObserverId] != nil) {
+            [[self manager] removeUnexpectedDisconnectObserver:[self disconnectObserverId]];
+            [self setDisconnectObserverId:nil];
+        }
+        [[self manager] disconnectFromSense];
+    }
+}
+
+- (void)observeUnexpectedDisconnects {
+    __weak typeof(self) weakSelf = self;
+    self.disconnectObserverId =
+        [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf && [[strongSelf readyButton] isShowingActivity]) {
+                [strongSelf stopActivity];
+                [strongSelf showErrorMessage:NSLocalizedString(@"pairing.error.unexpected-disconnect", nil)];
+            }
+        }];
 }
 
 #pragma mark - Actions
@@ -67,15 +94,15 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
     // or manager to cause issues.
     __weak typeof(self) weakSelf = self;
     if (![SENSenseManager scanForSense:^(NSArray *senses) {
-        // TODO (jimmy): what to do when more than 1 sense is detected?
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             if ([senses count] > 0) {
-                [strongSelf enablePairingMode:[senses firstObject]];
-                DLog(@"sense found, %@", [strongSelf sense]);
+                // TODO (jimmy): what to do when more than 1 sense is detected?
+                [strongSelf pairWith:[senses firstObject]];
+                DLog(@"sense found, %@", [[strongSelf manager] sense]);
             } else {
                 [strongSelf stopActivity];
-                [strongSelf showNoSenseFoundAlert];
+                [strongSelf showErrorMessage:NSLocalizedString(@"pairing.error.sense-not-found", nil)];
             }
         }
     }]) {
@@ -85,47 +112,37 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
     }
 }
 
-- (void)enablePairingMode:(SENSense*)sense {
-    if (sense) {
-        __weak typeof(self) weakSelf = self;
-        // TODO (jimmy): show next steps, but that requires some design
-        // decisions.  will speak with Kevin when he comes in
-        [self setSense:sense];
-        [self setManager:[[SENSenseManager alloc] initWithSense:sense]];
-        [[self manager] enablePairingMode:YES
-                                  success:^(id response) {
-                                      DLog(@"pairing mode on");
-                                      __strong typeof(weakSelf) strongSelf = weakSelf;
-                                      if (strongSelf) {
-                                          NSString* segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
-                                          [strongSelf stopActivity];
-                                          [strongSelf performSegueWithIdentifier:segueId sender:self];
-                                      }
-                                  } failure:^(NSError *error) {
-                                      DLog(@"failed to enable code");
-                                      __strong typeof(weakSelf) strongSelf = weakSelf;
-                                      if (strongSelf) {
-                                          [strongSelf stopActivity];
-                                          [strongSelf showPairingErrorAlert];
-                                      }
-                                  }];
-    }
+#pragma mark - Pairing
+
+- (void)pairWith:(SENSense*)sense {
+    [self disconnectSense]; // in case one has been set
+    [self setManager:[[SENSenseManager alloc] initWithSense:sense]];
+    [self observeUnexpectedDisconnects];
+
+    __weak typeof(self) weakSelf = self;
+    [[self manager] pair:^(id response) {
+        DLog(@"paired!");
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf cacheManager];
+            [strongSelf stopActivity];
+            NSString* segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
+            [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
+        }
+    } failure:^(NSError *error) {
+        DLog(@"failed to pair %@", error);
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf && [[strongSelf readyButton] isShowingActivity]) {
+            [strongSelf stopActivity];
+            [strongSelf showErrorMessage:NSLocalizedString(@"pairing.error.could-not-pair", nil)];
+        }
+    }];
 }
 
-- (void)showNoSenseFoundAlert {
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"pairing.failed.title", nil)
-                                message:NSLocalizedString(@"pairing.error.sense-not-found", nil)
-                               delegate:nil
-                      cancelButtonTitle:nil
-                      otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
-}
+#pragma mark - Errors
 
-- (void)showPairingErrorAlert {
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"pairing.failed.title", nil)
-                                message:NSLocalizedString(@"pairing.error.could-not-enable", nil)
-                               delegate:nil
-                      cancelButtonTitle:nil
-                      otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
+- (void)showErrorMessage:(NSString*)message {
+    [self showMessageDialog:message title:NSLocalizedString(@"pairing.failed.title", nil)];
 }
 
 @end

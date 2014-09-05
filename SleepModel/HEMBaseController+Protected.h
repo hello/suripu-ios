@@ -12,5 +12,6 @@
 
 - (void)adjustConstraintsForIPhone4;
 - (void)updateConstraint:(NSLayoutConstraint*)constraint withDiff:(CGFloat)diff;
+- (void)showMessageDialog:(NSString*)message title:(NSString*)title;
 
 @end

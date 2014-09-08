@@ -21,7 +21,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    [HelloStyleKit drawSleepScoreGraphWithSleepScoreLabelText:self.sleepScoreLabelText sleepScore:self.sleepScore sleepScoreDateText:self.sleepScoreDateText];
+    [HelloStyleKit drawSleepScoreGraphWithSleepScoreLabelText:self.sleepScoreLabelText sleepScore:self.sleepScore];
 }
 
 - (void)animateScoreTo:(CGFloat)value

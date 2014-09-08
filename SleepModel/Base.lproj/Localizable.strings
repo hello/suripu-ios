@@ -11,6 +11,9 @@
 "sign-up.error.conflict" = "The provided email address is already attached to an account.";
 "sign-up.error.generic" = "Something went wrong. Please try again.";
 
+// user information
+"user.info.accessibility.birthdate-title" = "Select the month, day, and year of your birthday";
+
 // pairing with sense
 "pairing.failed.title" = "Pairing Failed";
 "pairing.error.sense-not-found" = "Sense was not detected.  Ensure Sense is on and near by your device.";

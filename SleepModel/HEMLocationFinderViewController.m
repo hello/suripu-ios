@@ -39,9 +39,11 @@
         [[HEMLocationCenter sharedCenter] locate:&error success:^BOOL(double lat, double lon, double accuracy) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
+                SENAccount* account = [[HEMUserDataCache sharedUserDataCache] account];
+                [account setLatitude:@(lat)];
+                [account setLongitude:@(lon)];
+                
                 [strongSelf stopActivity];
-                DLog(@"got lat %f, long %f, accuracy %f", lat, lon, accuracy);
-                // TODO (jimmy): where to put this data?
                 [strongSelf setLocationTxId:nil];
                 [strongSelf uploadCollectedData:YES];
                 [strongSelf next];
@@ -77,6 +79,7 @@
     __weak typeof(self) weakSelf = self;
     [SENAPIAccount updateAccount:[[HEMUserDataCache sharedUserDataCache] account]
                  completionBlock:^(id data, NSError *error) {
+                     DLog(@"update completed with error %@", error);
                      __strong typeof(weakSelf) strongSelf = weakSelf;
                      if (!strongSelf) return;
                      if (error != nil && retry) {

@@ -1,6 +1,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HEMAgePickerViewController : UIViewController
+@interface HEMBirthdatePickerViewController : UIViewController
 
 @end

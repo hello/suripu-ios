@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="s6I-B7-593">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
     </dependencies>
     <scenes>
@@ -550,10 +549,10 @@
             </objects>
             <point key="canvasLocation" x="2190" y="1226"/>
         </scene>
-        <!--Age View Controller-->
+        <!--DoB View Controller-->
         <scene sceneID="J5f-Jz-Trm">
             <objects>
-                <viewController storyboardIdentifier="ageViewController" id="R0p-kB-1qZ" userLabel="Age View Controller" customClass="HEMAgePickerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="dobViewController" id="R0p-kB-1qZ" userLabel="DoB View Controller" customClass="HEMBirthdatePickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="CiX-HD-SQL"/>
                         <viewControllerLayoutGuide type="bottom" id="GdX-Ok-5df"/>
@@ -562,7 +561,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What is your age?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znD-8e-Xes">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What's your birthday?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znD-8e-Xes">
                                 <rect key="frame" x="23" y="28" width="274" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="274" id="8ha-C3-ylS"/>
@@ -572,18 +571,6 @@
                                 <color key="textColor" red="0.25882352939999997" green="0.25882352939999997" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gNl-Rw-59y">
-                                <rect key="frame" x="0.0" y="200" width="320" height="162"/>
-                                <color key="tintColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="150" id="Pcg-HG-uVL"/>
-                                    <constraint firstAttribute="width" constant="320" id="ubJ-do-7dR"/>
-                                </constraints>
-                                <connections>
-                                    <outlet property="dataSource" destination="R0p-kB-1qZ" id="4pn-5K-xP0"/>
-                                    <outlet property="delegate" destination="R0p-kB-1qZ" id="yAe-d6-Qvl"/>
-                                </connections>
-                            </pickerView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1g-YQ-7bC" customClass="HEMActionButton">
                                 <rect key="frame" x="101" y="484" width="119" height="40"/>
                                 <constraints>
@@ -596,29 +583,39 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="gpF-55-MmK" kind="push" id="LfH-qq-fau"/>
+                                    <action selector="next:" destination="R0p-kB-1qZ" eventType="touchUpInside" id="0F5-hk-pZj"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7P9-ib-JRI" customClass="HEMBirthdatePickerView">
+                                <rect key="frame" x="25" y="134" width="270" height="300"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="270" id="bmH-Yj-HEK"/>
+                                    <constraint firstAttribute="height" constant="300" id="qlT-A0-Sum"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="h1g-YQ-7bC" secondAttribute="centerX" constant="-0.5" id="2Ah-nm-PZ1"/>
-                            <constraint firstAttribute="centerY" secondItem="gNl-Rw-59y" secondAttribute="centerY" constant="3" id="MJ3-Ww-iYH"/>
+                            <constraint firstItem="7P9-ib-JRI" firstAttribute="top" secondItem="h1g-YQ-7bC" secondAttribute="top" constant="-350" id="7er-xc-98n"/>
+                            <constraint firstAttribute="centerX" secondItem="7P9-ib-JRI" secondAttribute="centerX" id="8MD-I2-8Us"/>
                             <constraint firstAttribute="centerX" secondItem="znD-8e-Xes" secondAttribute="centerX" id="VZN-5x-rdc"/>
                             <constraint firstItem="GdX-Ok-5df" firstAttribute="top" secondItem="h1g-YQ-7bC" secondAttribute="bottom" constant="44" id="gef-Wm-GJ8"/>
                             <constraint firstItem="znD-8e-Xes" firstAttribute="top" secondItem="CiX-HD-SQL" secondAttribute="bottom" constant="8" id="rJ6-Qb-ccS"/>
-                            <constraint firstAttribute="centerX" secondItem="gNl-Rw-59y" secondAttribute="centerX" id="vHh-1O-Njd"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kZr-Gj-zOB"/>
                     <connections>
-                        <outlet property="agePickerView" destination="gNl-Rw-59y" id="MXX-XY-Jzj"/>
+                        <outlet property="dobPicker" destination="7P9-ib-JRI" id="AxA-0d-3ne"/>
+                        <outlet property="titleLabel" destination="znD-8e-Xes" id="UOF-tQ-Cng"/>
+                        <segue destination="gpF-55-MmK" kind="push" identifier="gender" id="Bj1-eU-Rc8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ffw-pv-gaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2643" y="1226"/>
+            <point key="canvasLocation" x="2643" y="1231"/>
         </scene>
         <!--Height View Controller-->
         <scene sceneID="YNj-iP-C8c">
@@ -1002,7 +999,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="uc7-01-jZi" kind="push" id="KSL-1I-d7X"/>
+                                    <segue destination="uc7-01-jZi" kind="push" identifier="height" id="KSL-1I-d7X"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kcS-lE-b2D" userLabel="Line">

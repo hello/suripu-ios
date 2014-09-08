@@ -13,8 +13,10 @@
 /** Segue Identifiers */
 +(NSString *)signupSegueIdentifier;
 +(NSString *)setupSegueIdentifier;
++(NSString *)genderSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
 +(NSString *)dataIntroSegueIdentifier;
++(NSString *)heightSegueIdentifier;
 +(NSString *)sleepQuestionIntroSegueIdentifier;
 +(NSString *)skipSegueIdentifier;
 +(NSString *)wifiSegueIdentifier;
@@ -23,7 +25,7 @@
 +(UIViewController *)instantiateWelcomeViewController;
 +(UIViewController *)instantiateSignUpViewController;
 +(UIViewController *)instantiateDataIntroViewController;
-+(UIViewController *)instantiateAgeViewController;
++(UIViewController *)instantiateDobViewController;
 +(UIViewController *)instantiateWifiViewController;
 +(UIViewController *)instantiateSleepQuestionIntroViewController;
 +(UIViewController *)instantiateBluetoothViewController;

@@ -9,7 +9,7 @@ NSString* const SENBackgroundNoiseStorageKey = @"SENBackgroundNoise";
 
 + (instancetype)savedBackgroundNoise
 {
-    SENBackgroundNoise* noise = [[[SENKeyedArchiver objectsForKey:SENBackgroundNoiseStorageKey] allObjects] firstObject];
+    SENBackgroundNoise* noise = [SENKeyedArchiver objectsForKey:SENBackgroundNoiseStorageKey inCollection:NSStringFromClass([self class])];
     if (!noise) {
         noise = [[SENBackgroundNoise alloc] initWithSoundName:NSLocalizedString(@"noise.sound-name.none", nil)];
     }
@@ -39,7 +39,7 @@ NSString* const SENBackgroundNoiseStorageKey = @"SENBackgroundNoise";
 
 - (void)save
 {
-    [SENKeyedArchiver setObjects:[NSSet setWithObject:self] forKey:SENBackgroundNoiseStorageKey];
+    [SENKeyedArchiver setObject:self forKey:SENBackgroundNoiseStorageKey inCollection:NSStringFromClass([SENBackgroundNoise class])];
 }
 
 - (BOOL)isOn

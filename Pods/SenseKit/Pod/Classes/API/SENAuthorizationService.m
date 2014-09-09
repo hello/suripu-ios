@@ -68,6 +68,10 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
     return token != nil;
 }
 
++ (NSString*)accessToken {
+    return [FXKeychain defaultKeychain][SENAuthorizationServiceCredentialsKey][SENAuthorizationServiceAccessTokenKey];
+}
+
 #pragma mark Private
 
 + (id)authorizationHeaderValue
@@ -77,7 +81,7 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 
 + (void)authorizeRequestsFromKeychain
 {
-    id token = [FXKeychain defaultKeychain][SENAuthorizationServiceCredentialsKey][SENAuthorizationServiceAccessTokenKey];
+    id token = [self accessToken];
     if (token)
         [self authorizeRequestsWithToken:token];
 }

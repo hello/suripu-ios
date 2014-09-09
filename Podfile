@@ -11,7 +11,7 @@ pod 'SVProgressHUD', :git =>    'https://github.com/samvermette/SVProgressHUD.gi
 pod 'JBChartView', :git => 'git@github.com:hello/JBChartView.git'
 pod 'FCDynamicPanesNavigationController', :git => 'git@github.com:hello/FCDynamicPanesNavigationController.git'
 pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
-pod 'SenseKit', :path => '../SenseKit'
+pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
 
 
 target 'Tests', :exclusive => true do

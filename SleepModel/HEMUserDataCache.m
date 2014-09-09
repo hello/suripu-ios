@@ -1,4 +1,7 @@
 
+#import <SenseKit/SENSenseManager.h>
+#import <SenseKit/SENAccount.h>
+
 #import "HEMUserDataCache.h"
 
 static HEMUserDataCache* sharedUserDataCache = nil;
@@ -16,15 +19,6 @@ static HEMUserDataCache* sharedUserDataCache = nil;
 + (void)clearSharedUserDataCache
 {
     sharedUserDataCache = nil;
-}
-
-+ (void)updateAccountWithSharedUserDataWithCompletion:(void (^)(NSError*))block
-{
-    HEMUserDataCache* cache = [self sharedUserDataCache];
-    [SENAPIAccount updateUserAccountWithAge:cache.age gender:cache.gender height:cache.heightInCentimeters weight:cache.weightInKilograms completion:^(id data, NSError* error) {
-        if (block)
-        block(error);
-    }];
 }
 
 @end

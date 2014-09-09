@@ -1,48 +1,55 @@
 
 #import <Foundation/Foundation.h>
 
+@class YapDatabase;
+
 /**
  *  A utility class for handling archiving sets of objects to disk
  */
 @interface SENKeyedArchiver : NSObject
 
++ (YapDatabase*)datastore;
+
+/**
+ *  Retrieves all objects in a given bucket
+ *
+ *  @param collectionName name of the bucket
+ *
+ *  @return array of matching objects
+ */
++ (NSArray*)allObjectsInCollection:(NSString*)collectionName;
+
+/**
+ *  Removes all objects in a given bucket
+ *
+ *  @param collectionName name of the bucket
+ */
++ (void)removeAllObjectsInCollection:(NSString*)collectionName;
+
 /**
  *  Retrieves objects stored under a particular key
  *
- *  @param key identifier of the objects to retrieve
+ *  @param key            identifier of the objects to retrieve
+ *  @param collectionName storage bucket of the objects
  *
  *  @return a set of matching objects or an empty set
  */
-+ (NSSet*)objectsForKey:(NSString*)key;
++ (id)objectsForKey:(NSString*)key inCollection:(NSString*)collectionName;
 
 /**
  *  Persists NSCoding-compliant objects to be retrieved later using a key
  *
- *  @param objects objects to save
- *  @param key     identifier of the objects to persist
+ *  @param objects        objects to save
+ *  @param key            identifier of the objects to persist
+ *  @param collectionName storage bucket of the objects
  */
-+ (void)setObjects:(NSSet*)objects forKey:(NSString*)key;
-
-/**
- *  Adds an object to a collection stored under a particular key
- *
- *  @param object object to add
- *  @param key    identifier of the persisted collection
- */
-+ (void)addObject:(id<NSCoding>)object toObjectsForKey:(NSString*)key;
-
-/**
- *  Removes an object from a collection stored under a particular key
- *
- *  @param object object to remove
- *  @param key    identifier of the persisted collection
- */
-+ (void)removeObject:(id<NSCoding>)object fromObjectsForKey:(NSString*)key;
++ (void)setObject:(id)objects forKey:(NSString*)key inCollection:(NSString*)collectionName;
 
 /**
  *  Removes all objects from a collction stored under a particular key
  *
- *  @param key identifier of the persisted collection
+ *  @param key            identifier of the persisted collection
+ *  @param collectionName storage bucket of the objects
  */
-+ (void)removeAllObjectsForKey:(NSString*)key;
++ (void)removeAllObjectsForKey:(NSString*)key inCollection:(NSString*)collectionName;
 @end

@@ -1,1 +1,1 @@
-../../../../SenseKit/Pod/Classes/BLE/SENPill.h
+../../SenseKit/Pod/Classes/BLE/SENPill.h

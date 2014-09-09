@@ -1,9 +1,14 @@
 
+#import <SenseKit/SENAPIAccount.h>
+#import <SenseKit/SENAccount.h>
+
 #import "HEMLocationFinderViewController.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMUserDataCache.h"
 #import "HEMLocationCenter.h"
 #import "HEMActionButton.h"
+#import "HEMOnboardingStoryboard.h"
+#import "HEMBaseController+Protected.h"
 
 @interface HEMLocationFinderViewController ()
 
@@ -14,17 +19,6 @@
 @end
 
 @implementation HEMLocationFinderViewController
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view.
-}
-
-- (void)finish {
-    [self uploadCollectedData];
-    [self next];
-}
 
 - (void)showActivity {
     [[self skipButton] setEnabled:NO];
@@ -45,11 +39,14 @@
         [[HEMLocationCenter sharedCenter] locate:&error success:^BOOL(double lat, double lon, double accuracy) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
+                SENAccount* account = [[HEMUserDataCache sharedUserDataCache] account];
+                [account setLatitude:@(lat)];
+                [account setLongitude:@(lon)];
+                
                 [strongSelf stopActivity];
-                NSLog(@"got lat %f, long %f, accuracy %f", lat, lon, accuracy);
-                // TODO (jimmy): where to put this data?
                 [strongSelf setLocationTxId:nil];
-                [strongSelf finish];
+                [strongSelf uploadCollectedData:YES];
+                [strongSelf next];
             }
             return NO;
         } failure:^BOOL(NSError *error) {
@@ -68,23 +65,28 @@
     }
 }
 
-- (IBAction)skipRequestingLocation:(id)sender
-{
-    [self uploadCollectedData];
+- (IBAction)skipRequestingLocation:(id)sender {
+    [self uploadCollectedData:YES];
     [self next];
 }
 
 - (void)next {
-    [self performSegueWithIdentifier:@"next" sender:self];
+    UIViewController* questionIntroVC = [HEMOnboardingStoryboard instantiateSleepQuestionIntroViewController];
+    [[self navigationController] setViewControllers:@[questionIntroVC] animated:YES];
 }
 
-- (void)uploadCollectedData
-{
-    [HEMUserDataCache updateAccountWithSharedUserDataWithCompletion:^(NSError* error) {
-        if (error) {
-            NSLog(@"OH NOES: %@", error);
-        }
-    }];
+- (void)uploadCollectedData:(BOOL)retry {
+    __weak typeof(self) weakSelf = self;
+    [SENAPIAccount updateAccount:[[HEMUserDataCache sharedUserDataCache] account]
+                 completionBlock:^(id data, NSError *error) {
+                     DLog(@"update completed with error %@", error);
+                     __strong typeof(weakSelf) strongSelf = weakSelf;
+                     if (!strongSelf) return;
+                     if (error != nil && retry) {
+                         DLog(@"failed to update account with user information");
+                         [strongSelf uploadCollectedData:NO];
+                     } // TODO (jimmy): else if error, no retry, what should we do?
+                 }];
 }
 
 #pragma mark - Alerts
@@ -106,13 +108,8 @@
 }
 
 - (void)showLocationError:(NSError*)error {
-    NSString* errorMessage = [self errorMessageForLocationError:error];
-    NSString* title = NSLocalizedString(@"location.error.title", nil);
-    [[[UIAlertView alloc] initWithTitle:title
-                                message:errorMessage
-                               delegate:nil
-                      cancelButtonTitle:nil
-                      otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
+    [self showMessageDialog:[self errorMessageForLocationError:error]
+                      title:NSLocalizedString(@"location.error.title", nil)];
 }
 
 #pragma mark - Clean Up

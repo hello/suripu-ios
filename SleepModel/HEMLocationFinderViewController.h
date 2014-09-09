@@ -1,6 +1,7 @@
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMLocationFinderViewController : UIViewController
+@interface HEMLocationFinderViewController : HEMBaseController
 
 @end

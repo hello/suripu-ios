@@ -11,10 +11,17 @@
 "sign-up.error.conflict" = "The provided email address is already attached to an account.";
 "sign-up.error.generic" = "Something went wrong. Please try again.";
 
+// user information
+"user.info.accessibility.birthdate-title" = "Select the month, day, and year of your birthday";
+
 // pairing with sense
 "pairing.failed.title" = "Pairing Failed";
 "pairing.error.sense-not-found" = "Sense was not detected.  Ensure Sense is on and near by your device.";
-"pairing.error.could-not-enable" = "Unable to enable pairing mode.  Sense may not be ready.  Try again.";
+"pairing.error.could-not-pair" = "Could not pair with Sense.  If there is a phone already paired to Sense, unpair from that phone then try again.";
+"pairing.setup.failed.title" = "Set Up Failed";
+"pairing.error.sense-setup-failed" = "Unable to set up Sense.  If Sense has been paired before, make sure previously paired phones have been removed then try again.";
+"pairing.error.pill-pair-failed" = "Unable to find any Sleep Pills to pair with.  Make sure they are nearby and try again.";
+"pairing.error.unexpected-disconnect" = "Connection from Sense was broken.  Try again.";
 
 // location
 "location.error.title" = "Unknown Location";

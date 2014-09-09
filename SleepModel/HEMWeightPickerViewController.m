@@ -1,4 +1,6 @@
 
+#import <SenseKit/SENAccount.h>
+
 #import "HEMWeightPickerViewController.h"
 #import "HEMUserDataCache.h"
 
@@ -76,7 +78,7 @@ CGFloat const HEMWeightPickerKilogramsPerPound = 0.453592f;
         } else {
             value = row;
         }
-        [[HEMUserDataCache sharedUserDataCache] setWeightInKilograms:@(value)];
+        [[[HEMUserDataCache sharedUserDataCache] account] setWeight:@(value)];
     } else if (component == 1 && !([self isUsingImperial] == (row == 1))) {
         self.usingImperial = (row == 1);
         NSInteger selectedRow = [self.weightPickerView selectedRowInComponent:0];

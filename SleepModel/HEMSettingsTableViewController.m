@@ -53,7 +53,7 @@
     switch (indexPath.section) {
     case 1: {
         if (indexPath.row == 0) {
-            UIViewController* startController = [HEMOnboardingStoryboard instantiateAgeViewController];
+            UIViewController* startController = [HEMOnboardingStoryboard instantiateDobViewController];
             [self.navigationController pushViewController:startController animated:YES];
         }
     } break;

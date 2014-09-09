@@ -1,43 +1,82 @@
 
+#import <YapDatabase/YapDatabase.h>
 #import "SENKeyedArchiver.h"
 
 @implementation SENKeyedArchiver
 
-+ (NSSet*)objectsForKey:(NSString*)key
+static NSString* const SENKeyedArchiverStoreName = @"SENKeyedArchiverStore";
+
++ (YapDatabase*)datastore
 {
-    return [NSKeyedUnarchiver unarchiveObjectWithFile:[self filePathForKey:key]] ?: [NSSet set];
+    static YapDatabase* database = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        database = [[YapDatabase alloc] initWithPath:[self datastorePath]];
+    });
+    return database;
 }
 
-+ (NSString*)filePathForKey:(NSString*)key
++ (NSString*)datastorePath
 {
     NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    return [documentsPath stringByAppendingPathComponent:key];
+    return [documentsPath stringByAppendingPathComponent:SENKeyedArchiverStoreName];
 }
 
-+ (void)setObjects:(NSSet*)objects forKey:(NSString*)key
++ (YapDatabaseConnection*)mainConnection
 {
-    [NSKeyedArchiver archiveRootObject:objects toFile:[self filePathForKey:key]];
+    static YapDatabaseConnection* connection = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        connection = [[self datastore] newConnection];
+    });
+    return connection;
 }
 
-+ (void)addObject:(id<NSCoding>)object toObjectsForKey:(NSString*)key
++ (NSArray*)allObjectsInCollection:(NSString*)collectionName
 {
-    if (!object)
+    __block NSMutableArray* objects = [[NSMutableArray alloc] init];
+    [[self mainConnection] readWithBlock:^(YapDatabaseReadTransaction* transaction) {
+        for (NSString* key in [transaction allKeysInCollection:collectionName]) {
+            id obj = [transaction objectForKey:key inCollection:collectionName];
+            if (obj)
+                [objects addObject:obj];
+        }
+    }];
+    return objects;
+}
+
++ (void)removeAllObjectsInCollection:(NSString*)collectionName
+{
+    [[self mainConnection] readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        [transaction removeAllObjectsInCollection:collectionName];
+    }];
+}
+
++ (NSSet*)objectsForKey:(NSString*)key inCollection:(NSString*)collectionName
+{
+    __block id objects = nil;
+    [[self mainConnection] readWithBlock:^(YapDatabaseReadTransaction* transaction) {
+        objects = [transaction objectForKey:key inCollection:collectionName];
+    }];
+    return objects;
+}
+
++ (void)setObject:(id)object forKey:(NSString*)key inCollection:(NSString*)collectionName
+{
+    if (!object) {
+        [self removeAllObjectsForKey:key inCollection:collectionName];
         return;
-
-    NSMutableSet* objects = [[self objectsForKey:key] mutableCopy];
-    [objects addObject:object];
-    [self setObjects:objects forKey:key];
+    }
+    [[self mainConnection] readWriteWithBlock:^(YapDatabaseReadWriteTransaction* transaction) {
+        [transaction setObject:object forKey:key inCollection:collectionName];
+    }];
 }
 
-+ (void)removeAllObjectsForKey:(NSString*)key
++ (void)removeAllObjectsForKey:(NSString*)key inCollection:(NSString*)collectionName
 {
-    [self setObjects:nil forKey:key];
+    [[self mainConnection] readWriteWithBlock:^(YapDatabaseReadWriteTransaction* transaction) {
+        [transaction removeObjectForKey:key inCollection:collectionName];
+    }];
 }
 
-+ (void)removeObject:(id<NSCoding>)object fromObjectsForKey:(NSString*)key
-{
-    NSMutableSet* objects = [[self objectsForKey:key] mutableCopy];
-    [objects removeObject:object];
-    [self setObjects:objects forKey:key];
-}
 @end

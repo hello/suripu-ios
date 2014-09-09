@@ -18,7 +18,7 @@ static NSString* const SENAlarmArchiveKey = @"SENAlarmArchiveKey";
 
 + (SENAlarm*)savedAlarm
 {
-    SENAlarm* alarm = [[[SENKeyedArchiver objectsForKey:SENAlarmArchiveKey] allObjects] firstObject];
+    SENAlarm* alarm = [SENKeyedArchiver objectsForKey:SENAlarmArchiveKey inCollection:NSStringFromClass([self class])];
     if (!alarm) {
         NSDictionary* properties = @{
             SENAlarmSoundNameKey : @"None",
@@ -35,7 +35,7 @@ static NSString* const SENAlarmArchiveKey = @"SENAlarmArchiveKey";
 
 + (void)clearSavedAlarms
 {
-    [SENKeyedArchiver setObjects:nil forKey:SENAlarmArchiveKey];
+    [SENKeyedArchiver removeAllObjectsForKey:SENAlarmArchiveKey inCollection:NSStringFromClass([self class])];
 }
 
 + (NSString*)localizedValueForTime:(struct SENAlarmTime)time
@@ -161,7 +161,7 @@ static NSString* const SENAlarmArchiveKey = @"SENAlarmArchiveKey";
 
 - (void)save
 {
-    [SENKeyedArchiver setObjects:[NSSet setWithObject:self] forKey:SENAlarmArchiveKey];
+    [SENKeyedArchiver setObject:self forKey:SENAlarmArchiveKey inCollection:NSStringFromClass([SENAlarm class])];
 }
 
 - (void)setSoundName:(NSString*)soundName

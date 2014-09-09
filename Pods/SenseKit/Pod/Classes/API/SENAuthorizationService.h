@@ -37,4 +37,11 @@ extern NSString* const SENAuthorizationServiceDidDeauthorizeNotification;
  *  Check whether there are cached credentials in the keychain
  */
 + (BOOL)isAuthorized;
+
+/**
+ * The access token of the authorized user, if authorized
+ * @return the access token or nil if not authorized
+ */
++ (NSString*)accessToken;
+
 @end

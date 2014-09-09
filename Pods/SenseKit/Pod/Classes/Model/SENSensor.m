@@ -20,12 +20,12 @@ NSString* const SENSensorUnitKey = @"unit";
 
 + (NSArray*)sensors
 {
-    return [[SENKeyedArchiver objectsForKey:SENSensorArchiveKey] allObjects];
+    return [SENKeyedArchiver allObjectsInCollection:NSStringFromClass([self class])];
 }
 
 + (void)clearCachedSensors
 {
-    [SENKeyedArchiver setObjects:nil forKey:SENSensorArchiveKey];
+    [SENKeyedArchiver removeAllObjectsInCollection:NSStringFromClass([self class])];
     [[NSNotificationCenter defaultCenter] postNotificationName:SENSensorsUpdatedNotification object:nil];
 }
 
@@ -43,9 +43,9 @@ NSString* const SENSensorUnitKey = @"unit";
             SENSensor* sensor = [[SENSensor alloc] initWithDictionary:values];
             if (sensor) {
                 [sensors addObject:sensor];
+                [sensor save];
             }
         }];
-        [SENKeyedArchiver setObjects:[NSSet setWithArray:sensors] forKey:SENSensorArchiveKey];
         [[NSNotificationCenter defaultCenter] postNotificationName:SENSensorsUpdatedNotification object:sensors];
     }];
 }
@@ -173,7 +173,7 @@ NSString* const SENSensorUnitKey = @"unit";
 
 - (void)save
 {
-    [SENKeyedArchiver addObject:self toObjectsForKey:SENSensorArchiveKey];
+    [SENKeyedArchiver setObject:self forKey:self.name inCollection:NSStringFromClass([SENSensor class])];
     [[NSNotificationCenter defaultCenter] postNotificationName:SENSensorUpdatedNotification object:self];
 }
 

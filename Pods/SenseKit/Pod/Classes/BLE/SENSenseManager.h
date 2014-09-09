@@ -16,9 +16,14 @@ typedef void(^SENSenseSuccessBlock)(id response);
 typedef void(^SENSenseFailureBlock)(NSError* error);
 
 typedef enum {
-    SENSenseManagerErrorCodeNoDeviceSpecified,
-    SENSenseManagerErrorCodeNoInvalidArgument,
-    SENSenseManagerErrorCodeUnexpectedResponse
+    SENSenseManagerErrorCodeNoDeviceSpecified = -1,
+    SENSenseManagerErrorCodeInvalidArgument = -2,
+    SENSenseManagerErrorCodeUnexpectedResponse = -3,
+    SENSenseManagerErrorCodeTimeout = -4,
+    SENSenseManagerErrorCodeDeviceAlreadyPaired = -5,
+    SENSenseManagerErrorCodeInvalidCommand = -6,
+    SENSenseManagerErrorCodeConnectionFailed = -7,
+    SENSenseManagerErrorCodeNone = 0
 } SENSenseManagerErrorCode;
 
 @interface SENSenseManager : NSObject
@@ -48,6 +53,12 @@ typedef enum {
 + (void)stopScan;
 
 /**
+ * Check to see if bluetooth on the device is on or not
+ * @return YES if on, NO otherwise
+ */
++ (BOOL)isBluetoothOn;
+
+/**
  * Initialize a manager for the specified Sense object.  You can retrieve
  * a sense object by calling scanForSense: or scanForSenseWithTimeout:completion.
  *
@@ -56,7 +67,21 @@ typedef enum {
  */
 - (instancetype)initWithSense:(SENSense*)sense;
 
-#pragma mark - Paring
+/**
+ * Disconnect from Sense, if connected.  This will not trigger a callback to
+ * observers of unexpected disconnects.
+ */
+- (void)disconnectFromSense;
+
+#pragma mark - Pairing
+
+/**
+ * Pair with the initialized Sense device.
+ * @param success: the block to invoke upon successfully pairing with Sense
+ * @param failure: the block to invoke if pairing failed for any reason
+ */
+- (void)pair:(SENSenseSuccessBlock)success
+     failure:(SENSenseFailureBlock)failure;
 
 /**
  * Enable / Disable pairing mode on Sense.  Disabling the paring
@@ -71,7 +96,58 @@ typedef enum {
                   success:(SENSenseSuccessBlock)success
                   failure:(SENSenseFailureBlock)failure;
 
-- (void)removePairedUser:(SENSenseCompletionBlock)completion;
+/**
+ * Remove devices, other than than the currently connected device, from
+ * Sense.  This will open up additional device spots to allow new devices
+ * to be paired with Sense
+ * 
+ * @param success: callback to invoke when this has succeeded
+ * @param failure: callback to invoke if an error encountered
+ */
+- (void)removeOtherPairedDevices:(SENSenseSuccessBlock)success
+                         failure:(SENSenseFailureBlock)failure;
+
+/**
+ * Link the user account using the user's authenticated access token with
+ * Sense.  Wifi must be set up with Sense to proceed.
+ * @param accountAccessToken: access token of the authenticated user
+ * @param success: the callback to invoke when process succeeded
+ * @param failure: the callback to invoke when process failed for any reason
+ */
+- (void)linkAccount:(NSString*)accountAccessToken
+            success:(SENSenseSuccessBlock)success
+            failure:(SENSenseFailureBlock)failure;
+
+/**
+ * Tell Sense to pair with nearby Pills.  Once the pairing has completed, Sense
+ * will update the user account with such information and as such will require:
+ *
+ *     1. wifi to have been set up
+ *     2. access token of the authenticated user.
+ *
+ * @param accountAccessToken: access token of the authenticated user
+ * @param success: the callback to invoke when process succeeded
+ * @param failure: the callback to invoke when process failed for any reason
+ */
+- (void)pairWithPill:(NSString*)accountAccessToken
+             success:(SENSenseSuccessBlock)success
+             failure:(SENSenseFailureBlock)failure;
+
+/**
+ * Observe any unexpected disconnects that may occur, which will invoke the block
+ * specified.  You must pair this call with removeUnexpectedDisconnectObserver:
+ * to prevent a potential leak as the blocks will be held until it is removed
+ * @param block: the block to invoke when an unexpected disconnect happens
+ * @return observerId: a unique identifier that maps to this block
+ */
+- (NSString*)observeUnexpectedDisconnect:(SENSenseFailureBlock)block;
+
+/**
+ * Remove the observer for unexpected disconnects, free-ing the block that was
+ * passed in from observeUnexpectedDisconnect:
+ * @param observerId: a unique identifier returned from observeUnexpectedDisconnect:
+ */
+- (void)removeUnexpectedDisconnectObserver:(NSString*)observerId;
 
 #pragma mark - Time
 

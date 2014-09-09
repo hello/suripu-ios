@@ -23,7 +23,6 @@
 @implementation HEMSleepGraphCollectionViewController
 
 static CGFloat const HEMSleepSummaryCellHeight = 300.f;
-static CGFloat const HEMSleepHistoryGraphViewHeight = 200.f;
 static CGFloat const HEMSleepGraphCollectionViewSensorViewHeight = 65.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 55.f;
 static CGFloat const HEMSleepGraphCollectionViewEventLightHeight = 95.f;
@@ -149,9 +148,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
             }
         }
     }
-
-    case HEMSleepGraphCollectionViewHistorySection:
-        return CGSizeMake(width, HEMSleepHistoryGraphViewHeight);
     default:
         return CGSizeMake(width, HEMSleepGraphCollectionViewEventMinimumHeight);
     }

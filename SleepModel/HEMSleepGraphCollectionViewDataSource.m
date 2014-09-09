@@ -32,7 +32,6 @@
 
 static NSString* const sleepSegmentReuseIdentifier = @"sleepSegmentCell";
 static NSString* const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
-static NSString* const aggregateGraphReuseIdentifier = @"aggregateCell";
 static NSString* const sleepEventReuseIdentifier = @"sleepEventCell";
 static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
 
@@ -84,8 +83,6 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
           forCellWithReuseIdentifier:sleepSummaryReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSleepEventCollectionViewCell class]) bundle:bundle]
           forCellWithReuseIdentifier:sleepEventReuseIdentifier];
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMAggregateGraphCollectionViewCell class]) bundle:bundle]
-          forCellWithReuseIdentifier:aggregateGraphReuseIdentifier];
 }
 
 - (void)fetchAggregateData
@@ -188,7 +185,7 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView
 {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
@@ -198,8 +195,6 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
         return 1;
     case HEMSleepGraphCollectionViewSegmentSection:
         return self.sleepResult.segments.count;
-    case HEMSleepGraphCollectionViewHistorySection:
-        return self.aggregateDataSources.count;
     default:
         return 0;
     }
@@ -234,9 +229,6 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
         } else {
             return [self collectionView:collectionView sleepEventCellForItemAtIndexPath:indexPath];
         }
-    }
-    case HEMSleepGraphCollectionViewHistorySection: {
-        return [self collectionView:collectionView historyCellForItemAtIndexPath:indexPath];
     }
     default:
         return nil;
@@ -281,21 +273,6 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
     cell.eventTitleLabel.text = [self localizedNameForSleepEventType:segment.eventType];
     cell.expanded = [self eventCellAtIndexPathIsExpanded:indexPath];
     cell.playButton.hidden = ![segment.eventType isEqualToString:@"noise"];
-    return cell;
-}
-
-- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView historyCellForItemAtIndexPath:(NSIndexPath*)indexPath
-{
-    HEMAggregateGraphCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:aggregateGraphReuseIdentifier forIndexPath:indexPath];
-    HEMSensorGraphDataSource* dataSource = self.aggregateDataSources[indexPath.row];
-    cell.chartView.dataSource = dataSource;
-    cell.chartView.sections = dataSource.dataSeries;
-    NSArray* dates = [dataSource.dataSeries valueForKey:@"date"];
-    cell.titleLabel.text = [NSString stringWithFormat:@"%@ - %@",
-                                                      [self.rangeDateFormatter stringFromDate:[dates firstObject]],
-                                                      [self.rangeDateFormatter stringFromDate:[dates lastObject]]];
-    [cell.chartView reloadData];
-    [cell.chartView setNeedsDisplay];
     return cell;
 }
 

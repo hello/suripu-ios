@@ -1,5 +1,41 @@
 # Changelog
 
+## 1.0.0.11
+
+New Stuff:
+
+* Real data in the timeline from your pill!
+* New style for the onboarding process, for recording height, weight, and birth date
+
+## 1.0.0.10
+
+Fixes:
+
+* Historical sensor data should be in the correct timezone
+
+New Stuff:
+
+* Smooth and animated transition between sleep data timelines, similar to the Chrome app
+* Make sleep timeline text bigger and sleep events expandable
+* New font
+
+## 1.0.0.9
+
+New Stuff:
+
+* Onboarding flow, complete with custom controls!
+* Location storage through onboarding
+
+## 1.0.0.8
+
+Fixes:
+
+* Fix for crash when swiping rapidly through days in sleep history
+
+New Stuff:
+
+* Tapping in the sleep history graph now shows an indicator for the time and event details
+
 ## 1.0.0.7
 
 Fixes:

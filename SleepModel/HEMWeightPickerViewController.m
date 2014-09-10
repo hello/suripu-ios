@@ -1,109 +1,110 @@
 
 #import <SenseKit/SENAccount.h>
+#import <iCarousel/iCarousel.h>
 
 #import "HEMWeightPickerViewController.h"
 #import "HEMUserDataCache.h"
+#import "HelloStyleKit.h"
 
 CGFloat const HEMWeightPickerPoundsPerKilogram = 2.20462f;
 CGFloat const HEMWeightPickerKilogramsPerPound = 0.453592f;
+NSInteger const HEMWeightPickerMaxWeight = 900;
 
-@interface HEMWeightPickerViewController () <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface HEMWeightPickerViewController () <iCarouselDataSource, iCarouselDelegate>
 
-@property (weak, nonatomic) IBOutlet UIPickerView* weightPickerView;
-@property (nonatomic, getter=isUsingImperial) BOOL usingImperial;
+@property (weak,   nonatomic) IBOutlet iCarousel* carousel;
+@property (weak,   nonatomic) IBOutlet UILabel* topWeightLabel;
+@property (weak,   nonatomic) IBOutlet UILabel* botWeightLabel;
+@property (assign, nonatomic) NSInteger weightInKgs;
+
 @end
 
 @implementation HEMWeightPickerViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    [self configurePicker];
+    [self setupCarousel];
 }
 
-- (void)configurePicker
-{
-    NSString* currentLocaleIdentifier = [[NSLocale currentLocale] localeIdentifier];
-    self.usingImperial = [currentLocaleIdentifier isEqualToString:@"en_US"] || [currentLocaleIdentifier isEqualToString:@"en_GB"];
-    if ([self isUsingImperial]) {
-        [self.weightPickerView selectRow:1
-                             inComponent:1
-                                animated:NO];
-        [self.weightPickerView selectRow:150
-                             inComponent:0
-                                animated:NO];
+- (void)setupCarousel {
+    [[self carousel] setType:iCarouselTypeWheel];
+    [[self carousel] setDataSource:self];
+    [[self carousel] setDelegate:self];
+    [[self carousel] setScrollToItemBoundary:NO];
+    [[self carousel] setClipsToBounds:YES];
+}
+
+#pragma mark - iCarousel
+
+- (NSUInteger)numberOfItemsInCarousel:(iCarousel*)carousel {
+    return HEMWeightPickerMaxWeight / 10;
+}
+- (UIView *)carousel:(__unused iCarousel *)carousel
+  viewForItemAtIndex:(NSUInteger)index
+         reusingView:(UIView *)view {
+    
+    UILabel* weightLabel = nil;
+    
+    if (view == nil) {
+        CGRect labelFrame = {0.0f, 0.0f, 50.0f, 60.0f};
+        weightLabel = [[UILabel alloc] initWithFrame:labelFrame];
+        [weightLabel setBackgroundColor:[[self view] backgroundColor]];
+        [weightLabel setTextAlignment:NSTextAlignmentCenter];
+        [weightLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0f]];
+        [weightLabel setTextColor:[HelloStyleKit mediumBlueColor]];
+        [weightLabel setClipsToBounds:NO];
     } else {
-        [self.weightPickerView selectRow:0
-                             inComponent:1
-                                animated:NO];
-        [self.weightPickerView selectRow:80
-                             inComponent:0
-                                animated:NO];
+        weightLabel = (UILabel*)view;
+    }
+
+    [weightLabel setText:[NSString stringWithFormat:@"%ld", (long)index*10]];
+
+    return weightLabel;
+    
+}
+
+- (CGFloat)carousel:(iCarousel *)carousel
+     valueForOption:(iCarouselOption)option
+        withDefault:(CGFloat)value {
+    switch (option) {
+        case iCarouselOptionVisibleItems:
+            return 4;
+        case iCarouselOptionRadius:
+            return value * 0.5f; // take half the radius to move items closer
+        case iCarouselOptionArc:
+            return M_PI; // half a circle
+        case iCarouselOptionAngle:
+            return ((45.0f) / 180.0 * M_PI); // 45degs approximately between items
+        default:
+            return value;
     }
 }
 
-#pragma mark - UIPickerViewDataSource
+- (void)carouselDidScroll:(iCarousel *)carousel {
+    NSInteger lbs = roundf([carousel scrollOffset] * 10);
+    NSInteger kgs = lbs * HEMWeightPickerKilogramsPerPound;
+    
+    NSString* lbsText =
+        [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), lbs];
+    [[self topWeightLabel] setText:lbsText];
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView*)pickerView
-{
-    return 2;
+    NSString* kgsText =
+        [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), kgs];
+    [[self botWeightLabel] setText:kgsText];
+    
+    [self setWeightInKgs:kgs];
 }
 
-- (NSInteger)pickerView:(UIPickerView*)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    return component == 0 ? 800 : 2;
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    [[[HEMUserDataCache sharedUserDataCache] account] setWeight:@([self weightInKgs])];
 }
 
-- (NSAttributedString*)pickerView:(UIPickerView*)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    NSString* contentString = nil;
-    if (component == 0) {
-        contentString = [NSString stringWithFormat:@"%ld", (long)row];
-    } else if (row == 0) {
-        contentString = NSLocalizedString(@"measurement.kg.unit", nil);
-    } else {
-        contentString = NSLocalizedString(@"measurement.lb.unit", nil);
-    }
-    return [[NSAttributedString alloc] initWithString:contentString attributes:@{ NSForegroundColorAttributeName : [UIColor blackColor] }];
+#pragma mark - Cleanup
+
+- (void)dealloc {
+    [[self carousel] setDelegate:nil];
+    [[self carousel] setDataSource:nil];
 }
 
-#pragma mark - UIPickerViewDelegate
-
-- (void)pickerView:(UIPickerView*)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
-{
-    if (component == 0) {
-        NSInteger value = 0;
-        if ([self isUsingImperial]) {
-            value = [self valueInKilograms:row];
-        } else {
-            value = row;
-        }
-        [[[HEMUserDataCache sharedUserDataCache] account] setWeight:@(value)];
-    } else if (component == 1 && !([self isUsingImperial] == (row == 1))) {
-        self.usingImperial = (row == 1);
-        NSInteger selectedRow = [self.weightPickerView selectedRowInComponent:0];
-        if ([self isUsingImperial]) {
-            selectedRow = [self valueInPounds:selectedRow];
-        } else {
-            selectedRow = [self valueInKilograms:selectedRow];
-        }
-        [self.weightPickerView selectRow:selectedRow inComponent:0 animated:NO];
-    }
-}
-
-- (NSInteger)valueInPounds:(NSInteger)value
-{
-    return ceilf(value * HEMWeightPickerPoundsPerKilogram);
-}
-
-- (NSInteger)valueInKilograms:(NSInteger)value
-{
-    return floorf(value * HEMWeightPickerKilogramsPerPound);
-}
-
-- (CGFloat)pickerView:(UIPickerView*)pickerView widthForComponent:(NSInteger)component
-{
-    return 60.f;
-}
 
 @end

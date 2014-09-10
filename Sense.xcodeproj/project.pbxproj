@@ -716,8 +716,6 @@
 				8A033872197DDA9700BE8327 /* HEMActionButton.m */,
 				8A4B3D471992CB4500856BDE /* HEMRoundedTextField.h */,
 				8A4B3D481992CB4500856BDE /* HEMRoundedTextField.m */,
-				BFEAA0C819A66746002FBD44 /* HEMValueSliderView.h */,
-				BFEAA0C919A66746002FBD44 /* HEMValueSliderView.m */,
 				BFB6D47419BE16D1004CA11B /* HEMBirthdatePickerView.h */,
 				BFB6D47519BE16D1004CA11B /* HEMBirthdatePickerView.m */,
 			);
@@ -909,9 +907,19 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		BF80F6DD19BF99E800A4D779 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BFEAA0C819A66746002FBD44 /* HEMValueSliderView.h */,
+				BFEAA0C919A66746002FBD44 /* HEMValueSliderView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		BFABE74E19A2E6C900AB2F0F /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				BF80F6DD19BF99E800A4D779 /* Views */,
 				BFACC71019A4083400FC77EE /* View Controllers */,
 				BFABE74F19A2E6D900AB2F0F /* Utilities */,
 			);

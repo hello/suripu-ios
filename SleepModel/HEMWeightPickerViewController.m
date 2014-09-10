@@ -81,7 +81,6 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 }
 
 - (void)carouselDidScroll:(iCarousel *)carousel {
-    DLog(@"offset %f", [carousel scrollOffset]);
     NSInteger lbs = roundf([carousel scrollOffset] * 10);
     NSInteger kgs = lbs * HEMWeightPickerKilogramsPerPound;
     

@@ -26,12 +26,20 @@
 
 - (void)animateScoreTo:(CGFloat)value
 {
+    _sleepScore = 0;
     for (int i = 0; i < value; i++) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(i * 0.0075 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             ++self.sleepScore;
             [self setNeedsDisplay];
         });
     }
+}
+
+- (void)setSleepScore:(NSInteger)sleepScore animated:(BOOL)animated
+{
+    if (sleepScore == _sleepScore)
+        return;
+    [self animateScoreTo:sleepScore];
 }
 
 - (void)setSleepScore:(NSInteger)sleepScore

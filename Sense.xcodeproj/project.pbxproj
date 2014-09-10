@@ -79,7 +79,6 @@
 		8AA8D93419ABDCCB00349FD0 /* HEMSleepGraphCollectionViewFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D93319ABDCCB00349FD0 /* HEMSleepGraphCollectionViewFlowLayout.m */; };
 		8AA8D93719ABE76C00349FD0 /* HEMSensorDataHeaderClockContainerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D93619ABE76C00349FD0 /* HEMSensorDataHeaderClockContainerView.m */; };
 		8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D93919AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m */; };
-		8AA8D93D19ACFD8800349FD0 /* HEMFakeDataGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D93C19ACFD8800349FD0 /* HEMFakeDataGenerator.m */; };
 		8AA8D94019AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D93F19AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m */; };
 		8AAEECBC19A431E1006517C4 /* HEMSleepEventButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AAEECBB19A431E1006517C4 /* HEMSleepEventButton.m */; };
 		8AAEECFB19A5225F006517C4 /* Agile-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECE719A5225F006517C4 /* Agile-Black.otf */; };
@@ -129,7 +128,6 @@
 		8AC4A0491989D47000C2BD63 /* chevronIconLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0451989D47000C2BD63 /* chevronIconLeft.png */; };
 		8AC4A04A1989D47000C2BD63 /* chevronIconLeft@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0461989D47000C2BD63 /* chevronIconLeft@2x.png */; };
 		8AC4A04B1989D47000C2BD63 /* chevronIconRight.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0471989D47000C2BD63 /* chevronIconRight.png */; };
-		8AC4A04C1989D47000C2BD63 /* chevronIconRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0481989D47000C2BD63 /* chevronIconRight@2x.png */; };
 		8AC4A051198A070F00C2BD63 /* alarmEnabledIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A04D198A070F00C2BD63 /* alarmEnabledIcon.png */; };
 		8AC4A052198A070F00C2BD63 /* alarmEnabledIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A04E198A070F00C2BD63 /* alarmEnabledIcon@2x.png */; };
 		8AC4A053198A070F00C2BD63 /* alarmNoteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A04F198A070F00C2BD63 /* alarmNoteIcon.png */; };
@@ -137,6 +135,7 @@
 		8AC4A057198A0AE900C2BD63 /* questionIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A055198A0AE900C2BD63 /* questionIcon.png */; };
 		8AC4A058198A0AE900C2BD63 /* questionIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */; };
 		8AC4A05B198ACE4800C2BD63 /* HEMSensorGraphDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4A05A198ACE4800C2BD63 /* HEMSensorGraphDataSource.m */; };
+		8AF5A39C19C102D30009A499 /* chevronIconRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0481989D47000C2BD63 /* chevronIconRight@2x.png */; };
 		BF5E443719A7AA3D00278A2F /* HEMWifiCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5E443619A7AA3D00278A2F /* HEMWifiCenter.m */; };
 		BF5E444B19AD414500278A2F /* doubleArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5E444919AD414500278A2F /* doubleArrow.png */; };
 		BF5E444C19AD414500278A2F /* doubleArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5E444A19AD414500278A2F /* doubleArrow@2x.png */; };
@@ -293,8 +292,6 @@
 		8AA8D93619ABE76C00349FD0 /* HEMSensorDataHeaderClockContainerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorDataHeaderClockContainerView.m; sourceTree = "<group>"; };
 		8AA8D93819AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepGraphCollectionViewDataSource.h; sourceTree = "<group>"; };
 		8AA8D93919AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepGraphCollectionViewDataSource.m; sourceTree = "<group>"; };
-		8AA8D93B19ACFD8800349FD0 /* HEMFakeDataGenerator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMFakeDataGenerator.h; sourceTree = "<group>"; };
-		8AA8D93C19ACFD8800349FD0 /* HEMFakeDataGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMFakeDataGenerator.m; sourceTree = "<group>"; };
 		8AA8D93E19AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMiniGraphCollectionViewCell.h; sourceTree = "<group>"; };
 		8AA8D93F19AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMiniGraphCollectionViewCell.m; sourceTree = "<group>"; };
 		8AAEECBA19A431E1006517C4 /* HEMSleepEventButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepEventButton.h; sourceTree = "<group>"; };
@@ -872,8 +869,6 @@
 				8AA8D93119ABDC8B00349FD0 /* Layouts */,
 				8A660130199EBDDE007E6167 /* View Controllers */,
 				8A660135199EBEB8007E6167 /* Views */,
-				8AA8D93B19ACFD8800349FD0 /* HEMFakeDataGenerator.h */,
-				8AA8D93C19ACFD8800349FD0 /* HEMFakeDataGenerator.m */,
 			);
 			name = "Sleep Metrics";
 			sourceTree = "<group>";
@@ -1013,7 +1008,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = HEM;
-				LastUpgradeCheck = 0510;
+				LastUpgradeCheck = 0600;
 				ORGANIZATIONNAME = "Hello, Inc.";
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
@@ -1127,10 +1122,9 @@
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				8AC4A0491989D47000C2BD63 /* chevronIconLeft.png in Resources */,
 				BFACC71619A41CFE00FC77EE /* whitenavbar.png in Resources */,
-				8AC4A04C1989D47000C2BD63 /* chevronIconRight@2x.png in Resources */,
+				8AF5A39C19C102D30009A499 /* chevronIconRight@2x.png in Resources */,
 				8AAEECFB19A5225F006517C4 /* Agile-Black.otf in Resources */,
 				8AAEED0519A5225F006517C4 /* Agile-Fat.otf in Resources */,
-				8AC4A04C1989D47000C2BD63 /* chevronIconRight@2x.png in Resources */,
 				8AAEED0619A5225F006517C4 /* Agile-FatItalic.otf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1249,7 +1243,6 @@
 				8A660123199E9CF9007E6167 /* HEMUserDataCache.m in Sources */,
 				8AC4A05B198ACE4800C2BD63 /* HEMSensorGraphDataSource.m in Sources */,
 				8AC49F9F19832D2600C2BD63 /* HEMDevicePickerTableViewController.m in Sources */,
-				8AA8D93D19ACFD8800349FD0 /* HEMFakeDataGenerator.m in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,
 				8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */,
 				8AA8D92F19ABCB0300349FD0 /* HEMSensorDataHeaderView.m in Sources */,

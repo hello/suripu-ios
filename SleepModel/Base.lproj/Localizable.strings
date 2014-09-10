@@ -93,10 +93,11 @@
 "measurement.lb.format" = "%ldlbs";
 
 // sleep events
-"sleep-event.type.awake.name" = "Woke up";
+"sleep-event.type.wake_up.name" = "Woke up";
 "sleep-event.type.sleep.name" = "Fell asleep";
 "sleep-event.type.light.name" = "Light disturbance";
 "sleep-event.type.noise.name" = "Noise disturbance";
+"sleep-event.type.motion.name" = "Motion";
 
 // sleep history
 "sleep-history.last-night" = "LAST NIGHT";

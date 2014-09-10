@@ -1,9 +1,9 @@
 
+#import <SenseKit/SENSleepResult.h>
 #import "HEMSleepHistoryViewController.h"
 #import "HEMMiniGraphCollectionViewCell.h"
 #import "HEMMiniSleepHistoryView.h"
 #import "HEMMiniSleepScoreGraphView.h"
-#import "HEMFakeDataGenerator.h"
 
 @interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -52,7 +52,7 @@
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:sleepDataCapacity];
     for (int i = sleepDataCapacity - 1; i >= 0; i--) {
         NSDate* date = [NSDate dateWithTimeIntervalSinceNow:i * -(60 * 60 * 24)];
-        [self.sleepDataSummaries addObject:[HEMFakeDataGenerator sleepDataForDate:date]];
+        [self.sleepDataSummaries addObject:[SENSleepResult sleepResultForDate:date]];
     }
     NSDate* date = [NSDate dateWithTimeIntervalSince1970:[[self.sleepDataSummaries firstObject][@"date"] doubleValue] / 1000];
     self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:date];
@@ -89,13 +89,12 @@
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView sleepHistoryCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    NSDictionary* sleepData = [self.sleepDataSummaries objectAtIndex:indexPath.row];
-    NSDate* date = [NSDate dateWithTimeIntervalSince1970:[sleepData[@"date"] doubleValue] / 1000];
+    SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
     HEMMiniGraphCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeSliceCell" forIndexPath:indexPath];
-    [cell.sleepScoreView setSleepScore:[sleepData[@"score"] integerValue]];
-    [cell.graphView setSleepDataSegments:sleepData[@"segments"]];
-    cell.dayLabel.text = [self.dayFormatter stringFromDate:date];
-    cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:date] uppercaseString];
+    [cell.sleepScoreView setSleepScore:[sleepResult.score integerValue]];
+    [cell.graphView setSleepDataSegments:sleepResult.segments];
+    cell.dayLabel.text = [self.dayFormatter stringFromDate:sleepResult.date];
+    cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:sleepResult.date] uppercaseString];
     return cell;
 }
 

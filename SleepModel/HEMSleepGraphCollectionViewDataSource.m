@@ -2,6 +2,7 @@
 #import <SenseKit/SENSettings.h>
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENSleepResult.h>
+#import <SenseKit/SENAPITimeline.h>
 #import <JBChartView/JBLineChartView.h>
 
 #import "HEMSleepGraphCollectionViewDataSource.h"
@@ -11,7 +12,6 @@
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepSegmentCollectionViewCell.h"
 #import "HEMSensorDataHeaderView.h"
-#import "HEMFakeDataGenerator.h"
 #import "HEMSensorGraphDataSource.h"
 #import "HelloStyleKit.h"
 #import "HEMColorUtils.h"
@@ -65,9 +65,20 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
 - (void)updateDataForDate
 {
     self.sleepResult = [SENSleepResult sleepResultForDate:self.dateForNightOfSleep];
-    [self.sleepResult updateWithDictionary:[HEMFakeDataGenerator sleepDataForDate:self.dateForNightOfSleep]];
-    [self fetchAggregateData];
-    // todo: update data with latest from API
+    [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError *error) {
+        if (error) {
+            NSLog(@"Failed to fetch timeline: %@", error.localizedDescription);
+            return;
+        }
+        [self refreshWithTimelines:timelines];
+    }];
+}
+
+- (void)refreshWithTimelines:(NSArray*)timelines
+{
+    NSDictionary* timeline = [timelines firstObject];
+    [self.sleepResult updateWithDictionary:timeline];
+    [self.sleepResult save];
     [self.collectionView reloadData];
 }
 
@@ -83,30 +94,6 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
           forCellWithReuseIdentifier:sleepSummaryReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSleepEventCollectionViewCell class]) bundle:bundle]
           forCellWithReuseIdentifier:sleepEventReuseIdentifier];
-}
-
-- (void)fetchAggregateData
-{
-    NSMutableArray* agData = [[NSMutableArray alloc] initWithCapacity:3];
-    for (int i = 0; i < 3; i++) {
-        NSMutableArray* weekAgData = [[NSMutableArray alloc] initWithCapacity:7];
-        for (int j = 0; j < 7; j++) {
-            NSTimeInterval interval = -(60 * 60 * 24 * 7 * i) - (60 * 60 * 24 * j);
-            NSDate* date = [NSDate dateWithTimeInterval:interval sinceDate:self.dateForNightOfSleep];
-            SENSleepResult* result = [SENSleepResult sleepResultForDate:date];
-            NSDictionary* fakeData = [HEMFakeDataGenerator sleepDataForDate:date];
-            while (!fakeData) {
-                fakeData = [HEMFakeDataGenerator sleepDataForDate:date];
-            }
-            [result updateWithDictionary:fakeData];
-            [weekAgData addObject:@{ @"value" : [NSString stringWithFormat:@"%0.f", [result.score floatValue]],
-                                     @"label" : @"",
-                                     @"date" : date }];
-        }
-        HEMSensorGraphDataSource* dataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:[[weekAgData reverseObjectEnumerator] allObjects]];
-        [agData addObject:dataSource];
-    }
-    self.aggregateDataSources = agData;
 }
 
 #pragma mark - Event Cell Size Toggling
@@ -224,7 +211,7 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
     } break;
     case HEMSleepGraphCollectionViewSegmentSection: {
         SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
-        if ([segment.eventType isEqualToString:@"none"]) {
+        if (!segment.eventType || [segment.eventType isEqual:[NSNull null]]) {
             return [self collectionView:collectionView sleepSegmentCellForItemAtIndexPath:indexPath];
         } else {
             return [self collectionView:collectionView sleepEventCellForItemAtIndexPath:indexPath];
@@ -255,7 +242,7 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
     SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMSleepSegmentCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
-    [cell setSegmentRatio:sleepDepth / 3.f withColor:[HEMColorUtils colorForSleepDepth:sleepDepth]];
+    [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[HEMColorUtils colorForSleepDepth:sleepDepth]];
     return cell;
 }
 
@@ -299,17 +286,18 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
 
 - (NSString*)localizedNameForSleepEventType:(NSString*)eventType
 {
-    NSString* localizedFormat = [NSString stringWithFormat:@"sleep-event.type.%@.name", eventType];
+    NSString* localizedFormat = [NSString stringWithFormat:@"sleep-event.type.%@.name", [eventType lowercaseString]];
     NSString* eventName = NSLocalizedString(localizedFormat, nil);
     if ([eventName isEqualToString:localizedFormat]) {
-        return nil;
+        return [eventType capitalizedString];
     }
     return eventName;
 }
 
-- (UIImage*)imageForEventType:(NSString*)eventType
+- (UIImage*)imageForEventType:(NSString*)rawEventType
 {
-    if ([eventType isEqualToString:@"awake"]) {
+    NSString* eventType = [rawEventType lowercaseString];
+    if ([eventType isEqualToString:@"wake_up"]) {
         return [HelloStyleKit wakeupEventIcon];
     } else if ([eventType isEqualToString:@"sleep"]) {
         return [HelloStyleKit sleepEventIcon];

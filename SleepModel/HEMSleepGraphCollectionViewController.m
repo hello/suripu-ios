@@ -27,7 +27,7 @@ static CGFloat const HEMSleepGraphCollectionViewSensorViewHeight = 65.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 55.f;
 static CGFloat const HEMSleepGraphCollectionViewEventLightHeight = 95.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMaximumHeight = 165.f;
-static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
+static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 6.f;
 
 - (void)viewDidLoad
 {
@@ -107,13 +107,13 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath
 {
     SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-    return ![segment.eventType isEqualToString:@"none"];
+    return ![segment.eventType isEqual:[NSNull null]];
 }
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
     SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-    return ![segment.eventType isEqualToString:@"none"];
+    return ![segment.eventType isEqual:[NSNull null]];
 }
 
 - (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
@@ -134,9 +134,9 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
     case HEMSleepGraphCollectionViewSegmentSection: {
         SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
 
-        CGFloat durationHeight = ([segment.duration doubleValue] / 1000 / 3600) * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
-        if ([segment.eventType isEqualToString:@"none"]) {
-            return CGSizeMake(width, durationHeight);
+        CGFloat durationHeight = ([segment.duration doubleValue] / 3600) * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
+        if ([segment.eventType isEqual:[NSNull null]]) {
+            return CGSizeMake(width, ceilf(durationHeight));
         } else {
             if ([self.dataSource eventCellAtIndexPathIsExpanded:indexPath]) {
                 if ([segment.eventType isEqualToString:@"noise"]) {

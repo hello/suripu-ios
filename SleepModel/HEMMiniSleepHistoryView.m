@@ -1,5 +1,6 @@
 
 #import <SenseKit/SENSettings.h>
+#import <SenseKit/SENSleepResult.h>
 
 #import "HEMMiniSleepHistoryView.h"
 #import "HEMColorUtils.h"
@@ -43,14 +44,13 @@
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
     CGContextFillRect(ctx, rect);
-    for (NSDictionary* segment in self.sleepDataSegments) {
+    for (SENSleepResultSegment* segment in self.sleepDataSegments) {
         NSTimeInterval sliceStartInterval = [self timeIntervalForSegment:segment];
         NSTimeInterval sliceEndInterval = sliceStartInterval + [self durationForSegment:segment];
         CGFloat startYOffset = [self yOffsetForTimeInterval:sliceStartInterval];
         CGFloat endYOffset = [self yOffsetForTimeInterval:sliceEndInterval];
-        NSInteger sleepDepth = [segment[@"sleep_depth"] integerValue];
-        CGFloat endXOffset = [self xOffsetForSleepDepth:sleepDepth];
-        UIColor* color = [HEMColorUtils colorForSleepDepth:sleepDepth];
+        CGFloat endXOffset = [self xOffsetForSleepDepth:segment.sleepDepth];
+        UIColor* color = [HEMColorUtils colorForSleepDepth:segment.sleepDepth];
         CGContextSetFillColorWithColor(ctx, color.CGColor);
         CGContextFillRect(ctx, CGRectMake(CGRectGetMinX(rect), startYOffset, endXOffset, endYOffset - startYOffset));
     }
@@ -73,14 +73,14 @@
 
 #pragma mark - Data Parsing
 
-- (NSTimeInterval)timeIntervalForSegment:(NSDictionary*)segment
+- (NSTimeInterval)timeIntervalForSegment:(SENSleepResultSegment*)segment
 {
-    return [segment[@"timestamp"] doubleValue] / 1000;
+    return [segment.date timeIntervalSince1970];
 }
 
-- (NSTimeInterval)durationForSegment:(NSDictionary*)segment
+- (NSTimeInterval)durationForSegment:(SENSleepResultSegment*)segment
 {
-    return [segment[@"duration"] doubleValue] / 1000;
+    return [segment.duration doubleValue];
 }
 
 - (NSDate*)dateFromTimeInterval:(NSTimeInterval)interval

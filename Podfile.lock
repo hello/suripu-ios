@@ -31,6 +31,7 @@ PODS:
     - FCMutableArray
   - FCMutableArray (1.0)
   - FXKeychain (1.5.1)
+  - iCarousel (1.7.6)
   - JBChartView (2.5.5)
   - Kiwi (2.3.0)
   - LGBluetooth (1.1.4)
@@ -61,6 +62,7 @@ PODS:
 DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`)
   - FCDynamicPanesNavigationController (from `git@github.com:hello/FCDynamicPanesNavigationController.git`)
+  - iCarousel (~> 1.7.6)
   - JBChartView (from `git@github.com:hello/JBChartView.git`)
   - Kiwi
   - SenseKit (from `git@github.com:hello/SenseKit.git`)
@@ -90,6 +92,7 @@ SPEC CHECKSUMS:
   FCDynamicPanesNavigationController: 55ee3c165a070d8d01e0b90a1029916cbcaa1b09
   FCMutableArray: 1a8dbb05952c1e9dff31d86fd366f86edce9f159
   FXKeychain: beb642a4218ba783507af08865eda05e9b26a612
+  iCarousel: c35a4e26b3c657847e523012b593e70ddbd84992
   JBChartView: 3f979441a6a41e50b7c4b98f91b256bf33625c2d
   Kiwi: 54bece5b35564d9b8e03c608d926f1a22fcfc589
   LGBluetooth: 00f37b8c29cccc1dd44d5f726b2ec4a6e91c74ec

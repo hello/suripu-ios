@@ -4,7 +4,7 @@
 
 @implementation SENAPITimeline
 
-static NSString* const SENAPITimelineEndpointFormat = @"/timeline/%ld-%ld-%ld";
+static NSString* const SENAPITimelineEndpointFormat = @"timeline/%ld-%ld-%ld";
 
 + (void)timelineForDate:(NSDate *)date completion:(SENAPIDataBlock)block
 {
@@ -20,7 +20,7 @@ static NSString* const SENAPITimelineEndpointFormat = @"/timeline/%ld-%ld-%ld";
     NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSCalendarUnit flags = (NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit);
     NSDateComponents* components = [calendar components:flags fromDate:date];
-    return [NSString stringWithFormat:SENAPITimelineEndpointFormat, components.year, components.month, components.day];
+    return [NSString stringWithFormat:SENAPITimelineEndpointFormat, (long)components.year, (long)components.month, (long)components.day];
 }
 
 @end

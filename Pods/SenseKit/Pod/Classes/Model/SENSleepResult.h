@@ -1,11 +1,11 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_ENUM(NSUInteger, SENSleepResultSegmentDepth) {
+typedef NS_ENUM(NSInteger, SENSleepResultSegmentDepth) {
     SENSleepResultSegmentDepthAwake = 0,
-    SENSleepResultSegmentDepthLight = 1,
-    SENSleepResultSegmentDepthMedium = 2,
-    SENSleepResultSegmentDepthDeep = 3,
+    SENSleepResultSegmentDepthLight = 40,
+    SENSleepResultSegmentDepthMedium = 70,
+    SENSleepResultSegmentDepthDeep = 100,
 };
 
 @protocol SENSleepResultSerializable <NSObject>
@@ -50,7 +50,7 @@ typedef NS_ENUM(NSUInteger, SENSleepResultSegmentDepth) {
 @property (strong) NSString* message;
 @property (strong) NSString* eventType;
 @property (strong) NSArray* sensors;
-@property SENSleepResultSegmentDepth sleepDepth;
+@property NSInteger sleepDepth;
 @end
 
 @interface SENSleepResultSegmentSensor : NSObject <NSCoding, SENSleepResultSerializable>

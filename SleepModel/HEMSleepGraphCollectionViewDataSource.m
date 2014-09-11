@@ -16,6 +16,12 @@
 #import "HelloStyleKit.h"
 #import "HEMColorUtils.h"
 
+NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
+NSString* const HEMSleepEventTypeLight = @"LIGHT";
+NSString* const HEMSleepEventTypeMotion = @"MOTION";
+NSString* const HEMSleepEventTypeNoise = @"NOISE";
+NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
+
 @interface HEMSleepGraphCollectionViewDataSource ()
 
 @property (nonatomic, weak) UICollectionView* collectionView;
@@ -34,6 +40,10 @@ static NSString* const sleepSegmentReuseIdentifier = @"sleepSegmentCell";
 static NSString* const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
 static NSString* const sleepEventReuseIdentifier = @"sleepEventCell";
 static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
+
+static NSString* const sensorTypeTemperature = @"temperature";
+static NSString* const sensorTypeHumidity = @"humidity";
+static NSString* const sensorTypeParticulates = @"particulates";
 
 + (NSDateFormatter*)sleepDateFormatter
 {
@@ -148,11 +158,11 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
     if (segment) {
         for (SENSleepResultSegmentSensor* sensor in segment.sensors) {
             NSString* text = [SENSensor formatValue:sensor.value withUnit:[SENSensor unitFromValue:sensor.unit]];
-            if ([sensor.name isEqualToString:@"temperature"]) {
+            if ([sensor.name isEqualToString:sensorTypeTemperature]) {
                 self.sensorDataHeaderView.temperatureLabel.text = text;
-            } else if ([sensor.name isEqualToString:@"humidity"]) {
+            } else if ([sensor.name isEqualToString:sensorTypeHumidity]) {
                 self.sensorDataHeaderView.humidityLabel.text = text;
-            } else if ([sensor.name isEqualToString:@"particulates"]) {
+            } else if ([sensor.name isEqualToString:sensorTypeParticulates]) {
                 self.sensorDataHeaderView.particulateLabel.text = text;
             }
         }
@@ -210,8 +220,7 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
         return [self collectionView:collectionView sleepSummaryCellForItemAtIndexPath:indexPath];
     } break;
     case HEMSleepGraphCollectionViewSegmentSection: {
-        SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
-        if (!segment.eventType || [segment.eventType isEqual:[NSNull null]]) {
+        if ([self segmentForSleepExistsAtIndexPath:indexPath]) {
             return [self collectionView:collectionView sleepSegmentCellForItemAtIndexPath:indexPath];
         } else {
             return [self collectionView:collectionView sleepEventCellForItemAtIndexPath:indexPath];
@@ -259,7 +268,7 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
     cell.eventMessageLabel.text = segment.message;
     cell.eventTitleLabel.text = [self localizedNameForSleepEventType:segment.eventType];
     cell.expanded = [self eventCellAtIndexPathIsExpanded:indexPath];
-    cell.playButton.hidden = ![segment.eventType isEqualToString:@"noise"];
+    cell.playButton.hidden = ![segment.eventType isEqualToString:HEMSleepEventTypeNoise];
     return cell;
 }
 
@@ -297,13 +306,13 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
 - (UIImage*)imageForEventType:(NSString*)rawEventType
 {
     NSString* eventType = [rawEventType lowercaseString];
-    if ([eventType isEqualToString:@"wake_up"]) {
+    if ([eventType isEqualToString:HEMSleepEventTypeWakeUp]) {
         return [HelloStyleKit wakeupEventIcon];
-    } else if ([eventType isEqualToString:@"sleep"]) {
+    } else if ([eventType isEqualToString:HEMSleepEventTypeFallAsleep]) {
         return [HelloStyleKit sleepEventIcon];
-    } else if ([eventType isEqualToString:@"light"]) {
+    } else if ([eventType isEqualToString:HEMSleepEventTypeLight]) {
         return [HelloStyleKit lightEventIcon];
-    } else if ([eventType isEqualToString:@"noise"]) {
+    } else if ([eventType isEqualToString:HEMSleepEventTypeNoise]) {
         return [HelloStyleKit noiseEventIcon];
     }
     return nil;
@@ -312,6 +321,12 @@ static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
 - (NSString*)textForTimeInterval:(NSTimeInterval)timeInterval
 {
     return [[self.timeDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeInterval]] lowercaseString];
+}
+
+- (BOOL)segmentForSleepExistsAtIndexPath:(NSIndexPath*)indexPath
+{
+    SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
+    return !segment.eventType || [segment.eventType isEqual:[NSNull null]];
 }
 
 @end

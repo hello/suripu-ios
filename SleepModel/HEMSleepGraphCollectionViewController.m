@@ -106,14 +106,12 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 6.f;
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-    return ![segment.eventType isEqual:[NSNull null]];
+    return [self.dataSource segmentForSleepExistsAtIndexPath:indexPath];
 }
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-    return ![segment.eventType isEqual:[NSNull null]];
+    return [self.dataSource segmentForSleepExistsAtIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
@@ -135,11 +133,11 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 6.f;
         SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
 
         CGFloat durationHeight = ([segment.duration doubleValue] / 3600) * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
-        if ([segment.eventType isEqual:[NSNull null]]) {
+        if ([self.dataSource segmentForSleepExistsAtIndexPath:indexPath]) {
             return CGSizeMake(width, ceilf(durationHeight));
         } else {
             if ([self.dataSource eventCellAtIndexPathIsExpanded:indexPath]) {
-                if ([segment.eventType isEqualToString:@"noise"]) {
+                if ([segment.eventType isEqualToString:HEMSleepEventTypeNoise]) {
                     return CGSizeMake(width, HEMSleepGraphCollectionViewEventMaximumHeight);
                 }
                 return CGSizeMake(width, HEMSleepGraphCollectionViewEventLightHeight);

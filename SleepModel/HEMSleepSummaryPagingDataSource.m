@@ -3,7 +3,14 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSleepGraphCollectionViewController.h"
 
+@interface NSDate (HEMEqualityChecker)
+
+- (BOOL)isOnSameDay:(NSDate*)otherDate;
+@end
+
 @implementation HEMSleepSummaryPagingDataSource
+
+static CGFloat const HEMSleepSummaryDayInterval = 60 * 60 * 24;
 
 #pragma mark - UIPageViewControllerDataSource
 
@@ -11,12 +18,11 @@
     HEMSleepGraphCollectionViewController* sleepVC =
         (HEMSleepGraphCollectionViewController*)viewController;
     NSDate* date = [sleepVC dateForNightOfSleep];
-    NSInteger dayInterval = 60 * 60 * 24;
-    NSDate* nextDay = [date dateByAddingTimeInterval:dayInterval];
-    if ([nextDay compare:[NSDate date]] == NSOrderedDescending) {
+    NSDate* nextDay = [date dateByAddingTimeInterval:HEMSleepSummaryDayInterval];
+    if ([nextDay isOnSameDay:[NSDate date]] || [nextDay compare:[NSDate date]] == NSOrderedDescending) {
         return nil; // no data to show in the future
     }
-    return [self sleepSummaryControllerWithTimeIntervalOffset:dayInterval
+    return [self sleepSummaryControllerWithTimeIntervalOffset:HEMSleepSummaryDayInterval
                                             fromReferenceDate:date];
 }
 
@@ -54,6 +60,30 @@
 - (UIViewController*)slideViewController:(HEMSlideViewController *)slideController
                         controllerBefore:(UIViewController *)controller {
     return [self controllerBefore:controller];
+}
+
+@end
+
+@implementation NSDate (HEMEqualityChecker)
+
++ (NSCalendar*)sharedCalendar
+{
+    static NSCalendar* calendar;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        calendar = [NSCalendar currentCalendar];
+    });
+    return calendar;
+}
+
+- (BOOL)isOnSameDay:(NSDate *)otherDate
+{
+    NSCalendar *calendar = [[self class] sharedCalendar];
+    NSCalendarUnit flags = (NSMonthCalendarUnit| NSYearCalendarUnit | NSDayCalendarUnit);
+    NSDateComponents *components = [calendar components:flags fromDate:self];
+    NSDateComponents *otherComponents = [calendar components:flags fromDate:otherDate];
+
+    return ([components day] == [otherComponents day] && [components month] == [otherComponents month] && [components year] == [otherComponents year]);
 }
 
 @end

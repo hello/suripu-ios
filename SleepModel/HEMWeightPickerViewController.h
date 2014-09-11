@@ -1,6 +1,7 @@
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMWeightPickerViewController : UIViewController
+@interface HEMWeightPickerViewController : HEMBaseController
 
 @end

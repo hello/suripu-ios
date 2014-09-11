@@ -3,6 +3,7 @@
 
 #import "HEMGenderPickerViewController.h"
 #import "HEMUserDataCache.h"
+#import "HEMBaseController+Protected.h"
 
 @interface HEMGenderPickerViewController ()
 
@@ -13,6 +14,8 @@
 @property (weak, nonatomic) IBOutlet UIButton* otherTitleButton;
 @property (weak, nonatomic) IBOutlet UIView* lineView;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fIconButtonBotConstraint;
+
 @end
 
 @implementation HEMGenderPickerViewController
@@ -21,6 +24,11 @@
 {
     [super viewDidLoad];
     [self setGenderAsOther:self.otherTitleButton];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    CGFloat diff = -40.0f;
+    [self updateConstraint:[self fIconButtonBotConstraint] withDiff:diff];
 }
 
 - (IBAction)setGenderAsFemale:(id)sender

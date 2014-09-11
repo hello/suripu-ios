@@ -1,6 +1,7 @@
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMBirthdatePickerViewController : UIViewController
+@interface HEMBirthdatePickerViewController : HEMBaseController
 
 @end

@@ -90,9 +90,13 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 6.f;
 }
 
 - (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer
-    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UISwipeGestureRecognizer*)otherGestureRecognizer
-{
-    return YES;
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer*)otherGestureRecognizer {
+    return [self.collectionView contentSize].height > CGRectGetHeight([self.collectionView bounds]);
+}
+
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+    CGPoint translation = [gestureRecognizer translationInView:[self view]];
+    return fabsf(translation.y) > fabsf(translation.x);
 }
 
 #pragma mark UIScrollViewDelegate

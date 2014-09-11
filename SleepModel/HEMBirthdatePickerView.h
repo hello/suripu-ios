@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern CGFloat const kHEMBirthdateValueHeight;
+
 @interface HEMBirthdatePickerView : UIView
 
 /**

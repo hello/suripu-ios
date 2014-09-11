@@ -5,6 +5,7 @@
 #import "HEMWeightPickerViewController.h"
 #import "HEMUserDataCache.h"
 #import "HelloStyleKit.h"
+#import "HEMBaseController+Protected.h"
 
 CGFloat const HEMWeightPickerPoundsPerKilogram = 2.20462f;
 CGFloat const HEMWeightPickerKilogramsPerPound = 0.453592f;
@@ -16,6 +17,7 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 @property (weak,   nonatomic) IBOutlet UILabel* topWeightLabel;
 @property (weak,   nonatomic) IBOutlet UILabel* botWeightLabel;
 @property (assign, nonatomic) NSInteger weightInKgs;
+@property (weak,   nonatomic) IBOutlet NSLayoutConstraint *carouselToButtonTopAlignment;
 
 @end
 
@@ -32,6 +34,11 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
     [[self carousel] setDelegate:self];
     [[self carousel] setScrollToItemBoundary:NO];
     [[self carousel] setClipsToBounds:YES];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    CGFloat diff = -60;
+    [self updateConstraint:[self carouselToButtonTopAlignment] withDiff:diff];
 }
 
 #pragma mark - iCarousel

@@ -9,9 +9,10 @@
 #import "HEMBirthdatePickerView.h"
 #import "HelloStyleKit.h"
 
+CGFloat const kHEMBirthdateValueHeight = 60.0f;
+
 static CGFloat const kHEMBirthdatePickerWidth = 270.0f;
 static CGFloat const kHEMBirthdatePickerHeight = 300.0f;
-static CGFloat const kHEMBirthdateValueHeight = 60.0f;
 
 static NSInteger const kHEMBirthdateNumberOfYears = 120;
 static NSInteger const kHEMBirthdateNumberOfMonths = 12;

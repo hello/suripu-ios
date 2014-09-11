@@ -5,12 +5,16 @@
 #import "HelloStyleKit.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBirthdatePickerView.h"
+#import "HEMBaseController+Protected.h"
 
 @interface HEMBirthdatePickerViewController ()
 
 @property (weak,   nonatomic) IBOutlet HEMBirthdatePickerView *dobPicker;
 @property (weak,   nonatomic) IBOutlet UILabel *titleLabel;
 @property (assign, nonatomic)          BOOL appeared;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *dobPickerHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *dobPickerToButtonTopConstraint;
 
 @end
 
@@ -30,6 +34,12 @@
         [[self dobPicker] setMonth:7 day:15 yearsPast:18];
         [self setAppeared:YES];
     }
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    CGFloat heightDiff = -2 * kHEMBirthdateValueHeight; // show 3 rows instead
+    [self updateConstraint:[self dobPickerHeightConstraint] withDiff:heightDiff];
+    [self updateConstraint:[self dobPickerToButtonTopConstraint] withDiff:-heightDiff];
 }
 
 #pragma mark - Next

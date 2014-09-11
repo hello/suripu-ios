@@ -1,6 +1,7 @@
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMGenderPickerViewController : UIViewController
+@interface HEMGenderPickerViewController : HEMBaseController
 
 @end

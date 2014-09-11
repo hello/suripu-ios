@@ -2,10 +2,16 @@
 
 ## 1.0.0.11
 
+Fixes:
+
+* iPhone 4s layout issue with the gender selection screen
+
 New Stuff:
 
 * Real data in the timeline from your pill!
 * New style for the onboarding process, for recording height, weight, and birth date
+* Now pairs with Sense during onboarding, if one is found not already paired
+* Using updated Account API to save birthdate and lat/long information
 
 ## 1.0.0.10
 

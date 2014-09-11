@@ -27,6 +27,11 @@
 + (void)removeAllObjectsInCollection:(NSString*)collectionName;
 
 /**
+ *  Nuke it from the sky
+ */
++ (void)removeAllObjects;
+
+/**
  *  Retrieves objects stored under a particular key
  *
  *  @param key            identifier of the objects to retrieve

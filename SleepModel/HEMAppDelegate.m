@@ -1,6 +1,5 @@
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENAlarm.h>
-#import <SenseKit/SENSensor.h>
+#import <SenseKit/SENKeyedArchiver.h>
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <Crashlytics/Crashlytics.h>
 
@@ -8,10 +7,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummarySlideViewController.h"
 #import "HEMSleepGraphCollectionViewController.h"
-
-@interface HEMAppDelegate ()
-
-@end
 
 @implementation HEMAppDelegate
 
@@ -36,8 +31,7 @@
 
 - (void)resetAndShowOnboarding
 {
-    [SENAlarm clearSavedAlarms];
-    [SENSensor clearCachedSensors];
+    [SENKeyedArchiver removeAllObjects];
     [self showOnboardingFlowAnimated:YES];
 }
 

@@ -60,18 +60,19 @@ PODS:
     - YapDatabase/common
 
 DEPENDENCIES:
-  - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`)
+  - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`, commit `d598fb4f5e29f5aaa66e7e880a9857019865881b`)
   - FCDynamicPanesNavigationController (from `git@github.com:hello/FCDynamicPanesNavigationController.git`)
   - iCarousel (~> 1.7.6)
   - JBChartView (from `git@github.com:hello/JBChartView.git`)
   - Kiwi
   - SenseKit (from `git@github.com:hello/SenseKit.git`)
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
-  - SORelativeDateTransformer
+  - SORelativeDateTransformer (~> 1.1.10)
   - SVProgressHUD (from `https://github.com/samvermette/SVProgressHUD.git`, commit `90e5921e0a0a782c7e06dd8d308031041c10f789`)
 
 EXTERNAL SOURCES:
   AttributedMarkdown:
+    :commit: d598fb4f5e29f5aaa66e7e880a9857019865881b
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
   FCDynamicPanesNavigationController:
     :git: git@github.com:hello/FCDynamicPanesNavigationController.git

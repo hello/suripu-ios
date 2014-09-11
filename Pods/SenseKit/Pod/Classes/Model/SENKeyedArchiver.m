@@ -52,6 +52,13 @@ static NSString* const SENKeyedArchiverStoreName = @"SENKeyedArchiverStore";
     }];
 }
 
++ (void)removeAllObjects
+{
+    [[self mainConnection] readWriteWithBlock:^(YapDatabaseReadWriteTransaction *transaction) {
+        [transaction removeAllObjectsInAllCollections];
+    }];
+}
+
 + (NSSet*)objectsForKey:(NSString*)key inCollection:(NSString*)collectionName
 {
     __block id objects = nil;

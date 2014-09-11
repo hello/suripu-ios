@@ -16,7 +16,7 @@
 
 - (void)setSleepScore:(NSUInteger)sleepScore
 {
-    [self.sleepScoreGraphView setSleepScore:sleepScore];
+    [self.sleepScoreGraphView setSleepScore:sleepScore animated:YES];
 }
 
 @end

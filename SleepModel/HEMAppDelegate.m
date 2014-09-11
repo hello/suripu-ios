@@ -17,6 +17,7 @@
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+    [SENAuthorizationService authorizeRequestsFromKeychain];
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];

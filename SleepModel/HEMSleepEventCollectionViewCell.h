@@ -9,4 +9,5 @@
 @property (weak, nonatomic) IBOutlet UILabel* eventTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* eventTimeLabel;
 @property (weak, nonatomic) IBOutlet UILabel* eventMessageLabel;
+@property (weak, nonatomic) IBOutlet UIButton *playButton;
 @end

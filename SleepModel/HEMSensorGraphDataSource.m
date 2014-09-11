@@ -12,11 +12,10 @@
 
 @implementation HEMSensorGraphDataSource
 
-- (instancetype)initWithDataSeries:(NSArray*)dataSeries forSensor:(SENSensor*)sensor
+- (instancetype)initWithDataSeries:(NSArray*)dataSeries
 {
     if (self = [super init]) {
         _dataSeries = dataSeries;
-        _sensor = sensor;
     }
     return self;
 }
@@ -38,7 +37,7 @@
     if (lineIndex == 0)
         return [[self.dataSeries[horizontalIndex] valueForKey:@"value"] floatValue];
 
-    return [self.sensor.valueInPreferredUnit floatValue];
+    return 0;
 }
 
 #pragma mark appearance
@@ -80,17 +79,17 @@
     return [HelloStyleKit mediumBlueColor];
 }
 
-- (UIColor *)lineChartView:(JBLineChartView *)lineChartView fillColorForLineAtLineIndex:(NSUInteger)lineIndex
+- (UIColor*)lineChartView:(JBLineChartView*)lineChartView fillColorForLineAtLineIndex:(NSUInteger)lineIndex
 {
     return lineIndex == 0 ? [HelloStyleKit lightBlueColor] : [UIColor clearColor];
 }
 
-- (UIColor *)lineChartView:(JBLineChartView *)lineChartView selectionColorForDotAtHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
+- (UIColor*)lineChartView:(JBLineChartView*)lineChartView selectionColorForDotAtHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
     return [HelloStyleKit darkBlueColor];
 }
 
-- (UIColor *)lineChartView:(JBLineChartView *)lineChartView selectionColorForLineAtLineIndex:(NSUInteger)lineIndex
+- (UIColor*)lineChartView:(JBLineChartView*)lineChartView selectionColorForLineAtLineIndex:(NSUInteger)lineIndex
 {
     return [HelloStyleKit mediumBlueColor];
 }

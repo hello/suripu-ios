@@ -63,7 +63,7 @@ static UIFont* HEMSensorViewRegularFont;
     self.showHourlyData = YES;
     self.hourlyDataSeries = @[];
     self.dailyDataSeries = @[];
-    self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:@[] forSensor:self.sensor];
+    self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:@[]];
     CAGradientLayer* mask = [CAGradientLayer layer];
     mask.frame = self.graphView.bounds;
     mask.colors = @[ (id)[UIColor whiteColor].CGColor,
@@ -146,7 +146,7 @@ static UIFont* HEMSensorViewRegularFont;
             return;
         self.hourlyDataSeries = data;
         if ([self isShowingHourlyData]) {
-            self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:data forSensor:self.sensor];
+            self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:data];
             [self configureGraphView];
         }
     }];
@@ -155,7 +155,7 @@ static UIFont* HEMSensorViewRegularFont;
             return;
         self.dailyDataSeries = data;
         if (![self isShowingHourlyData]) {
-            self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:data forSensor:self.sensor];
+            self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:data];
             [self configureGraphView];
         }
     }];
@@ -187,7 +187,7 @@ static UIFont* HEMSensorViewRegularFont;
     [UIView animateWithDuration:0.25 animations:^{
         self.graphView.alpha = 0;
     } completion:^(BOOL finished) {
-        self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:dataSeries forSensor:self.sensor];
+        self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:dataSeries];
         [self configureGraphView];
         [UIView animateWithDuration:0.25 animations:^{
             self.graphView.alpha = 1.f;

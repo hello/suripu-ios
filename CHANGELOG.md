@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0.12
+
+Fixes:
+
+* More informative labeling when there is no curent sensor data available
+
 ## 1.0.0.11
 
 Fixes:

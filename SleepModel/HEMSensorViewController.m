@@ -105,6 +105,9 @@ static UIFont* HEMSensorViewRegularFont;
         } else {
             sectionValue = [SENSensor formatValue:@(value) withUnit:SENSensorUnitUnknown];
         }
+        if (!sectionValue) {
+            sectionValue = NSLocalizedString(@"sensor.value.none", nil);
+        }
         sections[i] = @{
             @"value" : sectionValue,
             @"label" : sectionLabel
@@ -125,7 +128,12 @@ static UIFont* HEMSensorViewRegularFont;
 - (void)configureSensorValueViews
 {
     self.title = self.sensor.localizedName;
-    self.valueLabel.text = [NSString stringWithFormat:@"%.0f", [[self.sensor valueInPreferredUnit] floatValue]];
+    if (self.sensor.value) {
+        self.valueLabel.text = [NSString stringWithFormat:@"%.0f", [[self.sensor valueInPreferredUnit] floatValue]];
+    } else {
+        self.valueLabel.text = @"--";
+    }
+
     self.unitLabel.text = [self.sensor localizedUnit];
     NSDictionary* attributes = @{
         @(EMPH) : @{

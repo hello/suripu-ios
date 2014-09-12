@@ -11,22 +11,22 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.resources = 'Pod/Assets/*.png'
-  
+
   s.subspec "API" do |ss|
     ss.source_files = 'Pod/Classes/API/*'
-    ss.dependency 'FXKeychain'
-    ss.dependency 'AFNetworking'
+    ss.dependency 'FXKeychain', '~> 1.5.1'
+    ss.dependency 'AFNetworking', '~> 2.4.1'
   end
 
   s.subspec "BLE" do |ss|
     ss.source_files = 'Pod/Classes/BLE/**/*.{h,m}'
-    ss.dependency 'LGBluetooth'
+    ss.dependency 'LGBluetooth', '~> 1.1.4'
     ss.dependency 'SHSProtoBuf'
   end
-  
+
   s.subspec "Model" do |ss|
     ss.source_files = 'Pod/Classes/Model/*'
-    ss.dependency 'YapDatabase'
+    ss.dependency 'YapDatabase', '~> 2.4.3'
   end
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

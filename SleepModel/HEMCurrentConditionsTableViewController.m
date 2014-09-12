@@ -121,7 +121,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
         [(HEMColoredRoundedLabel*)cell.detailLabel showRoundedBackground];
         SENSensor* sensor = self.sensors[indexPath.row];
         cell.titleLabel.text = sensor.localizedName;
-        cell.detailLabel.text = sensor.localizedValue;
+        cell.detailLabel.text = sensor.localizedValue ?: NSLocalizedString(@"sensor.value.none", nil);
         switch (sensor.unit) {
         case SENSensorUnitDegreeCentigrade:
             cell.glyphImageView.image = [HelloStyleKit temperatureIcon];
@@ -153,6 +153,9 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
             } else {
                 [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[HelloStyleKit alertSensorColor]];
             }
+        } else if (!sensor.value) {
+            cell.descriptionLabel.text = nil;
+            [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[UIColor grayColor]];
         } else {
             cell.descriptionLabel.text = nil;
             [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[HelloStyleKit idealSensorColor]];

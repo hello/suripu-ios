@@ -153,6 +153,12 @@
 #define COCOAPODS_VERSION_MINOR_SenseKit_Model 1
 #define COCOAPODS_VERSION_PATCH_SenseKit_Model 0
 
+// UIImageEffects
+#define COCOAPODS_POD_AVAILABLE_UIImageEffects
+#define COCOAPODS_VERSION_MAJOR_UIImageEffects 0
+#define COCOAPODS_VERSION_MINOR_UIImageEffects 0
+#define COCOAPODS_VERSION_PATCH_UIImageEffects 1
+
 // YapDatabase
 #define COCOAPODS_POD_AVAILABLE_YapDatabase
 #define COCOAPODS_VERSION_MAJOR_YapDatabase 2

@@ -114,3 +114,7 @@
 "actions.ok" = "OK";
 "actions.sign-out" = "Sign Out";
 "status.success" = "Done!";
+
+// questions
+"questions.failed.title" = "Could Not Submit Answer";
+"questions.error.unexpected" = "Whoops!  Probably our fault.  Skip the question for now.  We'll ask you again another time";

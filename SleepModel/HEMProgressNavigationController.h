@@ -11,6 +11,7 @@
 @interface HEMProgressNavigationController : UINavigationController
 
 @property (nonatomic, assign) NSInteger numberOfScreens;
+@property (nonatomic, strong) UIImage* bgImage;
 
 @end
  

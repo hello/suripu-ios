@@ -12,6 +12,7 @@
 @interface HEMProgressNavigationController()
 
 @property (strong, nonatomic) UIProgressView* progressView;
+@property (strong, nonatomic) UIImageView* bgImageView;
 @property (assign, nonatomic) NSInteger currentScreenCount;
 
 @end
@@ -36,6 +37,17 @@
     [[self progressView] setTintColor:[HelloStyleKit mediumBlueColor]];
     [[self progressView] setProgress:0.0f];
     [[self view] addSubview:[self progressView]];
+}
+
+- (void)setBgImage:(UIImage *)bgImage {
+    _bgImage = bgImage;
+    if (bgImage != nil && [self bgImageView] == nil) {
+        UIImageView* bgImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
+        [bgImageView setImage:[self bgImage]];
+        [[self view] insertSubview:bgImageView atIndex:0];
+        [self setBgImageView:bgImageView];
+    }
+    [[self bgImageView] setImage:bgImage];
 }
 
 - (void)updateProgress:(BOOL)animated {

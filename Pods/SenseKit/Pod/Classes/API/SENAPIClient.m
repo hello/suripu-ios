@@ -22,10 +22,15 @@ SENAFFailureBlock (^SENAPIClientRequestFailureBlock)(SENAPIDataBlock) = ^SENAFFa
 
 SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSuccessBlock(SENAPIDataBlock completion) {
     return ^(NSURLSessionDataTask *task, id responseObject) {
-        NSData* data = [NSJSONSerialization dataWithJSONObject:responseObject options:0 error:nil];
-        id strippedJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil removingNulls:YES ignoreArrays:NO];
+        if (responseObject) {
+            NSData* data = [NSJSONSerialization dataWithJSONObject:responseObject options:0 error:nil];
+            id strippedJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil removingNulls:YES ignoreArrays:NO];
+            if (completion)
+                completion(strippedJSON, nil);
+            return;
+        }
         if (completion)
-            completion(strippedJSON, nil);
+            completion(nil, nil);
     };
 };
 

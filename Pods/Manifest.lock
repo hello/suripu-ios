@@ -52,6 +52,7 @@ PODS:
   - SHSProtoBuf/non-arc (0.9)
   - SORelativeDateTransformer (1.1.10)
   - SVProgressHUD (1.0)
+  - UIImageEffects (0.0.1)
   - YapDatabase (2.4.3):
     - YapDatabase/standard
   - YapDatabase/common (2.4.3):
@@ -69,6 +70,7 @@ DEPENDENCIES:
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
   - SORelativeDateTransformer (~> 1.1.10)
   - SVProgressHUD (from `https://github.com/samvermette/SVProgressHUD.git`, commit `90e5921e0a0a782c7e06dd8d308031041c10f789`)
+  - UIImageEffects (~> 0.0.1)
 
 EXTERNAL SOURCES:
   AttributedMarkdown:
@@ -101,6 +103,7 @@ SPEC CHECKSUMS:
   SHSProtoBuf: 62a02d425f5dbee00d057bae65d76f0f01737410
   SORelativeDateTransformer: de7936811c9988af8e129a097af48c828f933f5f
   SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
+  UIImageEffects: 69cd1e1f8fc4042a8fefcf4a0727cbf213e4dbfb
   YapDatabase: 2ec54726596299c88e09e899e8f17c15d7f6b18a
 
 COCOAPODS: 0.33.1

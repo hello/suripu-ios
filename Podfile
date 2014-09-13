@@ -8,6 +8,7 @@ pod 'SORelativeDateTransformer', '~> 1.1.10'
 pod 'SVProgressHUD', :git =>    'https://github.com/samvermette/SVProgressHUD.git',
                      :commit => '90e5921e0a0a782c7e06dd8d308031041c10f789'
 pod 'iCarousel', '~> 1.7.6'
+pod 'UIImageEffects', '~> 0.0.1'
 
 # Private
 pod 'JBChartView', :git => 'git@github.com:hello/JBChartView.git'

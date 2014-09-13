@@ -105,6 +105,12 @@
 #define COCOAPODS_VERSION_MINOR_LGBluetooth 1
 #define COCOAPODS_VERSION_PATCH_LGBluetooth 4
 
+// NSJSONSerialization-NSNullRemoval
+#define COCOAPODS_POD_AVAILABLE_NSJSONSerialization_NSNullRemoval
+#define COCOAPODS_VERSION_MAJOR_NSJSONSerialization_NSNullRemoval 1
+#define COCOAPODS_VERSION_MINOR_NSJSONSerialization_NSNullRemoval 0
+#define COCOAPODS_VERSION_PATCH_NSJSONSerialization_NSNullRemoval 0
+
 // SHSProtoBuf
 #define COCOAPODS_POD_AVAILABLE_SHSProtoBuf
 #define COCOAPODS_VERSION_MAJOR_SHSProtoBuf 0
@@ -152,6 +158,12 @@
 #define COCOAPODS_VERSION_MAJOR_SenseKit_Model 0
 #define COCOAPODS_VERSION_MINOR_SenseKit_Model 1
 #define COCOAPODS_VERSION_PATCH_SenseKit_Model 0
+
+// SenseKit/Service
+#define COCOAPODS_POD_AVAILABLE_SenseKit_Service
+#define COCOAPODS_VERSION_MAJOR_SenseKit_Service 0
+#define COCOAPODS_VERSION_MINOR_SenseKit_Service 1
+#define COCOAPODS_VERSION_PATCH_SenseKit_Service 0
 
 // UIImageEffects
 #define COCOAPODS_POD_AVAILABLE_UIImageEffects

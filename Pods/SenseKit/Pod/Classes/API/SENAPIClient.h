@@ -1,16 +1,9 @@
 
 #import <Foundation/Foundation.h>
 
-@class AFHTTPSessionManager;
-
 typedef void (^SENAPIDataBlock)(id data, NSError* error);
 
 @interface SENAPIClient : NSObject
-
-/**
- *  A convenience helper for making requests through an NSURLSession
- */
-+ (AFHTTPSessionManager*)HTTPSessionManager;
 
 /**
  *  The base URL for the suripu app service
@@ -27,5 +20,73 @@ typedef void (^SENAPIDataBlock)(id data, NSError* error);
  *  Updates the base URL for the suripu app service to the default URL
  */
 + (void)resetToDefaultBaseURL;
+
+///-------------------------------
+/// @name HTTP Requests Formatting
+///-------------------------------
+
+/**
+ *  Default header values sent with each request
+ *
+ *  @return headers
+ */
++ (NSDictionary*)defaultHTTPHeaderValues;
+
+/**
+ *  Set a header to be sent with every request
+ *
+ *  @param value     value to set
+ *  @param fieldName name of the header field
+ */
++ (void)setValue:(id)value forHTTPHeaderField:(NSString*)fieldName;
+
+///---------------------------
+/// @name Making HTTP Requests
+///---------------------------
+
+/**
+ *  Convenience helper for making a POST request
+ *
+ *  @param URLString       url to connect
+ *  @param parameters      parameters to send
+ *  @param completionBlock block invoked at completion
+ */
++ (void)POST:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completionBlock;
+
+/**
+ *  Convenience helper for making a PUT request
+ *
+ *  @param URLString       url to connect
+ *  @param parameters      parameters to send
+ *  @param completionBlock block invoked at completion
+ */
++ (void)PUT:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completionBlock;
+
+/**
+ *  Convenience helper for making a GET request
+ *
+ *  @param URLString       url to connect
+ *  @param parameters      parameters to send
+ *  @param completionBlock block invoked at completion
+ */
++ (void)GET:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completionBlock;
+
+/**
+ *  Convenience helper for making a PATCH request
+ *
+ *  @param URLString       url to connect
+ *  @param parameters      parameters to send
+ *  @param completionBlock block invoked at completion
+ */
++ (void)PATCH:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completionBlock;
+
+/**
+ *  Convenience helper for making a DELETE request
+ *
+ *  @param URLString       url to connect
+ *  @param parameters      parameters to send
+ *  @param completionBlock block invoked at completion
+ */
++ (void)DELETE:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completionBlock;
 
 @end

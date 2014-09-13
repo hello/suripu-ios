@@ -1,0 +1,174 @@
+//
+//  SENServiceQuestions.m
+//  Pods
+//
+//  Created by Jimmy Lu on 9/10/14.
+//
+//
+#import "SENAPIQuestions.h"
+#import "SENAuthorizationService.h"
+#import "SENServiceQuestions.h"
+#import "SENService+Protected.h"
+#import "SENAnswer.h"
+
+static NSString* const kSENServiceQuestionsKeyDate = @"kSENServiceQuestionsKeyDate";
+
+@interface SENServiceQuestions()
+
+@property (nonatomic, strong) NSDate* lastDateAsked;
+@property (nonatomic, strong) NSDate* today;
+@property (nonatomic, strong) NSDate* dateQuestionsPulled;
+@property (nonatomic, copy)   NSArray* todaysQuestions;
+@property (nonatomic, strong) NSMutableDictionary* callbacksByObserver;
+@property (nonatomic, assign, getter=isUpdating) BOOL updating;
+
+@end
+
+@implementation SENServiceQuestions
+
++ (id)sharedService {
+    static SENServiceQuestions* service = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        service = [[super allocWithZone:NULL] init];
+    });
+    return service;
+}
+
++ (id)allocWithZone:(struct _NSZone *)zone {
+    return [self sharedService];
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self restore];
+        [self updateQuestions];
+    }
+    return self;
+}
+
+#pragma mark - SENService Override
+
+- (void)serviceBecameActive {
+    [self restore];
+    [self updateQuestions];
+}
+
+- (void)serviceWillBecomeInactive {
+    [self save];
+}
+
+#pragma mark - Helpers
+
+- (void)updateQuestions {
+    if (![self haveAskedQuestionsForToday] && [SENAuthorizationService isAuthorized]) {
+        if ([self todaysQuestions] != nil && [self isToday:[self dateQuestionsPulled]]) {
+            // just tell the observer there are questions to be asked to the user
+            [self notifyObserversOfQuestions];
+            return;
+        }
+        
+        if ([self isUpdating]) {
+            return;
+        }
+        
+        [self setUpdating:YES];
+        __weak typeof(self) weakSelf = self;
+        [SENAPIQuestions getQuestionsFor:[self today] completion:^(NSArray* questions, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                [strongSelf setTodaysQuestions:questions];
+                [strongSelf setDateQuestionsPulled:[strongSelf today]];
+                [strongSelf notifyObserversOfQuestions];
+                [strongSelf setUpdating:NO];
+            }
+        }];
+    }
+}
+
+- (void)restore {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [self setLastDateAsked:[defaults objectForKey:kSENServiceQuestionsKeyDate]];
+    [self setToday:[self todayWithoutTime]];
+}
+
+- (void)save {
+    if ([self lastDateAsked] != nil) {
+        NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+        [defaults setObject:[self lastDateAsked] forKey:kSENServiceQuestionsKeyDate];
+        [defaults synchronize];
+    }
+}
+
+- (void)notifyObserversOfQuestions {
+    for (NSString* key in [self callbacksByObserver]) {
+        SENServiceQuestionBlock callback = [[self callbacksByObserver] objectForKey:key];
+        callback([self todaysQuestions]);
+    }
+}
+
+- (NSDate*)todayWithoutTime {
+    // since this method can be called multiple times during the lifecycle and on
+    // restore, we should cache the instance so it does not take long to simply
+    // go in to foreground since [NSCalendar currentCalendar] is a little slow
+    static NSCalendar* calendar = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        calendar = [NSCalendar currentCalendar];
+    });
+    unsigned flags = NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
+    NSDateComponents* now = [calendar components:flags fromDate:[NSDate date]];
+    [now setCalendar:calendar];
+    return [now date];
+}
+
+- (BOOL)isToday:(NSDate*)date {
+    return date != nil ? [[self today] compare:date] == NSOrderedSame : NO;
+}
+
+- (BOOL)haveAskedQuestionsForToday {
+    return [self lastDateAsked] != nil
+    && [self isToday:[self lastDateAsked]];
+}
+
+#pragma mark - Public
+
+- (void)setQuestionsAskedToday {
+    [self setLastDateAsked:[self today]];
+    [self setTodaysQuestions:nil];
+    [self save];
+}
+
+- (id)listenForNewQuestions:(void(^)(NSArray* questions))callback {
+    if (callback == nil || callback == NULL) return nil;
+    
+    if ([self callbacksByObserver] == nil) {
+        [self setCallbacksByObserver:[NSMutableDictionary dictionary]];
+    }
+    
+    NSString* uuid = [[NSUUID UUID] UUIDString];
+    [[self callbacksByObserver] setValue:[callback copy] forKey:uuid];
+    return uuid;
+}
+
+- (void)stopListening:(id)listener {
+    if (listener == nil || listener == NULL) return;
+    [[self callbacksByObserver] removeObjectForKey:listener];
+}
+
+- (void)submitAnswer:(SENAnswer*)answer completion:(void(^)(NSError* error))completion {
+    if (answer == nil || [answer answerId] == nil || [answer answer] == nil) return;
+    
+    __weak typeof (self) weakSelf = self;
+    [SENAPIQuestions sendAnswer:answer completion:^(id data, NSError *error) {
+        __strong typeof (weakSelf) strongSelf = weakSelf;
+        if (strongSelf && !error) {
+            [strongSelf setQuestionsAskedToday];
+        }
+        if (completion) completion (error);
+    }];
+    
+}
+
+@end

@@ -52,7 +52,7 @@ NSString* const SENSensorUnitKey = @"unit";
 
 + (NSString*)formatValue:(NSNumber*)value withUnit:(SENSensorUnit)unit
 {
-    if (!value)
+    if (!value || [value isEqual:[NSNull null]])
         return nil;
 
     NSString* prefix = [self localizedStringPrefixForUnit:unit];

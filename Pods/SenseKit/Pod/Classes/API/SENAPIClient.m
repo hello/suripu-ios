@@ -1,5 +1,6 @@
 
 #import <AFNetworking/AFHTTPSessionManager.h>
+#import <NSJSONSerialization-NSNullRemoval/NSJSONSerialization+RemovingNulls.h>
 
 #import "SENAPIClient.h"
 
@@ -9,6 +10,24 @@ static NSString* const SENAPIClientBaseURLPathKey = @"SENAPIClientBaseURLPathKey
 static AFHTTPSessionManager* sessionManager = nil;
 
 @implementation SENAPIClient
+
+typedef void (^SENAFFailureBlock)(NSURLSessionDataTask *, NSError *);
+typedef void (^SENAFSuccessBlock)(NSURLSessionDataTask *, id responseObject);
+SENAFFailureBlock (^SENAPIClientRequestFailureBlock)(SENAPIDataBlock) = ^SENAFFailureBlock(SENAPIDataBlock completion) {
+    return ^(NSURLSessionDataTask *task, NSError *error) {
+        if (completion)
+            completion(nil, error);
+    };
+};
+
+SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSuccessBlock(SENAPIDataBlock completion) {
+    return ^(NSURLSessionDataTask *task, id responseObject) {
+        NSData* data = [NSJSONSerialization dataWithJSONObject:responseObject options:0 error:nil];
+        id strippedJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil removingNulls:YES ignoreArrays:NO];
+        if (completion)
+            completion(strippedJSON, nil);
+    };
+};
 
 + (AFHTTPSessionManager*)HTTPSessionManager
 {
@@ -46,6 +65,59 @@ static AFHTTPSessionManager* sessionManager = nil;
         return YES;
     }
     return NO;
+}
+
+///-------------------------------
+/// @name HTTP Requests Formatting
+///-------------------------------
+
++ (NSDictionary *)defaultHTTPHeaderValues
+{
+    return [[self HTTPSessionManager].requestSerializer HTTPRequestHeaders];
+}
+
++ (void)setValue:(id)value forHTTPHeaderField:(NSString *)fieldName
+{
+    [[self HTTPSessionManager].requestSerializer setValue:value forHTTPHeaderField:fieldName];
+}
+
+///---------------------------
+/// @name Making HTTP Requests
+///---------------------------
+
++ (void)GET:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion
+{
+    [[self HTTPSessionManager] GET:URLString parameters:parameters
+                           success:SENAPIClientRequestSuccessBlock(completion)
+                           failure:SENAPIClientRequestFailureBlock(completion)];
+}
+
++ (void)POST:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion
+{
+    [[self HTTPSessionManager] POST:URLString parameters:parameters
+                            success:SENAPIClientRequestSuccessBlock(completion)
+                            failure:SENAPIClientRequestFailureBlock(completion)];
+}
+
++ (void)PUT:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion
+{
+    [[self HTTPSessionManager] PUT:URLString parameters:parameters
+                           success:SENAPIClientRequestSuccessBlock(completion)
+                           failure:SENAPIClientRequestFailureBlock(completion)];
+}
+
++ (void)DELETE:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion
+{
+    [[self HTTPSessionManager] DELETE:URLString parameters:parameters
+                              success:SENAPIClientRequestSuccessBlock(completion)
+                              failure:SENAPIClientRequestFailureBlock(completion)];
+}
+
++ (void)PATCH:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion
+{
+    [[self HTTPSessionManager] PATCH:URLString parameters:parameters
+                             success:SENAPIClientRequestSuccessBlock(completion)
+                             failure:SENAPIClientRequestFailureBlock(completion)];
 }
 
 @end

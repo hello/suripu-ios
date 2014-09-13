@@ -8,11 +8,7 @@ static NSString* const SENAPITimelineEndpointFormat = @"timeline/%ld-%ld-%ld";
 
 + (void)timelineForDate:(NSDate *)date completion:(SENAPIDataBlock)block
 {
-    [[SENAPIClient HTTPSessionManager] GET:[self timelinePathForDate:date] parameters:nil success:^(NSURLSessionDataTask* task, id responseObject) {
-        block(responseObject, nil);
-    } failure:^(NSURLSessionDataTask* task, NSError* error) {
-        block(nil, error);
-    }];
+    [SENAPIClient  GET:[self timelinePathForDate:date] parameters:nil completion:block];
 }
 
 + (NSString*)timelinePathForDate:(NSDate*)date

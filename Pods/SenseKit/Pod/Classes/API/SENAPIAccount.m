@@ -40,26 +40,19 @@ NSString* const SENAPIAccountEndpoint = @"account";
 
     NSString* URLPath = [NSString stringWithFormat:@"%@?sig=%@", SENAPIAccountEndpoint, @"xxx"];
 
-    [[SENAPIClient HTTPSessionManager] POST:URLPath parameters:params success:^(NSURLSessionDataTask* task, id responseObject) {
+    [SENAPIClient POST:URLPath parameters:params completion:^(id responseObject, NSError *error) {
         SENAccount* account = nil;
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             account = [self accountFromResponse:responseObject];
         }
-        completionBlock(account, task.error);
-    } failure:^(NSURLSessionDataTask* task, NSError* error) {
-        completionBlock(nil, error);
+        completionBlock(account, error);
     }];
 }
 
 + (void)updateAccount:(SENAccount*)account completionBlock:(SENAPIDataBlock)completion {
-    [[SENAPIClient HTTPSessionManager] PUT:SENAPIAccountEndpoint
-                                parameters:[self dictionaryValue:account]
-                                   success:^(NSURLSessionDataTask* task, id responseObject) {
-                                       completion(responseObject, task.error);
-                                   }
-                                   failure:^(NSURLSessionDataTask* task, NSError* error) {
-                                       completion(nil, error);
-                                   }];
+    [SENAPIClient PUT:SENAPIAccountEndpoint
+           parameters:[self dictionaryValue:account]
+           completion:completion];
 }
 
 #pragma mark - Helpers

@@ -143,7 +143,7 @@
     if ([self presentedViewController] != nil) return;
     
     UIImage* snapshot = [[self snapshot] applyBlurWithRadius:10
-                                                   tintColor:[UIColor colorWithWhite:1.0f alpha:0.4f]
+                                                   tintColor:[UIColor colorWithWhite:1.0f alpha:0.9f]
                                        saturationDeltaFactor:1.2
                                                    maskImage:nil];
     

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0.13
+
+New Stuff:
+
+* Hooking up the Questions API to display question(s) to user at most once a day
+
 ## 1.0.0.12
 
 Fixes:

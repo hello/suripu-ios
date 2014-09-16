@@ -46,7 +46,7 @@ static UIFont* HEMSensorViewRegularFont;
     self.dailyFormatter = [[NSDateFormatter alloc] init];
     self.dailyFormatter.dateFormat = @"EEEEEE";
     HEMSensorViewEmphasisFont = [UIFont fontWithName:@"Agile-Medium" size:21.0];
-    HEMSensorViewRegularFont = [UIFont fontWithName:@"Agile-Thin" size:21.0];
+    HEMSensorViewRegularFont = [UIFont fontWithName:@"Agile-Light" size:21.0];
     self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
     [self initializeGraphDataSource];
     [self configureSensorValueViews];

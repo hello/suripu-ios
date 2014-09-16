@@ -108,16 +108,18 @@ static NSString* const sensorTypeParticulates = @"particulates";
 
 #pragma mark - Event Cell Size Toggling
 
-- (void)toggleExpansionOfEventCellAtIndexPath:(NSIndexPath*)indexPath
+- (BOOL)toggleExpansionOfEventCellAtIndexPath:(NSIndexPath*)indexPath
 {
     if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection) {
         if ([self eventCellAtIndexPathIsExpanded:indexPath]) {
             [self.expandedIndexPaths removeObject:indexPath];
+            return NO;
         } else {
             [self.expandedIndexPaths addObject:indexPath];
+            return YES;
         }
-        [self.collectionView reloadItemsAtIndexPaths:@[ indexPath ]];
     }
+    return NO;
 }
 
 - (BOOL)eventCellAtIndexPathIsExpanded:(NSIndexPath*)indexPath
@@ -303,9 +305,8 @@ static NSString* const sensorTypeParticulates = @"particulates";
     return eventName;
 }
 
-- (UIImage*)imageForEventType:(NSString*)rawEventType
+- (UIImage*)imageForEventType:(NSString*)eventType
 {
-    NSString* eventType = [rawEventType lowercaseString];
     if ([eventType isEqualToString:HEMSleepEventTypeWakeUp]) {
         return [HelloStyleKit wakeupEventIcon];
     } else if ([eventType isEqualToString:HEMSleepEventTypeFallAsleep]) {
@@ -329,6 +330,12 @@ static NSString* const sensorTypeParticulates = @"particulates";
 {
     SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
     return !segment.eventType || [segment.eventType isEqual:[NSNull null]];
+}
+
+- (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath*)indexPath
+{
+    SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
+    return segment.eventType && ![segment.eventType isEqual:[NSNull null]];
 }
 
 @end

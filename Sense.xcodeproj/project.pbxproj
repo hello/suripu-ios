@@ -499,7 +499,7 @@
 				BFABE74E19A2E6C900AB2F0F /* Common */,
 				8AC49F971982DE4D00C2BD63 /* Onboarding */,
 				8AC49F981982DE5E00C2BD63 /* Sensors */,
-				8AC49F8F1981B92100C2BD63 /* Sleep Metrics */,
+				8AC49F8F1981B92100C2BD63 /* Timeline */,
 				BFC3AA0319C2650F0055D308 /* Sleep Questions */,
 				8AC49F991982DE7000C2BD63 /* Settings */,
 				8A4B3D56199534DB00856BDE /* Generated Files */,
@@ -880,7 +880,7 @@
 			name = Alarm;
 			sourceTree = "<group>";
 		};
-		8AC49F8F1981B92100C2BD63 /* Sleep Metrics */ = {
+		8AC49F8F1981B92100C2BD63 /* Timeline */ = {
 			isa = PBXGroup;
 			children = (
 				8A660131199EBDFE007E6167 /* Assets */,
@@ -889,7 +889,7 @@
 				8A660130199EBDDE007E6167 /* View Controllers */,
 				8A660135199EBEB8007E6167 /* Views */,
 			);
-			name = "Sleep Metrics";
+			name = Timeline;
 			sourceTree = "<group>";
 		};
 		8AC49F971982DE4D00C2BD63 /* Onboarding */ = {

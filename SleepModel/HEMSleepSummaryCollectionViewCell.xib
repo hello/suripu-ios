@@ -5,11 +5,11 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <customFonts key="customFonts">
+        <mutableArray key="Agile-Light.otf">
+            <string>Agile-Light</string>
+        </mutableArray>
         <mutableArray key="Agile-Medium.otf">
             <string>Agile-Medium</string>
-        </mutableArray>
-        <mutableArray key="Agile-Thin.otf">
-            <string>Agile-Thin</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -29,12 +29,12 @@
                             <constraint firstAttribute="height" constant="175" id="Tcm-aA-44U"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="buK-Of-ZfH">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="buK-Of-ZfH">
                         <rect key="frame" x="58" y="252" width="198" height="34"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="198" id="q9r-Cr-xDK"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="14"/>
+                        <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="14"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LAST NIGHT" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-AK-PaO">

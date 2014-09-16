@@ -4,7 +4,7 @@
 
 @implementation HEMSensorDataHeaderClockContainerView
 
-static CGFloat const HEMSensorDataHeaderClockContainerViewBorderWidth = 2.f;
+static CGFloat const HEMSensorDataHeaderClockContainerViewBorderWidth = 1.f;
 
 - (void)awakeFromNib
 {
@@ -13,7 +13,7 @@ static CGFloat const HEMSensorDataHeaderClockContainerViewBorderWidth = 2.f;
 
 - (void)drawRect:(CGRect)rect
 {
-    [self fillRoundedRectInRect:rect withColor:[HelloStyleKit intermediateSleepColor]];
+    [self fillRoundedRectInRect:rect withColor:[UIColor colorWithWhite:0.9 alpha:1.f]];
     CGRect inset = CGRectInset(rect, HEMSensorDataHeaderClockContainerViewBorderWidth, HEMSensorDataHeaderClockContainerViewBorderWidth);
     [self fillRoundedRectInRect:inset withColor:[UIColor whiteColor]];
 

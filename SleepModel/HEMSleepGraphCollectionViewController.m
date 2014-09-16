@@ -110,18 +110,19 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 6.f;
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    return [self.dataSource segmentForSleepExistsAtIndexPath:indexPath];
+    return [self.dataSource segmentForEventExistsAtIndexPath:indexPath];
 }
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    return [self.dataSource segmentForSleepExistsAtIndexPath:indexPath];
+    return [self.dataSource segmentForEventExistsAtIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     [self.dataSource toggleExpansionOfEventCellAtIndexPath:indexPath];
+    [collectionView reloadItemsAtIndexPaths:@[indexPath]];
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout

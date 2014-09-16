@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0.14
+
+Fixes:
+
+* I know this was keeping you awake at night, so icons for sleep events have been restored
+* Really light text is now a tad darker
+* Events can be expanded to show messages again
+
 ## 1.0.0.13
 
 New Stuff:

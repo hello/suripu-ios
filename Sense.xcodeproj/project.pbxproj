@@ -25,6 +25,8 @@
 		8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A03386D197DD2D300BE8327 /* HEMSettingsTableViewController.m */; };
 		8A033870197DD89C00BE8327 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8A03386F197DD89C00BE8327 /* Onboarding.storyboard */; };
 		8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A033872197DDA9700BE8327 /* HEMActionButton.m */; };
+		8A0B6F9A19C7A46F000D64AF /* motionEventIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A0B6F9819C7A46F000D64AF /* motionEventIcon.png */; };
+		8A0B6F9B19C7A46F000D64AF /* motionEventIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A0B6F9919C7A46F000D64AF /* motionEventIcon@2x.png */; };
 		8A1743B719A7B471001E3C15 /* HEMSleepGraphCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1743B619A7B471001E3C15 /* HEMSleepGraphCollectionViewController.m */; };
 		8A1743BB19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1743B919A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m */; };
 		8A1743BC19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A1743BA19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.xib */; };
@@ -208,6 +210,8 @@
 		8A03386F197DD89C00BE8327 /* Onboarding.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Onboarding.storyboard; sourceTree = "<group>"; };
 		8A033871197DDA9700BE8327 /* HEMActionButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActionButton.h; sourceTree = "<group>"; };
 		8A033872197DDA9700BE8327 /* HEMActionButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMActionButton.m; sourceTree = "<group>"; };
+		8A0B6F9819C7A46F000D64AF /* motionEventIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = motionEventIcon.png; path = images/motionEventIcon.png; sourceTree = "<group>"; };
+		8A0B6F9919C7A46F000D64AF /* motionEventIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "motionEventIcon@2x.png"; path = "images/motionEventIcon@2x.png"; sourceTree = "<group>"; };
 		8A1743B519A7B471001E3C15 /* HEMSleepGraphCollectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepGraphCollectionViewController.h; sourceTree = "<group>"; };
 		8A1743B619A7B471001E3C15 /* HEMSleepGraphCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepGraphCollectionViewController.m; sourceTree = "<group>"; };
 		8A1743B819A7B896001E3C15 /* HEMSleepEventCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepEventCollectionViewCell.h; sourceTree = "<group>"; };
@@ -707,6 +711,8 @@
 			children = (
 				8AB33FE7199D56C20046188F /* lightEventIcon.png */,
 				8AB33FE8199D56C20046188F /* lightEventIcon@2x.png */,
+				8A0B6F9819C7A46F000D64AF /* motionEventIcon.png */,
+				8A0B6F9919C7A46F000D64AF /* motionEventIcon@2x.png */,
 				8AB33FE9199D56C20046188F /* noiseEventIcon.png */,
 				8AB33FEA199D56C20046188F /* noiseEventIcon@2x.png */,
 				8A5402AB19AFA52B00FC6085 /* playButtonIcon.png */,
@@ -1116,6 +1122,7 @@
 				8AC4A057198A0AE900C2BD63 /* questionIcon.png in Resources */,
 				8AB33FF1199D56C20046188F /* noiseEventIcon.png in Resources */,
 				BF3D2E4D19C37A62001DEEBA /* downArrow@2x.png in Resources */,
+				8A0B6F9A19C7A46F000D64AF /* motionEventIcon.png in Resources */,
 				8A4B3D50199308BB00856BDE /* wifiLogoImage.png in Resources */,
 				BFEAA0AB19A52017002FBD44 /* onboardingBackgroundImage2.png in Resources */,
 				8AAEED0919A5225F006517C4 /* Agile-Light.otf in Resources */,
@@ -1166,6 +1173,7 @@
 				BFEAA0C619A65E54002FBD44 /* mapIcon.png in Resources */,
 				BFEAA0C719A65E54002FBD44 /* mapIcon@2x.png in Resources */,
 				8AAEED0719A5225F006517C4 /* Agile-Hairline.otf in Resources */,
+				8A0B6F9B19C7A46F000D64AF /* motionEventIcon@2x.png in Resources */,
 				8AAEED0819A5225F006517C4 /* Agile-HairlineItalic.otf in Resources */,
 				8A66FC93199D24FF00922ED5 /* femaleIcon.png in Resources */,
 				8AC4A03A1989C36200C2BD63 /* particleIcon@2x.png in Resources */,

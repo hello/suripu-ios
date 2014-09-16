@@ -314,6 +314,8 @@ static NSString* const sensorTypeParticulates = @"particulates";
         return [HelloStyleKit lightEventIcon];
     } else if ([eventType isEqualToString:HEMSleepEventTypeNoise]) {
         return [HelloStyleKit noiseEventIcon];
+    } else if ([eventType isEqualToString:HEMSleepEventTypeMotion]) {
+        return [HelloStyleKit motionEventIcon];
     }
     return nil;
 }

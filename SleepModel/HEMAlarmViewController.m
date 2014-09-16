@@ -7,6 +7,7 @@
 #import "HEMAlarmSoundTableViewController.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
+#import "HEMMainStoryboard.h"
 
 @interface HEMAlarmViewController () <UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer* panGestureRecognizer;
@@ -60,15 +61,21 @@
     self.navigationController.navigationBar.titleTextAttributes = dict;
 }
 
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+{
+    if ([segue.identifier isEqualToString:[HEMMainStoryboard pickSoundSegueSegueIdentifier]]) {
+        HEMAlarmSoundTableViewController* controller = segue.destinationViewController;
+        controller.alarm = self.alarm;
+    }
+}
+
 - (void)configureViewBackground
 {
     if (!self.gradientLayer) {
         self.gradientLayer = [CAGradientLayer new];
         [self.view.layer insertSublayer:self.gradientLayer atIndex:0];
     }
-    SENAlarm* alarm = [[SENAlarm savedAlarms] count]>0?[SENAlarm savedAlarms][0]:nil;
-    NSInteger hour = alarm.hour;
-//    intensity += [SENAlarm savedAlarm].minute * 0.000005;
+    NSInteger hour = self.alarm.hour;
     CGFloat y = (self.edgesForExtendedLayout & UIRectEdgeTop) ? -(CGRectGetHeight(self.navigationController.navigationBar.frame) + CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame])) : 0;
     self.gradientLayer.frame = CGRectMake(0, y, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
     [HEMColorUtils configureLayer:self.gradientLayer forHourOfDay:hour];
@@ -76,12 +83,11 @@
 
 - (void)updateViewWithAlarmSettings
 {
-    SENAlarm* savedAlarm = [[SENAlarm savedAlarms] count]>0?[SENAlarm savedAlarms][0]:nil;
-    self.alarmEnabledSwitch.on = [savedAlarm isOn];
-    self.alarmSoundNameLabel.text = savedAlarm.soundName;
-    struct SENAlarmTime earliestAlarmTime = [savedAlarm timeByAddingMinutes:-30];
+    self.alarmEnabledSwitch.on = [self.alarm isOn];
+    self.alarmSoundNameLabel.text = self.alarm.soundName;
+    struct SENAlarmTime earliestAlarmTime = [self.alarm timeByAddingMinutes:-30];
     NSString* earliestAlarmTimeText = [self textForHour:earliestAlarmTime.hour minute:earliestAlarmTime.minute];
-    NSString* currentAlarmTimeText = [self textForHour:savedAlarm.hour minute:savedAlarm.minute];
+    NSString* currentAlarmTimeText = [self textForHour:self.alarm.hour minute:self.alarm.minute];
     self.alarmTimeLabel.text = currentAlarmTimeText;
 
     NSString* rawText = [NSString stringWithFormat:NSLocalizedString(@"alarm.time-range.format", nil), earliestAlarmTimeText, currentAlarmTimeText];
@@ -112,8 +118,7 @@
 
 - (IBAction)updateAlarmState:(UISwitch*)sender
 {
-    SENAlarm* savedAlarm = [[SENAlarm savedAlarms] count]>0?[SENAlarm savedAlarms][0]:nil;
-    savedAlarm.on = [sender isOn];
+    self.alarm.on = [sender isOn];
     [self updateViewWithAlarmSettings];
 }
 
@@ -122,8 +127,7 @@
     CGFloat currentLocationY = [sender locationInView:self.view].y;
     if (self.previousLocationY != 0) {
         CGFloat distanceMoved = -1 * (self.previousLocationY - currentLocationY);
-        SENAlarm* savedAlarm = [[SENAlarm savedAlarms] count]>0?[SENAlarm savedAlarms][0]:nil;
-        [savedAlarm incrementAlarmTimeByMinutes:distanceMoved];
+        [self.alarm incrementAlarmTimeByMinutes:distanceMoved];
         [self updateViewWithAlarmSettings];
         self.previousLocationY = 0;
     }

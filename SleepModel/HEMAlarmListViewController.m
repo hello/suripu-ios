@@ -1,5 +1,9 @@
 
+#import <SenseKit/SENAlarm.h>
+
 #import "HEMAlarmListViewController.h"
+#import "HEMAlarmViewController.h"
+#import "HEMAlarmListTableViewCell.h"
 #import "HelloStyleKit.h"
 #import "HEMColorUtils.h"
 #import "HEMAlarmAddButton.h"
@@ -8,6 +12,7 @@
 @interface HEMAlarmListViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) CAGradientLayer* gradientLayer;
+@property (strong, nonatomic) NSArray* alarms;
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (weak, nonatomic) IBOutlet HEMAlarmAddButton *addButton;
 @end
@@ -32,6 +37,7 @@
     dict[NSForegroundColorAttributeName] = [UIColor whiteColor];
     self.navigationController.navigationBar.titleTextAttributes = dict;
     [self configureViewBackground];
+    [self reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -55,22 +61,70 @@
     self.tableView.backgroundColor = [UIColor clearColor];
 }
 
+- (void)setEditing:(BOOL)editing
+{
+    [super setEditing:editing];
+    [self.tableView setEditing:editing];
+}
+
+- (void)reloadData
+{
+    self.alarms = [[SENAlarm savedAlarms] sortedArrayUsingComparator:^NSComparisonResult(SENAlarm *obj1, SENAlarm *obj2) {
+        NSNumber* alarmValue1 = @(obj1.hour * 60 + obj1.minute);
+        NSNumber* alarmValue2 = @(obj2.hour * 60 + obj2.minute);
+        return [alarmValue1 compare:alarmValue2];
+    }];
+    [self.tableView reloadData];
+}
+
+#pragma mark - Actions
+
 - (void)goBack
 {
     [self.navigationController popViewControllerAnimated:YES];
 }
 
+- (IBAction)addNewAlarm:(id)sender
+{
+    [[SENAlarm createDefaultAlarm] save];
+    [self reloadData];
+}
+
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 1;
+    return self.alarms.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmListCellIdentifier]];
+    SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
+    HEMAlarmListTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmListCellIdentifier]];
+    cell.timeLabel.text = [alarm localizedValue];
     return cell;
+}
+
+#pragma mark - UITableViewDelegate
+
+- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return YES;
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
+    SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
+    HEMAlarmViewController* controller = (HEMAlarmViewController*)[HEMMainStoryboard instantiateAlarmViewController];
+    controller.alarm = alarm;
+    [self.navigationController pushViewController:controller animated:YES];
 }
 
 @end

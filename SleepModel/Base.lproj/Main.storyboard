@@ -828,10 +828,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="x7f-NG-ha0">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="x7f-NG-ha0">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableFooterView" contentMode="scaleToFill" id="xtu-dn-RSF">
+                                    <rect key="frame" x="0.0" y="97" width="320" height="160"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="alarmListCellIdentifier" id="YD4-ny-bh9" customClass="HEMAlarmListTableViewCell">
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -846,7 +851,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yB4-zE-S5q">
-                                                    <rect key="frame" x="18" y="42" width="210" height="17"/>
+                                                    <rect key="frame" x="18" y="42" width="209" height="17"/>
                                                     <attributedString key="attributedText">
                                                         <fragment content="Smart Alarm:">
                                                             <attributes>
@@ -866,16 +871,16 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevronIconRight.png" translatesAutoresizingMaskIntoConstraints="NO" id="9pV-CA-cJw">
-                                                    <rect key="frame" x="302" y="28" width="10" height="18"/>
+                                                    <rect key="frame" x="294" y="28" width="10" height="18"/>
                                                 </imageView>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tzw-bG-wHw">
-                                                    <rect key="frame" x="236" y="22" width="51" height="31"/>
+                                                    <rect key="frame" x="235" y="22" width="51" height="31"/>
                                                 </switch>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="Xgw-vw-4jI" firstAttribute="leading" secondItem="Bf7-2L-uny" secondAttribute="leadingMargin" constant="10" id="24Y-G0-n47"/>
-                                                <constraint firstItem="9pV-CA-cJw" firstAttribute="trailing" secondItem="Bf7-2L-uny" secondAttribute="trailingMargin" id="3yW-st-rK2"/>
-                                                <constraint firstItem="9pV-CA-cJw" firstAttribute="leading" secondItem="tzw-bG-wHw" secondAttribute="trailing" constant="17" id="4XG-2u-ekG"/>
+                                                <constraint firstItem="9pV-CA-cJw" firstAttribute="trailing" secondItem="Bf7-2L-uny" secondAttribute="trailingMargin" constant="-8" id="3yW-st-rK2"/>
+                                                <constraint firstItem="9pV-CA-cJw" firstAttribute="leading" secondItem="tzw-bG-wHw" secondAttribute="trailing" constant="10" id="4XG-2u-ekG"/>
                                                 <constraint firstAttribute="centerY" secondItem="tzw-bG-wHw" secondAttribute="centerY" id="9qP-Eg-5uE"/>
                                                 <constraint firstItem="Xgw-vw-4jI" firstAttribute="leading" secondItem="yB4-zE-S5q" secondAttribute="leading" id="HlY-jb-gcV"/>
                                                 <constraint firstAttribute="centerY" secondItem="9pV-CA-cJw" secondAttribute="centerY" id="Lfz-Vj-oHU"/>
@@ -907,6 +912,9 @@
                                 <state key="normal" title="+">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
+                                <connections>
+                                    <action selector="addNewAlarm:" destination="Mem-QL-GCW" eventType="touchUpInside" id="pdo-f8-7Yu"/>
+                                </connections>
                             </button>
                         </subviews>
                         <constraints>

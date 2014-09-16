@@ -9,6 +9,7 @@
 #import "HEMAlarmViewController.h"
 #import "HEMInsetGlyphTableViewCell.h"
 #import "HEMSensorViewController.h"
+#import "HEMMainStoryboard.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 
@@ -175,13 +176,8 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     cell.disclosureImageView.hidden = NO;
     switch (indexPath.row) {
     case 0: {
-        cell.titleLabel.text = NSLocalizedString(@"alarm.title", nil);
-        SENAlarm* savedAlarm = [[SENAlarm savedAlarms] count]>0?[SENAlarm savedAlarms][0]:nil;
-        if ([savedAlarm isOn]) {
-            cell.detailLabel.text = [savedAlarm localizedValue];
-        } else {
-            cell.detailLabel.text = NSLocalizedString(@"alarm.state.disabled", nil);
-        }
+        cell.titleLabel.text = NSLocalizedString(@"alarms.title", nil);
+        cell.descriptionLabel.text = nil;
         cell.glyphImageView.image = nil;
     } break;
 
@@ -224,16 +220,16 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     case 1: {
         switch (indexPath.row) {
         case 0: {
-            UIViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"alarmViewController"];
+            UIViewController* controller = [HEMMainStoryboard instantiateAlarmListViewController];
             [self.navigationController pushViewController:controller animated:YES];
         } break;
 
         case 1: {
-            UIViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"sleepSoundViewController"];
+            UIViewController* controller = [HEMMainStoryboard instantiateSleepSoundViewController];
             [self.navigationController pushViewController:controller animated:YES];
         } break;
         case 2: {
-            UIViewController* controller = [storyboard instantiateViewControllerWithIdentifier:@"settingsController"];
+            UIViewController* controller = [HEMMainStoryboard instantiateSettingsController];
             [self.navigationController pushViewController:controller animated:YES];
         }
         }

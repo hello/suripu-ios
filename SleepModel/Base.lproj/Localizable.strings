@@ -54,6 +54,11 @@
 "authorization.sign-in.failed.title" = "Sign in Failed";
 "authorization.sign-in.failed.message" = "The provided email address and password were not recognized. Please try again.";
 
+// alarm list
+"alarms.title" = "Alarms";
+"alarms.smart-alarm.format" = "*Smart Alarm* %@";
+"alarms.alarm.format" = "*Alarm* %@";
+
 // alarm settings
 "alarm.time-range.format" = "Wake up between *%@* and *%@*";
 "alarm.update.instructions" = "*Drag* to adjust alarm time.";

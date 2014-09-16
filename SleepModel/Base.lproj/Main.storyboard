@@ -15,6 +15,7 @@
             <string>Agile-Light</string>
             <string>Agile-Light</string>
             <string>Agile-Light</string>
+            <string>Agile-Light</string>
         </mutableArray>
         <mutableArray key="Agile-LightItalic.otf">
             <string>Agile-LightItalic</string>
@@ -211,7 +212,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1070" y="-9"/>
+            <point key="canvasLocation" x="1467" y="-9"/>
         </scene>
         <!--Settings-->
         <scene sceneID="LfU-TZ-O3Q">
@@ -221,6 +222,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <view key="tableFooterView" contentMode="scaleToFill" id="mUp-Fn-mIu">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        </view>
                         <sections>
                             <tableViewSection headerTitle="" id="7uJ-PA-JkQ">
                                 <cells>
@@ -810,6 +816,117 @@
             </objects>
             <point key="canvasLocation" x="661" y="-9"/>
         </scene>
+        <!--Alarm List View Controller-->
+        <scene sceneID="XpH-hn-x9c">
+            <objects>
+                <viewController storyboardIdentifier="alarmListViewController" id="Mem-QL-GCW" userLabel="Alarm List View Controller" customClass="HEMAlarmListViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="2cE-92-oPr"/>
+                        <viewControllerLayoutGuide type="bottom" id="9Gu-MH-hXF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="S2E-t2-8bL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="x7f-NG-ha0">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="alarmListCellIdentifier" id="YD4-ny-bh9" customClass="HEMAlarmListTableViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YD4-ny-bh9" id="Bf7-2L-uny">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="7:30am" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xgw-vw-4jI">
+                                                    <rect key="frame" x="18" y="0.0" width="111.5" height="41"/>
+                                                    <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="34"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yB4-zE-S5q">
+                                                    <rect key="frame" x="18" y="42" width="210" height="17"/>
+                                                    <attributedString key="attributedText">
+                                                        <fragment content="Smart Alarm:">
+                                                            <attributes>
+                                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="14" name="Agile-Book"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                        <fragment content=" Mon Wed Fri">
+                                                            <attributes>
+                                                                <color key="NSColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <font key="NSFont" size="14" name="Agile-Light"/>
+                                                                <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
+                                                            </attributes>
+                                                        </fragment>
+                                                    </attributedString>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevronIconRight.png" translatesAutoresizingMaskIntoConstraints="NO" id="9pV-CA-cJw">
+                                                    <rect key="frame" x="302" y="28" width="10" height="18"/>
+                                                </imageView>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tzw-bG-wHw">
+                                                    <rect key="frame" x="236" y="22" width="51" height="31"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="Xgw-vw-4jI" firstAttribute="leading" secondItem="Bf7-2L-uny" secondAttribute="leadingMargin" constant="10" id="24Y-G0-n47"/>
+                                                <constraint firstItem="9pV-CA-cJw" firstAttribute="trailing" secondItem="Bf7-2L-uny" secondAttribute="trailingMargin" id="3yW-st-rK2"/>
+                                                <constraint firstItem="9pV-CA-cJw" firstAttribute="leading" secondItem="tzw-bG-wHw" secondAttribute="trailing" constant="17" id="4XG-2u-ekG"/>
+                                                <constraint firstAttribute="centerY" secondItem="tzw-bG-wHw" secondAttribute="centerY" id="9qP-Eg-5uE"/>
+                                                <constraint firstItem="Xgw-vw-4jI" firstAttribute="leading" secondItem="yB4-zE-S5q" secondAttribute="leading" id="HlY-jb-gcV"/>
+                                                <constraint firstAttribute="centerY" secondItem="9pV-CA-cJw" secondAttribute="centerY" id="Lfz-Vj-oHU"/>
+                                                <constraint firstItem="yB4-zE-S5q" firstAttribute="top" secondItem="Xgw-vw-4jI" secondAttribute="bottom" constant="1" id="YgP-2b-5wQ"/>
+                                                <constraint firstItem="Xgw-vw-4jI" firstAttribute="top" secondItem="Bf7-2L-uny" secondAttribute="top" id="fb8-kC-MHH"/>
+                                                <constraint firstItem="tzw-bG-wHw" firstAttribute="leading" secondItem="yB4-zE-S5q" secondAttribute="trailing" constant="8" id="pvQ-b1-O8R"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <connections>
+                                            <outlet property="detailLabel" destination="yB4-zE-S5q" id="BRS-ez-0Wg"/>
+                                            <outlet property="enabledSwitch" destination="tzw-bG-wHw" id="KQE-zC-cVJ"/>
+                                            <outlet property="timeLabel" destination="Xgw-vw-4jI" id="dov-sH-4PJ"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="Mem-QL-GCW" id="1ak-ct-wJe"/>
+                                    <outlet property="delegate" destination="Mem-QL-GCW" id="ZxZ-PN-uqZ"/>
+                                </connections>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2BJ-ze-ubh" customClass="HEMAlarmAddButton">
+                                <rect key="frame" x="130" y="437" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="jab-b1-CFU"/>
+                                    <constraint firstAttribute="height" constant="60" id="wrd-CX-Wzr"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                <state key="normal" title="+">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="9Gu-MH-hXF" firstAttribute="top" secondItem="x7f-NG-ha0" secondAttribute="bottom" id="86e-Wt-0eM"/>
+                            <constraint firstItem="x7f-NG-ha0" firstAttribute="leading" secondItem="S2E-t2-8bL" secondAttribute="leading" id="Nbu-rP-Lcl"/>
+                            <constraint firstAttribute="centerX" secondItem="2BJ-ze-ubh" secondAttribute="centerX" id="P2e-61-uUp"/>
+                            <constraint firstItem="x7f-NG-ha0" firstAttribute="top" secondItem="2cE-92-oPr" secondAttribute="bottom" constant="-20" id="nxH-bO-3Ac"/>
+                            <constraint firstAttribute="trailing" secondItem="x7f-NG-ha0" secondAttribute="trailing" id="oIr-8R-cis"/>
+                            <constraint firstItem="9Gu-MH-hXF" firstAttribute="top" secondItem="2BJ-ze-ubh" secondAttribute="bottom" constant="71" id="yVF-as-vqJ"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="addButton" destination="2BJ-ze-ubh" id="u08-zi-1Yb"/>
+                        <outlet property="tableView" destination="x7f-NG-ha0" id="KgQ-Zl-787"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ita-56-GRs" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1070" y="-9"/>
+        </scene>
         <!--Sound-->
         <scene sceneID="hmY-EV-EJQ">
             <objects>
@@ -848,7 +965,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cod-aB-3Gc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1467" y="-9"/>
+            <point key="canvasLocation" x="1864" y="-9"/>
         </scene>
         <!--Sleep Graph Collection View Controller-->
         <scene sceneID="fHt-a1-2UE">

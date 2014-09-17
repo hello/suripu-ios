@@ -819,7 +819,7 @@
         <!--Alarm List View Controller-->
         <scene sceneID="XpH-hn-x9c">
             <objects>
-                <viewController storyboardIdentifier="alarmListViewController" id="Mem-QL-GCW" userLabel="Alarm List View Controller" customClass="HEMAlarmListViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="alarmListViewController" extendedLayoutIncludesOpaqueBars="YES" id="Mem-QL-GCW" userLabel="Alarm List View Controller" customClass="HEMAlarmListViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="2cE-92-oPr"/>
                         <viewControllerLayoutGuide type="bottom" id="9Gu-MH-hXF"/>
@@ -828,8 +828,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="x7f-NG-ha0">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="x7f-NG-ha0">
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableFooterView" contentMode="scaleToFill" id="xtu-dn-RSF">

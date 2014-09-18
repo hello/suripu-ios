@@ -47,12 +47,7 @@ static CGFloat const kHEMZoomTransitionDuration = 0.3f;
 }
 
 - (void)dismissWithContext:(id<UIViewControllerContextTransitioning>)context {
-    UIViewController* to = [context viewControllerForKey:UITransitionContextToViewControllerKey];
     UIViewController* from = [context viewControllerForKey:UITransitionContextFromViewControllerKey];
-    UIView* container = [context containerView];
-    
-    [[to view] setFrame:[container bounds]];
-    [container insertSubview:[to view] belowSubview:[from view]];
     
     [UIView animateWithDuration:kHEMZoomTransitionDuration
                      animations:^{

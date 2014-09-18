@@ -1,10 +1,8 @@
 
 #import <SenseKit/SENAlarm.h>
 #import "HEMAlarmSoundTableViewController.h"
-#import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
-
-static NSString* const SleepCellIdentifier = @"sleepSoundCell";
+#import "HEMMainStoryboard.h"
 
 @interface HEMAlarmSoundTableViewController ()
 @property (nonatomic, strong) NSArray* possibleSleepSounds;
@@ -28,7 +26,7 @@ static NSString* const SleepCellIdentifier = @"sleepSoundCell";
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:SleepCellIdentifier forIndexPath:indexPath];
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmChoiceCellReuseIdentifier] forIndexPath:indexPath];
 
     NSString* sleepSoundText = [self.possibleSleepSounds objectAtIndex:indexPath.row];
     cell.textLabel.text = sleepSoundText;

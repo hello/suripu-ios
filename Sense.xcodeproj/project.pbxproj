@@ -106,6 +106,7 @@
 		8AB2683919CCFDB400017818 /* HEMAlarmAddButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2683819CCFDB400017818 /* HEMAlarmAddButton.m */; };
 		8AB2683C19CCFDBF00017818 /* HEMAlarmListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2683B19CCFDBF00017818 /* HEMAlarmListViewController.m */; };
 		8AB2683F19CCFDD400017818 /* HEMAlarmListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2683E19CCFDD400017818 /* HEMAlarmListTableViewCell.m */; };
+		8AB2684319CCFEBC00017818 /* HEMAlarmRepeatTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2684219CCFEBC00017818 /* HEMAlarmRepeatTableViewController.m */; };
 		8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB33FE5199D3F710046188F /* HEMLocationFinderViewController.m */; };
 		8AB33FEF199D56C20046188F /* lightEventIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AB33FE7199D56C20046188F /* lightEventIcon.png */; };
 		8AB33FF0199D56C20046188F /* lightEventIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AB33FE8199D56C20046188F /* lightEventIcon@2x.png */; };
@@ -339,6 +340,8 @@
 		8AB2683B19CCFDBF00017818 /* HEMAlarmListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmListViewController.m; sourceTree = "<group>"; };
 		8AB2683D19CCFDD400017818 /* HEMAlarmListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmListTableViewCell.h; sourceTree = "<group>"; };
 		8AB2683E19CCFDD400017818 /* HEMAlarmListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmListTableViewCell.m; sourceTree = "<group>"; };
+		8AB2684119CCFEBC00017818 /* HEMAlarmRepeatTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmRepeatTableViewController.h; sourceTree = "<group>"; };
+		8AB2684219CCFEBC00017818 /* HEMAlarmRepeatTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmRepeatTableViewController.m; sourceTree = "<group>"; };
 		8AB33FE4199D3F710046188F /* HEMLocationFinderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationFinderViewController.h; sourceTree = "<group>"; };
 		8AB33FE5199D3F710046188F /* HEMLocationFinderViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationFinderViewController.m; sourceTree = "<group>"; };
 		8AB33FE7199D56C20046188F /* lightEventIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightEventIcon.png; path = images/lightEventIcon.png; sourceTree = "<group>"; };
@@ -671,6 +674,8 @@
 			children = (
 				8AB2683A19CCFDBF00017818 /* HEMAlarmListViewController.h */,
 				8AB2683B19CCFDBF00017818 /* HEMAlarmListViewController.m */,
+				8AB2684119CCFEBC00017818 /* HEMAlarmRepeatTableViewController.h */,
+				8AB2684219CCFEBC00017818 /* HEMAlarmRepeatTableViewController.m */,
 				8A90F99C196225A100AFD110 /* HEMAlarmSoundTableViewController.h */,
 				8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */,
 				6003F5A5195388D20070C39A /* HEMAlarmViewController.h */,
@@ -1374,6 +1379,7 @@
 				BFACC71319A4085300FC77EE /* HEMProgressNavigationController.m in Sources */,
 				8A1743C319A7BB47001E3C15 /* HEMSleepSegmentCollectionViewCell.m in Sources */,
 				8A66FC85199C035500922ED5 /* HEMMiniSleepHistoryView.m in Sources */,
+				8AB2684319CCFEBC00017818 /* HEMAlarmRepeatTableViewController.m in Sources */,
 				6003F5A7195388D20070C39A /* HEMAlarmViewController.m in Sources */,
 				BFEAA0CA19A66746002FBD44 /* HEMValueSliderView.m in Sources */,
 				6003F59A195388D20070C39A /* main.m in Sources */,

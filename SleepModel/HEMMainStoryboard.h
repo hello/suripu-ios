@@ -14,11 +14,13 @@
 +(NSString *)infoReuseIdentifier;
 +(NSString *)currentConditionsCellReuseIdentifier;
 +(NSString *)alarmListCellIdentifier;
++(NSString *)alarmChoiceCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)insightCellReuseIdentifier;
 
 /** Segue Identifiers */
 +(NSString *)pickSoundSegueSegueIdentifier;
++(NSString *)alarmRepeatSegueIdentifier;
 +(NSString *)personalSegueIdentifier;
 
 /** View Controllers */
@@ -36,5 +38,6 @@
 +(UIViewController *)instantiateCurrentNavController;
 +(UIViewController *)instantiateSettingsNavController;
 +(UIViewController *)instantiateSleepGraphNavController;
++(UIViewController *)instantiateAlarmRepeatTableViewController;
 
 @end

@@ -90,6 +90,10 @@
     [self reloadData];
 }
 
+- (IBAction)flippedEnabledSwitch:(UISwitch *)sender {
+    SENAlarm* alarm = [self.alarms objectAtIndex:sender.tag];
+    alarm.on = [sender isOn];
+}
 
 #pragma mark - UITableViewDataSource
 
@@ -103,6 +107,8 @@
     SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
     HEMAlarmListTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmListCellIdentifier]];
     cell.timeLabel.text = [alarm localizedValue];
+    cell.enabledSwitch.on = [alarm isOn];
+    cell.enabledSwitch.tag = indexPath.row;
     return cell;
 }
 

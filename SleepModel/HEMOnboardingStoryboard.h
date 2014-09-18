@@ -15,14 +15,14 @@
 +(NSString *)signupSegueIdentifier;
 +(NSString *)setupSegueIdentifier;
 +(NSString *)genderSegueIdentifier;
++(NSString *)weightSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
 +(NSString *)dataIntroSegueIdentifier;
 +(NSString *)heightSegueIdentifier;
++(NSString *)locationSegueIdentifier;
 +(NSString *)sleepQuestionIntroSegueIdentifier;
 +(NSString *)skipSegueIdentifier;
 +(NSString *)wifiSegueIdentifier;
-+(NSString *)weightSegueIdentifier;
-+(NSString *)locationSegueIdentifier;
 
 /** View Controllers */
 +(UIViewController *)instantiateWelcomeViewController;

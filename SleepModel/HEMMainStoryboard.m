@@ -8,8 +8,11 @@
 
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMmain = @"Main";
+static NSString *const _HEMalarmChoiceCell = @"alarmChoiceCell";
 static NSString *const _HEMalarmListCellIdentifier = @"alarmListCellIdentifier";
 static NSString *const _HEMalarmListViewController = @"alarmListViewController";
+static NSString *const _HEMalarmRepeat = @"alarmRepeat";
+static NSString *const _HEMalarmRepeatTableViewController = @"alarmRepeatTableViewController";
 static NSString *const _HEMalarmSoundTableViewController = @"alarmSoundTableViewController";
 static NSString *const _HEMalarmViewController = @"alarmViewController";
 static NSString *const _HEMcurrentConditionsCell = @"currentConditionsCell";
@@ -40,11 +43,13 @@ static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)currentConditionsCellReuseIdentifier { return _HEMcurrentConditionsCell; }
 +(NSString *)alarmListCellIdentifier { return _HEMalarmListCellIdentifier; }
++(NSString *)alarmChoiceCellReuseIdentifier { return _HEMalarmChoiceCell; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
 +(NSString *)insightCellReuseIdentifier { return _HEMinsightCell; }
 
 /** Segue Identifiers */
 +(NSString *)pickSoundSegueSegueIdentifier { return _HEMpickSoundSegue; }
++(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
 +(NSString *)personalSegueIdentifier { return _HEMpersonal; }
 
 /** View Controllers */
@@ -62,5 +67,6 @@ static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 +(UIViewController *)instantiateCurrentNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentNavController]; }
 +(UIViewController *)instantiateSettingsNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsNavController]; }
 +(UIViewController *)instantiateSleepGraphNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepGraphNavController]; }
++(UIViewController *)instantiateAlarmRepeatTableViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmRepeatTableViewController]; }
 
 @end

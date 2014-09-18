@@ -1,0 +1,64 @@
+
+#import <SenseKit/SENAlarm.h>
+#import "HEMAlarmRepeatTableViewController.h"
+#import "HEMMainStoryboard.h"
+
+@interface HEMAlarmRepeatTableViewController ()
+
+@property (nonatomic, strong) NSArray* repeatOptions;
+@property (nonatomic, strong) NSMutableArray* selectedRepeatOptions;
+@end
+
+@implementation HEMAlarmRepeatTableViewController
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    self.title = NSLocalizedString(@"alarm.repeat.title", nil);
+    self.repeatOptions = @[ @"Sunday", @"Monday", @"Tuesday", @"Wednesday", @"Thursday", @"Friday", @"Saturday" ];
+}
+
+- (SENAlarmRepeatDays)repeatDayForIndexPath:(NSIndexPath*)indexPath
+{
+    return 1UL << (indexPath.row + 1);
+}
+
+#pragma mark - Table view data source
+
+- (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return self.repeatOptions.count;
+}
+
+- (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmChoiceCellReuseIdentifier] forIndexPath:indexPath];
+
+    NSString* text = [self.repeatOptions objectAtIndex:indexPath.row];
+    NSUInteger day = [self repeatDayForIndexPath:indexPath];
+    cell.textLabel.text = text;
+
+    if ((self.alarm.repeatFlags & day) == day) {
+        cell.accessoryType = UITableViewCellAccessoryCheckmark;
+    } else {
+        cell.accessoryType = UITableViewCellAccessoryNone;
+    }
+
+    return cell;
+}
+
+#pragma mark - Table view delegate
+
+- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
+{
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    NSUInteger day = [self repeatDayForIndexPath:indexPath];
+    if ((self.alarm.repeatFlags & day) == day) {
+        self.alarm.repeatFlags -= day;
+    } else {
+        self.alarm.repeatFlags |= day;
+    }
+    [tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+@end

@@ -39,6 +39,7 @@
     self.navigationController.navigationBar.titleTextAttributes = dict;
     [self configureViewBackground];
     [self reloadData];
+    [self.tableView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -62,10 +63,10 @@
     self.tableView.backgroundColor = [UIColor clearColor];
 }
 
-- (void)setEditing:(BOOL)editing
+- (void)setEditing:(BOOL)editing animated:(BOOL)animated
 {
-    [super setEditing:editing];
-    [self.tableView setEditing:editing];
+    [super setEditing:editing animated:animated];
+    [self.tableView setEditing:editing animated:animated];
 }
 
 - (void)reloadData
@@ -75,7 +76,6 @@
         NSNumber* alarmValue2 = @(obj2.hour * 60 + obj2.minute);
         return [alarmValue1 compare:alarmValue2];
     }];
-    [self.tableView reloadData];
 }
 
 #pragma mark - Actions
@@ -89,6 +89,7 @@
 {
     [[SENAlarm createDefaultAlarm] save];
     [self reloadData];
+    [self.tableView reloadData];
 }
 
 - (IBAction)flippedEnabledSwitch:(UISwitch *)sender {
@@ -123,7 +124,12 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-
+    if (editingStyle == UITableViewCellEditingStyleDelete) {
+        SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
+        [alarm delete];
+        [self reloadData];
+        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath

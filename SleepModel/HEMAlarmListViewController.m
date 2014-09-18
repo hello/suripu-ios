@@ -7,6 +7,7 @@
 #import "HelloStyleKit.h"
 #import "HEMColorUtils.h"
 #import "HEMAlarmAddButton.h"
+#import "HEMAlarmTextUtils.h"
 #import "HEMMainStoryboard.h"
 
 @interface HEMAlarmListViewController () <UITableViewDataSource, UITableViewDelegate>
@@ -107,6 +108,7 @@
     SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
     HEMAlarmListTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmListCellIdentifier]];
     cell.timeLabel.text = [alarm localizedValue];
+    cell.detailLabel.text = [HEMAlarmTextUtils repeatTextForAlarm:alarm];
     cell.enabledSwitch.on = [alarm isOn];
     cell.enabledSwitch.tag = indexPath.row;
     return cell;

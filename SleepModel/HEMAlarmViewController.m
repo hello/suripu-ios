@@ -8,6 +8,7 @@
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
+#import "HEMAlarmTextUtils.h"
 #import "HEMMainStoryboard.h"
 
 @interface HEMAlarmViewController () <UITableViewDelegate, UIGestureRecognizerDelegate>
@@ -94,7 +95,7 @@
     NSString* earliestAlarmTimeText = [self textForHour:earliestAlarmTime.hour minute:earliestAlarmTime.minute];
     NSString* currentAlarmTimeText = [self textForHour:self.alarm.hour minute:self.alarm.minute];
     self.alarmTimeLabel.text = currentAlarmTimeText;
-    self.alarmRepeatLabel.text = [self textForRepeatSettings];
+    self.alarmRepeatLabel.text = [HEMAlarmTextUtils repeatTextForAlarm:self.alarm];
 
     NSString* rawText = [NSString stringWithFormat:NSLocalizedString(@"alarm.time-range.format", nil), earliestAlarmTimeText, currentAlarmTimeText];
     UIFont* emFont = [UIFont fontWithName:@"Agile-Medium" size:14.0];
@@ -118,38 +119,6 @@
     time.hour = hour;
     time.minute = minute;
     return [SENAlarm localizedValueForTime:time];
-}
-
-- (NSString*)textForRepeatSettings
-{
-    switch (self.alarm.repeatFlags) {
-        case 0:
-            return NSLocalizedString(@"alarm.repeat.days.none", nil);
-        case (SENAlarmRepeatSaturday | SENAlarmRepeatSunday):
-            return NSLocalizedString(@"alarm.repeat.days.weekends", nil);
-        case (SENAlarmRepeatMonday | SENAlarmRepeatTuesday | SENAlarmRepeatWednesday | SENAlarmRepeatThursday | SENAlarmRepeatFriday):
-            return NSLocalizedString(@"alarm.repeat.days.weekdays", nil);
-        case (SENAlarmRepeatSunday | SENAlarmRepeatMonday | SENAlarmRepeatTuesday | SENAlarmRepeatWednesday | SENAlarmRepeatThursday | SENAlarmRepeatFriday | SENAlarmRepeatSaturday):
-            return NSLocalizedString(@"alarm.repeat.days.all", nil);
-        default: {
-            NSMutableArray* days = [[NSMutableArray alloc] initWithCapacity:6];
-            if ((self.alarm.repeatFlags & SENAlarmRepeatSunday) == SENAlarmRepeatSunday)
-                [days addObject:NSLocalizedString(@"alarm.repeat.days.sunday", nil)];
-            if ((self.alarm.repeatFlags & SENAlarmRepeatMonday) == SENAlarmRepeatMonday)
-                [days addObject:NSLocalizedString(@"alarm.repeat.days.monday", nil)];
-            if ((self.alarm.repeatFlags & SENAlarmRepeatTuesday) == SENAlarmRepeatTuesday)
-                [days addObject:NSLocalizedString(@"alarm.repeat.days.tuesday", nil)];
-            if ((self.alarm.repeatFlags & SENAlarmRepeatWednesday) == SENAlarmRepeatWednesday)
-                [days addObject:NSLocalizedString(@"alarm.repeat.days.wednesday", nil)];
-            if ((self.alarm.repeatFlags & SENAlarmRepeatThursday) == SENAlarmRepeatThursday)
-                [days addObject:NSLocalizedString(@"alarm.repeat.days.thursday", nil)];
-            if ((self.alarm.repeatFlags & SENAlarmRepeatFriday) == SENAlarmRepeatFriday)
-                [days addObject:NSLocalizedString(@"alarm.repeat.days.friday", nil)];
-            if ((self.alarm.repeatFlags & SENAlarmRepeatSaturday) == SENAlarmRepeatSaturday)
-                [days addObject:NSLocalizedString(@"alarm.repeat.days.saturday", nil)];
-            return [days componentsJoinedByString:@" "];
-        }
-    }
 }
 
 #pragma mark - Actions

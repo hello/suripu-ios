@@ -1,1 +1,1 @@
-../../SenseKit/Pod/Classes/Service/SENService+Protected.h
+../../../../SenseKit/Pod/Classes/Service/SENService+Protected.h

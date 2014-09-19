@@ -12,23 +12,19 @@ double const HEMMathCentimetersPerInch = 2.54f;
 double const HEMMathKilogramsPerPound = 0.453592f;
 double const HEMMathPoundsPerGram = 0.00220462f;
 
-@implementation HEMMathUtil
-
-BOOL IsMetricSystem () {
+BOOL HEMIsMetricSystem () {
     NSLocale *locale = [NSLocale currentLocale];
     return [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
 }
 
-long ToInches (NSNumber* centimeters) {
+long HEMToInches (NSNumber* centimeters) {
     return [centimeters longValue] / HEMMathCentimetersPerInch;
 }
 
-float ToPounds (NSNumber* grams) {
+float HEMToPounds (NSNumber* grams) {
     return [grams longValue] * HEMMathPoundsPerGram;
 }
 
-float ToKilograms (NSNumber* pounds) {
+float HEMToKilograms (NSNumber* pounds) {
     return [pounds integerValue] * HEMMathKilogramsPerPound;
 }
-
-@end

@@ -60,10 +60,10 @@
     long cmValue = [cm longValue];
     NSString* height = nil;
     
-    if (IsMetricSystem()) {
+    if (HEMIsMetricSystem()) {
         height = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cmValue];
     } else {
-        long inValue = ToInches(cm);
+        long inValue = HEMToInches(cm);
         long feet = floorf(inValue / 12);
         long inches = ceilf(inValue - (feet * 12));
         NSString* feetFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)feet];
@@ -78,11 +78,11 @@
     NSNumber* grams = [[self account] weight];
     NSString* weight = nil;
     
-    if (IsMetricSystem()) {
+    if (HEMIsMetricSystem()) {
         long gramValue = [grams longValue];
         weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), gramValue];
     } else {
-        long pounds = ToPounds(grams);
+        long pounds = HEMToPounds(grams);
         weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), pounds];
     }
     
@@ -161,11 +161,11 @@
 }
 
 - (NSInteger)heightInInches {
-    return ToInches([[self account] height]);
+    return HEMToInches([[self account] height]);
 }
 
 - (NSInteger)weightInLbs {
-    return ToPounds([[self account] weight]);
+    return HEMToPounds([[self account] weight]);
 }
 
 - (SENAccountGender)gender {

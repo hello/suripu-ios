@@ -100,7 +100,7 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 
 - (void)carouselDidScroll:(iCarousel *)carousel {
     CGFloat lbs = roundf([carousel scrollOffset] * 10);
-    CGFloat kgs = ToKilograms(@(lbs));
+    CGFloat kgs = HEMToKilograms(@(lbs));
     
     NSString* lbsText =
         [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), (long)lbs];

@@ -130,3 +130,14 @@
 "account.gender.other" = "Other";
 "account.update.failed.title" = "Update Failed";
 "account.update.error.generic" = "Unable to update your information";
+
+// notifications
+"notifications.actions.ok" = "Okay";
+"notifications.actions.good" = "Well";
+"notifications.actions.poor" = "Not well";
+"notifications.actions.yes" = "Yes";
+"notifications.actions.no" = "No";
+"notifications.actions.daily" = "Daily";
+"notifications.actions.weekly" = "Weekly";
+"notifications.actions.infrequently" = "Infrequently";
+

@@ -120,29 +120,29 @@
     return title;
 }
 
-- (NSString*)tableView:(UITableView*)tableView subtitleForIndexPath:(NSIndexPath*)indexPath {
-    NSString* subtitle = nil;
+- (NSString*)tableView:(UITableView*)tableView infoForIndexPath:(NSIndexPath*)indexPath {
+    NSString* info = nil;
     switch ([indexPath row]) {
         case HEMPersonalInfoBirthdate: {
-            subtitle = [[self account] birthdate];
+            info = [[self account] birthdate];
             break;
         }
         case HEMPersonalInfoGender: {
-            subtitle = [self genderFromAccount];
+            info = [self genderFromAccount];
             break;
         }
         case HEMPersonalInfoHeight: {
-            subtitle = [self heightFromAccount];
+            info = [self heightFromAccount];
             break;
         }
         case HEMPersonalInfoWeight: {
-            subtitle = [self weightFromAccount];
+            info = [self weightFromAccount];
             break;
         }
         default:
             break;
     }
-    return subtitle;
+    return info;
 }
 
 - (void)refresh:(void(^)(void))completion {
@@ -174,12 +174,19 @@
 
 #pragma mark - Updates
 
-- (void)updateAccount:(void(^)(void))completion {
+- (void)updateAccount:(void(^)(NSError* error))completion {
     __weak typeof(self) weakSelf = self;
     [SENAPIAccount updateAccount:[self account] completionBlock:^(id data, NSError *error) {
+        if (error != nil) {
+            if (completion) completion (error);
+            return;
+        }
+        
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            [strongSelf refresh:completion];
+            [strongSelf refresh:^{
+                if (completion) completion(nil);
+            }];
         }
     }];
 }
@@ -187,22 +194,22 @@
 - (void)updateBirthMonth:(NSInteger)month
                      day:(NSInteger)day
                     year:(NSInteger)year
-              completion:(void(^)(void))completion {
+              completion:(void(^)(NSError* error))completion {
     [[self account] setBirthMonth:month day:day andYear:year];
     [self updateAccount:completion];
 }
 
-- (void)updateHeight:(int)heightInCentimeters completion:(void(^)(void))completion {
+- (void)updateHeight:(int)heightInCentimeters completion:(void(^)(NSError* error))completion {
     [[self account] setHeight:@(heightInCentimeters)];
     [self updateAccount:completion];
 }
 
-- (void)updateWeight:(float)weightInKgs completion:(void(^)(void))completion {
+- (void)updateWeight:(float)weightInKgs completion:(void(^)(NSError* error))completion {
     [[self account] setWeight:@(ceilf(weightInKgs * 1000))];
     [self updateAccount:completion];
 }
 
-- (void)updateGender:(SENAccountGender)gender completion:(void(^)(void))completion {
+- (void)updateGender:(SENAccountGender)gender completion:(void(^)(NSError* error))completion {
     [[self account] setGender:gender];
     [self updateAccount:completion];
 }

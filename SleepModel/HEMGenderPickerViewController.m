@@ -19,7 +19,6 @@
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 
 @property (assign, nonatomic) SENAccountGender selectedGender;
-@property (assign, nonatomic) BOOL loadedDefault;
 
 @end
 
@@ -33,24 +32,39 @@
         NSString* title = NSLocalizedString(@"status.success", nil);
         [[self doneButton] setTitle:title forState:UIControlStateNormal];
     }
+    
+    switch ([self defaultGender]) {
+        case SENAccountGenderMale:
+            [self setGenderAsMale:nil];
+            break;
+        case SENAccountGenderFemale:
+            [self setGenderAsFemale:nil];
+            break;
+        default:
+            [self setGenderAsOther:nil];
+            break;
+    }
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     
-    if (![self loadedDefault]) {
-        switch ([self defaultGender]) {
-            case SENAccountGenderMale:
-                [self setGenderAsMale:nil];
-                break;
-            case SENAccountGenderFemale:
-                [self setGenderAsFemale:nil];
-                break;
-            default:
-                [self setGenderAsOther:nil];
-                break;
-        }
+    switch ([self selectedGender]) {
+        case SENAccountGenderFemale:
+            [self moveLineUnderButton:[self femaleTitleButton]];
+            break;
+        case SENAccountGenderMale:
+            [self moveLineUnderButton:[self maleTitleButton]];
+            break;
+        default:
+            [self moveLineUnderButton:[self otherTitleButton]];
+            break;
     }
+}
+
+- (void)moveLineUnderButton:(UIButton*)button {
+    CGRect frame = CGRectMake(CGRectGetMinX(button.frame), CGRectGetMaxY(button.frame) + 3.f, CGRectGetWidth(button.frame), 1.f);
+    self.lineView.frame = frame;
 }
 
 - (void)adjustConstraintsForIPhone4 {
@@ -100,8 +114,7 @@
 - (void)selectButton:(UIButton*)button
 {
     [UIView animateWithDuration:0.25f animations:^{
-        CGRect frame = CGRectMake(CGRectGetMinX(button.frame), CGRectGetMaxY(button.frame) + 3.f, CGRectGetWidth(button.frame), 1.f);
-        self.lineView.frame = frame;
+        [self moveLineUnderButton:button];
     }];
 }
 

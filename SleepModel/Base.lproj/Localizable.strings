@@ -128,3 +128,5 @@
 "account.gender.female" = "Female";
 "account.gender.male" = "Male";
 "account.gender.other" = "Other";
+"account.update.failed.title" = "Update Failed";
+"account.update.error.generic" = "Unable to update your information";

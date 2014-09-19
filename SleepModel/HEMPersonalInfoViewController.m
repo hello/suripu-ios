@@ -13,6 +13,7 @@
 #import "HEMHeightPickerViewController.h"
 #import "HEMWeightPickerViewController.h"
 #import "HEMGenderPickerViewController.h"
+#import "HEMBaseController+Protected.h"
 
 @interface HEMPersonalInfoViewController() <
     UITableViewDelegate,
@@ -99,7 +100,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIActivityIndicatorView* activityView = nil;
     
     if ([[self data] isLoaded] && ![self isUpdating]) {
-        subtitle = [[self data] tableView:tableView subtitleForIndexPath:indexPath];
+        subtitle = [[self data] tableView:tableView infoForIndexPath:indexPath];
     } else {
         activityView =
             [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -161,9 +162,16 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
                                 withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
-- (void)finishUpdate {
+- (void)finishUpdate:(NSError*)error {
     [self setUpdating:NO];
-    [[self infoTableView] reloadData];
+    
+    if (error == nil) {
+        [[self infoTableView] reloadData];
+    } else {
+        [self showMessageDialog:NSLocalizedString(@"account.update.error.generic", nil)
+                          title:NSLocalizedString(@"account.update.failed.title", nil)];
+    }
+    
 }
 
 #pragma mark BirthDate Delegate
@@ -175,10 +183,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self showUpdateProgressFor:HEMPersonalInfoBirthdate];
 
     __weak typeof(self) weakSelf = self;
-    [[self data] updateBirthMonth:month day:day year:year completion:^{
+    [[self data] updateBirthMonth:month day:day year:year completion:^(NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            [strongSelf finishUpdate];
+            [strongSelf finishUpdate:error];
         }
     }];
     [[self navigationController] popViewControllerAnimated:YES];
@@ -188,13 +196,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)didSelectHeightInCentimeters:(int)centimeters
                                 from:(HEMHeightPickerViewController *)controller {
+    
     [self showUpdateProgressFor:HEMPersonalInfoHeight];
     
     __weak typeof(self) weakSelf = self;
-    [[self data] updateHeight:centimeters completion:^{
+    [[self data] updateHeight:centimeters completion:^(NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            [strongSelf finishUpdate];
+            [strongSelf finishUpdate:error];
         }
     }];
     [[self navigationController] popViewControllerAnimated:YES];
@@ -209,10 +218,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self showUpdateProgressFor:HEMPersonalInfoWeight];
     
     __weak typeof(self) weakSelf = self;
-    [[self data] updateWeight:weightKgs completion:^{
+    [[self data] updateWeight:weightKgs completion:^(NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            [strongSelf finishUpdate];
+            [strongSelf finishUpdate:error];
         }
     }];
     [[self navigationController] popViewControllerAnimated:YES];
@@ -222,13 +231,14 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)didSelectGender:(SENAccountGender)gender
                    from:(HEMGenderPickerViewController *)controller {
+    
     [self showUpdateProgressFor:HEMPersonalInfoGender];
     
     __weak typeof(self) weakSelf = self;
-    [[self data] updateGender:gender completion:^{
+    [[self data] updateGender:gender completion:^(NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            [strongSelf finishUpdate];
+            [strongSelf finishUpdate:error];
         }
     }];
     [[self navigationController] popViewControllerAnimated:YES];

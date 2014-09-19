@@ -42,6 +42,14 @@
     [SENAPINotification registerForRemoteNotificationsWithTokenData:deviceToken completion:NULL];
 }
 
+- (void)application:(UIApplication*)application handleActionWithIdentifier:(NSString*)identifier forRemoteNotification:(NSDictionary*)userInfo completionHandler:(void (^)())completionHandler
+{
+    SENAnswer* answer = [[SENAnswer alloc] initWithId:nil answer:identifier questionId:userInfo[@"qid"]];
+    [SENAPIQuestions sendAnswer:answer completion:^(id data, NSError* error) {
+                                                      // something something
+                                                  }];
+}
+
 - (void)resetAndShowOnboarding
 {
     [SENKeyedArchiver removeAllObjects];

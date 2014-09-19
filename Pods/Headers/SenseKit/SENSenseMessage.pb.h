@@ -1,1 +1,1 @@
-../../../../SenseKit/Pod/Classes/BLE/SENSenseMessage.pb.h
+../../SenseKit/Pod/Classes/BLE/SENSenseMessage.pb.h

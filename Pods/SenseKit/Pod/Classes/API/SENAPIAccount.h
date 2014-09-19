@@ -31,10 +31,10 @@
       completionBlock:(SENAPIDataBlock)completion;
 
 /**
- * Get the account for the currently authorized user based on the stored
- * credentials
- * @param completion: block invoked when the account has been retrieved
- *                    or an error was encountered
+ * Get an instance of a SENAccount object for the currently authorized user.
+ * If the user is not authorized / signed in, the object will be nil
+ *
+ * @param completion block invoked when asynchronous call completes
  */
 + (void)getAccount:(SENAPIDataBlock)completion;
 

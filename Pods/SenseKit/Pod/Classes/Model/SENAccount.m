@@ -53,4 +53,19 @@ static NSString* kSENAccountDoBFormat = @"yyyy-MM-dd";
     [self setBirthdate:[formatter stringFromDate:date]];
 }
 
+- (NSDateComponents*)birthdateComponents {
+    if ([self birthdate] == nil) return nil;
+    
+    NSDateFormatter* formatter = [[NSDateFormatter alloc] init];
+    [formatter setDateFormat:kSENAccountDoBFormat];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSDateComponents* components =
+        [calendar components:NSCalendarUnitMonth
+                             |NSCalendarUnitDay
+                             |NSCalendarUnitYear
+                    fromDate:[formatter dateFromString:[self birthdate]]];
+    return components;
+}
+
 @end

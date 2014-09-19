@@ -70,7 +70,7 @@ DEPENDENCIES:
   - iCarousel (~> 1.7.6)
   - JBChartView (from `git@github.com:hello/JBChartView.git`)
   - Kiwi
-  - SenseKit (from `../SenseKit`)
+  - SenseKit (from `git@github.com:hello/SenseKit.git`)
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
   - SORelativeDateTransformer (~> 1.1.10)
   - SVProgressHUD (from `https://github.com/samvermette/SVProgressHUD.git`, commit `90e5921e0a0a782c7e06dd8d308031041c10f789`)
@@ -85,7 +85,7 @@ EXTERNAL SOURCES:
   JBChartView:
     :git: git@github.com:hello/JBChartView.git
   SenseKit:
-    :path: ../SenseKit
+    :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :git: git@github.com:hello/protobuf-objc.git
   SVProgressHUD:

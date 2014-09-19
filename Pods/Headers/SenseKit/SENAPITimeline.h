@@ -1,1 +1,1 @@
-../../../../SenseKit/Pod/Classes/API/SENAPITimeline.h
+../../SenseKit/Pod/Classes/API/SENAPITimeline.h

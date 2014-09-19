@@ -56,7 +56,15 @@ NSString* const SENAPIAccountEndpoint = @"account";
 }
 
 + (void)getAccount:(SENAPIDataBlock)completion {
-    
+    [SENAPIClient GET:SENAPIAccountEndpoint
+           parameters:nil
+           completion:^(id data, NSError *error) {
+               SENAccount* account = nil;
+               if ([data isKindOfClass:[NSDictionary class]]) {
+                   account = [self accountFromResponse:data];
+               }
+               completion(account, error);
+           }];
 }
 
 #pragma mark - Helpers

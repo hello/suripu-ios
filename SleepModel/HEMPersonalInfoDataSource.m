@@ -195,23 +195,71 @@
                      day:(NSInteger)day
                     year:(NSInteger)year
               completion:(void(^)(NSError* error))completion {
+    NSString* oldBirthdate = [[self account] birthdate];
+    
     [[self account] setBirthMonth:month day:day andYear:year];
-    [self updateAccount:completion];
+    
+    __weak typeof(self) weakSelf = self;
+    [self updateAccount:^(NSError *error) {
+        if (error != nil) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                [[strongSelf account] setBirthdate:oldBirthdate];
+            }
+        }
+        if (completion) completion (error);
+    }];
 }
 
 - (void)updateHeight:(int)heightInCentimeters completion:(void(^)(NSError* error))completion {
+    NSNumber* oldHeight = [[self account] height];
+    
     [[self account] setHeight:@(heightInCentimeters)];
-    [self updateAccount:completion];
+
+    __weak typeof(self) weakSelf = self;
+    [self updateAccount:^(NSError *error) {
+        if (error != nil) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                [[strongSelf account] setHeight:oldHeight];
+            }
+        }
+        if (completion) completion (error);
+    }];
 }
 
 - (void)updateWeight:(float)weightInKgs completion:(void(^)(NSError* error))completion {
+    NSNumber* oldWeight = [[self account] weight];
+    
     [[self account] setWeight:@(ceilf(weightInKgs * 1000))];
-    [self updateAccount:completion];
+    
+    __weak typeof(self) weakSelf = self;
+    [self updateAccount:^(NSError *error) {
+        if (error != nil) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                [[strongSelf account] setWeight:oldWeight];
+            }
+        }
+        if (completion) completion (error);
+    }];
 }
 
 - (void)updateGender:(SENAccountGender)gender completion:(void(^)(NSError* error))completion {
+    SENAccountGender oldGender = [[self account] gender];
+    
     [[self account] setGender:gender];
-    [self updateAccount:completion];
+    
+    __weak typeof(self) weakSelf = self;
+    [self updateAccount:^(NSError *error) {
+        if (error != nil) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                [[strongSelf account] setGender:oldGender];
+            }
+        }
+        if (completion) completion (error);
+    }];
 }
 
 @end

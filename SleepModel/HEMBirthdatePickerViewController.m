@@ -8,6 +8,10 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
 
+static NSInteger const kHEMBirthdatePickerDefaultMonth = 7;
+static NSInteger const kHEMBirthdatePickerDefaultDay = 15;
+static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
+
 @interface HEMBirthdatePickerViewController ()
 
 @property (weak,   nonatomic) IBOutlet HEMBirthdatePickerView *dobPicker;
@@ -38,9 +42,9 @@
     if (![self appeared]) {
         // set the picker so it's showing values somewhere in the middle and
         // the year at 18 years from this year
-        NSInteger defaultMonth = [self initialMonth] > 0 ? [self initialMonth] : 7;
-        NSInteger defaultDay = [self initialDay] > 0 ? [self initialDay]+1 : 15;
-        NSInteger defaultYear = [self initialYear] > 0 ? [self initialYear]+1 : 18;
+        NSInteger defaultMonth = [self initialMonth] > 0 ? [self initialMonth] : kHEMBirthdatePickerDefaultMonth;
+        NSInteger defaultDay = [self initialDay] > 0 ? [self initialDay]+1 : kHEMBirthdatePickerDefaultDay;
+        NSInteger defaultYear = [self initialYear] > 0 ? [self initialYear]+1 : kHEMBirthdatePickerDefaultYear;
         [[self dobPicker] setMonth:defaultMonth day:defaultDay yearsPast:defaultYear];
         [self setAppeared:YES];
     }

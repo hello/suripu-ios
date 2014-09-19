@@ -1,12 +1,19 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENKeyedArchiver.h>
+#import <SenseKit/SENAPINotification.h>
+#import <SenseKit/SENAPIQuestions.h>
+#import <SenseKit/SENServiceQuestions.h>
+#import <SenseKit/SENAnswer.h>
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <Crashlytics/Crashlytics.h>
+#import <CocoaLumberjack/DDLog.h>
 
 #import "HEMAppDelegate.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummarySlideViewController.h"
 #import "HEMSleepGraphCollectionViewController.h"
+#import "HEMNotificationHandler.h"
+#import "HEMSleepQuestionsViewController.h"
 
 @implementation HEMAppDelegate
 
@@ -19,6 +26,7 @@
 #ifndef DEBUG
     [Crashlytics startWithAPIKey:@"f464ccd280d3e5730dcdaa9b64d1d108694ee9a9"];
 #endif
+    [HEMNotificationHandler registerForRemoteNotifications];
     return YES;
 }
 
@@ -27,6 +35,19 @@
     if (![SENAuthorizationService isAuthorized]) {
         [self showOnboardingFlowAnimated:NO];
     }
+}
+
+- (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    [SENAPINotification registerForRemoteNotificationsWithTokenData:deviceToken completion:NULL];
+}
+
+- (void)application:(UIApplication*)application handleActionWithIdentifier:(NSString*)identifier forRemoteNotification:(NSDictionary*)userInfo completionHandler:(void (^)())completionHandler
+{
+    SENAnswer* answer = [[SENAnswer alloc] initWithId:nil answer:identifier questionId:userInfo[@"qid"]];
+    [SENAPIQuestions sendAnswer:answer completion:^(id data, NSError* error) {
+                                                      // something something
+                                                  }];
 }
 
 - (void)resetAndShowOnboarding
@@ -58,7 +79,7 @@
 - (void)createAndShowWindow
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    
+
     NSArray* viewControllers = @[
         [HEMMainStoryboard instantiateCurrentNavController],
         [[HEMSleepSummarySlideViewController alloc] init]

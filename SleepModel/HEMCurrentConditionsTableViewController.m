@@ -167,6 +167,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 
 - (UITableViewCell*)tableView:(UITableView*)tableView menuCellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
+    SENAlarm* alarm = [[SENAlarm savedAlarms] firstObject];
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
     [(HEMColoredRoundedLabel*)cell.detailLabel hideRoundedBackground];
     [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[UIColor darkGrayColor]];

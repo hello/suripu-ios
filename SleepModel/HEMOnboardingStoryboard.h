@@ -20,13 +20,18 @@
 +(NSString *)sleepQuestionIntroSegueIdentifier;
 +(NSString *)skipSegueIdentifier;
 +(NSString *)wifiSegueIdentifier;
++(NSString *)weightSegueIdentifier;
++(NSString *)locationSegueIdentifier;
 
 /** View Controllers */
 +(UIViewController *)instantiateWelcomeViewController;
 +(UIViewController *)instantiateSignUpViewController;
 +(UIViewController *)instantiateDataIntroViewController;
 +(UIViewController *)instantiateDobViewController;
++(UIViewController *)instantiateHeightViewController;
 +(UIViewController *)instantiateWifiViewController;
++(UIViewController *)instantiateGenderViewController;
++(UIViewController *)instantiateWeightViewController;
 +(UIViewController *)instantiateSleepQuestionIntroViewController;
 +(UIViewController *)instantiateBluetoothViewController;
 

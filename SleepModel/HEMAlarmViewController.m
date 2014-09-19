@@ -66,7 +66,8 @@
         self.gradientLayer = [CAGradientLayer new];
         [self.view.layer insertSublayer:self.gradientLayer atIndex:0];
     }
-    NSInteger hour = [SENAlarm savedAlarm].hour;
+    SENAlarm* alarm = [[SENAlarm savedAlarms] count]>0?[SENAlarm savedAlarms][0]:nil;
+    NSInteger hour = alarm.hour;
 //    intensity += [SENAlarm savedAlarm].minute * 0.000005;
     CGFloat y = (self.edgesForExtendedLayout & UIRectEdgeTop) ? -(CGRectGetHeight(self.navigationController.navigationBar.frame) + CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame])) : 0;
     self.gradientLayer.frame = CGRectMake(0, y, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
@@ -75,7 +76,7 @@
 
 - (void)updateViewWithAlarmSettings
 {
-    SENAlarm* savedAlarm = [SENAlarm savedAlarm];
+    SENAlarm* savedAlarm = [[SENAlarm savedAlarms] count]>0?[SENAlarm savedAlarms][0]:nil;
     self.alarmEnabledSwitch.on = [savedAlarm isOn];
     self.alarmSoundNameLabel.text = savedAlarm.soundName;
     struct SENAlarmTime earliestAlarmTime = [savedAlarm timeByAddingMinutes:-30];
@@ -111,7 +112,8 @@
 
 - (IBAction)updateAlarmState:(UISwitch*)sender
 {
-    [SENAlarm savedAlarm].on = [sender isOn];
+    SENAlarm* savedAlarm = [[SENAlarm savedAlarms] count]>0?[SENAlarm savedAlarms][0]:nil;
+    savedAlarm.on = [sender isOn];
     [self updateViewWithAlarmSettings];
 }
 
@@ -120,7 +122,8 @@
     CGFloat currentLocationY = [sender locationInView:self.view].y;
     if (self.previousLocationY != 0) {
         CGFloat distanceMoved = -1 * (self.previousLocationY - currentLocationY);
-        [[SENAlarm savedAlarm] incrementAlarmTimeByMinutes:distanceMoved];
+        SENAlarm* savedAlarm = [[SENAlarm savedAlarms] count]>0?[SENAlarm savedAlarms][0]:nil;
+        [savedAlarm incrementAlarmTimeByMinutes:distanceMoved];
         [self updateViewWithAlarmSettings];
         self.previousLocationY = 0;
     }

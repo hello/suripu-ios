@@ -30,6 +30,10 @@
 
 // settings
 "settings.title" = "Settings";
+"settings.personal.info.birthday" = "Birthday";
+"settings.personal.info.gender" = "Gender";
+"settings.personal.info.height" = "Height";
+"settings.personal.info.weight" = "Weight";
 
 // sounds
 "sounds.title" = "Sounds";
@@ -114,8 +118,13 @@
 "actions.save" = "Save";
 "actions.ok" = "OK";
 "actions.sign-out" = "Sign Out";
-"status.success" = "Done!";
+"status.success" = "Done";
 
 // questions
 "questions.failed.title" = "Could Not Submit Answer";
 "questions.error.unexpected" = "Whoops!  Probably our fault.  Skip the question for now.  We'll ask you again another time";
+
+// account info
+"account.gender.female" = "Female";
+"account.gender.male" = "Male";
+"account.gender.other" = "Other";

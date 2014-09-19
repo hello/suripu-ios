@@ -6,9 +6,10 @@
 #import "HEMUserDataCache.h"
 #import "HelloStyleKit.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMActionButton.h"
+#import "HEMOnboardingStoryboard.h"
+#import "HEMMathUtil.h"
 
-CGFloat const HEMWeightPickerPoundsPerKilogram = 2.20462f;
-CGFloat const HEMWeightPickerKilogramsPerPound = 0.453592f;
 NSInteger const HEMWeightPickerMaxWeight = 900;
 
 @interface HEMWeightPickerViewController () <iCarouselDataSource, iCarouselDelegate>
@@ -16,8 +17,9 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 @property (weak,   nonatomic) IBOutlet iCarousel* carousel;
 @property (weak,   nonatomic) IBOutlet UILabel* topWeightLabel;
 @property (weak,   nonatomic) IBOutlet UILabel* botWeightLabel;
-@property (assign, nonatomic) NSInteger weightInKgs;
+@property (assign, nonatomic) CGFloat weightInKgs;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint *carouselToButtonTopAlignment;
+@property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 
 @end
 
@@ -34,6 +36,15 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
     [[self carousel] setDelegate:self];
     [[self carousel] setScrollToItemBoundary:NO];
     [[self carousel] setClipsToBounds:YES];
+    
+    if ([self defaultWeightLbs] > 0) {
+        [[self carousel] scrollToOffset:[self defaultWeightLbs] / 10.0f duration:0.0f];
+    }
+    
+    if ([self delegate] != nil) {
+        NSString* title = NSLocalizedString(@"status.success", nil);
+        [[self doneButton] setTitle:title forState:UIControlStateNormal];
+    }
 }
 
 - (void)adjustConstraintsForIPhone4 {
@@ -88,22 +99,29 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 }
 
 - (void)carouselDidScroll:(iCarousel *)carousel {
-    NSInteger lbs = roundf([carousel scrollOffset] * 10);
-    NSInteger kgs = lbs * HEMWeightPickerKilogramsPerPound;
+    CGFloat lbs = roundf([carousel scrollOffset] * 10);
+    CGFloat kgs = ToKilograms(@(lbs));
     
     NSString* lbsText =
-        [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), lbs];
+        [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), (long)lbs];
     [[self topWeightLabel] setText:lbsText];
 
     NSString* kgsText =
-        [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), kgs];
+        [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), (long)kgs];
     [[self botWeightLabel] setText:kgsText];
     
     [self setWeightInKgs:kgs];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    [[[HEMUserDataCache sharedUserDataCache] account] setWeight:@([self weightInKgs])];
+#pragma mark - Actions
+
+- (IBAction)done:(id)sender {
+    if ([self delegate] != nil) {
+        [[self delegate] didSelectWeightInKgs:[self weightInKgs] from:self];
+    } else {
+        [[[HEMUserDataCache sharedUserDataCache] account] setWeight:@(ceilf([self weightInKgs] * 1000))];
+        [self performSegueWithIdentifier:[HEMOnboardingStoryboard locationSegueIdentifier] sender:self];
+    }
 }
 
 #pragma mark - Cleanup

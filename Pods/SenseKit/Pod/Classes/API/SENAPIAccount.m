@@ -55,6 +55,10 @@ NSString* const SENAPIAccountEndpoint = @"account";
            completion:completion];
 }
 
++ (void)getAccount:(SENAPIDataBlock)completion {
+    
+}
+
 #pragma mark - Helpers
 
 + (NSString*)stringValueOfGender:(SENAccountGender)gender {

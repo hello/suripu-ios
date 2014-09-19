@@ -14,6 +14,7 @@
             <string>Agile-Light</string>
             <string>Agile-Light</string>
             <string>Agile-Light</string>
+            <string>Agile-Light</string>
         </mutableArray>
         <mutableArray key="Agile-LightItalic.otf">
             <string>Agile-LightItalic</string>
@@ -22,6 +23,7 @@
             <string>Agile-Medium</string>
         </mutableArray>
         <mutableArray key="Agile-Thin.otf">
+            <string>Agile-Thin</string>
             <string>Agile-Thin</string>
             <string>Agile-Thin</string>
             <string>Agile-Thin</string>
@@ -67,19 +69,19 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Drag to adjust the time" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zCx-Mw-gYU">
-                                    <rect key="frame" x="97.5" y="289" width="125.5" height="14.5"/>
+                                    <rect key="frame" x="98" y="289" width="126" height="15"/>
                                     <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="12"/>
                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9UP-wt-CgU">
+                                <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9UP-wt-CgU">
                                     <rect key="frame" x="258" y="146" width="18" height="22"/>
                                     <state key="normal" image="questionIcon.png">
                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                     </state>
                                 </button>
                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Wake up between 7:00 and 7:30" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vnz-9v-ebh">
-                                    <rect key="frame" x="74" y="149" width="172.5" height="14.5"/>
+                                    <rect key="frame" x="74" y="149" width="173" height="15"/>
                                     <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="12"/>
                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
@@ -396,6 +398,7 @@
                     <connections>
                         <outlet property="clockStyleSegmentControl" destination="jAJ-zy-w6O" id="ISs-pp-lm6"/>
                         <outlet property="temperatureSegmentControl" destination="isJ-f0-S9q" id="iSb-Sh-C9E"/>
+                        <segue destination="kmi-iD-cGd" kind="push" identifier="personal" id="u2u-sB-6JZ"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kH3-TW-oUy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -509,7 +512,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="22" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71w-49-Doa">
-                                <rect key="frame" x="100" y="20" width="103.5" height="132"/>
+                                <rect key="frame" x="100" y="20" width="104" height="132"/>
                                 <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="110"/>
                                 <color key="textColor" white="0.22" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -530,7 +533,7 @@
                                     <constraint firstAttribute="trailing" secondItem="eKU-VY-IW0" secondAttribute="trailing" id="ycE-j6-9lO"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25000000000000006" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dQu-Hf-dor">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25000000000000006" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dQu-Hf-dor">
                                 <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="84"/>
                                 <color key="textColor" white="0.22" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
@@ -603,7 +606,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HiS-qP-eYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1070" y="706"/>
+            <point key="canvasLocation" x="1467" y="706"/>
         </scene>
         <!--Sleep Sound-->
         <scene sceneID="wBj-rI-NY0">
@@ -642,7 +645,70 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XAR-LI-fkR" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1467" y="706"/>
+            <point key="canvasLocation" x="1878" y="706"/>
+        </scene>
+        <!--My Information-->
+        <scene sceneID="fi3-gM-VUk">
+            <objects>
+                <viewController storyboardIdentifier="personalInfo" title="My Information" id="kmi-iD-cGd" customClass="HEMPersonalInfoViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="k9b-0e-N8w"/>
+                        <viewControllerLayoutGuide type="bottom" id="BAh-On-yZF"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="XkK-Ka-16U">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="60" sectionHeaderHeight="10" sectionFooterHeight="10" translatesAutoresizingMaskIntoConstraints="NO" id="rbm-KW-3zr">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="info" textLabel="fEx-Kx-6oY" detailTextLabel="EFs-8U-Whc" style="IBUITableViewCellStyleValue1" id="dAf-ei-RdP">
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dAf-ei-RdP" id="maL-Nv-3Jp">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fEx-Kx-6oY">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EFs-8U-Whc">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="15"/>
+                                                    <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="kmi-iD-cGd" id="dz7-9y-a5R"/>
+                                    <outlet property="delegate" destination="kmi-iD-cGd" id="dfd-oW-7o2"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="width" secondItem="rbm-KW-3zr" secondAttribute="width" id="56E-vJ-XbN"/>
+                            <constraint firstAttribute="height" secondItem="rbm-KW-3zr" secondAttribute="height" id="QQJ-0v-fsW"/>
+                            <constraint firstAttribute="centerX" secondItem="rbm-KW-3zr" secondAttribute="centerX" id="TWY-WC-nkz"/>
+                            <constraint firstAttribute="centerY" secondItem="rbm-KW-3zr" secondAttribute="centerY" id="WLN-2t-gPH"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Information" id="s1h-aS-2dI"/>
+                    <connections>
+                        <outlet property="infoTableView" destination="rbm-KW-3zr" id="SJb-Rh-cCH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="rmb-2b-9QE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1070" y="706"/>
         </scene>
         <!--Currently-->
         <scene sceneID="A0q-Da-YSX">
@@ -678,14 +744,14 @@
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TES-xs-u6w" customClass="HEMColoredRoundedLabel">
-                                            <rect key="frame" x="234" y="26" width="43.5" height="22"/>
+                                            <rect key="frame" x="234" y="26" width="44" height="22"/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                             <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="18"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" horizontalCompressionResistancePriority="748" verticalCompressionResistancePriority="749" text="description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="178" translatesAutoresizingMaskIntoConstraints="NO" id="Poc-rG-WgZ">
-                                            <rect key="frame" x="55" y="45" width="177.5" height="29"/>
+                                            <rect key="frame" x="55" y="45" width="178" height="29"/>
                                             <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="14"/>
                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                             <nil key="highlightedColor"/>
@@ -839,7 +905,7 @@
                                 </segments>
                             </segmentedControl>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="July 2014" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fBu-FT-ARo">
-                                <rect key="frame" x="110" y="98" width="100.5" height="30"/>
+                                <rect key="frame" x="110" y="98" width="101" height="30"/>
                                 <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="25"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -925,7 +991,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="In the last month, you have gone to sleep earlier than before, resulting in better sleep." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="190" translatesAutoresizingMaskIntoConstraints="NO" id="ctp-sa-Lyf">
-                                                    <rect key="frame" x="40" y="23" width="189.5" height="50"/>
+                                                    <rect key="frame" x="40" y="23" width="190" height="50"/>
                                                     <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="14"/>
                                                     <color key="textColor" white="0.22" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>

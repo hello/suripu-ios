@@ -30,4 +30,12 @@
 + (void)updateAccount:(SENAccount*)account
       completionBlock:(SENAPIDataBlock)completion;
 
+/**
+ * Get the account for the currently authorized user based on the stored
+ * credentials
+ * @param completion: block invoked when the account has been retrieved
+ *                    or an error was encountered
+ */
++ (void)getAccount:(SENAPIDataBlock)completion;
+
 @end

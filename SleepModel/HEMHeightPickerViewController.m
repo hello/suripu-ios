@@ -3,6 +3,8 @@
 #import "HEMHeightPickerViewController.h"
 #import "HEMUserDataCache.h"
 #import "HEMValueSliderView.h"
+#import "HEMActionButton.h"
+#import "HEMOnboardingStoryboard.h"
 
 CGFloat const HEMHeightPickerCentimetersPerInch = 2.54f;
 static NSInteger HEMMaxHeightInFeet = 9;
@@ -12,8 +14,10 @@ static NSInteger HEMMaxHeightInFeet = 9;
 @property (nonatomic, getter=isUsingImperial) BOOL usingImperial;
 @property (weak, nonatomic) IBOutlet HEMValueSliderView *heightSliderView;
 @property (assign, nonatomic) NSInteger numberOfRows;
+@property (assign, nonatomic) int selectedHeightInCm;
 @property (weak, nonatomic) IBOutlet UILabel *mainHeightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *otherHeightLabel;
+@property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 
 @end
 
@@ -23,7 +27,15 @@ static NSInteger HEMMaxHeightInFeet = 9;
     [super viewDidLoad];
     [self setNumberOfRows:HEMMaxHeightInFeet+1]; // include 0
     [[self heightSliderView] reload];
-    [[self heightSliderView] setToValue:HEMMaxHeightInFeet - (5 + (8/12.0f))];
+    
+    NSInteger feet = [self feet] > 0 ? [self feet] : 5;
+    NSInteger inch = [self inches] > 0 ? [self inches] : 8;
+    [[self heightSliderView] setToValue:HEMMaxHeightInFeet - (feet + (inch/12.0f))];
+    
+    if ([self delegate] != nil) {
+        NSString* title = NSLocalizedString(@"status.success", nil);
+        [[self doneButton] setTitle:title forState:UIControlStateNormal];
+    }
 }
 
 #pragma mark - HEMValueSliderDelegate
@@ -56,7 +68,16 @@ static NSInteger HEMMaxHeightInFeet = 9;
     [[self mainHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat]];
     [[self otherHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"measurement.or", nil), cmFormat]];
     
+    [self setSelectedHeightInCm:(int)cm];
     [[[HEMUserDataCache sharedUserDataCache] account] setHeight:@(cm)];
+}
+
+- (IBAction)done:(id)sender {
+    if ([self delegate] != nil) {
+        [[self delegate] didSelectHeightInCentimeters:[self selectedHeightInCm] from:self];
+    } else {
+        [self performSegueWithIdentifier:[HEMOnboardingStoryboard weightSegueIdentifier] sender:self];
+    }
 }
 
 @end

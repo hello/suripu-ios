@@ -175,8 +175,9 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     switch (indexPath.row) {
     case 0: {
         cell.titleLabel.text = NSLocalizedString(@"alarm.title", nil);
-        if ([[SENAlarm savedAlarm] isOn]) {
-            cell.detailLabel.text = [[SENAlarm savedAlarm] localizedValue];
+        SENAlarm* savedAlarm = [[SENAlarm savedAlarms] count]>0?[SENAlarm savedAlarms][0]:nil;
+        if ([savedAlarm isOn]) {
+            cell.detailLabel.text = [savedAlarm localizedValue];
         } else {
             cell.detailLabel.text = NSLocalizedString(@"alarm.state.disabled", nil);
         }

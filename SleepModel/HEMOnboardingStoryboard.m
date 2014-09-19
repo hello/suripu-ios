@@ -20,8 +20,10 @@ static NSString *const _HEMsignup = @"signup";
 static NSString *const _HEMskip = @"skip";
 static NSString *const _HEMsleepQuestionIntro = @"sleepQuestionIntro";
 static NSString *const _HEMsleepQuestionIntroViewController = @"sleepQuestionIntroViewController";
+static NSString *const _HEMweight = @"weight";
 static NSString *const _HEMwelcome = @"welcome";
 static NSString *const _HEMwifi = @"wifi";
+static NSString *const _HEMlocation = @"location";
 static NSString *const _HEMwifiViewController = @"wifiViewController";
 
 @implementation HEMOnboardingStoryboard
@@ -40,13 +42,18 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)sleepQuestionIntroSegueIdentifier { return _HEMsleepQuestionIntro; }
 +(NSString *)skipSegueIdentifier { return _HEMskip; }
 +(NSString *)wifiSegueIdentifier { return _HEMwifi; }
++(NSString *)weightSegueIdentifier { return _HEMweight; }
++(NSString *)locationSegueIdentifier { return _HEMlocation; }
 
 /** View Controllers */
 +(UIViewController *)instantiateWelcomeViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwelcome]; }
 +(UIViewController *)instantiateSignUpViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsignUpViewController]; }
 +(UIViewController *)instantiateDataIntroViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMdataIntroViewController]; }
 +(UIViewController *)instantiateDobViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMdobViewController]; }
++(UIViewController *)instantiateHeightViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMheight]; }
 +(UIViewController *)instantiateWifiViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwifiViewController]; }
++(UIViewController *)instantiateGenderViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMgender]; }
++(UIViewController *)instantiateWeightViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMweight]; }
 +(UIViewController *)instantiateSleepQuestionIntroViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepQuestionIntroViewController]; }
 +(UIViewController *)instantiateBluetoothViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbluetoothViewController]; }
 

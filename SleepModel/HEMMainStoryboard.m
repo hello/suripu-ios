@@ -12,7 +12,10 @@ static NSString *const _HEMalarmViewController = @"alarmViewController";
 static NSString *const _HEMcurrentConditionsCell = @"currentConditionsCell";
 static NSString *const _HEMcurrentController = @"currentController";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
+static NSString *const _HEMinfo = @"info";
 static NSString *const _HEMinsightCell = @"insightCell";
+static NSString *const _HEMpersonal = @"personal";
+static NSString *const _HEMpersonalInfo = @"personalInfo";
 static NSString *const _HEMpickSoundSegue = @"pickSoundSegue";
 static NSString *const _HEMsensorViewController = @"sensorViewController";
 static NSString *const _HEMsettingsController = @"settingsController";
@@ -31,12 +34,14 @@ static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 
 /** Cell Reuse Identifiers */
 +(NSString *)sleepSoundCellReuseIdentifier { return _HEMsleepSoundCell; }
++(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)currentConditionsCellReuseIdentifier { return _HEMcurrentConditionsCell; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
 +(NSString *)insightCellReuseIdentifier { return _HEMinsightCell; }
 
 /** Segue Identifiers */
 +(NSString *)pickSoundSegueSegueIdentifier { return _HEMpickSoundSegue; }
++(NSString *)personalSegueIdentifier { return _HEMpersonal; }
 
 /** View Controllers */
 +(UIViewController *)instantiateAlarmViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmViewController]; }
@@ -44,6 +49,7 @@ static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 +(UIViewController *)instantiateSleepQuestionsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepQuestions]; }
 +(UIViewController *)instantiateSensorViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensorViewController]; }
 +(UIViewController *)instantiateSleepSoundViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepSoundViewController]; }
++(UIViewController *)instantiatePersonalInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpersonalInfo]; }
 +(UIViewController *)instantiateCurrentController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentController]; }
 +(UIViewController *)instantiateAlarmSoundTableViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmSoundTableViewController]; }
 +(UIViewController *)instantiateSleepGraphController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepGraphController]; }

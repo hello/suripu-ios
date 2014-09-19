@@ -164,12 +164,12 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)finishUpdate:(NSError*)error {
     [self setUpdating:NO];
+    [[self infoTableView] reloadData]; // clear the activity indicators
     
-    if (error == nil) {
-        [[self infoTableView] reloadData];
-    } else {
+    if (error != nil) {
         [self showMessageDialog:NSLocalizedString(@"account.update.error.generic", nil)
                           title:NSLocalizedString(@"account.update.failed.title", nil)];
+        
     }
     
 }

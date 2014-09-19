@@ -44,7 +44,7 @@ static NSString* const kHEMLocationErrorDomain = @"is.hello.location";
     return self;
 }
 
-- (NSError*)checkAuthorizationError {
+- (NSError*)checkAuthorization {
     NSError* error = nil;
     switch ([CLLocationManager authorizationStatus]) {
         case kCLAuthorizationStatusRestricted:
@@ -54,6 +54,12 @@ static NSString* const kHEMLocationErrorDomain = @"is.hello.location";
                                     userInfo:nil];
             break;
         }
+        case kCLAuthorizationStatusNotDetermined:
+            // iOS8 only call so must check if available
+            if ([[self manager] respondsToSelector:@selector(requestWhenInUseAuthorization)]) {
+                [[self manager] requestWhenInUseAuthorization];
+            }
+            break;
         default:
             break;
     }
@@ -73,7 +79,7 @@ static NSString* const kHEMLocationErrorDomain = @"is.hello.location";
                                 userInfo:nil];
     }
 
-    if (error == nil) error = [self checkAuthorizationError];
+    if (error == nil) error = [self checkAuthorization];
     if (error != nil) {
         if (locationError != NULL) {
             *locationError = error;

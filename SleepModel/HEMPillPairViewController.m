@@ -23,6 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *pillImageVSpaceConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *readyButtonVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *readyButtonWidthConstraint;
 
 @property (strong, nonatomic) id disconnectObserverId;
 
@@ -56,7 +57,7 @@
     SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
     NSString* token = [SENAuthorizationService accessToken];
     
-    [[self readyButton] showActivity];
+    [[self readyButton] showActivityWithWidthConstraint:[self readyButtonWidthConstraint]];
     __weak typeof(self) weakSelf = self;
     [manager pairWithPill:token success:^(id response) {
         __block typeof(weakSelf) strongSelf = weakSelf;

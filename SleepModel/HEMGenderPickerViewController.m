@@ -4,6 +4,8 @@
 #import "HEMGenderPickerViewController.h"
 #import "HEMUserDataCache.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMOnboardingStoryboard.h"
+#import "HEMActionButton.h"
 
 @interface HEMGenderPickerViewController ()
 
@@ -13,8 +15,10 @@
 @property (weak, nonatomic) IBOutlet UIButton* maleTitleButton;
 @property (weak, nonatomic) IBOutlet UIButton* otherTitleButton;
 @property (weak, nonatomic) IBOutlet UIView* lineView;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *fIconButtonBotConstraint;
+@property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
+
+@property (assign, nonatomic) SENAccountGender selectedGender;
 
 @end
 
@@ -23,7 +27,44 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setGenderAsOther:self.otherTitleButton];
+    
+    if ([self delegate] != nil) {
+        NSString* title = NSLocalizedString(@"status.success", nil);
+        [[self doneButton] setTitle:title forState:UIControlStateNormal];
+    }
+    
+    switch ([self defaultGender]) {
+        case SENAccountGenderMale:
+            [self setGenderAsMale:nil];
+            break;
+        case SENAccountGenderFemale:
+            [self setGenderAsFemale:nil];
+            break;
+        default:
+            [self setGenderAsOther:nil];
+            break;
+    }
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    switch ([self selectedGender]) {
+        case SENAccountGenderFemale:
+            [self moveLineUnderButton:[self femaleTitleButton]];
+            break;
+        case SENAccountGenderMale:
+            [self moveLineUnderButton:[self maleTitleButton]];
+            break;
+        default:
+            [self moveLineUnderButton:[self otherTitleButton]];
+            break;
+    }
+}
+
+- (void)moveLineUnderButton:(UIButton*)button {
+    CGRect frame = CGRectMake(CGRectGetMinX(button.frame), CGRectGetMaxY(button.frame) + 3.f, CGRectGetWidth(button.frame), 1.f);
+    self.lineView.frame = frame;
 }
 
 - (void)adjustConstraintsForIPhone4 {
@@ -33,7 +74,7 @@
 
 - (IBAction)setGenderAsFemale:(id)sender
 {
-    [[[HEMUserDataCache sharedUserDataCache] account] setGender:SENAccountGenderFemale];
+    [self setSelectedGender:SENAccountGenderFemale];
     [self selectButton:self.femaleTitleButton];
     [UIView animateWithDuration:0.5f animations:^{
         self.femaleTitleButton.alpha = 1.f;
@@ -46,7 +87,7 @@
 
 - (IBAction)setGenderAsOther:(id)sender
 {
-    [[[HEMUserDataCache sharedUserDataCache] account] setGender:SENAccountGenderOther];
+    [self setSelectedGender:SENAccountGenderOther];
     [self selectButton:self.otherTitleButton];
     [UIView animateWithDuration:0.5f animations:^{
         self.femaleTitleButton.alpha = 0.5f;
@@ -59,7 +100,7 @@
 
 - (IBAction)setGenderAsMale:(id)sender
 {
-    [[[HEMUserDataCache sharedUserDataCache] account] setGender:SENAccountGenderMale];
+    [self setSelectedGender:SENAccountGenderMale];
     [self selectButton:self.maleTitleButton];
     [UIView animateWithDuration:0.5f animations:^{
         self.femaleTitleButton.alpha = 0.5f;
@@ -73,9 +114,18 @@
 - (void)selectButton:(UIButton*)button
 {
     [UIView animateWithDuration:0.25f animations:^{
-        CGRect frame = CGRectMake(CGRectGetMinX(button.frame), CGRectGetMaxY(button.frame) + 3.f, CGRectGetWidth(button.frame), 1.f);
-        self.lineView.frame = frame;
+        [self moveLineUnderButton:button];
     }];
+}
+
+- (IBAction)done:(id)sender {
+    if ([self delegate] != nil) {
+        [[self delegate] didSelectGender:[self selectedGender] from:self];
+    } else {
+        [[[HEMUserDataCache sharedUserDataCache] account] setGender:[self selectedGender]];
+        [self performSegueWithIdentifier:[HEMOnboardingStoryboard heightSegueIdentifier]
+                                  sender:self];
+    }
 }
 
 @end

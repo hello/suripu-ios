@@ -16,13 +16,15 @@
 @property (weak, nonatomic) IBOutlet HEMActionButton *locationButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *locateButtonWidthConstraint;
+
 @end
 
 @implementation HEMLocationFinderViewController
 
 - (void)showActivity {
     [[self skipButton] setEnabled:NO];
-    [[self locationButton] showActivity];
+    [[self locationButton] showActivityWithWidthConstraint:[self locateButtonWidthConstraint]];
 }
 
 - (void)stopActivity {

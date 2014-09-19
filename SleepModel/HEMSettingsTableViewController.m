@@ -2,7 +2,7 @@
 #import <SenseKit/SENSettings.h>
 
 #import "HEMSettingsTableViewController.h"
-#import "HEMOnboardingStoryboard.h"
+#import "HEMMainStoryboard.h"
 
 @interface HEMSettingsTableViewController ()
 
@@ -53,8 +53,7 @@
     switch (indexPath.section) {
     case 1: {
         if (indexPath.row == 0) {
-            UIViewController* startController = [HEMOnboardingStoryboard instantiateDobViewController];
-            [self.navigationController pushViewController:startController animated:YES];
+            [self performSegueWithIdentifier:[HEMMainStoryboard personalSegueIdentifier] sender:self];
         }
     } break;
     case 2:

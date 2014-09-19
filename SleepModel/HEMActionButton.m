@@ -11,6 +11,7 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
 @property (nonatomic, copy)   NSString* originalTitle;
 @property (nonatomic, assign, getter=isShowingActivity) BOOL showingActivity;
 @property (nonatomic, strong) UIActivityIndicatorView* activityView;
+@property (nonatomic, weak)   NSLayoutConstraint* widthConstraint;
 
 @end
 
@@ -39,9 +40,7 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
     [self addSubview:[self activityView]];
 }
 
-- (void)showActivity {
-    if ([self isShowingActivity]) return;
-    
+- (void)prepareForActivity {
     if (CGRectIsEmpty([self originalFrame])) {
         [self setOriginalFrame:[self frame]];
     }
@@ -52,17 +51,24 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
         [[self activityView] hidesWhenStopped];
         [self addSubview:[self activityView]];
     }
-    // take the height as the diameter
-    CGFloat size = CGRectGetHeight([self bounds]);
-    CGFloat radius = size / 2.0f;
-    CGPoint center = [self center];
-    center.x = CGRectGetMidX([self frame]);
-
+    
     [self setShowingActivity:YES];
     [self setOriginalTitle:[self titleForState:UIControlStateNormal]]; // always take latest
     [self setTitle:@"" forState:UIControlStateNormal];
     [self setTitle:@"" forState:UIControlStateDisabled];
     [self setEnabled:NO];
+}
+
+- (void)showActivity {
+    if ([self isShowingActivity]) return;
+    
+    [self prepareForActivity];
+    
+    // take the height as the diameter
+    CGFloat size = CGRectGetHeight([self bounds]);
+    CGFloat radius = size / 2.0f;
+    CGPoint center = [self center];
+    center.x = CGRectGetMidX([self frame]);
     
     [UIView animateWithDuration:0.25f
                           delay:0.0f
@@ -80,6 +86,25 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
                      }];
 }
 
+- (void)showActivityWithWidthConstraint:(NSLayoutConstraint*)constraint {
+    if ([self isShowingActivity]) return;
+    
+    [self prepareForActivity];
+    [self setWidthConstraint:constraint];
+    
+    [UIView animateWithDuration:0.25f
+                          delay:0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState
+                     animations:^{
+                         [constraint setConstant:CGRectGetHeight([self bounds])];
+                         [self layoutIfNeeded];
+                     }
+                     completion:^(BOOL finished) {
+                         [self addActivityView];
+                         [[self activityView] startAnimating];
+                     }];
+}
+
 - (void)stopActivity {
     if (![self isShowingActivity]) return;
     
@@ -88,8 +113,13 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
                           delay:0.0f
                         options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-                         [self setFrame:[self originalFrame]];
-                         [[self layer] setCornerRadius:kHEMActionCornerRadius];
+                         if ([self widthConstraint] != nil) {
+                             CGFloat width = CGRectGetWidth([self originalFrame]);
+                             [[self widthConstraint] setConstant:width];
+                             [self layoutIfNeeded];
+                         } else {
+                             [self setFrame:[self originalFrame]];
+                         }
                      }
                      completion:^(BOOL finished) {
                          [self setShowingActivity:NO];

@@ -10,12 +10,14 @@
 
 /** Cell Reuse Identifiers */
 +(NSString *)sleepSoundCellReuseIdentifier;
++(NSString *)infoReuseIdentifier;
 +(NSString *)currentConditionsCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)insightCellReuseIdentifier;
 
 /** Segue Identifiers */
 +(NSString *)pickSoundSegueSegueIdentifier;
++(NSString *)personalSegueIdentifier;
 
 /** View Controllers */
 +(UIViewController *)instantiateAlarmViewController;
@@ -23,6 +25,7 @@
 +(UIViewController *)instantiateSleepQuestionsViewController;
 +(UIViewController *)instantiateSensorViewController;
 +(UIViewController *)instantiateSleepSoundViewController;
++(UIViewController *)instantiatePersonalInfoViewController;
 +(UIViewController *)instantiateCurrentController;
 +(UIViewController *)instantiateAlarmSoundTableViewController;
 +(UIViewController *)instantiateSleepGraphController;

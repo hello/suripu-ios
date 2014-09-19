@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6205" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="s6I-B7-593">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="s6I-B7-593">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6198"/>
-        <capability name="Constraints with attributes relative to the layout margin" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Authentication View Controller-->
@@ -150,6 +150,7 @@
                         <outlet property="passwordLabel" destination="7G7-0Y-QJd" id="iX4-u8-xMd"/>
                         <outlet property="scrollView" destination="8F9-nO-uxM" id="oeE-0D-isI"/>
                         <outlet property="signInButton" destination="4MF-GM-hUc" id="oyH-Sa-JnI"/>
+                        <outlet property="signInWidthConstraint" destination="Kq4-JC-vl2" id="Vjt-6L-Lkz"/>
                         <outlet property="usernameField" destination="gMo-0B-UJM" id="yfw-pd-kDq"/>
                         <outlet property="usernameLabel" destination="Sfx-mA-FU0" id="YqU-Jq-hcS"/>
                     </connections>
@@ -427,6 +428,7 @@
                     <navigationItem key="navigationItem" id="qhq-QP-ftX"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="doneButtonWidthConstraint" destination="gIj-Cf-q2t" id="eTb-4A-cK8"/>
                         <outlet property="emailAddressField" destination="4H9-4w-9eg" id="oeH-wd-2GP"/>
                         <outlet property="emailFieldVSpaceConstraint" destination="zdu-gE-EMw" id="sgW-E7-QMn"/>
                         <outlet property="emailLabel" destination="rhq-od-2eJ" id="Z1M-ra-Miz"/>
@@ -497,7 +499,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nkf-eQ-SM0" customClass="HEMActionButton">
-                                <rect key="frame" x="100" y="484" width="119" height="40"/>
+                                <rect key="frame" x="100" y="464" width="119" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="h7l-hz-ffA"/>
                                     <constraint firstAttribute="width" constant="119" id="ydw-nQ-dRs"/>
@@ -512,7 +514,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vcC-x2-B8z">
-                                <rect key="frame" x="96" y="530" width="128" height="28"/>
+                                <rect key="frame" x="96" y="510" width="128" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="128" id="oHK-QY-0ax"/>
                                     <constraint firstAttribute="height" constant="28" id="vLy-Vh-MyN"/>
@@ -533,11 +535,11 @@
                             <constraint firstAttribute="centerX" secondItem="45s-Pz-c3A" secondAttribute="centerX" id="QZV-8N-8QG"/>
                             <constraint firstItem="59R-yf-Q1G" firstAttribute="top" secondItem="45s-Pz-c3A" secondAttribute="bottom" constant="14" id="V2G-3g-np9"/>
                             <constraint firstAttribute="centerX" secondItem="Nkf-eQ-SM0" secondAttribute="centerX" constant="0.5" id="V7G-FM-eG5"/>
-                            <constraint firstItem="bQ4-fe-iRl" firstAttribute="top" secondItem="vcC-x2-B8z" secondAttribute="bottom" constant="10" id="VTH-gt-80u"/>
+                            <constraint firstItem="bQ4-fe-iRl" firstAttribute="top" secondItem="vcC-x2-B8z" secondAttribute="bottom" constant="30" id="VTH-gt-80u"/>
                             <constraint firstAttribute="centerX" secondItem="59R-yf-Q1G" secondAttribute="centerX" id="aBB-YW-0mZ"/>
                             <constraint firstAttribute="centerX" secondItem="vcC-x2-B8z" secondAttribute="centerX" id="dTC-MG-As0"/>
                             <constraint firstItem="45s-Pz-c3A" firstAttribute="top" secondItem="DDQ-wG-B8c" secondAttribute="bottom" constant="8" id="ehG-nc-URj"/>
-                            <constraint firstItem="bQ4-fe-iRl" firstAttribute="top" secondItem="Nkf-eQ-SM0" secondAttribute="bottom" constant="44" id="kOG-si-7Yz"/>
+                            <constraint firstItem="bQ4-fe-iRl" firstAttribute="top" secondItem="Nkf-eQ-SM0" secondAttribute="bottom" constant="64" id="kOG-si-7Yz"/>
                             <constraint firstAttribute="centerY" secondItem="xGH-1d-jkJ" secondAttribute="centerY" constant="-10" id="s43-O5-Gem"/>
                         </constraints>
                     </view>
@@ -574,7 +576,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1g-YQ-7bC" customClass="HEMActionButton">
-                                <rect key="frame" x="101" y="484" width="119" height="40"/>
+                                <rect key="frame" x="101" y="464" width="119" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="6fN-Mb-Rff"/>
                                     <constraint firstAttribute="width" constant="119" id="VtM-1F-twe"/>
@@ -601,10 +603,10 @@
                         <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="h1g-YQ-7bC" secondAttribute="centerX" constant="-0.5" id="2Ah-nm-PZ1"/>
-                            <constraint firstItem="7P9-ib-JRI" firstAttribute="top" secondItem="h1g-YQ-7bC" secondAttribute="top" constant="-350" id="7er-xc-98n"/>
+                            <constraint firstItem="7P9-ib-JRI" firstAttribute="top" secondItem="h1g-YQ-7bC" secondAttribute="top" constant="-330" id="7er-xc-98n"/>
                             <constraint firstAttribute="centerX" secondItem="7P9-ib-JRI" secondAttribute="centerX" id="8MD-I2-8Us"/>
                             <constraint firstAttribute="centerX" secondItem="znD-8e-Xes" secondAttribute="centerX" id="VZN-5x-rdc"/>
-                            <constraint firstItem="GdX-Ok-5df" firstAttribute="top" secondItem="h1g-YQ-7bC" secondAttribute="bottom" constant="44" id="gef-Wm-GJ8"/>
+                            <constraint firstItem="GdX-Ok-5df" firstAttribute="top" secondItem="h1g-YQ-7bC" secondAttribute="bottom" constant="64" id="gef-Wm-GJ8"/>
                             <constraint firstItem="znD-8e-Xes" firstAttribute="top" secondItem="CiX-HD-SQL" secondAttribute="bottom" constant="8" id="rJ6-Qb-ccS"/>
                         </constraints>
                     </view>
@@ -613,18 +615,19 @@
                         <outlet property="dobPicker" destination="7P9-ib-JRI" id="AxA-0d-3ne"/>
                         <outlet property="dobPickerHeightConstraint" destination="qlT-A0-Sum" id="WWS-f8-kzJ"/>
                         <outlet property="dobPickerToButtonTopConstraint" destination="7er-xc-98n" id="1be-hR-2qU"/>
+                        <outlet property="doneButton" destination="h1g-YQ-7bC" id="zAk-SN-Lfx"/>
                         <outlet property="titleLabel" destination="znD-8e-Xes" id="UOF-tQ-Cng"/>
                         <segue destination="gpF-55-MmK" kind="push" identifier="gender" id="Bj1-eU-Rc8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ffw-pv-gaH" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2643" y="1231"/>
+            <point key="canvasLocation" x="2643" y="1226"/>
         </scene>
         <!--Height View Controller-->
         <scene sceneID="YNj-iP-C8c">
             <objects>
-                <viewController id="uc7-01-jZi" userLabel="Height View Controller" customClass="HEMHeightPickerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="height" id="uc7-01-jZi" userLabel="Height View Controller" customClass="HEMHeightPickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="PKP-T4-cPd"/>
                         <viewControllerLayoutGuide type="bottom" id="deH-7E-HFU"/>
@@ -654,7 +657,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M0L-MG-dGi" customClass="HEMActionButton">
-                                <rect key="frame" x="101" y="484" width="119" height="40"/>
+                                <rect key="frame" x="101" y="464" width="119" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="QMZ-zo-7zG"/>
                                     <constraint firstAttribute="width" constant="119" id="RSA-s3-qzn"/>
@@ -665,7 +668,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="f6G-Sh-hYd" kind="push" id="iNH-hq-mpb"/>
+                                    <action selector="done:" destination="uc7-01-jZi" eventType="touchUpInside" id="5C0-Pl-Ygi"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5' 3&quot;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nEX-5L-qND">
@@ -713,7 +716,7 @@
                             <constraint firstItem="9RP-yj-mMV" firstAttribute="top" secondItem="Pks-KU-Mi1" secondAttribute="bottom" constant="50" id="7MK-JO-VYZ"/>
                             <constraint firstAttribute="centerX" secondItem="6X3-cZ-M1A" secondAttribute="centerX" id="9Td-J6-2ln"/>
                             <constraint firstAttribute="centerX" secondItem="nEX-5L-qND" secondAttribute="centerX" id="Afn-LU-XxU"/>
-                            <constraint firstItem="deH-7E-HFU" firstAttribute="top" secondItem="M0L-MG-dGi" secondAttribute="bottom" constant="44" id="J2U-LZ-uhx"/>
+                            <constraint firstItem="deH-7E-HFU" firstAttribute="top" secondItem="M0L-MG-dGi" secondAttribute="bottom" constant="64" id="J2U-LZ-uhx"/>
                             <constraint firstAttribute="centerX" secondItem="9RP-yj-mMV" secondAttribute="centerX" constant="-0.5" id="KDC-xN-yY2"/>
                             <constraint firstAttribute="centerY" secondItem="6X3-cZ-M1A" secondAttribute="centerY" constant="-21" id="MdG-gU-xsg"/>
                             <constraint firstItem="iyM-PD-FTT" firstAttribute="top" secondItem="PKP-T4-cPd" secondAttribute="bottom" constant="8" id="WJJ-GV-qAx"/>
@@ -727,9 +730,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="Ue0-6d-1pL"/>
                     <connections>
+                        <outlet property="doneButton" destination="M0L-MG-dGi" id="jyM-rg-IIl"/>
                         <outlet property="heightSliderView" destination="6X3-cZ-M1A" id="fcl-i4-ek8"/>
                         <outlet property="mainHeightLabel" destination="nEX-5L-qND" id="sdk-CQ-dgp"/>
                         <outlet property="otherHeightLabel" destination="Pks-KU-Mi1" id="c8I-Dd-CLQ"/>
+                        <segue destination="f6G-Sh-hYd" kind="push" identifier="weight" id="jX4-7l-Grb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8j0-DD-Qpv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -814,6 +819,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="logoVSpaceConstraint" destination="tUd-yV-d4M" id="u1x-Bf-Sy7"/>
+                        <outlet property="shareButtonWidthConstraint" destination="QBe-nN-1J0" id="nRo-gc-ffq"/>
                         <outlet property="shareCredentialsButton" destination="HYT-At-WLL" id="Jvx-hd-I5y"/>
                         <outlet property="shareVSpaceConstraint" destination="B4a-bL-v79" id="Wl3-J9-wGm"/>
                         <outlet property="subtitleLabel" destination="4PT-Jb-KBo" id="SkV-pq-mrC"/>
@@ -908,6 +914,7 @@
                         <outlet property="pillImageView" destination="k3x-K0-1su" id="84m-Gk-xBq"/>
                         <outlet property="readyButton" destination="Cxf-NO-tVI" id="k82-ki-q1D"/>
                         <outlet property="readyButtonVSpaceConstraint" destination="PZK-Es-urH" id="F9R-yV-drj"/>
+                        <outlet property="readyButtonWidthConstraint" destination="aRH-j3-tne" id="qtZ-VR-VSD"/>
                         <outlet property="subtitleLabel" destination="dQE-eQ-cvY" id="CUW-63-6Ks"/>
                         <outlet property="titleLabel" destination="ded-Ea-3CR" id="XiG-6d-2MM"/>
                         <segue destination="ezT-R8-K4n" kind="push" identifier="dataIntro" id="nrK-aH-Age"/>
@@ -920,7 +927,7 @@
         <!--Gender View Controller-->
         <scene sceneID="s4K-5F-Rau">
             <objects>
-                <viewController id="gpF-55-MmK" userLabel="Gender View Controller" customClass="HEMGenderPickerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="gender" id="gpF-55-MmK" userLabel="Gender View Controller" customClass="HEMGenderPickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ecZ-6f-bII"/>
                         <viewControllerLayoutGuide type="bottom" id="d85-24-UBP"/>
@@ -991,8 +998,12 @@
                                     <action selector="setGenderAsOther:" destination="gpF-55-MmK" eventType="touchUpInside" id="ANm-XA-ZKv"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kcS-lE-b2D" userLabel="Line">
+                                <rect key="frame" x="224" y="334" width="38" height="1"/>
+                                <color key="backgroundColor" red="0.37647058823529411" green="0.58039215686274503" blue="1" alpha="1" colorSpace="deviceRGB"/>
+                            </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-fl-V5h" customClass="HEMActionButton">
-                                <rect key="frame" x="101" y="484" width="119" height="40"/>
+                                <rect key="frame" x="101" y="464" width="119" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="119" id="T6q-Wj-bnQ"/>
                                     <constraint firstAttribute="height" constant="40" id="g8t-6w-Xa2"/>
@@ -1003,13 +1014,9 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="uc7-01-jZi" kind="push" identifier="height" id="KSL-1I-d7X"/>
+                                    <action selector="done:" destination="gpF-55-MmK" eventType="touchUpInside" id="nya-P0-u1M"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kcS-lE-b2D" userLabel="Line">
-                                <rect key="frame" x="224" y="334" width="38" height="1"/>
-                                <color key="backgroundColor" red="0.37647058823529411" green="0.58039215686274503" blue="1" alpha="1" colorSpace="deviceRGB"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1025,12 +1032,13 @@
                             <constraint firstItem="qMR-u0-kGh" firstAttribute="top" secondItem="A6X-Ja-RGS" secondAttribute="top" id="hZq-RH-R2x"/>
                             <constraint firstItem="S9f-tS-yQg" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leading" constant="23" id="jHg-2u-Bs6"/>
                             <constraint firstItem="3Im-vl-hQo" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leadingMargin" constant="32" id="muD-lJ-MLZ"/>
-                            <constraint firstItem="d85-24-UBP" firstAttribute="top" secondItem="gMf-fl-V5h" secondAttribute="bottom" constant="44" id="qTR-nX-xSy"/>
+                            <constraint firstItem="d85-24-UBP" firstAttribute="top" secondItem="gMf-fl-V5h" secondAttribute="bottom" constant="64" id="qTR-nX-xSy"/>
                             <constraint firstItem="qMR-u0-kGh" firstAttribute="bottom" secondItem="S9f-tS-yQg" secondAttribute="bottom" constant="189" id="uyR-v6-vMC"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Cax-Ie-yFe"/>
                     <connections>
+                        <outlet property="doneButton" destination="gMf-fl-V5h" id="vUW-ug-XuQ"/>
                         <outlet property="fIconButtonBotConstraint" destination="uyR-v6-vMC" id="LX6-WT-c7t"/>
                         <outlet property="femaleIconButton" destination="qMR-u0-kGh" id="KLU-4s-MTD"/>
                         <outlet property="femaleTitleButton" destination="3Im-vl-hQo" id="4NV-pS-mbd"/>
@@ -1038,6 +1046,7 @@
                         <outlet property="maleIconButton" destination="A6X-Ja-RGS" id="h1Q-Wu-Y0e"/>
                         <outlet property="maleTitleButton" destination="F1J-He-hsq" id="arl-cl-XdC"/>
                         <outlet property="otherTitleButton" destination="Wme-m1-g9S" id="Gvd-xb-zh1"/>
+                        <segue destination="uc7-01-jZi" kind="push" identifier="height" id="2QV-xl-cNq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uPx-en-DTv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1047,7 +1056,7 @@
         <!--Weight View Controller-->
         <scene sceneID="ryl-Qb-DQZ">
             <objects>
-                <viewController id="f6G-Sh-hYd" userLabel="Weight View Controller" customClass="HEMWeightPickerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="weight" id="f6G-Sh-hYd" userLabel="Weight View Controller" customClass="HEMWeightPickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y9t-ip-NMT"/>
                         <viewControllerLayoutGuide type="bottom" id="hPY-my-fzC"/>
@@ -1113,7 +1122,7 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vwe-Kd-JLe" customClass="HEMActionButton">
-                                <rect key="frame" x="101" y="484" width="119" height="40"/>
+                                <rect key="frame" x="101" y="464" width="119" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="119" id="NCh-0K-sSP"/>
                                     <constraint firstAttribute="height" constant="40" id="irU-2z-tSw"/>
@@ -1124,7 +1133,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="KXH-dY-O28" kind="push" id="v0W-US-KYY"/>
+                                    <action selector="done:" destination="f6G-Sh-hYd" eventType="touchUpInside" id="wrP-Iw-zB2"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1134,7 +1143,7 @@
                             <constraint firstItem="7YJ-z6-26E" firstAttribute="top" secondItem="E3B-WU-9Bv" secondAttribute="top" constant="-45" id="2nP-JF-Vmn"/>
                             <constraint firstAttribute="centerX" secondItem="ppO-hl-bVw" secondAttribute="centerX" constant="-5" id="3Av-hB-yhB"/>
                             <constraint firstItem="Vca-9S-Db1" firstAttribute="leading" secondItem="DnN-fi-uxz" secondAttribute="leading" constant="23" id="DuG-Ik-jCR"/>
-                            <constraint firstItem="vwe-Kd-JLe" firstAttribute="top" secondItem="7YJ-z6-26E" secondAttribute="top" constant="249" id="Prm-gA-Glh"/>
+                            <constraint firstItem="vwe-Kd-JLe" firstAttribute="top" secondItem="7YJ-z6-26E" secondAttribute="top" constant="229" id="Prm-gA-Glh"/>
                             <constraint firstAttribute="centerX" secondItem="E3B-WU-9Bv" secondAttribute="centerX" constant="0.5" id="Q21-uM-ocL"/>
                             <constraint firstAttribute="centerX" secondItem="vwe-Kd-JLe" secondAttribute="centerX" constant="-0.5" id="Sgj-ND-RQT"/>
                             <constraint firstAttribute="centerX" secondItem="3jl-2r-2nX" secondAttribute="centerX" id="baP-4C-XdO"/>
@@ -1143,7 +1152,7 @@
                             <constraint firstAttribute="centerX" secondItem="YLN-GF-KON" secondAttribute="centerX" constant="-5" id="rsS-FK-2n8"/>
                             <constraint firstItem="YLN-GF-KON" firstAttribute="bottom" secondItem="ppO-hl-bVw" secondAttribute="bottom" constant="-44" id="sD3-1Z-a9V"/>
                             <constraint firstAttribute="centerX" secondItem="7YJ-z6-26E" secondAttribute="centerX" id="vm0-t7-sIE"/>
-                            <constraint firstItem="hPY-my-fzC" firstAttribute="top" secondItem="vwe-Kd-JLe" secondAttribute="bottom" constant="44" id="wNE-uO-B7z"/>
+                            <constraint firstItem="hPY-my-fzC" firstAttribute="top" secondItem="vwe-Kd-JLe" secondAttribute="bottom" constant="64" id="wNE-uO-B7z"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="PfP-cZ-xmv"/>
@@ -1151,7 +1160,9 @@
                         <outlet property="botWeightLabel" destination="ppO-hl-bVw" id="0YZ-1B-e5N"/>
                         <outlet property="carousel" destination="7YJ-z6-26E" id="jIf-Py-Cz9"/>
                         <outlet property="carouselToButtonTopAlignment" destination="Prm-gA-Glh" id="GD5-2s-Mb5"/>
+                        <outlet property="doneButton" destination="vwe-Kd-JLe" id="1hM-p5-QYT"/>
                         <outlet property="topWeightLabel" destination="YLN-GF-KON" id="vjs-dj-iqi"/>
+                        <segue destination="KXH-dY-O28" kind="push" identifier="location" id="RYF-eT-cgh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJk-Le-TAF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1184,7 +1195,7 @@
                                 <rect key="frame" x="-78" y="166" width="476" height="237"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-8C-14E" customClass="HEMActionButton">
-                                <rect key="frame" x="100" y="484" width="119" height="40"/>
+                                <rect key="frame" x="100" y="464" width="119" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="sSm-FW-Kol"/>
                                     <constraint firstAttribute="width" constant="119" id="tse-nm-Y92"/>
@@ -1199,7 +1210,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVC-vN-68T">
-                                <rect key="frame" x="100" y="530" width="119" height="28"/>
+                                <rect key="frame" x="100" y="510" width="119" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="119" id="TS9-xI-iia"/>
                                     <constraint firstAttribute="height" constant="28" id="f95-cU-0tP"/>
@@ -1216,7 +1227,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="shs-Q7-7yt" firstAttribute="top" secondItem="Sdf-8C-14E" secondAttribute="bottom" constant="44" id="00m-aa-3Pw"/>
+                            <constraint firstItem="shs-Q7-7yt" firstAttribute="top" secondItem="Sdf-8C-14E" secondAttribute="bottom" constant="64" id="00m-aa-3Pw"/>
                             <constraint firstItem="SVC-vN-68T" firstAttribute="top" secondItem="Sdf-8C-14E" secondAttribute="bottom" constant="6" id="5GU-by-mid"/>
                             <constraint firstAttribute="centerY" secondItem="sEE-9r-AQZ" secondAttribute="centerY" constant="-0.5" id="5iI-S1-A26"/>
                             <constraint firstAttribute="centerX" secondItem="SVC-vN-68T" secondAttribute="centerX" constant="0.5" id="K8O-N1-hEG"/>
@@ -1228,6 +1239,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="j8Z-os-nU5"/>
                     <connections>
+                        <outlet property="locateButtonWidthConstraint" destination="tse-nm-Y92" id="yte-ZT-6FS"/>
                         <outlet property="locationButton" destination="Sdf-8C-14E" id="amY-FG-Snl"/>
                         <outlet property="skipButton" destination="SVC-vN-68T" id="uU0-2Z-vGM"/>
                         <segue destination="51x-x3-qVm" kind="push" identifier="sleepQuestionIntro" id="7R6-5C-JKc"/>
@@ -1450,6 +1462,7 @@
                         <outlet property="logoVSpaceConstraint" destination="1Tr-bH-ZGF" id="2Pk-qG-GZ3"/>
                         <outlet property="noSenseButton" destination="8HN-0C-IaD" id="eRN-vb-S2e"/>
                         <outlet property="readyButton" destination="2TQ-o7-Rs6" id="ENr-AI-Zzv"/>
+                        <outlet property="readyButtonWidthConstraint" destination="SwH-wy-eha" id="UuP-nZ-lEN"/>
                         <outlet property="readyVSpaceConstraint" destination="tOO-kJ-Uir" id="wQU-E5-Se7"/>
                         <outlet property="subtitleLabel" destination="HQC-WI-rTG" id="7bq-04-E3u"/>
                         <outlet property="titleLabel" destination="xHT-0z-rBN" id="sOe-hX-4WK"/>
@@ -1477,10 +1490,7 @@
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>
-        <simulatedScreenMetrics key="destination" type="retina4">
-            <size key="portraitSize" width="320" height="568"/>
-            <size key="landscapeSize" width="568" height="320"/>
-        </simulatedScreenMetrics>
+        <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
         <segue reference="nrK-aH-Age"/>

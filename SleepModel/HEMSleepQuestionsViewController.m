@@ -23,6 +23,8 @@
 @property (weak, nonatomic) IBOutlet HEMActionButton* submitButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *submitButtonWidthConstraint;
+
 @property (strong, nonatomic) SENQuestion* question;
 
 @end
@@ -114,7 +116,7 @@
 
 - (void)showActivity:(BOOL)show {
     if (show) {
-        [[self submitButton] showActivity];
+        [[self submitButton] showActivityWithWidthConstraint:[self submitButtonWidthConstraint]];
     } else {
         [[self submitButton] stopActivity];
     }

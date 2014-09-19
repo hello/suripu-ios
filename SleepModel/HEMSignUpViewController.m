@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *emailFieldVSpaceConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passLabelVSpaceConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passFieldVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *doneButtonWidthConstraint;
 
 @property (nonatomic, getter=isSigningUp) BOOL signingUp;
 
@@ -84,7 +85,7 @@
 - (void)showActivity {
     self.signingUp = YES;
     [self enableControls:NO];
-    [[self signUpButton] showActivity];
+    [[self signUpButton] showActivityWithWidthConstraint:[self doneButtonWidthConstraint]];
 }
 
 - (void)stopActivity {

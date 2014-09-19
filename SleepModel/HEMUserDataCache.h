@@ -18,8 +18,6 @@
  */
 + (void)clearSharedUserDataCache;
 
-@property (nonatomic, strong) NSNumber* age;
-
 @property (nonatomic, strong) SENAccount* account;
 @property (nonatomic, strong) SENSenseManager* senseManager;
 

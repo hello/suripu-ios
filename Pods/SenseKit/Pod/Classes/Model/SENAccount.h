@@ -51,9 +51,9 @@ typedef NS_ENUM(NSUInteger, SENAccountGender) {
 /**
  * @property weight
  *
- * The weight in kilograms of the user
+ * The weight in grams of the user.
  */
-@property (nonatomic, strong, readwrite) NSNumber* weight; // in kg
+@property (nonatomic, strong, readwrite) NSNumber* weight; // in grams
 
 /**
  * @property height
@@ -110,5 +110,12 @@ typedef NS_ENUM(NSUInteger, SENAccountGender) {
  * @param birthdateInMillis: milliseconds representing the birthdate since Jan 1, 1970
  */
 - (void)setBirthdateInMillis:(NSNumber*)birthdateInMillis;
+
+/**
+ * Return the birthdate components, which will contain year, month, and day
+ * if the birthdate is available
+ * @return birthdate components
+ */
+- (NSDateComponents*)birthdateComponents;
 
 @end

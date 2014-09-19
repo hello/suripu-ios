@@ -1,6 +1,16 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, SENAlarmRepeatDays) {
+    SENAlarmRepeatSunday = (1UL << 1),
+    SENAlarmRepeatMonday = (1UL << 2),
+    SENAlarmRepeatTuesday = (1UL << 3),
+    SENAlarmRepeatWednesday = (1UL << 4),
+    SENAlarmRepeatThursday = (1UL << 5),
+    SENAlarmRepeatFriday = (1UL << 6),
+    SENAlarmRepeatSaturday = (1UL << 7),
+};
+
 struct SENAlarmTime {
     NSInteger hour;
     NSInteger minute;
@@ -9,14 +19,21 @@ struct SENAlarmTime {
 @interface SENAlarm : NSObject <NSCoding>
 
 /**
- *  A persisted alarms
+ *  Cached alarm
  *
- *  @return the alarm
+ *  @return the alarms
  */
-+ (SENAlarm*)savedAlarm;
++ (NSArray*)savedAlarms;
 
 /**
- *  Remove all cached alarm data
+ *  Create a new alarm using the default settings
+ *
+ *  @return an alarm
+ */
++ (SENAlarm*)createDefaultAlarm;
+
+/**
+ *  Remove all cached alarms
  */
 + (void)clearSavedAlarms;
 
@@ -61,6 +78,11 @@ struct SENAlarmTime {
 - (void)save;
 
 /**
+ *  Removes the alarm from the persistent store
+ */
+- (void)delete;
+
+/**
  *  Presents the alarm time in a locale-specific representation
  *
  *  @return a string representing the alarm wake time
@@ -68,7 +90,10 @@ struct SENAlarmTime {
 - (NSString*)localizedValue;
 
 @property (nonatomic, getter=isOn) BOOL on;
-@property (nonatomic) NSInteger hour;
-@property (nonatomic) NSInteger minute;
+@property (nonatomic, readonly, getter=isEditable) BOOL editable;
+@property (nonatomic, getter=isSmartAlarm) BOOL smartAlarm;
+@property (nonatomic) NSUInteger hour;
+@property (nonatomic) NSUInteger minute;
+@property (nonatomic) NSUInteger repeatFlags;
 @property (nonatomic, copy) NSString* soundName;
 @end

@@ -30,4 +30,12 @@
 + (void)updateAccount:(SENAccount*)account
       completionBlock:(SENAPIDataBlock)completion;
 
+/**
+ * Get an instance of a SENAccount object for the currently authorized user.
+ * If the user is not authorized / signed in, the object will be nil
+ *
+ * @param completion block invoked when asynchronous call completes
+ */
++ (void)getAccount:(SENAPIDataBlock)completion;
+
 @end

@@ -55,6 +55,18 @@ NSString* const SENAPIAccountEndpoint = @"account";
            completion:completion];
 }
 
++ (void)getAccount:(SENAPIDataBlock)completion {
+    [SENAPIClient GET:SENAPIAccountEndpoint
+           parameters:nil
+           completion:^(id data, NSError *error) {
+               SENAccount* account = nil;
+               if ([data isKindOfClass:[NSDictionary class]]) {
+                   account = [self accountFromResponse:data];
+               }
+               completion(account, error);
+           }];
+}
+
 #pragma mark - Helpers
 
 + (NSString*)stringValueOfGender:(SENAccountGender)gender {

@@ -55,6 +55,7 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 {
     [[FXKeychain defaultKeychain] removeObjectForKey:SENAuthorizationServiceCredentialsKey];
     [self authorizeRequestsWithToken:nil];
+    [SENAPIClient DELETE:SENAuthorizationServiceTokenPath parameters:nil completion:NULL];
 }
 
 + (BOOL)isAuthorized
@@ -68,7 +69,8 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
     return token != nil;
 }
 
-+ (NSString*)accessToken {
++ (NSString*)accessToken
+{
     return [FXKeychain defaultKeychain][SENAuthorizationServiceCredentialsKey][SENAuthorizationServiceAccessTokenKey];
 }
 

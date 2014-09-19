@@ -15,6 +15,7 @@ pod 'JBChartView', :git => 'git@github.com:hello/JBChartView.git'
 pod 'FCDynamicPanesNavigationController', :git => 'git@github.com:hello/FCDynamicPanesNavigationController.git'
 pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
 pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
+# pod 'SenseKit', :path => '../SenseKit'
 
 
 target 'Tests', :exclusive => true do

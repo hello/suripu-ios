@@ -33,7 +33,8 @@ static NSString* const SleepCellIdentifier = @"sleepSoundCell";
     NSString* sleepSoundText = [self.possibleSleepSounds objectAtIndex:indexPath.row];
     cell.textLabel.text = sleepSoundText;
 
-    if ([sleepSoundText isEqualToString:[SENAlarm savedAlarm].soundName]) {
+    SENAlarm* alarm = [[SENAlarm savedAlarms] count]>0?[SENAlarm savedAlarms][0]:nil;
+    if ([sleepSoundText isEqualToString:alarm.soundName]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -47,11 +48,12 @@ static NSString* const SleepCellIdentifier = @"sleepSoundCell";
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSUInteger index = [self.possibleSleepSounds indexOfObject:[SENAlarm savedAlarm].soundName];
+    SENAlarm* alarm = [[SENAlarm savedAlarms] count]>0?[SENAlarm savedAlarms][0]:nil;
+    NSUInteger index = [self.possibleSleepSounds indexOfObject:alarm.soundName];
     if (indexPath.row == index)
         return;
 
-    [SENAlarm savedAlarm].soundName = [self.possibleSleepSounds objectAtIndex:indexPath.row];
+    alarm.soundName = [self.possibleSleepSounds objectAtIndex:indexPath.row];
     if (index != NSNotFound) {
         NSArray* indexPaths = @[
             [NSIndexPath indexPathForRow:index inSection:0],

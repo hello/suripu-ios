@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="s6I-B7-593">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -149,6 +150,7 @@
                         <outlet property="passwordLabel" destination="7G7-0Y-QJd" id="iX4-u8-xMd"/>
                         <outlet property="scrollView" destination="8F9-nO-uxM" id="oeE-0D-isI"/>
                         <outlet property="signInButton" destination="4MF-GM-hUc" id="oyH-Sa-JnI"/>
+                        <outlet property="signInWidthConstraint" destination="Kq4-JC-vl2" id="Vjt-6L-Lkz"/>
                         <outlet property="usernameField" destination="gMo-0B-UJM" id="yfw-pd-kDq"/>
                         <outlet property="usernameLabel" destination="Sfx-mA-FU0" id="YqU-Jq-hcS"/>
                     </connections>
@@ -426,6 +428,7 @@
                     <navigationItem key="navigationItem" id="qhq-QP-ftX"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
+                        <outlet property="doneButtonWidthConstraint" destination="gIj-Cf-q2t" id="eTb-4A-cK8"/>
                         <outlet property="emailAddressField" destination="4H9-4w-9eg" id="oeH-wd-2GP"/>
                         <outlet property="emailFieldVSpaceConstraint" destination="zdu-gE-EMw" id="sgW-E7-QMn"/>
                         <outlet property="emailLabel" destination="rhq-od-2eJ" id="Z1M-ra-Miz"/>
@@ -731,7 +734,7 @@
                         <outlet property="heightSliderView" destination="6X3-cZ-M1A" id="fcl-i4-ek8"/>
                         <outlet property="mainHeightLabel" destination="nEX-5L-qND" id="sdk-CQ-dgp"/>
                         <outlet property="otherHeightLabel" destination="Pks-KU-Mi1" id="c8I-Dd-CLQ"/>
-                        <segue destination="f6G-Sh-hYd" kind="push" id="jX4-7l-Grb"/>
+                        <segue destination="f6G-Sh-hYd" kind="push" identifier="weight" id="jX4-7l-Grb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8j0-DD-Qpv" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -816,6 +819,7 @@
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="logoVSpaceConstraint" destination="tUd-yV-d4M" id="u1x-Bf-Sy7"/>
+                        <outlet property="shareButtonWidthConstraint" destination="QBe-nN-1J0" id="nRo-gc-ffq"/>
                         <outlet property="shareCredentialsButton" destination="HYT-At-WLL" id="Jvx-hd-I5y"/>
                         <outlet property="shareVSpaceConstraint" destination="B4a-bL-v79" id="Wl3-J9-wGm"/>
                         <outlet property="subtitleLabel" destination="4PT-Jb-KBo" id="SkV-pq-mrC"/>
@@ -910,6 +914,7 @@
                         <outlet property="pillImageView" destination="k3x-K0-1su" id="84m-Gk-xBq"/>
                         <outlet property="readyButton" destination="Cxf-NO-tVI" id="k82-ki-q1D"/>
                         <outlet property="readyButtonVSpaceConstraint" destination="PZK-Es-urH" id="F9R-yV-drj"/>
+                        <outlet property="readyButtonWidthConstraint" destination="aRH-j3-tne" id="qtZ-VR-VSD"/>
                         <outlet property="subtitleLabel" destination="dQE-eQ-cvY" id="CUW-63-6Ks"/>
                         <outlet property="titleLabel" destination="ded-Ea-3CR" id="XiG-6d-2MM"/>
                         <segue destination="ezT-R8-K4n" kind="push" identifier="dataIntro" id="nrK-aH-Age"/>
@@ -1234,6 +1239,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="j8Z-os-nU5"/>
                     <connections>
+                        <outlet property="locateButtonWidthConstraint" destination="tse-nm-Y92" id="yte-ZT-6FS"/>
                         <outlet property="locationButton" destination="Sdf-8C-14E" id="amY-FG-Snl"/>
                         <outlet property="skipButton" destination="SVC-vN-68T" id="uU0-2Z-vGM"/>
                         <segue destination="51x-x3-qVm" kind="push" identifier="sleepQuestionIntro" id="7R6-5C-JKc"/>
@@ -1456,6 +1462,7 @@
                         <outlet property="logoVSpaceConstraint" destination="1Tr-bH-ZGF" id="2Pk-qG-GZ3"/>
                         <outlet property="noSenseButton" destination="8HN-0C-IaD" id="eRN-vb-S2e"/>
                         <outlet property="readyButton" destination="2TQ-o7-Rs6" id="ENr-AI-Zzv"/>
+                        <outlet property="readyButtonWidthConstraint" destination="SwH-wy-eha" id="UuP-nZ-lEN"/>
                         <outlet property="readyVSpaceConstraint" destination="tOO-kJ-Uir" id="wQU-E5-Se7"/>
                         <outlet property="subtitleLabel" destination="HQC-WI-rTG" id="7bq-04-E3u"/>
                         <outlet property="titleLabel" destination="xHT-0z-rBN" id="sOe-hX-4WK"/>

@@ -493,6 +493,7 @@
                         <outlet property="questionLabel" destination="enr-Uk-1rN" id="7La-wO-m94"/>
                         <outlet property="skipButton" destination="eSP-6P-aRg" id="Nhi-mQ-h0K"/>
                         <outlet property="submitButton" destination="0OE-ek-DhL" id="5C6-YS-GNb"/>
+                        <outlet property="submitButtonWidthConstraint" destination="6NX-ef-Yje" id="7b7-bo-bw8"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HA7-Sv-D7p" userLabel="First Responder" sceneMemberID="firstResponder"/>

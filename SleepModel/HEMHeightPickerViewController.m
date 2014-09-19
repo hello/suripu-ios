@@ -76,7 +76,8 @@ static NSInteger HEMMaxHeightInFeet = 9;
     if ([self delegate] != nil) {
         [[self delegate] didSelectHeightInCentimeters:[self selectedHeightInCm] from:self];
     } else {
-        [self performSegueWithIdentifier:[HEMOnboardingStoryboard weightSegueIdentifier] sender:self];
+        [self performSegueWithIdentifier:[HEMOnboardingStoryboard weightSegueIdentifier]
+                                  sender:self];
     }
 }
 

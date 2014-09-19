@@ -25,6 +25,7 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoVSpaceConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *readyVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *readyButtonWidthConstraint;
 
 @property (strong, nonatomic) SENSenseManager* manager;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
@@ -84,7 +85,7 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
 
 - (void)scanForSense {
     [[self noSenseButton] setEnabled:NO];
-    [[self readyButton] showActivity];
+    [[self readyButton] showActivityWithWidthConstraint:[self readyButtonWidthConstraint]];
     [self startScan];
 }
 

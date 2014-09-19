@@ -23,6 +23,7 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoVSpaceConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *shareVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *shareButtonWidthConstraint;
 
 @property (strong, nonatomic) id disconnectObserverId;
 
@@ -64,7 +65,7 @@
     // 1. gather wifi credentials (wifi name, SSID, and password)
     // 2. pass the credentials to Morpheus and allow it to set up
     // 3. once #2 is successful, link account to morpheus and wait
-    [[self shareCredentialsButton] showActivity];
+    [[self shareCredentialsButton] showActivityWithWidthConstraint:[self shareButtonWidthConstraint]];
     [self linkAccount];
 }
 

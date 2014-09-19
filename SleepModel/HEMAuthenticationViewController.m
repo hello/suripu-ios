@@ -21,6 +21,8 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 @property (weak, nonatomic) IBOutlet HEMActionButton *signInButton;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *signInWidthConstraint;
+
 @property (assign, nonatomic) BOOL signingIn;
 
 @end
@@ -59,7 +61,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 }
 
 - (void)showActivity {
-    [[self signInButton] showActivity];
+    [[self signInButton] showActivityWithWidthConstraint:[self signInWidthConstraint]];
     [self enableControls:NO];
 }
 

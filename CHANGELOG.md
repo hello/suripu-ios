@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.0.15
+
+Fixes:
+
+* Fix iOS8 issue with location finder in onboarding
+* Fix iOS8 issue with dismissing Questions
+* Fix button animation
+
+New:
+
+* Push Notification integration
+* Settings for account information
+
 ## 1.0.0.14
 
 Fixes:

@@ -56,6 +56,7 @@
     [super viewDidLoad];
     [self addBackgroundGradientLayer];
     [self listenForSleepQuestions];
+    [self addTopShadow];
 }
 
 - (void)addBackgroundGradientLayer {
@@ -80,6 +81,17 @@
 - (void)endSliding {
     [[self panePanGestureRecognizer] setEnabled:YES];
     [super endSliding];
+}
+
+- (void)addTopShadow {
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:[[self view] bounds]];
+    CALayer* layer = [[self view] layer];
+    [layer setMasksToBounds:NO];
+    [layer setShadowColor:[[UIColor blackColor] CGColor]];
+    [layer setShadowOffset:CGSizeMake(0.0f, 5.0f)];
+    [layer setShadowOpacity:0.6f];
+    [layer setShadowRadius:5.0f];
+    [layer setShadowPath:[shadowPath CGPath]];
 }
 
 #pragma mark - FCDynamicPaneViewController

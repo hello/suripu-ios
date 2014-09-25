@@ -1,6 +1,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HEMSettingsTableViewController : UITableViewController
+@interface HEMSettingsTableViewController : UIViewController
 
 @end

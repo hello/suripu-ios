@@ -60,15 +60,9 @@
 }
 
 - (void)addBackgroundGradientLayer {
-    NSDate* now = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:NSHourCalendarUnit
-                                               fromDate:now];
-    NSInteger hour = [components hour];
-    
     CAGradientLayer* layer = [CAGradientLayer layer];
     [layer setFrame:[[self view] bounds]];
-    [HEMColorUtils configureLayer:layer forHourOfDay:hour];
+    [HEMColorUtils configureLayer:layer forHourOfDay:24];
     [[[self view] layer] insertSublayer:layer atIndex:0];
     [self setBgGradientLayer:layer];
 }
@@ -97,6 +91,7 @@
 #pragma mark - FCDynamicPaneViewController
 
 - (void)viewDidPop {
+    [self setNeedsStatusBarAppearanceUpdate];
     for (UIViewController* viewController in [self childViewControllers]) {
         if ([viewController respondsToSelector:@selector(viewDidPop)]) {
             [(UIViewController<FCDynamicPaneViewController>*)viewController viewDidPop];
@@ -106,6 +101,7 @@
 }
 
 - (void)viewDidPush {
+    [self setNeedsStatusBarAppearanceUpdate];
     for (UIViewController* viewController in [self childViewControllers]) {
         if ([viewController respondsToSelector:@selector(viewDidPush)]) {
             [(UIViewController<FCDynamicPaneViewController>*)viewController viewDidPush];

@@ -4,75 +4,82 @@
 #import "HEMSettingsTableViewController.h"
 #import "HEMMainStoryboard.h"
 
-@interface HEMSettingsTableViewController ()
+@interface HEMSettingsTableViewController ()<UITableViewDataSource, UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UISegmentedControl* clockStyleSegmentControl;
-@property (weak, nonatomic) IBOutlet UISegmentedControl* temperatureSegmentControl;
+@property (weak, nonatomic) IBOutlet UITableView *settingsTableView;
+
 @end
 
 @implementation HEMSettingsTableViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    if ([SENSettings temperatureFormat] == SENTemperatureFormatCentigrade) {
-        self.temperatureSegmentControl.selectedSegmentIndex = 0;
-    } else {
-        self.temperatureSegmentControl.selectedSegmentIndex = 1;
-    }
-    if ([SENSettings timeFormat] == SENTimeFormat24Hour) {
-        self.clockStyleSegmentControl.selectedSegmentIndex = 0;
-    } else {
-        self.clockStyleSegmentControl.selectedSegmentIndex = 1;
-    }
-}
-
-- (IBAction)temperatureFormatChanged:(UISegmentedControl*)sender
-{
-    if (sender.selectedSegmentIndex == 0) {
-        [SENSettings setTemperatureFormat:SENTemperatureFormatCentigrade];
-    } else {
-        [SENSettings setTemperatureFormat:SENTemperatureFormatFahrenheit];
-    }
-}
-
-- (IBAction)clockStyleChanged:(UISegmentedControl*)sender
-{
-    if (sender.selectedSegmentIndex == 0) {
-        [SENSettings setTimeFormat:SENTimeFormat24Hour];
-    } else {
-        [SENSettings setTimeFormat:SENTimeFormat12Hour];
-    }
+    [[self settingsTableView] setTableFooterView:[[UIView alloc] init]];
 }
 
 #pragma mark UITableViewDelegate
 
-- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 5;
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString* reuseId = [HEMMainStoryboard settingsCellReuseIdentifier];
+    return [tableView dequeueReusableCellWithIdentifier:reuseId];
+}
+
+- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString* title = nil;
+    switch ([indexPath row]) {
+        case 0:
+            title = NSLocalizedString(@"settings.info", nil);
+            break;
+        case 1:
+            title = NSLocalizedString(@"settings.account", nil);
+            break;
+        case 2:
+            title = NSLocalizedString(@"settings.units", nil);
+            break;
+        case 3:
+            title = NSLocalizedString(@"settings.devices", nil);
+            break;
+        case 4:
+            title = NSLocalizedString(@"actions.sign-out", nil);
+            break;
+        default:
+            break;
+    }
+    [[cell textLabel] setText:title];
+    [[cell textLabel] setTextColor:[UIColor whiteColor]];
+}
+
+- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch (indexPath.section) {
-    case 1: {
-        if (indexPath.row == 0) {
-            [self performSegueWithIdentifier:[HEMMainStoryboard personalSegueIdentifier] sender:self];
-        }
-    } break;
-    case 2:
-        break;
-    case 3:
-        [SENAuthorizationService deauthorize];
-        break;
-    default:
-        break;
+    
+    NSString* nextSegueId = nil;
+    switch ([indexPath row]) {
+        case 0:
+            nextSegueId = [HEMMainStoryboard infoSettingsSegueIdentifier];
+            break;
+        case 1:
+            // TODO (jimmy): account settings not implemented yet!
+            break;
+        case 2:
+            nextSegueId = [HEMMainStoryboard unitsSettingsSegueIdentifier];
+            break;
+        case 3:
+            nextSegueId = [HEMMainStoryboard devicesSegueIdentifier];
+            break;
+        case 4:
+            [SENAuthorizationService deauthorize];
+            break;
+        default:
+            break;
+    }
+    
+    if (nextSegueId != nil) {
+        [self performSegueWithIdentifier:nextSegueId sender:self];
     }
 }
 
-- (BOOL)tableView:(UITableView*)tableView shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    return indexPath.section != 0;
-}
-
-- (IBAction)doneButtonTapped:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
-}
 @end

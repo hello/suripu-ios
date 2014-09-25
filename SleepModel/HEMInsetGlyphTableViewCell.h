@@ -8,4 +8,5 @@
 @property (weak, nonatomic) IBOutlet UILabel* detailLabel;
 @property (weak, nonatomic) IBOutlet UILabel* descriptionLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *disclosureImageView;
+
 @end

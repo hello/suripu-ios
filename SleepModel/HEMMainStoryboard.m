@@ -13,8 +13,18 @@ static NSString *const _HEMcurrentConditionsCell = @"currentConditionsCell";
 static NSString *const _HEMcurrentController = @"currentController";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMinfo = @"info";
+static NSString *const _HEMdeviceCell = @"deviceCell";
+static NSString *const _HEMpillInfoCell = @"pillInfoCell";
+static NSString *const _HEMsenseInfoCell = @"senseInfoCell";
+static NSString *const _HEMfirmwareUpdateCell = @"firmwareUpdateCell";
+static NSString *const _HEMpill = @"pill";
+static NSString *const _HEMsense = @"sense";
 static NSString *const _HEMinsightCell = @"insightCell";
+static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMpersonal = @"personal";
+static NSString *const _HEMinfoSettings = @"infoSettings";
+static NSString *const _HEMunitsSettings = @"unitsSettings";
+static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMpersonalInfo = @"personalInfo";
 static NSString *const _HEMpickSoundSegue = @"pickSoundSegue";
 static NSString *const _HEMsensorViewController = @"sensorViewController";
@@ -38,10 +48,19 @@ static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 +(NSString *)currentConditionsCellReuseIdentifier { return _HEMcurrentConditionsCell; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
 +(NSString *)insightCellReuseIdentifier { return _HEMinsightCell; }
++(NSString *)deviceCellReuseIdentifier { return _HEMdeviceCell; }
++(NSString *)pillInfoCellReuseIdentifier { return _HEMpillInfoCell; }
++(NSString *)senseInfoCellReuseIdentifier { return _HEMsenseInfoCell; }
++(NSString *)firmwareUpdateCellReuseIdentifier { return _HEMfirmwareUpdateCell; }
++(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
 
 /** Segue Identifiers */
 +(NSString *)pickSoundSegueSegueIdentifier { return _HEMpickSoundSegue; }
-+(NSString *)personalSegueIdentifier { return _HEMpersonal; }
++(NSString *)pillSegueIdentifier { return _HEMpill; }
++(NSString *)senseSegueIdentifier { return _HEMsense; }
++(NSString *)infoSettingsSegueIdentifier { return _HEMinfoSettings; }
++(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
++(NSString *)devicesSegueIdentifier { return _HEMdevicesSettings; }
 
 /** View Controllers */
 +(UIViewController *)instantiateAlarmViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmViewController]; }

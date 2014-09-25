@@ -14,10 +14,19 @@
 +(NSString *)currentConditionsCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)insightCellReuseIdentifier;
++(NSString *)deviceCellReuseIdentifier;
++(NSString *)pillInfoCellReuseIdentifier;
++(NSString *)senseInfoCellReuseIdentifier;
++(NSString *)firmwareUpdateCellReuseIdentifier;
++(NSString *)settingsCellReuseIdentifier;
 
 /** Segue Identifiers */
 +(NSString *)pickSoundSegueSegueIdentifier;
-+(NSString *)personalSegueIdentifier;
++(NSString *)pillSegueIdentifier;
++(NSString *)senseSegueIdentifier;
++(NSString *)infoSettingsSegueIdentifier;
++(NSString *)unitsSettingsSegueIdentifier;
++(NSString *)devicesSegueIdentifier;
 
 /** View Controllers */
 +(UIViewController *)instantiateAlarmViewController;

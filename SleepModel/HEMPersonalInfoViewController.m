@@ -126,6 +126,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)tableView:(UITableView *)tableView
 didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
     if (![[self data] isLoaded] || [self isUpdating]) return;
     
     UIViewController* settingVC = nil;
@@ -148,7 +150,9 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     if (settingVC != nil) {
-        [[self navigationController] pushViewController:settingVC animated:YES];
+        UINavigationController* nav =
+            [[UINavigationController alloc] initWithRootViewController:settingVC];
+        [self presentViewController:nav animated:YES completion:nil];
         [tableView deselectRowAtIndexPath:indexPath animated:YES];
     }
 }
@@ -189,7 +193,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
             [strongSelf finishUpdate:error];
         }
     }];
-    [[self navigationController] popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark Height Delegate
@@ -206,7 +210,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
             [strongSelf finishUpdate:error];
         }
     }];
-    [[self navigationController] popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
     
 }
 
@@ -224,7 +228,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
             [strongSelf finishUpdate:error];
         }
     }];
-    [[self navigationController] popViewControllerAnimated:YES];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark Gender Delegate
@@ -241,7 +245,8 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
             [strongSelf finishUpdate:error];
         }
     }];
-    [[self navigationController] popViewControllerAnimated:YES];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
     
 }
 

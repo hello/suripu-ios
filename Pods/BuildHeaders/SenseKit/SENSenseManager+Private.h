@@ -1,1 +1,1 @@
-../../SenseKit/Pod/Classes/BLE/SENSenseManager+Private.h
+../../../../SenseKit/Pod/Classes/BLE/SENSenseManager+Private.h

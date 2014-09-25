@@ -39,6 +39,11 @@ extern NSString* const SENAuthorizationServiceDidDeauthorizeNotification;
 + (BOOL)isAuthorized;
 
 /**
+ *  Authenticated email address or nil
+ */
++ (NSString*)emailAddressOfAuthorizedUser;
+
+/**
  * The access token of the authorized user, if authorized
  * @return the access token or nil if not authorized
  */

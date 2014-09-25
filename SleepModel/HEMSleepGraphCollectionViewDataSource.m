@@ -3,6 +3,7 @@
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENSleepResult.h>
 #import <SenseKit/SENAPITimeline.h>
+#import <SenseKit/SENAuthorizationService.h>
 #import <JBChartView/JBLineChartView.h>
 
 #import "HEMSleepGraphCollectionViewDataSource.h"
@@ -67,12 +68,13 @@ static NSString* const sensorTypeParticulates = @"particulates";
         _rangeDateFormatter = [NSDateFormatter new];
         _rangeDateFormatter.dateFormat = @"MMM dd";
         [self configureCollectionView];
-        [self updateDataForDate];
+        [self reloadData];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:SENAuthorizationServiceDidAuthorizeNotification object:nil];
     }
     return self;
 }
 
-- (void)updateDataForDate
+- (void)reloadData
 {
     self.sleepResult = [SENSleepResult sleepResultForDate:self.dateForNightOfSleep];
     [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError *error) {
@@ -104,6 +106,11 @@ static NSString* const sensorTypeParticulates = @"particulates";
           forCellWithReuseIdentifier:sleepSummaryReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSleepEventCollectionViewCell class]) bundle:bundle]
           forCellWithReuseIdentifier:sleepEventReuseIdentifier];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SENAuthorizationServiceDidAuthorizeNotification object:nil];
 }
 
 #pragma mark - Event Cell Size Toggling

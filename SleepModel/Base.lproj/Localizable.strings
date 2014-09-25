@@ -16,7 +16,7 @@
 
 // pairing with sense
 "pairing.failed.title" = "Pairing Failed";
-"pairing.error.sense-not-found" = "Sense was not detected.  Ensure Sense is on and near by your device.";
+"pairing.error.sense-not-found" = "Sense was not detected.  Ensure Sense is on and near your phone.";
 "pairing.error.could-not-pair" = "Could not pair with Sense.  If there is a phone already paired to Sense, unpair from that phone then try again.";
 "pairing.setup.failed.title" = "Set Up Failed";
 "pairing.error.sense-setup-failed" = "Unable to set up Sense.  If Sense has been paired before, make sure previously paired phones have been removed then try again.";
@@ -54,6 +54,11 @@
 "authorization.sign-in.failed.title" = "Sign in Failed";
 "authorization.sign-in.failed.message" = "The provided email address and password were not recognized. Please try again.";
 
+// alarm list
+"alarms.title" = "Alarms";
+"alarms.smart-alarm.format" = "*Smart Alarm* %@";
+"alarms.alarm.format" = "*Alarm* %@";
+
 // alarm settings
 "alarm.time-range.format" = "Wake up between *%@* and *%@*";
 "alarm.update.instructions" = "*Drag* to adjust alarm time.";
@@ -62,6 +67,27 @@
 "alarm.title" = "Alarm";
 "alarm.state.enabled" = "Enabled";
 "alarm.state.disabled" = "Disabled";
+"alarm.repeat.title" = "Repeat";
+"alarm.repeat.days.none" = "Not repeating";
+"alarm.repeat.days.all" = "Everyday";
+
+"alarm.repeat.days.weekdays" = "Weekdays";
+"alarm.repeat.days.weekends" = "Weekends";
+"alarm.repeat.days.monday.short" = "Mon";
+"alarm.repeat.days.tuesday.short" = "Tue";
+"alarm.repeat.days.wednesday.short" = "Wed";
+"alarm.repeat.days.thursday.short" = "Thu";
+"alarm.repeat.days.friday.short" = "Fri";
+"alarm.repeat.days.saturday.short" = "Sat";
+"alarm.repeat.days.sunday.short" = "Sun";
+
+"alarm.repeat.days.monday" = "Monday";
+"alarm.repeat.days.tuesday" = "Tuesday";
+"alarm.repeat.days.wednesday" = "Wednesday";
+"alarm.repeat.days.thursday" = "Thursday";
+"alarm.repeat.days.friday" = "Friday";
+"alarm.repeat.days.saturday" = "Saturday";
+"alarm.repeat.days.sunday" = "Sunday";
 
 // background noise
 "noise.state.enabled" = "Enabled";

@@ -3,7 +3,7 @@
 
 @class SENAlarm;
 
-@interface HEMAlarmSoundTableViewController : UITableViewController
+@interface HEMAlarmRepeatTableViewController : UITableViewController
 
 @property (nonatomic, strong) SENAlarm* alarm;
 @end

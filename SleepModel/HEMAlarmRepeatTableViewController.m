@@ -15,7 +15,15 @@
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"alarm.repeat.title", nil);
-    self.repeatOptions = @[ @"Sunday", @"Monday", @"Tuesday", @"Wednesday", @"Thursday", @"Friday", @"Saturday" ];
+    self.repeatOptions = @[
+        NSLocalizedString(@"alarm.repeat.days.sunday", nil),
+        NSLocalizedString(@"alarm.repeat.days.monday", nil),
+        NSLocalizedString(@"alarm.repeat.days.tuesday", nil),
+        NSLocalizedString(@"alarm.repeat.days.wednesday", nil),
+        NSLocalizedString(@"alarm.repeat.days.thursday", nil),
+        NSLocalizedString(@"alarm.repeat.days.friday", nil),
+        NSLocalizedString(@"alarm.repeat.days.saturday", nil),
+    ];
 }
 
 - (SENAlarmRepeatDays)repeatDayForIndexPath:(NSIndexPath*)indexPath

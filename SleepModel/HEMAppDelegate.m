@@ -6,7 +6,6 @@
 #import <SenseKit/SENAnswer.h>
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <Crashlytics/Crashlytics.h>
-#import <CocoaLumberjack/DDLog.h>
 
 #import "HEMAppDelegate.h"
 #import "HEMMainStoryboard.h"
@@ -14,6 +13,7 @@
 #import "HEMSleepGraphCollectionViewController.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
+#import "HEMConfidentialityWarningView.h"
 
 @implementation HEMAppDelegate
 
@@ -23,6 +23,7 @@
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];
+    [self showConfidentialityNotice];
 #ifndef DEBUG
     [Crashlytics startWithAPIKey:@"f464ccd280d3e5730dcdaa9b64d1d108694ee9a9"];
 #endif
@@ -93,6 +94,12 @@
 - (void)registerForNotifications
 {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetAndShowOnboarding) name:SENAuthorizationServiceDidDeauthorizeNotification object:nil];
+}
+
+- (void)showConfidentialityNotice
+{
+    [self.window addSubview:[HEMConfidentialityWarningView viewInNewWindow]];
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
 @end

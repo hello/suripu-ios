@@ -1,5 +1,6 @@
 
 "current-conditions.title" = "Sense";
+"confidentiality-warning.format" = "CONFIDENTIAL - Hello Inc (%@)";
 
 // sign up
 "sign-up.title" = "Sign Up";

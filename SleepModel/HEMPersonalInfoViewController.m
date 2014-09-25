@@ -36,6 +36,7 @@
     
     [self setData:[[HEMPersonalInfoDataSource alloc] init]];
     [[self infoTableView] setDataSource:[self data]];
+    [[self infoTableView] setTableFooterView:[[UIView alloc] init]];
     
     __weak typeof(self) weakSelf = self;
     [[self data] refresh:^{
@@ -103,7 +104,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         subtitle = [[self data] tableView:tableView infoForIndexPath:indexPath];
     } else {
         activityView =
-            [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+            [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         [activityView hidesWhenStopped];
         [activityView startAnimating];
     }

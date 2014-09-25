@@ -15,6 +15,11 @@ extern NSString* const HEMSleepEventTypeFallAsleep;
 - (instancetype)initWithCollectionView:(UICollectionView*)collectionView sleepDate:(NSDate*)date;
 
 /**
+ *  Updates and reloads data
+ */
+- (void)reloadData;
+
+/**
  *  Fetch the sleep data corresponding to a given index path
  *
  *  @param indexPath the index path to key

@@ -7,10 +7,13 @@
 //
 
 #import "HEMSettingsNavigationController.h"
+#import "HEMSettingsTheme.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 
 @interface HEMSettingsNavigationController()
+
+@property (nonatomic, assign) UIStatusBarStyle previousBarStyle;
 
 @end
 
@@ -30,7 +33,15 @@
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    [self addBackgroundGradientLayer:[viewController view]];
+    BOOL addGradient = YES;
+    if ([viewController conformsToProtocol:@protocol(HEMSettingsTheme)]) {
+        id<HEMSettingsTheme> controller = (id<HEMSettingsTheme>)viewController;
+        addGradient = [controller useGradientBackground];
+    }
+    if (addGradient) {
+        [self addBackgroundGradientLayer:[viewController view]];
+    }
+    
     [super pushViewController:viewController animated:animated];
 }
 

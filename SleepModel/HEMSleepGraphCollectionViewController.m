@@ -37,6 +37,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 6.f;
     self.collectionView.dataSource = self.dataSource;
     self.collectionView.delegate = self;
     self.collectionView.collectionViewLayout = [HEMSleepGraphCollectionViewFlowLayout new];
+
 }
 
 - (void)viewWillAppear:(BOOL)animated

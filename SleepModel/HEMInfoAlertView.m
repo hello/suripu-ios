@@ -10,7 +10,7 @@
 #import "HelloStyleKit.h"
 
 static CGFloat const kHEMSleepQuestionPadding = 12.0f;
-static CGFloat const kHEMSleepQuestionHeight = 64.0f;
+static CGFloat const kHEMSleepQuestionHeight = 44.0f;
 static CGFloat const kHEMSleepQuestionAnimDuration = 0.4f;
 
 @interface HEMInfoAlertView()
@@ -34,10 +34,7 @@ static CGFloat const kHEMSleepQuestionAnimDuration = 0.4f;
 }
 
 - (void)setupInfo:(NSString*)info {
-    [self setBackgroundColor:[UIColor colorWithRed:71.0f/255.0f
-                                             green:111.0f/255.0f
-                                              blue:213.0f
-                                             alpha:0.9f]];
+    [self setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.9f]];
     
     CGFloat padding = 20.0f;
     CGRect labelFrame = {

@@ -38,7 +38,6 @@ static UIImage* _alarmEnabledIcon = nil;
 static UIImage* _chevronIconLeft = nil;
 static UIImage* _alarmNoteIcon = nil;
 static UIImage* _questionIcon = nil;
-static UIImage* _settingsIcon = nil;
 static UIImage* _onboardingBackgroundImage1 = nil;
 static UIImage* _onboardingBackgroundImage2 = nil;
 static UIImage* _bluetoothLogoImage = nil;
@@ -56,6 +55,12 @@ static UIImage* _alarmsIcon = nil;
 static UIImage* _sleepInsightsIcon = nil;
 static UIImage* _senseIcon = nil;
 static UIImage* _pillIcon = nil;
+static UIImage* _alarmRepeatIcon = nil;
+static UIImage* _alarmSmartIcon = nil;
+static UIImage* _alarmSoundIcon = nil;
+static UIImage* _humidityDarkIcon = nil;
+static UIImage* _particleDarkIcon = nil;
+static UIImage* _temperatureDarkIcon = nil;
 
 #pragma mark Initialization
 
@@ -114,7 +119,6 @@ static UIImage* _pillIcon = nil;
 + (UIImage*)chevronIconLeft { return _chevronIconLeft ?: (_chevronIconLeft = [UIImage imageNamed: @"chevronIconLeft"]); }
 + (UIImage*)alarmNoteIcon { return _alarmNoteIcon ?: (_alarmNoteIcon = [UIImage imageNamed: @"alarmNoteIcon"]); }
 + (UIImage*)questionIcon { return _questionIcon ?: (_questionIcon = [UIImage imageNamed: @"questionIcon"]); }
-+ (UIImage*)settingsIcon { return _settingsIcon ?: (_settingsIcon = [UIImage imageNamed: @"settingsIcon"]); }
 + (UIImage*)onboardingBackgroundImage1 { return _onboardingBackgroundImage1 ?: (_onboardingBackgroundImage1 = [UIImage imageNamed: @"onboardingBackgroundImage1"]); }
 + (UIImage*)onboardingBackgroundImage2 { return _onboardingBackgroundImage2 ?: (_onboardingBackgroundImage2 = [UIImage imageNamed: @"onboardingBackgroundImage2"]); }
 + (UIImage*)bluetoothLogoImage { return _bluetoothLogoImage ?: (_bluetoothLogoImage = [UIImage imageNamed: @"bluetoothLogoImage"]); }
@@ -132,6 +136,12 @@ static UIImage* _pillIcon = nil;
 + (UIImage*)sleepInsightsIcon { return _sleepInsightsIcon ?: (_sleepInsightsIcon = [UIImage imageNamed: @"sleepInsightsIcon"]); }
 + (UIImage*)senseIcon { return _senseIcon ?: (_senseIcon = [UIImage imageNamed: @"senseIcon"]); }
 + (UIImage*)pillIcon { return _pillIcon ?: (_pillIcon = [UIImage imageNamed: @"pillIcon"]); }
++ (UIImage*)alarmRepeatIcon { return _alarmRepeatIcon ?: (_alarmRepeatIcon = [UIImage imageNamed: @"alarmRepeatIcon"]); }
++ (UIImage*)alarmSmartIcon { return _alarmSmartIcon ?: (_alarmSmartIcon = [UIImage imageNamed: @"alarmSmartIcon"]); }
++ (UIImage*)alarmSoundIcon { return _alarmSoundIcon ?: (_alarmSoundIcon = [UIImage imageNamed: @"alarmSoundIcon"]); }
++ (UIImage*)humidityDarkIcon { return _humidityDarkIcon ?: (_humidityDarkIcon = [UIImage imageNamed: @"humidityDarkIcon"]); }
++ (UIImage*)particleDarkIcon { return _particleDarkIcon ?: (_particleDarkIcon = [UIImage imageNamed: @"particleDarkIcon"]); }
++ (UIImage*)temperatureDarkIcon { return _temperatureDarkIcon ?: (_temperatureDarkIcon = [UIImage imageNamed: @"temperatureDarkIcon"]); }
 
 #pragma mark Drawing Methods
 
@@ -195,7 +205,7 @@ static UIImage* _pillIcon = nil;
 
 
     //// sleep score text label Drawing
-    CGRect sleepScoreTextLabelRect = CGRectMake(56, 133, 64, 14);
+    CGRect sleepScoreTextLabelRect = CGRectMake(0, 133, 175, 14);
     NSMutableParagraphStyle* sleepScoreTextLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreTextLabelStyle.alignment = NSTextAlignmentCenter;
 

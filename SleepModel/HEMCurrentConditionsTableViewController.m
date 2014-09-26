@@ -109,7 +109,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 - (UITableViewCell*)tableView:(UITableView*)tableView sensorCellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
-    
+
     if (self.sensors.count <= indexPath.row) {
         cell.titleLabel.text = NSLocalizedString(@"sensor.data-unavailable", nil);
         cell.detailLabel.text = nil;
@@ -174,7 +174,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
         cell.titleLabel.text = NSLocalizedString(@"settings.title", nil);
         cell.detailLabel.text = nil;
         cell.descriptionLabel.text = nil;
-        cell.glyphImageView.image = [HelloStyleKit settingsIcon];
+        cell.glyphImageView.image = [UIImage imageNamed:@"settingsIcon"];
     }
     }
     return cell;

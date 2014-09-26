@@ -20,7 +20,7 @@
 @property (weak, nonatomic) IBOutlet UILabel* alarmEnabledLabel;
 @property (weak, nonatomic) IBOutlet UILabel* alarmSoundLabel;
 @property (weak, nonatomic) IBOutlet UILabel* alarmSoundNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *alarmRepeatLabel;
+@property (weak, nonatomic) IBOutlet UILabel* alarmRepeatLabel;
 @property (strong, nonatomic) IBOutlet UISwitch* alarmEnabledSwitch;
 @property (weak, nonatomic) IBOutlet UILabel* wakeUpInstructionsLabel;
 @property (strong, nonatomic) CAGradientLayer* gradientLayer;
@@ -57,7 +57,7 @@
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
+- (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:[HEMMainStoryboard pickSoundSegueSegueIdentifier]]) {
         HEMAlarmSoundTableViewController* controller = segue.destinationViewController;
@@ -82,7 +82,7 @@
 
 - (void)updateViewWithAlarmSettings
 {
-    self.alarmEnabledSwitch.on = [self.alarm isOn];
+    self.alarmEnabledSwitch.on = [self.alarm isSmartAlarm];
     self.alarmSoundNameLabel.text = self.alarm.soundName;
     struct SENAlarmTime earliestAlarmTime = [self.alarm timeByAddingMinutes:-30];
     NSString* earliestAlarmTimeText = [self textForHour:earliestAlarmTime.hour minute:earliestAlarmTime.minute];
@@ -116,7 +116,8 @@
 
 #pragma mark - HEMSettingsTheme
 
-- (BOOL)useGradientBackground {
+- (BOOL)useGradientBackground
+{
     return NO;
 }
 
@@ -124,7 +125,7 @@
 
 - (IBAction)updateAlarmState:(UISwitch*)sender
 {
-    self.alarm.on = [sender isOn];
+    self.alarm.smartAlarm = [sender isOn];
     [self updateViewWithAlarmSettings];
 }
 

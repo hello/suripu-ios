@@ -6,7 +6,7 @@
 
 - (void)awakeFromNib
 {
-    [self setTitleColor:[HelloStyleKit lightBlueColor] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor colorWithRed:0.24 green:0.25 blue:0.27 alpha:1] forState:UIControlStateNormal];
 }
 
 - (void)drawRect:(CGRect)rect

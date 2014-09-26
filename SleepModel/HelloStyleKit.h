@@ -42,7 +42,6 @@
 + (UIImage*)chevronIconLeft;
 + (UIImage*)alarmNoteIcon;
 + (UIImage*)questionIcon;
-+ (UIImage*)settingsIcon;
 + (UIImage*)onboardingBackgroundImage1;
 + (UIImage*)onboardingBackgroundImage2;
 + (UIImage*)bluetoothLogoImage;
@@ -60,6 +59,12 @@
 + (UIImage*)sleepInsightsIcon;
 + (UIImage*)senseIcon;
 + (UIImage*)pillIcon;
++ (UIImage*)alarmRepeatIcon;
++ (UIImage*)alarmSmartIcon;
++ (UIImage*)alarmSoundIcon;
++ (UIImage*)humidityDarkIcon;
++ (UIImage*)particleDarkIcon;
++ (UIImage*)temperatureDarkIcon;
 
 // Drawing Methods
 + (void)drawSleepScoreGraphWithSleepScoreLabelText: (NSString*)sleepScoreLabelText sleepScore: (CGFloat)sleepScore;

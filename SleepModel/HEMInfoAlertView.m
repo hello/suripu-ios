@@ -22,47 +22,36 @@ static CGFloat const kHEMSleepQuestionAnimDuration = 0.4f;
 @implementation HEMInfoAlertView
 
 - (id)initWithInfo:(NSString*)info {
-    // TODO: questionIcon is a placehold icon
-    return [self initWithInfo:info andIcon:[UIImage imageNamed:@"questionIcon.png"]];
-}
-
-- (id)initWithInfo:(NSString*)info andIcon:(UIImage*)icon {
     UIScreen* mainScreen = [UIScreen mainScreen];
     CGFloat fullHeight = kHEMSleepQuestionHeight + kHEMSleepQuestionPadding;
     CGRect defaultFrame = {0.0f, 0.0f, CGRectGetWidth([mainScreen bounds]), fullHeight};
     self = [super initWithFrame:defaultFrame];
     if (self) {
-        [self setupInfo:info withIcon:icon];
+        [self setupInfo:info];
         [self addTapGesture];
     }
     return self;
 }
 
-- (void)setupInfo:(NSString*)info withIcon:(UIImage*)icon {
-    [self setBackgroundColor:[UIColor colorWithRed:83.0f/255.0f green:142.0f/255.0f blue:255.0f alpha:0.9f]];
-
-    CGRect iconFrame = {
-        kHEMSleepQuestionPadding,
-        ceilf((kHEMSleepQuestionHeight-icon.size.height)/2),
-        icon.size.width,
-        icon.size.height
-    };
-    UIImageView* iconView = [[UIImageView alloc] initWithFrame:iconFrame];
-    [iconView setImage:icon];
-    [self addSubview:iconView];
+- (void)setupInfo:(NSString*)info {
+    [self setBackgroundColor:[UIColor colorWithRed:71.0f/255.0f
+                                             green:111.0f/255.0f
+                                              blue:213.0f
+                                             alpha:0.9f]];
     
-    CGFloat labelX = CGRectGetMaxX(iconFrame)+kHEMSleepQuestionPadding;
+    CGFloat padding = 20.0f;
     CGRect labelFrame = {
-        labelX,
+        padding,
         0.0f,
-        CGRectGetWidth([self bounds])-labelX-kHEMSleepQuestionPadding,
+        CGRectGetWidth([self bounds])-(2*padding),
         kHEMSleepQuestionHeight
     };
     UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
     [label setText:info];
-    [label setFont:[UIFont fontWithName:@"HelveticaNeue-Light" size:18.0f]];
+    [label setFont:[UIFont fontWithName:@"Agile-Medium" size:20.0f]];
     [label setTextColor:[UIColor whiteColor]];
     [label setNumberOfLines:2];
+    [label setTextAlignment:NSTextAlignmentCenter];
     [self addSubview:label];
 
 }

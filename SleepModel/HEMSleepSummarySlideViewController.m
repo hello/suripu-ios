@@ -125,12 +125,11 @@
         }];
 }
 
-- (void)showQuestionAlertFor:(NSArray*)questions {
-    if ([questions count] == 0 || [self qAlertView] != nil) return;
+- (void)showQuestionAlertFor:(__unused NSArray*)questions {
+    if ([self qAlertView] != nil) return;
     // just show the first question as an alert
-    SENQuestion* question = questions[0];
-    HEMInfoAlertView* alert =
-        [[HEMInfoAlertView alloc] initWithInfo:[question question]];
+    NSString* text = NSLocalizedString(@"questions.new-question", nil);
+    HEMInfoAlertView* alert = [[HEMInfoAlertView alloc] initWithInfo:text];
     [alert addTarget:self action:@selector(showQuestions:)];
     [alert showInView:[[self view] superview] animated:YES completion:nil];
     [self setQAlertView:alert];

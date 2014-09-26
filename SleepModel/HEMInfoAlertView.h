@@ -15,21 +15,10 @@
  * the information text is limited to 2 lines and will use ellipsis if it's
  * beyond the bounds.
  *
- * By default, this will show a question mark icon
- *
  * @param info: text to display
  * @return      initialized instance
  */
 - (id)initWithInfo:(NSString*)info;
-
-/**
- * Initialize the view with the info text and icon to display.
- *
- * @param info: text to display
- * @param icon: the icon to display to the left of the icon
- * @return      initialized instance
- */
-- (id)initWithInfo:(NSString*)info andIcon:(UIImage*)icon;
 
 /**
  * Add a target and action selector to react to user tapping on the viwe

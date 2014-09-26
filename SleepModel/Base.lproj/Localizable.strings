@@ -168,6 +168,7 @@
 // questions
 "questions.failed.title" = "Could Not Submit Answer";
 "questions.error.unexpected" = "Whoops!  Probably our fault.  Skip the question for now.  We'll ask you again another time";
+"questions.new-question" = "New Question";
 
 // account info
 "account.gender.female" = "Female";

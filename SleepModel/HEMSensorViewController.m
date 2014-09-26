@@ -140,7 +140,7 @@ static UIFont* HEMSensorViewRegularFont;
             NSFontAttributeName : HEMSensorViewEmphasisFont,
         },
         @(PARA) : @{
-            NSForegroundColorAttributeName : [UIColor colorWithWhite:0.22f alpha:1.f],
+            NSForegroundColorAttributeName : [UIColor whiteColor],
         }
     };
 

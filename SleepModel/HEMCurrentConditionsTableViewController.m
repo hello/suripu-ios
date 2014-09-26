@@ -143,7 +143,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
                     NSFontAttributeName : emFont,
                 },
                 @(PARA) : @{
-                    NSForegroundColorAttributeName : [UIColor darkGrayColor],
+                    NSForegroundColorAttributeName : [UIColor whiteColor],
                 }
             };
             cell.descriptionLabel.attributedText = markdown_to_attr_string(sensor.message, 0, attributes);

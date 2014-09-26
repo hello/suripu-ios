@@ -706,6 +706,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Sense" id="7sy-8f-b6s"/>
                     <connections>
+                        <outlet property="manageSenseView" destination="bJS-Cn-weR" id="mWS-jI-HZJ"/>
                         <outlet property="senseInfoTableView" destination="aNw-eX-aCs" id="DRy-EL-8LL"/>
                         <outlet property="view" destination="1Ml-OR-V9I" id="LYw-rK-OTi"/>
                     </connections>

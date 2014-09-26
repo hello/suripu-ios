@@ -14,6 +14,7 @@
 @interface HEMSenseViewController() <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *senseInfoTableView;
+@property (weak, nonatomic) IBOutlet UIView *manageSenseView;
 
 @end
 
@@ -22,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self senseInfoTableView] setTableFooterView:[[UIView alloc] init]];
+    [[self manageSenseView] setHidden:[self sense] == nil];
 }
 
 #pragma mark - UITableViewDelegate / DataSource

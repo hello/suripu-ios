@@ -23,6 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self pillInfoTableView] setTableFooterView:[[UIView alloc] init]];
+    [[self unpairView] setHidden:[self pill] == nil];
 }
 
 #pragma mark - UITableViewDelegate / DataSource

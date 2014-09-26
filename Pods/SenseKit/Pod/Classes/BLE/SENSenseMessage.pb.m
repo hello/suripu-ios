@@ -337,6 +337,7 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
     case SENSenseMessageTypePairPill:
     case SENSenseMessageTypeError:
     case SENSenseMessageTypePairSense:
+    case SENSenseMessageTypeUnpairPill:
       return YES;
     default:
       return NO;

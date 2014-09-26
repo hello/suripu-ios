@@ -6,6 +6,7 @@
 
 static NSString* const SENDefaultBaseURLPath = @"https://dev-api.hello.is/v1";
 //static NSString* const SENDefaultBaseURLPath = @"http://192.168.128.88:9999";
+// static NSString* const SENDefaultBaseURLPath = @"http://192.168.128.151:9999/v1";
 static NSString* const SENAPIClientBaseURLPathKey = @"SENAPIClientBaseURLPathKey";
 static AFHTTPSessionManager* sessionManager = nil;
 

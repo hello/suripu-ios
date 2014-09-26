@@ -1120,23 +1120,23 @@ static UIColor* kJBLineChartViewDefaultDotSelectionColor = nil;
     CGFloat labelY = 0;
     CGFloat summaryValueY = 30.f;
     CGFloat segmentWidth = CGRectGetWidth(rect) / (labels.count + 1);
-    UIFont* labelFont = [UIFont fontWithName:@"HelveticaNeue" size:10];
+    UIFont* labelFont = [UIFont fontWithName:@"Agile-Light" size:10];
     NSDictionary* lastLabelAttributes = @{
         NSFontAttributeName : labelFont,
-        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.1f alpha:1.f],
+        NSForegroundColorAttributeName : [UIColor colorWithWhite:1.f alpha:1.f],
     };
     NSDictionary* labelAttributes = @{
         NSFontAttributeName : labelFont,
-        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.5f alpha:1.f],
+        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.95f alpha:1.f],
     };
     NSDictionary* summaryAttributes = @{
         NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:24],
-        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.7f alpha:1.f],
-        NSKernAttributeName : @(-3),
+        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.95f alpha:1.f],
+        NSKernAttributeName : @(-2),
     };
     NSDictionary* summaryTitleAttributes = @{
         NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:36],
-        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.1f alpha:1.f],
+        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.95f alpha:1.f],
     };
 
     CGFloat lastSegmentWidth = CGRectGetWidth(rect) - (segmentWidth * (labels.count - 1));
@@ -1151,8 +1151,7 @@ static UIColor* kJBLineChartViewDefaultDotSelectionColor = nil;
         [self drawText:labels[i - 1][@"value"]
                         withAttributes:summaryAttributes
             centeredHorizontallyInRect:CGRectMake(segmentWidth * (i - 1), summaryValueY, segmentWidth, 0)];
-        CGContextSetStrokeColorWithColor(context, [UIColor colorWithWhite:0.9f alpha:1.f].CGColor);
-        CGContextSetStrokeColorWithColor(context, [UIColor colorWithWhite:0.9f alpha:1.f].CGColor);
+        CGContextSetStrokeColorWithColor(context, [UIColor colorWithWhite:0.3f alpha:1.f].CGColor);
         CGContextSetLineWidth(context, 1.0);
         CGContextMoveToPoint(context, startX, CGRectGetHeight(rect) / 4.f);
         CGContextAddLineToPoint(context, startX, CGRectGetHeight(rect));

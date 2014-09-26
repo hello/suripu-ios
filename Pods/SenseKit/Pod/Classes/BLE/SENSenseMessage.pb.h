@@ -45,6 +45,7 @@ typedef enum {
   SENSenseMessageTypePairPill = 12,
   SENSenseMessageTypeError = 13,
   SENSenseMessageTypePairSense = 14,
+  SENSenseMessageTypeUnpairPill = 15,
 } SENSenseMessageType;
 
 BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);

@@ -134,6 +134,18 @@ typedef enum {
              failure:(SENSenseFailureBlock)failure;
 
 /**
+ * Tell Sense to unpair with the pill, specified by the pill id.  This will prevent
+ * the Pill from sending any data to Sense.
+ * 
+ * @param pillId:  the device id of the pill.  @see SENDevice
+ * @param success: the block to invoke when this command succeeds
+ * @param failure: the failure block to invoke if this fails
+ */
+- (void)unpairPill:(NSString*)pillId
+           success:(SENSenseSuccessBlock)success
+           failure:(SENSenseFailureBlock)failure;
+
+/**
  * Observe any unexpected disconnects that may occur, which will invoke the block
  * specified.  You must pair this call with removeUnexpectedDisconnectObserver:
  * to prevent a potential leak as the blocks will be held until it is removed

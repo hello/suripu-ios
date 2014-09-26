@@ -582,6 +582,15 @@ static NSInteger const kSENSenseMessageVersion = 0;
     [self sendMessage:[builder build] success:success failure:failure];
 }
 
+- (void)unpairPill:(NSString*)pillId
+           success:(SENSenseSuccessBlock)success
+           failure:(SENSenseFailureBlock)failure {
+    SENSenseMessageType type = SENSenseMessageTypeUnpairPill;
+    SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
+    [builder setDeviceId:pillId];
+    [self sendMessage:[builder build] success:success failure:failure];
+}
+
 #pragma mark - Time
 
 - (void)setTime:(SENSenseCompletionBlock)completion {

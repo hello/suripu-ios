@@ -1,1 +1,0 @@
-../../LGBluetooth/LGBluetooth/LGCharacteristic.h

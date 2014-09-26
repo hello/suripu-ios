@@ -56,7 +56,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         case 2: {
             title = NSLocalizedString(@"settings.device.color", nil);
-            detail = NSLocalizedString(@"settings.device.color.green", nil);
+            detail = @"--"; // TODO (jimmy): color not yet supported
             break;
         }
         default:

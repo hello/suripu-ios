@@ -209,6 +209,7 @@
 
 /* Begin PBXFileReference section */
 		4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		56BD6DDD616CA07689AE1232 /* Pods-Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* Sense.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Sense.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -405,6 +406,7 @@
 		8AC4A05A198ACE4800C2BD63 /* HEMSensorGraphDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorGraphDataSource.m; sourceTree = "<group>"; };
 		8ACAF80919D398E100402BB7 /* HEMConfidentialityWarningView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMConfidentialityWarningView.h; sourceTree = "<group>"; };
 		8ACAF80A19D398E100402BB7 /* HEMConfidentialityWarningView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMConfidentialityWarningView.m; sourceTree = "<group>"; };
+		8AD11AD318ECD0AA0775D047 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		BF3D2E4A19C37A62001DEEBA /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downArrow.png; path = images/downArrow.png; sourceTree = "<group>"; };
 		BF3D2E4B19C37A62001DEEBA /* downArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "downArrow@2x.png"; path = "images/downArrow@2x.png"; sourceTree = "<group>"; };
 		BF5E443519A7AA3D00278A2F /* HEMWifiCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiCenter.h; sourceTree = "<group>"; };
@@ -415,6 +417,7 @@
 		BF5E444E19AD494500278A2F /* phoneWithEmoticons@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "phoneWithEmoticons@2x.png"; path = "images/phoneWithEmoticons@2x.png"; sourceTree = "<group>"; };
 		BF5E445119AD4B3900278A2F /* HEMSleepQuestionFYIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepQuestionFYIViewController.h; sourceTree = "<group>"; };
 		BF5E445219AD4B3900278A2F /* HEMSleepQuestionFYIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepQuestionFYIViewController.m; sourceTree = "<group>"; };
+		BF79185A099B572C06592929 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		BF9C87D219B6A001003188D4 /* sleep_pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sleep_pill.png; path = images/sleep_pill.png; sourceTree = "<group>"; };
 		BF9C87D319B6A001003188D4 /* sleep_pill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sleep_pill@2x.png"; path = "images/sleep_pill@2x.png"; sourceTree = "<group>"; };
 		BF9C87D619B6A199003188D4 /* HEMPillPairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillPairViewController.h; sourceTree = "<group>"; };
@@ -485,8 +488,7 @@
 		BFEAA0CB19A6D9E6002FBD44 /* HEMBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBaseController.h; sourceTree = "<group>"; };
 		BFEAA0CC19A6D9E6002FBD44 /* HEMBaseController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBaseController.m; sourceTree = "<group>"; };
 		BFEAA0CE19A6D9F8002FBD44 /* HEMBaseController+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HEMBaseController+Protected.h"; sourceTree = "<group>"; };
-		DB26CF606417423497851782 /* Pods-Tests.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.xcconfig"; path = "Pods/Pods-Tests.xcconfig"; sourceTree = "<group>"; };
-		F1BFFC8E459745C5B0578F6E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = Pods/Pods.xcconfig; sourceTree = "<group>"; };
+		ED068BEFEEBEC0C48801356C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FD539145AF784DC3AA0DAF13 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -525,8 +527,7 @@
 				6003F5B5195388D20070C39A /* Tests */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
-				DB26CF606417423497851782 /* Pods-Tests.xcconfig */,
-				F1BFFC8E459745C5B0578F6E /* Pods.xcconfig */,
+				A79F80776B2F7266AA5EA812 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1046,6 +1047,17 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		A79F80776B2F7266AA5EA812 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				ED068BEFEEBEC0C48801356C /* Pods.debug.xcconfig */,
+				BF79185A099B572C06592929 /* Pods.release.xcconfig */,
+				56BD6DDD616CA07689AE1232 /* Pods-Tests.debug.xcconfig */,
+				8AD11AD318ECD0AA0775D047 /* Pods-Tests.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		BF3D2E4919C37A54001DEEBA /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -1346,7 +1358,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods/Pods-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		4078913592044716B8672C8D /* Check Pods Manifest.lock */ = {
@@ -1390,7 +1402,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Pods-Tests-resources.sh\"\n";
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Tests/Pods-Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		F97E4F9A3F0F4F668604A8C8 /* Check Pods Manifest.lock */ = {
@@ -1630,7 +1642,7 @@
 		};
 		6003F5C0195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1BFFC8E459745C5B0578F6E /* Pods.xcconfig */;
+			baseConfigurationReference = ED068BEFEEBEC0C48801356C /* Pods.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1653,7 +1665,7 @@
 		};
 		6003F5C1195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F1BFFC8E459745C5B0578F6E /* Pods.xcconfig */;
+			baseConfigurationReference = BF79185A099B572C06592929 /* Pods.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -1676,7 +1688,7 @@
 		};
 		6003F5C3195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB26CF606417423497851782 /* Pods-Tests.xcconfig */;
+			baseConfigurationReference = 56BD6DDD616CA07689AE1232 /* Pods-Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SleepModel.app/SleepModel";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1699,7 +1711,7 @@
 		};
 		6003F5C4195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DB26CF606417423497851782 /* Pods-Tests.xcconfig */;
+			baseConfigurationReference = 8AD11AD318ECD0AA0775D047 /* Pods-Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/SleepModel.app/SleepModel";
 				FRAMEWORK_SEARCH_PATHS = (

@@ -5,7 +5,6 @@
 #import <markdown_peg.h>
 
 #import "HEMCurrentConditionsTableViewController.h"
-#import "HEMColoredRoundedLabel.h"
 #import "HEMAlarmViewController.h"
 #import "HEMInsetGlyphTableViewCell.h"
 #import "HEMSensorViewController.h"
@@ -23,8 +22,8 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [[self tableView] setTableFooterView:[[UIView alloc] init]];
     self.title = NSLocalizedString(@"current-conditions.title", nil);
-    self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
 }
 
 - (IBAction)dismissCurrentConditionsController:(id)sender
@@ -77,18 +76,18 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     }
 }
 
-- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    if (indexPath.section == 0) {
-        if (self.sensors.count > 0) {
-            SENSensor* sensor = self.sensors[indexPath.row];
-            if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
-                return 114.f;
-            }
-        }
-    }
-    return 64.f;
-}
+//- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
+//{
+//    if (indexPath.section == 0) {
+//        if (self.sensors.count > 0) {
+//            SENSensor* sensor = self.sensors[indexPath.row];
+//            if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
+//                return 114.f;
+//            }
+//        }
+//    }
+//    return 64.f;
+//}
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -110,8 +109,8 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 - (UITableViewCell*)tableView:(UITableView*)tableView sensorCellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
+    
     if (self.sensors.count <= indexPath.row) {
-        [(HEMColoredRoundedLabel*)cell.detailLabel hideRoundedBackground];
         cell.titleLabel.text = NSLocalizedString(@"sensor.data-unavailable", nil);
         cell.detailLabel.text = nil;
         cell.glyphImageView.image = nil;
@@ -119,7 +118,6 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
         cell.disclosureImageView.hidden = YES;
     } else {
         cell.disclosureImageView.hidden = NO;
-        [(HEMColoredRoundedLabel*)cell.detailLabel showRoundedBackground];
         SENSensor* sensor = self.sensors[indexPath.row];
         cell.titleLabel.text = sensor.localizedName;
         cell.detailLabel.text = sensor.localizedValue ?: NSLocalizedString(@"sensor.value.none", nil);
@@ -145,21 +143,10 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
                     NSFontAttributeName : emFont,
                 },
                 @(PARA) : @{
-                    NSForegroundColorAttributeName : [UIColor darkGrayColor],
+                    NSForegroundColorAttributeName : [UIColor whiteColor],
                 }
             };
             cell.descriptionLabel.attributedText = markdown_to_attr_string(sensor.message, 0, attributes);
-            if (sensor.condition == SENSensorConditionWarning) {
-                [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[HelloStyleKit warningSensorColor]];
-            } else {
-                [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[HelloStyleKit alertSensorColor]];
-            }
-        } else if (!sensor.value) {
-            cell.descriptionLabel.text = nil;
-            [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[UIColor grayColor]];
-        } else {
-            cell.descriptionLabel.text = nil;
-            [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[HelloStyleKit idealSensorColor]];
         }
     }
 
@@ -168,24 +155,20 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 
 - (UITableViewCell*)tableView:(UITableView*)tableView menuCellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    SENAlarm* alarm = [[SENAlarm savedAlarms] firstObject];
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
-    [(HEMColoredRoundedLabel*)cell.detailLabel hideRoundedBackground];
-    [(HEMColoredRoundedLabel*)cell.detailLabel setTextColor:[UIColor darkGrayColor]];
     cell.descriptionLabel.text = nil;
     cell.disclosureImageView.hidden = NO;
     switch (indexPath.row) {
     case 0: {
         cell.titleLabel.text = NSLocalizedString(@"alarms.title", nil);
         cell.descriptionLabel.text = nil;
-        cell.glyphImageView.image = nil;
+        cell.glyphImageView.image = [HelloStyleKit alarmsIcon];
     } break;
 
     case 1: {
-        cell.titleLabel.text = NSLocalizedString(@"sounds.title", nil);
-        SENBackgroundNoise* noise = [SENBackgroundNoise savedBackgroundNoise];
-        cell.detailLabel.text = [noise isOn] ? [noise soundName] : NSLocalizedString(@"noise.state.disabled", nil);
-        cell.glyphImageView.image = nil;
+        cell.titleLabel.text = NSLocalizedString(@"sleep.insights.title", nil);
+        cell.detailLabel.text = nil;
+        cell.glyphImageView.image = [HelloStyleKit sleepInsightsIcon];
     } break;
     case 2: {
         cell.titleLabel.text = NSLocalizedString(@"settings.title", nil);
@@ -225,8 +208,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
         } break;
 
         case 1: {
-            UIViewController* controller = [HEMMainStoryboard instantiateSleepSoundViewController];
-            [self.navigationController pushViewController:controller animated:YES];
+            // TODO (jimmy): sleep insights not yet implemented, I think!
         } break;
         case 2: {
             UIViewController* controller = [HEMMainStoryboard instantiateSettingsController];

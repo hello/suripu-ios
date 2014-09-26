@@ -16,10 +16,6 @@
  */
 @property (nonatomic, copy)   NSArray* questions;
 
-/**
- * An index within the questions array that points to the
- * question this controller should display
- */
-@property (nonatomic, assign) NSInteger questionIndex;
+@property (nonatomic, strong) UIImage* bgImage;
 
 @end

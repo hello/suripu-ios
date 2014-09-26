@@ -10,8 +10,9 @@
 #import "HelloStyleKit.h"
 #import "HEMAlarmTextUtils.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSettingsTheme.h"
 
-@interface HEMAlarmViewController () <UITableViewDelegate, UIGestureRecognizerDelegate>
+@interface HEMAlarmViewController () <UITableViewDelegate, UIGestureRecognizerDelegate, HEMSettingsTheme>
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer* panGestureRecognizer;
 
 @property (weak, nonatomic) IBOutlet UILabel* alarmTimeLabel;
@@ -47,10 +48,6 @@
 {
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    NSMutableDictionary* dict = self.navigationController.navigationBar.titleTextAttributes.mutableCopy;
-    dict[NSForegroundColorAttributeName] = [UIColor whiteColor];
-    self.navigationController.navigationBar.titleTextAttributes = dict;
     [self updateViewWithAlarmSettings];
 }
 
@@ -58,10 +55,6 @@
 {
     [super viewWillDisappear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
-    NSMutableDictionary* dict = self.navigationController.navigationBar.titleTextAttributes.mutableCopy;
-    dict[NSForegroundColorAttributeName] = [UIColor darkGrayColor];
-    self.navigationController.navigationBar.titleTextAttributes = dict;
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
@@ -119,6 +112,12 @@
     time.hour = hour;
     time.minute = minute;
     return [SENAlarm localizedValueForTime:time];
+}
+
+#pragma mark - HEMSettingsTheme
+
+- (BOOL)useGradientBackground {
+    return NO;
 }
 
 #pragma mark - Actions

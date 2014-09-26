@@ -31,13 +31,31 @@
 
 // settings
 "settings.title" = "Settings";
+"settings.info" = "My Info";
+"settings.account" = "Account";
+"settings.units" = "Units and Time";
+"settings.devices" = "Devices";
 "settings.personal.info.birthday" = "Birthday";
 "settings.personal.info.gender" = "Gender";
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
+"settings.device.sense" = "Your Sense";
+"settings.device.pill" = "Your Sleep Pill";
+"settings.device.status.low-battery" = "Battery Low";
+"settings.device.status.not-paired" = "Not Paired";
+"settings.device.firmware-version" = "Firmware Version";
+"settings.device.battery" = "Battery";
+"settings.device.last-seen" = "Last Seen";
+"settings.device.color" = "Color";
+"settings.device.color.green" = "Green";
+"settings.device.battery.good" = "Good";
+"settings.pill.dialog.unpair-title" = "Unpair Sleep Pill?";
+"settings.pill.dialog.unpair-message" = "Are you sure you want to unpair your Sleep Pill?  By doing so, we will no longer be able to track your sleep until you pair another Sleep Pill.";
+"settings.pill.dialog.unpair-no-sense-title" = "Sense Not Found";
+"settings.pill.dialog.unpair-no-sense-message" = "To unpair your Sleep Pill, you must be near your Sense device and Sense must be powered on.";
 
-// sounds
-"sounds.title" = "Sounds";
+// insights
+"sleep.insights.title" = "Sleep Insights";
 
 // authentication/sign in
 "authorization.title" = "Sign in";
@@ -93,7 +111,6 @@
 // background noise
 "noise.state.enabled" = "Enabled";
 "noise.state.disabled" = "Disabled";
-"noise.sound-name.none" = "None";
 
 // sensors
 "sensor.temperature" = "Temperature";
@@ -102,7 +119,7 @@
 "sensor.time-range.day" = "Past 24";
 "sensor.time-range.week" = "This week";
 "sensor.comfort-zone.title" = "Comfort Zone";
-"sensor.data-unavailable" = "Room sensor data is unavailable";
+"sensor.data-unavailable" = "Sensor data is unavailable.";
 "sensor.value.none" = "No data";
 "graph-data.unavailable.short" = "No data";
 "graph-data.unavailable" = "No data available";
@@ -145,11 +162,14 @@
 "actions.save" = "Save";
 "actions.ok" = "OK";
 "actions.sign-out" = "Sign Out";
+"actions.no" = "NO";
+"actions.yes" = "YES";
 "status.success" = "Done";
 
 // questions
 "questions.failed.title" = "Could Not Submit Answer";
 "questions.error.unexpected" = "Whoops!  Probably our fault.  Skip the question for now.  We'll ask you again another time";
+"questions.new-question" = "New Question";
 
 // account info
 "account.gender.female" = "Female";

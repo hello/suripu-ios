@@ -13,7 +13,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
+    [[self tableView] setTableFooterView:[[UIView alloc] init]];
     self.possibleSleepSounds = @[ @"None", @"Bells", @"Birdsong", @"Chime", @"Waterfall" ];
 }
 

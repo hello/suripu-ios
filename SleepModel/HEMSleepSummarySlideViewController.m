@@ -20,12 +20,11 @@
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HEMInfoAlertView.h"
 #import "HEMSleepQuestionsViewController.h"
-#import "HEMZoomTransitionAnimator.h"
 #import "HEMProgressNavigationController.h"
+#import "HelloStyleKit.h"
 
 @interface HEMSleepSummarySlideViewController () <
-    FCDynamicPaneViewController,
-    UIViewControllerTransitioningDelegate
+    FCDynamicPaneViewController
 >
 
 @property (nonatomic, weak) CAGradientLayer* bgGradientLayer;
@@ -56,18 +55,13 @@
     [super viewDidLoad];
     [self addBackgroundGradientLayer];
     [self listenForSleepQuestions];
+    [self addTopShadow];
 }
 
 - (void)addBackgroundGradientLayer {
-    NSDate* now = [NSDate date];
-    NSCalendar *calendar = [NSCalendar currentCalendar];
-    NSDateComponents *components = [calendar components:NSHourCalendarUnit
-                                               fromDate:now];
-    NSInteger hour = [components hour];
-    
     CAGradientLayer* layer = [CAGradientLayer layer];
     [layer setFrame:[[self view] bounds]];
-    [HEMColorUtils configureLayer:layer forHourOfDay:hour];
+    [HEMColorUtils configureLayer:layer forHourOfDay:24];
     [[[self view] layer] insertSublayer:layer atIndex:0];
     [self setBgGradientLayer:layer];
 }
@@ -82,9 +76,21 @@
     [super endSliding];
 }
 
+- (void)addTopShadow {
+    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:[[self view] bounds]];
+    CALayer* layer = [[self view] layer];
+    [layer setMasksToBounds:NO];
+    [layer setShadowColor:[[UIColor blackColor] CGColor]];
+    [layer setShadowOffset:CGSizeMake(0.0f, 5.0f)];
+    [layer setShadowOpacity:0.6f];
+    [layer setShadowRadius:5.0f];
+    [layer setShadowPath:[shadowPath CGPath]];
+}
+
 #pragma mark - FCDynamicPaneViewController
 
 - (void)viewDidPop {
+    [self setNeedsStatusBarAppearanceUpdate];
     for (UIViewController* viewController in [self childViewControllers]) {
         if ([viewController respondsToSelector:@selector(viewDidPop)]) {
             [(UIViewController<FCDynamicPaneViewController>*)viewController viewDidPop];
@@ -94,6 +100,7 @@
 }
 
 - (void)viewDidPush {
+    [self setNeedsStatusBarAppearanceUpdate];
     for (UIViewController* viewController in [self childViewControllers]) {
         if ([viewController respondsToSelector:@selector(viewDidPush)]) {
             [(UIViewController<FCDynamicPaneViewController>*)viewController viewDidPush];
@@ -117,12 +124,12 @@
         }];
 }
 
-- (void)showQuestionAlertFor:(NSArray*)questions {
-    if ([questions count] == 0 || [self qAlertView] != nil) return;
+- (void)showQuestionAlertFor:(__unused NSArray*)questions {
+    if ([self qAlertView] != nil) return;
     // just show the first question as an alert
-    SENQuestion* question = questions[0];
-    HEMInfoAlertView* alert =
-        [[HEMInfoAlertView alloc] initWithInfo:[question question]];
+    NSString* text = NSLocalizedString(@"questions.new-question", nil);
+    HEMInfoAlertView* alert = [[HEMInfoAlertView alloc] initWithInfo:text];
+    [alert setBackgroundColor:[HelloStyleKit sleepQuestionBgColor]];
     [alert addTarget:self action:@selector(showQuestions:)];
     [alert showInView:[[self view] superview] animated:YES completion:nil];
     [self setQAlertView:alert];
@@ -143,37 +150,23 @@
     if ([self presentedViewController] != nil) return;
     
     UIImage* snapshot = [[self snapshot] applyBlurWithRadius:10
-                                                   tintColor:[UIColor colorWithWhite:1.0f alpha:0.9f]
+                                                   tintColor:[HelloStyleKit sleepQuestionBgColor]
                                        saturationDeltaFactor:1.2
                                                    maskImage:nil];
     
     [[self qAlertView] dismiss:YES completion:^{
         NSArray* questions = [[SENServiceQuestions sharedService] todaysQuestions];
-        HEMSleepQuestionsViewController* questionsVC =
-        (HEMSleepQuestionsViewController*)[HEMMainStoryboard instantiateSleepQuestionsViewController];
-        [questionsVC setQuestions:questions];
         
-        HEMProgressNavigationController* nav =
-            [[HEMProgressNavigationController alloc] initWithRootViewController:questionsVC];
-        [nav setTransitioningDelegate:self];
-        [nav setModalPresentationStyle:UIModalPresentationCustom];
-        [nav setNumberOfScreens:[questions count]];
-        [nav setBgImage:snapshot];
-        [self presentViewController:nav animated:YES completion:nil];
+        HEMSleepQuestionsViewController* questionsVC =
+            (HEMSleepQuestionsViewController*)[HEMMainStoryboard instantiateSleepQuestionsViewController];
+        [questionsVC setQuestions:questions];
+        [questionsVC setBgImage:snapshot];
+        [questionsVC setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+        
+        [self presentViewController:questionsVC animated:YES completion:nil];
         
         [self setQAlertView:nil];
     }];
-}
-
-#pragma mark Transition
-
-- (id <UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented presentingController:(UIViewController *)presenting sourceController:(UIViewController *)source {
-    return [HEMZoomTransitionAnimator new];
-}
-
-- (id <UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed
-{
-    return [HEMZoomTransitionAnimator new];
 }
 
 #pragma mark - Cleanup

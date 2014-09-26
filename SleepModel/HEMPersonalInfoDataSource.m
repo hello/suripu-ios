@@ -11,6 +11,7 @@
 
 #import "HEMPersonalInfoDataSource.h"
 #import "HEMMathUtil.h"
+#import "HEMMainStoryboard.h"
 
 @interface HEMPersonalInfoDataSource()
 
@@ -33,8 +34,8 @@
 
 - (UITableViewCell*)tableView:(UITableView *)tableView
         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString* cellId = @"info";
-    return [tableView dequeueReusableCellWithIdentifier:cellId]; // prototype cell
+    NSString* reuseId = [HEMMainStoryboard infoReuseIdentifier];
+    return [tableView dequeueReusableCellWithIdentifier:reuseId]; // prototype cell
 }
 
 #pragma mark - Private Helpers

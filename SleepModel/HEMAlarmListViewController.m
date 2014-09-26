@@ -33,10 +33,6 @@
 {
     [super viewWillAppear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    self.navigationController.navigationBar.tintColor = [UIColor whiteColor];
-    NSMutableDictionary* dict = self.navigationController.navigationBar.titleTextAttributes.mutableCopy;
-    dict[NSForegroundColorAttributeName] = [UIColor whiteColor];
-    self.navigationController.navigationBar.titleTextAttributes = dict;
     [self configureViewBackground];
     [self reloadData];
     [self.tableView reloadData];
@@ -46,10 +42,6 @@
 {
     [super viewWillDisappear:animated];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    self.navigationController.navigationBar.tintColor = [UIColor darkGrayColor];
-    NSMutableDictionary* dict = self.navigationController.navigationBar.titleTextAttributes.mutableCopy;
-    dict[NSForegroundColorAttributeName] = [UIColor darkGrayColor];
-    self.navigationController.navigationBar.titleTextAttributes = dict;
 }
 
 - (void)configureViewBackground

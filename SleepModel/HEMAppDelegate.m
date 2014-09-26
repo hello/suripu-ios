@@ -71,10 +71,18 @@
 
 - (void)configureAppearance
 {
+    UIFont* navbarTextFont = [UIFont fontWithName:@"Agile-Light" size:18.0f];
     [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init]
                                       forBarPosition:UIBarPositionAny
                                           barMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
+    [[UINavigationBar appearance] setTitleTextAttributes:@{
+        NSForegroundColorAttributeName : [UIColor whiteColor],
+        NSFontAttributeName : navbarTextFont
+    }];
+    [[UIBarButtonItem appearance] setTitleTextAttributes:@{
+        NSFontAttributeName : navbarTextFont
+    } forState:UIControlStateNormal];
 }
 
 - (void)createAndShowWindow

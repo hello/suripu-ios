@@ -142,6 +142,7 @@
 		8AC4A057198A0AE900C2BD63 /* questionIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A055198A0AE900C2BD63 /* questionIcon.png */; };
 		8AC4A058198A0AE900C2BD63 /* questionIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */; };
 		8AC4A05B198ACE4800C2BD63 /* HEMSensorGraphDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4A05A198ACE4800C2BD63 /* HEMSensorGraphDataSource.m */; };
+		8ACAF80B19D398E100402BB7 /* HEMConfidentialityWarningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACAF80A19D398E100402BB7 /* HEMConfidentialityWarningView.m */; };
 		8AF5A39C19C102D30009A499 /* chevronIconRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0481989D47000C2BD63 /* chevronIconRight@2x.png */; };
 		BF3D2E4C19C37A62001DEEBA /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3D2E4A19C37A62001DEEBA /* downArrow.png */; };
 		BF3D2E4D19C37A62001DEEBA /* downArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3D2E4B19C37A62001DEEBA /* downArrow@2x.png */; };
@@ -389,6 +390,8 @@
 		8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "questionIcon@2x.png"; path = "images/questionIcon@2x.png"; sourceTree = "<group>"; };
 		8AC4A059198ACE4800C2BD63 /* HEMSensorGraphDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorGraphDataSource.h; sourceTree = "<group>"; };
 		8AC4A05A198ACE4800C2BD63 /* HEMSensorGraphDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorGraphDataSource.m; sourceTree = "<group>"; };
+		8ACAF80919D398E100402BB7 /* HEMConfidentialityWarningView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMConfidentialityWarningView.h; sourceTree = "<group>"; };
+		8ACAF80A19D398E100402BB7 /* HEMConfidentialityWarningView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMConfidentialityWarningView.m; sourceTree = "<group>"; };
 		BF3D2E4A19C37A62001DEEBA /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downArrow.png; path = images/downArrow.png; sourceTree = "<group>"; };
 		BF3D2E4B19C37A62001DEEBA /* downArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "downArrow@2x.png"; path = "images/downArrow@2x.png"; sourceTree = "<group>"; };
 		BF3D2E4E19C38774001DEEBA /* HEMZoomTransitionAnimator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMZoomTransitionAnimator.h; sourceTree = "<group>"; };
@@ -1006,6 +1009,8 @@
 				BFC3AA0619C2655F0055D308 /* HEMInfoAlertView.m */,
 				BFEAA0C819A66746002FBD44 /* HEMValueSliderView.h */,
 				BFEAA0C919A66746002FBD44 /* HEMValueSliderView.m */,
+				8ACAF80919D398E100402BB7 /* HEMConfidentialityWarningView.h */,
+				8ACAF80A19D398E100402BB7 /* HEMConfidentialityWarningView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1415,6 +1420,7 @@
 				BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */,
 				BF5E443719A7AA3D00278A2F /* HEMWifiCenter.m in Sources */,
 				8A28CAFF19CB95E40044A27D /* HEMNotificationHandler.m in Sources */,
+				8ACAF80B19D398E100402BB7 /* HEMConfidentialityWarningView.m in Sources */,
 				8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */,
 				BFB93C7619CB5F1D005067D0 /* HEMPersonalInfoDataSource.m in Sources */,
 				8A782686196CB6C9002882A1 /* HEMSnappingFlowLayout.m in Sources */,

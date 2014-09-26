@@ -10,13 +10,14 @@
 NSString* const SENAuthorizationServiceDidAuthorizeNotification = @"SENAuthorizationServiceDidAuthorize";
 NSString* const SENAuthorizationServiceDidDeauthorizeNotification = @"SENAuthorizationServiceDidDeauthorize";
 
+@implementation SENAuthorizationService
+
 static NSString* const SENAuthorizationServiceTokenPath = @"oauth2/token";
 static NSString* const SENAuthorizationServiceClientID = @"iphone_pill";
 static NSString* const SENAuthorizationServiceCredentialsKey = @"credentials";
+static NSString* const SENAuthorizationServiceCredentialsEmailKey = @"email";
 static NSString* const SENAuthorizationServiceAccessTokenKey = @"access_token";
 static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authorization";
-
-@implementation SENAuthorizationService
 
 + (void)authorizeWithUsername:(NSString*)username password:(NSString*)password callback:(void (^)(NSError*))block
 {
@@ -31,6 +32,7 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
     AFHTTPRequestOperation* operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation* operation, id responseObject) {
         [self authorizeRequestsWithResponse:[NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil]];
+        [self setEmailAddressOfAuthorizedUser:username];
         if (block)
             block(operation.error);
     } failure:^(AFHTTPRequestOperation* operation, NSError* error) {
@@ -55,6 +57,7 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 {
     [[FXKeychain defaultKeychain] removeObjectForKey:SENAuthorizationServiceCredentialsKey];
     [self authorizeRequestsWithToken:nil];
+    [self setEmailAddressOfAuthorizedUser:nil];
     [SENAPIClient DELETE:SENAuthorizationServiceTokenPath parameters:nil completion:NULL];
 }
 
@@ -67,6 +70,16 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
     }
 
     return token != nil;
+}
+
++ (NSString*)emailAddressOfAuthorizedUser
+{
+    return [FXKeychain defaultKeychain][SENAuthorizationServiceCredentialsEmailKey];
+}
+
++ (void)setEmailAddressOfAuthorizedUser:(NSString*)emailAddress
+{
+    [FXKeychain defaultKeychain][SENAuthorizationServiceCredentialsEmailKey] = emailAddress;
 }
 
 + (NSString*)accessToken

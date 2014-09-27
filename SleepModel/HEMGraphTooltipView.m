@@ -16,7 +16,7 @@
         CGFloat labelHeight = 14;
         CGFloat labelWidth = ceil(CGRectGetWidth(frame));
         _topLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, 2, labelWidth, labelHeight)];
-        _topLabel.font = [UIFont fontWithName:@"Agile-Medium" size:12];
+        _topLabel.font = [UIFont fontWithName:@"Agile-Medium" size:12.f];
         _topLabel.backgroundColor = [UIColor clearColor];
         _topLabel.textColor = [UIColor whiteColor];
         _topLabel.adjustsFontSizeToFitWidth = YES;
@@ -25,14 +25,14 @@
         [self addSubview:_topLabel];
 
         _bottomLabel = [[UILabel alloc] initWithFrame:CGRectMake(0, labelHeight, labelWidth, labelHeight)];
-        _bottomLabel.font = [UIFont fontWithName:@"Agile-Thin" size:12];
+        _bottomLabel.font = [UIFont fontWithName:@"Agile-Thin" size:11.f];
         _bottomLabel.backgroundColor = [UIColor clearColor];
         _bottomLabel.textColor = [UIColor whiteColor];
         _bottomLabel.adjustsFontSizeToFitWidth = YES;
         _bottomLabel.numberOfLines = 1;
         _bottomLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:_bottomLabel];
-        self.backgroundColor = [HelloStyleKit mediumBlueColor];
+        self.backgroundColor = [UIColor darkGrayColor];
         self.layer.cornerRadius = 6.f;
     }
     return self;

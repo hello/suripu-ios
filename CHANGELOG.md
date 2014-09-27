@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0.16
+
+New:
+
+* Device management. Remove your paired devices.
+* New style for settings screens
+* New style for questions
+* You can now have multiple repeatable alarms
+* APP ICON
+
+Fixes:
+
+* Fix date offsets in sensor history graph
+
 ## 1.0.0.15
 
 Fixes:

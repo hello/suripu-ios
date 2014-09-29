@@ -66,7 +66,10 @@
 
     UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
     UIViewController* rootController = [onboardingStoryboard instantiateInitialViewController];
-    [dynamicPanesController presentViewController:rootController animated:animated completion:NULL];
+    [dynamicPanesController presentViewController:rootController animated:animated completion:^{
+        FCDynamicPane* foregroundPane = [[dynamicPanesController viewControllers] lastObject];
+        [foregroundPane setState:FCDynamicPaneStateRetracted];
+    }];
 }
 
 - (void)configureAppearance

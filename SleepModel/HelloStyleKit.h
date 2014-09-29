@@ -42,8 +42,6 @@
 + (UIImage*)chevronIconLeft;
 + (UIImage*)alarmNoteIcon;
 + (UIImage*)questionIcon;
-+ (UIImage*)onboardingBackgroundImage1;
-+ (UIImage*)onboardingBackgroundImage2;
 + (UIImage*)bluetoothLogoImage;
 + (UIImage*)wifiLogoImage;
 + (UIImage*)humidityIcon;

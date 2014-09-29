@@ -187,9 +187,6 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboardingBackgroundImage1.png" translatesAutoresizingMaskIntoConstraints="NO" id="Wbq-y8-hbc">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="wad-1H-Rve">
                                 <rect key="frame" x="23" y="78" width="274" height="70"/>
                                 <constraints>
@@ -215,7 +212,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="Sign up">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -230,7 +227,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="Sign in">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -254,11 +251,7 @@
                             <constraint firstAttribute="centerX" secondItem="LK8-dI-wjg" secondAttribute="centerX" id="7q2-1U-EL7"/>
                             <constraint firstItem="wad-1H-Rve" firstAttribute="top" secondItem="hhl-8I-0bE" secondAttribute="bottom" constant="58" id="IyX-iv-wOp"/>
                             <constraint firstItem="fLD-XK-tY6" firstAttribute="top" secondItem="NxD-eY-cDC" secondAttribute="bottom" constant="67" id="Mqw-go-GIX"/>
-                            <constraint firstAttribute="centerX" secondItem="Wbq-y8-hbc" secondAttribute="centerX" id="OmG-Ha-3fV"/>
                             <constraint firstItem="fLD-XK-tY6" firstAttribute="top" secondItem="7ag-Tw-G3s" secondAttribute="bottom" constant="15" id="WMt-c4-MQt"/>
-                            <constraint firstAttribute="height" secondItem="Wbq-y8-hbc" secondAttribute="height" id="Wh8-Uh-ZxS"/>
-                            <constraint firstAttribute="width" secondItem="Wbq-y8-hbc" secondAttribute="width" id="aSr-m5-C0d"/>
-                            <constraint firstAttribute="centerY" secondItem="Wbq-y8-hbc" secondAttribute="centerY" id="oyw-Td-Y5T"/>
                             <constraint firstAttribute="centerX" secondItem="7ag-Tw-G3s" secondAttribute="centerX" constant="-0.5" id="rmZ-Cb-r8U"/>
                             <constraint firstAttribute="centerX" secondItem="NxD-eY-cDC" secondAttribute="centerX" constant="-0.5" id="wGa-wn-ucD"/>
                             <constraint firstAttribute="centerX" secondItem="wad-1H-Rve" secondAttribute="centerX" id="xto-kr-1Ym"/>
@@ -267,7 +260,6 @@
                     <navigationItem key="navigationItem" id="Dvc-vG-kd8"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="bgImageView" destination="Wbq-y8-hbc" id="Mze-x6-QcH"/>
                         <outlet property="signinButton" destination="7ag-Tw-G3s" id="e0e-tz-H6Z"/>
                         <outlet property="signupButton" destination="NxD-eY-cDC" id="4Z2-aY-z5I"/>
                         <outlet property="subtitleLabel" destination="LK8-dI-wjg" id="a0w-Mx-AcP"/>
@@ -464,13 +456,6 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboardingBackgroundImage2.png" translatesAutoresizingMaskIntoConstraints="NO" id="xGH-1d-jkJ">
-                                <rect key="frame" x="-10" y="-10" width="340" height="608"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="608" id="HAt-py-NFQ"/>
-                                    <constraint firstAttribute="width" constant="340" id="bY0-qi-mu4"/>
-                                </constraints>
-                            </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More about you" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="45s-Pz-c3A">
                                 <rect key="frame" x="23" y="28" width="274" height="34"/>
                                 <constraints>
@@ -478,7 +463,7 @@
                                     <constraint firstAttribute="height" constant="34" id="uFM-6n-fkf"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="28"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="59R-yf-Q1G">
@@ -490,13 +475,13 @@
                                 <attributedString key="attributedText">
                                     <fragment content="To get an accurate picture of the quality of your sleep, we'll need more info about you, like your age, weight, or height.">
                                         <attributes>
-                                            <color key="NSColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="NSColor" red="0.21176470588235294" green="0.21176470588235294" blue="0.21176470588235294" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="18" name="HelveticaNeue-Light"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
-                                <nil key="highlightedColor"/>
+                                <color key="highlightedColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Nkf-eQ-SM0" customClass="HEMActionButton">
                                 <rect key="frame" x="100" y="464" width="119" height="40"/>
@@ -506,7 +491,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="Let's go">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -521,7 +506,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="Wait, I need a scale...">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -531,7 +516,6 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="xGH-1d-jkJ" secondAttribute="centerX" id="Cai-vw-klD"/>
                             <constraint firstAttribute="centerX" secondItem="45s-Pz-c3A" secondAttribute="centerX" id="QZV-8N-8QG"/>
                             <constraint firstItem="59R-yf-Q1G" firstAttribute="top" secondItem="45s-Pz-c3A" secondAttribute="bottom" constant="14" id="V2G-3g-np9"/>
                             <constraint firstAttribute="centerX" secondItem="Nkf-eQ-SM0" secondAttribute="centerX" constant="0.5" id="V7G-FM-eG5"/>
@@ -540,14 +524,10 @@
                             <constraint firstAttribute="centerX" secondItem="vcC-x2-B8z" secondAttribute="centerX" id="dTC-MG-As0"/>
                             <constraint firstItem="45s-Pz-c3A" firstAttribute="top" secondItem="DDQ-wG-B8c" secondAttribute="bottom" constant="8" id="ehG-nc-URj"/>
                             <constraint firstItem="bQ4-fe-iRl" firstAttribute="top" secondItem="Nkf-eQ-SM0" secondAttribute="bottom" constant="64" id="kOG-si-7Yz"/>
-                            <constraint firstAttribute="centerY" secondItem="xGH-1d-jkJ" secondAttribute="centerY" constant="-10" id="s43-O5-Gem"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="g6m-uq-Vy2"/>
                     <nil key="simulatedTopBarMetrics"/>
-                    <connections>
-                        <outlet property="bgImageView" destination="xGH-1d-jkJ" id="Zpt-87-QyX"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9wc-7i-qfp" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -1466,8 +1446,6 @@
         <image name="femaleIcon.png" width="30" height="46"/>
         <image name="maleIcon.png" width="39" height="40"/>
         <image name="mapIcon.png" width="476" height="237"/>
-        <image name="onboardingBackgroundImage1.png" width="350" height="587"/>
-        <image name="onboardingBackgroundImage2.png" width="350" height="576"/>
         <image name="phoneWithEmoticons.png" width="191" height="244"/>
         <image name="sense.png" width="151" height="151"/>
         <image name="sleep_pill.png" width="122" height="125"/>

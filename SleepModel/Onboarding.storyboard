@@ -853,10 +853,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sleep_pill.png" translatesAutoresizingMaskIntoConstraints="NO" id="k3x-K0-1su">
-                                <rect key="frame" x="99" y="236" width="122" height="125"/>
+                                <rect key="frame" x="93" y="237" width="134" height="146"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="125" id="bRp-yH-j8w"/>
-                                    <constraint firstAttribute="width" constant="122" id="lM8-be-k02"/>
+                                    <constraint firstAttribute="height" constant="146" id="bRp-yH-j8w"/>
+                                    <constraint firstAttribute="width" constant="134" id="lM8-be-k02"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cxf-NO-tVI" customClass="HEMActionButton">
@@ -885,7 +885,7 @@
                             <constraint firstItem="dQE-eQ-cvY" firstAttribute="top" secondItem="ded-Ea-3CR" secondAttribute="bottom" constant="14" id="eWd-Jy-FGx"/>
                             <constraint firstAttribute="centerX" secondItem="k3x-K0-1su" secondAttribute="centerX" id="fMx-if-rjc"/>
                             <constraint firstItem="ded-Ea-3CR" firstAttribute="top" secondItem="SS5-15-dp3" secondAttribute="bottom" constant="8" id="rUe-t9-SRX"/>
-                            <constraint firstItem="k3x-K0-1su" firstAttribute="top" secondItem="dQE-eQ-cvY" secondAttribute="bottom" constant="80" id="wcA-EZ-Y7I"/>
+                            <constraint firstItem="k3x-K0-1su" firstAttribute="top" secondItem="dQE-eQ-cvY" secondAttribute="bottom" constant="81" id="wcA-EZ-Y7I"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rMe-eX-uln"/>
@@ -1448,7 +1448,7 @@
         <image name="mapIcon.png" width="476" height="237"/>
         <image name="phoneWithEmoticons.png" width="191" height="244"/>
         <image name="sense.png" width="151" height="151"/>
-        <image name="sleep_pill.png" width="122" height="125"/>
+        <image name="sleep_pill.png" width="134" height="146"/>
         <image name="wifiLogoImage.png" width="182" height="129"/>
     </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -1457,7 +1457,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="mO6-0R-vRY"/>
+        <segue reference="nrK-aH-Age"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

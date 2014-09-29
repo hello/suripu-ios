@@ -13,6 +13,7 @@
 #import "HEMActionButton.h"
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
+#import "HEMAnimationUtils.h"
 
 static CGFloat const kHEMSleepAnswerButtonBorderWidth = 1.0f;
 static CGFloat const kHEMSleepAnswerButtonHeight = 50.0f;
@@ -20,6 +21,8 @@ static CGFloat const kHEMSleepAnswerSpacing = 15.0f;
 static CGFloat const kHEMSleepViewAnimDuration = 0.2f;
 static CGFloat const kHEMSleepAnswerDisplayDelay = 0.2f;
 static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
+static CGFloat const kHEMSleepActivityDuration = 3.0f;
+static CGFloat const kHEMSleepActivityLineWidth = 2.0f;
 
 @interface HEMSleepQuestionsViewController ()
 
@@ -33,21 +36,20 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 @property (assign, nonatomic) NSInteger questionIndex;
 
 @property (strong, nonatomic) SENQuestion* currentQuestion;
+@property (strong, nonatomic) CALayer* activityLayer;
 
 @end
 
 @implementation HEMSleepQuestionsViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self setQuestionIndex:0];
     [self setupBackgroundImage];
     [self displayQuestionAtIndex:[self questionIndex]];
 }
 
-- (void)setupBackgroundImage
-{
+- (void)setupBackgroundImage {
     if ([self bgImage] != nil) {
         UIImageView* bgImageView = [[UIImageView alloc] initWithFrame:[[self view] bounds]];
         [bgImageView setImage:[self bgImage]];
@@ -59,8 +61,7 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
     }
 }
 
-- (void)displayQuestionAtIndex:(NSInteger)index
-{
+- (void)displayQuestionAtIndex:(NSInteger)index {
     if (index >= [[self questions] count])
         return;
 
@@ -88,8 +89,7 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
     [[self choicesScrollView] setContentSize:contentSize];
 }
 
-- (UIButton*)buttonForAnswer:(SENAnswer*)answer withFrame:(CGRect)frame
-{
+- (UIButton*)buttonForAnswer:(SENAnswer*)answer withFrame:(CGRect)frame {
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
 
     [button addTarget:self
@@ -111,24 +111,30 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
     return button;
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self animateIn];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
 }
 
-- (void)animateIn
-{
+- (void)showActivityOn:(UIButton*)button {
+    if ([self activityLayer] != nil) [[self activityLayer] removeFromSuperlayer];
+    [self setActivityLayer:[HEMAnimationUtils animateActivityAround:button]];
+}
+
+- (void)stopActivity {
+    [[self activityLayer] removeFromSuperlayer];
+    [self setActivityLayer:nil];
+}
+
+- (void)animateIn {
     NSInteger index = 0;
     for (UIView* subview in [[self choicesScrollView] subviews]) {
         if ([subview isKindOfClass:[UIButton class]]) {
@@ -145,23 +151,22 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
     }
 }
 
-- (void)animateOut
-{
+- (void)animateOut {
+    [[self activityLayer] removeFromSuperlayer];
     [UIView animateWithDuration:kHEMSleepViewAnimDuration
-        animations:^{
+                     animations:^{
                          [[self titleLabel] setAlpha:0.0f];
                          [[self titleSeparator] setAlpha:0.0f];
                          [[self questionLabel] setAlpha:0.0f];
                          [[self choicesScrollView] setAlpha:0.0f];
                          [[self skipButton] setAlpha:0.0f];
-        }
-        completion:^(BOOL finished) {
+                     }
+                     completion:^(BOOL finished) {
                          [self aniamteThankyou];
-        }];
+                     }];
 }
 
-- (void)aniamteThankyou
-{
+- (void)aniamteThankyou {
     [[self thankLabel] setHidden:NO];
     [[self youLabel] setHidden:NO];
     [UIView animateWithDuration:kHEMSleepViewAnimDuration
@@ -180,10 +185,11 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
                      completion:nil];
 }
 
+
+
 #pragma mark - Actions
 
-- (void)showError:(__unused NSError*)error
-{
+- (void)showError:(__unused NSError*)error {
     [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"questions.failed.title", nil)
                                 message:NSLocalizedString(@"questions.error.unexpected", nil)
                                delegate:nil
@@ -191,8 +197,7 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
                       otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
 }
 
-- (void)enableAnswerButtons:(BOOL)enable except:(UIButton*)choiceButton
-{
+- (void)enableAnswerButtons:(BOOL)enable except:(UIButton*)choiceButton {
     for (UIView* subview in [[self choicesScrollView] subviews]) {
         if ([subview isKindOfClass:[UIButton class]]) {
             UIButton* button = (UIButton*)subview;
@@ -208,19 +213,21 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
     }
 }
 
-- (void)selectAnswer:(UIButton*)choiceButton
-{
+- (void)selectAnswer:(UIButton*)choiceButton {
     NSInteger index = [choiceButton tag];
     SENAnswer* answer = [[self currentQuestion] choices][index];
 
+    [self showActivityOn:choiceButton];
     [self enableAnswerButtons:NO except:choiceButton];
-
+    
     SENServiceQuestions* service = [SENServiceQuestions sharedService];
 
     __weak typeof(self) weakSelf = self;
     [service submitAnswer:answer completion:^(NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
+            
+            [strongSelf stopActivity];
             
             if (error == nil) {
                 NSInteger nextQIndex = [strongSelf questionIndex]+1;
@@ -240,16 +247,14 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
     }];
 }
 
-- (IBAction)skip:(id)sender
-{
+- (IBAction)skip:(id)sender {
     [[SENServiceQuestions sharedService] setQuestionsAskedToday];
     [self dismiss];
 }
 
 #pragma mark - Navigation
 
-- (void)dismiss
-{
+- (void)dismiss {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

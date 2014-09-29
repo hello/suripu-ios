@@ -7,13 +7,15 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
 
+static CGFloat const kHEMGenderPickerDeselectedAlpha = 0.5f;
+static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
+
 @interface HEMGenderPickerViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton* femaleIconButton;
 @property (weak, nonatomic) IBOutlet UIButton* femaleTitleButton;
 @property (weak, nonatomic) IBOutlet UIButton* maleIconButton;
 @property (weak, nonatomic) IBOutlet UIButton* maleTitleButton;
-@property (weak, nonatomic) IBOutlet UIButton* otherTitleButton;
 @property (weak, nonatomic) IBOutlet UIView* lineView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *fIconButtonBotConstraint;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
@@ -24,8 +26,7 @@
 
 @implementation HEMGenderPickerViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     
     if ([self delegate] != nil) {
@@ -41,7 +42,7 @@
             [self setGenderAsFemale:nil];
             break;
         default:
-            [self setGenderAsOther:nil];
+            [self setGenderAsOther];
             break;
     }
 }
@@ -53,11 +54,8 @@
         case SENAccountGenderFemale:
             [self moveLineUnderButton:[self femaleTitleButton]];
             break;
-        case SENAccountGenderMale:
-            [self moveLineUnderButton:[self maleTitleButton]];
-            break;
         default:
-            [self moveLineUnderButton:[self otherTitleButton]];
+            [self moveLineUnderButton:[self maleTitleButton]];
             break;
     }
 }
@@ -72,47 +70,41 @@
     [self updateConstraint:[self fIconButtonBotConstraint] withDiff:diff];
 }
 
-- (IBAction)setGenderAsFemale:(id)sender
-{
+- (IBAction)setGenderAsFemale:(id)sender {
+    [[self lineView] setHidden:NO];
     [self setSelectedGender:SENAccountGenderFemale];
     [self selectButton:self.femaleTitleButton];
     [UIView animateWithDuration:0.5f animations:^{
-        self.femaleTitleButton.alpha = 1.f;
-        self.femaleIconButton.alpha = 1.f;
-        self.maleIconButton.alpha = 0.5f;
-        self.maleTitleButton.alpha = 0.5f;
-        self.otherTitleButton.alpha = 0.5f;
+        self.femaleTitleButton.alpha = kHEMGenderPickerSelectedAlpha;
+        self.femaleIconButton.alpha = kHEMGenderPickerSelectedAlpha;
+        self.maleIconButton.alpha = kHEMGenderPickerDeselectedAlpha;
+        self.maleTitleButton.alpha = kHEMGenderPickerDeselectedAlpha;
     }];
 }
 
-- (IBAction)setGenderAsOther:(id)sender
-{
-    [self setSelectedGender:SENAccountGenderOther];
-    [self selectButton:self.otherTitleButton];
-    [UIView animateWithDuration:0.5f animations:^{
-        self.femaleTitleButton.alpha = 0.5f;
-        self.femaleIconButton.alpha = 0.5f;
-        self.maleIconButton.alpha = 0.5f;
-        self.maleTitleButton.alpha = 0.5f;
-        self.otherTitleButton.alpha = 1.f;
-    }];
-}
-
-- (IBAction)setGenderAsMale:(id)sender
-{
+- (IBAction)setGenderAsMale:(id)sender {
+    [[self lineView] setHidden:NO];
     [self setSelectedGender:SENAccountGenderMale];
     [self selectButton:self.maleTitleButton];
     [UIView animateWithDuration:0.5f animations:^{
-        self.femaleTitleButton.alpha = 0.5f;
-        self.femaleIconButton.alpha = 0.5f;
-        self.maleIconButton.alpha = 1.f;
-        self.maleTitleButton.alpha = 1.f;
-        self.otherTitleButton.alpha = 0.5;
+        self.femaleTitleButton.alpha = kHEMGenderPickerDeselectedAlpha;
+        self.femaleIconButton.alpha = kHEMGenderPickerDeselectedAlpha;
+        self.maleIconButton.alpha = kHEMGenderPickerSelectedAlpha;
+        self.maleTitleButton.alpha = kHEMGenderPickerSelectedAlpha;
     }];
 }
 
-- (void)selectButton:(UIButton*)button
-{
+- (void)setGenderAsOther {
+    [self setSelectedGender:SENAccountGenderOther];
+    [[self lineView] setHidden:YES];
+    [[self femaleIconButton] setAlpha:kHEMGenderPickerDeselectedAlpha];
+    [[self femaleTitleButton] setAlpha:kHEMGenderPickerDeselectedAlpha];
+    [[self maleIconButton] setAlpha:kHEMGenderPickerDeselectedAlpha];
+    [[self maleTitleButton] setAlpha:kHEMGenderPickerDeselectedAlpha];
+    [self moveLineUnderButton:[self maleTitleButton]]; // just move it somewhere
+}
+
+- (void)selectButton:(UIButton*)button {
     [UIView animateWithDuration:0.25f animations:^{
         [self moveLineUnderButton:button];
     }];

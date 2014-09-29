@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="s6I-B7-593">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -946,7 +947,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMR-u0-kGh" userLabel="femaleIconButton">
-                                <rect key="frame" x="58" y="205" width="30" height="46"/>
+                                <rect key="frame" x="80" y="205" width="30" height="46"/>
                                 <state key="normal" image="femaleIcon.png">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -956,7 +957,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A6X-Ja-RGS" userLabel="maleIconButton">
-                                <rect key="frame" x="141" y="205" width="39" height="40"/>
+                                <rect key="frame" x="201" y="205" width="39" height="40"/>
                                 <state key="normal" image="maleIcon.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -965,7 +966,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Im-vl-hQo">
-                                <rect key="frame" x="48" y="301" width="49" height="30"/>
+                                <rect key="frame" x="70" y="301" width="49" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Female">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -976,7 +977,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F1J-He-hsq">
-                                <rect key="frame" x="144" y="301" width="33" height="30"/>
+                                <rect key="frame" x="200" y="301" width="33" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Male">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -986,19 +987,8 @@
                                     <action selector="setGenderAsMale:" destination="gpF-55-MmK" eventType="touchUpInside" id="bdz-tS-cJB"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Wme-m1-g9S">
-                                <rect key="frame" x="224" y="301" width="38" height="30"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
-                                <state key="normal" title="Other">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="setGenderAsOther:" destination="gpF-55-MmK" eventType="touchUpInside" id="ANm-XA-ZKv"/>
-                                </connections>
-                            </button>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="kcS-lE-b2D" userLabel="Line">
-                                <rect key="frame" x="224" y="334" width="38" height="1"/>
+                                <rect key="frame" x="197" y="334" width="38" height="1"/>
                                 <color key="backgroundColor" red="0.37647058823529411" green="0.58039215686274503" blue="1" alpha="1" colorSpace="deviceRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-fl-V5h" customClass="HEMActionButton">
@@ -1019,18 +1009,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="F1J-He-hsq" firstAttribute="leading" secondItem="Wme-m1-g9S" secondAttribute="leading" constant="-80" id="3BE-pG-O6Q"/>
                             <constraint firstItem="S9f-tS-yQg" firstAttribute="top" secondItem="ecZ-6f-bII" secondAttribute="bottom" constant="8" id="9VW-bQ-Kxg"/>
-                            <constraint firstItem="qMR-u0-kGh" firstAttribute="leading" secondItem="A6X-Ja-RGS" secondAttribute="leading" constant="-83" id="Jk0-PS-YeC"/>
-                            <constraint firstItem="qMR-u0-kGh" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leadingMargin" constant="42" id="JlJ-1g-xke"/>
+                            <constraint firstItem="qMR-u0-kGh" firstAttribute="leading" secondItem="A6X-Ja-RGS" secondAttribute="leading" constant="-121" id="Jk0-PS-YeC"/>
+                            <constraint firstItem="qMR-u0-kGh" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leadingMargin" constant="64" id="JlJ-1g-xke"/>
                             <constraint firstItem="A6X-Ja-RGS" firstAttribute="bottom" secondItem="F1J-He-hsq" secondAttribute="bottom" constant="-86" id="LVz-XS-fq6"/>
-                            <constraint firstItem="3Im-vl-hQo" firstAttribute="leading" secondItem="F1J-He-hsq" secondAttribute="leading" constant="-96" id="MME-ak-aeP"/>
+                            <constraint firstItem="3Im-vl-hQo" firstAttribute="leading" secondItem="F1J-He-hsq" secondAttribute="leading" constant="-130" id="MME-ak-aeP"/>
                             <constraint firstAttribute="centerX" secondItem="gMf-fl-V5h" secondAttribute="centerX" constant="-0.5" id="SKB-xc-oOV"/>
                             <constraint firstItem="3Im-vl-hQo" firstAttribute="bottom" secondItem="qMR-u0-kGh" secondAttribute="bottom" constant="80" id="dV7-qh-EWN"/>
-                            <constraint firstItem="F1J-He-hsq" firstAttribute="top" secondItem="Wme-m1-g9S" secondAttribute="top" id="efL-Zc-446"/>
                             <constraint firstItem="qMR-u0-kGh" firstAttribute="top" secondItem="A6X-Ja-RGS" secondAttribute="top" id="hZq-RH-R2x"/>
                             <constraint firstItem="S9f-tS-yQg" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leading" constant="23" id="jHg-2u-Bs6"/>
-                            <constraint firstItem="3Im-vl-hQo" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leadingMargin" constant="32" id="muD-lJ-MLZ"/>
+                            <constraint firstItem="3Im-vl-hQo" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leadingMargin" constant="54" id="muD-lJ-MLZ"/>
                             <constraint firstItem="d85-24-UBP" firstAttribute="top" secondItem="gMf-fl-V5h" secondAttribute="bottom" constant="64" id="qTR-nX-xSy"/>
                             <constraint firstItem="qMR-u0-kGh" firstAttribute="bottom" secondItem="S9f-tS-yQg" secondAttribute="bottom" constant="189" id="uyR-v6-vMC"/>
                         </constraints>
@@ -1044,7 +1032,6 @@
                         <outlet property="lineView" destination="kcS-lE-b2D" id="pZs-9m-a7r"/>
                         <outlet property="maleIconButton" destination="A6X-Ja-RGS" id="h1Q-Wu-Y0e"/>
                         <outlet property="maleTitleButton" destination="F1J-He-hsq" id="arl-cl-XdC"/>
-                        <outlet property="otherTitleButton" destination="Wme-m1-g9S" id="Gvd-xb-zh1"/>
                         <segue destination="uc7-01-jZi" kind="push" identifier="height" id="2QV-xl-cNq"/>
                     </connections>
                 </viewController>
@@ -1385,11 +1372,11 @@
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bluetoothLogoImage.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
-                                <rect key="frame" x="123" y="196" width="75" height="142"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
+                                <rect key="frame" x="85" y="196" width="151" height="151"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="75" id="QS5-mQ-I2e"/>
-                                    <constraint firstAttribute="height" constant="142" id="e2c-Wq-J9g"/>
+                                    <constraint firstAttribute="width" constant="151" id="QS5-mQ-I2e"/>
+                                    <constraint firstAttribute="height" constant="151" id="e2c-Wq-J9g"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2TQ-o7-Rs6" customClass="HEMActionButton">
@@ -1451,7 +1438,7 @@
                             <constraint firstAttribute="centerX" secondItem="2TQ-o7-Rs6" secondAttribute="centerX" id="P48-hu-073"/>
                             <constraint firstItem="8HN-0C-IaD" firstAttribute="top" secondItem="2TQ-o7-Rs6" secondAttribute="bottom" constant="12" id="mUu-Zl-XzL"/>
                             <constraint firstAttribute="centerX" secondItem="xHT-0z-rBN" secondAttribute="centerX" id="ozs-vz-nM1"/>
-                            <constraint firstItem="2TQ-o7-Rs6" firstAttribute="top" secondItem="Awm-Mz-tO7" secondAttribute="bottom" constant="84" id="tOO-kJ-Uir"/>
+                            <constraint firstItem="2TQ-o7-Rs6" firstAttribute="top" secondItem="Awm-Mz-tO7" secondAttribute="bottom" constant="75" id="tOO-kJ-Uir"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MWW-Jm-AdT"/>
@@ -1475,7 +1462,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="bluetoothLogoImage.png" width="75" height="144"/>
         <image name="doubleArrow.png" width="35" height="63"/>
         <image name="femaleIcon.png" width="30" height="46"/>
         <image name="maleIcon.png" width="39" height="40"/>
@@ -1483,6 +1469,7 @@
         <image name="onboardingBackgroundImage1.png" width="350" height="587"/>
         <image name="onboardingBackgroundImage2.png" width="350" height="576"/>
         <image name="phoneWithEmoticons.png" width="191" height="244"/>
+        <image name="sense.png" width="151" height="151"/>
         <image name="sleep_pill.png" width="122" height="125"/>
         <image name="wifiLogoImage.png" width="182" height="129"/>
     </resources>
@@ -1492,7 +1479,7 @@
         <simulatedScreenMetrics key="destination" type="retina4"/>
     </simulatedMetricsContainer>
     <inferredMetricsTieBreakers>
-        <segue reference="nrK-aH-Age"/>
+        <segue reference="mO6-0R-vRY"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

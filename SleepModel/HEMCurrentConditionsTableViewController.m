@@ -40,8 +40,19 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     // causes a relatively huge delay before anything actually moves
     [self refreshSensors];
     [self setLoading:YES];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSensors) name:SENSensorUpdatedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSensors) name:SENSensorsUpdatedNotification object:nil];
+    
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(refreshSensors)
+                   name:SENSensorUpdatedNotification object:nil];
+    [center addObserver:self
+               selector:@selector(refreshSensors)
+                   name:SENSensorsUpdatedNotification object:nil];
+    [center addObserver:self
+               selector:@selector(failedToRefreshSensors)
+                   name:SENSensorUpdateFailedNotification
+                 object:nil];
+    
     [SENSensor refreshCachedSensors];
 }
 
@@ -51,15 +62,18 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)refreshSensors
-{
+- (void)failedToRefreshSensors {
+    [self setLoading:NO];
+    [self.tableView reloadData];
+}
+
+- (void)refreshSensors {
     self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
         return [obj1.name compare:obj2.name];
     }];
     
     [self setLoading:NO];
     [self.tableView reloadData];
-    [self.view setNeedsLayout];
 }
 
 #pragma mark - UITableViewDataSource

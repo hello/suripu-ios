@@ -16,16 +16,20 @@
 
 @property (nonatomic, strong) SENDevice* sense;
 @property (nonatomic, strong) SENDevice* pill;
+@property (nonatomic, assign) BOOL loading;
 
 @end
 
 @implementation HEMDevicesDataSource
 
 - (void)loadDevices:(void(^)(void))completion {
+    [self setLoading:YES];
+    
     __weak typeof(self) weakSelf = self;
     [SENAPIDevice getPairedDevices:^(NSArray* devices, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
+            [strongSelf setLoading:NO];
             [strongSelf processDevices:devices];
         }
         if (completion) completion();

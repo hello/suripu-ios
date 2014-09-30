@@ -3,6 +3,7 @@
 "confidentiality-warning.format" = "CONFIDENTIAL - Hello Inc (%@)";
 
 "empty-data" = "--";
+"loading" = "Loading...";
 
 // sign up
 "sign-up.title" = "Sign Up";

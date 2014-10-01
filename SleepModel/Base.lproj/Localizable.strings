@@ -64,6 +64,10 @@
 "settings.pill.dialog.unpair-no-sense-message" = "To unpair your Sleep Pill, you must be near your Sense device and Sense must be powered on.";
 "settings.pill.need-pill" = "I need a Sleep Pill";
 "settings.pill.pair-no-sense-message" = "A Sense must be paired to your account in order to pair a Sleep Pill.";
+"settings.sense.signal" = "Signal";
+"settings.sense.signal.weak" = "Weak";
+"settings.sense.signal.good" = "Good";
+"settings.sense.signal.strong" = "Strong";
 
 // insights
 "sleep.insights.title" = "Sleep Insights";

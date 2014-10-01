@@ -74,7 +74,7 @@ static NSString* const kHEMNoPillOrderURL = @"https://order.hello.is/";
 }
 
 - (IBAction)pairPill:(id)sender {
-    if ([self sense] == nil) {
+    if ([self senseManager] == nil) {
         [self showNoSenseAlert];
     } // TODO: (jimmy): implement it! ... but it requires Sense to be working
 }

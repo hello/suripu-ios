@@ -7,11 +7,14 @@
 //
 
 #import <SenseKit/SENDevice.h>
+#import <SenseKit/SENSense.h>
+#import <SenseKit/SENSenseManager.h>
 
 #import "HEMDevicesViewController.h"
 #import "HEMDevicesDataSource.h"
 #import "HEMPillViewController.h"
 #import "HEMSenseViewController.h"
+#import "HEMNoPillViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
 
@@ -19,6 +22,7 @@
 
 @property (weak,   nonatomic) IBOutlet UITableView *devicesTableView;
 @property (strong, nonatomic)          HEMDevicesDataSource* deviceDataSource;
+@property (strong, nonatomic)          SENSenseManager* senseManager;
 
 @end
 
@@ -38,12 +42,22 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             [[strongSelf devicesTableView] reloadData];
+            
+            SENSense* sense = [[strongSelf deviceDataSource] sense];
+            if (sense != nil) {
+                [strongSelf setSenseManager:[[SENSenseManager alloc] initWithSense:sense]];
+            }
         }
     }];
 }
 
 - (NSString*)lastSeen:(SENDevice*)device {
     return NSLocalizedString(@"settings.device.last-seen", nil);
+}
+
+- (BOOL)isLoading:(NSIndexPath*)indexPath {
+    return ([[self deviceDataSource] isSenseLoading] && [indexPath row] == 0)
+        || ([[self deviceDataSource] isPillLoading] && [indexPath row] == 1);
 }
 
 #pragma mark - UITableViewDelegate
@@ -54,22 +68,22 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UIActivityIndicatorView* activity = nil;
     
-    SENDevice* device
+    SENDevice* deviceInfo
         = [indexPath row] == 0
-        ? [[self deviceDataSource] sense]
-        : [[self deviceDataSource] pill];
+        ? [[self deviceDataSource] senseInfo]
+        : [[self deviceDataSource] pillInfo];
     
     NSString* status = nil;
     
-    if ([[self deviceDataSource] isLoading]) {
+    if ([self isLoading:indexPath]) {
         status = NSLocalizedString(@"empty-data", nil);
         activity =
             [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     } else {
         status
-            = device == nil
+            = deviceInfo == nil
             ? NSLocalizedString(@"settings.device.status.not-paired", nil)
-            : [self lastSeen:device];
+            : [self lastSeen:deviceInfo];
     }
     
     NSString* name
@@ -98,14 +112,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[self deviceDataSource] isLoading]) return;
+    if ([self isLoading:indexPath]) {
+        return;
+    }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
     NSString* segueId = nil;
     if ([indexPath row] == 0) {
         segueId = [HEMMainStoryboard senseSegueIdentifier];
-    } else if ([[self deviceDataSource] pill] == nil){
+    } else if ([[self deviceDataSource] pillInfo] == nil){
         segueId = [HEMMainStoryboard noSleepPillSegueIdentifier];
     } else {
         segueId = [HEMMainStoryboard pillSegueIdentifier];
@@ -120,11 +136,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     id destVC = [segue destinationViewController];
     if ([destVC isKindOfClass:[HEMPillViewController class]]) {
         HEMPillViewController* pillVC = (HEMPillViewController*)destVC;
-        [pillVC setPill:[[self deviceDataSource] pill]];
-        [pillVC setSense:[[self deviceDataSource] sense]];
+        [pillVC setPillInfo:[[self deviceDataSource] pillInfo]];
+        [pillVC setSenseManager:[self senseManager]];
     } else if ([destVC isKindOfClass:[HEMSenseViewController class]]) {
         HEMSenseViewController* senseVC = (HEMSenseViewController*)destVC;
-        [senseVC setSense:[[self deviceDataSource] sense]];
+        [senseVC setSenseInfo:[[self deviceDataSource] senseInfo]];
+        [senseVC setSenseManager:[self senseManager]];
+    } else if ([destVC isKindOfClass:[HEMNoPillViewController class]]) {
+        HEMNoPillViewController* noPillVC = (HEMNoPillViewController*)destVC;
+        [noPillVC setSenseManager:[self senseManager]];
     }
 }
 

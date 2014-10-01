@@ -7,6 +7,7 @@
 //
 
 #import <SenseKit/SENDevice.h>
+#import <SenseKit/SENSenseManager.h>
 
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
@@ -15,6 +16,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView *senseInfoTableView;
 @property (weak, nonatomic) IBOutlet UIView *manageSenseView;
+@property (copy, nonatomic) NSString* senseSignalStrength;
 
 @end
 
@@ -23,21 +25,48 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self senseInfoTableView] setTableFooterView:[[UIView alloc] init]];
-    [[self manageSenseView] setHidden:[self sense] == nil];
+    [[self manageSenseView] setHidden:[self senseInfo] == nil];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self loadSenseRSSI];
+}
+
+- (void)loadSenseRSSI {
+    if ([self senseManager] != nil) {
+        __weak typeof(self) weakSelf = self;
+        [[self senseManager] currentRSSI:^(NSNumber* rssi) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                NSInteger value = [rssi integerValue];
+                NSString* strength = nil;
+                if (value >= 80) {
+                    strength = NSLocalizedString(@"settings.sense.signal.strong", nil);
+                } else if (value >= 60) {
+                    strength = NSLocalizedString(@"settings.sense.signal.good", nil);
+                } else if (value > 0){
+                    strength = NSLocalizedString(@"settings.sense.signal.weak", nil);
+                }
+                [strongSelf setSenseSignalStrength:strength];
+                [[strongSelf senseInfoTableView] reloadData];
+            }
+        } failure:nil];
+    }
 }
 
 #pragma mark - UITableViewDelegate / DataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger sections = 1; // the info
-    if ([[self sense] state] == SENDeviceStateFirmwareUpdate) {
+    if ([[self senseInfo] state] == SENDeviceStateFirmwareUpdate) {
         sections++; // need to show firmware update cell / section
     }
     return sections;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section == 0 ? 2 : 1;
+    return section == 0 ? 3 : 1;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -62,6 +91,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 break;
             }
             case 1: {
+                title = NSLocalizedString(@"settings.sense.signal", nil);
+                if ([self senseSignalStrength] != nil) {
+                    detail = [self senseSignalStrength];
+                }
+                break;
+            }
+            case 2: {
                 title = NSLocalizedString(@"settings.device.firmware-version", nil);
                 break;
             }

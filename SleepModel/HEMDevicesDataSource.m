@@ -6,39 +6,51 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENAPIDevice.h>
 #import <SenseKit/SENDevice.h>
+#import <SenseKit/SENSense.h>
 
 #import "HEMDevicesDataSource.h"
 #import "HEMMainStoryboard.h"
 
 @interface HEMDevicesDataSource()
 
-@property (nonatomic, strong) SENDevice* sense;
-@property (nonatomic, strong) SENDevice* pill;
-@property (nonatomic, assign) BOOL loading;
+@property (nonatomic, strong) SENSense* sense;
+@property (nonatomic, strong) SENDevice* senseInfo;
+@property (nonatomic, strong) SENDevice* pillInfo;
+@property (nonatomic, assign) BOOL pillLoading;
+@property (nonatomic, assign) BOOL senseLoading;
 
 @end
 
 @implementation HEMDevicesDataSource
 
 - (void)loadDevices:(void(^)(void))completion {
-    [self setLoading:YES];
+    [self setPillLoading:YES];
+    [self setSenseLoading:YES];
     
     __weak typeof(self) weakSelf = self;
     [SENAPIDevice getPairedDevices:^(NSArray* devices, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            [strongSelf setLoading:NO];
+            [strongSelf setPillLoading:NO];
             [strongSelf processDevices:devices];
+            
+            if ([strongSelf senseInfo] != nil) {
+                [strongSelf scanForActualDeviceWithInfo:[strongSelf senseInfo]];
+            } else {
+                [strongSelf setSenseLoading:NO];
+            }
         }
         if (completion) completion();
     }];
 }
 
 - (void)refresh:(void(^)(void))completion {
+    [self setSenseInfo:nil];
+    [self setPillInfo:nil];
     [self setSense:nil];
-    [self setPill:nil];
     [self loadDevices:completion];
 }
 
@@ -49,15 +61,35 @@
     // seen and take the most recently last seen of both the Sense and Pill
     SENDevice* device = nil;
     NSInteger i = [devices count] - 1;
-    while (i >= 0 && ([self sense] == nil || [self pill] == nil)) {
+    while (i >= 0 && ([self senseInfo] == nil || [self pillInfo] == nil)) {
         device = [devices objectAtIndex:i];
-        if ([self pill] == nil && [device type] == SENDeviceTypePill) {
-            [self setPill:device];
-        } else if ([self sense] == nil && [device type] == SENDeviceTypeSense) {
-            [self setSense:device];
+        if ([self pillInfo] == nil && [device type] == SENDeviceTypePill) {
+            [self setPillInfo:device];
+        } else if ([self senseInfo] == nil && [device type] == SENDeviceTypeSense) {
+            [self setSenseInfo:device];
         }
         i--;
     }
+}
+
+#pragma mark - BLE
+
+- (void)scanForActualDeviceWithInfo:(SENDevice*)senseInfo {
+    __weak typeof(self) weakSelf = self;
+    [SENSenseManager scanForSense:^(NSArray *senses) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            if ([senses count] > 0) {
+                for (SENSense* sense in senses) {
+                    if ([[sense deviceId] isEqualToString:[senseInfo deviceId]]) {
+                        [strongSelf setSense:sense];
+                        break;
+                    }
+                }
+            }
+            [strongSelf setSenseLoading:NO];
+        }
+    }];
 }
 
 #pragma mark - UITableViewDataSource
@@ -76,6 +108,12 @@
     }
     
     return cell;
+}
+
+#pragma mark - Cleanup
+
+- (void)dealloc {
+    [SENSenseManager stopScan]; // in case it's still scanning
 }
 
 @end

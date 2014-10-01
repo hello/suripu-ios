@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self pillInfoTableView] setTableFooterView:[[UIView alloc] init]];
-    [[self unpairView] setHidden:[self pill] == nil];
+    [[self unpairView] setHidden:[self pillInfo] == nil];
 }
 
 #pragma mark - UITableViewDelegate / DataSource
@@ -72,7 +72,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Actions
 
 - (IBAction)showUnpairConfirmation:(id)sender {
-    if ([self sense] != nil) {
+    if ([self senseManager] != nil) {
         [self showUnpairConfirmationAlert];
     } else {
         [self showNoSenseAlert];

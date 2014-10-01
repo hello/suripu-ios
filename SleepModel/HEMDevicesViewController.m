@@ -102,10 +102,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSString* segueId
-        = [indexPath row] == 0
-        ? [HEMMainStoryboard senseSegueIdentifier]
-        : [HEMMainStoryboard pillSegueIdentifier];
+    NSString* segueId = nil;
+    if ([indexPath row] == 0) {
+        segueId = [HEMMainStoryboard senseSegueIdentifier];
+    } else if ([[self deviceDataSource] pill] == nil){
+        segueId = [HEMMainStoryboard noSleepPillSegueIdentifier];
+    } else {
+        segueId = [HEMMainStoryboard pillSegueIdentifier];
+    }
     
     [self performSegueWithIdentifier:segueId sender:self];
 }

@@ -5,6 +5,7 @@
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
 #import <JBChartView/JBLineChartView.h>
+#import <markdown_peg.h>
 
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphCollectionViewController.h"
@@ -77,7 +78,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
 - (void)reloadData
 {
     self.sleepResult = [SENSleepResult sleepResultForDate:self.dateForNightOfSleep];
-    [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError *error) {
+    [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError* error) {
         if (error) {
             NSLog(@"Failed to fetch timeline: %@", error.localizedDescription);
             return;
@@ -244,7 +245,13 @@ static NSString* const sensorTypeParticulates = @"particulates";
 {
     HEMSleepSummaryCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSummaryReuseIdentifier forIndexPath:indexPath];
     [cell setSleepScore:[self.sleepResult.score integerValue]];
-    cell.messageLabel.text = self.sleepResult.message;
+    UIFont* emFont = [UIFont fontWithName:@"Agile-Medium" size:cell.messageLabel.font.pointSize];
+    NSDictionary* attributes = @{
+        @(EMPH) : @{
+            NSFontAttributeName : emFont,
+        }
+    };
+    cell.messageLabel.attributedText = markdown_to_attr_string(self.sleepResult.message, 0, attributes);
     NSString* dateText = [[[self class] sleepDateFormatter] stringFromDate:self.dateForNightOfSleep];
     NSString* lastNightDateText = [[[self class] sleepDateFormatter] stringFromDate:[NSDate dateWithTimeInterval:-60 * 60 * 24 sinceDate:[NSDate date]]];
     if ([dateText isEqualToString:lastNightDateText]) {

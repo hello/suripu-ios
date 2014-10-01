@@ -2,6 +2,9 @@
 "current-conditions.title" = "Sense";
 "confidentiality-warning.format" = "CONFIDENTIAL - Hello Inc (%@)";
 
+"empty-data" = "--";
+"loading" = "Loading...";
+
 // sign up
 "sign-up.title" = "Sign Up";
 "sign-up.failed.title" = "Sign Up Failed";
@@ -53,6 +56,8 @@
 "settings.pill.dialog.unpair-message" = "Are you sure you want to unpair your Sleep Pill?  By doing so, we will no longer be able to track your sleep until you pair another Sleep Pill.";
 "settings.pill.dialog.unpair-no-sense-title" = "Sense Not Found";
 "settings.pill.dialog.unpair-no-sense-message" = "To unpair your Sleep Pill, you must be near your Sense device and Sense must be powered on.";
+"settings.pill.need-pill" = "I need a Sleep Pill";
+"settings.pill.pair-no-sense-message" = "A Sense must be paired to your account in order to pair a Sleep Pill.";
 
 // insights
 "sleep.insights.title" = "Sleep Insights";

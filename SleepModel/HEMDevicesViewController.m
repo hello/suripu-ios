@@ -52,15 +52,25 @@
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
+    UIActivityIndicatorView* activity = nil;
+    
     SENDevice* device
         = [indexPath row] == 0
         ? [[self deviceDataSource] sense]
         : [[self deviceDataSource] pill];
     
-    NSString* status
-        = device == nil
-        ? NSLocalizedString(@"settings.device.status.not-paired", nil)
-        : [self lastSeen:device];
+    NSString* status = nil;
+    
+    if ([[self deviceDataSource] isLoading]) {
+        status = NSLocalizedString(@"empty-data", nil);
+        activity =
+            [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    } else {
+        status
+            = device == nil
+            ? NSLocalizedString(@"settings.device.status.not-paired", nil)
+            : [self lastSeen:device];
+    }
     
     NSString* name
         = [indexPath row] == 0
@@ -75,15 +85,31 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setText:name];
     [[cell detailTextLabel] setText:status];
     [[cell imageView] setImage:icon];
+
+    if (activity != nil) {
+        [activity startAnimating];
+        [cell setAccessoryView:activity];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
+    } else {
+        [cell setAccessoryView:nil];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
+        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([[self deviceDataSource] isLoading]) return;
+    
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
-    NSString* segueId
-        = [indexPath row] == 0
-        ? [HEMMainStoryboard senseSegueIdentifier]
-        : [HEMMainStoryboard pillSegueIdentifier];
+    NSString* segueId = nil;
+    if ([indexPath row] == 0) {
+        segueId = [HEMMainStoryboard senseSegueIdentifier];
+    } else if ([[self deviceDataSource] pill] == nil){
+        segueId = [HEMMainStoryboard noSleepPillSegueIdentifier];
+    } else {
+        segueId = [HEMMainStoryboard pillSegueIdentifier];
+    }
     
     [self performSegueWithIdentifier:segueId sender:self];
 }

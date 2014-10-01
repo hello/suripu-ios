@@ -24,6 +24,12 @@
 @property (nonatomic, strong, readonly) SENDevice* pill;
 
 /**
+ * @property loading: indicates whether or not the devices are currently being
+ *                    retrieved
+ */
+@property (nonatomic, assign, readonly, getter=isLoading) BOOL loading;
+
+/**
  * Refresh the data, loading sense and pill if avaialble
  * @param completion: the completion block to invoke when done
  */

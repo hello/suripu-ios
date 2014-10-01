@@ -131,7 +131,7 @@ static UIFont* HEMSensorViewRegularFont;
     if (self.sensor.value) {
         self.valueLabel.text = [NSString stringWithFormat:@"%.0f", [[self.sensor valueInPreferredUnit] floatValue]];
     } else {
-        self.valueLabel.text = @"--";
+        self.valueLabel.text = NSLocalizedString(@"empty-data", nil);
     }
 
     self.unitLabel.text = [self.sensor localizedUnit];

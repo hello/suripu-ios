@@ -41,22 +41,19 @@
 forRowAtIndexPath:(NSIndexPath *)indexPath {
 
     NSString* title = nil;
-    NSString* detail = nil;
+    NSString* detail = NSLocalizedString(@"empty-data", nil); // TODO (jimmy): heartbeat/color data not yet implemented!
     
     switch ([indexPath row]) {
         case 0: {
             title = NSLocalizedString(@"settings.device.battery", nil);
-            detail = @"--"; // TODO (jimmy): heartbeat data not yet implemented!
             break;
         }
         case 1: {
             title = NSLocalizedString(@"settings.device.last-seen", nil);
-            detail = @"--"; // TODO (jimmy): heartbeat data not yet implemented!
             break;
         }
         case 2: {
             title = NSLocalizedString(@"settings.device.color", nil);
-            detail = @"--"; // TODO (jimmy): color not yet supported
             break;
         }
         default:

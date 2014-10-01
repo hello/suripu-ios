@@ -68,7 +68,7 @@
             nextSegueId = [HEMMainStoryboard unitsSettingsSegueIdentifier];
             break;
         case 3:
-            nextSegueId = [HEMMainStoryboard devicesSegueIdentifier];
+            nextSegueId = [HEMMainStoryboard devicesSettingsSegueIdentifier];
             break;
         case 4:
             [SENAuthorizationService deauthorize];

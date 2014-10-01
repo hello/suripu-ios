@@ -54,17 +54,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([indexPath section] == 0) {
         NSString* title = nil;
-        NSString* detail = nil;
+        NSString* detail = NSLocalizedString(@"empty-data", nil); // TODO (jimmy): data not supported yet;
         
         switch ([indexPath row]) {
             case 0: {
                 title = NSLocalizedString(@"settings.device.last-seen", nil);
-                detail = @"--"; // TODO (jimmy): heartbeat data not supported yet
                 break;
             }
             case 1: {
                 title = NSLocalizedString(@"settings.device.firmware-version", nil);
-                detail = @"--"; // TODO (jimmy): firmware version not supported yet
                 break;
             }
             default:

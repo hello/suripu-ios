@@ -15,6 +15,7 @@
 NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 @interface HEMCurrentConditionsTableViewController ()
 @property (nonatomic, strong) NSArray* sensors;
+@property (nonatomic, assign, getter=isLoading) BOOL loading;
 @end
 
 @implementation HEMCurrentConditionsTableViewController
@@ -31,12 +32,27 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // the below should reside in viewDidAppear rather than willAppear because
+    // if you drag the view back will call viewWillAppear, which consequently
+    // causes a relatively huge delay before anything actually moves
     [self refreshSensors];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSensors) name:SENSensorUpdatedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(refreshSensors) name:SENSensorsUpdatedNotification object:nil];
+    [self setLoading:YES];
+    
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(refreshSensors)
+                   name:SENSensorUpdatedNotification object:nil];
+    [center addObserver:self
+               selector:@selector(refreshSensors)
+                   name:SENSensorsUpdatedNotification object:nil];
+    [center addObserver:self
+               selector:@selector(failedToRefreshSensors)
+                   name:SENSensorUpdateFailedNotification
+                 object:nil];
+    
     [SENSensor refreshCachedSensors];
 }
 
@@ -46,13 +62,18 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)refreshSensors
-{
+- (void)failedToRefreshSensors {
+    [self setLoading:NO];
+    [self.tableView reloadData];
+}
+
+- (void)refreshSensors {
     self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
         return [obj1.name compare:obj2.name];
     }];
+    
+    [self setLoading:NO];
     [self.tableView reloadData];
-    [self.view setNeedsLayout];
 }
 
 #pragma mark - UITableViewDataSource
@@ -76,19 +97,6 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     }
 }
 
-//- (CGFloat)tableView:(UITableView*)tableView heightForRowAtIndexPath:(NSIndexPath*)indexPath
-//{
-//    if (indexPath.section == 0) {
-//        if (self.sensors.count > 0) {
-//            SENSensor* sensor = self.sensors[indexPath.row];
-//            if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
-//                return 114.f;
-//            }
-//        }
-//    }
-//    return 64.f;
-//}
-
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     UITableViewCell* cell = nil;
@@ -111,7 +119,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
 
     if (self.sensors.count <= indexPath.row) {
-        cell.titleLabel.text = NSLocalizedString(@"sensor.data-unavailable", nil);
+        cell.titleLabel.text = [self isLoading] ? NSLocalizedString(@"loading", nil) : NSLocalizedString(@"sensor.data-unavailable", nil);
         cell.detailLabel.text = nil;
         cell.glyphImageView.image = nil;
         cell.descriptionLabel.text = nil;

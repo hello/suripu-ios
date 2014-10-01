@@ -11,15 +11,23 @@
 @implementation HEMWifiCenter
 
 + (NSDictionary*)connectedWifiInfo {
-    NSArray *interfaces = (__bridge id)CNCopySupportedInterfaces();
+    CFArrayRef interfacesRef = CNCopySupportedInterfaces();
+    if (!interfacesRef) return nil;
+    
+    NSArray *interfaces = (__bridge id)interfacesRef;
     NSDictionary* info = nil;
     for (NSString *interface in interfaces) {
-        id networkInfo = (__bridge id)CNCopyCurrentNetworkInfo((__bridge CFStringRef)interface);
-        if ([networkInfo isKindOfClass:[NSDictionary class]] && [networkInfo count] >0) {
-            info = networkInfo;
-            break;
+        CFDictionaryRef networkInfoRef = CNCopyCurrentNetworkInfo((__bridge CFStringRef)interface);
+        if (networkInfoRef) {
+            info = [NSDictionary dictionaryWithDictionary:(__bridge id)networkInfoRef];
+            CFRelease(networkInfoRef);
+            if ([info count] > 0) {
+                break;
+            }
         }
     }
+    
+    CFRelease(interfacesRef);
     return info;
 }
 

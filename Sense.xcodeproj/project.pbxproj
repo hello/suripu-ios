@@ -914,12 +914,8 @@
 				8A90F9BB19637F9400AFD110 /* HEMSleepSoundTableViewController.m */,
 				BFB93C7119CB4EA9005067D0 /* HEMPersonalInfoViewController.h */,
 				BFB93C7219CB4EA9005067D0 /* HEMPersonalInfoViewController.m */,
-				BFB93C7419CB5F1D005067D0 /* HEMPersonalInfoDataSource.h */,
-				BFB93C7519CB5F1D005067D0 /* HEMPersonalInfoDataSource.m */,
 				BFB0FBD419D243A60056FFEC /* HEMDevicesViewController.h */,
 				BFB0FBD519D243A60056FFEC /* HEMDevicesViewController.m */,
-				BFB0FBD719D244B90056FFEC /* HEMDevicesDataSource.h */,
-				BFB0FBD819D244B90056FFEC /* HEMDevicesDataSource.m */,
 				BFB0FBDE19D3463E0056FFEC /* HEMPillViewController.h */,
 				BFB0FBDF19D3463E0056FFEC /* HEMPillViewController.m */,
 				BFB0FBE519D38D790056FFEC /* HEMSenseViewController.h */,
@@ -1079,6 +1075,7 @@
 			isa = PBXGroup;
 			children = (
 				8A660132199EBE37007E6167 /* Assets */,
+				BF781E3219DC84EC00B68EBC /* Data Sources */,
 				8A90F9B019635C7900AFD110 /* View Controllers */,
 				8A660136199EBED2007E6167 /* Views */,
 			);
@@ -1103,6 +1100,17 @@
 				BF3D2E4B19C37A62001DEEBA /* downArrow@2x.png */,
 			);
 			name = Assets;
+			sourceTree = "<group>";
+		};
+		BF781E3219DC84EC00B68EBC /* Data Sources */ = {
+			isa = PBXGroup;
+			children = (
+				BFB93C7419CB5F1D005067D0 /* HEMPersonalInfoDataSource.h */,
+				BFB93C7519CB5F1D005067D0 /* HEMPersonalInfoDataSource.m */,
+				BFB0FBD719D244B90056FFEC /* HEMDevicesDataSource.h */,
+				BFB0FBD819D244B90056FFEC /* HEMDevicesDataSource.m */,
+			);
+			name = "Data Sources";
 			sourceTree = "<group>";
 		};
 		BF80F6DD19BF99E800A4D779 /* Views */ = {

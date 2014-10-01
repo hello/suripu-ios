@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13E28" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PBf-9P-C9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
@@ -8,6 +8,8 @@
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Agile-Light.otf">
+            <string>Agile-Light</string>
+            <string>Agile-Light</string>
             <string>Agile-Light</string>
             <string>Agile-Light</string>
             <string>Agile-Light</string>
@@ -48,8 +50,6 @@
             <string>Agile-Medium</string>
         </mutableArray>
         <mutableArray key="Agile-Thin.otf">
-            <string>Agile-Thin</string>
-            <string>Agile-Thin</string>
             <string>Agile-Thin</string>
             <string>Agile-Thin</string>
             <string>Agile-Thin</string>
@@ -494,9 +494,9 @@
                                                         <action selector="clockStyleChanged:" destination="boH-6R-scP" eventType="valueChanged" id="X9D-TC-D1c"/>
                                                     </connections>
                                                 </segmentedControl>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clock Style" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dOk-WX-0sF">
-                                                    <rect key="frame" x="20" y="20" width="89" height="22"/>
-                                                    <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="18"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clock" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dOk-WX-0sF">
+                                                    <rect key="frame" x="20" y="20" width="44" height="22"/>
+                                                    <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="18"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -531,9 +531,9 @@
                                                         <action selector="temperatureFormatChanged:" destination="boH-6R-scP" eventType="valueChanged" id="d83-4X-4WP"/>
                                                     </connections>
                                                 </segmentedControl>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature Style" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYb-Re-9dP">
-                                                    <rect key="frame" x="20" y="21" width="146" height="22"/>
-                                                    <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="18"/>
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RYb-Re-9dP">
+                                                    <rect key="frame" x="20" y="21" width="102" height="22"/>
+                                                    <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="18"/>
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>

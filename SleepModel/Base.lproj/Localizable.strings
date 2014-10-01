@@ -37,6 +37,12 @@
 "settings.info" = "My Info";
 "settings.account" = "Account";
 "settings.units" = "Units and Time";
+"settings.unit2.24-hour" = "24-hour";
+"settings.unit2.12-hour" = "12-hour";
+"settings.unit2.celcius" = "°C";
+"settings.unit2.fahrenheit" = "°F";
+"settings.units.clock" = "Clock";
+"settings.units.temp" = "Temperature";
 "settings.devices" = "Devices";
 "settings.personal.info.birthday" = "Birthday";
 "settings.personal.info.gender" = "Gender";

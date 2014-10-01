@@ -197,9 +197,9 @@ static UIImage* _sense = nil;
     NSMutableParagraphStyle* sleepScoreLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: 96], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
 
     [sleepScoreText drawInRect: CGRectOffset(sleepScoreLabelRect, 0, (CGRectGetHeight(sleepScoreLabelRect) - [sleepScoreText boundingRectWithSize: sleepScoreLabelRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreLabelFontAttributes context: nil].size.height) / 2) withAttributes: sleepScoreLabelFontAttributes];
+    NSDictionary* sleepScoreLabelFontAttributes = @{ NSFontAttributeName : [UIFont fontWithName:@"Agile-Thin" size:96], NSForegroundColorAttributeName : UIColor.blackColor, NSParagraphStyleAttributeName : sleepScoreLabelStyle };
 
 
     //// sleep score text label Drawing

@@ -60,6 +60,7 @@
 		8A5402AD19AFA52B00FC6085 /* playButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A5402AB19AFA52B00FC6085 /* playButtonIcon.png */; };
 		8A5402AE19AFA52B00FC6085 /* playButtonIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A5402AC19AFA52B00FC6085 /* playButtonIcon@2x.png */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
+		8A5A71DE19DB9034009E624D /* temperatureDarkIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A5A71DD19DB9034009E624D /* temperatureDarkIcon@2x.png */; };
 		8A660120199E9C5B007E6167 /* HEMUserDataIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66011F199E9C5B007E6167 /* HEMUserDataIntroViewController.m */; };
 		8A660123199E9CF9007E6167 /* HEMUserDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A660122199E9CF9007E6167 /* HEMUserDataCache.m */; };
 		8A660126199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A660125199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m */; };
@@ -291,6 +292,7 @@
 		8A5402AC19AFA52B00FC6085 /* playButtonIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "playButtonIcon@2x.png"; path = "images/playButtonIcon@2x.png"; sourceTree = "<group>"; };
 		8A59F631198C16050005B000 /* HEMSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSignUpViewController.h; sourceTree = "<group>"; };
 		8A59F632198C16050005B000 /* HEMSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignUpViewController.m; sourceTree = "<group>"; };
+		8A5A71DD19DB9034009E624D /* temperatureDarkIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "temperatureDarkIcon@2x.png"; path = "images/temperatureDarkIcon@2x.png"; sourceTree = "<group>"; };
 		8A66011E199E9C5B007E6167 /* HEMUserDataIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUserDataIntroViewController.h; sourceTree = "<group>"; };
 		8A66011F199E9C5B007E6167 /* HEMUserDataIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUserDataIntroViewController.m; sourceTree = "<group>"; };
 		8A660121199E9CF9007E6167 /* HEMUserDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUserDataCache.h; sourceTree = "<group>"; };
@@ -816,19 +818,20 @@
 			children = (
 				8A1E723A19D63028007475D3 /* humidityDarkIcon.png */,
 				8A1E723B19D63028007475D3 /* humidityDarkIcon@2x.png */,
-				8A1E723C19D63028007475D3 /* particleDarkIcon.png */,
-				8A1E723D19D63028007475D3 /* particleDarkIcon@2x.png */,
-				8A1E723E19D63028007475D3 /* temperatureDarkIcon.png */,
 				8AB33FE7199D56C20046188F /* lightEventIcon.png */,
 				8AB33FE8199D56C20046188F /* lightEventIcon@2x.png */,
 				8A0B6F9819C7A46F000D64AF /* motionEventIcon.png */,
 				8A0B6F9919C7A46F000D64AF /* motionEventIcon@2x.png */,
 				8AB33FE9199D56C20046188F /* noiseEventIcon.png */,
 				8AB33FEA199D56C20046188F /* noiseEventIcon@2x.png */,
+				8A1E723C19D63028007475D3 /* particleDarkIcon.png */,
+				8A1E723D19D63028007475D3 /* particleDarkIcon@2x.png */,
 				8A5402AB19AFA52B00FC6085 /* playButtonIcon.png */,
 				8A5402AC19AFA52B00FC6085 /* playButtonIcon@2x.png */,
 				8AB33FEB199D56C20046188F /* sleepEventIcon.png */,
 				8AB33FEC199D56C20046188F /* sleepEventIcon@2x.png */,
+				8A1E723E19D63028007475D3 /* temperatureDarkIcon.png */,
+				8A5A71DD19DB9034009E624D /* temperatureDarkIcon@2x.png */,
 				8AB33FED199D56C20046188F /* wakeupEventIcon.png */,
 				8AB33FEE199D56C20046188F /* wakeupEventIcon@2x.png */,
 			);
@@ -1283,6 +1286,7 @@
 				8AB33FF6199D56C20046188F /* wakeupEventIcon@2x.png in Resources */,
 				8AC4A058198A0AE900C2BD63 /* questionIcon@2x.png in Resources */,
 				8AAEECFC19A5225F006517C4 /* Agile-BlackItalic.otf in Resources */,
+				8A5A71DE19DB9034009E624D /* temperatureDarkIcon@2x.png in Resources */,
 				BFDCC7BA19D9C741007A922B /* sense.png in Resources */,
 				8A1E723819D62C26007475D3 /* alarmSoundIcon.png in Resources */,
 				8AAEED0319A5225F006517C4 /* Agile-Extralight.otf in Resources */,

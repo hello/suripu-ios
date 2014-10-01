@@ -5,8 +5,6 @@
 #import <SenseKit/SENSleepResult.h>
 
 #import "HEMSleepGraphCollectionViewController.h"
-#import "HEMSleepEventCollectionViewCell.h"
-#import "HEMSleepSegmentCollectionViewCell.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewFlowLayout.h"
 #import "HEMSensorDataHeaderView.h"
@@ -123,7 +121,14 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 6.f;
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     [self.dataSource toggleExpansionOfEventCellAtIndexPath:indexPath];
-    [collectionView reloadItemsAtIndexPaths:@[indexPath]];
+    [collectionView reloadItemsAtIndexPaths:@[ indexPath ]];
+}
+
+- (void)collectionView:(UICollectionView*)cv didEndDisplayingCell:(UICollectionViewCell*)cell forItemAtIndexPath:(NSIndexPath*)indexPath
+{
+    if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
+        [(HEMSleepSummaryCollectionViewCell*)cell setSleepScore:0];
+    }
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout

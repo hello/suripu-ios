@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.0.17
+
+New:
+
+* The summary area in the timeline supports markdown
+* Real summary of the previous night's sleep
+
+Fixes:
+
+* General polishing and cleanup in settings and onboarding
+  - removed unneeded images
+  - added loading indicators
+* Change the score font from Helvetica to Agile
+* Add missing retina icon for temperature
+
 ## 1.0.0.16
 
 New:

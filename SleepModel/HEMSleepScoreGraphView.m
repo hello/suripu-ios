@@ -5,6 +5,7 @@
 @interface HEMSleepScoreGraphView ()
 
 @property (nonatomic) NSInteger sleepScore;
+@property (nonatomic) NSInteger targetSleepScore;
 @property (nonatomic, strong) NSString* sleepScoreLabelText;
 @property (nonatomic, strong) NSString* sleepScoreDateText;
 @end
@@ -36,9 +37,14 @@
 
 - (void)setSleepScore:(NSInteger)sleepScore animated:(BOOL)animated
 {
-    if (sleepScore == _sleepScore)
+    if (sleepScore == _sleepScore || self.targetSleepScore == sleepScore)
         return;
-    [self animateScoreTo:sleepScore];
+    if (animated) {
+        self.targetSleepScore = sleepScore;
+        [self animateScoreTo:sleepScore];
+    } else {
+        _sleepScore = sleepScore;
+    }
 }
 
 - (void)setSleepScore:(NSInteger)sleepScore

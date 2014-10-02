@@ -6,5 +6,5 @@
 @property (weak, nonatomic) IBOutlet UILabel* dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel* messageLabel;
 
-- (void)setSleepScore:(NSUInteger)sleepScore;
+- (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated;
 @end

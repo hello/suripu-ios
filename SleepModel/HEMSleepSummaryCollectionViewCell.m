@@ -14,9 +14,9 @@
     // Initialization code
 }
 
-- (void)setSleepScore:(NSUInteger)sleepScore
+- (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated
 {
-    [self.sleepScoreGraphView setSleepScore:sleepScore animated:YES];
+    [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];
 }
 
 @end

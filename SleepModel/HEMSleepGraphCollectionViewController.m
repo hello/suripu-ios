@@ -127,7 +127,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 6.f;
 - (void)collectionView:(UICollectionView*)cv didEndDisplayingCell:(UICollectionViewCell*)cell forItemAtIndexPath:(NSIndexPath*)indexPath
 {
     if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
-        [(HEMSleepSummaryCollectionViewCell*)cell setSleepScore:0];
+        [(HEMSleepSummaryCollectionViewCell*)cell setSleepScore:0 animated:NO];
     }
 }
 

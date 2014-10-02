@@ -244,8 +244,8 @@ static NSString* const sensorTypeParticulates = @"particulates";
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView sleepSummaryCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMSleepSummaryCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSummaryReuseIdentifier forIndexPath:indexPath];
-    [cell setSleepScore:[self.sleepResult.score integerValue]];
     UIFont* emFont = [UIFont fontWithName:@"Agile-Medium" size:cell.messageLabel.font.pointSize];
+    [cell setSleepScore:[self.sleepResult.score integerValue] animated:YES];
     NSDictionary* attributes = @{
         @(EMPH) : @{
             NSFontAttributeName : emFont,

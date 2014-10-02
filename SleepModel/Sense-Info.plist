@@ -48,6 +48,20 @@
 		<string>Agile-MediumItalic.otf</string>
 		<string>Agile-ThinItalic.otf</string>
 		<string>Agile-Thin.otf</string>
+		<string>Calibre-Black.otf</string>
+		<string>Calibre-BlackItalic.otf</string>
+		<string>Calibre-Bold.otf</string>
+		<string>Calibre-BoldItalic.otf</string>
+		<string>Calibre-Light.otf</string>
+		<string>Calibre-LightItalic.otf</string>
+		<string>Calibre-Medium.otf</string>
+		<string>Calibre-MediumItalic.otf</string>
+		<string>Calibre-Regular.otf</string>
+		<string>Calibre-RegularItalic.otf</string>
+		<string>Calibre-Semibold.otf</string>
+		<string>Calibre-SemiboldItalic.otf</string>
+		<string>Calibre-Thin.otf</string>
+		<string>Calibre-ThinItalic.otf</string>
 	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

@@ -86,6 +86,20 @@
 		8A90F9B319635CAE00AFD110 /* HEMCurrentConditionsTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9B219635CAE00AFD110 /* HEMCurrentConditionsTableViewController.m */; };
 		8A90F9B81963701A00AFD110 /* HEMInsetGlyphTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9B61963701A00AFD110 /* HEMInsetGlyphTableViewCell.m */; };
 		8A90F9BC19637F9400AFD110 /* HEMSleepSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9BB19637F9400AFD110 /* HEMSleepSoundTableViewController.m */; };
+		8A9BD8B619DDD02100B1E57E /* Calibre-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8A819DDD02100B1E57E /* Calibre-Black.otf */; };
+		8A9BD8B719DDD02100B1E57E /* Calibre-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8A919DDD02100B1E57E /* Calibre-BlackItalic.otf */; };
+		8A9BD8B819DDD02100B1E57E /* Calibre-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8AA19DDD02100B1E57E /* Calibre-Bold.otf */; };
+		8A9BD8B919DDD02100B1E57E /* Calibre-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8AB19DDD02100B1E57E /* Calibre-BoldItalic.otf */; };
+		8A9BD8BA19DDD02100B1E57E /* Calibre-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8AC19DDD02100B1E57E /* Calibre-Light.otf */; };
+		8A9BD8BB19DDD02100B1E57E /* Calibre-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8AD19DDD02100B1E57E /* Calibre-LightItalic.otf */; };
+		8A9BD8BC19DDD02100B1E57E /* Calibre-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8AE19DDD02100B1E57E /* Calibre-Medium.otf */; };
+		8A9BD8BD19DDD02100B1E57E /* Calibre-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8AF19DDD02100B1E57E /* Calibre-MediumItalic.otf */; };
+		8A9BD8BE19DDD02100B1E57E /* Calibre-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B019DDD02100B1E57E /* Calibre-Regular.otf */; };
+		8A9BD8BF19DDD02100B1E57E /* Calibre-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B119DDD02100B1E57E /* Calibre-RegularItalic.otf */; };
+		8A9BD8C019DDD02100B1E57E /* Calibre-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B219DDD02100B1E57E /* Calibre-Semibold.otf */; };
+		8A9BD8C119DDD02100B1E57E /* Calibre-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B319DDD02100B1E57E /* Calibre-SemiboldItalic.otf */; };
+		8A9BD8C219DDD02100B1E57E /* Calibre-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B419DDD02100B1E57E /* Calibre-Thin.otf */; };
+		8A9BD8C319DDD02100B1E57E /* Calibre-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B519DDD02100B1E57E /* Calibre-ThinItalic.otf */; };
 		8AA8D92A19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D92819ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m */; };
 		8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AA8D92919ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib */; };
 		8AA8D92F19ABCB0300349FD0 /* HEMSensorDataHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D92D19ABCB0300349FD0 /* HEMSensorDataHeaderView.m */; };
@@ -339,6 +353,20 @@
 		8A90F9B61963701A00AFD110 /* HEMInsetGlyphTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsetGlyphTableViewCell.m; sourceTree = "<group>"; };
 		8A90F9BA19637F9400AFD110 /* HEMSleepSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSoundTableViewController.h; sourceTree = "<group>"; };
 		8A90F9BB19637F9400AFD110 /* HEMSleepSoundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSoundTableViewController.m; sourceTree = "<group>"; };
+		8A9BD8A819DDD02100B1E57E /* Calibre-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Black.otf"; path = "fonts/Calibre-Black.otf"; sourceTree = "<group>"; };
+		8A9BD8A919DDD02100B1E57E /* Calibre-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-BlackItalic.otf"; path = "fonts/Calibre-BlackItalic.otf"; sourceTree = "<group>"; };
+		8A9BD8AA19DDD02100B1E57E /* Calibre-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Bold.otf"; path = "fonts/Calibre-Bold.otf"; sourceTree = "<group>"; };
+		8A9BD8AB19DDD02100B1E57E /* Calibre-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-BoldItalic.otf"; path = "fonts/Calibre-BoldItalic.otf"; sourceTree = "<group>"; };
+		8A9BD8AC19DDD02100B1E57E /* Calibre-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Light.otf"; path = "fonts/Calibre-Light.otf"; sourceTree = "<group>"; };
+		8A9BD8AD19DDD02100B1E57E /* Calibre-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-LightItalic.otf"; path = "fonts/Calibre-LightItalic.otf"; sourceTree = "<group>"; };
+		8A9BD8AE19DDD02100B1E57E /* Calibre-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Medium.otf"; path = "fonts/Calibre-Medium.otf"; sourceTree = "<group>"; };
+		8A9BD8AF19DDD02100B1E57E /* Calibre-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-MediumItalic.otf"; path = "fonts/Calibre-MediumItalic.otf"; sourceTree = "<group>"; };
+		8A9BD8B019DDD02100B1E57E /* Calibre-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Regular.otf"; path = "fonts/Calibre-Regular.otf"; sourceTree = "<group>"; };
+		8A9BD8B119DDD02100B1E57E /* Calibre-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-RegularItalic.otf"; path = "fonts/Calibre-RegularItalic.otf"; sourceTree = "<group>"; };
+		8A9BD8B219DDD02100B1E57E /* Calibre-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Semibold.otf"; path = "fonts/Calibre-Semibold.otf"; sourceTree = "<group>"; };
+		8A9BD8B319DDD02100B1E57E /* Calibre-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-SemiboldItalic.otf"; path = "fonts/Calibre-SemiboldItalic.otf"; sourceTree = "<group>"; };
+		8A9BD8B419DDD02100B1E57E /* Calibre-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Thin.otf"; path = "fonts/Calibre-Thin.otf"; sourceTree = "<group>"; };
+		8A9BD8B519DDD02100B1E57E /* Calibre-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-ThinItalic.otf"; path = "fonts/Calibre-ThinItalic.otf"; sourceTree = "<group>"; };
 		8AA0F57E19C2255D00556AAF /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
 		8AA8D92719ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryCollectionViewCell.h; sourceTree = "<group>"; };
 		8AA8D92819ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryCollectionViewCell.m; sourceTree = "<group>"; };
@@ -939,6 +967,27 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
+		8A9BD8A719DDD01200B1E57E /* Calibre */ = {
+			isa = PBXGroup;
+			children = (
+				8A9BD8A819DDD02100B1E57E /* Calibre-Black.otf */,
+				8A9BD8A919DDD02100B1E57E /* Calibre-BlackItalic.otf */,
+				8A9BD8AA19DDD02100B1E57E /* Calibre-Bold.otf */,
+				8A9BD8AB19DDD02100B1E57E /* Calibre-BoldItalic.otf */,
+				8A9BD8AC19DDD02100B1E57E /* Calibre-Light.otf */,
+				8A9BD8AD19DDD02100B1E57E /* Calibre-LightItalic.otf */,
+				8A9BD8AE19DDD02100B1E57E /* Calibre-Medium.otf */,
+				8A9BD8AF19DDD02100B1E57E /* Calibre-MediumItalic.otf */,
+				8A9BD8B019DDD02100B1E57E /* Calibre-Regular.otf */,
+				8A9BD8B119DDD02100B1E57E /* Calibre-RegularItalic.otf */,
+				8A9BD8B219DDD02100B1E57E /* Calibre-Semibold.otf */,
+				8A9BD8B319DDD02100B1E57E /* Calibre-SemiboldItalic.otf */,
+				8A9BD8B419DDD02100B1E57E /* Calibre-Thin.otf */,
+				8A9BD8B519DDD02100B1E57E /* Calibre-ThinItalic.otf */,
+			);
+			name = Calibre;
+			sourceTree = "<group>";
+		};
 		8AA8D92619ABACC100349FD0 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
@@ -983,12 +1032,13 @@
 		8AAEECBD19A521CD006517C4 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				8AAEECBE19A521D7006517C4 /* Fonts */,
+				8A9BD8A719DDD01200B1E57E /* Calibre */,
+				8AAEECBE19A521D7006517C4 /* Agile */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
 		};
-		8AAEECBE19A521D7006517C4 /* Fonts */ = {
+		8AAEECBE19A521D7006517C4 /* Agile */ = {
 			isa = PBXGroup;
 			children = (
 				8AAEECE719A5225F006517C4 /* Agile-Black.otf */,
@@ -1012,7 +1062,7 @@
 				8AAEECF919A5225F006517C4 /* Agile-Thin.otf */,
 				8AAEECFA19A5225F006517C4 /* Agile-ThinItalic.otf */,
 			);
-			name = Fonts;
+			name = Agile;
 			sourceTree = "<group>";
 		};
 		8AB2683619CCFD9600017818 /* Views */ = {
@@ -1305,8 +1355,10 @@
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
 				8A1E723319D62C26007475D3 /* alarmNoteIcon@2x.png in Resources */,
 				8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */,
+				8A9BD8C319DDD02100B1E57E /* Calibre-ThinItalic.otf in Resources */,
 				8AAEED0019A5225F006517C4 /* Agile-BookItalic.otf in Resources */,
 				8AB33FF0199D56C20046188F /* lightEventIcon@2x.png in Resources */,
+				8A9BD8C119DDD02100B1E57E /* Calibre-SemiboldItalic.otf in Resources */,
 				8AB33FF6199D56C20046188F /* wakeupEventIcon@2x.png in Resources */,
 				8AC4A058198A0AE900C2BD63 /* questionIcon@2x.png in Resources */,
 				8AAEECFC19A5225F006517C4 /* Agile-BlackItalic.otf in Resources */,
@@ -1343,6 +1395,7 @@
 				8A4B3D4F199308BB00856BDE /* bluetoothLogoImage@2x.png in Resources */,
 				8A1743C419A7BB47001E3C15 /* HEMSleepSegmentCollectionViewCell.xib in Resources */,
 				8A66FC96199D24FF00922ED5 /* maleIcon@2x.png in Resources */,
+				8A9BD8B819DDD02100B1E57E /* Calibre-Bold.otf in Resources */,
 				BFB0FBDC19D253400056FFEC /* pillIcon.png in Resources */,
 				BFB0FBF819D4C3BD0056FFEC /* alarmsIcon.png in Resources */,
 				8A5402A619AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.xib in Resources */,
@@ -1351,6 +1404,7 @@
 				8A5402AD19AFA52B00FC6085 /* playButtonIcon.png in Resources */,
 				8AC4A052198A070F00C2BD63 /* alarmEnabledIcon@2x.png in Resources */,
 				8AC4A0391989C36200C2BD63 /* particleIcon.png in Resources */,
+				8A9BD8BA19DDD02100B1E57E /* Calibre-Light.otf in Resources */,
 				BFB0FBE319D377380056FFEC /* senseIcon.png in Resources */,
 				8AAEED0B19A5225F006517C4 /* Agile-Medium.otf in Resources */,
 				8A66FC94199D24FF00922ED5 /* femaleIcon@2x.png in Resources */,
@@ -1364,23 +1418,29 @@
 				8AAEED0219A5225F006517C4 /* Agile-ExtraboldItalic.otf in Resources */,
 				8AB33FEF199D56C20046188F /* lightEventIcon.png in Resources */,
 				8A1E723219D62C26007475D3 /* alarmNoteIcon.png in Resources */,
+				8A9BD8B719DDD02100B1E57E /* Calibre-BlackItalic.otf in Resources */,
 				BF5E445019AD494500278A2F /* phoneWithEmoticons@2x.png in Resources */,
 				BF5E444C19AD414500278A2F /* doubleArrow@2x.png in Resources */,
 				BF9C87D519B6A001003188D4 /* sleep_pill@2x.png in Resources */,
 				8AC4A04A1989D47000C2BD63 /* chevronIconLeft@2x.png in Resources */,
+				8A9BD8BD19DDD02100B1E57E /* Calibre-MediumItalic.otf in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				8AAEED0A19A5225F006517C4 /* Agile-LightItalic.otf in Resources */,
+				8A9BD8B619DDD02100B1E57E /* Calibre-Black.otf in Resources */,
 				BFDCC7BB19D9C741007A922B /* sense@2x.png in Resources */,
 				8AB33FF2199D56C20046188F /* noiseEventIcon@2x.png in Resources */,
 				8AC4A03F1989C5A100C2BD63 /* settingsIcon.png in Resources */,
 				BFB0FBDD19D253400056FFEC /* pillIcon@2x.png in Resources */,
+				8A9BD8BE19DDD02100B1E57E /* Calibre-Regular.otf in Resources */,
 				8AAEECFE19A5225F006517C4 /* Agile-BoldItalic.otf in Resources */,
+				8A9BD8BC19DDD02100B1E57E /* Calibre-Medium.otf in Resources */,
 				8A033870197DD89C00BE8327 /* Onboarding.storyboard in Resources */,
 				8A1E723419D62C26007475D3 /* alarmRepeatIcon.png in Resources */,
 				BF5E444F19AD494500278A2F /* phoneWithEmoticons.png in Resources */,
 				8AAEED0119A5225F006517C4 /* Agile-Extrabold.otf in Resources */,
 				8A4B3D4E199308BB00856BDE /* bluetoothLogoImage.png in Resources */,
 				8AB33FF3199D56C20046188F /* sleepEventIcon.png in Resources */,
+				8A9BD8BB19DDD02100B1E57E /* Calibre-LightItalic.otf in Resources */,
 				8AC4A04B1989D47000C2BD63 /* chevronIconRight.png in Resources */,
 				8A66FC95199D24FF00922ED5 /* maleIcon.png in Resources */,
 				BFB0FBE419D377380056FFEC /* senseIcon@2x.png in Resources */,
@@ -1394,6 +1454,7 @@
 				8A1E723F19D63028007475D3 /* humidityDarkIcon.png in Resources */,
 				8A66FC93199D24FF00922ED5 /* femaleIcon.png in Resources */,
 				8AC4A03A1989C36200C2BD63 /* particleIcon@2x.png in Resources */,
+				8A9BD8C219DDD02100B1E57E /* Calibre-Thin.otf in Resources */,
 				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,
 				8AAEED0D19A5225F006517C4 /* Agile-Thin.otf in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
@@ -1403,8 +1464,11 @@
 				8A1E723719D62C26007475D3 /* alarmSmartIcon@2x.png in Resources */,
 				BFACC71619A41CFE00FC77EE /* whitenavbar.png in Resources */,
 				8AF5A39C19C102D30009A499 /* chevronIconRight@2x.png in Resources */,
+				8A9BD8B919DDD02100B1E57E /* Calibre-BoldItalic.otf in Resources */,
 				BF3D2E4C19C37A62001DEEBA /* downArrow.png in Resources */,
+				8A9BD8C019DDD02100B1E57E /* Calibre-Semibold.otf in Resources */,
 				8AAEECFB19A5225F006517C4 /* Agile-Black.otf in Resources */,
+				8A9BD8BF19DDD02100B1E57E /* Calibre-RegularItalic.otf in Resources */,
 				8AAEED0519A5225F006517C4 /* Agile-Fat.otf in Resources */,
 				8AAEED0619A5225F006517C4 /* Agile-FatItalic.otf in Resources */,
 			);

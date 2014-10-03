@@ -2,13 +2,24 @@
 #import "HEMSleepSegmentCollectionViewCell.h"
 #import "HelloStyleKit.h"
 
+CGFloat HEMLinedCollectionViewCellLineOffset = 14.f;
+CGFloat HEMLinedCollectionViewCellLineWidth = 2.f;
+
 @interface HEMSleepSegmentCollectionViewCell ()
 
-@property (nonatomic) CGFloat fillRatio;
-@property (nonatomic, strong) UIColor* fillColor;
+@property (nonatomic, readwrite) CGFloat fillRatio;
+@property (nonatomic, strong, readwrite) UIColor* fillColor;
 @end
 
 @implementation HEMSleepSegmentCollectionViewCell
+
+static CGFloat HEMSleepSegmentMaximumFillRatio = 0.7f;
+static CGFloat HEMSleepSegmentMinimumFillWidth = 24.f;
+
+- (void)awakeFromNib
+{
+    self.backgroundColor = [HelloStyleKit lightestBlueColor];
+}
 
 - (void)setSegmentRatio:(CGFloat)ratio withColor:(UIColor*)color
 {
@@ -20,12 +31,22 @@
 - (void)drawRect:(CGRect)rect
 {
     [super drawRect:rect];
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGFloat inset = HEMLinedCollectionViewCellLineOffset + HEMLinedCollectionViewCellLineWidth;
-    CGRect fillRect = CGRectMake(inset, CGRectGetMinY(rect), (CGRectGetWidth(rect) - inset) * self.fillRatio, CGRectGetHeight(rect));
-    CGContextClearRect(ctx, fillRect);
-    CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
-    CGContextFillRect(ctx, fillRect);
+    if (![self isLastSegment] && ![self isFirstSegment]) {
+        CGContextRef ctx = UIGraphicsGetCurrentContext();
+        CGFloat inset = HEMLinedCollectionViewCellLineOffset + HEMLinedCollectionViewCellLineWidth;
+        CGFloat maximumFillWidth = (CGRectGetWidth(rect) - inset) * HEMSleepSegmentMaximumFillRatio;
+        CGFloat width = MAX(maximumFillWidth * self.fillRatio, HEMSleepSegmentMinimumFillWidth);
+        CGRect fillRect = CGRectMake(inset, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
+        CGContextClearRect(ctx, fillRect);
+        CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
+        CGContextFillRect(ctx, fillRect);
+
+        inset += HEMSleepSegmentMinimumFillWidth;
+        width = (CGRectGetWidth(rect) - inset);
+        fillRect = CGRectMake(inset, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
+        CGContextSetFillColorWithColor(ctx, [[HelloStyleKit lightestBlueColor] colorWithAlphaComponent:0.8].CGColor);
+        CGContextFillRect(ctx, fillRect);
+    }
 }
 
 @end

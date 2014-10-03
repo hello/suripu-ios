@@ -12,7 +12,7 @@
 #import "HEMAggregateGraphCollectionViewCell.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepEventCollectionViewCell.h"
-#import "HEMSleepSegmentCollectionViewCell.h"
+#import "HEMNoSleepEventCollectionViewCell.h"
 #import "HEMSensorDataHeaderView.h"
 #import "HEMSensorGraphDataSource.h"
 #import "HelloStyleKit.h"
@@ -101,7 +101,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSensorDataHeaderView class]) bundle:bundle]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                  withReuseIdentifier:sensorDataReuseIdentifier];
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSleepSegmentCollectionViewCell class]) bundle:bundle]
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMNoSleepEventCollectionViewCell class]) bundle:bundle]
           forCellWithReuseIdentifier:sleepSegmentReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSleepSummaryCollectionViewCell class]) bundle:bundle]
           forCellWithReuseIdentifier:sleepSummaryReuseIdentifier];
@@ -244,7 +244,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView sleepSummaryCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMSleepSummaryCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSummaryReuseIdentifier forIndexPath:indexPath];
-    UIFont* emFont = [UIFont fontWithName:@"Agile-Medium" size:cell.messageLabel.font.pointSize];
+    UIFont* emFont = [UIFont fontWithName:@"Calibre-Medium" size:cell.messageLabel.font.pointSize];
     [cell setSleepScore:[self.sleepResult.score integerValue] animated:YES];
     NSDictionary* attributes = @{
         @(EMPH) : @{
@@ -266,7 +266,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
 {
     SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
     NSUInteger sleepDepth = segment.sleepDepth;
-    HEMSleepSegmentCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
+    HEMNoSleepEventCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
     [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[HEMColorUtils colorForSleepDepth:sleepDepth]];
     return cell;
 }
@@ -285,6 +285,9 @@ static NSString* const sensorTypeParticulates = @"particulates";
     cell.eventTitleLabel.text = [self localizedNameForSleepEventType:segment.eventType];
     cell.expanded = [self eventCellAtIndexPathIsExpanded:indexPath];
     cell.playButton.hidden = ![segment.eventType isEqualToString:HEMSleepEventTypeNoise];
+    cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
+    cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
+    [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[HEMColorUtils colorForSleepDepth:sleepDepth]];
     return cell;
 }
 
@@ -322,15 +325,15 @@ static NSString* const sensorTypeParticulates = @"particulates";
 - (UIImage*)imageForEventType:(NSString*)eventType
 {
     if ([eventType isEqualToString:HEMSleepEventTypeWakeUp]) {
-        return [HelloStyleKit wakeupEventIcon];
+        return [UIImage imageNamed:@"wakeUpEventIcon"];
     } else if ([eventType isEqualToString:HEMSleepEventTypeFallAsleep]) {
-        return [HelloStyleKit sleepEventIcon];
+        return [UIImage imageNamed:@"fellAsleepEventIcon"];
     } else if ([eventType isEqualToString:HEMSleepEventTypeLight]) {
-        return [HelloStyleKit lightEventIcon];
+        return [UIImage imageNamed:@"lightEventIcon"];
     } else if ([eventType isEqualToString:HEMSleepEventTypeNoise]) {
-        return [HelloStyleKit noiseEventIcon];
+        return [UIImage imageNamed:@"soundEventIcon"];
     } else if ([eventType isEqualToString:HEMSleepEventTypeMotion]) {
-        return [HelloStyleKit motionEventIcon];
+        return [UIImage imageNamed:@"motionEventIcon"];
     }
     return nil;
 }

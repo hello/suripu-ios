@@ -22,20 +22,15 @@
 
 static CGFloat const HEMSleepSummaryCellHeight = 300.f;
 static CGFloat const HEMSleepGraphCollectionViewSensorViewHeight = 65.f;
-static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 55.f;
+static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 30.f;
 static CGFloat const HEMSleepGraphCollectionViewEventLightHeight = 95.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMaximumHeight = 165.f;
-static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 6.f;
+static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
-                                                                                  sleepDate:self.dateForNightOfSleep];
-    self.collectionView.dataSource = self.dataSource;
-    self.collectionView.delegate = self;
-    self.collectionView.collectionViewLayout = [HEMSleepGraphCollectionViewFlowLayout new];
-
+    [self configureCollectionView];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -106,6 +101,16 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 6.f;
 }
 
 #pragma mark UICollectionViewDelegate
+
+- (void)configureCollectionView
+{
+    self.collectionView.backgroundColor = [HelloStyleKit lightestBlueColor];
+    self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
+                                                                                  sleepDate:self.dateForNightOfSleep];
+    self.collectionView.dataSource = self.dataSource;
+    self.collectionView.delegate = self;
+    self.collectionView.collectionViewLayout = [HEMSleepGraphCollectionViewFlowLayout new];
+}
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath
 {

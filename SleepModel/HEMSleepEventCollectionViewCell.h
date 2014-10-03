@@ -1,8 +1,8 @@
 
 #import <UIKit/UIKit.h>
-#import "HEMLinedCollectionViewCell.h"
+#import "HEMSleepSegmentCollectionViewCell.h"
 
-@interface HEMSleepEventCollectionViewCell : HEMLinedCollectionViewCell
+@interface HEMSleepEventCollectionViewCell : HEMSleepSegmentCollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UIButton* eventTypeButton;
 @property (nonatomic, getter=isExpanded) BOOL expanded;

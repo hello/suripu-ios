@@ -20,6 +20,8 @@
 
 @implementation HEMAlarmListViewController
 
+static NSUInteger HEMAlarmListLimit = 8;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -27,6 +29,7 @@
     self.title = NSLocalizedString(@"alarms.title", nil);
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[HelloStyleKit chevronIconLeft] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
+    [self.addButton setTitleColor:[UIColor colorWithWhite:0.9 alpha:0.25] forState:UIControlStateDisabled];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -68,6 +71,7 @@
         NSNumber* alarmValue2 = @(obj2.hour * 60 + obj2.minute);
         return [alarmValue1 compare:alarmValue2];
     }];
+    self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
 }
 
 #pragma mark - Actions

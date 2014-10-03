@@ -1,5 +1,6 @@
 
 #import "SENAlarm.h"
+#import "SENAPIAlarms.h"
 #import "SENSettings.h"
 #import "SENKeyedArchiver.h"
 
@@ -15,11 +16,11 @@ static NSString* const SENAlarmSmartKey = @"smart";
 static NSString* const SENAlarmEditableKey = @"editable";
 static NSString* const SENAlarmHourKey = @"hour";
 static NSString* const SENAlarmMinuteKey = @"minute";
-static NSString* const SENAlarmRepeatKey = @"repeat";
+static NSString* const SENAlarmRepeatKey = @"day_of_week";
 static NSString* const SENAlarmIdentifierKey = @"identifier";
 
 static NSString* const SENAlarmDefaultSoundName = @"None";
-static NSUInteger const SENAlarmDefaultHour   = 7;
+static NSUInteger const SENAlarmDefaultHour = 7;
 static NSUInteger const SENAlarmDefaultMinute = 30;
 static NSUInteger const SENAlarmDefaultRepeatFlags = 0;
 static BOOL const SENAlarmDefaultOnState = YES;
@@ -38,9 +39,9 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
         SENAlarmHourKey : @(SENAlarmDefaultHour),
         SENAlarmMinuteKey : @(SENAlarmDefaultMinute),
         SENAlarmOnKey : @(SENAlarmDefaultOnState),
-        SENAlarmEditableKey: @(SENAlarmDefaultEditableState),
-        SENAlarmSmartKey: @(SENAlarmDefaultSmartAlarmState),
-        SENAlarmRepeatKey: @(SENAlarmDefaultRepeatFlags)
+        SENAlarmEditableKey : @(SENAlarmDefaultEditableState),
+        SENAlarmSmartKey : @(SENAlarmDefaultSmartAlarmState),
+        SENAlarmRepeatKey : @(SENAlarmDefaultRepeatFlags)
     }];
 }
 
@@ -81,7 +82,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
         _identifier = dict[SENAlarmIdentifierKey] ?: [[[NSUUID alloc] init] UUIDString];
         _minute = [dict[SENAlarmMinuteKey] unsignedIntegerValue];
         _on = [dict[SENAlarmOnKey] boolValue];
-        _repeatFlags = [dict[SENAlarmRepeatKey] unsignedIntegerValue];
+        _repeatFlags = [self repeatFlagsFromDays:dict[SENAlarmRepeatKey]];
         _smartAlarm = [dict[SENAlarmSmartKey] boolValue];
         _soundName = dict[SENAlarmSoundNameKey];
     }
@@ -94,6 +95,27 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     time.hour = self.hour;
     time.minute = self.minute;
     return [SENAlarm localizedValueForTime:time];
+}
+
+- (NSUInteger)repeatFlagsFromDays:(NSArray*)days
+{
+    NSUInteger repeatFlags = 0;
+    if ([days containsObject:@(SENAPIAlarmsRepeatDayMonday)])
+        repeatFlags |= SENAlarmRepeatMonday;
+    if ([days containsObject:@(SENAPIAlarmsRepeatDayTuesday)])
+        repeatFlags |= SENAlarmRepeatTuesday;
+    if ([days containsObject:@(SENAPIAlarmsRepeatDayWednesday)])
+        repeatFlags |= SENAlarmRepeatWednesday;
+    if ([days containsObject:@(SENAPIAlarmsRepeatDayThursday)])
+        repeatFlags |= SENAlarmRepeatThursday;
+    if ([days containsObject:@(SENAPIAlarmsRepeatDayFriday)])
+        repeatFlags |= SENAlarmRepeatFriday;
+    if ([days containsObject:@(SENAPIAlarmsRepeatDaySaturday)])
+        repeatFlags |= SENAlarmRepeatSaturday;
+    if ([days containsObject:@(SENAPIAlarmsRepeatDaySunday)])
+        repeatFlags |= SENAlarmRepeatSunday;
+
+    return repeatFlags;
 }
 
 #pragma mark - NSCoding

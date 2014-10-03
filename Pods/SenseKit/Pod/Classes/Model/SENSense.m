@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 8/22/14.
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
+#import <CoreBluetooth/CoreBluetooth.h>
 
 #import "LGPeripheral.h"
 
@@ -12,6 +13,7 @@
 
 @interface SENSense()
 
+@property (nonatomic, copy, readwrite) NSString* deviceId;
 @property (nonatomic, strong) LGPeripheral* peripheral;
 
 @end
@@ -22,20 +24,38 @@
     self = [super init];
     if (self) {
         [self setPeripheral:peripheral];
+        [self processDeviceId];
     }
     return self;
+}
+
+- (void)processDeviceId {
+    NSDictionary* data = [[self peripheral] advertisingData];
+    NSDictionary* serviceData = data[CBAdvertisementDataServiceDataKey];
+    NSMutableString* deviceIdInHex = nil;
+    
+    if ([serviceData count] == 1) {
+        NSData* deviceIdData = [serviceData allValues][0];
+        const unsigned char* dataBuffer = (const unsigned char*)[deviceIdData bytes];
+        if (dataBuffer) {
+            NSInteger len = [deviceIdData length];
+            deviceIdInHex = [[NSMutableString alloc] initWithCapacity:len];
+            
+            for (int i = 0; i < len; i++) {
+                [deviceIdInHex appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
+            }
+        }
+    }
+    
+    [self setDeviceId:deviceIdInHex];
 }
 
 - (NSString*)name {
     return [[self peripheral] name];
 }
 
-- (NSString*)uuid {
-    return [[self peripheral] UUIDString];
-}
-
 - (NSString*)description {
-    return [NSString stringWithFormat:@"Sense: %@, uuid: %@", [self name], [self uuid]];
+    return [NSString stringWithFormat:@"Sense: %@", [self name]];
 }
 
 @end

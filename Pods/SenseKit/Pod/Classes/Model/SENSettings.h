@@ -68,4 +68,14 @@ extern NSString* const SENSettingsDidUpdateNotification;
  */
 + (void)setTemperatureFormat:(SENTemperatureFormat)temperatureFormat;
 
+/**
+ * Return defaults of the settings managed, if values have not yet been set.
+ * If the values have already been set, return those.
+ *
+ * This can be used to register defaults for a settings bundle.
+ *
+ * @return dictionary containing default values
+ */
++ (NSDictionary*)defaults;
+
 @end

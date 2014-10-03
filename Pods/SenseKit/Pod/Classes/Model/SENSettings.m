@@ -47,4 +47,9 @@ NSString* const SENSettingsDidUpdateNotification = @"SENSettingsDidUpdateNotific
     [[NSNotificationCenter defaultCenter] postNotificationName:SENSettingsDidUpdateNotification object:nil];
 }
 
++ (NSDictionary*)defaults {
+    return @{SENSettingsTimeFormat : @([self timeFormat]),
+             SENSettingsTemperatureFormat : @([self temperatureFormat])};
+}
+
 @end

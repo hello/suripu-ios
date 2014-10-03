@@ -16,7 +16,8 @@
 #import "SENSense+Protected.h"
 #import "SENSenseMessage.pb.h"
 
-static CGFloat const kSENSenseDefaultTimeout = 5;
+static CGFloat const kSENSenseDefaultTimeout = 20;
+static CGFloat const kSENSenseRescanTimeout = 8;
 
 static NSString* const kSENSenseErrorDomain = @"is.hello.ble";
 static NSString* const kSENSenseServiceID = @"0000FEE1-1212-EFDE-1523-785FEABCD123";
@@ -27,6 +28,7 @@ static NSInteger const kSENSenseMessageVersion = 0;
 
 @interface SENSenseManager()
 
+@property (nonatomic, assign, readwrite, getter=isValid) BOOL valid;
 @property (nonatomic, strong, readwrite) SENSense* sense;
 @property (nonatomic, strong, readwrite) id disconnectNotifyObserver;
 @property (nonatomic, strong, readwrite) NSMutableDictionary* disconnectObservers;
@@ -78,23 +80,66 @@ static NSInteger const kSENSenseMessageVersion = 0;
 }
 
 + (void)stopScan {
-    [[LGCentralManager sharedInstance] stopScanForPeripherals];
+    if ([[LGCentralManager sharedInstance] isScanning]) {
+        [[LGCentralManager sharedInstance] stopScanForPeripherals];
+    }
+}
+
++ (BOOL)isScanning {
+    return [[LGCentralManager sharedInstance] isScanning];
 }
 
 + (BOOL)isBluetoothOn {
     return [[[LGCentralManager sharedInstance] manager] state] == CBCentralManagerStatePoweredOn;
 }
 
++ (BOOL)isReady {
+    return [[LGCentralManager sharedInstance] isCentralReady];
+}
+
 - (instancetype)initWithSense:(SENSense*)sense {
     self = [super init];
     if (self) {
         [self setSense:sense];
+        [self setValid:YES];
     }
     return self;
 }
 
 - (BOOL)isConnected {
     return [[[[self sense] peripheral] cbPeripheral] state] == CBPeripheralStateConnected;
+}
+
+- (void)rediscoverToConnectThen:(void(^)(NSError* error))completion {
+    __weak typeof(self) weakSelf = self;
+    [[self class] scanForSenseWithTimeout:kSENSenseRescanTimeout completion:^(NSArray *senses) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            BOOL foundAgain = NO;
+            if ([senses count] > 0) {
+                for (SENSense* sense in senses) {
+                    if ([[[strongSelf sense] deviceId] isEqualToString:[sense deviceId]]) {
+                        [strongSelf setSense:sense];
+                        foundAgain = YES;
+                        break;
+                    }
+                }
+                
+                if (foundAgain) {
+                    [strongSelf setValid:YES];
+                    LGPeripheral* peripheral = [[strongSelf sense] peripheral];
+                    [peripheral connectWithTimeout:kSENSenseDefaultTimeout completion:completion];
+                }
+            }
+            
+            if (!foundAgain && completion) {
+                completion ([NSError errorWithDomain:kSENSenseErrorDomain
+                                                code:SENSenseManagerErrorCodeInvalidated
+                                            userInfo:nil]);
+            }
+            
+        }
+    }];
 }
 
 /**
@@ -114,9 +159,22 @@ static NSInteger const kSENSenseMessageVersion = 0;
     }
     
     if (![self isConnected]) {
-        [peripheral connectWithTimeout:kSENSenseDefaultTimeout completion:^(NSError *error) {
-            completion (error);
-        }];
+        __weak typeof(self) weakSelf = self;
+        
+        id postConnectionBlock = ^(NSError* error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf && error == nil) {
+                [strongSelf listenForUnexpectedDisconnects];
+            }
+            if (completion) completion (error);
+        };
+        
+        if (![self isValid]) {
+            [self rediscoverToConnectThen:postConnectionBlock];
+        } else {
+            [peripheral connectWithTimeout:kSENSenseDefaultTimeout
+                                completion:postConnectionBlock];
+        }
     } else {
         completion (nil);
     }
@@ -479,9 +537,9 @@ static NSInteger const kSENSenseMessageVersion = 0;
     int index = 0;
     for (NSData* packetData in packets) {
         int offset = index == 0 ? 2 : 1;
-        int packetLength = [packetData length] - offset;
+        long packetLength = [packetData length] - offset;
         uint8_t payloadPacket[packetLength];
-        int length = sizeof(payloadPacket);
+        long length = sizeof(payloadPacket);
         [packetData getBytes:&payloadPacket range:NSMakeRange(offset, packetLength)];
         [actualPayload appendBytes:payloadPacket length:length];
         index++;
@@ -629,19 +687,50 @@ static NSInteger const kSENSenseMessageVersion = 0;
     // TODO (jimmy): Firmware not yet implemented
 }
 
-#pragma mark - Disconnects
+#pragma mark - Signal Strength / RSSI
+
+- (void)currentRSSI:(SENSenseSuccessBlock)success
+            failure:(SENSenseFailureBlock)failure {
+    __weak typeof(self) weakSelf = self;
+    [self connectThen:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            if (failure) failure (error);
+        } else if (strongSelf) {
+            [strongSelf readPeripheralRSSI:success failure:failure];
+        }
+    }];
+}
+
+- (void)readPeripheralRSSI:(SENSenseSuccessBlock)success
+                   failure:(SENSenseFailureBlock)failure {
+    [[[self sense] peripheral] readRSSIValueCompletion:^(NSNumber *RSSI, NSError *error) {
+        if (error) {
+            if (failure) failure (error);
+        } else if (success) {
+            success (RSSI);
+        }
+    }];
+}
+
+#pragma mark - Connections
 
 - (void)disconnectFromSense {
     if  ([self isConnected]) {
+        __weak typeof(self) weakSelf = self;
         [[[self sense] peripheral] disconnectWithCompletion:^(NSError *error) {
-            // need to disconnect with an empty block to prevent
-            // a notification from being sent from LGPeripheral
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) [strongSelf setValid:NO];
         }];
     }
 }
 
 - (void)listenForUnexpectedDisconnects {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    if ([self disconnectNotifyObserver] != nil) {
+        [center removeObserver:[self disconnectNotifyObserver]];
+    }
+    
     __weak typeof(self) weakSelf = self;
     self.disconnectNotifyObserver =
         [center addObserverForName:kLGPeripheralDidDisconnect
@@ -650,6 +739,13 @@ static NSInteger const kSENSenseMessageVersion = 0;
                         usingBlock:^(NSNotification *note) {
                             __strong typeof(weakSelf) strongSelf = weakSelf;
                             if (!strongSelf) return;
+                            
+                            // if peripheral is disconnected, it is removed from
+                            // scannedPeripherals in LGCentralManager, which causes
+                            // the reference to SENSense's peripheral to not be
+                            // recognized.  This is actually not a logic problem
+                            // from the library, but also the behavior in CoreBluetooth
+                            [strongSelf setValid:NO];
                             
                             NSError* error = [[note userInfo] valueForKey:@"error"];
                             for (NSString* observerId in [strongSelf disconnectObservers]) {

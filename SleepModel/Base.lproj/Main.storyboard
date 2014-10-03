@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Agile-Light.otf">
+            <string>Agile-Light</string>
             <string>Agile-Light</string>
             <string>Agile-Light</string>
             <string>Agile-Light</string>
@@ -632,6 +634,33 @@
                                     <outlet property="delegate" destination="0ke-gs-abm" id="nFf-Co-DMH"/>
                                 </connections>
                             </tableView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQC-5d-ND9">
+                                <rect key="frame" x="0.0" y="368" width="320" height="71"/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="pgd-Hu-6hb">
+                                        <rect key="frame" x="50" y="26" width="20" height="20"/>
+                                    </activityIndicatorView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="enabling pairing mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXO-iS-9i6">
+                                        <rect key="frame" x="80" y="25" width="185" height="21"/>
+                                        <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="16"/>
+                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="UXO-iS-9i6" secondAttribute="trailing" constant="55" id="EJR-4x-h98"/>
+                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="centerY" secondItem="HQC-5d-ND9" secondAttribute="centerY" id="Ftt-rN-etL"/>
+                                    <constraint firstItem="pgd-Hu-6hb" firstAttribute="top" secondItem="HQC-5d-ND9" secondAttribute="top" constant="26" id="GIj-wD-ury"/>
+                                    <constraint firstAttribute="width" constant="320" id="Jsl-CR-ccY"/>
+                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="leading" secondItem="HQC-5d-ND9" secondAttribute="leading" constant="80" id="QIN-8c-L9G"/>
+                                    <constraint firstAttribute="height" constant="71" id="WNs-13-Zip"/>
+                                    <constraint firstItem="pgd-Hu-6hb" firstAttribute="leading" secondItem="HQC-5d-ND9" secondAttribute="leading" constant="50" id="YDq-rf-fCL"/>
+                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="bottom" secondItem="pgd-Hu-6hb" secondAttribute="bottom" id="ZBy-fe-Wcz"/>
+                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="leading" secondItem="pgd-Hu-6hb" secondAttribute="trailing" constant="10" id="mdq-1q-uO6"/>
+                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="leading" secondItem="HQC-5d-ND9" secondAttribute="leading" constant="80" id="wdW-yg-8RM"/>
+                                </constraints>
+                            </view>
                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bJS-Cn-weR">
                                 <rect key="frame" x="0.0" y="368" width="320" height="142"/>
                                 <subviews>
@@ -643,6 +672,9 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="putSenseInPairingMode:" destination="0ke-gs-abm" eventType="touchUpInside" id="Y4s-Gx-XRa"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PZJ-QF-maf">
                                         <rect key="frame" x="0.0" y="54" width="320" height="44"/>
@@ -670,14 +702,19 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="aNw-eX-aCs" secondAttribute="centerX" id="Ew5-Qu-4lh"/>
+                            <constraint firstAttribute="centerX" secondItem="HQC-5d-ND9" secondAttribute="centerX" id="JeD-9x-3nn"/>
                             <constraint firstAttribute="height" secondItem="aNw-eX-aCs" secondAttribute="height" id="Sl1-1m-kAh"/>
                             <constraint firstAttribute="centerY" secondItem="aNw-eX-aCs" secondAttribute="centerY" id="UIU-XF-tS1"/>
+                            <constraint firstItem="PY5-Oi-hgT" firstAttribute="top" secondItem="HQC-5d-ND9" secondAttribute="bottom" constant="129" id="bkZ-R9-mqJ"/>
                             <constraint firstAttribute="width" secondItem="aNw-eX-aCs" secondAttribute="width" id="chh-Bc-RvP"/>
                             <constraint firstItem="PY5-Oi-hgT" firstAttribute="top" secondItem="bJS-Cn-weR" secondAttribute="bottom" constant="58" id="gN2-4m-6QD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Sense" id="7sy-8f-b6s"/>
                     <connections>
+                        <outlet property="actionStatusActivity" destination="pgd-Hu-6hb" id="kXA-et-gGO"/>
+                        <outlet property="actionStatusLabel" destination="UXO-iS-9i6" id="qII-cK-oCc"/>
+                        <outlet property="actionStatusView" destination="HQC-5d-ND9" id="CUP-uK-PTs"/>
                         <outlet property="manageSenseView" destination="bJS-Cn-weR" id="mWS-jI-HZJ"/>
                         <outlet property="senseInfoTableView" destination="aNw-eX-aCs" id="DRy-EL-8LL"/>
                         <outlet property="view" destination="1Ml-OR-V9I" id="LYw-rK-OTi"/>

@@ -43,7 +43,13 @@
         = (HEMSleepGraphCollectionViewController*)[HEMMainStoryboard instantiateSleepGraphController];
     [controller setDateForNightOfSleep:startDate];
     
-    if (self = [super initWithInitialController:controller]) {
+    if (self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                        navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil]) {
+        [self setViewControllers:@[controller]
+                       direction:UIPageViewControllerNavigationDirectionForward
+                                 | UIPageViewControllerNavigationDirectionReverse
+                        animated:NO
+                      completion:nil];
         [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
         [self setDataSource:[self data]];
     }
@@ -66,16 +72,6 @@
     [self setBgGradientLayer:layer];
 }
 
-- (void)beginSliding {
-    [[self panePanGestureRecognizer] setEnabled:NO];
-    [super beginSliding];
-}
-
-- (void)endSliding {
-    [[self panePanGestureRecognizer] setEnabled:YES];
-    [super endSliding];
-}
-
 - (void)addTopShadow {
     UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:[[self view] bounds]];
     CALayer* layer = [[self view] layer];
@@ -96,7 +92,8 @@
             [(UIViewController<FCDynamicPaneViewController>*)viewController viewDidPop];
         }
     }
-    [[self slideGesture] setEnabled:NO];
+    // disable scrolling
+    [self setDataSource:nil];
 }
 
 - (void)viewDidPush {
@@ -106,7 +103,8 @@
             [(UIViewController<FCDynamicPaneViewController>*)viewController viewDidPush];
         }
     }
-    [[self slideGesture] setEnabled:YES];
+    // enable scrolling
+    [self setDataSource:[self data]];
 }
 
 #pragma mark - Questions

@@ -7,22 +7,20 @@
 //
 
 #import <SenseKit/SENDevice.h>
-#import <SenseKit/SENSense.h>
-#import <SenseKit/SENSenseManager.h>
 
 #import "HEMDevicesViewController.h"
-#import "HEMDevicesDataSource.h"
+#import "HEMDeviceCenter.h"
 #import "HEMPillViewController.h"
 #import "HEMSenseViewController.h"
 #import "HEMNoPillViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
 
-@interface HEMDevicesViewController() <UITableViewDelegate>
+@interface HEMDevicesViewController() <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak,   nonatomic) IBOutlet UITableView *devicesTableView;
-@property (strong, nonatomic)          HEMDevicesDataSource* deviceDataSource;
-@property (strong, nonatomic)          SENSenseManager* senseManager;
+@property (strong, nonatomic) NSError* loadError;
+@property (assign, nonatomic) BOOL loaded;
 
 @end
 
@@ -30,34 +28,48 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self setDeviceDataSource:[[HEMDevicesDataSource alloc] init]];
-    
     [[self devicesTableView] setDelegate:self];
-    [[self devicesTableView] setDataSource:[self deviceDataSource]];
+    [[self devicesTableView] setDataSource:self];
     [[self devicesTableView] setTableFooterView:[[UIView alloc] init]];
-    
-    __weak typeof(self) weakSelf = self;
-    [[self deviceDataSource] refresh:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [[strongSelf devicesTableView] reloadData];
-            
-            SENSense* sense = [[strongSelf deviceDataSource] sense];
-            if (sense != nil) {
-                [strongSelf setSenseManager:[[SENSenseManager alloc] initWithSense:sense]];
+    [self loadDevices];
+}
+
+- (void)loadDevices {
+    if (![[HEMDeviceCenter sharedCenter] isInfoLoaded]) {
+        __weak typeof(self) weakSelf = self;
+        [[HEMDeviceCenter sharedCenter] loadDeviceInfo:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                [strongSelf setLoadError:error];
+                [[strongSelf devicesTableView] reloadSections:[NSIndexSet indexSetWithIndex:0]
+                                             withRowAnimation:UITableViewRowAnimationAutomatic];
             }
-        }
-    }];
+        }];
+        [[self devicesTableView] reloadData];
+    }
+    [self setLoaded:YES];
 }
 
 - (NSString*)lastSeen:(SENDevice*)device {
     return NSLocalizedString(@"settings.device.last-seen", nil);
 }
 
-- (BOOL)isLoading:(NSIndexPath*)indexPath {
-    return ([[self deviceDataSource] isSenseLoading] && [indexPath row] == 0)
-        || ([[self deviceDataSource] isPillLoading] && [indexPath row] == 1);
+#pragma mark - UITableViewDataSource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    return 2; // even if you don't have either a Sense or a Pill, show 2
+}
+
+- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString* reuseId = [HEMMainStoryboard deviceCellReuseIdentifier];
+    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
+    if (cell == nil) {
+        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                      reuseIdentifier:reuseId];
+        [cell setIndentationLevel:1];
+    }
+    
+    return cell;
 }
 
 #pragma mark - UITableViewDelegate
@@ -66,24 +78,35 @@
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    UIActivityIndicatorView* activity = nil;
+    HEMDeviceCenter* deviceCenter = [HEMDeviceCenter sharedCenter];
     
     SENDevice* deviceInfo
         = [indexPath row] == 0
-        ? [[self deviceDataSource] senseInfo]
-        : [[self deviceDataSource] pillInfo];
+        ? [deviceCenter senseInfo]
+        : [deviceCenter pillInfo];
     
+    CGFloat alpha = 1.0f;
     NSString* status = nil;
+    UIActivityIndicatorView* activity = nil;
+    UITableViewCellSelectionStyle selectionStyle = UITableViewCellSelectionStyleNone;
+    UITableViewCellAccessoryType accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    if ([self isLoading:indexPath]) {
+    if ([[HEMDeviceCenter sharedCenter] isLoadingInfo] || ![self loaded]) {
         status = NSLocalizedString(@"empty-data", nil);
         activity =
             [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+        [activity startAnimating];
+    } else if ([self loadError] != nil) {
+        status = NSLocalizedString(@"settings.device.info-failed-to-load", nil);
+        alpha = 0.5f;
+        selectionStyle = UITableViewCellSelectionStyleNone;
+        accessoryType = UITableViewCellAccessoryNone;
     } else {
         status
             = deviceInfo == nil
             ? NSLocalizedString(@"settings.device.status.not-paired", nil)
             : [self lastSeen:deviceInfo];
+        selectionStyle = UITableViewCellSelectionStyleDefault;
     }
     
     NSString* name
@@ -99,20 +122,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setText:name];
     [[cell detailTextLabel] setText:status];
     [[cell imageView] setImage:icon];
-
-    if (activity != nil) {
-        [activity startAnimating];
-        [cell setAccessoryView:activity];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
-    } else {
-        [cell setAccessoryView:nil];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-        [cell setSelectionStyle:UITableViewCellSelectionStyleDefault];
-    }
+    [[cell contentView] setAlpha:alpha];
+    [cell setAccessoryView:activity];
+    [cell setAccessoryType:accessoryType];
+    [cell setSelectionStyle:selectionStyle];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([self isLoading:indexPath]) {
+    if ([[HEMDeviceCenter sharedCenter] isLoadingInfo] || [self loadError] != nil) {
         return;
     }
     
@@ -121,31 +138,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* segueId = nil;
     if ([indexPath row] == 0) {
         segueId = [HEMMainStoryboard senseSegueIdentifier];
-    } else if ([[self deviceDataSource] pillInfo] == nil){
+    } else if ([[HEMDeviceCenter sharedCenter] pillInfo] == nil){
         segueId = [HEMMainStoryboard noSleepPillSegueIdentifier];
     } else {
         segueId = [HEMMainStoryboard pillSegueIdentifier];
     }
     
     [self performSegueWithIdentifier:segueId sender:self];
-}
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    id destVC = [segue destinationViewController];
-    if ([destVC isKindOfClass:[HEMPillViewController class]]) {
-        HEMPillViewController* pillVC = (HEMPillViewController*)destVC;
-        [pillVC setPillInfo:[[self deviceDataSource] pillInfo]];
-        [pillVC setSenseManager:[self senseManager]];
-    } else if ([destVC isKindOfClass:[HEMSenseViewController class]]) {
-        HEMSenseViewController* senseVC = (HEMSenseViewController*)destVC;
-        [senseVC setSenseInfo:[[self deviceDataSource] senseInfo]];
-        [senseVC setSenseManager:[self senseManager]];
-    } else if ([destVC isKindOfClass:[HEMNoPillViewController class]]) {
-        HEMNoPillViewController* noPillVC = (HEMNoPillViewController*)destVC;
-        [noPillVC setSenseManager:[self senseManager]];
-    }
 }
 
 #pragma mark - Cleanup

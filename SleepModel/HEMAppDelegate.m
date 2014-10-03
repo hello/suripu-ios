@@ -14,6 +14,7 @@
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMConfidentialityWarningView.h"
+#import "HEMDeviceCenter.h"
 
 @implementation HEMAppDelegate
 
@@ -53,6 +54,7 @@
 
 - (void)resetAndShowOnboarding
 {
+    [[HEMDeviceCenter sharedCenter] clearCache];
     [SENKeyedArchiver removeAllObjects];
     [self showOnboardingFlowAnimated:YES];
 }

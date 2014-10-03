@@ -92,7 +92,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)showNoSenseAlert {
-    NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-no-sense-title", nil);
+    NSString* title = NSLocalizedString(@"settings.sense.not-found-title", nil);
     NSString* message = NSLocalizedString(@"settings.pill.dialog.unpair-no-sense-message", nil);
     UIAlertView* messageDialog = [[UIAlertView alloc] initWithTitle:title
                                                             message:message

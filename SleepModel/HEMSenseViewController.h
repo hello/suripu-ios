@@ -8,12 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@class SENDevice;
-@class SENSenseManager;
-
 @interface HEMSenseViewController : UIViewController
-
-@property (nonatomic, strong) SENDevice* senseInfo;
-@property (nonatomic, strong) SENSenseManager* senseManager;
 
 @end

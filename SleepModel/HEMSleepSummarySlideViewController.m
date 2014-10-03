@@ -138,7 +138,7 @@
 - (UIImage*)snapshot {
     UIGraphicsBeginImageContextWithOptions([[self view] bounds].size, NO, 0);
     
-    [[self view] drawViewHierarchyInRect:[[self view] bounds] afterScreenUpdates:YES];
+    [[self view] drawViewHierarchyInRect:[[self view] bounds] afterScreenUpdates:NO];
     
     UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();

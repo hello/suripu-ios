@@ -31,8 +31,8 @@ static CGFloat const kHemUnitPrefSegControlWidth = 157;
 }
 
 - (void)setupClockControl {
-    NSString* h24 = NSLocalizedString(@"settings.unit2.24-hour", nil);
-    NSString* h12 = NSLocalizedString(@"settings.unit2.12-hour", nil);
+    NSString* h24 = NSLocalizedString(@"settings.units.24-hour", nil);
+    NSString* h12 = NSLocalizedString(@"settings.units.12-hour", nil);
     UISegmentedControl* clockControl = [[UISegmentedControl alloc] initWithItems:@[h24, h12]];
     [clockControl setSelectedSegmentIndex:[SENSettings timeFormat] == SENTimeFormat24Hour?0:1];
     [clockControl addTarget:self
@@ -44,8 +44,8 @@ static CGFloat const kHemUnitPrefSegControlWidth = 157;
 }
 
 - (void)setupTemperatureControl {
-    NSString* celcius = NSLocalizedString(@"settings.unit2.celcius", nil);
-    NSString* fahrenheit = NSLocalizedString(@"settings.unit2.fahrenheit", nil);
+    NSString* celcius = NSLocalizedString(@"settings.units.celcius", nil);
+    NSString* fahrenheit = NSLocalizedString(@"settings.units.fahrenheit", nil);
     NSInteger selectedIndex = [SENSettings temperatureFormat] == SENTemperatureFormatCentigrade?0:1;
     
     UISegmentedControl* tempControl = [[UISegmentedControl alloc] initWithItems:@[celcius, fahrenheit]];

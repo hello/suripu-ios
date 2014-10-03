@@ -38,10 +38,10 @@
 "settings.info" = "My Info";
 "settings.account" = "Account";
 "settings.units" = "Units and Time";
-"settings.unit2.24-hour" = "24-hour";
-"settings.unit2.12-hour" = "12-hour";
-"settings.unit2.celcius" = "°C";
-"settings.unit2.fahrenheit" = "°F";
+"settings.units.24-hour" = "24-hour";
+"settings.units.12-hour" = "12-hour";
+"settings.units.celcius" = "°C";
+"settings.units.fahrenheit" = "°F";
 "settings.units.clock" = "Clock";
 "settings.units.temp" = "Temperature";
 "settings.devices" = "Devices";

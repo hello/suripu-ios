@@ -175,7 +175,7 @@
 "sleep-event.type.motion.name" = "Motion";
 
 // sleep history
-"sleep-history.last-night" = "LAST NIGHT";
+"sleep-history.last-night" = "Last Night";
 "sleep-history.score" = "SLEEP SCORE";
 "sleep-history.depth.awake" = "Awake";
 "sleep-history.depth.light" = "Light sleep";

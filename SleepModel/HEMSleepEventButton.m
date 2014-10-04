@@ -12,11 +12,4 @@
     return self;
 }
 
-- (void)drawRect:(CGRect)rect
-{
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
-    CGContextFillEllipseInRect(ctx, CGRectInset(rect, 2, 2));
-}
-
 @end

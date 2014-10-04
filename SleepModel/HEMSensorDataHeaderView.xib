@@ -5,13 +5,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <customFonts key="customFonts">
-        <mutableArray key="Agile-Light.otf">
-            <string>Agile-Light</string>
-        </mutableArray>
-        <mutableArray key="Agile-Thin.otf">
-            <string>Agile-Thin</string>
-            <string>Agile-Thin</string>
-            <string>Agile-Thin</string>
+        <mutableArray key="Calibre-Thin.otf">
+            <string>Calibre-Thin</string>
+            <string>Calibre-Thin</string>
+            <string>Calibre-Thin</string>
         </mutableArray>
     </customFonts>
     <objects>
@@ -22,19 +19,19 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mhq-f8-L6t" userLabel="Temperature View">
-                    <rect key="frame" x="-1" y="21" width="108" height="33"/>
+                    <rect key="frame" x="-1" y="19" width="108" height="35"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="temperatureDarkIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="soh-vq-DWQ">
-                            <rect key="frame" x="8" y="1" width="29" height="30"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="temperatureGrayIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="soh-vq-DWQ">
+                            <rect key="frame" x="8" y="2.5" width="29" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="Fof-qx-hU1"/>
                                 <constraint firstAttribute="width" constant="29" id="YTp-er-wQC"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.40000000000000002" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="eCG-Vo-7zd" userLabel="First Sensor Label">
-                            <rect key="frame" x="45" y="4" width="55" height="25.5"/>
-                            <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="21"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <rect key="frame" x="45" y="5.5" width="55" height="25"/>
+                            <fontDescription key="fontDescription" name="Calibre-Thin" family="Calibre" pointSize="25"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -48,19 +45,19 @@
                     </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="FOb-Wl-ry3" userLabel="Particulate View">
-                    <rect key="frame" x="106" y="21" width="107.5" height="33"/>
+                    <rect key="frame" x="106" y="19" width="107.5" height="35"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="particleDarkIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="urU-xW-Xa4">
-                            <rect key="frame" x="8" y="1.5" width="29" height="30"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="particulateGrayIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="urU-xW-Xa4">
+                            <rect key="frame" x="8" y="2" width="29" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="QV4-6O-co8"/>
                                 <constraint firstAttribute="width" constant="29" id="isT-G9-ynZ"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.40000000000000002" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bjO-5P-t5i" userLabel="Second Sensor Label">
-                            <rect key="frame" x="45" y="4" width="54.5" height="25.5"/>
-                            <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="21"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <rect key="frame" x="45" y="5" width="54.5" height="25"/>
+                            <fontDescription key="fontDescription" name="Calibre-Thin" family="Calibre" pointSize="25"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -73,37 +70,20 @@
                         <constraint firstAttribute="centerY" secondItem="urU-xW-Xa4" secondAttribute="centerY" id="hpb-5n-96O"/>
                     </constraints>
                 </view>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o9X-AF-dOC" userLabel="Clock Container View" customClass="HEMSensorDataHeaderClockContainerView">
-                    <rect key="frame" x="234" y="65" width="80" height="34"/>
-                    <subviews>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9GF-FS-AI0">
-                            <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="16"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                            <nil key="highlightedColor"/>
-                        </label>
-                    </subviews>
-                    <color key="backgroundColor" red="0.65028843599999997" green="1" blue="0.44574605740000001" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="34" id="6Gl-Vj-OsA"/>
-                        <constraint firstAttribute="width" constant="80" id="ayW-vH-CKh"/>
-                        <constraint firstAttribute="centerX" secondItem="9GF-FS-AI0" secondAttribute="centerX" id="cqo-mQ-iRN"/>
-                        <constraint firstAttribute="centerY" secondItem="9GF-FS-AI0" secondAttribute="centerY" constant="-0.5" id="hrM-4z-AnQ"/>
-                    </constraints>
-                </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JrX-ve-eUR" userLabel="Humidity View">
-                    <rect key="frame" x="213" y="21" width="108" height="33"/>
+                    <rect key="frame" x="213" y="19" width="108" height="35"/>
                     <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="humidityDarkIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="ewq-jN-PK3">
-                            <rect key="frame" x="8" y="1" width="29" height="30"/>
+                        <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="humidityGrayIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="ewq-jN-PK3">
+                            <rect key="frame" x="8" y="2" width="29" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="29" id="CP7-ED-1cf"/>
                                 <constraint firstAttribute="height" constant="30" id="Lm1-pu-zHA"/>
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.40000000000000002" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0a4-F4-kV3" userLabel="Third Sensor Label">
-                            <rect key="frame" x="45" y="4" width="55" height="25.5"/>
-                            <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="21"/>
-                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                            <rect key="frame" x="45" y="5" width="55" height="25"/>
+                            <fontDescription key="fontDescription" name="Calibre-Thin" family="Calibre" pointSize="25"/>
+                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
                     </subviews>
@@ -126,30 +106,26 @@
                 <constraint firstItem="JrX-ve-eUR" firstAttribute="top" secondItem="mhq-f8-L6t" secondAttribute="top" id="AwT-RY-PDV"/>
                 <constraint firstItem="JrX-ve-eUR" firstAttribute="leading" secondItem="FOb-Wl-ry3" secondAttribute="trailing" constant="-1" id="GA2-Gh-RWC"/>
                 <constraint firstItem="FOb-Wl-ry3" firstAttribute="leading" secondItem="mhq-f8-L6t" secondAttribute="trailing" constant="-1" id="Swx-Pg-Jhz"/>
-                <constraint firstItem="mhq-f8-L6t" firstAttribute="top" secondItem="7ok-tj-Qtr" secondAttribute="top" constant="21" id="W1S-A0-2TX"/>
+                <constraint firstItem="mhq-f8-L6t" firstAttribute="top" secondItem="7ok-tj-Qtr" secondAttribute="top" constant="19" id="W1S-A0-2TX"/>
                 <constraint firstItem="mhq-f8-L6t" firstAttribute="top" secondItem="FOb-Wl-ry3" secondAttribute="top" id="YB0-Rx-FAU"/>
                 <constraint firstItem="mhq-f8-L6t" firstAttribute="bottom" secondItem="FOb-Wl-ry3" secondAttribute="bottom" id="dH9-P5-T6h"/>
                 <constraint firstAttribute="bottom" secondItem="mhq-f8-L6t" secondAttribute="bottom" constant="5" id="dVF-1o-PYA"/>
                 <constraint firstAttribute="trailing" secondItem="JrX-ve-eUR" secondAttribute="trailing" constant="-1" id="ldy-XR-Bgp"/>
-                <constraint firstAttribute="trailing" secondItem="o9X-AF-dOC" secondAttribute="trailing" constant="6" id="ook-Cv-gEx"/>
-                <constraint firstItem="o9X-AF-dOC" firstAttribute="top" secondItem="7ok-tj-Qtr" secondAttribute="bottom" constant="6" id="yPW-60-3Xg"/>
             </constraints>
             <connections>
-                <outlet property="clockContainerView" destination="o9X-AF-dOC" id="cnl-Aa-pvx"/>
                 <outlet property="humidityContainerView" destination="JrX-ve-eUR" id="ku9-xe-c8q"/>
                 <outlet property="humidityLabel" destination="0a4-F4-kV3" id="uZz-hT-Sfg"/>
                 <outlet property="particulateContainerView" destination="FOb-Wl-ry3" id="5xM-pn-nbR"/>
                 <outlet property="particulateLabel" destination="bjO-5P-t5i" id="4Fu-3f-gqA"/>
                 <outlet property="temperatureContainerView" destination="mhq-f8-L6t" id="L2S-gE-8Wl"/>
                 <outlet property="temperatureLabel" destination="eCG-Vo-7zd" id="Ecd-ua-yzV"/>
-                <outlet property="timeLabel" destination="9GF-FS-AI0" id="6IP-MW-UdV"/>
             </connections>
             <point key="canvasLocation" x="68" y="161.5"/>
         </collectionReusableView>
     </objects>
     <resources>
-        <image name="humidityDarkIcon.png" width="15" height="22"/>
-        <image name="particleDarkIcon.png" width="18" height="18"/>
-        <image name="temperatureDarkIcon.png" width="9" height="25"/>
+        <image name="humidityGrayIcon.png" width="21" height="29"/>
+        <image name="particulateGrayIcon.png" width="26" height="27"/>
+        <image name="temperatureGrayIcon.png" width="12" height="32"/>
     </resources>
 </document>

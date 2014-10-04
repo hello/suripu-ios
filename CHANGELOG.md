@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.0.18
+
+New:
+
+* Timeline style and icons
+* Transition style for moving between dates
+* Put Sense into pairing mode from settings
+* Add integration with device ID in BLE advertisement packets
+* Add a Sense area in Settings app
+
+Fixes:
+
+* Fix doubled animation for score
+* Fix Units + Time styling
+* Fix a split sec animation bug when question is presented on iphone 6
+
 ## 1.0.0.17
 
 New:

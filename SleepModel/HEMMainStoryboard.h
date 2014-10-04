@@ -9,6 +9,7 @@
 +(UIStoryboard *)storyboard;
 
 /** Cell Reuse Identifiers */
++(NSString *)unitCellReuseIdentifier;
 +(NSString *)settingsCellReuseIdentifier;
 +(NSString *)deviceCellReuseIdentifier;
 +(NSString *)senseInfoCellReuseIdentifier;

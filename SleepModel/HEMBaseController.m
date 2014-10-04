@@ -16,6 +16,17 @@
 
 @implementation HEMBaseController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(viewDidBecomeActive)
+                   name:UIApplicationDidBecomeActiveNotification
+                 object:nil];
+}
+
+- (void)viewDidBecomeActive {}
+
 - (void)updateViewConstraints {
     [super updateViewConstraints];
     if (![self adjustedConstraints]) {
@@ -40,6 +51,10 @@
                                delegate:nil
                       cancelButtonTitle:nil
                       otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

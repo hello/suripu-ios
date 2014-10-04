@@ -4,6 +4,7 @@
 
 "empty-data" = "--";
 "loading" = "Loading...";
+"bluetooth.off-message" = "Bluetooth is off.";
 
 // sign up
 "sign-up.title" = "Sign Up";
@@ -37,11 +38,19 @@
 "settings.info" = "My Info";
 "settings.account" = "Account";
 "settings.units" = "Units and Time";
+"settings.units.24-hour" = "24-hour";
+"settings.units.12-hour" = "12-hour";
+"settings.units.celcius" = "°C";
+"settings.units.fahrenheit" = "°F";
+"settings.units.clock" = "Clock";
+"settings.units.temp" = "Temperature";
 "settings.devices" = "Devices";
 "settings.personal.info.birthday" = "Birthday";
 "settings.personal.info.gender" = "Gender";
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
+
+// device management
 "settings.device.sense" = "Your Sense";
 "settings.device.pill" = "Your Sleep Pill";
 "settings.device.status.low-battery" = "Battery Low";
@@ -54,10 +63,22 @@
 "settings.device.battery.good" = "Good";
 "settings.pill.dialog.unpair-title" = "Unpair Sleep Pill?";
 "settings.pill.dialog.unpair-message" = "Are you sure you want to unpair your Sleep Pill?  By doing so, we will no longer be able to track your sleep until you pair another Sleep Pill.";
-"settings.pill.dialog.unpair-no-sense-title" = "Sense Not Found";
 "settings.pill.dialog.unpair-no-sense-message" = "To unpair your Sleep Pill, you must be near your Sense device and Sense must be powered on.";
 "settings.pill.need-pill" = "I need a Sleep Pill";
 "settings.pill.pair-no-sense-message" = "A Sense must be paired to your account in order to pair a Sleep Pill.";
+"settings.sense.not-found-title" = "Sense Not Found";
+"settings.sense.signal" = "Signal";
+"settings.sense.signal.weak" = "Weak";
+"settings.sense.signal.good" = "Good";
+"settings.sense.signal.strong" = "Strong";
+"settings.sense.dialog.pair-failed-title" = "Action Failed";
+"settings.sense.dialog.pair-failed-message" = "Unable to put Sense into pairing mode.  Make sure the signal to Sense is not too weak and try again.";
+"settings.sense.unpair-no-sense-message" = "Ensure you are near your Sense, Sense is powered on, and try again.";
+"settings.sense.dialog.enable-pair-mode-title" = "Put Sense into Pairing Mode";
+"settings.sense.dialog.enable-pair-mode-message" = "Are you sure you want to put Sense into pairing mode?";
+"settings.sense.scanning-message" = "looking for your Sense.";
+"settings.device.info-failed-to-load" = "failed to load information";
+"settings.sense.enabling-pairing-mode" = "enabling pairing mode.";
 
 // insights
 "sleep.insights.title" = "Sleep Insights";

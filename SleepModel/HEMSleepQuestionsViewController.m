@@ -21,8 +21,6 @@ static CGFloat const kHEMSleepAnswerSpacing = 15.0f;
 static CGFloat const kHEMSleepViewAnimDuration = 0.2f;
 static CGFloat const kHEMSleepAnswerDisplayDelay = 0.2f;
 static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
-static CGFloat const kHEMSleepActivityDuration = 3.0f;
-static CGFloat const kHEMSleepActivityLineWidth = 2.0f;
 
 @interface HEMSleepQuestionsViewController ()
 

@@ -9,10 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @class SENDevice;
+@class SENSenseManager;
 
 @interface HEMPillViewController : UIViewController
 
-@property (nonatomic, strong) SENDevice* pill;
-@property (nonatomic, strong) SENDevice* sense; // used to unpair
+@property (nonatomic, strong) SENDevice* pillInfo;
+@property (nonatomic, strong) SENSenseManager* senseManager;
 
 @end

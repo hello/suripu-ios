@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class SENSense;
+@class SENSenseManager;
 
 @interface HEMNoPillViewController : UIViewController
 
-@property (nonatomic, strong) SENSense* sense;
+@property (nonatomic, strong) SENSenseManager* senseManager;
 
 @end

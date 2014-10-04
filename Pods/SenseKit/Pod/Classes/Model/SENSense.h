@@ -13,7 +13,7 @@
 @interface SENSense : NSObject
 
 @property (nonatomic, copy, readonly) NSString* name;
-@property (nonatomic, copy, readonly) NSString* uuid;
+@property (nonatomic, copy, readonly) NSString* deviceId;
 
 - (instancetype)initWithPeripheral:(LGPeripheral*)peripheral;
 

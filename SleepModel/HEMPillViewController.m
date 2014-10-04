@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self pillInfoTableView] setTableFooterView:[[UIView alloc] init]];
-    [[self unpairView] setHidden:[self pill] == nil];
+    [[self unpairView] setHidden:[self pillInfo] == nil];
 }
 
 #pragma mark - UITableViewDelegate / DataSource
@@ -72,7 +72,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Actions
 
 - (IBAction)showUnpairConfirmation:(id)sender {
-    if ([self sense] != nil) {
+    if ([self senseManager] != nil) {
         [self showUnpairConfirmationAlert];
     } else {
         [self showNoSenseAlert];
@@ -92,7 +92,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)showNoSenseAlert {
-    NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-no-sense-title", nil);
+    NSString* title = NSLocalizedString(@"settings.sense.not-found-title", nil);
     NSString* message = NSLocalizedString(@"settings.pill.dialog.unpair-no-sense-message", nil);
     UIAlertView* messageDialog = [[UIAlertView alloc] initWithTitle:title
                                                             message:message

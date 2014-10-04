@@ -299,7 +299,7 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* title = nil;
-    NSTextAlignment alignment;
+    NSTextAlignment alignment = NSTextAlignmentLeft;
     
     if ([indexPath row] > 0 && [indexPath row] < [tableView numberOfRowsInSection:0] - 1) {
         NSInteger dataRow = [indexPath row] - 1;

@@ -4,6 +4,8 @@
 #import <SenseKit/SENAPIQuestions.h>
 #import <SenseKit/SENServiceQuestions.h>
 #import <SenseKit/SENAnswer.h>
+#import <SenseKit/SENSettings.h>
+
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <Crashlytics/Crashlytics.h>
 
@@ -14,12 +16,14 @@
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMConfidentialityWarningView.h"
+#import "HEMDeviceCenter.h"
 
 @implementation HEMAppDelegate
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
     [SENAuthorizationService authorizeRequestsFromKeychain];
+    [self configureSettingsDefaults];
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];
@@ -53,6 +57,7 @@
 
 - (void)resetAndShowOnboarding
 {
+    [[HEMDeviceCenter sharedCenter] clearCache];
     [SENKeyedArchiver removeAllObjects];
     [self showOnboardingFlowAnimated:YES];
 }
@@ -111,6 +116,15 @@
 {
     [self.window addSubview:[HEMConfidentialityWarningView viewInNewWindow]];
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
+}
+
+- (void)configureSettingsDefaults
+{
+    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    NSDictionary* settingsDefaults = [SENSettings defaults];
+    // combine any other default settings here for the Settings.bundle
+    [userDefaults registerDefaults:settingsDefaults];
+    [userDefaults synchronize];
 }
 
 @end

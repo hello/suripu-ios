@@ -39,6 +39,7 @@ static NSString *const _HEMsleepGraphNavController = @"sleepGraphNavController";
 static NSString *const _HEMsleepHistoryController = @"sleepHistoryController";
 static NSString *const _HEMsleepQuestions = @"sleepQuestions";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
+static NSString *const _HEMunitCell = @"unitCell";
 static NSString *const _HEMunitsSettings = @"unitsSettings";
 
 @implementation HEMMainStoryboard
@@ -46,6 +47,7 @@ static NSString *const _HEMunitsSettings = @"unitsSettings";
 +(UIStoryboard *)storyboard { return _storyboard ?: (_storyboard = [UIStoryboard storyboardWithName:_HEMmain bundle:[NSBundle mainBundle]]); }
 
 /** Cell Reuse Identifiers */
++(NSString *)unitCellReuseIdentifier { return _HEMunitCell; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
 +(NSString *)deviceCellReuseIdentifier { return _HEMdeviceCell; }
 +(NSString *)senseInfoCellReuseIdentifier { return _HEMsenseInfoCell; }

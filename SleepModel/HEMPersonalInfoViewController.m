@@ -219,7 +219,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)didSelectWeightInKgs:(CGFloat)weightKgs
                         from:(HEMWeightPickerViewController *)controller {
-    
+        
     [self showUpdateProgressFor:HEMPersonalInfoWeight];
     
     __weak typeof(self) weakSelf = self;

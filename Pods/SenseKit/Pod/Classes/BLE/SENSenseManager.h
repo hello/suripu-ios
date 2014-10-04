@@ -23,6 +23,7 @@ typedef enum {
     SENSenseManagerErrorCodeDeviceAlreadyPaired = -5,
     SENSenseManagerErrorCodeInvalidCommand = -6,
     SENSenseManagerErrorCodeConnectionFailed = -7,
+    SENSenseManagerErrorCodeInvalidated = -8,
     SENSenseManagerErrorCodeNone = 0
 } SENSenseManagerErrorCode;
 
@@ -53,8 +54,20 @@ typedef enum {
 + (void)stopScan;
 
 /**
- * Check to see if bluetooth on the device is on or not
+ * Check to see if manager is currently scanning for senses
+ * @return YES if scanning, NO otherwise
+ */
++ (BOOL)isScanning;
+
+/**
+ * Check to see if Central is ready to go
  * @return YES if on, NO otherwise
+ */
++ (BOOL)isReady;
+
+/**
+ * Check to see if bluetooth on the device is powered on or not
+ * @return YES if powered on, NO otherwise
  */
 + (BOOL)isBluetoothOn;
 
@@ -66,12 +79,6 @@ typedef enum {
  * @return an instance of SENSenseManager
  */
 - (instancetype)initWithSense:(SENSense*)sense;
-
-/**
- * Disconnect from Sense, if connected.  This will not trigger a callback to
- * observers of unexpected disconnects.
- */
-- (void)disconnectFromSense;
 
 #pragma mark - Pairing
 
@@ -144,6 +151,24 @@ typedef enum {
 - (void)unpairPill:(NSString*)pillId
            success:(SENSenseSuccessBlock)success
            failure:(SENSenseFailureBlock)failure;
+
+#pragma mark - Signal Strengths / RSSI
+
+/**
+ * Get the current RSSI value for the initialized SENSense object.  The device
+ * must be near as this will try to connect to the device, if not already.
+ * @param success: the block to invoke when rssi value is retrieved
+ * @param failure: the block to invoke if any any problems were encountered.
+ */
+- (void)currentRSSI:(SENSenseSuccessBlock)success failure:(SENSenseFailureBlock)failure;
+
+#pragma mark - Connections
+
+/**
+ * Disconnect from Sense, if connected.  This will not trigger a callback to
+ * observers of unexpected disconnects.
+ */
+- (void)disconnectFromSense;
 
 /**
  * Observe any unexpected disconnects that may occur, which will invoke the block

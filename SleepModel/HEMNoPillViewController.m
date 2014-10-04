@@ -63,7 +63,7 @@ static NSString* const kHEMNoPillOrderURL = @"https://order.hello.is/";
 }
 
 - (void)showNoSenseAlert {
-    NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-no-sense-title", nil);
+    NSString* title = NSLocalizedString(@"settings.sense.not-found-title", nil);
     NSString* message = NSLocalizedString(@"settings.pill.pair-no-sense-message", nil);
     UIAlertView* messageDialog = [[UIAlertView alloc] initWithTitle:title
                                                             message:message
@@ -74,7 +74,7 @@ static NSString* const kHEMNoPillOrderURL = @"https://order.hello.is/";
 }
 
 - (IBAction)pairPill:(id)sender {
-    if ([self sense] == nil) {
+    if ([self senseManager] == nil) {
         [self showNoSenseAlert];
     } // TODO: (jimmy): implement it! ... but it requires Sense to be working
 }

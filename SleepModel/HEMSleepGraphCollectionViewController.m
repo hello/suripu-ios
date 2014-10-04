@@ -84,11 +84,13 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 }
 
 - (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer
-    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer*)otherGestureRecognizer {
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer*)otherGestureRecognizer
+{
     return [self.collectionView contentSize].height > CGRectGetHeight([self.collectionView bounds]);
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
+- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer*)gestureRecognizer
+{
     CGPoint translation = [gestureRecognizer translationInView:[self view]];
     return fabsf(translation.y) > fabsf(translation.x);
 }
@@ -114,19 +116,12 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    return [self.dataSource segmentForEventExistsAtIndexPath:indexPath];
+    return NO;
 }
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    return [self.dataSource segmentForEventExistsAtIndexPath:indexPath];
-}
-
-- (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
-{
-    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
-    [self.dataSource toggleExpansionOfEventCellAtIndexPath:indexPath];
-    [collectionView reloadItemsAtIndexPaths:@[ indexPath ]];
+    return NO;
 }
 
 - (void)collectionView:(UICollectionView*)cv didEndDisplayingCell:(UICollectionViewCell*)cell forItemAtIndexPath:(NSIndexPath*)indexPath
@@ -152,14 +147,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
         if ([self.dataSource segmentForSleepExistsAtIndexPath:indexPath]) {
             return CGSizeMake(width, ceilf(durationHeight));
         } else {
-            if ([self.dataSource eventCellAtIndexPathIsExpanded:indexPath]) {
-                if ([segment.eventType isEqualToString:HEMSleepEventTypeNoise]) {
-                    return CGSizeMake(width, HEMSleepGraphCollectionViewEventMaximumHeight);
-                }
-                return CGSizeMake(width, HEMSleepGraphCollectionViewEventLightHeight);
-            } else {
-                return CGSizeMake(width, MAX(durationHeight, HEMSleepGraphCollectionViewEventMinimumHeight));
-            }
+            return CGSizeMake(width, MAX(durationHeight, HEMSleepGraphCollectionViewEventMinimumHeight));
         }
     }
     default:

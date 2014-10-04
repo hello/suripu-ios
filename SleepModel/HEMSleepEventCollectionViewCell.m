@@ -6,15 +6,7 @@
 
 - (void)awakeFromNib
 {
-    self.expanded = NO;
     self.backgroundColor = [HelloStyleKit lightestBlueColor];
-}
-
-- (void)setExpanded:(BOOL)expanded
-{
-    self.eventMessageLabel.hidden = self.playButton.hidden = !(_expanded = expanded);
-    [self setNeedsDisplay];
-    [self setNeedsLayout];
 }
 
 - (void)drawRect:(CGRect)rect

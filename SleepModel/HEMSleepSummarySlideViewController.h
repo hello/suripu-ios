@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HEMSlideViewController.h"
 
-@interface HEMSleepSummarySlideViewController : HEMSlideViewController
+@interface HEMSleepSummarySlideViewController : UIPageViewController
 
 @end

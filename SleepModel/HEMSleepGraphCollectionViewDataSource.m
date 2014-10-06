@@ -229,7 +229,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     UIFont* emFont = [UIFont fontWithName:@"Calibre-Medium" size:cell.messageLabel.font.pointSize];
     [cell setSleepScore:[self.sleepResult.score integerValue] animated:YES];
     NSDictionary* attributes = @{
-        @(EMPH) : @{
+        @(STRONG) : @{
             NSFontAttributeName : emFont,
         }
     };

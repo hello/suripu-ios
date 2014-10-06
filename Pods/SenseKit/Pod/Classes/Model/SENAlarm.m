@@ -22,7 +22,6 @@ static NSString* const SENAlarmIdentifierKey = @"identifier";
 static NSString* const SENAlarmDefaultSoundName = @"None";
 static NSUInteger const SENAlarmDefaultHour = 7;
 static NSUInteger const SENAlarmDefaultMinute = 30;
-static NSUInteger const SENAlarmDefaultRepeatFlags = 0;
 static BOOL const SENAlarmDefaultOnState = YES;
 static BOOL const SENAlarmDefaultEditableState = YES;
 static BOOL const SENAlarmDefaultSmartAlarmState = YES;
@@ -41,7 +40,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
         SENAlarmOnKey : @(SENAlarmDefaultOnState),
         SENAlarmEditableKey : @(SENAlarmDefaultEditableState),
         SENAlarmSmartKey : @(SENAlarmDefaultSmartAlarmState),
-        SENAlarmRepeatKey : @(SENAlarmDefaultRepeatFlags)
+        SENAlarmRepeatKey : @[]
     }];
 }
 

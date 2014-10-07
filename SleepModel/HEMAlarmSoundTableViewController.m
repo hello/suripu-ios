@@ -3,6 +3,7 @@
 #import "HEMAlarmSoundTableViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
+#import "HEMAlarmCache.h"
 
 @interface HEMAlarmSoundTableViewController ()
 @property (nonatomic, strong) NSArray* possibleSleepSounds;
@@ -31,7 +32,7 @@
     NSString* sleepSoundText = [self.possibleSleepSounds objectAtIndex:indexPath.row];
     cell.textLabel.text = sleepSoundText;
 
-    if ([sleepSoundText isEqualToString:self.cachedAlarmValues[@"sound"]]) {
+    if ([sleepSoundText isEqualToString:self.alarmCache.soundName]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -45,12 +46,11 @@
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSString* soundName = self.cachedAlarmValues[@"sound"];
-    NSUInteger index = [self.possibleSleepSounds indexOfObject:soundName];
+    NSUInteger index = [self.possibleSleepSounds indexOfObject:self.alarmCache.soundName];
     if (indexPath.row == index)
         return;
 
-    self.cachedAlarmValues[@"sound"] = [self.possibleSleepSounds objectAtIndex:indexPath.row];
+    self.alarmCache.soundName = [self.possibleSleepSounds objectAtIndex:indexPath.row];
     if (index != NSNotFound) {
         NSArray* indexPaths = @[
             [NSIndexPath indexPathForRow:index inSection:0],

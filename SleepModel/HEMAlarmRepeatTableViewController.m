@@ -2,6 +2,7 @@
 #import <SenseKit/SENAlarm.h>
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMAlarmCache.h"
 
 @interface HEMAlarmRepeatTableViewController ()
 
@@ -44,10 +45,9 @@
 
     NSString* text = [self.repeatOptions objectAtIndex:indexPath.row];
     NSUInteger day = [self repeatDayForIndexPath:indexPath];
-    NSUInteger repeatFlags = [self.cachedAlarmValues[@"repeat"] unsignedIntegerValue];
     cell.textLabel.text = text;
 
-    if ((repeatFlags & day) == day) {
+    if ((self.alarmCache.repeatFlags & day) == day) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -62,13 +62,13 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSUInteger day = [self repeatDayForIndexPath:indexPath];
-    NSUInteger repeatFlags = [self.cachedAlarmValues[@"repeat"] unsignedIntegerValue];
+    NSUInteger repeatFlags = self.alarmCache.repeatFlags;
     if ((repeatFlags & day) == day) {
         repeatFlags -= day;
     } else {
         repeatFlags |= day;
     }
-    self.cachedAlarmValues[@"repeat"] = @(repeatFlags);
+    self.alarmCache.repeatFlags = repeatFlags;
     [tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
 }
 

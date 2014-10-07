@@ -83,14 +83,20 @@ static NSUInteger HEMAlarmListLimit = 8;
 
 - (IBAction)addNewAlarm:(id)sender
 {
-    [[SENAlarm createDefaultAlarm] save];
-    [self reloadData];
-    [self.tableView reloadData];
+    SENAlarm* alarm = [SENAlarm createDefaultAlarm];
+    [self presentViewControllerForAlarm:alarm];
 }
 
 - (IBAction)flippedEnabledSwitch:(UISwitch *)sender {
     SENAlarm* alarm = [self.alarms objectAtIndex:sender.tag];
     alarm.on = [sender isOn];
+}
+
+- (void)presentViewControllerForAlarm:(SENAlarm*)alarm {
+    UINavigationController* controller = (UINavigationController*)[HEMMainStoryboard instantiateAlarmNavController];
+    HEMAlarmViewController* alarmController = (HEMAlarmViewController*)controller.topViewController;
+    alarmController.alarm = alarm;
+    [self.navigationController presentViewController:controller animated:YES completion:NULL];
 }
 
 #pragma mark - UITableViewDataSource
@@ -132,10 +138,7 @@ static NSUInteger HEMAlarmListLimit = 8;
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
-    UINavigationController* controller = (UINavigationController*)[HEMMainStoryboard instantiateAlarmNavController];
-    HEMAlarmViewController* alarmController = (HEMAlarmViewController*)controller.topViewController;
-    alarmController.alarm = alarm;
-    [self.navigationController presentViewController:controller animated:YES completion:NULL];
+    [self presentViewControllerForAlarm:alarm];
 }
 
 @end

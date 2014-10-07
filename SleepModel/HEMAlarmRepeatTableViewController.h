@@ -1,9 +1,9 @@
 
 #import <UIKit/UIKit.h>
 
-@class SENAlarm;
+@class HEMAlarmCache;
 
 @interface HEMAlarmRepeatTableViewController : UITableViewController
 
-@property (nonatomic, strong) NSMutableDictionary* cachedAlarmValues;
+@property (nonatomic, strong) HEMAlarmCache* alarmCache;
 @end

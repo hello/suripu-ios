@@ -7,15 +7,15 @@
 #import "HelloStyleKit.h"
 #import "HEMColorUtils.h"
 #import "HEMAlarmAddButton.h"
-#import "HEMAlarmTextUtils.h"
+#import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
 
 @interface HEMAlarmListViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) CAGradientLayer* gradientLayer;
 @property (strong, nonatomic) NSArray* alarms;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet HEMAlarmAddButton *addButton;
+@property (weak, nonatomic) IBOutlet UITableView* tableView;
+@property (weak, nonatomic) IBOutlet HEMAlarmAddButton* addButton;
 @end
 
 @implementation HEMAlarmListViewController
@@ -111,7 +111,7 @@ static NSUInteger HEMAlarmListLimit = 8;
     SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
     HEMAlarmListTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmListCellIdentifier]];
     cell.timeLabel.text = [alarm localizedValue];
-    cell.detailLabel.text = [HEMAlarmTextUtils repeatTextForUnitFlags:alarm.repeatFlags];
+    cell.detailLabel.text = [HEMAlarmUtils repeatTextForUnitFlags:alarm.repeatFlags];
     cell.enabledSwitch.on = [alarm isOn];
     cell.enabledSwitch.tag = indexPath.row;
     return cell;

@@ -9,7 +9,7 @@
 #import "HEMAlarmCache.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
-#import "HEMAlarmTextUtils.h"
+#import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSettingsTheme.h"
 

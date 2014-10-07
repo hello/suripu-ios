@@ -123,6 +123,7 @@
 "alarm.repeat.title" = "Repeat";
 "alarm.repeat.days.none" = "Not repeating";
 "alarm.repeat.days.all" = "Everyday";
+"alarm.error.title" = "Alarms could not be saved";
 
 "alarm.repeat.days.weekdays" = "Weekdays";
 "alarm.repeat.days.weekends" = "Weekends";

@@ -3,7 +3,7 @@
 
 @class SENAlarm;
 
-@interface HEMAlarmTextUtils : NSObject
+@interface HEMAlarmUtils : NSObject
 
 /**
  *  Text representing the repeat settings of an alarm
@@ -14,4 +14,5 @@
  */
 + (NSString*)repeatTextForUnitFlags:(NSUInteger)alarmRepeatFlags;
 
++ (void)updateAlarmFromPresentingController:(UIViewController*)controller completion:(void (^)(BOOL success))completion;
 @end

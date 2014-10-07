@@ -142,7 +142,7 @@
 		8AB2683919CCFDB400017818 /* HEMAlarmAddButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2683819CCFDB400017818 /* HEMAlarmAddButton.m */; };
 		8AB2683C19CCFDBF00017818 /* HEMAlarmListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2683B19CCFDBF00017818 /* HEMAlarmListViewController.m */; };
 		8AB2683F19CCFDD400017818 /* HEMAlarmListTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2683E19CCFDD400017818 /* HEMAlarmListTableViewCell.m */; };
-		8AB2684719CCFF8800017818 /* HEMAlarmTextUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2684619CCFF8800017818 /* HEMAlarmTextUtils.m */; };
+		8AB2684719CCFF8800017818 /* HEMAlarmUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2684619CCFF8800017818 /* HEMAlarmUtils.m */; };
 		8AB2684A19CCFF9200017818 /* HEMAlarmRepeatTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2684919CCFF9200017818 /* HEMAlarmRepeatTableViewController.m */; };
 		8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB33FE5199D3F710046188F /* HEMLocationFinderViewController.m */; };
 		8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */; };
@@ -464,8 +464,8 @@
 		8AB2683B19CCFDBF00017818 /* HEMAlarmListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmListViewController.m; sourceTree = "<group>"; };
 		8AB2683D19CCFDD400017818 /* HEMAlarmListTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmListTableViewCell.h; sourceTree = "<group>"; };
 		8AB2683E19CCFDD400017818 /* HEMAlarmListTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmListTableViewCell.m; sourceTree = "<group>"; };
-		8AB2684519CCFF8800017818 /* HEMAlarmTextUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmTextUtils.h; sourceTree = "<group>"; };
-		8AB2684619CCFF8800017818 /* HEMAlarmTextUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmTextUtils.m; sourceTree = "<group>"; };
+		8AB2684519CCFF8800017818 /* HEMAlarmUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmUtils.h; sourceTree = "<group>"; };
+		8AB2684619CCFF8800017818 /* HEMAlarmUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmUtils.m; sourceTree = "<group>"; };
 		8AB2684819CCFF9200017818 /* HEMAlarmRepeatTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmRepeatTableViewController.h; sourceTree = "<group>"; };
 		8AB2684919CCFF9200017818 /* HEMAlarmRepeatTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmRepeatTableViewController.m; sourceTree = "<group>"; };
 		8AB33FE4199D3F710046188F /* HEMLocationFinderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationFinderViewController.h; sourceTree = "<group>"; };
@@ -1159,8 +1159,8 @@
 			children = (
 				8A91EEF619E46D9900EA6E5F /* HEMAlarmCache.h */,
 				8A91EEF719E46D9900EA6E5F /* HEMAlarmCache.m */,
-				8AB2684519CCFF8800017818 /* HEMAlarmTextUtils.h */,
-				8AB2684619CCFF8800017818 /* HEMAlarmTextUtils.m */,
+				8AB2684519CCFF8800017818 /* HEMAlarmUtils.h */,
+				8AB2684619CCFF8800017818 /* HEMAlarmUtils.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1751,7 +1751,7 @@
 				8A660120199E9C5B007E6167 /* HEMUserDataIntroViewController.m in Sources */,
 				8A9BD8D019DF28F400B1E57E /* HEMPaddedRoundedLabel.m in Sources */,
 				BFAE0B1119AE3B790021EC0D /* HEMSlideViewController.m in Sources */,
-				8AB2684719CCFF8800017818 /* HEMAlarmTextUtils.m in Sources */,
+				8AB2684719CCFF8800017818 /* HEMAlarmUtils.m in Sources */,
 				8A782683196B4729002882A1 /* HEMGraphTooltipView.m in Sources */,
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,
 				8A66FC82199BE94100922ED5 /* HEMColoredRoundedLabel.m in Sources */,

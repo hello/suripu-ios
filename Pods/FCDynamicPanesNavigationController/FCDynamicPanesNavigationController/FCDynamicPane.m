@@ -89,7 +89,7 @@
         [self setAnchorPoint:CGPointMake(0.5, 0.5)];
 
         //I think that's a bug in the SDK, the collision behavior keeps losing its points
-        [self.collisionBehavior addBoundaryWithIdentifier:@"collision" fromPoint:CGPointMake(0, -1) toPoint:CGPointMake(320, -1)];
+        [self.collisionBehavior addBoundaryWithIdentifier:@"collision" fromPoint:CGPointMake(0, -1) toPoint:CGPointMake(CGRectGetWidth([UIScreen mainScreen].bounds), -1)];
 
         CGFloat pushDirectionY = [gesture velocityInView:self.view].y;
         [self.pushBehavior setPushDirection:CGVectorMake(0, pushDirectionY)];
@@ -118,14 +118,16 @@
 - (void)didMoveToParentViewController:(UIViewController*)parent
 {
     [super didMoveToParentViewController:parent];
+    CGFloat fullWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
+    CGFloat fullHeight = CGRectGetHeight([UIScreen mainScreen].bounds);
     [_viewController didMoveToParentViewController:self];
-    _isOutOfScreen = [self.view.superview convertPoint:self.view.frame.origin toView:nil].y > [UIScreen mainScreen].bounds.size.height;
+    _isOutOfScreen = [self.view.superview convertPoint:self.view.frame.origin toView:nil].y > fullHeight;
 
     self.animator = [[UIDynamicAnimator alloc] initWithReferenceView:[self.view superview]];
 
     self.behavior = [[UIDynamicBehavior alloc] init];
     self.collisionBehavior = [[UICollisionBehavior alloc] initWithItems:@[ self.view ]];
-    [self.collisionBehavior addBoundaryWithIdentifier:@"collision" fromPoint:CGPointMake(0, -1) toPoint:CGPointMake(320, -1)];
+    [self.collisionBehavior addBoundaryWithIdentifier:@"collision" fromPoint:CGPointMake(0, -1) toPoint:CGPointMake(fullWidth, -1)];
     [self.behavior addChildBehavior:self.collisionBehavior];
 
     self.gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[ self.view ]];
@@ -133,7 +135,7 @@
     self.gravityBehavior.action = ^{
 		typeof(self) strongSelf = weakSelf;
 		
-		BOOL isOutOfScreenNow = [strongSelf.view.superview convertPoint:weakSelf.view.frame.origin toView:nil].y > [UIScreen mainScreen].bounds.size.height;
+		BOOL isOutOfScreenNow = [strongSelf.view.superview convertPoint:weakSelf.view.frame.origin toView:nil].y > fullHeight;
 		if (isOutOfScreenNow && !strongSelf->_isOutOfScreen) {
 			if (strongSelf.delegate && [strongSelf.delegate respondsToSelector:@selector(dynamicPaneDidGoOutOfScreen:)]) {
 				[strongSelf.delegate dynamicPaneDidGoOutOfScreen:weakSelf];
@@ -143,13 +145,13 @@
 		strongSelf->_isOutOfScreen = isOutOfScreenNow;
 		
 		if (strongSelf.view.frame.origin.y <= 50) {
-			strongSelf.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2-10);
+			strongSelf.attachmentBehavior.anchorPoint = CGPointMake(fullWidth/2, [UIScreen mainScreen].bounds.size.height / 2-10);
 			strongSelf.attachmentBehavior.damping = 0.7f;
 			strongSelf.attachmentBehavior.frequency = 2.0f;
 			[strongSelf.behavior addChildBehavior:strongSelf.attachmentBehavior];
             strongSelf.state = FCDynamicPaneStateActive;
 		} else if (strongSelf.view.frame.origin.y >= TILE_Y-60) {
-			strongSelf.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2+TILE_Y);
+			strongSelf.attachmentBehavior.anchorPoint = CGPointMake(fullWidth/2, [UIScreen mainScreen].bounds.size.height / 2+TILE_Y);
 			strongSelf.attachmentBehavior.damping = 0.4f;
 			strongSelf.attachmentBehavior.frequency = 4.0f;
 			[strongSelf.behavior addChildBehavior:strongSelf.attachmentBehavior];
@@ -158,7 +160,7 @@
     };
     [self.behavior addChildBehavior:self.gravityBehavior];
 
-    self.attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.view attachedToAnchor:CGPointMake(160, TILE_Y + [UIScreen mainScreen].bounds.size.height / 2)];
+    self.attachmentBehavior = [[UIAttachmentBehavior alloc] initWithItem:self.view attachedToAnchor:CGPointMake(fullWidth/2, TILE_Y + [UIScreen mainScreen].bounds.size.height / 2)];
     self.attachmentBehavior.frequency = 4.0f;
     self.attachmentBehavior.damping = 0.4f;
     self.attachmentBehavior.length = 0;
@@ -204,13 +206,15 @@
         return;
     }
 
+    CGFloat fullWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
+    CGFloat fullHeight = CGRectGetHeight([UIScreen mainScreen].bounds);
     if (state == FCDynamicPaneStateRoot) {
         self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);
         __weak FCDynamicPane* weakSelf = self;
         self.gravityBehavior.action = ^{
 			typeof(self) strongSelf = weakSelf;
 			if (strongSelf.view.frame.origin.y <= 10) {
-				strongSelf.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2);
+				strongSelf.attachmentBehavior.anchorPoint = CGPointMake(fullWidth/2, fullHeight / 2);
 				strongSelf.attachmentBehavior.damping = 0.7f;
 				strongSelf.attachmentBehavior.frequency = 1.0f;
 				[strongSelf.behavior addChildBehavior:strongSelf.attachmentBehavior];
@@ -220,7 +224,7 @@
             }
         };
     } else if (state == FCDynamicPaneStateRetracted) {
-        self.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2 + TILE_Y);
+        self.attachmentBehavior.anchorPoint = CGPointMake(fullWidth/2, fullHeight/ 2 + TILE_Y);
         self.attachmentBehavior.damping = 0.4f;
         self.attachmentBehavior.frequency = 4.0f;
         self.gravityBehavior.gravityDirection = CGVectorMake(0, 1.5);
@@ -229,7 +233,7 @@
             [(UIViewController<FCDynamicPaneViewController>*)self.viewController viewDidPop];
         }
     } else if (state == FCDynamicPaneStateActive) {
-        self.attachmentBehavior.anchorPoint = CGPointMake(160, [UIScreen mainScreen].bounds.size.height / 2 + TILE_Y);
+        self.attachmentBehavior.anchorPoint = CGPointMake(fullWidth/2, fullHeight / 2 + TILE_Y);
         self.attachmentBehavior.damping = 0.4f;
         self.attachmentBehavior.frequency = 2.0f;
         self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);

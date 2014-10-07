@@ -96,9 +96,6 @@ static NSString* const sensorTypeParticulates = @"particulates";
 - (void)configureCollectionView
 {
     NSBundle* bundle = [NSBundle mainBundle];
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSensorDataHeaderView class]) bundle:bundle]
-          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                 withReuseIdentifier:sensorDataReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMNoSleepEventCollectionViewCell class]) bundle:bundle]
           forCellWithReuseIdentifier:sleepSegmentReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSleepSummaryCollectionViewCell class]) bundle:bundle]
@@ -187,22 +184,6 @@ static NSString* const sensorTypeParticulates = @"particulates";
     default:
         return 0;
     }
-}
-
-- (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView viewForSupplementaryElementOfKind:(NSString*)kind atIndexPath:(NSIndexPath*)indexPath
-{
-    if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
-        HEMSensorDataHeaderView* headerView = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:sensorDataReuseIdentifier forIndexPath:indexPath];
-        if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection) {
-            headerView.hidden = self.sleepResult.segments.count == 0;
-            self.sensorDataHeaderView = headerView;
-            [self updateSensorViewTextWithSleepData:[self.sleepResult.segments firstObject] forCellFillRatio:0];
-        } else {
-            headerView.hidden = YES;
-        }
-        return headerView;
-    }
-    return [UICollectionReusableView new];
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView cellForItemAtIndexPath:(NSIndexPath*)indexPath

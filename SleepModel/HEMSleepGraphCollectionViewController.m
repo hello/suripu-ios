@@ -6,7 +6,6 @@
 
 #import "HEMSleepGraphCollectionViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
-#import "HEMSleepGraphCollectionViewFlowLayout.h"
 #import "HEMSensorDataHeaderView.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HelloStyleKit.h"
@@ -23,8 +22,6 @@
 static CGFloat const HEMSleepSummaryCellHeight = 300.f;
 static CGFloat const HEMSleepGraphCollectionViewSensorViewHeight = 65.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 30.f;
-static CGFloat const HEMSleepGraphCollectionViewEventLightHeight = 95.f;
-static CGFloat const HEMSleepGraphCollectionViewEventMaximumHeight = 165.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 
 - (void)viewDidLoad
@@ -111,7 +108,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
                                                                                   sleepDate:self.dateForNightOfSleep];
     self.collectionView.dataSource = self.dataSource;
     self.collectionView.delegate = self;
-    self.collectionView.collectionViewLayout = [HEMSleepGraphCollectionViewFlowLayout new];
 }
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath
@@ -158,17 +154,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 - (CGFloat)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     return 0;
-}
-
-- (CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
-{
-    switch (section) {
-    case HEMSleepGraphCollectionViewSegmentSection:
-        return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMSleepGraphCollectionViewSensorViewHeight);
-
-    default:
-        return CGSizeZero;
-    }
 }
 
 @end

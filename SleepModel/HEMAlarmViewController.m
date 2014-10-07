@@ -1,5 +1,6 @@
 
 #import <SenseKit/SENAlarm.h>
+#import <SenseKit/SENAPIAlarms.h>
 #import <SenseKit/SENSettings.h>
 #import <markdown_peg.h>
 
@@ -28,6 +29,7 @@
 
 @property (nonatomic) CGFloat previousLocationY;
 @property (nonatomic, strong) HEMAlarmCache* alarmCache;
+@property (nonatomic, strong) HEMAlarmCache* originalAlarmCache;
 @end
 
 @implementation HEMAlarmViewController
@@ -39,8 +41,11 @@
     CGFloat fontSize = [SENSettings timeFormat] == SENTimeFormat12Hour ? 60.f : 90.f;
     self.alarmTimeLabel.font = [UIFont fontWithName:@"Agile-Thin" size:fontSize];
     self.alarmCache = [HEMAlarmCache new];
-    if (self.alarm)
+    self.originalAlarmCache = [HEMAlarmCache new];
+    if (self.alarm) {
         [self.alarmCache cacheValuesFromAlarm:self.alarm];
+        [self.originalAlarmCache cacheValuesFromAlarm:self.alarm];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -61,7 +66,8 @@
     if ([segue.identifier isEqualToString:[HEMMainStoryboard pickSoundSegueSegueIdentifier]]) {
         HEMAlarmSoundTableViewController* controller = segue.destinationViewController;
         controller.alarmCache = self.alarmCache;
-    } else if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmRepeatSegueIdentifier]]) {
+    }
+    else if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmRepeatSegueIdentifier]]) {
         HEMAlarmRepeatTableViewController* controller = segue.destinationViewController;
         controller.alarmCache = self.alarmCache;
     }
@@ -87,7 +93,7 @@
     NSString* earliestAlarmTimeText = [self textForHour:earliestAlarmTime.hour minute:earliestAlarmTime.minute];
     NSString* currentAlarmTimeText = [self textForHour:alarmTime.hour minute:alarmTime.minute];
     self.alarmTimeLabel.text = currentAlarmTimeText;
-    self.alarmRepeatLabel.text = [HEMAlarmTextUtils repeatTextForUnitFlags:self.alarmCache.repeatFlags];
+    self.alarmRepeatLabel.text = [HEMAlarmUtils repeatTextForUnitFlags:self.alarmCache.repeatFlags];
 
     NSString* rawText = [NSString stringWithFormat:NSLocalizedString(@"alarm.time-range.format", nil), earliestAlarmTimeText, currentAlarmTimeText];
     UIFont* emFont = [UIFont fontWithName:@"Agile-Medium" size:14.0];
@@ -107,8 +113,7 @@
 
 - (struct SENAlarmTime)timeFromCachedValues
 {
-    return (struct SENAlarmTime)
-    {
+    return (struct SENAlarmTime){
         .hour = self.alarmCache.hour,
         .minute = self.alarmCache.minute
     };
@@ -138,13 +143,15 @@
 
 - (IBAction)saveAndDismissFromView:(id)sender
 {
-    self.alarm.smartAlarm = [self.alarmCache isSmart];
-    self.alarm.minute = self.alarmCache.minute;
-    self.alarm.hour = self.alarmCache.hour;
-    self.alarm.repeatFlags = self.alarmCache.repeatFlags;
-    self.alarm.soundName = self.alarmCache.soundName;
-    [self.alarm save];
-    [self dismissFromView:nil];
+    [self updateAlarmFromCache:self.alarmCache];
+    __weak typeof(self) weakSelf = self;
+    [HEMAlarmUtils updateAlarmFromPresentingController:self completion:^(BOOL success) {
+        typeof(self) strongSelf = weakSelf;
+        if (success)
+            [strongSelf dismissFromView:nil];
+        else
+            [strongSelf updateAlarmFromCache:strongSelf.originalAlarmCache];
+    }];
 }
 
 - (IBAction)updateAlarmState:(UISwitch*)sender
@@ -166,6 +173,16 @@
         self.previousLocationY = 0;
     }
     self.previousLocationY = currentLocationY;
+}
+
+- (void)updateAlarmFromCache:(HEMAlarmCache*)cache
+{
+    self.alarm.smartAlarm = [cache isSmart];
+    self.alarm.minute = cache.minute;
+    self.alarm.hour = cache.hour;
+    self.alarm.repeatFlags = cache.repeatFlags;
+    self.alarm.soundName = cache.soundName;
+    [self.alarm save];
 }
 
 #pragma mark - UITableViewDelegate

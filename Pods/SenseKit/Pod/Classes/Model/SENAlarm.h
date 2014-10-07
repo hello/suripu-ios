@@ -32,6 +32,8 @@ struct SENAlarmTime {
  */
 + (SENAlarm*)createDefaultAlarm;
 
++ (struct SENAlarmTime)time:(struct SENAlarmTime)initialTime byAddingMinutes:(NSInteger)minutes;
+
 /**
  *  Remove all cached alarms
  */

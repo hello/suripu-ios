@@ -22,7 +22,6 @@ static NSString* const SENAlarmIdentifierKey = @"identifier";
 static NSString* const SENAlarmDefaultSoundName = @"None";
 static NSUInteger const SENAlarmDefaultHour = 7;
 static NSUInteger const SENAlarmDefaultMinute = 30;
-static NSUInteger const SENAlarmDefaultRepeatFlags = 0;
 static BOOL const SENAlarmDefaultOnState = YES;
 static BOOL const SENAlarmDefaultEditableState = YES;
 static BOOL const SENAlarmDefaultSmartAlarmState = YES;
@@ -41,7 +40,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
         SENAlarmOnKey : @(SENAlarmDefaultOnState),
         SENAlarmEditableKey : @(SENAlarmDefaultEditableState),
         SENAlarmSmartKey : @(SENAlarmDefaultSmartAlarmState),
-        SENAlarmRepeatKey : @(SENAlarmDefaultRepeatFlags)
+        SENAlarmRepeatKey : @[]
     }];
 }
 
@@ -162,19 +161,16 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
 
 #pragma mark - updating time
 
-- (struct SENAlarmTime)timeByAddingMinutes:(NSInteger)minutes
++ (struct SENAlarmTime)time:(struct SENAlarmTime)initialTime byAddingMinutes:(NSInteger)minutes
 {
-    struct SENAlarmTime alarmTime;
     if (minutes == 0) {
-        alarmTime.hour = self.hour;
-        alarmTime.minute = self.minute;
-        return alarmTime;
+        return initialTime;
     }
 
     NSInteger addedHours = minutes / 60;
     NSInteger addedMinutes = minutes % 60;
-    NSInteger hour = self.hour + addedHours;
-    NSInteger minute = self.minute + addedMinutes;
+    NSInteger hour = initialTime.hour + addedHours;
+    NSInteger minute = initialTime.minute + addedMinutes;
 
     if (minutes > 0) {
         if (minute > 59) {
@@ -192,9 +188,19 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     if (hour < 0) {
         hour += 24;
     }
+    struct SENAlarmTime alarmTime;
     alarmTime.hour = hour;
     alarmTime.minute = minute;
     return alarmTime;
+}
+
+- (struct SENAlarmTime)timeByAddingMinutes:(NSInteger)minutes
+{
+    struct SENAlarmTime time = (struct SENAlarmTime) {
+        .hour = self.hour,
+        .minute = self.minute
+    };
+    return [[self class] time:time byAddingMinutes:minutes];
 }
 
 - (void)incrementAlarmTimeByMinutes:(NSInteger)minutes

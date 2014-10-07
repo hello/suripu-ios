@@ -34,6 +34,11 @@ typedef NS_ENUM(NSUInteger, SENTimeFormat) {
  */
 extern NSString* const SENSettingsDidUpdateNotification;
 
+/**
+ * App group name to use when sharing user defaults.
+ */
+extern NSString* const SENSettingsAppGroup;
+
 @interface SENSettings : NSObject
 
 /**

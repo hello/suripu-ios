@@ -4,6 +4,7 @@
 
 @implementation SENKeyedArchiver
 
+static NSString* const SENKeyedArchiverGroupId = @"group.is.hello.sense.data";
 static NSString* const SENKeyedArchiverStoreName = @"SENKeyedArchiverStore";
 
 + (YapDatabase*)datastore
@@ -18,8 +19,8 @@ static NSString* const SENKeyedArchiverStoreName = @"SENKeyedArchiverStore";
 
 + (NSString*)datastorePath
 {
-    NSString* documentsPath = [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) firstObject];
-    return [documentsPath stringByAppendingPathComponent:SENKeyedArchiverStoreName];
+    NSURL* url = [[NSFileManager defaultManager] containerURLForSecurityApplicationGroupIdentifier:SENKeyedArchiverGroupId];
+    return [[url path] stringByAppendingPathComponent:SENKeyedArchiverStoreName];
 }
 
 + (YapDatabaseConnection*)mainConnection

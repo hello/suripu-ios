@@ -206,7 +206,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <segue destination="Xlb-L4-Nd1" kind="show" identifier="pickSoundSegue" id="iQY-CZ-LNt"/>
+                                            <segue destination="Xlb-L4-Nd1" kind="push" identifier="pickSoundSegue" id="iQY-CZ-LNt"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Ccr-f4-eAe">
@@ -247,7 +247,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <segue destination="Kmr-A6-uHb" kind="show" identifier="alarmRepeat" id="ygN-KF-1Rd"/>
+                                            <segue destination="Kmr-A6-uHb" kind="push" identifier="alarmRepeat" id="ygN-KF-1Rd"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>

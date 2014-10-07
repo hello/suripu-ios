@@ -13,7 +13,6 @@
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMNoSleepEventCollectionViewCell.h"
-#import "HEMSensorDataHeaderView.h"
 #import "HEMSensorGraphDataSource.h"
 #import "HelloStyleKit.h"
 #import "HEMColorUtils.h"
@@ -27,7 +26,6 @@ NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
 @interface HEMSleepGraphCollectionViewDataSource ()
 
 @property (nonatomic, weak) UICollectionView* collectionView;
-@property (nonatomic, weak, readwrite) HEMSensorDataHeaderView* sensorDataHeaderView;
 @property (nonatomic, strong) NSDateFormatter* timeDateFormatter;
 @property (nonatomic, strong) NSDateFormatter* rangeDateFormatter;
 @property (nonatomic, strong) NSDate* dateForNightOfSleep;
@@ -40,8 +38,6 @@ NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
 static NSString* const sleepSegmentReuseIdentifier = @"sleepSegmentCell";
 static NSString* const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
 static NSString* const sleepEventReuseIdentifier = @"sleepEventCell";
-static NSString* const sensorDataReuseIdentifier = @"sensorDataView";
-
 static NSString* const sensorTypeTemperature = @"temperature";
 static NSString* const sensorTypeHumidity = @"humidity";
 static NSString* const sensorTypeParticulates = @"particulates";
@@ -112,59 +108,6 @@ static NSString* const sensorTypeParticulates = @"particulates";
 - (NSUInteger)numberOfSleepSegments
 {
     return self.sleepResult.segments.count;
-}
-
-#pragma mark - Sensor Header View
-
-- (void)updateSensorViewText
-{
-    CGFloat contentOffsetY = self.collectionView.contentOffset.y;
-    if (contentOffsetY > CGRectGetMidY(self.sensorDataHeaderView.timeLabel.bounds)) {
-        contentOffsetY += CGRectGetHeight(self.sensorDataHeaderView.bounds);
-    }
-    for (UICollectionViewCell* cell in self.collectionView.visibleCells) {
-        if (CGRectGetMinY(cell.frame) <= contentOffsetY && CGRectGetMaxY(cell.frame) >= contentOffsetY) {
-            NSIndexPath* indexPath = [self.collectionView indexPathForCell:cell];
-            if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection) {
-                SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
-                CGFloat fill = contentOffsetY - CGRectGetMinY(cell.frame);
-                CGFloat total = CGRectGetMaxY(cell.frame) - CGRectGetMinY(cell.frame);
-                CGFloat ratio = fill / total;
-                [self updateSensorViewTextWithSleepData:segment forCellFillRatio:ratio];
-            }
-        }
-    }
-}
-
-/**
- *  Update the sensor data view with info from a given moment of sleep data
- *
- *  @param sleepData the data to use in the update
- *  @param ratio     the scale of time passed between the start and end of the data
- */
-- (void)updateSensorViewTextWithSleepData:(SENSleepResultSegment*)segment forCellFillRatio:(CGFloat)ratio
-{
-    if (segment) {
-        for (SENSleepResultSegmentSensor* sensor in segment.sensors) {
-            NSString* text = [SENSensor formatValue:sensor.value withUnit:[SENSensor unitFromValue:sensor.unit]];
-            if ([sensor.name isEqualToString:sensorTypeTemperature]) {
-                self.sensorDataHeaderView.temperatureLabel.text = text;
-            } else if ([sensor.name isEqualToString:sensorTypeHumidity]) {
-                self.sensorDataHeaderView.humidityLabel.text = text;
-            } else if ([sensor.name isEqualToString:sensorTypeParticulates]) {
-                self.sensorDataHeaderView.particulateLabel.text = text;
-            }
-        }
-        NSTimeInterval topInterval = [segment.date timeIntervalSince1970];
-        NSTimeInterval bottomInterval = topInterval + ([segment.duration doubleValue] / 1000);
-        NSTimeInterval intervalAtContentOffsetY = bottomInterval - (ratio * (bottomInterval - topInterval));
-        self.sensorDataHeaderView.timeLabel.text = [self textForTimeInterval:intervalAtContentOffsetY];
-    } else {
-        self.sensorDataHeaderView.temperatureLabel.text = @"0";
-        self.sensorDataHeaderView.humidityLabel.text = @"0";
-        self.sensorDataHeaderView.particulateLabel.text = @"0";
-        self.sensorDataHeaderView.timeLabel.text = @"";
-    }
 }
 
 #pragma mark - UICollectionViewDataSource

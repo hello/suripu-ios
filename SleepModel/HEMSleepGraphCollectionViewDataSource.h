@@ -1,7 +1,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class HEMSensorDataHeaderView;
 @class SENSleepResultSegment;
 
 extern NSString* const HEMSleepEventTypeWakeUp;
@@ -29,11 +28,6 @@ extern NSString* const HEMSleepEventTypeFallAsleep;
 - (SENSleepResultSegment*)sleepSegmentForIndexPath:(NSIndexPath*)indexPath;
 
 /**
- *  Update the text of the sensors view to reflect the sleep data at the top of the view
- */
-- (void)updateSensorViewText;
-
-/**
  *  Detect whether a segment represents sleep time elapsed or an event
  *
  *  @param indexPath index path of the segment to check
@@ -52,6 +46,4 @@ extern NSString* const HEMSleepEventTypeFallAsleep;
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath*)indexPath;
 
 - (NSUInteger)numberOfSleepSegments;
-
-@property (nonatomic, weak, readonly) HEMSensorDataHeaderView* sensorDataHeaderView;
 @end

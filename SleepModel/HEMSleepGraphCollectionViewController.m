@@ -6,21 +6,18 @@
 
 #import "HEMSleepGraphCollectionViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
-#import "HEMSensorDataHeaderView.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HelloStyleKit.h"
 
 @interface HEMSleepGraphCollectionViewController () <UICollectionViewDelegateFlowLayout, FCDynamicPaneViewController, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource* dataSource;
-@property (nonatomic, weak) HEMSensorDataHeaderView* sensorDataHeaderView;
 @property (nonatomic) UIStatusBarStyle oldBarStyle;
 @end
 
 @implementation HEMSleepGraphCollectionViewController
 
 static CGFloat const HEMSleepSummaryCellHeight = 300.f;
-static CGFloat const HEMSleepGraphCollectionViewSensorViewHeight = 65.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 30.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 
@@ -90,13 +87,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 {
     CGPoint translation = [gestureRecognizer translationInView:[self view]];
     return fabsf(translation.y) > fabsf(translation.x);
-}
-
-#pragma mark UIScrollViewDelegate
-
-- (void)scrollViewDidScroll:(UIScrollView*)scrollView
-{
-    [self.dataSource updateSensorViewText];
 }
 
 #pragma mark UICollectionViewDelegate

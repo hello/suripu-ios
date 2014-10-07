@@ -205,7 +205,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <segue destination="Xlb-L4-Nd1" kind="push" identifier="pickSoundSegue" id="iQY-CZ-LNt"/>
+                                            <segue destination="Xlb-L4-Nd1" kind="show" identifier="pickSoundSegue" id="iQY-CZ-LNt"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="Ccr-f4-eAe">
@@ -246,7 +246,7 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <segue destination="Kmr-A6-uHb" kind="push" identifier="alarmRepeat" id="ygN-KF-1Rd"/>
+                                            <segue destination="Kmr-A6-uHb" kind="show" identifier="alarmRepeat" id="ygN-KF-1Rd"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -1701,10 +1701,10 @@
             </objects>
             <point key="canvasLocation" x="4434" y="362"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Settings Navigation Controller-->
         <scene sceneID="DWr-yB-iBh">
             <objects>
-                <navigationController storyboardIdentifier="alarmNavController" automaticallyAdjustsScrollViewInsets="NO" id="88V-1f-xf4" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="alarmNavController" automaticallyAdjustsScrollViewInsets="NO" id="88V-1f-xf4" customClass="HEMSettingsNavigationController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="yoJ-RS-Jhy">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

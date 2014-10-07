@@ -21,11 +21,12 @@
 @property (weak, nonatomic) IBOutlet UILabel* alarmSoundLabel;
 @property (weak, nonatomic) IBOutlet UILabel* alarmSoundNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel* alarmRepeatLabel;
-@property (strong, nonatomic) IBOutlet UISwitch* alarmEnabledSwitch;
+@property (strong, nonatomic) IBOutlet UISwitch* alarmSmartSwitch;
 @property (weak, nonatomic) IBOutlet UILabel* wakeUpInstructionsLabel;
 @property (strong, nonatomic) CAGradientLayer* gradientLayer;
 
 @property (nonatomic) CGFloat previousLocationY;
+@property (nonatomic, strong) NSMutableDictionary* cachedAlarmProperties;
 @end
 
 @implementation HEMAlarmViewController
@@ -36,12 +37,13 @@
     [self setNeedsStatusBarAppearanceUpdate];
     CGFloat fontSize = [SENSettings timeFormat] == SENTimeFormat12Hour ? 60.f : 90.f;
     self.alarmTimeLabel.font = [UIFont fontWithName:@"Agile-Thin" size:fontSize];
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[HelloStyleKit chevronIconLeft] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
-}
-
-- (void)goBack
-{
-    [self.navigationController popViewControllerAnimated:YES];
+    self.cachedAlarmProperties = @{
+        @"hour" : @(self.alarm.hour),
+        @"minute" : @(self.alarm.minute),
+        @"repeat" : @(self.alarm.repeatFlags),
+        @"smart" : @([self.alarm isSmartAlarm]),
+        @"sound" : self.alarm.soundName ?: @"",
+    }.mutableCopy;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -61,10 +63,10 @@
 {
     if ([segue.identifier isEqualToString:[HEMMainStoryboard pickSoundSegueSegueIdentifier]]) {
         HEMAlarmSoundTableViewController* controller = segue.destinationViewController;
-        controller.alarm = self.alarm;
+        controller.cachedAlarmValues = self.cachedAlarmProperties;
     } else if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmRepeatSegueIdentifier]]) {
         HEMAlarmRepeatTableViewController* controller = segue.destinationViewController;
-        controller.alarm = self.alarm;
+        controller.cachedAlarmValues = self.cachedAlarmProperties;
     }
 }
 
@@ -74,21 +76,21 @@
         self.gradientLayer = [CAGradientLayer new];
         [self.view.layer insertSublayer:self.gradientLayer atIndex:0];
     }
-    NSInteger hour = self.alarm.hour;
     CGFloat y = (self.edgesForExtendedLayout & UIRectEdgeTop) ? -(CGRectGetHeight(self.navigationController.navigationBar.frame) + CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame])) : 0;
     self.gradientLayer.frame = CGRectMake(0, y, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
-    [HEMColorUtils configureLayer:self.gradientLayer forHourOfDay:hour];
+    [HEMColorUtils configureLayer:self.gradientLayer forHourOfDay:[self.cachedAlarmProperties[@"hour"] integerValue]];
 }
 
 - (void)updateViewWithAlarmSettings
 {
-    self.alarmEnabledSwitch.on = [self.alarm isSmartAlarm];
-    self.alarmSoundNameLabel.text = self.alarm.soundName;
-    struct SENAlarmTime earliestAlarmTime = [self.alarm timeByAddingMinutes:-30];
+    self.alarmSmartSwitch.on = [self.cachedAlarmProperties[@"smart"] boolValue];
+    self.alarmSoundNameLabel.text = self.cachedAlarmProperties[@"sound"];
+    struct SENAlarmTime alarmTime = [self timeFromCachedValues];
+    struct SENAlarmTime earliestAlarmTime = [SENAlarm time:alarmTime byAddingMinutes:-30];
     NSString* earliestAlarmTimeText = [self textForHour:earliestAlarmTime.hour minute:earliestAlarmTime.minute];
-    NSString* currentAlarmTimeText = [self textForHour:self.alarm.hour minute:self.alarm.minute];
+    NSString* currentAlarmTimeText = [self textForHour:alarmTime.hour minute:alarmTime.minute];
     self.alarmTimeLabel.text = currentAlarmTimeText;
-    self.alarmRepeatLabel.text = [HEMAlarmTextUtils repeatTextForAlarm:self.alarm];
+    self.alarmRepeatLabel.text = [HEMAlarmTextUtils repeatTextForUnitFlags:[self.cachedAlarmProperties[@"repeat"] integerValue]];
 
     NSString* rawText = [NSString stringWithFormat:NSLocalizedString(@"alarm.time-range.format", nil), earliestAlarmTimeText, currentAlarmTimeText];
     UIFont* emFont = [UIFont fontWithName:@"Agile-Medium" size:14.0];
@@ -104,6 +106,15 @@
     self.wakeUpInstructionsLabel.attributedText = markdown_to_attr_string(rawText, 0, attributes);
     self.alarmChangeInstructionsLabel.attributedText = markdown_to_attr_string(NSLocalizedString(@"alarm.update.instructions", nil), 0, attributes);
     [self configureViewBackground];
+}
+
+- (struct SENAlarmTime)timeFromCachedValues
+{
+    return (struct SENAlarmTime)
+    {
+        .hour = [self.cachedAlarmProperties[@"hour"] integerValue],
+        .minute = [self.cachedAlarmProperties[@"minute"] integerValue]
+    };
 }
 
 - (NSString*)textForHour:(NSInteger)hour minute:(NSInteger)minute
@@ -123,9 +134,24 @@
 
 #pragma mark - Actions
 
+- (IBAction)dismissFromView:(id)sender
+{
+    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (IBAction)saveAndDismissFromView:(id)sender
+{
+    self.alarm.smartAlarm = [self.cachedAlarmProperties[@"smart"] boolValue];
+    self.alarm.minute = [self.cachedAlarmProperties[@"minute"] integerValue];
+    self.alarm.hour = [self.cachedAlarmProperties[@"hour"] integerValue];
+    self.alarm.repeatFlags = [self.cachedAlarmProperties[@"repeat"] unsignedIntegerValue];
+    self.alarm.soundName = self.cachedAlarmProperties[@"sound"];
+    [self dismissFromView:nil];
+}
+
 - (IBAction)updateAlarmState:(UISwitch*)sender
 {
-    self.alarm.smartAlarm = [sender isOn];
+    self.cachedAlarmProperties[@"smart"] = @([sender isOn]);
     [self updateViewWithAlarmSettings];
 }
 
@@ -134,7 +160,10 @@
     CGFloat currentLocationY = [sender locationInView:self.view].y;
     if (self.previousLocationY != 0) {
         CGFloat distanceMoved = -1 * (self.previousLocationY - currentLocationY);
-        [self.alarm incrementAlarmTimeByMinutes:distanceMoved];
+        struct SENAlarmTime alarmTime = [self timeFromCachedValues];
+        alarmTime = [SENAlarm time:alarmTime byAddingMinutes:distanceMoved];
+        self.cachedAlarmProperties[@"hour"] = @(alarmTime.hour);
+        self.cachedAlarmProperties[@"minute"] = @(alarmTime.minute);
         [self updateViewWithAlarmSettings];
         self.previousLocationY = 0;
     }

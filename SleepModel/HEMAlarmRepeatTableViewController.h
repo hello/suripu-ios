@@ -5,5 +5,5 @@
 
 @interface HEMAlarmRepeatTableViewController : UITableViewController
 
-@property (nonatomic, strong) SENAlarm* alarm;
+@property (nonatomic, strong) NSMutableDictionary* cachedAlarmValues;
 @end

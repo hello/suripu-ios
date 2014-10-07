@@ -44,9 +44,10 @@
 
     NSString* text = [self.repeatOptions objectAtIndex:indexPath.row];
     NSUInteger day = [self repeatDayForIndexPath:indexPath];
+    NSUInteger repeatFlags = [self.cachedAlarmValues[@"repeat"] unsignedIntegerValue];
     cell.textLabel.text = text;
 
-    if ((self.alarm.repeatFlags & day) == day) {
+    if ((repeatFlags & day) == day) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -61,11 +62,13 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSUInteger day = [self repeatDayForIndexPath:indexPath];
-    if ((self.alarm.repeatFlags & day) == day) {
-        self.alarm.repeatFlags -= day;
+    NSUInteger repeatFlags = [self.cachedAlarmValues[@"repeat"] unsignedIntegerValue];
+    if ((repeatFlags & day) == day) {
+        repeatFlags -= day;
     } else {
-        self.alarm.repeatFlags |= day;
+        repeatFlags |= day;
     }
+    self.cachedAlarmValues[@"repeat"] = @(repeatFlags);
     [tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
 }
 

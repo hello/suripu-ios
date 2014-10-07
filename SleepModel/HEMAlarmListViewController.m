@@ -105,7 +105,7 @@ static NSUInteger HEMAlarmListLimit = 8;
     SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
     HEMAlarmListTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmListCellIdentifier]];
     cell.timeLabel.text = [alarm localizedValue];
-    cell.detailLabel.text = [HEMAlarmTextUtils repeatTextForAlarm:alarm];
+    cell.detailLabel.text = [HEMAlarmTextUtils repeatTextForUnitFlags:alarm.repeatFlags];
     cell.enabledSwitch.on = [alarm isOn];
     cell.enabledSwitch.tag = indexPath.row;
     return cell;
@@ -132,9 +132,10 @@ static NSUInteger HEMAlarmListLimit = 8;
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
-    HEMAlarmViewController* controller = (HEMAlarmViewController*)[HEMMainStoryboard instantiateAlarmViewController];
-    controller.alarm = alarm;
-    [self.navigationController pushViewController:controller animated:YES];
+    UINavigationController* controller = (UINavigationController*)[HEMMainStoryboard instantiateAlarmNavController];
+    HEMAlarmViewController* alarmController = (HEMAlarmViewController*)controller.topViewController;
+    alarmController.alarm = alarm;
+    [self.navigationController presentViewController:controller animated:YES completion:NULL];
 }
 
 @end

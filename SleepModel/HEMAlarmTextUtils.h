@@ -8,10 +8,10 @@
 /**
  *  Text representing the repeat settings of an alarm
  *
- *  @param alarm the alarm
+ *  @param alarmRepeatFlags repeat flags property of an alarm
  *
  *  @return localized repeat settings text
  */
-+ (NSString*)repeatTextForAlarm:(SENAlarm*)alarm;
++ (NSString*)repeatTextForUnitFlags:(NSUInteger)alarmRepeatFlags;
 
 @end

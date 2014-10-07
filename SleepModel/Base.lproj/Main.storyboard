@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -258,12 +257,25 @@
                             <outlet property="delegate" destination="UUf-ed-d3S" id="J7g-nT-Ac4"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Alarm" id="tQT-e0-oVd"/>
+                    <navigationItem key="navigationItem" title="Alarm" id="tQT-e0-oVd">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Pol-f9-BlN">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="dismissFromView:" destination="UUf-ed-d3S" id="3Bp-Io-VL3"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="Rxp-fb-p7J">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="saveAndDismissFromView:" destination="UUf-ed-d3S" id="vgx-cW-hN0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="alarmChangeInstructionsLabel" destination="zCx-Mw-gYU" id="dZK-0T-nii"/>
                         <outlet property="alarmEnabledLabel" destination="p13-Hs-VXY" id="TGC-sn-U79"/>
-                        <outlet property="alarmEnabledSwitch" destination="rXw-8b-uw7" id="2Sc-4Z-1CR"/>
                         <outlet property="alarmRepeatLabel" destination="5Fn-yc-usc" id="yhD-Aj-C48"/>
+                        <outlet property="alarmSmartSwitch" destination="rXw-8b-uw7" id="7VD-k8-yKG"/>
                         <outlet property="alarmSoundLabel" destination="Kjg-sg-8R8" id="coO-Jo-iWG"/>
                         <outlet property="alarmSoundNameLabel" destination="KKO-pE-iRO" id="uMH-vW-Ap9"/>
                         <outlet property="alarmTimeLabel" destination="9Mv-zP-tnC" id="KiR-Xc-NHK"/>
@@ -279,7 +291,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2750.625" y="-9.5070422535211261"/>
+            <point key="canvasLocation" x="3562" y="-10"/>
         </scene>
         <!--Sleep Questions View Controller-->
         <scene sceneID="KIp-Ra-hCy">
@@ -1387,7 +1399,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cod-aB-3Gc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3622.5" y="-363.38028169014081"/>
+            <point key="canvasLocation" x="4434" y="-364"/>
         </scene>
         <!--Sleep Graph Collection View Controller-->
         <scene sceneID="fHt-a1-2UE">
@@ -1687,7 +1699,25 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ucd-KC-NVA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3622.5" y="362.32394366197178"/>
+            <point key="canvasLocation" x="4434" y="362"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="DWr-yB-iBh">
+            <objects>
+                <navigationController storyboardIdentifier="alarmNavController" automaticallyAdjustsScrollViewInsets="NO" id="88V-1f-xf4" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yoJ-RS-Jhy">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="UUf-ed-d3S" kind="relationship" relationship="rootViewController" id="G4Y-Nz-1pa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZxP-DL-Pj1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2750" y="-10"/>
         </scene>
     </scenes>
     <resources>

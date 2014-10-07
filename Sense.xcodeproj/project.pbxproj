@@ -115,8 +115,6 @@
 		8A9BD8EE19DF4A0F00B1E57E /* wakeUpEventIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8DF19DF4A0F00B1E57E /* wakeUpEventIcon@3x.png */; };
 		8AA8D92A19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D92819ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m */; };
 		8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AA8D92919ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib */; };
-		8AA8D92F19ABCB0300349FD0 /* HEMSensorDataHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D92D19ABCB0300349FD0 /* HEMSensorDataHeaderView.m */; };
-		8AA8D93019ABCB0300349FD0 /* HEMSensorDataHeaderView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AA8D92E19ABCB0300349FD0 /* HEMSensorDataHeaderView.xib */; };
 		8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D93919AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m */; };
 		8AA8D94019AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D93F19AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m */; };
 		8AAEECBC19A431E1006517C4 /* HEMSleepEventButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AAEECBB19A431E1006517C4 /* HEMSleepEventButton.m */; };
@@ -388,9 +386,6 @@
 		8AA8D92719ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryCollectionViewCell.h; sourceTree = "<group>"; };
 		8AA8D92819ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryCollectionViewCell.m; sourceTree = "<group>"; };
 		8AA8D92919ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMSleepSummaryCollectionViewCell.xib; sourceTree = "<group>"; };
-		8AA8D92C19ABCB0300349FD0 /* HEMSensorDataHeaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorDataHeaderView.h; sourceTree = "<group>"; };
-		8AA8D92D19ABCB0300349FD0 /* HEMSensorDataHeaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorDataHeaderView.m; sourceTree = "<group>"; };
-		8AA8D92E19ABCB0300349FD0 /* HEMSensorDataHeaderView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMSensorDataHeaderView.xib; sourceTree = "<group>"; };
 		8AA8D93819AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepGraphCollectionViewDataSource.h; sourceTree = "<group>"; };
 		8AA8D93919AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepGraphCollectionViewDataSource.m; sourceTree = "<group>"; };
 		8AA8D93E19AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMiniGraphCollectionViewCell.h; sourceTree = "<group>"; };
@@ -1009,9 +1004,6 @@
 				8A1743C919A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m */,
 				8AA8D93E19AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.h */,
 				8AA8D93F19AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m */,
-				8AA8D92C19ABCB0300349FD0 /* HEMSensorDataHeaderView.h */,
-				8AA8D92D19ABCB0300349FD0 /* HEMSensorDataHeaderView.m */,
-				8AA8D92E19ABCB0300349FD0 /* HEMSensorDataHeaderView.xib */,
 				8A1743B819A7B896001E3C15 /* HEMSleepEventCollectionViewCell.h */,
 				8A1743B919A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m */,
 				8A1743BA19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.xib */,
@@ -1376,7 +1368,6 @@
 				8AAEED0319A5225F006517C4 /* Agile-Extralight.otf in Resources */,
 				8AC4A0371989C36200C2BD63 /* humidityIcon.png in Resources */,
 				8A1E723519D62C26007475D3 /* alarmRepeatIcon@2x.png in Resources */,
-				8AA8D93019ABCB0300349FD0 /* HEMSensorDataHeaderView.xib in Resources */,
 				8A4B3D51199308BB00856BDE /* wifiLogoImage@2x.png in Resources */,
 				8A66013B199EBF87007E6167 /* README.md in Resources */,
 				8AAEED0419A5225F006517C4 /* Agile-ExtralightItalic.otf in Resources */,
@@ -1607,7 +1598,6 @@
 				BFC3AA0719C2655F0055D308 /* HEMInfoAlertView.m in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,
 				8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */,
-				8AA8D92F19ABCB0300349FD0 /* HEMSensorDataHeaderView.m in Sources */,
 				8AB2683F19CCFDD400017818 /* HEMAlarmListTableViewCell.m in Sources */,
 				8A90F9B319635CAE00AFD110 /* HEMCurrentConditionsTableViewController.m in Sources */,
 				8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */,

@@ -58,14 +58,22 @@
 "settings.device.firmware-version" = "Firmware Version";
 "settings.device.battery" = "Battery";
 "settings.device.last-seen" = "Last Seen";
+"settings.device.never-seen" = "Paired, but never seen since";
 "settings.device.color" = "Color";
 "settings.device.color.green" = "Green";
 "settings.device.battery.good" = "Good";
 "settings.pill.dialog.unpair-title" = "Unpair Sleep Pill?";
 "settings.pill.dialog.unpair-message" = "Are you sure you want to unpair your Sleep Pill?  By doing so, we will no longer be able to track your sleep until you pair another Sleep Pill.";
 "settings.pill.dialog.unpair-no-sense-message" = "To unpair your Sleep Pill, you must be near your Sense device and Sense must be powered on.";
+"settings.pill.dialog.no-paired-sense-message" = "You don't currently have a paired Sense, which is needed to unpair your Sleep Pill";
+"settings.pill.dialog.unable-to-unpair-from-sense" = "Unable to unpair from Sense.  Make sure Sense is powered on, nearby, and try again.";
+"settings.pill.dialog.unable-to-unlink-from-account" = "Unable to unpair your Sleep Pill from your account.  Make sure you are connected to the internet and try again.";
+"settings.pill.unpair-no-sense-found" = "Could not find Sense.  Sense must be nearby and powered on to unpair your Sleep Pill.";
+"settings.pill.dialog.unable-to-unpair" = "Unable to unpair your Sleep Pill.";
 "settings.pill.need-pill" = "I need a Sleep Pill";
+"settings.pill.unpair-error-title" = "Unpairing Failed";
 "settings.pill.pair-no-sense-message" = "A Sense must be paired to your account in order to pair a Sleep Pill.";
+"settings.pill.unpairing-message" = "unpairing your Sleep Pill.";
 "settings.sense.not-found-title" = "Sense Not Found";
 "settings.sense.signal" = "Signal";
 "settings.sense.signal.weak" = "Weak";
@@ -214,3 +222,15 @@
 "notifications.actions.weekly" = "Weekly";
 "notifications.actions.infrequently" = "Infrequently";
 
+// time formats / strings
+"time.never.seen" = "Never Seen";
+"time.format.second.ago" = "%ld second ago";
+"time.format.seconds.ago" = "%ld seconds ago";
+"time.format.minute.ago" = "%ld minute ago";
+"time.format.minutes.ago" = "%ld minutes ago";
+"time.format.hour.ago" = "%ld hour ago";
+"time.format.hours.ago" = "%ld hours ago";
+"time.format.day.ago" = "%ld day ago";
+"time.format.days.ago" = "%ld days ago";
+"time.format.week.ago" = "%ld week ago";
+"time.format.weeks.ago" = "%ld weeks ago";

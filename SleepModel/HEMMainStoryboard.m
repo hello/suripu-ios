@@ -24,6 +24,7 @@ static NSString *const _HEMinfo = @"info";
 static NSString *const _HEMinfoSettings = @"infoSettings";
 static NSString *const _HEMinsightCell = @"insightCell";
 static NSString *const _HEMnoSleepPill = @"noSleepPill";
+static NSString *const _HEMnoSleepPillController = @"noSleepPillController";
 static NSString *const _HEMpersonalInfo = @"personalInfo";
 static NSString *const _HEMpickSoundSegue = @"pickSoundSegue";
 static NSString *const _HEMpill = @"pill";
@@ -64,8 +65,8 @@ static NSString *const _HEMunitsSettings = @"unitsSettings";
 +(NSString *)pickSoundSegueSegueIdentifier { return _HEMpickSoundSegue; }
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
 +(NSString *)infoSettingsSegueIdentifier { return _HEMinfoSettings; }
-+(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
++(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
 +(NSString *)senseSegueIdentifier { return _HEMsense; }
 +(NSString *)noSleepPillSegueIdentifier { return _HEMnoSleepPill; }
@@ -74,6 +75,7 @@ static NSString *const _HEMunitsSettings = @"unitsSettings";
 +(UIViewController *)instantiateAlarmViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmViewController]; }
 +(UIViewController *)instantiateSleepQuestionsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepQuestions]; }
 +(UIViewController *)instantiateSettingsController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsController]; }
++(UIViewController *)instantiateNoSleepPillController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMnoSleepPillController]; }
 +(UIViewController *)instantiateSensorViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensorViewController]; }
 +(UIViewController *)instantiatePersonalInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpersonalInfo]; }
 +(UIViewController *)instantiateCurrentController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentController]; }

@@ -8,6 +8,8 @@
 
 #import <SenseKit/SENDevice.h>
 
+#import "NSDate+HEMFormats.h"
+
 #import "HEMDevicesViewController.h"
 #import "HEMDeviceCenter.h"
 #import "HEMPillViewController.h"
@@ -34,6 +36,11 @@
     [self loadDevices];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[self devicesTableView] reloadData];
+}
+
 - (void)loadDevices {
     if (![[HEMDeviceCenter sharedCenter] isInfoLoaded]) {
         __weak typeof(self) weakSelf = self;
@@ -51,7 +58,15 @@
 }
 
 - (NSString*)lastSeen:(SENDevice*)device {
-    return NSLocalizedString(@"settings.device.last-seen", nil);
+    NSString* desc = nil;
+    if ([device lastSeen] != nil) {
+        NSString* lastSeen = NSLocalizedString(@"settings.device.last-seen", nil);
+        NSString* timeAgo = [[device lastSeen] timeAgo];
+        desc = [NSString stringWithFormat:@"%@ %@", lastSeen, timeAgo];
+    } else {
+        desc = NSLocalizedString(@"settings.device.never-seen", nil);
+    }
+    return desc;
 }
 
 #pragma mark - UITableViewDataSource

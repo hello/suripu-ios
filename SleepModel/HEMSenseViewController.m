@@ -9,6 +9,8 @@
 #import <SenseKit/SENDevice.h>
 #import <SenseKit/SENSenseManager.h>
 
+#import "NSDate+HEMFormats.h"
+
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDeviceCenter.h"
@@ -110,12 +112,16 @@ static NSInteger kHEMSenseAlertTagPairModeConfirmation = 1;
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([indexPath section] == 0) {
+        SENDevice* info = [[HEMDeviceCenter sharedCenter] senseInfo];
         NSString* title = nil;
         NSString* detail = NSLocalizedString(@"empty-data", nil); // TODO (jimmy): data not supported yet;
         
         switch ([indexPath row]) {
             case 0: {
                 title = NSLocalizedString(@"settings.device.last-seen", nil);
+                if ([info lastSeen] != nil) {
+                    detail = [[info lastSeen] timeAgo];
+                }
                 break;
             }
             case 1: {
@@ -127,6 +133,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             }
             case 2: {
                 title = NSLocalizedString(@"settings.device.firmware-version", nil);
+                if ([[info firmwareVersion] length] > 0) {
+                    detail = [info firmwareVersion];
+                }
                 break;
             }
             default:

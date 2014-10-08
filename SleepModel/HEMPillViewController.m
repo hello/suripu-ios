@@ -8,12 +8,17 @@
 
 #import <SenseKit/SENDevice.h>
 
+#import "NSDate+HEMFormats.h"
+
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMDeviceCenter.h"
 
 @interface HEMPillViewController() <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *unpairView;
+@property (weak, nonatomic) IBOutlet UIView *activityView;
+@property (weak, nonatomic) IBOutlet UILabel *activityLabel;
 @property (weak, nonatomic) IBOutlet UITableView *pillInfoTableView;
 
 @end
@@ -23,7 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self pillInfoTableView] setTableFooterView:[[UIView alloc] init]];
-    [[self unpairView] setHidden:[self pillInfo] == nil];
+    [[self unpairView] setHidden:[[HEMDeviceCenter sharedCenter] pillInfo] == nil];
 }
 
 #pragma mark - UITableViewDelegate / DataSource
@@ -40,8 +45,9 @@
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
 
+    SENDevice* info = [[HEMDeviceCenter sharedCenter] pillInfo];
     NSString* title = nil;
-    NSString* detail = NSLocalizedString(@"empty-data", nil); // TODO (jimmy): heartbeat/color data not yet implemented!
+    NSString* detail = NSLocalizedString(@"empty-data", nil);
     
     switch ([indexPath row]) {
         case 0: {
@@ -50,10 +56,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         case 1: {
             title = NSLocalizedString(@"settings.device.last-seen", nil);
+            if ([info lastSeen] != nil) {
+                detail = [[info lastSeen] timeAgo];
+            }
             break;
         }
         case 2: {
             title = NSLocalizedString(@"settings.device.color", nil);
+            if ([[info firmwareVersion] length] > 0) {
+                detail = [info firmwareVersion];
+            }
             break;
         }
         default:
@@ -71,15 +83,37 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 #pragma mark - Actions
 
-- (IBAction)showUnpairConfirmation:(id)sender {
-    if ([self senseManager] != nil) {
-        [self showUnpairConfirmationAlert];
-    } else {
-        [self showNoSenseAlert];
+- (void)showActivity {
+    [[self unpairView] setHidden:YES];
+    [[self unpairView] setAlpha:0.0f];
+    [[self activityView] setAlpha:0.0f];
+    [[self activityView] setHidden:[[HEMDeviceCenter sharedCenter] pillInfo] == nil];
+    
+    if (![[self activityView] isHidden]) {
+        [UIView animateWithDuration:0.25f
+                         animations:^{
+                             [[self activityView] setAlpha:1.0f];
+                         }];
+    }
+    
+}
+
+- (void)hideActivity {
+    [[self unpairView] setHidden:[[HEMDeviceCenter sharedCenter] pillInfo] == nil];
+    
+    if (![[self unpairView] isHidden]) {
+        [UIView animateWithDuration:0.25f
+                         animations:^{
+                             [[self unpairView] setAlpha:1.0f];
+                             [[self activityView] setAlpha:0.0f];
+                         }
+                         completion:^(BOOL finished) {
+                             [[self activityView] setHidden:YES];
+                         }];
     }
 }
 
-- (void)showUnpairConfirmationAlert {
+- (IBAction)showUnpairConfirmation:(id)sender {
     NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-title", nil);
     NSString* message = NSLocalizedString(@"settings.pill.dialog.unpair-message", nil);
     UIAlertView* confirmDialog = [[UIAlertView alloc] initWithTitle:title
@@ -91,9 +125,27 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [confirmDialog show];
 }
 
-- (void)showNoSenseAlert {
-    NSString* title = NSLocalizedString(@"settings.sense.not-found-title", nil);
-    NSString* message = NSLocalizedString(@"settings.pill.dialog.unpair-no-sense-message", nil);
+- (void)showUnpairMessageForError:(NSError*)error {
+    NSString* message = nil;
+    switch ([error code]) {
+        case HEMDeviceCenterErrorSenseUnavailable:
+            message = NSLocalizedString(@"settings.pill.unpair-no-sense-found", nil);
+            break;
+        case HEMDeviceCenterErrorSenseNotPaired:
+            message = NSLocalizedString(@"settings.pill.dialog.no-paired-sense-message", nil);
+            break;
+        case HEMDeviceCenterErrorUnpairPillFromSense:
+            message = NSLocalizedString(@"settings.pill.dialog.unable-to-unpair-from-sense", nil);
+            break;
+        case HEMDeviceCenterErrorUnlinkPillFromAccount:
+            message = NSLocalizedString(@"settings.pill.dialog.unable-to-unlink-from-account", nil);
+            break;
+        default:
+            message = NSLocalizedString(@"settings.pill.dialog.unable-to-unpair", nil);
+            break;
+    }
+    
+    NSString* title = NSLocalizedString(@"settings.pill.unpair-error-title", nil);
     UIAlertView* messageDialog = [[UIAlertView alloc] initWithTitle:title
                                                             message:message
                                                            delegate:self
@@ -102,37 +154,38 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [messageDialog show];
 }
 
+
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex != [alertView cancelButtonIndex]) {
-        // TODO: (jimmy) issue an unpair command to Sense
+        [self unpair];
+        [self showActivity];
     }
 }
 
-#pragma mark - Unpairing
-
 - (void)unpair {
+    [self showActivity];
+    [[self activityLabel] setText:NSLocalizedString(@"settings.pill.unpairing-message", nil)];
     __weak typeof(self) weakSelf = self;
-    [self unpairPillFromSense:^(NSError *error) {
+    [[HEMDeviceCenter sharedCenter] unpairSleepPill:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf) return;
-        if (error == nil) {
-            [strongSelf unlinkPillFromAccount:^(NSError *error) {
-                // TODO (jimmy): handle response
-            }];
-        } else {
-            // TODO (jimmy): what to do if we can't unpair pill from Sense?
+        if (strongSelf) {
+            [strongSelf hideActivity];
+            if (error != nil) {
+                [strongSelf showUnpairMessageForError:error];
+            } else {
+                UIViewController* nextVC = [HEMMainStoryboard instantiateNoSleepPillController];
+                // pop then push no pill view controller
+                [[strongSelf navigationController] popViewControllerAnimated:NO];
+                [[strongSelf navigationController] pushViewController:nextVC animated:YES];
+            }
         }
     }];
 }
 
-- (void)unpairPillFromSense:(void(^)(NSError* error))completion {
-    // TODO (jimmy): we need to connect to the right Sense, then use the SenseManager
-    // to unpill
-    if (completion) completion(nil);
-}
+#pragma mark - Cleanup
 
-- (void)unlinkPillFromAccount:(void(^)(NSError* error))completion {
-    if (completion) completion(nil);
+- (void)dealloc {
+    [[HEMDeviceCenter sharedCenter] stopScanning];
 }
 
 @end

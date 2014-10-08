@@ -83,13 +83,16 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
         buttonFrame.origin.y = CGRectGetMaxY(buttonFrame) + kHEMSleepAnswerSpacing;
     }
 
-    CGSize contentSize = CGSizeMake(CGRectGetWidth(buttonFrame), CGRectGetMinY(buttonFrame));
+    CGSize contentSize = [[self choicesScrollView] contentSize];
+    contentSize.height = CGRectGetMinY(buttonFrame);
     [[self choicesScrollView] setContentSize:contentSize];
 }
 
 - (UIButton*)buttonForAnswer:(SENAnswer*)answer withFrame:(CGRect)frame {
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-
+    [button setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [button translatesAutoresizingMaskIntoConstraints];
+    
     [button addTarget:self
                   action:@selector(selectAnswer:)
         forControlEvents:UIControlEventTouchUpInside];

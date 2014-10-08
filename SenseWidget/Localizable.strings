@@ -1,0 +1,6 @@
+// sections
+"section.title.last-night" = "Last night";
+"section.title.current-conditions" = "Current Conditions";
+
+// cell labels
+"cell.title.sleep-score" = "Sleep Score";

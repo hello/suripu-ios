@@ -35,6 +35,14 @@
     return YES;
 }
 
+- (BOOL)application:(UIApplication *)application
+            openURL:(NSURL *)url
+  sourceApplication:(NSString *)sourceApplication
+         annotation:(id)annotation {
+    // TODO (jimmy): implement custom URL actions?  don't know any requirements yet
+    return YES;
+}
+
 - (void)applicationDidBecomeActive:(UIApplication*)application
 {
     if (![SENAuthorizationService isAuthorized]) {
@@ -120,7 +128,7 @@
 
 - (void)configureSettingsDefaults
 {
-    NSUserDefaults* userDefaults = [NSUserDefaults standardUserDefaults];
+    NSUserDefaults* userDefaults = [[NSUserDefaults alloc] initWithSuiteName:SENSettingsAppGroup];
     NSDictionary* settingsDefaults = [SENSettings defaults];
     // combine any other default settings here for the Settings.bundle
     [userDefaults registerDefaults:settingsDefaults];

@@ -7,6 +7,8 @@
 #import "SENAuthorizationService.h"
 #import "SENAPIClient.h"
 
+NSString* const SENAuthorizationServiceKeychainService = @"is.hello.Sense";
+NSString* const SENAuthorizationServiceKeychainGroup = @"MSG86J7GNF.is.hello.Sense";
 NSString* const SENAuthorizationServiceDidAuthorizeNotification = @"SENAuthorizationServiceDidAuthorize";
 NSString* const SENAuthorizationServiceDidDeauthorizeNotification = @"SENAuthorizationServiceDidDeauthorize";
 
@@ -18,6 +20,16 @@ static NSString* const SENAuthorizationServiceCredentialsKey = @"credentials";
 static NSString* const SENAuthorizationServiceCredentialsEmailKey = @"email";
 static NSString* const SENAuthorizationServiceAccessTokenKey = @"access_token";
 static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authorization";
+
++ (FXKeychain*)keychain {
+    static FXKeychain* keychain = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        keychain = [[FXKeychain alloc] initWithService:SENAuthorizationServiceKeychainService
+                                           accessGroup:SENAuthorizationServiceKeychainGroup];
+    });
+    return keychain;
+}
 
 + (void)authorizeWithUsername:(NSString*)username password:(NSString*)password callback:(void (^)(NSError*))block
 {
@@ -56,7 +68,7 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 + (void)deauthorize
 {
     [SENAPIClient DELETE:SENAuthorizationServiceTokenPath parameters:nil completion:NULL];
-    [[FXKeychain defaultKeychain] removeObjectForKey:SENAuthorizationServiceCredentialsKey];
+    [[self keychain] removeObjectForKey:SENAuthorizationServiceCredentialsKey];
     [self authorizeRequestsWithToken:nil];
     [self setEmailAddressOfAuthorizedUser:nil];
 }
@@ -74,17 +86,17 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 
 + (NSString*)emailAddressOfAuthorizedUser
 {
-    return [FXKeychain defaultKeychain][SENAuthorizationServiceCredentialsEmailKey];
+    return [self keychain][SENAuthorizationServiceCredentialsEmailKey];
 }
 
 + (void)setEmailAddressOfAuthorizedUser:(NSString*)emailAddress
 {
-    [FXKeychain defaultKeychain][SENAuthorizationServiceCredentialsEmailKey] = emailAddress;
+    [self keychain][SENAuthorizationServiceCredentialsEmailKey] = emailAddress;
 }
 
 + (NSString*)accessToken
 {
-    return [FXKeychain defaultKeychain][SENAuthorizationServiceCredentialsKey][SENAuthorizationServiceAccessTokenKey];
+    return [self keychain][SENAuthorizationServiceCredentialsKey][SENAuthorizationServiceAccessTokenKey];
 }
 
 #pragma mark Private
@@ -104,7 +116,7 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 + (void)authorizeRequestsWithResponse:(id)responseObject
 {
     NSDictionary* responseData = (NSDictionary*)responseObject;
-    [[FXKeychain defaultKeychain] setObject:responseObject forKey:SENAuthorizationServiceCredentialsKey];
+    [[self keychain] setObject:responseObject forKey:SENAuthorizationServiceCredentialsKey];
     [self authorizeRequestsWithToken:responseData[SENAuthorizationServiceAccessTokenKey]];
 }
 

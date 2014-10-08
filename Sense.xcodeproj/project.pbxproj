@@ -181,6 +181,17 @@
 		BF781E3519DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3419DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.m */; };
 		BF781E3C19DCE00400B68EBC /* HEMDeviceCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3B19DCE00400B68EBC /* HEMDeviceCenter.m */; };
 		BF781E3E19DF0F7400B68EBC /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = BF781E3D19DF0F7400B68EBC /* Settings.bundle */; };
+		BF7F1BCA19E304050028F799 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF7F1BC919E304050028F799 /* NotificationCenter.framework */; };
+		BF7F1BD019E304050028F799 /* HEMTodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7F1BCF19E304050028F799 /* HEMTodayViewController.m */; };
+		BF7F1BD219E304050028F799 /* Widget.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BD119E304050028F799 /* Widget.storyboard */; };
+		BF7F1BD519E304050028F799 /* Sense.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BF7F1BC819E304050028F799 /* Sense.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BF7F1BE019E30DCC0028F799 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF7F1BDF19E30DCC0028F799 /* libPods.a */; };
+		BF7F1BE819E313940028F799 /* humidityIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE219E313940028F799 /* humidityIcon.png */; };
+		BF7F1BE919E313940028F799 /* humidityIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE319E313940028F799 /* humidityIcon@2x.png */; };
+		BF7F1BEA19E313940028F799 /* particleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE419E313940028F799 /* particleIcon.png */; };
+		BF7F1BEB19E313940028F799 /* particleIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE519E313940028F799 /* particleIcon@2x.png */; };
+		BF7F1BEC19E313940028F799 /* temperatureIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE619E313940028F799 /* temperatureIcon.png */; };
+		BF7F1BED19E313940028F799 /* temperatureIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BE719E313940028F799 /* temperatureIcon@2x.png */; };
 		BF9C87D419B6A001003188D4 /* sleep_pill.png in Resources */ = {isa = PBXBuildFile; fileRef = BF9C87D219B6A001003188D4 /* sleep_pill.png */; };
 		BF9C87D519B6A001003188D4 /* sleep_pill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF9C87D319B6A001003188D4 /* sleep_pill@2x.png */; };
 		BF9C87D819B6A199003188D4 /* HEMPillPairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF9C87D719B6A199003188D4 /* HEMPillPairViewController.m */; };
@@ -214,6 +225,10 @@
 		BFDCC7BA19D9C741007A922B /* sense.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B819D9C741007A922B /* sense.png */; };
 		BFDCC7BB19D9C741007A922B /* sense@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B919D9C741007A922B /* sense@2x.png */; };
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
+		BFE32FA919E47A4A00651946 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BFE32FA819E47A4A00651946 /* Localizable.strings */; };
+		BFE32FAD19E4997300651946 /* sleepScoreIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE32FAA19E4997300651946 /* sleepScoreIcon.png */; };
+		BFE32FAE19E4997300651946 /* sleepScoreIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE32FAB19E4997300651946 /* sleepScoreIcon@2x.png */; };
+		BFE32FAF19E4997300651946 /* sleepScoreIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE32FAC19E4997300651946 /* sleepScoreIcon@3x.png */; };
 		BFEAA0A819A51DCF002FBD44 /* HEMWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */; };
 		BFEAA0B219A54859002FBD44 /* NSString+Email.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0B119A54859002FBD44 /* NSString+Email.m */; };
 		BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */; };
@@ -234,7 +249,35 @@
 			remoteGlobalIDString = 6003F589195388D20070C39A;
 			remoteInfo = SleepModel;
 		};
+		BF7F1BD319E304050028F799 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6003F582195388D10070C39A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BF7F1BC719E304050028F799;
+			remoteInfo = SenseWidget;
+		};
+		BF7F1BD619E304050028F799 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6003F582195388D10070C39A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BF7F1BC719E304050028F799;
+			remoteInfo = SenseWidget;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		BF7F1BDB19E304050028F799 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				BF7F1BD519E304050028F799 /* Sense.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -477,6 +520,21 @@
 		BF781E3B19DCE00400B68EBC /* HEMDeviceCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDeviceCenter.m; sourceTree = "<group>"; };
 		BF781E3D19DF0F7400B68EBC /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		BF79185A099B572C06592929 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
+		BF7F1BC819E304050028F799 /* Sense.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = Sense.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		BF7F1BC919E304050028F799 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
+		BF7F1BCD19E304050028F799 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF7F1BCE19E304050028F799 /* HEMTodayViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMTodayViewController.h; sourceTree = "<group>"; };
+		BF7F1BCF19E304050028F799 /* HEMTodayViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HEMTodayViewController.m; sourceTree = "<group>"; };
+		BF7F1BD119E304050028F799 /* Widget.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Widget.storyboard; sourceTree = "<group>"; };
+		BF7F1BDC19E309920028F799 /* Sense.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Sense.entitlements; sourceTree = "<group>"; };
+		BF7F1BDD19E30D9A0028F799 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		BF7F1BDF19E30DCC0028F799 /* libPods.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libPods.a; path = "Pods/build/Debug-iphoneos/libPods.a"; sourceTree = "<group>"; };
+		BF7F1BE219E313940028F799 /* humidityIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = humidityIcon.png; sourceTree = "<group>"; };
+		BF7F1BE319E313940028F799 /* humidityIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "humidityIcon@2x.png"; sourceTree = "<group>"; };
+		BF7F1BE419E313940028F799 /* particleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = particleIcon.png; sourceTree = "<group>"; };
+		BF7F1BE519E313940028F799 /* particleIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "particleIcon@2x.png"; sourceTree = "<group>"; };
+		BF7F1BE619E313940028F799 /* temperatureIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = temperatureIcon.png; sourceTree = "<group>"; };
+		BF7F1BE719E313940028F799 /* temperatureIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "temperatureIcon@2x.png"; sourceTree = "<group>"; };
 		BF9C87D219B6A001003188D4 /* sleep_pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sleep_pill.png; path = images/sleep_pill.png; sourceTree = "<group>"; };
 		BF9C87D319B6A001003188D4 /* sleep_pill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sleep_pill@2x.png"; path = "images/sleep_pill@2x.png"; sourceTree = "<group>"; };
 		BF9C87D619B6A199003188D4 /* HEMPillPairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillPairViewController.h; sourceTree = "<group>"; };
@@ -531,6 +589,10 @@
 		BFDCC7B919D9C741007A922B /* sense@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sense@2x.png"; path = "images/sense@2x.png"; sourceTree = "<group>"; };
 		BFDCC7BC19DA078F007A922B /* HEMAnimationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAnimationUtils.h; sourceTree = "<group>"; };
 		BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAnimationUtils.m; sourceTree = "<group>"; };
+		BFE32FA819E47A4A00651946 /* Localizable.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
+		BFE32FAA19E4997300651946 /* sleepScoreIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sleepScoreIcon.png; sourceTree = "<group>"; };
+		BFE32FAB19E4997300651946 /* sleepScoreIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sleepScoreIcon@2x.png"; sourceTree = "<group>"; };
+		BFE32FAC19E4997300651946 /* sleepScoreIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sleepScoreIcon@3x.png"; sourceTree = "<group>"; };
 		BFEAA0A619A51DCF002FBD44 /* HEMWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWelcomeViewController.h; sourceTree = "<group>"; };
 		BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWelcomeViewController.m; sourceTree = "<group>"; };
 		BFEAA0B019A54859002FBD44 /* NSString+Email.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Email.h"; sourceTree = "<group>"; };
@@ -576,6 +638,15 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BF7F1BC519E304050028F799 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF7F1BE019E30DCC0028F799 /* libPods.a in Frameworks */,
+				BF7F1BCA19E304050028F799 /* NotificationCenter.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -583,6 +654,7 @@
 			isa = PBXGroup;
 			children = (
 				6003F593195388D20070C39A /* Sense */,
+				BF7F1BCB19E304050028F799 /* SenseWidget */,
 				6003F5B5195388D20070C39A /* Tests */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
@@ -595,6 +667,7 @@
 			children = (
 				6003F58A195388D20070C39A /* Sense.app */,
 				6003F5AE195388D20070C39A /* Tests.xctest */,
+				BF7F1BC819E304050028F799 /* Sense.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -602,6 +675,8 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF7F1BDF19E30DCC0028F799 /* libPods.a */,
+				BF7F1BDD19E30D9A0028F799 /* libPods.a */,
 				8A54029E19AE299B00FC6085 /* Crashlytics.framework */,
 				BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */,
 				6003F58D195388D20070C39A /* Foundation.framework */,
@@ -610,6 +685,7 @@
 				6003F5AF195388D20070C39A /* XCTest.framework */,
 				FD539145AF784DC3AA0DAF13 /* libPods.a */,
 				4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */,
+				BF7F1BC919E304050028F799 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1178,6 +1254,44 @@
 			name = Utilities;
 			sourceTree = "<group>";
 		};
+		BF7F1BCB19E304050028F799 /* SenseWidget */ = {
+			isa = PBXGroup;
+			children = (
+				BF7F1BCE19E304050028F799 /* HEMTodayViewController.h */,
+				BF7F1BCF19E304050028F799 /* HEMTodayViewController.m */,
+				BF7F1BD119E304050028F799 /* Widget.storyboard */,
+				BF7F1BE119E3132B0028F799 /* images */,
+				BF7F1BCC19E304050028F799 /* Supporting Files */,
+			);
+			path = SenseWidget;
+			sourceTree = "<group>";
+		};
+		BF7F1BCC19E304050028F799 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				BF7F1BDC19E309920028F799 /* Sense.entitlements */,
+				BF7F1BCD19E304050028F799 /* Info.plist */,
+				BFE32FA819E47A4A00651946 /* Localizable.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		BF7F1BE119E3132B0028F799 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				BFE32FAA19E4997300651946 /* sleepScoreIcon.png */,
+				BFE32FAB19E4997300651946 /* sleepScoreIcon@2x.png */,
+				BFE32FAC19E4997300651946 /* sleepScoreIcon@3x.png */,
+				BF7F1BE219E313940028F799 /* humidityIcon.png */,
+				BF7F1BE319E313940028F799 /* humidityIcon@2x.png */,
+				BF7F1BE419E313940028F799 /* particleIcon.png */,
+				BF7F1BE519E313940028F799 /* particleIcon@2x.png */,
+				BF7F1BE619E313940028F799 /* temperatureIcon.png */,
+				BF7F1BE719E313940028F799 /* temperatureIcon@2x.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
 		BF80F6DD19BF99E800A4D779 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -1279,10 +1393,13 @@
 				6003F588195388D20070C39A /* Resources */,
 				352ECF48FC214905A51E01BC /* Copy Pods Resources */,
 				8A54029D19AE296200FC6085 /* ShellScript */,
+				BF7F1BDB19E304050028F799 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				BF7F1BD419E304050028F799 /* PBXTargetDependency */,
+				BF7F1BD719E304050028F799 /* PBXTargetDependency */,
 			);
 			name = Sense;
 			productName = SleepModel;
@@ -1309,6 +1426,23 @@
 			productReference = 6003F5AE195388D20070C39A /* Tests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		BF7F1BC719E304050028F799 /* SenseWidget */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BF7F1BD819E304050028F799 /* Build configuration list for PBXNativeTarget "SenseWidget" */;
+			buildPhases = (
+				BF7F1BC419E304050028F799 /* Sources */,
+				BF7F1BC519E304050028F799 /* Frameworks */,
+				BF7F1BC619E304050028F799 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SenseWidget;
+			productName = SenseWidget;
+			productReference = BF7F1BC819E304050028F799 /* Sense.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -1321,9 +1455,26 @@
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
 						DevelopmentTeam = MSG86J7GNF;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+						};
 					};
 					6003F5AD195388D20070C39A = {
 						TestTargetID = 6003F589195388D20070C39A;
+					};
+					BF7F1BC719E304050028F799 = {
+						CreatedOnToolsVersion = 6.0;
+						DevelopmentTeam = MSG86J7GNF;
+						SystemCapabilities = {
+							com.apple.ApplicationGroups.iOS = {
+								enabled = 1;
+							};
+							com.apple.Keychain = {
+								enabled = 1;
+							};
+						};
 					};
 				};
 			};
@@ -1342,6 +1493,7 @@
 			targets = (
 				6003F589195388D20070C39A /* Sense */,
 				6003F5AD195388D20070C39A /* Tests */,
+				BF7F1BC719E304050028F799 /* SenseWidget */,
 			);
 		};
 /* End PBXProject section */
@@ -1481,6 +1633,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BF7F1BC619E304050028F799 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF7F1BED19E313940028F799 /* temperatureIcon@2x.png in Resources */,
+				BFE32FAD19E4997300651946 /* sleepScoreIcon.png in Resources */,
+				BFE32FAE19E4997300651946 /* sleepScoreIcon@2x.png in Resources */,
+				BF7F1BEB19E313940028F799 /* particleIcon@2x.png in Resources */,
+				BF7F1BEA19E313940028F799 /* particleIcon.png in Resources */,
+				BF7F1BD219E304050028F799 /* Widget.storyboard in Resources */,
+				BFE32FAF19E4997300651946 /* sleepScoreIcon@3x.png in Resources */,
+				BF7F1BE819E313940028F799 /* humidityIcon.png in Resources */,
+				BFE32FA919E47A4A00651946 /* Localizable.strings in Resources */,
+				BF7F1BE919E313940028F799 /* humidityIcon@2x.png in Resources */,
+				BF7F1BEC19E313940028F799 /* temperatureIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1662,6 +1832,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		BF7F1BC419E304050028F799 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BF7F1BD019E304050028F799 /* HEMTodayViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1669,6 +1847,16 @@
 			isa = PBXTargetDependency;
 			target = 6003F589195388D20070C39A /* Sense */;
 			targetProxy = 6003F5B3195388D20070C39A /* PBXContainerItemProxy */;
+		};
+		BF7F1BD419E304050028F799 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BF7F1BC719E304050028F799 /* SenseWidget */;
+			targetProxy = BF7F1BD319E304050028F799 /* PBXContainerItemProxy */;
+		};
+		BF7F1BD719E304050028F799 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BF7F1BC719E304050028F799 /* SenseWidget */;
+			targetProxy = BF7F1BD619E304050028F799 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1788,6 +1976,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -1811,8 +2000,9 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
@@ -1870,6 +2060,53 @@
 			};
 			name = Release;
 		};
+		BF7F1BD919E304050028F799 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED068BEFEEBEC0C48801356C /* Pods.debug.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = "$(inherited)";
+				INFOPLIST_FILE = SenseWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_NAME = Sense;
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		BF7F1BDA19E304050028F799 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF79185A099B572C06592929 /* Pods.release.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				INFOPLIST_FILE = SenseWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Sense;
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1896,6 +2133,15 @@
 			buildConfigurations = (
 				6003F5C3195388D20070C39A /* Debug */,
 				6003F5C4195388D20070C39A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BF7F1BD819E304050028F799 /* Build configuration list for PBXNativeTarget "SenseWidget" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF7F1BD919E304050028F799 /* Debug */,
+				BF7F1BDA19E304050028F799 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

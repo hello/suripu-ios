@@ -14,8 +14,13 @@ typedef NS_ENUM(NSInteger, HEMDeviceCenterError) {
     HEMDeviceCenterErrorSenseUnavailable = -1,
     HEMDeviceCenterErrorBLECommunicationError = -2,
     HEMDeviceCenterErrorScanInProgress = -3,
-    HEMDeviceCenterErrorSenseNotPaired = -4
+    HEMDeviceCenterErrorSenseNotPaired = -4,
+    HEMDeviceCenterErrorPillNotPaired = -5,
+    HEMDeviceCenterErrorUnpairPillFromSense = -6,
+    HEMDeviceCenterErrorUnlinkPillFromAccount = -7
 };
+
+typedef void(^HEMDeviceCompletionBlock)(NSError* error);
 
 @interface HEMDeviceCenter : NSObject
 
@@ -77,7 +82,7 @@ typedef NS_ENUM(NSInteger, HEMDeviceCenterError) {
  * @see @property pillInfo
  * @see @property senseInfo
  */
-- (void)loadDeviceInfo:(void(^)(NSError* error))completion;
+- (void)loadDeviceInfo:(HEMDeviceCompletionBlock)completion;
 
 /**
  * @method scanForPairedSense
@@ -92,7 +97,7 @@ typedef NS_ENUM(NSInteger, HEMDeviceCenterError) {
  * @see @property senseInfo
  * @see @method stopSenseOperations
  */
-- (void)scanForPairedSense:(void(^)(NSError* error))completion;
+- (void)scanForPairedSense:(HEMDeviceCompletionBlock)completion;
 
 /**
  * @method putSenseIntoPairingMode
@@ -105,7 +110,7 @@ typedef NS_ENUM(NSInteger, HEMDeviceCenterError) {
  *
  * @see @method stopSenseOperations
  */
-- (void)putSenseIntoPairingMode:(void(^)(NSError* error))completion;
+- (void)putSenseIntoPairingMode:(HEMDeviceCompletionBlock)completion;
 
 /**
  * @method currentSenseRSSI
@@ -138,5 +143,17 @@ typedef NS_ENUM(NSInteger, HEMDeviceCenterError) {
  * @return YES if available, NO if never scanned for or simply not available.
  */
 - (BOOL)pairedSenseAvailable;
+
+/**
+ * @method unpairSleepPill
+ *
+ * @discussion
+ * Unpair the sleep pill that is currently linked to the signed in user's account,
+ * identified by pillInfo.  If a Sleep Pill is not currently linked, completion
+ * block will be immediately called with an error.
+ *
+ * @see @property pillInfo
+ */
+- (void)unpairSleepPill:(HEMDeviceCompletionBlock)completion;
 
 @end

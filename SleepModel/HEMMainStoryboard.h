@@ -26,8 +26,8 @@
 +(NSString *)pickSoundSegueSegueIdentifier;
 +(NSString *)alarmRepeatSegueIdentifier;
 +(NSString *)infoSettingsSegueIdentifier;
-+(NSString *)unitsSettingsSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
++(NSString *)unitsSettingsSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
 +(NSString *)senseSegueIdentifier;
 +(NSString *)noSleepPillSegueIdentifier;
@@ -36,6 +36,7 @@
 +(UIViewController *)instantiateAlarmViewController;
 +(UIViewController *)instantiateSleepQuestionsViewController;
 +(UIViewController *)instantiateSettingsController;
++(UIViewController *)instantiateNoSleepPillController;
 +(UIViewController *)instantiateSensorViewController;
 +(UIViewController *)instantiatePersonalInfoViewController;
 +(UIViewController *)instantiateCurrentController;

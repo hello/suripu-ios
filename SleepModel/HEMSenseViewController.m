@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 9/24/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
+#import <SORelativeDateTransformer/SORelativeDateTransformer.h>
 
 #import <SenseKit/SENDevice.h>
 #import <SenseKit/SENSenseManager.h>
@@ -110,12 +111,17 @@ static NSInteger kHEMSenseAlertTagPairModeConfirmation = 1;
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([indexPath section] == 0) {
+        SENDevice* info = [[HEMDeviceCenter sharedCenter] senseInfo];
         NSString* title = nil;
         NSString* detail = NSLocalizedString(@"empty-data", nil); // TODO (jimmy): data not supported yet;
         
         switch ([indexPath row]) {
             case 0: {
                 title = NSLocalizedString(@"settings.device.last-seen", nil);
+                if ([info lastSeen] != nil) {
+                    NSValueTransformer* transformer = [SORelativeDateTransformer registeredTransformer];
+                    detail = [transformer transformedValue:[info lastSeen]];
+                }
                 break;
             }
             case 1: {
@@ -127,6 +133,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             }
             case 2: {
                 title = NSLocalizedString(@"settings.device.firmware-version", nil);
+                if ([[info firmwareVersion] length] > 0) {
+                    detail = [info firmwareVersion];
+                }
                 break;
             }
             default:

@@ -221,16 +221,3 @@
 "notifications.actions.daily" = "Daily";
 "notifications.actions.weekly" = "Weekly";
 "notifications.actions.infrequently" = "Infrequently";
-
-// time formats / strings
-"time.never.seen" = "Never Seen";
-"time.format.second.ago" = "%ld second ago";
-"time.format.seconds.ago" = "%ld seconds ago";
-"time.format.minute.ago" = "%ld minute ago";
-"time.format.minutes.ago" = "%ld minutes ago";
-"time.format.hour.ago" = "%ld hour ago";
-"time.format.hours.ago" = "%ld hours ago";
-"time.format.day.ago" = "%ld day ago";
-"time.format.days.ago" = "%ld days ago";
-"time.format.week.ago" = "%ld week ago";
-"time.format.weeks.ago" = "%ld weeks ago";

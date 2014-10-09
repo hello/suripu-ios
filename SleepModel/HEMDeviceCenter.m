@@ -102,14 +102,16 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
 }
 
 - (void)currentSenseRSSI:(void(^)(NSNumber* rssi, NSError* error))completion {
+    if (!completion) return; // do nothing
+    
     if ([self pairedSenseAvailable]) {
         [[self senseManager] currentRSSI:^(id response) {
-            if (completion) completion (response, nil);
+            completion (response, nil);
         } failure:^(NSError *error) {
-            if (completion) completion (nil, error);
+            completion (nil, error);
         }];
     } else {
-        if (completion) completion (nil, [self errorWithType:HEMDeviceCenterErrorSenseUnavailable]);
+        completion (nil, [self errorWithType:HEMDeviceCenterErrorSenseUnavailable]);
     }
 }
 

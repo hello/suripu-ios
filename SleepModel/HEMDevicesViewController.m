@@ -5,10 +5,9 @@
 //  Created by Jimmy Lu on 9/23/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
+#import <SORelativeDateTransformer/SORelativeDateTransformer.h>
 
 #import <SenseKit/SENDevice.h>
-
-#import "NSDate+HEMFormats.h"
 
 #import "HEMDevicesViewController.h"
 #import "HEMDeviceCenter.h"
@@ -60,8 +59,9 @@
 - (NSString*)lastSeen:(SENDevice*)device {
     NSString* desc = nil;
     if ([device lastSeen] != nil) {
+        NSValueTransformer* transformer = [SORelativeDateTransformer registeredTransformer];
+        NSString* timeAgo = [transformer transformedValue:[device lastSeen]];
         NSString* lastSeen = NSLocalizedString(@"settings.device.last-seen", nil);
-        NSString* timeAgo = [[device lastSeen] timeAgo];
         desc = [NSString stringWithFormat:@"%@ %@", lastSeen, timeAgo];
     } else {
         desc = NSLocalizedString(@"settings.device.never-seen", nil);

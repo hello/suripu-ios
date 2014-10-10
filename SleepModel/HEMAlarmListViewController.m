@@ -7,15 +7,15 @@
 #import "HelloStyleKit.h"
 #import "HEMColorUtils.h"
 #import "HEMAlarmAddButton.h"
-#import "HEMAlarmTextUtils.h"
+#import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
 
 @interface HEMAlarmListViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) CAGradientLayer* gradientLayer;
 @property (strong, nonatomic) NSArray* alarms;
-@property (weak, nonatomic) IBOutlet UITableView *tableView;
-@property (weak, nonatomic) IBOutlet HEMAlarmAddButton *addButton;
+@property (weak, nonatomic) IBOutlet UITableView* tableView;
+@property (weak, nonatomic) IBOutlet HEMAlarmAddButton* addButton;
 @end
 
 @implementation HEMAlarmListViewController
@@ -30,6 +30,9 @@ static NSUInteger HEMAlarmListLimit = 8;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[HelloStyleKit chevronIconLeft] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.addButton setTitleColor:[UIColor colorWithWhite:0.9 alpha:0.25] forState:UIControlStateDisabled];
+    [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^{
+        [self reloadData];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -66,7 +69,7 @@ static NSUInteger HEMAlarmListLimit = 8;
 
 - (void)reloadData
 {
-    self.alarms = [[SENAlarm savedAlarms] sortedArrayUsingComparator:^NSComparisonResult(SENAlarm *obj1, SENAlarm *obj2) {
+    self.alarms = [[SENAlarm savedAlarms] sortedArrayUsingComparator:^NSComparisonResult(SENAlarm* obj1, SENAlarm* obj2) {
         NSNumber* alarmValue1 = @(obj1.hour * 60 + obj1.minute);
         NSNumber* alarmValue2 = @(obj2.hour * 60 + obj2.minute);
         return [alarmValue1 compare:alarmValue2];
@@ -83,29 +86,44 @@ static NSUInteger HEMAlarmListLimit = 8;
 
 - (IBAction)addNewAlarm:(id)sender
 {
-    [[SENAlarm createDefaultAlarm] save];
-    [self reloadData];
-    [self.tableView reloadData];
+    SENAlarm* alarm = [SENAlarm createDefaultAlarm];
+    [self presentViewControllerForAlarm:alarm];
 }
 
-- (IBAction)flippedEnabledSwitch:(UISwitch *)sender {
-    SENAlarm* alarm = [self.alarms objectAtIndex:sender.tag];
-    alarm.on = [sender isOn];
+- (IBAction)flippedEnabledSwitch:(UISwitch*)sender
+{
+    __block SENAlarm* alarm = [self.alarms objectAtIndex:sender.tag];
+    BOOL on = [sender isOn];
+    alarm.on = on;
+    [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
+        if (!success) {
+            alarm.on = !on;
+            sender.on = !on;
+        }
+    }];
+}
+
+- (void)presentViewControllerForAlarm:(SENAlarm*)alarm
+{
+    UINavigationController* controller = (UINavigationController*)[HEMMainStoryboard instantiateAlarmNavController];
+    HEMAlarmViewController* alarmController = (HEMAlarmViewController*)controller.topViewController;
+    alarmController.alarm = alarm;
+    [self.navigationController presentViewController:controller animated:YES completion:NULL];
 }
 
 #pragma mark - UITableViewDataSource
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+- (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
     return self.alarms.count;
 }
 
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+- (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
     HEMAlarmListTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmListCellIdentifier]];
     cell.timeLabel.text = [alarm localizedValue];
-    cell.detailLabel.text = [HEMAlarmTextUtils repeatTextForAlarm:alarm];
+    cell.detailLabel.text = [HEMAlarmUtils repeatTextForUnitFlags:alarm.repeatFlags];
     cell.enabledSwitch.on = [alarm isOn];
     cell.enabledSwitch.tag = indexPath.row;
     return cell;
@@ -113,28 +131,35 @@ static NSUInteger HEMAlarmListLimit = 8;
 
 #pragma mark - UITableViewDelegate
 
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+- (BOOL)tableView:(UITableView*)tableView canEditRowAtIndexPath:(NSIndexPath*)indexPath
 {
     return YES;
 }
 
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
         [alarm delete];
         [self reloadData];
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
+        __weak typeof(self) weakSelf = self;
+        [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
+            typeof(self) strongSelf = weakSelf;
+            if (!success) {
+                [alarm save];
+                [strongSelf reloadData];
+                [strongSelf.tableView reloadData];
+            }
+        }];
+        [tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
     }
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
     SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
-    HEMAlarmViewController* controller = (HEMAlarmViewController*)[HEMMainStoryboard instantiateAlarmViewController];
-    controller.alarm = alarm;
-    [self.navigationController pushViewController:controller animated:YES];
+    [self presentViewControllerForAlarm:alarm];
 }
 
 @end

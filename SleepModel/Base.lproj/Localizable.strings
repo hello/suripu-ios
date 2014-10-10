@@ -127,6 +127,8 @@
 "alarm.repeat.title" = "Repeat";
 "alarm.repeat.days.none" = "Not repeating";
 "alarm.repeat.days.all" = "Everyday";
+"alarm.save-error.title" = "Alarms could not be saved";
+"alarm.load-error.title" = "Alarms could not be loaded";
 
 "alarm.repeat.days.weekdays" = "Weekdays";
 "alarm.repeat.days.weekends" = "Weekends";
@@ -145,6 +147,9 @@
 "alarm.repeat.days.friday" = "Friday";
 "alarm.repeat.days.saturday" = "Saturday";
 "alarm.repeat.days.sunday" = "Sunday";
+
+"alarm.repeat.day-reuse-error.title" = "Another alarm is already set";
+"alarm.repeat.day-reuse-error.message" = "Sense monitors your environment and predicts the perfect moment for you to awaken. Only one such alarm can be set for each day.";
 
 // background noise
 "noise.state.enabled" = "Enabled";

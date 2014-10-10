@@ -91,6 +91,13 @@ struct SENAlarmTime {
  */
 - (NSString*)localizedValue;
 
+/**
+ *  Check whether the alarm has ever been persisted
+ *
+ *  @return YES if an alarm with a matching identifier is present in the data store
+ */
+- (BOOL)isSaved;
+
 @property (nonatomic, getter=isOn) BOOL on;
 @property (nonatomic, readonly, getter=isEditable) BOOL editable;
 @property (nonatomic, getter=isSmartAlarm) BOOL smartAlarm;
@@ -98,4 +105,5 @@ struct SENAlarmTime {
 @property (nonatomic) NSUInteger minute;
 @property (nonatomic) NSUInteger repeatFlags;
 @property (nonatomic, copy) NSString* soundName;
+@property (nonatomic, strong) NSNumber* soundID;
 @end

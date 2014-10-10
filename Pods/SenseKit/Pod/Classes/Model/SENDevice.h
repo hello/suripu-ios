@@ -18,7 +18,8 @@ typedef NS_ENUM(NSUInteger, SENDeviceType) {
 typedef NS_ENUM(NSUInteger, SENDeviceState) {
     SENDeviceStateNormal = 0,
     SENDeviceStateLowBattery = 1,
-    SENDeviceStateFirmwareUpdate = 2
+    SENDeviceStateFirmwareUpdate = 2,
+    SENDeviceStateUnknown = 3
 };
 
 @interface SENDevice : NSObject
@@ -39,13 +40,27 @@ typedef NS_ENUM(NSUInteger, SENDeviceState) {
 @property (nonatomic, assign, readonly) SENDeviceState state;
 
 /**
+ * @property firmwareVersion: specifies the current firmware version of the device
+ */
+@property (nonatomic, copy, readonly)   NSString* firmwareVersion;
+
+/**
+ * @property lastSeen: specifies date in which the device last "phoned home"
+ */
+@property (nonatomic, strong, readonly) NSDate* lastSeen;
+
+/**
  * Initialize with the name, uuid, type, and state of the device
  * @param deviceId: @see @property deviceId
  * @param type:     @see @property type
  * @param state:    @see @property state
+ * @param version:  @see @property version
+ * @param lastSeen: @see @property lastSeen
  */
 - (id)initWithDeviceId:(NSString*)deviceId
                   type:(SENDeviceType)type
-                 state:(SENDeviceState)state;
+                 state:(SENDeviceState)state
+       firmwareVersion:(NSString*)version
+              lastSeen:(NSDate*)lastSeen;
 
 @end

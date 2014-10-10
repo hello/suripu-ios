@@ -10,6 +10,12 @@
 
 #import "SENAPIClient.h"
 
+typedef NS_ENUM(NSInteger, SENAPIDeviceError) {
+    SENAPIDeviceErrorInvalidParam = -1
+};
+
+@class SENDevice;
+
 @interface SENAPIDevice : NSObject
 
 /**
@@ -19,5 +25,13 @@
  * @param completion: the completion block to invoke when request returns
  */
 + (void)getPairedDevices:(SENAPIDataBlock)completion;
+
+/**
+ * Unregister the pill from the currently signed in account (must be authorized).
+ *
+ * @param device: the pill to unregister
+ * @param completion: the completion block to invoke when done
+ */
++ (void)unregisterPill:(SENDevice*)device completion:(SENAPIDataBlock)completion;
 
 @end

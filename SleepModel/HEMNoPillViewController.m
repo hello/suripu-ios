@@ -8,10 +8,6 @@
 
 #import "HEMNoPillViewController.h"
 
-// TODO (jimmy): we may need this type of information from the server instead
-// of hardcoding it here.
-static NSString* const kHEMNoPillOrderURL = @"https://order.hello.is/";
-
 @interface HEMNoPillViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
@@ -82,7 +78,7 @@ static NSString* const kHEMNoPillOrderURL = @"https://order.hello.is/";
 - (IBAction)needPill:(id)sender {
     // TODO (jimmy): if there's a design for an in-app browser, we can implement
     // it or if there's more time, we will think of something nice
-    NSURL* orderURL = [NSURL URLWithString:kHEMNoPillOrderURL];
+    NSURL* orderURL = [NSURL URLWithString:kHEMSenseOrderURL];
     [[UIApplication sharedApplication] openURL:orderURL];
 }
 

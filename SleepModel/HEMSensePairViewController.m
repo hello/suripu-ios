@@ -12,6 +12,7 @@
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMUserDataCache.h"
+#import "HEMSettingsTableViewController.h"
 
 static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523-785FEABCD123";
 
@@ -81,6 +82,19 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
     [self scanForSense];
 }
 
+- (IBAction)skip:(id)sender {
+    // TODO (jimmy): we will eventually not have this method once everyone actually
+    // gets a device.  It's here temporarily
+    for (UIViewController* viewController in self.navigationController.viewControllers) {
+        if ([viewController isKindOfClass:[HEMSettingsTableViewController class]]) {
+            [self.navigationController popToViewController:viewController animated:YES];
+            return;
+        }
+    }
+    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+
+}
+
 #pragma mark - Scanning
 
 - (void)scanForSense {
@@ -127,6 +141,7 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
         if (strongSelf) {
             [strongSelf cacheManager];
             [strongSelf stopActivity];
+
             NSString* segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
             [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
         }

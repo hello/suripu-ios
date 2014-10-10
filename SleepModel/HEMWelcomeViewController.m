@@ -12,6 +12,7 @@
 #import "HEMProgressNavigationController.h"
 #import "HEMAnimationUtils.h"
 #import "HEMSignUpViewController.h"
+#import "HEMBaseController+Protected.h"
 
 static CGFloat const kHEMWelcomeButtonAnimationDuration = 0.5f;
 static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
@@ -34,6 +35,7 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginCenterXConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *signupCenterXConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelCenterXConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *playCenterYConstraint;
 
 @end
 
@@ -53,6 +55,11 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
     [[self cancelCenterXConstraint] setConstant:-width];
  
     [[self bgImageView] add3DEffectWithBorder:5.0f];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    CGFloat diff = -30.0f;
+    [self updateConstraint:[self playCenterYConstraint] withDiff:diff];
 }
 
 #pragma mark - Animations

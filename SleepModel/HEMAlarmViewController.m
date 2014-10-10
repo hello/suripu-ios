@@ -153,7 +153,7 @@
         if (success)
             [strongSelf dismissFromView:nil];
         else if ([self isUnsavedAlarm])
-            [self.alarm delete];
+            [strongSelf.alarm delete];
         else
             [strongSelf updateAlarmFromCache:strongSelf.originalAlarmCache];
     }];

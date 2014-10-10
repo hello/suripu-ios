@@ -23,7 +23,7 @@
     [super layoutSubviews];
     if (!self.lineView) {
         self.lineView = [[UIView alloc] initWithFrame:CGRectMake(0, CGRectGetHeight(self.bounds) - 1, CGRectGetWidth(self.bounds), 1.f)];
-        self.lineView.backgroundColor = [HelloStyleKit mediumBlueColor];
+        self.lineView.backgroundColor = [HelloStyleKit onboardingBlueColor];
         [self addSubview:self.lineView];
     }
 }

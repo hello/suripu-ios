@@ -17,6 +17,7 @@
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMConfidentialityWarningView.h"
 #import "HEMDeviceCenter.h"
+#import "HelloStyleKit.h"
 
 @implementation HEMAppDelegate
 
@@ -79,6 +80,10 @@
 
     UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
     UIViewController* rootController = [onboardingStoryboard instantiateInitialViewController];
+    if ([rootController isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* navVC = (UINavigationController*)rootController;
+        [[navVC navigationBar] setTintColor:[HelloStyleKit onboardingBlueColor]];
+    }
     [dynamicPanesController presentViewController:rootController animated:animated completion:^{
         FCDynamicPane* foregroundPane = [[dynamicPanesController viewControllers] lastObject];
         [foregroundPane setState:FCDynamicPaneStateRetracted];

@@ -44,7 +44,12 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    CGColorRef white = [[UIColor whiteColor] CGColor];
+    UIColor* whiteColor = [UIColor whiteColor];
+    CGColorRef white = [whiteColor CGColor];
+    
+    [[self getStartedButton] setTitleColor:whiteColor forState:UIControlStateNormal];
+    [[self signinButton] setTitleColor:whiteColor forState:UIControlStateNormal];
+    [[self signupButton] setTitleColor:whiteColor forState:UIControlStateNormal];
     [[[self getStartedButton] layer] setBorderColor:white];
     [[[self signinButton] layer] setBorderColor:white];
     [[[self signupButton] layer] setBorderColor:white];

@@ -74,7 +74,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <state key="normal" title="I Forgot my Password">
-                                    <color key="titleColor" red="0.25882352939999997" green="0.25882352939999997" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.33333333333333331" green="0.51764705882352935" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -119,7 +119,9 @@
                                         <state key="normal" title="Done">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
-                                        <state key="disabled" title=" "/>
+                                        <state key="disabled" title=" ">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
                                         <connections>
                                             <action selector="didTapLogInButton:" destination="5ic-x1-0Fg" eventType="touchUpInside" id="Q5T-cY-fmw"/>
                                         </connections>
@@ -427,6 +429,7 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="18"/>
                                         <state key="normal" title="Done">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="disabled" title=" "/>
@@ -480,10 +483,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1g-YQ-7bC" customClass="HEMActionButton">
-                                <rect key="frame" x="241" y="496" width="119" height="40"/>
+                                <rect key="frame" x="190" y="496" width="220" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="6fN-Mb-Rff"/>
-                                    <constraint firstAttribute="width" constant="119" id="VtM-1F-twe"/>
+                                    <constraint firstAttribute="width" constant="220" id="VtM-1F-twe"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="Next">
@@ -561,10 +564,10 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M0L-MG-dGi" customClass="HEMActionButton">
-                                <rect key="frame" x="241" y="496" width="119" height="40"/>
+                                <rect key="frame" x="190" y="496" width="220" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="QMZ-zo-7zG"/>
-                                    <constraint firstAttribute="width" constant="119" id="RSA-s3-qzn"/>
+                                    <constraint firstAttribute="width" constant="220" id="RSA-s3-qzn"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="Next">
@@ -692,10 +695,10 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HYT-At-WLL" customClass="HEMActionButton">
-                                <rect key="frame" x="226" y="452" width="150" height="40"/>
+                                <rect key="frame" x="190" y="452" width="220" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="KQc-c4-rSc"/>
-                                    <constraint firstAttribute="width" constant="150" id="QBe-nN-1J0"/>
+                                    <constraint firstAttribute="width" constant="220" id="QBe-nN-1J0"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="Share Credentials">
@@ -715,7 +718,7 @@
                             <constraint firstItem="4PT-Jb-KBo" firstAttribute="top" secondItem="gvl-uZ-ZRh" secondAttribute="bottom" constant="12" id="hRv-2I-Nn1"/>
                             <constraint firstItem="gvl-uZ-ZRh" firstAttribute="top" secondItem="GhD-1W-lxB" secondAttribute="bottom" constant="8" id="rCw-AA-AIY"/>
                             <constraint firstItem="Rhq-rf-zuM" firstAttribute="top" secondItem="4PT-Jb-KBo" secondAttribute="bottom" constant="77" id="tUd-yV-d4M"/>
-                            <constraint firstAttribute="centerX" secondItem="HYT-At-WLL" secondAttribute="centerX" constant="-1" id="wiB-5L-2qT"/>
+                            <constraint firstAttribute="centerX" secondItem="HYT-At-WLL" secondAttribute="centerX" id="wiB-5L-2qT"/>
                             <constraint firstAttribute="centerX" secondItem="gvl-uZ-ZRh" secondAttribute="centerX" id="yUy-NK-ojw"/>
                         </constraints>
                     </view>
@@ -784,10 +787,10 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Cxf-NO-tVI" customClass="HEMActionButton">
-                                <rect key="frame" x="225" y="452" width="150" height="40"/>
+                                <rect key="frame" x="190" y="452" width="220" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="QbD-4k-dom"/>
-                                    <constraint firstAttribute="width" constant="150" id="aRH-j3-tne"/>
+                                    <constraint firstAttribute="width" constant="220" id="aRH-j3-tne"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="I'm ready">
@@ -888,9 +891,9 @@
                                 <color key="backgroundColor" red="0.37647058823529411" green="0.58039215686274503" blue="1" alpha="1" colorSpace="deviceRGB"/>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gMf-fl-V5h" customClass="HEMActionButton">
-                                <rect key="frame" x="241" y="496" width="119" height="40"/>
+                                <rect key="frame" x="190" y="496" width="220" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="119" id="T6q-Wj-bnQ"/>
+                                    <constraint firstAttribute="width" constant="220" id="T6q-Wj-bnQ"/>
                                     <constraint firstAttribute="height" constant="40" id="g8t-6w-Xa2"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
@@ -1014,9 +1017,9 @@
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vwe-Kd-JLe" customClass="HEMActionButton">
-                                <rect key="frame" x="241" y="496" width="119" height="40"/>
+                                <rect key="frame" x="190" y="496" width="220" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="119" id="NCh-0K-sSP"/>
+                                    <constraint firstAttribute="width" constant="220" id="NCh-0K-sSP"/>
                                     <constraint firstAttribute="height" constant="40" id="irU-2z-tSw"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
@@ -1087,10 +1090,10 @@
                                 <rect key="frame" x="62" y="182" width="476" height="237"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-8C-14E" customClass="HEMActionButton">
-                                <rect key="frame" x="240" y="496" width="119" height="40"/>
+                                <rect key="frame" x="190" y="496" width="220" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="sSm-FW-Kol"/>
-                                    <constraint firstAttribute="width" constant="119" id="tse-nm-Y92"/>
+                                    <constraint firstAttribute="width" constant="220" id="tse-nm-Y92"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="Set Location">
@@ -1171,9 +1174,9 @@
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2TQ-o7-Rs6" customClass="HEMActionButton">
-                                <rect key="frame" x="225" y="422" width="150" height="40"/>
+                                <rect key="frame" x="190" y="422" width="220" height="40"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="150" id="SwH-wy-eha"/>
+                                    <constraint firstAttribute="width" constant="220" id="SwH-wy-eha"/>
                                     <constraint firstAttribute="height" constant="40" id="jtb-y3-XeB"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>

@@ -30,6 +30,9 @@ static NSUInteger HEMAlarmListLimit = 8;
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[HelloStyleKit chevronIconLeft] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.addButton setTitleColor:[UIColor colorWithWhite:0.9 alpha:0.25] forState:UIControlStateDisabled];
+    [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^{
+        [self reloadData];
+    }];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -92,7 +95,7 @@ static NSUInteger HEMAlarmListLimit = 8;
     __block SENAlarm* alarm = [self.alarms objectAtIndex:sender.tag];
     BOOL on = [sender isOn];
     alarm.on = on;
-    [HEMAlarmUtils updateAlarmFromPresentingController:self completion:^(BOOL success) {
+    [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
         if (!success) {
             alarm.on = !on;
             sender.on = !on;
@@ -140,7 +143,7 @@ static NSUInteger HEMAlarmListLimit = 8;
         [alarm delete];
         [self reloadData];
         __weak typeof(self) weakSelf = self;
-        [HEMAlarmUtils updateAlarmFromPresentingController:self completion:^(BOOL success) {
+        [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
             typeof(self) strongSelf = weakSelf;
             if (!success) {
                 [alarm save];

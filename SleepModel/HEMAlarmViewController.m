@@ -30,6 +30,7 @@
 @property (nonatomic) CGFloat previousLocationY;
 @property (nonatomic, strong) HEMAlarmCache* alarmCache;
 @property (nonatomic, strong) HEMAlarmCache* originalAlarmCache;
+@property (nonatomic, getter=isUnsavedAlarm) BOOL unsavedAlarm;
 @end
 
 @implementation HEMAlarmViewController
@@ -45,6 +46,7 @@
     if (self.alarm) {
         [self.alarmCache cacheValuesFromAlarm:self.alarm];
         [self.originalAlarmCache cacheValuesFromAlarm:self.alarm];
+        self.unsavedAlarm = ![self.alarm isSaved];
     }
 }
 
@@ -70,6 +72,7 @@
     else if ([segue.identifier isEqualToString:[HEMMainStoryboard alarmRepeatSegueIdentifier]]) {
         HEMAlarmRepeatTableViewController* controller = segue.destinationViewController;
         controller.alarmCache = self.alarmCache;
+        controller.alarm = self.alarm;
     }
 }
 
@@ -145,10 +148,12 @@
 {
     [self updateAlarmFromCache:self.alarmCache];
     __weak typeof(self) weakSelf = self;
-    [HEMAlarmUtils updateAlarmFromPresentingController:self completion:^(BOOL success) {
+    [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
         typeof(self) strongSelf = weakSelf;
         if (success)
             [strongSelf dismissFromView:nil];
+        else if ([self isUnsavedAlarm])
+            [self.alarm delete];
         else
             [strongSelf updateAlarmFromCache:strongSelf.originalAlarmCache];
     }];

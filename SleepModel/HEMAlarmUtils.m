@@ -37,36 +37,67 @@
     }
 }
 
-+ (void)updateAlarmFromPresentingController:(UIViewController*)controller completion:(void (^)(BOOL))completion
++ (void)refreshAlarmsFromPresentingController:(UIViewController*)controller completion:(void (^)())completion
 {
-    UIBarButtonItem* saveButton = controller.navigationItem.rightBarButtonItem;
+    UIBarButtonItem* rightButton = controller.navigationItem.rightBarButtonItem;
+    UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    UIBarButtonItem* loadItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
+    controller.navigationItem.rightBarButtonItem = loadItem;
+    [indicatorView startAnimating];
+    [SENAPIAlarms alarmsWithCompletion:^(NSArray* alarms, NSError* error) {
+        if (error) {
+            [self showError:error
+                  withTitle:NSLocalizedString(@"alarm.load-error.title", nil)
+               onController:controller];
+        } else {
+            [SENAlarm clearSavedAlarms];
+            [alarms makeObjectsPerformSelector:@selector(save)];
+        }
+        [indicatorView stopAnimating];
+        controller.navigationItem.rightBarButtonItem = rightButton;
+        if (completion)
+            completion();
+    }];
+}
+
++ (void)updateAlarmsFromPresentingController:(UIViewController*)controller completion:(void (^)(BOOL))completion
+{
+    UIBarButtonItem* rightButton = controller.navigationItem.rightBarButtonItem;
     UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
     UIBarButtonItem* loadItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
     controller.navigationItem.rightBarButtonItem = loadItem;
     [indicatorView startAnimating];
     [SENAPIAlarms updateAlarms:[SENAlarm savedAlarms] completion:^(id data, NSError* error) {
         [indicatorView stopAnimating];
-        controller.navigationItem.rightBarButtonItem = saveButton;
+        controller.navigationItem.rightBarButtonItem = rightButton;
         if (error) {
-            if (NSClassFromString(@"UIAlertController")) {
-                UIAlertController* alertController = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"alarm.error.title", nil)
-                                                                                         message:error.localizedDescription
-                                                                                  preferredStyle:UIAlertControllerStyleAlert];
-                UIAlertAction* action = [UIAlertAction actionWithTitle:NSLocalizedString(@"actions.ok", nil) style:UIAlertActionStyleDefault handler:NULL];
-                [alertController addAction:action];
-                [controller presentViewController:alertController animated:YES completion:NULL];
-            } else {
-                UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alarm.error.title", nil)
-                                                                    message:error.localizedDescription
-                                                                   delegate:nil
-                                                          cancelButtonTitle:nil
-                                                          otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil];
-                [alertView show];
-            }
+            [self showError:error
+                  withTitle:NSLocalizedString(@"alarm.save-error.title", nil)
+               onController:controller];
         }
         if (controller && completion)
             completion(!error);
     }];
+}
+
++ (void)showError:(NSError*)error withTitle:(NSString*)title onController:(UIViewController*)controller
+{
+    if (NSClassFromString(@"UIAlertController")) {
+        UIAlertController* alertController = [UIAlertController alertControllerWithTitle:title
+                                                                                 message:error.localizedDescription
+                                                                          preferredStyle:UIAlertControllerStyleAlert];
+        UIAlertAction* action = [UIAlertAction actionWithTitle:NSLocalizedString(@"actions.ok", nil) style:UIAlertActionStyleDefault handler:NULL];
+        [alertController addAction:action];
+        [controller presentViewController:alertController animated:YES completion:NULL];
+    }
+    else {
+        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title
+                                                            message:error.localizedDescription
+                                                           delegate:nil
+                                                  cancelButtonTitle:nil
+                                                  otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil];
+        [alertView show];
+    }
 }
 
 @end

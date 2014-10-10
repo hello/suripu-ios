@@ -38,7 +38,6 @@
             <string>Agile-Light</string>
             <string>Agile-Light</string>
             <string>Agile-Light</string>
-            <string>Agile-Light</string>
         </mutableArray>
         <mutableArray key="Agile-LightItalic.otf">
             <string>Agile-LightItalic</string>
@@ -134,41 +133,6 @@
                         <sections>
                             <tableViewSection id="ERX-4N-5Se">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="3UO-Ud-fQP">
-                                        <rect key="frame" x="0.0" y="35" width="320" height="55"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3UO-Ud-fQP" id="bkj-vk-bCt">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rXw-8b-uw7">
-                                                    <rect key="frame" x="531" y="11" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="updateAlarmState:" destination="UUf-ed-d3S" eventType="valueChanged" id="D6z-7n-Bn1"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Smart Alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p13-Hs-VXY">
-                                                    <rect key="frame" x="55" y="16" width="468" height="22"/>
-                                                    <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="18"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmSmartIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="vzR-fK-Pbd">
-                                                    <rect key="frame" x="12" y="16" width="23" height="26"/>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="p13-Hs-VXY" firstAttribute="leading" secondItem="vzR-fK-Pbd" secondAttribute="trailing" constant="20" id="4bR-wX-RsG"/>
-                                                <constraint firstAttribute="centerY" secondItem="vzR-fK-Pbd" secondAttribute="centerY" constant="-1.5" id="Alf-lT-Tsw"/>
-                                                <constraint firstAttribute="centerY" secondItem="rXw-8b-uw7" secondAttribute="centerY" constant="0.5" id="fj9-Qs-z9Q"/>
-                                                <constraint firstAttribute="centerY" secondItem="p13-Hs-VXY" secondAttribute="centerY" constant="0.5" id="hRh-Ak-fKR"/>
-                                                <constraint firstItem="vzR-fK-Pbd" firstAttribute="leading" secondItem="bkj-vk-bCt" secondAttribute="leading" constant="12" id="sXs-gk-GS5"/>
-                                                <constraint firstAttribute="trailing" secondItem="rXw-8b-uw7" secondAttribute="trailing" constant="20" id="wJI-Dl-BpD"/>
-                                                <constraint firstItem="rXw-8b-uw7" firstAttribute="leading" secondItem="p13-Hs-VXY" secondAttribute="trailing" constant="8" id="xqx-fC-MLe"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="kTR-zv-87m">
                                         <rect key="frame" x="0.0" y="90" width="320" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -258,11 +222,22 @@
                             <outlet property="delegate" destination="UUf-ed-d3S" id="J7g-nT-Ac4"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Alarm" id="tQT-e0-oVd"/>
+                    <navigationItem key="navigationItem" title="Alarm" id="tQT-e0-oVd">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="Pol-f9-BlN">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="dismissFromView:" destination="UUf-ed-d3S" id="3Bp-Io-VL3"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" style="done" systemItem="save" id="Rxp-fb-p7J">
+                            <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <action selector="saveAndDismissFromView:" destination="UUf-ed-d3S" id="vgx-cW-hN0"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="alarmChangeInstructionsLabel" destination="zCx-Mw-gYU" id="dZK-0T-nii"/>
-                        <outlet property="alarmEnabledLabel" destination="p13-Hs-VXY" id="TGC-sn-U79"/>
-                        <outlet property="alarmEnabledSwitch" destination="rXw-8b-uw7" id="2Sc-4Z-1CR"/>
                         <outlet property="alarmRepeatLabel" destination="5Fn-yc-usc" id="yhD-Aj-C48"/>
                         <outlet property="alarmSoundLabel" destination="Kjg-sg-8R8" id="coO-Jo-iWG"/>
                         <outlet property="alarmSoundNameLabel" destination="KKO-pE-iRO" id="uMH-vW-Ap9"/>
@@ -279,7 +254,7 @@
                     </connections>
                 </panGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2750.625" y="-9.5070422535211261"/>
+            <point key="canvasLocation" x="3562" y="-10"/>
         </scene>
         <!--Sleep Questions View Controller-->
         <scene sceneID="KIp-Ra-hCy">
@@ -1387,7 +1362,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cod-aB-3Gc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3622.5" y="-363.38028169014081"/>
+            <point key="canvasLocation" x="4434" y="-364"/>
         </scene>
         <!--Sleep Graph Collection View Controller-->
         <scene sceneID="fHt-a1-2UE">
@@ -1687,12 +1662,29 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ucd-KC-NVA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3622.5" y="362.32394366197178"/>
+            <point key="canvasLocation" x="4434" y="362"/>
+        </scene>
+        <!--Settings Navigation Controller-->
+        <scene sceneID="DWr-yB-iBh">
+            <objects>
+                <navigationController storyboardIdentifier="alarmNavController" automaticallyAdjustsScrollViewInsets="NO" id="88V-1f-xf4" customClass="HEMSettingsNavigationController" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="yoJ-RS-Jhy">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="UUf-ed-d3S" kind="relationship" relationship="rootViewController" id="G4Y-Nz-1pa"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZxP-DL-Pj1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2750" y="-10"/>
         </scene>
     </scenes>
     <resources>
         <image name="alarmRepeatIcon.png" width="22" height="22"/>
-        <image name="alarmSmartIcon.png" width="23" height="26"/>
         <image name="alarmSoundIcon.png" width="21" height="23"/>
         <image name="chevronIconRight.png" width="10" height="18"/>
         <image name="questionIcon.png" width="18" height="19"/>

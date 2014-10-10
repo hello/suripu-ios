@@ -2,6 +2,7 @@
 #import <SenseKit/SENAlarm.h>
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMAlarmCache.h"
 
 @interface HEMAlarmRepeatTableViewController ()
 
@@ -46,9 +47,10 @@
     NSUInteger day = [self repeatDayForIndexPath:indexPath];
     cell.textLabel.text = text;
 
-    if ((self.alarm.repeatFlags & day) == day) {
+    if ((self.alarmCache.repeatFlags & day) == day) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    } else {
+    }
+    else {
         cell.accessoryType = UITableViewCellAccessoryNone;
     }
 
@@ -61,12 +63,47 @@
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSUInteger day = [self repeatDayForIndexPath:indexPath];
-    if ((self.alarm.repeatFlags & day) == day) {
-        self.alarm.repeatFlags -= day;
-    } else {
-        self.alarm.repeatFlags |= day;
+    NSUInteger repeatFlags = self.alarmCache.repeatFlags;
+    if ((repeatFlags & day) == day) {
+        repeatFlags -= day;
     }
+    else if ([self dayInUse:day]) {
+        [self showAlertForRepeatRestriction];
+    }
+    else {
+        repeatFlags |= day;
+    }
+    self.alarmCache.repeatFlags = repeatFlags;
     [tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
+}
+
+- (BOOL)dayInUse:(NSUInteger)day
+{
+    NSUInteger daysInUse = 0;
+    for (SENAlarm* alarm in [SENAlarm savedAlarms]) {
+        if ([alarm isEqual:self.alarm])
+            continue;
+        daysInUse |= alarm.repeatFlags;
+    }
+    return (daysInUse & day) == day;
+}
+
+- (void)showAlertForRepeatRestriction
+{
+    if (NSClassFromString(@"UIAlertController")) {
+        UIAlertController* controller = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"alarm.repeat.day-reuse-error.title", nil)
+                                                                            message:NSLocalizedString(@"alarm.repeat.day-reuse-error.message", nil)
+                                                                     preferredStyle:UIAlertControllerStyleAlert];
+        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"actions.ok", nil) style:UIAlertActionStyleDefault handler:NULL]];
+        [self presentViewController:controller animated:YES completion:NULL];
+    }
+    else {
+        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alarm.repeat.day-reuse-error.title", nil)
+                                    message:NSLocalizedString(@"alarm.repeat.day-reuse-error.message", nil)
+                                   delegate:nil
+                          cancelButtonTitle:nil
+                          otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
+    }
 }
 
 @end

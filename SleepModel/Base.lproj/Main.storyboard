@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Alignment constraints to the first baseline" minToolsVersion="6.0"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
         <mutableArray key="Agile-Light.otf">
-            <string>Agile-Light</string>
             <string>Agile-Light</string>
             <string>Agile-Light</string>
             <string>Agile-Light</string>
@@ -133,41 +133,6 @@
                         <sections>
                             <tableViewSection id="ERX-4N-5Se">
                                 <cells>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="3UO-Ud-fQP">
-                                        <rect key="frame" x="0.0" y="35" width="320" height="55"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="3UO-Ud-fQP" id="bkj-vk-bCt">
-                                            <rect key="frame" x="0.0" y="0.0" width="320" height="54"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="rXw-8b-uw7">
-                                                    <rect key="frame" x="531" y="11" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="updateAlarmState:" destination="UUf-ed-d3S" eventType="valueChanged" id="D6z-7n-Bn1"/>
-                                                    </connections>
-                                                </switch>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Smart Alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p13-Hs-VXY">
-                                                    <rect key="frame" x="55" y="16" width="468" height="22"/>
-                                                    <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="18"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmSmartIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="vzR-fK-Pbd">
-                                                    <rect key="frame" x="12" y="16" width="23" height="26"/>
-                                                </imageView>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="p13-Hs-VXY" firstAttribute="leading" secondItem="vzR-fK-Pbd" secondAttribute="trailing" constant="20" id="4bR-wX-RsG"/>
-                                                <constraint firstAttribute="centerY" secondItem="vzR-fK-Pbd" secondAttribute="centerY" constant="-1.5" id="Alf-lT-Tsw"/>
-                                                <constraint firstAttribute="centerY" secondItem="rXw-8b-uw7" secondAttribute="centerY" constant="0.5" id="fj9-Qs-z9Q"/>
-                                                <constraint firstAttribute="centerY" secondItem="p13-Hs-VXY" secondAttribute="centerY" constant="0.5" id="hRh-Ak-fKR"/>
-                                                <constraint firstItem="vzR-fK-Pbd" firstAttribute="leading" secondItem="bkj-vk-bCt" secondAttribute="leading" constant="12" id="sXs-gk-GS5"/>
-                                                <constraint firstAttribute="trailing" secondItem="rXw-8b-uw7" secondAttribute="trailing" constant="20" id="wJI-Dl-BpD"/>
-                                                <constraint firstItem="rXw-8b-uw7" firstAttribute="leading" secondItem="p13-Hs-VXY" secondAttribute="trailing" constant="8" id="xqx-fC-MLe"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                    </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" id="kTR-zv-87m">
                                         <rect key="frame" x="0.0" y="90" width="320" height="55"/>
                                         <autoresizingMask key="autoresizingMask"/>
@@ -273,9 +238,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="alarmChangeInstructionsLabel" destination="zCx-Mw-gYU" id="dZK-0T-nii"/>
-                        <outlet property="alarmEnabledLabel" destination="p13-Hs-VXY" id="TGC-sn-U79"/>
                         <outlet property="alarmRepeatLabel" destination="5Fn-yc-usc" id="yhD-Aj-C48"/>
-                        <outlet property="alarmSmartSwitch" destination="rXw-8b-uw7" id="7VD-k8-yKG"/>
                         <outlet property="alarmSoundLabel" destination="Kjg-sg-8R8" id="coO-Jo-iWG"/>
                         <outlet property="alarmSoundNameLabel" destination="KKO-pE-iRO" id="uMH-vW-Ap9"/>
                         <outlet property="alarmTimeLabel" destination="9Mv-zP-tnC" id="KiR-Xc-NHK"/>
@@ -1722,7 +1685,6 @@
     </scenes>
     <resources>
         <image name="alarmRepeatIcon.png" width="22" height="22"/>
-        <image name="alarmSmartIcon.png" width="23" height="26"/>
         <image name="alarmSoundIcon.png" width="21" height="23"/>
         <image name="chevronIconRight.png" width="10" height="18"/>
         <image name="questionIcon.png" width="18" height="19"/>

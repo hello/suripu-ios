@@ -199,7 +199,7 @@
 
 - (BOOL)tableView:(UITableView*)tableView shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    return (indexPath.row == 1 || indexPath.row == 2) && indexPath.section == 0;
+    return indexPath.section == 0;
 }
 
 #pragma mark - UIGestureRecognizerDelegate

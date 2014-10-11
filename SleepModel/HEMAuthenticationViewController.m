@@ -26,6 +26,12 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 @implementation HEMAuthenticationViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [[[self doneButton] titleLabel] setFont:[UIFont fontWithName:@"Calibre-Medium"
+                                                            size:18.0f]];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[self usernameField] becomeFirstResponder];
@@ -92,7 +98,6 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
         [strongSelf actAfterKeyboardDismissed:^{
             [strongSelf.navigationController dismissViewControllerAnimated:YES completion:NULL];
-            [strongSelf stopActivity];
         }];
         [[strongSelf view] endEditing:NO];
     }];

@@ -92,7 +92,7 @@
 
 - (void)configureAppearance
 {
-    UIFont* navbarTextFont = [UIFont fontWithName:@"Agile-Light" size:18.0f];
+    UIFont* navbarTextFont = [UIFont fontWithName:@"Calibre-Medium" size:18.0f];
     [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init]
                                       forBarPosition:UIBarPositionAny
                                           barMetrics:UIBarMetricsDefault];

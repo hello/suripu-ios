@@ -29,6 +29,12 @@
 
 @implementation HEMSignUpViewController
 
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [[[self doneButton] titleLabel] setFont:[UIFont fontWithName:@"Calibre-Medium"
+                                                            size:18.0f]];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[self nameField] becomeFirstResponder];

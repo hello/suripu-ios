@@ -6,7 +6,6 @@
 #import "HEMAuthenticationViewController.h"
 #import "HEMOnboardingHTTPErrorHandler.h"
 #import "HEMActionButton.h"
-#import "UIViewController+Keyboard.h"
 
 static NSInteger const HEPURLAlertButtonIndexSave = 1;
 static NSInteger const HEPURLAlertButtonIndexReset = 2;
@@ -96,10 +95,9 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
             return;
         }
 
-        [strongSelf actAfterKeyboardDismissed:^{
-            [strongSelf.navigationController dismissViewControllerAnimated:YES completion:NULL];
-        }];
         [[strongSelf view] endEditing:NO];
+        [strongSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
+        
     }];
 }
 

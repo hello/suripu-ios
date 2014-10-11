@@ -13,7 +13,7 @@
 #import "UIImage+ImageEffects.h"
 
 #import "HEMSleepSummarySlideViewController.h"
-#import "HEMSleepGraphCollectionViewController.h"
+#import "HEMSleepGraphViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSlideViewController+Protected.h"
 #import "HEMColorUtils.h"
@@ -39,8 +39,8 @@
 - (id)init {
     NSTimeInterval startTime = -86400; // -(60 * 60 * 24)
     NSDate* startDate = [NSDate dateWithTimeInterval:startTime sinceDate:[NSDate date]];
-    HEMSleepGraphCollectionViewController* controller
-        = (HEMSleepGraphCollectionViewController*)[HEMMainStoryboard instantiateSleepGraphController];
+    HEMSleepGraphViewController* controller
+        = (HEMSleepGraphViewController*)[HEMMainStoryboard instantiateSleepGraphController];
     [controller setDateForNightOfSleep:startDate];
     
     if (self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll

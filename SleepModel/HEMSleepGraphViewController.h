@@ -6,7 +6,13 @@ typedef NS_ENUM(NSUInteger, HEMSleepGraphCollectionViewSection) {
     HEMSleepGraphCollectionViewSegmentSection = 1,
 };
 
-@interface HEMSleepGraphCollectionViewController : UICollectionViewController
+@protocol HEMSleepEventActionDelegate <NSObject>
+
+- (void)didTapEventButton:(UIButton*)sender;
+
+@end
+
+@interface HEMSleepGraphViewController : UIViewController <HEMSleepEventActionDelegate>
 
 /**
  *  The date which is represented by this controller

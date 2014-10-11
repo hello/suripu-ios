@@ -20,7 +20,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
                 <subviews>
-                    <button opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IoS-vS-i2i" customClass="HEMSleepEventButton">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IoS-vS-i2i" customClass="HEMSleepEventButton">
                         <rect key="frame" x="16" y="3" width="24" height="24"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="24" id="9Uu-mh-086"/>

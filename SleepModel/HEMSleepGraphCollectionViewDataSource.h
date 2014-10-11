@@ -46,4 +46,6 @@ extern NSString* const HEMSleepEventTypeFallAsleep;
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath*)indexPath;
 
 - (NSUInteger)numberOfSleepSegments;
+
+- (NSString*)localizedNameForSleepEventType:(NSString*)eventType;
 @end

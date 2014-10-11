@@ -223,8 +223,8 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     [containerView setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.1f]];
     
     NSString* title = section == 0
-        ? NSLocalizedString(@"section.title.last-night", nil)
-        : NSLocalizedString(@"section.title.current-conditions", nil);
+        ? NSLocalizedString(@"today.section.title.last-night", nil)
+        : NSLocalizedString(@"today.section.title.current-conditions", nil);
     
     CGRect labelFrame = {kHEMTodayHeaderInset, 0.0f, tableWidth-(2*kHEMTodayHeaderInset), kHEMTodayHeaderHeight};
     UILabel* headerLabel = [[UILabel alloc] initWithFrame:labelFrame];
@@ -251,7 +251,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
         ? [NSString stringWithFormat:@"%ld", (long)scoreValue]
         : kHEMTodayEmptyData;
     [[cell detailTextLabel] setText:scoreText];
-    [[cell textLabel] setText:NSLocalizedString(@"cell.title.sleep-score", nil)];
+    [[cell textLabel] setText:NSLocalizedString(@"today.cell.title.sleep-score", nil)];
     [[cell imageView] setImage:[UIImage imageNamed:@"sleepScoreIcon"]];
 }
 

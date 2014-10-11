@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0.20
+
+Fixes
+
+* Fix Localized strings for widget
+
 ## 1.0.0.19
 
 New:

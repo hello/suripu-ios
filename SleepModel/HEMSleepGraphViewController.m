@@ -183,6 +183,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 
 - (void)scrollViewDidScroll:(UIScrollView*)scrollView
 {
+    if (self.eventInfoView.alpha == 0)
+        return;
     [UIView animateWithDuration:0.15f animations:^{
         self.eventInfoView.alpha = 0;
     }];

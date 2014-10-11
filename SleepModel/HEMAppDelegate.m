@@ -12,7 +12,6 @@
 #import "HEMAppDelegate.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummarySlideViewController.h"
-#import "HEMSleepGraphCollectionViewController.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMConfidentialityWarningView.h"

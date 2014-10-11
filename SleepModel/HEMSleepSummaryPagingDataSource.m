@@ -1,7 +1,7 @@
 
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HEMMainStoryboard.h"
-#import "HEMSleepGraphCollectionViewController.h"
+#import "HEMSleepGraphViewController.h"
 
 @interface NSDate (HEMEqualityChecker)
 
@@ -15,8 +15,8 @@ static CGFloat const HEMSleepSummaryDayInterval = 60 * 60 * 24;
 #pragma mark - UIPageViewControllerDataSource
 
 - (UIViewController*)controllerAfter:(UIViewController*)viewController {
-    HEMSleepGraphCollectionViewController* sleepVC =
-        (HEMSleepGraphCollectionViewController*)viewController;
+    HEMSleepGraphViewController* sleepVC =
+        (HEMSleepGraphViewController*)viewController;
     NSDate* date = [sleepVC dateForNightOfSleep];
     NSDate* nextDay = [date dateByAddingTimeInterval:HEMSleepSummaryDayInterval];
     if ([nextDay isOnSameDay:[NSDate date]] || [nextDay compare:[NSDate date]] == NSOrderedDescending) {
@@ -27,7 +27,7 @@ static CGFloat const HEMSleepSummaryDayInterval = 60 * 60 * 24;
 }
 
 - (UIViewController*)controllerBefore:(UIViewController*)viewController {
-        return [self sleepSummaryControllerWithTimeIntervalOffset:-60 * 60 * 24 fromReferenceDate:[(HEMSleepGraphCollectionViewController*)viewController dateForNightOfSleep]];
+        return [self sleepSummaryControllerWithTimeIntervalOffset:-60 * 60 * 24 fromReferenceDate:[(HEMSleepGraphViewController*)viewController dateForNightOfSleep]];
 } 
 
 #pragma mark - UIPageViewController
@@ -44,7 +44,7 @@ static CGFloat const HEMSleepSummaryDayInterval = 60 * 60 * 24;
 
 - (UIViewController*)sleepSummaryControllerWithTimeIntervalOffset:(NSTimeInterval)offset fromReferenceDate:(NSDate*)date
 {
-    HEMSleepGraphCollectionViewController* controller = (HEMSleepGraphCollectionViewController*)[HEMMainStoryboard instantiateSleepGraphController];
+    HEMSleepGraphViewController* controller = (HEMSleepGraphViewController*)[HEMMainStoryboard instantiateSleepGraphController];
     NSDate* nextViewControllerDate = [NSDate dateWithTimeInterval:offset sinceDate:date];
     [controller setDateForNightOfSleep:nextViewControllerDate];
     return controller;

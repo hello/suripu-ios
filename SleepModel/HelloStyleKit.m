@@ -160,6 +160,7 @@ static UIImage* _sense = nil;
     UIColor* sleepScoreColor = sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.idealSensorColor);
     CGFloat graphPercentageAngle = sleepScore > 0 ? (sleepScore < 100 ? 360 - sleepScore * 0.01 * 360 : 1) : 0;
     NSString* sleepScoreText = sleepScore > 0 ? (sleepScore <= 100 ? [NSString stringWithFormat: @"%ld", (NSInteger)round(sleepScore)] : @"100") : @"";
+    NSString* localizedSleepScoreDescriptionLabel = sleepScore > 0 ? sleepScoreLabelText : @"";
 
     //// gray oval Drawing
     CGContextSaveGState(context);
@@ -201,7 +202,7 @@ static UIImage* _sense = nil;
     NSMutableParagraphStyle* sleepScoreLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: 75], NSForegroundColorAttributeName: veryDarkGrayColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
+    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Calibre-Thin" size: 75], NSForegroundColorAttributeName: veryDarkGrayColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
 
     [sleepScoreText drawInRect: CGRectOffset(sleepScoreLabelRect, 0, (CGRectGetHeight(sleepScoreLabelRect) - [sleepScoreText boundingRectWithSize: sleepScoreLabelRect.size options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreLabelFontAttributes context: nil].size.height) / 2) withAttributes: sleepScoreLabelFontAttributes];
 
@@ -211,9 +212,9 @@ static UIImage* _sense = nil;
     NSMutableParagraphStyle* sleepScoreTextLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreTextLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreTextLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Helvetica" size: 10], NSForegroundColorAttributeName: veryDarkGrayColor, NSParagraphStyleAttributeName: sleepScoreTextLabelStyle};
+    NSDictionary* sleepScoreTextLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Calibre-Regular" size: 10], NSForegroundColorAttributeName: veryDarkGrayColor, NSParagraphStyleAttributeName: sleepScoreTextLabelStyle};
 
-    [sleepScoreLabelText drawInRect: sleepScoreTextLabelRect withAttributes: sleepScoreTextLabelFontAttributes];
+    [localizedSleepScoreDescriptionLabel drawInRect: sleepScoreTextLabelRect withAttributes: sleepScoreTextLabelFontAttributes];
 }
 
 + (void)drawMiniSleepScoreGraphWithSleepScore: (CGFloat)sleepScore;

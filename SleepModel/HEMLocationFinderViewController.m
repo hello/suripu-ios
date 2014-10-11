@@ -73,19 +73,8 @@
 }
 
 - (void)next {
-    for (UIViewController* viewController in self.navigationController.viewControllers) {
-        if ([viewController isKindOfClass:[HEMSettingsTableViewController class]]) {
-            [self.navigationController popToViewController:viewController animated:YES];
-            return;
-        }
-    }
-    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
-
-    // NOTE: 9/29 jimmy: Per Kevin, we will not show the FYI screen until questions
-    // are flushed out.  We will leave the storyboard segue in place since it likely
-    // will return soon rather than later
-//    UIViewController* questionIntroVC = [HEMOnboardingStoryboard instantiateSleepQuestionIntroViewController];
-//    [[self navigationController] setViewControllers:@[questionIntroVC] animated:YES];
+    UIViewController* nextVC = [HEMOnboardingStoryboard instantiateBluetoothViewController];
+    [[self navigationController] setViewControllers:@[nextVC] animated:YES];
 }
 
 - (void)uploadCollectedData:(BOOL)retry {

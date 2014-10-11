@@ -6,6 +6,10 @@
 
 #import <Availability.h>
 
+// TODO (jimmy): if we start to get more constants that are global across the app, we should
+// move them over to a HEMConstants file and import that here.
+#define kHEMSenseOrderURL @"https://order.hello.is/"
+
 #ifndef __IPHONE_5_0
 #warning "This project uses features only available in iOS SDK 5.0 and later."
 #endif

@@ -13,6 +13,7 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMUserDataCache.h"
+#import "HEMSettingsTableViewController.h"
 
 @interface HEMPillPairViewController()
 
@@ -77,9 +78,13 @@
 }
 
 - (void)next {
-    // prevent user from going back to this screen
-    UIViewController* dataIntroVC = [HEMOnboardingStoryboard instantiateDataIntroViewController];
-    [[self navigationController] setViewControllers:@[dataIntroVC] animated:YES];
+    for (UIViewController* viewController in self.navigationController.viewControllers) {
+        if ([viewController isKindOfClass:[HEMSettingsTableViewController class]]) {
+            [self.navigationController popToViewController:viewController animated:YES];
+            return;
+        }
+    }
+    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)disconnectSenseAndClearCache {

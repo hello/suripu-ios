@@ -6,22 +6,18 @@
 #import "HEMAuthenticationViewController.h"
 #import "HEMOnboardingHTTPErrorHandler.h"
 #import "HEMActionButton.h"
-#import "UIViewController+Keyboard.h"
 
 static NSInteger const HEPURLAlertButtonIndexSave = 1;
 static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 @interface HEMAuthenticationViewController () <UIAlertViewDelegate>
-@property (weak, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (weak, nonatomic) IBOutlet UILabel *passwordLabel;
+
 @property (weak, nonatomic) IBOutlet UITextField* usernameField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
-
-@property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
-@property (weak, nonatomic) IBOutlet HEMActionButton *signInButton;
+@property (weak, nonatomic) IBOutlet UITextField *hiddenField;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *signInWidthConstraint;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 @property (assign, nonatomic) BOOL signingIn;
 
@@ -29,19 +25,25 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 @implementation HEMAuthenticationViewController
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
-    //    self.title = NSLocalizedString(@"authorization.title", nil);
+    [[[self doneButton] titleLabel] setFont:[UIFont fontWithName:@"Calibre-Medium"
+                                                            size:18.0f]];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[self usernameField] becomeFirstResponder];
 }
 
 - (void)showURLUpdateAlertView
 {
-    UIAlertView* URLAlertView = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.set-url.title", nil)
-                                                           message:NSLocalizedString(@"authorization.set-url.message", nil)
-                                                          delegate:self
-                                                 cancelButtonTitle:NSLocalizedString(@"actions.cancel", nil)
-                                                 otherButtonTitles:NSLocalizedString(@"actions.save", nil), NSLocalizedString(@"authorization.set-url.action.reset", nil), nil];
+    UIAlertView* URLAlertView =
+        [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.set-url.title", nil)
+                                   message:NSLocalizedString(@"authorization.set-url.message", nil)
+                                  delegate:self
+                         cancelButtonTitle:NSLocalizedString(@"actions.cancel", nil)
+                         otherButtonTitles:NSLocalizedString(@"actions.save", nil), NSLocalizedString(@"authorization.set-url.action.reset", nil), nil];
     URLAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
     UITextField* URLField = [URLAlertView textFieldAtIndex:0];
     URLField.text = [SENAPIClient baseURL].absoluteString;
@@ -55,18 +57,25 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 }
 
 - (void)enableControls:(BOOL)enable {
+    if (!enable) {
+        [[self hiddenField] becomeFirstResponder];
+    }
     [[self forgotPasswordButton] setEnabled:enable];
     [[self usernameField] setEnabled:enable];
     [[self passwordField] setEnabled:enable];
+    [[self doneButton] setEnabled:enable];
+    if (enable) {
+        [[self usernameField] becomeFirstResponder];
+    }
 }
 
 - (void)showActivity {
-    [[self signInButton] showActivityWithWidthConstraint:[self signInWidthConstraint]];
     [self enableControls:NO];
+    [[self activityIndicator] startAnimating];
 }
 
 - (void)stopActivity {
-    [[self signInButton] stopActivity];
+    [[self activityIndicator] stopAnimating];
     [self enableControls:YES];
 }
 
@@ -77,13 +86,18 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
     [SENAuthorizationService authorizeWithUsername:self.usernameField.text password:self.passwordField.text callback:^(NSError* error) {
         typeof(self) strongSelf = weakSelf;
         if (!strongSelf) return;
+        
         [strongSelf setSigningIn:NO];
-        [strongSelf stopActivity];
+        
         if (error) {
+            [strongSelf stopActivity];
             [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)];
             return;
         }
-        [strongSelf.navigationController dismissViewControllerAnimated:YES completion:NULL];
+
+        [[strongSelf view] endEditing:NO];
+        [strongSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
+        
     }];
 }
 
@@ -102,20 +116,11 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 - (IBAction)setAPIURL:(id)sender
 {
+    // TODO (jimmy): what is this and how do get to it? :P
     [self showURLUpdateAlertView];
 }
 
 #pragma mark - UIAlertViewDelegate
-
-- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
-    NSString* nextText = [[textField text] stringByReplacingCharactersInRange:range withString:string];
-    if ([textField isEqual:[self usernameField]]) {
-        [[self usernameLabel] setHidden:[nextText length] == 0];
-    } else if ([textField isEqual:[self passwordField]]) {
-        [[self passwordLabel] setHidden:[nextText length] == 0];
-    }
-    return YES;
-}
 
 - (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
@@ -140,38 +145,20 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 #pragma mark - UITextFieldDelegate
 
-- (void)textFieldDidBeginEditing:(UITextField*)textField
-{
-    [self scrollToTextField:textField];
-}
-
 - (BOOL)textFieldShouldReturn:(UITextField*)textField
 {
     if ([textField isEqual:self.usernameField]) {
         [self.passwordField becomeFirstResponder];
-        [self scrollToTextField:self.passwordField];
     } else {
-        [self.scrollView setContentOffset:CGPointZero animated:YES];
         [textField resignFirstResponder];
         if ([self validateInputValues]) {
-            __weak typeof(self) weakSelf = self;
-            [self actAfterKeyboardDismissed:^{
-                __strong typeof(weakSelf) strongSelf = self;
-                if (strongSelf && ![strongSelf signingIn]) {
-                    [strongSelf showActivity];
-                    [strongSelf signIn];
-                }
-            }];
+            [self showActivity];
+            [self signIn];
             
         }
     }
 
     return YES;
-}
-
-- (void)scrollToTextField:(UITextField*)textField
-{
-    [self.scrollView setContentOffset:CGPointMake(0, CGRectGetMinY(textField.frame) - CGRectGetMinY(self.usernameField.frame)) animated:YES];
 }
 
 @end

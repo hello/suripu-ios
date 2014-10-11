@@ -53,7 +53,6 @@
 		8A5402AD19AFA52B00FC6085 /* playButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A5402AB19AFA52B00FC6085 /* playButtonIcon.png */; };
 		8A5402AE19AFA52B00FC6085 /* playButtonIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A5402AC19AFA52B00FC6085 /* playButtonIcon@2x.png */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
-		8A660120199E9C5B007E6167 /* HEMUserDataIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66011F199E9C5B007E6167 /* HEMUserDataIntroViewController.m */; };
 		8A660123199E9CF9007E6167 /* HEMUserDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A660122199E9CF9007E6167 /* HEMUserDataCache.m */; };
 		8A660126199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A660125199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m */; };
 		8A66013B199EBF87007E6167 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8A660139199EBF87007E6167 /* README.md */; };
@@ -177,7 +176,6 @@
 		BF5E444C19AD414500278A2F /* doubleArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5E444A19AD414500278A2F /* doubleArrow@2x.png */; };
 		BF5E444F19AD494500278A2F /* phoneWithEmoticons.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5E444D19AD494500278A2F /* phoneWithEmoticons.png */; };
 		BF5E445019AD494500278A2F /* phoneWithEmoticons@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5E444E19AD494500278A2F /* phoneWithEmoticons@2x.png */; };
-		BF5E445319AD4B3900278A2F /* HEMSleepQuestionFYIViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5E445219AD4B3900278A2F /* HEMSleepQuestionFYIViewController.m */; };
 		BF781E3119DC716F00B68EBC /* HEMUnitPreferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3019DC716F00B68EBC /* HEMUnitPreferenceViewController.m */; };
 		BF781E3519DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3419DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.m */; };
 		BF781E3C19DCE00400B68EBC /* HEMDeviceCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3B19DCE00400B68EBC /* HEMDeviceCenter.m */; };
@@ -221,6 +219,12 @@
 		BFB93C7919CB7F89005067D0 /* HEMMathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB93C7819CB7F89005067D0 /* HEMMathUtil.m */; };
 		BFC3AA0719C2655F0055D308 /* HEMInfoAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3AA0619C2655F0055D308 /* HEMInfoAlertView.m */; };
 		BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3AA0F19C27A610055D308 /* HEMSleepQuestionsViewController.m */; };
+		BFC8214D19E7402500E09D5D /* onboarding_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8214A19E7402500E09D5D /* onboarding_bg.png */; };
+		BFC8214E19E7402500E09D5D /* onboarding_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8214B19E7402500E09D5D /* onboarding_bg@2x.png */; };
+		BFC8214F19E7402500E09D5D /* onboarding_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8214C19E7402500E09D5D /* onboarding_bg@3x.png */; };
+		BFC8215319E7441200E09D5D /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215019E7441200E09D5D /* play.png */; };
+		BFC8215419E7441200E09D5D /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215119E7441200E09D5D /* play@2x.png */; };
+		BFC8215519E7441200E09D5D /* play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215219E7441200E09D5D /* play@3x.png */; };
 		BFD37FBC19DB73F000D89363 /* HEMNoPillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD37FBB19DB73F000D89363 /* HEMNoPillViewController.m */; };
 		BFD5643D19A3F31B002E461E /* HEMSensePairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */; };
 		BFDCC7BA19D9C741007A922B /* sense.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B819D9C741007A922B /* sense.png */; };
@@ -346,8 +350,6 @@
 		8A5402AC19AFA52B00FC6085 /* playButtonIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "playButtonIcon@2x.png"; path = "images/playButtonIcon@2x.png"; sourceTree = "<group>"; };
 		8A59F631198C16050005B000 /* HEMSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSignUpViewController.h; sourceTree = "<group>"; };
 		8A59F632198C16050005B000 /* HEMSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignUpViewController.m; sourceTree = "<group>"; };
-		8A66011E199E9C5B007E6167 /* HEMUserDataIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUserDataIntroViewController.h; sourceTree = "<group>"; };
-		8A66011F199E9C5B007E6167 /* HEMUserDataIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUserDataIntroViewController.m; sourceTree = "<group>"; };
 		8A660121199E9CF9007E6167 /* HEMUserDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUserDataCache.h; sourceTree = "<group>"; };
 		8A660122199E9CF9007E6167 /* HEMUserDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUserDataCache.m; sourceTree = "<group>"; };
 		8A660124199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingHTTPErrorHandler.h; sourceTree = "<group>"; };
@@ -513,8 +515,6 @@
 		BF5E444A19AD414500278A2F /* doubleArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "doubleArrow@2x.png"; path = "images/doubleArrow@2x.png"; sourceTree = "<group>"; };
 		BF5E444D19AD494500278A2F /* phoneWithEmoticons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = phoneWithEmoticons.png; path = images/phoneWithEmoticons.png; sourceTree = "<group>"; };
 		BF5E444E19AD494500278A2F /* phoneWithEmoticons@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "phoneWithEmoticons@2x.png"; path = "images/phoneWithEmoticons@2x.png"; sourceTree = "<group>"; };
-		BF5E445119AD4B3900278A2F /* HEMSleepQuestionFYIViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepQuestionFYIViewController.h; sourceTree = "<group>"; };
-		BF5E445219AD4B3900278A2F /* HEMSleepQuestionFYIViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepQuestionFYIViewController.m; sourceTree = "<group>"; };
 		BF781E2F19DC716F00B68EBC /* HEMUnitPreferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUnitPreferenceViewController.h; sourceTree = "<group>"; };
 		BF781E3019DC716F00B68EBC /* HEMUnitPreferenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUnitPreferenceViewController.m; sourceTree = "<group>"; };
 		BF781E3319DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDeviceInfoTableViewCell.h; sourceTree = "<group>"; };
@@ -583,6 +583,12 @@
 		BFC3AA0619C2655F0055D308 /* HEMInfoAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInfoAlertView.m; sourceTree = "<group>"; };
 		BFC3AA0E19C27A610055D308 /* HEMSleepQuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepQuestionsViewController.h; sourceTree = "<group>"; };
 		BFC3AA0F19C27A610055D308 /* HEMSleepQuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepQuestionsViewController.m; sourceTree = "<group>"; };
+		BFC8214A19E7402500E09D5D /* onboarding_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = onboarding_bg.png; path = images/onboarding_bg.png; sourceTree = "<group>"; };
+		BFC8214B19E7402500E09D5D /* onboarding_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding_bg@2x.png"; path = "images/onboarding_bg@2x.png"; sourceTree = "<group>"; };
+		BFC8214C19E7402500E09D5D /* onboarding_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding_bg@3x.png"; path = "images/onboarding_bg@3x.png"; sourceTree = "<group>"; };
+		BFC8215019E7441200E09D5D /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = images/play.png; sourceTree = "<group>"; };
+		BFC8215119E7441200E09D5D /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@2x.png"; path = "images/play@2x.png"; sourceTree = "<group>"; };
+		BFC8215219E7441200E09D5D /* play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@3x.png"; path = "images/play@3x.png"; sourceTree = "<group>"; };
 		BFCD7E9B19D4D9C1004AE99D /* HEMSettingsTheme.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMSettingsTheme.h; sourceTree = "<group>"; };
 		BFD37FBA19DB73F000D89363 /* HEMNoPillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNoPillViewController.h; sourceTree = "<group>"; };
 		BFD37FBB19DB73F000D89363 /* HEMNoPillViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNoPillViewController.m; sourceTree = "<group>"; };
@@ -791,16 +797,12 @@
 				8AB33FE5199D3F710046188F /* HEMLocationFinderViewController.m */,
 				8A59F631198C16050005B000 /* HEMSignUpViewController.h */,
 				8A59F632198C16050005B000 /* HEMSignUpViewController.m */,
-				8A66011E199E9C5B007E6167 /* HEMUserDataIntroViewController.h */,
-				8A66011F199E9C5B007E6167 /* HEMUserDataIntroViewController.m */,
 				8A66FC9A199D308B00922ED5 /* HEMWeightPickerViewController.h */,
 				8A66FC9B199D308B00922ED5 /* HEMWeightPickerViewController.m */,
 				BFD5643B19A3F31B002E461E /* HEMSensePairViewController.h */,
 				BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */,
 				BFACC71819A4282A00FC77EE /* HEMWifiViewController.h */,
 				BFACC71919A4282A00FC77EE /* HEMWifiViewController.m */,
-				BF5E445119AD4B3900278A2F /* HEMSleepQuestionFYIViewController.h */,
-				BF5E445219AD4B3900278A2F /* HEMSleepQuestionFYIViewController.m */,
 				BF9C87D619B6A199003188D4 /* HEMPillPairViewController.h */,
 				BF9C87D719B6A199003188D4 /* HEMPillPairViewController.m */,
 			);
@@ -810,6 +812,12 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BFC8215019E7441200E09D5D /* play.png */,
+				BFC8215119E7441200E09D5D /* play@2x.png */,
+				BFC8215219E7441200E09D5D /* play@3x.png */,
+				BFC8214A19E7402500E09D5D /* onboarding_bg.png */,
+				BFC8214B19E7402500E09D5D /* onboarding_bg@2x.png */,
+				BFC8214C19E7402500E09D5D /* onboarding_bg@3x.png */,
 				BFDCC7B819D9C741007A922B /* sense.png */,
 				BFDCC7B919D9C741007A922B /* sense@2x.png */,
 				BF9C87D219B6A001003188D4 /* sleep_pill.png */,
@@ -1522,6 +1530,7 @@
 				8AAEECFC19A5225F006517C4 /* Agile-BlackItalic.otf in Resources */,
 				BFDCC7BA19D9C741007A922B /* sense.png in Resources */,
 				8A1E723819D62C26007475D3 /* alarmSoundIcon.png in Resources */,
+				BFC8215419E7441200E09D5D /* play@2x.png in Resources */,
 				8AAEED0319A5225F006517C4 /* Agile-Extralight.otf in Resources */,
 				8AC4A0371989C36200C2BD63 /* humidityIcon.png in Resources */,
 				8A1E723519D62C26007475D3 /* alarmRepeatIcon@2x.png in Resources */,
@@ -1538,6 +1547,7 @@
 				BF3D2E4D19C37A62001DEEBA /* downArrow@2x.png in Resources */,
 				BFB0FBF919D4C3BD0056FFEC /* alarmsIcon@2x.png in Resources */,
 				8A4B3D50199308BB00856BDE /* wifiLogoImage.png in Resources */,
+				BFC8215519E7441200E09D5D /* play@3x.png in Resources */,
 				8AAEED0919A5225F006517C4 /* Agile-Light.otf in Resources */,
 				8A9BD8EA19DF4A0F00B1E57E /* temperatureEventIcon@2x.png in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
@@ -1576,6 +1586,7 @@
 				8A9BD8B719DDD02100B1E57E /* Calibre-BlackItalic.otf in Resources */,
 				BF5E445019AD494500278A2F /* phoneWithEmoticons@2x.png in Resources */,
 				8A9BD8E619DF4A0F00B1E57E /* phoneEventIcon@2x.png in Resources */,
+				BFC8214E19E7402500E09D5D /* onboarding_bg@2x.png in Resources */,
 				BF5E444C19AD414500278A2F /* doubleArrow@2x.png in Resources */,
 				BF9C87D519B6A001003188D4 /* sleep_pill@2x.png in Resources */,
 				8AC4A04A1989D47000C2BD63 /* chevronIconLeft@2x.png in Resources */,
@@ -1594,6 +1605,8 @@
 				8A033870197DD89C00BE8327 /* Onboarding.storyboard in Resources */,
 				8A1E723419D62C26007475D3 /* alarmRepeatIcon.png in Resources */,
 				BF5E444F19AD494500278A2F /* phoneWithEmoticons.png in Resources */,
+				BFC8214D19E7402500E09D5D /* onboarding_bg.png in Resources */,
+				BFC8214F19E7402500E09D5D /* onboarding_bg@3x.png in Resources */,
 				8AAEED0119A5225F006517C4 /* Agile-Extrabold.otf in Resources */,
 				8A4B3D4E199308BB00856BDE /* bluetoothLogoImage.png in Resources */,
 				8A9BD8BB19DDD02100B1E57E /* Calibre-LightItalic.otf in Resources */,
@@ -1624,6 +1637,7 @@
 				8A9BD8B919DDD02100B1E57E /* Calibre-BoldItalic.otf in Resources */,
 				BF3D2E4C19C37A62001DEEBA /* downArrow.png in Resources */,
 				8A9BD8C019DDD02100B1E57E /* Calibre-Semibold.otf in Resources */,
+				BFC8215319E7441200E09D5D /* play.png in Resources */,
 				8AAEECFB19A5225F006517C4 /* Agile-Black.otf in Resources */,
 				8A9BD8CC19DF160F00B1E57E /* particulateGrayIcon@3x.png in Resources */,
 				8A9BD8BF19DDD02100B1E57E /* Calibre-RegularItalic.otf in Resources */,
@@ -1748,7 +1762,6 @@
 				8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */,
 				6003F59E195388D20070C39A /* HEMAppDelegate.m in Sources */,
 				8AB2684A19CCFF9200017818 /* HEMAlarmRepeatTableViewController.m in Sources */,
-				8A660120199E9C5B007E6167 /* HEMUserDataIntroViewController.m in Sources */,
 				8A9BD8D019DF28F400B1E57E /* HEMPaddedRoundedLabel.m in Sources */,
 				BFAE0B1119AE3B790021EC0D /* HEMSlideViewController.m in Sources */,
 				8AB2684719CCFF8800017818 /* HEMAlarmUtils.m in Sources */,
@@ -1756,7 +1769,6 @@
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,
 				8A66FC82199BE94100922ED5 /* HEMColoredRoundedLabel.m in Sources */,
 				8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */,
-				BF5E445319AD4B3900278A2F /* HEMSleepQuestionFYIViewController.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
 				BFACC71A19A4282A00FC77EE /* HEMWifiViewController.m in Sources */,
 				BFD37FBC19DB73F000D89363 /* HEMNoPillViewController.m in Sources */,

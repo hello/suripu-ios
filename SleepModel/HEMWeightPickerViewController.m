@@ -69,7 +69,7 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
         [weightLabel setBackgroundColor:[[self view] backgroundColor]];
         [weightLabel setTextAlignment:NSTextAlignmentCenter];
         [weightLabel setFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:18.0f]];
-        [weightLabel setTextColor:[HelloStyleKit mediumBlueColor]];
+        [weightLabel setTextColor:[HelloStyleKit onboardingBlueColor]];
         [weightLabel setClipsToBounds:NO];
     } else {
         weightLabel = (UILabel*)view;

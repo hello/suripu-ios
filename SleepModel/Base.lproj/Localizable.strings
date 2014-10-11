@@ -6,6 +6,10 @@
 "loading" = "Loading...";
 "bluetooth.off-message" = "Bluetooth is off.";
 
+// welcome
+"welcome.title.meet-sense" = "Meet Sense.";
+"welcome.title.get-started" = "Let's get started.";
+
 // sign up
 "sign-up.title" = "Sign Up";
 "sign-up.failed.title" = "Sign Up Failed";

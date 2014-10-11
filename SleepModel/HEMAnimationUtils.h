@@ -20,4 +20,21 @@
  */
 + (CALayer*)animateActivityAround:(UIView*)view;
 
+/**
+ * Convenience method to wrap a group of animation in a transaction so that a final
+ * completion block can be called and animations appear more "in sync"
+ *
+ * @param animation:          the block containing animations.  Be sure to use
+ *                            UIViewAnimationOptionOverrideInheritedCurve to synchronize
+ *                            on the timing function across multiple animation blocks
+ *
+ * @param completion:         the block to call when all animations are complete
+ *
+ * @param timingFunctionName: the native function name to use.  
+ *                            ex: kCAMediaTimingFunctionEaseOut
+ */
++ (void)transactAnimation:(void(^)(void))animation
+               completion:(void(^)(void))completion
+                   timing:(NSString*)timingFunctionName;
+
 @end

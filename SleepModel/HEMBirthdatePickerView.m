@@ -158,7 +158,7 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
-    CGContextSetStrokeColorWithColor(context, [[HelloStyleKit mediumBlueColor] CGColor]);
+    CGContextSetStrokeColorWithColor(context, [[HelloStyleKit onboardingBlueColor] CGColor]);
     CGContextSetLineWidth(context, lineWidth);
     
     CGFloat padding = 8.0f;

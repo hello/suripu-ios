@@ -58,7 +58,7 @@ static CGFloat const kHEMValueSliderValueCellHeight = 75.0f;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
-    CGContextSetStrokeColorWithColor(context, [[HelloStyleKit mediumBlueColor] CGColor]);
+    CGContextSetStrokeColorWithColor(context, [[HelloStyleKit onboardingBlueColor] CGColor]);
     CGContextSetLineWidth(context, lineWidth);
     
     // add a line at the middle of the view

@@ -41,4 +41,23 @@ static CGFloat const kHEMAnimationActivityDuration = 3.0f;
     return shapeLayer;
 }
 
++ (void)transactAnimation:(void(^)(void))animation
+               completion:(void(^)(void))completion
+                   timing:(NSString*)timingFunctionName {
+    
+    CAMediaTimingFunction* function =
+    [CAMediaTimingFunction functionWithName:timingFunctionName];
+    
+    [CATransaction begin];
+    [CATransaction setAnimationTimingFunction:function];
+    [CATransaction setCompletionBlock:^{
+        if (completion) completion ();
+    }];
+    
+    animation();
+    
+    [CATransaction commit];
+    
+}
+
 @end

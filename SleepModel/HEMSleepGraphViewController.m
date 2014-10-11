@@ -47,7 +47,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 {
     [super viewDidAppear:animated];
     self.panePanGestureRecognizer.delegate = self;
-    [self presentEventInfoView];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

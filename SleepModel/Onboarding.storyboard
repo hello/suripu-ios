@@ -93,12 +93,9 @@
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="Fcs-EL-Ys6" secondAttribute="trailing" constant="18" id="1lj-DU-unN"/>
                             <constraint firstAttribute="centerX" secondItem="g5p-rj-MOq" secondAttribute="centerX" id="78c-FY-PWd"/>
-                            <constraint firstAttribute="centerX" secondItem="Fcs-EL-Ys6" secondAttribute="centerX" id="7Xm-5A-i43"/>
                             <constraint firstItem="Fcs-EL-Ys6" firstAttribute="leading" secondItem="1eB-lz-NfX" secondAttribute="leadingMargin" constant="18" id="CEv-PN-Iv5"/>
                             <constraint firstItem="gMo-0B-UJM" firstAttribute="leading" secondItem="1eB-lz-NfX" secondAttribute="leadingMargin" constant="18" id="F93-3n-MLa"/>
                             <constraint firstItem="Fcs-EL-Ys6" firstAttribute="top" secondItem="Hyi-t4-E2t" secondAttribute="bottom" constant="8" id="JxO-AX-IeG"/>
-                            <constraint firstAttribute="centerX" secondItem="gMo-0B-UJM" secondAttribute="centerX" id="K5S-bE-n5G"/>
-                            <constraint firstAttribute="centerX" secondItem="hPf-UR-a80" secondAttribute="centerX" id="K8r-9F-G5V"/>
                             <constraint firstItem="hPf-UR-a80" firstAttribute="leading" secondItem="1eB-lz-NfX" secondAttribute="leadingMargin" constant="18" id="NIO-kk-XiV"/>
                             <constraint firstItem="hPf-UR-a80" firstAttribute="bottom" secondItem="gMo-0B-UJM" secondAttribute="bottom" constant="55" id="NcR-bV-1We"/>
                             <constraint firstAttribute="centerX" secondItem="Lnm-XS-wFM" secondAttribute="centerX" id="OYM-AQ-kQG"/>

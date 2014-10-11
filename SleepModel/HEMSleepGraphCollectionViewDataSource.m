@@ -21,6 +21,8 @@ NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
 NSString* const HEMSleepEventTypeLight = @"LIGHT";
 NSString* const HEMSleepEventTypeMotion = @"MOTION";
 NSString* const HEMSleepEventTypeNoise = @"NOISE";
+NSString* const HEMSleepEventTypeSunrise = @"SUNRISE";
+NSString* const HEMSleepEventTypeSunset = @"SUNSET";
 NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
 
 @interface HEMSleepGraphCollectionViewDataSource ()
@@ -234,19 +236,25 @@ static NSString* const sensorTypeParticulates = @"particulates";
 - (UIImage*)imageForEventType:(NSString*)eventType
 {
     if ([eventType isEqualToString:HEMSleepEventTypeWakeUp]) {
-        return [UIImage imageNamed:@"wakeUpEventIcon"];
+        return [UIImage imageNamed:@"wakeup"];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeFallAsleep]) {
-        return [UIImage imageNamed:@"fellAsleepEventIcon"];
+        return [UIImage imageNamed:@"asleep"];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeLight]) {
-        return [UIImage imageNamed:@"lightEventIcon"];
+        return [UIImage imageNamed:@"light-medium"];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeNoise]) {
-        return [UIImage imageNamed:@"soundEventIcon"];
+        return [UIImage imageNamed:@"sound-medium"];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeMotion]) {
-        return [UIImage imageNamed:@"motionEventIcon"];
+        return [UIImage imageNamed:@"movement-bad"];
+    }
+    else if ([eventType isEqualToString:HEMSleepEventTypeSunrise]) {
+        return [UIImage imageNamed:@"sunrise"];
+    }
+    else if ([eventType isEqualToString:HEMSleepEventTypeSunset]) {
+        return [UIImage imageNamed:@"sunset"];
     }
     return nil;
 }

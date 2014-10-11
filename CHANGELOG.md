@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.0.19
+
+New:
+
+* Sense Today Widget
+* Paired devices show Last Seen from server
+* Unpair your Sleep Pill (if you have access to your Sense)
+* Updated, but still in progress, onboarding flow
+* Updated Timeline
+* Alarm UI updates and also persists to server
+
+Fixes:
+
+* Alarm crasher
+* Layout fixes in various screens
+
 ## 1.0.0.18
 
 New:

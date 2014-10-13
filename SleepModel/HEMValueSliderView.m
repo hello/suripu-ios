@@ -39,6 +39,8 @@ static CGFloat const kHEMValueSliderValueCellHeight = 75.0f;
 
 - (void)setup {
     UITableView* tv = [[UITableView alloc] initWithFrame:[self bounds]];
+    [tv setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [tv setTranslatesAutoresizingMaskIntoConstraints:YES];
     [tv setDelegate:self];
     [tv setDataSource:self];
     [tv setBackgroundColor:[UIColor clearColor]];

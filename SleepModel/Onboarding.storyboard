@@ -979,7 +979,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="HeH-0k-zJV"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="22"/>
                                 <color key="textColor" red="0.25882352939999997" green="0.25882352939999997" blue="0.25882352939999997" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1053,11 +1053,9 @@
                             <constraint firstAttribute="centerX" secondItem="E3B-WU-9Bv" secondAttribute="centerX" constant="0.5" id="Q21-uM-ocL"/>
                             <constraint firstAttribute="centerX" secondItem="vwe-Kd-JLe" secondAttribute="centerX" constant="-0.5" id="Sgj-ND-RQT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3jl-2r-2nX" secondAttribute="trailing" constant="18" id="WZF-fT-L9P"/>
-                            <constraint firstAttribute="centerX" secondItem="3jl-2r-2nX" secondAttribute="centerX" id="baP-4C-XdO"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Vca-9S-Db1" secondAttribute="trailing" constant="18" id="dak-hV-Cdy"/>
                             <constraint firstAttribute="centerY" secondItem="7YJ-z6-26E" secondAttribute="centerY" constant="-50" id="dkv-NH-6gk"/>
                             <constraint firstAttribute="trailingMargin" secondItem="7YJ-z6-26E" secondAttribute="trailing" constant="18" id="mFR-1W-y4M"/>
-                            <constraint firstAttribute="centerX" secondItem="Vca-9S-Db1" secondAttribute="centerX" id="mgL-tu-5FK"/>
                             <constraint firstItem="3jl-2r-2nX" firstAttribute="leading" secondItem="DnN-fi-uxz" secondAttribute="leadingMargin" constant="18" id="mzs-nk-dH1"/>
                             <constraint firstItem="Vca-9S-Db1" firstAttribute="top" secondItem="y9t-ip-NMT" secondAttribute="bottom" constant="8" id="qgE-fQ-1wA"/>
                             <constraint firstItem="Vca-9S-Db1" firstAttribute="bottom" secondItem="3jl-2r-2nX" secondAttribute="bottom" constant="-30" id="qzG-qJ-INU"/>

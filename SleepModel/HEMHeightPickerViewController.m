@@ -25,6 +25,7 @@ static NSInteger HEMMaxHeightInFeet = 9;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[super navigationItem] setHidesBackButton:YES];
     [self setNumberOfRows:HEMMaxHeightInFeet+1]; // include 0
     [[self heightSliderView] reload];
     

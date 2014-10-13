@@ -3,7 +3,8 @@
 "confidentiality-warning.format" = "CONFIDENTIAL - Hello Inc (%@)";
 
 "empty-data" = "--";
-"loading" = "Loading...";
+
+// bluetooth messages
 "bluetooth.off-message" = "Bluetooth is off.";
 
 // welcome
@@ -217,6 +218,11 @@
 "actions.yes" = "YES";
 "status.success" = "Done";
 
+// actitivity messages
+"activity.thank" = "Thank";
+"activity.you" = "You.";
+"activity.loading" = "Loading...";
+
 // questions
 "questions.failed.title" = "Could Not Submit Answer";
 "questions.error.unexpected" = "Whoops!  Probably our fault.  Skip the question for now.  We'll ask you again another time";
@@ -240,7 +246,6 @@
 "notifications.actions.infrequently" = "Infrequently";
 
 // Today strings
-
 // sections
 "today.section.title.last-night" = "Last night";
 "today.section.title.current-conditions" = "Current Conditions";

@@ -37,6 +37,7 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self navigationItem] setHidesBackButton:YES];
 }
 
 - (void)adjustConstraintsForIPhone4 {

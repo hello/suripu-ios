@@ -28,6 +28,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self navigationItem] setHidesBackButton:YES];
     [[self titleLabel] setAccessibilityLabel:NSLocalizedString(@"user.info.accessibility.birthdate-title", nil)];
     
     if ([self delegate] != nil) {

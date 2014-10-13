@@ -28,6 +28,7 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self navigationItem] setHidesBackButton:YES];
     
     if ([self delegate] != nil) {
         NSString* title = NSLocalizedString(@"status.success", nil);

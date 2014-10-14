@@ -97,7 +97,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
             UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
             if ([cell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
                 HEMSleepEventCollectionViewCell* eventCell = (HEMSleepEventCollectionViewCell*)cell;
-                [eventCell.eventTypeButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+                if (CGAffineTransformEqualToTransform(CGAffineTransformIdentity, eventCell.eventTypeButton.transform))
+                    [eventCell.eventTypeButton sendActionsForControlEvents:UIControlEventTouchUpInside];
                 break;
             }
         }

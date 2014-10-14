@@ -208,7 +208,7 @@ static UIImage* _sense = nil;
 
 
     //// sleep score text label Drawing
-    CGRect sleepScoreTextLabelRect = CGRectMake(0, 97, 123, 10);
+    CGRect sleepScoreTextLabelRect = CGRectMake(0, 93, 123, 10);
     NSMutableParagraphStyle* sleepScoreTextLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreTextLabelStyle.alignment = NSTextAlignmentCenter;
 

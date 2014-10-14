@@ -6,9 +6,9 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SystemConfiguration/CaptiveNetwork.h>
-#import "HEMWifiCenter.h"
+#import "HEMWifiUtils.h"
 
-@implementation HEMWifiCenter
+@implementation HEMWifiUtils
 
 + (NSDictionary*)connectedWifiInfo {
     CFArrayRef interfacesRef = CNCopySupportedInterfaces();

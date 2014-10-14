@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface HEMWifiCenter : NSObject
+@interface HEMWifiUtils : NSObject
 
 /**
  * Obtain information, mainly the SSID, of the currently connected

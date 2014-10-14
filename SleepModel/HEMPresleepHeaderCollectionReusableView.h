@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HEMPreSleepCollectionViewCell : UICollectionViewCell
+@interface HEMPresleepHeaderCollectionReusableView : UICollectionReusableView
 
 @end

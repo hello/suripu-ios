@@ -8,6 +8,8 @@
 
 #import "HEMStartSetupViewController.h"
 #import "HEMActionButton.h"
+#import "HEMBluetoothUtils.h"
+#import "HEMOnboardingStoryboard.h"
 
 @interface HEMStartSetupViewController ()
 
@@ -18,6 +20,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *helpButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *subtitleHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *onePillWidthConstraint;
+
+@property (assign, nonatomic) BOOL bluetoothOn;
 
 @end
 
@@ -28,20 +33,24 @@
     [[self navigationItem] setHidesBackButton:YES];
 }
 
-- (void)updateViewConstraints {
-    [super updateViewConstraints];
-    
-    CGSize constraint = CGSizeZero;
-    constraint.width = CGRectGetWidth([[self subtitleLabel] bounds]);
-    constraint.height = MAXFLOAT;
-    CGSize textSize = [[self subtitleLabel] sizeThatFits:constraint];
-    DLog(@"text height %f", textSize.height);
-}
-
 #pragma mark - Actions
 
 - (IBAction)setupNewSense:(id)sender {
-    DLog(@"new sense");
+    if (![HEMBluetoothUtils stateAvailable]) {
+        [[self onePillButton] showActivityWithWidthConstraint:[self onePillWidthConstraint]];
+        [self performSelector:@selector(setupNewSense:)
+                   withObject:sender
+                   afterDelay:0.1f];
+        return;
+    }
+    
+    [[self onePillButton] stopActivity];
+    
+    NSString* segueId
+        = ![HEMBluetoothUtils isBluetoothOn]
+        ? [HEMOnboardingStoryboard needBluetoothSegueIdentifier]
+        : [HEMOnboardingStoryboard senseSetupSegueIdentifier];
+    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 - (IBAction)help:(id)sender {

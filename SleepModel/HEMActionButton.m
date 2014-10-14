@@ -34,7 +34,7 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
     // TODO (jimmy): we should animate a border around the circle instead, similar to the sleep number view
     if ([self activityView] == nil) {
         [self setActivityView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
-        [[self activityView] hidesWhenStopped];
+        [[self activityView] setHidesWhenStopped:YES];
     }
     // re-center it
     [[self activityView] setCenter:CGPointMake(CGRectGetWidth([self bounds])/2, CGRectGetHeight([self bounds])/2)];
@@ -124,7 +124,7 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
                      }
                      completion:^(BOOL finished) {
                          [self setShowingActivity:NO];
-                         [[self activityView] setHidden:YES];
+                         [[self activityView] stopAnimating];
                          [self setTitle:[self originalTitle] forState:UIControlStateNormal];
                          [self setTitle:[self originalTitle] forState:UIControlStateDisabled];
                          [self setEnabled:YES];

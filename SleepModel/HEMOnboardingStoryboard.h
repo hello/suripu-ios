@@ -19,6 +19,9 @@
 +(NSString *)locationSegueIdentifier;
 +(NSString *)senseSetupSegueIdentifier;
 +(NSString *)wifiSegueIdentifier;
++(NSString *)needBluetoothSegueIdentifier;
++(NSString *)setupOnePillSegueIdentifier;
++(NSString *)pillNeedBluetoothSegueIdentifier;
 
 /** View Controllers */
 +(UIViewController *)instantiateWelcomeViewController;

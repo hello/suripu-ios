@@ -13,8 +13,11 @@ static NSString *const _HEMgender = @"gender";
 static NSString *const _HEMheight = @"height";
 static NSString *const _HEMlocation = @"location";
 static NSString *const _HEMmoreInfo = @"moreInfo";
+static NSString *const _HEMneedBluetooth = @"needBluetooth";
 static NSString *const _HEMpill = @"pill";
+static NSString *const _HEMpillNeedBluetooth = @"pillNeedBluetooth";
 static NSString *const _HEMsenseSetup = @"senseSetup";
+static NSString *const _HEMsetupOnePill = @"setupOnePill";
 static NSString *const _HEMsignUpViewController = @"signUpViewController";
 static NSString *const _HEMweight = @"weight";
 static NSString *const _HEMwelcome = @"welcome";
@@ -36,6 +39,9 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)locationSegueIdentifier { return _HEMlocation; }
 +(NSString *)senseSetupSegueIdentifier { return _HEMsenseSetup; }
 +(NSString *)wifiSegueIdentifier { return _HEMwifi; }
++(NSString *)needBluetoothSegueIdentifier { return _HEMneedBluetooth; }
++(NSString *)setupOnePillSegueIdentifier { return _HEMsetupOnePill; }
++(NSString *)pillNeedBluetoothSegueIdentifier { return _HEMpillNeedBluetooth; }
 
 /** View Controllers */
 +(UIViewController *)instantiateWelcomeViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwelcome]; }

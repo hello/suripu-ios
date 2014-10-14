@@ -26,6 +26,8 @@
 @implementation HEMSleepGraphViewController
 
 static CGFloat const HEMSleepSummaryCellHeight = 300.f;
+static CGFloat const HEMPresleepHeaderCellHeight = 84.f;
+static CGFloat const HEMPresleepItemCellHeight = 48.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 30.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 
@@ -246,6 +248,9 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
     case HEMSleepGraphCollectionViewSummarySection:
         return CGSizeMake(width, HEMSleepSummaryCellHeight);
 
+    case HEMSleepGraphCollectionViewPresleepSection:
+        return CGSizeMake(width, HEMPresleepItemCellHeight);
+
     case HEMSleepGraphCollectionViewSegmentSection: {
         SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
 
@@ -257,8 +262,19 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
             return CGSizeMake(width, MAX(durationHeight, HEMSleepGraphCollectionViewEventMinimumHeight));
         }
     }
+
     default:
         return CGSizeMake(width, HEMSleepGraphCollectionViewEventMinimumHeight);
+    }
+}
+
+- (CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+{
+    switch (section) {
+    case HEMSleepGraphCollectionViewPresleepSection:
+        return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMPresleepHeaderCellHeight);
+    default:
+        return CGSizeZero;
     }
 }
 

@@ -25,7 +25,7 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
         self.layer.borderWidth = kHEMActionBorderWidth;
         [self setTitleColor:[HelloStyleKit onboardingBlueColor] forState:UIControlStateNormal];
         [self setTitle:@"" forState:UIControlStateDisabled];
-        [self.titleLabel setFont:[UIFont fontWithName:@"Agile-Medium" size:13.f]];
+        [self.titleLabel setFont:[UIFont fontWithName:@"Calibre-Medium" size:16.f]];
     }
     return self;
 }

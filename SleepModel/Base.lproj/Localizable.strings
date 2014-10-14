@@ -197,7 +197,7 @@
 "sleep-event.type.sleep.name" = "Fell asleep";
 "sleep-event.type.light.name" = "Light disturbance";
 "sleep-event.type.noise.name" = "Noise disturbance";
-"sleep-event.type.motion.name" = "Motion";
+"sleep-event.type.motion.name" = "Tossing and Turning";
 
 // sleep history
 "sleep-history.last-night" = "Last Night";
@@ -207,6 +207,7 @@
 "sleep-history.depth.medium" = "Medium sleep";
 "sleep-history.depth.deep" = "Deep sleep";
 "sleep-history.no-data" = "There is no information available about the selected date.";
+"sleep-history.presleep-state.title" = "Before you slept";
 
 // actions
 "actions.cancel" = "Cancel";

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.0.21
+
+Fixes:
+
+* No more events in the timeline with a black background
+
+New:
+
+* "Before you slept" insights below the timeline -- the displayed insights are currently static, but you can see how they will appear
+* Better animation when event popups appear
+* Make events easier to tap
+
 ## 1.0.0.20
 
 Fixes

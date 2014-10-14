@@ -124,9 +124,19 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
     CGFloat clockInset = 14.f;
     CGRect buttonFrame = [self.view convertRect:view.frame fromView:view];
     CGRect frame = CGRectMake(inset, CGRectGetMinY(buttonFrame) - yAdjustment, CGRectGetWidth(self.view.bounds) - inset - clockInset, CGRectGetHeight(self.eventInfoView.bounds));
-    if (CGRectGetMaxY(frame) > CGRectGetMaxY(self.view.bounds)) {
-        frame.origin.y = CGRectGetMaxY(buttonFrame) - CGRectGetHeight(self.eventInfoView.bounds);
-        self.eventInfoView.caretPosition = HEMEventInfoViewCaretPositionBottom;
+    CGPoint bottomPoint = CGPointMake(1, CGRectGetMaxY(frame));
+    NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:[self.collectionView convertPoint:bottomPoint fromView:self.view]];
+    if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection || CGRectGetMaxY(frame) > CGRectGetMaxY(self.view.bounds)) {
+        frame.origin.y = CGRectGetMidY(buttonFrame) - (CGRectGetHeight(self.eventInfoView.bounds) / 2);
+        bottomPoint = CGPointMake(1, CGRectGetMaxY(frame));
+        indexPath = [self.collectionView indexPathForItemAtPoint:[self.collectionView convertPoint:bottomPoint fromView:self.view]];
+        if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection || CGRectGetMaxY(frame) > CGRectGetMaxY(self.view.bounds)) {
+            frame.origin.y = CGRectGetMaxY(buttonFrame) - CGRectGetHeight(self.eventInfoView.bounds);
+            self.eventInfoView.caretPosition = HEMEventInfoViewCaretPositionBottom;
+        }
+        else {
+            self.eventInfoView.caretPosition = HEMEventInfoViewCaretPositionMiddle;
+        }
     }
     else {
         self.eventInfoView.caretPosition = HEMEventInfoViewCaretPositionTop;

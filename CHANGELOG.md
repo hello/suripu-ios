@@ -1,5 +1,19 @@
 # Changelog
 
+## master
+
+New:
+
+* "Before you slept" insights are now provided via the API
+
+Fixes:
+
+* Move sleep score text upward slightly to center it
+* Change "deep sleep" fill amount to match margins on both sides
+* Show historical temperature data in centigrade or fahrenheit
+* Event summary popup text should not change before moving into position
+* Avoid closing event summary popup if tapped just after opening
+
 ## 1.0.0.21
 
 Fixes:

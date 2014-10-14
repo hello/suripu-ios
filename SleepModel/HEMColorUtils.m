@@ -38,7 +38,7 @@
 + (UIColor*)colorForSleepDepth:(NSUInteger)sleepDepth
 {
     if (sleepDepth == 0)
-        return [HelloStyleKit awakeSleepColor];
+        return [HelloStyleKit lightSleepColor];
     else if (sleepDepth == 100)
         return [HelloStyleKit deepSleepColor];
     else if (sleepDepth < 60)

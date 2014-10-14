@@ -32,8 +32,12 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:17pm" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKh-De-4s7" customClass="HEMPaddedRoundedLabel">
-                    <rect key="frame" x="188" y="14" width="42" height="16"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:17pm" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKh-De-4s7" customClass="HEMPaddedRoundedLabel">
+                    <rect key="frame" x="167" y="10" width="63" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="s6v-ii-0uH"/>
+                        <constraint firstAttribute="width" constant="63" id="vXt-mK-jZ0"/>
+                    </constraints>
                     <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="16"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>

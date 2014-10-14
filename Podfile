@@ -4,7 +4,7 @@ platform :ios, '7.0'
 
 # UI
 pod 'AttributedMarkdown', :git => 'https://github.com/dreamwieber/AttributedMarkdown.git',
-                          :commit => 'd598fb4f5e29f5aaa66e7e880a9857019865881b'
+                          :commit => '6bf420df77117f519af32a6393520ead4e7848c6'
 pod 'SORelativeDateTransformer', '~> 1.1.10'
 pod 'SVProgressHUD', :git =>    'https://github.com/samvermette/SVProgressHUD.git',
                      :commit => '90e5921e0a0a782c7e06dd8d308031041c10f789'

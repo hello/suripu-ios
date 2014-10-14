@@ -1108,10 +1108,27 @@ static UIColor* kJBLineChartViewDefaultDotSelectionColor = nil;
 
 - (void)drawText:(NSString*)text withAttributes:(NSDictionary*)attributes centeredHorizontallyInRect:(CGRect)rect
 {
-    CGSize labelSize = [text sizeWithAttributes:attributes];
+    NSMutableDictionary* dict = attributes.mutableCopy;
+    UIFont* font = [self fontForString:text toFitInRect:rect seedFont:attributes[NSFontAttributeName]];
+    if (font)
+        dict[NSFontAttributeName] = font;
+    CGSize labelSize = [text sizeWithAttributes:dict];
     CGFloat width = CGRectGetWidth(rect);
     CGFloat labelStartX = (ABS(width - labelSize.width) / 2.f) + CGRectGetMinX(rect);
-    [text drawAtPoint:CGPointMake(labelStartX, CGRectGetMinY(rect)) withAttributes:attributes];
+    [text drawAtPoint:CGPointMake(labelStartX, CGRectGetMinY(rect)) withAttributes:dict];
+}
+
+- (UIFont*)fontForString:(NSString*)string toFitInRect:(CGRect)rect seedFont:(UIFont*)seedFont
+{
+    UIFont* returnFont = seedFont;
+    CGSize stringSize = [string sizeWithAttributes:@{ NSFontAttributeName : returnFont }];
+
+    while (stringSize.width > CGRectGetWidth(rect) && returnFont.pointSize > 0) {
+        returnFont = [UIFont fontWithName:returnFont.fontName size:returnFont.pointSize - 1];
+        stringSize = [string sizeWithAttributes:@{ NSFontAttributeName : returnFont }];
+    }
+
+    return returnFont;
 }
 
 - (void)drawSections:(NSArray*)labels inRect:(CGRect)rect forLineData:(NSArray*)lineData
@@ -1132,7 +1149,7 @@ static UIColor* kJBLineChartViewDefaultDotSelectionColor = nil;
     NSDictionary* summaryAttributes = @{
         NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:24],
         NSForegroundColorAttributeName : [UIColor colorWithWhite:0.95f alpha:1.f],
-        NSKernAttributeName : @(-2),
+        NSKernAttributeName : @(-1),
     };
     NSDictionary* summaryTitleAttributes = @{
         NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:36],
@@ -1150,7 +1167,7 @@ static UIColor* kJBLineChartViewDefaultDotSelectionColor = nil;
             centeredHorizontallyInRect:CGRectMake(segmentWidth * (i - 1), labelY, segmentWidth, 0)];
         [self drawText:labels[i - 1][@"value"]
                         withAttributes:summaryAttributes
-            centeredHorizontallyInRect:CGRectMake(segmentWidth * (i - 1), summaryValueY, segmentWidth, 0)];
+            centeredHorizontallyInRect:CGRectInset(CGRectMake(segmentWidth * (i - 1), summaryValueY, segmentWidth, 0), 2.f, 0)];
         CGContextSetStrokeColorWithColor(context, [UIColor colorWithWhite:0.3f alpha:1.f].CGColor);
         CGContextSetLineWidth(context, 1.0);
         CGContextMoveToPoint(context, startX, CGRectGetHeight(rect) / 4.f);

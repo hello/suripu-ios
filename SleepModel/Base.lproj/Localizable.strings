@@ -197,7 +197,7 @@
 "sleep-event.type.sleep.name" = "Fell asleep";
 "sleep-event.type.light.name" = "Light disturbance";
 "sleep-event.type.noise.name" = "Noise disturbance";
-"sleep-event.type.motion.name" = "Motion";
+"sleep-event.type.motion.name" = "Tossing and Turning";
 
 // sleep history
 "sleep-history.last-night" = "Last Night";

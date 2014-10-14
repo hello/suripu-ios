@@ -224,11 +224,17 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    return NO;
+    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+    return [cell isKindOfClass:[HEMSleepEventCollectionViewCell class]];
 }
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
+    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+    if ([cell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
+        HEMSleepEventCollectionViewCell* eventCell = (HEMSleepEventCollectionViewCell*)cell;
+        [eventCell.eventTypeButton sendActionsForControlEvents:UIControlEventTouchUpInside];
+    }
     return NO;
 }
 

@@ -145,20 +145,21 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
     CGFloat clockInset = 14.f;
     CGRect buttonFrame = [self.view convertRect:view.frame fromView:view];
     CGRect frame = CGRectMake(inset, CGRectGetMinY(buttonFrame) - yAdjustment, CGRectGetWidth(self.view.bounds) - inset - clockInset, CGRectGetHeight(self.eventInfoView.bounds));
-    [self updateEventInfoViewWithEventAtIndexPath:[self indexPathForEventCellWithSubview:view]];
-    if (self.eventInfoView.messageLabel.text.length > 0) {
+    NSIndexPath* eventIndexPath = [self indexPathForEventCellWithSubview:view];
+    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:eventIndexPath];
+    if (segment.message.length > 0) {
         frame.size.height = HEMSleepEventPopupFullHeight;
     }
     else {
         frame.size.height = HEMSleepEventPopupMinimumHeight;
     }
     CGPoint bottomPoint = CGPointMake(1, CGRectGetMaxY(frame));
-    NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:[self.collectionView convertPoint:bottomPoint fromView:self.view]];
-    if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection || CGRectGetMaxY(frame) > CGRectGetMaxY(self.view.bounds)) {
+    NSIndexPath* popupBottomIndexPath = [self.collectionView indexPathForItemAtPoint:[self.collectionView convertPoint:bottomPoint fromView:self.view]];
+    if (popupBottomIndexPath.section != HEMSleepGraphCollectionViewSegmentSection || CGRectGetMaxY(frame) > CGRectGetMaxY(self.view.bounds)) {
         frame.origin.y = CGRectGetMidY(buttonFrame) - (CGRectGetHeight(frame) / 2);
         bottomPoint = CGPointMake(1, CGRectGetMaxY(frame));
-        indexPath = [self.collectionView indexPathForItemAtPoint:[self.collectionView convertPoint:bottomPoint fromView:self.view]];
-        if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection || CGRectGetMaxY(frame) > CGRectGetMaxY(self.view.bounds)) {
+        popupBottomIndexPath = [self.collectionView indexPathForItemAtPoint:[self.collectionView convertPoint:bottomPoint fromView:self.view]];
+        if (popupBottomIndexPath.section != HEMSleepGraphCollectionViewSegmentSection || CGRectGetMaxY(frame) > CGRectGetMaxY(self.view.bounds)) {
             frame.origin.y = CGRectGetMaxY(buttonFrame) - CGRectGetHeight(frame);
             self.eventInfoView.caretPosition = HEMEventInfoViewCaretPositionBottom;
         }
@@ -176,6 +177,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
         }];
     }
     else {
+        [self updateEventInfoViewWithEventAtIndexPath:eventIndexPath];
         [UIView animateWithDuration:0.25f animations:^{
             [self shrinkAllEventButtonsToNormalSize];
             view.transform = CGAffineTransformMakeScale(1.2f, 1.2f);

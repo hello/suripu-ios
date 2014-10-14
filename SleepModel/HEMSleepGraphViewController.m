@@ -141,13 +141,18 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
     else {
         self.eventInfoView.caretPosition = HEMEventInfoViewCaretPositionTop;
     }
-    if (CGRectEqualToRect(self.eventInfoView.frame, frame) && self.eventInfoView.alpha > 0) {
+    if ((CGRectEqualToRect(self.eventInfoView.frame, frame) || fabsf(CGRectGetMinY(frame) - CGRectGetMinY(self.eventInfoView.frame)) <  10.f) && self.eventInfoView.alpha > 0) {
         [UIView animateWithDuration:0.25f animations:^{
             self.eventInfoView.alpha = 0;
+            view.transform = CGAffineTransformIdentity;
         }];
     }
     else {
         [self updateEventInfoViewWithEventAtIndexPath:[self indexPathForEventCellWithSubview:view]];
+        [UIView animateWithDuration:0.25f animations:^{
+            [self shrinkAllEventButtonsToNormalSize];
+            view.transform = CGAffineTransformMakeScale(1.2f, 1.2f);
+        }];
         if (fabsf(CGRectGetMinY(self.eventInfoView.frame) - CGRectGetMinY(frame)) > (CGRectGetHeight([UIScreen mainScreen].bounds) / 10)) {
             [UIView animateWithDuration:0.15f animations:^{
                 self.eventInfoView.alpha = 0;
@@ -165,6 +170,16 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
                 self.eventInfoView.alpha = 1;
                 [self.eventInfoView setNeedsDisplay];
             }];
+        }
+    }
+}
+
+- (void)shrinkAllEventButtonsToNormalSize
+{
+    for (UICollectionViewCell* cell in self.collectionView.visibleCells) {
+        if ([cell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
+            HEMSleepEventCollectionViewCell* eventCell = (HEMSleepEventCollectionViewCell*)cell;
+            eventCell.eventTypeButton.transform = CGAffineTransformIdentity;
         }
     }
 }
@@ -199,6 +214,13 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
         return;
     [UIView animateWithDuration:0.15f animations:^{
         self.eventInfoView.alpha = 0;
+    }];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView*)scrollView willDecelerate:(BOOL)decelerate
+{
+    [UIView animateWithDuration:0.25f animations:^{
+        [self shrinkAllEventButtonsToNormalSize];
     }];
 }
 

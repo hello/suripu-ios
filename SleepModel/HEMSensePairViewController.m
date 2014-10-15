@@ -17,7 +17,10 @@
 #import "HelloStyleKit.h"
 #import "HEMActivityCoverView.h"
 
-static CGFloat const kHEMSensePairScanTimeout = 15.0f;
+// I've tested the scanning process multiple times starting with a timeout of
+// 15 to 20.  Out of say 5 tries, I've seen it return in time once.  30 secs
+// seem to allow the response to return in time reliably.
+static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 @interface HEMSensePairViewController()
 
@@ -118,6 +121,7 @@ static CGFloat const kHEMSensePairScanTimeout = 15.0f;
 #pragma mark - Scanning
 
 - (void)scanTimeout {
+    DLog(@"scanning for Sense timed out, oh no!");
     [self setTimedOut:YES];
     [SENSenseManager stopScan];
     [self stopActivityWithMessage:nil completion:^{
@@ -154,6 +158,9 @@ static CGFloat const kHEMSensePairScanTimeout = 15.0f;
     if (![SENSenseManager scanForSense:^(NSArray *senses) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf && ![strongSelf isTimedOut]) {
+            [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
+                                                     selector:@selector(scanTimeout)
+                                                       object:nil];
             if ([senses count] > 0) {
                 // TODO (jimmy): what to do when more than 1 sense is detected?
                 [strongSelf pairWith:[senses firstObject]];

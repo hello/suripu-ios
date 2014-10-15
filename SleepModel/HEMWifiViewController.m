@@ -25,6 +25,8 @@
 @property (weak, nonatomic) IBOutlet HEMRoundedTextField *ssidField;
 @property (weak, nonatomic) IBOutlet HEMRoundedTextField *passwordField;
 
+@property (assign, nonatomic) BOOL wifiConfigured;
+
 @end
 
 @implementation HEMWifiViewController
@@ -65,10 +67,24 @@
     NSString* ssid = [self trim:[[self ssidField] text]];
     NSString* pass = [self trim:[[self passwordField] text]];
     if ([ssid length] > 0 && [pass length] > 0) {
-        // TODO (jimmy): we will need to do a few more things when firmware is ready for this
-        // 1. pass the credentials to Morpheus and allow it to set up
-        // 2. once #1 is successful, link account to morpheus and wait
-        [self linkAccount];
+        if (![self wifiConfigured]) {
+            __weak typeof(self) weakSelf = self;
+            [self setWiFi:ssid password:pass completion:^(NSError *error) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if (strongSelf) {
+                    if (error == nil) {
+                        [strongSelf setWifiConfigured:YES];
+                        [strongSelf linkAccount];
+                    } else {
+                        NSString* msg = NSLocalizedString(@"wifi.error.sense-wifi-message", nil);
+                        NSString* title = NSLocalizedString(@"wifi.error.title", nil);
+                        [strongSelf showMessageDialog:msg title:title];
+                    }
+                }
+            }];
+        } else {
+            [self linkAccount];
+        }
     }
 }
 
@@ -77,6 +93,19 @@
     // TODO (jimmy): the help website is still being discussed / worked on.  When
     // we know what to actually point to, we likely will open up a browser to
     // show the help
+}
+
+- (void)setWiFi:(NSString*)ssid
+       password:(NSString*)password
+     completion:(void(^)(NSError* error))completion {
+
+    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    [manager setWiFi:ssid password:password success:^(id response) {
+        if (completion) completion (nil);
+    } failure:^(NSError *error) {
+        if (completion) completion (error);
+    }];
+    
 }
 
 - (void)linkAccount {
@@ -92,8 +121,8 @@
     } failure:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            NSString* msg = NSLocalizedString(@"pairing.error.sense-setup-failed", nil);
-            NSString* title = NSLocalizedString(@"pairing.setup.failed.title", nil);
+            NSString* msg = NSLocalizedString(@"wifi.error.account-link-message", nil);
+            NSString* title = NSLocalizedString(@"wifi.error.title", nil);
             [strongSelf showMessageDialog:msg title:title];
         }
     }];

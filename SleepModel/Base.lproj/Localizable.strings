@@ -52,12 +52,15 @@
 "pairing.failed.title" = "Pairing Failed";
 "pairing.error.sense-not-found" = "Sense was not detected.  Ensure Sense is on and near your phone.";
 "pairing.error.could-not-pair" = "Could not pair with Sense.  If there is a phone already paired to Sense, unpair from that phone then try again.";
-"pairing.setup.failed.title" = "Set Up Failed";
-"pairing.error.sense-setup-failed" = "Unable to set up Sense.  If Sense has been paired before, make sure previously paired phones have been removed then try again.";
 "pairing.error.pill-pair-failed" = "Unable to find any Sleep Pills to pair with.  Make sure they are nearby and try again.";
 "pairing.error.unexpected-disconnect" = "Connection from Sense was broken.  Try again.";
 "pairing.error.no-response" = "Sense did not respond in time.";
 "pairing.done" = "Paired.";
+
+// wifi setup
+"wifi.error.title" = "WiFi Setup Failed";
+"wifi.error.sense-wifi-message" = "Sense could not set up WiFi.  Make sure Sense is on and nearby and try again.";
+"wifi.error.account-link-message" = "Unable to set up Sense properly.";
 
 // pairing with the pill
 "pill-pair.subtitle.shake-pill" = "Gently shake your Sleep Pill for three seconds.  When your Sleep Pill lights up";

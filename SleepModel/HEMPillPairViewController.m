@@ -101,6 +101,9 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
         NSString* token = [SENAuthorizationService accessToken];
         
         [self setPairTimedOut:NO];
+        [self performSelector:@selector(pairingTimedOut)
+                   withObject:nil
+                   afterDelay:kHEMPillPairTimeout];
         
         __weak typeof(self) weakSelf = self;
         [manager pairWithPill:token success:^(id response) {
@@ -153,6 +156,7 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
 
 - (void)dealloc {
     [self disconnectSenseAndClearCache];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 @end

@@ -136,7 +136,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     case HEMSleepGraphCollectionViewSegmentSection:
         return self.numberOfSleepSegments;
     case HEMSleepGraphCollectionViewPresleepSection:
-        return self.numberOfSleepSegments > 0 ? 3 : 0;
+        return self.numberOfSleepSegments > 0 ? self.sleepResult.sensorInsights.count : 0;
     default:
         return 0;
     }
@@ -232,26 +232,39 @@ static NSString* const sensorTypeParticulates = @"particulates";
          presleepCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMPresleepItemCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:presleepItemReuseIdentifier forIndexPath:indexPath];
-    switch (indexPath.row) {
-    case 0: {
-        cell.typeImageView.image = [UIImage imageNamed:@"sound-medium"];
-        cell.typeImageView.layer.borderColor = [HelloStyleKit alertSensorColor].CGColor;
-        cell.messageLabel.text = @"Your bedroom was a bit noisy.";
-    } break;
-
-    case 1: {
-        cell.typeImageView.image = [UIImage imageNamed:@"particulates-bad"];
-        cell.typeImageView.layer.borderColor = [HelloStyleKit warningSensorColor].CGColor;
-        cell.messageLabel.text = @"It was too dusty in there!";
-    } break;
-
-    case 2: {
-        cell.typeImageView.image = [UIImage imageNamed:@"temperature-good"];
-        cell.typeImageView.layer.borderColor = [HelloStyleKit idealSensorColor].CGColor;
-        cell.messageLabel.text = @"The temperature was perfect for sleep.";
-    } break;
-    }
+    SENSleepResultSensorInsight* insight = self.sleepResult.sensorInsights[indexPath.row];
+    cell.messageLabel.text = insight.message;
+    [self configureImageView:cell.typeImageView forInsight:insight];
     return cell;
+}
+
+- (void)configureImageView:(UIImageView*)imageView forInsight:(SENSleepResultSensorInsight*)insight
+{
+    NSString* suffix = nil;
+    UIColor* color = nil;
+    switch (insight.condition) {
+        case SENSensorConditionIdeal:
+            suffix = @"good";
+            color = [HelloStyleKit idealSensorColor];
+            break;
+        case SENSensorConditionWarning:
+            suffix = @"bad";
+            color = [HelloStyleKit warningSensorColor];
+            break;
+        case SENSensorConditionUnknown:
+        case SENSensorConditionAlert:
+        default:
+            suffix = @"medium";
+            color = [HelloStyleKit alertSensorColor];
+            break;
+    }
+    if (suffix && color) {
+        imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@-%@", insight.name, suffix]];
+        imageView.layer.borderColor = color.CGColor;
+    } else {
+        imageView.image = nil;
+        imageView.layer.borderColor = [HelloStyleKit alertSensorColor].CGColor;
+    }
 }
 
 #pragma mark - Data Parsing
@@ -318,14 +331,13 @@ static NSString* const sensorTypeParticulates = @"particulates";
 
 - (BOOL)segmentForSleepExistsAtIndexPath:(NSIndexPath*)indexPath
 {
-    SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
-    return !segment.eventType || [segment.eventType isEqual:[NSNull null]];
+    return indexPath.section == HEMSleepGraphCollectionViewSegmentSection && ![self segmentForEventExistsAtIndexPath:indexPath];
 }
 
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath*)indexPath
 {
     SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
-    return segment.eventType && ![segment.eventType isEqual:[NSNull null]];
+    return ![segment.eventType isEqual:[NSNull null]] && segment.eventType.length > 0;
 }
 
 @end

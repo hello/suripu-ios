@@ -217,4 +217,11 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [self showMessageDialog:message title:NSLocalizedString(@"pairing.failed.title", nil)];
 }
 
+#pragma mark - Clean up
+
+- (void)dealloc {
+    [SENSenseManager stopScan];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+}
+
 @end

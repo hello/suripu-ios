@@ -1,5 +1,36 @@
 # Changelog
 
+## 1.0.0.22
+
+New:
+
+* "Before you slept" insights are now provided via the API
+
+Fixes:
+
+* Move sleep score text upward slightly to center it
+* Change "deep sleep" fill amount to match margins on both sides
+* Show historical temperature data in centigrade or fahrenheit
+* Event summary popup text should not change before moving into position
+* Avoid closing event summary popup if tapped just after opening
+
+Known Issues:
+
+* Fetching alarms for the first time sometimes returns an error
+* Alarms cannot be saved without picking at least one day to repeat
+
+## 1.0.0.21
+
+Fixes:
+
+* No more events in the timeline with a black background
+
+New:
+
+* "Before you slept" insights below the timeline -- the displayed insights are currently static, but you can see how they will appear
+* Better animation when event popups appear
+* Make events easier to tap
+
 ## 1.0.0.20
 
 Fixes

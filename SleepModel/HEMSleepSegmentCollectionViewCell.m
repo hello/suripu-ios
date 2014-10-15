@@ -13,7 +13,7 @@ CGFloat HEMLinedCollectionViewCellLineWidth = 2.f;
 
 @implementation HEMSleepSegmentCollectionViewCell
 
-static CGFloat HEMSleepSegmentMaximumFillRatio = 0.7f;
+static CGFloat HEMSleepSegmentMaximumFillRatio = 0.95f;
 static CGFloat HEMSleepSegmentMinimumFillWidth = 24.f;
 
 - (void)awakeFromNib
@@ -34,7 +34,7 @@ static CGFloat HEMSleepSegmentMinimumFillWidth = 24.f;
     if (![self isLastSegment] && ![self isFirstSegment]) {
         CGContextRef ctx = UIGraphicsGetCurrentContext();
         CGFloat inset = HEMLinedCollectionViewCellLineOffset + HEMLinedCollectionViewCellLineWidth;
-        CGFloat maximumFillWidth = (CGRectGetWidth(rect) - inset) * HEMSleepSegmentMaximumFillRatio;
+        CGFloat maximumFillWidth = (CGRectGetWidth(rect) - (inset*2));
         CGFloat width = MAX(maximumFillWidth * self.fillRatio, HEMSleepSegmentMinimumFillWidth);
         CGRect fillRect = CGRectMake(inset, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
         CGContextClearRect(ctx, fillRect);

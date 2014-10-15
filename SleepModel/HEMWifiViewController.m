@@ -51,6 +51,16 @@
     return [value stringByTrimmingCharactersInSet:spaces];
 }
 
+- (void)showActivity {
+    [[self doneButton] setEnabled:NO];
+    [[self activityIndicator] startAnimating];
+}
+
+- (void)stopActivity {
+    [[self activityIndicator] stopAnimating];
+    [[self doneButton] setEnabled:YES];
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -65,6 +75,8 @@
 #pragma mark - Actions
 
 - (IBAction)connectWifi:(id)sender {
+    if (![[self doneButton] isEnabled]) return;
+    
     NSString* ssid = [self trim:[[self ssidField] text]];
     NSString* pass = [self trim:[[self passwordField] text]];
     if ([ssid length] > 0 && [pass length] > 0) {

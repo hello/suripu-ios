@@ -102,8 +102,9 @@ static UIFont* HEMSensorViewRegularFont;
             sectionValue = @"-";
         } else if (i == 6) {
             sectionValue = [SENSensor formatValue:@(value) withUnit:self.sensor.unit];
-        } else {
-            sectionValue = [SENSensor formatValue:@(value) withUnit:SENSensorUnitUnknown];
+        }
+        else {
+            sectionValue = [NSString stringWithFormat:@"%ld", [[SENSensor value:@(value) inPreferredUnit:self.sensor.unit] longValue]];
         }
         if (!sectionValue) {
             sectionValue = NSLocalizedString(@"sensor.value.none", nil);

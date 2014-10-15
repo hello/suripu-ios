@@ -13,6 +13,7 @@
 #import "HEMAnimationUtils.h"
 #import "HEMSignUpViewController.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMOnboardingUtils.h"
 
 static CGFloat const kHEMWelcomeButtonAnimationDuration = 0.5f;
 static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
@@ -44,6 +45,8 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setSubtitleText];
+    
     UIColor* whiteColor = [UIColor whiteColor];
     CGColorRef white = [whiteColor CGColor];
     
@@ -60,6 +63,16 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
     [[self cancelCenterXConstraint] setConstant:-width];
  
     [[self bgImageView] add3DEffectWithBorder:5.0f];
+    
+}
+
+- (void)setSubtitleText {
+    NSString* text = NSLocalizedString(@"welcome.subtitle", nil);
+    
+    NSMutableAttributedString* attrText = [[NSMutableAttributedString alloc] initWithString:text];
+    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
+    
+    [[self subtitleLabel] setAttributedText:attrText];
 }
 
 - (void)adjustConstraintsForIPhone4 {

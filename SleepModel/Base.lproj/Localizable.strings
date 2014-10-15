@@ -11,7 +11,29 @@
 "welcome.title.meet-sense" = "Meet Sense.";
 "welcome.title.get-started" = "Let's get started.";
 
-// sign up
+// onboarding
+"onboarding.purple" = "purple";
+"welcome.subtitle" = "A simple system that tracks your sleep monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
+"get-started.subtitle" = "Are you using Sense with one Sleep Pill or two Sleep Pills?";
+"two-pill-setup.subtitle" = "Are you setting up the first Sleep Pill, or the second Sleep Pill?";
+"no-bluetooth.launch-the" = "Launch the";
+"no-bluetooth.settings" = "Settings";
+"no-bluetooth.app-tap" = "app, tap";
+"no-bluetooth.bluetooth" = "Bluetooth,";
+"no-bluetooth.subtitle.ble-required" = "Sense uses Bluetooth to communicate with your mobile device.  Please turn your Bluetooth on to continue.";
+"no-bluetooth.flip-switch" = "and flip the switch to";
+"no-bluetooth.on" = "On.";
+"second-pill.description.pairing-mode" = "To connect a second Sleep Pill, Sense needs to be put into pairing mode.";
+"second-pill.description" = "Ask the owner of the first Sleep Pill to stand next to Sense and open the Sense app, then go to";
+"second-pill.description.sense-settings" = "Settings > Devices > Sense";
+"second-pill.description.and-tap" = "and tap";
+"second-pill.description.put-into-pairing" = "'Put Sense Into Pairing Mode'.";
+"second-pill.description.sense-glow" = "Sense will glow";
+"second-pill.description.when-in-mode" = "when it is in pairing mode.";
+"sense-setup.description.plug-n-glow" = "Plug in Sense next to your bed.  Sense will glow";
+"sense-setup.description.on-and-ready" = "to tell you it is on, and ready to be paired with your mobile device.";
+"sense-pair.description.pair-now" = "Now we'll pair your phone with Sense.  Make sure Sense is glowing";
+"sense-pair.description.then-tap" = "then tap continue.";
 "sign-up.title" = "Sign Up";
 "sign-up.failed.title" = "Sign Up Failed";
 "sign-up.error.password-length" = "Your password must be at least 3 characters.";

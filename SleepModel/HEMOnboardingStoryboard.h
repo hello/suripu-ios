@@ -20,17 +20,20 @@
 +(NSString *)senseSetupSegueIdentifier;
 +(NSString *)wifiSegueIdentifier;
 +(NSString *)needBluetoothSegueIdentifier;
-+(NSString *)setupOnePillSegueIdentifier;
 +(NSString *)pillNeedBluetoothSegueIdentifier;
++(NSString *)firstPillSenseSetupSegueIdentifier;
++(NSString *)secondPillNeedBleSegueIdentifier;
++(NSString *)secondPillToSenseSegueIdentifier;
++(NSString *)noBleToSenseSetupSegueIdentifier;
 
 /** View Controllers */
 +(UIViewController *)instantiateWelcomeViewController;
 +(UIViewController *)instantiateSignUpViewController;
 +(UIViewController *)instantiateDobViewController;
-+(UIViewController *)instantiateHeightViewController;
++(UIViewController *)instantiateHeightPickerViewController;
 +(UIViewController *)instantiateWifiViewController;
-+(UIViewController *)instantiateGenderViewController;
-+(UIViewController *)instantiateWeightViewController;
++(UIViewController *)instantiateGenderPickerViewController;
++(UIViewController *)instantiateWeightPickerViewController;
 +(UIViewController *)instantiateBluetoothViewController;
 
 @end

@@ -4,6 +4,7 @@
 
 static CGFloat const kHEMActionCornerRadius = 20.0f;
 static CGFloat const kHEMActionBorderWidth = 2.0f;
+static CGFloat const kHEMActionDisabledAlpha = 0.3f;
 
 @interface HEMActionButton()
 
@@ -24,10 +25,20 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
         self.layer.borderColor = [HelloStyleKit onboardingBlueColor].CGColor;
         self.layer.borderWidth = kHEMActionBorderWidth;
         [self setTitleColor:[HelloStyleKit onboardingBlueColor] forState:UIControlStateNormal];
-        [self setTitle:@"" forState:UIControlStateDisabled];
+        [self setTitleColor:[[HelloStyleKit onboardingBlueColor] colorWithAlphaComponent:kHEMActionDisabledAlpha]
+                   forState:UIControlStateDisabled];
         [self.titleLabel setFont:[UIFont fontWithName:@"Calibre-Medium" size:16.f]];
     }
     return self;
+}
+
+- (void)setEnabled:(BOOL)enabled {
+    UIColor* color = [HelloStyleKit onboardingBlueColor];
+    if (!enabled) {
+        color = [color colorWithAlphaComponent:kHEMActionDisabledAlpha];
+    }
+    [[self layer] setBorderColor:[color CGColor]];
+    [super setEnabled:enabled];
 }
 
 - (void)addActivityView {

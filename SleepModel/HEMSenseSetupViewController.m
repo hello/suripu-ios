@@ -8,6 +8,8 @@
 
 #import "HEMSenseSetupViewController.h"
 #import "HEMActionButton.h"
+#import "HEMOnboardingUtils.h"
+#import "HelloStyleKit.h"
 
 @interface HEMSenseSetupViewController ()
 
@@ -23,17 +25,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view.
+    [self setupDescription];
 }
 
-
-- (void)updateViewConstraints {
-    [super updateViewConstraints];
-    CGSize constraint = CGSizeZero;
-    constraint.width = CGRectGetWidth([[self descriptionLabel] bounds]);
-    constraint.height = MAXFLOAT;
-    CGSize textSize = [[self descriptionLabel] sizeThatFits:constraint];
-    DLog(@"text height %f", textSize.height);
+- (void)setupDescription {
+    NSString* plugInSenseToGlow = [NSString stringWithFormat:@"%@ ",
+                                   NSLocalizedString(@"sense-setup.description.plug-n-glow", nil)];
+    NSString* purple = NSLocalizedString(@"onboarding.purple", nil);
+    NSString* onAndReady = [NSString stringWithFormat:@" %@",
+                            NSLocalizedString(@"sense-setup.description.on-and-ready", nil)];
+    
+    NSMutableAttributedString* attrText
+        = [[NSMutableAttributedString alloc] initWithString:plugInSenseToGlow];
+    [attrText appendAttributedString:[HEMOnboardingUtils boldAttributedText:purple
+                                                                  withColor:[HelloStyleKit purple]]];
+    [attrText appendAttributedString:[[NSAttributedString alloc] initWithString:onAndReady]];
+    
+    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
+    
+    [[self descriptionLabel] setAttributedText:attrText];
 }
 
 #pragma mark - Actions

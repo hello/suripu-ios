@@ -66,7 +66,7 @@
 
 - (HEMHeightPickerViewController*)heightController {
     HEMHeightPickerViewController* heightPicker =
-        (HEMHeightPickerViewController*) [HEMOnboardingStoryboard instantiateHeightViewController];
+        (HEMHeightPickerViewController*) [HEMOnboardingStoryboard instantiateHeightPickerViewController];
     NSInteger inches = [[self data] heightInInches];
     NSInteger feet = floorf(inches/12);
     [heightPicker setFeet:feet];
@@ -77,7 +77,7 @@
 
 - (HEMWeightPickerViewController*)weightController {
     HEMWeightPickerViewController* weightPicker =
-        (HEMWeightPickerViewController*) [HEMOnboardingStoryboard instantiateWeightViewController];
+        (HEMWeightPickerViewController*) [HEMOnboardingStoryboard instantiateWeightPickerViewController];
     [weightPicker setDefaultWeightLbs:[[self data] weightInLbs]];
     [weightPicker setDelegate:self];
     return weightPicker;
@@ -85,7 +85,7 @@
 
 - (HEMGenderPickerViewController*)genderController {
     HEMGenderPickerViewController* genderPicker =
-        (HEMGenderPickerViewController*) [HEMOnboardingStoryboard instantiateGenderViewController];
+        (HEMGenderPickerViewController*) [HEMOnboardingStoryboard instantiateGenderPickerViewController];
     [genderPicker setDefaultGender:[[self data] gender]];
     [genderPicker setDelegate:self];
     return genderPicker;

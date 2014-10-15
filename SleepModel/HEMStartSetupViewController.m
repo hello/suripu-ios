@@ -10,6 +10,7 @@
 #import "HEMActionButton.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMOnboardingUtils.h"
 
 @interface HEMStartSetupViewController ()
 
@@ -31,6 +32,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
+    [self setSubtitleText];
+}
+
+- (void)setSubtitleText {
+    NSString* text = NSLocalizedString(@"get-started.subtitle", nil);
+    
+    NSMutableAttributedString* attrText = [[NSMutableAttributedString alloc] initWithString:text];
+    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
+    
+    [[self subtitleLabel] setAttributedText:attrText];
 }
 
 #pragma mark - Actions

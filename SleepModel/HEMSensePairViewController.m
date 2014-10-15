@@ -13,13 +13,15 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMUserDataCache.h"
 #import "HEMSettingsTableViewController.h"
+#import "HEMOnboardingUtils.h"
+#import "HelloStyleKit.h"
 
 static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523-785FEABCD123";
 
 @interface HEMSensePairViewController()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *bluetoothLogo;
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
 @property (weak, nonatomic) IBOutlet UIButton *noSenseButton;
@@ -37,7 +39,40 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
+    [self setupDescription];
+}
+
+- (void)setupDescription {
+    NSString* pairNow = [NSString stringWithFormat:@"%@ ",
+                         NSLocalizedString(@"sense-pair.description.pair-now", nil)];
+    NSString* purple = NSLocalizedString(@"onboarding.purple", nil);
+    NSString* thenTap = [NSString stringWithFormat:@" %@",
+                         NSLocalizedString(@"sense-pair.description.then-tap", nil)];
+    
+    NSMutableAttributedString* attrDesc
+        = [[NSMutableAttributedString alloc] initWithString:pairNow];
+    [attrDesc appendAttributedString:[HEMOnboardingUtils boldAttributedText:purple
+                                                                  withColor:[HelloStyleKit purple]]];
+    [attrDesc appendAttributedString:[[NSAttributedString alloc] initWithString:thenTap]];
+    
+    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
+    
+    [[self descLabel] setAttributedText:attrDesc];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    CGSize constraint = CGSizeZero;
+    constraint.width = CGRectGetWidth([[self descLabel] bounds]);
+    constraint.height = 0.0f;
+    
+    NSAttributedString* attrText = [[self descLabel] attributedText];
+    CGRect rect = [attrText boundingRectWithSize:constraint
+                                         options:NSStringDrawingUsesDeviceMetrics
+                                         context:nil];
+    CGSize textSize = [[self descLabel] sizeThatFits:constraint];
+    DLog(@"text height %f with rect height %f", textSize.height, CGRectGetHeight(rect));
 }
 
 - (void)adjustConstraintsForIPhone4 {
@@ -83,16 +118,7 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
     [self scanForSense];
 }
 
-- (IBAction)skip:(id)sender {
-    // TODO (jimmy): we will eventually not have this method once everyone actually
-    // gets a device.  It's here temporarily
-    for (UIViewController* viewController in self.navigationController.viewControllers) {
-        if ([viewController isKindOfClass:[HEMSettingsTableViewController class]]) {
-            [self.navigationController popToViewController:viewController animated:YES];
-            return;
-        }
-    }
-    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+- (IBAction)help:(id)sender {
 
 }
 

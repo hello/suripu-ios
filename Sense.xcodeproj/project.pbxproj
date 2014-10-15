@@ -2296,7 +2296,7 @@
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PRODUCT_NAME = Sense;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "37a08b05-9660-4d04-9f58-b27a38beaff2";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -2386,7 +2386,7 @@
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = Sense;
-				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE = "8dd4a983-d52c-4f2e-aafd-ebbf187afc74";
 				SKIP_INSTALL = YES;
 			};
 			name = Release;

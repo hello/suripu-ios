@@ -1,6 +1,6 @@
 # Changelog
 
-## master
+## 1.0.0.22
 
 New:
 
@@ -13,6 +13,11 @@ Fixes:
 * Show historical temperature data in centigrade or fahrenheit
 * Event summary popup text should not change before moving into position
 * Avoid closing event summary popup if tapped just after opening
+
+Known Issues:
+
+* Fetching alarms for the first time sometimes returns an error
+* Alarms cannot be saved without picking at least one day to repeat
 
 ## 1.0.0.21
 

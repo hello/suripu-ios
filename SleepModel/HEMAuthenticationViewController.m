@@ -88,7 +88,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
         if (!strongSelf) return;
         
         [strongSelf setSigningIn:NO];
-        
+    
         if (error) {
             [strongSelf stopActivity];
             [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)];

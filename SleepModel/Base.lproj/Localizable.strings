@@ -9,7 +9,7 @@
 
 // welcome
 "welcome.title.meet-sense" = "Meet Sense.";
-"welcome.title.get-started" = "Let's get started.";
+"welcome.title.welcome" = "Welcome.";
 
 // onboarding
 "onboarding.purple" = "purple";

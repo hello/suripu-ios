@@ -235,8 +235,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding_bg.png" translatesAutoresizingMaskIntoConstraints="NO" id="smu-a3-ZXe">
-                                <rect key="frame" x="-20" y="-5" width="625" height="610"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding_bg_wide.png" translatesAutoresizingMaskIntoConstraints="NO" id="smu-a3-ZXe">
+                                <rect key="frame" x="-10" y="-10" width="760" height="620"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" text="Meet Sense." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LK8-dI-wjg">
                                 <rect key="frame" x="28" y="28" width="544" height="32"/>
@@ -307,23 +307,23 @@
                             <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dT-qJ-kIJ" customClass="HEMActionButton">
                                 <rect key="frame" x="790" y="443" width="220" height="40"/>
                                 <fontDescription key="fontDescription" name="Agile-Bold" family="Agile" pointSize="13"/>
-                                <state key="normal" title="Log In">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="5ic-x1-0Fg" kind="show" id="Hfw-eR-j9B"/>
-                                </connections>
-                            </button>
-                            <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tuz-ez-XXK" customClass="HEMActionButton">
-                                <rect key="frame" x="790" y="493" width="220" height="40"/>
-                                <fontDescription key="fontDescription" name="Agile-Bold" family="Agile" pointSize="13"/>
                                 <state key="normal" title="Sign Up">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="5JR-hM-9bB" kind="show" id="EgC-AW-CBe"/>
+                                    <segue destination="5JR-hM-9bB" kind="show" id="gpv-cN-9Qy"/>
+                                </connections>
+                            </button>
+                            <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tuz-ez-XXK" customClass="HEMActionButton">
+                                <rect key="frame" x="790" y="493" width="220" height="40"/>
+                                <fontDescription key="fontDescription" name="Agile-Bold" family="Agile" pointSize="13"/>
+                                <state key="normal" title="Log In">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="5ic-x1-0Fg" kind="show" id="Wuv-OR-ObL"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oyF-xX-5db">
@@ -342,9 +342,10 @@
                         <constraints>
                             <constraint firstItem="7ag-Tw-G3s" firstAttribute="width" secondItem="oyF-xX-5db" secondAttribute="width" id="29C-U0-lLF"/>
                             <constraint firstItem="LK8-dI-wjg" firstAttribute="top" secondItem="hhl-8I-0bE" secondAttribute="bottom" constant="8" id="3X6-dc-rSS"/>
-                            <constraint firstItem="smu-a3-ZXe" firstAttribute="height" secondItem="k8F-r0-Evx" secondAttribute="height" constant="10" id="4pK-8y-416"/>
+                            <constraint firstAttribute="centerX" secondItem="smu-a3-ZXe" secondAttribute="centerX" constant="-70" id="4Ay-PT-a6J"/>
+                            <constraint firstItem="smu-a3-ZXe" firstAttribute="height" secondItem="k8F-r0-Evx" secondAttribute="height" constant="20" id="4pK-8y-416"/>
                             <constraint firstAttribute="centerX" secondItem="oyF-xX-5db" secondAttribute="centerX" constant="-600" id="80L-I4-2Os"/>
-                            <constraint firstItem="smu-a3-ZXe" firstAttribute="width" secondItem="k8F-r0-Evx" secondAttribute="width" constant="25" id="Cf0-Fg-3f7"/>
+                            <constraint firstItem="smu-a3-ZXe" firstAttribute="width" secondItem="k8F-r0-Evx" secondAttribute="width" constant="160" id="Cf0-Fg-3f7"/>
                             <constraint firstItem="wad-1H-Rve" firstAttribute="top" secondItem="LK8-dI-wjg" secondAttribute="bottom" constant="18" id="Eu7-8L-4WU"/>
                             <constraint firstAttribute="centerX" secondItem="tuz-ez-XXK" secondAttribute="centerX" constant="-600" id="G5Y-xM-Rbi"/>
                             <constraint firstAttribute="centerY" secondItem="dQB-Nr-cm5" secondAttribute="centerY" id="JXu-gT-k98"/>
@@ -357,7 +358,6 @@
                             <constraint firstItem="NxD-eY-cDC" firstAttribute="width" secondItem="tuz-ez-XXK" secondAttribute="width" id="aRf-6q-Nd2"/>
                             <constraint firstItem="tuz-ez-XXK" firstAttribute="width" secondItem="3dT-qJ-kIJ" secondAttribute="width" id="bkT-dj-3G5"/>
                             <constraint firstAttribute="centerX" secondItem="dQB-Nr-cm5" secondAttribute="centerX" constant="-0.5" id="dQ2-5r-zcT"/>
-                            <constraint firstAttribute="centerX" secondItem="smu-a3-ZXe" secondAttribute="centerX" constant="7.5" id="eer-a2-Ked"/>
                             <constraint firstItem="wad-1H-Rve" firstAttribute="trailing" secondItem="LK8-dI-wjg" secondAttribute="trailing" id="fvq-Po-Ge0"/>
                             <constraint firstItem="wad-1H-Rve" firstAttribute="leading" secondItem="LK8-dI-wjg" secondAttribute="leading" id="jDm-lC-wzD"/>
                             <constraint firstItem="NxD-eY-cDC" firstAttribute="height" secondItem="tuz-ez-XXK" secondAttribute="height" id="mMK-ie-voT"/>
@@ -373,6 +373,7 @@
                     <navigationItem key="navigationItem" id="Dvc-vG-kd8"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
+                        <outlet property="bgCenterXConstraint" destination="4Ay-PT-a6J" id="d1m-Xl-Zzz"/>
                         <outlet property="bgImageView" destination="smu-a3-ZXe" id="5Wo-H5-Tnq"/>
                         <outlet property="cancelCenterXConstraint" destination="80L-I4-2Os" id="PMf-K3-89b"/>
                         <outlet property="cancelGetStartedButton" destination="oyF-xX-5db" id="2RB-tU-mnj"/>
@@ -383,8 +384,8 @@
                         <outlet property="noSenseCenterXConstraint" destination="rmZ-Cb-r8U" id="qqu-k4-Qex"/>
                         <outlet property="playButton" destination="dQB-Nr-cm5" id="36E-5s-MUD"/>
                         <outlet property="playCenterYConstraint" destination="JXu-gT-k98" id="vDE-ce-PuR"/>
-                        <outlet property="signinButton" destination="3dT-qJ-kIJ" id="sRO-GL-Ky0"/>
-                        <outlet property="signupButton" destination="tuz-ez-XXK" id="ggN-Y7-CVs"/>
+                        <outlet property="signinButton" destination="tuz-ez-XXK" id="hFY-nV-0BF"/>
+                        <outlet property="signupButton" destination="3dT-qJ-kIJ" id="73c-Sj-MC7"/>
                         <outlet property="signupCenterXConstraint" destination="G5Y-xM-Rbi" id="Bbk-vt-bEg"/>
                         <outlet property="subtitleLabel" destination="wad-1H-Rve" id="b9L-qe-0JX"/>
                         <outlet property="titleLabel" destination="LK8-dI-wjg" id="PaN-Du-vGZ"/>
@@ -2241,7 +2242,7 @@ Launch the </string>
         <image name="femaleIcon.png" width="30" height="46"/>
         <image name="maleIcon.png" width="39" height="40"/>
         <image name="map.png" width="319" height="242"/>
-        <image name="onboarding_bg.png" width="340" height="588"/>
+        <image name="onboarding_bg_wide.png" width="470" height="588"/>
         <image name="play.png" width="75" height="75"/>
         <image name="sense.png" width="151" height="151"/>
     </resources>

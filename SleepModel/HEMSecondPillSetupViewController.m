@@ -32,7 +32,7 @@
 
 - (void)setupDescription {
     NSString* firstPara = NSLocalizedString(@"second-pill.description.pairing-mode", nil);
-    NSString* askThenGo = [NSString stringWithFormat:@"\n\n%@",
+    NSString* askThenGo = [NSString stringWithFormat:@"\n\n%@ ",
                            NSLocalizedString(@"second-pill.description.ask-to-pair", nil)];
     NSString* senseSettings = NSLocalizedString(@"second-pill.description.sense-settings", nil);
     NSString* andTap = [NSString stringWithFormat:@" %@ ",

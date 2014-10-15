@@ -13,19 +13,17 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMUserDataCache.h"
+#import "HEMWifiUtils.h"
+#import "HEMRoundedTextField.h"
 
 @interface HEMWifiViewController()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *wifiLogoView;
-@property (weak, nonatomic) IBOutlet HEMActionButton *shareCredentialsButton;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoVSpaceConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *shareVSpaceConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *shareButtonWidthConstraint;
-
-@property (strong, nonatomic) id disconnectObserverId;
+@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
+@property (weak, nonatomic) IBOutlet HEMRoundedTextField *ssidField;
+@property (weak, nonatomic) IBOutlet HEMRoundedTextField *passwordField;
 
 @end
 
@@ -33,27 +31,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self ssidField] setText:[HEMWifiUtils connectedWifiSSID]];
 }
 
-- (void)adjustConstraintsForIPhone4 {
-    CGFloat diff = -40.0f;
-    [self updateConstraint:[self logoVSpaceConstraint] withDiff:diff];
-    [self updateConstraint:[self shareVSpaceConstraint] withDiff:diff];
-}
-
-- (void)listenForDisconnects {
-    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
-    if ([self disconnectObserverId] == nil) {
-        __weak typeof(self) weakSelf = self;
-        self.disconnectObserverId =
-        [manager observeUnexpectedDisconnect:^(NSError *error) {
-            __block typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf && [[strongSelf shareCredentialsButton] isShowingActivity]) {
-                [[strongSelf shareCredentialsButton] stopActivity];
-                [strongSelf showMessageDialog:NSLocalizedString(@"pairing.error.unexpected-disconnect", nil)
-                                        title:NSLocalizedString(@"pairing.setup.failed.title", nil)];
-            }
-        }];
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    if ([[[self ssidField] text] length] == 0) {
+        [[self ssidField] becomeFirstResponder];
+    } else {
+        [[self passwordField] becomeFirstResponder];
     }
 }
 
@@ -62,11 +48,13 @@
 - (IBAction)connectWifi:(id)sender {
     NSLog(@"WARNING: this hasn't been fully implemented!");
     // we will need to do a few things:
-    // 1. gather wifi credentials (wifi name, SSID, and password)
     // 2. pass the credentials to Morpheus and allow it to set up
     // 3. once #2 is successful, link account to morpheus and wait
-    [[self shareCredentialsButton] showActivityWithWidthConstraint:[self shareButtonWidthConstraint]];
     [self linkAccount];
+}
+
+- (IBAction)help:(id)sender {
+    
 }
 
 - (void)linkAccount {
@@ -77,13 +65,11 @@
     [manager linkAccount:accessToken success:^(id response) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            [[strongSelf shareCredentialsButton] stopActivity];
             [strongSelf next];
         }
     } failure:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            [[strongSelf shareCredentialsButton] stopActivity];
             NSString* msg = NSLocalizedString(@"pairing.error.sense-setup-failed", nil);
             NSString* title = NSLocalizedString(@"pairing.setup.failed.title", nil);
             [strongSelf showMessageDialog:msg title:title];

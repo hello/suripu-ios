@@ -24,7 +24,7 @@
 "no-bluetooth.flip-switch" = "and flip the switch to";
 "no-bluetooth.on" = "On.";
 "second-pill.description.pairing-mode" = "To connect a second Sleep Pill, Sense needs to be put into pairing mode.";
-"second-pill.description" = "Ask the owner of the first Sleep Pill to stand next to Sense and open the Sense app, then go to";
+"second-pill.description.ask-to-pair" = "Ask the owner of the first Sleep Pill to stand next to Sense and open the Sense app, then go to";
 "second-pill.description.sense-settings" = "Settings > Devices > Sense";
 "second-pill.description.and-tap" = "and tap";
 "second-pill.description.put-into-pairing" = "'Put Sense Into Pairing Mode'.";
@@ -47,6 +47,7 @@
 "user.info.accessibility.birthdate-title" = "Select the month, day, and year of your birthday";
 
 // pairing with sense
+"pairing.activity.pairing-sense" = "Pairing with Sense";
 "pairing.failed.title" = "Pairing Failed";
 "pairing.error.sense-not-found" = "Sense was not detected.  Ensure Sense is on and near your phone.";
 "pairing.error.could-not-pair" = "Could not pair with Sense.  If there is a phone already paired to Sense, unpair from that phone then try again.";
@@ -54,6 +55,8 @@
 "pairing.error.sense-setup-failed" = "Unable to set up Sense.  If Sense has been paired before, make sure previously paired phones have been removed then try again.";
 "pairing.error.pill-pair-failed" = "Unable to find any Sleep Pills to pair with.  Make sure they are nearby and try again.";
 "pairing.error.unexpected-disconnect" = "Connection from Sense was broken.  Try again.";
+"pairing.error.no-response" = "Sense did not respond in time.";
+"pairing.done" = "Paired.";
 
 // location
 "location.error.title" = "Unknown Location";

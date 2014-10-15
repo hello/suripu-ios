@@ -236,6 +236,9 @@
 		BF14E3A119EDF7C40006EFEA /* HEMActivityCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3A019EDF7C40006EFEA /* HEMActivityCoverView.m */; };
 		BF14E3A419EEDE450006EFEA /* HEMPillIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3A319EEDE450006EFEA /* HEMPillIntroViewController.m */; };
 		BF14E3A719EEEBBB0006EFEA /* HEMEndSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3A619EEEBBB0006EFEA /* HEMEndSetupViewController.m */; };
+		BF14E3AB19EF049F0006EFEA /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3A819EF049F0006EFEA /* map.png */; };
+		BF14E3AC19EF049F0006EFEA /* map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3A919EF049F0006EFEA /* map@2x.png */; };
+		BF14E3AD19EF049F0006EFEA /* map@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3AA19EF049F0006EFEA /* map@3x.png */; };
 		BF3D2E4C19C37A62001DEEBA /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3D2E4A19C37A62001DEEBA /* downArrow.png */; };
 		BF3D2E4D19C37A62001DEEBA /* downArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3D2E4B19C37A62001DEEBA /* downArrow@2x.png */; };
 		BF50BD4F19E8D21F00F3B687 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
@@ -313,8 +316,6 @@
 		BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */; };
 		BFEAA0BB19A578EE002FBD44 /* HEMLocationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0BA19A578EE002FBD44 /* HEMLocationCenter.m */; };
 		BFEAA0BD19A57A89002FBD44 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */; };
-		BFEAA0C619A65E54002FBD44 /* mapIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0C419A65E54002FBD44 /* mapIcon.png */; };
-		BFEAA0C719A65E54002FBD44 /* mapIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */; };
 		BFEAA0CA19A66746002FBD44 /* HEMValueSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0C919A66746002FBD44 /* HEMValueSliderView.m */; };
 		BFEAA0CD19A6D9E6002FBD44 /* HEMBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0CC19A6D9E6002FBD44 /* HEMBaseController.m */; };
 		D12BBDB2950F47EDA9F85F68 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */; };
@@ -656,6 +657,9 @@
 		BF14E3A319EEDE450006EFEA /* HEMPillIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillIntroViewController.m; sourceTree = "<group>"; };
 		BF14E3A519EEEBBB0006EFEA /* HEMEndSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMEndSetupViewController.h; sourceTree = "<group>"; };
 		BF14E3A619EEEBBB0006EFEA /* HEMEndSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMEndSetupViewController.m; sourceTree = "<group>"; };
+		BF14E3A819EF049F0006EFEA /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = map.png; path = images/map.png; sourceTree = "<group>"; };
+		BF14E3A919EF049F0006EFEA /* map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map@2x.png"; path = "images/map@2x.png"; sourceTree = "<group>"; };
+		BF14E3AA19EF049F0006EFEA /* map@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map@3x.png"; path = "images/map@3x.png"; sourceTree = "<group>"; };
 		BF3D2E4A19C37A62001DEEBA /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downArrow.png; path = images/downArrow.png; sourceTree = "<group>"; };
 		BF3D2E4B19C37A62001DEEBA /* downArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "downArrow@2x.png"; path = "images/downArrow@2x.png"; sourceTree = "<group>"; };
 		BF5E443519A7AA3D00278A2F /* HEMWifiUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiUtils.h; sourceTree = "<group>"; };
@@ -772,8 +776,6 @@
 		BFEAA0B919A578EE002FBD44 /* HEMLocationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationCenter.h; sourceTree = "<group>"; };
 		BFEAA0BA19A578EE002FBD44 /* HEMLocationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationCenter.m; sourceTree = "<group>"; };
 		BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		BFEAA0C419A65E54002FBD44 /* mapIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapIcon.png; path = images/mapIcon.png; sourceTree = "<group>"; };
-		BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mapIcon@2x.png"; path = "images/mapIcon@2x.png"; sourceTree = "<group>"; };
 		BFEAA0C819A66746002FBD44 /* HEMValueSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMValueSliderView.h; sourceTree = "<group>"; };
 		BFEAA0C919A66746002FBD44 /* HEMValueSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMValueSliderView.m; sourceTree = "<group>"; };
 		BFEAA0CB19A6D9E6002FBD44 /* HEMBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBaseController.h; sourceTree = "<group>"; };
@@ -998,6 +1000,9 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BF14E3A819EF049F0006EFEA /* map.png */,
+				BF14E3A919EF049F0006EFEA /* map@2x.png */,
+				BF14E3AA19EF049F0006EFEA /* map@3x.png */,
 				BFC8215019E7441200E09D5D /* play.png */,
 				BFC8215119E7441200E09D5D /* play@2x.png */,
 				BFC8215219E7441200E09D5D /* play@3x.png */,
@@ -1012,8 +1017,6 @@
 				BF5E444E19AD494500278A2F /* phoneWithEmoticons@2x.png */,
 				BF5E444919AD414500278A2F /* doubleArrow.png */,
 				BF5E444A19AD414500278A2F /* doubleArrow@2x.png */,
-				BFEAA0C419A65E54002FBD44 /* mapIcon.png */,
-				BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */,
 				BFACC71419A41CFE00FC77EE /* whitenavbar.png */,
 				BFACC71519A41CFE00FC77EE /* whitenavbar@2x.png */,
 				8A4B3D4A199308BB00856BDE /* bluetoothLogoImage.png */,
@@ -1845,6 +1848,7 @@
 				8AFE77FC19E8C2170000F881 /* movement-bad@3x.png in Resources */,
 				8AFE780319E8C2170000F881 /* particulates-bad.png in Resources */,
 				8AC4A0391989C36200C2BD63 /* particleIcon.png in Resources */,
+				BF14E3AB19EF049F0006EFEA /* map.png in Resources */,
 				8A9BD8BA19DDD02100B1E57E /* Calibre-Light.otf in Resources */,
 				BFB0FBE319D377380056FFEC /* senseIcon.png in Resources */,
 				8AFE782119E8C2170000F881 /* sunset.png in Resources */,
@@ -1885,6 +1889,7 @@
 				8AAEECFE19A5225F006517C4 /* Agile-BoldItalic.otf in Resources */,
 				8A9BD8BC19DDD02100B1E57E /* Calibre-Medium.otf in Resources */,
 				8AFE77F019E8C2170000F881 /* humidity-medium@3x.png in Resources */,
+				BF14E3AC19EF049F0006EFEA /* map@2x.png in Resources */,
 				8AFE782919E8C2170000F881 /* temperature-good@3x.png in Resources */,
 				8A033870197DD89C00BE8327 /* Onboarding.storyboard in Resources */,
 				8AFE782419E8C2170000F881 /* temperature-bad.png in Resources */,
@@ -1907,9 +1912,8 @@
 				8A66FC95199D24FF00922ED5 /* maleIcon.png in Resources */,
 				BFB0FBE419D377380056FFEC /* senseIcon@2x.png in Resources */,
 				8AFE780D19E8C2170000F881 /* phone-bad@2x.png in Resources */,
-				BFEAA0C619A65E54002FBD44 /* mapIcon.png in Resources */,
+				BF14E3AD19EF049F0006EFEA /* map@3x.png in Resources */,
 				8AFE77ED19E8C2170000F881 /* humidity-good@3x.png in Resources */,
-				BFEAA0C719A65E54002FBD44 /* mapIcon@2x.png in Resources */,
 				8AAEED0719A5225F006517C4 /* Agile-Hairline.otf in Resources */,
 				8AAEED0819A5225F006517C4 /* Agile-HairlineItalic.otf in Resources */,
 				8A1E723919D62C26007475D3 /* alarmSoundIcon@2x.png in Resources */,

@@ -5,6 +5,8 @@
 static CGFloat const kHEMActionCornerRadius = 20.0f;
 static CGFloat const kHEMActionBorderWidth = 2.0f;
 static CGFloat const kHEMActionDisabledAlpha = 0.3f;
+static CGFloat const kHEMActionTitleFontSize = 15.0f;
+static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 
 @interface HEMActionButton()
 
@@ -27,7 +29,8 @@ static CGFloat const kHEMActionDisabledAlpha = 0.3f;
         [self setTitleColor:[HelloStyleKit onboardingBlueColor] forState:UIControlStateNormal];
         [self setTitleColor:[[HelloStyleKit onboardingBlueColor] colorWithAlphaComponent:kHEMActionDisabledAlpha]
                    forState:UIControlStateDisabled];
-        [self.titleLabel setFont:[UIFont fontWithName:@"Calibre-Medium" size:15.f]];
+        [self.titleLabel setFont:[UIFont fontWithName:@"Calibre-Medium" size:kHEMActionTitleFontSize]];
+        [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];
     }
     return self;
 }

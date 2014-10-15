@@ -16,7 +16,7 @@
 #import "HEMWifiUtils.h"
 #import "HEMRoundedTextField.h"
 
-@interface HEMWifiViewController()
+@interface HEMWifiViewController() <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
@@ -43,18 +43,40 @@
     }
 }
 
+- (NSString*)trim:(NSString*)value {
+    NSCharacterSet* spaces = [NSCharacterSet whitespaceAndNewlineCharacterSet];
+    return [value stringByTrimmingCharactersInSet:spaces];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if (textField == [self ssidField]) {
+        [[self passwordField] becomeFirstResponder];
+    } else {
+        [self connectWifi:self];
+    }
+    return YES;
+}
+
 #pragma mark - Actions
 
 - (IBAction)connectWifi:(id)sender {
-    NSLog(@"WARNING: this hasn't been fully implemented!");
-    // we will need to do a few things:
-    // 2. pass the credentials to Morpheus and allow it to set up
-    // 3. once #2 is successful, link account to morpheus and wait
-    [self linkAccount];
+    NSString* ssid = [self trim:[[self ssidField] text]];
+    NSString* pass = [self trim:[[self passwordField] text]];
+    if ([ssid length] > 0 && [pass length] > 0) {
+        // TODO (jimmy): we will need to do a few more things when firmware is ready for this
+        // 1. pass the credentials to Morpheus and allow it to set up
+        // 2. once #1 is successful, link account to morpheus and wait
+        [self linkAccount];
+    }
 }
 
 - (IBAction)help:(id)sender {
-    
+    DLog(@"WARNING: this has not been implemented yet!")
+    // TODO (jimmy): the help website is still being discussed / worked on.  When
+    // we know what to actually point to, we likely will open up a browser to
+    // show the help
 }
 
 - (void)linkAccount {

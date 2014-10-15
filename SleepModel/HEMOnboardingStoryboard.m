@@ -9,6 +9,7 @@ static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMonboarding = @"Onboarding";
 static NSString *const _HEMbluetoothViewController = @"bluetoothViewController";
 static NSString *const _HEMdobViewController = @"dobViewController";
+static NSString *const _HEMdone = @"done";
 static NSString *const _HEMfirstPillSenseSetup = @"firstPillSenseSetup";
 static NSString *const _HEMgender = @"gender";
 static NSString *const _HEMgenderPicker = @"genderPicker";
@@ -17,7 +18,6 @@ static NSString *const _HEMheightPicker = @"heightPicker";
 static NSString *const _HEMlocation = @"location";
 static NSString *const _HEMmoreInfo = @"moreInfo";
 static NSString *const _HEMneedBluetooth = @"needBluetooth";
-static NSString *const _HEMnoBleToSenseSetup = @"noBleToSenseSetup";
 static NSString *const _HEMpill = @"pill";
 static NSString *const _HEMpillNeedBluetooth = @"pillNeedBluetooth";
 static NSString *const _HEMsecondPillNeedBle = @"secondPillNeedBle";
@@ -41,6 +41,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)genderSegueIdentifier { return _HEMgender; }
 +(NSString *)weightSegueIdentifier { return _HEMweight; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
++(NSString *)doneSegueIdentifier { return _HEMdone; }
 +(NSString *)heightSegueIdentifier { return _HEMheight; }
 +(NSString *)locationSegueIdentifier { return _HEMlocation; }
 +(NSString *)senseSetupSegueIdentifier { return _HEMsenseSetup; }
@@ -50,7 +51,6 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)firstPillSenseSetupSegueIdentifier { return _HEMfirstPillSenseSetup; }
 +(NSString *)secondPillNeedBleSegueIdentifier { return _HEMsecondPillNeedBle; }
 +(NSString *)secondPillToSenseSegueIdentifier { return _HEMsecondPillToSense; }
-+(NSString *)noBleToSenseSetupSegueIdentifier { return _HEMnoBleToSenseSetup; }
 
 /** View Controllers */
 +(UIViewController *)instantiateWelcomeViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwelcome]; }

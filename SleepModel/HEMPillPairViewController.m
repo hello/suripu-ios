@@ -14,17 +14,19 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMUserDataCache.h"
 #import "HEMSettingsTableViewController.h"
+#import "HEMOnboardingUtils.h"
+#import "HelloStyleKit.h"
+#import "HEMActivityCoverView.h"
 
 @interface HEMPillPairViewController()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *pillImageView;
-@property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
+@property (weak, nonatomic)   IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic)   IBOutlet UILabel *subtitleLabel;
+@property (weak, nonatomic)   IBOutlet UIImageView *pillDiagram;
+@property (weak, nonatomic)   IBOutlet HEMActionButton *readyButton;
+@property (weak, nonatomic)   IBOutlet UIButton *helpButton;
+@property (strong, nonatomic) HEMActivityCoverView* activityView;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *pillImageVSpaceConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *readyButtonVSpaceConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *readyButtonWidthConstraint;
 
 @property (strong, nonatomic) id disconnectObserverId;
 
@@ -32,10 +34,27 @@
 
 @implementation HEMPillPairViewController
 
-- (void)adjustConstraintsForIPhone4 {
-    CGFloat diff = -40.0f;
-    [self updateConstraint:[self pillImageVSpaceConstraint] withDiff:diff];
-    [self updateConstraint:[self readyButtonVSpaceConstraint] withDiff:diff];
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setupSubtitle];
+}
+
+- (void)setupSubtitle {
+    NSString* shakeIt = [NSString stringWithFormat:@"%@ ",
+                         NSLocalizedString(@"pill-pair.subtitle.shake-pill", nil)];
+    NSString* green = NSLocalizedString(@"onboarding.green", nil);
+    NSString* thenTap = [NSString stringWithFormat:@", %@",
+                         NSLocalizedString(@"pill-pair.subtitle.tap-continue", nil)];
+    
+    NSMutableAttributedString* attrSubtitle
+        = [[NSMutableAttributedString alloc] initWithString:shakeIt];
+    [attrSubtitle appendAttributedString:[HEMOnboardingUtils boldAttributedText:green
+                                                                  withColor:[HelloStyleKit green]]];
+    [attrSubtitle appendAttributedString:[[NSAttributedString alloc] initWithString:thenTap]];
+    
+    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
+    
+    [[self subtitleLabel] setAttributedText:attrSubtitle];
 }
 
 - (void)listenForDisconnects {
@@ -45,47 +64,62 @@
         self.disconnectObserverId =
             [manager observeUnexpectedDisconnect:^(NSError *error) {
                 __block typeof(weakSelf) strongSelf = weakSelf;
-                if (strongSelf && [[strongSelf readyButton] isShowingActivity]) {
-                    [[strongSelf readyButton] stopActivity];
-                    [strongSelf showMessageDialog:NSLocalizedString(@"pairing.error.unexpected-disconnect", nil)
-                                            title:NSLocalizedString(@"pairing.failed.title", nil)];
+                if (strongSelf) {
+                    [[strongSelf activityView] dismissWithResultText:nil completion:^{
+                        [strongSelf showMessageDialog:NSLocalizedString(@"pairing.error.unexpected-disconnect", nil)
+                                                title:NSLocalizedString(@"pairing.failed.title", nil)];
+                    }];
                 }
             }];
     }
 }
 
 - (IBAction)pairPill:(id)sender {
-    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
-    NSString* token = [SENAuthorizationService accessToken];
+    if ([self activityView] == nil) {
+        [self setActivityView:[[HEMActivityCoverView alloc] init]];
+    }
     
-    [[self readyButton] showActivityWithWidthConstraint:[self readyButtonWidthConstraint]];
-    __weak typeof(self) weakSelf = self;
-    [manager pairWithPill:token success:^(id response) {
-        __block typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [[strongSelf readyButton] stopActivity];
-            [strongSelf disconnectSenseAndClearCache];
-            [strongSelf next];
-        }
-    } failure:^(NSError *error) {
-        __block typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf && [[strongSelf readyButton] isShowingActivity]) {
-            [[strongSelf readyButton] stopActivity];
-            [strongSelf showMessageDialog:NSLocalizedString(@"pairing.error.pill-pair-failed", nil)
-                                    title:NSLocalizedString(@"pairing.failed.title", nil)];
-        }
+    NSString* pairing = NSLocalizedString(@"pill-pair.pairing-message", nil);
+    [[[self activityView] activityLabel] setText:pairing];
+    
+    [[self activityView] showInView:[[self navigationController] view] completion:^{
+        [self listenForDisconnects];
+        
+        SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+        NSString* token = [SENAuthorizationService accessToken];
+        
+        __weak typeof(self) weakSelf = self;
+        [manager pairWithPill:token success:^(id response) {
+            __block typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                NSString* paired = NSLocalizedString(@"pairing.done", nil);
+                [[strongSelf activityView] dismissWithResultText:paired completion:^{
+                    [strongSelf disconnectSenseAndClearCache];
+                    
+                    NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
+                    [strongSelf performSegueWithIdentifier:segueId sender:self];
+                }];
+            }
+        } failure:^(NSError *error) {
+            __block typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                [[strongSelf activityView] dismissWithResultText:nil completion:^{
+                    [strongSelf showMessageDialog:NSLocalizedString(@"pairing.error.pill-pair-failed", nil)
+                                            title:NSLocalizedString(@"pairing.failed.title", nil)];
+                }];
+            }
+        }];
     }];
 }
 
-- (void)next {
-    for (UIViewController* viewController in self.navigationController.viewControllers) {
-        if ([viewController isKindOfClass:[HEMSettingsTableViewController class]]) {
-            [self.navigationController popToViewController:viewController animated:YES];
-            return;
-        }
-    }
-    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+- (IBAction)help:(id)sender {
+    DLog(@"WARNING: this has not been implemented yet!")
+    // TODO (jimmy): the help website is still being discussed / worked on.  When
+    // we know what to actually point to, we likely will open up a browser to
+    // show the help
 }
+
+#pragma mark - Clean Up
 
 - (void)disconnectSenseAndClearCache {
     SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
@@ -96,8 +130,6 @@
     }
     [[HEMUserDataCache sharedUserDataCache] setSenseManager:nil];
 }
-
-#pragma mark - Clean Up
 
 - (void)dealloc {
     [self disconnectSenseAndClearCache];

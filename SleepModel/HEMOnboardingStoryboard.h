@@ -15,6 +15,7 @@
 +(NSString *)genderSegueIdentifier;
 +(NSString *)weightSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
++(NSString *)doneSegueIdentifier;
 +(NSString *)heightSegueIdentifier;
 +(NSString *)locationSegueIdentifier;
 +(NSString *)senseSetupSegueIdentifier;
@@ -24,7 +25,6 @@
 +(NSString *)firstPillSenseSetupSegueIdentifier;
 +(NSString *)secondPillNeedBleSegueIdentifier;
 +(NSString *)secondPillToSenseSegueIdentifier;
-+(NSString *)noBleToSenseSetupSegueIdentifier;
 
 /** View Controllers */
 +(UIViewController *)instantiateWelcomeViewController;

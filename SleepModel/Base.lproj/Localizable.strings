@@ -13,6 +13,7 @@
 
 // onboarding
 "onboarding.purple" = "purple";
+"onboarding.green" = "green";
 "welcome.subtitle" = "A simple system that tracks your sleep monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
 "get-started.subtitle" = "Are you using Sense with one Sleep Pill or two Sleep Pills?";
 "two-pill-setup.subtitle" = "Are you setting up the first Sleep Pill, or the second Sleep Pill?";
@@ -57,6 +58,11 @@
 "pairing.error.unexpected-disconnect" = "Connection from Sense was broken.  Try again.";
 "pairing.error.no-response" = "Sense did not respond in time.";
 "pairing.done" = "Paired.";
+
+// pairing with the pill
+"pill-pair.subtitle.shake-pill" = "Gently shake your Sleep Pill for three seconds.  When your Sleep Pill lights up";
+"pill-pair.subtitle.tap-continue" = "tap continue.";
+"pill-pair.pairing-message" = "Pairing your Sleep Pill";
 
 // location
 "location.error.title" = "Unknown Location";

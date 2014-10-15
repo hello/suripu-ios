@@ -74,7 +74,6 @@ static CGFloat const kHEMSensePairScanTimeout = 15.0f;
         [[self noSenseButton] setEnabled:YES];
         if (completion) completion ();
     }];
-    
 }
 
 - (void)cacheManager {
@@ -96,7 +95,7 @@ static CGFloat const kHEMSensePairScanTimeout = 15.0f;
     self.disconnectObserverId =
         [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf && [[strongSelf readyButton] isShowingActivity]) {
+            if (strongSelf) {
                 NSString* message = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
                 [strongSelf stopActivityWithMessage:message completion:nil];
             }
@@ -106,15 +105,14 @@ static CGFloat const kHEMSensePairScanTimeout = 15.0f;
 #pragma mark - Actions
 
 - (IBAction)enablePairing:(id)sender {
-    // TODO (jimmy): remove the below code once Sense is readily available and
-    // bug free
-//    NSString* segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
-//    [self performSegueWithIdentifier:segueId sender:self];
     [self scanForSense];
 }
 
 - (IBAction)help:(id)sender {
-
+    DLog(@"WARNING: this has not been implemented yet!")
+    // TODO (jimmy): the help website is still being discussed / worked on.  When
+    // we know what to actually point to, we likely will open up a browser to
+    // show the help
 }
 
 #pragma mark - Scanning
@@ -196,9 +194,7 @@ static CGFloat const kHEMSensePairScanTimeout = 15.0f;
     } failure:^(NSError *error) {
         DLog(@"failed to pair %@", error);
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf
-            && [[strongSelf readyButton] isShowingActivity]
-            && ![strongSelf isTimedOut]) {
+        if (strongSelf && ![strongSelf isTimedOut]) {
             [strongSelf stopActivityWithMessage:nil completion:^{
                 NSString* msg = NSLocalizedString(@"pairing.error.could-not-pair", nil);
                 [strongSelf showErrorMessage:msg];

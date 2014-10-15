@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+#import "SENSensor.h"
 
 typedef NS_ENUM(NSInteger, SENSleepResultSegmentDepth) {
     SENSleepResultSegmentDepthAwake = 0,
@@ -35,6 +36,7 @@ typedef NS_ENUM(NSInteger, SENSleepResultSegmentDepth) {
 @property (strong) NSNumber* score;
 @property (strong) NSString* message;
 @property (strong) NSArray* segments;
+@property (strong) NSArray* sensorInsights;
 
 /**
  *  Persist changes
@@ -49,13 +51,12 @@ typedef NS_ENUM(NSInteger, SENSleepResultSegmentDepth) {
 @property (strong) NSNumber* duration;
 @property (strong) NSString* message;
 @property (strong) NSString* eventType;
-@property (strong) NSArray* sensors;
 @property NSInteger sleepDepth;
 @end
 
-@interface SENSleepResultSegmentSensor : NSObject <NSCoding, SENSleepResultSerializable>
+@interface SENSleepResultSensorInsight : NSObject <NSCoding, SENSleepResultSerializable>
 
 @property (strong) NSString* name;
-@property (strong) NSNumber* value;
-@property (strong) NSString* unit;
+@property (strong) NSString* message;
+@property SENSensorCondition condition;
 @end

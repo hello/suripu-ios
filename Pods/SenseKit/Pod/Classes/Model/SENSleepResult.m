@@ -34,6 +34,7 @@ static NSString* const SENSleepResultDate = @"date";
 static NSString* const SENSleepResultScore = @"score";
 static NSString* const SENSleepResultMessage = @"message";
 static NSString* const SENSleepResultSegments = @"segments";
+static NSString* const SENSleepResultSensorInsights = @"insights";
 static NSString* const SENSleepResultRetrievalKeyFormat = @"SleepResult-%ld-%ld-%ld";
 
 + (NSString*)retrievalKeyForDate:(NSDate*)date
@@ -68,6 +69,7 @@ static NSString* const SENSleepResultRetrievalKeyFormat = @"SleepResult-%ld-%ld-
         _score = sleepData[SENSleepResultScore];
         _message = sleepData[SENSleepResultMessage];
         _segments = [self parseSegmentsFromArray:sleepData[SENSleepResultSegments]];
+        _sensorInsights = [self parseSensorInsightsFromArray:sleepData[SENSleepResultSensorInsights]];
     }
     return self;
 }
@@ -99,6 +101,8 @@ static NSString* const SENSleepResultRetrievalKeyFormat = @"SleepResult-%ld-%ld-
         self.score = data[SENSleepResultScore];
     if (data[SENSleepResultSegments])
         self.segments = [self parseSegmentsFromArray:data[SENSleepResultSegments]];
+    if (data[SENSleepResultSensorInsights])
+        self.sensorInsights = [self parseSensorInsightsFromArray:data[SENSleepResultSensorInsights]];
 }
 
 - (NSString*)retrievalKey
@@ -117,6 +121,17 @@ static NSString* const SENSleepResultRetrievalKeyFormat = @"SleepResult-%ld-%ld-
     return segments;
 }
 
+- (NSArray*)parseSensorInsightsFromArray:(NSArray*)insightData
+{
+    __block NSMutableArray* insights = [[NSMutableArray alloc] initWithCapacity:insightData.count];
+    for (NSDictionary* data in insightData) {
+        SENSleepResultSensorInsight* insight = [[SENSleepResultSensorInsight alloc] initWithDictionary:data];
+        if (insight)
+            [insights addObject:insight];
+    }
+    return insights;
+}
+
 - (void)save
 {
     [SENKeyedArchiver setObject:self forKey:[self retrievalKey] inCollection:NSStringFromClass([SENSleepResult class])];
@@ -132,7 +147,6 @@ static NSString* const SENSleepResultSegmentDuration = @"duration";
 static NSString* const SENSleepResultSegmentEventType = @"event_type";
 static NSString* const SENSleepResultSegmentMessage = @"message";
 static NSString* const SENSleepResultSegmentSleepDepth = @"sleep_depth";
-static NSString* const SENSleepResultSegmentSensors = @"sensors";
 
 - (instancetype)initWithDictionary:(NSDictionary*)segmentData
 {
@@ -143,7 +157,6 @@ static NSString* const SENSleepResultSegmentSensors = @"sensors";
         _message = segmentData[SENSleepResultSegmentMessage];
         _eventType = segmentData[SENSleepResultSegmentEventType];
         _sleepDepth = [segmentData[SENSleepResultSegmentSleepDepth] integerValue];
-        _sensors = [self parseSensorsFromDictionary:segmentData[SENSleepResultSegmentSensors]];
     }
     return self;
 }
@@ -157,7 +170,6 @@ static NSString* const SENSleepResultSegmentSensors = @"sensors";
         _message = [aDecoder decodeObjectForKey:SENSleepResultSegmentMessage];
         _eventType = [aDecoder decodeObjectForKey:SENSleepResultSegmentEventType];
         _sleepDepth = [[aDecoder decodeObjectForKey:SENSleepResultSegmentSleepDepth] integerValue];
-        _sensors = [aDecoder decodeObjectForKey:SENSleepResultSegmentSensors];
     }
     return self;
 }
@@ -170,7 +182,6 @@ static NSString* const SENSleepResultSegmentSensors = @"sensors";
     [aCoder encodeObject:_message forKey:SENSleepResultSegmentMessage];
     [aCoder encodeObject:_eventType forKey:SENSleepResultSegmentEventType];
     [aCoder encodeObject:@(_sleepDepth) forKey:SENSleepResultSegmentSleepDepth];
-    [aCoder encodeObject:_sensors forKey:SENSleepResultSegmentSensors];
 }
 
 - (void)updateWithDictionary:(NSDictionary*)data
@@ -187,63 +198,51 @@ static NSString* const SENSleepResultSegmentSensors = @"sensors";
         self.eventType = data[SENSleepResultSegmentEventType];
     if (data[SENSleepResultSegmentSleepDepth])
         self.sleepDepth = [data[SENSleepResultSegmentSleepDepth] integerValue];
-    if (data[SENSleepResultSegmentSensors])
-        self.sensors = [self parseSensorsFromDictionary:data[SENSleepResultSegments]];
-}
-
-- (NSArray*)parseSensorsFromDictionary:(NSArray*)sensorsData
-{
-    NSMutableArray* sensors = [[NSMutableArray alloc] initWithCapacity:[sensorsData count]];
-    for (NSDictionary* sensorData in sensorsData) {
-        SENSleepResultSegmentSensor* sensor = [[SENSleepResultSegmentSensor alloc] initWithDictionary:sensorData];
-        if (sensor)
-            [sensors addObject:sensor];
-    }
-    return sensors;
 }
 
 @end
 
-@implementation SENSleepResultSegmentSensor
+@implementation SENSleepResultSensorInsight
 
-static NSString* const SENSleepResultSegmentSensorValue = @"value";
-static NSString* const SENSleepResultSegmentSensorUnit = @"unit";
+static NSString* const SENSleepResultSensorInsightName = @"sensor";
+static NSString* const SENSleepResultSensorInsightMessage = @"message";
+static NSString* const SENSleepResultSensorInsightCondition = @"condition";
 
-- (instancetype)initWithDictionary:(NSDictionary*)sensorData
+- (instancetype)initWithDictionary:(NSDictionary*)data
 {
     if (self = [super init]) {
-        _name = sensorData[SENSleepResultSegmentSensorName];
-        _value = sensorData[SENSleepResultSegmentSensorValue];
-        _unit = sensorData[SENSleepResultSegmentSensorUnit];
+        _name = data[SENSleepResultSensorInsightName];
+        _message = data[SENSleepResultSensorInsightMessage];
+        _condition = [SENSensor conditionFromValue:data[SENSleepResultSensorInsightCondition]];
     }
     return self;
 }
 
-- (id)initWithCoder:(NSCoder*)aDecoder
+- (instancetype)initWithCoder:(NSCoder*)decoder
 {
     if (self = [super init]) {
-        _name = [aDecoder decodeObjectForKey:SENSleepResultSegmentSensorName];
-        _value = [aDecoder decodeObjectForKey:SENSleepResultSegmentSensorValue];
-        _unit = [aDecoder decodeObjectForKey:SENSleepResultSegmentSensorUnit];
+        _name = [decoder decodeObjectForKey:SENSleepResultSensorInsightName];
+        _message = [decoder decodeObjectForKey:SENSleepResultSensorInsightMessage];
+        _condition = [[decoder decodeObjectForKey:SENSleepResultSensorInsightCondition] integerValue];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder*)aCoder
 {
-    [aCoder encodeObject:_name forKey:SENSleepResultSegmentSensorName];
-    [aCoder encodeObject:_value forKey:SENSleepResultSegmentSensorValue];
-    [aCoder encodeObject:_unit forKey:SENSleepResultSegmentSensorUnit];
+    [aCoder encodeObject:self.name forKey:SENSleepResultSensorInsightName];
+    [aCoder encodeObject:self.message forKey:SENSleepResultSensorInsightMessage];
+    [aCoder encodeObject:@(self.condition) forKey:SENSleepResultSensorInsightCondition];
 }
 
 - (void)updateWithDictionary:(NSDictionary*)data
 {
-    if (data[SENSleepResultSegmentSensorName])
-        self.name = data[SENSleepResultSegmentSensorName];
-    if (data[SENSleepResultSegmentSensorValue])
-        self.value = data[SENSleepResultSegmentSensorValue];
-    if (data[SENSleepResultSegmentSensorUnit])
-        self.unit = data[SENSleepResultSegmentSensorUnit];
+    if (data[SENSleepResultSensorInsightName])
+        self.name = data[SENSleepResultSensorInsightName];
+    if (data[SENSleepResultSensorInsightMessage])
+        self.message = data[SENSleepResultSensorInsightMessage];
+    if (data[SENSleepResultSensorInsightCondition])
+        self.condition = [SENSensor conditionFromValue:data[SENSleepResultSensorInsightCondition]];
 }
 
 @end

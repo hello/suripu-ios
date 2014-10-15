@@ -496,7 +496,7 @@ The GNU General Public License does not permit incorporating your program into p
 
 FXKeychain
 
-Version 1.5.1, May 30th, 2014
+Version 1.5.2, October 13th, 2014
 
 Copyright (C) 2012 Charcoal Design
 

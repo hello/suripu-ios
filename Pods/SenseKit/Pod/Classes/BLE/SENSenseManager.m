@@ -661,8 +661,15 @@ static NSInteger const kSENSenseMessageVersion = 0;
 
 #pragma mark - Wifi
 
-- (void)setWifiEndPoint:(SENSenseCompletionBlock)completion {
-    // TODO (jimmy): Firmware not yet implemented
+- (void)setWiFi:(NSString*)ssid
+       password:(NSString*)password
+        success:(SENSenseSuccessBlock)success
+        failure:(SENSenseFailureBlock)failure {
+    SENSenseMessageType type = SENSenseMessageTypeSetWifiEndpoint;
+    SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
+    [builder setWifiSsid:ssid];
+    [builder setWifiPassword:password];
+    [self sendMessage:[builder build] success:success failure:failure];
 }
 
 - (void)getWifiEndPoint:(SENSenseCompletionBlock)completion {
@@ -674,16 +681,6 @@ static NSInteger const kSENSenseMessageVersion = 0;
 }
 
 - (void)stopWifiScan:(SENSenseCompletionBlock)completion {
-    // TODO (jimmy): Firmware not yet implemented
-}
-
-#pragma mark - Alarms
-
-- (void)setAlarms:(SENSenseCompletionBlock)completion {
-    // TODO (jimmy): Firmware not yet implemented
-}
-
-- (void)getAlarms:(SENSenseCompletionBlock)completion {
     // TODO (jimmy): Firmware not yet implemented
 }
 

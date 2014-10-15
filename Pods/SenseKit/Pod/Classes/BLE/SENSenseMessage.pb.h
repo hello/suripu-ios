@@ -25,6 +25,7 @@ typedef enum {
   ErrorTypeInternalDataError = 3,
   ErrorTypeDeviceDatabaseFull = 4,
   ErrorTypeDeviceNoMemory = 5,
+  ErrorTypeInternalOperationFailed = 6,
 } ErrorType;
 
 BOOL ErrorTypeIsValidValue(ErrorType value);
@@ -46,6 +47,10 @@ typedef enum {
   SENSenseMessageTypeError = 13,
   SENSenseMessageTypePairSense = 14,
   SENSenseMessageTypeUnpairPill = 15,
+  SENSenseMessageTypeDfuBegin = 16,
+  SENSenseMessageTypePillData = 17,
+  SENSenseMessageTypePillHeartbeat = 18,
+  SENSenseMessageTypePillDfuBegin = 19,
 } SENSenseMessageType;
 
 BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
@@ -60,19 +65,29 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 @interface SENSenseMessage : PBGeneratedMessage {
 @private
   BOOL hasVersion_:1;
+  BOOL hasBatteryLevel_:1;
+  BOOL hasUptime_:1;
+  BOOL hasMotionData_:1;
+  BOOL hasFirmwareVersion_:1;
   BOOL hasDeviceId_:1;
   BOOL hasAccountId_:1;
   BOOL hasWifiName_:1;
   BOOL hasWifiSsid_:1;
   BOOL hasWifiPassword_:1;
+  BOOL hasMotionDataEncrypted_:1;
   BOOL hasType_:1;
   BOOL hasError_:1;
   long version;
+  long batteryLevel;
+  long uptime;
+  long motionData;
+  long firmwareVersion;
   NSString* deviceId;
   NSString* accountId;
   NSString* wifiName;
   NSString* wifiSsid;
   NSString* wifiPassword;
+  NSData* motionDataEncrypted;
   SENSenseMessageType type;
   ErrorType error;
 }
@@ -84,6 +99,11 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 - (BOOL) hasWifiName;
 - (BOOL) hasWifiSsid;
 - (BOOL) hasWifiPassword;
+- (BOOL) hasBatteryLevel;
+- (BOOL) hasUptime;
+- (BOOL) hasMotionData;
+- (BOOL) hasMotionDataEncrypted;
+- (BOOL) hasFirmwareVersion;
 @property (readonly) long version;
 @property (readonly) SENSenseMessageType type;
 @property (readonly, strong) NSString* deviceId;
@@ -92,6 +112,11 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 @property (readonly, strong) NSString* wifiName;
 @property (readonly, strong) NSString* wifiSsid;
 @property (readonly, strong) NSString* wifiPassword;
+@property (readonly) long batteryLevel;
+@property (readonly) long uptime;
+@property (readonly) long motionData;
+@property (readonly, strong) NSData* motionDataEncrypted;
+@property (readonly) long firmwareVersion;
 
 + (SENSenseMessage*) defaultInstance;
 - (SENSenseMessage*) defaultInstance;
@@ -167,6 +192,31 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 - (NSString*) wifiPassword;
 - (SENSenseMessageBuilder*) setWifiPassword:(NSString*) value;
 - (SENSenseMessageBuilder*) clearWifiPassword;
+
+- (BOOL) hasBatteryLevel;
+- (long) batteryLevel;
+- (SENSenseMessageBuilder*) setBatteryLevel:(long) value;
+- (SENSenseMessageBuilder*) clearBatteryLevel;
+
+- (BOOL) hasUptime;
+- (long) uptime;
+- (SENSenseMessageBuilder*) setUptime:(long) value;
+- (SENSenseMessageBuilder*) clearUptime;
+
+- (BOOL) hasMotionData;
+- (long) motionData;
+- (SENSenseMessageBuilder*) setMotionData:(long) value;
+- (SENSenseMessageBuilder*) clearMotionData;
+
+- (BOOL) hasMotionDataEncrypted;
+- (NSData*) motionDataEncrypted;
+- (SENSenseMessageBuilder*) setMotionDataEncrypted:(NSData*) value;
+- (SENSenseMessageBuilder*) clearMotionDataEncrypted;
+
+- (BOOL) hasFirmwareVersion;
+- (long) firmwareVersion;
+- (SENSenseMessageBuilder*) setFirmwareVersion:(long) value;
+- (SENSenseMessageBuilder*) clearFirmwareVersion;
 @end
 
 

@@ -27,7 +27,7 @@ static CGFloat const kHEMActionDisabledAlpha = 0.3f;
         [self setTitleColor:[HelloStyleKit onboardingBlueColor] forState:UIControlStateNormal];
         [self setTitleColor:[[HelloStyleKit onboardingBlueColor] colorWithAlphaComponent:kHEMActionDisabledAlpha]
                    forState:UIControlStateDisabled];
-        [self.titleLabel setFont:[UIFont fontWithName:@"Calibre-Medium" size:16.f]];
+        [self.titleLabel setFont:[UIFont fontWithName:@"Calibre-Medium" size:15.f]];
     }
     return self;
 }

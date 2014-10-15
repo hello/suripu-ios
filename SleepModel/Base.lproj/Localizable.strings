@@ -52,7 +52,7 @@
 "pairing.failed.title" = "Pairing Failed";
 "pairing.error.sense-not-found" = "Sense was not detected.  Ensure Sense is on and near your phone.";
 "pairing.error.could-not-pair" = "Could not pair with Sense.  If there is a phone already paired to Sense, unpair from that phone then try again.";
-"pairing.error.pill-pair-failed" = "Unable to find any Sleep Pills to pair with.  Make sure they are nearby and try again.";
+
 "pairing.error.unexpected-disconnect" = "Connection from Sense was broken.  Try again.";
 "pairing.error.no-response" = "Sense did not respond in time.";
 "pairing.done" = "Paired.";
@@ -66,6 +66,8 @@
 "pill-pair.subtitle.shake-pill" = "Gently shake your Sleep Pill for three seconds.  When your Sleep Pill lights up";
 "pill-pair.subtitle.tap-continue" = "tap continue.";
 "pill-pair.pairing-message" = "Pairing your Sleep Pill";
+"pill-pair.error.pill-pair-failed" = "Unable to find any Sleep Pills to pair with.  Make sure they are nearby and try again.";
+"pill-pair.error.timed-out" = "Device did not respond in time.";
 
 // location
 "location.error.title" = "Unknown Location";

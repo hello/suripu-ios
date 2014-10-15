@@ -192,6 +192,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf && ![strongSelf isTimedOut]) {
             [strongSelf cacheManager];
+
             NSString* msg = NSLocalizedString(@"pairing.done", nil);
             [strongSelf stopActivityWithMessage:msg completion:^{
                 NSString* segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];

@@ -33,6 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self navigationItem] setHidesBackButton:YES];
     [[self ssidField] setText:[HEMWifiUtils connectedWifiSSID]];
 }
 

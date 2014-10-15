@@ -18,6 +18,8 @@
 #import "HelloStyleKit.h"
 #import "HEMActivityCoverView.h"
 
+static CGFloat const kHEMPillPairTimeout = 15.0f;
+
 @interface HEMPillPairViewController()
 
 @property (weak, nonatomic)   IBOutlet UILabel *titleLabel;
@@ -26,6 +28,8 @@
 @property (weak, nonatomic)   IBOutlet HEMActionButton *readyButton;
 @property (weak, nonatomic)   IBOutlet UIButton *helpButton;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
+
+@property (assign, nonatomic) BOOL pairTimedOut;
 
 
 @property (strong, nonatomic) id disconnectObserverId;
@@ -74,6 +78,14 @@
     }
 }
 
+- (void)pairingTimedOut {
+    [self setPairTimedOut:YES];
+    [[self activityView] dismissWithResultText:nil completion:^{
+        [self showMessageDialog:NSLocalizedString(@"pill-pair.error.timed-out", nil)
+                          title:NSLocalizedString(@"pairing.failed.title", nil)];
+    }];
+}
+
 - (IBAction)pairPill:(id)sender {
     if ([self activityView] == nil) {
         [self setActivityView:[[HEMActivityCoverView alloc] init]];
@@ -88,10 +100,15 @@
         SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
         NSString* token = [SENAuthorizationService accessToken];
         
+        [self setPairTimedOut:NO];
+        
         __weak typeof(self) weakSelf = self;
         [manager pairWithPill:token success:^(id response) {
             __block typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
+            if (strongSelf && ![strongSelf pairTimedOut]) {
+                [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
+                                                         selector:@selector(pairingTimedOut)
+                                                           object:nil];
                 NSString* paired = NSLocalizedString(@"pairing.done", nil);
                 [[strongSelf activityView] dismissWithResultText:paired completion:^{
                     [strongSelf disconnectSenseAndClearCache];
@@ -102,9 +119,12 @@
             }
         } failure:^(NSError *error) {
             __block typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
+            if (strongSelf && ![strongSelf pairTimedOut]) {
+                [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
+                                                         selector:@selector(pairingTimedOut)
+                                                           object:nil];
                 [[strongSelf activityView] dismissWithResultText:nil completion:^{
-                    [strongSelf showMessageDialog:NSLocalizedString(@"pairing.error.pill-pair-failed", nil)
+                    [strongSelf showMessageDialog:NSLocalizedString(@"pill-pair.error.pill-pair-failed", nil)
                                             title:NSLocalizedString(@"pairing.failed.title", nil)];
                 }];
             }

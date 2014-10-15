@@ -331,14 +331,13 @@ static NSString* const sensorTypeParticulates = @"particulates";
 
 - (BOOL)segmentForSleepExistsAtIndexPath:(NSIndexPath*)indexPath
 {
-    SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
-    return !segment.eventType || [segment.eventType isEqual:[NSNull null]];
+    return indexPath.section == HEMSleepGraphCollectionViewSegmentSection && ![self segmentForEventExistsAtIndexPath:indexPath];
 }
 
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath*)indexPath
 {
     SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
-    return segment.eventType && ![segment.eventType isEqual:[NSNull null]];
+    return ![segment.eventType isEqual:[NSNull null]] && segment.eventType.length > 0;
 }
 
 @end

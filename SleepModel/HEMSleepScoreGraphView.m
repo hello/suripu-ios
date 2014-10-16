@@ -52,6 +52,7 @@
     if (sleepScore == _sleepScore)
         return;
 
+    self.targetSleepScore = sleepScore;
     _sleepScore = sleepScore;
     [self setNeedsDisplay];
 }

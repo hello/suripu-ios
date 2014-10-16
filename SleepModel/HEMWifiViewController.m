@@ -46,11 +46,6 @@
     }
 }
 
-- (NSString*)trim:(NSString*)value {
-    NSCharacterSet* spaces = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-    return [value stringByTrimmingCharactersInSet:spaces];
-}
-
 - (void)showActivity {
     [[self doneButton] setEnabled:NO];
     [[self activityIndicator] startAnimating];
@@ -77,8 +72,10 @@
 - (IBAction)connectWifi:(id)sender {
     if (![[self doneButton] isEnabled]) return;
     
-    NSString* ssid = [self trim:[[self ssidField] text]];
-    NSString* pass = [self trim:[[self passwordField] text]];
+    // from a google search, spaces are allowed in both ssid and passwords so we
+    // will have to take the values as is.
+    NSString* ssid = [[self ssidField] text];
+    NSString* pass = [[self passwordField] text];
     if ([ssid length] > 0 && [pass length] > 0) {
         [self showActivity];
         

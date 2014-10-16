@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "NSMutableAttributedString+HEMFormat.h"
+
 #import "HEMSenseSetupViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingUtils.h"
@@ -29,17 +31,14 @@
 }
 
 - (void)setupDescription {
-    NSString* plugInSenseToGlow = [NSString stringWithFormat:@"%@ ",
-                                   NSLocalizedString(@"sense-setup.description.plug-n-glow", nil)];
+    NSString* descFormat = NSLocalizedString(@"sense-setup.description.format", nil);
     NSString* purple = NSLocalizedString(@"onboarding.purple", nil);
-    NSString* onAndReady = [NSString stringWithFormat:@" %@",
-                            NSLocalizedString(@"sense-setup.description.on-and-ready", nil)];
+    
+    NSArray* args = @[[HEMOnboardingUtils boldAttributedText:purple
+                                                   withColor:[HelloStyleKit purple]]];
     
     NSMutableAttributedString* attrText
-        = [[NSMutableAttributedString alloc] initWithString:plugInSenseToGlow];
-    [attrText appendAttributedString:[HEMOnboardingUtils boldAttributedText:purple
-                                                                  withColor:[HelloStyleKit purple]]];
-    [attrText appendAttributedString:[[NSAttributedString alloc] initWithString:onAndReady]];
+        = [[NSMutableAttributedString alloc] initWithFormat:descFormat args:args];
     
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
     

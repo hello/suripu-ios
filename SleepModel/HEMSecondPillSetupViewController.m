@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "NSMutableAttributedString+HEMFormat.h"
+
 #import "HEMSecondPillSetupViewController.h"
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
@@ -31,29 +33,20 @@
 }
 
 - (void)setupDescription {
-    NSString* firstPara = NSLocalizedString(@"second-pill.description.pairing-mode", nil);
-    NSString* askThenGo = [NSString stringWithFormat:@"\n\n%@ ",
-                           NSLocalizedString(@"second-pill.description.ask-to-pair", nil)];
+    NSString* descFormat = NSLocalizedString(@"second-pill.description.format", nil);
     NSString* senseSettings = NSLocalizedString(@"second-pill.description.sense-settings", nil);
-    NSString* andTap = [NSString stringWithFormat:@" %@ ",
-                        NSLocalizedString(@"second-pill.description.and-tap", nil)];
     NSString* intoPairing = NSLocalizedString(@"second-pill.description.put-into-pairing", nil);
-    NSString* senseGlow = [NSString stringWithFormat:@"\n\n%@ ",
-                           NSLocalizedString(@"second-pill.description.sense-glow", nil)];
     NSString* purple = NSLocalizedString(@"onboarding.purple", nil);
-    NSString* whenInMode = [NSString stringWithFormat:@" %@",
-                            NSLocalizedString(@"second-pill.description.when-in-mode", nil)];
+    
+    NSArray* args = @[
+        [HEMOnboardingUtils boldAttributedText:senseSettings],
+        [HEMOnboardingUtils boldAttributedText:intoPairing],
+        [HEMOnboardingUtils boldAttributedText:purple
+                                     withColor:[HelloStyleKit purple]]
+    ];
     
     NSMutableAttributedString* attrDesc
-        = [[NSMutableAttributedString alloc] initWithString:firstPara];
-    [attrDesc appendAttributedString:[[NSAttributedString alloc] initWithString:askThenGo]];
-    [attrDesc appendAttributedString:[HEMOnboardingUtils boldAttributedText:senseSettings]];
-    [attrDesc appendAttributedString:[[NSAttributedString alloc] initWithString:andTap]];
-    [attrDesc appendAttributedString:[HEMOnboardingUtils boldAttributedText:intoPairing]];
-    [attrDesc appendAttributedString:[[NSAttributedString alloc] initWithString:senseGlow]];
-    [attrDesc appendAttributedString:[HEMOnboardingUtils boldAttributedText:purple
-                                                                  withColor:[HelloStyleKit purple]]];
-    [attrDesc appendAttributedString:[[NSAttributedString alloc] initWithString:whenInMode]];
+        = [[NSMutableAttributedString alloc] initWithFormat:descFormat args:args];
     
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
     

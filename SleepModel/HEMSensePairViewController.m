@@ -7,6 +7,8 @@
 //
 #import <SenseKit/BLE.h>
 
+#import "NSMutableAttributedString+HEMFormat.h"
+
 #import "HEMSensePairViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
@@ -49,17 +51,13 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)setupDescription {
-    NSString* pairNow = [NSString stringWithFormat:@"%@ ",
-                         NSLocalizedString(@"sense-pair.description.pair-now", nil)];
+    NSString* descFormat = NSLocalizedString(@"sense-pair.description.format", nil);
     NSString* purple = NSLocalizedString(@"onboarding.purple", nil);
-    NSString* thenTap = [NSString stringWithFormat:@" %@",
-                         NSLocalizedString(@"sense-pair.description.then-tap", nil)];
+    
+    NSArray* args = @[[HEMOnboardingUtils boldAttributedText:purple withColor:[HelloStyleKit purple]]];
     
     NSMutableAttributedString* attrDesc
-        = [[NSMutableAttributedString alloc] initWithString:pairNow];
-    [attrDesc appendAttributedString:[HEMOnboardingUtils boldAttributedText:purple
-                                                                  withColor:[HelloStyleKit purple]]];
-    [attrDesc appendAttributedString:[[NSAttributedString alloc] initWithString:thenTap]];
+        = [[NSMutableAttributedString alloc] initWithFormat:descFormat args:args];
     
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
     

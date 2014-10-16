@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "NSMutableAttributedString+HEMFormat.h"
+
 #import "HEMNoBLEViewController.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMBluetoothUtils.h"
@@ -31,24 +33,19 @@
 }
 
 - (void)setupSubtitleText {
-    NSString* firstParagraph = NSLocalizedString(@"no-bluetooth.subtitle.ble-required", nil);
-    NSString* launch = [NSString stringWithFormat:@"\n\n%@ ", NSLocalizedString(@"no-bluetooth.launch-the", nil)];
+    NSString* subtitleFormat = NSLocalizedString(@"no-bluetooth.subtitle.format", nil);
     NSString* settings = NSLocalizedString(@"no-bluetooth.settings", nil);
-    NSString* appTap = [NSString stringWithFormat:@" %@ ",
-                        NSLocalizedString(@"no-bluetooth.app-tap", nil)];
     NSString* bluetooth = NSLocalizedString(@"no-bluetooth.bluetooth", nil);
-    NSString* flipSwitch = [NSString stringWithFormat:@" %@ ", NSLocalizedString(@"no-bluetooth.flip-switch", nil)];
     NSString* on = NSLocalizedString(@"no-bluetooth.on", nil);
 
-    NSMutableAttributedString* attrSubtitle =
-        [[NSMutableAttributedString alloc] initWithString:firstParagraph];
+    NSArray* args = @[
+        [HEMOnboardingUtils boldAttributedText:settings],
+        [HEMOnboardingUtils boldAttributedText:bluetooth],
+        [HEMOnboardingUtils boldAttributedText:on]
+    ];
     
-    [attrSubtitle appendAttributedString:[[NSAttributedString alloc] initWithString:launch]];
-    [attrSubtitle appendAttributedString:[HEMOnboardingUtils boldAttributedText:settings]];
-    [attrSubtitle appendAttributedString:[[NSAttributedString alloc] initWithString:appTap]];
-    [attrSubtitle appendAttributedString:[HEMOnboardingUtils boldAttributedText:bluetooth]];
-    [attrSubtitle appendAttributedString:[[NSAttributedString alloc] initWithString:flipSwitch]];
-    [attrSubtitle appendAttributedString:[HEMOnboardingUtils boldAttributedText:on]];
+    NSMutableAttributedString* attrSubtitle =
+        [[NSMutableAttributedString alloc] initWithFormat:subtitleFormat args:args];
     
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
     

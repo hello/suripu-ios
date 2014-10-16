@@ -8,6 +8,8 @@
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENAuthorizationService.h>
 
+#import "NSMutableAttributedString+HEMFormat.h"
+
 #import "HEMPillPairViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
@@ -44,18 +46,16 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
 }
 
 - (void)setupSubtitle {
-    NSString* shakeIt = [NSString stringWithFormat:@"%@ ",
-                         NSLocalizedString(@"pill-pair.subtitle.shake-pill", nil)];
+    NSString* subtitleFormat = NSLocalizedString(@"pill-pair.subtitle.format", nil);
     NSString* green = NSLocalizedString(@"onboarding.green", nil);
-    NSString* thenTap = [NSString stringWithFormat:@", %@",
-                         NSLocalizedString(@"pill-pair.subtitle.tap-continue", nil)];
+    
+    NSArray* args = @[
+        [HEMOnboardingUtils boldAttributedText:green withColor:[HelloStyleKit green]]
+    ];
     
     NSMutableAttributedString* attrSubtitle
-        = [[NSMutableAttributedString alloc] initWithString:shakeIt];
-    [attrSubtitle appendAttributedString:[HEMOnboardingUtils boldAttributedText:green
-                                                                  withColor:[HelloStyleKit green]]];
-    [attrSubtitle appendAttributedString:[[NSAttributedString alloc] initWithString:thenTap]];
-    
+        = [[NSMutableAttributedString alloc] initWithFormat:subtitleFormat args:args];
+
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
     
     [[self subtitleLabel] setAttributedText:attrSubtitle];

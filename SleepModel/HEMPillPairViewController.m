@@ -117,7 +117,7 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
                     [strongSelf disconnectSenseAndClearCache];
                     
                     NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
-                    [strongSelf performSegueWithIdentifier:segueId sender:self];
+                    [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
                 }];
             }
         } failure:^(NSError *error) {
@@ -140,6 +140,9 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
     // TODO (jimmy): the help website is still being discussed / worked on.  When
     // we know what to actually point to, we likely will open up a browser to
     // show the help
+#pragma message ("remove when we have devices!")
+    NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
+    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 #pragma mark - Clean Up

@@ -114,6 +114,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     // TODO (jimmy): the help website is still being discussed / worked on.  When
     // we know what to actually point to, we likely will open up a browser to
     // show the help
+    
+#pragma message ("remove when we all have devices!")
+    NSString* segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
+    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 #pragma mark - Scanning

@@ -13,7 +13,9 @@
 #import "HEMAnimationUtils.h"
 #import "HEMSignUpViewController.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMOnboardingUtils.h"
 
+static CGFloat const kHEMWelcomeMotionEffectBorder = 10.0f;
 static CGFloat const kHEMWelcomeButtonAnimationDuration = 0.5f;
 static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
@@ -36,6 +38,7 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *signupCenterXConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cancelCenterXConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *playCenterYConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgCenterXConstraint;
 
 @end
 
@@ -43,6 +46,8 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self setSubtitleText];
     
     UIColor* whiteColor = [UIColor whiteColor];
     CGColorRef white = [whiteColor CGColor];
@@ -59,7 +64,17 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
     [[self signupCenterXConstraint] setConstant:-width];
     [[self cancelCenterXConstraint] setConstant:-width];
  
-    [[self bgImageView] add3DEffectWithBorder:5.0f];
+    [[self bgImageView] add3DEffectWithBorder:kHEMWelcomeMotionEffectBorder];
+    
+}
+
+- (void)setSubtitleText {
+    NSString* text = NSLocalizedString(@"welcome.subtitle", nil);
+    
+    NSMutableAttributedString* attrText = [[NSMutableAttributedString alloc] initWithString:text];
+    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
+    
+    [[self subtitleLabel] setAttributedText:attrText];
 }
 
 - (void)adjustConstraintsForIPhone4 {
@@ -90,7 +105,7 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
         // work with autolayout constraints :(
         [UIView animateWithDuration:kHEMWelcomeButtonAnimationDuration
                               delay:0.0f
-                            options:UIViewAnimationOptionOverrideInheritedCurve
+                            options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              [[self signinButton] setAlpha:alpha];
                              [[self loginCenterXConstraint] setConstant:xConstant];
@@ -100,7 +115,7 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
         
         [UIView animateWithDuration:kHEMWelcomeButtonAnimationDuration
                               delay:kHEMWelcomeButtonDelayIncrements
-                            options:UIViewAnimationOptionOverrideInheritedCurve
+                            options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              [[self signupButton] setAlpha:alpha];
                              [[self signupCenterXConstraint] setConstant:xConstant];
@@ -110,7 +125,7 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
         
         [UIView animateWithDuration:kHEMWelcomeButtonAnimationDuration
                               delay:kHEMWelcomeButtonDelayIncrements*2
-                            options:UIViewAnimationOptionOverrideInheritedCurve
+                            options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              [[self cancelGetStartedButton] setAlpha:alpha];
                              [[self cancelCenterXConstraint] setConstant:xConstant];
@@ -132,17 +147,38 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
     }
 }
 
+- (void)updateTtitle:(NSString*)text alignment:(NSTextAlignment)alignment {
+    CGFloat halfDuration = kHEMWelcomeButtonAnimationDuration/2;
+    [UIView animateWithDuration:halfDuration
+                     animations:^{
+                         [[self titleLabel] setAlpha:0.0f];
+                     }
+                     completion:^(BOOL finished) {
+                         [[self titleLabel] setTextAlignment:alignment];
+                         [[self titleLabel] setText:text];
+                         [UIView animateWithDuration:halfDuration
+                                          animations:^{
+                                              [[self titleLabel] setAlpha:1.0f];
+                                          }];
+                     }];
+}
+
 - (void)showInitialActions:(NSNumber*)showValue {
     BOOL show = [showValue boolValue];
     CGFloat constant = CGRectGetWidth([[self view] bounds]);
     CGFloat alpha = 0.0f;
+    CGFloat bgXConstant = ((CGRectGetWidth([[self bgImageView] bounds]) - constant)/2)
+                            - kHEMWelcomeMotionEffectBorder;
     NSString* timingFunction = kCAMediaTimingFunctionEaseIn;
-    NSString* title = NSLocalizedString(@"welcome.title.get-started", nil);
+    NSString* title = NSLocalizedString(@"welcome.title.welcome", nil);
+    NSTextAlignment alignment = NSTextAlignmentCenter;
     
     if (show) {
         alpha = 1.0f;
+        bgXConstant = -(bgXConstant);
         constant = 0.0f;
         timingFunction = kCAMediaTimingFunctionEaseOut;
+        alignment = NSTextAlignmentLeft;
         title = NSLocalizedString(@"welcome.title.meet-sense", nil);
         
         [[self getStartedButton] setHidden:NO];
@@ -150,14 +186,13 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
         [[self playButton] setHidden:NO];
     }
     
-    [[self titleLabel] setText:title];
-    
     [HEMAnimationUtils transactAnimation:^{
+        [self updateTtitle:title alignment:alignment];
         // why not use CABasicAnimations here?  well it's because those do not
         // work with autolayout constraints :(
         [UIView animateWithDuration:kHEMWelcomeButtonAnimationDuration
                               delay:0.0f
-                            options:UIViewAnimationOptionOverrideInheritedCurve
+                            options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              [[self getStartedButton] setAlpha:alpha];
                              [[self getStartedCenterXConstraint] setConstant:constant];
@@ -167,7 +202,7 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
         
         [UIView animateWithDuration:kHEMWelcomeButtonAnimationDuration
                               delay:kHEMWelcomeButtonDelayIncrements
-                            options:UIViewAnimationOptionOverrideInheritedCurve
+                            options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              [[self noSenseButton] setAlpha:alpha];
                              [[self noSenseCenterXConstraint] setConstant:constant];
@@ -177,9 +212,13 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
         
         [UIView animateWithDuration:kHEMWelcomeButtonDelayIncrements +
                                     kHEMWelcomeButtonAnimationDuration
+                              delay:0.0f
+                            options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              [[self playButton] setAlpha:alpha];
                              [[self subtitleLabel] setAlpha:alpha];
+                             [[self bgCenterXConstraint] setConstant:bgXConstant];
+                             [[self view] layoutIfNeeded];
                          }
                          completion:nil];
     } completion:^{

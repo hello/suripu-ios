@@ -193,14 +193,23 @@ typedef enum {
 
 #pragma mark - Wifi
 
-- (void)setWifiEndPoint:(SENSenseCompletionBlock)completion;
+/**
+ * @method
+ * Provide the initialized Sense device with the wifi credentials that it should
+ * use to connect itself with the Sense API.
+ * 
+ * @param ssid:     the SSID of the WiFi
+ * @param password: the password to the WiFI
+ * @param success:  the block to call when the command succeeded
+ * @param failure:  the block to call if the command encountered an error
+ */
+- (void)setWiFi:(NSString*)ssid
+       password:(NSString*)password
+        success:(SENSenseSuccessBlock)success
+        failure:(SENSenseFailureBlock)failure;
+
 - (void)getWifiEndPoint:(SENSenseCompletionBlock)completion;
 - (void)scanForWifi:(SENSenseCompletionBlock)completion;
 - (void)stopWifiScan:(SENSenseCompletionBlock)completion;
-
-#pragma mark - Alarms
-
-- (void)setAlarms:(SENSenseCompletionBlock)completion;
-- (void)getAlarms:(SENSenseCompletionBlock)completion;
 
 @end

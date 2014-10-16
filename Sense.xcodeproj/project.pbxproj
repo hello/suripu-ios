@@ -232,10 +232,27 @@
 		8AFE782D19E8C2170000F881 /* wakeup.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE77DF19E8C2170000F881 /* wakeup.png */; };
 		8AFE782E19E8C2170000F881 /* wakeup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE77E019E8C2170000F881 /* wakeup@2x.png */; };
 		8AFE782F19E8C2170000F881 /* wakeup@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE77E119E8C2170000F881 /* wakeup@3x.png */; };
+		BF14E3BA19EF3BD10006EFEA /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3B419EF3BD10006EFEA /* map.png */; };
+		BF14E3BB19EF3BD10006EFEA /* map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3B519EF3BD10006EFEA /* map@2x.png */; };
+		BF14E3BC19EF3BD10006EFEA /* map@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3B619EF3BD10006EFEA /* map@3x.png */; };
+		BF14E3BD19EF3BD10006EFEA /* onboarding_bg_wide.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3B719EF3BD10006EFEA /* onboarding_bg_wide.png */; };
+		BF14E3BE19EF3BD10006EFEA /* onboarding_bg_wide@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3B819EF3BD10006EFEA /* onboarding_bg_wide@2x.png */; };
+		BF14E3BF19EF3BD10006EFEA /* onboarding_bg_wide@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3B919EF3BD10006EFEA /* onboarding_bg_wide@3x.png */; };
+		BF14E3C419EF3C020006EFEA /* HEMBluetoothUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C119EF3C020006EFEA /* HEMBluetoothUtils.m */; };
+		BF14E3C519EF3C020006EFEA /* HEMWifiUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C319EF3C020006EFEA /* HEMWifiUtils.m */; };
+		BF14E3C819EF3C1C0006EFEA /* HEMActivityCoverView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3C719EF3C1C0006EFEA /* HEMActivityCoverView.m */; };
+		BF14E3D719EF3C3D0006EFEA /* HEMEndSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3CA19EF3C3D0006EFEA /* HEMEndSetupViewController.m */; };
+		BF14E3D819EF3C3D0006EFEA /* HEMNoBLEViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3CC19EF3C3D0006EFEA /* HEMNoBLEViewController.m */; };
+		BF14E3D919EF3C3D0006EFEA /* HEMPillIntroViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3CE19EF3C3D0006EFEA /* HEMPillIntroViewController.m */; };
+		BF14E3DA19EF3C3D0006EFEA /* HEMSecondPillSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3D019EF3C3D0006EFEA /* HEMSecondPillSetupViewController.m */; };
+		BF14E3DB19EF3C3D0006EFEA /* HEMSenseSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3D219EF3C3D0006EFEA /* HEMSenseSetupViewController.m */; };
+		BF14E3DC19EF3C3D0006EFEA /* HEMStartSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3D419EF3C3D0006EFEA /* HEMStartSetupViewController.m */; };
+		BF14E3DD19EF3C3D0006EFEA /* HEMTwoPillSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3D619EF3C3D0006EFEA /* HEMTwoPillSetupViewController.m */; };
+		BF14E3E019EF3C520006EFEA /* HEMOnboardingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3DF19EF3C520006EFEA /* HEMOnboardingUtils.m */; };
+		BF14E3E619EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3E519EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m */; };
 		BF3D2E4C19C37A62001DEEBA /* downArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3D2E4A19C37A62001DEEBA /* downArrow.png */; };
 		BF3D2E4D19C37A62001DEEBA /* downArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF3D2E4B19C37A62001DEEBA /* downArrow@2x.png */; };
 		BF50BD4F19E8D21F00F3B687 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
-		BF5E443719A7AA3D00278A2F /* HEMWifiCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5E443619A7AA3D00278A2F /* HEMWifiCenter.m */; };
 		BF5E444B19AD414500278A2F /* doubleArrow.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5E444919AD414500278A2F /* doubleArrow.png */; };
 		BF5E444C19AD414500278A2F /* doubleArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5E444A19AD414500278A2F /* doubleArrow@2x.png */; };
 		BF5E444F19AD494500278A2F /* phoneWithEmoticons.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5E444D19AD494500278A2F /* phoneWithEmoticons.png */; };
@@ -283,9 +300,6 @@
 		BFB93C7919CB7F89005067D0 /* HEMMathUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB93C7819CB7F89005067D0 /* HEMMathUtil.m */; };
 		BFC3AA0719C2655F0055D308 /* HEMInfoAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3AA0619C2655F0055D308 /* HEMInfoAlertView.m */; };
 		BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3AA0F19C27A610055D308 /* HEMSleepQuestionsViewController.m */; };
-		BFC8214D19E7402500E09D5D /* onboarding_bg.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8214A19E7402500E09D5D /* onboarding_bg.png */; };
-		BFC8214E19E7402500E09D5D /* onboarding_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8214B19E7402500E09D5D /* onboarding_bg@2x.png */; };
-		BFC8214F19E7402500E09D5D /* onboarding_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8214C19E7402500E09D5D /* onboarding_bg@3x.png */; };
 		BFC8215319E7441200E09D5D /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215019E7441200E09D5D /* play.png */; };
 		BFC8215419E7441200E09D5D /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215119E7441200E09D5D /* play@2x.png */; };
 		BFC8215519E7441200E09D5D /* play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215219E7441200E09D5D /* play@3x.png */; };
@@ -302,8 +316,6 @@
 		BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */; };
 		BFEAA0BB19A578EE002FBD44 /* HEMLocationCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0BA19A578EE002FBD44 /* HEMLocationCenter.m */; };
 		BFEAA0BD19A57A89002FBD44 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */; };
-		BFEAA0C619A65E54002FBD44 /* mapIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0C419A65E54002FBD44 /* mapIcon.png */; };
-		BFEAA0C719A65E54002FBD44 /* mapIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */; };
 		BFEAA0CA19A66746002FBD44 /* HEMValueSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0C919A66746002FBD44 /* HEMValueSliderView.m */; };
 		BFEAA0CD19A6D9E6002FBD44 /* HEMBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0CC19A6D9E6002FBD44 /* HEMBaseController.m */; };
 		D12BBDB2950F47EDA9F85F68 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */; };
@@ -637,10 +649,38 @@
 		8AFE77DF19E8C2170000F881 /* wakeup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wakeup.png; path = images/wakeup.png; sourceTree = "<group>"; };
 		8AFE77E019E8C2170000F881 /* wakeup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wakeup@2x.png"; path = "images/wakeup@2x.png"; sourceTree = "<group>"; };
 		8AFE77E119E8C2170000F881 /* wakeup@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "wakeup@3x.png"; path = "images/wakeup@3x.png"; sourceTree = "<group>"; };
+		BF14E3B419EF3BD10006EFEA /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = map.png; path = images/map.png; sourceTree = "<group>"; };
+		BF14E3B519EF3BD10006EFEA /* map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map@2x.png"; path = "images/map@2x.png"; sourceTree = "<group>"; };
+		BF14E3B619EF3BD10006EFEA /* map@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map@3x.png"; path = "images/map@3x.png"; sourceTree = "<group>"; };
+		BF14E3B719EF3BD10006EFEA /* onboarding_bg_wide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = onboarding_bg_wide.png; path = images/onboarding_bg_wide.png; sourceTree = "<group>"; };
+		BF14E3B819EF3BD10006EFEA /* onboarding_bg_wide@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding_bg_wide@2x.png"; path = "images/onboarding_bg_wide@2x.png"; sourceTree = "<group>"; };
+		BF14E3B919EF3BD10006EFEA /* onboarding_bg_wide@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding_bg_wide@3x.png"; path = "images/onboarding_bg_wide@3x.png"; sourceTree = "<group>"; };
+		BF14E3C019EF3C020006EFEA /* HEMBluetoothUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBluetoothUtils.h; sourceTree = "<group>"; };
+		BF14E3C119EF3C020006EFEA /* HEMBluetoothUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBluetoothUtils.m; sourceTree = "<group>"; };
+		BF14E3C219EF3C020006EFEA /* HEMWifiUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiUtils.h; sourceTree = "<group>"; };
+		BF14E3C319EF3C020006EFEA /* HEMWifiUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWifiUtils.m; sourceTree = "<group>"; };
+		BF14E3C619EF3C1C0006EFEA /* HEMActivityCoverView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActivityCoverView.h; sourceTree = "<group>"; };
+		BF14E3C719EF3C1C0006EFEA /* HEMActivityCoverView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMActivityCoverView.m; sourceTree = "<group>"; };
+		BF14E3C919EF3C3D0006EFEA /* HEMEndSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMEndSetupViewController.h; sourceTree = "<group>"; };
+		BF14E3CA19EF3C3D0006EFEA /* HEMEndSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMEndSetupViewController.m; sourceTree = "<group>"; };
+		BF14E3CB19EF3C3D0006EFEA /* HEMNoBLEViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNoBLEViewController.h; sourceTree = "<group>"; };
+		BF14E3CC19EF3C3D0006EFEA /* HEMNoBLEViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNoBLEViewController.m; sourceTree = "<group>"; };
+		BF14E3CD19EF3C3D0006EFEA /* HEMPillIntroViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillIntroViewController.h; sourceTree = "<group>"; };
+		BF14E3CE19EF3C3D0006EFEA /* HEMPillIntroViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillIntroViewController.m; sourceTree = "<group>"; };
+		BF14E3CF19EF3C3D0006EFEA /* HEMSecondPillSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSecondPillSetupViewController.h; sourceTree = "<group>"; };
+		BF14E3D019EF3C3D0006EFEA /* HEMSecondPillSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSecondPillSetupViewController.m; sourceTree = "<group>"; };
+		BF14E3D119EF3C3D0006EFEA /* HEMSenseSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseSetupViewController.h; sourceTree = "<group>"; };
+		BF14E3D219EF3C3D0006EFEA /* HEMSenseSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseSetupViewController.m; sourceTree = "<group>"; };
+		BF14E3D319EF3C3D0006EFEA /* HEMStartSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMStartSetupViewController.h; sourceTree = "<group>"; };
+		BF14E3D419EF3C3D0006EFEA /* HEMStartSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMStartSetupViewController.m; sourceTree = "<group>"; };
+		BF14E3D519EF3C3D0006EFEA /* HEMTwoPillSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTwoPillSetupViewController.h; sourceTree = "<group>"; };
+		BF14E3D619EF3C3D0006EFEA /* HEMTwoPillSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTwoPillSetupViewController.m; sourceTree = "<group>"; };
+		BF14E3DE19EF3C520006EFEA /* HEMOnboardingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingUtils.h; sourceTree = "<group>"; };
+		BF14E3DF19EF3C520006EFEA /* HEMOnboardingUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingUtils.m; sourceTree = "<group>"; };
+		BF14E3E419EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+HEMFormat.h"; sourceTree = "<group>"; };
+		BF14E3E519EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+HEMFormat.m"; sourceTree = "<group>"; };
 		BF3D2E4A19C37A62001DEEBA /* downArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = downArrow.png; path = images/downArrow.png; sourceTree = "<group>"; };
 		BF3D2E4B19C37A62001DEEBA /* downArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "downArrow@2x.png"; path = "images/downArrow@2x.png"; sourceTree = "<group>"; };
-		BF5E443519A7AA3D00278A2F /* HEMWifiCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiCenter.h; sourceTree = "<group>"; };
-		BF5E443619A7AA3D00278A2F /* HEMWifiCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWifiCenter.m; sourceTree = "<group>"; };
 		BF5E444919AD414500278A2F /* doubleArrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = doubleArrow.png; path = images/doubleArrow.png; sourceTree = "<group>"; };
 		BF5E444A19AD414500278A2F /* doubleArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "doubleArrow@2x.png"; path = "images/doubleArrow@2x.png"; sourceTree = "<group>"; };
 		BF5E444D19AD494500278A2F /* phoneWithEmoticons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = phoneWithEmoticons.png; path = images/phoneWithEmoticons.png; sourceTree = "<group>"; };
@@ -713,9 +753,6 @@
 		BFC3AA0619C2655F0055D308 /* HEMInfoAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInfoAlertView.m; sourceTree = "<group>"; };
 		BFC3AA0E19C27A610055D308 /* HEMSleepQuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepQuestionsViewController.h; sourceTree = "<group>"; };
 		BFC3AA0F19C27A610055D308 /* HEMSleepQuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepQuestionsViewController.m; sourceTree = "<group>"; };
-		BFC8214A19E7402500E09D5D /* onboarding_bg.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = onboarding_bg.png; path = images/onboarding_bg.png; sourceTree = "<group>"; };
-		BFC8214B19E7402500E09D5D /* onboarding_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding_bg@2x.png"; path = "images/onboarding_bg@2x.png"; sourceTree = "<group>"; };
-		BFC8214C19E7402500E09D5D /* onboarding_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "onboarding_bg@3x.png"; path = "images/onboarding_bg@3x.png"; sourceTree = "<group>"; };
 		BFC8215019E7441200E09D5D /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = images/play.png; sourceTree = "<group>"; };
 		BFC8215119E7441200E09D5D /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@2x.png"; path = "images/play@2x.png"; sourceTree = "<group>"; };
 		BFC8215219E7441200E09D5D /* play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@3x.png"; path = "images/play@3x.png"; sourceTree = "<group>"; };
@@ -740,8 +777,6 @@
 		BFEAA0B919A578EE002FBD44 /* HEMLocationCenter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLocationCenter.h; sourceTree = "<group>"; };
 		BFEAA0BA19A578EE002FBD44 /* HEMLocationCenter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLocationCenter.m; sourceTree = "<group>"; };
 		BFEAA0BC19A57A89002FBD44 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
-		BFEAA0C419A65E54002FBD44 /* mapIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = mapIcon.png; path = images/mapIcon.png; sourceTree = "<group>"; };
-		BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "mapIcon@2x.png"; path = "images/mapIcon@2x.png"; sourceTree = "<group>"; };
 		BFEAA0C819A66746002FBD44 /* HEMValueSliderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMValueSliderView.h; sourceTree = "<group>"; };
 		BFEAA0C919A66746002FBD44 /* HEMValueSliderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMValueSliderView.m; sourceTree = "<group>"; };
 		BFEAA0CB19A6D9E6002FBD44 /* HEMBaseController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBaseController.h; sourceTree = "<group>"; };
@@ -919,6 +954,20 @@
 		8A660129199EBCD0007E6167 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BF14E3C919EF3C3D0006EFEA /* HEMEndSetupViewController.h */,
+				BF14E3CA19EF3C3D0006EFEA /* HEMEndSetupViewController.m */,
+				BF14E3CB19EF3C3D0006EFEA /* HEMNoBLEViewController.h */,
+				BF14E3CC19EF3C3D0006EFEA /* HEMNoBLEViewController.m */,
+				BF14E3CD19EF3C3D0006EFEA /* HEMPillIntroViewController.h */,
+				BF14E3CE19EF3C3D0006EFEA /* HEMPillIntroViewController.m */,
+				BF14E3CF19EF3C3D0006EFEA /* HEMSecondPillSetupViewController.h */,
+				BF14E3D019EF3C3D0006EFEA /* HEMSecondPillSetupViewController.m */,
+				BF14E3D119EF3C3D0006EFEA /* HEMSenseSetupViewController.h */,
+				BF14E3D219EF3C3D0006EFEA /* HEMSenseSetupViewController.m */,
+				BF14E3D319EF3C3D0006EFEA /* HEMStartSetupViewController.h */,
+				BF14E3D419EF3C3D0006EFEA /* HEMStartSetupViewController.m */,
+				BF14E3D519EF3C3D0006EFEA /* HEMTwoPillSetupViewController.h */,
+				BF14E3D619EF3C3D0006EFEA /* HEMTwoPillSetupViewController.m */,
 				BFEAA0A619A51DCF002FBD44 /* HEMWelcomeViewController.h */,
 				BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */,
 				8AC49F9A198305F600C2BD63 /* HEMAuthenticationViewController.h */,
@@ -950,12 +999,15 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BF14E3B419EF3BD10006EFEA /* map.png */,
+				BF14E3B519EF3BD10006EFEA /* map@2x.png */,
+				BF14E3B619EF3BD10006EFEA /* map@3x.png */,
+				BF14E3B719EF3BD10006EFEA /* onboarding_bg_wide.png */,
+				BF14E3B819EF3BD10006EFEA /* onboarding_bg_wide@2x.png */,
+				BF14E3B919EF3BD10006EFEA /* onboarding_bg_wide@3x.png */,
 				BFC8215019E7441200E09D5D /* play.png */,
 				BFC8215119E7441200E09D5D /* play@2x.png */,
 				BFC8215219E7441200E09D5D /* play@3x.png */,
-				BFC8214A19E7402500E09D5D /* onboarding_bg.png */,
-				BFC8214B19E7402500E09D5D /* onboarding_bg@2x.png */,
-				BFC8214C19E7402500E09D5D /* onboarding_bg@3x.png */,
 				BFDCC7B819D9C741007A922B /* sense.png */,
 				BFDCC7B919D9C741007A922B /* sense@2x.png */,
 				BF9C87D219B6A001003188D4 /* sleep_pill.png */,
@@ -964,8 +1016,6 @@
 				BF5E444E19AD494500278A2F /* phoneWithEmoticons@2x.png */,
 				BF5E444919AD414500278A2F /* doubleArrow.png */,
 				BF5E444A19AD414500278A2F /* doubleArrow@2x.png */,
-				BFEAA0C419A65E54002FBD44 /* mapIcon.png */,
-				BFEAA0C519A65E54002FBD44 /* mapIcon@2x.png */,
 				BFACC71419A41CFE00FC77EE /* whitenavbar.png */,
 				BFACC71519A41CFE00FC77EE /* whitenavbar@2x.png */,
 				8A4B3D4A199308BB00856BDE /* bluetoothLogoImage.png */,
@@ -983,6 +1033,8 @@
 		8A66012B199EBD0E007E6167 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				BF14E3DE19EF3C520006EFEA /* HEMOnboardingUtils.h */,
+				BF14E3DF19EF3C520006EFEA /* HEMOnboardingUtils.m */,
 				8A660121199E9CF9007E6167 /* HEMUserDataCache.h */,
 				8A660122199E9CF9007E6167 /* HEMUserDataCache.m */,
 				8A660124199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.h */,
@@ -1177,6 +1229,8 @@
 		8A660133199EBE5E007E6167 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				BF14E3C619EF3C1C0006EFEA /* HEMActivityCoverView.h */,
+				BF14E3C719EF3C1C0006EFEA /* HEMActivityCoverView.m */,
 				8A033871197DDA9700BE8327 /* HEMActionButton.h */,
 				8A033872197DDA9700BE8327 /* HEMActionButton.m */,
 				8A4B3D471992CB4500856BDE /* HEMRoundedTextField.h */,
@@ -1535,12 +1589,14 @@
 		BFABE74F19A2E6D900AB2F0F /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				BF14E3C019EF3C020006EFEA /* HEMBluetoothUtils.h */,
+				BF14E3C119EF3C020006EFEA /* HEMBluetoothUtils.m */,
+				BF14E3C219EF3C020006EFEA /* HEMWifiUtils.h */,
+				BF14E3C319EF3C020006EFEA /* HEMWifiUtils.m */,
 				8A90F9AD196353F600AFD110 /* HEMColorUtils.h */,
 				8A90F9AE196353F600AFD110 /* HEMColorUtils.m */,
 				BFEAA0B919A578EE002FBD44 /* HEMLocationCenter.h */,
 				BFEAA0BA19A578EE002FBD44 /* HEMLocationCenter.m */,
-				BF5E443519A7AA3D00278A2F /* HEMWifiCenter.h */,
-				BF5E443619A7AA3D00278A2F /* HEMWifiCenter.m */,
 				BFEAA0B019A54859002FBD44 /* NSString+Email.h */,
 				BFEAA0B119A54859002FBD44 /* NSString+Email.m */,
 				BFABE75019A2E70A00AB2F0F /* UIView+HEMMotionEffects.h */,
@@ -1549,6 +1605,8 @@
 				BFB93C7819CB7F89005067D0 /* HEMMathUtil.m */,
 				BFDCC7BC19DA078F007A922B /* HEMAnimationUtils.h */,
 				BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */,
+				BF14E3E419EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.h */,
+				BF14E3E519EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -1720,6 +1778,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
+				BF14E3BD19EF3BD10006EFEA /* onboarding_bg_wide.png in Resources */,
 				8A1E723319D62C26007475D3 /* alarmNoteIcon@2x.png in Resources */,
 				8AFE780919E8C2170000F881 /* particulates-medium.png in Resources */,
 				8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */,
@@ -1727,6 +1786,7 @@
 				8AFE782B19E8C2170000F881 /* temperature-medium@2x.png in Resources */,
 				8A9BD8C319DDD02100B1E57E /* Calibre-ThinItalic.otf in Resources */,
 				8AFE77EC19E8C2170000F881 /* humidity-good@2x.png in Resources */,
+				BF14E3BE19EF3BD10006EFEA /* onboarding_bg_wide@2x.png in Resources */,
 				8AAEED0019A5225F006517C4 /* Agile-BookItalic.otf in Resources */,
 				8AFE781119E8C2170000F881 /* phone-good@3x.png in Resources */,
 				8A9BD8C119DDD02100B1E57E /* Calibre-SemiboldItalic.otf in Resources */,
@@ -1779,6 +1839,7 @@
 				8AFE780C19E8C2170000F881 /* phone-bad.png in Resources */,
 				8A66FC96199D24FF00922ED5 /* maleIcon@2x.png in Resources */,
 				8AFE77F219E8C2170000F881 /* light-bad@2x.png in Resources */,
+				BF14E3BF19EF3BD10006EFEA /* onboarding_bg_wide@3x.png in Resources */,
 				8AFE781E19E8C2170000F881 /* sunrise.png in Resources */,
 				8A9BD8B819DDD02100B1E57E /* Calibre-Bold.otf in Resources */,
 				BFB0FBDC19D253400056FFEC /* pillIcon.png in Resources */,
@@ -1791,6 +1852,7 @@
 				8AFE77FC19E8C2170000F881 /* movement-bad@3x.png in Resources */,
 				8AFE780319E8C2170000F881 /* particulates-bad.png in Resources */,
 				8AC4A0391989C36200C2BD63 /* particleIcon.png in Resources */,
+				BF14E3BA19EF3BD10006EFEA /* map.png in Resources */,
 				8A9BD8BA19DDD02100B1E57E /* Calibre-Light.otf in Resources */,
 				BFB0FBE319D377380056FFEC /* senseIcon.png in Resources */,
 				8AFE782119E8C2170000F881 /* sunset.png in Resources */,
@@ -1811,7 +1873,6 @@
 				8A1E723219D62C26007475D3 /* alarmNoteIcon.png in Resources */,
 				8A9BD8B719DDD02100B1E57E /* Calibre-BlackItalic.otf in Resources */,
 				BF5E445019AD494500278A2F /* phoneWithEmoticons@2x.png in Resources */,
-				BFC8214E19E7402500E09D5D /* onboarding_bg@2x.png in Resources */,
 				8AFE77E419E8C2170000F881 /* alarm@3x.png in Resources */,
 				BF5E444C19AD414500278A2F /* doubleArrow@2x.png in Resources */,
 				BF9C87D519B6A001003188D4 /* sleep_pill@2x.png in Resources */,
@@ -1831,6 +1892,7 @@
 				8AAEECFE19A5225F006517C4 /* Agile-BoldItalic.otf in Resources */,
 				8A9BD8BC19DDD02100B1E57E /* Calibre-Medium.otf in Resources */,
 				8AFE77F019E8C2170000F881 /* humidity-medium@3x.png in Resources */,
+				BF14E3BB19EF3BD10006EFEA /* map@2x.png in Resources */,
 				8AFE782919E8C2170000F881 /* temperature-good@3x.png in Resources */,
 				8A033870197DD89C00BE8327 /* Onboarding.storyboard in Resources */,
 				8AFE782419E8C2170000F881 /* temperature-bad.png in Resources */,
@@ -1839,8 +1901,6 @@
 				8AFE77EA19E8C2170000F881 /* humidity-bad@3x.png in Resources */,
 				8A1E723419D62C26007475D3 /* alarmRepeatIcon.png in Resources */,
 				BF5E444F19AD494500278A2F /* phoneWithEmoticons.png in Resources */,
-				BFC8214D19E7402500E09D5D /* onboarding_bg.png in Resources */,
-				BFC8214F19E7402500E09D5D /* onboarding_bg@3x.png in Resources */,
 				8AFE781219E8C2170000F881 /* phone-medium.png in Resources */,
 				8AFE780419E8C2170000F881 /* particulates-bad@2x.png in Resources */,
 				8AFE781719E8C2170000F881 /* sound-bad@3x.png in Resources */,
@@ -1853,9 +1913,8 @@
 				8A66FC95199D24FF00922ED5 /* maleIcon.png in Resources */,
 				BFB0FBE419D377380056FFEC /* senseIcon@2x.png in Resources */,
 				8AFE780D19E8C2170000F881 /* phone-bad@2x.png in Resources */,
-				BFEAA0C619A65E54002FBD44 /* mapIcon.png in Resources */,
+				BF14E3BC19EF3BD10006EFEA /* map@3x.png in Resources */,
 				8AFE77ED19E8C2170000F881 /* humidity-good@3x.png in Resources */,
-				BFEAA0C719A65E54002FBD44 /* mapIcon@2x.png in Resources */,
 				8AAEED0719A5225F006517C4 /* Agile-Hairline.otf in Resources */,
 				8AAEED0819A5225F006517C4 /* Agile-HairlineItalic.otf in Resources */,
 				8A1E723919D62C26007475D3 /* alarmSoundIcon@2x.png in Resources */,
@@ -2021,15 +2080,22 @@
 			files = (
 				8AA8D92A19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m in Sources */,
 				8AC49F9C198305F600C2BD63 /* HEMAuthenticationViewController.m in Sources */,
+				BF14E3DB19EF3C3D0006EFEA /* HEMSenseSetupViewController.m in Sources */,
+				BF14E3C819EF3C1C0006EFEA /* HEMActivityCoverView.m in Sources */,
 				8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */,
+				BF14E3C519EF3C020006EFEA /* HEMWifiUtils.m in Sources */,
 				6003F59E195388D20070C39A /* HEMAppDelegate.m in Sources */,
 				8AB2684A19CCFF9200017818 /* HEMAlarmRepeatTableViewController.m in Sources */,
 				8A9BD8D019DF28F400B1E57E /* HEMPaddedRoundedLabel.m in Sources */,
+				BF14E3DC19EF3C3D0006EFEA /* HEMStartSetupViewController.m in Sources */,
 				BFAE0B1119AE3B790021EC0D /* HEMSlideViewController.m in Sources */,
+				BF14E3E619EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m in Sources */,
 				8AB2684719CCFF8800017818 /* HEMAlarmUtils.m in Sources */,
 				8A782683196B4729002882A1 /* HEMGraphTooltipView.m in Sources */,
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,
 				8A66FC82199BE94100922ED5 /* HEMColoredRoundedLabel.m in Sources */,
+				BF14E3DD19EF3C3D0006EFEA /* HEMTwoPillSetupViewController.m in Sources */,
+				BF14E3D919EF3C3D0006EFEA /* HEMPillIntroViewController.m in Sources */,
 				8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,
 				BFACC71A19A4282A00FC77EE /* HEMWifiViewController.m in Sources */,
@@ -2042,6 +2108,8 @@
 				8AA8D94019AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m in Sources */,
 				8A66FC8E199D17C000922ED5 /* HEMHeightPickerViewController.m in Sources */,
 				8A660123199E9CF9007E6167 /* HEMUserDataCache.m in Sources */,
+				BF14E3E019EF3C520006EFEA /* HEMOnboardingUtils.m in Sources */,
+				BF14E3C419EF3C020006EFEA /* HEMBluetoothUtils.m in Sources */,
 				8AC4A05B198ACE4800C2BD63 /* HEMSensorGraphDataSource.m in Sources */,
 				8AC49F9F19832D2600C2BD63 /* HEMDevicePickerTableViewController.m in Sources */,
 				BFC3AA0719C2655F0055D308 /* HEMInfoAlertView.m in Sources */,
@@ -2052,6 +2120,7 @@
 				8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */,
 				8A90F9B81963701A00AFD110 /* HEMInsetGlyphTableViewCell.m in Sources */,
 				8AC7F8D119E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.m in Sources */,
+				BF14E3D819EF3C3D0006EFEA /* HEMNoBLEViewController.m in Sources */,
 				8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */,
 				8A4B668F19EC7CD200445883 /* HEMTimelineDrawingUtils.m in Sources */,
 				8AAEECBC19A431E1006517C4 /* HEMSleepEventButton.m in Sources */,
@@ -2059,6 +2128,7 @@
 				8A91EEF819E46D9900EA6E5F /* HEMAlarmCache.m in Sources */,
 				8A90F9AF196353F600AFD110 /* HEMColorUtils.m in Sources */,
 				8A66FC9C199D308B00922ED5 /* HEMWeightPickerViewController.m in Sources */,
+				BF14E3D719EF3C3D0006EFEA /* HEMEndSetupViewController.m in Sources */,
 				BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */,
 				8A660126199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m in Sources */,
 				8A0CB13C19E5D1EE0030FC7D /* HEMEventInfoView.m in Sources */,
@@ -2080,6 +2150,7 @@
 				BFAE0B1419AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m in Sources */,
 				BF781E3119DC716F00B68EBC /* HEMUnitPreferenceViewController.m in Sources */,
 				8AB2683919CCFDB400017818 /* HEMAlarmAddButton.m in Sources */,
+				BF14E3DA19EF3C3D0006EFEA /* HEMSecondPillSetupViewController.m in Sources */,
 				8A1743CA19A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m in Sources */,
 				8A033873197DDA9700BE8327 /* HEMActionButton.m in Sources */,
 				8A90F9AC196350D200AFD110 /* HelloStyleKit.m in Sources */,
@@ -2088,7 +2159,6 @@
 				8AC49F961981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m in Sources */,
 				BFB6D47619BE16D1004CA11B /* HEMBirthdatePickerView.m in Sources */,
 				BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */,
-				BF5E443719A7AA3D00278A2F /* HEMWifiCenter.m in Sources */,
 				BF781E3519DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.m in Sources */,
 				8A28CAFF19CB95E40044A27D /* HEMNotificationHandler.m in Sources */,
 				8ACAF80B19D398E100402BB7 /* HEMConfidentialityWarningView.m in Sources */,

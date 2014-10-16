@@ -28,6 +28,7 @@ BOOL ErrorTypeIsValidValue(ErrorType value) {
     case ErrorTypeInternalDataError:
     case ErrorTypeDeviceDatabaseFull:
     case ErrorTypeDeviceNoMemory:
+    case ErrorTypeInternalOperationFailed:
       return YES;
     default:
       return NO;
@@ -42,6 +43,11 @@ BOOL ErrorTypeIsValidValue(ErrorType value) {
 @property (strong) NSString* wifiName;
 @property (strong) NSString* wifiSsid;
 @property (strong) NSString* wifiPassword;
+@property long batteryLevel;
+@property long uptime;
+@property long motionData;
+@property (strong) NSData* motionDataEncrypted;
+@property long firmwareVersion;
 @end
 
 @implementation SENSenseMessage
@@ -102,12 +108,48 @@ BOOL ErrorTypeIsValidValue(ErrorType value) {
   hasWifiPassword_ = !!value_;
 }
 @synthesize wifiPassword;
+- (BOOL) hasBatteryLevel {
+  return !!hasBatteryLevel_;
+}
+- (void) setHasBatteryLevel:(BOOL) value_ {
+  hasBatteryLevel_ = !!value_;
+}
+@synthesize batteryLevel;
+- (BOOL) hasUptime {
+  return !!hasUptime_;
+}
+- (void) setHasUptime:(BOOL) value_ {
+  hasUptime_ = !!value_;
+}
+@synthesize uptime;
+- (BOOL) hasMotionData {
+  return !!hasMotionData_;
+}
+- (void) setHasMotionData:(BOOL) value_ {
+  hasMotionData_ = !!value_;
+}
+@synthesize motionData;
+- (BOOL) hasMotionDataEncrypted {
+  return !!hasMotionDataEncrypted_;
+}
+- (void) setHasMotionDataEncrypted:(BOOL) value_ {
+  hasMotionDataEncrypted_ = !!value_;
+}
+@synthesize motionDataEncrypted;
+- (BOOL) hasFirmwareVersion {
+  return !!hasFirmwareVersion_;
+}
+- (void) setHasFirmwareVersion:(BOOL) value_ {
+  hasFirmwareVersion_ = !!value_;
+}
+@synthesize firmwareVersion;
 - (void) dealloc {
   self.deviceId = nil;
   self.accountId = nil;
   self.wifiName = nil;
   self.wifiSsid = nil;
   self.wifiPassword = nil;
+  self.motionDataEncrypted = nil;
 }
 - (id) init {
   if ((self = [super init])) {
@@ -119,6 +161,11 @@ BOOL ErrorTypeIsValidValue(ErrorType value) {
     self.wifiName = @"";
     self.wifiSsid = @"";
     self.wifiPassword = @"";
+    self.batteryLevel = 0;
+    self.uptime = 0;
+    self.motionData = 0;
+    self.motionDataEncrypted = [NSData data];
+    self.firmwareVersion = 0;
   }
   return self;
 }
@@ -168,6 +215,21 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   if (self.hasWifiPassword) {
     [output writeString:8 value:self.wifiPassword];
   }
+  if (self.hasBatteryLevel) {
+    [output writeInt32:9 value:self.batteryLevel];
+  }
+  if (self.hasUptime) {
+    [output writeInt32:10 value:self.uptime];
+  }
+  if (self.hasMotionData) {
+    [output writeInt32:11 value:self.motionData];
+  }
+  if (self.hasMotionDataEncrypted) {
+    [output writeData:12 value:self.motionDataEncrypted];
+  }
+  if (self.hasFirmwareVersion) {
+    [output writeInt32:13 value:self.firmwareVersion];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (long) serializedSize {
@@ -200,6 +262,21 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   }
   if (self.hasWifiPassword) {
     size_ += computeStringSize(8, self.wifiPassword);
+  }
+  if (self.hasBatteryLevel) {
+    size_ += computeInt32Size(9, self.batteryLevel);
+  }
+  if (self.hasUptime) {
+    size_ += computeInt32Size(10, self.uptime);
+  }
+  if (self.hasMotionData) {
+    size_ += computeInt32Size(11, self.motionData);
+  }
+  if (self.hasMotionDataEncrypted) {
+    size_ += computeDataSize(12, self.motionDataEncrypted);
+  }
+  if (self.hasFirmwareVersion) {
+    size_ += computeInt32Size(13, self.firmwareVersion);
   }
   size_ += self.unknownFields.serializedSize;
   memoizedSerializedSize = size_;
@@ -260,6 +337,21 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   if (self.hasWifiPassword) {
     [output appendFormat:@"%@%@: %@\n", indent, @"wifiPassword", self.wifiPassword];
   }
+  if (self.hasBatteryLevel) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"batteryLevel", [NSNumber numberWithInteger:self.batteryLevel]];
+  }
+  if (self.hasUptime) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"uptime", [NSNumber numberWithInteger:self.uptime]];
+  }
+  if (self.hasMotionData) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"motionData", [NSNumber numberWithInteger:self.motionData]];
+  }
+  if (self.hasMotionDataEncrypted) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"motionDataEncrypted", self.motionDataEncrypted];
+  }
+  if (self.hasFirmwareVersion) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"firmwareVersion", [NSNumber numberWithInteger:self.firmwareVersion]];
+  }
   [self.unknownFields writeDescriptionTo:output withIndent:indent];
 }
 - (BOOL) isEqual:(id)other {
@@ -287,6 +379,16 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
       (!self.hasWifiSsid || [self.wifiSsid isEqual:otherMessage.wifiSsid]) &&
       self.hasWifiPassword == otherMessage.hasWifiPassword &&
       (!self.hasWifiPassword || [self.wifiPassword isEqual:otherMessage.wifiPassword]) &&
+      self.hasBatteryLevel == otherMessage.hasBatteryLevel &&
+      (!self.hasBatteryLevel || self.batteryLevel == otherMessage.batteryLevel) &&
+      self.hasUptime == otherMessage.hasUptime &&
+      (!self.hasUptime || self.uptime == otherMessage.uptime) &&
+      self.hasMotionData == otherMessage.hasMotionData &&
+      (!self.hasMotionData || self.motionData == otherMessage.motionData) &&
+      self.hasMotionDataEncrypted == otherMessage.hasMotionDataEncrypted &&
+      (!self.hasMotionDataEncrypted || [self.motionDataEncrypted isEqual:otherMessage.motionDataEncrypted]) &&
+      self.hasFirmwareVersion == otherMessage.hasFirmwareVersion &&
+      (!self.hasFirmwareVersion || self.firmwareVersion == otherMessage.firmwareVersion) &&
       (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
 }
 - (NSUInteger) hash {
@@ -315,6 +417,21 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   if (self.hasWifiPassword) {
     hashCode = hashCode * 31 + [self.wifiPassword hash];
   }
+  if (self.hasBatteryLevel) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.batteryLevel] hash];
+  }
+  if (self.hasUptime) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.uptime] hash];
+  }
+  if (self.hasMotionData) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.motionData] hash];
+  }
+  if (self.hasMotionDataEncrypted) {
+    hashCode = hashCode * 31 + [self.motionDataEncrypted hash];
+  }
+  if (self.hasFirmwareVersion) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.firmwareVersion] hash];
+  }
   hashCode = hashCode * 31 + [self.unknownFields hash];
   return hashCode;
 }
@@ -338,6 +455,10 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
     case SENSenseMessageTypeError:
     case SENSenseMessageTypePairSense:
     case SENSenseMessageTypeUnpairPill:
+    case SENSenseMessageTypeDfuBegin:
+    case SENSenseMessageTypePillData:
+    case SENSenseMessageTypePillHeartbeat:
+    case SENSenseMessageTypePillDfuBegin:
       return YES;
     default:
       return NO;
@@ -408,6 +529,21 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
   if (other.hasWifiPassword) {
     [self setWifiPassword:other.wifiPassword];
   }
+  if (other.hasBatteryLevel) {
+    [self setBatteryLevel:other.batteryLevel];
+  }
+  if (other.hasUptime) {
+    [self setUptime:other.uptime];
+  }
+  if (other.hasMotionData) {
+    [self setMotionData:other.motionData];
+  }
+  if (other.hasMotionDataEncrypted) {
+    [self setMotionDataEncrypted:other.motionDataEncrypted];
+  }
+  if (other.hasFirmwareVersion) {
+    [self setFirmwareVersion:other.firmwareVersion];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -469,6 +605,26 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
       }
       case 66: {
         [self setWifiPassword:[input readString]];
+        break;
+      }
+      case 72: {
+        [self setBatteryLevel:[input readInt32]];
+        break;
+      }
+      case 80: {
+        [self setUptime:[input readInt32]];
+        break;
+      }
+      case 88: {
+        [self setMotionData:[input readInt32]];
+        break;
+      }
+      case 98: {
+        [self setMotionDataEncrypted:[input readData]];
+        break;
+      }
+      case 104: {
+        [self setFirmwareVersion:[input readInt32]];
         break;
       }
     }
@@ -600,6 +756,86 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
 - (SENSenseMessageBuilder*) clearWifiPassword {
   result.hasWifiPassword = NO;
   result.wifiPassword = @"";
+  return self;
+}
+- (BOOL) hasBatteryLevel {
+  return result.hasBatteryLevel;
+}
+- (long) batteryLevel {
+  return result.batteryLevel;
+}
+- (SENSenseMessageBuilder*) setBatteryLevel:(long) value {
+  result.hasBatteryLevel = YES;
+  result.batteryLevel = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearBatteryLevel {
+  result.hasBatteryLevel = NO;
+  result.batteryLevel = 0;
+  return self;
+}
+- (BOOL) hasUptime {
+  return result.hasUptime;
+}
+- (long) uptime {
+  return result.uptime;
+}
+- (SENSenseMessageBuilder*) setUptime:(long) value {
+  result.hasUptime = YES;
+  result.uptime = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearUptime {
+  result.hasUptime = NO;
+  result.uptime = 0;
+  return self;
+}
+- (BOOL) hasMotionData {
+  return result.hasMotionData;
+}
+- (long) motionData {
+  return result.motionData;
+}
+- (SENSenseMessageBuilder*) setMotionData:(long) value {
+  result.hasMotionData = YES;
+  result.motionData = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearMotionData {
+  result.hasMotionData = NO;
+  result.motionData = 0;
+  return self;
+}
+- (BOOL) hasMotionDataEncrypted {
+  return result.hasMotionDataEncrypted;
+}
+- (NSData*) motionDataEncrypted {
+  return result.motionDataEncrypted;
+}
+- (SENSenseMessageBuilder*) setMotionDataEncrypted:(NSData*) value {
+  result.hasMotionDataEncrypted = YES;
+  result.motionDataEncrypted = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearMotionDataEncrypted {
+  result.hasMotionDataEncrypted = NO;
+  result.motionDataEncrypted = [NSData data];
+  return self;
+}
+- (BOOL) hasFirmwareVersion {
+  return result.hasFirmwareVersion;
+}
+- (long) firmwareVersion {
+  return result.firmwareVersion;
+}
+- (SENSenseMessageBuilder*) setFirmwareVersion:(long) value {
+  result.hasFirmwareVersion = YES;
+  result.firmwareVersion = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearFirmwareVersion {
+  result.hasFirmwareVersion = NO;
+  result.firmwareVersion = 0;
   return self;
 }
 @end

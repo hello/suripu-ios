@@ -7,19 +7,27 @@
 //
 #import <SenseKit/BLE.h>
 
+#import "NSMutableAttributedString+HEMFormat.h"
+
 #import "HEMSensePairViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMUserDataCache.h"
 #import "HEMSettingsTableViewController.h"
+#import "HEMOnboardingUtils.h"
+#import "HelloStyleKit.h"
+#import "HEMActivityCoverView.h"
 
-static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523-785FEABCD123";
+// I've tested the scanning process multiple times starting with a timeout of
+// 15 to 20.  Out of say 5 tries, I've seen it return in time once.  30 secs
+// seem to allow the response to return in time reliably.
+static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 @interface HEMSensePairViewController()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *bluetoothLogo;
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
 @property (weak, nonatomic) IBOutlet UIButton *noSenseButton;
@@ -30,6 +38,8 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
 
 @property (strong, nonatomic) SENSenseManager* manager;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
+@property (strong, nonatomic) HEMActivityCoverView* activityView;
+@property (assign, nonatomic, getter=isTimedOut) BOOL timedOut;
 
 @end
 
@@ -37,6 +47,21 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setupDescription];
+}
+
+- (void)setupDescription {
+    NSString* descFormat = NSLocalizedString(@"sense-pair.description.format", nil);
+    NSString* purple = NSLocalizedString(@"onboarding.purple", nil);
+    
+    NSArray* args = @[[HEMOnboardingUtils boldAttributedText:purple withColor:[HelloStyleKit purple]]];
+    
+    NSMutableAttributedString* attrDesc
+        = [[NSMutableAttributedString alloc] initWithFormat:descFormat args:args];
+    
+    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
+    
+    [[self descLabel] setAttributedText:attrDesc];
 }
 
 - (void)adjustConstraintsForIPhone4 {
@@ -45,9 +70,11 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
     [self updateConstraint:[self readyVSpaceConstraint] withDiff:diff];
 }
 
-- (void)stopActivity {
-    [[self readyButton] stopActivity];
-    [[self noSenseButton] setEnabled:YES];
+- (void)stopActivityWithMessage:(NSString*)message completion:(void(^)(void))completion {
+    [[self activityView] dismissWithResultText:message completion:^{
+        [[self noSenseButton] setEnabled:YES];
+        if (completion) completion ();
+    }];
 }
 
 - (void)cacheManager {
@@ -69,9 +96,9 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
     self.disconnectObserverId =
         [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf && [[strongSelf readyButton] isShowingActivity]) {
-                [strongSelf stopActivity];
-                [strongSelf showErrorMessage:NSLocalizedString(@"pairing.error.unexpected-disconnect", nil)];
+            if (strongSelf) {
+                NSString* message = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
+                [strongSelf stopActivityWithMessage:message completion:nil];
             }
         }];
 }
@@ -82,25 +109,47 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
     [self scanForSense];
 }
 
-- (IBAction)skip:(id)sender {
-    // TODO (jimmy): we will eventually not have this method once everyone actually
-    // gets a device.  It's here temporarily
-    for (UIViewController* viewController in self.navigationController.viewControllers) {
-        if ([viewController isKindOfClass:[HEMSettingsTableViewController class]]) {
-            [self.navigationController popToViewController:viewController animated:YES];
-            return;
-        }
-    }
-    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
-
+- (IBAction)help:(id)sender {
+    DLog(@"WARNING: this has not been implemented yet!")
+    // TODO (jimmy): the help website is still being discussed / worked on.  When
+    // we know what to actually point to, we likely will open up a browser to
+    // show the help
+    
+#pragma message ("remove when we all have devices!")
+    NSString* segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
+    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 #pragma mark - Scanning
 
+- (void)scanTimeout {
+    DLog(@"scanning for Sense timed out, oh no!");
+    [self setTimedOut:YES];
+    [SENSenseManager stopScan];
+    [self stopActivityWithMessage:nil completion:^{
+        NSString* msg = NSLocalizedString(@"pairing.error.no-response", nil);
+        [self showErrorMessage:msg];
+    }];
+}
+
 - (void)scanForSense {
+    if ([self activityView] == nil) {
+        [self setActivityView:[[HEMActivityCoverView alloc] init]];
+    }
+    
+    NSString* message = NSLocalizedString(@"pairing.activity.pairing-sense", nil);
+    [[[self activityView] activityLabel] setText:message];
+    
+    [self setTimedOut:NO];
     [[self noSenseButton] setEnabled:NO];
-    [[self readyButton] showActivityWithWidthConstraint:[self readyButtonWidthConstraint]];
-    [self startScan];
+    
+    [[self activityView] showInView:[[self navigationController] view] completion:^{
+        [self startScan];
+        [self performSelector:@selector(scanTimeout)
+                   withObject:nil
+                   afterDelay:kHEMSensePairScanTimeout];
+    }];
+    
 }
 
 - (void)startScan {
@@ -110,14 +159,19 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
     __weak typeof(self) weakSelf = self;
     if (![SENSenseManager scanForSense:^(NSArray *senses) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
+        if (strongSelf && ![strongSelf isTimedOut]) {
+            [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
+                                                     selector:@selector(scanTimeout)
+                                                       object:nil];
             if ([senses count] > 0) {
                 // TODO (jimmy): what to do when more than 1 sense is detected?
                 [strongSelf pairWith:[senses firstObject]];
                 DLog(@"sense found, %@", [[strongSelf manager] sense]);
             } else {
-                [strongSelf stopActivity];
-                [strongSelf showErrorMessage:NSLocalizedString(@"pairing.error.sense-not-found", nil)];
+                [strongSelf stopActivityWithMessage:nil completion:^{
+                    NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
+                    [strongSelf showErrorMessage:msg];
+                }];
             }
         }
     }]) {
@@ -138,19 +192,23 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
     [[self manager] pair:^(id response) {
         DLog(@"paired!");
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
+        if (strongSelf && ![strongSelf isTimedOut]) {
             [strongSelf cacheManager];
-            [strongSelf stopActivity];
 
-            NSString* segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
-            [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
+            NSString* msg = NSLocalizedString(@"pairing.done", nil);
+            [strongSelf stopActivityWithMessage:msg completion:^{
+                NSString* segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
+                [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
+            }];
         }
     } failure:^(NSError *error) {
         DLog(@"failed to pair %@", error);
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf && [[strongSelf readyButton] isShowingActivity]) {
-            [strongSelf stopActivity];
-            [strongSelf showErrorMessage:NSLocalizedString(@"pairing.error.could-not-pair", nil)];
+        if (strongSelf && ![strongSelf isTimedOut]) {
+            [strongSelf stopActivityWithMessage:nil completion:^{
+                NSString* msg = NSLocalizedString(@"pairing.error.could-not-pair", nil);
+                [strongSelf showErrorMessage:msg];
+            }];
         }
     }];
 }
@@ -159,6 +217,13 @@ static NSString* const kHEMBluetoothSenseServiceUUID = @"0000FEE1-1212-EFDE-1523
 
 - (void)showErrorMessage:(NSString*)message {
     [self showMessageDialog:message title:NSLocalizedString(@"pairing.failed.title", nil)];
+}
+
+#pragma mark - Clean up
+
+- (void)dealloc {
+    [SENSenseManager stopScan];
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 
 @end

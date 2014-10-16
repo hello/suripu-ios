@@ -3,14 +3,21 @@
 "confidentiality-warning.format" = "CONFIDENTIAL - Hello Inc (%@)";
 
 "empty-data" = "--";
-"loading" = "Loading...";
+
+// bluetooth messages
 "bluetooth.off-message" = "Bluetooth is off.";
 
 // welcome
 "welcome.title.meet-sense" = "Meet Sense.";
-"welcome.title.get-started" = "Let's get started.";
+"welcome.title.welcome" = "Welcome.";
 
-// sign up
+// onboarding
+"onboarding.purple" = "purple";
+"onboarding.green" = "green";
+"welcome.subtitle" = "A simple system that tracks your sleep monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
+"get-started.subtitle" = "Are you using Sense with one Sleep Pill or two Sleep Pills?";
+"sense-pair.description.format" = "Now we'll pair your phone with Sense.  Make sure Sense is glowing %@, then tap continue.";
+"two-pill-setup.subtitle" = "Are you setting up the first Sleep Pill, or the second Sleep Pill?";
 "sign-up.title" = "Sign Up";
 "sign-up.failed.title" = "Sign Up Failed";
 "sign-up.error.password-length" = "Your password must be at least 3 characters.";
@@ -20,17 +27,44 @@
 "sign-up.error.conflict" = "The provided email address is already attached to an account.";
 "sign-up.error.generic" = "Something went wrong. Please try again.";
 
+
+// no bluetooth on
+"no-bluetooth.subtitle.format" = "Sense uses Bluetooth to communicate with your mobile device.  Please turn your Bluetooth on to continue.\n\nLaunch the %@ app, tap %@, and flip the switch to %@.";
+"no-bluetooth.settings" = "Settings";
+"no-bluetooth.bluetooth" = "Bluetooth";
+"no-bluetooth.on" = "On";
+
+// sense setup
+"sense-setup.description.format" = "Plug in Sense next to your bed.  Sense will glow %@ to tell you it is on, and ready to be paired with your mobile device.";
+
+// second pill
+"second-pill.description.format" = "To connect a second Sleep Pill, Sense needs to be put into pairing mode.\n\nAsk the owner of the first Sleep Pill to stand next to Sense and open the Sense app, then go to %@ and tap %@.\n\nSense will glow %@ when it is in pairing mode.";
+"second-pill.description.sense-settings" = "Settings > Devices > Sense";
+"second-pill.description.put-into-pairing" = "'Put Sense Into Pairing Mode'";
+
 // user information
 "user.info.accessibility.birthdate-title" = "Select the month, day, and year of your birthday";
 
 // pairing with sense
+"pairing.activity.pairing-sense" = "Pairing with Sense";
 "pairing.failed.title" = "Pairing Failed";
 "pairing.error.sense-not-found" = "Sense was not detected.  Ensure Sense is on and near your phone.";
 "pairing.error.could-not-pair" = "Could not pair with Sense.  If there is a phone already paired to Sense, unpair from that phone then try again.";
-"pairing.setup.failed.title" = "Set Up Failed";
-"pairing.error.sense-setup-failed" = "Unable to set up Sense.  If Sense has been paired before, make sure previously paired phones have been removed then try again.";
-"pairing.error.pill-pair-failed" = "Unable to find any Sleep Pills to pair with.  Make sure they are nearby and try again.";
+
 "pairing.error.unexpected-disconnect" = "Connection from Sense was broken.  Try again.";
+"pairing.error.no-response" = "Sense did not respond in time.";
+"pairing.done" = "Paired.";
+
+// wifi setup
+"wifi.error.title" = "WiFi Setup Failed";
+"wifi.error.sense-wifi-message" = "Sense could not set up WiFi.  Make sure Sense is on and nearby and try again.";
+"wifi.error.account-link-message" = "Unable to set up Sense properly.";
+
+// pairing with the pill
+"pill-pair.subtitle.format" = "Gently shake your Sleep Pill for three seconds.  When your Sleep Pill lights up %@, tap continue.";
+"pill-pair.pairing-message" = "Pairing your Sleep Pill";
+"pill-pair.error.pill-pair-failed" = "Unable to find any Sleep Pills to pair with.  Make sure they are nearby and try again.";
+"pill-pair.error.timed-out" = "Device did not respond in time.";
 
 // location
 "location.error.title" = "Unknown Location";
@@ -219,6 +253,11 @@
 "actions.yes" = "YES";
 "status.success" = "Done";
 
+// actitivity messages
+"activity.thank" = "Thank";
+"activity.you" = "You.";
+"activity.loading" = "Loading...";
+
 // questions
 "questions.failed.title" = "Could Not Submit Answer";
 "questions.error.unexpected" = "Whoops!  Probably our fault.  Skip the question for now.  We'll ask you again another time";
@@ -242,7 +281,6 @@
 "notifications.actions.infrequently" = "Infrequently";
 
 // Today strings
-
 // sections
 "today.section.title.last-night" = "Last night";
 "today.section.title.current-conditions" = "Current Conditions";

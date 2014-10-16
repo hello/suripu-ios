@@ -9,18 +9,33 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBaseController+Protected.h"
+#import "HelloStyleKit.h"
+
+static CGFloat const kHEMLocationFinderAnimationDuration = 0.25f;
+static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
 
 @interface HEMLocationFinderViewController ()
 
-@property (nonatomic, copy) NSString* locationTxId;
-@property (weak, nonatomic) IBOutlet HEMActionButton *locationButton;
-@property (weak, nonatomic) IBOutlet UIButton *skipButton;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *mapImageView;
+@property (weak, nonatomic)   IBOutlet HEMActionButton *locationButton;
+@property (weak, nonatomic)   IBOutlet UIButton *skipButton;
+@property (weak, nonatomic) IBOutlet UILabel *thankLabel;
+@property (weak, nonatomic) IBOutlet UILabel *youLabel;
+@property (nonatomic, copy)   NSString* locationTxId;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *locateButtonWidthConstraint;
 
 @end
 
 @implementation HEMLocationFinderViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [[super navigationItem] setHidesBackButton:YES];
+}
+
+#pragma - Activity
 
 - (void)showActivity {
     [[self skipButton] setEnabled:NO];
@@ -31,6 +46,8 @@
     [[self skipButton] setEnabled:YES];
     [[self locationButton] stopActivity];
 }
+
+#pragma mark - Actions
 
 - (IBAction)requestLocation:(id)sender {
     [self showActivity];
@@ -48,7 +65,7 @@
                 [strongSelf stopActivity];
                 [strongSelf setLocationTxId:nil];
                 [strongSelf uploadCollectedData:YES];
-                [strongSelf next];
+                [strongSelf sayThankyouBeforeLeaving];
             }
             return NO;
         } failure:^BOOL(NSError *error) {
@@ -69,26 +86,7 @@
 
 - (IBAction)skipRequestingLocation:(id)sender {
     [self uploadCollectedData:YES];
-    [self next];
-}
-
-- (void)next {
-    UIViewController* nextVC = [HEMOnboardingStoryboard instantiateBluetoothViewController];
-    [[self navigationController] setViewControllers:@[nextVC] animated:YES];
-}
-
-- (void)uploadCollectedData:(BOOL)retry {
-    __weak typeof(self) weakSelf = self;
-    [SENAPIAccount updateAccount:[[HEMUserDataCache sharedUserDataCache] account]
-                 completionBlock:^(id data, NSError *error) {
-                     DLog(@"update completed with error %@", error);
-                     __strong typeof(weakSelf) strongSelf = weakSelf;
-                     if (!strongSelf) return;
-                     if (error != nil && retry) {
-                         DLog(@"failed to update account with user information");
-                         [strongSelf uploadCollectedData:NO];
-                     } // TODO (jimmy): else if error, no retry, what should we do?
-                 }];
+    [self sayThankyouBeforeLeaving];
 }
 
 #pragma mark - Alerts
@@ -112,6 +110,58 @@
 - (void)showLocationError:(NSError*)error {
     [self showMessageDialog:[self errorMessageForLocationError:error]
                       title:NSLocalizedString(@"location.error.title", nil)];
+}
+
+#pragma mark - Finishing Up
+
+- (void)uploadCollectedData:(BOOL)retry {
+    __weak typeof(self) weakSelf = self;
+    [SENAPIAccount updateAccount:[[HEMUserDataCache sharedUserDataCache] account]
+                 completionBlock:^(id data, NSError *error) {
+                     DLog(@"update completed with error %@", error);
+                     __strong typeof(weakSelf) strongSelf = weakSelf;
+                     if (!strongSelf) return;
+                     if (error != nil && retry) {
+                         DLog(@"failed to update account with user information");
+                         [strongSelf uploadCollectedData:NO];
+                     } // TODO (jimmy): else if error, no retry, what should we do?
+                 }];
+}
+
+- (void)next {
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard senseSetupSegueIdentifier]
+                              sender:self];
+}
+
+- (void)animateThankyou:(void(^)(BOOL finished))completion {
+    [UIView animateWithDuration:kHEMLocationFinderAnimationDuration
+                     animations:^{
+                         [[self thankLabel] setAlpha:1.0f];
+                     }
+                     completion:^(BOOL finished) {
+                         [UIView animateWithDuration:kHEMLocationFinderAnimationDuration
+                                          animations:^{
+                                              [[self youLabel] setAlpha:1.0f];
+                                          }
+                                          completion:completion];
+                     }];
+}
+
+- (void)sayThankyouBeforeLeaving {
+    [UIView animateWithDuration:kHEMLocationFinderAnimationDuration
+                     animations:^{
+                         [[self titleLabel] setAlpha:0.0f];
+                         [[self mapImageView] setAlpha:0.0f];
+                         [[self locationButton] setAlpha:0.0f];
+                         [[self skipButton] setAlpha:0.0f];
+                     }
+                     completion:^(BOOL finished) {
+                         [self animateThankyou:^(BOOL finished) {
+                             [self performSelector:@selector(next)
+                                        withObject:nil
+                                        afterDelay:kHEMLocationFinderThankyouDisplayTime];
+                         }];
+                     }];
 }
 
 #pragma mark - Clean Up

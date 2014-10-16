@@ -12,6 +12,7 @@
 #import "HEMBaseController+Protected.h"
 #import "HelloStyleKit.h"
 #import "HEMUserDataCache.h"
+#import "HEMOnboardingStoryboard.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
@@ -118,10 +119,9 @@
             [strongSelf authenticate:email password:password rety:NO];
             return;
         }
-        // we need to replace the root view controller with this controller so
-        // user cannot go back to sign up again
-        UIViewController* nextVC = [HEMOnboardingStoryboard instantiateDobViewController];
-        [[strongSelf navigationController] setViewControllers:@[nextVC] animated:YES];
+        
+        [self performSegueWithIdentifier:[HEMOnboardingStoryboard moreInfoSegueIdentifier]
+                                  sender:self];
     }];
 }
 

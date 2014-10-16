@@ -4,6 +4,9 @@
 
 static CGFloat const kHEMActionCornerRadius = 20.0f;
 static CGFloat const kHEMActionBorderWidth = 2.0f;
+static CGFloat const kHEMActionDisabledAlpha = 0.3f;
+static CGFloat const kHEMActionTitleFontSize = 15.0f;
+static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 
 @interface HEMActionButton()
 
@@ -24,17 +27,28 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
         self.layer.borderColor = [HelloStyleKit onboardingBlueColor].CGColor;
         self.layer.borderWidth = kHEMActionBorderWidth;
         [self setTitleColor:[HelloStyleKit onboardingBlueColor] forState:UIControlStateNormal];
-        [self setTitle:@"" forState:UIControlStateDisabled];
-        [self.titleLabel setFont:[UIFont fontWithName:@"Agile-Medium" size:13.f]];
+        [self setTitleColor:[[HelloStyleKit onboardingBlueColor] colorWithAlphaComponent:kHEMActionDisabledAlpha]
+                   forState:UIControlStateDisabled];
+        [self.titleLabel setFont:[UIFont fontWithName:@"Calibre-Medium" size:kHEMActionTitleFontSize]];
+        [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];
     }
     return self;
+}
+
+- (void)setEnabled:(BOOL)enabled {
+    UIColor* color = [HelloStyleKit onboardingBlueColor];
+    if (!enabled) {
+        color = [color colorWithAlphaComponent:kHEMActionDisabledAlpha];
+    }
+    [[self layer] setBorderColor:[color CGColor]];
+    [super setEnabled:enabled];
 }
 
 - (void)addActivityView {
     // TODO (jimmy): we should animate a border around the circle instead, similar to the sleep number view
     if ([self activityView] == nil) {
         [self setActivityView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
-        [[self activityView] hidesWhenStopped];
+        [[self activityView] setHidesWhenStopped:YES];
     }
     // re-center it
     [[self activityView] setCenter:CGPointMake(CGRectGetWidth([self bounds])/2, CGRectGetHeight([self bounds])/2)];
@@ -124,7 +138,7 @@ static CGFloat const kHEMActionBorderWidth = 2.0f;
                      }
                      completion:^(BOOL finished) {
                          [self setShowingActivity:NO];
-                         [[self activityView] setHidden:YES];
+                         [[self activityView] stopAnimating];
                          [self setTitle:[self originalTitle] forState:UIControlStateNormal];
                          [self setTitle:[self originalTitle] forState:UIControlStateDisabled];
                          [self setEnabled:YES];

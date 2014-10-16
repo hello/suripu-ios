@@ -9,14 +9,23 @@ static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMonboarding = @"Onboarding";
 static NSString *const _HEMbluetoothViewController = @"bluetoothViewController";
 static NSString *const _HEMdobViewController = @"dobViewController";
+static NSString *const _HEMdone = @"done";
+static NSString *const _HEMfirstPillSenseSetup = @"firstPillSenseSetup";
 static NSString *const _HEMgender = @"gender";
+static NSString *const _HEMgenderPicker = @"genderPicker";
 static NSString *const _HEMheight = @"height";
+static NSString *const _HEMheightPicker = @"heightPicker";
 static NSString *const _HEMlocation = @"location";
 static NSString *const _HEMmoreInfo = @"moreInfo";
+static NSString *const _HEMneedBluetooth = @"needBluetooth";
 static NSString *const _HEMpill = @"pill";
+static NSString *const _HEMpillNeedBluetooth = @"pillNeedBluetooth";
+static NSString *const _HEMsecondPillNeedBle = @"secondPillNeedBle";
+static NSString *const _HEMsecondPillToSense = @"secondPillToSense";
 static NSString *const _HEMsenseSetup = @"senseSetup";
 static NSString *const _HEMsignUpViewController = @"signUpViewController";
 static NSString *const _HEMweight = @"weight";
+static NSString *const _HEMweightPicker = @"weightPicker";
 static NSString *const _HEMwelcome = @"welcome";
 static NSString *const _HEMwifi = @"wifi";
 static NSString *const _HEMwifiViewController = @"wifiViewController";
@@ -32,19 +41,25 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)genderSegueIdentifier { return _HEMgender; }
 +(NSString *)weightSegueIdentifier { return _HEMweight; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
++(NSString *)doneSegueIdentifier { return _HEMdone; }
 +(NSString *)heightSegueIdentifier { return _HEMheight; }
 +(NSString *)locationSegueIdentifier { return _HEMlocation; }
 +(NSString *)senseSetupSegueIdentifier { return _HEMsenseSetup; }
 +(NSString *)wifiSegueIdentifier { return _HEMwifi; }
++(NSString *)needBluetoothSegueIdentifier { return _HEMneedBluetooth; }
++(NSString *)pillNeedBluetoothSegueIdentifier { return _HEMpillNeedBluetooth; }
++(NSString *)firstPillSenseSetupSegueIdentifier { return _HEMfirstPillSenseSetup; }
++(NSString *)secondPillNeedBleSegueIdentifier { return _HEMsecondPillNeedBle; }
++(NSString *)secondPillToSenseSegueIdentifier { return _HEMsecondPillToSense; }
 
 /** View Controllers */
 +(UIViewController *)instantiateWelcomeViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwelcome]; }
 +(UIViewController *)instantiateSignUpViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsignUpViewController]; }
 +(UIViewController *)instantiateDobViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMdobViewController]; }
-+(UIViewController *)instantiateHeightViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMheight]; }
++(UIViewController *)instantiateHeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMheightPicker]; }
 +(UIViewController *)instantiateWifiViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwifiViewController]; }
-+(UIViewController *)instantiateGenderViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMgender]; }
-+(UIViewController *)instantiateWeightViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMweight]; }
++(UIViewController *)instantiateGenderPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMgenderPicker]; }
++(UIViewController *)instantiateWeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMweightPicker]; }
 +(UIViewController *)instantiateBluetoothViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbluetoothViewController]; }
 
 @end

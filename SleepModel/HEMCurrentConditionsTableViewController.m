@@ -119,7 +119,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
 
     if (self.sensors.count <= indexPath.row) {
-        cell.titleLabel.text = [self isLoading] ? NSLocalizedString(@"loading", nil) : NSLocalizedString(@"sensor.data-unavailable", nil);
+        cell.titleLabel.text = [self isLoading] ? NSLocalizedString(@"activity.loading", nil) : NSLocalizedString(@"sensor.data-unavailable", nil);
         cell.detailLabel.text = nil;
         cell.glyphImageView.image = nil;
         cell.descriptionLabel.text = nil;

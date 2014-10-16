@@ -80,6 +80,8 @@
     NSString* ssid = [self trim:[[self ssidField] text]];
     NSString* pass = [self trim:[[self passwordField] text]];
     if ([ssid length] > 0 && [pass length] > 0) {
+        [self showActivity];
+        
         if (![self wifiConfigured]) {
             __weak typeof(self) weakSelf = self;
             [self setWiFi:ssid password:pass completion:^(NSError *error) {
@@ -89,6 +91,8 @@
                         [strongSelf setWifiConfigured:YES];
                         [strongSelf linkAccount];
                     } else {
+                        [strongSelf stopActivity];
+                        
                         NSString* msg = NSLocalizedString(@"wifi.error.sense-wifi-message", nil);
                         NSString* title = NSLocalizedString(@"wifi.error.title", nil);
                         [strongSelf showMessageDialog:msg title:title];
@@ -129,11 +133,14 @@
     [manager linkAccount:accessToken success:^(id response) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
+            [strongSelf stopActivity];
             [strongSelf next];
         }
     } failure:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
+            [strongSelf stopActivity];
+            
             NSString* msg = NSLocalizedString(@"wifi.error.account-link-message", nil);
             NSString* title = NSLocalizedString(@"wifi.error.title", nil);
             [strongSelf showMessageDialog:msg title:title];

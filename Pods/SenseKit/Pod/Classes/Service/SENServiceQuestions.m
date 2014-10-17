@@ -10,6 +10,7 @@
 #import "SENServiceQuestions.h"
 #import "SENService+Protected.h"
 #import "SENAnswer.h"
+#import "SENQuestion.h"
 
 static NSString* const kSENServiceQuestionsKeyDate = @"kSENServiceQuestionsKeyDate";
 
@@ -158,8 +159,7 @@ static NSString* const kSENServiceQuestionsKeyDate = @"kSENServiceQuestionsKeyDa
 }
 
 - (void)submitAnswer:(SENAnswer*)answer completion:(void(^)(NSError* error))completion {
-    if (answer == nil || [answer answerId] == nil || [answer answer] == nil) return;
-    
+    // Let the API to fail with callback if answer parameter is insuffcient
     __weak typeof (self) weakSelf = self;
     [SENAPIQuestions sendAnswer:answer completion:^(id data, NSError *error) {
         __strong typeof (weakSelf) strongSelf = weakSelf;
@@ -169,6 +169,22 @@ static NSString* const kSENServiceQuestionsKeyDate = @"kSENServiceQuestionsKeyDa
         if (completion) completion (error);
     }];
     
+}
+
+- (void)skipQuestion:(SENQuestion*)question
+          completion:(void(^)(NSError* error))completion {
+    // Let the API to fail with callback if question parameter is insuffcient
+    __weak typeof (self) weakSelf = self;
+    [SENAPIQuestions skipQuestion:question completion:^(id data, NSError *error) {
+        __strong typeof (weakSelf) strongSelf = weakSelf;
+        if (strongSelf && [error code] != SENAPIQuestionErrorInvalidParameter) {
+            // set questionas as asked for today unless error exists and it's
+            // an invalid parameter.  If error returned from any other reason,
+            // we will simply just not ask again for today.
+            [strongSelf setQuestionsAskedToday];
+        }
+        if (completion) completion (error);
+    }];
 }
 
 @end

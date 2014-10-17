@@ -24,6 +24,12 @@ static NSString* const kSENAPIQuestionTypeChoice = @"CHOICE";
 
 @implementation SENAPIQuestions
 
++ (NSError*)invalidParameterError {
+    return [NSError errorWithDomain:kSENAPIQuestionErrorDomain
+                               code:SENAPIQuestionErrorInvalidParameter
+                           userInfo:nil];
+}
+
 #pragma mark - GET QUESTIONS
 
 + (id)object:(id)object mustBe:(Class)class {
@@ -117,15 +123,25 @@ static NSString* const kSENAPIQuestionTypeChoice = @"CHOICE";
 
 + (void)sendAnswer:(SENAnswer*)answer completion:(SENAPIDataBlock)completion {
     if (answer == nil || [answer answerId] == nil) {
-        if (completion) completion (nil, [NSError errorWithDomain:kSENAPIQuestionErrorDomain
-                                                             code:SENAPIQuestionErrorInvalidParameter
-                                                         userInfo:nil]);
+        if (completion) completion (nil, [self invalidParameterError]);
         return;
     }
     
-    NSString* path = [NSString stringWithFormat:@"%@", kSENAPIQuestionsPath];
     NSDictionary* answerDict = [self dictionaryValueForAnswer:answer];
-    [SENAPIClient POST:path parameters:answerDict completion:completion];
+    [SENAPIClient POST:kSENAPIQuestionsPath parameters:answerDict completion:completion];
+}
+
+#pragma mark - SKIPPING QUESTIONS
+
++ (void)skipQuestion:(SENQuestion*)question completion:(SENAPIDataBlock)completion {
+    if (question == nil || [question questionId] == nil) {
+        if (completion) completion (nil, [self invalidParameterError]);
+        return;
+    }
+    
+    NSString* path = [kSENAPIQuestionsPath stringByAppendingFormat:@"/%ld/skip",
+                      [[question questionId] longValue]];
+    [SENAPIClient PUT:path parameters:nil completion:completion];
 }
 
 @end

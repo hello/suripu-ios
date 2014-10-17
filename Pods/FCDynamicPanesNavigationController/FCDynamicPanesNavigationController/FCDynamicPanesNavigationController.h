@@ -29,6 +29,8 @@
 
 - (id)initWithViewControllers:(NSArray*)viewControllers;
 
+- (id)initWithViewControllers:(NSArray *)viewControllers hintOnLoad:(BOOL)hintOnLoad;
+
 - (void)pushViewController:(UIViewController*)viewController retracted:(BOOL)retracted;
 
 - (void)popToViewController:(UIViewController*)viewController animated:(BOOL)animated;

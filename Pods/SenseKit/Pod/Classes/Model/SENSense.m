@@ -42,7 +42,7 @@
             deviceIdInHex = [[NSMutableString alloc] initWithCapacity:len];
             
             for (int i = 0; i < len; i++) {
-                [deviceIdInHex appendString:[NSString stringWithFormat:@"%02lx", (unsigned long)dataBuffer[i]]];
+                [deviceIdInHex appendString:[NSString stringWithFormat:@"%02lX", (unsigned long)dataBuffer[i]]];
             }
         }
     }

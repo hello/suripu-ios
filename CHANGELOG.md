@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.0.0.23
+
+New:
+
+* New onboarding flow, including ability to set wifi credentials manually
+* updated onboarding screen font type
+
+Fixes:
+
+* handling empty strings from Timeline API
+* various screen layout fixes
+
+Notes:
+
+* Onboarding flow has not been tested against a fully assembled Sense
+* For now, "I am having trouble" button in the onboarding flow will skip the
+  screen as a way for people to test the flow without a device.
+* Placeholders for onboarding videos and images until those are provided.
+
 ## 1.0.0.22
 
 New:

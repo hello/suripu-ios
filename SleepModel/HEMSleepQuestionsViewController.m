@@ -249,7 +249,9 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 }
 
 - (IBAction)skip:(id)sender {
-    [[SENServiceQuestions sharedService] setQuestionsAskedToday];
+    // optimistically skip the question
+    SENServiceQuestions* svc = [SENServiceQuestions sharedService];
+    [svc skipQuestion:[self currentQuestion] completion:nil];
     [self dismiss];
 }
 

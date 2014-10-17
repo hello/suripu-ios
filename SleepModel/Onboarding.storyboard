@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="s6I-B7-593">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -775,6 +776,15 @@
                                     <action selector="help:" destination="Qk9-qi-Wt3" eventType="touchUpInside" id="pUg-ab-rHY"/>
                                 </connections>
                             </button>
+                            <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VCv-fO-TME">
+                                <rect key="frame" x="167" y="570" width="266" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="XAd-CJ-Mau"/>
+                                    <constraint firstAttribute="width" constant="266" id="dl6-tu-xIZ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -782,6 +792,8 @@
                             <constraint firstAttribute="trailingMargin" secondItem="gvl-uZ-ZRh" secondAttribute="trailing" constant="12" id="6ny-AH-SP5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4PT-Jb-KBo" secondAttribute="trailing" constant="12" id="Dr5-Hp-Bo9"/>
                             <constraint firstItem="4PT-Jb-KBo" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="HwQ-UW-XXh"/>
+                            <constraint firstItem="kbz-Q6-Bp4" firstAttribute="top" secondItem="VCv-fO-TME" secondAttribute="bottom" id="Hxi-LZ-olC"/>
+                            <constraint firstAttribute="centerX" secondItem="VCv-fO-TME" secondAttribute="centerX" id="MrM-ea-yCI"/>
                             <constraint firstItem="A3u-Ml-oGM" firstAttribute="bottom" secondItem="eHT-GQ-6UW" secondAttribute="bottom" constant="60" id="QWK-n3-7aM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="h8z-JJ-lrQ" secondAttribute="trailing" constant="12" id="SyW-Vn-fhh"/>
                             <constraint firstItem="4PT-Jb-KBo" firstAttribute="bottom" secondItem="h8z-JJ-lrQ" secondAttribute="bottom" constant="-55" id="UYq-Kq-EoL"/>
@@ -829,6 +841,7 @@
                     <connections>
                         <outlet property="activityIndicator" destination="5N2-bs-k0H" id="h16-HY-O7y"/>
                         <outlet property="doneButton" destination="h6O-W0-Wus" id="Ys6-Zp-igw"/>
+                        <outlet property="hiddenField" destination="VCv-fO-TME" id="ci6-B8-sjo"/>
                         <outlet property="passwordField" destination="eHT-GQ-6UW" id="wqM-rB-ezM"/>
                         <outlet property="ssidField" destination="h8z-JJ-lrQ" id="md5-lZ-l61"/>
                         <outlet property="subtitleLabel" destination="4PT-Jb-KBo" id="SkV-pq-mrC"/>

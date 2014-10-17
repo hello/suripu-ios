@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet HEMRoundedTextField *ssidField;
 @property (weak, nonatomic) IBOutlet HEMRoundedTextField *passwordField;
+@property (weak, nonatomic) IBOutlet UITextField *hiddenField;
 
 @property (assign, nonatomic) BOOL wifiConfigured;
 
@@ -46,14 +47,29 @@
     }
 }
 
+- (void)enableControls:(BOOL)enable {
+    if (!enable) {
+        // keep the keyboard up at all times
+        [[self hiddenField] becomeFirstResponder];
+    }
+    
+    [[self ssidField] setEnabled:enable];
+    [[self passwordField] setEnabled:enable];
+    [[self doneButton] setEnabled:enable];
+    
+    if (enable) {
+        [[self passwordField] becomeFirstResponder];
+    }
+}
+
 - (void)showActivity {
-    [[self doneButton] setEnabled:NO];
+    [self enableControls:NO];
     [[self activityIndicator] startAnimating];
 }
 
 - (void)stopActivity {
     [[self activityIndicator] stopAnimating];
-    [[self doneButton] setEnabled:YES];
+    [self enableControls:YES];
 }
 
 #pragma mark - UITextFieldDelegate

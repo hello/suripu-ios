@@ -174,7 +174,10 @@
     self.pushBehavior = [[UIPushBehavior alloc] initWithItems:@[ self.view ] mode:UIPushBehaviorModeInstantaneous];
     [self.behavior addChildBehavior:self.pushBehavior];
 
-    [self.animator addBehavior:self.behavior];
+    if ([self showBounceHintOnLoad]) {
+        [self.animator addBehavior:self.behavior];
+    }
+    
 }
 
 - (void)setAnchorPoint:(CGPoint)anchorPoint

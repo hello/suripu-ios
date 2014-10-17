@@ -2,6 +2,8 @@
 #import <Foundation/Foundation.h>
 #import "SENAPIClient.h"
 
+extern NSString* const kSENAccountNotificationAccountCreated;
+
 @class SENAccount;
 
 @interface SENAPIAccount : NSObject

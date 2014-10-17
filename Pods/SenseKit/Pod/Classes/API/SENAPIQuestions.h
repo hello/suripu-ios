@@ -10,6 +10,7 @@
 #import "SENAPIClient.h"
 
 @class SENAnswer;
+@class SENQuestion;
 
 typedef NS_ENUM(NSInteger, SENAPIQuestionError) {
     SENAPIQuestionErrorInvalidParameter = -1
@@ -38,5 +39,13 @@ typedef NS_ENUM(NSInteger, SENAPIQuestionError) {
  * @param completion: the block to invoke when process succeeds
  */
 + (void)sendAnswer:(SENAnswer*)answer completion:(SENAPIDataBlock)completion;
+
+/**
+ * Skip the question specified.
+ *
+ * @param question:   the question to mark as skipped
+ * @param completion: the block to invoke when question has been marked as skipped
+ */
++ (void)skipQuestion:(SENQuestion*)question completion:(SENAPIDataBlock)completion;
 
 @end

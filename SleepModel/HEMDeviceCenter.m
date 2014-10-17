@@ -1,4 +1,4 @@
-//
+    //
 //  HEMDeviceCenter.m
 //  Sense
 //
@@ -231,74 +231,24 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
 
 #pragma mark Unpairing Sleep Pill
 
-- (void)unpairPillFromSense:(HEMDeviceCompletionBlock)completion {
-    [[self senseManager] unpairPill:[[self pillInfo] deviceId] success:^(id response) {
-        if (completion) completion (nil);
-    } failure:completion];
-}
-
-- (void)unlinkPillFromAccount:(HEMDeviceCompletionBlock)completion {
-    [SENAPIDevice unregisterPill:[self pillInfo] completion:^(id data, NSError *error) {
-        if (completion) completion (error);
-    }];
-}
-
-- (void)unpairSleepPillFromSenseThenAccount:(HEMDeviceCompletionBlock)completion {
-    __weak typeof(self) weakSelf = self;
-    [self unpairPillFromSense:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            if (error == nil) {
-                [strongSelf unlinkPillFromAccount:^(NSError *error) {
-                    NSError* deviceError = nil;
-                    if (error != nil) {
-                        error = [strongSelf errorWithType:HEMDeviceCenterErrorUnlinkPillFromAccount];
-                    }
-                    if (completion) completion (deviceError);
-                }];
-            } else {
-                if (completion) {
-                    completion ([strongSelf errorWithType:HEMDeviceCenterErrorUnpairPillFromSense]);
-                }
-            }
-        }
-    }];
-}
-
-- (NSError*)preconditionsErrorForUnpairingPill {
-    NSError* error = nil;
-    if ([self pillInfo] == nil) {
-        error = [self errorWithType:HEMDeviceCenterErrorPillNotPaired];
-    } else if ([self senseInfo] == nil) {
-        error = [self errorWithType:HEMDeviceCenterErrorSenseNotPaired];
-    }
-    return error;
-}
-
 - (void)unpairSleepPill:(HEMDeviceCompletionBlock)completion {
-    NSError* error = [self preconditionsErrorForUnpairingPill];
-    if (error != nil) {
-        if (completion) completion ( error );
+    if ([self pillInfo] == nil) {
+        if (completion) completion ( [self errorWithType:HEMDeviceCenterErrorPillNotPaired] );
         return;
     }
     
-    if (![self pairedSenseAvailable]) {
-        __weak typeof(self) weakSelf = self;
-        [self scanForPairedSense:^(NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                if (error == nil) {
-                    [strongSelf unpairSleepPillFromSenseThenAccount:completion];
-                } else {
-                    if (completion) {
-                        completion ([strongSelf  errorWithType:HEMDeviceCenterErrorSenseUnavailable]);
-                    }
-                }
-            }
-        }];
-    } else {
-        [self unpairSleepPillFromSenseThenAccount:completion];
-    }
+    __weak typeof(self) weakSelf = self;
+    [SENAPIDevice unregisterPill:[self pillInfo] completion:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        NSError* deviceError = nil;
+        
+        if (error != nil && strongSelf) {
+            deviceError = [strongSelf errorWithType:HEMDeviceCenterErrorUnlinkPillFromAccount];
+        }
+        
+        if (completion) completion (deviceError);
+    }];
 }
 
 @end

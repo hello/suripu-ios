@@ -35,6 +35,7 @@ typedef NS_ENUM(NSUInteger, FCDynamicPaneState) {
 @property (nonatomic, readonly)	FCDynamicPanesNavigationController *panesNavigationController;
 @property (nonatomic) UIView *view;
 @property (nonatomic) BOOL swipeEnabled;
+@property (nonatomic) BOOL showBounceHintOnLoad;
 @property (nonatomic) FCDynamicPaneState state;
 
 @property (nonatomic) UIDynamicAnimator *animator;

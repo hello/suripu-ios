@@ -14,6 +14,7 @@
 #import "SENService.h"
 
 @class SENAnswer;
+@class SENQuestion;
 
 typedef void(^SENServiceQuestionBlock)(NSArray* questions);
 
@@ -56,6 +57,15 @@ typedef void(^SENServiceQuestionBlock)(NSArray* questions);
  * @param completion: the block to invoke when submission is complete
  */
 - (void)submitAnswer:(SENAnswer*)answer
+          completion:(void(^)(NSError* error))completion;
+
+/**
+ * Skip the question specified.
+ *
+ * @param question:   the question to skip
+ * @param completion: the block to invoke when question has been skipped
+ */
+- (void)skipQuestion:(SENQuestion*)question
           completion:(void(^)(NSError* error))completion;
 
 @end

@@ -73,6 +73,17 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
     return NO;
 }
 
++ (NSString*)urlEncode:(NSString*)URLString {
+    static NSMutableCharacterSet* set = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        set = [[NSMutableCharacterSet alloc] init];
+        [set formUnionWithCharacterSet:[NSCharacterSet URLPathAllowedCharacterSet]];
+        [set formUnionWithCharacterSet:[NSCharacterSet URLQueryAllowedCharacterSet]];
+    });
+    return [URLString stringByAddingPercentEncodingWithAllowedCharacters:set];
+}
+
 ///-------------------------------
 /// @name HTTP Requests Formatting
 ///-------------------------------
@@ -93,35 +104,35 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
 
 + (void)GET:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion
 {
-    [[self HTTPSessionManager] GET:URLString parameters:parameters
+    [[self HTTPSessionManager] GET:[self urlEncode:URLString] parameters:parameters
                            success:SENAPIClientRequestSuccessBlock(completion)
                            failure:SENAPIClientRequestFailureBlock(completion)];
 }
 
 + (void)POST:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion
 {
-    [[self HTTPSessionManager] POST:URLString parameters:parameters
+    [[self HTTPSessionManager] POST:[self urlEncode:URLString] parameters:parameters
                             success:SENAPIClientRequestSuccessBlock(completion)
                             failure:SENAPIClientRequestFailureBlock(completion)];
 }
 
 + (void)PUT:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion
 {
-    [[self HTTPSessionManager] PUT:URLString parameters:parameters
+    [[self HTTPSessionManager] PUT:[self urlEncode:URLString] parameters:parameters
                            success:SENAPIClientRequestSuccessBlock(completion)
                            failure:SENAPIClientRequestFailureBlock(completion)];
 }
 
 + (void)DELETE:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion
 {
-    [[self HTTPSessionManager] DELETE:URLString parameters:parameters
+    [[self HTTPSessionManager] DELETE:[self urlEncode:URLString] parameters:parameters
                               success:SENAPIClientRequestSuccessBlock(completion)
                               failure:SENAPIClientRequestFailureBlock(completion)];
 }
 
 + (void)PATCH:(NSString *)URLString parameters:(id)parameters completion:(SENAPIDataBlock)completion
 {
-    [[self HTTPSessionManager] PATCH:URLString parameters:parameters
+    [[self HTTPSessionManager] PATCH:[self urlEncode:URLString] parameters:parameters
                              success:SENAPIClientRequestSuccessBlock(completion)
                              failure:SENAPIClientRequestFailureBlock(completion)];
 }

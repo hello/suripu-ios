@@ -5,6 +5,7 @@
 #import <SenseKit/SENServiceQuestions.h>
 #import <SenseKit/SENAnswer.h>
 #import <SenseKit/SENSettings.h>
+#import <SenseKit/SENAPIAccount.h>
 
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <Crashlytics/Crashlytics.h>
@@ -72,6 +73,8 @@
 
 - (void)showOnboardingFlowAnimated:(BOOL)animated
 {
+    [self listenForAccountCreationNotification];
+    
     FCDynamicPanesNavigationController* dynamicPanesController = (FCDynamicPanesNavigationController*)self.window.rootViewController;
     UINavigationController* navController = (UINavigationController*)((FCDynamicPane*)[dynamicPanesController.viewControllers firstObject]).viewController;
     [navController popToRootViewControllerAnimated:NO];
@@ -83,10 +86,7 @@
         UINavigationController* navVC = (UINavigationController*)rootController;
         [[navVC navigationBar] setTintColor:[HelloStyleKit onboardingBlueColor]];
     }
-    [dynamicPanesController presentViewController:rootController animated:animated completion:^{
-        FCDynamicPane* foregroundPane = [[dynamicPanesController viewControllers] lastObject];
-        [foregroundPane setState:FCDynamicPaneStateRetracted];
-    }];
+    [dynamicPanesController presentViewController:rootController animated:animated completion:nil];
 }
 
 - (void)configureAppearance
@@ -114,7 +114,7 @@
         [[HEMSleepSummarySlideViewController alloc] init]
     ];
 
-    FCDynamicPanesNavigationController* dynamicPanes = [[FCDynamicPanesNavigationController alloc] initWithViewControllers:viewControllers];
+    FCDynamicPanesNavigationController* dynamicPanes = [[FCDynamicPanesNavigationController alloc] initWithViewControllers:viewControllers hintOnLoad:YES];
     self.window.rootViewController = dynamicPanes;
     [self.window makeKeyAndVisible];
 }
@@ -137,6 +137,31 @@
     // combine any other default settings here for the Settings.bundle
     [userDefaults registerDefaults:settingsDefaults];
     [userDefaults synchronize];
+}
+
+#pragma mark - App Notifications
+
+- (void)listenForAccountCreationNotification {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:kSENAccountNotificationAccountCreated object:nil];
+    [center addObserver:self
+               selector:@selector(didCreateAccount:)
+                   name:kSENAccountNotificationAccountCreated
+                 object:nil];
+}
+
+- (void)didCreateAccount:(NSNotification*)notification {
+    // when sign up is complete, show the "settings" area instead of the Timeline,
+    // but only do so after sign up and not sign in, or any other scenario
+    FCDynamicPanesNavigationController* dynamicPanesController
+        = (FCDynamicPanesNavigationController*)self.window.rootViewController;
+    FCDynamicPane* foregroundPane = [[dynamicPanesController viewControllers] lastObject];
+    if (foregroundPane != nil) {
+        [foregroundPane setState:FCDynamicPaneStateRetracted];
+    }
+    
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:kSENAccountNotificationAccountCreated object:nil];
 }
 
 @end

@@ -11,6 +11,7 @@
 
 @interface FCDynamicPanesNavigationController ()
 
+@property (nonatomic) BOOL showBounceHintOnLoad;
 @property (nonatomic) FCMutableArray* viewControllers;
 @property (nonatomic, weak) UIViewController* activeViewController;
 
@@ -36,11 +37,15 @@
 
 - (id)initWithViewControllers:(NSArray*)viewControllers
 {
+    return [self initWithViewControllers:viewControllers hintOnLoad:NO];
+}
+
+- (id)initWithViewControllers:(NSArray *)viewControllers hintOnLoad:(BOOL)hintOnLoad {
     if (self = [super init]) {
+        _showBounceHintOnLoad = hintOnLoad;
         _viewControllers = [[FCMutableArray alloc] initWithDelegate:self];
         [_viewControllers addObjectsFromArray:viewControllers];
     }
-
     return self;
 }
 
@@ -168,6 +173,7 @@
         return YES;
     } else if ([object isKindOfClass:[UIViewController class]]) {
         FCDynamicPane* compositeItem = [[FCDynamicPane alloc] initWithViewController:object];
+        [compositeItem setShowBounceHintOnLoad:[self showBounceHintOnLoad]];
         [array addObject:compositeItem];
     }
     return NO;

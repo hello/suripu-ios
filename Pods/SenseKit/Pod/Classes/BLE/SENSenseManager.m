@@ -16,8 +16,9 @@
 #import "SENSense+Protected.h"
 #import "SENSenseMessage.pb.h"
 
-static CGFloat const kSENSenseDefaultTimeout = 20;
-static CGFloat const kSENSenseRescanTimeout = 8;
+static CGFloat const kSENSenseDefaultTimeout = 20.0f;
+static CGFloat const kSENSenseRescanTimeout = 8.0f;
+static CGFloat const kSENSenseSetWifiTimeout = 60.0f; // firmware suggestion
 
 static NSString* const kSENSenseErrorDomain = @"is.hello.ble";
 static NSString* const kSENSenseServiceID = @"0000FEE1-1212-EFDE-1523-785FEABCD123";
@@ -32,6 +33,8 @@ static NSInteger const kSENSenseMessageVersion = 0;
 @property (nonatomic, strong, readwrite) SENSense* sense;
 @property (nonatomic, strong, readwrite) id disconnectNotifyObserver;
 @property (nonatomic, strong, readwrite) NSMutableDictionary* disconnectObservers;
+@property (nonatomic, strong, readwrite) NSMutableDictionary* messageSuccessCallbacks;
+@property (nonatomic, strong, readwrite) NSMutableDictionary* messageFailureCallbacks;
 
 @end
 
@@ -102,6 +105,8 @@ static NSInteger const kSENSenseMessageVersion = 0;
     if (self) {
         [self setSense:sense];
         [self setValid:YES];
+        [self setMessageSuccessCallbacks:[NSMutableDictionary dictionary]];
+        [self setMessageFailureCallbacks:[NSMutableDictionary dictionary]];
     }
     return self;
 }
@@ -336,10 +341,12 @@ static NSInteger const kSENSenseMessageVersion = 0;
 /**
  * Send a message to the initialized Sense through the main service.
  * @param command: the command to send
+ * @param timeout: time in seconds before operation fails with timeout error
  * @param success: the success callback when command was sent
  * @param failure: the failure callback called when command failed
  */
 - (void)sendMessage:(SENSenseMessage*)message
+            timeout:(CGFloat)timeout
             success:(SENSenseSuccessBlock)success
             failure:(SENSenseFailureBlock)failure {
     
@@ -368,6 +375,10 @@ static NSInteger const kSENSenseMessageVersion = 0;
         NSArray* packets = [strongSelf blePackets:message];
         
         if ([packets count] > 0) {
+            NSString* cbKey = [self cacheMessageCallbacks:success failureBlock:failure];
+            [self performSelector:@selector(sendMessageTimeoutWithCbKey:)
+                       withObject:cbKey afterDelay:timeout];
+            
             __block NSMutableArray* allPackets = nil;
             __block NSNumber* totalPackets = nil;
             __block typeof(reader) blockReader = reader;
@@ -382,7 +393,7 @@ static NSInteger const kSENSenseMessageVersion = 0;
                                 success:nil
                                 failure:^(NSError *error) {
                                     [blockReader setNotifyValue:NO completion:nil];
-                                    if (failure) failure (error);
+                                    [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                                 }];
             } onUpdate:^(NSData *data, NSError *error) {
                 [strongSelf handleResponseUpdate:data
@@ -392,10 +403,10 @@ static NSInteger const kSENSenseMessageVersion = 0;
                                     totalPackets:&totalPackets
                                          success:^(id response) {
                                              [blockReader setNotifyValue:NO completion:nil];
-                                             if (success) success (nil); // don't need to forward response
+                                             [strongSelf fireSuccessMsgCbWithCbKey:cbKey andResponse:nil];
                                          } failure:^(NSError *error) {
                                              [blockReader setNotifyValue:NO completion:nil];
-                                             if (failure) failure (error);
+                                             [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                                          }];
             }];
 
@@ -405,6 +416,65 @@ static NSInteger const kSENSenseMessageVersion = 0;
         }
 
     }];
+}
+
+- (NSString*)cacheMessageCallbacks:(SENSenseSuccessBlock)successBlock
+                      failureBlock:(SENSenseFailureBlock)failureBlock {
+    NSString* key = [[NSUUID UUID] UUIDString];
+    
+    if (successBlock) {
+        [[self messageSuccessCallbacks] setValue:[successBlock copy] forKey:key];
+    }
+    
+    if (failureBlock) {
+        [[self messageFailureCallbacks] setValue:[failureBlock copy] forKey:key];
+    }
+    
+    return key;
+}
+
+- (void)clearMessageCallbacksForKey:(NSString*)key {
+    if (key != nil) {
+        [[self messageFailureCallbacks] removeObjectForKey:key];
+        [[self messageSuccessCallbacks] removeObjectForKey:key];
+    }
+}
+
+- (void)fireSuccessMsgCbWithCbKey:(NSString*)cbKey andResponse:(id)response {
+    [self cancelMessageTimeoutWithCbKey:cbKey];
+    if (cbKey != nil) {
+        SENSenseSuccessBlock callback = [[self messageSuccessCallbacks] valueForKey:cbKey];
+        if (callback) callback (response); // don't need to forward response
+        [self clearMessageCallbacksForKey:cbKey];
+    }
+}
+
+- (void)fireFailureMsgCbWithCbKey:(NSString*)cbKey andError:(NSError*)error {
+    [self cancelMessageTimeoutWithCbKey:cbKey];
+    if (cbKey != nil) {
+        SENSenseFailureBlock callback = [[self messageFailureCallbacks] valueForKey:cbKey];
+        if (callback) callback (error);
+        [self clearMessageCallbacksForKey:cbKey];
+    }
+}
+
+- (void)cancelMessageTimeoutWithCbKey:(NSString*)cbKey {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(sendMessageTimeoutWithCbKey:)
+                                               object:cbKey];
+}
+
+- (void)sendMessageTimeoutWithCbKey:(NSString*)cbKey {
+    if (cbKey != nil) {
+        [self cancelMessageTimeoutWithCbKey:cbKey];
+        SENSenseFailureBlock failureCb = [[self messageFailureCallbacks] valueForKey:cbKey];
+        if (failureCb) {
+            failureCb ([NSError errorWithDomain:kSENSenseErrorDomain
+                                           code:SENSenseManagerErrorCodeTimeout
+                                       userInfo:nil]);
+        }
+        [self clearMessageCallbacksForKey:cbKey];
+    }
 }
 
 /**
@@ -612,14 +682,18 @@ static NSInteger const kSENSenseMessageVersion = 0;
         : SENSenseMessageTypeSwitchToNormalMode;
 
     [self sendMessage:[[self messageBuilderWithType:type] build]
-              success:success failure:failure];
+              timeout:kSENSenseDefaultTimeout
+              success:success
+              failure:failure];
 }
 
 - (void)removeOtherPairedDevices:(SENSenseSuccessBlock)success
                          failure:(SENSenseFailureBlock)failure {
     SENSenseMessageType type = SENSenseMessageTypeEreasePairedPhone;
     [self sendMessage:[[self messageBuilderWithType:type] build]
-              success:success failure:failure];
+              timeout:kSENSenseDefaultTimeout
+              success:success
+              failure:failure];
 }
 
 - (void)linkAccount:(NSString*)accountAccessToken
@@ -628,7 +702,10 @@ static NSInteger const kSENSenseMessageVersion = 0;
     SENSenseMessageType type = SENSenseMessageTypePairSense;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [builder setAccountId:accountAccessToken];
-    [self sendMessage:[builder build] success:success failure:failure];
+    [self sendMessage:[builder build]
+              timeout:kSENSenseDefaultTimeout
+              success:success
+              failure:failure];
 }
 
 - (void)pairWithPill:(NSString*)accountAccessToken
@@ -637,7 +714,10 @@ static NSInteger const kSENSenseMessageVersion = 0;
     SENSenseMessageType type = SENSenseMessageTypePairPill;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [builder setAccountId:accountAccessToken];
-    [self sendMessage:[builder build] success:success failure:failure];
+    [self sendMessage:[builder build]
+              timeout:kSENSenseDefaultTimeout
+              success:success
+              failure:failure];
 }
 
 - (void)unpairPill:(NSString*)pillId
@@ -646,7 +726,10 @@ static NSInteger const kSENSenseMessageVersion = 0;
     SENSenseMessageType type = SENSenseMessageTypeUnpairPill;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [builder setDeviceId:pillId];
-    [self sendMessage:[builder build] success:success failure:failure];
+    [self sendMessage:[builder build]
+              timeout:kSENSenseDefaultTimeout
+              success:success
+              failure:failure];
 }
 
 #pragma mark - Time
@@ -669,7 +752,10 @@ static NSInteger const kSENSenseMessageVersion = 0;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [builder setWifiSsid:ssid];
     [builder setWifiPassword:password];
-    [self sendMessage:[builder build] success:success failure:failure];
+    [self sendMessage:[builder build]
+              timeout:kSENSenseSetWifiTimeout
+              success:success
+              failure:failure];
 }
 
 - (void)getWifiEndPoint:(SENSenseCompletionBlock)completion {

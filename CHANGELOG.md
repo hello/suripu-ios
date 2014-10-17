@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.0.24
+
+New:
+
+* Hooked up API to skip a question
+* Unpairing sleep pill directly unlinks pill from account ... does not go
+  through Sense
+
+Fixes:
+
+* fix issue with app opening in to a state where Timeline is retracted
+* BLE operations now times out, ~60s for setting up wifi.  ~20s for all others
+* fixed issue where view to set up wifi is not disabled while operation in
+  progress.
+
 ## 1.0.0.23
 
 New:

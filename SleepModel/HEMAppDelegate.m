@@ -114,7 +114,7 @@
         [[HEMSleepSummarySlideViewController alloc] init]
     ];
 
-    FCDynamicPanesNavigationController* dynamicPanes = [[FCDynamicPanesNavigationController alloc] initWithViewControllers:viewControllers];
+    FCDynamicPanesNavigationController* dynamicPanes = [[FCDynamicPanesNavigationController alloc] initWithViewControllers:viewControllers hintOnLoad:YES];
     self.window.rootViewController = dynamicPanes;
     [self.window makeKeyAndVisible];
 }

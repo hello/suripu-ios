@@ -50,7 +50,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self showFirstAvailableEventPopup];
     self.panePanGestureRecognizer.delegate = self;
 }
 
@@ -85,25 +84,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 4.f;
 }
 
 #pragma mark Event Info Popup
-
-- (void)showFirstAvailableEventPopup
-{
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        NSArray* visibleCellIndexPaths = self.collectionView.indexPathsForVisibleItems;
-        NSArray *sortedIndexPaths = [visibleCellIndexPaths sortedArrayUsingSelector:@selector(compare:)];
-        for (NSIndexPath* indexPath in sortedIndexPaths) {
-            if (indexPath.row > 3)
-                break;
-            UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-            if ([cell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
-                HEMSleepEventCollectionViewCell* eventCell = (HEMSleepEventCollectionViewCell*)cell;
-                if (CGAffineTransformEqualToTransform(CGAffineTransformIdentity, eventCell.eventTypeButton.transform))
-                    [eventCell.eventTypeButton sendActionsForControlEvents:UIControlEventTouchUpInside];
-                break;
-            }
-        }
-    });
-}
 
 - (void)configureEventInfoView
 {

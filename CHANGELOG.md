@@ -1,5 +1,13 @@
 # Changelog
 
+## master
+
+
+Fixes:
+
+* Expand the width of long sleep summary messages to match the margins of the timeline
+* Remove the presentation of the first sleep event
+
 ## 1.0.0.24
 
 New:

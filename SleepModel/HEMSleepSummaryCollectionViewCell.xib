@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -18,7 +19,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="314" height="292"/>
                 <subviews>
-                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="T3i-WO-VZQ" customClass="HEMSleepScoreGraphView">
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T3i-WO-VZQ" customClass="HEMSleepScoreGraphView">
                         <rect key="frame" x="95" y="79" width="123" height="123"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -26,13 +27,13 @@
                             <constraint firstAttribute="height" constant="123" id="Tcm-aA-44U"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" adjustsLetterSpacingToFitWidth="YES" preferredMaxLayoutWidth="200" translatesAutoresizingMaskIntoConstraints="NO" id="buK-Of-ZfH">
-                        <rect key="frame" x="68" y="225" width="179" height="28"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="buK-Of-ZfH">
+                        <rect key="frame" x="17" y="225" width="281" height="28"/>
                         <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="14"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Last Night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-AK-PaO">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-AK-PaO">
                         <rect key="frame" x="110" y="44" width="91" height="23"/>
                         <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="23"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -49,9 +50,9 @@
                 <constraint firstItem="T3i-WO-VZQ" firstAttribute="top" secondItem="Bcg-AK-PaO" secondAttribute="bottom" constant="12" id="KF5-q2-HnP"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="23" id="k0k-0L-Ffa"/>
                 <constraint firstAttribute="centerX" secondItem="T3i-WO-VZQ" secondAttribute="centerX" constant="0.5" id="p9I-c4-GqY"/>
-                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="buK-Of-ZfH" secondAttribute="trailing" constant="23" id="qyQ-fV-uRR"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="buK-Of-ZfH" secondAttribute="trailing" constant="15" id="qyQ-fV-uRR"/>
                 <constraint firstAttribute="centerX" secondItem="Bcg-AK-PaO" secondAttribute="centerX" constant="1" id="uJ7-Wb-V2p"/>
-                <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="23" id="wPf-Zd-mGf"/>
+                <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="wPf-Zd-mGf"/>
             </constraints>
             <size key="customSize" width="314" height="292"/>
             <connections>

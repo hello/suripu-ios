@@ -24,6 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBEnd];
 }
 
 #pragma mark - Actions

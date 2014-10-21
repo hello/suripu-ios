@@ -43,6 +43,8 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupSubtitle];
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
 }
 
 - (void)setupSubtitle {
@@ -74,6 +76,8 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
                                                 title:NSLocalizedString(@"pairing.failed.title", nil)];
                     }];
                 }
+                
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             }];
     }
 }
@@ -84,6 +88,9 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
         [self showMessageDialog:NSLocalizedString(@"pill-pair.error.timed-out", nil)
                           title:NSLocalizedString(@"pairing.failed.title", nil)];
     }];
+    
+    [SENAnalytics track:kHEMAnalyticsEventError
+             properties:@{kHEMAnalyticsEventPropMessage : @"pairing timed out"}];
 }
 
 - (IBAction)pairPill:(id)sender {
@@ -131,6 +138,8 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
                                             title:NSLocalizedString(@"pairing.failed.title", nil)];
                 }];
             }
+            
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
         }];
     }];
 }

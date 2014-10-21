@@ -28,6 +28,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupDescription];
+    [SENAnalytics track:kHEMAnalyticsEventOnBSetupStart];
 }
 
 - (void)setupDescription {

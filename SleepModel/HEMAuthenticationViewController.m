@@ -29,6 +29,8 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
     [super viewDidLoad];
     [[[self doneButton] titleLabel] setFont:[UIFont fontWithName:@"Calibre-Medium"
                                                             size:18.0f]];
+    
+    [SENAnalytics track:kHEMAnalyticsEventSignInStart];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -90,10 +92,14 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
         [strongSelf setSigningIn:NO];
     
         if (error) {
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             [strongSelf stopActivity];
             [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)];
             return;
         }
+
+        [SENAnalytics setUserId:[SENAuthorizationService accountIdOfAuthorizedUser] properties:nil];
+        [SENAnalytics track:kHEMAnalyticsEventSignIn];
 
         [[strongSelf view] endEditing:NO];
         [strongSelf.navigationController dismissViewControllerAnimated:YES completion:nil];

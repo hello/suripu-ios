@@ -72,6 +72,7 @@
             break;
         case 4:
             [SENAuthorizationService deauthorize];
+            [SENAnalytics track:kHEMAnalyticsEventSignOut];
             break;
         default:
             break;

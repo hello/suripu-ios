@@ -28,6 +28,7 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupCarousel];
+    [SENAnalytics track:kHEMAnalyticsEventOnBWeight];
 }
 
 - (void)setupCarousel {

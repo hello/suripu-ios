@@ -37,6 +37,8 @@ static NSInteger HEMMaxHeightInFeet = 9;
         NSString* title = NSLocalizedString(@"status.success", nil);
         [[self doneButton] setTitle:title forState:UIControlStateNormal];
     }
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBHeight];
 }
 
 #pragma mark - HEMValueSliderDelegate

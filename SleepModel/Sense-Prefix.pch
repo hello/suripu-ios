@@ -5,6 +5,7 @@
 //
 
 #import <Availability.h>
+#import "HEMAnalytics.h"
 
 // TODO (jimmy): if we start to get more constants that are global across the app, we should
 // move them over to a HEMConstants file and import that here.

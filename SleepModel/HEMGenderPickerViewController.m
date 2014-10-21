@@ -46,6 +46,8 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
             [self setGenderAsOther];
             break;
     }
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBGender];
 }
 
 - (void)viewDidLayoutSubviews {

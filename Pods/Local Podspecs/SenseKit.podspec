@@ -11,6 +11,11 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.resources = 'Pod/Assets/*.png'
+  
+  s.subspec "Analytics" do |ss|
+    ss.source_files = 'Pod/Classes/Analytics/*'
+    ss.dependency 'Amplitude-iOS'
+  end
 
   s.subspec "API" do |ss|
     ss.source_files = 'Pod/Classes/API/*'

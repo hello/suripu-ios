@@ -18,6 +18,7 @@ static NSString* const SENAuthorizationServiceTokenPath = @"oauth2/token";
 static NSString* const SENAuthorizationServiceClientID = @"iphone_pill";
 static NSString* const SENAuthorizationServiceCredentialsKey = @"credentials";
 static NSString* const SENAuthorizationServiceCredentialsEmailKey = @"email";
+static NSString* const SENAuthorizationServiceAccountIdKey = @"account_id";
 static NSString* const SENAuthorizationServiceAccessTokenKey = @"access_token";
 static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authorization";
 
@@ -43,8 +44,10 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 
     AFHTTPRequestOperation* operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
     [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation* operation, id responseObject) {
-        [self authorizeRequestsWithResponse:[NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil]];
+        NSDictionary* response = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        [self authorizeRequestsWithResponse:response];
         [self setEmailAddressOfAuthorizedUser:username];
+        [self setAccountIdOfAuthorizedUser:response[SENAuthorizationServiceAccountIdKey]];
         if (block)
             block(operation.error);
     } failure:^(AFHTTPRequestOperation* operation, NSError* error) {
@@ -71,6 +74,7 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
     [[self keychain] removeObjectForKey:SENAuthorizationServiceCredentialsKey];
     [self authorizeRequestsWithToken:nil];
     [self setEmailAddressOfAuthorizedUser:nil];
+    [self setAccountIdOfAuthorizedUser:nil];
 }
 
 + (BOOL)isAuthorized
@@ -92,6 +96,16 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 + (void)setEmailAddressOfAuthorizedUser:(NSString*)emailAddress
 {
     [self keychain][SENAuthorizationServiceCredentialsEmailKey] = emailAddress;
+}
+
++ (NSString*)accountIdOfAuthorizedUser
+{
+    return [self keychain][SENAuthorizationServiceAccountIdKey];
+}
+
++ (void)setAccountIdOfAuthorizedUser:(NSString*)accountId
+{
+    [self keychain][SENAuthorizationServiceAccountIdKey] = accountId;
 }
 
 + (NSString*)accessToken

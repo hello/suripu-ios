@@ -48,6 +48,12 @@
 #define COCOAPODS_VERSION_MINOR_AFNetworking_UIKit 4
 #define COCOAPODS_VERSION_PATCH_AFNetworking_UIKit 1
 
+// Amplitude-iOS
+#define COCOAPODS_POD_AVAILABLE_Amplitude_iOS
+#define COCOAPODS_VERSION_MAJOR_Amplitude_iOS 2
+#define COCOAPODS_VERSION_MINOR_Amplitude_iOS 1
+#define COCOAPODS_VERSION_PATCH_Amplitude_iOS 1
+
 // AttributedMarkdown
 #define COCOAPODS_POD_AVAILABLE_AttributedMarkdown
 #define COCOAPODS_VERSION_MAJOR_AttributedMarkdown 0
@@ -146,6 +152,12 @@
 #define COCOAPODS_VERSION_MAJOR_SenseKit_API 0
 #define COCOAPODS_VERSION_MINOR_SenseKit_API 1
 #define COCOAPODS_VERSION_PATCH_SenseKit_API 0
+
+// SenseKit/Analytics
+#define COCOAPODS_POD_AVAILABLE_SenseKit_Analytics
+#define COCOAPODS_VERSION_MAJOR_SenseKit_Analytics 0
+#define COCOAPODS_VERSION_MINOR_SenseKit_Analytics 1
+#define COCOAPODS_VERSION_PATCH_SenseKit_Analytics 0
 
 // SenseKit/BLE
 #define COCOAPODS_POD_AVAILABLE_SenseKit_BLE

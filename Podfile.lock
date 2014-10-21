@@ -20,6 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
+  - Amplitude-iOS (2.1.1)
   - AttributedMarkdown (0.9.2)
   - CocoaLumberjack (1.6.5.1):
     - CocoaLumberjack/Core
@@ -37,10 +38,13 @@ PODS:
   - LGBluetooth (1.1.4)
   - NSJSONSerialization-NSNullRemoval (1.0.0)
   - SenseKit (0.1.0):
+    - SenseKit/Analytics
     - SenseKit/API
     - SenseKit/BLE
     - SenseKit/Model
     - SenseKit/Service
+  - SenseKit/Analytics (0.1.0):
+    - Amplitude-iOS
   - SenseKit/API (0.1.0):
     - AFNetworking (~> 2.4.1)
     - FXKeychain (~> 1.5.1)
@@ -94,6 +98,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
+  Amplitude-iOS: e72b65479dc035ef671a57e34e1a981767224318
   AttributedMarkdown: de3267724c9e2175e1fc398184d03ba6697766ef
   CocoaLumberjack: baf4a09a3bcbdfea3363556a90104e026d3504e2
   FCDynamicPanesNavigationController: 55ee3c165a070d8d01e0b90a1029916cbcaa1b09
@@ -104,11 +109,11 @@ SPEC CHECKSUMS:
   Kiwi: 54bece5b35564d9b8e03c608d926f1a22fcfc589
   LGBluetooth: 00f37b8c29cccc1dd44d5f726b2ec4a6e91c74ec
   NSJSONSerialization-NSNullRemoval: e12839c3f5c406708ef388ded9021884bc00f3b9
-  SenseKit: c750e05ab043e05b9da2a3d6cadf9fc253a519b7
+  SenseKit: 32d3efa3ca8d03ae0250b0b88d9a541b72062dc1
   SHSProtoBuf: 62a02d425f5dbee00d057bae65d76f0f01737410
   SORelativeDateTransformer: de7936811c9988af8e129a097af48c828f933f5f
   SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
   UIImageEffects: 69cd1e1f8fc4042a8fefcf4a0727cbf213e4dbfb
   YapDatabase: 2ec54726596299c88e09e899e8f17c15d7f6b18a
 
-COCOAPODS: 0.34.1
+COCOAPODS: 0.34.4

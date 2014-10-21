@@ -30,6 +30,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupDescription];
+    [SENAnalytics track:kHEMAnalyticsEventOnBAddPill];
 }
 
 - (void)setupDescription {

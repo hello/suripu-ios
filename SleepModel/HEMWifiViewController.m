@@ -36,6 +36,8 @@
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
     [[self ssidField] setText:[HEMWifiUtils connectedWifiSSID]];
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBSetupWiFi];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -111,6 +113,8 @@
                         [strongSelf showMessageDialog:msg title:title];
                     }
                 }
+                
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             }];
         } else {
             [self linkAccount];
@@ -160,6 +164,8 @@
             NSString* title = NSLocalizedString(@"wifi.error.title", nil);
             [strongSelf showMessageDialog:msg title:title];
         }
+        
+        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }];
 }
 

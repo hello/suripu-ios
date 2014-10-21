@@ -48,6 +48,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupDescription];
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBPairSense];
 }
 
 - (void)setupDescription {
@@ -130,6 +132,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         NSString* msg = NSLocalizedString(@"pairing.error.no-response", nil);
         [self showErrorMessage:msg];
     }];
+    [SENAnalytics track:kHEMAnalyticsEventError
+             properties:@{kHEMAnalyticsEventPropMessage : @"scanning timed out"}];
 }
 
 - (void)scanForSense {
@@ -168,6 +172,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                 [strongSelf pairWith:[senses firstObject]];
                 DLog(@"sense found, %@", [[strongSelf manager] sense]);
             } else {
+                [SENAnalytics track:kHEMAnalyticsEventError
+                         properties:@{kHEMAnalyticsEventPropMessage : @"no sense found"}];
                 [strongSelf stopActivityWithMessage:nil completion:^{
                     NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
                     [strongSelf showErrorMessage:msg];
@@ -208,6 +214,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             [strongSelf stopActivityWithMessage:nil completion:^{
                 NSString* msg = NSLocalizedString(@"pairing.error.could-not-pair", nil);
                 [strongSelf showErrorMessage:msg];
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             }];
         }
     }];

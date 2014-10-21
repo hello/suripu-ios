@@ -33,6 +33,7 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[super navigationItem] setHidesBackButton:YES];
+    [SENAnalytics track:kHEMAnalyticsEventOnBLocation];
 }
 
 #pragma - Activity
@@ -66,6 +67,7 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
                 [strongSelf setLocationTxId:nil];
                 [strongSelf uploadCollectedData:YES];
                 [strongSelf sayThankyouBeforeLeaving];
+                [strongSelf trackPermission:NO error:nil];
             }
             return NO;
         } failure:^BOOL(NSError *error) {
@@ -74,6 +76,7 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
                 [strongSelf stopActivity];
                 [strongSelf showLocationError:error];
                 [strongSelf setLocationTxId:nil];
+                [strongSelf trackPermission:NO error:error];
             }
             return NO;
         }];
@@ -87,6 +90,26 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
 - (IBAction)skipRequestingLocation:(id)sender {
     [self uploadCollectedData:YES];
     [self sayThankyouBeforeLeaving];
+    [self trackPermission:YES error:nil];
+}
+
+#pragma mark - Tracking Actions
+
+- (void)trackPermission:(BOOL)skipped error:(NSError*)error {
+    NSString* status = nil;
+    
+    if (skipped) {
+        status = kHEManaltyicsEventStatusSkipped;
+    } else if (error == nil) {
+        status = kHEManaltyicsEventStatusEnabled;
+    } else if ([error code] == HEMLocationErrorCodeNotAuthorized) {
+        status = kHEManaltyicsEventStatusDenied;
+    } else if ([error code] == HEMLocationErrorCodeNotEnabled) {
+        status = kHEManaltyicsEventStatusDisabled;
+    }
+    
+    NSDictionary* properties = status != nil ? @{kHEManaltyicsEventPropStatus : status} : nil;
+    [SENAnalytics track:kHEMAnalyticsEventPermissionLoc properties:properties];
 }
 
 #pragma mark - Alerts

@@ -35,6 +35,8 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
         NSString* title = NSLocalizedString(@"status.success", nil);
         [[self doneButton] setTitle:title forState:UIControlStateNormal];
     }
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBBirthday];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

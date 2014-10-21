@@ -25,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setSubtitleText];
+    [SENAnalytics track:kHEMAnalyticsEventOnBTwoPill];
 }
 
 - (void)setSubtitleText {

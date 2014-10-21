@@ -23,6 +23,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBSetupPill];
 }
 
 #pragma mark - Actions

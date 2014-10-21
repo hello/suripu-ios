@@ -30,6 +30,8 @@
     [super viewDidLoad];
     [self setupSubtitleText];
     [self updateContinueState];
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBNoBle];
 }
 
 - (void)setupSubtitleText {

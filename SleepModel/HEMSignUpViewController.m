@@ -34,6 +34,7 @@
     [super viewDidLoad];
     [[[self doneButton] titleLabel] setFont:[UIFont fontWithName:@"Calibre-Medium"
                                                             size:18.0f]];
+    [SENAnalytics track:kHEMAnalyticsEventOnBStart];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -89,6 +90,7 @@
                                   if (!strongSelf) return;
                                   
                                   if (error) {
+                                      [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
                                       [strongSelf stopActivity];
                                       [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
                                       return;
@@ -115,11 +117,13 @@
             [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:signInError withTitle:errTitle];
             return;
         } else if (signInError) { // retry once
+            [SENAnalytics trackError:signInError withEventName:kHEMAnalyticsEventError];
             DLog(@"retrying authentication post sign up");
             [strongSelf authenticate:email password:password rety:NO];
             return;
         }
         
+        [SENAnalytics setUserId:[SENAuthorizationService accountIdOfAuthorizedUser] properties:nil];
         [self performSegueWithIdentifier:[HEMOnboardingStoryboard moreInfoSegueIdentifier]
                                   sender:self];
     }];

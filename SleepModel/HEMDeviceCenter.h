@@ -13,7 +13,7 @@
 typedef NS_ENUM(NSInteger, HEMDeviceCenterError) {
     HEMDeviceCenterErrorSenseUnavailable = -1,
     HEMDeviceCenterErrorBLECommunicationError = -2,
-    HEMDeviceCenterErrorScanInProgress = -3,
+    HEMDeviceCenterErrorInProgress = -3,
     HEMDeviceCenterErrorSenseNotPaired = -4,
     HEMDeviceCenterErrorPillNotPaired = -5,
     HEMDeviceCenterErrorUnpairPillFromSense = -6,

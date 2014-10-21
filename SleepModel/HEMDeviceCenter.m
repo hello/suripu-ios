@@ -63,10 +63,13 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
 #pragma mark - Device Info
 
 - (void)loadDeviceInfo:(void(^)(NSError* error))completion {
-    if ([self isInfoLoaded]) {
-        if (completion) completion( nil );
+    if ([self isLoadingInfo]) {
+        if (completion) completion ([self errorWithType:HEMDeviceCenterErrorInProgress]);
         return;
     }
+
+    // no need to set InfoLoaded to NO here b/c we will not clear the cache unless
+    // caller explicitly calls clear or when response comes back without error.
     
     [self setLoadingInfo:YES];
     __weak typeof(self) weakSelf = self;
@@ -84,10 +87,10 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
 }
 
 - (void)processDeviceInfo:(NSArray*)devicesInfo {
-    // TODO (jimmy): for now, let's find the last Sense and last Pill, if any,
-    // and assume these are the actual devices the user is using in case there
-    // are multiple.  What we probably want to do is to sort the list by last
-    // seen and take the most recently last seen of both the Sense and Pill
+    // first, clear the currently cached info so it will actually update
+    [self setPillInfo:nil];
+    [self setSenseInfo:nil];
+    
     SENDevice* device = nil;
     NSInteger i = [devicesInfo count] - 1;
     while (i >= 0 && ([self senseInfo] == nil || [self pillInfo] == nil)) {
@@ -210,7 +213,7 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
         } failure:completion];
         
     } else if ([SENSenseManager isScanning]) {
-        if (completion) completion ([self errorWithType:HEMDeviceCenterErrorScanInProgress]);
+        if (completion) completion ([self errorWithType:HEMDeviceCenterErrorInProgress]);
     } else {
         
         [self scanForPairedSense:^(NSError* error) {

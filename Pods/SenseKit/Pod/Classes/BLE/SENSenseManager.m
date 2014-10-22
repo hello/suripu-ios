@@ -92,12 +92,14 @@ static NSInteger const kSENSenseMessageVersion = 0;
     return [[LGCentralManager sharedInstance] isScanning];
 }
 
-+ (BOOL)isBluetoothOn {
-    return [[[LGCentralManager sharedInstance] manager] state] == CBCentralManagerStatePoweredOn;
-}
-
 + (BOOL)isReady {
     return [[LGCentralManager sharedInstance] isCentralReady];
+}
+
++ (BOOL)canScan {
+    CBCentralManagerState state = [[[LGCentralManager sharedInstance] manager] state];
+    return state != CBCentralManagerStateUnauthorized
+            && state != CBCentralManagerStateUnsupported;
 }
 
 - (instancetype)initWithSense:(SENSense*)sense {

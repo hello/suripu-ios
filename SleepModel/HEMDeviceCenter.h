@@ -12,7 +12,7 @@
 
 typedef NS_ENUM(NSInteger, HEMDeviceCenterError) {
     HEMDeviceCenterErrorSenseUnavailable = -1,
-    HEMDeviceCenterErrorBLECommunicationError = -2,
+    HEMDeviceCenterErrorBLEUnavailable = -2,
     HEMDeviceCenterErrorInProgress = -3,
     HEMDeviceCenterErrorSenseNotPaired = -4,
     HEMDeviceCenterErrorPillNotPaired = -5,
@@ -54,12 +54,6 @@ typedef void(^HEMDeviceCompletionBlock)(NSError* error);
 @property (nonatomic, assign, readonly, getter=isInfoLoaded) BOOL infoLoaded;
 
 + (instancetype)sharedCenter;
-
-/**
- * Determine if the device's bluetooth is powered on
- * @return YES if on, NO otherwise
- */
-+ (BOOL)isBluetoothOn;
 
 /**
  * @method clearCache:

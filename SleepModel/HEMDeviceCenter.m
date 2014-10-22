@@ -42,10 +42,6 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
     return [self sharedCenter];
 }
 
-+ (BOOL)isBluetoothOn {
-    return [SENSenseManager isBluetoothOn];
-}
-
 - (void)clearCache {
     [self setPillInfo:nil];
     [self setSenseInfo:nil];
@@ -124,6 +120,16 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
     if ([self senseManager] != nil) { // already loaded?  just complete
         
         if (completion) completion (nil);
+        
+    } else if (![SENSenseManager canScan]) { // has info?  find Sense nearby
+        
+        if (completion) completion ([self errorWithType:HEMDeviceCenterErrorBLEUnavailable]);
+        
+    } else if (![SENSenseManager isReady]) { // has info?  find Sense nearby
+        // if it's not ready for scanning, try again in a bit
+        return [self performSelector:@selector(scanForPairedSense:)
+                          withObject:completion
+                          afterDelay:0.1f];
         
     } else if ([self senseInfo] != nil) { // has info?  find Sense nearby
         

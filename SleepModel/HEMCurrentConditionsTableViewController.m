@@ -133,7 +133,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
         case SENSensorUnitDegreeCentigrade:
             cell.glyphImageView.image = [HelloStyleKit temperatureIcon];
             break;
-        case SENSensorUnitPartsPerMillion:
+        case SENSensorUnitMicrogramPerCubicMeter:
             cell.glyphImageView.image = [HelloStyleKit particleIcon];
             break;
         case SENSensorUnitPercent:

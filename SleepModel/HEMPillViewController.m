@@ -182,10 +182,4 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }];
 }
 
-#pragma mark - Cleanup
-
-- (void)dealloc {
-    [[HEMDeviceCenter sharedCenter] stopScanning];
-}
-
 @end

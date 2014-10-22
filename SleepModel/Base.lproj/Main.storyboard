@@ -680,8 +680,8 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="This will reset your entire Sense System, including your Sleep Pill." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Id-oB-6lZ">
-                                        <rect key="frame" x="96" y="108" width="410" height="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This will reset your entire Sense System, including your Sleep Pill." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Id-oB-6lZ">
+                                        <rect key="frame" x="28" y="98" width="544" height="17"/>
                                         <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -692,8 +692,10 @@
                                     <constraint firstItem="99x-GA-dKO" firstAttribute="top" secondItem="bJS-Cn-weR" secondAttribute="top" id="54a-GY-XRy"/>
                                     <constraint firstAttribute="trailing" secondItem="99x-GA-dKO" secondAttribute="trailing" constant="28" id="9b3-Kr-VJ1"/>
                                     <constraint firstAttribute="height" constant="142" id="JRU-wC-zbQ"/>
-                                    <constraint firstItem="4Id-oB-6lZ" firstAttribute="top" secondItem="PZJ-QF-maf" secondAttribute="bottom" constant="15" id="KZA-8c-HhT"/>
+                                    <constraint firstItem="4Id-oB-6lZ" firstAttribute="top" secondItem="PZJ-QF-maf" secondAttribute="bottom" constant="5" id="KZA-8c-HhT"/>
                                     <constraint firstItem="PZJ-QF-maf" firstAttribute="leading" secondItem="bJS-Cn-weR" secondAttribute="leading" constant="28" id="ShB-o0-ChD"/>
+                                    <constraint firstItem="4Id-oB-6lZ" firstAttribute="leading" secondItem="bJS-Cn-weR" secondAttribute="leading" constant="28" id="VPr-wN-jLq"/>
+                                    <constraint firstAttribute="trailing" secondItem="4Id-oB-6lZ" secondAttribute="trailing" constant="28" id="eZF-fX-hjF"/>
                                     <constraint firstItem="PZJ-QF-maf" firstAttribute="top" secondItem="99x-GA-dKO" secondAttribute="bottom" constant="5" id="iA0-py-SNs"/>
                                     <constraint firstAttribute="trailing" secondItem="PZJ-QF-maf" secondAttribute="trailing" constant="28" id="ocd-g2-tz1"/>
                                     <constraint firstItem="99x-GA-dKO" firstAttribute="leading" secondItem="bJS-Cn-weR" secondAttribute="leading" constant="28" id="qbC-QP-NR0"/>

@@ -61,12 +61,12 @@
 
 - (void)showNoSenseAlert {
     [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"settings.sense.not-found-title", nil)
+                                          message:NSLocalizedString(@"settings.pill.pair-no-sense-message", nil)
+                             presentingController:self];
 }
 
 - (IBAction)pairPill:(id)sender {
     if ([self senseManager] == nil) {
-                                          message:NSLocalizedString(@"settings.pill.pair-no-sense-message", nil)
-                             presentingController:self];
         [self showNoSenseAlert];
     } // TODO: (jimmy): implement it! ... but it requires Sense to be working
 }

@@ -7,6 +7,7 @@
 //
 
 #import "HEMNoPillViewController.h"
+#import "HEMAlertController.h"
 
 @interface HEMNoPillViewController ()
 
@@ -59,18 +60,13 @@
 }
 
 - (void)showNoSenseAlert {
-    NSString* title = NSLocalizedString(@"settings.sense.not-found-title", nil);
-    NSString* message = NSLocalizedString(@"settings.pill.pair-no-sense-message", nil);
-    UIAlertView* messageDialog = [[UIAlertView alloc] initWithTitle:title
-                                                            message:message
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"actions.ok", nil)
-                                                  otherButtonTitles:nil];
-    [messageDialog show];
+    [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"settings.sense.not-found-title", nil)
 }
 
 - (IBAction)pairPill:(id)sender {
     if ([self senseManager] == nil) {
+                                          message:NSLocalizedString(@"settings.pill.pair-no-sense-message", nil)
+                             presentingController:self];
         [self showNoSenseAlert];
     } // TODO: (jimmy): implement it! ... but it requires Sense to be working
 }

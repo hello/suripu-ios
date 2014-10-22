@@ -7,6 +7,7 @@
 //
 
 #import "HEMBaseController.h"
+#import "HEMAlertController.h"
 
 @interface HEMBaseController()
 
@@ -46,11 +47,7 @@
 }
 
 - (void)showMessageDialog:(NSString*)message title:(NSString*)title {
-    [[[UIAlertView alloc] initWithTitle:title
-                                message:message
-                               delegate:nil
-                      cancelButtonTitle:nil
-                      otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
+    [HEMAlertController presentInfoAlertWithTitle:title message:message presentingController:self];
 }
 
 - (void)dealloc {

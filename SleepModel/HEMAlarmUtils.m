@@ -2,6 +2,7 @@
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENAPIAlarms.h>
 #import "HEMAlarmUtils.h"
+#import "HEMAlertController.h"
 
 @implementation HEMAlarmUtils
 
@@ -82,22 +83,9 @@
 
 + (void)showError:(NSError*)error withTitle:(NSString*)title onController:(UIViewController*)controller
 {
-    if (NSClassFromString(@"UIAlertController")) {
-        UIAlertController* alertController = [UIAlertController alertControllerWithTitle:title
-                                                                                 message:error.localizedDescription
-                                                                          preferredStyle:UIAlertControllerStyleAlert];
-        UIAlertAction* action = [UIAlertAction actionWithTitle:NSLocalizedString(@"actions.ok", nil) style:UIAlertActionStyleDefault handler:NULL];
-        [alertController addAction:action];
-        [controller presentViewController:alertController animated:YES completion:NULL];
-    }
-    else {
-        UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:title
-                                                            message:error.localizedDescription
-                                                           delegate:nil
-                                                  cancelButtonTitle:nil
-                                                  otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil];
-        [alertView show];
-    }
+    [HEMAlertController presentInfoAlertWithTitle:title
+                                          message:error.localizedDescription
+                             presentingController:controller];
 }
 
 @end

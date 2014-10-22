@@ -3,6 +3,7 @@
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
+#import "HEMAlertController.h"
 
 @interface HEMAlarmRepeatTableViewController ()
 
@@ -90,20 +91,9 @@
 
 - (void)showAlertForRepeatRestriction
 {
-    if (NSClassFromString(@"UIAlertController")) {
-        UIAlertController* controller = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"alarm.repeat.day-reuse-error.title", nil)
-                                                                            message:NSLocalizedString(@"alarm.repeat.day-reuse-error.message", nil)
-                                                                     preferredStyle:UIAlertControllerStyleAlert];
-        [controller addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"actions.ok", nil) style:UIAlertActionStyleDefault handler:NULL]];
-        [self presentViewController:controller animated:YES completion:NULL];
-    }
-    else {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"alarm.repeat.day-reuse-error.title", nil)
-                                    message:NSLocalizedString(@"alarm.repeat.day-reuse-error.message", nil)
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
-    }
+    [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.repeat.day-reuse-error.title", nil)
+                                          message:NSLocalizedString(@"alarm.repeat.day-reuse-error.message", nil)
+                             presentingController:self];
 }
 
 @end

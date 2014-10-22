@@ -14,6 +14,7 @@
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAnimationUtils.h"
+#import "HEMAlertController.h"
 
 static CGFloat const kHEMSleepAnswerButtonBorderWidth = 1.0f;
 static CGFloat const kHEMSleepAnswerButtonHeight = 50.0f;
@@ -191,11 +192,9 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 #pragma mark - Actions
 
 - (void)showError:(__unused NSError*)error {
-    [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"questions.failed.title", nil)
-                                message:NSLocalizedString(@"questions.error.unexpected", nil)
-                               delegate:nil
-                      cancelButtonTitle:nil
-                      otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
+    [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"questions.failed.title", nil)
+                                          message:NSLocalizedString(@"questions.error.unexpected", nil)
+                             presentingController:self];
 }
 
 - (void)enableAnswerButtons:(BOOL)enable except:(UIButton*)choiceButton {

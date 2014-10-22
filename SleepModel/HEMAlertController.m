@@ -21,17 +21,21 @@
 
 static NSString* const HEMAlertControllerButtonTextKey = @"text";
 static NSString* const HEMAlertControllerButtonActionKey = @"action";
+static NSMutableArray* alertControllers = nil;
 
 + (void)presentInfoAlertWithTitle:(NSString*)title
                           message:(NSString*)message
              presentingController:(UIViewController*)controller
 {
+    if (!alertControllers)
+        alertControllers = [NSMutableArray new];
     HEMAlertController* alertController = [[self alloc] initWithTitle:title
                                                               message:message
                                                                 style:HEMAlertControllerStyleAlert
                                                  presentingController:controller];
     [alertController addActionWithText:NSLocalizedString(@"actions.ok", nil) block:NULL];
     [alertController show];
+    [alertControllers addObject:alertController];
 }
 
 - (instancetype)initWithTitle:(NSString*)title
@@ -75,11 +79,13 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 - (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     [self activateActionAtIndex:buttonIndex];
+    [alertControllers removeObject:[alertControllers lastObject]];
 }
 
-- (void)actionSheet:(UIActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+- (void)actionSheet:(UIActionSheet*)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     [self activateActionAtIndex:buttonIndex];
+    [alertControllers removeObject:[alertControllers lastObject]];
 }
 
 #pragma mark - Present Alert

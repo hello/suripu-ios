@@ -141,11 +141,12 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
     __weak typeof(self) weakSelf = self;
     [SENAPIAccount updateAccount:[[HEMUserDataCache sharedUserDataCache] account]
                  completionBlock:^(id data, NSError *error) {
-                     DLog(@"update completed with error %@", error);
+                     if (error)
+                         DDLogVerbose(@"update completed with error %@", error);
                      __strong typeof(weakSelf) strongSelf = weakSelf;
                      if (!strongSelf) return;
                      if (error != nil && retry) {
-                         DLog(@"failed to update account with user information");
+                         DDLogVerbose(@"failed to update account with user information");
                          [strongSelf uploadCollectedData:NO];
                      } // TODO (jimmy): else if error, no retry, what should we do?
                  }];

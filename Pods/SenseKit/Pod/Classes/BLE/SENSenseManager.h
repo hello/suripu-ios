@@ -66,10 +66,14 @@ typedef enum {
 + (BOOL)isReady;
 
 /**
- * Check to see if bluetooth on the device is powered on or not
- * @return YES if powered on, NO otherwise
+ * Determine, as best as possible, whether if manager can actually start a scan
+ * based on whether BLE is supported and enabled.  If the radio is resetting or
+ * in some unknown state, this will assume it's still functional and thus can scan,
+ * but possibly not yet ready.
+ *
+ * @return YES if can scan, NO otherwise
  */
-+ (BOOL)isBluetoothOn;
++ (BOOL)canScan;
 
 /**
  * Initialize a manager for the specified Sense object.  You can retrieve

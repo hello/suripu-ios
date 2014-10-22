@@ -267,7 +267,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
             icon = [UIImage imageNamed:@"temperatureIcon"];
             break;
         }
-        case SENSensorUnitPartsPerMillion: {
+        case SENSensorUnitMicrogramPerCubicMeter: {
             icon = [UIImage imageNamed:@"particleIcon"];
             break;
         }

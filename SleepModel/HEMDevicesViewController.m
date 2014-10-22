@@ -21,7 +21,6 @@
 
 @property (weak,   nonatomic) IBOutlet UITableView *devicesTableView;
 @property (strong, nonatomic) NSError* loadError;
-@property (assign, nonatomic) BOOL loaded;
 
 @end
 
@@ -41,19 +40,33 @@
 }
 
 - (void)loadDevices {
-    if (![[HEMDeviceCenter sharedCenter] isInfoLoaded]) {
-        __weak typeof(self) weakSelf = self;
-        [[HEMDeviceCenter sharedCenter] loadDeviceInfo:^(NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
+    __weak typeof(self) weakSelf = self;
+    // always load device information.  previous bug was that it will never reload
+    // to show updated "Last Seen" unless you killed the app because data is always
+    // loaded after once
+    [[HEMDeviceCenter sharedCenter] loadDeviceInfo:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            if (error != nil && [error code] != HEMDeviceCenterErrorInProgress) {
                 [strongSelf setLoadError:error];
-                [[strongSelf devicesTableView] reloadSections:[NSIndexSet indexSetWithIndex:0]
-                                             withRowAnimation:UITableViewRowAnimationAutomatic];
             }
-        }];
-        [[self devicesTableView] reloadData];
+            // if loading in progress, will re-call itself.  otherwise, just update
+            [strongSelf updateTableWhenDoneLoadingInfo];
+        }
+    }];
+    [[self devicesTableView] reloadData];
+}
+
+- (void)updateTableWhenDoneLoadingInfo {
+    if ([[HEMDeviceCenter sharedCenter] isLoadingInfo]) {
+        [self performSelector:@selector(updateTableWhenDoneLoadingInfo)
+                   withObject:nil
+                   afterDelay:0.1f];
+        return;
     }
-    [self setLoaded:YES];
+    
+    [[self devicesTableView] reloadSections:[NSIndexSet indexSetWithIndex:0]
+                           withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 - (NSString*)lastSeen:(SENDevice*)device {
@@ -106,7 +119,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCellSelectionStyle selectionStyle = UITableViewCellSelectionStyleNone;
     UITableViewCellAccessoryType accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    if ([[HEMDeviceCenter sharedCenter] isLoadingInfo] || ![self loaded]) {
+    if ([[HEMDeviceCenter sharedCenter] isLoadingInfo]) {
         status = NSLocalizedString(@"empty-data", nil);
         activity =
             [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];

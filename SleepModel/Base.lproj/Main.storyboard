@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -653,10 +654,9 @@
                                 <rect key="frame" x="0.0" y="400" width="600" height="142"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="99x-GA-dKO">
-                                        <rect key="frame" x="140" y="0.0" width="320" height="44"/>
+                                        <rect key="frame" x="28" y="0.0" width="544" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="320" id="hXc-5d-tpG"/>
                                             <constraint firstAttribute="height" constant="44" id="w9E-5E-Pxu"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="18"/>
@@ -669,10 +669,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PZJ-QF-maf">
-                                        <rect key="frame" x="140" y="49" width="320" height="44"/>
+                                        <rect key="frame" x="28" y="49" width="544" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="320" id="MZv-rY-Drv"/>
                                             <constraint firstAttribute="height" constant="44" id="qcg-Jf-vsS"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="18"/>
@@ -681,8 +680,8 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="This will reset your entire Sense System, including your Sleep Pill." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Id-oB-6lZ">
-                                        <rect key="frame" x="96" y="108" width="410" height="17"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This will reset your entire Sense System, including your Sleep Pill." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Id-oB-6lZ">
+                                        <rect key="frame" x="28" y="98" width="544" height="17"/>
                                         <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="14"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -691,12 +690,15 @@
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="99x-GA-dKO" firstAttribute="top" secondItem="bJS-Cn-weR" secondAttribute="top" id="54a-GY-XRy"/>
-                                    <constraint firstAttribute="centerX" secondItem="99x-GA-dKO" secondAttribute="centerX" id="FGO-70-sOs"/>
-                                    <constraint firstItem="PZJ-QF-maf" firstAttribute="centerX" secondItem="99x-GA-dKO" secondAttribute="centerX" id="IbS-Vv-J4Q"/>
+                                    <constraint firstAttribute="trailing" secondItem="99x-GA-dKO" secondAttribute="trailing" constant="28" id="9b3-Kr-VJ1"/>
                                     <constraint firstAttribute="height" constant="142" id="JRU-wC-zbQ"/>
-                                    <constraint firstItem="4Id-oB-6lZ" firstAttribute="top" secondItem="PZJ-QF-maf" secondAttribute="bottom" constant="15" id="KZA-8c-HhT"/>
-                                    <constraint firstItem="PZJ-QF-maf" firstAttribute="centerX" secondItem="4Id-oB-6lZ" secondAttribute="centerX" id="ghb-Xo-hpY"/>
+                                    <constraint firstItem="4Id-oB-6lZ" firstAttribute="top" secondItem="PZJ-QF-maf" secondAttribute="bottom" constant="5" id="KZA-8c-HhT"/>
+                                    <constraint firstItem="PZJ-QF-maf" firstAttribute="leading" secondItem="bJS-Cn-weR" secondAttribute="leading" constant="28" id="ShB-o0-ChD"/>
+                                    <constraint firstItem="4Id-oB-6lZ" firstAttribute="leading" secondItem="bJS-Cn-weR" secondAttribute="leading" constant="28" id="VPr-wN-jLq"/>
+                                    <constraint firstAttribute="trailing" secondItem="4Id-oB-6lZ" secondAttribute="trailing" constant="28" id="eZF-fX-hjF"/>
                                     <constraint firstItem="PZJ-QF-maf" firstAttribute="top" secondItem="99x-GA-dKO" secondAttribute="bottom" constant="5" id="iA0-py-SNs"/>
+                                    <constraint firstAttribute="trailing" secondItem="PZJ-QF-maf" secondAttribute="trailing" constant="28" id="ocd-g2-tz1"/>
+                                    <constraint firstItem="99x-GA-dKO" firstAttribute="leading" secondItem="bJS-Cn-weR" secondAttribute="leading" constant="28" id="qbC-QP-NR0"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -725,7 +727,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h9h-4l-Pe7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2790" y="2998.9436619718308"/>
+            <point key="canvasLocation" x="2790" y="2998"/>
         </scene>
         <!--Sleep Pill-->
         <scene sceneID="ALm-aT-Nq9">

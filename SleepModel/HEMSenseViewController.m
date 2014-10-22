@@ -216,17 +216,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)hideActivity {
     [[self manageSenseView] setHidden:![[HEMDeviceCenter sharedCenter] pairedSenseAvailable]];
-    
-    if (![[self manageSenseView] isHidden]) {
-        [UIView animateWithDuration:0.25f
-                         animations:^{
-                             [[self manageSenseView] setAlpha:1.0f];
-                             [[self actionStatusView] setAlpha:0.0f];
-                         }
-                         completion:^(BOOL finished) {
-                             [[self actionStatusView] setHidden:YES];
-                         }];
-    }
+
+    // still need to hide status view regardless of whether manageSenseView is hidden.
+    [UIView animateWithDuration:0.25f
+                     animations:^{
+                         [[self manageSenseView] setAlpha:1.0f];
+                         [[self actionStatusView] setAlpha:0.0f];
+                     }
+                     completion:^(BOOL finished) {
+                         [[self actionStatusView] setHidden:YES];
+                     }];
 }
 
 - (void)enablePairingMode {

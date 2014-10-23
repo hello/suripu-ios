@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 
 @class SENDevice;
+@class SENSenseManager;
 
 typedef NS_ENUM(NSInteger, HEMDeviceCenterError) {
     HEMDeviceCenterErrorSenseUnavailable = -1,
@@ -33,6 +34,17 @@ typedef void(^HEMDeviceCompletionBlock)(NSError* error);
  * @property pillInfo: the device information for the Sense
  */
 @property (nonatomic, strong, readonly) SENDevice* senseInfo;
+
+/**
+ * @property senseManager: the manager for the paired Sense that was found.  You
+ *                         should only use this outside of the center if it's a
+ *                         one off operation that does not require any interaction
+ *                         with the API.
+ *
+ * @see loadDeviceInfo:
+ * @see scanForPairedSense:
+ */
+@property (nonatomic, strong, readonly) SENSenseManager* senseManager;
 
 /**
  * @property loadingInfo: flag that indicates whether or not device information

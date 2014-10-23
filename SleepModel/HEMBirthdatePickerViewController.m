@@ -1,4 +1,5 @@
 #import <SenseKit/SENAccount.h>
+#import <SenseKit/SENAPIAccount.h>
 
 #import "HEMBirthdatePickerViewController.h"
 #import "HEMUserDataCache.h"
@@ -21,6 +22,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *dobPickerHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *dobPickerToButtonTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *doneButtonWidthConstraint;
 
 @end
 
@@ -29,6 +31,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
+    [self loadAccount:nil]; // if does not yet exist, in case user returns to here
     [[self titleLabel] setAccessibilityLabel:NSLocalizedString(@"user.info.accessibility.birthdate-title", nil)];
     
     if ([self delegate] != nil) {
@@ -59,6 +62,24 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
     [self updateConstraint:[self dobPickerToButtonTopConstraint] withDiff:-heightDiff];
 }
 
+- (void)loadAccount:(void(^)(NSError* error))completion {
+    if ([[HEMUserDataCache sharedUserDataCache] account] == nil) {
+        [SENAPIAccount getAccount:^(SENAccount* account, NSError *error) {
+            if (account != nil) {
+                [[HEMUserDataCache sharedUserDataCache] setAccount:account];
+            }
+            if (completion) completion (error);
+        }];
+    }
+}
+
+#pragma mark - Errors
+
+- (void)showIssueLoadingAccountAlert {
+    [self showMessageDialog:NSLocalizedString(@"onboarding.account.dob-not-updated", nil)
+                      title:NSLocalizedString(@"onboarding.account.not-loaded-title", nil)];
+}
+
 #pragma mark - Next
 
 - (IBAction)next:(id)sender {
@@ -71,14 +92,44 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
     NSInteger year = [components year]-yearDiff+1;
     
     if ([self delegate] == nil) {
-        [[[HEMUserDataCache sharedUserDataCache] account] setBirthMonth:month
-                                                                    day:day
-                                                                andYear:year];
-        [self performSegueWithIdentifier:[HEMOnboardingStoryboard genderSegueIdentifier]
-                                  sender:self];
+        HEMUserDataCache* cache = [HEMUserDataCache sharedUserDataCache];
+        
+        if ([cache account] == nil) {
+            [self loadAccountThenProceedWithMonth:month day:day year:year];
+        } else {
+            [[cache account] setBirthMonth:month day:day andYear:year];
+            [self proceedToNextScreen];
+        }
+
     } else {
         [[self delegate] didSelectMonth:month day:day year:year from:self];
     }
+}
+
+- (void)loadAccountThenProceedWithMonth:(NSInteger)month day:(NSInteger)day year:(NSInteger)year {
+    [[self doneButton] showActivityWithWidthConstraint:[self doneButtonWidthConstraint]];
+    
+    __weak typeof(self) weakSelf = self;
+    [self loadAccount:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            [[strongSelf doneButton] stopActivity];
+            
+            if (error != nil) {
+                [strongSelf showIssueLoadingAccountAlert];
+            } else {
+                [[[HEMUserDataCache sharedUserDataCache] account] setBirthMonth:month
+                                                                            day:day
+                                                                        andYear:year];
+                [strongSelf proceedToNextScreen];
+            }
+        }
+    }];
+}
+
+- (void)proceedToNextScreen {
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard genderSegueIdentifier]
+                              sender:self];
 }
 
 @end

@@ -15,6 +15,7 @@
 #import "HEMUserDataCache.h"
 #import "HEMWifiUtils.h"
 #import "HEMRoundedTextField.h"
+#import "HEMOnboardingUtils.h"
 
 @interface HEMWifiViewController() <UITextFieldDelegate>
 
@@ -172,6 +173,7 @@
 #pragma mark - Navigation
 
 - (void)next {
+    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard pillSegueIdentifier]
                               sender:nil];
 }

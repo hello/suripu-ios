@@ -13,6 +13,7 @@
 #import "HelloStyleKit.h"
 #import "HEMUserDataCache.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMOnboardingUtils.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
@@ -92,13 +93,19 @@
                                   if (error) {
                                       [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
                                       [strongSelf stopActivity];
-                                      [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"sign-up.failed.title", nil)];
+                                      
+                                      NSString* title = NSLocalizedString(@"sign-up.failed.title", nil);
+                                      [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:title];
                                       return;
                                   }
                                   // cache the account as that is needed post sign up
                                   // to update the account with further information
                                   [[HEMUserDataCache sharedUserDataCache] setAccount:account];
                                   [strongSelf authenticate:emailAddress password:password rety:YES];
+                                  
+                                  // save a checkpoint so that user does not have to try and create
+                                  // another account
+                                  [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
                               }];
 }
 
@@ -124,8 +131,8 @@
         }
         
         [SENAnalytics setUserId:[SENAuthorizationService accountIdOfAuthorizedUser] properties:nil];
-        [self performSegueWithIdentifier:[HEMOnboardingStoryboard moreInfoSegueIdentifier]
-                                  sender:self];
+        [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard moreInfoSegueIdentifier]
+                                        sender:strongSelf];
     }];
 }
 

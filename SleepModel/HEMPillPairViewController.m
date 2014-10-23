@@ -19,8 +19,9 @@
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMActivityCoverView.h"
+#import "HEMDeviceCenter.h"
 
-static CGFloat const kHEMPillPairTimeout = 15.0f;
+static CGFloat const kHEMPillPairTimeout = 30.0f; // accommodate case when scanning is needed
 
 @interface HEMPillPairViewController()
 
@@ -65,7 +66,7 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
 
 - (void)listenForDisconnects {
     SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
-    if ([self disconnectObserverId] == nil) {
+    if ([self disconnectObserverId] == nil && manager != nil) {
         __weak typeof(self) weakSelf = self;
         self.disconnectObserverId =
             [manager observeUnexpectedDisconnect:^(NSError *error) {
@@ -93,6 +94,43 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
              properties:@{kHEMAnalyticsEventPropMessage : @"pairing timed out"}];
 }
 
+- (void)ensureSenseIsReady:(void(^)(SENSenseManager* manager))completion {
+    if (!completion) return;
+    
+    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    if (manager != nil) {
+        completion (manager);
+    } else {
+        __weak typeof(self) weakSelf = self;
+        [[HEMDeviceCenter sharedCenter] loadDeviceInfo:^(NSError *error) {
+            __block typeof(weakSelf) strongSelf = weakSelf;
+            if (!strongSelf) return;
+            
+            if (error != nil) {
+                [[strongSelf activityView] dismissWithResultText:nil completion:^{
+                    [strongSelf showMessageDialog:NSLocalizedString(@"pill-pair.error.device-info-unknown", nil)
+                                            title:NSLocalizedString(@"pairing.failed.title", nil)];
+                }];
+                completion (nil);
+                return;
+            }
+            
+            [[HEMDeviceCenter sharedCenter] scanForPairedSense:^(NSError *error) {
+                if (error != nil) {
+                    [[strongSelf activityView] dismissWithResultText:nil completion:^{
+                        [strongSelf showMessageDialog:NSLocalizedString(@"pill-pair.error.sense-not-found", nil)
+                                                title:NSLocalizedString(@"pairing.failed.title", nil)];
+                    }];
+                    completion (nil);
+                    return;
+                }
+                
+                if (completion) completion ([[HEMDeviceCenter sharedCenter] senseManager]);
+            }];
+        }];
+    }
+}
+
 - (IBAction)pairPill:(id)sender {
     if ([self activityView] == nil) {
         [self setActivityView:[[HEMActivityCoverView alloc] init]];
@@ -102,45 +140,51 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
     [[[self activityView] activityLabel] setText:pairing];
     
     [[self activityView] showInView:[[self navigationController] view] completion:^{
-        [self listenForDisconnects];
-        
-        SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
-        NSString* token = [SENAuthorizationService accessToken];
-        
         [self setPairTimedOut:NO];
         [self performSelector:@selector(pairingTimedOut)
                    withObject:nil
                    afterDelay:kHEMPillPairTimeout];
         
         __weak typeof(self) weakSelf = self;
-        [manager pairWithPill:token success:^(id response) {
+        [self ensureSenseIsReady:^(SENSenseManager *manager) {
             __block typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf && ![strongSelf pairTimedOut]) {
-                [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
-                                                         selector:@selector(pairingTimedOut)
-                                                           object:nil];
-                NSString* paired = NSLocalizedString(@"pairing.done", nil);
-                [[strongSelf activityView] dismissWithResultText:paired completion:^{
-                    [strongSelf disconnectSenseAndClearCache];
-                    
-                    NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
-                    [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
-                }];
-            }
-        } failure:^(NSError *error) {
-            __block typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf && ![strongSelf pairTimedOut]) {
-                [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
-                                                         selector:@selector(pairingTimedOut)
-                                                           object:nil];
-                [[strongSelf activityView] dismissWithResultText:nil completion:^{
-                    [strongSelf showMessageDialog:NSLocalizedString(@"pill-pair.error.pill-pair-failed", nil)
-                                            title:NSLocalizedString(@"pairing.failed.title", nil)];
-                }];
-            }
-            
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            if (!strongSelf || manager == nil) return;
+            [strongSelf pairNowWith:manager];
         }];
+    }];
+}
+
+- (void)pairNowWith:(SENSenseManager*)manager {
+    [self listenForDisconnects];
+    
+    NSString* token = [SENAuthorizationService accessToken];
+    
+    __weak typeof(self) weakSelf = self;
+    [manager pairWithPill:token success:^(id response) {
+        __block typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf && ![strongSelf pairTimedOut]) {
+            [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
+                                                     selector:@selector(pairingTimedOut)
+                                                       object:nil];
+            NSString* paired = NSLocalizedString(@"pairing.done", nil);
+            [[strongSelf activityView] dismissWithResultText:paired completion:^{
+                [strongSelf disconnectSenseAndClearCache];
+                [strongSelf proceed];
+            }];
+        }
+    } failure:^(NSError *error) {
+        __block typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf && ![strongSelf pairTimedOut]) {
+            [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
+                                                     selector:@selector(pairingTimedOut)
+                                                       object:nil];
+            [[strongSelf activityView] dismissWithResultText:nil completion:^{
+                [strongSelf showMessageDialog:NSLocalizedString(@"pill-pair.error.pill-pair-failed", nil)
+                                        title:NSLocalizedString(@"pairing.failed.title", nil)];
+            }];
+        }
+        
+        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }];
 }
 
@@ -150,6 +194,12 @@ static CGFloat const kHEMPillPairTimeout = 15.0f;
     // we know what to actually point to, we likely will open up a browser to
     // show the help
 #pragma message ("remove when we have devices!")
+    [self proceed];
+}
+
+- (void)proceed {
+    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+    
     NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
     [self performSegueWithIdentifier:segueId sender:self];
 }

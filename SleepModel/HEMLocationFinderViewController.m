@@ -9,6 +9,7 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 
 static CGFloat const kHEMLocationFinderAnimationDuration = 0.25f;
@@ -33,7 +34,7 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[super navigationItem] setHidesBackButton:YES];
-    [SENAnalytics track:kHEMAnalyticsEventOnBLocation];
+    [SENAnalytics track:kHEMAnalyticsEventOnBLocation];   
 }
 
 #pragma - Activity
@@ -153,6 +154,7 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
 }
 
 - (void)next {
+    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard senseSetupSegueIdentifier]
                               sender:self];
 }

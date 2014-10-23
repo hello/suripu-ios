@@ -5,11 +5,14 @@
 //  Created by Jimmy Lu on 10/14/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
+#import <SenseKit/SENAPIAccount.h>
 
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
+#import "HEMUserDataCache.h"
 
-static CGFloat kHEMOnboardingDefaultFontSize = 18.0f;
+static NSString* const kHEMOnboardingSettingCheckpoint = @"sense.checkpoint";
+static CGFloat   const kHEMOnboardingDefaultFontSize = 18.0f;
 
 @implementation HEMOnboardingUtils
 
@@ -59,6 +62,22 @@ static CGFloat kHEMOnboardingDefaultFontSize = 18.0f;
     }
     
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
+}
+
+#pragma mark - Checkpoints
+
++ (void)saveOnboardingCheckpoint:(HEMOnboardingCheckpoint)checkpoint {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults setInteger:checkpoint forKey:kHEMOnboardingSettingCheckpoint];
+    [defaults synchronize]; // save now in case user kills app or something else
+}
+
++ (HEMOnboardingCheckpoint)onboardingCheckpoint {
+    return [[NSUserDefaults standardUserDefaults] integerForKey:kHEMOnboardingSettingCheckpoint];
+}
+
++ (void)resetOnboardingCheckpoint {
+    [self saveOnboardingCheckpoint:HEMOnboardingCheckpointStart];
 }
 
 @end

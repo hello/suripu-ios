@@ -19,7 +19,8 @@
 #import "HEMDeviceCenter.h"
 #import "HelloStyleKit.h"
 #import "HEMLogUtils.h"
-
+#import "HEMOnboardingUtils.h"
+#import "HEMOnboardingStoryboard.h"
 @implementation HEMAppDelegate
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
@@ -57,9 +58,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication*)application
 {
-    if (![SENAuthorizationService isAuthorized]) {
-        [self showOnboardingFlowAnimated:NO];
-    }
+    [self resume:NO];
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
@@ -79,25 +78,8 @@
 {
     [[HEMDeviceCenter sharedCenter] clearCache];
     [SENKeyedArchiver removeAllObjects];
-    [self showOnboardingFlowAnimated:YES];
-}
-
-- (void)showOnboardingFlowAnimated:(BOOL)animated
-{
-    [self listenForAccountCreationNotification];
-    
-    FCDynamicPanesNavigationController* dynamicPanesController = (FCDynamicPanesNavigationController*)self.window.rootViewController;
-    UINavigationController* navController = (UINavigationController*)((FCDynamicPane*)[dynamicPanesController.viewControllers firstObject]).viewController;
-    [navController popToRootViewControllerAnimated:NO];
-    [dynamicPanesController popViewControllerAnimated:animated];
-
-    UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding" bundle:[NSBundle mainBundle]];
-    UIViewController* rootController = [onboardingStoryboard instantiateInitialViewController];
-    if ([rootController isKindOfClass:[UINavigationController class]]) {
-        UINavigationController* navVC = (UINavigationController*)rootController;
-        [[navVC navigationBar] setTintColor:[HelloStyleKit onboardingBlueColor]];
-    }
-    [dynamicPanesController presentViewController:rootController animated:animated completion:nil];
+    [HEMOnboardingUtils resetOnboardingCheckpoint];
+    [self resume:YES];
 }
 
 - (void)configureAppearance
@@ -150,6 +132,15 @@
     [userDefaults synchronize];
 }
 
+- (void)showAppInRetractedState {
+    FCDynamicPanesNavigationController* dynamicPanesController
+    = (FCDynamicPanesNavigationController*)self.window.rootViewController;
+    FCDynamicPane* foregroundPane = [[dynamicPanesController viewControllers] lastObject];
+    if (foregroundPane != nil) {
+        [foregroundPane setState:FCDynamicPaneStateRetracted];
+    }
+}
+
 #pragma mark - App Notifications
 
 - (void)listenForAccountCreationNotification {
@@ -162,17 +153,91 @@
 }
 
 - (void)didCreateAccount:(NSNotification*)notification {
-    // when sign up is complete, show the "settings" area instead of the Timeline,
-    // but only do so after sign up and not sign in, or any other scenario
-    FCDynamicPanesNavigationController* dynamicPanesController
-        = (FCDynamicPanesNavigationController*)self.window.rootViewController;
-    FCDynamicPane* foregroundPane = [[dynamicPanesController viewControllers] lastObject];
-    if (foregroundPane != nil) {
-        [foregroundPane setState:FCDynamicPaneStateRetracted];
-    }
-    
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self name:kSENAccountNotificationAccountCreated object:nil];
+    // when sign up is complete, show the "settings" area instead of the Timeline,
+    // but only do so after sign up and not sign in, or any other scenario
+    [self showAppInRetractedState];
+}
+
+#pragma mark - Resume Where Last Off
+
+- (void)resume:(BOOL)animated
+{
+    UIViewController* onboardingController = nil;
+    
+    switch ([HEMOnboardingUtils onboardingCheckpoint]) {
+        case HEMOnboardingCheckpointStart: {
+            // hmm, this is a bit hairy.  To ensure that user is logged in even
+            // after the app is deleted, or even for existing users who have already
+            // signed up, we need to check that they are not authenticated before
+            // actually starting from beginning.  However, this gives user a way
+            // to by pass onboarding by creating the app and
+            
+            // TODO (jimmy:) create API to check validity of the user's account
+            // and if it's not properly setup, sign out the user
+            if (![SENAuthorizationService isAuthorized]) {
+                onboardingController = [self startOnboardingFromBeginning];
+            }
+            break;
+        }
+        case HEMOnboardingCheckpointAccountCreated: {
+            onboardingController = [self resumeAccountSetup];
+            break;
+        }
+        case HEMOnboardingCheckpointAccountDone: {
+            onboardingController = [self resumeSenseSetup];
+            break;
+        }
+        case HEMOnboardingCheckpointSenseDone: {
+            onboardingController = [self resumePillSetup];
+            break;
+        }
+        case HEMOnboardingCheckpointPillDone:
+        default: {
+            break;
+        }
+    }
+
+    if (onboardingController != nil) {
+        FCDynamicPanesNavigationController* dynamicPanesController = (FCDynamicPanesNavigationController*)self.window.rootViewController;
+        UINavigationController* navController = (UINavigationController*)((FCDynamicPane*)[dynamicPanesController.viewControllers firstObject]).viewController;
+        [navController popToRootViewControllerAnimated:NO];
+        [dynamicPanesController popViewControllerAnimated:animated];
+
+        
+        if ([onboardingController isKindOfClass:[UINavigationController class]]) {
+            UINavigationController* navVC = (UINavigationController*)onboardingController;
+            [[navVC navigationBar] setTintColor:[HelloStyleKit onboardingBlueColor]];
+        }
+        
+        [dynamicPanesController presentViewController:onboardingController
+                                             animated:animated completion:nil];
+    } // let it just start the application up normally
+}
+
+- (UIViewController*)startOnboardingFromBeginning {
+    UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
+                                                                   bundle:[NSBundle mainBundle]];
+    [self listenForAccountCreationNotification];
+    return [onboardingStoryboard instantiateInitialViewController];
+}
+
+- (UIViewController*)resumeOnboardingWithController:(UIViewController*)controller {
+    [self showAppInRetractedState];
+    return [[UINavigationController alloc] initWithRootViewController:controller];
+}
+
+- (UIViewController*)resumeAccountSetup {
+    return [self resumeOnboardingWithController:[HEMOnboardingStoryboard instantiateDobViewController]];
+}
+
+- (UIViewController*)resumeSenseSetup {
+    return [self resumeOnboardingWithController:[HEMOnboardingStoryboard instantiateGetSetupViewController]];
+}
+
+- (UIViewController*)resumePillSetup {
+    return [self resumeOnboardingWithController:[HEMOnboardingStoryboard instantiatePillIntroViewController]];
 }
 
 @end

@@ -26,7 +26,8 @@
 "sign-up.error.email-invalid" = "Your email address was not recognized.";
 "sign-up.error.conflict" = "The provided email address is already attached to an account.";
 "sign-up.error.generic" = "Something went wrong. Please try again.";
-
+"onboarding.account.not-loaded-title" = "Account Update Failed";
+"onboarding.account.dob-not-updated" = "We could not set your birthdate for your account.";
 
 // no bluetooth on
 "no-bluetooth.subtitle.format" = "Sense uses Bluetooth to communicate with your mobile device.  Please turn your Bluetooth on to continue.\n\nLaunch the %@ app, tap %@, and flip the switch to %@.";
@@ -63,6 +64,8 @@
 // pairing with the pill
 "pill-pair.subtitle.format" = "Gently shake your Sleep Pill for three seconds.  When your Sleep Pill lights up %@, tap continue.";
 "pill-pair.pairing-message" = "Pairing your Sleep Pill";
+"pill-pair.error.device-info-unknown" = "Could not find your paired Sense right now.  Try again later.";
+"pill-pair.error.sense-not-found" = "Could not connect to your Sense to pair your Sleep Pill.";
 "pill-pair.error.pill-pair-failed" = "Unable to find any Sleep Pills to pair with.  Make sure they are nearby and try again.";
 "pill-pair.error.timed-out" = "Device did not respond in time.";
 

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="s6I-B7-593">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -582,6 +581,7 @@
                         <outlet property="dobPicker" destination="7P9-ib-JRI" id="AxA-0d-3ne"/>
                         <outlet property="dobPickerHeightConstraint" destination="qlT-A0-Sum" id="WWS-f8-kzJ"/>
                         <outlet property="doneButton" destination="h1g-YQ-7bC" id="zAk-SN-Lfx"/>
+                        <outlet property="doneButtonWidthConstraint" destination="VtM-1F-twe" id="v2S-Y5-9UJ"/>
                         <outlet property="titleLabel" destination="znD-8e-Xes" id="UOF-tQ-Cng"/>
                         <segue destination="gpF-55-MmK" kind="show" identifier="gender" id="Bj1-eU-Rc8"/>
                     </connections>
@@ -857,7 +857,7 @@
         <!--Pill Intro View Controller-->
         <scene sceneID="Eoe-Ki-OxF">
             <objects>
-                <viewController id="4s2-Gt-ovZ" customClass="HEMPillIntroViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="pillIntro" id="4s2-Gt-ovZ" customClass="HEMPillIntroViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SS5-15-dp3"/>
                         <viewControllerLayoutGuide type="bottom" id="ccb-Ef-kXd"/>
@@ -1606,7 +1606,7 @@
         <!--Start Setup View Controller-->
         <scene sceneID="h8B-yu-zRW">
             <objects>
-                <viewController id="0fM-vz-qcK" customClass="HEMStartSetupViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="getSetup" id="0fM-vz-qcK" customClass="HEMStartSetupViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yRC-PP-kQQ"/>
                         <viewControllerLayoutGuide type="bottom" id="tIK-zZ-3vh"/>

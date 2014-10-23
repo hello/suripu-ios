@@ -37,7 +37,7 @@
     [SENAnalytics configure:SENAnalyticsProviderNameAmplitude
                        with:@{kSENAnalyticsProviderToken : analyticsToken}];
     [SENAnalytics setUserId:[SENAuthorizationService accountIdOfAuthorizedUser]
-                 properties:nil];
+                 properties:@{}];
     [SENAuthorizationService authorizeRequestsFromKeychain];
     [self configureAppearance];
     [self registerForNotifications];

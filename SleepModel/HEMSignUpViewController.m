@@ -13,6 +13,7 @@
 #import "HelloStyleKit.h"
 #import "HEMUserDataCache.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMAlertController.h"
 #import "HEMOnboardingUtils.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
@@ -193,11 +194,9 @@
         return YES;
     }
     if (errorMessage && shouldShowAlert) {
-        [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"sign-up.failed.title", nil)
-                                    message:errorMessage
-                                   delegate:nil
-                          cancelButtonTitle:nil
-                          otherButtonTitles:NSLocalizedString(@"actions.ok", nil), nil] show];
+        [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"sign-up.failed.title", nil)
+                                              message:errorMessage
+                                 presentingController:self];
     }
     return NO;
 }

@@ -91,6 +91,11 @@
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
 
+// support
+"settings.contact-support" = "Contact Support";
+"settings.support.fail.title" = "No E-mail Address Configured";
+"settings.support.fail.message" = "There is no e-mail address configured in the Mail app.";
+
 // device management
 "settings.device.sense" = "Your Sense";
 "settings.device.pill" = "Your Sleep Pill";

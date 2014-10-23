@@ -112,7 +112,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (IBAction)help:(id)sender {
-    DLog(@"WARNING: this has not been implemented yet!")
+    DDLogVerbose(@"WARNING: this has not been implemented yet!");
     // TODO (jimmy): the help website is still being discussed / worked on.  When
     // we know what to actually point to, we likely will open up a browser to
     // show the help
@@ -125,7 +125,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 #pragma mark - Scanning
 
 - (void)scanTimeout {
-    DLog(@"scanning for Sense timed out, oh no!");
+    DDLogVerbose(@"scanning for Sense timed out, oh no!");
     [self setTimedOut:YES];
     [SENSenseManager stopScan];
     [self stopActivityWithMessage:nil completion:^{
@@ -170,7 +170,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             if ([senses count] > 0) {
                 // TODO (jimmy): what to do when more than 1 sense is detected?
                 [strongSelf pairWith:[senses firstObject]];
-                DLog(@"sense found, %@", [[strongSelf manager] sense]);
+                DDLogVerbose(@"sense found, %@", [[strongSelf manager] sense]);
             } else {
                 [SENAnalytics track:kHEMAnalyticsEventError
                          properties:@{kHEMAnalyticsEventPropMessage : @"no sense found"}];
@@ -196,7 +196,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
     __weak typeof(self) weakSelf = self;
     [[self manager] pair:^(id response) {
-        DLog(@"paired!");
+        DDLogVerbose(@"paired!");
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf && ![strongSelf isTimedOut]) {
             [strongSelf cacheManager];
@@ -208,7 +208,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             }];
         }
     } failure:^(NSError *error) {
-        DLog(@"failed to pair %@", error);
+        DDLogVerbose(@"failed to pair %@", error);
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf && ![strongSelf isTimedOut]) {
             [strongSelf stopActivityWithMessage:nil completion:^{

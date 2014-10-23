@@ -117,7 +117,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 }
 
 - (IBAction)didTapForgotPasswordButton:(UIButton*)sender {
-    NSLog(@"WARNING: this has not been implemented!");
+    DDLogVerbose(@"WARNING: this has not been implemented!");
 }
 
 - (IBAction)setAPIURL:(id)sender

@@ -18,32 +18,31 @@
 #import "HEMConfidentialityWarningView.h"
 #import "HEMDeviceCenter.h"
 #import "HelloStyleKit.h"
+#import "HEMLogUtils.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMOnboardingStoryboard.h"
-
 @implementation HEMAppDelegate
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-    [SENAuthorizationService authorizeRequestsFromKeychain];
+    [HEMLogUtils enableLogger];
     [self configureSettingsDefaults];
-    [self configureAppearance];
-    [self registerForNotifications];
-    [self createAndShowWindow];
-    [self showConfidentialityNotice];
-    
     NSString* analyticsToken = nil;
-#ifndef DEBUG
+#if !DEBUG
     [Crashlytics startWithAPIKey:@"f464ccd280d3e5730dcdaa9b64d1d108694ee9a9"];
     analyticsToken = @"8fea5e93a27fbac95b3c19aed0b36980";
 #else
     analyticsToken = @"b353e69e990cfce15a9557287ce7fbf8";
 #endif
-    
     [SENAnalytics configure:SENAnalyticsProviderNameAmplitude
                        with:@{kSENAnalyticsProviderToken : analyticsToken}];
     [SENAnalytics setUserId:[SENAuthorizationService accountIdOfAuthorizedUser]
                  properties:nil];
+    [SENAuthorizationService authorizeRequestsFromKeychain];
+    [self configureAppearance];
+    [self registerForNotifications];
+    [self createAndShowWindow];
+    [self showConfidentialityNotice];
     [HEMNotificationHandler registerForRemoteNotifications];
     return YES;
 }

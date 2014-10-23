@@ -9,32 +9,42 @@
 #import "SENAnalytics.h"
 #import "SENAuthorizationService.h"
 #import "SENAnalyticsAmplitude.h"
+#import "SENAnalyticsLogger.h"
 
 NSString* const kSENAnalyticsConfigAPIKey = @"kSENAnalyticsConfigAPIKey";
 NSString* const kSENAnalyticsPropConnection = @"connection";
 NSString* const kSENAnalyticsPropCode = @"code";
 NSString* const kSENAnalyticsPropMessage = @"message";
 
-static id<SENAnalyticsProvider> provider;
-
 @implementation SENAnalytics
 
+static NSMutableDictionary* providers;
+
 + (void)configure:(SENAnalyticsProviderName)name with:(NSDictionary*)properties {
+    id<SENAnalyticsProvider> provider;
+
     switch (name) {
         case SENAnalyticsProviderNameAmplitude:
             provider = [[SENAnalyticsAmplitude alloc] init];
             break;
+        case SENAnalyticsProviderNameLogger:
+            provider = [[SENAnalyticsLogger alloc] init];
+            break;
         default:
             break;
     }
-    
+
     [provider configureWithProperties:properties];
+    if (!providers)
+        providers = [NSMutableDictionary new];
+    if (provider)
+        providers[@(name)] = provider;
 }
 
 + (void)setUserId:(NSString*)userId properties:(NSDictionary*)properties {
-    if (provider == nil) return;
-    
-    [provider setUserId:userId withProperties:properties];
+    [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
+        [provider setUserId:userId withProperties:properties];
+    }];
 }
 
 + (void)track:(NSString*)eventName {
@@ -42,18 +52,18 @@ static id<SENAnalyticsProvider> provider;
 }
 
 + (void)track:(NSString*)eventName properties:(NSDictionary*)properties {
-    if (provider == nil) return;
-    
-    [provider track:eventName withProperties:properties];
+    [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
+        [provider track:eventName withProperties:properties];
+    }];
 }
 
 + (void)trackError:(NSError*)error withEventName:(NSString*)eventName {
-    if (provider == nil) return;
-    
     NSMutableDictionary* mutableProps = [NSMutableDictionary dictionaryWithCapacity:2];
     [mutableProps setValue:@([error code]) forKey:kSENAnalyticsPropCode];
     [mutableProps setValue:[error description] forKey:kSENAnalyticsPropMessage];
-    [provider track:eventName withProperties:mutableProps];
+    [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
+        [provider track:eventName withProperties:mutableProps];
+    }];
 }
 
 @end

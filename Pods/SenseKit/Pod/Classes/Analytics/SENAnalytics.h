@@ -18,7 +18,8 @@
  * switch, making it relatively trivial to do so.
  */
 typedef NS_ENUM(NSUInteger, SENAnalyticsProviderName) {
-    SENAnalyticsProviderNameAmplitude
+    SENAnalyticsProviderNameAmplitude,
+    SENAnalyticsProviderNameLogger
 };
 
 @interface SENAnalytics : NSObject

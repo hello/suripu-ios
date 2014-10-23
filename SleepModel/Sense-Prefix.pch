@@ -26,5 +26,6 @@
     #import <Foundation/Foundation.h>
     #import <CocoaLumberjack/DDLog.h>
     #import <CocoaLumberjack/DDLog+LOGV.h>
+    #import <CocoaLumberjack/DDLogMacros.h>
 #define ddLogLevel LOG_LEVEL_VERBOSE
 #endif

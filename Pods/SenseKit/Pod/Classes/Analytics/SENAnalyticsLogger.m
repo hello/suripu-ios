@@ -15,9 +15,13 @@
 }
 
 - (void)setUserId:(NSString *)userId withProperties:(NSDictionary *)properties {
-    NSMutableDictionary* dict = properties.mutableCopy;
-    dict[@"user"] = userId;
-    [self logEvent:@"Set User ID" withProperties:dict];
+    NSDictionary* userProperties = properties;
+    if (userId != nil) {
+        NSMutableDictionary* dict = userProperties.mutableCopy;
+        dict[@"user"] = userId;
+        userProperties = dict;
+    }
+    [self logEvent:@"Set User ID" withProperties:userProperties];
 }
 - (void)track:(NSString *)eventName withProperties:(NSDictionary *)properties {
     [self logEvent:eventName withProperties:properties];

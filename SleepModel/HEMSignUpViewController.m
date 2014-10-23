@@ -106,7 +106,7 @@
                                   
                                   // save a checkpoint so that user does not have to try and create
                                   // another account
-                                  [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
+                                  [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountCreated];
                               }];
 }
 

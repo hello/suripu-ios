@@ -154,6 +154,7 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
 }
 
 - (void)next {
+    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard senseSetupSegueIdentifier]
                               sender:self];
 }

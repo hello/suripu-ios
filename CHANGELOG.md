@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0.25
+
+New:
+
+1. Analytics with Amplitude, mostly for Onboarding and errors
+2. Logging events to file to be sent by email through Customer Support menu
+
+Fixes:
+
+1. various layout issues
+2. fixed issue with Devices view where info was not properly reloaded
+3. fixed issue where scanning for Sense inside the app never times out
+4. updated particulate unit, which fixed particulates icon
+
 ## master
 
 

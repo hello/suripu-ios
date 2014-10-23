@@ -34,12 +34,12 @@
 #else
     analyticsToken = @"b353e69e990cfce15a9557287ce7fbf8";
 #endif
+    [SENAuthorizationService authorizeRequestsFromKeychain];
     [SENAnalytics configure:SENAnalyticsProviderNameLogger with:nil];
     [SENAnalytics configure:SENAnalyticsProviderNameAmplitude
                        with:@{kSENAnalyticsProviderToken : analyticsToken}];
     [SENAnalytics setUserId:[SENAuthorizationService accountIdOfAuthorizedUser]
                  properties:@{}];
-    [SENAuthorizationService authorizeRequestsFromKeychain];
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];

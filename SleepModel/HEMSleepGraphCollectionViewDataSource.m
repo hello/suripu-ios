@@ -80,7 +80,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     self.sleepResult = [SENSleepResult sleepResultForDate:self.dateForNightOfSleep];
     [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError* error) {
         if (error) {
-            NSLog(@"Failed to fetch timeline: %@", error.localizedDescription);
+            DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
             return;
         }
         [self refreshWithTimelines:timelines];

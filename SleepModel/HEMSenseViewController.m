@@ -46,10 +46,10 @@ static NSInteger kHEMSenseAlertTagPairModeConfirmation = 1;
 
 - (void)loadSense {
     __weak typeof(self) weakSelf = self;
-    DLog(@"scanning for sense");
+    DDLogVerbose(@"scanning for sense");
     [[HEMDeviceCenter sharedCenter] scanForPairedSense:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        DLog(@"finished scanning, error ? %@", error);
+        DDLogVerbose(@"finished scanning, error ? %@", error);
         if (strongSelf) {
             if (error != nil) {
                 [strongSelf setSenseSignalStrength:NSLocalizedString(@"empty.data", nil)];
@@ -63,13 +63,13 @@ static NSInteger kHEMSenseAlertTagPairModeConfirmation = 1;
 
 - (void)loadRSSI {
     __weak typeof(self) weakSelf = self;
-    DLog(@"reading rssi value");
+    DDLogVerbose(@"reading rssi value");
     [[HEMDeviceCenter sharedCenter] currentSenseRSSI:^(NSNumber *rssi, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!strongSelf) return;
         
         NSInteger value = [rssi integerValue];
-        DLog(@"rssi value %ld", (long)value);
+        DDLogVerbose(@"rssi value %ld", (long)value);
         NSString* strength = nil;
         if (value <= -30) {
             strength = NSLocalizedString(@"settings.sense.signal.strong", nil);

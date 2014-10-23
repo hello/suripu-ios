@@ -24,4 +24,7 @@
 #ifdef __OBJC__
     #import <UIKit/UIKit.h>
     #import <Foundation/Foundation.h>
+    #import <CocoaLumberjack/DDLog.h>
+    #import <CocoaLumberjack/DDLog+LOGV.h>
+#define ddLogLevel LOG_LEVEL_VERBOSE
 #endif

@@ -14,7 +14,7 @@
 
 @implementation HEMSettingsTableViewController
 
-static NSString* const HEMSettingsContactEmail = @"support@hello.is";
+static NSString* const HEMSettingsContactEmail = @"beta-logs@hello.is";
 static NSString* const HEMSettingsContactSubject = @"App Support Request";
 static NSString* const HEMSettingsLogFileName = @"newest_log_file.log";
 static NSString* const HEMSettingsLogFileType = @"text/plain";

@@ -302,7 +302,7 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
     [self unlinkSenseFromAccount:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            if (error != nil) {
+            if (error != nil && [error code] != HEMDeviceCenterErrorSenseNotPaired) {
                 if (completion) {
                     DDLogVerbose(@"unlinking sense ended at %@ with error", [NSDate date]);
                     completion ([strongSelf errorWithType:HEMDeviceCenterErrorUnlinkSenseFromAccount]);
@@ -331,61 +331,59 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
     }];
 }
 
-- (void)resetSense:(HEMDeviceCompletionBlock)completion {
-    __weak typeof(self) weakSelf = self;
-    [[self senseManager] resetToFactoryState:^(id response) {
-    
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf unlinkAllDevices:^(NSError *error) {
-                if (error != nil) {
-                    if (completion) completion (error);
-                    return;
-                }
-                
-                // required.  firmware will actually just reply it succeeded, but
-                // the actual resetting won't happen until it has been disconnected.
-                [[strongSelf senseManager] disconnectFromSense];
-                [strongSelf clearCache];
-                [strongSelf notifyFactoryRestore];
-                
-                if (completion) completion (nil);
-            }];
-        }
-    } failure:completion];
-}
-
 - (void)notifyFactoryRestore {
     NSString* name = kHEMDeviceNotificationFactorySettingsRestored;
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
 }
 
+- (void)resetSense:(HEMDeviceCompletionBlock)completion {
+    if ([self senseManager] == nil) {
+        if (completion) completion (nil);
+    } else {
+        [[self senseManager] resetToFactoryState:^(id response) {
+            if (completion) {
+                completion (nil);
+            }
+        } failure:completion];
+    }
+}
+
 - (void)restoreFactorySettings:(HEMDeviceCompletionBlock)completion {
     
-    if ([self pairedSenseAvailable]) { // good to start the process
-        
-        [self resetSense:completion];
-        
-    } else if ([SENSenseManager isScanning]) {
+    if ([SENSenseManager isScanning]) {
         
         if (completion) completion ([self errorWithType:HEMDeviceCenterErrorInProgress]);
         
     } else {
         
         __weak typeof(self) weakSelf = self;
-        [self scanForPairedSense:^(NSError* error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                if ([strongSelf senseManager] != nil) {
-                    [strongSelf resetSense:completion];
-                } else {
-                    if (completion) {
-                        completion ([strongSelf errorWithType:HEMDeviceCenterErrorSenseUnavailable]);
-                    }
-                }
+        [self resetSense:^(NSError *error) {
+            if (error) {
+                if (completion) completion (error);
+                return;
             }
             
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                // required.  firmware will actually just reply it succeeded, but
+                // the actual resetting won't happen until it has been disconnected.
+                [[strongSelf senseManager] disconnectFromSense];
+                [strongSelf setSenseManager:nil];
+                
+                [strongSelf unlinkAllDevices:^(NSError *error) {
+                    if (error != nil) {
+                        if (completion) completion (error);
+                        return;
+                    }
+                    
+                    [strongSelf clearCache];
+                    [strongSelf notifyFactoryRestore];
+                    
+                    if (completion) completion (nil);
+                }];
+            }
         }];
+
     }
     
 }

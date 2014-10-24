@@ -337,15 +337,15 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
     
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            // required.  firmware will actually just reply it succeeded, but
-            // the actual resetting won't happen until it has been disconnected.
-            [[strongSelf senseManager] disconnectFromSense];
             [strongSelf unlinkAllDevices:^(NSError *error) {
                 if (error != nil) {
                     if (completion) completion (error);
                     return;
                 }
                 
+                // required.  firmware will actually just reply it succeeded, but
+                // the actual resetting won't happen until it has been disconnected.
+                [[strongSelf senseManager] disconnectFromSense];
                 [strongSelf clearCache];
                 [strongSelf notifyFactoryRestore];
                 

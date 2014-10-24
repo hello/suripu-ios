@@ -181,6 +181,12 @@ extern NSString* const kHEMDeviceNotificationFactorySettingsRestored;
  * Upon completion, if no error is encountered, a notification with the name:
  * kHEMDeviceNotificationFactorySettingsRestored will be posted.  Act accordingly
  *
+ * Please note that if Sense is not currently cached, this will assume Sense has
+ * already been reset, disconnected and cleared.  Be sure to only call this method
+ * once Sense is cached / scanned.
+ *
+ * User will still need to go in to Settings App to "Forget This Device".
+ *
  * @property completion: the block to invoke when done
  */
 - (void)restoreFactorySettings:(HEMDeviceCompletionBlock)completion;

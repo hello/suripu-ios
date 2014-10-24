@@ -12,7 +12,7 @@
 "welcome.title.welcome" = "Welcome.";
 
 // onboarding
-"onboarding.purple" = "purple";
+"onboarding.blue" = "blue";
 "onboarding.green" = "green";
 "welcome.subtitle" = "A simple system that tracks your sleep monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
 "get-started.subtitle" = "Are you using Sense with one Sleep Pill or two Sleep Pills?";
@@ -127,12 +127,18 @@
 "settings.sense.signal.strong" = "Strong";
 "settings.sense.dialog.pair-failed-title" = "Action Failed";
 "settings.sense.dialog.pair-failed-message" = "Unable to put Sense into pairing mode.  Make sure the signal to Sense is not too weak and try again.";
-"settings.sense.unpair-no-sense-message" = "Ensure you are near your Sense, Sense is powered on, and try again.";
+"settings.sense.no-sense-message" = "Ensure you are near your Sense, Sense is powered on, and try again.";
 "settings.sense.dialog.enable-pair-mode-title" = "Put Sense into Pairing Mode";
 "settings.sense.dialog.enable-pair-mode-message" = "Are you sure you want to put Sense into pairing mode?";
 "settings.sense.scanning-message" = "looking for your Sense.";
 "settings.device.info-failed-to-load" = "failed to load information";
 "settings.sense.enabling-pairing-mode" = "enabling pairing mode.";
+"settings.device.restoring-factory-settings" = "restoring, please wait.";
+"settings.device.dialog.factory-restore-title" = "Restore Sense to Factory Settings?";
+"settings.device.dialog.factory-restore-message" = "Are you sure you want to restore Sense to factory settings?  You will need to have a Sense paired to continue using the application.\n\nOnce complete, you will need to take one last step by going to the Settings App > Bluetooth, and remove Sense from the list of devices.";
+"settings.factory-restore.error.title" = "Factory Restore Failed";
+"settings.factory-restore.error.unlink-pill" = "Unable to remove your Sleep Pill from your account.  Ensure you have connectivity and try again.";
+"settings.factory-restore.error.unlink-sense" = "Unable to remove your Sense from your account.  Ensure you have connectivity and try again.";
 
 // insights
 "sleep.insights.title" = "Sleep Insights";

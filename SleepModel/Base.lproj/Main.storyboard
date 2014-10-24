@@ -627,10 +627,10 @@
                                 <rect key="frame" x="140" y="400" width="320" height="71"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="pgd-Hu-6hb">
-                                        <rect key="frame" x="50" y="26" width="20" height="20"/>
+                                        <rect key="frame" x="50" y="20" width="20" height="30"/>
                                     </activityIndicatorView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="enabling pairing mode" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXO-iS-9i6">
-                                        <rect key="frame" x="80" y="25" width="185" height="21"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="enabling pairing mode" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXO-iS-9i6">
+                                        <rect key="frame" x="80" y="0.0" width="185" height="71"/>
                                         <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="16"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -638,16 +638,16 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="UXO-iS-9i6" secondAttribute="trailing" constant="55" id="EJR-4x-h98"/>
-                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="centerY" secondItem="HQC-5d-ND9" secondAttribute="centerY" id="Ftt-rN-etL"/>
-                                    <constraint firstItem="pgd-Hu-6hb" firstAttribute="top" secondItem="HQC-5d-ND9" secondAttribute="top" constant="26" id="GIj-wD-ury"/>
+                                    <constraint firstAttribute="bottom" secondItem="UXO-iS-9i6" secondAttribute="bottom" id="2dg-fu-YCX"/>
+                                    <constraint firstAttribute="centerY" secondItem="pgd-Hu-6hb" secondAttribute="centerY" constant="0.5" id="3eQ-Ag-9WY"/>
+                                    <constraint firstAttribute="trailing" secondItem="UXO-iS-9i6" secondAttribute="trailing" constant="55" id="5Dp-fe-4i8"/>
+                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="height" secondItem="HQC-5d-ND9" secondAttribute="height" id="5Wt-7r-Uiz"/>
                                     <constraint firstAttribute="width" constant="320" id="Jsl-CR-ccY"/>
-                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="leading" secondItem="HQC-5d-ND9" secondAttribute="leading" constant="80" id="QIN-8c-L9G"/>
                                     <constraint firstAttribute="height" constant="71" id="WNs-13-Zip"/>
-                                    <constraint firstItem="pgd-Hu-6hb" firstAttribute="leading" secondItem="HQC-5d-ND9" secondAttribute="leading" constant="50" id="YDq-rf-fCL"/>
-                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="bottom" secondItem="pgd-Hu-6hb" secondAttribute="bottom" id="ZBy-fe-Wcz"/>
-                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="leading" secondItem="pgd-Hu-6hb" secondAttribute="trailing" constant="10" id="mdq-1q-uO6"/>
-                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="leading" secondItem="HQC-5d-ND9" secondAttribute="leading" constant="80" id="wdW-yg-8RM"/>
+                                    <constraint firstItem="pgd-Hu-6hb" firstAttribute="leading" secondItem="HQC-5d-ND9" secondAttribute="leading" constant="50" id="Wnb-Cb-9Yv"/>
+                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="leading" secondItem="pgd-Hu-6hb" secondAttribute="trailing" constant="10" id="acf-Jh-uTi"/>
+                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="top" secondItem="HQC-5d-ND9" secondAttribute="top" id="ivB-z7-xXQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="pgd-Hu-6hb" secondAttribute="bottom" constant="21" id="skn-NB-bUp"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJS-Cn-weR">
@@ -679,6 +679,9 @@
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="restoreToFactoryDefaults:" destination="0ke-gs-abm" eventType="touchUpInside" id="rJb-x0-Vt9"/>
+                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This will reset your entire Sense System, including your Sleep Pill." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Id-oB-6lZ">
                                         <rect key="frame" x="28" y="98" width="544" height="17"/>

@@ -16,7 +16,6 @@
 #import "HEMUserDataCache.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingUtils.h"
-#import "HelloStyleKit.h"
 #import "HEMActivityCoverView.h"
 
 // I've tested the scanning process multiple times starting with a timeout of
@@ -54,9 +53,9 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)setupDescription {
     NSString* descFormat = NSLocalizedString(@"sense-pair.description.format", nil);
-    NSString* purple = NSLocalizedString(@"onboarding.purple", nil);
+    NSString* blue = NSLocalizedString(@"onboarding.blue", nil);
     
-    NSArray* args = @[[HEMOnboardingUtils boldAttributedText:purple withColor:[HelloStyleKit purple]]];
+    NSArray* args = @[[HEMOnboardingUtils boldAttributedText:blue withColor:[UIColor blueColor]]];
     
     NSMutableAttributedString* attrDesc
         = [[NSMutableAttributedString alloc] initWithFormat:descFormat args:args];

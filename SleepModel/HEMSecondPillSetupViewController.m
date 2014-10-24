@@ -10,7 +10,6 @@
 
 #import "HEMSecondPillSetupViewController.h"
 #import "HEMOnboardingUtils.h"
-#import "HelloStyleKit.h"
 #import "HEMActionButton.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMOnboardingStoryboard.h"
@@ -37,13 +36,13 @@
     NSString* descFormat = NSLocalizedString(@"second-pill.description.format", nil);
     NSString* senseSettings = NSLocalizedString(@"second-pill.description.sense-settings", nil);
     NSString* intoPairing = NSLocalizedString(@"second-pill.description.put-into-pairing", nil);
-    NSString* purple = NSLocalizedString(@"onboarding.purple", nil);
+    NSString* blue = NSLocalizedString(@"onboarding.blue", nil);
     
     NSArray* args = @[
         [HEMOnboardingUtils boldAttributedText:senseSettings],
         [HEMOnboardingUtils boldAttributedText:intoPairing],
-        [HEMOnboardingUtils boldAttributedText:purple
-                                     withColor:[HelloStyleKit purple]]
+        [HEMOnboardingUtils boldAttributedText:blue
+                                     withColor:[UIColor blueColor]]
     ];
     
     NSMutableAttributedString* attrDesc

@@ -21,6 +21,8 @@
 #import "HEMLogUtils.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMDeviceCenter.h"
+
 @implementation HEMAppDelegate
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
@@ -82,6 +84,12 @@
     [self resume:YES];
 }
 
+- (void)showOnboardingAtSenseSetup
+{
+    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
+    [self resume:YES];
+}
+
 - (void)configureAppearance
 {
     UIFont* navbarTextFont = [UIFont fontWithName:@"Calibre-Medium" size:18.0f];
@@ -114,7 +122,17 @@
 
 - (void)registerForNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(resetAndShowOnboarding) name:SENAuthorizationServiceDidDeauthorizeNotification object:nil];
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    
+    [center addObserver:self
+               selector:@selector(resetAndShowOnboarding)
+                   name:SENAuthorizationServiceDidDeauthorizeNotification
+                 object:nil];
+    
+    [center addObserver:self
+               selector:@selector(showOnboardingAtSenseSetup)
+                   name:kHEMDeviceNotificationFactorySettingsRestored
+                 object:nil];
 }
 
 - (void)showConfidentialityNotice

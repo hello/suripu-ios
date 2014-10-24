@@ -18,10 +18,13 @@ typedef NS_ENUM(NSInteger, HEMDeviceCenterError) {
     HEMDeviceCenterErrorSenseNotPaired = -4,
     HEMDeviceCenterErrorPillNotPaired = -5,
     HEMDeviceCenterErrorUnpairPillFromSense = -6,
-    HEMDeviceCenterErrorUnlinkPillFromAccount = -7
+    HEMDeviceCenterErrorUnlinkPillFromAccount = -7,
+    HEMDeviceCenterErrorUnlinkSenseFromAccount = -8
 };
 
 typedef void(^HEMDeviceCompletionBlock)(NSError* error);
+
+extern NSString* const kHEMDeviceNotificationFactorySettingsRestored;
 
 @interface HEMDeviceCenter : NSObject
 
@@ -158,8 +161,28 @@ typedef void(^HEMDeviceCompletionBlock)(NSError* error);
  * identified by pillInfo.  If a Sleep Pill is not currently linked, completion
  * block will be immediately called with an error.
  *
+ * @property completion: the block to invoke when done
  * @see @property pillInfo
  */
 - (void)unpairSleepPill:(HEMDeviceCompletionBlock)completion;
+
+/**
+ * @method restoreFactorySettings:
+ *
+ * @discussion
+ * Restore factory settings for the Sense system, which includes Sense as well
+ * as the Sleep Pill.  This will do the following:
+ *
+ *     1. remove bond between this device and Sense
+ *     2. clear WiFi credentials set, which will disconnect Sense from network
+ *     3. Unpair / unlink Sleep Pill, if paired, from user's account
+ *     4. Unpair / unlink Sense from user's account
+ *
+ * Upon completion, if no error is encountered, a notification with the name:
+ * kHEMDeviceNotificationFactorySettingsRestored will be posted.  Act accordingly
+ *
+ * @property completion: the block to invoke when done
+ */
+- (void)restoreFactorySettings:(HEMDeviceCompletionBlock)completion;
 
 @end

@@ -13,6 +13,7 @@ NSString* const SENAPIDeviceErrorDomain = @"is.hello.api.device";
 
 NSString* const SENAPIDeviceEndpoint = @"devices";
 NSString* const SENAPIDevicePathPill = @"pill";
+NSString* const SENAPIDevicePathSense = @"sense";
 
 NSString* const SENAPIDevicePropertyDeviceId = @"device_id";
 NSString* const SENAPIDevicePropertyType = @"type";
@@ -104,6 +105,14 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
     
 }
 
+#pragma mark - Unregistering Devices
+
++ (void)unregisterDevice:(SENDevice*)device completion:(SENAPIDataBlock)completion {
+    NSString* type = [device type] == SENDeviceTypePill ? SENAPIDevicePathPill : SENAPIDevicePathSense;
+    NSString* path = [SENAPIDeviceEndpoint stringByAppendingFormat:@"/%@/%@", type, [device deviceId]];
+    [SENAPIClient DELETE:path parameters:nil completion:completion];
+}
+
 + (void)unregisterPill:(SENDevice*)device completion:(SENAPIDataBlock)completion {
     if ([device type] != SENDeviceTypePill || [device deviceId] == nil) {
         if (completion) {
@@ -114,9 +123,20 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
         return;
     }
     
-    NSString* path = [SENAPIDeviceEndpoint stringByAppendingFormat:@"/%@/%@",
-                      SENAPIDevicePathPill, [device deviceId]];
-    [SENAPIClient DELETE:path parameters:nil completion:completion];
+    return [self unregisterDevice:device completion:completion];
+}
+
++ (void)unregisterSense:(SENDevice*)device completion:(SENAPIDataBlock)completion {
+    if ([device type] != SENDeviceTypeSense || [device deviceId] == nil) {
+        if (completion) {
+            completion (nil, [NSError errorWithDomain:SENAPIDeviceErrorDomain
+                                                 code:SENAPIDeviceErrorInvalidParam
+                                             userInfo:nil]);
+        }
+        return;
+    }
+    
+    return [self unregisterDevice:device completion:completion];
 }
 
 @end

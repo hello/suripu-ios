@@ -34,4 +34,12 @@ typedef NS_ENUM(NSInteger, SENAPIDeviceError) {
  */
 + (void)unregisterPill:(SENDevice*)device completion:(SENAPIDataBlock)completion;
 
+/**
+ * Unregister Sense from the currently signed in account (must be authorized).
+ *
+ * @param device: the sense to unregister
+ * @param completion: the completion block to invoke when done
+ */
++ (void)unregisterSense:(SENDevice*)device completion:(SENAPIDataBlock)completion;
+
 @end

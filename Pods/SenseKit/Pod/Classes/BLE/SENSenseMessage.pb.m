@@ -459,6 +459,7 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
     case SENSenseMessageTypePillData:
     case SENSenseMessageTypePillHeartbeat:
     case SENSenseMessageTypePillDfuBegin:
+    case SENSenseMessageTypeFactoryReset:
       return YES;
     default:
       return NO;

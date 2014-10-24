@@ -51,6 +51,7 @@ typedef enum {
   SENSenseMessageTypePillData = 17,
   SENSenseMessageTypePillHeartbeat = 18,
   SENSenseMessageTypePillDfuBegin = 19,
+  SENSenseMessageTypeFactoryReset = 20,
 } SENSenseMessageType;
 
 BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);

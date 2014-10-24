@@ -272,19 +272,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     HEMDeviceCenter* center = [HEMDeviceCenter sharedCenter];
     [center scanForPairedSense:^(NSError *error) {
         if (error != nil) {
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-            
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (!strongSelf) return;
             
-            if ([error code] == HEMDeviceCenterErrorSenseUnavailable) {
-                NSString* message = NSLocalizedString(@"settings.sense.no-sense-message", nil);
-                [strongSelf showNoSenseWithMessage:message];
-            } else {
-                [strongSelf showFailureToEnablePairingModeAlert];
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+
+            if (strongSelf) {
+                if ([error code] == HEMDeviceCenterErrorSenseUnavailable) {
+                    NSString* message = NSLocalizedString(@"settings.sense.no-sense-message", nil);
+                    [strongSelf showNoSenseWithMessage:message];
+                } else {
+                    [strongSelf showFailureToEnablePairingModeAlert];
+                }
+                
+                [strongSelf hideActivity];
             }
             
-            [strongSelf hideActivity];
         } else {
             [[HEMDeviceCenter sharedCenter] putSenseIntoPairingMode:^(NSError *error) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;

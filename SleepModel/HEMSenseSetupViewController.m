@@ -33,10 +33,10 @@
 
 - (void)setupDescription {
     NSString* descFormat = NSLocalizedString(@"sense-setup.description.format", nil);
-    NSString* purple = NSLocalizedString(@"onboarding.purple", nil);
+    NSString* blue = NSLocalizedString(@"onboarding.blue", nil);
     
-    NSArray* args = @[[HEMOnboardingUtils boldAttributedText:purple
-                                                   withColor:[HelloStyleKit purple]]];
+    NSArray* args = @[[HEMOnboardingUtils boldAttributedText:blue
+                                                   withColor:[UIColor blueColor]]];
     
     NSMutableAttributedString* attrText
         = [[NSMutableAttributedString alloc] initWithFormat:descFormat args:args];

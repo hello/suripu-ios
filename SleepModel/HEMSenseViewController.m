@@ -13,10 +13,10 @@
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDeviceCenter.h"
+#import "HEMBaseController+Protected.h"
+#import "HEMAlertController.h"
 
-static NSInteger kHEMSenseAlertTagPairModeConfirmation = 1;
-
-@interface HEMSenseViewController() <UITableViewDataSource, UITableViewDelegate, UIAlertViewDelegate>
+@interface HEMSenseViewController() <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *senseInfoTableView;
 @property (weak, nonatomic) IBOutlet UIView *manageSenseView;
@@ -24,7 +24,8 @@ static NSInteger kHEMSenseAlertTagPairModeConfirmation = 1;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *actionStatusActivity;
 @property (weak, nonatomic) IBOutlet UILabel *actionStatusLabel;
 
-@property (copy, nonatomic) NSString* senseSignalStrength;
+@property (copy, nonatomic)   NSString* senseSignalStrength;
+@property (strong, nonatomic) HEMAlertController* alertController;
 
 @end
 
@@ -158,43 +159,75 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)showFailureToEnablePairingModeAlert {
     NSString* title = NSLocalizedString(@"settings.sense.dialog.pair-failed-title", nil);
     NSString* message = NSLocalizedString(@"settings.sense.dialog.pair-failed-message", nil);
-    UIAlertView* error = [[UIAlertView alloc] initWithTitle:title
-                                                    message:message
-                                                   delegate:self
-                                          cancelButtonTitle:NSLocalizedString(@"actions.ok", nil)
-                                          otherButtonTitles:nil];
-    [error show];
+    [self showMessageDialog:message title:title];
+}
+
+- (void)showConfirmation:(NSString*)title message:(NSString*)message action:(void(^)(void))action {
+    HEMAlertController* alert = [[HEMAlertController alloc] initWithTitle:title
+                                                                  message:message
+                                                                    style:HEMAlertControllerStyleAlert
+                                                     presentingController:self];
+    
+    [alert addActionWithText:NSLocalizedString(@"actions.no", nil) block:nil];
+    [alert addActionWithText:NSLocalizedString(@"actions.yes", nil) block:action];
+    
+    [self setAlertController:alert];
+    [[self alertController] show];
 }
 
 - (void)showPairingModeConfirmation {
     NSString* title = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-title", nil);
     NSString* message = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-message", nil);
-    UIAlertView* confirmDialog = [[UIAlertView alloc] initWithTitle:title
-                                                            message:message
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"actions.no", nil)
-                                                  otherButtonTitles:NSLocalizedString(@"actions.yes", nil), nil];
-    [confirmDialog setTag:kHEMSenseAlertTagPairModeConfirmation];
-    [confirmDialog setDelegate:self];
-    [confirmDialog show];
+    
+    __weak typeof(self) weakSelf = self;
+    [self showConfirmation:title message:message action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf enablePairingMode];
+        }
+    }];
+}
+
+- (void)showFactoryRestoreConfirmation {
+    NSString* title = NSLocalizedString(@"settings.device.dialog.factory-restore-title", nil);
+    NSString* message = NSLocalizedString(@"settings.device.dialog.factory-restore-message", nil);
+
+    __weak typeof(self) weakSelf = self;
+    [self showConfirmation:title message:message action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf restore];
+        }
+    }];
+}
+
+- (void)showFactoryRestoreErrorMessage:(NSError*)error {
+    NSString* title = NSLocalizedString(@"settings.factory-restore.error.title", nil);
+    NSString* message = nil;
+    
+    switch ([error code]) {
+        case HEMDeviceCenterErrorUnlinkPillFromAccount:
+            message = NSLocalizedString(@"settings.factory-restore.error.unlink-pill", nil);
+            break;
+        case HEMDeviceCenterErrorUnlinkSenseFromAccount:
+            message = NSLocalizedString(@"settings.factory-restore.error.unlink-sense", nil);
+            break;
+        case HEMDeviceCenterErrorInProgress:
+        case HEMDeviceCenterErrorSenseUnavailable: {
+            title = NSLocalizedString(@"settings.sense.not-found-title", nil);
+            message = NSLocalizedString(@"settings.sense.no-sense-message", nil);
+            break;
+        }
+        default:
+            break;
+    }
+    
+    [self showMessageDialog:message title:title];
 }
 
 - (void)showNoSenseWithMessage:(NSString*)message {
     NSString* title = NSLocalizedString(@"settings.sense.not-found-title", nil);
-    UIAlertView* error = [[UIAlertView alloc] initWithTitle:title
-                                                    message:message
-                                                   delegate:self
-                                          cancelButtonTitle:NSLocalizedString(@"actions.ok", nil)
-                                          otherButtonTitles:nil];
-    [error show];
-}
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex != [alertView cancelButtonIndex]) {
-        if ([alertView tag] == kHEMSenseAlertTagPairModeConfirmation) {
-            [self enablePairingMode];
-        }
-    }
+    [self showMessageDialog:message title:title];
 }
 
 #pragma mark - Actions
@@ -229,6 +262,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)enablePairingMode {
+    [SENAnalytics track:kHEMAnalyticsEventDeviceAction
+             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDevicePairingMode}];
+    
     [[self actionStatusLabel] setText:NSLocalizedString(@"settings.sense.enabling-pairing-mode", nil)];
     [self showActivity];
     
@@ -237,19 +273,26 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [center scanForPairedSense:^(NSError *error) {
         if (error != nil) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (!strongSelf) return;
-            if ([error code] == HEMDeviceCenterErrorSenseUnavailable) {
-                NSString* message = NSLocalizedString(@"settings.sense.unpair-no-sense-message", nil);
-                [strongSelf showNoSenseWithMessage:message];
-            } else {
-                [strongSelf showFailureToEnablePairingModeAlert];
+            
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+
+            if (strongSelf) {
+                if ([error code] == HEMDeviceCenterErrorSenseUnavailable) {
+                    NSString* message = NSLocalizedString(@"settings.sense.no-sense-message", nil);
+                    [strongSelf showNoSenseWithMessage:message];
+                } else {
+                    [strongSelf showFailureToEnablePairingModeAlert];
+                }
+                
+                [strongSelf hideActivity];
             }
-            [strongSelf hideActivity];
+            
         } else {
             [[HEMDeviceCenter sharedCenter] putSenseIntoPairingMode:^(NSError *error) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 if (strongSelf) {
                     if (error != nil) {
+                        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
                         return [strongSelf showFailureToEnablePairingModeAlert];
                     }
                     // TODO (jimmy): what to actually show?
@@ -264,8 +307,30 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self showPairingModeConfirmation];
 }
 
+#pragma mark Factory Reset
+
+- (void)restore {
+    [SENAnalytics track:kHEMAnalyticsEventDeviceAction
+             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceFactoryRestore}];
+    
+    [[self actionStatusLabel] setText:NSLocalizedString(@"settings.device.restoring-factory-settings", nil)];
+    [self showActivity];
+    
+    __weak typeof(self) weakSelf = self;
+    [[HEMDeviceCenter sharedCenter] restoreFactorySettings:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf && error != nil) {
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            // if there's no error, notification of factory restore will fire,
+            // which will trigger app to be put back at checkpoint
+            [strongSelf hideActivity];
+            [strongSelf showFactoryRestoreErrorMessage:error];
+        }
+    }];
+}
+
 - (IBAction)restoreToFactoryDefaults:(id)sender {
-    // TODO (jimmy): reset!
+    [self showFactoryRestoreConfirmation];
 }
 
 #pragma mark - Cleanup

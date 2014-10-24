@@ -12,6 +12,7 @@ extern NSString* const kHEMAnalyticsEventError;
 extern NSString* const kHEMAnalyticsEventHelp;
 extern NSString* const kHEMAnalyticsEventVideo;
 extern NSString* const kHEMAnalyticsEventPropMessage;
+extern NSString* const kHEMAnalyticsEventPropAction;
 
 // permissions
 extern NSString* const kHEMAnalyticsEventPermissionLoc;
@@ -45,3 +46,8 @@ extern NSString* const kHEMAnalyticsEventTimeline;
 extern NSString* const kHEMAnalyticsEventSignInStart;
 extern NSString* const kHEMAnalyticsEventSignIn;
 extern NSString* const kHEMAnalyticsEventSignOut;
+
+// device management
+NSString* const kHEMAnalyticsEventDeviceAction;
+NSString* const kHEMAnalyticsEventDeviceFactoryRestore;
+NSString* const kHEMAnalyticsEventDevicePairingMode;

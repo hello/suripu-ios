@@ -13,6 +13,7 @@ NSString* const kHEMAnalyticsEventError = @"Error";
 NSString* const kHEMAnalyticsEventHelp = @"Help";
 NSString* const kHEMAnalyticsEventVideo = @"Play Video";
 NSString* const kHEMAnalyticsEventPropMessage = @"message";
+NSString* const kHEMAnalyticsEventPropAction = @"action";
 
 // permissions
 NSString* const kHEMAnalyticsEventPermissionLoc = @"Permission Location";
@@ -46,3 +47,8 @@ NSString* const kHEMAnalyticsEventTimeline = @"Timeline";
 NSString* const kHEMAnalyticsEventSignInStart = @"Sign In Start";
 NSString* const kHEMAnalyticsEventSignIn = @"Signed In";
 NSString* const kHEMAnalyticsEventSignOut = @"Signed Out";
+
+// device management
+NSString* const kHEMAnalyticsEventDeviceAction = @"Device Action";
+NSString* const kHEMAnalyticsEventDeviceFactoryRestore = @"factory restore";
+NSString* const kHEMAnalyticsEventDevicePairingMode = @"enable pairing mode";

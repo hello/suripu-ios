@@ -12,7 +12,7 @@
 
 @property (nonatomic, strong) NSString* title;
 @property (nonatomic, strong) NSString* message;
-@property (nonatomic, strong) UIViewController* presentingController;
+@property (nonatomic, weak)   UIViewController* presentingController;
 @property (nonatomic, strong) NSMutableArray* actions;
 @property (nonatomic) HEMAlertControllerStyle style;
 @end
@@ -67,7 +67,7 @@ static NSMutableArray* alertControllers = nil;
 
 - (void)activateActionAtIndex:(NSInteger)index
 {
-    if (self.actions.count > index)
+    if (index >= self.actions.count)
         return;
 
     NSDictionary* actionProperties = self.actions[index];

@@ -539,6 +539,18 @@ static NSInteger const kSENSenseMessageVersion = 0;
         case ErrorTypeDeviceAlreadyPaired:
             code = SENSenseManagerErrorCodeDeviceAlreadyPaired;
             break;
+        case ErrorTypeInternalOperationFailed:
+            code = SENSenseManagerErrorCodeInternalFailure;
+            break;
+        case ErrorTypeDeviceNoMemory:
+            code = SENSenseManagerErrorCodeDeviceOutOfMemory;
+            break;
+        case ErrorTypeDeviceDatabaseFull:
+            code = SENSenseManagerErrorCodeDeviceDbFull;
+            break;
+        case ErrorTypeNetworkError:
+            code = SENSenseManagerErrorCodeDeviceNetworkError;
+            break;
         default:
             code = SENSenseManagerErrorCodeUnexpectedResponse;
             break;
@@ -583,12 +595,16 @@ static NSInteger const kSENSenseMessageVersion = 0;
         if ([*totalPackets intValue] == 1 || [*totalPackets intValue] - 1 == seq) {
             NSError* parseError = nil;
             SENSenseMessage* responseMsg = [self messageFromBlePackets:*allPackets error:&parseError];
-            if (parseError != nil || [responseMsg type] != type) {
-                [self failWithBlock:failure andCode:SENSenseManagerErrorCodeUnexpectedResponse];
+            if (parseError != nil || [responseMsg type] != type || [responseMsg hasError]) {
+                NSInteger code
+                    = parseError != nil
+                    ? [parseError code]
+                    : SENSenseManagerErrorCodeUnexpectedResponse;
+                [self failWithBlock:failure andCode:code];
             } else {
                 if (success) success (responseMsg);
             }
-        }
+        } // else, wait for next update
     } else {
         [self failWithBlock:failure andCode:SENSenseManagerErrorCodeUnexpectedResponse];
     }
@@ -628,7 +644,7 @@ static NSInteger const kSENSenseMessageVersion = 0;
     
     if (errCode != SENSenseManagerErrorCodeNone && error != NULL) {
         *error = [NSError errorWithDomain:kSENSenseErrorDomain
-                                     code:SENSenseManagerErrorCodeUnexpectedResponse
+                                     code:errCode
                                  userInfo:nil];
     }
     return response;
@@ -659,6 +675,11 @@ static NSInteger const kSENSenseMessageVersion = 0;
                                                    andCode:SENSenseManagerErrorCodeUnexpectedResponse];
                       }
                       
+                      NSString* cbKey = [strongSelf cacheMessageCallbacks:success failureBlock:failure];
+                      [strongSelf performSelector:@selector(sendMessageTimeoutWithCbKey:)
+                                       withObject:cbKey
+                                       afterDelay:kSENSenseDefaultTimeout];
+                      
                       [reader setNotifyValue:YES completion:^(NSError *error) {
                           __strong typeof(reader) strongReader = reader;
                           if (!strongReader) return;
@@ -666,9 +687,9 @@ static NSInteger const kSENSenseMessageVersion = 0;
                           [strongReader setNotifyValue:NO completion:nil];
                           
                           if (error != nil) {
-                              if (failure) failure (error);
+                              [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                           } else {
-                              if (success) success (nil);
+                              [strongSelf fireSuccessMsgCbWithCbKey:cbKey andResponse:nil];
                           }
 
                       }];
@@ -734,16 +755,6 @@ static NSInteger const kSENSenseMessageVersion = 0;
               failure:failure];
 }
 
-#pragma mark - Time
-
-- (void)setTime:(SENSenseCompletionBlock)completion {
-    // TODO (jimmy): Firmware not yet implemented
-}
-
-- (void)getTime:(SENSenseCompletionBlock)completion {
-    // TODO (jimmy): Firmware not yet implemented
-}
-
 #pragma mark - Wifi
 
 - (void)setWiFi:(NSString*)ssid
@@ -760,16 +771,16 @@ static NSInteger const kSENSenseMessageVersion = 0;
               failure:failure];
 }
 
-- (void)getWifiEndPoint:(SENSenseCompletionBlock)completion {
-    // TODO (jimmy): Firmware not yet implemented
-}
+#pragma mark - Factory Reset
 
-- (void)scanForWifi:(SENSenseCompletionBlock)completion {
-    // TODO (jimmy): Firmware not yet implemented
-}
-
-- (void)stopWifiScan:(SENSenseCompletionBlock)completion {
-    // TODO (jimmy): Firmware not yet implemented
+- (void)resetToFactoryState:(SENSenseSuccessBlock)success
+                    failure:(SENSenseFailureBlock)failure {
+    SENSenseMessageType type = SENSenseMessageTypeFactoryReset;
+    SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
+    [self sendMessage:[builder build]
+              timeout:kSENSenseDefaultTimeout
+              success:success
+              failure:failure];
 }
 
 #pragma mark - Signal Strength / RSSI

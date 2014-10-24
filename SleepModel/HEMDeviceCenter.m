@@ -13,6 +13,8 @@
 
 #import "HEMDeviceCenter.h"
 
+NSString* const kHEMDeviceNotificationFactorySettingsRestored = @"sense.restored";
+
 static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
 
 @interface HEMDeviceCenter()
@@ -258,6 +260,132 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
         
         if (completion) completion (deviceError);
     }];
+}
+
+#pragma mark Unlink Sense From account
+
+- (void)unlinkSenseFromAccount:(HEMDeviceCompletionBlock)completion {
+    if ([self senseInfo] == nil) {
+        if (completion) completion ( [self errorWithType:HEMDeviceCenterErrorSenseNotPaired]);
+        return;
+    }
+    
+    __weak typeof(self) weakSelf = self;
+    [SENAPIDevice unregisterSense:[self senseInfo] completion:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        NSError* deviceError = nil;
+        
+        if (error != nil && strongSelf) {
+            deviceError = [strongSelf errorWithType:HEMDeviceCenterErrorUnlinkPillFromAccount];
+        }
+        
+        if (completion) completion (deviceError);
+    }];
+}
+
+#pragma mark Factory Settings
+
+- (void)unlinkAllDevices:(HEMDeviceCompletionBlock)completion {
+    // so... we can unlink Sense and the Sleep Pill simulataneously, which will
+    // save a bit of time.  However, the actual operations on the server are quick
+    // so time saved is really based on the connection.  If the connection is good,
+    // then running the two actions serially will likely not take much more time
+    // then running them simultaneously since 1 action will have to turn on the radio
+    // (if not already fired up) and the radio + connection pool will be "warmed up"
+    // for the second call  Serial calls will benefit from less logic and/or avoids
+    // having to synchronize any data to call the completion call when both are done.
+    //
+    // serial it is!, unless we starting seeing this to take too long
+    DDLogVerbose(@"unlinking devices started at %@", [NSDate date]);
+    __weak typeof(self) weakSelf = self;
+    [self unlinkSenseFromAccount:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            if (error != nil && [error code] != HEMDeviceCenterErrorSenseNotPaired) {
+                if (completion) {
+                    DDLogVerbose(@"unlinking sense ended at %@ with error", [NSDate date]);
+                    completion ([strongSelf errorWithType:HEMDeviceCenterErrorUnlinkSenseFromAccount]);
+                }
+                return;
+            }
+            
+            if ([strongSelf pillInfo] != nil) {
+                [strongSelf unpairSleepPill:^(NSError *error) {
+                    if (error != nil) {
+                        if (completion) {
+                            DDLogVerbose(@"unlinking pill ended at %@ with error", [NSDate date]);
+                            completion ([strongSelf errorWithType:HEMDeviceCenterErrorUnlinkPillFromAccount]);
+                        }
+                        return;
+                    }
+                    
+                    DDLogVerbose(@"unlinking devices ended at %@ successfully", [NSDate date]);
+                    if (completion) completion (nil);
+                }];
+            } else {
+                if (completion) completion (nil);
+            }
+
+        }
+    }];
+}
+
+- (void)notifyFactoryRestore {
+    NSString* name = kHEMDeviceNotificationFactorySettingsRestored;
+    [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
+}
+
+- (void)resetSense:(HEMDeviceCompletionBlock)completion {
+    if ([self senseManager] == nil) {
+        if (completion) completion (nil);
+    } else {
+        [[self senseManager] resetToFactoryState:^(id response) {
+            if (completion) {
+                completion (nil);
+            }
+        } failure:completion];
+    }
+}
+
+- (void)restoreFactorySettings:(HEMDeviceCompletionBlock)completion {
+    
+    if ([SENSenseManager isScanning]) {
+        
+        if (completion) completion ([self errorWithType:HEMDeviceCenterErrorInProgress]);
+        
+    } else {
+        
+        __weak typeof(self) weakSelf = self;
+        [self resetSense:^(NSError *error) {
+            if (error) {
+                if (completion) completion (error);
+                return;
+            }
+            
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                // required.  firmware will actually just reply it succeeded, but
+                // the actual resetting won't happen until it has been disconnected.
+                [[strongSelf senseManager] disconnectFromSense];
+                [strongSelf setSenseManager:nil];
+                
+                [strongSelf unlinkAllDevices:^(NSError *error) {
+                    if (error != nil) {
+                        if (completion) completion (error);
+                        return;
+                    }
+                    
+                    [strongSelf clearCache];
+                    [strongSelf notifyFactoryRestore];
+                    
+                    if (completion) completion (nil);
+                }];
+            }
+        }];
+
+    }
+    
 }
 
 @end

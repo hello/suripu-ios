@@ -15,7 +15,8 @@ typedef void(^SENSenseCompletionBlock)(id response, NSError* error);
 typedef void(^SENSenseSuccessBlock)(id response);
 typedef void(^SENSenseFailureBlock)(NSError* error);
 
-typedef enum {
+typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
+    SENSenseManagerErrorCodeNone = 0,
     SENSenseManagerErrorCodeNoDeviceSpecified = -1,
     SENSenseManagerErrorCodeInvalidArgument = -2,
     SENSenseManagerErrorCodeUnexpectedResponse = -3,
@@ -24,8 +25,11 @@ typedef enum {
     SENSenseManagerErrorCodeInvalidCommand = -6,
     SENSenseManagerErrorCodeConnectionFailed = -7,
     SENSenseManagerErrorCodeInvalidated = -8,
-    SENSenseManagerErrorCodeNone = 0
-} SENSenseManagerErrorCode;
+    SENSenseManagerErrorCodeInternalFailure = -9,
+    SENSenseManagerErrorCodeDeviceOutOfMemory = -10,
+    SENSenseManagerErrorCodeDeviceDbFull = -11,
+    SENSenseManagerErrorCodeDeviceNetworkError = -12
+};
 
 @interface SENSenseManager : NSObject
 
@@ -190,11 +194,6 @@ typedef enum {
  */
 - (void)removeUnexpectedDisconnectObserver:(NSString*)observerId;
 
-#pragma mark - Time
-
-- (void)setTime:(SENSenseCompletionBlock)completion;
-- (void)getTime:(SENSenseCompletionBlock)completion;
-
 #pragma mark - Wifi
 
 /**
@@ -212,8 +211,16 @@ typedef enum {
         success:(SENSenseSuccessBlock)success
         failure:(SENSenseFailureBlock)failure;
 
-- (void)getWifiEndPoint:(SENSenseCompletionBlock)completion;
-- (void)scanForWifi:(SENSenseCompletionBlock)completion;
-- (void)stopWifiScan:(SENSenseCompletionBlock)completion;
+#pragma mark - Factory Reset
+
+/**
+ * Reset Sense back to factory state, which will erase the device from Sense and
+ * clear WiFi credentials that have been set, if any.
+ * 
+ * @param success:  the block to call when the command succeeded
+ * @param failure:  the block to call if the command encountered an er
+ */
+- (void)resetToFactoryState:(SENSenseSuccessBlock)success
+                    failure:(SENSenseFailureBlock)failure;
 
 @end

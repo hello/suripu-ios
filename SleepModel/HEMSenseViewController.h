@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMSenseViewController : UIViewController
+@interface HEMSenseViewController : HEMBaseController
 
 @end

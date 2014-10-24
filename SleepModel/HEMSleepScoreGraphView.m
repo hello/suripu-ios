@@ -29,7 +29,7 @@
 {
     for (int i = 0; i < value; i++) {
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(i * 0.0075 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            self.sleepScore = i + 1;
+            _sleepScore = i + 1;
             [self setNeedsDisplay];
         });
     }
@@ -39,11 +39,13 @@
 {
     if (sleepScore == _sleepScore || self.targetSleepScore == sleepScore)
         return;
+
     if (animated) {
         self.targetSleepScore = sleepScore;
         [self animateScoreTo:sleepScore];
-    } else {
-        _sleepScore = sleepScore;
+    }
+    else {
+        self.sleepScore = sleepScore;
     }
 }
 

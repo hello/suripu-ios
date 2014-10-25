@@ -16,9 +16,12 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 @interface HEMCurrentConditionsTableViewController ()
 @property (nonatomic, strong) NSArray* sensors;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
+@property (nonatomic, strong) NSTimer* refreshTimer;
 @end
 
 @implementation HEMCurrentConditionsTableViewController
+
+static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
 
 - (void)viewDidLoad
 {
@@ -54,6 +57,7 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
                  object:nil];
     
     [SENSensor refreshCachedSensors];
+    [self configureRefreshTimer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -62,18 +66,40 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [self.refreshTimer invalidate];
+    [super viewDidDisappear:animated];
+}
+
 - (void)failedToRefreshSensors {
     [self setLoading:NO];
     [self.tableView reloadData];
 }
 
+- (void)configureRefreshTimer
+{
+    [self.refreshTimer invalidate];
+    self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:HEMCurrentConditionsRefreshIntervalInSeconds
+                                                         target:self
+                                                       selector:@selector(refreshSensors)
+                                                       userInfo:nil
+                                                        repeats:YES];
+}
+
 - (void)refreshSensors {
+    DDLogVerbose(@"refreshing sensor data in settings");
     self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
         return [obj1.name compare:obj2.name];
     }];
     
     [self setLoading:NO];
     [self.tableView reloadData];
+}
+
+- (void)dealloc
+{
+    [_refreshTimer invalidate];
 }
 
 #pragma mark - UITableViewDataSource

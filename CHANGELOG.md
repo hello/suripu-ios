@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0.27
+
+New:
+
+1. Aadded auto refresh on sensor data
+
 ## 1.0.0.26
 
 New:
@@ -8,6 +14,8 @@ New:
 you are doing!
 
 2 Added analytic events to Sense controls within the app.
+
+3. Onboarding Checkpoints
 
 Fixes:
 

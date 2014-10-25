@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.0.26
+
+New:
+
+1. Added ability to do a factory reset.  Only use this if you know exactly what
+you are doing!
+
+2 Added analytic events to Sense controls within the app.
+
+Fixes:
+
+1. added time out while pairing with Sense
+2. better error handling in BLE operations
+3. minor visual fixes
+
 ## 1.0.0.25
 
 New:

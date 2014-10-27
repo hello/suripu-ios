@@ -78,6 +78,7 @@
     // TODO (jimmy): the help website is still being discussed / worked on.  When
     // we know what to actually point to, we likely will open up a browser to
     // show the help
+    [SENAnalytics track:kHEMAnalyticsEventHelp];
 }
 
 @end

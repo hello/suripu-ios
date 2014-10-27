@@ -82,6 +82,7 @@
     [[HEMDeviceCenter sharedCenter] clearCache];
     [SENKeyedArchiver removeAllObjects];
     [HEMOnboardingUtils resetOnboardingCheckpoint];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
     [self resume:YES];
 }
 

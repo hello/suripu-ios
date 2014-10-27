@@ -8,6 +8,7 @@
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 
 #import <SenseKit/SENServiceQuestions.h>
+#import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENQuestion.h>
 
 #import "UIImage+ImageEffects.h"
@@ -62,6 +63,14 @@
     [self addBackgroundGradientLayer];
     [self listenForSleepQuestions];
     [self addTopShadow];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleSignOutNotification)
+                                                 name:SENAuthorizationServiceDidDeauthorizeNotification
+                                               object:nil];
+}
+
+- (void)handleSignOutNotification {
+    [self performSelectorOnMainThread:@selector(hideQuestionAlert) withObject:nil waitUntilDone:NO];
 }
 
 - (void)addBackgroundGradientLayer {
@@ -133,6 +142,13 @@
     [self setQAlertView:alert];
 }
 
+- (void)hideQuestionAlert {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [[self qAlertView] dismiss:NO completion:^{
+        self.qAlertView = nil;
+    }];
+}
+
 - (UIImage*)snapshot {
     UIGraphicsBeginImageContextWithOptions([[self view] bounds].size, NO, 0);
     
@@ -170,6 +186,7 @@
 #pragma mark - Cleanup
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [self setDataSource:nil];
     [[SENServiceQuestions sharedService] stopListening:[self qObserver]];

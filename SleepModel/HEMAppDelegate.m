@@ -6,6 +6,7 @@
 #import <SenseKit/SENAnswer.h>
 #import <SenseKit/SENSettings.h>
 #import <SenseKit/SENAPIAccount.h>
+#import <SenseKit/SENAnalytics.h>
 
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <Crashlytics/Crashlytics.h>

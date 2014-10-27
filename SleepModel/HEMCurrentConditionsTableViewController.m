@@ -55,8 +55,7 @@ static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
                selector:@selector(failedToRefreshSensors)
                    name:SENSensorUpdateFailedNotification
                  object:nil];
-    
-    [SENSensor refreshCachedSensors];
+
     [self configureRefreshTimer];
 }
 
@@ -89,6 +88,7 @@ static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
 
 - (void)refreshSensors {
     DDLogVerbose(@"refreshing sensor data in settings");
+    [SENSensor refreshCachedSensors];
     self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
         return [obj1.name compare:obj2.name];
     }];

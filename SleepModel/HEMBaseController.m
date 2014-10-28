@@ -9,6 +9,9 @@
 #import "HEMBaseController.h"
 #import "HEMAlertController.h"
 
+static CGFloat const kHEMIPhone4Height = 480.0f;
+static CGFloat const kHEMIPhone5Height = 568.0f;
+
 @interface HEMBaseController()
 
 @property (nonatomic, assign) BOOL adjustedConstraints;
@@ -32,12 +35,16 @@
     [super updateViewConstraints];
     if (![self adjustedConstraints]) {
         CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
-        if (screenHeight == 480.0f) {
+        if (screenHeight == kHEMIPhone4Height) {
             [self adjustConstraintsForIPhone4];
+        } else if (screenHeight == kHEMIPhone5Height) {
+            [self adjustConstraintsForIphone5];
         }
         [self setAdjustedConstraints:YES];
     }
 }
+
+- (void)adjustConstraintsForIphone5 { /* do nothing here, meant for subclasses */ }
 
 - (void)adjustConstraintsForIPhone4 { /* do nothing here, meant for subclasses */ }
 

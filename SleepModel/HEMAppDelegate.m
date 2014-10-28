@@ -6,6 +6,7 @@
 #import <SenseKit/SENAnswer.h>
 #import <SenseKit/SENSettings.h>
 #import <SenseKit/SENAPIAccount.h>
+#import <SenseKit/SENAnalytics.h>
 
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <Crashlytics/Crashlytics.h>
@@ -81,6 +82,7 @@
     [[HEMDeviceCenter sharedCenter] clearCache];
     [SENKeyedArchiver removeAllObjects];
     [HEMOnboardingUtils resetOnboardingCheckpoint];
+    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
     [self resume:YES];
 }
 

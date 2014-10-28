@@ -5,6 +5,7 @@
 #import <FXKeychain/FXKeychain.h>
 
 #import "SENAuthorizationService.h"
+#import "SENAPIAccount.h"
 #import "SENAPIClient.h"
 
 NSString* const SENAuthorizationServiceKeychainService = @"is.hello.Sense";
@@ -20,6 +21,7 @@ static NSString* const SENAuthorizationServiceCredentialsKey = @"credentials";
 static NSString* const SENAuthorizationServiceCredentialsEmailKey = @"email";
 static NSString* const SENAuthorizationServiceAccountIdKey = @"account_id";
 static NSString* const SENAuthorizationServiceAccessTokenKey = @"access_token";
+static NSInteger const SENAuthorizationServiceDeauthorizationCode = 401;
 static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authorization";
 
 + (FXKeychain*)keychain {
@@ -86,6 +88,17 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
     }
 
     return token != nil;
+}
+
++ (BOOL)isAuthorizedRequest:(NSURLRequest*)request
+{
+    return request.allHTTPHeaderFields[SENAuthorizationServiceAuthorizationHeaderKey] != nil;
+}
+
++ (BOOL)isAuthorizationError:(NSError*)error
+{
+    NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+    return response.statusCode == SENAuthorizationServiceDeauthorizationCode;
 }
 
 + (NSString*)emailAddressOfAuthorizedUser

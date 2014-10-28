@@ -55,8 +55,7 @@ static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
                selector:@selector(failedToRefreshSensors)
                    name:SENSensorUpdateFailedNotification
                  object:nil];
-    
-    [SENSensor refreshCachedSensors];
+
     [self configureRefreshTimer];
 }
 
@@ -82,9 +81,13 @@ static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
     [self.refreshTimer invalidate];
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:HEMCurrentConditionsRefreshIntervalInSeconds
                                                          target:self
-                                                       selector:@selector(refreshSensors)
+                                                       selector:@selector(refreshCachedSensors)
                                                        userInfo:nil
                                                         repeats:YES];
+}
+
+- (void)refreshCachedSensors {
+    [SENSensor refreshCachedSensors];
 }
 
 - (void)refreshSensors {

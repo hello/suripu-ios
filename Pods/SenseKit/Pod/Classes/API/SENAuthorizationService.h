@@ -39,6 +39,24 @@ extern NSString* const SENAuthorizationServiceDidDeauthorizeNotification;
 + (BOOL)isAuthorized;
 
 /**
+ *  Checks whether an error indicates an invalid API access token
+ *
+ *  @param error error to check
+ *
+ *  @return YES if the error indicates the token is deauthorized
+ */
++ (BOOL)isAuthorizationError:(NSError*)error;
+
+/**
+ *  Checks whether a request has an authorization
+ *
+ *  @param request request to check
+ *
+ *  @return YES if the request has an authorization header set
+ */
++ (BOOL)isAuthorizedRequest:(NSURLRequest*)request;
+
+/**
  *  Authenticated email address or nil
  */
 + (NSString*)emailAddressOfAuthorizedUser;

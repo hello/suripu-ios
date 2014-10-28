@@ -81,14 +81,17 @@ static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
     [self.refreshTimer invalidate];
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:HEMCurrentConditionsRefreshIntervalInSeconds
                                                          target:self
-                                                       selector:@selector(refreshSensors)
+                                                       selector:@selector(refreshCachedSensors)
                                                        userInfo:nil
                                                         repeats:YES];
 }
 
+- (void)refreshCachedSensors {
+    [SENSensor refreshCachedSensors];
+}
+
 - (void)refreshSensors {
     DDLogVerbose(@"refreshing sensor data in settings");
-    [SENSensor refreshCachedSensors];
     self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
         return [obj1.name compare:obj2.name];
     }];

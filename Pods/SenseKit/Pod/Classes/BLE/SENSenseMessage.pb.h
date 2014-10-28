@@ -6,6 +6,8 @@
 
 @class SENSenseMessage;
 @class SENSenseMessageBuilder;
+@class SENWifiEndpoint;
+@class SENWifiEndpointBuilder;
 #ifndef __has_feature
   #define __has_feature(x) 0 // Compatibility with non-clang compilers.
 #endif // __has_feature
@@ -26,9 +28,21 @@ typedef enum {
   ErrorTypeDeviceDatabaseFull = 4,
   ErrorTypeDeviceNoMemory = 5,
   ErrorTypeInternalOperationFailed = 6,
+  ErrorTypeNoEndpointInRange = 7,
+  ErrorTypeWlanConnectionError = 8,
+  ErrorTypeFailToObtainIp = 9,
 } ErrorType;
 
 BOOL ErrorTypeIsValidValue(ErrorType value);
+
+typedef enum {
+  SENWifiEndpointSecurityTypeOpen = 0,
+  SENWifiEndpointSecurityTypeWep = 1,
+  SENWifiEndpointSecurityTypeWpa = 2,
+  SENWifiEndpointSecurityTypeWpa2 = 3,
+} SENWifiEndpointSecurityType;
+
+BOOL SENWifiEndpointSecurityTypeIsValidValue(SENWifiEndpointSecurityType value);
 
 typedef enum {
   SENSenseMessageTypeSetTime = 0,
@@ -63,6 +77,82 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 + (void) registerAllExtensions:(PBMutableExtensionRegistry*) registry;
 @end
 
+@interface SENWifiEndpoint : PBGeneratedMessage {
+@private
+  BOOL hasRssi_:1;
+  BOOL hasSsid_:1;
+  BOOL hasBssid_:1;
+  BOOL hasSecurity_:1;
+  long rssi;
+  NSString* ssid;
+  NSData* bssid;
+  SENWifiEndpointSecurityType security;
+}
+- (BOOL) hasSsid;
+- (BOOL) hasBssid;
+- (BOOL) hasRssi;
+- (BOOL) hasSecurity;
+@property (readonly, strong) NSString* ssid;
+@property (readonly, strong) NSData* bssid;
+@property (readonly) long rssi;
+@property (readonly) SENWifiEndpointSecurityType security;
+
++ (SENWifiEndpoint*) defaultInstance;
+- (SENWifiEndpoint*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (SENWifiEndpointBuilder*) builder;
++ (SENWifiEndpointBuilder*) builder;
++ (SENWifiEndpointBuilder*) builderWithPrototype:(SENWifiEndpoint*) prototype;
+- (SENWifiEndpointBuilder*) toBuilder;
+
++ (SENWifiEndpoint*) parseFromData:(NSData*) data;
++ (SENWifiEndpoint*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (SENWifiEndpoint*) parseFromInputStream:(NSInputStream*) input;
++ (SENWifiEndpoint*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (SENWifiEndpoint*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (SENWifiEndpoint*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface SENWifiEndpointBuilder : PBGeneratedMessageBuilder {
+@private
+  SENWifiEndpoint* result;
+}
+
+- (SENWifiEndpoint*) defaultInstance;
+
+- (SENWifiEndpointBuilder*) clear;
+- (SENWifiEndpointBuilder*) clone;
+
+- (SENWifiEndpoint*) build;
+- (SENWifiEndpoint*) buildPartial;
+
+- (SENWifiEndpointBuilder*) mergeFrom:(SENWifiEndpoint*) other;
+- (SENWifiEndpointBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (SENWifiEndpointBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasSsid;
+- (NSString*) ssid;
+- (SENWifiEndpointBuilder*) setSsid:(NSString*) value;
+- (SENWifiEndpointBuilder*) clearSsid;
+
+- (BOOL) hasBssid;
+- (NSData*) bssid;
+- (SENWifiEndpointBuilder*) setBssid:(NSData*) value;
+- (SENWifiEndpointBuilder*) clearBssid;
+
+- (BOOL) hasRssi;
+- (long) rssi;
+- (SENWifiEndpointBuilder*) setRssi:(long) value;
+- (SENWifiEndpointBuilder*) clearRssi;
+
+- (BOOL) hasSecurity;
+- (SENWifiEndpointSecurityType) security;
+- (SENWifiEndpointBuilder*) setSecurity:(SENWifiEndpointSecurityType) value;
+- (SENWifiEndpointBuilder*) clearSecurity;
+@end
+
 @interface SENSenseMessage : PBGeneratedMessage {
 @private
   BOOL hasVersion_:1;
@@ -91,6 +181,7 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
   NSData* motionDataEncrypted;
   SENSenseMessageType type;
   ErrorType error;
+  PBAppendableArray * wifisDetectedArray;
 }
 - (BOOL) hasVersion;
 - (BOOL) hasType;
@@ -118,6 +209,8 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 @property (readonly) long motionData;
 @property (readonly, strong) NSData* motionDataEncrypted;
 @property (readonly) long firmwareVersion;
+@property (readonly, strong) PBArray * wifisDetected;
+- (SENWifiEndpoint*)wifisDetectedAtIndex:(NSUInteger)index;
 
 + (SENSenseMessage*) defaultInstance;
 - (SENSenseMessage*) defaultInstance;
@@ -218,6 +311,13 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 - (long) firmwareVersion;
 - (SENSenseMessageBuilder*) setFirmwareVersion:(long) value;
 - (SENSenseMessageBuilder*) clearFirmwareVersion;
+
+- (PBAppendableArray *)wifisDetected;
+- (SENWifiEndpoint*)wifisDetectedAtIndex:(NSUInteger)index;
+- (SENSenseMessageBuilder *)addWifisDetected:(SENWifiEndpoint*)value;
+- (SENSenseMessageBuilder *)setWifisDetectedArray:(NSArray *)array;
+- (SENSenseMessageBuilder *)setWifisDetectedValues:(const SENWifiEndpoint* __strong *)values count:(NSUInteger)count;
+- (SENSenseMessageBuilder *)clearWifisDetected;
 @end
 
 

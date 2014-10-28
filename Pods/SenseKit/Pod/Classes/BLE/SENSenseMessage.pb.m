@@ -29,11 +29,384 @@ BOOL ErrorTypeIsValidValue(ErrorType value) {
     case ErrorTypeDeviceDatabaseFull:
     case ErrorTypeDeviceNoMemory:
     case ErrorTypeInternalOperationFailed:
+    case ErrorTypeNoEndpointInRange:
+    case ErrorTypeWlanConnectionError:
+    case ErrorTypeFailToObtainIp:
       return YES;
     default:
       return NO;
   }
 }
+@interface SENWifiEndpoint ()
+@property (strong) NSString* ssid;
+@property (strong) NSData* bssid;
+@property long rssi;
+@property SENWifiEndpointSecurityType security;
+@end
+
+@implementation SENWifiEndpoint
+
+- (BOOL) hasSsid {
+  return !!hasSsid_;
+}
+- (void) setHasSsid:(BOOL) value_ {
+  hasSsid_ = !!value_;
+}
+@synthesize ssid;
+- (BOOL) hasBssid {
+  return !!hasBssid_;
+}
+- (void) setHasBssid:(BOOL) value_ {
+  hasBssid_ = !!value_;
+}
+@synthesize bssid;
+- (BOOL) hasRssi {
+  return !!hasRssi_;
+}
+- (void) setHasRssi:(BOOL) value_ {
+  hasRssi_ = !!value_;
+}
+@synthesize rssi;
+- (BOOL) hasSecurity {
+  return !!hasSecurity_;
+}
+- (void) setHasSecurity:(BOOL) value_ {
+  hasSecurity_ = !!value_;
+}
+@synthesize security;
+- (void) dealloc {
+  self.ssid = nil;
+  self.bssid = nil;
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.ssid = @"";
+    self.bssid = [NSData data];
+    self.rssi = 0;
+    self.security = SENWifiEndpointSecurityTypeOpen;
+  }
+  return self;
+}
+static SENWifiEndpoint* defaultSENWifiEndpointInstance = nil;
++ (void) initialize {
+  if (self == [SENWifiEndpoint class]) {
+    defaultSENWifiEndpointInstance = [[SENWifiEndpoint alloc] init];
+  }
+}
++ (SENWifiEndpoint*) defaultInstance {
+  return defaultSENWifiEndpointInstance;
+}
+- (SENWifiEndpoint*) defaultInstance {
+  return defaultSENWifiEndpointInstance;
+}
+- (BOOL) isInitialized {
+  if (!self.hasSsid) {
+    return NO;
+  }
+  if (!self.hasRssi) {
+    return NO;
+  }
+  if (!self.hasSecurity) {
+    return NO;
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasSsid) {
+    [output writeString:1 value:self.ssid];
+  }
+  if (self.hasBssid) {
+    [output writeData:2 value:self.bssid];
+  }
+  if (self.hasRssi) {
+    [output writeInt32:4 value:self.rssi];
+  }
+  if (self.hasSecurity) {
+    [output writeEnum:5 value:self.security];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (long) serializedSize {
+  long size_ = memoizedSerializedSize;
+  if (size_ != -1) {
+    return size_;
+  }
+
+  size_ = 0;
+  if (self.hasSsid) {
+    size_ += computeStringSize(1, self.ssid);
+  }
+  if (self.hasBssid) {
+    size_ += computeDataSize(2, self.bssid);
+  }
+  if (self.hasRssi) {
+    size_ += computeInt32Size(4, self.rssi);
+  }
+  if (self.hasSecurity) {
+    size_ += computeEnumSize(5, self.security);
+  }
+  size_ += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size_;
+  return size_;
+}
++ (SENWifiEndpoint*) parseFromData:(NSData*) data {
+  return (SENWifiEndpoint*)[[[SENWifiEndpoint builder] mergeFromData:data] build];
+}
++ (SENWifiEndpoint*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (SENWifiEndpoint*)[[[SENWifiEndpoint builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (SENWifiEndpoint*) parseFromInputStream:(NSInputStream*) input {
+  return (SENWifiEndpoint*)[[[SENWifiEndpoint builder] mergeFromInputStream:input] build];
+}
++ (SENWifiEndpoint*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (SENWifiEndpoint*)[[[SENWifiEndpoint builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (SENWifiEndpoint*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (SENWifiEndpoint*)[[[SENWifiEndpoint builder] mergeFromCodedInputStream:input] build];
+}
++ (SENWifiEndpoint*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (SENWifiEndpoint*)[[[SENWifiEndpoint builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (SENWifiEndpointBuilder*) builder {
+  return [[SENWifiEndpointBuilder alloc] init];
+}
++ (SENWifiEndpointBuilder*) builderWithPrototype:(SENWifiEndpoint*) prototype {
+  return [[SENWifiEndpoint builder] mergeFrom:prototype];
+}
+- (SENWifiEndpointBuilder*) builder {
+  return [SENWifiEndpoint builder];
+}
+- (SENWifiEndpointBuilder*) toBuilder {
+  return [SENWifiEndpoint builderWithPrototype:self];
+}
+- (void) writeDescriptionTo:(NSMutableString*) output withIndent:(NSString*) indent {
+  if (self.hasSsid) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"ssid", self.ssid];
+  }
+  if (self.hasBssid) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"bssid", self.bssid];
+  }
+  if (self.hasRssi) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"rssi", [NSNumber numberWithInteger:self.rssi]];
+  }
+  if (self.hasSecurity) {
+    [output appendFormat:@"%@%@: %d\n", indent, @"security", self.security];
+  }
+  [self.unknownFields writeDescriptionTo:output withIndent:indent];
+}
+- (BOOL) isEqual:(id)other {
+  if (other == self) {
+    return YES;
+  }
+  if (![other isKindOfClass:[SENWifiEndpoint class]]) {
+    return NO;
+  }
+  SENWifiEndpoint *otherMessage = other;
+  return
+      self.hasSsid == otherMessage.hasSsid &&
+      (!self.hasSsid || [self.ssid isEqual:otherMessage.ssid]) &&
+      self.hasBssid == otherMessage.hasBssid &&
+      (!self.hasBssid || [self.bssid isEqual:otherMessage.bssid]) &&
+      self.hasRssi == otherMessage.hasRssi &&
+      (!self.hasRssi || self.rssi == otherMessage.rssi) &&
+      self.hasSecurity == otherMessage.hasSecurity &&
+      (!self.hasSecurity || self.security == otherMessage.security) &&
+      (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
+}
+- (NSUInteger) hash {
+  NSUInteger hashCode = 7;
+  if (self.hasSsid) {
+    hashCode = hashCode * 31 + [self.ssid hash];
+  }
+  if (self.hasBssid) {
+    hashCode = hashCode * 31 + [self.bssid hash];
+  }
+  if (self.hasRssi) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.rssi] hash];
+  }
+  if (self.hasSecurity) {
+    hashCode = hashCode * 31 + self.security;
+  }
+  hashCode = hashCode * 31 + [self.unknownFields hash];
+  return hashCode;
+}
+@end
+
+BOOL SENWifiEndpointSecurityTypeIsValidValue(SENWifiEndpointSecurityType value) {
+  switch (value) {
+    case SENWifiEndpointSecurityTypeOpen:
+    case SENWifiEndpointSecurityTypeWep:
+    case SENWifiEndpointSecurityTypeWpa:
+    case SENWifiEndpointSecurityTypeWpa2:
+      return YES;
+    default:
+      return NO;
+  }
+}
+@interface SENWifiEndpointBuilder()
+@property (strong) SENWifiEndpoint* result;
+@end
+
+@implementation SENWifiEndpointBuilder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[SENWifiEndpoint alloc] init];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (SENWifiEndpointBuilder*) clear {
+  self.result = [[SENWifiEndpoint alloc] init];
+  return self;
+}
+- (SENWifiEndpointBuilder*) clone {
+  return [SENWifiEndpoint builderWithPrototype:result];
+}
+- (SENWifiEndpoint*) defaultInstance {
+  return [SENWifiEndpoint defaultInstance];
+}
+- (SENWifiEndpoint*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (SENWifiEndpoint*) buildPartial {
+  SENWifiEndpoint* returnMe = result;
+  self.result = nil;
+  return returnMe;
+}
+- (SENWifiEndpointBuilder*) mergeFrom:(SENWifiEndpoint*) other {
+  if (other == [SENWifiEndpoint defaultInstance]) {
+    return self;
+  }
+  if (other.hasSsid) {
+    [self setSsid:other.ssid];
+  }
+  if (other.hasBssid) {
+    [self setBssid:other.bssid];
+  }
+  if (other.hasRssi) {
+    [self setRssi:other.rssi];
+  }
+  if (other.hasSecurity) {
+    [self setSecurity:other.security];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (SENWifiEndpointBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (SENWifiEndpointBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSetBuilder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    NSInteger tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        [self setSsid:[input readString]];
+        break;
+      }
+      case 18: {
+        [self setBssid:[input readData]];
+        break;
+      }
+      case 32: {
+        [self setRssi:[input readInt32]];
+        break;
+      }
+      case 40: {
+        SENWifiEndpointSecurityType value = (SENWifiEndpointSecurityType)[input readEnum];
+        if (SENWifiEndpointSecurityTypeIsValidValue(value)) {
+          [self setSecurity:value];
+        } else {
+          [unknownFields mergeVarintField:5 value:value];
+        }
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasSsid {
+  return result.hasSsid;
+}
+- (NSString*) ssid {
+  return result.ssid;
+}
+- (SENWifiEndpointBuilder*) setSsid:(NSString*) value {
+  result.hasSsid = YES;
+  result.ssid = value;
+  return self;
+}
+- (SENWifiEndpointBuilder*) clearSsid {
+  result.hasSsid = NO;
+  result.ssid = @"";
+  return self;
+}
+- (BOOL) hasBssid {
+  return result.hasBssid;
+}
+- (NSData*) bssid {
+  return result.bssid;
+}
+- (SENWifiEndpointBuilder*) setBssid:(NSData*) value {
+  result.hasBssid = YES;
+  result.bssid = value;
+  return self;
+}
+- (SENWifiEndpointBuilder*) clearBssid {
+  result.hasBssid = NO;
+  result.bssid = [NSData data];
+  return self;
+}
+- (BOOL) hasRssi {
+  return result.hasRssi;
+}
+- (long) rssi {
+  return result.rssi;
+}
+- (SENWifiEndpointBuilder*) setRssi:(long) value {
+  result.hasRssi = YES;
+  result.rssi = value;
+  return self;
+}
+- (SENWifiEndpointBuilder*) clearRssi {
+  result.hasRssi = NO;
+  result.rssi = 0;
+  return self;
+}
+- (BOOL) hasSecurity {
+  return result.hasSecurity;
+}
+- (SENWifiEndpointSecurityType) security {
+  return result.security;
+}
+- (SENWifiEndpointBuilder*) setSecurity:(SENWifiEndpointSecurityType) value {
+  result.hasSecurity = YES;
+  result.security = value;
+  return self;
+}
+- (SENWifiEndpointBuilder*) clearSecurity {
+  result.hasSecurity = NO;
+  result.security = SENWifiEndpointSecurityTypeOpen;
+  return self;
+}
+@end
+
 @interface SENSenseMessage ()
 @property long version;
 @property SENSenseMessageType type;
@@ -48,6 +421,7 @@ BOOL ErrorTypeIsValidValue(ErrorType value) {
 @property long motionData;
 @property (strong) NSData* motionDataEncrypted;
 @property long firmwareVersion;
+@property (strong) PBAppendableArray * wifisDetectedArray;
 @end
 
 @implementation SENSenseMessage
@@ -143,6 +517,8 @@ BOOL ErrorTypeIsValidValue(ErrorType value) {
   hasFirmwareVersion_ = !!value_;
 }
 @synthesize firmwareVersion;
+@synthesize wifisDetectedArray;
+@dynamic wifisDetected;
 - (void) dealloc {
   self.deviceId = nil;
   self.accountId = nil;
@@ -150,6 +526,7 @@ BOOL ErrorTypeIsValidValue(ErrorType value) {
   self.wifiSsid = nil;
   self.wifiPassword = nil;
   self.motionDataEncrypted = nil;
+  self.wifisDetectedArray = nil;
 }
 - (id) init {
   if ((self = [super init])) {
@@ -181,12 +558,23 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
 - (SENSenseMessage*) defaultInstance {
   return defaultSENSenseMessageInstance;
 }
+- (PBArray *)wifisDetected {
+  return wifisDetectedArray;
+}
+- (SENWifiEndpoint*)wifisDetectedAtIndex:(NSUInteger)index {
+  return [wifisDetectedArray objectAtIndex:index];
+}
 - (BOOL) isInitialized {
   if (!self.hasVersion) {
     return NO;
   }
   if (!self.hasType) {
     return NO;
+  }
+  for (SENWifiEndpoint* element in self.wifisDetected) {
+    if (!element.isInitialized) {
+      return NO;
+    }
   }
   return YES;
 }
@@ -229,6 +617,9 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   }
   if (self.hasFirmwareVersion) {
     [output writeInt32:13 value:self.firmwareVersion];
+  }
+  for (SENWifiEndpoint *element in self.wifisDetectedArray) {
+    [output writeMessage:14 value:element];
   }
   [self.unknownFields writeToCodedOutputStream:output];
 }
@@ -277,6 +668,9 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   }
   if (self.hasFirmwareVersion) {
     size_ += computeInt32Size(13, self.firmwareVersion);
+  }
+  for (SENWifiEndpoint *element in self.wifisDetectedArray) {
+    size_ += computeMessageSize(14, element);
   }
   size_ += self.unknownFields.serializedSize;
   memoizedSerializedSize = size_;
@@ -352,6 +746,12 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   if (self.hasFirmwareVersion) {
     [output appendFormat:@"%@%@: %@\n", indent, @"firmwareVersion", [NSNumber numberWithInteger:self.firmwareVersion]];
   }
+  for (SENWifiEndpoint* element in self.wifisDetectedArray) {
+    [output appendFormat:@"%@%@ {\n", indent, @"wifisDetected"];
+    [element writeDescriptionTo:output
+                     withIndent:[NSString stringWithFormat:@"%@  ", indent]];
+    [output appendFormat:@"%@}\n", indent];
+  }
   [self.unknownFields writeDescriptionTo:output withIndent:indent];
 }
 - (BOOL) isEqual:(id)other {
@@ -389,6 +789,7 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
       (!self.hasMotionDataEncrypted || [self.motionDataEncrypted isEqual:otherMessage.motionDataEncrypted]) &&
       self.hasFirmwareVersion == otherMessage.hasFirmwareVersion &&
       (!self.hasFirmwareVersion || self.firmwareVersion == otherMessage.firmwareVersion) &&
+      [self.wifisDetectedArray isEqualToArray:otherMessage.wifisDetectedArray] &&
       (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
 }
 - (NSUInteger) hash {
@@ -431,6 +832,9 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   }
   if (self.hasFirmwareVersion) {
     hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.firmwareVersion] hash];
+  }
+  for (SENWifiEndpoint* element in self.wifisDetectedArray) {
+    hashCode = hashCode * 31 + [element hash];
   }
   hashCode = hashCode * 31 + [self.unknownFields hash];
   return hashCode;
@@ -545,6 +949,13 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
   if (other.hasFirmwareVersion) {
     [self setFirmwareVersion:other.firmwareVersion];
   }
+  if (other.wifisDetectedArray.count > 0) {
+    if (result.wifisDetectedArray == nil) {
+      result.wifisDetectedArray = [other.wifisDetectedArray copy];
+    } else {
+      [result.wifisDetectedArray appendArray:other.wifisDetectedArray];
+    }
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -626,6 +1037,12 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
       }
       case 104: {
         [self setFirmwareVersion:[input readInt32]];
+        break;
+      }
+      case 114: {
+        SENWifiEndpointBuilder* subBuilder = [SENWifiEndpoint builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addWifisDetected:[subBuilder buildPartial]];
         break;
       }
     }
@@ -837,6 +1254,31 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
 - (SENSenseMessageBuilder*) clearFirmwareVersion {
   result.hasFirmwareVersion = NO;
   result.firmwareVersion = 0;
+  return self;
+}
+- (PBAppendableArray *)wifisDetected {
+  return result.wifisDetectedArray;
+}
+- (SENWifiEndpoint*)wifisDetectedAtIndex:(NSUInteger)index {
+  return [result wifisDetectedAtIndex:index];
+}
+- (SENSenseMessageBuilder *)addWifisDetected:(SENWifiEndpoint*)value {
+  if (result.wifisDetectedArray == nil) {
+    result.wifisDetectedArray = [PBAppendableArray arrayWithValueType:PBArrayValueTypeObject];
+  }
+  [result.wifisDetectedArray addObject:value];
+  return self;
+}
+- (SENSenseMessageBuilder *)setWifisDetectedArray:(NSArray *)array {
+  result.wifisDetectedArray = [PBAppendableArray arrayWithArray:array valueType:PBArrayValueTypeObject];
+  return self;
+}
+- (SENSenseMessageBuilder *)setWifisDetectedValues:(const SENWifiEndpoint* __strong *)values count:(NSUInteger)count {
+  result.wifisDetectedArray = [PBAppendableArray arrayWithValues:values count:count valueType:PBArrayValueTypeObject];
+  return self;
+}
+- (SENSenseMessageBuilder *)clearWifisDetected {
+  result.wifisDetectedArray = nil;
   return self;
 }
 @end

@@ -180,6 +180,12 @@
 #define COCOAPODS_VERSION_MINOR_SenseKit_Service 1
 #define COCOAPODS_VERSION_PATCH_SenseKit_Service 0
 
+// SpinKit
+#define COCOAPODS_POD_AVAILABLE_SpinKit
+#define COCOAPODS_VERSION_MAJOR_SpinKit 1
+#define COCOAPODS_VERSION_MINOR_SpinKit 2
+#define COCOAPODS_VERSION_PATCH_SpinKit 0
+
 // UIImageEffects
 #define COCOAPODS_POD_AVAILABLE_UIImageEffects
 #define COCOAPODS_VERSION_MAJOR_UIImageEffects 0

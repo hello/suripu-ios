@@ -5,7 +5,6 @@
 
 @interface HEMSleepSummaryCollectionViewCell ()
 
-@property (weak, nonatomic) IBOutlet HEMSleepScoreGraphView* sleepScoreGraphView;
 @end
 
 @implementation HEMSleepSummaryCollectionViewCell

@@ -5,6 +5,7 @@
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
 #import <JBChartView/JBLineChartView.h>
+#import <SpinKit/RTSpinKitView.h>
 #import <markdown_peg.h>
 
 #import "HEMSleepGraphCollectionViewDataSource.h"
@@ -16,6 +17,7 @@
 #import "HEMPresleepHeaderCollectionReusableView.h"
 #import "HEMPresleepItemCollectionViewCell.h"
 #import "HEMSensorGraphDataSource.h"
+#import "HEMSleepScoreGraphView.h"
 #import "HelloStyleKit.h"
 #import "HEMColorUtils.h"
 
@@ -30,11 +32,13 @@ NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
 @interface HEMSleepGraphCollectionViewDataSource ()
 
 @property (nonatomic, weak) UICollectionView* collectionView;
+@property (nonatomic, strong) RTSpinKitView* loadingView;
 @property (nonatomic, strong) NSDateFormatter* timeDateFormatter;
 @property (nonatomic, strong) NSDateFormatter* rangeDateFormatter;
 @property (nonatomic, strong) NSDate* dateForNightOfSleep;
 @property (nonatomic, strong) SENSleepResult* sleepResult;
 @property (nonatomic, strong) NSArray* aggregateDataSources;
+@property (nonatomic, getter=shouldBeLoading) BOOL beLoading;
 @end
 
 @implementation HEMSleepGraphCollectionViewDataSource
@@ -59,7 +63,8 @@ static NSString* const sensorTypeParticulates = @"particulates";
     return formatter;
 }
 
-- (instancetype)initWithCollectionView:(UICollectionView*)collectionView sleepDate:(NSDate*)date
+- (instancetype)initWithCollectionView:(UICollectionView*)collectionView
+                             sleepDate:(NSDate*)date
 {
     if (self = [super init]) {
         _collectionView = collectionView;
@@ -78,9 +83,14 @@ static NSString* const sensorTypeParticulates = @"particulates";
 - (void)reloadData
 {
     self.sleepResult = [SENSleepResult sleepResultForDate:self.dateForNightOfSleep];
+    if ([self shouldShowLoadingView]) {
+        self.beLoading = YES;
+        [self showLoadingView];
+    }
     [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError* error) {
         if (error) {
             DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
+            [self hideLoadingViewWithSuccess:NO];
             return;
         }
         [self refreshWithTimelines:timelines];
@@ -92,6 +102,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     NSDictionary* timeline = [timelines firstObject];
     [self.sleepResult updateWithDictionary:timeline];
     [self.sleepResult save];
+    [self hideLoadingViewWithSuccess:YES];
     [self.collectionView reloadData];
 }
 
@@ -119,6 +130,44 @@ static NSString* const sensorTypeParticulates = @"particulates";
 - (NSUInteger)numberOfSleepSegments
 {
     return self.sleepResult.segments.count;
+}
+
+#pragma mark - Loading
+
+- (BOOL)shouldShowLoadingView
+{
+    return [self numberOfSleepSegments] == 0;
+}
+
+- (void)showLoadingView
+{
+    if (![self shouldBeLoading] || self.loadingView)
+        return;
+
+    HEMSleepSummaryCollectionViewCell* cell = (id)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
+    HEMSleepScoreGraphView* graphView = cell.sleepScoreGraphView;
+    if (graphView) {
+        [NSObject cancelPreviousPerformRequestsWithTarget:self];
+        CGFloat width = MIN(CGRectGetWidth(graphView.frame), CGRectGetHeight(graphView.frame)) * 0.5;
+        self.loadingView = [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleWave color:[UIColor colorWithWhite:0.9 alpha:0.5] spinnerSize:width];
+        self.loadingView.center = graphView.center;
+        [self.loadingView startAnimating];
+        [cell addSubview:self.loadingView];
+    } else {
+        self.beLoading = YES;
+    }
+}
+
+- (void)hideLoadingViewWithSuccess:(BOOL)success
+{
+    self.beLoading = NO;
+    [self.loadingView stopAnimating];
+    [UIView animateWithDuration:0.25f animations:^{
+        self.loadingView.alpha = 0;
+    } completion:^(BOOL finished) {
+        [self.loadingView removeFromSuperview];
+        self.loadingView = nil;
+    }];
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -192,6 +241,9 @@ static NSString* const sensorTypeParticulates = @"particulates";
     }
     else {
         cell.dateLabel.text = dateText;
+    }
+    if ([self shouldBeLoading]) {
+        [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:0.5];
     }
     return cell;
 }

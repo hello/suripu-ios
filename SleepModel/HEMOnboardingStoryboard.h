@@ -9,7 +9,8 @@
 
 +(UIStoryboard *)storyboard;
 
-
+/** Cell Reuse Identifiers */
++(NSString *)networkReuseIdentifier;
 
 /** Segue Identifiers */
 +(NSString *)doneSegueIdentifier;
@@ -19,6 +20,7 @@
 +(NSString *)locationSegueIdentifier;
 +(NSString *)moreInfoSegueIdentifier;
 +(NSString *)needBluetoothSegueIdentifier;
++(NSString *)noBleToSetupSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
 +(NSString *)pillNeedBluetoothSegueIdentifier;
 +(NSString *)secondPillNeedBleSegueIdentifier;
@@ -26,6 +28,7 @@
 +(NSString *)senseSetupSegueIdentifier;
 +(NSString *)weightSegueIdentifier;
 +(NSString *)wifiSegueIdentifier;
++(NSString *)wifiPasswordSegueIdentifier;
 
 /** View Controllers */
 +(UIViewController *)instantiateBluetoothViewController;

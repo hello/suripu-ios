@@ -76,4 +76,17 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  */
 + (void)resetOnboardingCheckpoint;
 
+/**
+ * Show an alert for the error encountered during any http requests made while
+ * in the onboarding flow, which will interpret any NSURLError codes as well
+ * as HTTP Status Codes from the API that are relevant to us.
+ *
+ * @param error:      the error object encountered
+ * @param errorTitle: the title of the alert when it's shown
+ * @param controller: the controller that is presenting the alert
+ */
++ (void)showAlertForHTTPError:(NSError*)error
+                    withTitle:(NSString*)errorTitle
+                         from:(UIViewController*)controller;
+
 @end

@@ -311,3 +311,9 @@
 
 // cell labels
 "today.cell.title.sleep-score" = "Sleep Score";
+
+// network connection error code messages
+"network.error.not-connected" = "An internet connection is required to proceed.  Make sure you are connected and try again.";
+"network.error.connection-lost" = "Connection to the internet was lost during the request.  Try again.";
+"network.error.cannot-connect-to-host" = "Unable to connect to our servers.  Try again later.";
+"network.error.timed-out" = "The request timed out.  Make sure you have a good connection and try again.";

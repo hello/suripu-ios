@@ -5,8 +5,8 @@
 #import <CocoaLumberjack/DDLog.h>
 
 #import "HEMAuthenticationViewController.h"
-#import "HEMOnboardingHTTPErrorHandler.h"
 #import "HEMActionButton.h"
+#import "HEMOnboardingUtils.h"
 
 static NSInteger const HEPURLAlertButtonIndexSave = 1;
 static NSInteger const HEPURLAlertButtonIndexReset = 2;
@@ -95,7 +95,9 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
         if (error) {
             [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             [strongSelf stopActivity];
-            [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)];
+            [HEMOnboardingUtils showAlertForHTTPError:error
+                                            withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)
+                                                 from:strongSelf];
             return;
         }
 

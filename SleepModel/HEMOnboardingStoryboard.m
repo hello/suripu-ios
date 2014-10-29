@@ -20,6 +20,8 @@ static NSString *const _HEMheightPicker = @"heightPicker";
 static NSString *const _HEMlocation = @"location";
 static NSString *const _HEMmoreInfo = @"moreInfo";
 static NSString *const _HEMneedBluetooth = @"needBluetooth";
+static NSString *const _HEMnetwork = @"network";
+static NSString *const _HEMnoBleToSetup = @"noBleToSetup";
 static NSString *const _HEMpill = @"pill";
 static NSString *const _HEMpillIntro = @"pillIntro";
 static NSString *const _HEMpillNeedBluetooth = @"pillNeedBluetooth";
@@ -31,13 +33,15 @@ static NSString *const _HEMweight = @"weight";
 static NSString *const _HEMweightPicker = @"weightPicker";
 static NSString *const _HEMwelcome = @"welcome";
 static NSString *const _HEMwifi = @"wifi";
+static NSString *const _HEMwifiPassword = @"wifiPassword";
 static NSString *const _HEMwifiViewController = @"wifiViewController";
 
 @implementation HEMOnboardingStoryboard
 
 +(UIStoryboard *)storyboard { return _storyboard ?: (_storyboard = [UIStoryboard storyboardWithName:_HEMonboarding bundle:[NSBundle mainBundle]]); }
 
-
+/** Cell Reuse Identifiers */
++(NSString *)networkReuseIdentifier { return _HEMnetwork; }
 
 /** Segue Identifiers */
 +(NSString *)doneSegueIdentifier { return _HEMdone; }
@@ -47,6 +51,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)locationSegueIdentifier { return _HEMlocation; }
 +(NSString *)moreInfoSegueIdentifier { return _HEMmoreInfo; }
 +(NSString *)needBluetoothSegueIdentifier { return _HEMneedBluetooth; }
++(NSString *)noBleToSetupSegueIdentifier { return _HEMnoBleToSetup; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
 +(NSString *)pillNeedBluetoothSegueIdentifier { return _HEMpillNeedBluetooth; }
 +(NSString *)secondPillNeedBleSegueIdentifier { return _HEMsecondPillNeedBle; }
@@ -54,6 +59,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)senseSetupSegueIdentifier { return _HEMsenseSetup; }
 +(NSString *)weightSegueIdentifier { return _HEMweight; }
 +(NSString *)wifiSegueIdentifier { return _HEMwifi; }
++(NSString *)wifiPasswordSegueIdentifier { return _HEMwifiPassword; }
 
 /** View Controllers */
 +(UIViewController *)instantiateBluetoothViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbluetoothViewController]; }

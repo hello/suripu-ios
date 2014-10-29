@@ -17,18 +17,51 @@ typedef void(^SENSenseFailureBlock)(NSError* error);
 
 typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
     SENSenseManagerErrorCodeNone = 0,
+    /** If SENSenseManager was not properly initialized with a Sense peripheral **/
     SENSenseManagerErrorCodeNoDeviceSpecified = -1,
+    /** If any methods are called without proper arguments **/
     SENSenseManagerErrorCodeInvalidArgument = -2,
+    /** 
+     * If either Sense returned a code this manager does not know about, or a
+     * condition was encountered that was not expected
+     */
     SENSenseManagerErrorCodeUnexpectedResponse = -3,
+    /** 
+     * If either Sense timed out on it's operation, or the manager is tired of
+     * waiting and fired a timeout on it's own, based on the operation's timeout
+     * parameter
+     */
     SENSenseManagerErrorCodeTimeout = -4,
-    SENSenseManagerErrorCodeDeviceAlreadyPaired = -5,
+    /** If Sense believes the mobile device has already been paired **/
+    SENSenseManagerErrorCodeSenseAlreadyPaired = -5,
+    /** If some how the manager created a Sense messasge **/
     SENSenseManagerErrorCodeInvalidCommand = -6,
+    /** If some how, while sending a message, the connection fails **/
     SENSenseManagerErrorCodeConnectionFailed = -7,
+    /** If some how, while sending a message, the connection fails **/
     SENSenseManagerErrorCodeInvalidated = -8,
-    SENSenseManagerErrorCodeInternalFailure = -9,
-    SENSenseManagerErrorCodeDeviceOutOfMemory = -10,
-    SENSenseManagerErrorCodeDeviceDbFull = -11,
-    SENSenseManagerErrorCodeDeviceNetworkError = -12
+    /** This is a generic code returned by Sense when something fails **/
+    SENSenseManagerErrorCodeSenseInternalFailure = -9,
+    /** If Sense reports that it ran out of memory **/
+    SENSenseManagerErrorCodeSenseOutOfMemory = -10,
+    /** If Sense's device whitelist is full, meaning it cannot pair anymore **/
+    SENSenseManagerErrorCodeSenseDbFull = -11,
+    /** If Sense tried to communicate with the cloud, but fail due to network **/
+    SENSenseManagerErrorCodeSenseNetworkError = -12,
+    /** 
+     * If trying to set WiFi credentials and Sense reports back that the endpoint
+     * is not in range for Sense to connect to.
+     */
+    SENSenseManagerErrorCodeWifiNotInRange = -13,
+    /**
+     * If trying to set WiFi credentials and Sense reports back that the endpoint
+     * is not in range for Sense to connect to.
+     */
+    SENSenseManagerErrorCodeWLANConnection = -14,
+    /**
+     * If trying to set WiFi credentials and Sense can't obtain an IP
+     */
+    SENSenseManagerErrorCodeFailToObtainIP = -15
 };
 
 @interface SENSenseManager : NSObject
@@ -210,6 +243,17 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
        password:(NSString*)password
         success:(SENSenseSuccessBlock)success
         failure:(SENSenseFailureBlock)failure;
+
+/**
+ * Scan for WiFi networks that Sense can see.  It may take multiple scans to see
+ * all nearby networks.  1 scan typically returns a good set, but missing some, but
+ * 2 usually returns a full set.  3 would probably be max needed.
+ *
+ * @param success:  the block to call when the command succeeded
+ * @param failure:  the block to call if the command encountered an error
+ */
+- (void)scanForWifiNetworks:(SENSenseSuccessBlock)success
+                    failure:(SENSenseFailureBlock)failure;
 
 #pragma mark - Factory Reset
 

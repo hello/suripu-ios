@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "HEMBaseController.h"
 
-@interface HEMWifiViewController : HEMBaseController
+@interface HEMWifiPasswordViewController : HEMBaseController
+
+@property (nonatomic, copy) NSString* ssid;
 
 @end

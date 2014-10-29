@@ -58,8 +58,16 @@
 
 // wifi setup
 "wifi.error.title" = "WiFi Setup Failed";
-"wifi.error.sense-wifi-message" = "Sense could not set up WiFi.  Make sure Sense is on and nearby and try again.";
+"wifi.error.set-sense-general" = "Sense could not set up WiFi.  Make sure Sense is on and nearby and try again.";
+"wifi.error.set-sense-not-in-range" = "WiFi is out of Sense's range.";
+"wifi.error.set-sense-timeout" = "Timed out while configuring WiFi credentials on Sense.";
+"wifi.error.set-sense-failed-connection" = "Sense could not connect to the network.";
 "wifi.error.account-link-message" = "Unable to set up Sense properly.";
+"wifi.error.account-link-timeout" = "Timed out while linking Sense to your account.";
+"wifi.error.account-link-network-failed" = "Sense failed to connect to your network to link your account.";
+"wifi.error.scan-title" = "WiFi Scan Failed";
+"wifi.error.scan-out-of-memory" = "Sense failed to complete the scan due to a memory issue.";
+"wifi.error.scan-general" = "Sense failed to complete the scan due to an unknown issue.";
 
 // pairing with the pill
 "pill-pair.subtitle.format" = "Gently shake your Sleep Pill for three seconds.  When your Sleep Pill lights up %@, tap continue.";
@@ -90,6 +98,7 @@
 "settings.personal.info.gender" = "Gender";
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
+"settings.wifi.other" = "Other...";
 
 // support
 "settings.contact-support" = "Contact Support";

@@ -36,6 +36,8 @@ extern NSString* const kHEMAnalyticsEventOnBNoBle;
 extern NSString* const kHEMAnalyticsEventOnBSenseSetup;
 extern NSString* const kHEMAnalyticsEventOnBPairSense;
 extern NSString* const kHEMAnalyticsEventOnBSetupWiFi;
+extern NSString* const kHEMAnalyticsEventOnBWiFiScan;
+extern NSString* const kHEMAnalyticsEventOnBWiFiPass;
 extern NSString* const kHEMAnalyticsEventOnBSetupPill;
 extern NSString* const kHEMAnalyticsEventOnBPairPill;
 extern NSString* const kHEMAnalyticsEventOnBEnd;

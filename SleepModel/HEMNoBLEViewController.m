@@ -13,6 +13,7 @@
 #import "HEMBluetoothUtils.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMOnboardingStoryboard.h"
 
 @interface HEMNoBLEViewController ()
 
@@ -78,6 +79,12 @@
     // TODO (jimmy): the help website is still being discussed / worked on.  When
     // we know what to actually point to, we likely will open up a browser to
     // show the help
+    [SENAnalytics track:kHEMAnalyticsEventHelp];
+    
+#if TARGET_IPHONE_SIMULATOR
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard noBleToSetupSegueIdentifier]
+                              sender:self];
+#endif
 }
 
 @end

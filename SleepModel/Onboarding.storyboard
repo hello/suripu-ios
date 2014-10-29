@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="s6I-B7-593">
     <dependencies>
+        <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
@@ -51,6 +52,7 @@
             <string>Calibre-Light</string>
             <string>Calibre-Light</string>
             <string>Calibre-Light</string>
+            <string>Calibre-Light</string>
         </mutableArray>
         <mutableArray key="Calibre-Medium.otf">
             <string>Calibre-Medium</string>
@@ -68,6 +70,7 @@
             <string>Calibre-Medium</string>
         </mutableArray>
         <mutableArray key="Calibre-Thin.otf">
+            <string>Calibre-Thin</string>
             <string>Calibre-Thin</string>
             <string>Calibre-Thin</string>
             <string>Calibre-Thin</string>
@@ -710,7 +713,7 @@
         <!--Wifi View Controller-->
         <scene sceneID="OMH-aM-jNv">
             <objects>
-                <viewController storyboardIdentifier="wifiViewController" id="qC8-fd-UCX" userLabel="Wifi View Controller" customClass="HEMWifiViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="wifiViewController" id="qC8-fd-UCX" userLabel="Wifi View Controller" customClass="HEMWifiPasswordViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="GhD-1W-lxB"/>
                         <viewControllerLayoutGuide type="bottom" id="kbz-Q6-Bp4"/>
@@ -852,7 +855,127 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkd-iJ-jh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9912" y="1715"/>
+            <point key="canvasLocation" x="10636" y="1715"/>
+        </scene>
+        <!--Wifi Picker View Controller-->
+        <scene sceneID="22e-KB-YCx">
+            <objects>
+                <viewController id="H2i-xS-f14" customClass="HEMWifiPickerViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="rQr-NN-MoL"/>
+                        <viewControllerLayoutGuide type="bottom" id="Hzz-un-6Ly"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="9Vm-4j-dzQ">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting Sense to WiFi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPY-hQ-rr3">
+                                <rect key="frame" x="28" y="43" width="544" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="0Iq-85-Zkf"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="26"/>
+                                <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please select your WiFi network from the list below:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="jA1-IU-BsJ">
+                                <rect key="frame" x="28" y="89" width="544" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="97s-1d-rxU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Calibre-Thin" family="Calibre" pointSize="18"/>
+                                <color key="textColor" red="0.22352941179999999" green="0.22352941179999999" blue="0.22352941179999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="uzN-XV-GHq">
+                                <rect key="frame" x="13" y="168" width="572" height="264"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="264" id="FTS-2E-zGG"/>
+                                </constraints>
+                                <color key="separatorColor" red="0.75686274509803919" green="0.75686274509803919" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
+                                <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="network" textLabel="EmK-D8-elU" style="IBUITableViewCellStyleDefault" id="w2R-Q9-Bmm">
+                                        <rect key="frame" x="0.0" y="0.0" width="544" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="w2R-Q9-Bmm" id="39f-cF-XX7">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="EmK-D8-elU">
+                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJB-u8-jcX" customClass="HEMActionButton">
+                                <rect key="frame" x="190" y="496" width="220" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="BBu-2B-TEd"/>
+                                    <constraint firstAttribute="height" constant="40" id="GAk-sB-XJT"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="Scan">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="enablePairing:" destination="cgk-PX-LxG" eventType="touchUpInside" id="nHn-lW-A76"/>
+                                    <action selector="scan:" destination="H2i-xS-f14" eventType="touchUpInside" id="1UJ-wx-z9P"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ao-Zs-Uri">
+                                <rect key="frame" x="197" y="542" width="207" height="40"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="40" id="dhb-tw-R9Z"/>
+                                    <constraint firstAttribute="width" constant="207" id="f1B-IQ-jwS"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
+                                <state key="normal" title="I'm having trouble">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="help:" destination="H2i-xS-f14" eventType="touchUpInside" id="089-tY-7mw"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="jA1-IU-BsJ" firstAttribute="bottom" secondItem="uzN-XV-GHq" secondAttribute="top" constant="-32" id="3Yx-VW-Yt6"/>
+                            <constraint firstItem="Hzz-un-6Ly" firstAttribute="top" secondItem="1ao-Zs-Uri" secondAttribute="bottom" constant="18" id="7pK-OW-HbH"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jA1-IU-BsJ" secondAttribute="trailing" constant="12" id="9p1-I1-i62"/>
+                            <constraint firstItem="jA1-IU-BsJ" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="12" id="AsE-8L-TM8"/>
+                            <constraint firstAttribute="centerX" secondItem="1ao-Zs-Uri" secondAttribute="centerX" constant="-0.5" id="E1Z-8n-CpH"/>
+                            <constraint firstItem="uzN-XV-GHq" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="-3" id="H8u-ui-2cP"/>
+                            <constraint firstItem="jA1-IU-BsJ" firstAttribute="bottom" secondItem="kPY-hQ-rr3" secondAttribute="bottom" constant="59" id="Ivz-73-uzW"/>
+                            <constraint firstItem="kPY-hQ-rr3" firstAttribute="top" secondItem="rQr-NN-MoL" secondAttribute="bottom" constant="23" id="RHA-ee-3Oq"/>
+                            <constraint firstItem="kPY-hQ-rr3" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="12" id="XKg-PQ-vw8"/>
+                            <constraint firstItem="1ao-Zs-Uri" firstAttribute="top" secondItem="IJB-u8-jcX" secondAttribute="top" constant="46" id="Zhz-56-bJB"/>
+                            <constraint firstAttribute="centerX" secondItem="IJB-u8-jcX" secondAttribute="centerX" id="fW9-53-9Cq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uzN-XV-GHq" secondAttribute="trailing" constant="-1" id="hHj-JH-Db7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kPY-hQ-rr3" secondAttribute="trailing" constant="12" id="obU-Dc-KC1"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="helpButton" destination="1ao-Zs-Uri" id="1KD-s4-9cR"/>
+                        <outlet property="scanButton" destination="IJB-u8-jcX" id="V8l-nH-HV4"/>
+                        <outlet property="scanButtonWidthConstraint" destination="BBu-2B-TEd" id="Uz6-8G-8ju"/>
+                        <outlet property="subtitleLabel" destination="jA1-IU-BsJ" id="tfF-OV-b7c"/>
+                        <outlet property="tableViewHeightConstraint" destination="FTS-2E-zGG" id="MUs-fX-RdV"/>
+                        <outlet property="titleLabel" destination="kPY-hQ-rr3" id="PEQ-YG-Jkm"/>
+                        <outlet property="wifiPickerTableView" destination="uzN-XV-GHq" id="ffT-TW-d5f"/>
+                        <segue destination="qC8-fd-UCX" kind="show" identifier="wifiPassword" id="Rko-UE-A3y"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="uGV-Fr-TJ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="9898" y="1715"/>
         </scene>
         <!--Pill Intro View Controller-->
         <scene sceneID="Eoe-Ki-OxF">
@@ -954,7 +1077,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z94-uI-D3y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10660" y="1715"/>
+            <point key="canvasLocation" x="11385" y="1715"/>
         </scene>
         <!--Pill Pair View Controller-->
         <scene sceneID="zKq-xs-xPt">
@@ -1063,7 +1186,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rQM-de-S9i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11390" y="1715"/>
+            <point key="canvasLocation" x="12146" y="1715"/>
         </scene>
         <!--End Setup View Controller-->
         <scene sceneID="PnI-Ki-ngp">
@@ -1144,7 +1267,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7Va-Oi-8st" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12104" y="1715"/>
+            <point key="canvasLocation" x="12894" y="1715"/>
         </scene>
         <!--Gender View Controller-->
         <scene sceneID="s4K-5F-Rau">
@@ -1596,7 +1719,7 @@
                         <outlet property="readyButtonWidthConstraint" destination="SwH-wy-eha" id="UuP-nZ-lEN"/>
                         <outlet property="titleLabel" destination="xHT-0z-rBN" id="sOe-hX-4WK"/>
                         <outlet property="view" destination="f6K-qr-p0h" id="k5s-iP-vXI"/>
-                        <segue destination="qC8-fd-UCX" kind="show" identifier="wifi" id="osf-Bc-yvB"/>
+                        <segue destination="H2i-xS-f14" kind="show" identifier="wifi" id="IQX-WG-nAB"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsS-E7-Lfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2084,7 +2207,7 @@ Launch the </string>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="Qk9-qi-Wt3" kind="show" id="OeC-Do-qcD"/>
+                                    <segue destination="Qk9-qi-Wt3" kind="show" identifier="noBleToSetup" id="OeC-Do-qcD"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rIf-wQ-F1B">

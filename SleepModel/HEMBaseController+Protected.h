@@ -11,6 +11,7 @@
 @interface HEMBaseController (Protected)
 
 - (void)adjustConstraintsForIPhone4;
+- (void)adjustConstraintsForIphone5;
 - (void)updateConstraint:(NSLayoutConstraint*)constraint withDiff:(CGFloat)diff;
 - (void)showMessageDialog:(NSString*)message title:(NSString*)title;
 - (void)viewDidBecomeActive;

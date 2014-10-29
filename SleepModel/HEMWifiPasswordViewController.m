@@ -8,7 +8,7 @@
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENAuthorizationService.h>
 
-#import "HEMWifiViewController.h"
+#import "HEMWifiPasswordViewController.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
@@ -17,7 +17,7 @@
 #import "HEMRoundedTextField.h"
 #import "HEMOnboardingUtils.h"
 
-@interface HEMWifiViewController() <UITextFieldDelegate>
+@interface HEMWifiPasswordViewController() <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
@@ -31,12 +31,12 @@
 
 @end
 
-@implementation HEMWifiViewController
+@implementation HEMWifiPasswordViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
-    [[self ssidField] setText:[HEMWifiUtils connectedWifiSSID]];
+
+    [[self ssidField] setText:[self ssid]];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBSetupWiFi];
 }
@@ -108,10 +108,7 @@
                         [strongSelf linkAccount];
                     } else {
                         [strongSelf stopActivity];
-                        
-                        NSString* msg = NSLocalizedString(@"wifi.error.sense-wifi-message", nil);
-                        NSString* title = NSLocalizedString(@"wifi.error.title", nil);
-                        [strongSelf showMessageDialog:msg title:title];
+                        [strongSelf showSetWiFiError:error];
                     }
                 }
                 
@@ -128,7 +125,9 @@
     // TODO (jimmy): the help website is still being discussed / worked on.  When
     // we know what to actually point to, we likely will open up a browser to
     // show the help
+    [SENAnalytics track:kHEMAnalyticsEventHelp];
 #pragma message ("remove when we all have devices!")
+    
     [self next];
 }
 
@@ -168,6 +167,50 @@
         
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }];
+}
+
+#pragma mark - Errors / Alerts
+
+- (void)showSetWiFiError:(NSError*)error {
+    NSString* title = NSLocalizedString(@"wifi.error.title", nil);
+    NSString* message = nil;
+    
+    switch ([error code]) {
+        case SENSenseManagerErrorCodeWifiNotInRange:
+            message = NSLocalizedString(@"wifi.error.set-sense-not-in-range", nil);
+            break;
+        case SENSenseManagerErrorCodeTimeout:
+            message = NSLocalizedString(@"wifi.error.set-sense-timeout", nil);
+            break;
+        case SENSenseManagerErrorCodeWLANConnection:
+        case SENSenseManagerErrorCodeFailToObtainIP:
+            message = NSLocalizedString(@"wifi.error.set-sense-failed-connection", nil);
+            break;
+        default:
+            message = NSLocalizedString(@"wifi.error.set-sense-general", nil);
+            break;
+    }
+    
+    [self showMessageDialog:message title:title];
+}
+
+- (void)showLinkAccountError:(NSError*)error {
+    NSString* title = NSLocalizedString(@"wifi.error.title", nil);
+    NSString* message = nil;
+    
+    switch ([error code]) {
+        case SENSenseManagerErrorCodeSenseNetworkError:
+            message = NSLocalizedString(@"wifi.error.account-link-network-failed", nil);
+            break;
+        case SENSenseManagerErrorCodeTimeout:
+            message = NSLocalizedString(@"wifi.error.account-link-timeout", nil);
+            break;
+        default:
+            message = NSLocalizedString(@"wifi.error.account-link-message", nil);
+            break;
+    }
+    
+    [self showMessageDialog:message title:title];
 }
 
 #pragma mark - Navigation

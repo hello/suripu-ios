@@ -19,6 +19,11 @@ pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
 pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
 # pod 'SenseKit', :path => '../SenseKit'
 
+post_install do |installer|
+    require 'fileutils'
+    FileUtils.cp_r('Pods/Target Support Files/Pods/Pods-acknowledgements.plist',
+                   'SleepModel/Settings.bundle/Acknowledgements.plist', :remove_destination => true)
+end
 
 target 'Tests', :exclusive => true do
   pod 'Kiwi'

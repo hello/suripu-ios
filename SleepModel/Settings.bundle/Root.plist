@@ -5,6 +5,20 @@
 	<key>PreferenceSpecifiers</key>
 	<array>
 		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string></string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSChildPaneSpecifier</string>
+			<key>Title</key>
+			<string>acknowledgements.title</string>
+			<key>File</key>
+			<string>Acknowledgements</string>
+		</dict>
+		<dict>
 			<key>Title</key>
 			<string>group.title.units-time</string>
 			<key>Type</key>

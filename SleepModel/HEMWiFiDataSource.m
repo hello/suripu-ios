@@ -144,7 +144,8 @@ NSString* const kHEMWifiNetworkCellId = @"network";
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1 + [[self wifisDetected] count]; // 1 for Other (Manual)
+    // 1 for Other (Manual), but only if not scanning
+    return [self isScanning] ? 0 : 1 + [[self wifisDetected] count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

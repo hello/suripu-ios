@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
 #import <SenseKit/BLE.h>
+#import <SenseKit/SENAuthorizationService.h>
 
 #import "NSMutableAttributedString+HEMFormat.h"
 
@@ -118,8 +119,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [SENAnalytics track:kHEMAnalyticsEventHelp];
     
 #pragma message ("remove when we all have devices!")
-    NSString* segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
-    [self performSegueWithIdentifier:segueId sender:self];
+    [self next];
 }
 
 #pragma mark - Scanning
@@ -201,11 +201,12 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         if (strongSelf && ![strongSelf isTimedOut]) {
             [strongSelf cacheManager];
 
-            NSString* msg = NSLocalizedString(@"pairing.done", nil);
-            [strongSelf stopActivityWithMessage:msg completion:^{
-                NSString* segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
-                [strongSelf performSegueWithIdentifier:segueId sender:strongSelf];
-            }];
+            if ([[HEMUserDataCache sharedUserDataCache] settingUpSecondPill]) {
+                [strongSelf linkAccount];
+            } else {
+                [strongSelf finish];
+            }
+
         }
     } failure:^(NSError *error) {
         DDLogVerbose(@"failed to pair %@", error);
@@ -220,10 +221,60 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     }];
 }
 
+- (void)finish {
+    NSString* msg = NSLocalizedString(@"pairing.done", nil);
+    __weak typeof(self) weakSelf = self;
+    [self stopActivityWithMessage:msg completion:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf next];
+        }
+    }];
+}
+
+#pragma mark - Link Account
+
+- (void)linkAccount {
+    NSString* accessToken = [SENAuthorizationService accessToken];
+    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    
+    __weak typeof(self) weakSelf = self;
+    [manager linkAccount:accessToken success:^(id response) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf finish];
+        }
+    } failure:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf stopActivityWithMessage:nil completion:^{
+                NSString* msg = NSLocalizedString(@"pairing.error.link-account-failed", nil);
+                [strongSelf showErrorMessage:msg];
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            }];
+        }
+        
+        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+    }];
+}
+
 #pragma mark - Errors
 
 - (void)showErrorMessage:(NSString*)message {
     [self showMessageDialog:message title:NSLocalizedString(@"pairing.failed.title", nil)];
+}
+
+#pragma mark - Navigation
+
+- (void)next {
+    NSString* segueId = nil;
+    if ([[HEMUserDataCache sharedUserDataCache] settingUpSecondPill]) {
+        segueId = [HEMOnboardingStoryboard senseToPillSegueIdentifier];
+    } else {
+        segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
+    }
+    
+    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 #pragma mark - Clean up

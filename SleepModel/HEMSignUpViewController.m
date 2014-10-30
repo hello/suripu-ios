@@ -8,7 +8,6 @@
 #import "HEMSignUpViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMOnboardingHTTPErrorHandler.h"
 #import "HEMBaseController+Protected.h"
 #import "HelloStyleKit.h"
 #import "HEMUserDataCache.h"
@@ -96,7 +95,9 @@
                                       [strongSelf stopActivity];
                                       
                                       NSString* title = NSLocalizedString(@"sign-up.failed.title", nil);
-                                      [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:error withTitle:title];
+                                      [HEMOnboardingUtils showAlertForHTTPError:error
+                                                                      withTitle:title
+                                                                           from:strongSelf];
                                       return;
                                   }
                                   // cache the account as that is needed post sign up
@@ -120,13 +121,16 @@
         
         if (signInError && !retry) {
             // TODO: what should happen if we land in this case?
-            DLog(@"authentication failed post sign up");
+            DDLogInfo(@"authentication failed post sign up %@", signInError);
+            [SENAnalytics trackError:signInError withEventName:kHEMAnalyticsEventError];
             NSString* errTitle = NSLocalizedString(@"sign-up.failed.title", nil);
-            [HEMOnboardingHTTPErrorHandler showAlertForHTTPError:signInError withTitle:errTitle];
+            [HEMOnboardingUtils showAlertForHTTPError:signInError
+                                            withTitle:errTitle
+                                                 from:strongSelf];
             return;
         } else if (signInError) { // retry once
             [SENAnalytics trackError:signInError withEventName:kHEMAnalyticsEventError];
-            DLog(@"retrying authentication post sign up");
+            DDLogInfo(@"retrying authentication post sign up %@", signInError);
             [strongSelf authenticate:email password:password rety:NO];
             return;
         }

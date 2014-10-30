@@ -19,7 +19,13 @@ static CGFloat const kHEMWifiCellHeight = 44.0f;
 static CGFloat const kHEMWifiPickerIconPadding = 5.0f;
 static NSUInteger const kHEMWifiPickerTagLock = 1;
 static NSUInteger const kHEMWifiPickerTagWifi = 2;
-static NSUInteger const kHEMWifiPickerScansRequired = 2;
+// 10/29/2014 jimmy:
+// even though we really want to scan more than once to get a full list of
+// networks nearby, we have decided that we should scan once and make user
+// re-scan until they see their own network and analyze the result through
+// analytics.  The reason is because top board firmware for Sense cannot handle
+// multiple commands at once and if we scan once, user goes
+static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 @interface HEMWifiPickerViewController() <UITableViewDelegate>
 
@@ -31,6 +37,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 2;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scanButtonWidthConstraint;
 
+@property (strong, nonatomic) NSDate* scanStart;
 @property (copy, nonatomic)   NSString* selectedSSID;
 @property (strong, nonatomic) HEMWiFiDataSource* wifiDataSource;
 @property (assign, nonatomic, getter=isVisible) BOOL visible;
@@ -148,14 +155,21 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)scanWithActivity {
+    [self setScanStart:[NSDate date]];
     [[self scanButton] showActivityWithWidthConstraint:[self scanButtonWidthConstraint]];
     
     __weak typeof(self) weakSelf = self;
     [self scanUntilDoneWithCount:0 completion:^(NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
+            NSTimeInterval elapsed = abs([[strongSelf scanStart] timeIntervalSinceNow]);
+            DDLogVerbose(@"wifi scan took %lds", (long)elapsed);
+            [SENAnalytics track:kHEMAnalyticsEventOnBWiFiScanComplete
+                     properties:@{kHEMAnalyticsEventPropDuration : @(elapsed)}];
+            
             [[strongSelf scanButton] stopActivity];
             [[strongSelf wifiPickerTableView] reloadData];
+            [[strongSelf wifiPickerTableView] flashScrollIndicators];
             
             if (error != nil && [strongSelf isVisible]) {
                 [strongSelf showError:error];

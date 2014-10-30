@@ -20,7 +20,7 @@ PODS:
   - AFNetworking/UIKit (2.4.1):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Amplitude-iOS (2.1.1)
+  - Amplitude-iOS (2.2.0)
   - AttributedMarkdown (0.9.2)
   - CocoaLumberjack (2.0.0-beta3):
     - CocoaLumberjack/Default
@@ -103,7 +103,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
-  Amplitude-iOS: e72b65479dc035ef671a57e34e1a981767224318
+  Amplitude-iOS: 826033d01dee9383131d1237a1911e7170a8e0c1
   AttributedMarkdown: de3267724c9e2175e1fc398184d03ba6697766ef
   CocoaLumberjack: 55c22a2b8bde7a29c568ab4015b5874216524d70
   FCDynamicPanesNavigationController: 55ee3c165a070d8d01e0b90a1029916cbcaa1b09

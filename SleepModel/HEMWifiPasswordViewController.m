@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENAPITimeZone.h>
 
 #import "HEMWifiPasswordViewController.h"
 #import "HEMActionButton.h"
@@ -15,6 +16,7 @@
 #import "HEMUserDataCache.h"
 #import "HEMWifiUtils.h"
 #import "HEMRoundedTextField.h"
+#import "HEMDeviceCenter.h"
 #import "HEMOnboardingUtils.h"
 
 @interface HEMWifiPasswordViewController() <UITextFieldDelegate>
@@ -75,6 +77,23 @@
     [self enableControls:YES];
 }
 
+- (BOOL)shouldLinkAccount {
+    // When we reuse this controller in settings, pairedSenseAvailable will
+    // be true and in that case, we should not need to linkAccount again.
+    return ![[HEMDeviceCenter sharedCenter] pairedSenseAvailable];
+}
+
+- (void)setTimeZone {
+    __weak typeof(self) weakSelf = self;
+    [SENAPITimeZone setCurrentTimeZone:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf && error != nil) {
+            DDLogWarn(@"failed to set timezone on the server");
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        }
+    }];
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -105,7 +124,13 @@
                 if (strongSelf) {
                     if (error == nil) {
                         [strongSelf setWifiConfigured:YES];
-                        [strongSelf linkAccount];
+                        
+                        if ([strongSelf shouldLinkAccount]) {
+                            [strongSelf linkAccount];
+                        } else {
+                            [strongSelf next];
+                        }
+                        
                     } else {
                         [strongSelf stopActivity];
                         [strongSelf showSetWiFiError:error];
@@ -114,8 +139,10 @@
                 
                 [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             }];
-        } else {
+        } else if ([self shouldLinkAccount]){
             [self linkAccount];
+        } else {
+            [self next];
         }
     }
 }
@@ -216,6 +243,7 @@
 #pragma mark - Navigation
 
 - (void)next {
+    [self setTimeZone]; // fire and forget (besides logging that it failed)
     [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard pillSegueIdentifier]
                               sender:nil];

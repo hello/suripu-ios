@@ -13,6 +13,7 @@ extern NSString* const kHEMAnalyticsEventHelp;
 extern NSString* const kHEMAnalyticsEventVideo;
 extern NSString* const kHEMAnalyticsEventPropMessage;
 extern NSString* const kHEMAnalyticsEventPropAction;
+extern NSString* const kHEMAnalyticsEventPropDuration;
 
 // permissions
 extern NSString* const kHEMAnalyticsEventPermissionLoc;
@@ -37,6 +38,7 @@ extern NSString* const kHEMAnalyticsEventOnBSenseSetup;
 extern NSString* const kHEMAnalyticsEventOnBPairSense;
 extern NSString* const kHEMAnalyticsEventOnBSetupWiFi;
 extern NSString* const kHEMAnalyticsEventOnBWiFiScan;
+extern NSString* const kHEMAnalyticsEventOnBWiFiScanComplete;
 extern NSString* const kHEMAnalyticsEventOnBWiFiPass;
 extern NSString* const kHEMAnalyticsEventOnBSetupPill;
 extern NSString* const kHEMAnalyticsEventOnBPairPill;

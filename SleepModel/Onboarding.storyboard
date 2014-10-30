@@ -975,7 +975,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uGV-Fr-TJ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9898" y="1715"/>
+            <point key="canvasLocation" x="9899" y="1618"/>
         </scene>
         <!--Pill Intro View Controller-->
         <scene sceneID="Eoe-Ki-OxF">
@@ -1619,10 +1619,10 @@
             </objects>
             <point key="canvasLocation" x="6344" y="922"/>
         </scene>
-        <!--Bluetooth View Controller-->
+        <!--Sense Pair View Controller-->
         <scene sceneID="cKk-Qb-F4O">
             <objects>
-                <viewController storyboardIdentifier="bluetoothViewController" id="cgk-PX-LxG" userLabel="Bluetooth View Controller" customClass="HEMSensePairViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="bluetoothViewController" id="cgk-PX-LxG" customClass="HEMSensePairViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="I6r-jE-jN1"/>
                         <viewControllerLayoutGuide type="bottom" id="rNF-MR-Ds2"/>
@@ -1720,6 +1720,7 @@
                         <outlet property="titleLabel" destination="xHT-0z-rBN" id="sOe-hX-4WK"/>
                         <outlet property="view" destination="f6K-qr-p0h" id="k5s-iP-vXI"/>
                         <segue destination="H2i-xS-f14" kind="show" identifier="wifi" id="IQX-WG-nAB"/>
+                        <segue destination="4s2-Gt-ovZ" kind="show" identifier="senseToPill" id="o2R-Mm-2qz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsS-E7-Lfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2382,8 +2383,9 @@ Launch the </string>
         <image name="sense.png" width="151" height="151"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="oDd-TY-BtQ"/>
         <segue reference="1pf-f8-VGr"/>
+        <segue reference="oDd-TY-BtQ"/>
+        <segue reference="o2R-Mm-2qz"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

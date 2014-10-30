@@ -26,6 +26,7 @@
 +(NSString *)secondPillNeedBleSegueIdentifier;
 +(NSString *)secondPillToSenseSegueIdentifier;
 +(NSString *)senseSetupSegueIdentifier;
++(NSString *)senseToPillSegueIdentifier;
 +(NSString *)weightSegueIdentifier;
 +(NSString *)wifiSegueIdentifier;
 +(NSString *)wifiPasswordSegueIdentifier;

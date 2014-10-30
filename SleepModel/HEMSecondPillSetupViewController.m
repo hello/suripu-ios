@@ -13,6 +13,7 @@
 #import "HEMActionButton.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMUserDataCache.h"
 
 @interface HEMSecondPillSetupViewController ()
 
@@ -30,6 +31,11 @@
     [super viewDidLoad];
     [self setupDescription];
     [SENAnalytics track:kHEMAnalyticsEventOnBAddPill];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[HEMUserDataCache sharedUserDataCache] setSettingUpSecondPill:NO];
 }
 
 - (void)setupDescription {
@@ -66,11 +72,14 @@
     
     [[self continueButton] stopActivity];
     
+    [[HEMUserDataCache sharedUserDataCache] setSettingUpSecondPill:YES];
+    
     NSString* segueId
         = ![HEMBluetoothUtils isBluetoothOn]
         ? [HEMOnboardingStoryboard secondPillNeedBleSegueIdentifier]
         : [HEMOnboardingStoryboard secondPillToSenseSegueIdentifier];
     [self performSegueWithIdentifier:segueId sender:self];
+   
 }
 
 - (IBAction)help:(id)sender {

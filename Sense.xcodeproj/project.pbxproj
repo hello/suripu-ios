@@ -58,7 +58,6 @@
 		8A5402A619AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A5402A419AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.xib */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
 		8A660123199E9CF9007E6167 /* HEMUserDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A660122199E9CF9007E6167 /* HEMUserDataCache.m */; };
-		8A660126199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A660125199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m */; };
 		8A66013B199EBF87007E6167 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8A660139199EBF87007E6167 /* README.md */; };
 		8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */; };
 		8A66FC82199BE94100922ED5 /* HEMColoredRoundedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC81199BE94100922ED5 /* HEMColoredRoundedLabel.m */; };
@@ -447,8 +446,6 @@
 		8A59F632198C16050005B000 /* HEMSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignUpViewController.m; sourceTree = "<group>"; };
 		8A660121199E9CF9007E6167 /* HEMUserDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUserDataCache.h; sourceTree = "<group>"; };
 		8A660122199E9CF9007E6167 /* HEMUserDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUserDataCache.m; sourceTree = "<group>"; };
-		8A660124199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingHTTPErrorHandler.h; sourceTree = "<group>"; };
-		8A660125199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingHTTPErrorHandler.m; sourceTree = "<group>"; };
 		8A660139199EBF87007E6167 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		8A66FC7A199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryPagingDataSource.h; sourceTree = "<group>"; };
 		8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryPagingDataSource.m; sourceTree = "<group>"; };
@@ -1079,8 +1076,6 @@
 				BF14E3DF19EF3C520006EFEA /* HEMOnboardingUtils.m */,
 				8A660121199E9CF9007E6167 /* HEMUserDataCache.h */,
 				8A660122199E9CF9007E6167 /* HEMUserDataCache.m */,
-				8A660124199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.h */,
-				8A660125199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2194,7 +2189,6 @@
 				8A66FC9C199D308B00922ED5 /* HEMWeightPickerViewController.m in Sources */,
 				BF14E3D719EF3C3D0006EFEA /* HEMEndSetupViewController.m in Sources */,
 				BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */,
-				8A660126199EB99E007E6167 /* HEMOnboardingHTTPErrorHandler.m in Sources */,
 				8A0CB13C19E5D1EE0030FC7D /* HEMEventInfoView.m in Sources */,
 				BFACC71319A4085300FC77EE /* HEMProgressNavigationController.m in Sources */,
 				8A1743C319A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.m in Sources */,

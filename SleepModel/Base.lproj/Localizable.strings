@@ -53,6 +53,7 @@
 "pairing.error.could-not-pair" = "Could not pair with Sense.  If there is a phone already paired to Sense, unpair from that phone then try again.";
 
 "pairing.error.unexpected-disconnect" = "Connection from Sense was broken.  Try again.";
+"pairing.error.link-account-failed" = "Could not attach Sense to your account.";
 "pairing.error.no-response" = "Sense did not respond in time.";
 "pairing.done" = "Paired.";
 

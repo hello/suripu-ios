@@ -28,6 +28,7 @@ static NSString *const _HEMpillNeedBluetooth = @"pillNeedBluetooth";
 static NSString *const _HEMsecondPillNeedBle = @"secondPillNeedBle";
 static NSString *const _HEMsecondPillToSense = @"secondPillToSense";
 static NSString *const _HEMsenseSetup = @"senseSetup";
+static NSString *const _HEMsenseToPill = @"senseToPill";
 static NSString *const _HEMsignUpViewController = @"signUpViewController";
 static NSString *const _HEMweight = @"weight";
 static NSString *const _HEMweightPicker = @"weightPicker";
@@ -57,6 +58,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)secondPillNeedBleSegueIdentifier { return _HEMsecondPillNeedBle; }
 +(NSString *)secondPillToSenseSegueIdentifier { return _HEMsecondPillToSense; }
 +(NSString *)senseSetupSegueIdentifier { return _HEMsenseSetup; }
++(NSString *)senseToPillSegueIdentifier { return _HEMsenseToPill; }
 +(NSString *)weightSegueIdentifier { return _HEMweight; }
 +(NSString *)wifiSegueIdentifier { return _HEMwifi; }
 +(NSString *)wifiPasswordSegueIdentifier { return _HEMwifiPassword; }

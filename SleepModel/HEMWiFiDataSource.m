@@ -30,6 +30,7 @@ NSString* const kHEMWifiNetworkCellId = @"network";
  */
 @property (nonatomic, strong) NSMutableSet* uniqueSSIDs;
 @property (nonatomic, assign, getter=isScanning) BOOL scanning;
+@property (nonatomic, assign) BOOL scanned;
 
 @end
 
@@ -70,6 +71,7 @@ NSString* const kHEMWifiNetworkCellId = @"network";
 }
 
 - (void)clearDetectedWifis {
+    [self setScanned:NO];
     [[self wifisDetected] removeAllObjects];
     [[self uniqueSSIDs] removeAllObjects];
 }
@@ -84,6 +86,7 @@ NSString* const kHEMWifiNetworkCellId = @"network";
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
                 [strongSelf setScanning:NO];
+                [strongSelf setScanned:YES];
                 [strongSelf addDetectedNetworksFromArray:response];
             }
             if (completion) completion (nil);
@@ -91,6 +94,7 @@ NSString* const kHEMWifiNetworkCellId = @"network";
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
                 [strongSelf setScanning:NO];
+                [strongSelf setScanned:YES];
             }
             if (completion) completion (error);
         }];
@@ -144,7 +148,8 @@ NSString* const kHEMWifiNetworkCellId = @"network";
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 1 + [[self wifisDetected] count]; // 1 for Other (Manual)
+    // 1 for Other (Manual), but only if not scanning
+    return [self isScanning] || ![self scanned] ? 0 : 1 + [[self wifisDetected] count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {

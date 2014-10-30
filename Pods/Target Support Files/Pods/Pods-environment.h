@@ -51,8 +51,8 @@
 // Amplitude-iOS
 #define COCOAPODS_POD_AVAILABLE_Amplitude_iOS
 #define COCOAPODS_VERSION_MAJOR_Amplitude_iOS 2
-#define COCOAPODS_VERSION_MINOR_Amplitude_iOS 1
-#define COCOAPODS_VERSION_PATCH_Amplitude_iOS 1
+#define COCOAPODS_VERSION_MINOR_Amplitude_iOS 2
+#define COCOAPODS_VERSION_PATCH_Amplitude_iOS 0
 
 // AttributedMarkdown
 #define COCOAPODS_POD_AVAILABLE_AttributedMarkdown

@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0.28
+
+New:
+
+1. WiFi Scanner / Picker that integrates with Sense
+2. Better error messaging when connecting WiFi
+3. Loading indicator in Timeline view
+4. Logging user out when receiving 401 from server
+
+Fixes:
+
+1. Auto refreshing of Sensors now properly displays cached data
+2. Fixed cached questions between users
+
 ## 1.0.0.27
 
 New:

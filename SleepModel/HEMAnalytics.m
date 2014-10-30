@@ -14,6 +14,7 @@ NSString* const kHEMAnalyticsEventHelp = @"Help";
 NSString* const kHEMAnalyticsEventVideo = @"Play Video";
 NSString* const kHEMAnalyticsEventPropMessage = @"message";
 NSString* const kHEMAnalyticsEventPropAction = @"action";
+NSString* const kHEMAnalyticsEventPropDuration = @"duration";
 
 // permissions
 NSString* const kHEMAnalyticsEventPermissionLoc = @"Permission Location";
@@ -38,6 +39,7 @@ NSString* const kHEMAnalyticsEventOnBSenseSetup = @"Onboarding Sense Setup";
 NSString* const kHEMAnalyticsEventOnBPairSense = @"Onboarding Pair Sense";
 NSString* const kHEMAnalyticsEventOnBSetupWiFi = @"Onboarding Setup WiFi";
 NSString* const kHEMAnalyticsEventOnBWiFiScan = @"Onboarding WiFi Scan";
+NSString* const kHEMAnalyticsEventOnBWiFiScanComplete = @"Onboarding WiFi Scan Complete";
 NSString* const kHEMAnalyticsEventOnBWiFiPass = @"Onboarding WiFi Password";
 NSString* const kHEMAnalyticsEventOnBSetupPill = @"Onboarding Setup Pill";
 NSString* const kHEMAnalyticsEventOnBPairPill = @"Onboarding Pair Pill";

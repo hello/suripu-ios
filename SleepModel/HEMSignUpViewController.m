@@ -121,7 +121,8 @@
         
         if (signInError && !retry) {
             // TODO: what should happen if we land in this case?
-            DDLogInfo(@"authentication failed post sign up");
+            DDLogInfo(@"authentication failed post sign up %@", signInError);
+            [SENAnalytics trackError:signInError withEventName:kHEMAnalyticsEventError];
             NSString* errTitle = NSLocalizedString(@"sign-up.failed.title", nil);
             [HEMOnboardingUtils showAlertForHTTPError:signInError
                                             withTitle:errTitle
@@ -129,7 +130,7 @@
             return;
         } else if (signInError) { // retry once
             [SENAnalytics trackError:signInError withEventName:kHEMAnalyticsEventError];
-            DLog(@"retrying authentication post sign up");
+            DDLogInfo(@"retrying authentication post sign up %@", signInError);
             [strongSelf authenticate:email password:password rety:NO];
             return;
         }

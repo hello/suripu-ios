@@ -22,12 +22,14 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 @implementation HEMCurrentConditionsTableViewController
 
 static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
+static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 10.f;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [[self tableView] setTableFooterView:[[UIView alloc] init]];
     self.title = NSLocalizedString(@"current-conditions.title", nil);
+    [self refreshCachedSensors];
 }
 
 - (IBAction)dismissCurrentConditionsController:(id)sender
@@ -45,9 +47,6 @@ static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
     [self setLoading:YES];
     
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(refreshSensors)
-                   name:SENSensorUpdatedNotification object:nil];
     [center addObserver:self
                selector:@selector(refreshSensors)
                    name:SENSensorsUpdatedNotification object:nil];
@@ -73,6 +72,7 @@ static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
 
 - (void)failedToRefreshSensors {
     [self setLoading:NO];
+    [self configureNoDataRefreshTimer];
     [self.tableView reloadData];
 }
 
@@ -80,6 +80,16 @@ static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
 {
     [self.refreshTimer invalidate];
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:HEMCurrentConditionsRefreshIntervalInSeconds
+                                                         target:self
+                                                       selector:@selector(refreshCachedSensors)
+                                                       userInfo:nil
+                                                        repeats:YES];
+}
+
+- (void)configureNoDataRefreshTimer
+{
+    [self.refreshTimer invalidate];
+    self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:HEMCurrentConditionsFailureIntervalInSeconds
                                                          target:self
                                                        selector:@selector(refreshCachedSensors)
                                                        userInfo:nil
@@ -95,6 +105,12 @@ static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
     self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
         return [obj1.name compare:obj2.name];
     }];
+    NSMutableArray* values = [[self.sensors valueForKey:NSStringFromSelector(@selector(value))] mutableCopy];
+    [values removeObject:[NSNull null]];
+    if (values.count == 0)
+        [self configureNoDataRefreshTimer];
+    else
+        [self configureRefreshTimer];
     
     [self setLoading:NO];
     [self.tableView reloadData];

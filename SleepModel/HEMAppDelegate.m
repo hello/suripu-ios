@@ -26,9 +26,13 @@
 
 @implementation HEMAppDelegate
 
+static NSString* const HEMAppForceLogout = @"HEMAppForceLogout";
+static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
+
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
     [HEMLogUtils enableLogger];
+    [self deauthorizeIfNeeded];
     [self configureSettingsDefaults];
     NSString* analyticsToken = nil;
 #if !DEBUG
@@ -61,7 +65,22 @@
 
 - (void)applicationDidBecomeActive:(UIApplication*)application
 {
-    [self resume:NO];
+    if (![self deauthorizeIfNeeded]) {
+        [self resume:NO];
+    }
+}
+
+- (BOOL)deauthorizeIfNeeded {
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:HEMAppForceLogout]) {
+        [SENAuthorizationService deauthorize];
+        [[NSUserDefaults standardUserDefaults] removeObjectForKey:HEMAppForceLogout];
+        return YES;
+    } else if (![[NSUserDefaults standardUserDefaults] stringForKey:HEMAppFirstLaunch]) {
+        [SENAuthorizationService deauthorize];
+        [[NSUserDefaults standardUserDefaults] setObject:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
+        return YES;
+    }
+    return NO;
 }
 
 - (void)application:(UIApplication*)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken

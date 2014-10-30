@@ -27,6 +27,7 @@
 @implementation HEMAppDelegate
 
 static NSString* const HEMAppForceLogout = @"HEMAppForceLogout";
+static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
@@ -73,6 +74,10 @@ static NSString* const HEMAppForceLogout = @"HEMAppForceLogout";
     if ([[NSUserDefaults standardUserDefaults] boolForKey:HEMAppForceLogout]) {
         [SENAuthorizationService deauthorize];
         [[NSUserDefaults standardUserDefaults] removeObjectForKey:HEMAppForceLogout];
+        return YES;
+    } else if (![[NSUserDefaults standardUserDefaults] stringForKey:HEMAppFirstLaunch]) {
+        [SENAuthorizationService deauthorize];
+        [[NSUserDefaults standardUserDefaults] setObject:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
         return YES;
     }
     return NO;

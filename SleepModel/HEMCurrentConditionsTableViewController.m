@@ -1,5 +1,6 @@
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENBackgroundNoise.h>
+#import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENAPIRoom.h>
 #import <markdown_peg.h>
@@ -17,12 +18,13 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 @property (nonatomic, strong) NSArray* sensors;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSTimer* refreshTimer;
+@property (nonatomic) CGFloat refreshRate;
 @end
 
 @implementation HEMCurrentConditionsTableViewController
 
 static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
-static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 10.f;
+static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 
 - (void)viewDidLoad
 {
@@ -30,6 +32,7 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 10.f;
     [[self tableView] setTableFooterView:[[UIView alloc] init]];
     self.title = NSLocalizedString(@"current-conditions.title", nil);
     [self refreshCachedSensors];
+    self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
 }
 
 - (IBAction)dismissCurrentConditionsController:(id)sender
@@ -54,8 +57,6 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 10.f;
                selector:@selector(failedToRefreshSensors)
                    name:SENSensorUpdateFailedNotification
                  object:nil];
-
-    [self configureRefreshTimer];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -72,24 +73,25 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 10.f;
 
 - (void)failedToRefreshSensors {
     [self setLoading:NO];
-    [self configureNoDataRefreshTimer];
     [self.tableView reloadData];
 }
 
 - (void)configureRefreshTimer
 {
-    [self.refreshTimer invalidate];
-    self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:HEMCurrentConditionsRefreshIntervalInSeconds
-                                                         target:self
-                                                       selector:@selector(refreshCachedSensors)
-                                                       userInfo:nil
-                                                        repeats:YES];
+    self.refreshRate = HEMCurrentConditionsRefreshIntervalInSeconds;
+    [self updateTimer];
 }
 
-- (void)configureNoDataRefreshTimer
+- (void)configureFailureRefreshTimer
+{
+    self.refreshRate = MIN(HEMCurrentConditionsRefreshIntervalInSeconds, self.refreshRate * 2);
+    [self updateTimer];
+}
+
+- (void)updateTimer
 {
     [self.refreshTimer invalidate];
-    self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:HEMCurrentConditionsFailureIntervalInSeconds
+    self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:self.refreshRate
                                                          target:self
                                                        selector:@selector(refreshCachedSensors)
                                                        userInfo:nil
@@ -101,14 +103,16 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 10.f;
 }
 
 - (void)refreshSensors {
-    DDLogVerbose(@"refreshing sensor data in settings");
+    if (![SENAuthorizationService isAuthorized])
+        return;
+    DDLogVerbose(@"Refreshing sensor data (rate: %f)", self.refreshRate);
     self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
         return [obj1.name compare:obj2.name];
     }];
     NSMutableArray* values = [[self.sensors valueForKey:NSStringFromSelector(@selector(value))] mutableCopy];
     [values removeObject:[NSNull null]];
     if (values.count == 0)
-        [self configureNoDataRefreshTimer];
+        [self configureFailureRefreshTimer];
     else
         [self configureRefreshTimer];
     

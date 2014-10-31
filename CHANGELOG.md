@@ -1,5 +1,11 @@
 # Changelog
 
+## master
+
+Fixes:
+
+* Fix sensor data appearing in alarm summary when connection to API is lost
+
 ## 1.0.0.29
 
 New:

@@ -214,6 +214,7 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 {
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
     cell.descriptionLabel.text = nil;
+    cell.detailLabel.text = nil;
     cell.disclosureImageView.hidden = NO;
     switch (indexPath.row) {
     case 0: {

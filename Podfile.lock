@@ -38,7 +38,7 @@ PODS:
   - JBChartView (2.5.5)
   - Kiwi (2.3.0)
   - LGBluetooth (1.1.4)
-  - NSJSONSerialization-NSNullRemoval (1.0.0)
+  - NSJSONSerialization-NSNullRemoval (1.0.1)
   - SenseKit (0.1.0):
     - SenseKit/Analytics
     - SenseKit/API
@@ -113,7 +113,7 @@ SPEC CHECKSUMS:
   JBChartView: 3f979441a6a41e50b7c4b98f91b256bf33625c2d
   Kiwi: 54bece5b35564d9b8e03c608d926f1a22fcfc589
   LGBluetooth: 00f37b8c29cccc1dd44d5f726b2ec4a6e91c74ec
-  NSJSONSerialization-NSNullRemoval: e12839c3f5c406708ef388ded9021884bc00f3b9
+  NSJSONSerialization-NSNullRemoval: b3f02955f898d01205567e3f1292e4aae3ad547e
   SenseKit: 5ab95f94602263bcbdbcdd80324394a2630d6c0e
   SHSProtoBuf: 62a02d425f5dbee00d057bae65d76f0f01737410
   SORelativeDateTransformer: de7936811c9988af8e129a097af48c828f933f5f

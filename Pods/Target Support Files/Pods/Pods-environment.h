@@ -118,7 +118,7 @@
 #define COCOAPODS_POD_AVAILABLE_NSJSONSerialization_NSNullRemoval
 #define COCOAPODS_VERSION_MAJOR_NSJSONSerialization_NSNullRemoval 1
 #define COCOAPODS_VERSION_MINOR_NSJSONSerialization_NSNullRemoval 0
-#define COCOAPODS_VERSION_PATCH_NSJSONSerialization_NSNullRemoval 0
+#define COCOAPODS_VERSION_PATCH_NSJSONSerialization_NSNullRemoval 1
 
 // SHSProtoBuf
 #define COCOAPODS_POD_AVAILABLE_SHSProtoBuf

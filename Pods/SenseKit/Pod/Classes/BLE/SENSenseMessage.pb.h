@@ -168,6 +168,7 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
   BOOL hasMotionDataEncrypted_:1;
   BOOL hasType_:1;
   BOOL hasError_:1;
+  BOOL hasSecurityType_:1;
   long version;
   long batteryLevel;
   long uptime;
@@ -181,6 +182,7 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
   NSData* motionDataEncrypted;
   SENSenseMessageType type;
   ErrorType error;
+  SENWifiEndpointSecurityType securityType;
   PBAppendableArray * wifisDetectedArray;
 }
 - (BOOL) hasVersion;
@@ -196,6 +198,7 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 - (BOOL) hasMotionData;
 - (BOOL) hasMotionDataEncrypted;
 - (BOOL) hasFirmwareVersion;
+- (BOOL) hasSecurityType;
 @property (readonly) long version;
 @property (readonly) SENSenseMessageType type;
 @property (readonly, strong) NSString* deviceId;
@@ -210,6 +213,7 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 @property (readonly, strong) NSData* motionDataEncrypted;
 @property (readonly) long firmwareVersion;
 @property (readonly, strong) PBArray * wifisDetected;
+@property (readonly) SENWifiEndpointSecurityType securityType;
 - (SENWifiEndpoint*)wifisDetectedAtIndex:(NSUInteger)index;
 
 + (SENSenseMessage*) defaultInstance;
@@ -318,6 +322,11 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 - (SENSenseMessageBuilder *)setWifisDetectedArray:(NSArray *)array;
 - (SENSenseMessageBuilder *)setWifisDetectedValues:(const SENWifiEndpoint* __strong *)values count:(NSUInteger)count;
 - (SENSenseMessageBuilder *)clearWifisDetected;
+
+- (BOOL) hasSecurityType;
+- (SENWifiEndpointSecurityType) securityType;
+- (SENSenseMessageBuilder*) setSecurityType:(SENWifiEndpointSecurityType) value;
+- (SENSenseMessageBuilder*) clearSecurityType;
 @end
 
 

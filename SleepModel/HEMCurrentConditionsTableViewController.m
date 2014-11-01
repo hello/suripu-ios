@@ -2,6 +2,7 @@
 #import <SenseKit/SENBackgroundNoise.h>
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENAPIRoom.h>
+
 #import <markdown_peg.h>
 
 #import "HEMCurrentConditionsTableViewController.h"
@@ -11,12 +12,22 @@
 #import "HEMMainStoryboard.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
+#import "HEMPagingFlowLayout.h"
+#import "HEMInsightCollectionViewCell.h"
+#import "HEMInsightsSummaryDataSource.h"
 
 NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
-@interface HEMCurrentConditionsTableViewController ()
+static CGFloat const kHEMCurrentConditionsInsightsViewHeight = 112.0f;
+static CGFloat const kHEMCurrentConditionsInsightsMargin = 12.0f;
+static CGFloat const kHEMCurrentConditionsInsightsSpacing= 5.0f;
+
+@interface HEMCurrentConditionsTableViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegateFlowLayout>
+@property (nonatomic, strong) IBOutlet UITableView* tableView;
 @property (nonatomic, strong) NSArray* sensors;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSTimer* refreshTimer;
+@property (nonatomic, strong) UICollectionView* insightsView;
+@property (nonatomic, strong) HEMInsightsSummaryDataSource* insightsDataSource;
 @end
 
 @implementation HEMCurrentConditionsTableViewController
@@ -27,9 +38,41 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 10.f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[self tableView] setTableFooterView:[[UIView alloc] init]];
+    
     self.title = NSLocalizedString(@"current-conditions.title", nil);
+    
+    [[self tableView] setTableFooterView:[[UIView alloc] init]];
+    [self configureInsightsView];
     [self refreshCachedSensors];
+}
+
+- (void)configureInsightsView {
+    HEMPagingFlowLayout* layout = [[HEMPagingFlowLayout alloc] init];
+    [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
+    [layout setSectionInset:UIEdgeInsetsMake(0.0f,
+                                             kHEMCurrentConditionsInsightsMargin,
+                                             0.0f,
+                                             kHEMCurrentConditionsInsightsMargin)];
+    [layout setMinimumLineSpacing:kHEMCurrentConditionsInsightsSpacing];
+    
+    CGRect collectionFrame = CGRectZero;
+    collectionFrame.size.width = CGRectGetWidth([[self tableView] bounds]);
+    collectionFrame.size.height = kHEMCurrentConditionsInsightsViewHeight;
+    
+    UICollectionView* collectView = [[UICollectionView alloc] initWithFrame:collectionFrame
+                                                       collectionViewLayout:layout];
+    [collectView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [collectView setTranslatesAutoresizingMaskIntoConstraints:YES];
+    [collectView setBackgroundColor:[[self tableView] backgroundColor]];
+    [collectView setDelegate:self];
+    [collectView setShowsHorizontalScrollIndicator:NO];
+    
+    [self setInsightsDataSource:[[HEMInsightsSummaryDataSource alloc] initWithCollectionView:collectView]];
+    [collectView setDataSource:[self insightsDataSource]];
+    [collectView setDelegate:self];
+    
+    [self setInsightsView:collectView];
+    [[self tableView] setTableHeaderView:collectView];
 }
 
 - (IBAction)dismissCurrentConditionsController:(id)sender
@@ -44,6 +87,14 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 10.f;
     // if you drag the view back will call viewWillAppear, which consequently
     // causes a relatively huge delay before anything actually moves
     [self refreshSensors];
+    
+    __weak typeof(self) weakSelf = self;
+    [[self insightsDataSource] refreshInsights:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            [[strongSelf insightsView] reloadData];
+        }
+    }];
     [self setLoading:YES];
     
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
@@ -121,11 +172,32 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 10.f;
     [_refreshTimer invalidate];
 }
 
+#pragma mark - UICollectionViewDelegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat itemWidth
+        = CGRectGetWidth([collectionView bounds])
+        - (2*kHEMCurrentConditionsInsightsMargin);
+    return CGSizeMake(itemWidth, kHEMCurrentConditionsInsightsViewHeight);
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
     return 2;
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 20.0f)];
+    [headerView setBackgroundColor:[UIColor clearColor]];
+    return headerView;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return 20.0f;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
@@ -135,7 +207,7 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 10.f;
         return self.sensors.count == 0 ? 1 : self.sensors.count;
 
     case 1:
-        return 3;
+        return 2;
 
     default:
         return 0;
@@ -211,24 +283,21 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 10.f;
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
     cell.descriptionLabel.text = nil;
     cell.disclosureImageView.hidden = NO;
+
     switch (indexPath.row) {
     case 0: {
         cell.titleLabel.text = NSLocalizedString(@"alarms.title", nil);
         cell.descriptionLabel.text = nil;
+        cell.detailLabel.text = nil;
         cell.glyphImageView.image = [HelloStyleKit alarmsIcon];
     } break;
 
     case 1: {
-        cell.titleLabel.text = NSLocalizedString(@"sleep.insights.title", nil);
-        cell.detailLabel.text = nil;
-        cell.glyphImageView.image = [HelloStyleKit sleepInsightsIcon];
-    } break;
-    case 2: {
-        cell.titleLabel.text = NSLocalizedString(@"settings.title", nil);
+        cell.titleLabel.text = NSLocalizedString(@"sleep.trends.title", nil);
         cell.detailLabel.text = nil;
         cell.descriptionLabel.text = nil;
-        cell.glyphImageView.image = [UIImage imageNamed:@"settingsIcon"];
-    }
+        cell.glyphImageView.image = [HelloStyleKit sleepInsightsIcon];
+    } break;
     }
     return cell;
 }
@@ -263,10 +332,6 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 10.f;
         case 1: {
             // TODO (jimmy): sleep insights not yet implemented, I think!
         } break;
-        case 2: {
-            UIViewController* controller = [HEMMainStoryboard instantiateSettingsController];
-            [self.navigationController pushViewController:controller animated:YES];
-        }
         }
     } break;
     }

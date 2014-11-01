@@ -8,40 +8,20 @@
 
 #import <Foundation/Foundation.h>
 
+@class SENWifiEndpoint;
+
 @interface HEMWiFiDataSource : NSObject <UITableViewDataSource>
 
 /**
- * @method ssidOfWiFiAtIndexPath:
+ * @method endpointAtIndexPath:
  *
  * @discussion
- * Retrieve the ssid of the WiFi at index path specified
+ * Retrieve the wifi endpoint at the specified index path
  *
- * @param indexPath: the indexPath of the cell used to display the ssid
- * @return ssid of the wifi, or nil if no wifi was detected at that path
+ * @param indexPath: indexPath of the cell used to display the wifi endpoint info
+ * @return SENWifiEndpoint or nil if indexpath does not map to an endpoint
  */
-- (NSString*)ssidOfWiFiAtIndexPath:(NSIndexPath*)indexPath;
-
-/**
- * @method isWiFiSecureAtIndexPath:
- *
- * @discussion
- * Determine if the WiFi a the specified indexpath is secure or not
- *
- * @param indexPath: the indexPath of the cell that is used to display the WiFi
- * @return YES if secure, NO otherwise.
- */
-- (BOOL)isWiFiSecureAtIndexPath:(NSIndexPath*)indexPath;
-
-/**
- * @method rssiOfWifiAtIndexPath:
- *
- * @discussion
- * Determine if the rssi value of the WiFi at the specified indexPath
- *
- * @param indexPath: the indexPath of the cell that is used to display the WiFi
- * @return the RSSI value of the WiFi, if WiFi exists at that path
- */
-- (long)rssiOfWifiAtIndexPath:(NSIndexPath*)indexPath;
+- (SENWifiEndpoint*)endpointAtIndexPath:(NSIndexPath*)indexPath;
 
 /**
  * @method scan:

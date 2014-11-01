@@ -19,7 +19,7 @@
 static CGFloat const kSENSenseDefaultTimeout = 20.0f;
 static CGFloat const kSENSenseRescanTimeout = 8.0f;
 static CGFloat const kSENSenseSetWifiTimeout = 60.0f; // firmware suggestion
-static CGFloat const kSENSenseScanWifiTimeout = 45.0f; // firmware actually suggests 60, but 45 seems to work consistently
+static CGFloat const kSENSenseScanWifiTimeout = 120.0f; // firmware actually suggests 60, but 45 seems to work consistently
 
 static NSString* const kSENSenseErrorDomain = @"is.hello.ble";
 static NSString* const kSENSenseServiceID = @"0000FEE1-1212-EFDE-1523-785FEABCD123";
@@ -389,7 +389,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                           throughWriter:writer
                                 success:nil
                                 failure:^(NSError *error) {
-                                    [blockReader setNotifyValue:NO completion:nil];
+                                    [blockReader setNotifyValue:NO completion:^(NSError *unscriptionError) {
+                                        NSLog(@"unsubscribed from message with error %@", error);
+                                    }];
                                     [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                                 }];
             } onUpdate:^(NSData *data, NSError *error) {
@@ -411,7 +413,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                                  totalPackets = @(1);
                                              }
                                          } failure:^(NSError *error) {
-                                             [blockReader setNotifyValue:NO completion:nil];
+                                             [blockReader setNotifyValue:NO completion:^(NSError *unscriptionError) {
+                                                 NSLog(@"unsubscribed from message with error %@", error);
+                                             }];
                                              [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                                          }];
             }];
@@ -601,7 +605,8 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     
     uint8_t packet[[data length]];
     [data getBytes:&packet length:kSENSensePacketSize];
-    if (sizeof(packet) > 2 && error == nil) {
+    
+    if (sizeof(packet) >= 2 && error == nil) {
         uint8_t seq = packet[0];
         if (seq == 0) {
             *totalPackets = @(packet[1]);
@@ -624,6 +629,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
             }
         } // else, wait for next update
     } else {
+        NSLog(@"ERROR: packet size 1 %d", packet[0]);
         [self failWithBlock:failure andCode:SENSenseManagerErrorCodeUnexpectedResponse];
     }
 }

@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SENSenseMessage.pb.h"
 
 @class SENSense;
 @class LGCentralManager;
@@ -234,13 +235,15 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
  * Provide the initialized Sense device with the wifi credentials that it should
  * use to connect itself with the Sense API.
  * 
- * @param ssid:     the SSID of the WiFi
- * @param password: the password to the WiFI
- * @param success:  the block to call when the command succeeded
- * @param failure:  the block to call if the command encountered an error
+ * @param ssid:         the SSID of the WiFi
+ * @param password:     the password to the WiFI
+ * @param securityType: the supported WiFi security type
+ * @param success:      the block to call when the command succeeded
+ * @param failure:      the block to call if the command encountered an error
  */
 - (void)setWiFi:(NSString*)ssid
        password:(NSString*)password
+   securityType:(SENWifiEndpointSecurityType)securityType
         success:(SENSenseSuccessBlock)success
         failure:(SENSenseFailureBlock)failure;
 

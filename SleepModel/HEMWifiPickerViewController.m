@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENSenseManager.h>
+#import <SenseKit/SENSenseMessage.pb.h>
 
 #import "HEMWifiPickerViewController.h"
 #import "HEMBaseController+Protected.h"
@@ -38,7 +39,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scanButtonWidthConstraint;
 
 @property (strong, nonatomic) NSDate* scanStart;
-@property (copy, nonatomic)   NSString* selectedSSID;
+@property (strong, nonatomic) SENWifiEndpoint* selectedWifiEndpont;
 @property (strong, nonatomic) HEMWiFiDataSource* wifiDataSource;
 @property (assign, nonatomic, getter=isVisible) BOOL visible;
 
@@ -131,15 +132,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [cell setAccessoryView:accessoryView];
     }
     
+    SENWifiEndpoint* endpoint = [[self wifiDataSource] endpointAtIndexPath:indexPath];
     BOOL showWifiIcon = YES;
-    NSString* ssid = [[self wifiDataSource] ssidOfWiFiAtIndexPath:indexPath];
+    NSString* ssid = [endpoint ssid];
     if (ssid == nil) {
         showWifiIcon = NO;
         ssid = NSLocalizedString(@"settings.wifi.other", nil);
     }
     
     UIImageView* lockView = (UIImageView*)[accessoryView viewWithTag:kHEMWifiPickerTagLock];
-    [lockView setHidden:![[self wifiDataSource] isWiFiSecureAtIndexPath:indexPath]];
+    [lockView setHidden:[endpoint security] == SENWifiEndpointSecurityTypeOpen];
     
     UIImageView* wifiView = (UIImageView*)[accessoryView viewWithTag:kHEMWifiPickerTagWifi];
     [wifiView setHidden:!showWifiIcon];
@@ -150,7 +152,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    [self setSelectedSSID:[[self wifiDataSource] ssidOfWiFiAtIndexPath:indexPath]];
+    [self setSelectedWifiEndpont:[[self wifiDataSource] endpointAtIndexPath:indexPath]];
     [self next];
 }
 
@@ -239,12 +241,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([self selectedSSID] != nil) {
-        UIViewController* destVC = [segue destinationViewController];
-        if ([destVC isKindOfClass:[HEMWifiPasswordViewController class]]) {
-            HEMWifiPasswordViewController* wifiVC = (HEMWifiPasswordViewController*)destVC;
-            [wifiVC setSsid:[self selectedSSID]];
-        }
+    UIViewController* destVC = [segue destinationViewController];
+    if ([destVC isKindOfClass:[HEMWifiPasswordViewController class]]) {
+        HEMWifiPasswordViewController* wifiVC = (HEMWifiPasswordViewController*)destVC;
+        [wifiVC setEndpoint:[self selectedWifiEndpont]];
     }
 }
 

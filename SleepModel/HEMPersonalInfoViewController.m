@@ -14,6 +14,7 @@
 #import "HEMWeightPickerViewController.h"
 #import "HEMGenderPickerViewController.h"
 #import "HEMBaseController+Protected.h"
+#import "HelloStyleKit.h"
 
 @interface HEMPersonalInfoViewController() <
     UITableViewDelegate,
@@ -104,14 +105,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         subtitle = [[self data] tableView:tableView infoForIndexPath:indexPath];
     } else {
         activityView =
-            [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+            [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [activityView hidesWhenStopped];
         [activityView startAnimating];
     }
     
     [[cell textLabel] setText:title];
+    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
     [[cell detailTextLabel] setText:subtitle];
     [[cell detailTextLabel] sizeToFit];
+    [[cell detailTextLabel] setTextColor:[HelloStyleKit settingsTextColor]];
     [cell setAccessoryView:activityView];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     

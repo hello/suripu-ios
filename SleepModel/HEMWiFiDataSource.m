@@ -112,39 +112,6 @@ NSString* const kHEMWifiNetworkCellId = @"network";
     return endpoint;
 }
 
-- (NSString*)ssidOfWiFiAtIndexPath:(NSIndexPath*)indexPath {
-    NSString* ssid = nil;
-    
-    SENWifiEndpoint* endpoint = [self endpointAtIndexPath:indexPath];
-    if (endpoint != nil) {
-        ssid = [endpoint ssid];
-    }
-    
-    return ssid;
-}
-
-- (BOOL)isWiFiSecureAtIndexPath:(NSIndexPath*)indexPath {
-    BOOL secure = NO;
-    
-    SENWifiEndpoint* endpoint = [self endpointAtIndexPath:indexPath];
-    if (endpoint != nil) {
-        secure = [endpoint security] != SENWifiEndpointSecurityTypeOpen;
-    }
-    
-    return secure;
-}
-
-- (long)rssiOfWifiAtIndexPath:(NSIndexPath*)indexPath {
-    long rssi = 0;
-    
-    SENWifiEndpoint* endpoint = [self endpointAtIndexPath:indexPath];
-    if (endpoint != nil) {
-        rssi = [endpoint rssi];
-    }
-    
-    return rssi;
-}
-
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

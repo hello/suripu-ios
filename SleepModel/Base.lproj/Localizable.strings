@@ -151,7 +151,7 @@
 "settings.factory-restore.error.unlink-sense" = "Unable to remove your Sense from your account.  Ensure you have connectivity and try again.";
 
 // insights
-"sleep.insights.title" = "Sleep Insights";
+"sleep.trends.title" = "Trends";
 
 // authentication/sign in
 "authorization.title" = "Sign in";

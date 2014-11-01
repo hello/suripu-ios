@@ -8,6 +8,7 @@
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAPITimeZone.h>
+#import <SenseKit/SENSenseMessage.pb.h>
 
 #import "HEMWifiPasswordViewController.h"
 #import "HEMActionButton.h"
@@ -38,7 +39,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [[self ssidField] setText:[self ssid]];
+    if ([self endpoint] != nil) {
+        [[self ssidField] setText:[[self endpoint] ssid]];
+    }
     
     [SENAnalytics track:kHEMAnalyticsEventOnBSetupWiFi];
 }
@@ -114,12 +117,22 @@
     // will have to take the values as is.
     NSString* ssid = [[self ssidField] text];
     NSString* pass = [[self passwordField] text];
-    if ([ssid length] > 0 && [pass length] > 0) {
+    if ([ssid length] > 0
+        && ([self endpoint] == nil
+            || ([[self endpoint] security] != SENWifiEndpointSecurityTypeOpen
+                && [pass length] > 0))) {
+                
         [self showActivity];
         
         if (![self wifiConfigured]) {
+            
+            SENWifiEndpointSecurityType type = SENWifiEndpointSecurityTypeWpa2; // default, per discussion
+            if ([self endpoint] != nil) {
+                type = [[self endpoint] security];
+            }
+            
             __weak typeof(self) weakSelf = self;
-            [self setWiFi:ssid password:pass completion:^(NSError *error) {
+            [self setWiFi:ssid password:pass securityType:type completion:^(NSError *error) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 if (strongSelf) {
                     if (error == nil) {
@@ -160,10 +173,11 @@
 
 - (void)setWiFi:(NSString*)ssid
        password:(NSString*)password
+   securityType:(SENWifiEndpointSecurityType)securityType
      completion:(void(^)(NSError* error))completion {
 
     SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
-    [manager setWiFi:ssid password:password success:^(id response) {
+    [manager setWiFi:ssid password:password securityType:securityType success:^(id response) {
         if (completion) completion (nil);
     } failure:^(NSError *error) {
         if (completion) completion (error);

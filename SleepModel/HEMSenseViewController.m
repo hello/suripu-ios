@@ -15,6 +15,7 @@
 #import "HEMDeviceCenter.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMAlertController.h"
+#import "HelloStyleKit.h"
 
 @interface HEMSenseViewController() <UITableViewDataSource, UITableViewDelegate>
 
@@ -36,6 +37,7 @@
     [[self senseInfoTableView] setTableFooterView:[[UIView alloc] init]];
     
     [[self actionStatusLabel] setText:NSLocalizedString(@"settings.sense.scanning-message", nil)];
+    [[self actionStatusLabel] setTintColor:[HelloStyleKit settingsTextColor]];
     [self showActivity];
 
 }
@@ -144,7 +146,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         
         [[cell textLabel] setText:title];
+        [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
         [[cell detailTextLabel] setText:detail];
+        [[cell detailTextLabel] setTextColor:[HelloStyleKit settingsTextColor]];
         
     } // else, look at the storyboard
     

@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "HEMBaseController.h"
 
+@class SENWifiEndpoint;
+
 @interface HEMWifiPasswordViewController : HEMBaseController
 
-@property (nonatomic, copy) NSString* ssid;
+@property (nonatomic, strong) SENWifiEndpoint* endpoint;
 
 @end

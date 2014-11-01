@@ -6,6 +6,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAlertController.h"
 #import "HEMLogUtils.h"
+#import "HelloStyleKit.h"
 
 @interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 
@@ -64,7 +65,7 @@ static NSString* const HEMSettingsLogFileType = @"text/plain";
         break;
     }
     [[cell textLabel] setText:title];
-    [[cell textLabel] setTextColor:[UIColor whiteColor]];
+    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
 }
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath

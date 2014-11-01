@@ -122,7 +122,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([[HEMDeviceCenter sharedCenter] isLoadingInfo]) {
         status = NSLocalizedString(@"empty-data", nil);
         activity =
-            [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+            [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
         [activity startAnimating];
     } else if ([self loadError] != nil) {
         status = NSLocalizedString(@"settings.device.info-failed-to-load", nil);
@@ -148,7 +148,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         : [HelloStyleKit pillIcon];
     
     [[cell textLabel] setText:name];
+    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
     [[cell detailTextLabel] setText:status];
+    [[cell detailTextLabel] setTextColor:[HelloStyleKit settingsTextColor]];
     [[cell imageView] setImage:icon];
     [[cell contentView] setAlpha:alpha];
     [cell setAccessoryView:activity];

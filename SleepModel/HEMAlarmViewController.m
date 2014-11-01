@@ -12,9 +12,8 @@
 #import "HelloStyleKit.h"
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
-#import "HEMSettingsTheme.h"
 
-@interface HEMAlarmViewController () <UITableViewDelegate, UIGestureRecognizerDelegate, HEMSettingsTheme>
+@interface HEMAlarmViewController () <UITableViewDelegate, UIGestureRecognizerDelegate>
 @property (strong, nonatomic) IBOutlet UIPanGestureRecognizer* panGestureRecognizer;
 
 @property (weak, nonatomic) IBOutlet UILabel* alarmTimeLabel;
@@ -128,13 +127,6 @@
     time.hour = hour;
     time.minute = minute;
     return [SENAlarm localizedValueForTime:time];
-}
-
-#pragma mark - HEMSettingsTheme
-
-- (BOOL)useGradientBackground
-{
-    return NO;
 }
 
 #pragma mark - Actions

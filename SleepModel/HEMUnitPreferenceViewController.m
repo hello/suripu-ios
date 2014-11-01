@@ -9,6 +9,7 @@
 
 #import "HEMUnitPreferenceViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HelloStyleKit.h"
 
 static CGFloat const kHemUnitPrefSegControlWidth = 157;
 
@@ -59,10 +60,10 @@ static CGFloat const kHemUnitPrefSegControlWidth = 157;
 }
 
 - (void)styleControl:(UISegmentedControl*)control {
-    [control setTintColor:[UIColor whiteColor]];
+    [control setTintColor:[HelloStyleKit settingsTextColor]];
     [control setTitleTextAttributes:@{
                                 NSFontAttributeName : [UIFont fontWithName:@"Agile-Light" size:18],
-                                NSForegroundColorAttributeName : [UIColor whiteColor]
+                                NSForegroundColorAttributeName : [HelloStyleKit settingsTextColor]
                            }
                            forState:UIControlStateNormal];
     
@@ -117,6 +118,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         
         [[cell textLabel] setText:title];
+        [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
         [cell setAccessoryView:control];
     }
     

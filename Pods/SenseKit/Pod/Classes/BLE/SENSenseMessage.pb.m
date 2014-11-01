@@ -422,6 +422,7 @@ BOOL SENWifiEndpointSecurityTypeIsValidValue(SENWifiEndpointSecurityType value) 
 @property (strong) NSData* motionDataEncrypted;
 @property long firmwareVersion;
 @property (strong) PBAppendableArray * wifisDetectedArray;
+@property SENWifiEndpointSecurityType securityType;
 @end
 
 @implementation SENSenseMessage
@@ -519,6 +520,13 @@ BOOL SENWifiEndpointSecurityTypeIsValidValue(SENWifiEndpointSecurityType value) 
 @synthesize firmwareVersion;
 @synthesize wifisDetectedArray;
 @dynamic wifisDetected;
+- (BOOL) hasSecurityType {
+  return !!hasSecurityType_;
+}
+- (void) setHasSecurityType:(BOOL) value_ {
+  hasSecurityType_ = !!value_;
+}
+@synthesize securityType;
 - (void) dealloc {
   self.deviceId = nil;
   self.accountId = nil;
@@ -543,6 +551,7 @@ BOOL SENWifiEndpointSecurityTypeIsValidValue(SENWifiEndpointSecurityType value) 
     self.motionData = 0;
     self.motionDataEncrypted = [NSData data];
     self.firmwareVersion = 0;
+    self.securityType = SENWifiEndpointSecurityTypeOpen;
   }
   return self;
 }
@@ -621,6 +630,9 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   for (SENWifiEndpoint *element in self.wifisDetectedArray) {
     [output writeMessage:14 value:element];
   }
+  if (self.hasSecurityType) {
+    [output writeEnum:15 value:self.securityType];
+  }
   [self.unknownFields writeToCodedOutputStream:output];
 }
 - (long) serializedSize {
@@ -671,6 +683,9 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   }
   for (SENWifiEndpoint *element in self.wifisDetectedArray) {
     size_ += computeMessageSize(14, element);
+  }
+  if (self.hasSecurityType) {
+    size_ += computeEnumSize(15, self.securityType);
   }
   size_ += self.unknownFields.serializedSize;
   memoizedSerializedSize = size_;
@@ -752,6 +767,9 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
                      withIndent:[NSString stringWithFormat:@"%@  ", indent]];
     [output appendFormat:@"%@}\n", indent];
   }
+  if (self.hasSecurityType) {
+    [output appendFormat:@"%@%@: %d\n", indent, @"securityType", self.securityType];
+  }
   [self.unknownFields writeDescriptionTo:output withIndent:indent];
 }
 - (BOOL) isEqual:(id)other {
@@ -790,6 +808,8 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
       self.hasFirmwareVersion == otherMessage.hasFirmwareVersion &&
       (!self.hasFirmwareVersion || self.firmwareVersion == otherMessage.firmwareVersion) &&
       [self.wifisDetectedArray isEqualToArray:otherMessage.wifisDetectedArray] &&
+      self.hasSecurityType == otherMessage.hasSecurityType &&
+      (!self.hasSecurityType || self.securityType == otherMessage.securityType) &&
       (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
 }
 - (NSUInteger) hash {
@@ -835,6 +855,9 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
   }
   for (SENWifiEndpoint* element in self.wifisDetectedArray) {
     hashCode = hashCode * 31 + [element hash];
+  }
+  if (self.hasSecurityType) {
+    hashCode = hashCode * 31 + self.securityType;
   }
   hashCode = hashCode * 31 + [self.unknownFields hash];
   return hashCode;
@@ -956,6 +979,9 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
       [result.wifisDetectedArray appendArray:other.wifisDetectedArray];
     }
   }
+  if (other.hasSecurityType) {
+    [self setSecurityType:other.securityType];
+  }
   [self mergeUnknownFields:other.unknownFields];
   return self;
 }
@@ -1043,6 +1069,15 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
         SENWifiEndpointBuilder* subBuilder = [SENWifiEndpoint builder];
         [input readMessage:subBuilder extensionRegistry:extensionRegistry];
         [self addWifisDetected:[subBuilder buildPartial]];
+        break;
+      }
+      case 120: {
+        SENWifiEndpointSecurityType value = (SENWifiEndpointSecurityType)[input readEnum];
+        if (SENWifiEndpointSecurityTypeIsValidValue(value)) {
+          [self setSecurityType:value];
+        } else {
+          [unknownFields mergeVarintField:15 value:value];
+        }
         break;
       }
     }
@@ -1279,6 +1314,22 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
 }
 - (SENSenseMessageBuilder *)clearWifisDetected {
   result.wifisDetectedArray = nil;
+  return self;
+}
+- (BOOL) hasSecurityType {
+  return result.hasSecurityType;
+}
+- (SENWifiEndpointSecurityType) securityType {
+  return result.securityType;
+}
+- (SENSenseMessageBuilder*) setSecurityType:(SENWifiEndpointSecurityType) value {
+  result.hasSecurityType = YES;
+  result.securityType = value;
+  return self;
+}
+- (SENSenseMessageBuilder*) clearSecurityType {
+  result.hasSecurityType = NO;
+  result.securityType = SENWifiEndpointSecurityTypeOpen;
   return self;
 }
 @end

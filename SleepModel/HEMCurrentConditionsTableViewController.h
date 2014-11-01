@@ -1,6 +1,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HEMCurrentConditionsTableViewController : UITableViewController
+@interface HEMCurrentConditionsTableViewController : UIViewController
 
 @end

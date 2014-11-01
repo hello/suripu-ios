@@ -7,7 +7,6 @@
 //
 
 #import "HEMSettingsNavigationController.h"
-#import "HEMSettingsTheme.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 
@@ -21,27 +20,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self addBackgroundGradientLayer:[self view]];
-    [[self navigationBar] setTintColor:[UIColor whiteColor]];
-}
-
-- (void)addBackgroundGradientLayer:(UIView*)view {
-    CAGradientLayer* layer = [CAGradientLayer layer];
-    [layer setFrame:[view bounds]];
-    [HEMColorUtils configureLayer:layer forHourOfDay:24]; // midnight
-    [[view layer] insertSublayer:layer atIndex:0];
-}
+    [[self view] setBackgroundColor:[HelloStyleKit backViewGraycolor]];
+    [[self navigationBar] setTintColor:[HelloStyleKit backViewNavTintColor]];
+    [[self navigationBar] setTitleTextAttributes:@{
+        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTintColor],
+        NSFontAttributeName : [UIFont fontWithName:@"Calibre-Regular" size:20.0f]
+    }];
+}   
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    BOOL addGradient = YES;
-    if ([viewController conformsToProtocol:@protocol(HEMSettingsTheme)]) {
-        id<HEMSettingsTheme> controller = (id<HEMSettingsTheme>)viewController;
-        addGradient = [controller useGradientBackground];
-    }
-    if (addGradient) {
-        [self addBackgroundGradientLayer:[viewController view]];
-    }
-    
+    [[viewController view] setBackgroundColor:[HelloStyleKit backViewGraycolor]];
     [super pushViewController:viewController animated:animated];
 }
 

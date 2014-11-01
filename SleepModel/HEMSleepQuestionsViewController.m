@@ -92,7 +92,7 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 - (UIButton*)buttonForAnswer:(SENAnswer*)answer withFrame:(CGRect)frame {
     UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
     [button setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [button translatesAutoresizingMaskIntoConstraints];
+    [button setTranslatesAutoresizingMaskIntoConstraints:YES];
     
     [button addTarget:self
                   action:@selector(selectAnswer:)

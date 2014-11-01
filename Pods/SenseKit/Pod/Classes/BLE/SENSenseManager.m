@@ -788,10 +788,13 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 - (void)setWiFi:(NSString*)ssid
        password:(NSString*)password
+   securityType:(SENWifiEndpointSecurityType)securityType
         success:(SENSenseSuccessBlock)success
         failure:(SENSenseFailureBlock)failure {
+    
     SENSenseMessageType type = SENSenseMessageTypeSetWifiEndpoint;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
+    [builder setSecurityType:securityType];
     [builder setWifiSsid:ssid];
     [builder setWifiPassword:password];
     [self sendMessage:[builder build]

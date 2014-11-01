@@ -12,6 +12,7 @@
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDeviceCenter.h"
+#import "HelloStyleKit.h"
 
 @interface HEMPillViewController() <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 
@@ -28,6 +29,7 @@
     [super viewDidLoad];
     [[self pillInfoTableView] setTableFooterView:[[UIView alloc] init]];
     [[self unpairView] setHidden:[[HEMDeviceCenter sharedCenter] pillInfo] == nil];
+    [[self activityLabel] setTextColor:[HelloStyleKit settingsTextColor]];
 }
 
 #pragma mark - UITableViewDelegate / DataSource
@@ -73,7 +75,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     [[cell textLabel] setText:title];
+    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
     [[cell detailTextLabel] setText:detail];
+    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
     
 }
 

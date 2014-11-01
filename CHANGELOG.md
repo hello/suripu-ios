@@ -1,9 +1,16 @@
 # Changelog
 
-## master
+## 1.0.0.30
+
+New:
+
+* Insight summary view, pulling from server
+* Updated Back View styling, but partially complete
+* Passing WiFi security type to enhance speed in set up
 
 Fixes:
 
+* Fixing WiFi scanning issue
 * Fix sensor data appearing in alarm summary when connection to API is lost
 
 ## 1.0.0.29

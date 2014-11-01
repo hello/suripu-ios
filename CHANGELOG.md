@@ -1,5 +1,27 @@
 # Changelog
 
+## master
+
+Fixes:
+
+* Fix sensor data appearing in alarm summary when connection to API is lost
+
+## 1.0.0.29
+
+New:
+
+* New setup for people with two pills for one sense
+* Timezone configuration while setting up wifi
+* Option to force sign out from Settings app
+* Third-party library attributions in Settings app
+
+Fixes:
+
+* Only scan once for wifi networks instead of auto-scanning twice, to prevent issues with Sense
+* Faster refresh for room conditions
+* Better error messaging in sign up / sign in
+* General setup fixes
+
 ## 1.0.0.28
 
 New:
@@ -43,6 +65,8 @@ New:
 
 1. Analytics with Amplitude, mostly for Onboarding and errors
 2. Logging events to file to be sent by email through Customer Support menu
+3. Expand the width of long sleep summary messages to match the margins of the timeline
+4. Remove the presentation of the first sleep event
 
 Fixes:
 
@@ -50,14 +74,6 @@ Fixes:
 2. fixed issue with Devices view where info was not properly reloaded
 3. fixed issue where scanning for Sense inside the app never times out
 4. updated particulate unit, which fixed particulates icon
-
-## master
-
-
-Fixes:
-
-* Expand the width of long sleep summary messages to match the margins of the timeline
-* Remove the presentation of the first sleep event
 
 ## 1.0.0.24
 

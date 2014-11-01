@@ -28,6 +28,8 @@ static CGFloat const kHEMCurrentConditionsInsightsSpacing= 5.0f;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSTimer* refreshTimer;
 @property (nonatomic) CGFloat refreshRate;
+@property (nonatomic, strong) HEMInsightsSummaryDataSource* insightsDataSource;
+@property (nonatomic, strong) UICollectionView* insightsView;
 @end
 
 @implementation HEMCurrentConditionsTableViewController

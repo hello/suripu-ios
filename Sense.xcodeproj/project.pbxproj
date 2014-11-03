@@ -32,6 +32,8 @@
 		8A1743C319A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1743C119A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.m */; };
 		8A1743C419A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A1743C219A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.xib */; };
 		8A1743CA19A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1743C919A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m */; };
+		8A1C94B81A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C94B71A08178A006E3A31 /* UIFont+HEMStyle.m */; };
+		8A1C94B91A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C94B71A08178A006E3A31 /* UIFont+HEMStyle.m */; };
 		8A1E723219D62C26007475D3 /* alarmNoteIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1E722A19D62C26007475D3 /* alarmNoteIcon.png */; };
 		8A1E723319D62C26007475D3 /* alarmNoteIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1E722B19D62C26007475D3 /* alarmNoteIcon@2x.png */; };
 		8A1E723419D62C26007475D3 /* alarmRepeatIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1E722C19D62C26007475D3 /* alarmRepeatIcon.png */; };
@@ -415,6 +417,8 @@
 		8A1743C219A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMNoSleepEventCollectionViewCell.xib; sourceTree = "<group>"; };
 		8A1743C819A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSegmentCollectionViewCell.h; sourceTree = "<group>"; };
 		8A1743C919A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSegmentCollectionViewCell.m; sourceTree = "<group>"; };
+		8A1C94B61A08178A006E3A31 /* UIFont+HEMStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+HEMStyle.h"; sourceTree = "<group>"; };
+		8A1C94B71A08178A006E3A31 /* UIFont+HEMStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+HEMStyle.m"; sourceTree = "<group>"; };
 		8A1E722A19D62C26007475D3 /* alarmNoteIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = alarmNoteIcon.png; path = images/alarmNoteIcon.png; sourceTree = "<group>"; };
 		8A1E722B19D62C26007475D3 /* alarmNoteIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "alarmNoteIcon@2x.png"; path = "images/alarmNoteIcon@2x.png"; sourceTree = "<group>"; };
 		8A1E722C19D62C26007475D3 /* alarmRepeatIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = alarmRepeatIcon.png; path = images/alarmRepeatIcon.png; sourceTree = "<group>"; };
@@ -1676,6 +1680,8 @@
 				BF14E3E519EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m */,
 				BFEAA0B019A54859002FBD44 /* NSString+Email.h */,
 				BFEAA0B119A54859002FBD44 /* NSString+Email.m */,
+				8A1C94B61A08178A006E3A31 /* UIFont+HEMStyle.h */,
+				8A1C94B71A08178A006E3A31 /* UIFont+HEMStyle.m */,
 				BFABE75019A2E70A00AB2F0F /* UIView+HEMMotionEffects.h */,
 				BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */,
 			);
@@ -2254,6 +2260,7 @@
 				8AC49F961981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m in Sources */,
 				BFB6D47619BE16D1004CA11B /* HEMBirthdatePickerView.m in Sources */,
 				BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */,
+				8A1C94B81A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,
 				BF781E3519DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.m in Sources */,
 				BF1E2E7C1A03292C00DDD0D0 /* HEMInsightsSummaryDataSource.m in Sources */,
 				8A28CAFF19CB95E40044A27D /* HEMNotificationHandler.m in Sources */,
@@ -2287,6 +2294,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BF7F1BD019E304050028F799 /* HEMTodayViewController.m in Sources */,
+				8A1C94B91A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

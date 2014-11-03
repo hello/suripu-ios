@@ -148,9 +148,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         : [HelloStyleKit pillIcon];
     
     [[cell textLabel] setText:name];
-    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
     [[cell detailTextLabel] setText:status];
-    [[cell detailTextLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
     [[cell imageView] setImage:icon];
     [[cell contentView] setAlpha:alpha];
     [cell setAccessoryView:activity];

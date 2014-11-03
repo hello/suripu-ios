@@ -20,16 +20,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self view] setBackgroundColor:[HelloStyleKit backViewGraycolor]];
-    [[self navigationBar] setTintColor:[HelloStyleKit backViewNavTintColor]];
+    [[self view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
+    [[self navigationBar] setTintColor:[HelloStyleKit backViewTintColor]];
     [[self navigationBar] setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTintColor],
+        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
         NSFontAttributeName : [UIFont fontWithName:@"Calibre-Regular" size:20.0f]
     }];
 }   
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    [[viewController view] setBackgroundColor:[HelloStyleKit backViewGraycolor]];
+    [[viewController view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
     [super pushViewController:viewController animated:animated];
 }
 

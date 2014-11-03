@@ -60,10 +60,10 @@ static CGFloat const kHemUnitPrefSegControlWidth = 157;
 }
 
 - (void)styleControl:(UISegmentedControl*)control {
-    [control setTintColor:[HelloStyleKit settingsTextColor]];
+    [control setTintColor:[HelloStyleKit backViewTextColor]];
     [control setTitleTextAttributes:@{
                                 NSFontAttributeName : [UIFont fontWithName:@"Agile-Light" size:18],
-                                NSForegroundColorAttributeName : [HelloStyleKit settingsTextColor]
+                                NSForegroundColorAttributeName : [HelloStyleKit backViewTextColor]
                            }
                            forState:UIControlStateNormal];
     
@@ -118,7 +118,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         
         [[cell textLabel] setText:title];
-        [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+        [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
         [cell setAccessoryView:control];
     }
     

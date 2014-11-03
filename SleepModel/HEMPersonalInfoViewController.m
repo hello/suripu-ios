@@ -111,10 +111,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     [[cell textLabel] setText:title];
-    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
     [[cell detailTextLabel] setText:subtitle];
     [[cell detailTextLabel] sizeToFit];
-    [[cell detailTextLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
     [cell setAccessoryView:activityView];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     

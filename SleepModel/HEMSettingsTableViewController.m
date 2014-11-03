@@ -65,7 +65,7 @@ static NSString* const HEMSettingsLogFileType = @"text/plain";
         break;
     }
     [[cell textLabel] setText:title];
-    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
 }
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath

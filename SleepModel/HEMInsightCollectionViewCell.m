@@ -76,7 +76,7 @@ static CGFloat const kHEMInsightSummaryCornerRadius = 3.0f;
     [label setTranslatesAutoresizingMaskIntoConstraints:YES];
     [label setBackgroundColor:[self backgroundColor]];
     [label setFont:[UIFont fontWithName:@"Calibre-Regular" size:9.0f]];
-    [label setTextColor:[HelloStyleKit onboardingBlueColor]];
+    [label setTextColor:[HelloStyleKit senseBlueColor]];
     [label setText:text];
     
     [[self contentView] addSubview:label];

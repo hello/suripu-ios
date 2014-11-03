@@ -37,7 +37,7 @@
     [[self senseInfoTableView] setTableFooterView:[[UIView alloc] init]];
     
     [[self actionStatusLabel] setText:NSLocalizedString(@"settings.sense.scanning-message", nil)];
-    [[self actionStatusLabel] setTintColor:[HelloStyleKit settingsTextColor]];
+    [[self actionStatusLabel] setTintColor:[HelloStyleKit backViewTextColor]];
     [self showActivity];
 
 }
@@ -146,9 +146,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         
         [[cell textLabel] setText:title];
-        [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+        [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
         [[cell detailTextLabel] setText:detail];
-        [[cell detailTextLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+        [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
         
     } // else, look at the storyboard
     

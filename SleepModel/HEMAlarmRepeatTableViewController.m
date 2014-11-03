@@ -4,6 +4,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
 #import "HEMAlertController.h"
+#import "HelloStyleKit.h"
 
 @interface HEMAlarmRepeatTableViewController ()
 
@@ -47,6 +48,7 @@
     NSString* text = [self.repeatOptions objectAtIndex:indexPath.row];
     NSUInteger day = [self repeatDayForIndexPath:indexPath];
     cell.textLabel.text = text;
+    cell.textLabel.textColor = [HelloStyleKit backViewTextColor];
 
     if ((self.alarmCache.repeatFlags & day) == day) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

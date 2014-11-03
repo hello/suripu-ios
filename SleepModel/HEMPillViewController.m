@@ -29,7 +29,7 @@
     [super viewDidLoad];
     [[self pillInfoTableView] setTableFooterView:[[UIView alloc] init]];
     [[self unpairView] setHidden:[[HEMDeviceCenter sharedCenter] pillInfo] == nil];
-    [[self activityLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[self activityLabel] setTextColor:[HelloStyleKit backViewTextColor]];
 }
 
 #pragma mark - UITableViewDelegate / DataSource
@@ -75,9 +75,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     [[cell textLabel] setText:title];
-    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
     [[cell detailTextLabel] setText:detail];
-    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
     
 }
 

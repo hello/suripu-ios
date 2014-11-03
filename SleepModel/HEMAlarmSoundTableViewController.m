@@ -31,6 +31,7 @@
 
     NSString* sleepSoundText = [self.possibleSleepSounds objectAtIndex:indexPath.row];
     cell.textLabel.text = sleepSoundText;
+    cell.textLabel.textColor = [HelloStyleKit backViewTextColor];
 
     if ([sleepSoundText isEqualToString:self.alarmCache.soundName]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

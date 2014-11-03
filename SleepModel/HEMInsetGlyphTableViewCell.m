@@ -8,9 +8,9 @@
 @implementation HEMInsetGlyphTableViewCell
 
 - (void)awakeFromNib {
-    [[self titleLabel] setTextColor:[HelloStyleKit settingsTextColor]];
-    [[self detailLabel] setTextColor:[HelloStyleKit settingsTextColor]];
-    [[self descriptionLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[self titleLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[self detailLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[self descriptionLabel] setTextColor:[HelloStyleKit backViewTextColor]];
 }
 
 @end

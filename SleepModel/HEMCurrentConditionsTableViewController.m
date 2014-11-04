@@ -280,7 +280,7 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
             break;
         case SENSensorUnitMicrogramPerCubicMeter:
             cell.glyphImageView.image = [HelloStyleKit particleIcon];
-            cell.detailLabel.text = sensor.value ? [NSString stringWithFormat:@"%.02f", sensor.value] : NSLocalizedString(@"empty-data", nil);
+            cell.detailLabel.text = sensor.value ? [NSString stringWithFormat:@"%.02f", [sensor.value doubleValue]] : NSLocalizedString(@"empty-data", nil);
             break;
         case SENSensorUnitPercent:
             cell.glyphImageView.image = [HelloStyleKit humidityIcon];

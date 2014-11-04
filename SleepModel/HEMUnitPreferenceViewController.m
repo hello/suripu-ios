@@ -122,6 +122,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[cell textLabel] setText:title];
         [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
         [[cell textLabel] setFont:[UIFont settingsTitleFont]];
+        [control setTitleTextAttributes:@{NSFontAttributeName:[UIFont settingsTableCellDetailFont]}
+                               forState:UIControlStateNormal];
         
         [cell setAccessoryView:control];
     }

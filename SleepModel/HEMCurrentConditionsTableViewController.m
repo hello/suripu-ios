@@ -264,12 +264,13 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
         cell.titleLabel.text = [self isLoading] ? NSLocalizedString(@"activity.loading", nil) : NSLocalizedString(@"sensor.data-unavailable", nil);
         cell.detailLabel.text = nil;
         cell.glyphImageView.image = nil;
-        cell.detailContainer.backgroundColor = [UIColor clearColor];
+        [cell showDetailBubble:NO];
     } else {
         SENSensor* sensor = self.sensors[indexPath.row];
         cell.titleLabel.text = sensor.localizedName;
         cell.detailLabel.text = sensor.localizedValue ?: NSLocalizedString(@"empty-data", nil);
-        cell.detailContainer.backgroundColor = [UIColor whiteColor];
+
+        [cell showDetailBubble:YES];
         
         [self colorizeSensorTextIn:cell.detailLabel forCondition:sensor.condition];
         
@@ -300,8 +301,9 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 {
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
     cell.detailLabel.text = nil;
-    cell.detailContainer.backgroundColor = [UIColor clearColor];
     cell.detailLabel.textColor = [HelloStyleKit backViewTextColor];
+    
+    [cell showDetailBubble:NO];
     
     switch (indexPath.row) {
     case 0: {

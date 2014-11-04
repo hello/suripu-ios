@@ -16,7 +16,7 @@ CGFloat HEMSleepSegmentMinimumFillWidth = 28.f;
 
 - (void)awakeFromNib
 {
-    self.backgroundColor = [HelloStyleKit lightestBlueColor];
+    self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)setSegmentRatio:(CGFloat)ratio withColor:(UIColor*)color
@@ -42,7 +42,7 @@ CGFloat HEMSleepSegmentMinimumFillWidth = 28.f;
         inset += HEMSleepSegmentMinimumFillWidth;
         width = (CGRectGetWidth(rect) - inset);
         fillRect = CGRectMake(inset, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
-        CGContextSetFillColorWithColor(ctx, [[HelloStyleKit lightestBlueColor] colorWithAlphaComponent:0.8].CGColor);
+        CGContextSetFillColorWithColor(ctx, [UIColor colorWithWhite:1.f alpha:0.8].CGColor);
         CGContextFillRect(ctx, fillRect);
     }
 }

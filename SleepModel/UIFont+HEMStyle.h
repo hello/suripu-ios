@@ -63,6 +63,11 @@
 + (UIFont *)timelineEventMessageFont;
 
 /**
+ *  Bold font for event message text in the timeline
+ */
++ (UIFont *)timelineEventMessageBoldFont;
+
+/**
  *  Font for tips at the bottom of event expansion
  */
 + (UIFont *)timelineEventTipFont;

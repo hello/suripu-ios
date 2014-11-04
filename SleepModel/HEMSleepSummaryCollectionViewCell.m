@@ -14,17 +14,12 @@ static CGFloat const HEMSleepSummaryInsetHeight = 8.f;
 
 - (void)awakeFromNib
 {
-    self.backgroundColor = [UIColor clearColor];
+    self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated
 {
     [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];
-}
-
-- (void)drawRect:(CGRect)rect
-{
-    [self drawShadowGradientInRect:rect];
 }
 
 - (void)drawShadowGradientInRect:(CGRect)rect

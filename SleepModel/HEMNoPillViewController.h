@@ -12,6 +12,6 @@
 
 @interface HEMNoPillViewController : UIViewController
 
-@property (nonatomic, strong) SENSenseManager* senseManager;
+@property (nonatomic, weak) UIViewController* previousController;
 
 @end

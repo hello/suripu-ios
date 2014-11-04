@@ -7,9 +7,11 @@
 //
 
 #import "HEMNoPillViewController.h"
+#import "HEMPillPairViewController.h"
+#import "HEMOnboardingStoryboard.h"
 #import "HEMAlertController.h"
 
-@interface HEMNoPillViewController ()
+@interface HEMNoPillViewController () <HEMPillPairDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
@@ -27,20 +29,18 @@
 }
 
 - (void)setupPairButton {
-    [[[self pairButton] titleLabel] setFont:[UIFont fontWithName:@"Agile-Medium"
-                                                            size:20.0f]];
-    [[[self pairButton] layer] setBorderColor:[[UIColor whiteColor] CGColor]];
+    [[[self pairButton] layer] setBorderColor:[[[self pairButton] titleColorForState:UIControlStateNormal] CGColor]];
     [[[self pairButton] layer] setBorderWidth:1.0f];
     [[[self pairButton] layer] setCornerRadius:CGRectGetHeight([[self pairButton] bounds])/2];
-    [[self pairButton] setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.1f]];
+    [[self pairButton] setBackgroundColor:[[self view] backgroundColor]];
 }
 
 - (void)setupNeedButtonTitle {
-    UIFont* font = [UIFont fontWithName:@"Agile-Thin" size:18.0f];
+    UIFont* font = [[[self needButton] titleLabel] font];
     NSString* needText = NSLocalizedString(@"settings.pill.need-pill", nil);
     NSDictionary* normalAttributes = @{
         NSFontAttributeName : font,
-        NSForegroundColorAttributeName : [UIColor whiteColor],
+        NSForegroundColorAttributeName : [[self needButton] titleColorForState:UIControlStateNormal],
         NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle)
     };
     NSDictionary* highlightedAttributes = @{
@@ -59,16 +59,12 @@
     [[self needButton] setAttributedTitle:highlightedTitle forState:UIControlStateHighlighted];
 }
 
-- (void)showNoSenseAlert {
-    [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"settings.sense.not-found-title", nil)
-                                          message:NSLocalizedString(@"settings.pill.pair-no-sense-message", nil)
-                             presentingController:self];
-}
-
 - (IBAction)pairPill:(id)sender {
-    if ([self senseManager] == nil) {
-        [self showNoSenseAlert];
-    } // TODO: (jimmy): implement it! ... but it requires Sense to be working
+    HEMPillPairViewController* pairVC =
+        (HEMPillPairViewController*) [HEMOnboardingStoryboard instantiatePillPairViewController];
+    [pairVC setDelegate:self];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:pairVC];
+    [self presentViewController:nav animated:YES completion:nil];
 }
 
 - (IBAction)needPill:(id)sender {
@@ -76,6 +72,17 @@
     // it or if there's more time, we will think of something nice
     NSURL* orderURL = [NSURL URLWithString:kHEMSenseOrderURL];
     [[UIApplication sharedApplication] openURL:orderURL];
+}
+
+#pragma mark - HEMPillPairDelegate
+
+- (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
+    [[self navigationController] popToViewController:[self previousController] animated:NO];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didCancelPairing:(HEMPillPairViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

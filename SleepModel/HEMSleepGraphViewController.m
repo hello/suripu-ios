@@ -156,7 +156,9 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 - (UIImage*)timelineSnapshotInRect:(CGRect)rect {
     UIGraphicsBeginImageContextWithOptions(rect.size, NO, [UIScreen mainScreen].scale);
-    [self.collectionView drawViewHierarchyInRect:CGRectMake(-CGRectGetMinX(rect), -CGRectGetMinY(rect), CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds)) afterScreenUpdates:NO];
+    CGRect enlargedRect = CGRectMake(-CGRectGetMinX(rect), -CGRectGetMinY(rect),
+                                     CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
+    [self.collectionView drawViewHierarchyInRect:enlargedRect afterScreenUpdates:NO];
     UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     return image;
@@ -195,8 +197,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
         self.eventInfoView.caretPosition = HEMEventInfoViewCaretPositionTop;
     }
     if ((CGRectEqualToRect(self.eventInfoView.frame, frame) || fabsf(CGRectGetMinY(frame) - CGRectGetMinY(self.eventInfoView.frame)) < 10.f) && self.eventInfoView.alpha > 0) {
-        [self hideEventBlurView];
         [UIView animateWithDuration:0.25f animations:^{
+            [self hideEventBlurView];
             self.eventInfoView.alpha = 0;
         }];
     }
@@ -227,6 +229,9 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 - (void)showEventBlurView
 {
+    if (self.eventBandView.alpha == 1 && self.eventBlurView.alpha == 1)
+        return;
+
     CGRect blurRect = CGRectZero;
     CGFloat minX = 0.f;
     CGFloat width = CGRectGetWidth(self.view.bounds);
@@ -271,7 +276,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     self.eventBandView.backgroundColor = [UIColor colorWithPatternImage:bandSnapshot];
     self.eventBandView.frame = bandRect;
     self.eventTimelineHeaderLabel.frame = CGRectMake(CGRectGetMinX(bandRect), CGRectGetMinY(blurRect), CGRectGetWidth(self.view.bounds), HEMTimelineHeaderCellHeight);
-    [UIView animateWithDuration:0.1f animations:^{
+    [UIView animateWithDuration:0.5f animations:^{
         self.eventBandView.alpha = 1;
         self.eventBlurView.alpha = 1;
         self.eventTimelineHeaderLabel.alpha = 1;

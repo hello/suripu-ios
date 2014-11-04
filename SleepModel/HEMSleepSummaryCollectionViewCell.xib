@@ -45,7 +45,7 @@
                         <color key="textColor" white="0.57999999999999996" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DtZ-v4-794">
+                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DtZ-v4-794">
                         <rect key="frame" x="283" y="15" width="16" height="23"/>
                         <state key="normal" image="Share.png">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -80,8 +80,10 @@
             <size key="customSize" width="314" height="343"/>
             <connections>
                 <outlet property="dateLabel" destination="Bcg-AK-PaO" id="IMW-mi-SBx"/>
+                <outlet property="drawerButton" destination="RAe-yJ-lzB" id="kMb-h5-7af"/>
                 <outlet property="messageLabel" destination="buK-Of-ZfH" id="wIT-cG-avW"/>
                 <outlet property="messageTitleLabel" destination="EkC-F1-GFh" id="daw-iv-tMM"/>
+                <outlet property="shareButton" destination="DtZ-v4-794" id="kvQ-v5-ADb"/>
                 <outlet property="sleepScoreGraphView" destination="T3i-WO-VZQ" id="nPx-1C-bLv"/>
             </connections>
             <point key="canvasLocation" x="231" y="282"/>

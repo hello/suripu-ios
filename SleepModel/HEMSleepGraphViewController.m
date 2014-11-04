@@ -12,6 +12,7 @@
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMEventInfoView.h"
 #import "HEMPaddedRoundedLabel.h"
+#import "HEMAppDelegate.h"
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 
@@ -57,6 +58,9 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 {
     [super viewDidAppear:animated];
     self.panePanGestureRecognizer.delegate = self;
+    [self.dataSource.sleepSummaryCell.drawerButton addTarget:self
+                                                      action:@selector(toggleDrawer)
+                                            forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -71,6 +75,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     self.collectionView.scrollEnabled = NO;
     [UIView animateWithDuration:0.5f animations:^{
         self.collectionView.contentOffset = CGPointMake(0, 0);
+        [self.dataSource.sleepSummaryCell.drawerButton setImage:[UIImage imageNamed:@"caret up"]
+                                                       forState:UIControlStateNormal];
     }];
     self.oldBarStyle = UIStatusBarStyleLightContent;
     [self setNeedsStatusBarAppearanceUpdate];
@@ -82,7 +88,17 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     self.oldBarStyle = [UIApplication sharedApplication].statusBarStyle;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.collectionView.scrollEnabled = YES;
+    [UIView animateWithDuration:0.5f animations:^{
+        [self.dataSource.sleepSummaryCell.drawerButton setImage:[UIImage imageNamed:@"Menu"]
+                                                       forState:UIControlStateNormal];
+    }];
     [self setNeedsStatusBarAppearanceUpdate];
+}
+
+- (void)toggleDrawer
+{
+    HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
+    [delegate toggleSettingsDrawer];
 }
 
 #pragma mark Event Info Popup

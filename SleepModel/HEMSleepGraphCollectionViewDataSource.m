@@ -138,6 +138,12 @@ static NSString* const sensorTypeParticulates = @"particulates";
     return self.sleepResult.segments.count;
 }
 
+- (HEMSleepSummaryCollectionViewCell *)sleepSummaryCell
+{
+    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:0 inSection:HEMSleepGraphCollectionViewSummarySection];
+    return (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+}
+
 #pragma mark - Loading
 
 - (BOOL)shouldShowLoadingView

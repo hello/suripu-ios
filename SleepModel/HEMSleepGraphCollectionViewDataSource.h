@@ -2,6 +2,7 @@
 #import <Foundation/Foundation.h>
 
 @class SENSleepResultSegment;
+@class HEMSleepSummaryCollectionViewCell;
 
 extern NSString* const HEMSleepEventTypeWakeUp;
 extern NSString* const HEMSleepEventTypeLight;
@@ -48,4 +49,6 @@ extern NSString* const HEMSleepEventTypeFallAsleep;
 - (NSUInteger)numberOfSleepSegments;
 
 - (NSString*)localizedNameForSleepEventType:(NSString*)eventType;
+
+- (HEMSleepSummaryCollectionViewCell*)sleepSummaryCell;
 @end

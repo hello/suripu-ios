@@ -165,6 +165,9 @@
 		8AD88C451A088CE100B4F803 /* Share.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C3F1A088CE100B4F803 /* Share.png */; };
 		8AD88C461A088CE100B4F803 /* Share@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C401A088CE100B4F803 /* Share@2x.png */; };
 		8AD88C471A088CE100B4F803 /* Share@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C411A088CE100B4F803 /* Share@3x.png */; };
+		8AD88C4B1A09828900B4F803 /* caret up.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C481A09828900B4F803 /* caret up.png */; };
+		8AD88C4C1A09828900B4F803 /* caret up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C491A09828900B4F803 /* caret up@2x.png */; };
+		8AD88C4D1A09828900B4F803 /* caret up@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C4A1A09828900B4F803 /* caret up@3x.png */; };
 		8AF5A39C19C102D30009A499 /* chevronIconRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0481989D47000C2BD63 /* chevronIconRight@2x.png */; };
 		8AFE77E219E8C2170000F881 /* alarm.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE779419E8C2170000F881 /* alarm.png */; };
 		8AFE77E319E8C2170000F881 /* alarm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE779519E8C2170000F881 /* alarm@2x.png */; };
@@ -612,6 +615,9 @@
 		8AD88C3F1A088CE100B4F803 /* Share.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Share.png; sourceTree = "<group>"; };
 		8AD88C401A088CE100B4F803 /* Share@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Share@2x.png"; sourceTree = "<group>"; };
 		8AD88C411A088CE100B4F803 /* Share@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Share@3x.png"; sourceTree = "<group>"; };
+		8AD88C481A09828900B4F803 /* caret up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "caret up.png"; sourceTree = "<group>"; };
+		8AD88C491A09828900B4F803 /* caret up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "caret up@2x.png"; sourceTree = "<group>"; };
+		8AD88C4A1A09828900B4F803 /* caret up@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "caret up@3x.png"; sourceTree = "<group>"; };
 		8AFE779419E8C2170000F881 /* alarm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = alarm.png; path = images/alarm.png; sourceTree = "<group>"; };
 		8AFE779519E8C2170000F881 /* alarm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "alarm@2x.png"; path = "images/alarm@2x.png"; sourceTree = "<group>"; };
 		8AFE779619E8C2170000F881 /* alarm@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "alarm@3x.png"; path = "images/alarm@3x.png"; sourceTree = "<group>"; };
@@ -1205,6 +1211,9 @@
 		8A660131199EBDFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				8AD88C481A09828900B4F803 /* caret up.png */,
+				8AD88C491A09828900B4F803 /* caret up@2x.png */,
+				8AD88C4A1A09828900B4F803 /* caret up@3x.png */,
 				8AD88C3C1A088CE100B4F803 /* Menu.png */,
 				8AD88C3D1A088CE100B4F803 /* Menu@2x.png */,
 				8AD88C3E1A088CE100B4F803 /* Menu@3x.png */,
@@ -1911,6 +1920,7 @@
 				8AFE77EE19E8C2170000F881 /* humidity-medium.png in Resources */,
 				BFDCC7BA19D9C741007A922B /* sense.png in Resources */,
 				8A1E723819D62C26007475D3 /* alarmSoundIcon.png in Resources */,
+				8AD88C4C1A09828900B4F803 /* caret up@2x.png in Resources */,
 				BFC8215419E7441200E09D5D /* play@2x.png in Resources */,
 				8AFE780519E8C2170000F881 /* particulates-bad@3x.png in Resources */,
 				8AAEED0319A5225F006517C4 /* Agile-Extralight.otf in Resources */,
@@ -1956,6 +1966,7 @@
 				8AFE780C19E8C2170000F881 /* phone-bad.png in Resources */,
 				8A66FC96199D24FF00922ED5 /* maleIcon@2x.png in Resources */,
 				8AFE77F219E8C2170000F881 /* light-bad@2x.png in Resources */,
+				8AD88C4B1A09828900B4F803 /* caret up.png in Resources */,
 				BF14E3BF19EF3BD10006EFEA /* onboarding_bg_wide@3x.png in Resources */,
 				8AFE781E19E8C2170000F881 /* sunrise.png in Resources */,
 				8A9BD8B819DDD02100B1E57E /* Calibre-Bold.otf in Resources */,
@@ -1982,6 +1993,7 @@
 				8A1743BC19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.xib in Resources */,
 				8AC4A03B1989C36200C2BD63 /* temperatureIcon.png in Resources */,
 				8AFE77E919E8C2170000F881 /* humidity-bad@2x.png in Resources */,
+				8AD88C4D1A09828900B4F803 /* caret up@3x.png in Resources */,
 				8AFE780819E8C2170000F881 /* particulates-good@3x.png in Resources */,
 				8AFE781A19E8C2170000F881 /* sound-good@3x.png in Resources */,
 				8AC4A03C1989C36200C2BD63 /* temperatureIcon@2x.png in Resources */,

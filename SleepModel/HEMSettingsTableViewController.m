@@ -2,6 +2,8 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENSettings.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMSettingsTableViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlertController.h"
@@ -66,6 +68,7 @@ static NSString* const HEMSettingsLogFileType = @"text/plain";
     }
     [[cell textLabel] setText:title];
     [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell textLabel] setFont:[UIFont settingsTitleFont]];
 }
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath

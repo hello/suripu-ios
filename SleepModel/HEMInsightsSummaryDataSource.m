@@ -53,20 +53,26 @@ static CGFloat const kHEMInsightCellDisplayDuration = 1.0f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    
-    return [[self insights] count];
+    NSInteger insightCount = [[self insights] count];
+    return insightCount > 0 ? insightCount : 1; // display description of what it is
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    SENInsight* insight = [self insights][[indexPath row]];
-    
     HEMInsightCollectionViewCell* cell =
-        [collectionView dequeueReusableCellWithReuseIdentifier:kHEMInsightCellReuseId
-                                                  forIndexPath:indexPath];
+    [collectionView dequeueReusableCellWithReuseIdentifier:kHEMInsightCellReuseId
+                                              forIndexPath:indexPath];
     
-    [cell setTitle:[[insight title] uppercaseString] message:[insight message]];
+    if ([[self insights] count] > 0) {
+        SENInsight* insight = [self insights][[indexPath row]];
+        
+        [cell setTitle:[[insight title] uppercaseString] message:[insight message]];
+        
+    } else {
+        [cell setTitle:NSLocalizedString(@"sleep.insight.title", nil)
+               message:NSLocalizedString(@"sleep.insight.summary.no-data-message", nil)];
+    }
     
     [[cell contentView ] setAlpha:0.0f];
     [UIView animateWithDuration:kHEMInsightCellDisplayDuration animations:^{

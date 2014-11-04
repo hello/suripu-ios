@@ -1,5 +1,8 @@
 
 #import <SenseKit/SENAlarm.h>
+
+#import "UIFont+HEMStyle.h"
+
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
@@ -49,6 +52,7 @@
     NSUInteger day = [self repeatDayForIndexPath:indexPath];
     cell.textLabel.text = text;
     cell.textLabel.textColor = [HelloStyleKit backViewTextColor];
+    cell.textLabel.font = [UIFont settingsTitleFont];
 
     if ((self.alarmCache.repeatFlags & day) == day) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

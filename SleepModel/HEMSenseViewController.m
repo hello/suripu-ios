@@ -10,6 +10,8 @@
 #import <SenseKit/SENDevice.h>
 #import <SenseKit/SENSenseManager.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDeviceCenter.h"
@@ -147,8 +149,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         
         [[cell textLabel] setText:title];
         [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+        [[cell textLabel] setFont:[UIFont settingsTitleFont]];
+        
         [[cell detailTextLabel] setText:detail];
         [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+        [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
         
     } // else, look at the storyboard
     

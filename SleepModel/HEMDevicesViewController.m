@@ -9,6 +9,8 @@
 
 #import <SenseKit/SENDevice.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMDevicesViewController.h"
 #import "HEMDeviceCenter.h"
 #import "HEMPillViewController.h"
@@ -149,8 +151,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [[cell textLabel] setText:name];
     [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell textLabel] setFont:[UIFont settingsTitleFont]];
+    
     [[cell detailTextLabel] setText:status];
     [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
+    
     [[cell imageView] setImage:icon];
     [[cell contentView] setAlpha:alpha];
     [cell setAccessoryView:activity];

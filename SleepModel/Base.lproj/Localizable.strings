@@ -152,6 +152,8 @@
 
 // insights
 "sleep.trends.title" = "Trends";
+"sleep.insight.title" = "INSIGHTS";
+"sleep.insight.summary.no-data-message"  = "As Sense learns from your sleep habits, we will let you know how to improve.";
 
 // authentication/sign in
 "authorization.title" = "Sign in";

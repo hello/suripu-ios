@@ -9,6 +9,8 @@
 
 #import <SenseKit/SENDevice.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDeviceCenter.h"
@@ -35,7 +37,7 @@
 #pragma mark - UITableViewDelegate / DataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -65,6 +67,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         case 2: {
             title = NSLocalizedString(@"settings.device.color", nil);
+            break;
+        }
+        case 3: {
+            title = NSLocalizedString(@"settings.device.firmware-version", nil);
             if ([[info firmwareVersion] length] > 0) {
                 detail = [info firmwareVersion];
             }
@@ -76,8 +82,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [[cell textLabel] setText:title];
     [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell textLabel] setFont:[UIFont settingsTitleFont]];
+    
     [[cell detailTextLabel] setText:detail];
     [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
     
 }
 

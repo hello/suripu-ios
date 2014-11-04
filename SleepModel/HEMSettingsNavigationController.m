@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMSettingsNavigationController.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
@@ -24,7 +26,7 @@
     [[self navigationBar] setTintColor:[HelloStyleKit backViewTintColor]];
     [[self navigationBar] setTitleTextAttributes:@{
         NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
-        NSFontAttributeName : [UIFont fontWithName:@"Calibre-Regular" size:20.0f]
+        NSFontAttributeName : [UIFont settingsTitleFont]
     }];
 }   
 

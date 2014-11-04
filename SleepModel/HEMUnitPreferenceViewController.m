@@ -7,6 +7,8 @@
 //
 #import <SenseKit/SENSettings.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMUnitPreferenceViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
@@ -119,6 +121,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         
         [[cell textLabel] setText:title];
         [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+        [[cell textLabel] setFont:[UIFont settingsTitleFont]];
+        
         [cell setAccessoryView:control];
     }
     

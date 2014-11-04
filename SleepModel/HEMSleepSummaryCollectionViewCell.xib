@@ -21,8 +21,8 @@
                             <constraint firstAttribute="height" constant="155" id="Tcm-aA-44U"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Last night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-AK-PaO">
-                        <rect key="frame" x="118" y="18" width="82.5" height="25"/>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-AK-PaO">
+                        <rect key="frame" x="120" y="18" width="78.5" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="E5c-Hr-7wE"/>
                         </constraints>
@@ -45,6 +45,18 @@
                         <color key="textColor" white="0.57999999999999996" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DtZ-v4-794">
+                        <rect key="frame" x="283" y="15" width="16" height="23"/>
+                        <state key="normal" image="Share.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RAe-yJ-lzB">
+                        <rect key="frame" x="21" y="18" width="18" height="22"/>
+                        <state key="normal" image="Menu.png">
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -55,11 +67,15 @@
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="buK-Of-ZfH" secondAttribute="bottom" id="FOD-tr-5xk"/>
                 <constraint firstItem="T3i-WO-VZQ" firstAttribute="top" secondItem="Bcg-AK-PaO" secondAttribute="bottom" constant="30" id="KF5-q2-HnP"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="EkC-F1-GFh" secondAttribute="bottom" constant="14" id="KSZ-Id-dKy"/>
+                <constraint firstItem="Bcg-AK-PaO" firstAttribute="top" secondItem="RAe-yJ-lzB" secondAttribute="top" id="XIa-yQ-7yq"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="EkC-F1-GFh" secondAttribute="leading" id="Y5J-NU-9dH"/>
+                <constraint firstItem="Bcg-AK-PaO" firstAttribute="top" secondItem="DtZ-v4-794" secondAttribute="top" constant="3" id="kiW-cm-qcx"/>
+                <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="RAe-yJ-lzB" secondAttribute="leading" id="nOG-Yp-2KT"/>
                 <constraint firstAttribute="centerX" secondItem="T3i-WO-VZQ" secondAttribute="centerX" constant="0.5" id="p9I-c4-GqY"/>
                 <constraint firstAttribute="trailing" secondItem="buK-Of-ZfH" secondAttribute="trailing" constant="21" id="qyQ-fV-uRR"/>
                 <constraint firstAttribute="centerX" secondItem="Bcg-AK-PaO" secondAttribute="centerX" constant="1" id="uJ7-Wb-V2p"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="21" id="wPf-Zd-mGf"/>
+                <constraint firstItem="buK-Of-ZfH" firstAttribute="trailing" secondItem="DtZ-v4-794" secondAttribute="trailing" id="y1z-oQ-msL"/>
             </constraints>
             <size key="customSize" width="314" height="343"/>
             <connections>
@@ -68,7 +84,11 @@
                 <outlet property="messageTitleLabel" destination="EkC-F1-GFh" id="daw-iv-tMM"/>
                 <outlet property="sleepScoreGraphView" destination="T3i-WO-VZQ" id="nPx-1C-bLv"/>
             </connections>
-            <point key="canvasLocation" x="231" y="282.5"/>
+            <point key="canvasLocation" x="231" y="282"/>
         </collectionViewCell>
     </objects>
+    <resources>
+        <image name="Menu.png" width="18" height="12"/>
+        <image name="Share.png" width="16" height="23"/>
+    </resources>
 </document>

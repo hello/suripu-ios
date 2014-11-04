@@ -5,14 +5,6 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <mutableArray key="Calibre-Light.otf">
-            <string>Calibre-Light</string>
-        </mutableArray>
-        <mutableArray key="Calibre-Thin.otf">
-            <string>Calibre-Thin</string>
-        </mutableArray>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -39,14 +31,13 @@
                             <constraint firstAttribute="height" constant="24" id="0Xq-m6-7LT"/>
                             <constraint firstAttribute="width" constant="64" id="awX-fN-ACH"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="Calibre-Thin" family="Calibre" pointSize="15"/>
+                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Woke up" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5DK-SE-Ybo">
-                        <rect key="frame" x="66" y="7" width="53" height="16"/>
-                        <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="16"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <rect key="frame" x="66" y="5" width="60" height="20.5"/>
+                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                         <nil key="highlightedColor"/>
                     </label>
                 </subviews>

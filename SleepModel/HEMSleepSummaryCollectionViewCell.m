@@ -12,11 +12,6 @@
 
 static CGFloat const HEMSleepSummaryShadowHeight = 1.f;
 
-- (void)awakeFromNib
-{
-
-}
-
 - (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated
 {
     [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];

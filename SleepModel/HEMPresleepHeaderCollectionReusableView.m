@@ -1,32 +1,41 @@
-//
-//  HEMPreSleepCollectionViewCell.m
-//  Sense
-//
-//  Created by Delisa Mason on 10/10/14.
-//  Copyright (c) 2014 Hello, Inc. All rights reserved.
-//
 
 #import "HEMPresleepHeaderCollectionReusableView.h"
 #import "HEMTimelineDrawingUtils.h"
 #import "HelloStyleKit.h"
 
+CGFloat const HEMPresleepSummaryLineOffset = 20.f;
+
 @interface HEMPresleepHeaderCollectionReusableView ()
 
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
+@property (nonatomic, strong) CAGradientLayer* gradientLayer;
 @end
 
 @implementation HEMPresleepHeaderCollectionReusableView
 
-static CGFloat const HEMPresleepSummaryShadowHeight = 5.f;
-static CGFloat const HEMPresleepSummaryInsetHeight = 15.f;
+static CGFloat const HEMPresleepSummaryShadowHeight = 1.f;
 
 - (void)awakeFromNib
 {
     self.backgroundColor = [UIColor clearColor];
-    self.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:[NSLocalizedString(@"sleep-history.presleep-state.title", nil) uppercaseString]
-                                                                     attributes:@{
-                                                                         NSKernAttributeName : @(2.5)
-                                                                     }];
+    self.titleLabel.text = [NSLocalizedString(@"sleep-history.presleep-state.title", nil) uppercaseString];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    if (!self.gradientLayer) {
+        UIColor* topColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.97 alpha:1];
+        UIColor* bottomColor = [UIColor whiteColor];
+        self.gradientLayer = [CAGradientLayer layer];
+        CGRect gradientRect = self.bounds;
+        CGFloat offset = HEMPresleepSummaryShadowHeight + HEMPresleepSummaryLineOffset;
+        gradientRect.origin.y += offset;
+        gradientRect.size.height -= offset;
+        self.gradientLayer.frame = gradientRect;
+        self.gradientLayer.colors = @[(id)topColor.CGColor, (id)bottomColor.CGColor];
+        [self.layer insertSublayer:self.gradientLayer atIndex:0];
+    }
 }
 
 - (void)drawRect:(CGRect)rect
@@ -37,17 +46,9 @@ static CGFloat const HEMPresleepSummaryInsetHeight = 15.f;
 - (void)drawShadowGradientInRect:(CGRect)rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithWhite:0.97f alpha:1.f].CGColor);
-    CGRect contentRect = CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect) + HEMPresleepSummaryShadowHeight + HEMPresleepSummaryInsetHeight, CGRectGetWidth(rect), CGRectGetHeight(rect) - HEMPresleepSummaryShadowHeight - HEMPresleepSummaryInsetHeight);
-    CGContextFillRect(ctx, contentRect);
-
-    CGRect shadowRect = CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect) + HEMPresleepSummaryInsetHeight, CGRectGetWidth(rect), HEMPresleepSummaryShadowHeight);
-
-    CGFloat colors[] = {
-        0.302, 0.31, 0.306, 0.0,
-        0.41, 0.42, 0.42, 0.1,
-    };
-    [HEMTimelineDrawingUtils drawVerticalGradientInRect:shadowRect withColors:colors];
+    CGRect shadowRect = CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect) + HEMPresleepSummaryLineOffset, CGRectGetWidth(rect), HEMPresleepSummaryShadowHeight);
+    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.9 green:0.91 blue:0.91 alpha:1].CGColor);
+    CGContextFillRect(ctx, shadowRect);
 }
 
 @end

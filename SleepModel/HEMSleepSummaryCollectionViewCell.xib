@@ -23,6 +23,9 @@
                     </view>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Last night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-AK-PaO">
                         <rect key="frame" x="118" y="18" width="82.5" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="E5c-Hr-7wE"/>
+                        </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
                         <color key="textColor" white="0.40000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>

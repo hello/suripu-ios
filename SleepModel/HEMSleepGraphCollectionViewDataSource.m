@@ -14,6 +14,7 @@
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMNoSleepEventCollectionViewCell.h"
+#import "HEMTimelineHeaderCollectionReusableView.h"
 #import "HEMPresleepHeaderCollectionReusableView.h"
 #import "HEMPresleepItemCollectionViewCell.h"
 #import "HEMSensorGraphDataSource.h"
@@ -47,6 +48,7 @@ NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
 static NSString* const sleepSegmentReuseIdentifier = @"sleepSegmentCell";
 static NSString* const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
 static NSString* const presleepHeaderReuseIdentifier = @"presleepCell";
+static NSString* const timelineHeaderReuseIdentifier = @"timelineHeaderCell";
 static NSString* const presleepItemReuseIdentifier = @"presleepItemCell";
 static NSString* const sleepEventReuseIdentifier = @"sleepEventCell";
 static NSString* const sensorTypeTemperature = @"temperature";
@@ -119,6 +121,9 @@ static NSString* const sensorTypeParticulates = @"particulates";
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMPresleepHeaderCollectionReusableView class]) bundle:bundle]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                  withReuseIdentifier:presleepHeaderReuseIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMTimelineHeaderCollectionReusableView class]) bundle:bundle]
+          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                 withReuseIdentifier:timelineHeaderReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMPresleepItemCollectionViewCell class]) bundle:bundle]
           forCellWithReuseIdentifier:presleepItemReuseIdentifier];
 }
@@ -194,10 +199,19 @@ static NSString* const sensorTypeParticulates = @"particulates";
 
 - (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView viewForSupplementaryElementOfKind:(NSString*)kind atIndexPath:(NSIndexPath*)indexPath
 {
-    HEMPresleepHeaderCollectionReusableView* view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:presleepHeaderReuseIdentifier forIndexPath:indexPath];
-    view.hidden = !([kind isEqualToString:UICollectionElementKindSectionHeader]
-                    && indexPath.section == HEMSleepGraphCollectionViewPresleepSection
-                    && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewPresleepSection] > 0);
+    UICollectionReusableView* view = nil;
+    switch (indexPath.section) {
+        case HEMSleepGraphCollectionViewPresleepSection: {
+            view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:presleepHeaderReuseIdentifier forIndexPath:indexPath];
+            view.hidden = !([kind isEqualToString:UICollectionElementKindSectionHeader] && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewPresleepSection] > 0);
+        } break;
+
+        case HEMSleepGraphCollectionViewSegmentSection:
+        default: {
+            view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:timelineHeaderReuseIdentifier forIndexPath:indexPath];
+            view.hidden = !([kind isEqualToString:UICollectionElementKindSectionHeader] && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] > 0);
+        }    break;
+    }
     return view;
 }
 

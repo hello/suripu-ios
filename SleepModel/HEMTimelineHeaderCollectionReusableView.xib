@@ -12,7 +12,7 @@
             <autoresizingMask key="autoresizingMask"/>
             <subviews>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="EVENTS TIMELINE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0f-0i-AVp">
-                    <rect key="frame" x="21" y="0.0" width="78.5" height="50"/>
+                    <rect key="frame" x="22" y="0.0" width="78.5" height="50"/>
                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="9"/>
                     <color key="textColor" white="0.57999999999999996" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
@@ -20,7 +20,7 @@
             </subviews>
             <constraints>
                 <constraint firstItem="k0f-0i-AVp" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" id="0XG-Fu-L6f"/>
-                <constraint firstItem="k0f-0i-AVp" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="21" id="9eV-5N-b9L"/>
+                <constraint firstItem="k0f-0i-AVp" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="22" id="9eV-5N-b9L"/>
                 <constraint firstAttribute="bottom" secondItem="k0f-0i-AVp" secondAttribute="bottom" id="zjI-Xw-dZL"/>
             </constraints>
         </collectionReusableView>

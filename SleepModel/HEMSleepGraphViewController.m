@@ -23,6 +23,7 @@
 @property (strong, nonatomic) HEMEventInfoView* eventInfoView;
 @property (strong, nonatomic) UIView* eventBlurView;
 @property (strong, nonatomic) UIView* eventBandView;
+@property (strong, nonatomic) UILabel* eventTimelineHeaderLabel;
 @property (strong, nonatomic) NSDictionary* eventInfoMarkdownAttributes;
 @property (strong, nonatomic) NSDateFormatter* eventInfoDateFormatter;
 @end
@@ -106,15 +107,21 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     if (!self.eventBlurView) {
         self.eventBlurView = [UIView new];
         self.eventBandView = [UIView new];
+        self.eventTimelineHeaderLabel = [UILabel new];
+        self.eventTimelineHeaderLabel.font = [UIFont insightTitleFont];
+        self.eventTimelineHeaderLabel.textColor = [UIColor grayColor];
+        self.eventTimelineHeaderLabel.text = [NSLocalizedString(@"sleep-event.timeline.title", nil) uppercaseString];
         self.eventBlurView.userInteractionEnabled = NO;
         self.eventBandView.userInteractionEnabled = NO;
         self.eventBandView.layer.cornerRadius = floorf(HEMSleepSegmentMinimumFillWidth/2);
         [self.view insertSubview:self.eventBlurView belowSubview:self.eventInfoView];
         [self.view insertSubview:self.eventBandView aboveSubview:self.eventBlurView];
+        [self.view insertSubview:self.eventTimelineHeaderLabel aboveSubview:self.eventBlurView];
     }
     self.eventInfoView.alpha = 0;
     self.eventBlurView.alpha = 0;
     self.eventBandView.alpha = 0;
+    self.eventTimelineHeaderLabel.alpha = 0;
 }
 
 - (void)presentEventInfoView
@@ -247,9 +254,11 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     self.eventBlurView.frame = blurRect;
     self.eventBandView.backgroundColor = [UIColor colorWithPatternImage:bandSnapshot];
     self.eventBandView.frame = bandRect;
+    self.eventTimelineHeaderLabel.frame = CGRectMake(CGRectGetMinX(bandRect), CGRectGetMinY(blurRect), CGRectGetWidth(self.view.bounds), HEMTimelineHeaderCellHeight);
     [UIView animateWithDuration:0.1f animations:^{
         self.eventBandView.alpha = 1;
         self.eventBlurView.alpha = 1;
+        self.eventTimelineHeaderLabel.alpha = 1;
     }];
 }
 
@@ -257,6 +266,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 {
     self.eventBlurView.alpha = 0;
     self.eventBandView.alpha = 0;
+    self.eventTimelineHeaderLabel.alpha = 0;
 }
 
 - (NSIndexPath*)indexPathForEventCellWithSubview:(UIView*)view

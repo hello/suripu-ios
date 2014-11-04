@@ -264,6 +264,7 @@
 "sleep-event.type.motion.name" = "Tossing and turning";
 "sleep-event.type.partner_motion.name" = "Partner moved";
 "sleep-event.title.format" = "%@ ― %@";
+"sleep-event.timeline.title" = "Events timeline";
 
 // sleep history
 "sleep-history.last-night" = "Last night";

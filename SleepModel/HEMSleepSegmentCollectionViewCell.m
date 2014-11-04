@@ -2,8 +2,9 @@
 #import "HEMSleepSegmentCollectionViewCell.h"
 #import "HelloStyleKit.h"
 
-CGFloat HEMLinedCollectionViewCellLineOffset = 14.f;
+CGFloat HEMLinedCollectionViewCellLineOffset = 20.f;
 CGFloat HEMLinedCollectionViewCellLineWidth = 2.f;
+CGFloat HEMSleepSegmentMinimumFillWidth = 28.f;
 
 @interface HEMSleepSegmentCollectionViewCell ()
 
@@ -12,9 +13,6 @@ CGFloat HEMLinedCollectionViewCellLineWidth = 2.f;
 @end
 
 @implementation HEMSleepSegmentCollectionViewCell
-
-static CGFloat HEMSleepSegmentMaximumFillRatio = 0.95f;
-static CGFloat HEMSleepSegmentMinimumFillWidth = 24.f;
 
 - (void)awakeFromNib
 {

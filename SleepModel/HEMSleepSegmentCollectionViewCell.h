@@ -3,6 +3,7 @@
 
 extern CGFloat HEMLinedCollectionViewCellLineOffset;
 extern CGFloat HEMLinedCollectionViewCellLineWidth;
+extern CGFloat HEMSleepSegmentMinimumFillWidth;
 
 @interface HEMSleepSegmentCollectionViewCell : UICollectionViewCell
 

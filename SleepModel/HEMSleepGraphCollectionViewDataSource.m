@@ -20,6 +20,7 @@
 #import "HEMSleepScoreGraphView.h"
 #import "HelloStyleKit.h"
 #import "HEMColorUtils.h"
+#import "UIFont+HEMStyle.h"
 
 NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
 NSString* const HEMSleepEventTypeLight = @"LIGHT";
@@ -149,7 +150,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     if (graphView) {
         [NSObject cancelPreviousPerformRequestsWithTarget:self];
         CGFloat width = MIN(CGRectGetWidth(graphView.frame), CGRectGetHeight(graphView.frame)) * 0.5;
-        self.loadingView = [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleWave color:[UIColor colorWithWhite:0.9 alpha:0.5] spinnerSize:width];
+        self.loadingView = [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleWave color:[UIColor colorWithWhite:0.1 alpha:0.06] spinnerSize:width];
         self.loadingView.center = graphView.center;
         [self.loadingView startAnimating];
         [cell addSubview:self.loadingView];
@@ -226,11 +227,21 @@ static NSString* const sensorTypeParticulates = @"particulates";
      sleepSummaryCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMSleepSummaryCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSummaryReuseIdentifier forIndexPath:indexPath];
-    UIFont* emFont = [UIFont fontWithName:@"Calibre-Medium" size:cell.messageLabel.font.pointSize];
-    [cell setSleepScore:[self.sleepResult.score integerValue] animated:YES];
+    NSInteger score = [self.sleepResult.score integerValue];
+    [cell setSleepScore:score animated:YES];
+    if (score == 0) {
+        cell.messageTitleLabel.hidden = YES;
+        cell.messageLabel.textAlignment = NSTextAlignmentCenter;
+    } else {
+        cell.messageTitleLabel.hidden = NO;
+        cell.messageLabel.textAlignment = NSTextAlignmentLeft;
+    }
     NSDictionary* attributes = @{
         @(STRONG) : @{
-            NSFontAttributeName : emFont,
+            NSFontAttributeName : [UIFont timelineMessageBoldFont],
+        },
+        @(PLAIN) : @{
+            NSFontAttributeName : [UIFont timelineMessageFont]
         }
     };
     cell.messageLabel.attributedText = markdown_to_attr_string(self.sleepResult.message, 0, attributes);
@@ -264,13 +275,14 @@ static NSString* const sensorTypeParticulates = @"particulates";
     SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMSleepEventCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepEventReuseIdentifier forIndexPath:indexPath];
-    cell.eventTypeButton.layer.borderColor = [HEMColorUtils colorForSleepDepth:sleepDepth].CGColor;
-    cell.eventTypeButton.layer.borderWidth = 2.f;
-    cell.eventTypeButton.layer.cornerRadius = CGRectGetWidth(cell.eventTypeButton.bounds) / 2;
     if ([collectionView.delegate respondsToSelector:@selector(didTapEventButton:)]) {
         [cell.eventTypeButton addTarget:collectionView.delegate action:@selector(didTapEventButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     [cell.eventTypeButton setImage:[self imageForEventType:segment.eventType] forState:UIControlStateNormal];
+    BOOL showLargeButton = [segment.eventType isEqualToString:HEMSleepEventTypeWakeUp]
+        || [segment.eventType isEqualToString:HEMSleepEventTypeFallAsleep];
+    [cell showLargeButton:showLargeButton];
+    cell.eventTypeButton.layer.borderColor = [HEMColorUtils colorForSleepDepth:sleepDepth].CGColor;
     cell.eventTimeLabel.text = [self textForTimeInterval:[segment.date timeIntervalSince1970]];
 
     cell.eventTitleLabel.text = [self localizedNameForSleepEventType:segment.eventType];

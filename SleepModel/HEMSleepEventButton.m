@@ -7,7 +7,7 @@
 {
     if (self = [super initWithFrame:frame]) {
         self.layer.cornerRadius = CGRectGetWidth(frame) / 2;
-        self.layer.borderWidth = 2.f;
+        self.layer.borderWidth = 0.f;
     }
     return self;
 }
@@ -16,7 +16,7 @@
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
-    CGContextFillEllipseInRect(ctx, CGRectInset(rect, 2.f, 2.f));
+    CGContextFillEllipseInRect(ctx, CGRectInset(rect, 1.f, 1.f));
 }
 
 @end

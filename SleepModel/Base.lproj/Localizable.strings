@@ -263,9 +263,10 @@
 "sleep-event.type.noise.name" = "Noise disturbance";
 "sleep-event.type.motion.name" = "Tossing and turning";
 "sleep-event.type.partner_motion.name" = "Partner moved";
+"sleep-event.title.format" = "%@ ― %@";
 
 // sleep history
-"sleep-history.last-night" = "Last Night";
+"sleep-history.last-night" = "Last night";
 "sleep-history.score" = "SLEEP SCORE";
 "sleep-history.depth.awake" = "Awake";
 "sleep-history.depth.light" = "Light sleep";

@@ -36,7 +36,7 @@ static CGFloat const HEMPresleepHeaderCellHeight = 84.f;
 static CGFloat const HEMTimelineHeaderCellHeight = 50.f;
 static CGFloat const HEMPresleepItemCellHeight = 48.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 30.f;
-static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 20.f;
+static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 - (void)viewDidLoad
 {
@@ -101,22 +101,20 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 20.f;
     if (!self.eventInfoView) {
         UINib* nib = [UINib nibWithNibName:NSStringFromClass([HEMEventInfoView class]) bundle:nil];
         self.eventInfoView = [[nib instantiateWithOwner:self options:nil] firstObject];
-        self.eventInfoView.clockLabel.layer.borderWidth = 1.f;
-        self.eventInfoView.clockLabel.layer.borderColor = [UIColor colorWithWhite:0.9 alpha:1.f].CGColor;
         [self.view addSubview:self.eventInfoView];
     }
-    self.eventInfoView.alpha = 0;
     if (!self.eventBlurView) {
         self.eventBlurView = [UIView new];
         self.eventBandView = [UIView new];
         self.eventBlurView.userInteractionEnabled = NO;
         self.eventBandView.userInteractionEnabled = NO;
         self.eventBandView.layer.cornerRadius = floorf(HEMSleepSegmentMinimumFillWidth/2);
-        self.eventBlurView.alpha = 0;
-        self.eventBandView.alpha = 0;
         [self.view insertSubview:self.eventBlurView belowSubview:self.eventInfoView];
         [self.view insertSubview:self.eventBandView aboveSubview:self.eventBlurView];
     }
+    self.eventInfoView.alpha = 0;
+    self.eventBlurView.alpha = 0;
+    self.eventBandView.alpha = 0;
 }
 
 - (void)presentEventInfoView
@@ -143,11 +141,10 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 20.f;
 
 - (void)positionEventInfoViewRelativeToView:(UIView*)view
 {
-    [self showEventBlurView];
-    CGFloat inset = 46.f;
-    CGFloat yAdjustment = 12.f;
+    CGFloat inset = 50.f;
+    CGFloat yAdjustment = 8.f;
     CGFloat clockInset = 24.f;
-    CGRect buttonFrame = [self.view convertRect:view.frame fromView:view];
+    CGRect buttonFrame = [self.view convertRect:view.frame fromView:view.superview];
     CGRect frame = CGRectMake(inset, CGRectGetMinY(buttonFrame) - yAdjustment, CGRectGetWidth(self.view.bounds) - inset - clockInset, CGRectGetHeight(self.eventInfoView.bounds));
     NSIndexPath* eventIndexPath = [self indexPathForEventCellWithSubview:view];
     SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:eventIndexPath];
@@ -175,6 +172,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 20.f;
         self.eventInfoView.caretPosition = HEMEventInfoViewCaretPositionTop;
     }
     if ((CGRectEqualToRect(self.eventInfoView.frame, frame) || fabsf(CGRectGetMinY(frame) - CGRectGetMinY(self.eventInfoView.frame)) < 10.f) && self.eventInfoView.alpha > 0) {
+        [self hideEventBlurView];
         [UIView animateWithDuration:0.25f animations:^{
             self.eventInfoView.alpha = 0;
         }];
@@ -185,6 +183,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 20.f;
             [UIView animateWithDuration:0.15f animations:^{
                 self.eventInfoView.alpha = 0;
             } completion:^(BOOL finished) {
+                [self showEventBlurView];
                 self.eventInfoView.frame = frame;
                 [self.eventInfoView setNeedsDisplay];
                 [UIView animateWithDuration:0.25f animations:^{
@@ -193,6 +192,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 20.f;
             }];
         }
         else {
+            [self showEventBlurView];
             [UIView animateWithDuration:0.25f animations:^{
                 self.eventInfoView.frame = frame;
                 self.eventInfoView.alpha = 1;
@@ -218,17 +218,23 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 20.f;
         CGRect topCellRect = [self.view convertRect:topCell.frame fromView:self.collectionView];
         blurRect = CGRectMake(minX, CGRectGetMinY(topCellRect), width, CGRectGetHeight(self.view.bounds) - CGRectGetMinX(topCellRect));
     } else if (bottomCell) {
-        CGRect bottomCellRect = [self.view convertRect:bottomCell.frame fromView:bottomCell];
+        CGRect bottomCellRect = [self.view convertRect:bottomCell.frame fromView:self.collectionView];
         blurRect = CGRectMake(minX, 0, width, CGRectGetMaxY(bottomCellRect));
     } else {
         blurRect = self.view.bounds;
     }
-    CGFloat bandYOffset = 7.f;
+    CGFloat bandYOffset = 4.f;
     CGRect bandRect = blurRect;
     bandRect.origin.x = HEMLinedCollectionViewCellLineOffset + HEMLinedCollectionViewCellLineWidth;
-    bandRect.origin.y += bandYOffset;
+    bandRect.size.height = CGRectGetHeight(blurRect) - bandYOffset/2;
+    if (blurRect.origin.y == 0) {
+        bandRect.origin.y -= HEMSleepSegmentMinimumFillWidth;
+        bandRect.size.height += HEMSleepSegmentMinimumFillWidth;
+    } else {
+        bandRect.origin.y += bandYOffset;
+        bandRect.size.height -= bandYOffset;
+    }
     bandRect.size.width = HEMSleepSegmentMinimumFillWidth;
-    bandRect.size.height = CGRectGetHeight(blurRect) - (bandYOffset * 1.1);
     UIImage* bandSnapshot = [self timelineSnapshotInRect:bandRect];
     UIImage* blurSnapshot = [[self timelineSnapshotInRect:blurRect] applyBlurWithRadius:15
                                                                               tintColor:[UIColor colorWithWhite:1.f alpha:0.1]
@@ -242,6 +248,12 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 20.f;
         self.eventBandView.alpha = 1;
         self.eventBlurView.alpha = 1;
     }];
+}
+
+- (void)hideEventBlurView
+{
+    self.eventBlurView.alpha = 0;
+    self.eventBandView.alpha = 0;
 }
 
 - (NSIndexPath*)indexPathForEventCellWithSubview:(UIView*)view
@@ -260,9 +272,9 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 20.f;
 {
     SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     if (segment) {
-        self.eventInfoView.titleLabel.text = [self.dataSource localizedNameForSleepEventType:segment.eventType];
+        NSString* title = [NSString stringWithFormat:NSLocalizedString(@"sleep-event.title.format", nil), [[self.dataSource localizedNameForSleepEventType:segment.eventType] uppercaseString], [[self.eventInfoDateFormatter stringFromDate:segment.date] lowercaseString]];
+        self.eventInfoView.titleLabel.text = title;
         self.eventInfoView.messageLabel.attributedText = markdown_to_attr_string(segment.message, 0, self.eventInfoMarkdownAttributes);
-        self.eventInfoView.clockLabel.text = [[self.eventInfoDateFormatter stringFromDate:segment.date] lowercaseString];
     }
 }
 
@@ -272,8 +284,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 20.f;
 {
     if (self.eventInfoView.alpha == 0 && self.eventBandView.alpha == 0 && self.eventBlurView.alpha == 0)
         return;
-    self.eventBlurView.alpha = 0;
-    self.eventBandView.alpha = 0;
+    [self hideEventBlurView];
     [UIView animateWithDuration:0.15f animations:^{
         self.eventInfoView.alpha = 0;
     }];

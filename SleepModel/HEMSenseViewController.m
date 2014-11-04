@@ -65,9 +65,11 @@
                 // MUST do 1 BLE operation at a time or else top board will crash, or
                 // do unexpected things
                 [strongSelf loadRSSIThen:^{
-                    [strongSelf loadWifiThen:^{
-                        [strongSelf hideActivity];
-                    }];
+                    [strongSelf hideActivity];
+                    // TODO (jimmy): doesn't seem to be implemented?
+//                    [strongSelf loadWifiThen:^{
+//                        [strongSelf hideActivity];
+//                    }];
                 }];
             }
         }

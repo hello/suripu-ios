@@ -223,11 +223,14 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     } else {
         blurRect = self.view.bounds;
     }
+    blurRect.origin.y -= HEMTimelineHeaderCellHeight;
+    blurRect.size.height += HEMTimelineHeaderCellHeight;
     CGFloat bandYOffset = 4.f;
     CGRect bandRect = blurRect;
     bandRect.origin.x = HEMLinedCollectionViewCellLineOffset + HEMLinedCollectionViewCellLineWidth;
-    bandRect.size.height = CGRectGetHeight(blurRect) - bandYOffset/2;
-    if (blurRect.origin.y == 0) {
+    bandRect.origin.y += HEMTimelineHeaderCellHeight;
+    bandRect.size.height = CGRectGetHeight(blurRect) - HEMTimelineHeaderCellHeight - bandYOffset/2;
+    if (blurRect.origin.y == -HEMTimelineHeaderCellHeight) {
         bandRect.origin.y -= HEMSleepSegmentMinimumFillWidth;
         bandRect.size.height += HEMSleepSegmentMinimumFillWidth;
     } else {

@@ -21,20 +21,20 @@
                             <constraint firstAttribute="height" constant="155" id="Tcm-aA-44U"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last Night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-AK-PaO">
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Last night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-AK-PaO">
                         <rect key="frame" x="118" y="18" width="82.5" height="25"/>
                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
                         <color key="textColor" white="0.40000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="buK-Of-ZfH">
-                        <rect key="frame" x="15" y="276" width="290" height="41"/>
+                        <rect key="frame" x="21" y="276" width="278" height="41"/>
                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BREAKDOWN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EkC-F1-GFh">
-                        <rect key="frame" x="15" y="248" width="60" height="14"/>
+                        <rect key="frame" x="21" y="248" width="60" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="Knk-Pm-euN"/>
                         </constraints>
@@ -54,9 +54,9 @@
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="EkC-F1-GFh" secondAttribute="bottom" constant="14" id="KSZ-Id-dKy"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="EkC-F1-GFh" secondAttribute="leading" id="Y5J-NU-9dH"/>
                 <constraint firstAttribute="centerX" secondItem="T3i-WO-VZQ" secondAttribute="centerX" constant="0.5" id="p9I-c4-GqY"/>
-                <constraint firstAttribute="trailing" secondItem="buK-Of-ZfH" secondAttribute="trailing" constant="15" id="qyQ-fV-uRR"/>
+                <constraint firstAttribute="trailing" secondItem="buK-Of-ZfH" secondAttribute="trailing" constant="21" id="qyQ-fV-uRR"/>
                 <constraint firstAttribute="centerX" secondItem="Bcg-AK-PaO" secondAttribute="centerX" constant="1" id="uJ7-Wb-V2p"/>
-                <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="15" id="wPf-Zd-mGf"/>
+                <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="21" id="wPf-Zd-mGf"/>
             </constraints>
             <size key="customSize" width="314" height="343"/>
             <connections>

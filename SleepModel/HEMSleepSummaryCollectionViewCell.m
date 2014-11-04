@@ -9,12 +9,18 @@
 
 @implementation HEMSleepSummaryCollectionViewCell
 
-static CGFloat const HEMSleepSummaryShadowHeight = 5.f;
-static CGFloat const HEMSleepSummaryInsetHeight = 8.f;
+static CGFloat const HEMSleepSummaryShadowHeight = 1.f;
 
 - (void)awakeFromNib
 {
-    self.backgroundColor = [UIColor whiteColor];
+    UIColor* topColor = [UIColor whiteColor];
+    UIColor* bottomColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.97 alpha:1];
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    CGRect gradientRect = self.bounds;
+    gradientRect.size.height -= HEMSleepSummaryShadowHeight;
+    gradient.frame = gradientRect;
+    gradient.colors = @[(id)topColor.CGColor, (id)bottomColor.CGColor];
+    [self.layer insertSublayer:gradient atIndex:0];
 }
 
 - (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated
@@ -22,19 +28,17 @@ static CGFloat const HEMSleepSummaryInsetHeight = 8.f;
     [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];
 }
 
+- (void)drawRect:(CGRect)rect
+{
+    [self drawShadowGradientInRect:rect];
+}
+
 - (void)drawShadowGradientInRect:(CGRect)rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithWhite:0.97f alpha:1.f].CGColor);
-    CGRect contentRect = CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect), CGRectGetWidth(rect), CGRectGetHeight(rect) - HEMSleepSummaryShadowHeight - HEMSleepSummaryInsetHeight);
-    CGContextFillRect(ctx, contentRect);
-
-    CGFloat colors[] = {
-        0.51, 0.52, 0.52, 0.1,
-        0.302, 0.31, 0.306, 0.0,
-    };
-    CGRect shadowRect = CGRectMake(CGRectGetMinX(rect), CGRectGetMaxY(rect) - HEMSleepSummaryInsetHeight - HEMSleepSummaryShadowHeight, CGRectGetWidth(rect), HEMSleepSummaryShadowHeight);
-    [HEMTimelineDrawingUtils drawVerticalGradientInRect:shadowRect withColors:colors];
+    CGRect shadowRect = CGRectMake(CGRectGetMinX(rect), CGRectGetHeight(rect) - HEMSleepSummaryShadowHeight, CGRectGetWidth(rect), HEMSleepSummaryShadowHeight);
+    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.9 green:0.91 blue:0.91 alpha:1].CGColor);
+    CGContextFillRect(ctx, shadowRect);
 }
 
 @end

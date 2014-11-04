@@ -71,27 +71,27 @@
 
 - (UIColor*)lineChartView:(JBLineChartView*)lineChartView colorForLineAtLineIndex:(NSUInteger)lineIndex
 {
-    return [UIColor whiteColor];
+    return [UIColor colorWithWhite:0.59 alpha:1.0f];
 }
 
 - (UIColor*)lineChartView:(JBLineChartView*)lineChartView colorForDotAtHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
-    return [UIColor colorWithWhite:0.95f alpha:1.f];
+    return [UIColor colorWithWhite:0.59 alpha:1.0f];
 }
 
 - (UIColor*)lineChartView:(JBLineChartView*)lineChartView fillColorForLineAtLineIndex:(NSUInteger)lineIndex
 {
-    return lineIndex == 0 ? [UIColor colorWithWhite:0.9f alpha:0.4f] : [UIColor clearColor];
+    return [UIColor clearColor];
 }
 
 - (UIColor*)lineChartView:(JBLineChartView*)lineChartView selectionColorForDotAtHorizontalIndex:(NSUInteger)horizontalIndex atLineIndex:(NSUInteger)lineIndex
 {
-    return [UIColor whiteColor];
+    return [UIColor blackColor];
 }
 
 - (UIColor*)lineChartView:(JBLineChartView*)lineChartView selectionColorForLineAtLineIndex:(NSUInteger)lineIndex
 {
-    return [UIColor whiteColor];
+    return [UIColor blackColor];
 }
 
 #pragma mark selection appearance

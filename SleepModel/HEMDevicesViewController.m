@@ -39,6 +39,12 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[self devicesTableView] reloadData];
+    
+    if ([[HEMDeviceCenter sharedCenter] pillInfo] == nil
+        || [[HEMDeviceCenter sharedCenter] senseInfo] == nil) {
+        [self loadDevices];
+    }
+    
 }
 
 - (void)loadDevices {
@@ -181,6 +187,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     [self performSegueWithIdentifier:segueId sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UIViewController* vc = [segue destinationViewController];
+    if ([vc isKindOfClass:[HEMNoPillViewController class]]) {
+        HEMNoPillViewController* noPillVC = (HEMNoPillViewController*)vc;
+        [noPillVC setPreviousController:self];
+    }
 }
 
 #pragma mark - Cleanup

@@ -132,6 +132,10 @@
 }
 
 - (void)showQuestionAlertFor:(__unused NSArray*)questions {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(showQuestionAlertFor:)
+                                               object:questions];
+    
     if ([self qAlertView] != nil) return;
     // just show the first question as an alert
     NSString* text = NSLocalizedString(@"questions.new-question", nil);

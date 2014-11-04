@@ -38,6 +38,7 @@
 +(UIViewController *)instantiateGetSetupViewController;
 +(UIViewController *)instantiateHeightPickerViewController;
 +(UIViewController *)instantiatePillIntroViewController;
++(UIViewController *)instantiatePillPairViewController;
 +(UIViewController *)instantiateSignUpViewController;
 +(UIViewController *)instantiateWeightPickerViewController;
 +(UIViewController *)instantiateWelcomeViewController;

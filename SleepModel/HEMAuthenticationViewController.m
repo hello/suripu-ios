@@ -7,6 +7,7 @@
 #import "HEMAuthenticationViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingUtils.h"
+#import "HelloStyleKit.h"
 
 static NSInteger const HEPURLAlertButtonIndexSave = 1;
 static NSInteger const HEPURLAlertButtonIndexReset = 2;
@@ -30,6 +31,8 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
     [super viewDidLoad];
     [[[self doneButton] titleLabel] setFont:[UIFont fontWithName:@"Calibre-Medium"
                                                             size:18.0f]];
+    [[self doneButton] setTitleColor:[HelloStyleKit senseBlueColor]
+                            forState:UIControlStateNormal];
     
     [SENAnalytics track:kHEMAnalyticsEventSignInStart];
 }

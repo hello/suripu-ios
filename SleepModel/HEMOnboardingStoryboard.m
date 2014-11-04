@@ -25,6 +25,7 @@ static NSString *const _HEMnoBleToSetup = @"noBleToSetup";
 static NSString *const _HEMpill = @"pill";
 static NSString *const _HEMpillIntro = @"pillIntro";
 static NSString *const _HEMpillNeedBluetooth = @"pillNeedBluetooth";
+static NSString *const _HEMpillPair = @"pillPair";
 static NSString *const _HEMsecondPillNeedBle = @"secondPillNeedBle";
 static NSString *const _HEMsecondPillToSense = @"secondPillToSense";
 static NSString *const _HEMsenseSetup = @"senseSetup";
@@ -70,6 +71,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(UIViewController *)instantiateGetSetupViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMgetSetup]; }
 +(UIViewController *)instantiateHeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMheightPicker]; }
 +(UIViewController *)instantiatePillIntroViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillIntro]; }
++(UIViewController *)instantiatePillPairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillPair]; }
 +(UIViewController *)instantiateSignUpViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsignUpViewController]; }
 +(UIViewController *)instantiateWeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMweightPicker]; }
 +(UIViewController *)instantiateWelcomeViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwelcome]; }

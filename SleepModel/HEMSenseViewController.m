@@ -28,6 +28,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *actionStatusLabel;
 
 @property (copy, nonatomic)   NSString* senseSignalStrength;
+@property (copy, nonatomic)   NSString* wifiSSID;
 @property (strong, nonatomic) HEMAlertController* alertController;
 
 @end
@@ -58,15 +59,22 @@
         if (strongSelf) {
             if (error != nil) {
                 [strongSelf setSenseSignalStrength:NSLocalizedString(@"empty.data", nil)];
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [strongSelf hideActivity];
             } else {
-                [strongSelf loadRSSI];
+                // MUST do 1 BLE operation at a time or else top board will crash, or
+                // do unexpected things
+                [strongSelf loadRSSIThen:^{
+                    [strongSelf loadWifiThen:^{
+                        [strongSelf hideActivity];
+                    }];
+                }];
             }
-            [strongSelf hideActivity];
         }
     }];
 }
 
-- (void)loadRSSI {
+- (void)loadRSSIThen:(void(^)(void))completion {
     __weak typeof(self) weakSelf = self;
     DDLogVerbose(@"reading rssi value");
     [[HEMDeviceCenter sharedCenter] currentSenseRSSI:^(NSNumber *rssi, NSError *error) {
@@ -86,6 +94,24 @@
         [strongSelf setSenseSignalStrength:strength];
         [[strongSelf senseInfoTableView] reloadSections:[NSIndexSet indexSetWithIndex:0]
                                        withRowAnimation:UITableViewRowAnimationAutomatic];
+        
+        if (completion) completion();
+    }];
+}
+
+- (void)loadWifiThen:(void(^)(void))completion {
+    __weak typeof(self) weakSelf = self;
+    DDLogVerbose(@"getting Sense wifi ssid");
+    [[HEMDeviceCenter sharedCenter] getConfiguredWiFiSSID:^(NSString *ssid, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) return;
+        
+        if (error == nil) {
+            [strongSelf setWifiSSID:ssid];
+        } else {
+            DDLogVerbose(@"failed to retrieve ssid configured with Sense");
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        }
     }];
 }
 
@@ -100,7 +126,7 @@
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section == 0 ? 3 : 1;
+    return section == 0 ? 4 : 1;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -119,6 +145,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         SENDevice* info = [[HEMDeviceCenter sharedCenter] senseInfo];
         NSString* title = nil;
         NSString* detail = NSLocalizedString(@"empty-data", nil); // TODO (jimmy): data not supported yet;
+        UITableViewCellAccessoryType accessory = UITableViewCellAccessoryNone;
         
         switch ([indexPath row]) {
             case 0: {
@@ -130,16 +157,24 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
                 break;
             }
             case 1: {
+                title = NSLocalizedString(@"settings.device.firmware-version", nil);
+                if ([[info firmwareVersion] length] > 0) {
+                    detail = [info firmwareVersion];
+                }
+                break;
+            }
+            case 2: {
                 title = NSLocalizedString(@"settings.sense.signal", nil);
                 if ([self senseSignalStrength] != nil) {
                     detail = [self senseSignalStrength];
                 }
                 break;
             }
-            case 2: {
-                title = NSLocalizedString(@"settings.device.firmware-version", nil);
-                if ([[info firmwareVersion] length] > 0) {
-                    detail = [info firmwareVersion];
+            case 3: {
+                title = NSLocalizedString(@"settings.sense.wifi", nil);
+                if ([[self wifiSSID] length] > 0) {
+                    detail = [self wifiSSID];
+                    accessory = UITableViewCellAccessoryDisclosureIndicator;
                 }
                 break;
             }
@@ -154,6 +189,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[cell detailTextLabel] setText:detail];
         [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
         [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
+        
+        [cell setAccessoryType:accessory];
         
     } // else, look at the storyboard
     

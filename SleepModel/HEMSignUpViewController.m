@@ -35,6 +35,8 @@
     [super viewDidLoad];
     [[[self doneButton] titleLabel] setFont:[UIFont fontWithName:@"Calibre-Medium"
                                                             size:18.0f]];
+    [[self doneButton] setTitleColor:[HelloStyleKit senseBlueColor]
+                            forState:UIControlStateNormal];
     [SENAnalytics track:kHEMAnalyticsEventOnBStart];
 }
 

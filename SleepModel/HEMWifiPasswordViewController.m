@@ -19,6 +19,7 @@
 #import "HEMRoundedTextField.h"
 #import "HEMDeviceCenter.h"
 #import "HEMOnboardingUtils.h"
+#import "HelloStyleKit.h"
 
 @interface HEMWifiPasswordViewController() <UITextFieldDelegate>
 
@@ -39,6 +40,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [[self doneButton] setTitleColor:[HelloStyleKit senseBlueColor]
+                            forState:UIControlStateNormal];
+    
     if ([self endpoint] != nil) {
         [[self ssidField] setText:[[self endpoint] ssid]];
     }

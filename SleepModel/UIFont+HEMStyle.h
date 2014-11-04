@@ -10,6 +10,10 @@
 
 @interface UIFont (HEMStyle)
 
++ (UIFont *)alarmMessageFont;
+
++ (UIFont *)alarmMessageBoldFont;
+
 /**
  *  Font for section and insight headings
  */

@@ -10,6 +10,14 @@ extern NSString* const HEMSleepEventTypeMotion;
 extern NSString* const HEMSleepEventTypeNoise;
 extern NSString* const HEMSleepEventTypeFallAsleep;
 
+@protocol HEMSleepGraphActionDelegate <NSObject>
+
+@optional
+
+- (void)drawerButtonTapped:(UIButton*)button;
+
+@end
+
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>
 
 - (instancetype)initWithCollectionView:(UICollectionView*)collectionView sleepDate:(NSDate*)date;

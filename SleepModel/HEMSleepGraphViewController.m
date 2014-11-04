@@ -9,6 +9,7 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepEventCollectionViewCell.h"
+#import "HEMPresleepHeaderCollectionReusableView.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMEventInfoView.h"
 #import "HEMPaddedRoundedLabel.h"
@@ -34,7 +35,7 @@
 static CGFloat const HEMSleepSummaryCellHeight = 350.f;
 static CGFloat const HEMSleepEventPopupFullHeight = 100.f;
 static CGFloat const HEMSleepEventPopupMinimumHeight = 50.f;
-static CGFloat const HEMPresleepHeaderCellHeight = 84.f;
+static CGFloat const HEMPresleepHeaderCellHeight = 70.f;
 static CGFloat const HEMTimelineHeaderCellHeight = 50.f;
 static CGFloat const HEMPresleepItemCellHeight = 48.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 30.f;
@@ -58,9 +59,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 {
     [super viewDidAppear:animated];
     self.panePanGestureRecognizer.delegate = self;
-    [self.dataSource.sleepSummaryCell.drawerButton addTarget:self
-                                                      action:@selector(toggleDrawer)
-                                            forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
@@ -99,6 +97,11 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 {
     HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
     [delegate toggleSettingsDrawer];
+}
+
+- (void)drawerButtonTapped:(UIButton*)button
+{
+    [self toggleDrawer];
 }
 
 #pragma mark Event Info Popup
@@ -266,6 +269,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
         bandRect.size.height -= bandYOffset;
     }
     bandRect.size.width = HEMSleepSegmentMinimumFillWidth;
+    blurRect.size.height += HEMPresleepSummaryLineOffset;
     UIImage* bandSnapshot = [self timelineSnapshotInRect:bandRect];
     UIImage* blurSnapshot = [[self timelineSnapshotInRect:blurRect] applyBlurWithRadius:15
                                                                               tintColor:[UIColor colorWithWhite:1.f alpha:0.1]

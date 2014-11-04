@@ -276,6 +276,10 @@ static NSString* const sensorTypeParticulates = @"particulates";
     if ([self shouldBeLoading]) {
         [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:0.5];
     }
+    if ([self.collectionView.delegate respondsToSelector:@selector(drawerButtonTapped:)])
+        [cell.drawerButton addTarget:self.collectionView.delegate
+                              action:@selector(drawerButtonTapped:)
+                    forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 

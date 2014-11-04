@@ -21,7 +21,7 @@ CGFloat HEMSleepSegmentMinimumFillWidth = 28.f;
 
 - (void)setSegmentRatio:(CGFloat)ratio withColor:(UIColor*)color
 {
-    self.fillRatio = ratio;
+    self.fillRatio = MIN(ratio, 1.0);
     self.fillColor = color;
     [self setNeedsDisplay];
 }

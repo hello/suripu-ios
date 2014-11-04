@@ -58,6 +58,34 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
                            userInfo:nil];
 }
 
+- (void)whenPairedSenseIsReadyDo:(void(^)(NSError* error))completion {
+    if (!completion) return;
+    
+    __weak typeof(self) weakSelf = self;
+    if ([self pairedSenseAvailable]) {
+        
+        completion (nil);
+        
+    } else if ([SENSenseManager isScanning]) {
+        
+        completion ([self errorWithType:HEMDeviceCenterErrorInProgress]);
+        
+    } else {
+        
+        [self scanForPairedSense:^(NSError* error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                if ([strongSelf senseManager] != nil) {
+                    completion (nil);
+                } else {
+                    completion ([strongSelf errorWithType:HEMDeviceCenterErrorSenseUnavailable]);
+                }
+            }
+            
+        }];
+    }
+}
+
 #pragma mark - Device Info
 
 - (void)loadDeviceInfo:(void(^)(NSError* error))completion {
@@ -114,6 +142,27 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
     } else {
         completion (nil, [self errorWithType:HEMDeviceCenterErrorSenseUnavailable]);
     }
+}
+
+- (void)getConfiguredWiFiSSID:(void(^)(NSString* ssid, NSError* error))completion {
+    if (!completion) return;
+    
+    __weak typeof(self) weakSelf = self;
+    [self whenPairedSenseIsReadyDo:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            if (error != nil) {
+                completion (nil, error);
+                return;
+            }
+            
+            [[strongSelf senseManager] getConfiguredWiFi:^(NSString* ssid) {
+                completion (ssid, nil);
+            } failure:^(NSError *error) {
+                completion (nil, error);
+            }];
+        }
+    }];
 }
 
 #pragma mark - Scanning
@@ -214,30 +263,14 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
 
 - (void)putSenseIntoPairingMode:(void(^)(NSError* error))completion {
     __weak typeof(self) weakSelf = self;
-    if ([self pairedSenseAvailable]) {
-        
-        [[self senseManager] enablePairingMode:YES success:^(id response) {
-            if (completion) completion (nil);
-        } failure:completion];
-        
-    } else if ([SENSenseManager isScanning]) {
-        if (completion) completion ([self errorWithType:HEMDeviceCenterErrorInProgress]);
-    } else {
-        
-        [self scanForPairedSense:^(NSError* error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                if ([strongSelf senseManager] != nil) {
-                    [strongSelf putSenseIntoPairingMode:completion];
-                } else {
-                    if (completion) {
-                        completion ([strongSelf errorWithType:HEMDeviceCenterErrorSenseUnavailable]);
-                    }
-                }
-            }
-
-        }];
-    }
+    [self whenPairedSenseIsReadyDo:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error != nil) {
+            if (completion) completion(error);
+            return;
+        }
+        [strongSelf putSenseIntoPairingMode:completion];
+    }];
 }
 
 #pragma mark Unpairing Sleep Pill

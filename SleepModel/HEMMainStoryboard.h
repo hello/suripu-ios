@@ -17,9 +17,9 @@
 +(NSString *)firmwareUpdateCellReuseIdentifier;
 +(NSString *)pillInfoCellReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
-+(NSString *)currentConditionsCellReuseIdentifier;
 +(NSString *)alarmListCellIdentifier;
 +(NSString *)alarmChoiceCellReuseIdentifier;
++(NSString *)currentConditionsCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)insightCellReuseIdentifier;
 
@@ -39,7 +39,6 @@
 +(UIViewController *)instantiateAlarmRepeatTableViewController;
 +(UIViewController *)instantiateAlarmSoundTableViewController;
 +(UIViewController *)instantiateAlarmViewController;
-+(UIViewController *)instantiateCurrentController;
 +(UIViewController *)instantiateCurrentNavController;
 +(UIViewController *)instantiateNoSleepPillController;
 +(UIViewController *)instantiatePersonalInfoViewController;

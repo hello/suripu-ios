@@ -17,7 +17,6 @@ static NSString *const _HEMalarmRepeatTableViewController = @"alarmRepeatTableVi
 static NSString *const _HEMalarmSoundTableViewController = @"alarmSoundTableViewController";
 static NSString *const _HEMalarmViewController = @"alarmViewController";
 static NSString *const _HEMcurrentConditionsCell = @"currentConditionsCell";
-static NSString *const _HEMcurrentController = @"currentController";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdeviceCell = @"deviceCell";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
@@ -79,7 +78,6 @@ static NSString *const _HEMunitsSettings = @"unitsSettings";
 +(UIViewController *)instantiateAlarmRepeatTableViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmRepeatTableViewController]; }
 +(UIViewController *)instantiateAlarmSoundTableViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmSoundTableViewController]; }
 +(UIViewController *)instantiateAlarmViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmViewController]; }
-+(UIViewController *)instantiateCurrentController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentController]; }
 +(UIViewController *)instantiateCurrentNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentNavController]; }
 +(UIViewController *)instantiateNoSleepPillController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMnoSleepPillController]; }
 +(UIViewController *)instantiatePersonalInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpersonalInfo]; }

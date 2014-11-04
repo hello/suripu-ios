@@ -1386,7 +1386,7 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <inset key="separatorInset" minX="15" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
                                             <outlet property="detailContainer" destination="qtz-Zx-z1h" id="qet-xj-7JW"/>
                                             <outlet property="detailLabel" destination="6ua-bn-Lpg" id="2dJ-Gk-aZp"/>

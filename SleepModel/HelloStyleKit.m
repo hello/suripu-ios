@@ -95,7 +95,7 @@ static UIImage* _lockIcon = nil;
     _green = [UIColor colorWithRed: 0.455 green: 0.792 blue: 0.459 alpha: 1];
     _backViewBackgroundColor = [UIColor colorWithRed: 0.961 green: 0.961 blue: 0.961 alpha: 1];
     _backViewNavTitleColor = [UIColor colorWithRed: 0.4 green: 0.4 blue: 0.4 alpha: 1];
-    _backViewTextColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
+    _backViewTextColor = [UIColor colorWithRed: 0.498 green: 0.498 blue: 0.498 alpha: 1];
     _senseBlueColor = [UIColor colorWithRed: 0 green: 0.604 blue: 1 alpha: 1];
     _backViewTintColor = [UIColor colorWithRed: 0.686 green: 0.686 blue: 0.686 alpha: 1];
 

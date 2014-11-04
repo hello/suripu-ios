@@ -189,14 +189,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self performSegueWithIdentifier:segueId sender:self];
 }
 
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UIViewController* vc = [segue destinationViewController];
-    if ([vc isKindOfClass:[HEMNoPillViewController class]]) {
-        HEMNoPillViewController* noPillVC = (HEMNoPillViewController*)vc;
-        [noPillVC setPreviousController:self];
-    }
-}
-
 #pragma mark - Cleanup
 
 - (void)dealloc {

@@ -77,7 +77,7 @@
 #pragma mark - HEMPillPairDelegate
 
 - (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
-    [[self navigationController] popToViewController:[self previousController] animated:NO];
+    [[self navigationController] popViewControllerAnimated:NO];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

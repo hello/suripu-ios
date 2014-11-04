@@ -12,6 +12,4 @@
 
 @interface HEMNoPillViewController : UIViewController
 
-@property (nonatomic, weak) UIViewController* previousController;
-
 @end

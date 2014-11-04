@@ -186,10 +186,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             if (error != nil) {
                 [strongSelf showUnpairMessageForError:error];
             } else {
-                UIViewController* nextVC = [HEMMainStoryboard instantiateNoSleepPillController];
                 // pop then push no pill view controller
-                [[strongSelf navigationController] popViewControllerAnimated:NO];
-                [[strongSelf navigationController] pushViewController:nextVC animated:YES];
+                [[strongSelf navigationController] popViewControllerAnimated:YES];
             }
         }
     }];

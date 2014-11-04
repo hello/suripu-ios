@@ -248,6 +248,17 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
         failure:(SENSenseFailureBlock)failure;
 
 /**
+ * @method getWiFi:
+ * 
+ * @discussion:
+ * Get the configured wifi ssid, if set, from Sense
+ *
+ * @param success: the block to invoke when it successfully retrieved the information
+ * @param failure: the block to invoke when it failed to retrieve the info
+ */
+- (void)getConfiguredWiFi:(SENSenseSuccessBlock)success failure:(SENSenseFailureBlock)failure;
+
+/**
  * Scan for WiFi networks that Sense can see.  It may take multiple scans to see
  * all nearby networks.  1 scan typically returns a good set, but missing some, but
  * 2 usually returns a full set.  3 would probably be max needed.

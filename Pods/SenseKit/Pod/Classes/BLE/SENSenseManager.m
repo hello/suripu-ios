@@ -19,7 +19,7 @@
 static CGFloat const kSENSenseDefaultTimeout = 20.0f;
 static CGFloat const kSENSenseRescanTimeout = 8.0f;
 static CGFloat const kSENSenseSetWifiTimeout = 60.0f; // firmware suggestion
-static CGFloat const kSENSenseScanWifiTimeout = 120.0f; // firmware actually suggests 60, but 45 seems to work consistently
+static CGFloat const kSENSenseScanWifiTimeout = 45.0f; // firmware actually suggests 60, but 45 seems to work consistently
 
 static NSString* const kSENSenseErrorDomain = @"is.hello.ble";
 static NSString* const kSENSenseServiceID = @"0000FEE1-1212-EFDE-1523-785FEABCD123";
@@ -389,9 +389,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                           throughWriter:writer
                                 success:nil
                                 failure:^(NSError *error) {
-                                    [blockReader setNotifyValue:NO completion:^(NSError *unscriptionError) {
-                                        NSLog(@"unsubscribed from message with error %@", error);
-                                    }];
+                                    [blockReader setNotifyValue:NO completion:nil];
                                     [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                                 }];
             } onUpdate:^(NSData *data, NSError *error) {
@@ -413,9 +411,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                                  totalPackets = @(1);
                                              }
                                          } failure:^(NSError *error) {
-                                             [blockReader setNotifyValue:NO completion:^(NSError *unscriptionError) {
-                                                 NSLog(@"unsubscribed from message with error %@", error);
-                                             }];
+                                             [blockReader setNotifyValue:NO completion:nil];
                                              [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                                          }];
             }];
@@ -605,7 +601,6 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     
     uint8_t packet[[data length]];
     [data getBytes:&packet length:kSENSensePacketSize];
-    
     if (sizeof(packet) >= 2 && error == nil) {
         uint8_t seq = packet[0];
         if (seq == 0) {
@@ -629,7 +624,6 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
             }
         } // else, wait for next update
     } else {
-        NSLog(@"ERROR: packet size 1 %d", packet[0]);
         [self failWithBlock:failure andCode:SENSenseManagerErrorCodeUnexpectedResponse];
     }
 }
@@ -834,6 +828,25 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                       return result;
                   }];
                   if (success) success (wifis);
+              }
+              failure:failure];
+}
+
+- (void)getConfiguredWiFi:(SENSenseSuccessBlock)success failure:(SENSenseFailureBlock)failure {
+    if (!success) {
+        if (failure) failure ([NSError errorWithDomain:kSENSenseErrorDomain
+                                                  code:SENSenseManagerErrorCodeInvalidArgument
+                                              userInfo:nil]);
+        return;
+    }
+    
+    SENSenseMessageType type = SENSenseMessageTypeGetWifiEndpoint;
+    SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
+    [self sendMessage:[builder build]
+              timeout:kSENSenseDefaultTimeout
+               update:nil
+              success:^(SENSenseMessage* response) {
+                  success ([response wifiSsid]);
               }
               failure:failure];
 }

@@ -1140,20 +1140,20 @@ static UIColor* kJBLineChartViewDefaultDotSelectionColor = nil;
     UIFont* labelFont = [UIFont fontWithName:@"Agile-Light" size:10];
     NSDictionary* lastLabelAttributes = @{
         NSFontAttributeName : labelFont,
-        NSForegroundColorAttributeName : [UIColor colorWithWhite:1.f alpha:1.f],
+        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.59f alpha:1.f],
     };
     NSDictionary* labelAttributes = @{
         NSFontAttributeName : labelFont,
-        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.95f alpha:1.f],
+        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.59f alpha:1.f],
     };
     NSDictionary* summaryAttributes = @{
         NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:24],
-        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.95f alpha:1.f],
+        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.71f alpha:1.f],
         NSKernAttributeName : @(-1),
     };
     NSDictionary* summaryTitleAttributes = @{
         NSFontAttributeName : [UIFont fontWithName:@"HelveticaNeue-Thin" size:36],
-        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.95f alpha:1.f],
+        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.71f alpha:1.f],
     };
 
     CGFloat lastSegmentWidth = CGRectGetWidth(rect) - (segmentWidth * (labels.count - 1));

@@ -191,4 +191,13 @@ extern NSString* const kHEMDeviceNotificationFactorySettingsRestored;
  */
 - (void)restoreFactorySettings:(HEMDeviceCompletionBlock)completion;
 
+/**
+ * @method getConfiguredWiFiSSID
+ * 
+ * @discussion
+ * This is just a wrapper around SENSenseManager's getConfiguredWifi method,
+ * but will ensure a paired sense is detected before proceeding
+ */
+- (void)getConfiguredWiFiSSID:(void(^)(NSString* ssid, NSError* error))completion;
+
 @end

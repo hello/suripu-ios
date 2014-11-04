@@ -9,6 +9,8 @@
 
 #import <SenseKit/SENDevice.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDeviceCenter.h"
@@ -29,13 +31,13 @@
     [super viewDidLoad];
     [[self pillInfoTableView] setTableFooterView:[[UIView alloc] init]];
     [[self unpairView] setHidden:[[HEMDeviceCenter sharedCenter] pillInfo] == nil];
-    [[self activityLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[self activityLabel] setTextColor:[HelloStyleKit backViewTextColor]];
 }
 
 #pragma mark - UITableViewDelegate / DataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 3;
+    return 4;
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -65,6 +67,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
         case 2: {
             title = NSLocalizedString(@"settings.device.color", nil);
+            break;
+        }
+        case 3: {
+            title = NSLocalizedString(@"settings.device.firmware-version", nil);
             if ([[info firmwareVersion] length] > 0) {
                 detail = [info firmwareVersion];
             }
@@ -75,9 +81,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     [[cell textLabel] setText:title];
-    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell textLabel] setFont:[UIFont settingsTitleFont]];
+    
     [[cell detailTextLabel] setText:detail];
-    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
     
 }
 
@@ -177,10 +186,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             if (error != nil) {
                 [strongSelf showUnpairMessageForError:error];
             } else {
-                UIViewController* nextVC = [HEMMainStoryboard instantiateNoSleepPillController];
                 // pop then push no pill view controller
-                [[strongSelf navigationController] popViewControllerAnimated:NO];
-                [[strongSelf navigationController] pushViewController:nextVC animated:YES];
+                [[strongSelf navigationController] popViewControllerAnimated:YES];
             }
         }
     }];

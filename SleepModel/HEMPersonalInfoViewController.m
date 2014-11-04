@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMPersonalInfoViewController.h"
 #import "HEMPersonalInfoDataSource.h"
 #import "HEMOnboardingStoryboard.h"
@@ -111,10 +113,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     
     [[cell textLabel] setText:title];
-    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell textLabel] setFont:[UIFont settingsTitleFont]];
+    
     [[cell detailTextLabel] setText:subtitle];
     [[cell detailTextLabel] sizeToFit];
-    [[cell detailTextLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
+    
     [cell setAccessoryView:activityView];
     [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
     

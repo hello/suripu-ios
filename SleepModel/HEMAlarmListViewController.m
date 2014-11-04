@@ -1,6 +1,8 @@
 
 #import <SenseKit/SENAlarm.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMAlarmListViewController.h"
 #import "HEMAlarmViewController.h"
 #import "HEMAlarmListTableViewCell.h"
@@ -123,7 +125,11 @@ static NSUInteger HEMAlarmListLimit = 8;
     SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
     HEMAlarmListTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmListCellIdentifier]];
     cell.timeLabel.text = [alarm localizedValue];
+    cell.timeLabel.font = [UIFont settingsTitleFont];
+    
     cell.detailLabel.text = [HEMAlarmUtils repeatTextForUnitFlags:alarm.repeatFlags];
+    cell.detailLabel.font = [UIFont settingsTableCellDetailFont];
+    
     cell.enabledSwitch.on = [alarm isOn];
     cell.enabledSwitch.tag = indexPath.row;
     return cell;

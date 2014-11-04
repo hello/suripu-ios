@@ -34,7 +34,7 @@
     
     [self setProgressView:[[UIProgressView alloc] initWithProgressViewStyle:UIProgressViewStyleBar]];
     [[self progressView] setFrame:progressFrame];
-    [[self progressView] setTintColor:[HelloStyleKit onboardingBlueColor]];
+    [[self progressView] setTintColor:[HelloStyleKit senseBlueColor]];
     [[self progressView] setProgress:0.0f];
     [[self view] addSubview:[self progressView]];
 }

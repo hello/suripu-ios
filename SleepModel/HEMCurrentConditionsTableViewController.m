@@ -6,6 +6,8 @@
 
 #import <markdown_peg.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMCurrentConditionsTableViewController.h"
 #import "HEMAlarmViewController.h"
 #import "HEMInsetGlyphTableViewCell.h"
@@ -171,6 +173,25 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
     [self.tableView reloadData];
 }
 
+- (void)colorizeSensorTextIn:(UILabel*)label forCondition:(SENSensorCondition)condition {
+    UIColor* textColor = nil;
+    switch (condition) {
+        case SENSensorConditionAlert:
+            textColor = [HelloStyleKit alertSensorColor];
+            break;
+        case SENSensorConditionWarning:
+            textColor = [HelloStyleKit warningSensorColor];
+            break;
+        case SENSensorConditionIdeal:
+            textColor = [HelloStyleKit idealSensorColor];
+            break;
+        default:
+            textColor = [HelloStyleKit backViewTextColor];
+            break;
+    }
+    [label setTextColor:textColor];
+}
+
 - (void)dealloc
 {
     [_refreshTimer invalidate];
@@ -191,7 +212,7 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
-    return 2;
+    return 3; // empty section below
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -243,39 +264,32 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
         cell.titleLabel.text = [self isLoading] ? NSLocalizedString(@"activity.loading", nil) : NSLocalizedString(@"sensor.data-unavailable", nil);
         cell.detailLabel.text = nil;
         cell.glyphImageView.image = nil;
-        cell.descriptionLabel.text = nil;
-        cell.disclosureImageView.hidden = YES;
+        cell.detailContainer.backgroundColor = [UIColor clearColor];
     } else {
-        cell.disclosureImageView.hidden = NO;
         SENSensor* sensor = self.sensors[indexPath.row];
         cell.titleLabel.text = sensor.localizedName;
-        cell.detailLabel.text = sensor.localizedValue ?: NSLocalizedString(@"sensor.value.none", nil);
+        cell.detailLabel.text = sensor.localizedValue ?: NSLocalizedString(@"empty-data", nil);
+        cell.detailContainer.backgroundColor = [UIColor whiteColor];
+        
+        [self colorizeSensorTextIn:cell.detailLabel forCondition:sensor.condition];
+        
         switch (sensor.unit) {
         case SENSensorUnitDegreeCentigrade:
             cell.glyphImageView.image = [HelloStyleKit temperatureIcon];
+            cell.detailLabel.text = sensor.localizedValue ?: NSLocalizedString(@"empty-data", nil);
             break;
         case SENSensorUnitMicrogramPerCubicMeter:
             cell.glyphImageView.image = [HelloStyleKit particleIcon];
+            cell.detailLabel.text = sensor.value ? [NSString stringWithFormat:@"%.02f", [sensor.value doubleValue]] : NSLocalizedString(@"empty-data", nil);
             break;
         case SENSensorUnitPercent:
             cell.glyphImageView.image = [HelloStyleKit humidityIcon];
+            cell.detailLabel.text = sensor.localizedValue ?: NSLocalizedString(@"empty-data", nil);
             break;
         case SENSensorUnitUnknown:
         default:
             cell.glyphImageView.image = nil;
             break;
-        }
-        if (sensor.condition == SENSensorConditionWarning || sensor.condition == SENSensorConditionAlert) {
-            UIFont* emFont = [UIFont fontWithName:@"Agile-Bold" size:11.0];
-            NSDictionary* attributes = @{
-                @(EMPH) : @{
-                    NSFontAttributeName : emFont,
-                },
-                @(PARA) : @{
-                    NSForegroundColorAttributeName : [UIColor whiteColor],
-                }
-            };
-            cell.descriptionLabel.attributedText = markdown_to_attr_string(sensor.message, 0, attributes);
         }
     }
 
@@ -285,14 +299,13 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 - (UITableViewCell*)tableView:(UITableView*)tableView menuCellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
-    cell.descriptionLabel.text = nil;
     cell.detailLabel.text = nil;
-    cell.disclosureImageView.hidden = NO;
-
+    cell.detailContainer.backgroundColor = [UIColor clearColor];
+    cell.detailLabel.textColor = [HelloStyleKit backViewTextColor];
+    
     switch (indexPath.row) {
     case 0: {
         cell.titleLabel.text = NSLocalizedString(@"alarms.title", nil);
-        cell.descriptionLabel.text = nil;
         cell.detailLabel.text = nil;
         cell.glyphImageView.image = [HelloStyleKit alarmsIcon];
     } break;
@@ -300,7 +313,6 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
     case 1: {
         cell.titleLabel.text = NSLocalizedString(@"sleep.trends.title", nil);
         cell.detailLabel.text = nil;
-        cell.descriptionLabel.text = nil;
         cell.glyphImageView.image = [HelloStyleKit sleepInsightsIcon];
     } break;
     }

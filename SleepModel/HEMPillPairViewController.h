@@ -9,6 +9,17 @@
 #import <UIKit/UIKit.h>
 #import "HEMBaseController.h"
 
+@class HEMPillPairViewController;
+
+@protocol HEMPillPairDelegate <NSObject>
+
+- (void)didPairWithPillFrom:(HEMPillPairViewController*)controller;
+- (void)didCancelPairing:(HEMPillPairViewController*)controller;
+
+@end
+
 @interface HEMPillPairViewController : HEMBaseController
+
+@property (nonatomic, weak) id<HEMPillPairDelegate> delegate;
 
 @end

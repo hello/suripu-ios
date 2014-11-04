@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENSenseManager.h>
+#import <SenseKit/SENSense.h>
 #import <SenseKit/SENAuthorizationService.h>
 
 #import "NSMutableAttributedString+HEMFormat.h"
@@ -21,7 +22,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMDeviceCenter.h"
 
-static CGFloat const kHEMPillPairTimeout = 30.0f; // accommodate case when scanning is needed
+static CGFloat const kHEMPillPairTimeout = 60.0f; // accommodate case when scanning is needed
 
 @interface HEMPillPairViewController()
 
@@ -44,7 +45,7 @@ static CGFloat const kHEMPillPairTimeout = 30.0f; // accommodate case when scann
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupSubtitle];
-    
+    [self setupCancelButton];
     [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
 }
 
@@ -62,6 +63,17 @@ static CGFloat const kHEMPillPairTimeout = 30.0f; // accommodate case when scann
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
     
     [[self subtitleLabel] setAttributedText:attrSubtitle];
+}
+
+- (void)setupCancelButton {
+    if ([self delegate] != nil) {
+        NSString* title = NSLocalizedString(@"actions.cancel", nil);
+        UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:title
+                                                                       style:UIBarButtonItemStyleBordered
+                                                                      target:self
+                                                                      action:@selector(cancel:)];
+        [[self navigationItem] setLeftBarButtonItem:cancelItem];
+    }
 }
 
 - (void)listenForDisconnects {
@@ -115,12 +127,14 @@ static CGFloat const kHEMPillPairTimeout = 30.0f; // accommodate case when scann
                 return;
             }
             
+            DDLogVerbose(@"looking for sense to trigger pill pairing");
             [[HEMDeviceCenter sharedCenter] scanForPairedSense:^(NSError *error) {
                 if (error != nil) {
                     [[strongSelf activityView] dismissWithResultText:nil completion:^{
                         [strongSelf showMessageDialog:NSLocalizedString(@"pill-pair.error.sense-not-found", nil)
                                                 title:NSLocalizedString(@"pairing.failed.title", nil)];
                     }];
+                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
                     completion (nil);
                     return;
                 }
@@ -146,6 +160,7 @@ static CGFloat const kHEMPillPairTimeout = 30.0f; // accommodate case when scann
                    afterDelay:kHEMPillPairTimeout];
         
         __weak typeof(self) weakSelf = self;
+        
         [self ensureSenseIsReady:^(SENSenseManager *manager) {
             __block typeof(weakSelf) strongSelf = weakSelf;
             if (!strongSelf || manager == nil) return;
@@ -160,6 +175,7 @@ static CGFloat const kHEMPillPairTimeout = 30.0f; // accommodate case when scann
     NSString* token = [SENAuthorizationService accessToken];
     
     __weak typeof(self) weakSelf = self;
+    DDLogVerbose(@"attempting to pair pill through %@", [[manager sense] name]);
     [manager pairWithPill:token success:^(id response) {
         __block typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf && ![strongSelf pairTimedOut]) {
@@ -197,14 +213,25 @@ static CGFloat const kHEMPillPairTimeout = 30.0f; // accommodate case when scann
     
 #pragma message ("remove when we have devices!")
     
-    [self proceed];
+    if ([self delegate] == nil) {
+        [self proceed];
+    }
+    
+}
+
+- (IBAction)cancel:(id)sender {
+    [[self delegate] didCancelPairing:self];
 }
 
 - (void)proceed {
-    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
-    
-    NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
-    [self performSegueWithIdentifier:segueId sender:self];
+    if ([self delegate] == nil) {
+        [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+        
+        NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
+        [self performSegueWithIdentifier:segueId sender:self];
+    } else {
+        [[self delegate] didPairWithPillFrom:self];
+    }
 }
 
 #pragma mark - Clean Up

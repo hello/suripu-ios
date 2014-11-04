@@ -1,5 +1,8 @@
 
 #import <SenseKit/SENAlarm.h>
+
+#import "UIFont+HEMStyle.h"
+
 #import "HEMAlarmSoundTableViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
@@ -31,6 +34,8 @@
 
     NSString* sleepSoundText = [self.possibleSleepSounds objectAtIndex:indexPath.row];
     cell.textLabel.text = sleepSoundText;
+    cell.textLabel.textColor = [HelloStyleKit backViewTextColor];
+    cell.textLabel.font = [UIFont settingsTitleFont];
 
     if ([sleepSoundText isEqualToString:self.alarmCache.soundName]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

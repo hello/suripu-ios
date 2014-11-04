@@ -1,4 +1,6 @@
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMInsetGlyphTableViewCell.h"
 #import "HelloStyleKit.h"
 
@@ -8,9 +10,13 @@
 @implementation HEMInsetGlyphTableViewCell
 
 - (void)awakeFromNib {
-    [[self titleLabel] setTextColor:[HelloStyleKit settingsTextColor]];
-    [[self detailLabel] setTextColor:[HelloStyleKit settingsTextColor]];
-    [[self descriptionLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[self titleLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[self titleLabel] setFont:[UIFont settingsTitleFont]];
+    
+    [[self detailLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[self detailLabel] setFont:[UIFont settingsTableCellDetailFont]];
+    
+    [[[self detailContainer] layer] setCornerRadius:CGRectGetHeight([[self detailContainer] bounds])/2];
 }
 
 @end

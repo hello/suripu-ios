@@ -247,7 +247,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
         
         if ([onboardingController isKindOfClass:[UINavigationController class]]) {
             UINavigationController* navVC = (UINavigationController*)onboardingController;
-            [[navVC navigationBar] setTintColor:[HelloStyleKit onboardingBlueColor]];
+            [[navVC navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];
         }
         
         [dynamicPanesController presentViewController:onboardingController

@@ -128,13 +128,13 @@
 "settings.pill.dialog.unable-to-unpair" = "Unable to unpair your Sleep Pill.";
 "settings.pill.need-pill" = "I need a Sleep Pill";
 "settings.pill.unpair-error-title" = "Unpairing failed";
-"settings.pill.pair-no-sense-message" = "A Sense must be paired to your account in order to pair a Sleep Pill.";
 "settings.pill.unpairing-message" = "Unpairing your Sleep Pill.";
 "settings.sense.not-found-title" = "Sense not found";
 "settings.sense.signal" = "Signal";
 "settings.sense.signal.weak" = "Weak";
 "settings.sense.signal.good" = "Good";
 "settings.sense.signal.strong" = "Strong";
+"settings.sense.wifi" = "WiFi";
 "settings.sense.dialog.pair-failed-title" = "Action failed";
 "settings.sense.dialog.pair-failed-message" = "Unable to put Sense into pairing mode. Make sure the signal to Sense is not too weak and try again.";
 "settings.sense.no-sense-message" = "Ensure you are near your Sense and that Sense is powered on then try again.";
@@ -152,6 +152,8 @@
 
 // insights
 "sleep.trends.title" = "Trends";
+"sleep.insight.title" = "INSIGHTS";
+"sleep.insight.summary.no-data-message"  = "As Sense learns from your sleep habits, we will let you know how to improve.";
 
 // authentication/sign in
 "authorization.title" = "Sign in";

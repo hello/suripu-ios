@@ -66,10 +66,10 @@ static UIFont* HEMSensorViewRegularFont;
     self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:@[]];
     CAGradientLayer* mask = [CAGradientLayer layer];
     mask.frame = self.graphView.bounds;
-    mask.colors = @[ (id)[HelloStyleKit settingsTextColor].CGColor,
-                     (id)[HelloStyleKit settingsTextColor].CGColor,
-                     (id)[UIColor clearColor].CGColor,
-                     (id)[UIColor clearColor].CGColor ];
+    mask.colors = @[(id)[UIColor whiteColor].CGColor,
+                    (id)[UIColor whiteColor].CGColor,
+                    (id)[HelloStyleKit backViewBackgroundColor].CGColor,
+                    (id)[HelloStyleKit backViewBackgroundColor].CGColor];
     mask.startPoint = CGPointMake(0, 0.5);
     mask.endPoint = CGPointMake(1, 0.5);
     mask.locations = @[ @(-1), @(-1), @0, @1 ];
@@ -148,7 +148,7 @@ static UIFont* HEMSensorViewRegularFont;
             NSFontAttributeName : HEMSensorViewEmphasisFont,
         },
         @(PARA) : @{
-            NSForegroundColorAttributeName : [HelloStyleKit settingsTextColor],
+            NSForegroundColorAttributeName : [HelloStyleKit backViewTextColor],
         }
     };
 

@@ -9,6 +9,8 @@
 
 #import <SenseKit/SENDevice.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMDevicesViewController.h"
 #import "HEMDeviceCenter.h"
 #import "HEMPillViewController.h"
@@ -37,6 +39,12 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[self devicesTableView] reloadData];
+    
+    if ([[HEMDeviceCenter sharedCenter] pillInfo] == nil
+        || [[HEMDeviceCenter sharedCenter] senseInfo] == nil) {
+        [self loadDevices];
+    }
+    
 }
 
 - (void)loadDevices {
@@ -148,9 +156,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         : [HelloStyleKit pillIcon];
     
     [[cell textLabel] setText:name];
-    [[cell textLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell textLabel] setFont:[UIFont settingsTitleFont]];
+    
     [[cell detailTextLabel] setText:status];
-    [[cell detailTextLabel] setTextColor:[HelloStyleKit settingsTextColor]];
+    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
+    
     [[cell imageView] setImage:icon];
     [[cell contentView] setAlpha:alpha];
     [cell setAccessoryView:activity];

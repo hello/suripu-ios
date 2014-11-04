@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMInsightCollectionViewCell.h"
 #import "HelloStyleKit.h"
 
@@ -75,8 +77,8 @@ static CGFloat const kHEMInsightSummaryCornerRadius = 3.0f;
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [label setTranslatesAutoresizingMaskIntoConstraints:YES];
     [label setBackgroundColor:[self backgroundColor]];
-    [label setFont:[UIFont fontWithName:@"Calibre-Regular" size:9.0f]];
-    [label setTextColor:[HelloStyleKit onboardingBlueColor]];
+    [label setFont:[UIFont insightTitleFont]];
+    [label setTextColor:[HelloStyleKit senseBlueColor]];
     [label setText:text];
     
     [[self contentView] addSubview:label];
@@ -101,10 +103,10 @@ static CGFloat const kHEMInsightSummaryCornerRadius = 3.0f;
     UILabel* label = [[UILabel alloc] initWithFrame:messageFrame];
     [label setBackgroundColor:[self backgroundColor]];
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [label setFont:[UIFont fontWithName:@"Calibre-Thin" size:18.0f]];
+    [label setFont:[UIFont settingsInsightMessageFont]];
     [label setTextColor:[HelloStyleKit onboardingGrayColor]];
     [label setText:text];
-    [label setNumberOfLines:0];
+    [label setNumberOfLines:3];
 
     [[self contentView] addSubview:label];
  

@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMSettingsNavigationController.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
@@ -20,16 +22,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self view] setBackgroundColor:[HelloStyleKit backViewGraycolor]];
-    [[self navigationBar] setTintColor:[HelloStyleKit backViewNavTintColor]];
+    [[self view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
+    [[self navigationBar] setTintColor:[HelloStyleKit backViewTintColor]];
     [[self navigationBar] setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTintColor],
-        NSFontAttributeName : [UIFont fontWithName:@"Calibre-Regular" size:20.0f]
+        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
+        NSFontAttributeName : [UIFont settingsTitleFont]
     }];
 }   
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    [[viewController view] setBackgroundColor:[HelloStyleKit backViewGraycolor]];
+    [[viewController view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
     [super pushViewController:viewController animated:animated];
 }
 

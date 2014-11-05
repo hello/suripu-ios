@@ -287,8 +287,12 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
         
         NSError* deviceError = nil;
         
-        if (error != nil && strongSelf) {
-            deviceError = [strongSelf errorWithType:HEMDeviceCenterErrorUnlinkPillFromAccount];
+        if (strongSelf) {
+            if (error != nil) {
+                deviceError = [strongSelf errorWithType:HEMDeviceCenterErrorUnlinkPillFromAccount];
+            } else {
+                [strongSelf setPillInfo:nil];
+            }
         }
         
         if (completion) completion (deviceError);

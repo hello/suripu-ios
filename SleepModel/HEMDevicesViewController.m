@@ -23,6 +23,7 @@
 
 @property (weak,   nonatomic) IBOutlet UITableView *devicesTableView;
 @property (strong, nonatomic) NSError* loadError;
+@property (assign, nonatomic) BOOL loaded;
 
 @end
 
@@ -33,15 +34,22 @@
     [[self devicesTableView] setDelegate:self];
     [[self devicesTableView] setDataSource:self];
     [[self devicesTableView] setTableFooterView:[[UIView alloc] init]];
-    [self loadDevices];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[self devicesTableView] reloadData];
     
-    if ([[HEMDeviceCenter sharedCenter] pillInfo] == nil
-        || [[HEMDeviceCenter sharedCenter] senseInfo] == nil) {
+    // only load devices again on appearance if user is coming back, not when
+    // coming to, and only if devices are not configured so that we can check
+    // if it has happened.
+    if ([self loaded]) {
+        if ([[HEMDeviceCenter sharedCenter] pillInfo] == nil
+            || [[HEMDeviceCenter sharedCenter] senseInfo] == nil) {
+            [self loadDevices];
+        } else {
+            [[self devicesTableView] reloadData];
+        }
+    } else {
         [self loadDevices];
     }
     
@@ -63,6 +71,7 @@
         }
     }];
     [[self devicesTableView] reloadData];
+    [self setLoaded:YES];
 }
 
 - (void)updateTableWhenDoneLoadingInfo {
@@ -127,7 +136,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCellSelectionStyle selectionStyle = UITableViewCellSelectionStyleNone;
     UITableViewCellAccessoryType accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    if ([[HEMDeviceCenter sharedCenter] isLoadingInfo]) {
+    if ([[HEMDeviceCenter sharedCenter] isLoadingInfo] || ![self loaded]) {
         status = NSLocalizedString(@"empty-data", nil);
         activity =
             [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];

@@ -6,8 +6,9 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#ifndef Sense_HEMWifiConfigurationDelegate_h
-#define Sense_HEMWifiConfigurationDelegate_h
+@protocol HEMWiFiConfigurationDelegate <NSObject>
 
+- (void)didConfigureWiFiTo:(NSString*)ssid from:(id)controller;
+- (void)didCancelWiFiConfigurationFrom:(id)controller;
 
-#endif
+@end

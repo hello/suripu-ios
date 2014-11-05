@@ -18,21 +18,24 @@
 #import "HEMUserDataCache.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingUtils.h"
-#import "HelloStyleKit.h"
 #import "HEMActivityCoverView.h"
 #import "HEMDeviceCenter.h"
 
-static CGFloat const kHEMPillPairTimeout = 60.0f; // accommodate case when scanning is needed
+static CGFloat const kHEMPillPairTimeout = 90.0f; // accommodate case when scanning is needed
+static CGFloat const kHEMPillPairedStateDuration = 2.0f;
+static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 @interface HEMPillPairViewController()
 
 @property (weak, nonatomic)   IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic)   IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic)   IBOutlet UIImageView *pillDiagram;
-@property (weak, nonatomic)   IBOutlet HEMActionButton *readyButton;
+@property (weak, nonatomic)   IBOutlet HEMActionButton *retryButton;
 @property (weak, nonatomic)   IBOutlet UIButton *helpButton;
-@property (strong, nonatomic) HEMActivityCoverView* activityView;
+@property (weak, nonatomic)   IBOutlet NSLayoutConstraint *retryButtonWidthConstraint;
 
+@property (strong, nonatomic) HEMActivityCoverView* activityView;
+@property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL pairTimedOut;
 
 
@@ -46,15 +49,26 @@ static CGFloat const kHEMPillPairTimeout = 60.0f; // accommodate case when scann
     [super viewDidLoad];
     [self setupSubtitle];
     [self setupCancelButton];
+    
+    [self updateActivityText:NSLocalizedString(@"pill-pair.connecting-sense", nil)];
+    [self showActivity];
+    
     [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self performSelector:@selector(pairPill:)
+               withObject:self
+               afterDelay:kHEMPillPairStartDelay];
 }
 
 - (void)setupSubtitle {
     NSString* subtitleFormat = NSLocalizedString(@"pill-pair.subtitle.format", nil);
-    NSString* green = NSLocalizedString(@"onboarding.green", nil);
+    NSString* blue = NSLocalizedString(@"onboarding.blue", nil);
     
     NSArray* args = @[
-        [HEMOnboardingUtils boldAttributedText:green withColor:[HelloStyleKit green]]
+        [HEMOnboardingUtils boldAttributedText:blue withColor:[UIColor blueColor]]
     ];
     
     NSMutableAttributedString* attrSubtitle
@@ -73,34 +87,51 @@ static CGFloat const kHEMPillPairTimeout = 60.0f; // accommodate case when scann
                                                                       target:self
                                                                       action:@selector(cancel:)];
         [[self navigationItem] setLeftBarButtonItem:cancelItem];
+        [self setCancelItem:cancelItem];
     }
 }
 
+- (void)updateActivityText:(NSString*)text {
+    [[self helpButton] setTitle:text forState:UIControlStateDisabled];
+}
+
+- (void)showActivity {
+    [[self cancelItem] setEnabled:NO];
+    [[self helpButton] setEnabled:NO];
+    [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
+}
+
+- (void)hideActivity {
+    [[self cancelItem] setEnabled:YES];
+    [[self helpButton] setEnabled:YES];
+    [[self retryButton] stopActivity];
+}
+
+- (SENSenseManager*)manager {
+    SENSenseManager* manager = [[HEMDeviceCenter sharedCenter] senseManager];
+    return manager ? manager : [[HEMUserDataCache sharedUserDataCache] senseManager];
+}
+
 - (void)listenForDisconnects {
-    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    SENSenseManager* manager = [self manager];
     if ([self disconnectObserverId] == nil && manager != nil) {
         __weak typeof(self) weakSelf = self;
         self.disconnectObserverId =
             [manager observeUnexpectedDisconnect:^(NSError *error) {
                 __block typeof(weakSelf) strongSelf = weakSelf;
                 if (strongSelf) {
-                    [[strongSelf activityView] dismissWithResultText:nil completion:^{
-                        [strongSelf showMessageDialog:NSLocalizedString(@"pairing.error.unexpected-disconnect", nil)
-                                                title:NSLocalizedString(@"pairing.failed.title", nil)];
-                    }];
+                    NSString* msg = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
+                    [strongSelf showError:error customMessage:msg];
                 }
-                
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             }];
     }
 }
 
 - (void)pairingTimedOut {
     [self setPairTimedOut:YES];
-    [[self activityView] dismissWithResultText:nil completion:^{
-        [self showMessageDialog:NSLocalizedString(@"pill-pair.error.timed-out", nil)
-                          title:NSLocalizedString(@"pairing.failed.title", nil)];
-    }];
+    
+    NSString* msg = NSLocalizedString(@"pill-pair.error.timed-out", nil);
+    [self showError:nil customMessage:msg];
     
     [SENAnalytics track:kHEMAnalyticsEventError
              properties:@{kHEMAnalyticsEventPropMessage : @"pairing timed out"}];
@@ -109,7 +140,7 @@ static CGFloat const kHEMPillPairTimeout = 60.0f; // accommodate case when scann
 - (void)ensureSenseIsReady:(void(^)(SENSenseManager* manager))completion {
     if (!completion) return;
     
-    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    SENSenseManager* manager = [self manager];
     if (manager != nil) {
         completion (manager);
     } else {
@@ -119,58 +150,53 @@ static CGFloat const kHEMPillPairTimeout = 60.0f; // accommodate case when scann
             if (!strongSelf) return;
             
             if (error != nil) {
-                [[strongSelf activityView] dismissWithResultText:nil completion:^{
-                    [strongSelf showMessageDialog:NSLocalizedString(@"pill-pair.error.device-info-unknown", nil)
-                                            title:NSLocalizedString(@"pairing.failed.title", nil)];
-                }];
+
+                NSString* msg = NSLocalizedString(@"pill-pair.error.device-info-unknown", nil);
+                [strongSelf showError:error customMessage:msg];
+                
                 completion (nil);
                 return;
             }
             
             DDLogVerbose(@"looking for sense to trigger pill pairing");
+            [strongSelf updateActivityText:NSLocalizedString(@"pill-pair.connecting-sense", nil)];
+            
             [[HEMDeviceCenter sharedCenter] scanForPairedSense:^(NSError *error) {
                 if (error != nil) {
-                    [[strongSelf activityView] dismissWithResultText:nil completion:^{
-                        [strongSelf showMessageDialog:NSLocalizedString(@"pill-pair.error.sense-not-found", nil)
-                                                title:NSLocalizedString(@"pairing.failed.title", nil)];
-                    }];
-                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                    
+                    NSString* msg = NSLocalizedString(@"pill-pair.error.sense-not-found", nil);
+                    [strongSelf showError:error customMessage:msg];
+                    
                     completion (nil);
                     return;
                 }
                 
-                if (completion) completion ([[HEMDeviceCenter sharedCenter] senseManager]);
+                completion ([[HEMDeviceCenter sharedCenter] senseManager]);
             }];
         }];
     }
 }
 
 - (IBAction)pairPill:(id)sender {
-    if ([self activityView] == nil) {
-        [self setActivityView:[[HEMActivityCoverView alloc] init]];
-    }
+    [self showActivity];
+    [self setPairTimedOut:NO];
     
-    NSString* pairing = NSLocalizedString(@"pill-pair.pairing-message", nil);
-    [[[self activityView] activityLabel] setText:pairing];
+    [self performSelector:@selector(pairingTimedOut)
+               withObject:nil
+               afterDelay:kHEMPillPairTimeout];
     
-    [[self activityView] showInView:[[self navigationController] view] completion:^{
-        [self setPairTimedOut:NO];
-        [self performSelector:@selector(pairingTimedOut)
-                   withObject:nil
-                   afterDelay:kHEMPillPairTimeout];
-        
-        __weak typeof(self) weakSelf = self;
-        
-        [self ensureSenseIsReady:^(SENSenseManager *manager) {
-            __block typeof(weakSelf) strongSelf = weakSelf;
-            if (!strongSelf || manager == nil) return;
-            [strongSelf pairNowWith:manager];
-        }];
+    __weak typeof(self) weakSelf = self;
+    [self ensureSenseIsReady:^(SENSenseManager *manager) {
+        __block typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf || manager == nil) return;
+        [strongSelf pairNowWith:manager];
     }];
 }
 
 - (void)pairNowWith:(SENSenseManager*)manager {
     [self listenForDisconnects];
+    
+    [self updateActivityText:NSLocalizedString(@"pill-pair.pairing-message", nil)];
     
     NSString* token = [SENAuthorizationService accessToken];
     
@@ -182,11 +208,7 @@ static CGFloat const kHEMPillPairTimeout = 60.0f; // accommodate case when scann
             [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
                                                      selector:@selector(pairingTimedOut)
                                                        object:nil];
-            NSString* paired = NSLocalizedString(@"pairing.done", nil);
-            [[strongSelf activityView] dismissWithResultText:paired completion:^{
-                [strongSelf disconnectSenseAndClearCache];
-                [strongSelf proceed];
-            }];
+            [strongSelf flashPairedState];
         }
     } failure:^(NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
@@ -194,13 +216,32 @@ static CGFloat const kHEMPillPairTimeout = 60.0f; // accommodate case when scann
             [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
                                                      selector:@selector(pairingTimedOut)
                                                        object:nil];
-            [[strongSelf activityView] dismissWithResultText:nil completion:^{
-                [strongSelf showMessageDialog:NSLocalizedString(@"pill-pair.error.pill-pair-failed", nil)
-                                        title:NSLocalizedString(@"pairing.failed.title", nil)];
-            }];
         }
         
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        [strongSelf showError:error customMessage:nil];
+    }];
+}
+
+- (void)flashPairedState {
+    if ([self activityView] == nil) {
+        [self setActivityView:[[HEMActivityCoverView alloc] init]];
+        
+        NSString* paired = NSLocalizedString(@"pairing.done", nil);
+        [[[self activityView] activityLabel] setText:paired];
+    }
+    
+    [[self activityView] showInView:[[self navigationController] view] activity:NO completion:^{
+        [[self cancelItem] setEnabled:YES];
+        
+        [self performSelector:@selector(dismissPairedState)
+                   withObject:nil
+                   afterDelay:kHEMPillPairedStateDuration];
+    }];
+}
+
+- (void)dismissPairedState {
+    [[self activityView] dismissWithResultText:nil completion:^{
+        [self proceed];
     }];
 }
 
@@ -225,6 +266,8 @@ static CGFloat const kHEMPillPairTimeout = 60.0f; // accommodate case when scann
 
 - (void)proceed {
     if ([self delegate] == nil) {
+        [self disconnectSenseAndClearCache];
+        
         [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
         
         NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
@@ -234,10 +277,39 @@ static CGFloat const kHEMPillPairTimeout = 60.0f; // accommodate case when scann
     }
 }
 
+#pragma mark - Errors
+
+- (void)showError:(NSError*)error customMessage:(NSString*)customMessage {
+    [self hideActivity];
+    
+    NSString* message = customMessage;
+    
+    if (message == nil) {
+        
+        switch ([error code]) {
+            case SENSenseManagerErrorCodeSenseAlreadyPaired:
+                message = NSLocalizedString(@"pill-pair.error.already-paired", nil);
+                break;
+            case SENSenseManagerErrorCodeTimeout:
+                message = NSLocalizedString(@"pill-pair.error.timed-out", nil);
+                break;
+            default:
+                message = NSLocalizedString(@"pill-pair.error.pill-pair-failed", nil);
+                break;
+        }
+    }
+    
+    [self showMessageDialog:message title:NSLocalizedString(@"pairing.failed.title", nil)];
+    
+    if (error) {
+        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+    }
+}
+
 #pragma mark - Clean Up
 
 - (void)disconnectSenseAndClearCache {
-    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    SENSenseManager* manager = [self manager];
     [manager disconnectFromSense];
     if ([self disconnectObserverId] != nil) {
         [manager removeUnexpectedDisconnectObserver:[self disconnectObserverId]];

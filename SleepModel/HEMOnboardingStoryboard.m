@@ -36,6 +36,7 @@ static NSString *const _HEMweightPicker = @"weightPicker";
 static NSString *const _HEMwelcome = @"welcome";
 static NSString *const _HEMwifi = @"wifi";
 static NSString *const _HEMwifiPassword = @"wifiPassword";
+static NSString *const _HEMwifiPicker = @"wifiPicker";
 static NSString *const _HEMwifiViewController = @"wifiViewController";
 
 @implementation HEMOnboardingStoryboard
@@ -75,6 +76,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(UIViewController *)instantiateSignUpViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsignUpViewController]; }
 +(UIViewController *)instantiateWeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMweightPicker]; }
 +(UIViewController *)instantiateWelcomeViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwelcome]; }
++(UIViewController *)instantiateWifiPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwifiPicker]; }
 +(UIViewController *)instantiateWifiViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwifiViewController]; }
 
 @end

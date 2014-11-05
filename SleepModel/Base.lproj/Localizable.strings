@@ -71,12 +71,14 @@
 "wifi.error.scan-general" = "Sense failed to complete the scan due to an unknown issue.";
 
 // pairing with the pill
-"pill-pair.subtitle.format" = "Gently shake your Sleep Pill for three seconds. When your Sleep Pill lights up %@, tap continue.";
+"pill-pair.subtitle.format" = "Gently shake your Sleep Pill for three seconds. Once Sense detects your Sleep Pill, it will light up %@.";
 "pill-pair.pairing-message" = "Pairing your Sleep Pill";
+"pill-pair.connecting-sense" = "Connecting to Sense.";
 "pill-pair.error.device-info-unknown" = "Could not find your paired Sense right now. Please try again.";
 "pill-pair.error.sense-not-found" = "Could not connect to your Sense to pair your Sleep Pill.";
 "pill-pair.error.pill-pair-failed" = "Unable to find any Sleep Pills to pair with.  Make sure they are nearby and try again.";
 "pill-pair.error.timed-out" = "Device did not respond in time.";
+"pill-pair.error.already-paired" = "Your Sleep Pill is currently paired to an account.";
 
 // location
 "location.error.title" = "Unknown Location";
@@ -135,6 +137,7 @@
 "settings.sense.signal.good" = "Good";
 "settings.sense.signal.strong" = "Strong";
 "settings.sense.wifi" = "WiFi";
+"settings.sense.getting-wifi-configured" = "Checking WiFi configured";
 "settings.sense.dialog.pair-failed-title" = "Action failed";
 "settings.sense.dialog.pair-failed-message" = "Unable to put Sense into pairing mode. Make sure the signal to Sense is not too weak and try again.";
 "settings.sense.no-sense-message" = "Ensure you are near your Sense and that Sense is powered on then try again.";

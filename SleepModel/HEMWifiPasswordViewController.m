@@ -31,7 +31,7 @@
 @property (weak, nonatomic) IBOutlet HEMRoundedTextField *passwordField;
 @property (weak, nonatomic) IBOutlet UITextField *hiddenField;
 
-@property (assign, nonatomic) BOOL wifiConfigured;
+@property (copy,   nonatomic) NSString* ssidConfigured;
 
 @end
 
@@ -101,6 +101,11 @@
     }];
 }
 
+- (SENSenseManager*)manager {
+    SENSenseManager* manager = [[HEMDeviceCenter sharedCenter] senseManager];
+    return manager ? manager : [[HEMUserDataCache sharedUserDataCache] senseManager];
+}
+
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
@@ -128,7 +133,7 @@
                 
         [self showActivity];
         
-        if (![self wifiConfigured]) {
+        if ([self ssidConfigured] == nil) {
             
             SENWifiEndpointSecurityType type = SENWifiEndpointSecurityTypeWpa2; // default, per discussion
             if ([self endpoint] != nil) {
@@ -140,7 +145,7 @@
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 if (strongSelf) {
                     if (error == nil) {
-                        [strongSelf setWifiConfigured:YES];
+                        [strongSelf setSsidConfigured:ssid];
                         
                         if ([strongSelf shouldLinkAccount]) {
                             [strongSelf linkAccount];
@@ -180,7 +185,7 @@
    securityType:(SENWifiEndpointSecurityType)securityType
      completion:(void(^)(NSError* error))completion {
 
-    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    SENSenseManager* manager = [self manager];
     [manager setWiFi:ssid password:password securityType:securityType success:^(id response) {
         if (completion) completion (nil);
     } failure:^(NSError *error) {
@@ -191,7 +196,7 @@
 
 - (void)linkAccount {
     NSString* accessToken = [SENAuthorizationService accessToken];
-    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    SENSenseManager* manager = [self manager];
     
     __weak typeof(self) weakSelf = self;
     [manager linkAccount:accessToken success:^(id response) {
@@ -262,9 +267,15 @@
 
 - (void)next {
     [self setTimeZone]; // fire and forget (besides logging that it failed)
-    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard pillSegueIdentifier]
-                              sender:nil];
+    
+    if ([self delegate] != nil) {
+        [[self view] endEditing:NO];
+        [[self delegate] didConfigureWiFiTo:[self ssidConfigured] from:self];
+    } else {
+        [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
+        [self performSegueWithIdentifier:[HEMOnboardingStoryboard pillSegueIdentifier]
+                                  sender:nil];
+    }
 }
 
 @end

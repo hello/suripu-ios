@@ -9,6 +9,8 @@
 #import <SenseKit/SENAnswer.h>
 #import <SenseKit/SENServiceQuestions.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMActionButton.h"
 #import "HelloStyleKit.h"
@@ -43,9 +45,18 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureFonts];
     [self setQuestionIndex:0];
     [self setupBackgroundImage];
     [self displayQuestionAtIndex:[self questionIndex]];
+}
+
+- (void)configureFonts {
+    [[self titleLabel] setFont:[UIFont questionTitleFont]];
+    [[self questionLabel] setFont:[UIFont questionFont]];
+    [[self thankLabel] setFont:[UIFont thankyouFont]];
+    [[self youLabel] setFont:[UIFont thankyouFont]];
+    [[[self skipButton] titleLabel] setFont:[UIFont questionAnswerFont]];
 }
 
 - (void)setupBackgroundImage {
@@ -100,7 +111,7 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 
     [button setTitle:[answer answer] forState:UIControlStateNormal];
     [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [[button titleLabel] setFont:[UIFont fontWithName:@"Agile-Light" size:20.0f]];
+    [[button titleLabel] setFont:[UIFont questionAnswerFont]];
 
     [[button layer] setCornerRadius:kHEMSleepAnswerButtonHeight / 2];
     [[button layer] setBorderColor:[[UIColor whiteColor] CGColor]];

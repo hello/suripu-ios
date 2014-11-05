@@ -1349,10 +1349,10 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qtz-Zx-z1h">
-                                                    <rect key="frame" x="510" y="15" width="50" height="34"/>
+                                                    <rect key="frame" x="500" y="15" width="60" height="34"/>
                                                     <subviews>
                                                         <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6ua-bn-Lpg" userLabel="detail">
-                                                            <rect key="frame" x="10" y="7" width="30" height="20"/>
+                                                            <rect key="frame" x="10" y="7" width="40" height="20"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="18"/>
                                                             <color key="textColor" red="0.58039215686274503" green="0.58039215686274503" blue="0.58039215686274503" alpha="1" colorSpace="calibratedRGB"/>
@@ -1361,7 +1361,7 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="7kh-mk-p3U"/>
+                                                        <constraint firstAttribute="width" constant="60" id="7kh-mk-p3U"/>
                                                         <constraint firstItem="6ua-bn-Lpg" firstAttribute="top" secondItem="qtz-Zx-z1h" secondAttribute="top" constant="7" id="9iE-U9-hZh"/>
                                                         <constraint firstAttribute="trailing" secondItem="6ua-bn-Lpg" secondAttribute="trailing" constant="10" id="CBV-T3-13r"/>
                                                         <constraint firstItem="6ua-bn-Lpg" firstAttribute="leading" secondItem="qtz-Zx-z1h" secondAttribute="leading" constant="10" id="L7S-br-HqO"/>

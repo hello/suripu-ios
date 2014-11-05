@@ -40,6 +40,8 @@
 + (UIColor*)backViewTextColor;
 + (UIColor*)senseBlueColor;
 + (UIColor*)backViewTintColor;
++ (UIColor*)timelineSectionBorderColor;
++ (UIColor*)timelineGradientDarkColor;
 
 // Gradients
 + (PCGradient*)blueBackgroundGradient;

@@ -38,6 +38,8 @@ static UIColor* _backViewNavTitleColor = nil;
 static UIColor* _backViewTextColor = nil;
 static UIColor* _senseBlueColor = nil;
 static UIColor* _backViewTintColor = nil;
+static UIColor* _timelineSectionBorderColor = nil;
+static UIColor* _timelineGradientDarkColor = nil;
 
 static PCGradient* _blueBackgroundGradient = nil;
 
@@ -98,6 +100,8 @@ static UIImage* _lockIcon = nil;
     _backViewTextColor = [UIColor colorWithRed: 0.498 green: 0.498 blue: 0.498 alpha: 1];
     _senseBlueColor = [UIColor colorWithRed: 0 green: 0.604 blue: 1 alpha: 1];
     _backViewTintColor = [UIColor colorWithRed: 0.686 green: 0.686 blue: 0.686 alpha: 1];
+    _timelineSectionBorderColor = [UIColor colorWithRed: 0.9 green: 0.91 blue: 0.91 alpha: 1];
+    _timelineGradientDarkColor = [UIColor colorWithRed: 0.96 green: 0.96 blue: 0.97 alpha: 1];
 
     // Gradients Initialization
     CGFloat blueBackgroundGradientLocations[] = {0, 1};
@@ -130,6 +134,8 @@ static UIImage* _lockIcon = nil;
 + (UIColor*)backViewTextColor { return _backViewTextColor; }
 + (UIColor*)senseBlueColor { return _senseBlueColor; }
 + (UIColor*)backViewTintColor { return _backViewTintColor; }
++ (UIColor*)timelineSectionBorderColor { return _timelineSectionBorderColor; }
++ (UIColor*)timelineGradientDarkColor { return _timelineGradientDarkColor; }
 
 #pragma mark Gradients
 

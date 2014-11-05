@@ -2,6 +2,7 @@
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HEMTimelineDrawingUtils.h"
+#import "HelloStyleKit.h"
 
 @interface HEMSleepSummaryCollectionViewCell ()
 
@@ -22,7 +23,7 @@ static CGFloat const HEMSleepSummaryShadowHeight = 1.f;
     [super layoutSubviews];
     if (!self.gradientLayer) {
         UIColor* topColor = [UIColor whiteColor];
-        UIColor* bottomColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.97 alpha:1];
+        UIColor* bottomColor = [HelloStyleKit timelineGradientDarkColor];
         self.gradientLayer = [CAGradientLayer layer];
         CGRect gradientRect = self.bounds;
         gradientRect.size.height -= HEMSleepSummaryShadowHeight;
@@ -41,7 +42,7 @@ static CGFloat const HEMSleepSummaryShadowHeight = 1.f;
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGRect shadowRect = CGRectMake(CGRectGetMinX(rect), CGRectGetHeight(rect) - HEMSleepSummaryShadowHeight, CGRectGetWidth(rect), HEMSleepSummaryShadowHeight);
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.9 green:0.91 blue:0.91 alpha:1].CGColor);
+    CGContextSetFillColorWithColor(ctx, [HelloStyleKit timelineSectionBorderColor].CGColor);
     CGContextFillRect(ctx, shadowRect);
 }
 

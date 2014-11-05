@@ -25,7 +25,7 @@ static CGFloat const HEMPresleepSummaryShadowHeight = 1.f;
 {
     [super layoutSubviews];
     if (!self.gradientLayer) {
-        UIColor* topColor = [UIColor colorWithRed:0.96 green:0.96 blue:0.97 alpha:1];
+        UIColor* topColor = [HelloStyleKit timelineGradientDarkColor];
         UIColor* bottomColor = [UIColor whiteColor];
         self.gradientLayer = [CAGradientLayer layer];
         CGRect gradientRect = self.bounds;
@@ -47,7 +47,7 @@ static CGFloat const HEMPresleepSummaryShadowHeight = 1.f;
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGRect shadowRect = CGRectMake(CGRectGetMinX(rect), CGRectGetMinY(rect) + HEMPresleepSummaryLineOffset, CGRectGetWidth(rect), HEMPresleepSummaryShadowHeight);
-    CGContextSetFillColorWithColor(ctx, [UIColor colorWithRed:0.9 green:0.91 blue:0.91 alpha:1].CGColor);
+    CGContextSetFillColorWithColor(ctx, [HelloStyleKit timelineSectionBorderColor].CGColor);
     CGContextFillRect(ctx, shadowRect);
 }
 

@@ -34,6 +34,7 @@ static NSUInteger HEMAlarmListLimit = 8;
     [self.addButton setTitleColor:[UIColor colorWithWhite:0.9 alpha:0.25] forState:UIControlStateDisabled];
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^{
         [self reloadData];
+        [self.tableView reloadData];
     }];
 }
 

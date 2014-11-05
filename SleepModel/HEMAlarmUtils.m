@@ -52,7 +52,9 @@
                onController:controller];
         } else {
             [SENAlarm clearSavedAlarms];
-            [alarms makeObjectsPerformSelector:@selector(save)];
+            for (SENAlarm* alarm in alarms) {
+                [alarm save];
+            }
         }
         [indicatorView stopAnimating];
         controller.navigationItem.rightBarButtonItem = rightButton;

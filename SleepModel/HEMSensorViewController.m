@@ -11,9 +11,7 @@
 #import "HEMGraphTooltipView.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
-
-static UIFont* HEMSensorViewEmphasisFont;
-static UIFont* HEMSensorViewRegularFont;
+#import "UIFont+HEMStyle.h"
 
 @interface HEMSensorViewController () <JBLineChartViewDelegate>
 
@@ -45,8 +43,8 @@ static UIFont* HEMSensorViewRegularFont;
     self.hourlyFormatter.dateFormat = [SENSettings timeFormat] == SENTimeFormat12Hour ? @"ha" : @"H";
     self.dailyFormatter = [[NSDateFormatter alloc] init];
     self.dailyFormatter.dateFormat = @"EEEEEE";
-    HEMSensorViewEmphasisFont = [UIFont fontWithName:@"Agile-Medium" size:21.0];
-    HEMSensorViewRegularFont = [UIFont fontWithName:@"Agile-Light" size:21.0];
+    self.hourlyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
+    self.dailyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
     [self initializeGraphDataSource];
     [self configureSensorValueViews];
@@ -145,7 +143,10 @@ static UIFont* HEMSensorViewRegularFont;
     self.unitLabel.text = [self.sensor localizedUnit];
     NSDictionary* attributes = @{
         @(EMPH) : @{
-            NSFontAttributeName : HEMSensorViewEmphasisFont,
+            NSFontAttributeName : [UIFont settingsInsightMessageFont],
+        },
+        @(PLAIN) : @{
+            NSFontAttributeName : [UIFont settingsInsightMessageFont],
         },
         @(PARA) : @{
             NSForegroundColorAttributeName : [HelloStyleKit backViewTextColor],
@@ -181,9 +182,9 @@ static UIFont* HEMSensorViewRegularFont;
 {
     if ([self isShowingHourlyData])
         return;
+    [self.dailyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
+    [self.hourlyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
 
-    self.hourlyGraphButton.titleLabel.font = HEMSensorViewEmphasisFont;
-    self.dailyGraphButton.titleLabel.font = HEMSensorViewRegularFont;
     [self animateActiveDataSeriesTo:self.hourlyDataSeries];
 }
 
@@ -192,8 +193,8 @@ static UIFont* HEMSensorViewRegularFont;
     if (![self isShowingHourlyData])
         return;
 
-    self.dailyGraphButton.titleLabel.font = HEMSensorViewEmphasisFont;
-    self.hourlyGraphButton.titleLabel.font = HEMSensorViewRegularFont;
+    [self.dailyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
+    [self.hourlyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
     [self animateActiveDataSeriesTo:self.dailyDataSeries];
 }
 

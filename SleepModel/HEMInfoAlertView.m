@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMInfoAlertView.h"
 #import "HelloStyleKit.h"
 
@@ -45,7 +47,7 @@ static CGFloat const kHEMSleepQuestionAnimDuration = 0.4f;
     };
     UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
     [label setText:info];
-    [label setFont:[UIFont fontWithName:@"Agile-Medium" size:20.0f]];
+    [label setFont:[UIFont infoToastFont]];
     [label setTextColor:[UIColor whiteColor]];
     [label setNumberOfLines:2];
     [label setTextAlignment:NSTextAlignmentCenter];

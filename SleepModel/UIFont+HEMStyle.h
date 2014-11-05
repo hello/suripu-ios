@@ -91,4 +91,29 @@
  */
 + (UIFont *)timelineMessageBoldFont;
 
+/**
+ *  Font to display the answers for questions
+ */
++ (UIFont *)questionAnswerFont;
+
+/**
+ *  Font for the title when display question + answers
+ */
++ (UIFont *)questionTitleFont;
+
+/**
+ *  Font for actual question
+ */
++ (UIFont *)questionFont;
+
+/**
+ *  Font for display any Thank You text
+ */
++ (UIFont *)thankyouFont;
+
+/**
+ *  Font used to display the blue toast that appears at the bottom of screen
+ */
++ (UIFont *)infoToastFont;
+
 @end

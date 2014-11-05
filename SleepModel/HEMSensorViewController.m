@@ -85,6 +85,7 @@
     gradient.colors = @[
                         (id)[[UIColor whiteColor] CGColor],
                         (id)[[UIColor colorWithWhite:1.f alpha:0] CGColor]];
+    gradient.locations = @[@0, @(0.4)];
     [self.graphContainerView.layer insertSublayer:gradient atIndex:0];
 }
 

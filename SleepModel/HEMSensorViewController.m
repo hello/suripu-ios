@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet JBLineChartView* graphView;
 @property (weak, nonatomic) IBOutlet UILabel* comfortZoneInfoLabel;
 @property (weak, nonatomic) IBOutlet UILabel* comfortZoneLabel;
+@property (weak, nonatomic) IBOutlet UIView *graphContainerView;
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
 @property (weak, nonatomic) IBOutlet UIView* chartContainerView;
 @property (nonatomic, strong) HEMGraphTooltipView* tooltipView;
@@ -46,6 +47,7 @@
     self.hourlyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.dailyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
+    [self configureGraphViewBackground];
     [self initializeGraphDataSource];
     [self configureSensorValueViews];
 }
@@ -74,6 +76,16 @@
     self.graphView.layer.mask = mask;
     [self configureGraphView];
     [self refreshGraphData];
+}
+
+- (void)configureGraphViewBackground
+{
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = self.view.bounds;
+    gradient.colors = @[
+                        (id)[[UIColor whiteColor] CGColor],
+                        (id)[[UIColor colorWithWhite:1.f alpha:0] CGColor]];
+    [self.graphContainerView.layer insertSublayer:gradient atIndex:0];
 }
 
 - (void)configureGraphView

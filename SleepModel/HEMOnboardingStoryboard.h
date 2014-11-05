@@ -42,6 +42,7 @@
 +(UIViewController *)instantiateSignUpViewController;
 +(UIViewController *)instantiateWeightPickerViewController;
 +(UIViewController *)instantiateWelcomeViewController;
++(UIViewController *)instantiateWifiPickerViewController;
 +(UIViewController *)instantiateWifiViewController;
 
 @end

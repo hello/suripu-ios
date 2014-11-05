@@ -57,6 +57,8 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     
     [[[self scanButton] layer] setBorderWidth:0.0f];
     
+    [self setupCancelButton];
+    
     [SENAnalytics track:kHEMAnalyticsEventOnBWiFiPass];
 }
 
@@ -83,6 +85,17 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 - (void)adjustConstraintsForIPhone4 {
     CGFloat diff = -(2*kHEMWifiCellHeight);
     [self updateConstraint:[self tableViewHeightConstraint] withDiff:diff];
+}
+
+- (void)setupCancelButton {
+    if ([self delegate] != nil) {
+        NSString* title = NSLocalizedString(@"actions.cancel", nil);
+        UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:title
+                                                                       style:UIBarButtonItemStyleBordered
+                                                                      target:self
+                                                                      action:@selector(cancel:)];
+        [[self navigationItem] setLeftBarButtonItem:cancelItem];
+    }
 }
 
 #pragma mark - UITableViewDelegate
@@ -233,6 +246,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self scanWithActivity];
 }
 
+- (IBAction)cancel:(id)sender {
+    [[self delegate] didCancelWiFiConfigurationFrom:self];
+}
+
 #pragma mark - Navigation
 
 - (void)next {
@@ -245,6 +262,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([destVC isKindOfClass:[HEMWifiPasswordViewController class]]) {
         HEMWifiPasswordViewController* wifiVC = (HEMWifiPasswordViewController*)destVC;
         [wifiVC setEndpoint:[self selectedWifiEndpont]];
+        [wifiVC setDelegate:[self delegate]];
     }
 }
 

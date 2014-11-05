@@ -11,9 +11,12 @@
 
 #import "HEMWiFiDataSource.h"
 #import "HEMUserDataCache.h"
+#import "HEMDeviceCenter.h"
 
 NSString* const kHEMWifiOtherCellId = @"other";
 NSString* const kHEMWifiNetworkCellId = @"network";
+
+static NSString* const kHEMWifiNetworkErrorDomain = @"is.hello.ble.wifi";
 
 @interface HEMWiFiDataSource()
 
@@ -70,6 +73,14 @@ NSString* const kHEMWifiNetworkCellId = @"network";
     }
 }
 
+- (SENSenseManager*)manager {
+    SENSenseManager* manager = [[HEMDeviceCenter sharedCenter] senseManager];
+    if (manager == nil) {
+        manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    }
+    return manager;
+}
+
 - (void)clearDetectedWifis {
     [self setScanned:NO];
     [[self wifisDetected] removeAllObjects];
@@ -77,7 +88,9 @@ NSString* const kHEMWifiNetworkCellId = @"network";
 }
 
 - (void)scan:(void(^)(NSError* error))completion {
-    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    if (!completion) return;
+    
+    SENSenseManager* manager = [self manager];
     if (manager) {
         [self setScanning:YES];
         
@@ -98,6 +111,10 @@ NSString* const kHEMWifiNetworkCellId = @"network";
             }
             if (completion) completion (error);
         }];
+    } else {
+        if (completion) completion ([NSError errorWithDomain:kHEMWifiNetworkErrorDomain
+                                                        code:HEMWiFiErrorCodeInvalidArgument
+                                                    userInfo:nil]);
     }
 }
 

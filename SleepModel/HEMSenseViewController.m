@@ -18,8 +18,16 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMAlertController.h"
 #import "HelloStyleKit.h"
+#import "HEMWiFiConfigurationDelegate.h"
+#import "HEMWifiPickerViewController.h"
+#import "HEMOnboardingStoryboard.h"
 
-@interface HEMSenseViewController() <UITableViewDataSource, UITableViewDelegate>
+static NSInteger const kHEMSenseRowLastSeen = 0;
+static NSInteger const kHEMSenseRowVersion = 1;
+static NSInteger const kHEMSenseRowSignal = 2;
+static NSInteger const kHEMSenseRowWiFi = 3;
+
+@interface HEMSenseViewController() <UITableViewDataSource, UITableViewDelegate, HEMWiFiConfigurationDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *senseInfoTableView;
 @property (weak, nonatomic) IBOutlet UIView *manageSenseView;
@@ -27,6 +35,7 @@
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *actionStatusActivity;
 @property (weak, nonatomic) IBOutlet UILabel *actionStatusLabel;
 
+@property (assign, nonatomic, getter=isLoaded) BOOL loaded;
 @property (copy, nonatomic)   NSString* senseSignalStrength;
 @property (copy, nonatomic)   NSString* wifiSSID;
 @property (strong, nonatomic) HEMAlertController* alertController;
@@ -51,6 +60,8 @@
 }
 
 - (void)loadSense {
+    if ([self isLoaded]) return;
+    
     __weak typeof(self) weakSelf = self;
     DDLogVerbose(@"scanning for sense");
     [[HEMDeviceCenter sharedCenter] scanForPairedSense:^(NSError *error) {
@@ -65,13 +76,14 @@
                 // MUST do 1 BLE operation at a time or else top board will crash, or
                 // do unexpected things
                 [strongSelf loadRSSIThen:^{
-                    [strongSelf hideActivity];
-                    // TODO (jimmy): doesn't seem to be implemented?
-//                    [strongSelf loadWifiThen:^{
-//                        [strongSelf hideActivity];
-//                    }];
+                    [[strongSelf actionStatusLabel] setText:NSLocalizedString(@"settings.sense.getting-wifi-configured", nil)];
+                    [strongSelf loadWifiThen:^{
+                        [strongSelf hideActivity];
+                    }];
                 }];
             }
+            
+            [strongSelf setLoaded:YES];
         }
     }];
 }
@@ -94,8 +106,7 @@
             strength = NSLocalizedString(@"settings.sense.signal.weak", nil);
         }
         [strongSelf setSenseSignalStrength:strength];
-        [[strongSelf senseInfoTableView] reloadSections:[NSIndexSet indexSetWithIndex:0]
-                                       withRowAnimation:UITableViewRowAnimationAutomatic];
+        [strongSelf reloadRow:kHEMSenseRowSignal];
         
         if (completion) completion();
     }];
@@ -110,11 +121,20 @@
         
         if (error == nil) {
             [strongSelf setWifiSSID:ssid];
+            [strongSelf reloadRow:kHEMSenseRowWiFi];
         } else {
             DDLogVerbose(@"failed to retrieve ssid configured with Sense");
             [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
         }
+        
+        if (completion) completion ();
     }];
+}
+
+- (void)reloadRow:(NSInteger)row {
+    NSIndexPath* path = [NSIndexPath indexPathForItem:row inSection:0];
+    [[self senseInfoTableView] reloadRowsAtIndexPaths:@[path]
+                                     withRowAnimation:UITableViewRowAnimationAutomatic];
 }
 
 #pragma mark - UITableViewDelegate / DataSource
@@ -146,37 +166,38 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     if ([indexPath section] == 0) {
         SENDevice* info = [[HEMDeviceCenter sharedCenter] senseInfo];
         NSString* title = nil;
-        NSString* detail = NSLocalizedString(@"empty-data", nil); // TODO (jimmy): data not supported yet;
-        UITableViewCellAccessoryType accessory = UITableViewCellAccessoryNone;
+        NSMutableAttributedString* detail = nil;
+        UITableViewCellSelectionStyle selection = UITableViewCellSelectionStyleNone;
         
         switch ([indexPath row]) {
-            case 0: {
+            case kHEMSenseRowLastSeen: {
                 title = NSLocalizedString(@"settings.device.last-seen", nil);
                 if ([info lastSeen] != nil) {
                     NSValueTransformer* transformer = [SORelativeDateTransformer registeredTransformer];
-                    detail = [transformer transformedValue:[info lastSeen]];
+                    detail = [[NSMutableAttributedString alloc] initWithString:[transformer transformedValue:[info lastSeen]]];
                 }
                 break;
             }
-            case 1: {
+            case kHEMSenseRowVersion: {
                 title = NSLocalizedString(@"settings.device.firmware-version", nil);
                 if ([[info firmwareVersion] length] > 0) {
-                    detail = [info firmwareVersion];
+                    detail = [[NSMutableAttributedString alloc] initWithString:[info firmwareVersion]];
                 }
                 break;
             }
-            case 2: {
+            case kHEMSenseRowSignal: {
                 title = NSLocalizedString(@"settings.sense.signal", nil);
                 if ([self senseSignalStrength] != nil) {
-                    detail = [self senseSignalStrength];
+                    detail = [[NSMutableAttributedString alloc] initWithString:[self senseSignalStrength]];
                 }
                 break;
             }
-            case 3: {
+            case kHEMSenseRowWiFi: {
                 title = NSLocalizedString(@"settings.sense.wifi", nil);
                 if ([[self wifiSSID] length] > 0) {
-                    detail = [self wifiSSID];
-                    accessory = UITableViewCellAccessoryDisclosureIndicator;
+                    detail = [[NSMutableAttributedString alloc] initWithString:[self wifiSSID]
+                                                                    attributes:@{NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle)}];
+                    selection = UITableViewCellSelectionStyleDefault;
                 }
                 break;
             }
@@ -188,11 +209,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
         [[cell textLabel] setFont:[UIFont settingsTitleFont]];
         
-        [[cell detailTextLabel] setText:detail];
-        [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
-        [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
+        if (detail == nil) {
+            detail = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"empty-data", nil)];
+        }
+        [detail addAttributes:@{NSFontAttributeName : [UIFont settingsTableCellDetailFont],
+                                NSForegroundColorAttributeName : [HelloStyleKit backViewTextColor]}
+                        range:NSMakeRange(0, [detail length])];
+        [[cell detailTextLabel] setAttributedText:detail];
         
-        [cell setAccessoryType:accessory];
+        [cell setSelectionStyle:selection];
         
     } // else, look at the storyboard
     
@@ -200,6 +225,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    switch ([indexPath row]) {
+        case kHEMSenseRowWiFi:
+            [self configureWiFi];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - Alerts
@@ -379,6 +411,30 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (IBAction)restoreToFactoryDefaults:(id)sender {
     [self showFactoryRestoreConfirmation];
+}
+
+#pragma mark Configure WiFi
+
+- (void)configureWiFi {
+    HEMWifiPickerViewController* picker =
+        (HEMWifiPickerViewController*) [HEMOnboardingStoryboard instantiateWifiPickerViewController];
+    [picker setDelegate:self];
+    
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:picker];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark HEMWifiConfigurationDelegate
+
+- (void)didCancelWiFiConfigurationFrom:(id)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didConfigureWiFiTo:(NSString *)ssid from:(id)controller {
+    [self setWifiSSID:ssid];
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self reloadRow:kHEMSenseRowWiFi];
+    }];
 }
 
 #pragma mark - Cleanup

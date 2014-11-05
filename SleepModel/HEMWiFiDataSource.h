@@ -8,6 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSInteger, HEMWiFiErrorCode) {
+    HEMWiFiErrorCodeInvalidArgument = -1
+};
+
 @class SENWifiEndpoint;
 
 @interface HEMWiFiDataSource : NSObject <UITableViewDataSource>

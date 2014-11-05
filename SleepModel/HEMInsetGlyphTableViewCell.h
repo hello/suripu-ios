@@ -6,6 +6,7 @@
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView* glyphImageView;
 @property (weak, nonatomic) IBOutlet UILabel* detailLabel;
-@property (weak, nonatomic) IBOutlet UIView* detailContainer;
+
+- (void)showDetailBubble:(BOOL)show;
 
 @end

@@ -116,6 +116,10 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 #pragma mark - Public Interfaces
 
 - (void)showInView:(UIView*)view completion:(void(^)(void))completion {
+    [self showInView:view activity:YES completion:completion];
+}
+
+- (void)showInView:(UIView*)view activity:(BOOL)activity completion:(void(^)(void))completion {
     [self setFrame:[view bounds]];
     [self setNeedsLayout];
     [self setAlpha:0.0f];
@@ -126,7 +130,9 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
                          [self setAlpha:1.0f];
                      }
                      completion:^(BOOL finished) {
-                         [[self activityView] startAnimating];
+                         if (activity) {
+                             [[self activityView] startAnimating];
+                         }
                          if (completion) completion ();
                      }];
 }

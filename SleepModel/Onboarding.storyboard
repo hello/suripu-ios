@@ -860,7 +860,7 @@
         <!--Wifi Picker View Controller-->
         <scene sceneID="22e-KB-YCx">
             <objects>
-                <viewController id="H2i-xS-f14" customClass="HEMWifiPickerViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="wifiPicker" id="H2i-xS-f14" customClass="HEMWifiPickerViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="rQr-NN-MoL"/>
                         <viewControllerLayoutGuide type="bottom" id="Hzz-un-6Ly"/>
@@ -1106,7 +1106,7 @@
                                     <constraint firstAttribute="height" constant="71" id="SZ7-c1-pnz"/>
                                 </constraints>
                                 <attributedString key="attributedText">
-                                    <fragment content="Gently share your Sleep Pill for three seconds.  When you Sleep Pill lights up green, tap continue.">
+                                    <fragment content="Gently share your Sleep Pill for three seconds.  Once Sense detects the Pill, it will light up blue.">
                                         <attributes>
                                             <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <font key="NSFont" size="18" name="Calibre-Thin"/>
@@ -1131,7 +1131,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Continue">
+                                <state key="normal" title="Retry">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1150,6 +1150,9 @@
                                 <state key="normal" title="I'm having trouble">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <state key="disabled" title=" ">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
                                     <action selector="help:" destination="Qk9-qi-Wt3" eventType="touchUpInside" id="TC7-rQ-rN8"/>
@@ -1178,7 +1181,8 @@
                     <connections>
                         <outlet property="helpButton" destination="V55-X2-Vfq" id="DTz-CW-3Fa"/>
                         <outlet property="pillDiagram" destination="sET-vH-ZfK" id="62r-P2-D6A"/>
-                        <outlet property="readyButton" destination="lGd-9N-cHV" id="vzA-tg-cBY"/>
+                        <outlet property="retryButton" destination="lGd-9N-cHV" id="q88-hx-YrG"/>
+                        <outlet property="retryButtonWidthConstraint" destination="eTO-Et-PGf" id="CnM-8K-AtF"/>
                         <outlet property="subtitleLabel" destination="KH6-Mg-9at" id="kBE-bP-8xF"/>
                         <outlet property="titleLabel" destination="pq7-me-JcE" id="JZq-t8-RyY"/>
                         <segue destination="pw0-Gz-IWi" kind="show" identifier="done" id="hUy-AY-BQY"/>

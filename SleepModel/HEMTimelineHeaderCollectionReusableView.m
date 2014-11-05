@@ -10,8 +10,4 @@
 
 @implementation HEMTimelineHeaderCollectionReusableView
 
-- (void)awakeFromNib {
-    // Initialization code
-}
-
 @end

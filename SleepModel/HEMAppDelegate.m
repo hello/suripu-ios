@@ -1,10 +1,8 @@
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENKeyedArchiver.h>
+#import <SenseKit/Model.h>
 #import <SenseKit/SENAPINotification.h>
 #import <SenseKit/SENAPIQuestions.h>
 #import <SenseKit/SENServiceQuestions.h>
-#import <SenseKit/SENAnswer.h>
-#import <SenseKit/SENSettings.h>
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAnalytics.h>
 
@@ -98,8 +96,8 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)resetAndShowOnboarding
 {
+    SENClearModel();
     [[HEMDeviceCenter sharedCenter] clearCache];
-    [SENKeyedArchiver removeAllObjects];
     [HEMOnboardingUtils resetOnboardingCheckpoint];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
     [self resume:YES];

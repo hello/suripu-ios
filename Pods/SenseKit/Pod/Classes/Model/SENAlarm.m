@@ -2,7 +2,6 @@
 #import "SENAlarm.h"
 #import "SENAPIAlarms.h"
 #import "SENSettings.h"
-#import "SENKeyedArchiver.h"
 
 @interface SENAlarm ()
 @property (nonatomic, strong) NSString* identifier;
@@ -28,9 +27,35 @@ static BOOL const SENAlarmDefaultOnState = YES;
 static BOOL const SENAlarmDefaultEditableState = YES;
 static BOOL const SENAlarmDefaultSmartAlarmState = YES;
 
++ (NSCache*)alarmCache
+{
+    static NSCache* alarmCache = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        alarmCache = [NSCache new];
+    });
+    return alarmCache;
+}
+
++ (NSMutableSet*)alarmKeys
+{
+    static NSMutableSet* keys = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        keys = [NSMutableSet new];
+    });
+    return keys;
+}
+
 + (NSArray*)savedAlarms
 {
-    return [SENKeyedArchiver allObjectsInCollection:NSStringFromClass([self class])];
+    NSMutableArray* alarms = [NSMutableArray new];
+    for (NSString* key in [self alarmKeys]) {
+        SENAlarm* alarm = [[self alarmCache] objectForKey:key];
+        if (alarm)
+            [alarms addObject:alarm];
+    }
+    return alarms;
 }
 
 + (SENAlarm*)createDefaultAlarm
@@ -48,7 +73,8 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
 
 + (void)clearSavedAlarms
 {
-    [SENKeyedArchiver removeAllObjectsInCollection:NSStringFromClass([self class])];
+    [[self alarmKeys] removeAllObjects];
+    [[self alarmCache] removeAllObjects];
 }
 
 + (NSString*)localizedValueForTime:(struct SENAlarmTime)time
@@ -220,17 +246,19 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
 
 - (void)save
 {
-    [SENKeyedArchiver setObject:self forKey:self.identifier inCollection:NSStringFromClass([SENAlarm class])];
+    [[[self class] alarmKeys] addObject:self.identifier];
+    [[[self class] alarmCache] setObject:self forKey:self.identifier];
 }
 
 - (void)delete
 {
-    [SENKeyedArchiver removeAllObjectsForKey:self.identifier inCollection:NSStringFromClass([SENAlarm class])];
+    [[[self class] alarmKeys] removeObject:self.identifier];
+    [[[self class] alarmCache] removeObjectForKey:self.identifier];
 }
 
 - (BOOL)isSaved
 {
-    return [SENKeyedArchiver objectsForKey:self.identifier inCollection:NSStringFromClass([SENAlarm class])] != nil;
+    return [[[self class] alarmKeys] containsObject:self.identifier];
 }
 
 - (void)setSoundName:(NSString*)soundName

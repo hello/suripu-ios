@@ -81,6 +81,7 @@ static NSString* const SENSleepResultRetrievalKeyFormat = @"SleepResult-%ld-%ld-
         _score = [aDecoder decodeObjectForKey:SENSleepResultScore];
         _message = [aDecoder decodeObjectForKey:SENSleepResultMessage];
         _segments = [aDecoder decodeObjectForKey:SENSleepResultSegments];
+        _sensorInsights = [aDecoder decodeObjectForKey:SENSleepResultSensorInsights];
     }
     return self;
 }
@@ -91,6 +92,7 @@ static NSString* const SENSleepResultRetrievalKeyFormat = @"SleepResult-%ld-%ld-
     [aCoder encodeObject:_score forKey:SENSleepResultScore];
     [aCoder encodeObject:_message forKey:SENSleepResultMessage];
     [aCoder encodeObject:_segments forKey:SENSleepResultSegments];
+    [aCoder encodeObject:_sensorInsights forKey:SENSleepResultSensorInsights];
 }
 
 - (void)updateWithDictionary:(NSDictionary*)data

@@ -1,10 +1,8 @@
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENKeyedArchiver.h>
+#import <SenseKit/Model.h>
 #import <SenseKit/SENAPINotification.h>
 #import <SenseKit/SENAPIQuestions.h>
 #import <SenseKit/SENServiceQuestions.h>
-#import <SenseKit/SENAnswer.h>
-#import <SenseKit/SENSettings.h>
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAnalytics.h>
 
@@ -98,8 +96,8 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)resetAndShowOnboarding
 {
+    SENClearModel();
     [[HEMDeviceCenter sharedCenter] clearCache];
-    [SENKeyedArchiver removeAllObjects];
     [HEMOnboardingUtils resetOnboardingCheckpoint];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
     [self resume:YES];
@@ -171,12 +169,33 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [userDefaults synchronize];
 }
 
-- (void)showAppInRetractedState {
+- (void)openSettingsDrawer {
     FCDynamicPanesNavigationController* dynamicPanesController
     = (FCDynamicPanesNavigationController*)self.window.rootViewController;
     FCDynamicPane* foregroundPane = [[dynamicPanesController viewControllers] lastObject];
     if (foregroundPane != nil) {
         [foregroundPane setState:FCDynamicPaneStateRetracted];
+    }
+}
+
+- (void)closeSettingsDrawer {
+    FCDynamicPanesNavigationController* dynamicPanesController
+    = (FCDynamicPanesNavigationController*)self.window.rootViewController;
+    FCDynamicPane* foregroundPane = [[dynamicPanesController viewControllers] lastObject];
+    if (foregroundPane != nil) {
+        [foregroundPane setState:FCDynamicPaneStateActive];
+    }
+}
+
+- (void)toggleSettingsDrawer {
+    FCDynamicPanesNavigationController* dynamicPanesController
+    = (FCDynamicPanesNavigationController*)self.window.rootViewController;
+    FCDynamicPane* foregroundPane = [[dynamicPanesController viewControllers] lastObject];
+    if (foregroundPane != nil) {
+        FCDynamicPaneState state = foregroundPane.state == FCDynamicPaneStateActive
+            ? FCDynamicPaneStateRetracted
+            : FCDynamicPaneStateActive;
+        [foregroundPane setState:state];
     }
 }
 
@@ -196,7 +215,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [center removeObserver:self name:kSENAccountNotificationAccountCreated object:nil];
     // when sign up is complete, show the "settings" area instead of the Timeline,
     // but only do so after sign up and not sign in, or any other scenario
-    [self showAppInRetractedState];
+    [self openSettingsDrawer];
 }
 
 #pragma mark - Resume Where Last Off
@@ -263,7 +282,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 }
 
 - (UIViewController*)resumeOnboardingWithController:(UIViewController*)controller {
-    [self showAppInRetractedState];
+    [self openSettingsDrawer];
     return [[UINavigationController alloc] initWithRootViewController:controller];
 }
 

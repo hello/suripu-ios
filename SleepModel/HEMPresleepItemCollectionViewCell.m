@@ -12,7 +12,6 @@
 
 - (void)awakeFromNib
 {
-    self.backgroundColor = [UIColor colorWithWhite:0.97f alpha:1.f];
     self.typeImageView.layer.borderWidth = 1.f;
     self.typeImageView.layer.cornerRadius = CGRectGetWidth(self.typeImageView.bounds) / 2;
 }

@@ -2,12 +2,21 @@
 #import <Foundation/Foundation.h>
 
 @class SENSleepResultSegment;
+@class HEMSleepSummaryCollectionViewCell;
 
 extern NSString* const HEMSleepEventTypeWakeUp;
 extern NSString* const HEMSleepEventTypeLight;
 extern NSString* const HEMSleepEventTypeMotion;
 extern NSString* const HEMSleepEventTypeNoise;
 extern NSString* const HEMSleepEventTypeFallAsleep;
+
+@protocol HEMSleepGraphActionDelegate <NSObject>
+
+@optional
+
+- (void)drawerButtonTapped:(UIButton*)button;
+
+@end
 
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>
 
@@ -48,4 +57,6 @@ extern NSString* const HEMSleepEventTypeFallAsleep;
 - (NSUInteger)numberOfSleepSegments;
 
 - (NSString*)localizedNameForSleepEventType:(NSString*)eventType;
+
+- (HEMSleepSummaryCollectionViewCell*)sleepSummaryCell;
 @end

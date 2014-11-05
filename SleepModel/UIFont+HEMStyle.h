@@ -10,6 +10,10 @@
 
 @interface UIFont (HEMStyle)
 
++ (UIFont *)alarmMessageFont;
+
++ (UIFont *)alarmMessageBoldFont;
+
 /**
  *  Font for section and insight headings
  */
@@ -61,6 +65,11 @@
  *  Font for event message text in the timeline
  */
 + (UIFont *)timelineEventMessageFont;
+
+/**
+ *  Bold font for event message text in the timeline
+ */
++ (UIFont *)timelineEventMessageBoldFont;
 
 /**
  *  Font for tips at the bottom of event expansion

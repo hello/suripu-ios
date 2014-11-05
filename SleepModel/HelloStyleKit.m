@@ -38,6 +38,8 @@ static UIColor* _backViewNavTitleColor = nil;
 static UIColor* _backViewTextColor = nil;
 static UIColor* _senseBlueColor = nil;
 static UIColor* _backViewTintColor = nil;
+static UIColor* _timelineSectionBorderColor = nil;
+static UIColor* _timelineGradientDarkColor = nil;
 
 static PCGradient* _blueBackgroundGradient = nil;
 
@@ -78,7 +80,7 @@ static UIImage* _lockIcon = nil;
     _darkBlueColor = [UIColor colorWithRed: 0.314 green: 0.325 blue: 0.529 alpha: 1];
     _mediumBlueColor = [UIColor colorWithRed: 0.184 green: 0.514 blue: 0.639 alpha: 1];
     _currentConditionsBackgroundColor = [UIColor colorWithRed: 0.902 green: 0.91 blue: 0.906 alpha: 1];
-    _highSleepScoreColor = [UIColor colorWithRed: 0.118 green: 0.729 blue: 0.416 alpha: 1];
+    _highSleepScoreColor = [UIColor colorWithRed: 0.252 green: 0.84 blue: 0.664 alpha: 1];
     _poorSleepScoreColor = [UIColor colorWithRed: 0.8 green: 0.339 blue: 0.32 alpha: 1];
     _averageSleepScoreColor = [UIColor colorWithRed: 0.947 green: 0.901 blue: 0.5 alpha: 1];
     _lightBlueColor = [UIColor colorWithRed: 0.733 green: 0.851 blue: 0.929 alpha: 1];
@@ -98,6 +100,8 @@ static UIImage* _lockIcon = nil;
     _backViewTextColor = [UIColor colorWithRed: 0.498 green: 0.498 blue: 0.498 alpha: 1];
     _senseBlueColor = [UIColor colorWithRed: 0 green: 0.604 blue: 1 alpha: 1];
     _backViewTintColor = [UIColor colorWithRed: 0.686 green: 0.686 blue: 0.686 alpha: 1];
+    _timelineSectionBorderColor = [UIColor colorWithRed: 0.9 green: 0.91 blue: 0.91 alpha: 1];
+    _timelineGradientDarkColor = [UIColor colorWithRed: 0.96 green: 0.96 blue: 0.97 alpha: 1];
 
     // Gradients Initialization
     CGFloat blueBackgroundGradientLocations[] = {0, 1};
@@ -130,6 +134,8 @@ static UIImage* _lockIcon = nil;
 + (UIColor*)backViewTextColor { return _backViewTextColor; }
 + (UIColor*)senseBlueColor { return _senseBlueColor; }
 + (UIColor*)backViewTintColor { return _backViewTintColor; }
++ (UIColor*)timelineSectionBorderColor { return _timelineSectionBorderColor; }
++ (UIColor*)timelineGradientDarkColor { return _timelineGradientDarkColor; }
 
 #pragma mark Gradients
 
@@ -174,57 +180,38 @@ static UIImage* _lockIcon = nil;
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Color Declarations
-    UIColor* color = [UIColor colorWithRed: 0.866 green: 0.866 blue: 0.866 alpha: 1];
-    UIColor* color3 = [UIColor colorWithRed: 0.97 green: 0.97 blue: 0.97 alpha: 1];
-    UIColor* veryDarkGrayColor = [UIColor colorWithRed: 0.227 green: 0.226 blue: 0.27 alpha: 1];
+    UIColor* insightHeadingColor = [UIColor colorWithRed: 0.58 green: 0.58 blue: 0.58 alpha: 1];
+    UIColor* sleepScoreValueColor = [UIColor colorWithRed: 0.416 green: 0.416 blue: 0.416 alpha: 1];
+    UIColor* sleepScoreNoValueColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.059];
 
     //// Variable Declarations
-    UIColor* sleepScoreColor = sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.idealSensorColor);
-    CGFloat graphPercentageAngle = sleepScore > 0 ? (sleepScore < 100 ? 360 - sleepScore * 0.01 * 360 : 1) : 0;
+    UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.highSleepScoreColor)) : sleepScoreNoValueColor;
+    CGFloat graphPercentageAngle = sleepScore > 0 ? (sleepScore < 100 ? 360 - sleepScore * 0.01 * 360 : 0.01) : 0.01;
     NSString* sleepScoreText = sleepScore > 0 ? (sleepScore <= 100 ? [NSString stringWithFormat: @"%ld", (NSInteger)round(sleepScore)] : @"100") : @"";
     NSString* localizedSleepScoreDescriptionLabel = sleepScore > 0 ? sleepScoreLabelText : @"";
 
-    //// gray oval Drawing
-    CGContextSaveGState(context);
-    CGContextTranslateCTM(context, 61.5, 61.5);
-    CGContextRotateCTM(context, -90 * M_PI / 180);
-
-    UIBezierPath* grayOvalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(-61.5, -61.5, 123, 123)];
-    [color setFill];
-    [grayOvalPath fill];
-
-    CGContextRestoreGState(context);
-
-
     //// pie oval Drawing
     CGContextSaveGState(context);
-    CGContextTranslateCTM(context, 61.5, 61.5);
+    CGContextTranslateCTM(context, 1, 1);
     CGContextRotateCTM(context, -90 * M_PI / 180);
 
-    CGRect pieOvalRect = CGRectMake(-61.5, -61.5, 123, 123);
+    CGRect pieOvalRect = CGRectMake(-153, 0, 153, 153);
     UIBezierPath* pieOvalPath = UIBezierPath.bezierPath;
     [pieOvalPath addArcWithCenter: CGPointMake(CGRectGetMidX(pieOvalRect), CGRectGetMidY(pieOvalRect)) radius: CGRectGetWidth(pieOvalRect) / 2 startAngle: 0 * M_PI/180 endAngle: -graphPercentageAngle * M_PI/180 clockwise: YES];
-    [pieOvalPath addLineToPoint: CGPointMake(CGRectGetMidX(pieOvalRect), CGRectGetMidY(pieOvalRect))];
-    [pieOvalPath closePath];
 
-    [sleepScoreColor setFill];
-    [pieOvalPath fill];
+    [sleepScoreColor setStroke];
+    pieOvalPath.lineWidth = 2.5;
+    [pieOvalPath stroke];
 
     CGContextRestoreGState(context);
-
-
-    //// white center oval Drawing
-    UIBezierPath* whiteCenterOvalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(1.5, 1.5, 120, 120)];
-    [color3 setFill];
-    [whiteCenterOvalPath fill];
 
 
     //// sleep score label Drawing
-    CGRect sleepScoreLabelRect = CGRectMake(0, 21, 123, 98);
+    CGRect sleepScoreLabelRect = CGRectMake(0, 36, 155, 98);
     NSMutableParagraphStyle* sleepScoreLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Calibre-Thin" size: 75], NSForegroundColorAttributeName: veryDarkGrayColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
+    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNext-UltraLight" size: 75], NSForegroundColorAttributeName: sleepScoreValueColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
 
     CGFloat sleepScoreLabelTextHeight = [sleepScoreText boundingRectWithSize: CGSizeMake(sleepScoreLabelRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreLabelFontAttributes context: nil].size.height;
     CGContextSaveGState(context);
@@ -234,13 +221,17 @@ static UIImage* _lockIcon = nil;
 
 
     //// sleep score text label Drawing
-    CGRect sleepScoreTextLabelRect = CGRectMake(0, 93, 123, 10);
+    CGRect sleepScoreTextLabelRect = CGRectMake(0, 30, 155, 10);
     NSMutableParagraphStyle* sleepScoreTextLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreTextLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreTextLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Calibre-Regular" size: 10], NSForegroundColorAttributeName: veryDarkGrayColor, NSParagraphStyleAttributeName: sleepScoreTextLabelStyle};
+    NSDictionary* sleepScoreTextLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Avenir-Heavy" size: 9], NSForegroundColorAttributeName: insightHeadingColor, NSParagraphStyleAttributeName: sleepScoreTextLabelStyle};
 
-    [localizedSleepScoreDescriptionLabel drawInRect: sleepScoreTextLabelRect withAttributes: sleepScoreTextLabelFontAttributes];
+    CGFloat sleepScoreTextLabelTextHeight = [localizedSleepScoreDescriptionLabel boundingRectWithSize: CGSizeMake(sleepScoreTextLabelRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreTextLabelFontAttributes context: nil].size.height;
+    CGContextSaveGState(context);
+    CGContextClipToRect(context, sleepScoreTextLabelRect);
+    [localizedSleepScoreDescriptionLabel drawInRect: CGRectMake(CGRectGetMinX(sleepScoreTextLabelRect), CGRectGetMinY(sleepScoreTextLabelRect) + (CGRectGetHeight(sleepScoreTextLabelRect) - sleepScoreTextLabelTextHeight) / 2, CGRectGetWidth(sleepScoreTextLabelRect), sleepScoreTextLabelTextHeight) withAttributes: sleepScoreTextLabelFontAttributes];
+    CGContextRestoreGState(context);
 }
 
 + (void)drawMiniSleepScoreGraphWithSleepScore: (CGFloat)sleepScore
@@ -250,10 +241,11 @@ static UIImage* _lockIcon = nil;
 
     //// Color Declarations
     UIColor* color = [UIColor colorWithRed: 0.866 green: 0.866 blue: 0.866 alpha: 1];
+    UIColor* sleepScoreNoValueColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.059];
 
     //// Variable Declarations
-    UIColor* sleepScoreColor = sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.idealSensorColor);
-    CGFloat graphPercentageAngle = sleepScore > 0 ? (sleepScore < 100 ? 360 - sleepScore * 0.01 * 360 : 1) : 0;
+    UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.highSleepScoreColor)) : sleepScoreNoValueColor;
+    CGFloat graphPercentageAngle = sleepScore > 0 ? (sleepScore < 100 ? 360 - sleepScore * 0.01 * 360 : 0.01) : 0.01;
     NSString* sleepScoreText = sleepScore > 0 ? (sleepScore <= 100 ? [NSString stringWithFormat: @"%ld", (NSInteger)round(sleepScore)] : @"100") : @"";
 
     //// gray oval Drawing

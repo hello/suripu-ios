@@ -20,6 +20,5 @@ typedef NS_ENUM(NSUInteger, HEMEventInfoViewCaretPosition) {
 
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* messageLabel;
-@property (weak, nonatomic) IBOutlet HEMPaddedRoundedLabel* clockLabel;
 @property (nonatomic) HEMEventInfoViewCaretPosition caretPosition;
 @end

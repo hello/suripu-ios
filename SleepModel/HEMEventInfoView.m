@@ -26,30 +26,43 @@ static CGFloat const HEMEventInfoViewCornerRadius = 4.f;
 - (void)drawRect:(CGRect)rect
 {
     [self drawRoundedContainerInRect:rect];
-    [self drawCaretInRect:rect];
+//    [self drawCaretInRect:rect];
 }
 
 - (void)drawRoundedContainerInRect:(CGRect)rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGRect containerRect = CGRectMake(CGRectGetMinX(rect) + HEMEventInfoViewCaretDepth + HEMEventInfoViewCaretInset, CGRectGetMinY(rect), CGRectGetWidth(rect) - HEMEventInfoViewCaretDepth - HEMEventInfoViewCaretInset, CGRectGetHeight(rect));
-    for (int i = 5; i >= 0; i--) {
-        UIBezierPath* bezierPath = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(containerRect, i, i) cornerRadius:HEMEventInfoViewCornerRadius];
-        CGContextSetFillColorWithColor(ctx, [UIColor colorWithWhite:100 - (i * 4)alpha:0.8f].CGColor);
-        [bezierPath fill];
-    }
+    UIBezierPath* bezierPath = [UIBezierPath bezierPathWithRoundedRect:containerRect cornerRadius:HEMEventInfoViewCornerRadius + 1];
+    CGContextSetFillColorWithColor(ctx, [UIColor colorWithWhite:0 alpha:0.05f].CGColor);
+    [bezierPath fill];
+
+    CGFloat caretYOffset = [self yOffsetForCaretPointInRect:rect];
+    CGRect caretRect = CGRectMake(
+                                  CGRectGetMinX(rect) + HEMEventInfoViewCaretInset,
+                                  caretYOffset - HEMEventInfoViewCaretRadius,
+                                  HEMEventInfoViewCaretRadius,
+                                  HEMEventInfoViewCaretRadius * 2.2);
+    [self drawCaretInRect:caretRect];
+
+
+    bezierPath = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(containerRect, 1, 1) cornerRadius:HEMEventInfoViewCornerRadius];
+    CGContextSetFillColorWithColor(ctx, [UIColor colorWithWhite:1.f alpha:1.f].CGColor);
+    [bezierPath fill];
+    caretRect.origin.x += 1;
+    [self drawCaretInRect:caretRect];
 }
 
 - (void)drawCaretInRect:(CGRect)rect
 {
-    CGFloat caretYOffset = [self yOffsetForCaretPointInRect:rect];
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextBeginPath(ctx);
-    CGContextMoveToPoint(ctx, CGRectGetMinX(rect) + HEMEventInfoViewCaretInset, caretYOffset);
-    CGContextAddLineToPoint(ctx, CGRectGetMinX(rect) + HEMEventInfoViewCaretRadius + HEMEventInfoViewCaretInset, caretYOffset - HEMEventInfoViewCaretRadius);
-    CGContextAddLineToPoint(ctx, CGRectGetMinX(rect) + HEMEventInfoViewCaretRadius + HEMEventInfoViewCaretInset, caretYOffset + HEMEventInfoViewCaretRadius);
+
+    CGContextMoveToPoint(ctx, CGRectGetMinX(rect), CGRectGetMidY(rect));
+    CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMinY(rect));
+    CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), CGRectGetMaxY(rect));
+
     CGContextClosePath(ctx);
-    CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
     CGContextFillPath(ctx);
 }
 

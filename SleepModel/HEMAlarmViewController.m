@@ -11,6 +11,7 @@
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMAlarmUtils.h"
+#import "UIFont+HEMStyle.h"
 #import "HEMMainStoryboard.h"
 
 @interface HEMAlarmViewController () <UITableViewDelegate, UIGestureRecognizerDelegate>
@@ -25,6 +26,7 @@
 @property (strong, nonatomic) IBOutlet UISwitch* alarmSmartSwitch;
 @property (weak, nonatomic) IBOutlet UILabel* wakeUpInstructionsLabel;
 @property (strong, nonatomic) CAGradientLayer* gradientLayer;
+@property (strong, nonatomic) NSDictionary* markdownAttributes;
 
 @property (nonatomic) CGFloat previousLocationY;
 @property (nonatomic, strong) HEMAlarmCache* alarmCache;
@@ -38,8 +40,7 @@
 {
     [super viewDidLoad];
     [self setNeedsStatusBarAppearanceUpdate];
-    CGFloat fontSize = [SENSettings timeFormat] == SENTimeFormat12Hour ? 60.f : 90.f;
-    self.alarmTimeLabel.font = [UIFont fontWithName:@"Agile-Thin" size:fontSize];
+    self.alarmTimeLabel.font = [UIFont largeNumberFont];
     self.alarmCache = [HEMAlarmCache new];
     self.originalAlarmCache = [HEMAlarmCache new];
     if (self.alarm) {
@@ -47,6 +48,17 @@
         [self.originalAlarmCache cacheValuesFromAlarm:self.alarm];
         self.unsavedAlarm = ![self.alarm isSaved];
     }
+    self.markdownAttributes = @{
+        @(EMPH) : @{
+            NSFontAttributeName : [UIFont alarmMessageBoldFont],
+        },
+        @(PARA) : @{
+            NSForegroundColorAttributeName : [UIColor whiteColor],
+        },
+        @(PLAIN) : @{
+            NSFontAttributeName : [UIFont alarmMessageFont]
+        }
+    };
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -98,18 +110,8 @@
     self.alarmRepeatLabel.text = [HEMAlarmUtils repeatTextForUnitFlags:self.alarmCache.repeatFlags];
 
     NSString* rawText = [NSString stringWithFormat:NSLocalizedString(@"alarm.time-range.format", nil), earliestAlarmTimeText, currentAlarmTimeText];
-    UIFont* emFont = [UIFont fontWithName:@"Agile-Medium" size:14.0];
-    NSDictionary* attributes = @{
-        @(EMPH) : @{
-            NSFontAttributeName : emFont,
-        },
-        @(PARA) : @{
-            NSForegroundColorAttributeName : [UIColor whiteColor],
-        }
-    };
-
-    self.wakeUpInstructionsLabel.attributedText = markdown_to_attr_string(rawText, 0, attributes);
-    self.alarmChangeInstructionsLabel.attributedText = markdown_to_attr_string(NSLocalizedString(@"alarm.update.instructions", nil), 0, attributes);
+    self.wakeUpInstructionsLabel.attributedText = markdown_to_attr_string(rawText, 0, self.markdownAttributes);
+    self.alarmChangeInstructionsLabel.attributedText = markdown_to_attr_string(NSLocalizedString(@"alarm.update.instructions", nil), 0, self.markdownAttributes);
     [self configureViewBackground];
 }
 

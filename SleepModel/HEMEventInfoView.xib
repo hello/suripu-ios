@@ -1,18 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6245" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment defaultVersion="1792" identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <mutableArray key="Calibre-Light.otf">
-            <string>Calibre-Light</string>
-        </mutableArray>
-        <mutableArray key="Calibre-Regular.otf">
-            <string>Calibre-Regular</string>
-            <string>Calibre-Regular</string>
-        </mutableArray>
-    </customFonts>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -20,25 +11,15 @@
             <rect key="frame" x="0.0" y="0.0" width="238" height="100"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Woke up" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lzh-0f-YUM">
-                    <rect key="frame" x="20" y="14" width="53.5" height="16"/>
-                    <fontDescription key="fontDescription" name="Calibre-Regular" family="Calibre" pointSize="16"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WOKE UP ― 9:17am" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lzh-0f-YUM">
+                    <rect key="frame" x="30" y="14" width="88.5" height="12.5"/>
+                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="9"/>
+                    <color key="textColor" white="0.57999999999999996" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5a4-2W-TI9">
-                    <rect key="frame" x="20" y="43" width="209.5" height="14"/>
-                    <fontDescription key="fontDescription" name="Calibre-Regular" family="Calibre" pointSize="14"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:17pm" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bKh-De-4s7" customClass="HEMPaddedRoundedLabel">
-                    <rect key="frame" x="167" y="10" width="63" height="24"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="24" id="s6v-ii-0uH"/>
-                        <constraint firstAttribute="width" constant="63" id="vXt-mK-jZ0"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="16"/>
+                    <rect key="frame" x="30" y="39" width="32" height="18"/>
+                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
@@ -47,19 +28,15 @@
             <constraints>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="5a4-2W-TI9" secondAttribute="bottom" id="4bg-jH-4eA"/>
                 <constraint firstItem="5a4-2W-TI9" firstAttribute="top" secondItem="Lzh-0f-YUM" secondAttribute="bottom" constant="13" id="J5l-S3-cZ7"/>
-                <constraint firstItem="bKh-De-4s7" firstAttribute="centerY" secondItem="Lzh-0f-YUM" secondAttribute="centerY" id="Vf8-vM-SWY"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="leading" secondItem="5a4-2W-TI9" secondAttribute="leading" id="aDk-Hl-JQN"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="14" id="h2Q-Go-sNa"/>
-                <constraint firstItem="bKh-De-4s7" firstAttribute="trailing" secondItem="5a4-2W-TI9" secondAttribute="trailing" id="ilm-S9-2a5"/>
-                <constraint firstItem="Lzh-0f-YUM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="20" id="u4g-wi-sCt"/>
-                <constraint firstAttribute="trailing" secondItem="bKh-De-4s7" secondAttribute="trailing" constant="8" id="xUo-W9-NwX"/>
+                <constraint firstItem="Lzh-0f-YUM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="u4g-wi-sCt"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
             <nil key="simulatedBottomBarMetrics"/>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
-                <outlet property="clockLabel" destination="bKh-De-4s7" id="6cV-fy-T8i"/>
                 <outlet property="messageLabel" destination="5a4-2W-TI9" id="DBD-wo-Ajl"/>
                 <outlet property="titleLabel" destination="Lzh-0f-YUM" id="7rs-mY-gzB"/>
             </connections>

@@ -10,3 +10,5 @@
 #import "SENSensor.h"
 #import "SENSettings.h"
 #import "SENSleepResult.h"
+
+void SENClearModel();

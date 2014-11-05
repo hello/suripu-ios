@@ -14,12 +14,14 @@
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMNoSleepEventCollectionViewCell.h"
+#import "HEMTimelineHeaderCollectionReusableView.h"
 #import "HEMPresleepHeaderCollectionReusableView.h"
 #import "HEMPresleepItemCollectionViewCell.h"
 #import "HEMSensorGraphDataSource.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HelloStyleKit.h"
 #import "HEMColorUtils.h"
+#import "UIFont+HEMStyle.h"
 
 NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
 NSString* const HEMSleepEventTypeLight = @"LIGHT";
@@ -46,6 +48,7 @@ NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
 static NSString* const sleepSegmentReuseIdentifier = @"sleepSegmentCell";
 static NSString* const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
 static NSString* const presleepHeaderReuseIdentifier = @"presleepCell";
+static NSString* const timelineHeaderReuseIdentifier = @"timelineHeaderCell";
 static NSString* const presleepItemReuseIdentifier = @"presleepItemCell";
 static NSString* const sleepEventReuseIdentifier = @"sleepEventCell";
 static NSString* const sensorTypeTemperature = @"temperature";
@@ -118,6 +121,9 @@ static NSString* const sensorTypeParticulates = @"particulates";
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMPresleepHeaderCollectionReusableView class]) bundle:bundle]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                  withReuseIdentifier:presleepHeaderReuseIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMTimelineHeaderCollectionReusableView class]) bundle:bundle]
+          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                 withReuseIdentifier:timelineHeaderReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMPresleepItemCollectionViewCell class]) bundle:bundle]
           forCellWithReuseIdentifier:presleepItemReuseIdentifier];
 }
@@ -130,6 +136,12 @@ static NSString* const sensorTypeParticulates = @"particulates";
 - (NSUInteger)numberOfSleepSegments
 {
     return self.sleepResult.segments.count;
+}
+
+- (HEMSleepSummaryCollectionViewCell *)sleepSummaryCell
+{
+    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:0 inSection:HEMSleepGraphCollectionViewSummarySection];
+    return (id)[self.collectionView cellForItemAtIndexPath:indexPath];
 }
 
 #pragma mark - Loading
@@ -149,7 +161,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     if (graphView) {
         [NSObject cancelPreviousPerformRequestsWithTarget:self];
         CGFloat width = MIN(CGRectGetWidth(graphView.frame), CGRectGetHeight(graphView.frame)) * 0.5;
-        self.loadingView = [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleWave color:[UIColor colorWithWhite:0.9 alpha:0.5] spinnerSize:width];
+        self.loadingView = [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleWave color:[UIColor colorWithWhite:0.1 alpha:0.06] spinnerSize:width];
         self.loadingView.center = graphView.center;
         [self.loadingView startAnimating];
         [cell addSubview:self.loadingView];
@@ -193,10 +205,19 @@ static NSString* const sensorTypeParticulates = @"particulates";
 
 - (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView viewForSupplementaryElementOfKind:(NSString*)kind atIndexPath:(NSIndexPath*)indexPath
 {
-    HEMPresleepHeaderCollectionReusableView* view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:presleepHeaderReuseIdentifier forIndexPath:indexPath];
-    view.hidden = !([kind isEqualToString:UICollectionElementKindSectionHeader]
-                    && indexPath.section == HEMSleepGraphCollectionViewPresleepSection
-                    && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewPresleepSection] > 0);
+    UICollectionReusableView* view = nil;
+    switch (indexPath.section) {
+        case HEMSleepGraphCollectionViewPresleepSection: {
+            view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:presleepHeaderReuseIdentifier forIndexPath:indexPath];
+            view.hidden = !([kind isEqualToString:UICollectionElementKindSectionHeader] && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewPresleepSection] > 0);
+        } break;
+
+        case HEMSleepGraphCollectionViewSegmentSection:
+        default: {
+            view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:timelineHeaderReuseIdentifier forIndexPath:indexPath];
+            view.hidden = !([kind isEqualToString:UICollectionElementKindSectionHeader] && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] > 0);
+        }    break;
+    }
     return view;
 }
 
@@ -226,11 +247,21 @@ static NSString* const sensorTypeParticulates = @"particulates";
      sleepSummaryCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMSleepSummaryCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSummaryReuseIdentifier forIndexPath:indexPath];
-    UIFont* emFont = [UIFont fontWithName:@"Calibre-Medium" size:cell.messageLabel.font.pointSize];
-    [cell setSleepScore:[self.sleepResult.score integerValue] animated:YES];
+    NSInteger score = [self.sleepResult.score integerValue];
+    [cell setSleepScore:score animated:YES];
+    if (score == 0) {
+        cell.messageTitleLabel.hidden = YES;
+        cell.messageLabel.textAlignment = NSTextAlignmentCenter;
+    } else {
+        cell.messageTitleLabel.hidden = NO;
+        cell.messageLabel.textAlignment = NSTextAlignmentLeft;
+    }
     NSDictionary* attributes = @{
         @(STRONG) : @{
-            NSFontAttributeName : emFont,
+            NSFontAttributeName : [UIFont timelineMessageBoldFont],
+        },
+        @(PLAIN) : @{
+            NSFontAttributeName : [UIFont timelineMessageFont]
         }
     };
     cell.messageLabel.attributedText = markdown_to_attr_string(self.sleepResult.message, 0, attributes);
@@ -245,6 +276,10 @@ static NSString* const sensorTypeParticulates = @"particulates";
     if ([self shouldBeLoading]) {
         [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:0.5];
     }
+    if ([self.collectionView.delegate respondsToSelector:@selector(drawerButtonTapped:)])
+        [cell.drawerButton addTarget:self.collectionView.delegate
+                              action:@selector(drawerButtonTapped:)
+                    forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 
@@ -264,13 +299,14 @@ static NSString* const sensorTypeParticulates = @"particulates";
     SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMSleepEventCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepEventReuseIdentifier forIndexPath:indexPath];
-    cell.eventTypeButton.layer.borderColor = [HEMColorUtils colorForSleepDepth:sleepDepth].CGColor;
-    cell.eventTypeButton.layer.borderWidth = 2.f;
-    cell.eventTypeButton.layer.cornerRadius = CGRectGetWidth(cell.eventTypeButton.bounds) / 2;
     if ([collectionView.delegate respondsToSelector:@selector(didTapEventButton:)]) {
         [cell.eventTypeButton addTarget:collectionView.delegate action:@selector(didTapEventButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     [cell.eventTypeButton setImage:[self imageForEventType:segment.eventType] forState:UIControlStateNormal];
+    BOOL showLargeButton = [segment.eventType isEqualToString:HEMSleepEventTypeWakeUp]
+        || [segment.eventType isEqualToString:HEMSleepEventTypeFallAsleep];
+    [cell showLargeButton:showLargeButton];
+    cell.eventTypeButton.layer.borderColor = [HEMColorUtils colorForSleepDepth:sleepDepth].CGColor;
     cell.eventTimeLabel.text = [self textForTimeInterval:[segment.date timeIntervalSince1970]];
 
     cell.eventTitleLabel.text = [self localizedNameForSleepEventType:segment.eventType];

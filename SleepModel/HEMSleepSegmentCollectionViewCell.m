@@ -2,8 +2,9 @@
 #import "HEMSleepSegmentCollectionViewCell.h"
 #import "HelloStyleKit.h"
 
-CGFloat HEMLinedCollectionViewCellLineOffset = 14.f;
+CGFloat HEMLinedCollectionViewCellLineOffset = 20.f;
 CGFloat HEMLinedCollectionViewCellLineWidth = 2.f;
+CGFloat HEMSleepSegmentMinimumFillWidth = 28.f;
 
 @interface HEMSleepSegmentCollectionViewCell ()
 
@@ -13,17 +14,14 @@ CGFloat HEMLinedCollectionViewCellLineWidth = 2.f;
 
 @implementation HEMSleepSegmentCollectionViewCell
 
-static CGFloat HEMSleepSegmentMaximumFillRatio = 0.95f;
-static CGFloat HEMSleepSegmentMinimumFillWidth = 24.f;
-
 - (void)awakeFromNib
 {
-    self.backgroundColor = [HelloStyleKit lightestBlueColor];
+    self.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)setSegmentRatio:(CGFloat)ratio withColor:(UIColor*)color
 {
-    self.fillRatio = ratio;
+    self.fillRatio = MIN(ratio, 1.0);
     self.fillColor = color;
     [self setNeedsDisplay];
 }
@@ -44,7 +42,7 @@ static CGFloat HEMSleepSegmentMinimumFillWidth = 24.f;
         inset += HEMSleepSegmentMinimumFillWidth;
         width = (CGRectGetWidth(rect) - inset);
         fillRect = CGRectMake(inset, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
-        CGContextSetFillColorWithColor(ctx, [[HelloStyleKit lightestBlueColor] colorWithAlphaComponent:0.8].CGColor);
+        CGContextSetFillColorWithColor(ctx, [UIColor colorWithWhite:1.f alpha:0.8].CGColor);
         CGContextFillRect(ctx, fillRect);
     }
 }

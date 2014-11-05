@@ -265,12 +265,14 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
         cell.detailLabel.text = nil;
         cell.glyphImageView.image = nil;
         [cell showDetailBubble:NO];
+        [cell setAccessoryType:UITableViewCellAccessoryNone];
     } else {
         SENSensor* sensor = self.sensors[indexPath.row];
         cell.titleLabel.text = sensor.localizedName;
         cell.detailLabel.text = sensor.localizedValue ?: NSLocalizedString(@"empty-data", nil);
 
         [cell showDetailBubble:YES];
+        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         
         [self colorizeSensorTextIn:cell.detailLabel forCondition:sensor.condition];
         

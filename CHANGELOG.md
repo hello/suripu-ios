@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.0.31
+
+New:
+
+* Updated design throughout the app, minus Sensor graphs
+* Hooked up Sleep Pill pairing from within Settings
+* Hooked up WiFi set up from within Settings
+* Showing currently configured WiFi in Settings
+* auto re-pair if you have an account and have paired with Sense previously, within Settings
+
 ## 1.0.0.30
 
 New:

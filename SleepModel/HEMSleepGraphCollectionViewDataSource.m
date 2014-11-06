@@ -4,13 +4,11 @@
 #import <SenseKit/SENSleepResult.h>
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import <JBChartView/JBLineChartView.h>
 #import <SpinKit/RTSpinKitView.h>
 #import <markdown_peg.h>
 
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphViewController.h"
-#import "HEMAggregateGraphCollectionViewCell.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMNoSleepEventCollectionViewCell.h"

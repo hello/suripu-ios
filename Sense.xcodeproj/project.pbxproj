@@ -56,8 +56,6 @@
 		8A4B669B19F6C9E900445883 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A4B669A19F6C9E900445883 /* MessageUI.framework */; };
 		8A4B669E19F6CE4400445883 /* HEMAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B669D19F6CE4400445883 /* HEMAlertController.m */; };
 		8A54029F19AE299B00FC6085 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A54029E19AE299B00FC6085 /* Crashlytics.framework */; };
-		8A5402A519AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A5402A319AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.m */; };
-		8A5402A619AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A5402A419AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.xib */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
 		8A660123199E9CF9007E6167 /* HEMUserDataCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A660122199E9CF9007E6167 /* HEMUserDataCache.m */; };
 		8A66013B199EBF87007E6167 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8A660139199EBF87007E6167 /* README.md */; };
@@ -465,9 +463,6 @@
 		8A4B669D19F6CE4400445883 /* HEMAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlertController.m; sourceTree = "<group>"; };
 		8A54029E19AE299B00FC6085 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		8A5402A019AE72F300FC6085 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = SOURCE_ROOT; };
-		8A5402A219AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAggregateGraphCollectionViewCell.h; sourceTree = "<group>"; };
-		8A5402A319AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAggregateGraphCollectionViewCell.m; sourceTree = "<group>"; };
-		8A5402A419AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMAggregateGraphCollectionViewCell.xib; sourceTree = "<group>"; };
 		8A59F631198C16050005B000 /* HEMSignUpViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSignUpViewController.h; sourceTree = "<group>"; };
 		8A59F632198C16050005B000 /* HEMSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignUpViewController.m; sourceTree = "<group>"; };
 		8A660121199E9CF9007E6167 /* HEMUserDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUserDataCache.h; sourceTree = "<group>"; };
@@ -1442,9 +1437,6 @@
 		8AA8D92619ABACC100349FD0 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
-				8A5402A219AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.h */,
-				8A5402A319AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.m */,
-				8A5402A419AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.xib */,
 				8AA8D93E19AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.h */,
 				8AA8D93F19AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m */,
 				8A1743C019A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.h */,
@@ -1988,7 +1980,6 @@
 				BFB0FBDC19D253400056FFEC /* pillIcon.png in Resources */,
 				8AFE781F19E8C2170000F881 /* sunrise@2x.png in Resources */,
 				BFB0FBF819D4C3BD0056FFEC /* alarmsIcon.png in Resources */,
-				8A5402A619AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.xib in Resources */,
 				8AC4A0401989C5A100C2BD63 /* settingsIcon@2x.png in Resources */,
 				8AFE77F819E8C2170000F881 /* light-medium@2x.png in Resources */,
 				8AC4A052198A070F00C2BD63 /* alarmEnabledIcon@2x.png in Resources */,
@@ -2338,7 +2329,6 @@
 				8A782686196CB6C9002882A1 /* HEMSnappingFlowLayout.m in Sources */,
 				8AC49F8A1981A89D00C2BD63 /* HEMSleepHistoryViewController.m in Sources */,
 				8A78267719663BB1002882A1 /* HEMSensorViewController.m in Sources */,
-				8A5402A519AE8D4000FC6085 /* HEMAggregateGraphCollectionViewCell.m in Sources */,
 				BFEAA0BB19A578EE002FBD44 /* HEMLocationCenter.m in Sources */,
 				BFB0FBD619D243A60056FFEC /* HEMDevicesViewController.m in Sources */,
 				BFB93C7919CB7F89005067D0 /* HEMMathUtil.m in Sources */,

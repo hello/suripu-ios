@@ -72,6 +72,13 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 + (HEMOnboardingCheckpoint)onboardingCheckpoint;
 
 /**
+ * @param checkpoint: the onboarding checkpoint
+ * @param authorized: YES if user is authorized, NO otherwise
+ * @return the controller to show for the specified checkpoint
+ */
++ (UIViewController*)onboardingControllerForCheckpoint:(HEMOnboardingCheckpoint)checkpoint authorized:(BOOL)authorized;
+
+/**
  * Clear checkpoints by resetting it to the beginning
  */
 + (void)resetOnboardingCheckpoint;

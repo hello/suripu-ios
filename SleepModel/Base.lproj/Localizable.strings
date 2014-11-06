@@ -104,6 +104,9 @@
 "settings.wifi.other" = "Other...";
 
 // support
+"support.options.title" = "Support options";
+"support.option.contact-support" = "Contact support";
+"support.option.reset" = "Start Over";
 "settings.contact-support" = "Contact support";
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";

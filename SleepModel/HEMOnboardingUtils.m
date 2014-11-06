@@ -13,6 +13,7 @@
 #import "HelloStyleKit.h"
 #import "HEMUserDataCache.h"
 #import "HEMAlertController.h"
+#import "HEMOnboardingStoryboard.h"
 
 static NSString* const kHEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 static CGFloat   const kHEMOnboardingDefaultFontSize = 18.0f;
@@ -81,6 +82,45 @@ static CGFloat   const kHEMOnboardingDefaultFontSize = 18.0f;
 
 + (void)resetOnboardingCheckpoint {
     [self saveOnboardingCheckpoint:HEMOnboardingCheckpointStart];
+}
+
++ (UIViewController*)onboardingControllerForCheckpoint:(HEMOnboardingCheckpoint)checkpoint authorized:(BOOL)authorized {
+    UIViewController* onboardingController = nil;
+    switch (checkpoint) {
+        case HEMOnboardingCheckpointStart: {
+            // hmm, this is a bit hairy.  To ensure that user is logged in even
+            // after the app is deleted, or even for existing users who have already
+            // signed up, we need to check that they are not authenticated before
+            // actually starting from beginning.  However, this gives user a way
+            // to by pass onboarding by creating the app and
+            
+            // TODO (jimmy:) create API to check validity of the user's account
+            // and if it's not properly setup, sign out the user
+            if (!authorized) {
+                UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
+                                                                               bundle:[NSBundle mainBundle]];
+                onboardingController = [onboardingStoryboard instantiateInitialViewController];
+            }
+            break;
+        }
+        case HEMOnboardingCheckpointAccountCreated: {
+            onboardingController = [HEMOnboardingStoryboard instantiateDobViewController];
+            break;
+        }
+        case HEMOnboardingCheckpointAccountDone: {
+            onboardingController = [HEMOnboardingStoryboard instantiateGetSetupViewController];
+            break;
+        }
+        case HEMOnboardingCheckpointSenseDone: {
+            onboardingController = [HEMOnboardingStoryboard instantiatePillIntroViewController];
+            break;
+        }
+        case HEMOnboardingCheckpointPillDone:
+        default: {
+            break;
+        }
+    }
+    return onboardingController;
 }
 
 #pragma mark - Errors

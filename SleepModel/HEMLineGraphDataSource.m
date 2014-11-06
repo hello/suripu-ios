@@ -7,29 +7,35 @@
 @interface HEMLineGraphDataSource ()
 
 @property (nonatomic, strong, readwrite) NSArray* dataSeries;
-@property (nonatomic) NSUInteger sectionCount;
 @property (nonatomic, weak) SENSensor* sensor;
+@property (nonatomic, strong) NSMutableSet* labeledIndexes;
+@property (nonatomic) SENSensorUnit unit;
 @end
 
 @implementation HEMLineGraphDataSource
 
-- (instancetype)initWithDataSeries:(NSArray*)dataSeries numberOfSections:(NSUInteger)sectionCount
+- (instancetype)initWithDataSeries:(NSArray*)dataSeries unit:(SENSensorUnit)unit
 {
     if (self = [super init]) {
         _dataSeries = dataSeries;
-        _sectionCount = sectionCount;
+        _labeledIndexes = [NSMutableSet new];
+        _unit = unit;
     }
     return self;
 }
 
-#pragma mark - BEMSimpleLineGraphDelegate
-
-- (NSInteger)numberOfPointsInLineGraph:(BEMSimpleLineGraphView *)graph {
-    return self.dataSeries.count;
-}
-
-- (NSInteger)numberOfGapsBetweenLabelsOnLineGraph:(BEMSimpleLineGraphView *)graph {
-    return ceil(self.dataSeries.count/self.sectionCount);
+- (NSArray*)valuesForSectionIndexes {
+    NSMutableArray* labels = [[NSMutableArray alloc] initWithCapacity:self.labeledIndexes.count];
+    if (self.dateFormatter) {
+        NSArray* indexes = [[self.labeledIndexes allObjects] sortedArrayUsingSelector:@selector(integerValue)];
+        for (NSNumber* index in indexes) {
+            NSDictionary* dataPoint = [self dataPointAtIndex:[index integerValue]];
+            NSDate* lastUpdated = [NSDate dateWithTimeIntervalSince1970:([dataPoint[@"datetime"] doubleValue])/1000];
+            [labels addObject:@{
+                                [self.dateFormatter stringFromDate:lastUpdated]:[SENSensor formatValue:dataPoint[@"value"] withUnit:self.unit]}];
+        }
+    }
+    return labels;
 }
 
 #pragma mark - BEMSimpleLineGraphDataSource
@@ -38,18 +44,13 @@
     return self.dataSeries[index];
 }
 
-- (NSString *)lineGraph:(BEMSimpleLineGraphView *)graph labelOnXAxisForIndex:(NSInteger)index {
-    NSDictionary* dataPoint = [self dataPointAtIndex:index];
-    CGFloat value = [dataPoint[@"value"] floatValue];
-    if (value == 0)
-        return @"-";
+- (NSInteger)numberOfPointsInLineGraph:(BEMSimpleLineGraphView *)graph {
+    return self.dataSeries.count;
+}
 
-    if (self.dateFormatter) {
-        NSDate* lastUpdated = [NSDate dateWithTimeIntervalSince1970:([dataPoint[@"datetime"] doubleValue])/1000];
-        NSString* dateString = [self.dateFormatter stringFromDate:lastUpdated];
-        return [NSString stringWithFormat:@"%f\n%@", value, dateString];
-    }
-    return [NSString stringWithFormat:@"%f", value];
+- (NSString *)lineGraph:(BEMSimpleLineGraphView *)graph labelOnXAxisForIndex:(NSInteger)index {
+    [_labeledIndexes addObject:@(index)];
+    return @"";
 }
 
 - (CGFloat)lineGraph:(BEMSimpleLineGraphView *)graph valueForPointAtIndex:(NSInteger)index {

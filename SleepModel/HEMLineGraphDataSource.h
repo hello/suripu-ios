@@ -4,9 +4,11 @@
 
 @class SENSensor;
 
-@interface HEMLineGraphDataSource : NSObject <BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate>
+@interface HEMLineGraphDataSource : NSObject <BEMSimpleLineGraphDataSource>
 
-- (instancetype)initWithDataSeries:(NSArray*)dataSeries numberOfSections:(NSUInteger)sectionCount;
+- (instancetype)initWithDataSeries:(NSArray*)dataSeries unit:(SENSensorUnit)unit;
+
+- (NSArray*)valuesForSectionIndexes;
 
 @property (nonatomic, strong, readonly) NSArray* dataSeries;
 /**

@@ -109,6 +109,7 @@
 		8A9BD8C219DDD02100B1E57E /* Calibre-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B419DDD02100B1E57E /* Calibre-Thin.otf */; };
 		8A9BD8C319DDD02100B1E57E /* Calibre-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B519DDD02100B1E57E /* Calibre-ThinItalic.otf */; };
 		8A9BD8D019DF28F400B1E57E /* HEMPaddedRoundedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9BD8CF19DF28F400B1E57E /* HEMPaddedRoundedLabel.m */; };
+		8A9D380B1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D380A1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m */; };
 		8A9F574519F873110009E50A /* HEMLogUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9F574419F873110009E50A /* HEMLogUtils.m */; };
 		8AA8D92A19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D92819ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m */; };
 		8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AA8D92919ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib */; };
@@ -532,6 +533,8 @@
 		8A9BD8B519DDD02100B1E57E /* Calibre-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-ThinItalic.otf"; path = "fonts/Calibre-ThinItalic.otf"; sourceTree = "<group>"; };
 		8A9BD8CE19DF28F400B1E57E /* HEMPaddedRoundedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPaddedRoundedLabel.h; sourceTree = "<group>"; };
 		8A9BD8CF19DF28F400B1E57E /* HEMPaddedRoundedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPaddedRoundedLabel.m; sourceTree = "<group>"; };
+		8A9D38091A0B0B0900150FAB /* HEMGraphSectionOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMGraphSectionOverlayView.h; sourceTree = "<group>"; };
+		8A9D380A1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMGraphSectionOverlayView.m; sourceTree = "<group>"; };
 		8A9F574319F873110009E50A /* HEMLogUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLogUtils.h; sourceTree = "<group>"; };
 		8A9F574419F873110009E50A /* HEMLogUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLogUtils.m; sourceTree = "<group>"; };
 		8AA0F57E19C2255D00556AAF /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
@@ -1341,6 +1344,8 @@
 		8A660134199EBE9F007E6167 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8A9D38091A0B0B0900150FAB /* HEMGraphSectionOverlayView.h */,
+				8A9D380A1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m */,
 				8A90F9B51963701A00AFD110 /* HEMInsetGlyphTableViewCell.h */,
 				8A90F9B61963701A00AFD110 /* HEMInsetGlyphTableViewCell.m */,
 			);
@@ -2230,6 +2235,7 @@
 				6003F59E195388D20070C39A /* HEMAppDelegate.m in Sources */,
 				8AB2684A19CCFF9200017818 /* HEMAlarmRepeatTableViewController.m in Sources */,
 				8A9BD8D019DF28F400B1E57E /* HEMPaddedRoundedLabel.m in Sources */,
+				8A9D380B1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m in Sources */,
 				8AD88C3A1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m in Sources */,
 				BF005C7319FED17800E68E87 /* HEMWiFiDataSource.m in Sources */,
 				BF14E3DC19EF3C3D0006EFEA /* HEMStartSetupViewController.m in Sources */,

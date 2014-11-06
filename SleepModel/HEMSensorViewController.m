@@ -7,11 +7,12 @@
 
 #import "HEMSensorViewController.h"
 #import "HEMLineGraphDataSource.h"
+#import "HEMGraphSectionOverlayView.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 
-@interface HEMSensorViewController ()
+@interface HEMSensorViewController ()<BEMSimpleLineGraphDelegate>
 
 @property (weak, nonatomic) IBOutlet UIButton* dailyGraphButton;
 @property (weak, nonatomic) IBOutlet UIButton* hourlyGraphButton;
@@ -22,6 +23,10 @@
 @property (weak, nonatomic) IBOutlet UIView *graphContainerView;
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
 @property (weak, nonatomic) IBOutlet UIView* chartContainerView;
+@property (weak, nonatomic) IBOutlet HEMGraphSectionOverlayView* overlayView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionViewWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionViewLeadingConstraint;
+@property (weak, nonatomic) IBOutlet UIView *selectionView;
 
 @property (strong, nonatomic) NSArray* hourlyDataSeries;
 @property (strong, nonatomic) NSArray* dailyDataSeries;
@@ -40,12 +45,13 @@
     self.hourlyFormatter = [[NSDateFormatter alloc] init];
     self.hourlyFormatter.dateFormat = [SENSettings timeFormat] == SENTimeFormat12Hour ? @"ha" : @"H";
     self.dailyFormatter = [[NSDateFormatter alloc] init];
-    self.dailyFormatter.dateFormat = @"EEEEEE";
+    self.dailyFormatter.dateFormat = @"EEEEE";
     self.hourlyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.dailyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
     [self configureGraphViewBackground];
     [self initializeGraphDataSource];
+    [self configureGraphView];
     [self configureSensorValueViews];
 }
 
@@ -60,7 +66,7 @@
     self.showHourlyData = YES;
     self.hourlyDataSeries = @[];
     self.dailyDataSeries = @[];
-    self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:@[] numberOfSections:8];
+    self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:@[] unit:self.sensor.unit];
     self.graphDataSource.dateFormatter = self.hourlyFormatter;
     CAGradientLayer* mask = [CAGradientLayer layer];
     mask.frame = self.graphView.bounds;
@@ -72,7 +78,7 @@
     mask.endPoint = CGPointMake(1, 0.5);
     mask.locations = @[ @(-1), @(-1), @0, @1 ];
     self.graphView.layer.mask = mask;
-    [self configureGraphView];
+    [self reloadData];
     [self refreshGraphData];
 }
 
@@ -89,8 +95,7 @@
 
 - (void)configureGraphView
 {
-    self.graphView.delegate = self.graphDataSource;
-    self.graphView.dataSource = self.graphDataSource;
+    self.overlayView.alpha = 0;
     self.graphView.enableBezierCurve = YES;
     self.graphView.enablePopUpReport = YES;
     self.graphView.colorBottom = [UIColor clearColor];
@@ -99,6 +104,12 @@
     self.graphView.colorLine = [HelloStyleKit backViewTextColor];
     self.graphView.widthLine = 1.f;
     self.graphView.labelFont = [UIFont sensorGraphNumberFont];
+}
+
+- (void)reloadData
+{
+    self.graphView.delegate = self;
+    self.graphView.dataSource = self.graphDataSource;
     [self.graphView reloadGraph];
 }
 
@@ -182,8 +193,13 @@
 - (void)animateActiveDataSeriesTo:(NSArray*)dataSeries
 {
     self.showHourlyData = ![self isShowingHourlyData];
+    UIButton* button = [self isShowingHourlyData] ? self.hourlyGraphButton : self.dailyGraphButton;
     [UIView animateWithDuration:0.25 animations:^{
         self.graphView.alpha = 0;
+        self.overlayView.alpha = 0;
+        self.selectionViewLeadingConstraint.constant = CGRectGetMinX(button.frame);
+        self.selectionViewWidthConstraint.constant = CGRectGetWidth(button.frame);
+        [self.selectionView layoutIfNeeded];
     } completion:^(BOOL finished) {
         if ([self isShowingHourlyData]) {
             [self updateGraphWithHourlyData:dataSeries];
@@ -198,16 +214,43 @@
 
 - (void)updateGraphWithHourlyData:(NSArray*)dataSeries {
     self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:dataSeries
-                                                             numberOfSections:8];
+                                                                         unit:self.sensor.unit];
     self.graphDataSource.dateFormatter = self.hourlyFormatter;
-    [self configureGraphView];
+    [self reloadData];
 }
 
 - (void)updateGraphWithDailyData:(NSArray*)dataSeries {
     self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:dataSeries
-                                                             numberOfSections:8];
+                                                                         unit:self.sensor.unit];
     self.graphDataSource.dateFormatter = self.dailyFormatter;
-    [self configureGraphView];
+    [self reloadData];
+}
+
+#pragma mark - BEMSimpleLineGraphDelegate
+
+- (NSArray*)dataSeries {
+    return [self isShowingHourlyData] ? self.hourlyDataSeries : self.dailyDataSeries;
+}
+
+- (NSInteger)numberOfGapsBetweenLabelsOnLineGraph:(BEMSimpleLineGraphView *)graph {
+    return ceil(self.dataSeries.count/8);
+}
+
+- (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {
+    NSArray* labels = self.graphDataSource.valuesForSectionIndexes;
+    if ([self isShowingHourlyData]) {
+        NSMutableArray* modifiedLabels = [[NSMutableArray alloc] initWithCapacity:labels.count];
+        for (NSDictionary* label in labels) {
+            NSString* dateLabelText = [[label allKeys] firstObject];
+            NSString* sensorValue = [[label allValues] firstObject];
+            [modifiedLabels addObject:@{[dateLabelText lowercaseString]:sensorValue}];
+        }
+        labels = modifiedLabels;
+    }
+    [self.overlayView setSectionValues:labels];
+    [UIView animateWithDuration:0.5f animations:^{
+        self.overlayView.alpha = 1;
+    }];
 }
 
 @end

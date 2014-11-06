@@ -36,10 +36,12 @@
 @property (nonatomic, getter=isShowingHourlyData) BOOL showHourlyData;
 @property (nonatomic, strong) NSDateFormatter* hourlyFormatter;
 @property (nonatomic, strong) NSDateFormatter* dailyFormatter;
-
+@property (nonatomic, strong) NSTimer* refreshTimer;
 @end
 
 @implementation HEMSensorViewController
+
+static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 
 - (void)viewDidLoad
 {
@@ -66,6 +68,22 @@
         self.selectionView.alpha = 1;
         [self.hourlyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
     }];
+    self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:HEMSensorRefreshInterval
+                                                         target:self
+                                                       selector:@selector(refreshGraphData)
+                                                       userInfo:nil
+                                                        repeats:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.refreshTimer invalidate];
+}
+
+- (void)dealloc
+{
+    [_refreshTimer invalidate];
 }
 
 #pragma mark - Configuration

@@ -175,9 +175,6 @@
     // we know what to actually point to, we likely will open up a browser to
     // show the help
     [SENAnalytics track:kHEMAnalyticsEventHelp];
-#pragma message ("remove when we all have devices!")
-    
-    [self next];
 }
 
 - (void)setWiFi:(NSString*)ssid

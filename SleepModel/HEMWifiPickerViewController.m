@@ -235,7 +235,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     DDLogVerbose(@"WARNING: this has not been implemented yet!");
     
     [SENAnalytics track:kHEMAnalyticsEventHelp];
-    [self next];
 }
 
 - (IBAction)scan:(id)sender {

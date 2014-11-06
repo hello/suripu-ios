@@ -228,13 +228,6 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     // we know what to actually point to, we likely will open up a browser to
     // show the help
     [SENAnalytics track:kHEMAnalyticsEventHelp];
-    
-#pragma message ("remove when we have devices!")
-    
-    if ([self delegate] == nil) {
-        [self proceed];
-    }
-    
 }
 
 - (IBAction)cancel:(id)sender {

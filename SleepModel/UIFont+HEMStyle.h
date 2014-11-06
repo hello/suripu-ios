@@ -57,9 +57,19 @@
 + (UIFont *)sensorGraphNumberFont;
 
 /**
+ *  Bold font for numbers
+ */
++ (UIFont *)sensorGraphNumberBoldFont;
+
+/**
  *  Font for headings at the top of each graph section
  */
 + (UIFont *)sensorGraphHeadingFont;
+
+/**
+ *  Bold font for headings at the top of each graph section
+ */
++ (UIFont *)sensorGraphHeadingBoldFont;
 
 /**
  *  Font for event message text in the timeline

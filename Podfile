@@ -11,9 +11,9 @@ pod 'SVProgressHUD', :git =>    'https://github.com/samvermette/SVProgressHUD.gi
 pod 'iCarousel', '~> 1.7.6'
 pod 'UIImageEffects', '~> 0.0.1'
 pod 'SpinKit', '~> 1.2.0'
+pod 'BEMSimpleLineGraph'
 
 # Private
-pod 'JBChartView', :git => 'git@github.com:hello/JBChartView.git'
 pod 'FCDynamicPanesNavigationController', :git => 'git@github.com:hello/FCDynamicPanesNavigationController.git'
 pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
 pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'

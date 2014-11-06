@@ -59,8 +59,16 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:13.f];
 }
 
++ (UIFont *)sensorGraphNumberBoldFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:13.f];
+}
+
 + (UIFont *)sensorGraphHeadingFont {
     return [UIFont fontWithName:HEMFontFamilyNameBook size:10.f];
+}
+
++ (UIFont *)sensorGraphHeadingBoldFont {
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:10.f];
 }
 
 + (UIFont *)timelineEventMessageFont {

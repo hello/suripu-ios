@@ -60,6 +60,12 @@
 #define COCOAPODS_VERSION_MINOR_AttributedMarkdown 9
 #define COCOAPODS_VERSION_PATCH_AttributedMarkdown 2
 
+// BEMSimpleLineGraph
+#define COCOAPODS_POD_AVAILABLE_BEMSimpleLineGraph
+#define COCOAPODS_VERSION_MAJOR_BEMSimpleLineGraph 3
+#define COCOAPODS_VERSION_MINOR_BEMSimpleLineGraph 2
+#define COCOAPODS_VERSION_PATCH_BEMSimpleLineGraph 0
+
 // CocoaLumberjack
 #define COCOAPODS_POD_AVAILABLE_CocoaLumberjack
 #define COCOAPODS_VERSION_MAJOR_CocoaLumberjack 2
@@ -101,12 +107,6 @@
 #define COCOAPODS_VERSION_MAJOR_FXKeychain 1
 #define COCOAPODS_VERSION_MINOR_FXKeychain 5
 #define COCOAPODS_VERSION_PATCH_FXKeychain 2
-
-// JBChartView
-#define COCOAPODS_POD_AVAILABLE_JBChartView
-#define COCOAPODS_VERSION_MAJOR_JBChartView 2
-#define COCOAPODS_VERSION_MINOR_JBChartView 5
-#define COCOAPODS_VERSION_PATCH_JBChartView 5
 
 // LGBluetooth
 #define COCOAPODS_POD_AVAILABLE_LGBluetooth

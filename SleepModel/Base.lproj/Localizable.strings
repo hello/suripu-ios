@@ -243,7 +243,9 @@
 "measurement.db.unit" = "db";
 "measurement.lx.unit" = "lx";
 "measurement.temperature.format" = "%.f°";
+"measurement.temperature.zero.format" = "%.f°";
 "measurement.percentage.format" = "%.f%%";
+"measurement.percentage..zero.format" = "%.f%%";
 "measurement.light.format" = "%.flx";
 "measurement.sound.format" = "%.fdb";
 "measurement.particle.zero.format" = "%.0f µg/m³";

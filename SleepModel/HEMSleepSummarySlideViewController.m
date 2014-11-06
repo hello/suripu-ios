@@ -21,7 +21,6 @@
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HEMInfoAlertView.h"
 #import "HEMSleepQuestionsViewController.h"
-#import "HEMProgressNavigationController.h"
 #import "HelloStyleKit.h"
 
 @interface HEMSleepSummarySlideViewController () <

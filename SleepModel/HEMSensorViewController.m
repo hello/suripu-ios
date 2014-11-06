@@ -2,33 +2,30 @@
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENAPIRoom.h>
 #import <SenseKit/SENSettings.h>
-#import <SORelativeDateTransformer/SORelativeDateTransformer.h>
-#import <JBChartView/JBLineChartView.h>
+#import <BEMSimpleLineGraph/BEMSimpleLineGraphView.h>
 #import <markdown_peg.h>
 
 #import "HEMSensorViewController.h"
-#import "HEMSensorGraphDataSource.h"
-#import "HEMGraphTooltipView.h"
+#import "HEMLineGraphDataSource.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 
-@interface HEMSensorViewController () <JBLineChartViewDelegate>
+@interface HEMSensorViewController ()
 
 @property (weak, nonatomic) IBOutlet UIButton* dailyGraphButton;
 @property (weak, nonatomic) IBOutlet UIButton* hourlyGraphButton;
 @property (weak, nonatomic) IBOutlet UILabel* valueLabel;
-@property (weak, nonatomic) IBOutlet JBLineChartView* graphView;
+@property (weak, nonatomic) IBOutlet BEMSimpleLineGraphView* graphView;
 @property (weak, nonatomic) IBOutlet UILabel* comfortZoneInfoLabel;
 @property (weak, nonatomic) IBOutlet UILabel* comfortZoneLabel;
 @property (weak, nonatomic) IBOutlet UIView *graphContainerView;
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
 @property (weak, nonatomic) IBOutlet UIView* chartContainerView;
-@property (nonatomic, strong) HEMGraphTooltipView* tooltipView;
 
 @property (strong, nonatomic) NSArray* hourlyDataSeries;
 @property (strong, nonatomic) NSArray* dailyDataSeries;
-@property (strong, nonatomic) HEMSensorGraphDataSource* graphDataSource;
+@property (strong, nonatomic) HEMLineGraphDataSource* graphDataSource;
 @property (nonatomic, getter=isShowingHourlyData) BOOL showHourlyData;
 @property (nonatomic, strong) NSDateFormatter* hourlyFormatter;
 @property (nonatomic, strong) NSDateFormatter* dailyFormatter;
@@ -63,7 +60,8 @@
     self.showHourlyData = YES;
     self.hourlyDataSeries = @[];
     self.dailyDataSeries = @[];
-    self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:@[]];
+    self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:@[] numberOfSections:8];
+    self.graphDataSource.dateFormatter = self.hourlyFormatter;
     CAGradientLayer* mask = [CAGradientLayer layer];
     mask.frame = self.graphView.bounds;
     mask.colors = @[(id)[UIColor whiteColor].CGColor,
@@ -91,42 +89,17 @@
 
 - (void)configureGraphView
 {
-    self.graphView.delegate = self;
+    self.graphView.delegate = self.graphDataSource;
     self.graphView.dataSource = self.graphDataSource;
-    NSInteger sectionSize = self.graphDataSource.dataSeries.count / 8;
-    NSInteger midPoint = sectionSize / 2;
-    NSMutableArray* sections = [[NSMutableArray alloc] initWithCapacity:7];
-
-    for (int i = 0; i < 7 && i < self.graphDataSource.dataSeries.count; i++) {
-        NSInteger index = i == 6 ? (sectionSize * (i + 1)) : midPoint + (sectionSize * i);
-        NSDictionary* dataPoint = self.graphDataSource.dataSeries[index];
-        CGFloat value = [dataPoint[@"value"] floatValue];
-        NSString* sectionLabel;
-        NSString* sectionValue;
-        NSDate* lastUpdated = [NSDate dateWithTimeIntervalSince1970:([dataPoint[@"datetime"] doubleValue]) / 1000];
-        if ([self isShowingHourlyData]) {
-            sectionLabel = [self.hourlyFormatter stringFromDate:lastUpdated];
-        } else {
-            sectionLabel = [self.dailyFormatter stringFromDate:lastUpdated];
-        }
-        if (value == 0) {
-            sectionValue = @"-";
-        } else if (i == 6) {
-            sectionValue = [SENSensor formatValue:@(value) withUnit:self.sensor.unit];
-        }
-        else {
-            sectionValue = [NSString stringWithFormat:@"%ld", [[SENSensor value:@(value) inPreferredUnit:self.sensor.unit] longValue]];
-        }
-        if (!sectionValue) {
-            sectionValue = NSLocalizedString(@"sensor.value.none", nil);
-        }
-        sections[i] = @{
-            @"value" : sectionValue,
-            @"label" : sectionLabel
-        };
-    }
-    self.graphView.sections = sections;
-    [self.graphView reloadData];
+    self.graphView.enableBezierCurve = YES;
+    self.graphView.enablePopUpReport = YES;
+    self.graphView.colorBottom = [UIColor clearColor];
+    self.graphView.colorTop = [UIColor clearColor];
+    self.graphView.colorPoint = [UIColor clearColor];
+    self.graphView.colorLine = [HelloStyleKit backViewTextColor];
+    self.graphView.widthLine = 1.f;
+    self.graphView.labelFont = [UIFont sensorGraphNumberFont];
+    [self.graphView reloadGraph];
 }
 
 - (void)fadeInGraphView
@@ -175,19 +148,15 @@
         if (!data)
             return;
         self.hourlyDataSeries = data;
-        if ([self isShowingHourlyData]) {
-            self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:data];
-            [self configureGraphView];
-        }
+        if ([self isShowingHourlyData])
+            [self updateGraphWithHourlyData:data];
     }];
     [SENAPIRoom dailyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
         if (!data)
             return;
         self.dailyDataSeries = data;
-        if (![self isShowingHourlyData]) {
-            self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:data];
-            [self configureGraphView];
-        }
+        if (![self isShowingHourlyData])
+            [self updateGraphWithDailyData:data];
     }];
 }
 
@@ -197,7 +166,6 @@
         return;
     [self.dailyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
     [self.hourlyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
-
     [self animateActiveDataSeriesTo:self.hourlyDataSeries];
 }
 
@@ -217,89 +185,29 @@
     [UIView animateWithDuration:0.25 animations:^{
         self.graphView.alpha = 0;
     } completion:^(BOOL finished) {
-        self.graphDataSource = [[HEMSensorGraphDataSource alloc] initWithDataSeries:dataSeries];
-        [self configureGraphView];
+        if ([self isShowingHourlyData]) {
+            [self updateGraphWithHourlyData:dataSeries];
+        } else {
+            [self updateGraphWithDailyData:dataSeries];
+        }
         [UIView animateWithDuration:0.25 animations:^{
             self.graphView.alpha = 1.f;
         }];
     }];
 }
 
-#pragma mark - JBLineChartViewDelegate
-
-- (void)lineChartView:(JBLineChartView*)lineChartView didSelectLineAtIndex:(NSUInteger)lineIndex horizontalIndex:(NSUInteger)horizontalIndex touchPoint:(CGPoint)touchPoint
-{
-    NSDictionary* dataPoint = self.graphDataSource.dataSeries[horizontalIndex];
-    CGFloat value = [dataPoint[@"value"] floatValue];
-    NSString* toolTipText = value == 0
-                                ? NSLocalizedString(@"graph-data.unavailable.short", nil)
-                                : [SENSensor formatValue:@(value) withUnit:self.sensor.unit];
-    NSTimeInterval timeInterval = ([dataPoint[@"datetime"] doubleValue] / 1000);
-    [self setTooltipVisible:YES animated:YES atTouchPoint:touchPoint];
-    [self.tooltipView setTitleText:toolTipText];
-    [self.tooltipView setDetailText:[[SORelativeDateTransformer registeredTransformer] transformedValue:[NSDate dateWithTimeIntervalSince1970:timeInterval]]];
+- (void)updateGraphWithHourlyData:(NSArray*)dataSeries {
+    self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:dataSeries
+                                                             numberOfSections:8];
+    self.graphDataSource.dateFormatter = self.hourlyFormatter;
+    [self configureGraphView];
 }
 
-- (void)didUnselectLineInLineChartView:(JBLineChartView*)lineChartView
-{
-    [self setTooltipVisible:NO animated:YES];
-}
-
-- (void)setTooltipVisible:(BOOL)tooltipVisible animated:(BOOL)animated atTouchPoint:(CGPoint)touchPoint
-{
-
-    JBChartView* chartView = [self graphView];
-
-    if (!self.tooltipView) {
-        self.tooltipView = [[HEMGraphTooltipView alloc] initWithFrame:CGRectMake(0, 0, 70, 34)];
-        self.tooltipView.alpha = 0.0;
-        [self.chartContainerView addSubview:self.tooltipView];
-    }
-
-    dispatch_block_t adjustTooltipPosition = ^{
-        CGPoint convertedTouchPoint = [self.chartContainerView convertPoint:touchPoint fromView:chartView];
-        CGFloat minChartX = (chartView.frame.origin.x + ceil(CGRectGetWidth(self.tooltipView.frame) * 0.5));
-        if (convertedTouchPoint.x < minChartX)
-            convertedTouchPoint.x = minChartX;
-
-        CGFloat maxChartX = (chartView.frame.origin.x + chartView.frame.size.width - ceil(self.tooltipView.frame.size.width * 0.5));
-        if (convertedTouchPoint.x > maxChartX)
-            convertedTouchPoint.x = maxChartX;
-
-        self.tooltipView.frame = CGRectMake(convertedTouchPoint.x - ceil(CGRectGetWidth(self.tooltipView.frame) * 0.5),
-                                            CGRectGetMinY(chartView.frame) + 30,
-                                            CGRectGetWidth(self.tooltipView.frame),
-                                            CGRectGetHeight(self.tooltipView.frame));
-    };
-
-    dispatch_block_t adjustTooltipVisibility = ^{
-        self.tooltipView.alpha = tooltipVisible ? 1.0 : 0.0;
-    };
-
-    if (tooltipVisible) {
-        adjustTooltipPosition();
-    }
-
-    if (animated) {
-        [UIView animateWithDuration:0.25f animations:^{
-            adjustTooltipVisibility();
-        } completion:^(BOOL finished) {
-            if (!tooltipVisible)
-                adjustTooltipPosition();
-        }];
-    } else {
-        adjustTooltipVisibility();
-    }
-}
-
-- (void)setTooltipVisible:(BOOL)tooltipVisible animated:(BOOL)animated
-{
-    [self setTooltipVisible:tooltipVisible animated:animated atTouchPoint:CGPointZero];
-}
-
-- (void)setTooltipVisible:(BOOL)tooltipVisible
-{
-    [self setTooltipVisible:tooltipVisible animated:NO];
+- (void)updateGraphWithDailyData:(NSArray*)dataSeries {
+    self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:dataSeries
+                                                             numberOfSections:8];
+    self.graphDataSource.dateFormatter = self.dailyFormatter;
+    [self configureGraphView];
 }
 
 @end

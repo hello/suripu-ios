@@ -952,7 +952,7 @@
                                             <constraint firstAttribute="height" constant="1" id="Zz7-a2-qob"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eKU-VY-IW0" customClass="JBLineChartView">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eKU-VY-IW0" customClass="BEMSimpleLineGraphView">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="276"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
@@ -968,7 +968,7 @@
                                     <constraint firstAttribute="trailing" secondItem="eKU-VY-IW0" secondAttribute="trailing" id="ycE-j6-9lO"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25000000000000006" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dQu-Hf-dor">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.25000000000000006" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dQu-Hf-dor">
                                 <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="32"/>
                                 <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1033,7 +1033,7 @@
                         <outlet property="comfortZoneInfoLabel" destination="Zkp-GN-ZQu" id="eLz-Tm-LDl"/>
                         <outlet property="dailyGraphButton" destination="U6O-Dc-1qK" id="lZr-Wd-XT6"/>
                         <outlet property="graphContainerView" destination="jXq-nN-8Qt" id="1Dd-eu-q83"/>
-                        <outlet property="graphView" destination="eKU-VY-IW0" id="gIQ-jy-fGb"/>
+                        <outlet property="graphView" destination="eKU-VY-IW0" id="7TD-qB-cd7"/>
                         <outlet property="hourlyGraphButton" destination="d9H-QV-uE8" id="v7k-ws-X03"/>
                         <outlet property="unitLabel" destination="dQu-Hf-dor" id="fsT-no-aCx"/>
                         <outlet property="valueLabel" destination="71w-49-Doa" id="VOi-sB-GX0"/>
@@ -1339,7 +1339,7 @@
                                                         <constraint firstAttribute="width" constant="40" id="oMX-GV-QDI"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K15-8I-VJf" userLabel="title">
+                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" misplaced="YES" text="" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K15-8I-VJf" userLabel="title">
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="40" id="W6c-2W-QG5"/>

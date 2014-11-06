@@ -15,7 +15,6 @@
 #import "HEMTimelineHeaderCollectionReusableView.h"
 #import "HEMPresleepHeaderCollectionReusableView.h"
 #import "HEMPresleepItemCollectionViewCell.h"
-#import "HEMSensorGraphDataSource.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HelloStyleKit.h"
 #import "HEMColorUtils.h"

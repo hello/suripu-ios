@@ -21,7 +21,6 @@
 #import "HEMActivityCoverView.h"
 #import "HEMDeviceCenter.h"
 
-static CGFloat const kHEMPillPairTimeout = 90.0f; // accommodate case when scanning is needed
 static CGFloat const kHEMPillPairedStateDuration = 2.0f;
 static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
@@ -127,16 +126,6 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     }
 }
 
-- (void)pairingTimedOut {
-    [self setPairTimedOut:YES];
-    
-    NSString* msg = NSLocalizedString(@"pill-pair.error.timed-out", nil);
-    [self showError:nil customMessage:msg];
-    
-    [SENAnalytics track:kHEMAnalyticsEventError
-             properties:@{kHEMAnalyticsEventPropMessage : @"pairing timed out"}];
-}
-
 - (void)ensureSenseIsReady:(void(^)(SENSenseManager* manager))completion {
     if (!completion) return;
     
@@ -179,11 +168,6 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 - (IBAction)pairPill:(id)sender {
     [self showActivity];
-    [self setPairTimedOut:NO];
-    
-    [self performSelector:@selector(pairingTimedOut)
-               withObject:nil
-               afterDelay:kHEMPillPairTimeout];
     
     __weak typeof(self) weakSelf = self;
     [self ensureSenseIsReady:^(SENSenseManager *manager) {
@@ -204,21 +188,14 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     DDLogVerbose(@"attempting to pair pill through %@", [[manager sense] name]);
     [manager pairWithPill:token success:^(id response) {
         __block typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf && ![strongSelf pairTimedOut]) {
-            [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
-                                                     selector:@selector(pairingTimedOut)
-                                                       object:nil];
+        if (strongSelf) {
             [strongSelf flashPairedState];
         }
     } failure:^(NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf && ![strongSelf pairTimedOut]) {
-            [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
-                                                     selector:@selector(pairingTimedOut)
-                                                       object:nil];
+        if (strongSelf) {
+            [strongSelf showError:error customMessage:nil];
         }
-        
-        [strongSelf showError:error customMessage:nil];
     }];
 }
 

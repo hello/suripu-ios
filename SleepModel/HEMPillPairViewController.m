@@ -95,16 +95,26 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 }
 
 - (void)showActivity {
-    [[self cancelItem] setEnabled:NO];
     [[self helpButton] setEnabled:NO];
-    [[self navigationItem] setHidesBackButton:YES animated:YES];
+    
+    if ([self cancelItem] == nil) {
+        [[self navigationItem] setHidesBackButton:YES animated:YES];
+    } else {
+        [[self cancelItem] setEnabled:NO];
+    }
+
     [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
 }
 
 - (void)hideActivity {
-    [[self cancelItem] setEnabled:YES];
     [[self helpButton] setEnabled:YES];
-    [[self navigationItem] setHidesBackButton:NO animated:YES];
+
+    if ([self cancelItem] == nil) {
+        [[self navigationItem] setHidesBackButton:NO animated:YES];
+    } else {
+        [[self cancelItem] setEnabled:YES];
+    }
+    
     [[self retryButton] stopActivity];
 }
 

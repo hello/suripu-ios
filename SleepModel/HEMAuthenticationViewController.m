@@ -70,6 +70,8 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
     [[self usernameField] setEnabled:enable];
     [[self passwordField] setEnabled:enable];
     [[self doneButton] setEnabled:enable];
+    [[self navigationItem] setHidesBackButton:!enable animated:YES];
+    
     if (enable) {
         [[self usernameField] becomeFirstResponder];
     }

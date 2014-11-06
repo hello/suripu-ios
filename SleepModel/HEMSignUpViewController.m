@@ -57,6 +57,7 @@
     [[self emailAddressField] setEnabled:enable];
     [[self passwordField] setEnabled:enable];
     [[self doneButton] setEnabled:enable];
+    [[self navigationItem] setHidesBackButton:!enable animated:YES];
     
     if (enable) {
         [[self nameField] becomeFirstResponder];

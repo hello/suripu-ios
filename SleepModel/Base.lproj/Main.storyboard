@@ -263,17 +263,8 @@
                                     <constraint firstAttribute="width" constant="160" id="v4z-vZ-qCP"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="501" text="Question" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="264" translatesAutoresizingMaskIntoConstraints="NO" id="rOa-C0-vLI">
-                                <rect key="frame" x="28" y="110" width="544" height="27"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" priority="500" constant="27" id="cdP-Uu-llC"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Agile-Medium" family="Agile" pointSize="22"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ybt-AF-rJY">
-                                <rect key="frame" x="28" y="170" width="544" height="307"/>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalHuggingPriority="253" verticalCompressionResistancePriority="747" translatesAutoresizingMaskIntoConstraints="NO" id="ybt-AF-rJY">
+                                <rect key="frame" x="28" y="196" width="544" height="281"/>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eSP-6P-aRg">
                                 <rect key="frame" x="28" y="536" width="544" height="40"/>
@@ -305,6 +296,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="1000" text="User, do you sleep better when you are:" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="264" translatesAutoresizingMaskIntoConstraints="NO" id="rOa-C0-vLI">
+                                <rect key="frame" x="28" y="110" width="544" height="53"/>
+                                <fontDescription key="fontDescription" name="Agile-Medium" family="Agile" pointSize="22"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="0.31372549020000001" green="0.47450980390000003" blue="0.96078431369999995" alpha="0.80000000000000004" colorSpace="deviceRGB"/>
                         <constraints>
@@ -316,7 +313,6 @@
                             <constraint firstAttribute="bottom" secondItem="ybt-AF-rJY" secondAttribute="bottom" constant="123" id="FuA-Vf-FyG"/>
                             <constraint firstItem="ybt-AF-rJY" firstAttribute="top" secondItem="rOa-C0-vLI" secondAttribute="bottom" constant="33" id="ISU-P7-A7l"/>
                             <constraint firstItem="rOa-C0-vLI" firstAttribute="centerX" secondItem="6Lt-2g-dgz" secondAttribute="centerX" id="Ixm-51-Gh9"/>
-                            <constraint firstItem="ybt-AF-rJY" firstAttribute="top" secondItem="k1v-P4-XGi" secondAttribute="top" constant="170" id="JM6-LO-3hW"/>
                             <constraint firstAttribute="centerX" secondItem="enr-Uk-1rN" secondAttribute="centerX" id="PM4-Dp-IW0"/>
                             <constraint firstAttribute="centerXWithinMargins" secondItem="sqA-DT-O8i" secondAttribute="trailing" id="Tdi-He-wp9"/>
                             <constraint firstItem="ybt-AF-rJY" firstAttribute="leading" secondItem="rOa-C0-vLI" secondAttribute="leading" id="WXr-8Z-thd"/>

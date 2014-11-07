@@ -35,7 +35,7 @@ NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
 @property (nonatomic, strong) NSDateFormatter* timeDateFormatter;
 @property (nonatomic, strong) NSDateFormatter* rangeDateFormatter;
 @property (nonatomic, strong) NSDate* dateForNightOfSleep;
-@property (nonatomic, strong) SENSleepResult* sleepResult;
+@property (nonatomic, strong, readwrite) SENSleepResult* sleepResult;
 @property (nonatomic, strong) NSArray* aggregateDataSources;
 @property (nonatomic, getter=shouldBeLoading) BOOL beLoading;
 @end
@@ -277,6 +277,11 @@ static NSString* const sensorTypeParticulates = @"particulates";
         [cell.drawerButton addTarget:self.collectionView.delegate
                               action:@selector(drawerButtonTapped:)
                     forControlEvents:UIControlEventTouchUpInside];
+    cell.shareButton.enabled = [self.sleepResult.score integerValue] > 0;
+    if ([self.collectionView.delegate respondsToSelector:@selector(shareButtonTapped:)])
+        [cell.shareButton addTarget:self.collectionView.delegate
+                             action:@selector(shareButtonTapped:)
+                   forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 

@@ -22,7 +22,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-AK-PaO">
-                        <rect key="frame" x="120" y="18" width="78.5" height="25"/>
+                        <rect key="frame" x="120" y="18" width="79" height="25"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="E5c-Hr-7wE"/>
                         </constraints>
@@ -55,8 +55,8 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DtZ-v4-794">
-                        <rect key="frame" x="261" y="0.0" width="59" height="50.5"/>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DtZ-v4-794">
+                        <rect key="frame" x="261" y="0.0" width="59" height="51"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="59" id="Xwc-pS-cNB"/>
                             <constraint firstAttribute="height" constant="50.5" id="wc0-se-SsO"/>

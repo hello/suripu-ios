@@ -15,6 +15,7 @@ extern NSString* const HEMSleepEventTypeFallAsleep;
 @optional
 
 - (void)drawerButtonTapped:(UIButton*)button;
+- (void)shareButtonTapped:(UIButton*)button;
 
 @end
 
@@ -59,4 +60,6 @@ extern NSString* const HEMSleepEventTypeFallAsleep;
 - (NSString*)localizedNameForSleepEventType:(NSString*)eventType;
 
 - (HEMSleepSummaryCollectionViewCell*)sleepSummaryCell;
+
+@property (nonatomic, strong, readonly) SENSleepResult* sleepResult;
 @end

@@ -73,6 +73,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     self.collectionView.scrollEnabled = NO;
     [UIView animateWithDuration:0.5f animations:^{
         self.collectionView.contentOffset = CGPointMake(0, 0);
+        [self.dataSource.sleepSummaryCell.shareButton setEnabled:NO];
+        [self.dataSource.sleepSummaryCell.dateLabel setAlpha:0.5];
         [self.dataSource.sleepSummaryCell.drawerButton setImage:[UIImage imageNamed:@"caret up"]
                                                        forState:UIControlStateNormal];
     }];
@@ -87,6 +89,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.collectionView.scrollEnabled = YES;
     [UIView animateWithDuration:0.5f animations:^{
+        [self.dataSource.sleepSummaryCell.shareButton setEnabled:[self.dataSource.sleepResult.score integerValue] > 0];
+        [self.dataSource.sleepSummaryCell.dateLabel setAlpha:1];
         [self.dataSource.sleepSummaryCell.drawerButton setImage:[UIImage imageNamed:@"Menu"]
                                                        forState:UIControlStateNormal];
     }];
@@ -102,6 +106,16 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 - (void)drawerButtonTapped:(UIButton*)button
 {
     [self toggleDrawer];
+}
+
+- (void)shareButtonTapped:(UIButton*)button
+{
+    long score = [self.dataSource.sleepResult.score longValue];
+    if (score > 0) {
+        NSString* message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.format", nil), score];
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message] applicationActivities:nil];
+        [self presentViewController:activityController animated:YES completion:nil];
+    }
 }
 
 #pragma mark Event Info Popup

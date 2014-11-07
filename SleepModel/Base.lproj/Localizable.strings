@@ -294,6 +294,7 @@
 "activity.thank" = "Thank";
 "activity.you" = "you.";
 "activity.loading" = "Loading...";
+"activity.share.format" = "Last night my sleep score was %.0ld — Can you beat it? http://hello.is";
 
 // questions
 "questions.failed.title" = "Could not submit answer";

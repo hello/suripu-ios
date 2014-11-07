@@ -104,7 +104,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     mask.endPoint = CGPointMake(1, 0.5);
     mask.locations = @[ @(-1), @(-1), @0, @1 ];
     self.graphView.layer.mask = mask;
-    [self reloadData];
     [self refreshGraphData];
 }
 
@@ -124,6 +123,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 {
     self.overlayView.alpha = 0;
     self.selectionView.alpha = 0;
+    self.graphView.delegate = self;
     self.graphView.enableBezierCurve = YES;
     self.graphView.enablePopUpReport = YES;
     self.graphView.colorBottom = [UIColor clearColor];
@@ -169,13 +169,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 }
 
 #pragma mark - Update Graph
-
-- (void)reloadData
-{
-    self.graphView.delegate = self;
-    self.graphView.dataSource = self.graphDataSource;
-    [self.graphView reloadGraph];
-}
 
 - (void)fadeInGraphView
 {
@@ -275,7 +268,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:dataSeries
                                                                          unit:self.sensor.unit];
     self.graphDataSource.dateFormatter = formatter;
-    [self reloadData];
+    self.graphView.dataSource = self.graphDataSource;
+    [self.graphView reloadGraph];
     if (dataSeries.count == 0) {
         self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
         self.statusLabel.alpha = 1;

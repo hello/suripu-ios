@@ -133,7 +133,7 @@
     self.gravityBehavior = [[UIGravityBehavior alloc] initWithItems:@[ self.view ]];
     __weak FCDynamicPane* weakSelf = self;
     self.gravityBehavior.action = ^{
-		typeof(self) strongSelf = weakSelf;
+		__strong typeof(weakSelf) strongSelf = weakSelf;
 		
 		BOOL isOutOfScreenNow = [strongSelf.view.superview convertPoint:weakSelf.view.frame.origin toView:nil].y > fullHeight;
 		if (isOutOfScreenNow && !strongSelf->_isOutOfScreen) {
@@ -215,7 +215,7 @@
         self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);
         __weak FCDynamicPane* weakSelf = self;
         self.gravityBehavior.action = ^{
-			typeof(self) strongSelf = weakSelf;
+			__strong typeof(weakSelf) strongSelf = weakSelf;
 			if (strongSelf.view.frame.origin.y <= 10) {
 				strongSelf.attachmentBehavior.anchorPoint = CGPointMake(fullWidth/2, fullHeight / 2);
 				strongSelf.attachmentBehavior.damping = 0.7f;
@@ -232,6 +232,10 @@
         self.attachmentBehavior.frequency = 4.0f;
         self.gravityBehavior.gravityDirection = CGVectorMake(0, 1.5);
         [self.behavior addChildBehavior:self.attachmentBehavior];
+        if (CGRectGetMinY(self.view.layer.frame) < 50) {
+            [self.pushBehavior setPushDirection:CGVectorMake(0, 4000)];
+            self.pushBehavior.active = YES;
+        }
         if ([self.viewController respondsToSelector:@selector(viewDidPop)]) {
             [(UIViewController<FCDynamicPaneViewController>*)self.viewController viewDidPop];
         }
@@ -241,6 +245,10 @@
         self.attachmentBehavior.frequency = 2.0f;
         self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);
         [self.behavior addChildBehavior:self.attachmentBehavior];
+        if (CGRectGetMinY(self.view.layer.frame) > 50) {
+            [self.pushBehavior setPushDirection:CGVectorMake(0, -10000)];
+            self.pushBehavior.active = YES;
+        }
         if ([self.viewController respondsToSelector:@selector(viewDidPush)]) {
             [(UIViewController<FCDynamicPaneViewController>*)self.viewController viewDidPush];
         }

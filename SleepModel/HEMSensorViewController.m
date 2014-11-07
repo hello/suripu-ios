@@ -20,6 +20,8 @@
 @property (weak, nonatomic) IBOutlet BEMSimpleLineGraphView* graphView;
 @property (weak, nonatomic) IBOutlet UILabel* comfortZoneInfoLabel;
 @property (weak, nonatomic) IBOutlet UILabel* comfortZoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel* statusLabel;
+@property (weak, nonatomic) IBOutlet UIView* comfortZoneContainer;
 @property (weak, nonatomic) IBOutlet UIView *graphContainerView;
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
 @property (weak, nonatomic) IBOutlet UIView* chartContainerView;
@@ -34,10 +36,12 @@
 @property (nonatomic, getter=isShowingHourlyData) BOOL showHourlyData;
 @property (nonatomic, strong) NSDateFormatter* hourlyFormatter;
 @property (nonatomic, strong) NSDateFormatter* dailyFormatter;
-
+@property (nonatomic, strong) NSTimer* refreshTimer;
 @end
 
 @implementation HEMSensorViewController
+
+static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 
 - (void)viewDidLoad
 {
@@ -48,26 +52,48 @@
     self.dailyFormatter.dateFormat = @"EEEEE";
     self.hourlyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.dailyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
-    self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
     [self configureGraphViewBackground];
     [self initializeGraphDataSource];
     [self configureGraphView];
     [self configureSensorValueViews];
+    [self configureComfortLevelViews];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self fadeInGraphView];
+    [self updateSelectionViewLocation];
+    [UIView animateWithDuration:0.25 animations:^{
+        self.selectionView.alpha = 1;
+        [self.hourlyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
+    }];
+    self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:HEMSensorRefreshInterval
+                                                         target:self
+                                                       selector:@selector(refreshGraphData)
+                                                       userInfo:nil
+                                                        repeats:YES];
 }
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.refreshTimer invalidate];
+}
+
+- (void)dealloc
+{
+    [_refreshTimer invalidate];
+}
+
+#pragma mark - Configuration
 
 - (void)initializeGraphDataSource
 {
     self.showHourlyData = YES;
     self.hourlyDataSeries = @[];
     self.dailyDataSeries = @[];
-    self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:@[] unit:self.sensor.unit];
-    self.graphDataSource.dateFormatter = self.hourlyFormatter;
+    [self toggleDataSeriesTo:self.hourlyDataSeries animated:NO];
     CAGradientLayer* mask = [CAGradientLayer layer];
     mask.frame = self.graphView.bounds;
     mask.colors = @[(id)[UIColor whiteColor].CGColor,
@@ -78,24 +104,26 @@
     mask.endPoint = CGPointMake(1, 0.5);
     mask.locations = @[ @(-1), @(-1), @0, @1 ];
     self.graphView.layer.mask = mask;
-    [self reloadData];
     [self refreshGraphData];
 }
 
 - (void)configureGraphViewBackground
 {
+    self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
     CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = self.view.bounds;
+    gradient.frame = self.graphContainerView.bounds;
     gradient.colors = @[
                         (id)[[UIColor whiteColor] CGColor],
-                        (id)[[UIColor colorWithWhite:1.f alpha:0] CGColor]];
-    gradient.locations = @[@0, @(0.4)];
+                        (id)[[HelloStyleKit backViewBackgroundColor] CGColor]];
+    gradient.locations = @[@0, @(0.8)];
     [self.graphContainerView.layer insertSublayer:gradient atIndex:0];
 }
 
 - (void)configureGraphView
 {
     self.overlayView.alpha = 0;
+    self.selectionView.alpha = 0;
+    self.graphView.delegate = self;
     self.graphView.enableBezierCurve = YES;
     self.graphView.enablePopUpReport = YES;
     self.graphView.colorBottom = [UIColor clearColor];
@@ -106,28 +134,12 @@
     self.graphView.labelFont = [UIFont sensorGraphNumberFont];
 }
 
-- (void)reloadData
-{
-    self.graphView.delegate = self;
-    self.graphView.dataSource = self.graphDataSource;
-    [self.graphView reloadGraph];
-}
-
-- (void)fadeInGraphView
-{
-    [CATransaction begin];
-    [CATransaction setValue:@1 forKey:kCATransactionAnimationDuration];
-    ((CAGradientLayer*)self.graphView.layer.mask).locations = @[ @0, @1, @2, @2 ];
-    [CATransaction commit];
-}
-
 - (void)configureSensorValueViews
 {
     self.title = self.sensor.localizedName;
     if (self.sensor.value) {
         NSString* format = nil;
-        if (self.sensor.unit == SENSensorUnitMicrogramPerCubicMeter
-            && [self.sensor.value floatValue] > 0.0f) {
+        if (self.sensor.unit == SENSensorUnitMicrogramPerCubicMeter && [self.sensor.value floatValue] > 0.0f) {
             format = @"%.02f";
         } else {
             format = @"%.0f";
@@ -139,32 +151,52 @@
 
     self.unitLabel.text = [self.sensor localizedUnit];
     NSDictionary* attributes = @{
-        @(EMPH) : @{
-            NSFontAttributeName : [UIFont settingsInsightMessageFont],
-        },
-        @(PLAIN) : @{
-            NSFontAttributeName : [UIFont settingsInsightMessageFont],
-        },
-        @(PARA) : @{
-            NSForegroundColorAttributeName : [HelloStyleKit backViewTextColor],
-        }
+        @(EMPH)  : @{ NSFontAttributeName : [UIFont settingsInsightMessageFont]},
+        @(PLAIN) : @{ NSFontAttributeName : [UIFont settingsInsightMessageFont]}
     };
 
     self.comfortZoneInfoLabel.attributedText = markdown_to_attr_string(self.sensor.message, 0, attributes);
 }
 
+- (void)configureComfortLevelViews
+{
+    self.comfortZoneLabel.font = [UIFont insightTitleFont];
+    self.comfortZoneContainer.layer.cornerRadius = 2.f;
+    self.comfortZoneContainer.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
+    self.comfortZoneContainer.layer.shadowOffset = CGSizeMake(0, 1);
+    self.comfortZoneContainer.layer.shadowOpacity = 1.f;
+    self.comfortZoneContainer.layer.shadowRadius = 2.f;
+}
+
+#pragma mark - Update Graph
+
+- (void)fadeInGraphView
+{
+    [CATransaction begin];
+    [CATransaction setValue:@1 forKey:kCATransactionAnimationDuration];
+    ((CAGradientLayer*)self.graphView.layer.mask).locations = @[ @0, @1, @2, @2 ];
+    [CATransaction commit];
+}
+
 - (void)refreshGraphData
 {
+    self.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
     [SENAPIRoom hourlyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
-        if (!data)
+        if (!data) {
+            self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
+            self.statusLabel.alpha = 1;
             return;
+        }
         self.hourlyDataSeries = data;
         if ([self isShowingHourlyData])
             [self updateGraphWithHourlyData:data];
     }];
     [SENAPIRoom dailyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
-        if (!data)
+        if (!data) {
+            self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
+            self.statusLabel.alpha = 1;
             return;
+        }
         self.dailyDataSeries = data;
         if (![self isShowingHourlyData])
             [self updateGraphWithDailyData:data];
@@ -175,32 +207,30 @@
 {
     if ([self isShowingHourlyData])
         return;
+    self.showHourlyData = YES;
     [self.dailyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
     [self.hourlyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
-    [self animateActiveDataSeriesTo:self.hourlyDataSeries];
+    [self toggleDataSeriesTo:self.hourlyDataSeries animated:YES];
 }
 
 - (IBAction)selectedDailyGraph:(id)sender
 {
     if (![self isShowingHourlyData])
         return;
-
+    self.showHourlyData = NO;
     [self.dailyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
     [self.hourlyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
-    [self animateActiveDataSeriesTo:self.dailyDataSeries];
+    [self toggleDataSeriesTo:self.dailyDataSeries animated:YES];
 }
 
-- (void)animateActiveDataSeriesTo:(NSArray*)dataSeries
+- (void)toggleDataSeriesTo:(NSArray*)dataSeries animated:(BOOL)animated
 {
-    self.showHourlyData = ![self isShowingHourlyData];
-    UIButton* button = [self isShowingHourlyData] ? self.hourlyGraphButton : self.dailyGraphButton;
-    [UIView animateWithDuration:0.25 animations:^{
+    void (^animations)() = ^{
         self.graphView.alpha = 0;
         self.overlayView.alpha = 0;
-        self.selectionViewLeadingConstraint.constant = CGRectGetMinX(button.frame);
-        self.selectionViewWidthConstraint.constant = CGRectGetWidth(button.frame);
-        [self.selectionView layoutIfNeeded];
-    } completion:^(BOOL finished) {
+        [self updateSelectionViewLocation];
+    };
+    void (^completion)(BOOL) = ^(BOOL finished) {
         if ([self isShowingHourlyData]) {
             [self updateGraphWithHourlyData:dataSeries];
         } else {
@@ -209,21 +239,43 @@
         [UIView animateWithDuration:0.25 animations:^{
             self.graphView.alpha = 1.f;
         }];
-    }];
+    };
+    if (animated) {
+        [UIView animateWithDuration:0.25 animations:animations completion:completion];
+    } else {
+        animations();
+        completion(YES);
+    }
+}
+
+- (void)updateSelectionViewLocation {
+    UIButton* button = [self isShowingHourlyData] ? self.hourlyGraphButton : self.dailyGraphButton;
+    self.selectionViewLeadingConstraint.constant = CGRectGetMinX(button.frame);
+    self.selectionViewWidthConstraint.constant = CGRectGetWidth(button.frame);
+    [self.selectionView layoutIfNeeded];
 }
 
 - (void)updateGraphWithHourlyData:(NSArray*)dataSeries {
-    self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:dataSeries
-                                                                         unit:self.sensor.unit];
-    self.graphDataSource.dateFormatter = self.hourlyFormatter;
-    [self reloadData];
+    [self updateGraphWithData:dataSeries formatter:self.hourlyFormatter];
 }
 
 - (void)updateGraphWithDailyData:(NSArray*)dataSeries {
+    [self updateGraphWithData:dataSeries formatter:self.dailyFormatter];
+}
+
+- (void)updateGraphWithData:(NSArray*)dataSeries formatter:(NSDateFormatter*)formatter
+{
     self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:dataSeries
                                                                          unit:self.sensor.unit];
-    self.graphDataSource.dateFormatter = self.dailyFormatter;
-    [self reloadData];
+    self.graphDataSource.dateFormatter = formatter;
+    self.graphView.dataSource = self.graphDataSource;
+    [self.graphView reloadGraph];
+    if (dataSeries.count == 0) {
+        self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
+        self.statusLabel.alpha = 1;
+    } else {
+        self.statusLabel.alpha = 0;
+    }
 }
 
 #pragma mark - BEMSimpleLineGraphDelegate
@@ -234,6 +286,10 @@
 
 - (NSInteger)numberOfGapsBetweenLabelsOnLineGraph:(BEMSimpleLineGraphView *)graph {
     return ceil(self.dataSeries.count/8);
+}
+
+- (BOOL)noDataLabelEnableForLineGraph:(BEMSimpleLineGraphView *)graph {
+    return NO;
 }
 
 - (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {

@@ -74,11 +74,16 @@ static CGFloat const kHEMInsightCellDisplayDuration = 1.0f;
                message:NSLocalizedString(@"sleep.insight.summary.no-data-message", nil)];
     }
     
-    [[cell contentView ] setAlpha:0.0f];
+    [[cell contentView] setAlpha:0.0f];
     [UIView animateWithDuration:kHEMInsightCellDisplayDuration animations:^{
-        [[cell contentView ] setAlpha:1.0f];
+        [[cell contentView] setAlpha:1.0f];
     }];
-    
+
+    cell.layer.cornerRadius = 2.f;
+    cell.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
+    cell.layer.shadowOffset = CGSizeMake(0, 0.5);
+    cell.layer.shadowOpacity = 1.f;
+    cell.layer.shadowRadius = 1.f;
     return cell;
 }
 

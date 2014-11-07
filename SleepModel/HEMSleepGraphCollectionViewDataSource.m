@@ -392,13 +392,13 @@ static NSString* const sensorTypeParticulates = @"particulates";
         return [UIImage imageNamed:@"asleep"];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeLight]) {
-        return [UIImage imageNamed:@"light-medium"];
+        return [UIImage imageNamed:@"light"];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeNoise]) {
-        return [UIImage imageNamed:@"sound-medium"];
+        return [UIImage imageNamed:@"sound"];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeMotion]) {
-        return [UIImage imageNamed:@"movement-bad"];
+        return [UIImage imageNamed:@"movement"];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeSunrise]) {
         return [UIImage imageNamed:@"sunrise"];

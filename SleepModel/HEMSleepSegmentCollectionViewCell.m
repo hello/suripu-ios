@@ -42,7 +42,11 @@ CGFloat HEMSleepSegmentMinimumFillWidth = 28.f;
         inset += HEMSleepSegmentMinimumFillWidth;
         width = (CGRectGetWidth(rect) - inset);
         fillRect = CGRectMake(inset, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
-        CGContextSetFillColorWithColor(ctx, [UIColor colorWithWhite:1.f alpha:0.8].CGColor);
+        CGContextSetBlendMode(ctx, kCGBlendModeOverlay);
+        CGContextSetFillColorWithColor(ctx, [UIColor colorWithWhite:1.f alpha:0.2].CGColor);
+        CGContextFillRect(ctx, fillRect);
+        CGContextSetBlendMode(ctx, kCGBlendModeLighten);
+        CGContextSetFillColorWithColor(ctx, [UIColor colorWithWhite:1.f alpha:0.85].CGColor);
         CGContextFillRect(ctx, fillRect);
     }
 }

@@ -179,7 +179,7 @@ static NSString* const pillCellIdentifier = @"pillCell";
     __weak typeof(self) weakSelf = self;
     [SVProgressHUD showWithStatus:NSLocalizedString(@"device-list.search.loading-message", nil) maskType:SVProgressHUDMaskTypeBlack];
     [[LGCentralManager sharedInstance] scanForPeripheralsByInterval:3 services:@[] options:nil completion:^(NSArray* peripherals) {
-        typeof(self) strongSelf = weakSelf;
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         [SVProgressHUD dismiss];
         NSPredicate* predicate = [NSPredicate predicateWithFormat:@"name.length > 0"];
         strongSelf.discoveredDevices = [peripherals filteredArrayUsingPredicate:predicate];

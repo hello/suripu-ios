@@ -151,7 +151,7 @@ static NSUInteger HEMAlarmListLimit = 8;
         [self reloadData];
         __weak typeof(self) weakSelf = self;
         [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
-            typeof(self) strongSelf = weakSelf;
+            __strong typeof(weakSelf) strongSelf = weakSelf;
             if (!success) {
                 [alarm save];
                 [strongSelf reloadData];

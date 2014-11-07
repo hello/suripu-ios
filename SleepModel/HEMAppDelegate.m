@@ -74,13 +74,16 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 }
 
 - (BOOL)deauthorizeIfNeeded {
-    if ([[NSUserDefaults standardUserDefaults] boolForKey:HEMAppForceLogout]) {
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    if ([defaults boolForKey:HEMAppForceLogout]) {
         [SENAuthorizationService deauthorize];
-        [[NSUserDefaults standardUserDefaults] removeObjectForKey:HEMAppForceLogout];
+        [defaults removeObjectForKey:HEMAppForceLogout];
+        [defaults synchronize];
         return YES;
-    } else if (![[NSUserDefaults standardUserDefaults] stringForKey:HEMAppFirstLaunch]) {
+    } else if (![defaults stringForKey:HEMAppFirstLaunch]) {
         [SENAuthorizationService deauthorize];
-        [[NSUserDefaults standardUserDefaults] setObject:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
+        [defaults setObject:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
+        [defaults synchronize];
         return YES;
     }
     return NO;

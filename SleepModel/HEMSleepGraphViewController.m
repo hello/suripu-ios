@@ -370,10 +370,11 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 - (CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
+    BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     switch (indexPath.section) {
     case HEMSleepGraphCollectionViewSummarySection:
-        return CGSizeMake(width, HEMSleepSummaryCellHeight);
+        return CGSizeMake(width, hasSegments ? HEMSleepSummaryCellHeight : CGRectGetHeight(self.view.bounds));
 
     case HEMSleepGraphCollectionViewPresleepSection:
         return CGSizeMake(width, HEMPresleepItemCellHeight);
@@ -397,6 +398,10 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 - (CGSize)collectionView:(UICollectionView*)collectionView layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
+    BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
+    if (!hasSegments)
+        return CGSizeZero;
+
     switch (section) {
     case HEMSleepGraphCollectionViewPresleepSection:
         return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMPresleepHeaderCellHeight);

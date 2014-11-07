@@ -68,6 +68,7 @@
     [[self ssidField] setEnabled:enable];
     [[self passwordField] setEnabled:enable];
     [[self doneButton] setEnabled:enable];
+    [[self navigationItem] setHidesBackButton:!enable animated:YES];
     
     if (enable) {
         [[self passwordField] becomeFirstResponder];
@@ -175,9 +176,6 @@
     // we know what to actually point to, we likely will open up a browser to
     // show the help
     [SENAnalytics track:kHEMAnalyticsEventHelp];
-#pragma message ("remove when we all have devices!")
-    
-    [self next];
 }
 
 - (void)setWiFi:(NSString*)ssid

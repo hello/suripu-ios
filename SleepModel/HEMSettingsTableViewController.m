@@ -9,6 +9,7 @@
 #import "HEMAlertController.h"
 #import "HEMLogUtils.h"
 #import "HelloStyleKit.h"
+#import "HEMSupportUtil.h"
 
 @interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 
@@ -16,11 +17,6 @@
 @end
 
 @implementation HEMSettingsTableViewController
-
-static NSString* const HEMSettingsContactEmail = @"beta-logs@hello.is";
-static NSString* const HEMSettingsContactSubject = @"App Support Request";
-static NSString* const HEMSettingsLogFileName = @"newest_log_file.log";
-static NSString* const HEMSettingsLogFileType = @"text/plain";
 
 - (void)viewDidLoad
 {
@@ -90,7 +86,7 @@ static NSString* const HEMSettingsLogFileType = @"text/plain";
         nextSegueId = [HEMMainStoryboard devicesSettingsSegueIdentifier];
         break;
     case 4:
-        [self openMailController];
+        [HEMSupportUtil contactSupportFrom:[self navigationController] mailDelegate:self];
         break;
     case 5:
         [SENAuthorizationService deauthorize];
@@ -105,25 +101,7 @@ static NSString* const HEMSettingsLogFileType = @"text/plain";
     }
 }
 
-#pragma mark - Contact Support
-
-- (void)openMailController
-{
-    if (![MFMailComposeViewController canSendMail]) {
-        [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"settings.support.fail.title", nil)
-                                              message:NSLocalizedString(@"settings.support.fail.message", nil)
-                                 presentingController:self];
-        return;
-    }
-    MFMailComposeViewController* controller = [[MFMailComposeViewController alloc] init];
-    [controller setToRecipients:@[ HEMSettingsContactEmail ]];
-    [controller setSubject:HEMSettingsContactSubject];
-    [controller addAttachmentData:[HEMLogUtils latestLogFileData]
-                         mimeType:HEMSettingsLogFileType
-                         fileName:HEMSettingsLogFileName];
-    controller.mailComposeDelegate = self;
-    [self.navigationController presentViewController:controller animated:YES completion:NULL];
-}
+#pragma mark - Contact Support Mail Delegate
 
 - (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
 {

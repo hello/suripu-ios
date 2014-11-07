@@ -117,9 +117,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     // we know what to actually point to, we likely will open up a browser to
     // show the help
     [SENAnalytics track:kHEMAnalyticsEventHelp];
-    
-#pragma message ("remove when we all have devices!")
-    [self next];
 }
 
 #pragma mark - Scanning
@@ -168,12 +165,15 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                                                      selector:@selector(scanTimeout)
                                                        object:nil];
             if ([senses count] > 0) {
-                // TODO (jimmy): what to do when more than 1 sense is detected?
+                // per team consensus, it is expected that the app pairs with the
+                // first sense with the highest average RSSI value that is found.
+                // In our case, the first object matches that spec.
                 [strongSelf pairWith:[senses firstObject]];
                 DDLogVerbose(@"sense found, %@", [[strongSelf manager] sense]);
             } else {
                 [SENAnalytics track:kHEMAnalyticsEventError
                          properties:@{kHEMAnalyticsEventPropMessage : @"no sense found"}];
+                
                 [strongSelf stopActivityWithMessage:nil completion:^{
                     NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
                     [strongSelf showErrorMessage:msg];

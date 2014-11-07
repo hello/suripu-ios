@@ -312,7 +312,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         } else if (tableView == [self yearTableView]) {
             NSDateComponents* components = [[NSCalendar currentCalendar] components:NSCalendarUnitYear
                                                                            fromDate:[NSDate date]];
-            title = [NSString stringWithFormat:@"%ld", [components year]-dataRow];
+            title = [NSString stringWithFormat:@"%ld", [components year]-kHEMBirthdateNumberOfYears+dataRow+1];
             alignment = NSTextAlignmentRight;
         }
     }
@@ -371,7 +371,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
     [self selectValueRow:month-1 inTableView:[self monthTableView]];
     [self selectValueRow:day-1 inTableView:[self dayTableView]];
-    [self selectValueRow:yearsPast-1 inTableView:[self yearTableView]];
+    [self selectValueRow:[self lastRowOf:[self yearTableView]]-yearsPast-2
+             inTableView:[self yearTableView]];
 }
 
 #pragma mark - Selected Values

@@ -23,7 +23,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    [[self navigationItem] setHidesBackButton:YES];
     [SENAnalytics track:kHEMAnalyticsEventOnBSetupPill];
 }
 

@@ -10,6 +10,7 @@
 #import <Crashlytics/Crashlytics.h>
 
 #import "HEMAppDelegate.h"
+#import "HEMRootViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummarySlideViewController.h"
 #import "HEMNotificationHandler.h"
@@ -50,6 +51,10 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [self createAndShowWindow];
     [self showConfidentialityNotice];
     [HEMNotificationHandler registerForRemoteNotifications];
+
+#pragma message ("TODO - create preprocessor macro to distinguish APP_STORE from Internal")
+    [application setApplicationSupportsShakeToEdit:YES];
+    
     return YES;
 }
 
@@ -98,8 +103,8 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 {
     SENClearModel();
     [[HEMDeviceCenter sharedCenter] clearCache];
-    [HEMOnboardingUtils resetOnboardingCheckpoint];
     [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
+    [HEMOnboardingUtils resetOnboardingCheckpoint];
     [self resume:YES];
 }
 
@@ -134,7 +139,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
         [[HEMSleepSummarySlideViewController alloc] init]
     ];
 
-    FCDynamicPanesNavigationController* dynamicPanes = [[FCDynamicPanesNavigationController alloc] initWithViewControllers:viewControllers hintOnLoad:YES];
+    FCDynamicPanesNavigationController* dynamicPanes = [[HEMRootViewController alloc] initWithViewControllers:viewControllers hintOnLoad:YES];
     self.window.rootViewController = dynamicPanes;
     [self.window makeKeyAndVisible];
 }
@@ -222,80 +227,30 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)resume:(BOOL)animated
 {
-    UIViewController* onboardingController = nil;
+    FCDynamicPanesNavigationController* dynamicPanesController = (FCDynamicPanesNavigationController*)self.window.rootViewController;
+    if ([dynamicPanesController presentedViewController] != nil) return;
     
-    switch ([HEMOnboardingUtils onboardingCheckpoint]) {
-        case HEMOnboardingCheckpointStart: {
-            // hmm, this is a bit hairy.  To ensure that user is logged in even
-            // after the app is deleted, or even for existing users who have already
-            // signed up, we need to check that they are not authenticated before
-            // actually starting from beginning.  However, this gives user a way
-            // to by pass onboarding by creating the app and
-            
-            // TODO (jimmy:) create API to check validity of the user's account
-            // and if it's not properly setup, sign out the user
-            if (![SENAuthorizationService isAuthorized]) {
-                onboardingController = [self startOnboardingFromBeginning];
-            }
-            break;
-        }
-        case HEMOnboardingCheckpointAccountCreated: {
-            onboardingController = [self resumeAccountSetup];
-            break;
-        }
-        case HEMOnboardingCheckpointAccountDone: {
-            onboardingController = [self resumeSenseSetup];
-            break;
-        }
-        case HEMOnboardingCheckpointSenseDone: {
-            onboardingController = [self resumePillSetup];
-            break;
-        }
-        case HEMOnboardingCheckpointPillDone:
-        default: {
-            break;
-        }
-    }
-
+    BOOL authorized = [SENAuthorizationService isAuthorized];
+    HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
+    UIViewController* onboardingController = [HEMOnboardingUtils onboardingControllerForCheckpoint:checkpoint authorized:authorized];
+    
     if (onboardingController != nil) {
-        FCDynamicPanesNavigationController* dynamicPanesController = (FCDynamicPanesNavigationController*)self.window.rootViewController;
         UINavigationController* navController = (UINavigationController*)((FCDynamicPane*)[dynamicPanesController.viewControllers firstObject]).viewController;
         [navController popToRootViewControllerAnimated:NO];
         [dynamicPanesController popViewControllerAnimated:animated];
-
         
-        if ([onboardingController isKindOfClass:[UINavigationController class]]) {
-            UINavigationController* navVC = (UINavigationController*)onboardingController;
-            [[navVC navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];
+        UINavigationController* onboardingNav = [[UINavigationController alloc] initWithRootViewController:onboardingController];
+        [[onboardingNav navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];
+        
+        if (checkpoint == HEMOnboardingCheckpointStart) {
+            [self listenForAccountCreationNotification];
+        } else {
+            [self openSettingsDrawer];
         }
         
-        [dynamicPanesController presentViewController:onboardingController
+        [dynamicPanesController presentViewController:onboardingNav
                                              animated:animated completion:nil];
     } // let it just start the application up normally
-}
-
-- (UIViewController*)startOnboardingFromBeginning {
-    UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
-                                                                   bundle:[NSBundle mainBundle]];
-    [self listenForAccountCreationNotification];
-    return [onboardingStoryboard instantiateInitialViewController];
-}
-
-- (UIViewController*)resumeOnboardingWithController:(UIViewController*)controller {
-    [self openSettingsDrawer];
-    return [[UINavigationController alloc] initWithRootViewController:controller];
-}
-
-- (UIViewController*)resumeAccountSetup {
-    return [self resumeOnboardingWithController:[HEMOnboardingStoryboard instantiateDobViewController]];
-}
-
-- (UIViewController*)resumeSenseSetup {
-    return [self resumeOnboardingWithController:[HEMOnboardingStoryboard instantiateGetSetupViewController]];
-}
-
-- (UIViewController*)resumePillSetup {
-    return [self resumeOnboardingWithController:[HEMOnboardingStoryboard instantiatePillIntroViewController]];
 }
 
 @end

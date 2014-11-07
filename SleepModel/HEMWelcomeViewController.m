@@ -9,7 +9,6 @@
 
 #import "HEMWelcomeViewController.h"
 #import "HEMActionButton.h"
-#import "HEMProgressNavigationController.h"
 #import "HEMAnimationUtils.h"
 #import "HEMSignUpViewController.h"
 #import "HEMBaseController+Protected.h"
@@ -18,7 +17,6 @@
 static CGFloat const kHEMWelcomeMotionEffectBorder = 10.0f;
 static CGFloat const kHEMWelcomeButtonAnimationDuration = 0.5f;
 static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
-static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
 
 @interface HEMWelcomeViewController ()
 
@@ -251,21 +249,6 @@ static NSInteger const kHEMWelcomeNumberOfSignupScreens = 9;
 
 - (IBAction)cancelGettingStarted:(id)sender {
     [self showGettingStartedActions:@(NO)];
-}
-
-#pragma mark - Navigation
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    if ([[self navigationController] isKindOfClass:[HEMProgressNavigationController class]]) {
-        HEMProgressNavigationController* pNav = (HEMProgressNavigationController*)[self navigationController];
-        UIViewController* rootVC = [[pNav viewControllers] firstObject];
-        NSInteger numberOfSteps = 1;
-        if ([rootVC isKindOfClass:[HEMSignUpViewController class]]) {
-            numberOfSteps = kHEMWelcomeNumberOfSignupScreens;
-        }
-        [pNav setNumberOfScreens:numberOfSteps];
-    }
-    
 }
 
 @end

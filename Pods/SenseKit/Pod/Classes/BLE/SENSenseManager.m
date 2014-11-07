@@ -40,6 +40,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 @property (nonatomic, strong, readwrite) NSMutableDictionary* messageSuccessCallbacks;
 @property (nonatomic, strong, readwrite) NSMutableDictionary* messageFailureCallbacks;
 @property (nonatomic, strong, readwrite) NSMutableDictionary* messageUpdateCallbacks;
+@property (nonatomic, strong, readwrite) NSMutableDictionary* messageTimeoutTimers;
 
 @end
 
@@ -103,6 +104,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         [self setMessageSuccessCallbacks:[NSMutableDictionary dictionary]];
         [self setMessageFailureCallbacks:[NSMutableDictionary dictionary]];
         [self setMessageUpdateCallbacks:[NSMutableDictionary dictionary]];
+        [self setMessageTimeoutTimers:[NSMutableDictionary dictionary]];
     }
     return self;
 }
@@ -343,7 +345,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
  * @param failure: the failure callback called when command failed
  */
 - (void)sendMessage:(SENSenseMessage*)message
-            timeout:(CGFloat)timeout
+            timeout:(NSTimeInterval)timeout
              update:(SENSenseUpdateBlock)update
             success:(SENSenseSuccessBlock)success
             failure:(SENSenseFailureBlock)failure {
@@ -373,13 +375,16 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         NSArray* packets = [strongSelf blePackets:message];
         
         if ([packets count] > 0) {
-            NSString* cbKey = [self cacheMessageCallbacks:update success:success failureBlock:failure];
-            [self performSelector:@selector(sendMessageTimeoutWithCbKey:)
-                       withObject:cbKey afterDelay:timeout];
-            
             __block NSMutableArray* allPackets = nil;
             __block NSNumber* totalPackets = nil;
             __block typeof(reader) blockReader = reader;
+            
+            NSString* cbKey = [self cacheMessageCallbacks:update success:success failureBlock:^(NSError *error) {
+                if (failure) failure (error);
+                [blockReader setNotifyValue:NO completion:nil];
+            }];
+            [strongSelf scheduleMessageTimeOut:timeout withKey:cbKey];
+            
             [reader setNotifyValue:YES completion:^(NSError *error) {
                 if (error != nil) {
                     if (failure) failure (error);
@@ -453,7 +458,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 }
 
 - (void)fireSuccessMsgCbWithCbKey:(NSString*)cbKey andResponse:(id)response {
-    [self cancelMessageTimeoutWithCbKey:cbKey];
+    [self cancelMessageTimeOutWithCbKey:cbKey];
     if (cbKey != nil) {
         SENSenseSuccessBlock callback = [[self messageSuccessCallbacks] valueForKey:cbKey];
         if (callback) callback (response); // don't need to forward response
@@ -462,29 +467,10 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 }
 
 - (void)fireFailureMsgCbWithCbKey:(NSString*)cbKey andError:(NSError*)error {
-    [self cancelMessageTimeoutWithCbKey:cbKey];
+    [self cancelMessageTimeOutWithCbKey:cbKey];
     if (cbKey != nil) {
         SENSenseFailureBlock callback = [[self messageFailureCallbacks] valueForKey:cbKey];
         if (callback) callback (error);
-        [self clearMessageCallbacksForKey:cbKey];
-    }
-}
-
-- (void)cancelMessageTimeoutWithCbKey:(NSString*)cbKey {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                             selector:@selector(sendMessageTimeoutWithCbKey:)
-                                               object:cbKey];
-}
-
-- (void)sendMessageTimeoutWithCbKey:(NSString*)cbKey {
-    if (cbKey != nil) {
-        [self cancelMessageTimeoutWithCbKey:cbKey];
-        SENSenseFailureBlock failureCb = [[self messageFailureCallbacks] valueForKey:cbKey];
-        if (failureCb) {
-            failureCb ([NSError errorWithDomain:kSENSenseErrorDomain
-                                           code:SENSenseManagerErrorCodeTimeout
-                                       userInfo:nil]);
-        }
         [self clearMessageCallbacksForKey:cbKey];
     }
 }
@@ -669,6 +655,39 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     return response;
 }
 
+#pragma mark - (Private) Timeout
+
+- (void)scheduleMessageTimeOut:(NSTimeInterval)timeOutInSecs withKey:(NSString*)key {
+    NSTimer* timer = [NSTimer scheduledTimerWithTimeInterval:timeOutInSecs
+                                                      target:self
+                                                    selector:@selector(timedOut:)
+                                                    userInfo:key
+                                                     repeats:NO];
+    [[self messageTimeoutTimers] setValue:timer forKey:key];
+}
+
+- (void)cancelMessageTimeOutWithCbKey:(NSString*)cbKey {
+    NSTimer* timer = [[self messageTimeoutTimers] objectForKey:cbKey];
+    [timer invalidate];
+    [[self messageTimeoutTimers] removeObjectForKey:cbKey];
+}
+
+- (void)timedOut:(NSTimer*)timer {
+    NSString* cbKey = [timer userInfo];
+    if (cbKey != nil) {
+        [self cancelMessageTimeOutWithCbKey:cbKey];
+        
+        SENSenseFailureBlock failureCb = [[self messageFailureCallbacks] valueForKey:cbKey];
+        if (failureCb) {
+            failureCb ([NSError errorWithDomain:kSENSenseErrorDomain
+                                           code:SENSenseManagerErrorCodeTimeout
+                                       userInfo:nil]);
+        }
+        
+        [self clearMessageCallbacksForKey:cbKey];
+    }
+}
+
 #pragma mark - Pairing
 
 /**
@@ -694,10 +713,15 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                                    andCode:SENSenseManagerErrorCodeUnexpectedResponse];
                       }
                       
-                      NSString* cbKey = [strongSelf cacheMessageCallbacks:nil success:success failureBlock:failure];
-                      [strongSelf performSelector:@selector(sendMessageTimeoutWithCbKey:)
-                                       withObject:cbKey
-                                       afterDelay:kSENSenseDefaultTimeout];
+                      NSString* cbKey = [strongSelf cacheMessageCallbacks:nil success:success failureBlock:^(NSError *error) {
+                          __strong typeof(reader) strongReader = reader;
+                          if (strongReader) {
+                              [strongReader setNotifyValue:NO completion:nil];
+                          }
+                          
+                          if (failure) failure (error);
+                      }];
+                      [strongSelf scheduleMessageTimeOut:kSENSenseDefaultTimeout withKey:cbKey];
                       
                       [reader setNotifyValue:YES completion:^(NSError *error) {
                           __strong typeof(reader) strongReader = reader;
@@ -759,19 +783,6 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     SENSenseMessageType type = SENSenseMessageTypePairPill;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [builder setAccountId:accountAccessToken];
-    [self sendMessage:[builder build]
-              timeout:kSENSenseDefaultTimeout
-               update:nil
-              success:success
-              failure:failure];
-}
-
-- (void)unpairPill:(NSString*)pillId
-           success:(SENSenseSuccessBlock)success
-           failure:(SENSenseFailureBlock)failure {
-    SENSenseMessageType type = SENSenseMessageTypeUnpairPill;
-    SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
-    [builder setDeviceId:pillId];
     [self sendMessage:[builder build]
               timeout:kSENSensePillPairTimeout
                update:nil
@@ -951,6 +962,10 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 #pragma mark - Cleanup
 
 - (void)dealloc {
+    for (NSTimer* timer in [[self messageTimeoutTimers] allValues]) {
+        [timer invalidate];
+    }
+    
     if ([self isConnected]) {
         [[[self sense] peripheral] disconnectWithCompletion:nil];
     }

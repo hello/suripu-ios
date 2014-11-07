@@ -67,6 +67,9 @@
 
 // wifi setup
 "wifi.error.title" = "WiFi setup Failed";
+"wifi.activity.setting-wifi" = "Setting WiFi credentials";
+"wifi.activity.linking-account" = "Linking account to Sense";
+"wifi.activity.setting-timezone" = "Setting timezone";
 "wifi.error.set-sense-general" = "Sense could not set up WiFi. Make sure Sense is on and nearby and try again.";
 "wifi.error.set-sense-not-in-range" = "WiFi is out of Sense's range.";
 "wifi.error.set-sense-timeout" = "Timed out while configuring WiFi credentials on Sense.";
@@ -74,9 +77,11 @@
 "wifi.error.account-link-message" = "Unable to set up Sense properly.";
 "wifi.error.account-link-timeout" = "Timed out while linking Sense to your account.";
 "wifi.error.account-link-network-failed" = "Sense failed to connect to your network to link your account.";
+"wifi.error.time-zone-failed" = "Failed to set your timezone, required for the Smart Alarm to work.";
 "wifi.error.scan-title" = "WiFi Scan Failed";
 "wifi.error.scan-out-of-memory" = "Sense failed to complete the scan due to a memory issue.";
 "wifi.error.scan-general" = "Sense failed to complete the scan due to an unknown issue.";
+"wifi.setup.complete" = "Success";
 
 // location
 "location.error.title" = "Unknown Location";

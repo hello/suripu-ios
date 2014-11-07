@@ -11,6 +11,7 @@
 @interface HEMActivityCoverView : UIView
 
 @property (nonatomic, strong, readonly) UILabel* activityLabel;
+@property (nonatomic, assign, readonly, getter=isShowing) BOOL showing;
 
 /**
  * @method

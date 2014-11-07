@@ -18,6 +18,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 
 @property (nonatomic, strong) UILabel* activityLabel;
 @property (nonatomic, strong) UIActivityIndicatorView* activityView;
+@property (nonatomic, assign, getter=isShowing) BOOL showing;
 
 @end
 
@@ -145,6 +146,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
                          if (activity) {
                              [[self activityView] startAnimating];
                          }
+                         [self setShowing:YES];
                          if (completion) completion ();
                      }];
 }
@@ -163,6 +165,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
                          completion:^(BOOL finished) {
                              [[self activityLabel] setText:nil];
                              [self removeFromSuperview];
+                             [self setShowing:NO];
                              if (completion) completion();
                          }];
     }];

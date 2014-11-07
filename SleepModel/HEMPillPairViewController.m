@@ -232,7 +232,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 }
 
 - (void)dismissPairedState {
-    [[self activityView] dismissWithResultText:nil completion:^{
+    [[self activityView] dismissWithResultText:nil remove:YES completion:^{
         [self proceed];
     }];
 }

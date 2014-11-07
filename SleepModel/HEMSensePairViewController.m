@@ -73,7 +73,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)stopActivityWithMessage:(NSString*)message completion:(void(^)(void))completion {
-    [[self activityView] dismissWithResultText:message completion:^{
+    [[self activityView] dismissWithResultText:message remove:YES completion:^{
         [[self noSenseButton] setEnabled:YES];
         if (completion) completion ();
     }];

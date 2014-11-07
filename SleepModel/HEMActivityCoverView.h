@@ -63,9 +63,14 @@
  * block when all is done.
  * 
  * @param text:       text to display before dismissing
+ * @param remove:     YES to automatically remove itself from super view, 
+                      NO to keep it there, but hidden
  * @param completion: the block to invoke when this has been dismissed
  */
 - (void)dismissWithResultText:(NSString*)text
+                       remove:(BOOL)remove
                    completion:(void(^)(void))completion;
+
+- (void)showWithText:(NSString*)text activity:(BOOL)activity completion:(void(^)(void))completion;
 
 @end

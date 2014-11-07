@@ -144,7 +144,7 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
                 renableControls:(BOOL)enable
                      completion:(void(^)(void))completion {
     [self enableControls:enable];
-    [[self activityView] dismissWithResultText:message completion:completion];
+    [[self activityView] dismissWithResultText:message remove:YES completion:completion];
 }
 
 - (void)updateActivity:(NSString*)message {

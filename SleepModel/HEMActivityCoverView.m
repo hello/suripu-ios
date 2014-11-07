@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMActivityCoverView.h"
 #import "HelloStyleKit.h"
 
@@ -30,7 +32,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [self initWithCoder:aDecoder];
+    self = [super initWithCoder:aDecoder];
     if (self) {
         [self setup];
     }
@@ -53,7 +55,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 
 - (void)addLabel {
     [self setActivityLabel:[[UILabel alloc] init]];
-    [[self activityLabel] setFont:[UIFont fontWithName:@"Calibre-Light" size:26.0f]];
+    [[self activityLabel] setFont:[UIFont onboardingActivityFontLarge]];
     [[self activityLabel] setTextColor:[HelloStyleKit onboardingGrayColor]];
     [[self activityLabel] setTextAlignment:NSTextAlignmentCenter];
     [[self activityLabel] setNumberOfLines:0];
@@ -118,7 +120,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 #pragma mark - Public Interfaces
 
 - (void)showInView:(UIView*)view completion:(void(^)(void))completion {
-    [self showInView:view activity:YES completion:completion];
+    [self showInView:view withText:nil activity:YES completion:completion];
 }
 
 - (void)showInView:(UIView*)view
@@ -126,17 +128,28 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
           activity:(BOOL)activity
         completion:(void(^)(void))completion {
     
-    [[self activityLabel] setText:text];
-    [[self activityLabel] setAlpha:1.0f];
-    [self showInView:view activity:activity completion:completion];
+    [self setFrame:[view bounds]];
+    [self setNeedsLayout];
+    [self setAlpha:0.0f]; // make sure it's not visible before adding to view
+    [view addSubview:self];
+    [self showWithText:text activity:activity completion:completion];
 }
 
 - (void)showInView:(UIView*)view activity:(BOOL)activity completion:(void(^)(void))completion {
-    [self setFrame:[view bounds]];
-    [self setNeedsLayout];
+    [self showInView:view withText:nil activity:activity completion:completion];
+}
+
+- (void)showWithText:(NSString*)text
+            activity:(BOOL)activity
+          completion:(void(^)(void))completion {
     [self setAlpha:0.0f];
+    [self setHidden:NO];
     [[self activityView] stopAnimating]; // in case it's animating
-    [view addSubview:self];
+    
+    if (text != nil) {
+        [[self activityLabel] setText:text];
+        [[self activityLabel] setAlpha:1.0f];
+    }
     
     [UIView animateWithDuration:kHEMActivityAnimDuration
                      animations:^{
@@ -152,6 +165,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 }
 
 - (void)dismissWithResultText:(NSString*)text
+                       remove:(BOOL)remove
                    completion:(void(^)(void))completion {
     
     [[self activityView] stopAnimating];
@@ -164,7 +178,10 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
                          }
                          completion:^(BOOL finished) {
                              [[self activityLabel] setText:nil];
-                             [self removeFromSuperview];
+                             [self setHidden:YES];
+                             if (remove) {
+                                 [self removeFromSuperview];
+                             }
                              [self setShowing:NO];
                              if (completion) completion();
                          }];

@@ -912,25 +912,34 @@
                                     <action selector="help:" destination="H2i-xS-f14" eventType="touchUpInside" id="089-tY-7mw"/>
                                 </connections>
                             </button>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jKd-MI-d19" userLabel="activityView" customClass="HEMActivityCoverView">
+                                <rect key="frame" x="28" y="89" width="544" height="511"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jA1-IU-BsJ" firstAttribute="bottom" secondItem="uzN-XV-GHq" secondAttribute="top" constant="-32" id="3Yx-VW-Yt6"/>
                             <constraint firstItem="Hzz-un-6Ly" firstAttribute="top" secondItem="1ao-Zs-Uri" secondAttribute="bottom" constant="18" id="7pK-OW-HbH"/>
+                            <constraint firstItem="jKd-MI-d19" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="12" id="8ZX-YR-KJb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jA1-IU-BsJ" secondAttribute="trailing" constant="12" id="9p1-I1-i62"/>
                             <constraint firstItem="jA1-IU-BsJ" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="12" id="AsE-8L-TM8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jKd-MI-d19" secondAttribute="trailing" constant="12" id="DJj-Wj-HOe"/>
                             <constraint firstAttribute="centerX" secondItem="1ao-Zs-Uri" secondAttribute="centerX" constant="-0.5" id="E1Z-8n-CpH"/>
                             <constraint firstItem="uzN-XV-GHq" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="-3" id="H8u-ui-2cP"/>
                             <constraint firstItem="jA1-IU-BsJ" firstAttribute="bottom" secondItem="kPY-hQ-rr3" secondAttribute="bottom" constant="59" id="Ivz-73-uzW"/>
                             <constraint firstItem="kPY-hQ-rr3" firstAttribute="top" secondItem="rQr-NN-MoL" secondAttribute="bottom" constant="23" id="RHA-ee-3Oq"/>
                             <constraint firstItem="kPY-hQ-rr3" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="12" id="XKg-PQ-vw8"/>
                             <constraint firstItem="1ao-Zs-Uri" firstAttribute="top" secondItem="IJB-u8-jcX" secondAttribute="top" constant="46" id="Zhz-56-bJB"/>
+                            <constraint firstItem="Hzz-un-6Ly" firstAttribute="top" secondItem="jKd-MI-d19" secondAttribute="bottom" id="f3h-hE-Kgf"/>
                             <constraint firstAttribute="centerX" secondItem="IJB-u8-jcX" secondAttribute="centerX" id="fW9-53-9Cq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uzN-XV-GHq" secondAttribute="trailing" constant="-1" id="hHj-JH-Db7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kPY-hQ-rr3" secondAttribute="trailing" constant="12" id="obU-Dc-KC1"/>
+                            <constraint firstItem="jKd-MI-d19" firstAttribute="top" secondItem="jA1-IU-BsJ" secondAttribute="top" id="pX5-ut-3oZ"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityView" destination="jKd-MI-d19" id="4uh-Kg-uv6"/>
                         <outlet property="helpButton" destination="1ao-Zs-Uri" id="1KD-s4-9cR"/>
                         <outlet property="scanButton" destination="IJB-u8-jcX" id="V8l-nH-HV4"/>
                         <outlet property="scanButtonWidthConstraint" destination="BBu-2B-TEd" id="Uz6-8G-8ju"/>

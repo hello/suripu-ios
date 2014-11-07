@@ -235,7 +235,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     if (self.eventBandView.alpha == 1 && self.eventBlurView.alpha == 1)
         return;
 
-    CGRect blurRect = CGRectZero;
+    CGRect blurRect;
     CGFloat minX = 0.f;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     UICollectionViewCell* topCell = [self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:HEMSleepGraphCollectionViewSegmentSection]];
@@ -247,29 +247,21 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
         blurRect = CGRectMake(minX, CGRectGetMinY(topCellRect), width, height);
     } else if (topCell) {
         CGRect topCellRect = [self.view convertRect:topCell.frame fromView:self.collectionView];
-        blurRect = CGRectMake(minX, CGRectGetMinY(topCellRect), width, CGRectGetHeight(self.view.bounds) - CGRectGetMinX(topCellRect));
+        blurRect = CGRectMake(minX, CGRectGetMinY(topCellRect), width, CGRectGetHeight(self.view.bounds));
     } else if (bottomCell) {
         CGRect bottomCellRect = [self.view convertRect:bottomCell.frame fromView:self.collectionView];
         blurRect = CGRectMake(minX, 0, width, CGRectGetMaxY(bottomCellRect));
     } else {
-        blurRect = self.view.bounds;
+        blurRect = CGRectInset(self.view.bounds, 0, -HEMTimelineHeaderCellHeight);
     }
-    blurRect.origin.y -= HEMTimelineHeaderCellHeight;
-    blurRect.size.height += HEMTimelineHeaderCellHeight;
+
     CGFloat bandYOffset = 4.f;
-    CGRect bandRect = blurRect;
-    bandRect.origin.x = HEMLinedCollectionViewCellLineOffset + HEMLinedCollectionViewCellLineWidth;
-    bandRect.origin.y += HEMTimelineHeaderCellHeight;
-    bandRect.size.height = CGRectGetHeight(blurRect) - HEMTimelineHeaderCellHeight - bandYOffset/2;
-    if (blurRect.origin.y == -HEMTimelineHeaderCellHeight) {
-        bandRect.origin.y -= HEMSleepSegmentMinimumFillWidth;
-        bandRect.size.height += HEMSleepSegmentMinimumFillWidth;
-    } else {
-        bandRect.origin.y += bandYOffset;
-        bandRect.size.height -= bandYOffset;
-    }
-    bandRect.size.width = HEMSleepSegmentMinimumFillWidth;
-    blurRect.size.height += HEMPresleepSummaryLineOffset;
+    CGRect bandRect = CGRectMake(HEMLinedCollectionViewCellLineOffset + HEMLinedCollectionViewCellLineWidth,
+                                 CGRectGetMinY(blurRect),
+                                 HEMSleepSegmentMinimumFillWidth,
+                                 CGRectGetHeight(blurRect) - bandYOffset/2);
+    blurRect.origin.y -= HEMTimelineHeaderCellHeight;
+    blurRect.size.height += (HEMTimelineHeaderCellHeight + HEMPresleepSummaryLineOffset);
     UIImage* bandSnapshot = [self timelineSnapshotInRect:bandRect];
     UIImage* blurSnapshot = [[self timelineSnapshotInRect:blurRect] applyBlurWithRadius:15
                                                                               tintColor:[UIColor colorWithWhite:1.f alpha:0.1]
@@ -280,11 +272,11 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     self.eventBandView.backgroundColor = [UIColor colorWithPatternImage:bandSnapshot];
     self.eventBandView.frame = bandRect;
     self.eventTimelineHeaderLabel.frame = CGRectMake(CGRectGetMinX(bandRect), CGRectGetMinY(blurRect), CGRectGetWidth(self.view.bounds), HEMTimelineHeaderCellHeight);
-    [UIView animateWithDuration:0.5f animations:^{
+    [UIView animateWithDuration:0.5f delay:0 options:(UIViewAnimationOptionCurveEaseInOut) animations:^{
         self.eventBandView.alpha = 1;
         self.eventBlurView.alpha = 1;
         self.eventTimelineHeaderLabel.alpha = 1;
-    }];
+    } completion:NULL];
 }
 
 - (void)hideEventBlurView
@@ -372,13 +364,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
         [eventCell.eventTypeButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     }
     return NO;
-}
-
-- (void)collectionView:(UICollectionView*)cv didEndDisplayingCell:(UICollectionViewCell*)cell forItemAtIndexPath:(NSIndexPath*)indexPath
-{
-    if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
-        [(HEMSleepSummaryCollectionViewCell*)cell setSleepScore:0 animated:NO];
-    }
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout

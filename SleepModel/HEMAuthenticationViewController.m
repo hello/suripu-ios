@@ -92,7 +92,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
     __weak typeof(self) weakSelf = self;
     [SENAuthorizationService authorizeWithUsername:self.usernameField.text password:self.passwordField.text callback:^(NSError* error) {
-        typeof(self) strongSelf = weakSelf;
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!strongSelf) return;
         
         [strongSelf setSigningIn:NO];

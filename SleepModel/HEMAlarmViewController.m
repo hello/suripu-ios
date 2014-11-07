@@ -143,7 +143,7 @@
     [self updateAlarmFromCache:self.alarmCache];
     __weak typeof(self) weakSelf = self;
     [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
-        typeof(self) strongSelf = weakSelf;
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (success)
             [strongSelf dismissFromView:nil];
         else if ([self isUnsavedAlarm])

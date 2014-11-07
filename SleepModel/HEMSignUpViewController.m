@@ -90,7 +90,7 @@
                             emailAddress:emailAddress
                                 password:password
                               completion:^(SENAccount* account, NSError* error) {
-                                  __strong typeof(self) strongSelf = weakSelf;
+                                  __strong typeof(weakSelf) strongSelf = weakSelf;
                                   if (!strongSelf) return;
                                   
                                   if (error) {

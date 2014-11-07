@@ -23,6 +23,18 @@
 - (void)showInView:(UIView*)view completion:(void(^)(void))completion;
 
 /**
+ * Show the activity with with initial text
+ * @param view:       view this view should attach to
+ * @param text:       initial text to display
+ * @param activity:   YES to show an activity indicator, NO to show text only
+ * @param completion: block to invoke on completion
+ */
+- (void)showInView:(UIView*)view
+          withText:(NSString*)text
+          activity:(BOOL)activity
+        completion:(void(^)(void))completion;
+
+/**
  * @method
  * Show this activity view inside the specified view.  If you want to display this
  * over the navigationBar, then pass in the navigation controller's view

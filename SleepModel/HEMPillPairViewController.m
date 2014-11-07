@@ -49,7 +49,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     [self setupSubtitle];
     [self setupCancelButton];
     
-    [self updateActivityText:NSLocalizedString(@"pill-pair.connecting-sense", nil)];
+    [self updateActivityText:NSLocalizedString(@"pairing.activity.connecting-sense", nil)];
     [self showActivity];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
@@ -63,7 +63,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 }
 
 - (void)setupSubtitle {
-    NSString* subtitleFormat = NSLocalizedString(@"pill-pair.subtitle.format", nil);
+    NSString* subtitleFormat = NSLocalizedString(@"pairing.pill.subtitle.format", nil);
     NSString* blue = NSLocalizedString(@"onboarding.blue", nil);
     
     NSArray* args = @[
@@ -146,13 +146,16 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
         completion (manager);
     } else {
         __weak typeof(self) weakSelf = self;
+        DDLogVerbose(@"sense not found, loading account info to scan existing paired sense");
+        [self updateActivityText:NSLocalizedString(@"pairing.activity.loading-paired-sense", nil)];
+        
         [[HEMDeviceCenter sharedCenter] loadDeviceInfo:^(NSError *error) {
             __block typeof(weakSelf) strongSelf = weakSelf;
             if (!strongSelf) return;
             
             if (error != nil) {
 
-                NSString* msg = NSLocalizedString(@"pill-pair.error.device-info-unknown", nil);
+                NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
                 [strongSelf showError:error customMessage:msg];
                 
                 completion (nil);
@@ -160,12 +163,12 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
             }
             
             DDLogVerbose(@"looking for sense to trigger pill pairing");
-            [strongSelf updateActivityText:NSLocalizedString(@"pill-pair.connecting-sense", nil)];
+            [strongSelf updateActivityText:NSLocalizedString(@"pairing.activity.scanning-sense", nil)];
             
             [[HEMDeviceCenter sharedCenter] scanForPairedSense:^(NSError *error) {
                 if (error != nil) {
                     
-                    NSString* msg = NSLocalizedString(@"pill-pair.error.sense-not-found", nil);
+                    NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
                     [strongSelf showError:error customMessage:msg];
                     
                     completion (nil);
@@ -192,7 +195,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 - (void)pairNowWith:(SENSenseManager*)manager {
     [self listenForDisconnects];
     
-    [self updateActivityText:NSLocalizedString(@"pill-pair.pairing-message", nil)];
+    [self updateActivityText:NSLocalizedString(@"pairing.activity.pairing-pill", nil)];
     
     NSString* token = [SENAuthorizationService accessToken];
     
@@ -270,13 +273,13 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
         
         switch ([error code]) {
             case SENSenseManagerErrorCodeSenseAlreadyPaired:
-                message = NSLocalizedString(@"pill-pair.error.already-paired", nil);
+                message = NSLocalizedString(@"pairing.error.pill-already-paired", nil);
                 break;
             case SENSenseManagerErrorCodeTimeout:
-                message = NSLocalizedString(@"pill-pair.error.timed-out", nil);
+                message = NSLocalizedString(@"pairing.error.timed-out", nil);
                 break;
             default:
-                message = NSLocalizedString(@"pill-pair.error.pill-pair-failed", nil);
+                message = NSLocalizedString(@"pairing.error.pill-pairing-failed", nil);
                 break;
         }
     }

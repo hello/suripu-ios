@@ -99,8 +99,11 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
-                NSString* message = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
-                [strongSelf stopActivityWithMessage:message completion:nil];
+                [strongSelf stopActivityWithMessage:nil completion:^{
+                    NSString* message = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
+                    NSString* title = NSLocalizedString(@"pairing.failed.title", nil);
+                    [strongSelf showMessageDialog:message title:title];
+                }];
             }
         }];
 }
@@ -126,7 +129,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [self setTimedOut:YES];
     [SENSenseManager stopScan];
     [self stopActivityWithMessage:nil completion:^{
-        NSString* msg = NSLocalizedString(@"pairing.error.no-response", nil);
+        NSString* msg = NSLocalizedString(@"pairing.error.timed-out", nil);
         [self showErrorMessage:msg];
     }];
     [SENAnalytics track:kHEMAnalyticsEventError
@@ -138,13 +141,12 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         [self setActivityView:[[HEMActivityCoverView alloc] init]];
     }
     
-    NSString* message = NSLocalizedString(@"pairing.activity.pairing-sense", nil);
-    [[[self activityView] activityLabel] setText:message];
-    
     [self setTimedOut:NO];
     [[self noSenseButton] setEnabled:NO];
     
-    [[self activityView] showInView:[[self navigationController] view] completion:^{
+    NSString* activityMessage = NSLocalizedString(@"pairing.activity.scanning-sense", nil);
+    UIView* viewToAttach = [[self navigationController] view];
+    [[self activityView] showInView:viewToAttach withText:activityMessage activity:YES completion:^{
         [self startScan];
         [self performSelector:@selector(scanTimeout)
                    withObject:nil
@@ -157,6 +159,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     // always rescan in case the user has moved or changed Sense globes or
     // whatever the reason is, that would cause a cache of the Sense object
     // or manager to cause issues.
+    DDLogVerbose(@"scanning for sense");
     __weak typeof(self) weakSelf = self;
     if (![SENSenseManager scanForSense:^(NSArray *senses) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -194,6 +197,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [self setManager:[[SENSenseManager alloc] initWithSense:sense]];
     [self observeUnexpectedDisconnects];
 
+    NSString* activityMessage = NSLocalizedString(@"pairing.activity.pairing-sense", nil);
+    [[self activityView] updateText:activityMessage completion:nil];
+    DDLogVerbose(@"pairing with sense %@", [sense name]);
+    
     __weak typeof(self) weakSelf = self;
     [[self manager] pair:^(id response) {
         DDLogVerbose(@"paired!");

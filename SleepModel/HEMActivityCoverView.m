@@ -63,6 +63,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 - (void)addActivityIndicator {
     [self setActivityView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
     
+    [[self activityView] setHidesWhenStopped:YES];
     [self addSubview:[self activityView]];
 }
 
@@ -119,10 +120,21 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
     [self showInView:view activity:YES completion:completion];
 }
 
+- (void)showInView:(UIView*)view
+          withText:(NSString*)text
+          activity:(BOOL)activity
+        completion:(void(^)(void))completion {
+    
+    [[self activityLabel] setText:text];
+    [[self activityLabel] setAlpha:1.0f];
+    [self showInView:view activity:activity completion:completion];
+}
+
 - (void)showInView:(UIView*)view activity:(BOOL)activity completion:(void(^)(void))completion {
     [self setFrame:[view bounds]];
     [self setNeedsLayout];
     [self setAlpha:0.0f];
+    [[self activityView] stopAnimating]; // in case it's animating
     [view addSubview:self];
     
     [UIView animateWithDuration:kHEMActivityAnimDuration
@@ -149,6 +161,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
                              [self setAlpha:0.0f];
                          }
                          completion:^(BOOL finished) {
+                             [[self activityLabel] setText:nil];
                              [self removeFromSuperview];
                              if (completion) completion();
                          }];

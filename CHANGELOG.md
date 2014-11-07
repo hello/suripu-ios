@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.0.32
+
+New:
+
+* Shake to open "help and debug" menu for contacting support
+* Updated styling
+* Refresh individual sensor views periodically
+
+Fixes:
+
+* Fix for question text being clipped
+* Fix for alarm time being clipped
+* Make hamburger button easier to tap
+* Fix signing out the user after a crash or killing the app
+
 ## 1.0.0.31
 
 New:

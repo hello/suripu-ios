@@ -205,7 +205,7 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
     CGFloat itemWidth
         = CGRectGetWidth([collectionView bounds])
         - (2*kHEMCurrentConditionsInsightsMargin);
-    return CGSizeMake(itemWidth, kHEMCurrentConditionsInsightsViewHeight);
+    return CGSizeMake(itemWidth, kHEMCurrentConditionsInsightsViewHeight - kHEMCurrentConditionsInsightsSpacing);
 }
 
 #pragma mark - UITableViewDataSource

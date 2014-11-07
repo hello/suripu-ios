@@ -36,6 +36,8 @@
 }
 
 - (void)showSupportOptions {
+    if ([self supportOptionController] != nil) return; // don't show it if showing now
+    
     // can't simply cache the alertcontroller and not recreate it as the presentingcontroller
     // is cached within it, which may be different each time this is called
     UIViewController* presentingController = [self presentedViewController] ?: self;
@@ -47,7 +49,7 @@
     
     [self addContactSupportOptionTo:sheet];
     [self addResetCheckpointOptionTo:sheet];
-    [sheet addActionWithText:NSLocalizedString(@"actions.cancel", nil) block:^{}];
+    [self addCancelOptionTo:sheet];
     
     [self setSupportOptionController:sheet]; // need to hold on to it otherwise action callbacks will crash
     [[self supportOptionController] show];
@@ -59,7 +61,10 @@
     __weak typeof(self) weakSelf = self;
     [sheet addActionWithText:NSLocalizedString(@"support.option.contact-support", nil) block:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) [HEMSupportUtil contactSupportFrom:presentingController mailDelegate:strongSelf];
+        if (strongSelf) {
+            [HEMSupportUtil contactSupportFrom:presentingController mailDelegate:strongSelf];
+            [strongSelf setSupportOptionController:nil];
+        }
     }];
 }
 
@@ -75,7 +80,18 @@
                     [onboardingVC setViewControllers:@[startController] animated:YES];
                 }
             }
+            [strongSelf setSupportOptionController:nil];
             [SENAuthorizationService deauthorize];
+        }
+    }];
+}
+
+- (void)addCancelOptionTo:(HEMAlertController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addActionWithText:NSLocalizedString(@"actions.cancel", nil) block:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf setSupportOptionController:nil];
         }
     }];
 }

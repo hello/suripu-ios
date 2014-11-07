@@ -7,7 +7,6 @@
 @interface HEMLineGraphDataSource ()
 
 @property (nonatomic, strong, readwrite) NSArray* dataSeries;
-@property (nonatomic, weak) SENSensor* sensor;
 @property (nonatomic, strong) NSMutableSet* labeledIndexes;
 @property (nonatomic) SENSensorUnit unit;
 @end
@@ -55,7 +54,7 @@
 
 - (CGFloat)lineGraph:(BEMSimpleLineGraphView *)graph valueForPointAtIndex:(NSInteger)index {
     NSDictionary* dataPoint = [self dataPointAtIndex:index];
-    return [dataPoint[@"value"] floatValue];
+    return [[SENSensor value:dataPoint[@"value"] inPreferredUnit:self.unit] floatValue];
 }
 
 @end

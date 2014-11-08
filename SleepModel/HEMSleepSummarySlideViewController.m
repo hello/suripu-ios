@@ -45,11 +45,7 @@
     
     if (self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                         navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil]) {
-        [self setViewControllers:@[controller]
-                       direction:UIPageViewControllerNavigationDirectionForward
-                                 | UIPageViewControllerNavigationDirectionReverse
-                        animated:NO
-                      completion:nil];
+        [self reloadDataWithController:controller];
         [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
         [self setDataSource:[self data]];
     }
@@ -66,6 +62,24 @@
                                              selector:@selector(handleSignOutNotification)
                                                  name:SENAuthorizationServiceDidDeauthorizeNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadData)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+}
+
+- (void)reloadData {
+    [self reloadDataWithController:[[self viewControllers] firstObject]];
+}
+
+- (void)reloadDataWithController:(UIViewController*)controller {
+    if (!controller)
+        return;
+    [self setViewControllers:@[controller]
+                   direction:UIPageViewControllerNavigationDirectionForward
+     | UIPageViewControllerNavigationDirectionReverse
+                    animated:NO
+                  completion:nil];
 }
 
 - (void)handleSignOutNotification {

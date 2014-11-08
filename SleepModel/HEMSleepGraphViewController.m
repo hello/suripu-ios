@@ -59,12 +59,19 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 {
     [super viewDidAppear:animated];
     self.panePanGestureRecognizer.delegate = self;
+    [self registerForNotifications];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     self.panePanGestureRecognizer.delegate = nil;
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidPop
@@ -113,9 +120,19 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     long score = [self.dataSource.sleepResult.score longValue];
     if (score > 0) {
         NSString* message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.format", nil), score];
-        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message] applicationActivities:nil];
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
+                                                                                         applicationActivities:nil];
         [self presentViewController:activityController animated:YES completion:nil];
     }
+}
+
+- (void)registerForNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData)
+                                                 name:UIApplicationDidBecomeActiveNotification object:nil];
+}
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark Event Info Popup
@@ -355,13 +372,19 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 #pragma mark UICollectionViewDelegate
 
-- (void)configureCollectionView
+- (void)reloadData
 {
-    self.collectionView.backgroundColor = [UIColor whiteColor];
     self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
                                                                                   sleepDate:self.dateForNightOfSleep];
     self.collectionView.dataSource = self.dataSource;
+    [self.collectionView reloadData];
+}
+
+- (void)configureCollectionView
+{
+    self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.delegate = self;
+    [self reloadData];
 }
 
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath

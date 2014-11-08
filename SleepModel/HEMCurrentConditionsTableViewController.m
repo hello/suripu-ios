@@ -44,10 +44,8 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
     [super viewDidLoad];
     
     self.title = NSLocalizedString(@"current-conditions.title", nil);
-    
     [[self tableView] setTableFooterView:[[UIView alloc] init]];
     [self configureInsightsView];
-    [self refreshCachedSensors];
     self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
 }
 
@@ -87,12 +85,8 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
-    // the below should reside in viewDidAppear rather than willAppear because
-    // if you drag the view back will call viewWillAppear, which consequently
-    // causes a relatively huge delay before anything actually moves
-    [self refreshSensors];
-    
+    [self registerForNotifications];
+    [self refreshCachedSensors];
     __weak typeof(self) weakSelf = self;
     [[self insightsDataSource] refreshInsights:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -100,33 +94,13 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
             [[strongSelf insightsView] reloadData];
         }
     }];
-    [self setLoading:YES];
-    
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(refreshSensors)
-                   name:SENSensorsUpdatedNotification object:nil];
-    [center addObserver:self
-               selector:@selector(failedToRefreshSensors)
-                   name:SENSensorUpdateFailedNotification
-                 object:nil];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [self.refreshTimer invalidate];
     [super viewDidDisappear:animated];
-}
-
-- (void)failedToRefreshSensors {
-    [self setLoading:NO];
-    [self.tableView reloadData];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)configureRefreshTimer
@@ -152,6 +126,7 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 }
 
 - (void)refreshCachedSensors {
+    [self setLoading:YES];
     [SENSensor refreshCachedSensors];
 }
 
@@ -171,6 +146,16 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
     
     [self setLoading:NO];
     [self.tableView reloadData];
+}
+
+- (void)failedToRefreshSensors {
+    [self setLoading:NO];
+    [self.tableView reloadData];
+}
+
+- (void)restartRefreshTimers {
+    self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
+    [self refreshCachedSensors];
 }
 
 - (void)colorizeSensorTextIn:(UILabel*)label forCondition:(SENSensorCondition)condition {
@@ -195,6 +180,22 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 - (void)dealloc
 {
     [_refreshTimer invalidate];
+}
+
+- (void)registerForNotifications
+{
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(refreshSensors)
+                   name:SENSensorsUpdatedNotification object:nil];
+    [center addObserver:self
+               selector:@selector(failedToRefreshSensors)
+                   name:SENSensorUpdateFailedNotification
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(restartRefreshTimers)
+                   name:SENAuthorizationServiceDidAuthorizeNotification
+                 object:nil];
 }
 
 #pragma mark - UICollectionViewDelegate

@@ -27,19 +27,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self navigationItem] setHidesBackButton:YES];
     [self setupDescription];
     [SENAnalytics track:kHEMAnalyticsEventOnBSenseSetup];
 }
 
 - (void)setupDescription {
-    NSString* descFormat = NSLocalizedString(@"sense-setup.description.format", nil);
-    NSString* blue = NSLocalizedString(@"onboarding.blue", nil);
-    
-    NSArray* args = @[[HEMOnboardingUtils boldAttributedText:blue
-                                                   withColor:[UIColor blueColor]]];
-    
-    NSMutableAttributedString* attrText
-        = [[NSMutableAttributedString alloc] initWithFormat:descFormat args:args];
+    NSString* subtitle = NSLocalizedString(@"sense-setup.description", nil);
+
+    NSMutableAttributedString* attrText = [[NSMutableAttributedString alloc] initWithString:subtitle];
     
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
     

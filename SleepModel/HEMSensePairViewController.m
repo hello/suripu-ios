@@ -8,8 +8,6 @@
 #import <SenseKit/BLE.h>
 #import <SenseKit/SENAuthorizationService.h>
 
-#import "NSMutableAttributedString+HEMFormat.h"
-
 #import "HEMSensePairViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
@@ -53,13 +51,9 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)setupDescription {
-    NSString* descFormat = NSLocalizedString(@"sense-pair.description.format", nil);
-    NSString* blue = NSLocalizedString(@"onboarding.blue", nil);
+    NSString* desc = NSLocalizedString(@"sense-pair.description", nil);
     
-    NSArray* args = @[[HEMOnboardingUtils boldAttributedText:blue withColor:[UIColor blueColor]]];
-    
-    NSMutableAttributedString* attrDesc
-        = [[NSMutableAttributedString alloc] initWithFormat:descFormat args:args];
+    NSMutableAttributedString* attrDesc = [[NSMutableAttributedString alloc] initWithString:desc];
     
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
     

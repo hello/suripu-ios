@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "HEMPillIntroViewController.h"
+#import "HEMPillSetupViewController.h"
 #import "HEMActionButton.h"
 
-@interface HEMPillIntroViewController ()
+@interface HEMPillSetupViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *videoContainer;
@@ -19,12 +19,20 @@
 
 @end
 
-@implementation HEMPillIntroViewController
+@implementation HEMPillSetupViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
     [SENAnalytics track:kHEMAnalyticsEventOnBSetupPill];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    CGSize constraint = [[self descLabel] bounds].size;
+    constraint.height = MAXFLOAT;
+    CGSize textSize = [[self descLabel] sizeThatFits:constraint];
+    DLog(@"text size is %f", textSize.height);
 }
 
 #pragma mark - Actions

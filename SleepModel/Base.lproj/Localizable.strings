@@ -16,7 +16,7 @@
 "onboarding.green" = "green";
 "welcome.subtitle" = "A simple system that tracks your sleep monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
 "get-started.subtitle" = "Are you using Sense with one Sleep Pill or two Sleep Pills?";
-"sense-pair.description.format" = "Now we'll pair your phone with Sense. Make sure Sense is glowing %@, then tap continue.";
+"sense-pair.description" = "Now we'll pair your phone with Sense. Make sure your Sense is plugged in and nearby, then tap Continue.";
 "two-pill-setup.subtitle" = "Are you setting up the first Sleep Pill or the second Sleep Pill?";
 "sign-up.title" = "Sign up";
 "sign-up.failed.title" = "Sign up failed";
@@ -36,7 +36,7 @@
 "no-bluetooth.on" = "On";
 
 // sense setup
-"sense-setup.description.format" = "Plug in Sense next to your bed.  Sense will glow %@ to tell you it is on, and ready to be paired with your mobile device.";
+"sense-setup.description" = "Make sure Sense is plugged into a wall outlet next your bed.";
 
 // second pill
 "second-pill.description.format" = "To connect a second Sleep Pill, Sense needs to be put into pairing mode.\n\nAsk the owner of the first Sleep Pill to stand next to Sense and open the Sense app, then go to %@ and tap %@.\n\nSense will glow %@ when it is in pairing mode.";
@@ -59,7 +59,7 @@
 "pairing.error.link-account-failed" = "Could not attach Sense to your account.";
 "pairing.error.timed-out" = "Sense did not respond in time.";
 "pairing.done" = "Paired.";
-"pairing.pill.subtitle.format" = "Gently shake your Sleep Pill for three seconds. Once Sense detects your Sleep Pill, it will light up %@.";
+"pairing.pill.subtitle" = "Shake your Sleep Pill for three seconds to pair it with your Sense.";
 "pairing.error.pill-already-paired" = "Your Sleep Pill is currently paired to an account.";
 "pairing.error.fail-to-load-paired-info" = "Could not load paired Sense information.";
 "pairing.error.sense-not-found" = "Could not connect to your Sense to pair your Sleep Pill.";
@@ -88,6 +88,15 @@
 "location.error.title" = "Unknown Location";
 "location.error.not-enabled" = "You have denied access to, or disabled, Location Services.  You can change this preference inside the Settings app.";
 "location.error.weak-signal" = "We were unable to obtain your location.  Try moving to a different location and try again.";
+
+// setting up second pill
+"setup.second-pill.subtitle.format" = "Would you like to set up a second Sleep Pill at this time?\n\nYou can always do this later by visiting %@.";
+"setup.second-pill.settings" = "Settings";
+"setup.second-pill.error.title" = "Fail to enable Pairing Mode";
+"setup.second-pill.error.failed-to-enable-pairing-mode" = "Could not enable Pairing Mode on Sense.";
+"setup.second-pill.error.sense-full" = "Sense can no longer pair with anymore devices.";
+"setup.get-app.subtitle.format" = "Your Sense is now in Pairing Mode.\n\nHave your partner visit %@ to download the Sense app and set up their Sleep Pill.";
+"setup.get-app.url" = "hello.is/app";
 
 // settings
 "settings.title" = "Settings";

@@ -14,18 +14,14 @@
 
 /** Segue Identifiers */
 +(NSString *)doneSegueIdentifier;
-+(NSString *)firstPillSenseSetupSegueIdentifier;
 +(NSString *)genderSegueIdentifier;
++(NSString *)getAppSegueIdentifier;
 +(NSString *)heightSegueIdentifier;
 +(NSString *)locationSegueIdentifier;
 +(NSString *)moreInfoSegueIdentifier;
-+(NSString *)needBluetoothSegueIdentifier;
 +(NSString *)noBleToSetupSegueIdentifier;
-+(NSString *)pillSegueIdentifier;
-+(NSString *)pillNeedBluetoothSegueIdentifier;
-+(NSString *)secondPillNeedBleSegueIdentifier;
-+(NSString *)secondPillToSenseSegueIdentifier;
 +(NSString *)senseSetupSegueIdentifier;
++(NSString *)senseSetupNoBleSegueIdentifier;
 +(NSString *)senseToPillSegueIdentifier;
 +(NSString *)weightSegueIdentifier;
 +(NSString *)wifiSegueIdentifier;
@@ -35,10 +31,9 @@
 +(UIViewController *)instantiateBluetoothViewController;
 +(UIViewController *)instantiateDobViewController;
 +(UIViewController *)instantiateGenderPickerViewController;
-+(UIViewController *)instantiateGetSetupViewController;
 +(UIViewController *)instantiateHeightPickerViewController;
-+(UIViewController *)instantiatePillIntroViewController;
 +(UIViewController *)instantiatePillPairViewController;
++(UIViewController *)instantiateSenseSetupViewController;
 +(UIViewController *)instantiateSignUpViewController;
 +(UIViewController *)instantiateWeightPickerViewController;
 +(UIViewController *)instantiateWelcomeViewController;

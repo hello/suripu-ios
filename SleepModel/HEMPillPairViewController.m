@@ -9,8 +9,6 @@
 #import <SenseKit/SENSense.h>
 #import <SenseKit/SENAuthorizationService.h>
 
-#import "NSMutableAttributedString+HEMFormat.h"
-
 #import "HEMPillPairViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
@@ -63,15 +61,9 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 }
 
 - (void)setupSubtitle {
-    NSString* subtitleFormat = NSLocalizedString(@"pairing.pill.subtitle.format", nil);
-    NSString* blue = NSLocalizedString(@"onboarding.blue", nil);
-    
-    NSArray* args = @[
-        [HEMOnboardingUtils boldAttributedText:blue withColor:[UIColor blueColor]]
-    ];
-    
-    NSMutableAttributedString* attrSubtitle
-        = [[NSMutableAttributedString alloc] initWithFormat:subtitleFormat args:args];
+    NSString* subtitle = NSLocalizedString(@"pairing.pill.subtitle", nil);
+
+    NSMutableAttributedString* attrSubtitle = [[NSMutableAttributedString alloc] initWithString:subtitle];
 
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
     
@@ -251,8 +243,6 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 - (void)proceed {
     if ([self delegate] == nil) {
-        [self disconnectSenseAndClearCache];
-        
         [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
         
         NSString* segueId = [HEMOnboardingStoryboard doneSegueIdentifier];
@@ -293,18 +283,12 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 #pragma mark - Clean Up
 
-- (void)disconnectSenseAndClearCache {
+- (void)dealloc {
     SENSenseManager* manager = [self manager];
-    [manager disconnectFromSense];
     if ([self disconnectObserverId] != nil) {
         [manager removeUnexpectedDisconnectObserver:[self disconnectObserverId]];
         [self setDisconnectObserverId:nil];
     }
-    [[HEMUserDataCache sharedUserDataCache] setSenseManager:nil];
-}
-
-- (void)dealloc {
-    [self disconnectSenseAndClearCache];
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 

@@ -108,11 +108,11 @@ static CGFloat   const kHEMOnboardingDefaultFontSize = 18.0f;
             break;
         }
         case HEMOnboardingCheckpointAccountDone: {
-            onboardingController = [HEMOnboardingStoryboard instantiateGetSetupViewController];
+            onboardingController = [HEMOnboardingStoryboard instantiateSenseSetupViewController];
             break;
         }
         case HEMOnboardingCheckpointSenseDone: {
-            onboardingController = [HEMOnboardingStoryboard instantiatePillIntroViewController];
+            onboardingController = [HEMOnboardingStoryboard instantiatePillPairViewController];
             break;
         }
         case HEMOnboardingCheckpointPillDone:

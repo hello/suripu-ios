@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HEMPillIntroViewController : UIViewController
+@interface HEMPillSetupViewController : UIViewController
 
 @end

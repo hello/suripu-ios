@@ -143,8 +143,10 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
 - (void)stopActivityWithMessage:(NSString*)message
                 renableControls:(BOOL)enable
                      completion:(void(^)(void))completion {
-    [self enableControls:enable];
-    [[self activityView] dismissWithResultText:message remove:YES completion:completion];
+    [[self activityView] dismissWithResultText:message remove:YES completion:^{
+        [self enableControls:enable];
+        if (completion) completion ();
+    }];
 }
 
 - (void)updateActivity:(NSString*)message {
@@ -187,6 +189,10 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     
     NSString* accessToken = [SENAuthorizationService accessToken];
     SENSenseManager* manager = [self manager];
+    
+    if (accessToken == nil) {
+        DDLogWarn(@"account was not set up correctly! access token missing!");
+    }
     
     __weak typeof(self) weakSelf = self;
     [manager linkAccount:accessToken success:^(id response) {
@@ -241,7 +247,7 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
                 [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
             } else {
                 [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
-                [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard pillSegueIdentifier]
+                [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard senseToPillSegueIdentifier]
                                                 sender:nil];
             }
         }

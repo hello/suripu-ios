@@ -284,9 +284,9 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 #pragma mark - Clean Up
 
 - (void)dealloc {
-    if ([self disconnectObserverId] != nil) {
+    if (_disconnectObserverId != nil) {
         SENSenseManager* manager = [self manager];
-        [manager removeUnexpectedDisconnectObserver:[self disconnectObserverId]];
+        [manager removeUnexpectedDisconnectObserver:_disconnectObserverId];
         [self setDisconnectObserverId:nil];
     }
     [NSObject cancelPreviousPerformRequestsWithTarget:self];

@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.0.33
+
+New:
+
+* New onboarding workflow for single pass through
+* More activity messaging to indicate what is going on during onboarding
+* Start of sharing from Timeline
+* auto setting of timezone is enforced after Sense is configured with WiFi
+* Auto refresh of Timeline when coming back from background
+
+Fixes:
+
+* Support options cannot be triggered more than once
+* Alarm text styling fixes
+
+
 ## 1.0.0.32
 
 New:

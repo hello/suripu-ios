@@ -11,4 +11,12 @@
 @interface HEMGraphSectionOverlayView : UIView
 
 - (void)setSectionValues:(NSArray *)sectionValues;
+
+@property (nonatomic, strong) UIColor* topLabelColor;
+@property (nonatomic, strong) UIFont* topLabelFont;
+@property (nonatomic, strong) UIFont* topLabelBoldFont;
+@property (nonatomic, strong) UIColor* bottomLabelColor;
+@property (nonatomic, strong) UIFont* bottomLabelFont;
+@property (nonatomic, strong) UIFont* bottomLabelBoldFont;
+@property (nonatomic, getter=shouldBoldLastElement) BOOL boldLastElement;
 @end

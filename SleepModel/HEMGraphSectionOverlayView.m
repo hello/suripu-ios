@@ -21,6 +21,37 @@
 static NSInteger const HEMGraphSectionLineWidth = 1.f;
 static CGFloat const HEMGraphSectionLabelHeight = 15.f;
 
+- (instancetype)init {
+    if (self = [super init]) {
+        [self __initializeLayout];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        [self __initializeLayout];
+    }
+    return self;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        [self __initializeLayout];
+    }
+    return self;
+}
+
+- (void)__initializeLayout {
+    _boldLastElement = YES;
+    _topLabelColor = [HelloStyleKit backViewTextColor];
+    _bottomLabelColor = [UIColor colorWithRed:0.72 green:0.72 blue:0.72 alpha:1];
+    _topLabelFont = [UIFont sensorGraphHeadingFont];
+    _topLabelBoldFont = [UIFont sensorGraphHeadingBoldFont];
+    _bottomLabelFont = [UIFont sensorGraphNumberFont];
+    _bottomLabelBoldFont = [UIFont sensorGraphNumberBoldFont];
+}
+
 - (void)setSectionValues:(NSArray *)sectionValues {
     self.sectionHeaders = [[NSMutableArray alloc] initWithCapacity:sectionValues.count];
     self.sectionFooters = [[NSMutableArray alloc] initWithCapacity:sectionValues.count];
@@ -50,11 +81,11 @@ static CGFloat const HEMGraphSectionLabelHeight = 15.f;
         bottomLabel.text = self.sectionFooters[i];
         topLabel.textAlignment = NSTextAlignmentCenter;
         bottomLabel.textAlignment = NSTextAlignmentCenter;
-        BOOL isBold = (i == count - 1);
-        topLabel.font = isBold ? [UIFont sensorGraphHeadingBoldFont] : [UIFont sensorGraphHeadingFont];
-        bottomLabel.font = isBold ? [UIFont sensorGraphNumberBoldFont] : [UIFont sensorGraphNumberFont];
-        topLabel.textColor = [HelloStyleKit backViewTextColor];
-        bottomLabel.textColor = [UIColor colorWithRed:0.72 green:0.72 blue:0.72 alpha:1];
+        BOOL isBold = [self shouldBoldLastElement] && (i == count - 1);
+        topLabel.font = isBold ? self.topLabelBoldFont : self.topLabelFont;
+        bottomLabel.font = isBold ? self.bottomLabelBoldFont : self.bottomLabelFont;
+        topLabel.textColor = self.topLabelColor;
+        bottomLabel.textColor = self.bottomLabelColor;
         bottomLabel.minimumScaleFactor = 0.5;
         bottomLabel.adjustsFontSizeToFitWidth = YES;
         [self addSubview:topLabel];

@@ -27,14 +27,6 @@
     [SENAnalytics track:kHEMAnalyticsEventOnBSetupPill];
 }
 
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    CGSize constraint = [[self descLabel] bounds].size;
-    constraint.height = MAXFLOAT;
-    CGSize textSize = [[self descLabel] sizeThatFits:constraint];
-    DLog(@"text size is %f", textSize.height);
-}
-
 #pragma mark - Actions
 
 - (IBAction)help:(id)sender {

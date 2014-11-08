@@ -64,14 +64,24 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+        NSForegroundColorAttributeName : [UIColor whiteColor],
+        NSFontAttributeName : [UIFont settingsTitleFont]
+    }];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
     [self updateViewWithAlarmSettings];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+    [self.navigationController.navigationBar setTintColor:[HelloStyleKit backViewNavTitleColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
+        NSFontAttributeName : [UIFont settingsTitleFont]
+    }];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender

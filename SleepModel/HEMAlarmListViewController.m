@@ -41,6 +41,11 @@ static NSUInteger HEMAlarmListLimit = 8;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+        NSForegroundColorAttributeName : [UIColor whiteColor],
+        NSFontAttributeName : [UIFont settingsTitleFont]
+    }];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
     [self configureViewBackground];
     [self reloadData];
@@ -50,6 +55,11 @@ static NSUInteger HEMAlarmListLimit = 8;
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self.navigationController.navigationBar setTintColor:[HelloStyleKit backViewNavTitleColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
+        NSFontAttributeName : [UIFont settingsTitleFont]
+    }];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
 }
 

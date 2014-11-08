@@ -11,6 +11,7 @@
 @interface HEMActivityCoverView : UIView
 
 @property (nonatomic, strong, readonly) UILabel* activityLabel;
+@property (nonatomic, assign, readonly, getter=isShowing) BOOL showing;
 
 /**
  * @method
@@ -21,6 +22,18 @@
  * @param completion: the block the invoke when this has been shown
  */
 - (void)showInView:(UIView*)view completion:(void(^)(void))completion;
+
+/**
+ * Show the activity with with initial text
+ * @param view:       view this view should attach to
+ * @param text:       initial text to display
+ * @param activity:   YES to show an activity indicator, NO to show text only
+ * @param completion: block to invoke on completion
+ */
+- (void)showInView:(UIView*)view
+          withText:(NSString*)text
+          activity:(BOOL)activity
+        completion:(void(^)(void))completion;
 
 /**
  * @method
@@ -50,9 +63,14 @@
  * block when all is done.
  * 
  * @param text:       text to display before dismissing
+ * @param remove:     YES to automatically remove itself from super view, 
+                      NO to keep it there, but hidden
  * @param completion: the block to invoke when this has been dismissed
  */
 - (void)dismissWithResultText:(NSString*)text
+                       remove:(BOOL)remove
                    completion:(void(^)(void))completion;
+
+- (void)showWithText:(NSString*)text activity:(BOOL)activity completion:(void(^)(void))completion;
 
 @end

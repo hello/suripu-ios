@@ -5,7 +5,9 @@
 //  Created by Jimmy Lu on 10/15/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
+#import <SenseKit/SENSenseManager.h>
 
+#import "HEMUserDataCache.h"
 #import "HEMEndSetupViewController.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMActionButton.h"
@@ -37,8 +39,16 @@
             return;
         }
     }
+    
     [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+}
 
+#pragma mark - Clean up
+
+- (void)dealloc {
+    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    [manager disconnectFromSense];
+    [[HEMUserDataCache sharedUserDataCache] setSenseManager:nil];
 }
 
 @end

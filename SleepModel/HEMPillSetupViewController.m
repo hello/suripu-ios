@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "HEMPillIntroViewController.h"
+#import "HEMPillSetupViewController.h"
 #import "HEMActionButton.h"
 
-@interface HEMPillIntroViewController ()
+@interface HEMPillSetupViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *videoContainer;
@@ -19,7 +19,7 @@
 
 @end
 
-@implementation HEMPillIntroViewController
+@implementation HEMPillSetupViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

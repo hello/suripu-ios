@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMActivityCoverView.h"
 #import "HelloStyleKit.h"
 
@@ -18,6 +20,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 
 @property (nonatomic, strong) UILabel* activityLabel;
 @property (nonatomic, strong) UIActivityIndicatorView* activityView;
+@property (nonatomic, assign, getter=isShowing) BOOL showing;
 
 @end
 
@@ -29,7 +32,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [self initWithCoder:aDecoder];
+    self = [super initWithCoder:aDecoder];
     if (self) {
         [self setup];
     }
@@ -52,7 +55,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 
 - (void)addLabel {
     [self setActivityLabel:[[UILabel alloc] init]];
-    [[self activityLabel] setFont:[UIFont fontWithName:@"Calibre-Light" size:26.0f]];
+    [[self activityLabel] setFont:[UIFont onboardingActivityFontLarge]];
     [[self activityLabel] setTextColor:[HelloStyleKit onboardingGrayColor]];
     [[self activityLabel] setTextAlignment:NSTextAlignmentCenter];
     [[self activityLabel] setNumberOfLines:0];
@@ -63,6 +66,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 - (void)addActivityIndicator {
     [self setActivityView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
     
+    [[self activityView] setHidesWhenStopped:YES];
     [self addSubview:[self activityView]];
 }
 
@@ -116,14 +120,36 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 #pragma mark - Public Interfaces
 
 - (void)showInView:(UIView*)view completion:(void(^)(void))completion {
-    [self showInView:view activity:YES completion:completion];
+    [self showInView:view withText:nil activity:YES completion:completion];
+}
+
+- (void)showInView:(UIView*)view
+          withText:(NSString*)text
+          activity:(BOOL)activity
+        completion:(void(^)(void))completion {
+    
+    [self setFrame:[view bounds]];
+    [self setNeedsLayout];
+    [self setAlpha:0.0f]; // make sure it's not visible before adding to view
+    [view addSubview:self];
+    [self showWithText:text activity:activity completion:completion];
 }
 
 - (void)showInView:(UIView*)view activity:(BOOL)activity completion:(void(^)(void))completion {
-    [self setFrame:[view bounds]];
-    [self setNeedsLayout];
+    [self showInView:view withText:nil activity:activity completion:completion];
+}
+
+- (void)showWithText:(NSString*)text
+            activity:(BOOL)activity
+          completion:(void(^)(void))completion {
     [self setAlpha:0.0f];
-    [view addSubview:self];
+    [self setHidden:NO];
+    [[self activityView] stopAnimating]; // in case it's animating
+    
+    if (text != nil) {
+        [[self activityLabel] setText:text];
+        [[self activityLabel] setAlpha:1.0f];
+    }
     
     [UIView animateWithDuration:kHEMActivityAnimDuration
                      animations:^{
@@ -133,11 +159,13 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
                          if (activity) {
                              [[self activityView] startAnimating];
                          }
+                         [self setShowing:YES];
                          if (completion) completion ();
                      }];
 }
 
 - (void)dismissWithResultText:(NSString*)text
+                       remove:(BOOL)remove
                    completion:(void(^)(void))completion {
     
     [[self activityView] stopAnimating];
@@ -149,7 +177,12 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
                              [self setAlpha:0.0f];
                          }
                          completion:^(BOOL finished) {
-                             [self removeFromSuperview];
+                             [[self activityLabel] setText:nil];
+                             [self setHidden:YES];
+                             if (remove) {
+                                 [self removeFromSuperview];
+                             }
+                             [self setShowing:NO];
                              if (completion) completion();
                          }];
     }];

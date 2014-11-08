@@ -8,6 +8,8 @@
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENSenseMessage.pb.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMWifiPickerViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMWiFiDataSource.h"
@@ -15,6 +17,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMWifiPasswordViewController.h"
 #import "HEMActionButton.h"
+#import "HEMActivityCoverView.h"
 
 static CGFloat const kHEMWifiCellHeight = 44.0f;
 static CGFloat const kHEMWifiPickerIconPadding = 5.0f;
@@ -37,6 +40,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 @property (weak, nonatomic) IBOutlet HEMActionButton *scanButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scanButtonWidthConstraint;
+@property (weak, nonatomic) IBOutlet HEMActivityCoverView *activityView;
 
 @property (strong, nonatomic) NSDate* scanStart;
 @property (strong, nonatomic) SENWifiEndpoint* selectedWifiEndpont;
@@ -54,6 +58,8 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     [self setWifiDataSource:[[HEMWiFiDataSource alloc] init]];
     [[self wifiPickerTableView] setDataSource:[self wifiDataSource]];
     [[self wifiPickerTableView] setDelegate:self];
+    
+    [[[self activityView] activityLabel] setFont:[UIFont onboardingActivityFontMedium]];
     
     [[[self scanButton] layer] setBorderWidth:0.0f];
     
@@ -96,6 +102,11 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
                                                                       action:@selector(cancel:)];
         [[self navigationItem] setLeftBarButtonItem:cancelItem];
     }
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [[self activityView] setNeedsLayout];
 }
 
 #pragma mark - UITableViewDelegate
@@ -171,7 +182,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)scanWithActivity {
     [self setScanStart:[NSDate date]];
-    [[self scanButton] showActivityWithWidthConstraint:[self scanButtonWidthConstraint]];
+    
+    NSString* message = NSLocalizedString(@"wifi.activity.scanning", nil);
+    [[self activityView] showWithText:message activity:YES completion:nil];
     
     __weak typeof(self) weakSelf = self;
     [self scanUntilDoneWithCount:0 completion:^(NSError *error) {
@@ -182,9 +195,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             [SENAnalytics track:kHEMAnalyticsEventOnBWiFiScanComplete
                      properties:@{kHEMAnalyticsEventPropDuration : @(elapsed)}];
             
-            [[strongSelf scanButton] stopActivity];
-            [[strongSelf wifiPickerTableView] reloadData];
-            [[strongSelf wifiPickerTableView] flashScrollIndicators];
+            [[strongSelf activityView] dismissWithResultText:nil remove:NO completion:^{
+                [[strongSelf wifiPickerTableView] reloadData];
+                [[strongSelf wifiPickerTableView] flashScrollIndicators];
+            }];
             
             if (error != nil && [strongSelf isVisible]) {
                 [strongSelf showError:error];
@@ -227,6 +241,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             break;
     }
     [self showMessageDialog:message title:title];
+    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
 }
 
 #pragma mark - Actions

@@ -126,4 +126,14 @@
  */
 + (UIFont *)infoToastFont;
 
+/**
+ * Font used to display activity status full screen
+ */
++ (UIFont *)onboardingActivityFontLarge;
+
+/**
+ * Font used to display activity status within another view, typically
+ */
++ (UIFont *)onboardingActivityFontMedium;
+
 @end

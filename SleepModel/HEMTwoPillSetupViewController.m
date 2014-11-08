@@ -40,22 +40,9 @@
 #pragma mark
 
 - (IBAction)setupFirstPill:(id)sender {
-    if (![HEMBluetoothUtils stateAvailable]) {
-        NSLayoutConstraint* constraint = [self firstPillButtonWidthConstraint];
-        [[self firstPillButton] showActivityWithWidthConstraint:constraint];
-        [self performSelector:@selector(setupFirstPill:)
-                   withObject:sender
-                   afterDelay:0.1f];
-        return;
-    }
-    
-    [[self firstPillButton] stopActivity];
-    
-    NSString* segueId
-        = ![HEMBluetoothUtils isBluetoothOn]
-        ? [HEMOnboardingStoryboard pillNeedBluetoothSegueIdentifier]
-        : [HEMOnboardingStoryboard firstPillSenseSetupSegueIdentifier];
-    [self performSegueWithIdentifier:segueId sender:self];
+    DDLogVerbose(@"WARNING: this has not been implemented yet!");
+    // TODO (jimmy): this part of the flow has not yet been implemented and
+    // actually deprecated
 }
 
 - (IBAction)setupSecondPill:(id)sender {

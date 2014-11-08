@@ -11,6 +11,7 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
+#import "HEMBluetoothUtils.h"
 
 static CGFloat const kHEMLocationFinderAnimationDuration = 0.25f;
 static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
@@ -153,12 +154,6 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
                  }];
 }
 
-- (void)next {
-    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard senseSetupSegueIdentifier]
-                              sender:self];
-}
-
 - (void)animateThankyou:(void(^)(BOOL finished))completion {
     [UIView animateWithDuration:kHEMLocationFinderAnimationDuration
                      animations:^{
@@ -188,6 +183,23 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
                                         afterDelay:kHEMLocationFinderThankyouDisplayTime];
                          }];
                      }];
+}
+
+- (void)next {
+    if (![HEMBluetoothUtils stateAvailable]) {
+        [self performSelector:@selector(next)
+                   withObject:nil
+                   afterDelay:0.1f];
+        return;
+    }
+    
+    NSString* segueId
+        = ![HEMBluetoothUtils isBluetoothOn]
+        ? [HEMOnboardingStoryboard senseSetupNoBleSegueIdentifier]
+        : [HEMOnboardingStoryboard senseSetupSegueIdentifier];
+
+    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
+    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 #pragma mark - Clean Up

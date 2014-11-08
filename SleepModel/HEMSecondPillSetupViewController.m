@@ -62,24 +62,8 @@
 #pragma mark - Actions
 
 - (IBAction)next:(id)sender {
-    if (![HEMBluetoothUtils stateAvailable]) {
-        [[self continueButton] showActivityWithWidthConstraint:[self continueButtonWidthConstraint]];
-        [self performSelector:@selector(next:)
-                   withObject:sender
-                   afterDelay:0.1f];
-        return;
-    }
-    
-    [[self continueButton] stopActivity];
-    
-    [[HEMUserDataCache sharedUserDataCache] setSettingUpSecondPill:YES];
-    
-    NSString* segueId
-        = ![HEMBluetoothUtils isBluetoothOn]
-        ? [HEMOnboardingStoryboard secondPillNeedBleSegueIdentifier]
-        : [HEMOnboardingStoryboard secondPillToSenseSegueIdentifier];
-    [self performSegueWithIdentifier:segueId sender:self];
-   
+    DDLogVerbose(@"WARNING: this has not been implemented yet!");
+    // TODO (jimmy): this controller has been decommissioned temporarily
 }
 
 - (IBAction)help:(id)sender {

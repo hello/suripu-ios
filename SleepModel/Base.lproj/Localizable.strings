@@ -16,7 +16,7 @@
 "onboarding.green" = "green";
 "welcome.subtitle" = "A simple system that tracks your sleep monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
 "get-started.subtitle" = "Are you using Sense with one Sleep Pill or two Sleep Pills?";
-"sense-pair.description.format" = "Now we'll pair your phone with Sense. Make sure Sense is glowing %@, then tap continue.";
+"sense-pair.description" = "Now we'll pair your phone with Sense. Make sure your Sense is plugged in and nearby, then tap Continue.";
 "two-pill-setup.subtitle" = "Are you setting up the first Sleep Pill or the second Sleep Pill?";
 "sign-up.title" = "Sign up";
 "sign-up.failed.title" = "Sign up failed";
@@ -36,7 +36,7 @@
 "no-bluetooth.on" = "On";
 
 // sense setup
-"sense-setup.description.format" = "Plug in Sense next to your bed.  Sense will glow %@ to tell you it is on, and ready to be paired with your mobile device.";
+"sense-setup.description" = "Make sure Sense is plugged into a wall outlet next your bed.";
 
 // second pill
 "second-pill.description.format" = "To connect a second Sleep Pill, Sense needs to be put into pairing mode.\n\nAsk the owner of the first Sleep Pill to stand next to Sense and open the Sense app, then go to %@ and tap %@.\n\nSense will glow %@ when it is in pairing mode.";
@@ -46,44 +46,58 @@
 // user information
 "user.info.accessibility.birthdate-title" = "Select the month, day, and year of your birthday";
 
-// pairing with sense
+// pairing
 "pairing.activity.pairing-sense" = "Pairing with Sense";
+"pairing.activity.scanning-sense" = "Scanning for Sense";
+"pairing.activity.pairing-pill" = "Pairing your Sleep Pill";
+"pairing.activity.connecting-sense" = "Connecting to Sense";
+"pairing.activity.loading-paired-sense" = "Loading paired Sense";
 "pairing.failed.title" = "Pairing Failed";
 "pairing.error.sense-not-found" = "Sense was not detected. Ensure Sense is on and near your phone.";
 "pairing.error.could-not-pair" = "Could not pair with Sense. If there is a phone already paired to Sense, unpair from that phone then try again.";
-
 "pairing.error.unexpected-disconnect" = "Connection from Sense was broken. Please try again.";
 "pairing.error.link-account-failed" = "Could not attach Sense to your account.";
-"pairing.error.no-response" = "Sense did not respond in time.";
+"pairing.error.timed-out" = "Sense did not respond in time.";
 "pairing.done" = "Paired.";
+"pairing.pill.subtitle" = "Shake your Sleep Pill for three seconds to pair it with your Sense.";
+"pairing.error.pill-already-paired" = "Your Sleep Pill is currently paired to an account.";
+"pairing.error.fail-to-load-paired-info" = "Could not load paired Sense information.";
+"pairing.error.sense-not-found" = "Could not connect to your Sense to pair your Sleep Pill.";
+"pairing.error.pill-pairing-failed" = "Sense did not detect any Sleep Pills.  Make sure Sense is on and that you shake the pill for at least 3 seconds.";
 
 // wifi setup
-"wifi.error.title" = "WiFi setup fFailed";
+"wifi.error.title" = "WiFi setup Failed";
+"wifi.activity.setting-wifi" = "Setting WiFi credentials";
+"wifi.activity.linking-account" = "Linking account to Sense";
+"wifi.activity.setting-timezone" = "Setting timezone";
 "wifi.error.set-sense-general" = "Sense could not set up WiFi. Make sure Sense is on and nearby and try again.";
+"wifi.activity.scanning" = "Finding WiFi networks...";
 "wifi.error.set-sense-not-in-range" = "WiFi is out of Sense's range.";
+"wifi.error.missing-access-token" = "Link account failed because access token is missing from account.  Please report this and for now, restart the process";
 "wifi.error.set-sense-timeout" = "Timed out while configuring WiFi credentials on Sense.";
 "wifi.error.set-sense-failed-connection" = "Sense could not connect to the network.";
 "wifi.error.account-link-message" = "Unable to set up Sense properly.";
 "wifi.error.account-link-timeout" = "Timed out while linking Sense to your account.";
 "wifi.error.account-link-network-failed" = "Sense failed to connect to your network to link your account.";
+"wifi.error.time-zone-failed" = "Failed to set your timezone, required for the Smart Alarm to work.";
 "wifi.error.scan-title" = "WiFi Scan Failed";
 "wifi.error.scan-out-of-memory" = "Sense failed to complete the scan due to a memory issue.";
 "wifi.error.scan-general" = "Sense failed to complete the scan due to an unknown issue.";
-
-// pairing with the pill
-"pill-pair.subtitle.format" = "Gently shake your Sleep Pill for three seconds. Once Sense detects your Sleep Pill, it will light up %@.";
-"pill-pair.pairing-message" = "Pairing your Sleep Pill";
-"pill-pair.connecting-sense" = "Connecting to Sense.";
-"pill-pair.error.device-info-unknown" = "Could not find your paired Sense right now. Please try again.";
-"pill-pair.error.sense-not-found" = "Could not connect to your Sense to pair your Sleep Pill.";
-"pill-pair.error.pill-pair-failed" = "Unable to find any Sleep Pills to pair with.  Make sure they are nearby and try again.";
-"pill-pair.error.timed-out" = "Device did not respond in time.";
-"pill-pair.error.already-paired" = "Your Sleep Pill is currently paired to an account.";
+"wifi.setup.complete" = "Success";
 
 // location
 "location.error.title" = "Unknown Location";
 "location.error.not-enabled" = "You have denied access to, or disabled, Location Services.  You can change this preference inside the Settings app.";
 "location.error.weak-signal" = "We were unable to obtain your location.  Try moving to a different location and try again.";
+
+// setting up second pill
+"setup.second-pill.subtitle.format" = "Would you like to set up a second Sleep Pill at this time?\n\nYou can always do this later by visiting %@.";
+"setup.second-pill.settings" = "Settings";
+"setup.second-pill.error.title" = "Fail to enable Pairing Mode";
+"setup.second-pill.error.failed-to-enable-pairing-mode" = "Could not enable Pairing Mode on Sense.";
+"setup.second-pill.error.sense-full" = "Sense can no longer pair with anymore devices.";
+"setup.get-app.subtitle.format" = "Your Sense is now in Pairing Mode.\n\nHave your partner visit %@ to download the Sense app and set up their Sleep Pill.";
+"setup.get-app.url" = "hello.is/app";
 
 // settings
 "settings.title" = "Settings";

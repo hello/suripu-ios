@@ -191,7 +191,13 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     SENSenseManager* manager = [self manager];
     
     if (accessToken == nil) {
+        // FIXME (jimmy): i've hit this case once, but have not reproduced it
+        // we need to find this problem and recover from it!
         DDLogWarn(@"account was not set up correctly! access token missing!");
+        NSString* msg = NSLocalizedString(@"wifi.error.missing-access-token", nil);
+        NSString* title = NSLocalizedString(@"wifi.error.title", nil);
+        [self showMessageDialog:msg title:title];
+        return;
     }
     
     __weak typeof(self) weakSelf = self;

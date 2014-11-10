@@ -26,7 +26,7 @@
 - (NSArray*)valuesForSectionIndexes {
     NSMutableArray* labels = [[NSMutableArray alloc] initWithCapacity:self.labeledIndexes.count];
     if (self.dateFormatter) {
-        NSArray* indexes = [[self.labeledIndexes allObjects] sortedArrayUsingSelector:@selector(integerValue)];
+        NSArray* indexes = [[self.labeledIndexes allObjects] sortedArrayUsingSelector:@selector(compare:)];
         for (NSNumber* index in indexes) {
             NSDictionary* dataPoint = [self dataPointAtIndex:[index integerValue]];
             NSDate* lastUpdated = [NSDate dateWithTimeIntervalSince1970:([dataPoint[@"datetime"] doubleValue])/1000];

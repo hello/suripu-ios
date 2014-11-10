@@ -50,7 +50,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [self registerForNotifications];
     [self createAndShowWindow];
     [self showConfidentialityNotice];
-    [HEMNotificationHandler registerForRemoteNotifications];
 
 #pragma message ("TODO - create preprocessor macro to distinguish APP_STORE from Internal")
     [application setApplicationSupportsShakeToEdit:YES];

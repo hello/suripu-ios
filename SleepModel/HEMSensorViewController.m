@@ -70,20 +70,30 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     }];
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:HEMSensorRefreshInterval
                                                          target:self
-                                                       selector:@selector(refreshGraphData)
+                                                       selector:@selector(refreshData)
                                                        userInfo:nil
                                                         repeats:YES];
+    [self registerForNotifications];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
     [self.refreshTimer invalidate];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)dealloc
 {
     [_refreshTimer invalidate];
+}
+
+- (void)registerForNotifications
+{
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(refreshCurrentSensorValue:)
+                   name:SENSensorUpdatedNotification object:nil];
 }
 
 #pragma mark - Configuration
@@ -104,7 +114,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     mask.endPoint = CGPointMake(1, 0.5);
     mask.locations = @[ @(-1), @(-1), @0, @1 ];
     self.graphView.layer.mask = mask;
-    [self refreshGraphData];
+    [self refreshData];
 }
 
 - (void)configureGraphViewBackground
@@ -178,7 +188,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [CATransaction commit];
 }
 
-- (void)refreshGraphData
+- (void)refreshData
 {
     self.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
     [SENAPIRoom hourlyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
@@ -201,6 +211,18 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
         if (![self isShowingHourlyData])
             [self updateGraphWithDailyData:data];
     }];
+    [SENSensor refreshCachedSensors];
+}
+
+- (void)refreshCurrentSensorValue:(NSNotification*)note
+{
+    SENSensor* sensor = note.object;
+    if (![sensor.name isEqualToString:self.sensor.name])
+        return;
+
+    self.sensor = sensor;
+    [self configureSensorValueViews];
+
 }
 
 - (IBAction)selectedHourlyGraph:(id)sender

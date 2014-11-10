@@ -209,6 +209,8 @@
 "alarm.repeat.days.all" = "Everyday";
 "alarm.save-error.title" = "Alarms could not be saved";
 "alarm.load-error.title" = "Alarms could not be loaded";
+"alarm.time-explanation.title" = "Why is alarm time flexible?";
+"alarm.time-explanation.message" = "Sense monitors your sleep depth and determines the best time to start the alarm in the minutes before you need to awaken.";
 
 "alarm.repeat.days.weekdays" = "Weekdays";
 "alarm.repeat.days.weekends" = "Weekends";

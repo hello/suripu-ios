@@ -5,6 +5,7 @@
 #import <markdown_peg.h>
 
 #import "HEMAlarmViewController.h"
+#import "HEMAlertController.h"
 #import "HEMAlarmSoundTableViewController.h"
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMAlarmCache.h"
@@ -182,6 +183,13 @@
         self.previousLocationY = 0;
     }
     self.previousLocationY = currentLocationY;
+}
+
+- (IBAction)showAlarmTimeExplanationDialog:(UIButton*)sender
+{
+    [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.time-explanation.title", nil)
+                                          message:NSLocalizedString(@"alarm.time-explanation.message", nil)
+                             presentingController:self];
 }
 
 - (void)updateAlarmFromCache:(HEMAlarmCache*)cache

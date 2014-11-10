@@ -25,12 +25,12 @@ static CGFloat const HEMSleepSummaryShadowHeight = 1.f;
         UIColor* topColor = [UIColor whiteColor];
         UIColor* bottomColor = [HelloStyleKit timelineGradientDarkColor];
         self.gradientLayer = [CAGradientLayer layer];
-        CGRect gradientRect = self.bounds;
-        gradientRect.size.height -= HEMSleepSummaryShadowHeight;
-        self.gradientLayer.frame = gradientRect;
         self.gradientLayer.colors = @[(id)topColor.CGColor, (id)bottomColor.CGColor];
         [self.layer insertSublayer:self.gradientLayer atIndex:0];
     }
+    CGRect gradientRect = self.bounds;
+    gradientRect.size.height -= HEMSleepSummaryShadowHeight;
+    self.gradientLayer.frame = gradientRect;
 }
 
 - (void)drawRect:(CGRect)rect

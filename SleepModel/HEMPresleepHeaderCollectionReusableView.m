@@ -28,14 +28,14 @@ static CGFloat const HEMPresleepSummaryShadowHeight = 1.f;
         UIColor* topColor = [HelloStyleKit timelineGradientDarkColor];
         UIColor* bottomColor = [UIColor whiteColor];
         self.gradientLayer = [CAGradientLayer layer];
-        CGRect gradientRect = self.bounds;
-        CGFloat offset = HEMPresleepSummaryShadowHeight + HEMPresleepSummaryLineOffset;
-        gradientRect.origin.y += offset;
-        gradientRect.size.height -= offset;
-        self.gradientLayer.frame = gradientRect;
         self.gradientLayer.colors = @[(id)topColor.CGColor, (id)bottomColor.CGColor];
         [self.layer insertSublayer:self.gradientLayer atIndex:0];
     }
+    CGRect gradientRect = self.bounds;
+    CGFloat offset = HEMPresleepSummaryShadowHeight + HEMPresleepSummaryLineOffset;
+    gradientRect.origin.y += offset;
+    gradientRect.size.height -= offset;
+    self.gradientLayer.frame = gradientRect;
 }
 
 - (void)drawRect:(CGRect)rect

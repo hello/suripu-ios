@@ -302,12 +302,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSTextAlignment alignment = NSTextAlignmentLeft;
     
     if ([indexPath row] > 0 && [indexPath row] < [tableView numberOfRowsInSection:0] - 1) {
-        NSInteger dataRow = [indexPath row] - 1;
+        NSInteger dataRow = [indexPath row];
         if (tableView == [self monthTableView]) {
-            title = [[[self monthFormatter] standaloneMonthSymbols] objectAtIndex:dataRow];
+            title = [[[self monthFormatter] standaloneMonthSymbols] objectAtIndex:dataRow - 1];
             alignment = NSTextAlignmentLeft;
         } else if (tableView == [self dayTableView]) {
-            title = [NSString stringWithFormat:@"%ld", dataRow+1];
+            title = [NSString stringWithFormat:@"%ld", dataRow];
             alignment = NSTextAlignmentCenter;
         } else if (tableView == [self yearTableView]) {
             NSDateComponents* components = [[NSCalendar currentCalendar] components:NSCalendarUnitYear
@@ -388,11 +388,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (NSInteger)selectedDay {
-    return [[self selectedPathFor:[self dayTableView]] row];
+    return [self selectedIntegerValueInTableView:self.dayTableView];
 }
 
 - (NSInteger)selectedYear {
-    return [[self selectedPathFor:[self yearTableView]] row];
+    return [self selectedIntegerValueInTableView:self.yearTableView];
+}
+
+- (NSInteger)selectedIntegerValueInTableView:(UITableView*)tableView {
+    NSIndexPath* path = [self selectedPathFor:tableView];
+    UITableViewCell* cell = [tableView cellForRowAtIndexPath:path];
+    return [cell.textLabel.text integerValue];
 }
 
 #pragma mark - Cleanup

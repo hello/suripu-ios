@@ -44,6 +44,9 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[self navigationItem] setHidesBackButton:YES];
+    
     [self setupSubtitle];
     [self setupCancelButton];
     

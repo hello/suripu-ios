@@ -21,6 +21,7 @@ static NSString *const _HEMmoreInfo = @"moreInfo";
 static NSString *const _HEMnetwork = @"network";
 static NSString *const _HEMnoBleToSetup = @"noBleToSetup";
 static NSString *const _HEMpillPair = @"pillPair";
+static NSString *const _HEMsecondPillCheck = @"secondPillCheck";
 static NSString *const _HEMsenseSetup = @"senseSetup";
 static NSString *const _HEMsenseSetupNoBle = @"senseSetupNoBle";
 static NSString *const _HEMsenseToPill = @"senseToPill";
@@ -48,6 +49,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)locationSegueIdentifier { return _HEMlocation; }
 +(NSString *)moreInfoSegueIdentifier { return _HEMmoreInfo; }
 +(NSString *)noBleToSetupSegueIdentifier { return _HEMnoBleToSetup; }
++(NSString *)secondPillCheckSegueIdentifier { return _HEMsecondPillCheck; }
 +(NSString *)senseSetupSegueIdentifier { return _HEMsenseSetup; }
 +(NSString *)senseSetupNoBleSegueIdentifier { return _HEMsenseSetupNoBle; }
 +(NSString *)senseToPillSegueIdentifier { return _HEMsenseToPill; }

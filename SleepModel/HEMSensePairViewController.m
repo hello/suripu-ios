@@ -16,13 +16,27 @@
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMActivityCoverView.h"
+#import "HEMSecondPillCheckViewController.h"
+#import "HelloStyleKit.h"
+
+typedef NS_ENUM(NSUInteger, HEMSensePairState) {
+    HEMSensePairStateNotStarted = 0,
+    HEMSensePairStateSenseFound = 1,
+    HEMSensePairStateSensePaired = 2,
+    HEMSensePairStatePairingError = 3,
+    HEMSensePairStateAddingSleepPill = 4,
+    HEMSensePairStateSettingUpNewSense = 5,
+    HEMSensePairStateWiFiNotDetected = 6,
+    HEMSensePairStateWiFiDetected = 7,
+    HEMSensePairStateAccountLinked = 8
+};
 
 // I've tested the scanning process multiple times starting with a timeout of
 // 15 to 20.  Out of say 5 tries, I've seen it return in time once.  30 secs
 // seem to allow the response to return in time reliably.
 static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
-@interface HEMSensePairViewController()
+@interface HEMSensePairViewController() <HEMSecondPillCheckDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
@@ -35,9 +49,13 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *readyButtonWidthConstraint;
 
 @property (strong, nonatomic) SENSenseManager* manager;
+@property (assign, nonatomic) HEMSensePairState currentState;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
+@property (copy,   nonatomic) NSString* detectedSSID;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (assign, nonatomic, getter=isTimedOut) BOOL timedOut;
+@property (assign, nonatomic, getter=isPairing) BOOL pairing;
+@property (assign, nonatomic, getter=hasAskedAboutSecondPill) BOOL askedAboutSecondPill;
 
 @end
 
@@ -46,6 +64,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupDescription];
+    [self setCurrentState:HEMSensePairStateNotStarted];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBPairSense];
 }
@@ -93,10 +112,16 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
+                DDLogVerbose(@"Sense unexpected disconnected");
                 [strongSelf stopActivityWithMessage:nil completion:^{
-                    NSString* message = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
-                    NSString* title = NSLocalizedString(@"pairing.failed.title", nil);
-                    [strongSelf showMessageDialog:message title:title];
+                    if ([strongSelf isPairing]) {
+                        [strongSelf setCurrentState:HEMSensePairStatePairingError];
+                        [strongSelf executeNextStep];
+                    } else {
+                        NSString* message = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
+                        NSString* title = NSLocalizedString(@"pairing.failed.title", nil);
+                        [strongSelf showMessageDialog:message title:title];
+                    }
                 }];
             }
         }];
@@ -105,7 +130,9 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 #pragma mark - Actions
 
 - (IBAction)enablePairing:(id)sender {
-    [self scanForSense];
+    // restart the scanning
+    [self setCurrentState:HEMSensePairStateNotStarted];
+    [self executeNextStep];
 }
 
 - (IBAction)help:(id)sender {
@@ -119,6 +146,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 #pragma mark - Scanning
 
 - (void)scanTimeout {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(scanTimeout) object:nil];
     DDLogVerbose(@"scanning for Sense timed out, oh no!");
     [self setTimedOut:YES];
     [SENSenseManager stopScan];
@@ -130,7 +158,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
              properties:@{kHEMAnalyticsEventPropMessage : @"scanning timed out"}];
 }
 
-- (void)scanForSense {
+- (void)scanWithActivity {
     if ([self activityView] == nil) {
         [self setActivityView:[[HEMActivityCoverView alloc] init]];
     }
@@ -146,7 +174,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                    withObject:nil
                    afterDelay:kHEMSensePairScanTimeout];
     }];
-    
 }
 
 - (void)startScan {
@@ -158,14 +185,15 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     if (![SENSenseManager scanForSense:^(NSArray *senses) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf && ![strongSelf isTimedOut]) {
-            [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
-                                                     selector:@selector(scanTimeout)
-                                                       object:nil];
+            [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf selector:@selector(scanTimeout) object:nil];
+            
             if ([senses count] > 0) {
                 // per team consensus, it is expected that the app pairs with the
                 // first sense with the highest average RSSI value that is found.
                 // In our case, the first object matches that spec.
-                [strongSelf pairWith:[senses firstObject]];
+                [strongSelf setManager:[[SENSenseManager alloc] initWithSense:[senses firstObject]]];
+                [strongSelf setCurrentState:HEMSensePairStateSenseFound];
+                [strongSelf executeNextStep];
                 DDLogVerbose(@"sense found, %@", [[strongSelf manager] sense]);
             } else {
                 [SENAnalytics track:kHEMAnalyticsEventError
@@ -178,49 +206,172 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             }
         }
     }]) {
+        DDLogVerbose(@"ble not ready, retrying");
         [self performSelector:@selector(startScan)
                    withObject:nil
                    afterDelay:0.1f];
     }
 }
 
+#pragma mark - States
+
+- (void)executeNextStep {
+    switch ([self currentState]) {
+        case HEMSensePairStateNotStarted: {
+            [self scanWithActivity];
+            break;
+        }
+        case HEMSensePairStateSenseFound: {
+            [self pair];
+            break;
+        }
+        case HEMSensePairStateSensePaired: {
+            [self checkWiFi];
+            break;
+        }
+        case HEMSensePairStatePairingError: {
+            if ([self hasAskedAboutSecondPill]) {
+                NSString* msg = NSLocalizedString(@"pairing.error.could-not-pair", nil);
+                [self showErrorMessage:msg];
+            } else {
+                [self checkIfAddingSecondPill];
+            }
+            break;
+        }
+        case HEMSensePairStateWiFiNotDetected: {
+            [self finish];
+            break;
+        }
+        case HEMSensePairStateWiFiDetected: {
+            [self linkAccount];
+            break;
+        }
+        case HEMSensePairStateAccountLinked: {
+            [self finish];
+            break;
+        }
+        default: {
+            DDLogWarn(@"state %ld not recognized", (long)[self currentState]);
+            break;
+        }
+    }
+}
+
+
 #pragma mark - Pairing
 
-- (void)pairWith:(SENSense*)sense {
+- (void)pair {
+    [self setPairing:YES];
     [self disconnectSense]; // in case one has been set
-    [self setManager:[[SENSenseManager alloc] initWithSense:sense]];
     [self observeUnexpectedDisconnects];
-
+    
     NSString* activityMessage = NSLocalizedString(@"pairing.activity.pairing-sense", nil);
     [[self activityView] updateText:activityMessage completion:nil];
-    DDLogVerbose(@"pairing with sense %@", [sense name]);
+    DDLogVerbose(@"pairing with sense %@", [[[self manager] sense] name]);
     
     __weak typeof(self) weakSelf = self;
     [[self manager] pair:^(id response) {
         DDLogVerbose(@"paired!");
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf && ![strongSelf isTimedOut]) {
+            [strongSelf setPairing:NO];
             [strongSelf cacheManager];
-
-            if ([[HEMUserDataCache sharedUserDataCache] settingUpSecondPill]) {
-                [strongSelf linkAccount];
-            } else {
-                [strongSelf finish];
-            }
-
+            [strongSelf setCurrentState:HEMSensePairStateSensePaired];
+            [strongSelf executeNextStep];
         }
     } failure:^(NSError *error) {
         DDLogVerbose(@"failed to pair %@", error);
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf && ![strongSelf isTimedOut]) {
+        if (strongSelf) {
+            [strongSelf setPairing:NO];
             [strongSelf stopActivityWithMessage:nil completion:^{
-                NSString* msg = NSLocalizedString(@"pairing.error.could-not-pair", nil);
-                [strongSelf showErrorMessage:msg];
                 [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [strongSelf setCurrentState:HEMSensePairStatePairingError];
+                [strongSelf executeNextStep];
             }];
         }
     }];
 }
+
+#pragma mark - WiFi
+
+- (void)checkWiFi {
+    NSString* activityMessage = NSLocalizedString(@"pairing.activity.checking-wifi", nil);
+    [[self activityView] updateText:activityMessage completion:nil];
+    DDLogVerbose(@"checking if Sense has already been configured with wifi");
+    
+    __weak typeof(self) weakSelf = self;
+    [[self manager] getConfiguredWiFi:^(NSString *ssid, SENWiFiConnectionState state) {
+        __block typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            HEMSensePairState pairState = HEMSensePairStateWiFiNotDetected;
+            if (state == SENWiFiConnectionStateConnected) {
+                pairState = HEMSensePairStateWiFiDetected;
+                [strongSelf setDetectedSSID:ssid];
+            }
+            DDLogVerbose(@"wifi %@ is in state detected %ld", ssid, (long)state);
+            [strongSelf setCurrentState:pairState];
+            [strongSelf executeNextStep];
+        }
+    } failure:^(NSError *error) {
+        DDLogVerbose(@"could not determine configured wifi ssid + state");
+        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        
+        __block typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            // if there's an error just act like wifi was not set up, rather than
+            // telling user that wifi could not be checked and making user do
+            // something that makes no sense
+            [strongSelf setCurrentState:HEMSensePairStateWiFiNotDetected];
+            [strongSelf executeNextStep];
+        }
+    }];
+}
+
+#pragma mark - Second Pill
+
+- (void)checkIfAddingSecondPill {
+    DDLogVerbose(@"asking if user has a second pill to set up");
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard secondPillCheckSegueIdentifier]
+                              sender:self];
+}
+
+#pragma mark - Link Account
+
+- (void)linkAccount {
+    NSString* activityMessage = NSLocalizedString(@"pairing.activity.linking-account", nil);
+    [[self activityView] updateText:activityMessage completion:nil];
+    DDLogVerbose(@"linking account");
+    
+    NSString* accessToken = [SENAuthorizationService accessToken];
+    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    
+    __weak typeof(self) weakSelf = self;
+    [manager linkAccount:accessToken success:^(id response) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf setCurrentState:HEMSensePairStateAccountLinked];
+            [strongSelf executeNextStep];
+        }
+    } failure:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf stopActivityWithMessage:nil completion:^{
+                NSString* msg = NSLocalizedString(@"pairing.error.link-account-failed", nil);
+                [strongSelf showErrorMessage:msg];
+            }];
+        }
+        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+    }];
+}
+
+#pragma mark - Errors
+
+- (void)showErrorMessage:(NSString*)message {
+    [self showMessageDialog:message title:NSLocalizedString(@"pairing.failed.title", nil)];
+}
+
+#pragma mark - Finishing
 
 - (void)finish {
     NSString* msg = NSLocalizedString(@"pairing.done", nil);
@@ -233,49 +384,40 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     }];
 }
 
-#pragma mark - Link Account
-
-- (void)linkAccount {
-    NSString* accessToken = [SENAuthorizationService accessToken];
-    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
-    
-    __weak typeof(self) weakSelf = self;
-    [manager linkAccount:accessToken success:^(id response) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf finish];
-        }
-    } failure:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf stopActivityWithMessage:nil completion:^{
-                NSString* msg = NSLocalizedString(@"pairing.error.link-account-failed", nil);
-                [strongSelf showErrorMessage:msg];
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-            }];
-        }
-        
-        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-    }];
-}
-
-#pragma mark - Errors
-
-- (void)showErrorMessage:(NSString*)message {
-    [self showMessageDialog:message title:NSLocalizedString(@"pairing.failed.title", nil)];
-}
-
-#pragma mark - Navigation
-
 - (void)next {
     NSString* segueId = nil;
-    if ([[HEMUserDataCache sharedUserDataCache] settingUpSecondPill]) {
+    if ([self detectedSSID] != nil) {
+        DDLogVerbose(@"detected SSID %@, skipping wifi set up", [self detectedSSID]);
         segueId = [HEMOnboardingStoryboard senseToPillSegueIdentifier];
     } else {
         segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
     }
-    
     [self performSegueWithIdentifier:segueId sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UIViewController* destVC = segue.destinationViewController;
+    if ([[segue identifier] isEqualToString:[HEMOnboardingStoryboard secondPillCheckSegueIdentifier]]) {
+        UINavigationController* nav = (UINavigationController*)destVC;
+        [[nav navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];
+        HEMSecondPillCheckViewController* pairingCheckVC = (HEMSecondPillCheckViewController*)[nav topViewController];
+        [pairingCheckVC setDelegate:self];
+    }
+}
+
+#pragma mark - HEMPairingCheckDelegate
+
+- (void)checkController:(HEMSecondPillCheckViewController *)controller
+    isSettingUpNewSense:(BOOL)settingUpNewSense {
+    
+    [self dismissViewControllerAnimated:YES completion:^{
+        [self setAskedAboutSecondPill:YES];
+        if (!settingUpNewSense) {
+            // restart the process
+            [self setCurrentState:HEMSensePairStateNotStarted];
+        }
+        [self executeNextStep];
+    }];
 }
 
 #pragma mark - Clean up

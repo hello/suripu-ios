@@ -8,6 +8,24 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HEMTwoPillSetupViewController : UIViewController
+@protocol HEMSecondPillCheckDelegate <NSObject>
+
+/**
+ * @method checkController:isSettingUpNewSense
+ *
+ * @discussion
+ * delegate method to let calling controller know what the user is doing.
+ *
+ * @param controller:        the check controller
+ * @param settingUpNewSense: YES if new Sense set up, NO if adding new pill
+ */
+- (void)checkController:(UIViewController*)controller
+    isSettingUpNewSense:(BOOL)settingUpNewSense;
+
+@end
+
+@interface HEMSecondPillCheckViewController : UIViewController
+
+@property (nonatomic, assign) id<HEMSecondPillCheckDelegate> delegate;
 
 @end

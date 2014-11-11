@@ -6,13 +6,14 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "HEMTwoPillSetupViewController.h"
+#import "HEMSecondPillCheckViewController.h"
 #import "HEMActionButton.h"
 #import "HEMBluetoothUtils.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingUtils.h"
+#import "HEMSecondPillSetupViewController.h"
 
-@interface HEMTwoPillSetupViewController ()
+@interface HEMSecondPillCheckViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *firstPillButton;
@@ -20,7 +21,7 @@
 
 @end
 
-@implementation HEMTwoPillSetupViewController
+@implementation HEMSecondPillCheckViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -29,32 +30,29 @@
 }
 
 - (void)setSubtitleText {
-    NSString* text = NSLocalizedString(@"two-pill-setup.subtitle", nil);
+    NSString* text = NSLocalizedString(@"pairing.check.add-second-pill-subtitle", nil);
     
-    NSMutableAttributedString* attrText = [[NSMutableAttributedString alloc] initWithString:text];
+    NSMutableAttributedString* attrText =
+        [[NSMutableAttributedString alloc] initWithString:text];
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
     
     [[self subtitleLabel] setAttributedText:attrText];
 }
 
-#pragma mark
+#pragma mark - Actions
 
-- (IBAction)setupFirstPill:(id)sender {
-    DDLogVerbose(@"WARNING: this has not been implemented yet!");
-    // TODO (jimmy): this part of the flow has not yet been implemented and
-    // actually deprecated
+- (IBAction)setupNewSense:(id)sender {
+    [[self delegate] checkController:self isSettingUpNewSense:YES];
 }
 
-- (IBAction)setupSecondPill:(id)sender {
-    
-}
+#pragma mark - Navigation
 
-- (IBAction)help:(id)sender {
-    DDLogVerbose(@"WARNING: this has not been implemented yet!");
-    // TODO (jimmy): the help website is still being discussed / worked on.  When
-    // we know what to actually point to, we likely will open up a browser to
-    // show the help
-    [SENAnalytics track:kHEMAnalyticsEventHelp];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UIViewController* destVC = segue.destinationViewController;
+    if ([destVC isKindOfClass:[HEMSecondPillSetupViewController class]]) {
+        HEMSecondPillSetupViewController* setupVC = (HEMSecondPillSetupViewController*)destVC;
+        [setupVC setDelegate:[self delegate]]; // pass it along
+    }
 }
 
 @end

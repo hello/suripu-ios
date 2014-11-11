@@ -51,7 +51,6 @@
             <string>Calibre-Light</string>
             <string>Calibre-Light</string>
             <string>Calibre-Light</string>
-            <string>Calibre-Light</string>
         </mutableArray>
         <mutableArray key="Calibre-Medium.otf">
             <string>Calibre-Medium</string>
@@ -822,7 +821,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkd-iJ-jh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10074" y="922"/>
+            <point key="canvasLocation" x="10059" y="753"/>
         </scene>
         <!--Wifi Picker View Controller-->
         <scene sceneID="22e-KB-YCx">
@@ -951,7 +950,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uGV-Fr-TJ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9309" y="922"/>
+            <point key="canvasLocation" x="9309" y="753"/>
         </scene>
         <!--Pill Setup View Controller-->
         <scene sceneID="Eoe-Ki-OxF">
@@ -1267,7 +1266,7 @@ You can always do this later by visiting Settings.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rQM-de-S9i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10853" y="922"/>
+            <point key="canvasLocation" x="10862" y="922"/>
         </scene>
         <!--End Setup View Controller-->
         <scene sceneID="PnI-Ki-ngp">
@@ -1802,16 +1801,34 @@ You can always do this later by visiting Settings.</string>
                         <outlet property="titleLabel" destination="xHT-0z-rBN" id="sOe-hX-4WK"/>
                         <outlet property="view" destination="f6K-qr-p0h" id="k5s-iP-vXI"/>
                         <segue destination="H2i-xS-f14" kind="show" identifier="wifi" id="IQX-WG-nAB"/>
+                        <segue destination="aKm-El-gle" kind="presentation" identifier="secondPillCheck" id="zVG-Kk-viu"/>
+                        <segue destination="Aoy-k8-hYr" kind="show" identifier="senseToPill" id="DAu-sO-H4V"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsS-E7-Lfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="8576" y="922"/>
         </scene>
-        <!--Two Pill Setup View Controller-->
+        <!--Navigation Controller-->
+        <scene sceneID="cAg-OD-GJx">
+            <objects>
+                <navigationController id="aKm-El-gle" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="KH9-V8-wED">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="4dx-WR-zTS" kind="relationship" relationship="rootViewController" id="rrG-4t-V8T"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kf3-2D-nhX" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="8576" y="1715"/>
+        </scene>
+        <!--Second Pill Check View Controller-->
         <scene sceneID="X2g-7t-TH3">
             <objects>
-                <viewController id="4dx-WR-zTS" customClass="HEMTwoPillSetupViewController" sceneMemberID="viewController">
+                <viewController id="4dx-WR-zTS" customClass="HEMSecondPillCheckViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QmT-Pn-4Ju"/>
                         <viewControllerLayoutGuide type="bottom" id="EEy-lZ-Pm4"/>
@@ -1820,22 +1837,22 @@ You can always do this later by visiting Settings.</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="First one here?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1Y-8p-wxu">
-                                <rect key="frame" x="28" y="45" width="544" height="34"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adding a second Sleep Pill?" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1Y-8p-wxu">
+                                <rect key="frame" x="28" y="45" width="544" height="90"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="oOc-eS-hjE"/>
+                                    <constraint firstAttribute="height" constant="90" id="oOc-eS-hjE"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="26"/>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="AO2-Sy-66K">
-                                <rect key="frame" x="28" y="89" width="544" height="47"/>
+                                <rect key="frame" x="28" y="142" width="544" height="94"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="47" id="Ypu-ph-qzC"/>
+                                    <constraint firstAttribute="height" constant="94" id="Ypu-ph-qzC"/>
                                 </constraints>
                                 <attributedString key="attributedText">
-                                    <fragment content="Are you setting up the first Sleep Pill or the second Sleep Pill?">
+                                    <fragment content="Are you adding a second Sleep Pill to a Sense that has been set up previously, or are you setting up Sense for the first time?">
                                         <attributes>
                                             <color key="NSColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="18" name="Calibre-Light"/>
@@ -1846,71 +1863,54 @@ You can always do this later by visiting Settings.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFG-Ub-heZ" customClass="HEMActionButton">
-                                <rect key="frame" x="190" y="443" width="220" height="40"/>
+                                <rect key="frame" x="190" y="473" width="220" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="220" id="UG1-U4-Ea5"/>
                                     <constraint firstAttribute="height" constant="40" id="bkc-ox-Zhb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="First Sleep Pill">
+                                <state key="normal" title="I'm adding a second Sleep Pill">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="setupFirstPill:" destination="4dx-WR-zTS" eventType="touchUpInside" id="02H-EL-aJo"/>
+                                    <segue destination="ryl-bI-Ek1" kind="show" id="zmP-Fv-LMA"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="140-hN-mHL" customClass="HEMActionButton">
-                                <rect key="frame" x="190" y="493" width="220" height="40"/>
+                                <rect key="frame" x="190" y="523" width="220" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="7ov-7A-8rL"/>
                                     <constraint firstAttribute="width" constant="220" id="Wg9-PJ-nqV"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Second Sleep Pill">
+                                <state key="normal" title="I'm setting up a new Sense">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="setupSecondPill:" destination="4dx-WR-zTS" eventType="touchUpInside" id="wqv-Z8-zF2"/>
-                                    <segue destination="ryl-bI-Ek1" kind="show" id="9Qn-Mq-QVp"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VQO-TC-k6r">
-                                <rect key="frame" x="190" y="543" width="220" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="EAs-AU-L4A"/>
-                                    <constraint firstAttribute="height" constant="40" id="GBN-rl-7S4"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
-                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="I'm not sure">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="help:" destination="4dx-WR-zTS" eventType="touchUpInside" id="n69-3t-1Lv"/>
+                                    <action selector="setupNewSense:" destination="4dx-WR-zTS" eventType="touchUpInside" id="Qpt-7i-5TS"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="Y1Y-8p-wxu" secondAttribute="trailing" constant="12" id="2XM-RO-aQw"/>
-                            <constraint firstItem="Y1Y-8p-wxu" firstAttribute="top" secondItem="QmT-Pn-4Ju" secondAttribute="bottom" constant="25" id="2r8-rV-83S"/>
-                            <constraint firstAttribute="centerX" secondItem="140-hN-mHL" secondAttribute="centerX" id="83H-KO-Hdz"/>
-                            <constraint firstAttribute="centerX" secondItem="eFG-Ub-heZ" secondAttribute="centerX" id="Hr7-Xt-6B3"/>
-                            <constraint firstItem="Y1Y-8p-wxu" firstAttribute="leading" secondItem="fs7-kC-KJ1" secondAttribute="leadingMargin" constant="12" id="MMC-Po-dUR"/>
-                            <constraint firstItem="eFG-Ub-heZ" firstAttribute="top" secondItem="140-hN-mHL" secondAttribute="top" constant="-50" id="RWt-Cj-in6"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="AO2-Sy-66K" secondAttribute="trailing" constant="12" id="WoG-8H-uUK"/>
-                            <constraint firstItem="AO2-Sy-66K" firstAttribute="top" secondItem="QmT-Pn-4Ju" secondAttribute="bottom" constant="69" id="Z0o-bq-Fx3"/>
-                            <constraint firstAttribute="centerX" secondItem="VQO-TC-k6r" secondAttribute="centerX" id="aXG-38-yY0"/>
-                            <constraint firstItem="AO2-Sy-66K" firstAttribute="leading" secondItem="fs7-kC-KJ1" secondAttribute="leadingMargin" constant="12" id="dCE-L3-KOr"/>
-                            <constraint firstItem="VQO-TC-k6r" firstAttribute="top" secondItem="140-hN-mHL" secondAttribute="top" constant="50" id="ezp-rc-Fbx"/>
-                            <constraint firstItem="EEy-lZ-Pm4" firstAttribute="top" secondItem="VQO-TC-k6r" secondAttribute="bottom" constant="17" id="wKh-Mc-mUd"/>
+                            <constraint firstAttribute="centerX" secondItem="eFG-Ub-heZ" secondAttribute="centerX" id="BpG-OJ-W3o"/>
+                            <constraint firstItem="Y1Y-8p-wxu" firstAttribute="leading" secondItem="fs7-kC-KJ1" secondAttribute="leadingMargin" constant="12" id="MAt-5f-1BC"/>
+                            <constraint firstItem="AO2-Sy-66K" firstAttribute="leading" secondItem="fs7-kC-KJ1" secondAttribute="leadingMargin" constant="12" id="O6a-l5-02s"/>
+                            <constraint firstItem="Y1Y-8p-wxu" firstAttribute="top" secondItem="QmT-Pn-4Ju" secondAttribute="bottom" constant="25" id="Pv1-ws-AUM"/>
+                            <constraint firstItem="140-hN-mHL" firstAttribute="top" secondItem="eFG-Ub-heZ" secondAttribute="top" constant="50" id="R9E-zM-c1F"/>
+                            <constraint firstAttribute="centerX" secondItem="140-hN-mHL" secondAttribute="centerX" id="WRx-3Q-8Qv"/>
+                            <constraint firstItem="EEy-lZ-Pm4" firstAttribute="top" secondItem="140-hN-mHL" secondAttribute="bottom" constant="37" id="XVG-Rh-WXa"/>
+                            <constraint firstItem="Y1Y-8p-wxu" firstAttribute="bottom" secondItem="AO2-Sy-66K" secondAttribute="top" constant="-7" id="YtH-2m-A1J"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="AO2-Sy-66K" secondAttribute="trailing" constant="12" id="ahV-73-IVv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Y1Y-8p-wxu" secondAttribute="trailing" constant="12" id="oB1-3s-0mA"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="69G-XR-Qw1"/>
+                    <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="firstPillButton" destination="eFG-Ub-heZ" id="uoi-mv-XMW"/>
                         <outlet property="firstPillButtonWidthConstraint" destination="UG1-U4-Ea5" id="3xh-eB-1KF"/>
@@ -1919,7 +1919,7 @@ You can always do this later by visiting Settings.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="yLy-Qu-aT0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7812" y="-77"/>
+            <point key="canvasLocation" x="8576" y="2470"/>
         </scene>
         <!--Second Pill Setup View Controller-->
         <scene sceneID="LMT-uc-QUR">
@@ -2070,7 +2070,7 @@ Cgo
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jhh-nN-VI1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8559" y="-77"/>
+            <point key="canvasLocation" x="9309" y="2470"/>
         </scene>
         <!--NoBLE View Controller-->
         <scene sceneID="HBA-jc-u2O">
@@ -2407,7 +2407,8 @@ Have your partner visit hello.is/app to download the Sense app and set up their 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="OeC-Do-qcD"/>
-        <segue reference="Owc-w0-TLK"/>
+        <segue reference="DAu-sO-H4V"/>
+        <segue reference="JSp-ra-OqT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

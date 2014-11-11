@@ -99,11 +99,19 @@ static NSString* const sensorTypeParticulates = @"particulates";
 
 - (void)refreshWithTimelines:(NSArray*)timelines
 {
+    NSString* message = self.sleepResult.message;
+    NSNumber* score = self.sleepResult.score;
     NSDictionary* timeline = [timelines firstObject];
     [self.sleepResult updateWithDictionary:timeline];
     [self.sleepResult save];
     [self hideLoadingViewWithSuccess:YES];
-    [self.collectionView reloadData];
+    if ([self.sleepResult.message isEqualToString:message] && [self.sleepResult.score isEqual:score]) {
+        NSMutableIndexSet* set = [NSMutableIndexSet indexSetWithIndex:HEMSleepGraphCollectionViewSegmentSection];
+        [set addIndex:HEMSleepGraphCollectionViewPresleepSection];
+        [self.collectionView reloadSections:set];
+    } else {
+        [self.collectionView reloadData];
+    }
 }
 
 - (void)configureCollectionView

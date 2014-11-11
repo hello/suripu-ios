@@ -22,6 +22,7 @@
 #import "HEMOnboardingUtils.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMDeviceCenter.h"
+#import "UIFont+HEMStyle.h"
 
 @implementation HEMAppDelegate
 
@@ -119,7 +120,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)configureAppearance
 {
-    UIFont* navbarTextFont = [UIFont fontWithName:@"Calibre-Medium" size:18.0f];
+    UIFont* navbarTextFont = [UIFont settingsTitleFont];
     [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init]
                                       forBarPosition:UIBarPositionAny
                                           barMetrics:UIBarMetricsDefault];

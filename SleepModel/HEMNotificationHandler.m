@@ -60,7 +60,7 @@
     infrequentlyAction.title = NSLocalizedString(@"notifications.actions.infrequently", nil);
     infrequentlyAction.activationMode = UIUserNotificationActivationModeBackground;
     UIMutableUserNotificationCategory* qualityCategory = [[UIMutableUserNotificationCategory alloc] init];
-    qualityCategory.identifier = @"freuqency";
+    qualityCategory.identifier = @"frequency";
     [qualityCategory setActions:@[ dailyAction, weeklyAction, infrequentlyAction ] forContext:UIUserNotificationActionContextDefault];
     [qualityCategory setActions:@[ weeklyAction, infrequentlyAction ] forContext:UIUserNotificationActionContextMinimal];
     return qualityCategory;

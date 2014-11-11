@@ -85,11 +85,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 - (IBAction)next:(id)sender {
     NSInteger month = [[self dobPicker] selectedMonth];
     NSInteger day = [[self dobPicker] selectedDay];
-    NSInteger yearDiff = [[self dobPicker] selectedYear];
-    
-    NSDateComponents* components = [[NSCalendar currentCalendar] components:NSCalendarUnitYear
-                                                                   fromDate:[NSDate date]];
-    NSInteger year = [components year]-yearDiff+1;
+    NSInteger year = [[self dobPicker] selectedYear];
     
     if ([self delegate] == nil) {
         HEMUserDataCache* cache = [HEMUserDataCache sharedUserDataCache];

@@ -277,7 +277,7 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
             break;
         }
         case HEMWiFiSetupStepConfigureWiFi: {
-            NSString* message = NSLocalizedString(@"wifi.activity.linking-account", nil);
+            NSString* message = NSLocalizedString(@"pairing.activity.linking-account", nil);
             [self updateActivity:message];
             [self linkAccount];
             break;

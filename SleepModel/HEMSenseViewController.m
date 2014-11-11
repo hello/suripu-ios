@@ -115,7 +115,10 @@ static NSInteger const kHEMSenseRowWiFi = 3;
 - (void)loadWifiThen:(void(^)(void))completion {
     __weak typeof(self) weakSelf = self;
     DDLogVerbose(@"getting Sense wifi ssid");
-    [[HEMDeviceCenter sharedCenter] getConfiguredWiFiSSID:^(NSString *ssid, NSError *error) {
+    [[HEMDeviceCenter sharedCenter] getConfiguredWiFi:^(NSString *ssid,
+                                                        SENWiFiConnectionState state,
+                                                        NSError *error) {
+        
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!strongSelf) return;
         

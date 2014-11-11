@@ -20,5 +20,6 @@ typedef NS_ENUM(NSUInteger, HEMEventInfoViewCaretPosition) {
 
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* messageLabel;
+@property (weak, nonatomic) IBOutlet UIButton* playSoundButton;
 @property (nonatomic) HEMEventInfoViewCaretPosition caretPosition;
 @end

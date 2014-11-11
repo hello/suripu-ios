@@ -23,14 +23,22 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDP-FI-Oy3">
+                    <rect key="frame" x="30" y="69" width="22" height="22"/>
+                    <state key="normal" image="playSound.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="5a4-2W-TI9" secondAttribute="bottom" id="4bg-jH-4eA"/>
                 <constraint firstItem="5a4-2W-TI9" firstAttribute="top" secondItem="Lzh-0f-YUM" secondAttribute="bottom" constant="13" id="J5l-S3-cZ7"/>
+                <constraint firstItem="RDP-FI-Oy3" firstAttribute="leading" secondItem="5a4-2W-TI9" secondAttribute="leading" id="PnE-Sd-yVd"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="leading" secondItem="5a4-2W-TI9" secondAttribute="leading" id="aDk-Hl-JQN"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="14" id="h2Q-Go-sNa"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="u4g-wi-sCt"/>
+                <constraint firstItem="RDP-FI-Oy3" firstAttribute="top" secondItem="5a4-2W-TI9" secondAttribute="bottom" constant="12" id="vbY-Ie-4c8"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
@@ -38,9 +46,13 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="messageLabel" destination="5a4-2W-TI9" id="DBD-wo-Ajl"/>
+                <outlet property="playSoundButton" destination="RDP-FI-Oy3" id="flA-4U-XpZ"/>
                 <outlet property="titleLabel" destination="Lzh-0f-YUM" id="7rs-mY-gzB"/>
             </connections>
             <point key="canvasLocation" x="297" y="318"/>
         </view>
     </objects>
+    <resources>
+        <image name="playSound.png" width="22" height="22"/>
+    </resources>
 </document>

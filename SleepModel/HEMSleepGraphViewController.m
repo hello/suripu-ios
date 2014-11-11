@@ -200,19 +200,21 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 - (void)positionEventInfoViewRelativeToView:(UIView*)view
 {
+    NSIndexPath* eventIndexPath = [self indexPathForEventCellWithSubview:view];
+    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:eventIndexPath];
     CGFloat inset = 50.f;
     CGFloat yAdjustment = 8.f;
     CGFloat clockInset = 24.f;
     CGRect buttonFrame = [self.view convertRect:view.frame fromView:view.superview];
     CGRect frame = CGRectMake(inset, CGRectGetMinY(buttonFrame) - yAdjustment, CGRectGetWidth(self.view.bounds) - inset - clockInset, CGRectGetHeight(self.eventInfoView.bounds));
-    NSIndexPath* eventIndexPath = [self indexPathForEventCellWithSubview:view];
-    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:eventIndexPath];
     if (segment.message.length > 0) {
         frame.size.height = HEMSleepEventPopupFullHeight;
     }
     else {
         frame.size.height = HEMSleepEventPopupMinimumHeight;
     }
+    if (segment.sound)
+        frame.size.height += 20.f;
     CGPoint bottomPoint = CGPointMake(1, CGRectGetMaxY(frame));
     NSIndexPath* popupBottomIndexPath = [self.collectionView indexPathForItemAtPoint:[self.collectionView convertPoint:bottomPoint fromView:self.view]];
     if (popupBottomIndexPath.section != HEMSleepGraphCollectionViewSegmentSection || CGRectGetMaxY(frame) > CGRectGetMaxY(self.view.bounds)) {
@@ -336,6 +338,13 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
         NSString* title = [NSString stringWithFormat:NSLocalizedString(@"sleep-event.title.format", nil), [[self.dataSource localizedNameForSleepEventType:segment.eventType] uppercaseString], [[self.eventInfoDateFormatter stringFromDate:segment.date] lowercaseString]];
         self.eventInfoView.titleLabel.text = title;
         self.eventInfoView.messageLabel.attributedText = markdown_to_attr_string(segment.message, 0, self.eventInfoMarkdownAttributes);
+        [self.eventInfoView.messageLabel sizeToFit];
+        if (segment.sound) {
+            self.eventInfoView.playSoundButton.hidden = NO;
+        } else {
+            self.eventInfoView.playSoundButton.hidden = YES;
+        }
+        [self.eventInfoView updateConstraintsIfNeeded];
     }
 }
 

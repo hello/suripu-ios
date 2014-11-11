@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMSecondPillCheckViewController.h"
 
 @interface HEMSecondPillSetupViewController : UIViewController
+
+@property (nonatomic, weak) id<HEMSecondPillCheckDelegate> delegate;
 
 @end

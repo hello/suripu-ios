@@ -61,16 +61,18 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
 {
     if (!value || [value isEqual:[NSNull null]])
         return nil;
+    
+    double formattedValue = (unit == SENSensorUnitDegreeCentigrade)
+                            ? [self temperatureValueInPreferredUnit:[value doubleValue]]
+                            : [value doubleValue];
 
     NSString* prefix = [self localizedStringPrefixForUnit:unit];
     NSString* format;
     if (prefix) {
         NSString* localizationKey = nil;
-        if ([value floatValue] == 0.0f) {
+        if (formattedValue == 0.0f) {
             localizationKey = [NSString stringWithFormat:@"%@zero.format", prefix];
-        }
-        
-        if (localizationKey == nil) {
+        } else {
             localizationKey = [NSString stringWithFormat:@"%@format", prefix];
         }
         format = NSLocalizedString(localizationKey, nil);
@@ -79,9 +81,6 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
         format = @"%.02f";
     }
 
-    double formattedValue = (unit == SENSensorUnitDegreeCentigrade)
-                                ? [self temperatureValueInPreferredUnit:[value doubleValue]]
-                                : [value doubleValue];
     return [NSString stringWithFormat:format, formattedValue];
 }
 

@@ -65,6 +65,14 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
     SENSenseManagerErrorCodeFailToObtainIP = -15
 };
 
+typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {
+    SENWiFiConnectionStateUnknown = -1,
+    SENWiFiConnectionStateConnected = 0,
+    SENWiFiConnectionStateConnecting = 1,
+    SENWifiConnectionStateDisconnected = 2,
+    SENWiFiConnectionStateNoInternet = 3
+};
+
 @interface SENSenseManager : NSObject
 
 @property (nonatomic, strong, readonly) SENSense* sense;
@@ -239,12 +247,13 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
  * @method getWiFi:
  * 
  * @discussion:
- * Get the configured wifi ssid, if set, from Sense
+ * Get the configured wifi ssid and state, if set, from Sense
  *
  * @param success: the block to invoke when it successfully retrieved the information
  * @param failure: the block to invoke when it failed to retrieve the info
  */
-- (void)getConfiguredWiFi:(SENSenseSuccessBlock)success failure:(SENSenseFailureBlock)failure;
+- (void)getConfiguredWiFi:(void(^)(NSString* ssid, SENWiFiConnectionState state))success
+                  failure:(SENSenseFailureBlock)failure;
 
 /**
  * Scan for WiFi networks that Sense can see.  It may take multiple scans to see

@@ -563,6 +563,29 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     return code;
 }
 
+- (SENWiFiConnectionState)wiFiStateFromMessgage:(SENSenseMessage*)message {
+    SENWiFiConnectionState state = SENWiFiConnectionStateUnknown;
+    if ([message hasWifiState]) {
+        switch ([message wifiState]) {
+            case WiFiStateIpObtained:
+                state = SENWiFiConnectionStateConnected;
+                break;
+            case WiFiStateWlanConnected:
+                state = SENWiFiConnectionStateNoInternet;
+                break;
+            case WiFiStateWlanConnecting:
+                state = SENWiFiConnectionStateConnecting;
+                break;
+            case WiFiStateNoWlanConnected:
+                state = SENWifiConnectionStateDisconnected;
+                break;
+            default:
+                break;
+        }
+    }
+    return state;
+}
+
 /**
  * Handle response from Sense until it's done sending data back.  Since response
  * will likely be split in to multiple packets, we need to append all data as they
@@ -844,7 +867,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
               failure:failure];
 }
 
-- (void)getConfiguredWiFi:(SENSenseSuccessBlock)success failure:(SENSenseFailureBlock)failure {
+- (void)getConfiguredWiFi:(void(^)(NSString* ssid, SENWiFiConnectionState state))success
+                  failure:(SENSenseFailureBlock)failure {
+    
     if (!success) {
         if (failure) failure ([NSError errorWithDomain:kSENSenseErrorDomain
                                                   code:SENSenseManagerErrorCodeInvalidArgument
@@ -852,13 +877,23 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         return;
     }
     
+    __weak typeof(self) weakSelf = self;
     SENSenseMessageType type = SENSenseMessageTypeGetWifiEndpoint;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [self sendMessage:[builder build]
               timeout:kSENSenseDefaultTimeout
                update:nil
               success:^(SENSenseMessage* response) {
-                  success ([response wifiSsid]);
+                  // connection state and protobuf wifiState maps 1:1, but with more caller
+                  // friendly naming
+                  __strong typeof(weakSelf) strongSelf = weakSelf;
+                  SENWiFiConnectionState state = SENWiFiConnectionStateUnknown;
+                  if (strongSelf) {
+                      state = [strongSelf wiFiStateFromMessgage:response];
+                  }
+
+                  success ([response wifiSsid], state);
+                  
               }
               failure:failure];
 }

@@ -141,6 +141,46 @@ static NSString* const SENSleepResultRetrievalKeyFormat = @"SleepResult-%ld-%ld-
 
 @end
 
+@implementation SENSleepResultSound
+
+static NSString* const SENSleepResultSoundURL = @"url";
+static NSString* const SENSleepResultSoundDuration = @"duration_millis";
+
+- (instancetype)initWithDictionary:(NSDictionary *)data
+{
+    if (!data) return nil;
+    if (self = [super init]) {
+        _URLPath = data[SENSleepResultSoundURL];
+        _durationMillis = [data[SENSleepResultSoundDuration] longValue];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init]) {
+        _URLPath = [aDecoder decodeObjectForKey:SENSleepResultSoundURL];
+        _durationMillis = [[aDecoder decodeObjectForKey:SENSleepResultSoundDuration] longValue];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.URLPath forKey:SENSleepResultSoundURL];
+    [aCoder encodeObject:@(self.durationMillis) forKey:SENSleepResultSoundDuration];
+}
+
+- (void)updateWithDictionary:(NSDictionary *)data
+{
+    if (data[SENSleepResultSoundURL])
+        self.URLPath = data[SENSleepResultSoundURL];
+    if (data[SENSleepResultSoundDuration])
+        self.durationMillis = [data[SENSleepResultSoundDuration] longValue];
+}
+
+@end
+
 @implementation SENSleepResultSegment
 
 static NSString* const SENSleepResultSegmentServerID = @"id";
@@ -149,6 +189,7 @@ static NSString* const SENSleepResultSegmentDuration = @"duration";
 static NSString* const SENSleepResultSegmentEventType = @"event_type";
 static NSString* const SENSleepResultSegmentMessage = @"message";
 static NSString* const SENSleepResultSegmentSleepDepth = @"sleep_depth";
+static NSString* const SENSleepResultSegmentSound = @"sound";
 
 - (instancetype)initWithDictionary:(NSDictionary*)segmentData
 {
@@ -159,6 +200,7 @@ static NSString* const SENSleepResultSegmentSleepDepth = @"sleep_depth";
         _message = segmentData[SENSleepResultSegmentMessage];
         _eventType = segmentData[SENSleepResultSegmentEventType];
         _sleepDepth = [segmentData[SENSleepResultSegmentSleepDepth] integerValue];
+        _sound = [[SENSleepResultSound alloc] initWithDictionary:segmentData[SENSleepResultSegmentSound]];
     }
     return self;
 }
@@ -172,18 +214,20 @@ static NSString* const SENSleepResultSegmentSleepDepth = @"sleep_depth";
         _message = [aDecoder decodeObjectForKey:SENSleepResultSegmentMessage];
         _eventType = [aDecoder decodeObjectForKey:SENSleepResultSegmentEventType];
         _sleepDepth = [[aDecoder decodeObjectForKey:SENSleepResultSegmentSleepDepth] integerValue];
+        _sound = [aDecoder decodeObjectForKey:SENSleepResultSegmentSound];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder*)aCoder
 {
-    [aCoder encodeObject:_serverID forKey:SENSleepResultSegmentServerID];
-    [aCoder encodeObject:_date forKey:SENSleepResultSegmentTimestamp];
-    [aCoder encodeObject:_duration forKey:SENSleepResultSegmentDuration];
-    [aCoder encodeObject:_message forKey:SENSleepResultSegmentMessage];
-    [aCoder encodeObject:_eventType forKey:SENSleepResultSegmentEventType];
-    [aCoder encodeObject:@(_sleepDepth) forKey:SENSleepResultSegmentSleepDepth];
+    [aCoder encodeObject:self.serverID forKey:SENSleepResultSegmentServerID];
+    [aCoder encodeObject:self.date forKey:SENSleepResultSegmentTimestamp];
+    [aCoder encodeObject:self.duration forKey:SENSleepResultSegmentDuration];
+    [aCoder encodeObject:self.message forKey:SENSleepResultSegmentMessage];
+    [aCoder encodeObject:self.eventType forKey:SENSleepResultSegmentEventType];
+    [aCoder encodeObject:@(self.sleepDepth) forKey:SENSleepResultSegmentSleepDepth];
+    [aCoder encodeObject:self.sound forKey:SENSleepResultSegmentSound];
 }
 
 - (void)updateWithDictionary:(NSDictionary*)data
@@ -200,6 +244,12 @@ static NSString* const SENSleepResultSegmentSleepDepth = @"sleep_depth";
         self.eventType = data[SENSleepResultSegmentEventType];
     if (data[SENSleepResultSegmentSleepDepth])
         self.sleepDepth = [data[SENSleepResultSegmentSleepDepth] integerValue];
+    if (data[SENSleepResultSegmentSound]) {
+        if (self.sound)
+            [self.sound updateWithDictionary:data[SENSleepResultSegmentSound]];
+        else
+            self.sound = [[SENSleepResultSound alloc] initWithDictionary:data[SENSleepResultSegmentSound]];
+    }
 }
 
 @end

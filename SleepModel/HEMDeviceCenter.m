@@ -144,7 +144,7 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
     }
 }
 
-- (void)getConfiguredWiFiSSID:(void(^)(NSString* ssid, NSError* error))completion {
+- (void)getConfiguredWiFi:(void(^)(NSString* ssid, SENWiFiConnectionState state,  NSError* error))completion {
     if (!completion) return;
     
     __weak typeof(self) weakSelf = self;
@@ -152,14 +152,14 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             if (error != nil) {
-                completion (nil, error);
+                completion (nil, SENWiFiConnectionStateUnknown, error);
                 return;
             }
             
-            [[strongSelf senseManager] getConfiguredWiFi:^(NSString* ssid) {
-                completion (ssid, nil);
+            [[strongSelf senseManager] getConfiguredWiFi:^(NSString* ssid, SENWiFiConnectionState state) {
+                completion (ssid, state, nil);
             } failure:^(NSError *error) {
-                completion (nil, error);
+                completion (nil, SENWiFiConnectionStateUnknown, error);
             }];
         }
     }];
@@ -269,7 +269,13 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
             if (completion) completion(error);
             return;
         }
-        [strongSelf putSenseIntoPairingMode:completion];
+        [[strongSelf senseManager] enablePairingMode:YES success:^(id response) {
+            // must disconnect from sense to actually allow other person to pair
+            [[strongSelf senseManager] disconnectFromSense];
+            if (completion) completion (nil);
+        } failure:^(NSError *error) {
+            if (completion) completion (error);
+        }];
     }];
 }
 

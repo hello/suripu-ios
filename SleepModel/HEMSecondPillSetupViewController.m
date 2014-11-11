@@ -33,11 +33,6 @@
     [SENAnalytics track:kHEMAnalyticsEventOnBAddPill];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [[HEMUserDataCache sharedUserDataCache] setSettingUpSecondPill:NO];
-}
-
 - (void)setupDescription {
     NSString* descFormat = NSLocalizedString(@"second-pill.description.format", nil);
     NSString* senseSettings = NSLocalizedString(@"second-pill.description.sense-settings", nil);
@@ -62,8 +57,7 @@
 #pragma mark - Actions
 
 - (IBAction)next:(id)sender {
-    DDLogVerbose(@"WARNING: this has not been implemented yet!");
-    // TODO (jimmy): this controller has been decommissioned temporarily
+    [[self delegate] checkController:self isSettingUpNewSense:NO];
 }
 
 - (IBAction)help:(id)sender {

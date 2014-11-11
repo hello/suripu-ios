@@ -44,6 +44,9 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[self navigationItem] setHidesBackButton:YES];
+    
     [self setupSubtitle];
     [self setupCancelButton];
     
@@ -187,7 +190,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 - (void)pairNowWith:(SENSenseManager*)manager {
     [self listenForDisconnects];
     
-    [self updateActivityText:NSLocalizedString(@"pairing.activity.pairing-pill", nil)];
+    [self updateActivityText:NSLocalizedString(@"pairing.activity.looking-for-pill", nil)];
     
     NSString* token = [SENAuthorizationService accessToken];
     

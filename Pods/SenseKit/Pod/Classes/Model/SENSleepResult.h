@@ -44,6 +44,12 @@ typedef NS_ENUM(NSInteger, SENSleepResultSegmentDepth) {
 - (void)save;
 @end
 
+@interface SENSleepResultSound : NSObject <NSCoding, SENSleepResultSerializable>
+
+@property (strong) NSString* URLPath;
+@property long durationMillis;
+@end
+
 @interface SENSleepResultSegment : NSObject <NSCoding, SENSleepResultSerializable>
 
 @property (strong) id serverID;
@@ -51,6 +57,7 @@ typedef NS_ENUM(NSInteger, SENSleepResultSegmentDepth) {
 @property (strong) NSNumber* duration;
 @property (strong) NSString* message;
 @property (strong) NSString* eventType;
+@property (strong) SENSleepResultSound* sound;
 @property NSInteger sleepDepth;
 @end
 

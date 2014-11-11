@@ -35,8 +35,10 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [self deauthorizeIfNeeded];
     [self configureSettingsDefaults];
     NSString* analyticsToken = nil;
+    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
 #if !DEBUG
     [Crashlytics startWithAPIKey:@"f464ccd280d3e5730dcdaa9b64d1d108694ee9a9"];
+    if (accountId != nil) [Crashlytics setUserIdentifier:accountId];
     analyticsToken = @"8fea5e93a27fbac95b3c19aed0b36980";
 #else
     analyticsToken = @"b353e69e990cfce15a9557287ce7fbf8";
@@ -45,8 +47,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [SENAnalytics configure:SENAnalyticsProviderNameLogger with:nil];
     [SENAnalytics configure:SENAnalyticsProviderNameAmplitude
                        with:@{kSENAnalyticsProviderToken : analyticsToken}];
-    [SENAnalytics setUserId:[SENAuthorizationService accountIdOfAuthorizedUser]
-                 properties:@{}];
+    [SENAnalytics setUserId:accountId properties:@{}];
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];

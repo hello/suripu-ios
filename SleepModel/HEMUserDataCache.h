@@ -20,6 +20,5 @@
 
 @property (nonatomic, strong) SENAccount* account;
 @property (nonatomic, strong) SENSenseManager* senseManager;
-@property (nonatomic, assign) BOOL settingUpSecondPill;
 
 @end

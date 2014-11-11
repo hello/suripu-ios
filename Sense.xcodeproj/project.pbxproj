@@ -283,7 +283,7 @@
 		BF14E3D919EF3C3D0006EFEA /* HEMPillSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3CE19EF3C3D0006EFEA /* HEMPillSetupViewController.m */; };
 		BF14E3DA19EF3C3D0006EFEA /* HEMSecondPillSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3D019EF3C3D0006EFEA /* HEMSecondPillSetupViewController.m */; };
 		BF14E3DB19EF3C3D0006EFEA /* HEMSenseSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3D219EF3C3D0006EFEA /* HEMSenseSetupViewController.m */; };
-		BF14E3DD19EF3C3D0006EFEA /* HEMTwoPillSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3D619EF3C3D0006EFEA /* HEMTwoPillSetupViewController.m */; };
+		BF14E3DD19EF3C3D0006EFEA /* HEMSecondPillCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3D619EF3C3D0006EFEA /* HEMSecondPillCheckViewController.m */; };
 		BF14E3E019EF3C520006EFEA /* HEMOnboardingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3DF19EF3C520006EFEA /* HEMOnboardingUtils.m */; };
 		BF14E3E619EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3E519EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m */; };
 		BF1E2E5D1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E2E5C1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m */; };
@@ -756,8 +756,8 @@
 		BF14E3D019EF3C3D0006EFEA /* HEMSecondPillSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSecondPillSetupViewController.m; sourceTree = "<group>"; };
 		BF14E3D119EF3C3D0006EFEA /* HEMSenseSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSenseSetupViewController.h; sourceTree = "<group>"; };
 		BF14E3D219EF3C3D0006EFEA /* HEMSenseSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSenseSetupViewController.m; sourceTree = "<group>"; };
-		BF14E3D519EF3C3D0006EFEA /* HEMTwoPillSetupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTwoPillSetupViewController.h; sourceTree = "<group>"; };
-		BF14E3D619EF3C3D0006EFEA /* HEMTwoPillSetupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTwoPillSetupViewController.m; sourceTree = "<group>"; };
+		BF14E3D519EF3C3D0006EFEA /* HEMSecondPillCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSecondPillCheckViewController.h; sourceTree = "<group>"; };
+		BF14E3D619EF3C3D0006EFEA /* HEMSecondPillCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSecondPillCheckViewController.m; sourceTree = "<group>"; };
 		BF14E3DE19EF3C520006EFEA /* HEMOnboardingUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingUtils.h; sourceTree = "<group>"; };
 		BF14E3DF19EF3C520006EFEA /* HEMOnboardingUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingUtils.m; sourceTree = "<group>"; };
 		BF14E3E419EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+HEMFormat.h"; sourceTree = "<group>"; };
@@ -1070,8 +1070,8 @@
 				BF14E3D019EF3C3D0006EFEA /* HEMSecondPillSetupViewController.m */,
 				BF14E3D119EF3C3D0006EFEA /* HEMSenseSetupViewController.h */,
 				BF14E3D219EF3C3D0006EFEA /* HEMSenseSetupViewController.m */,
-				BF14E3D519EF3C3D0006EFEA /* HEMTwoPillSetupViewController.h */,
-				BF14E3D619EF3C3D0006EFEA /* HEMTwoPillSetupViewController.m */,
+				BF14E3D519EF3C3D0006EFEA /* HEMSecondPillCheckViewController.h */,
+				BF14E3D619EF3C3D0006EFEA /* HEMSecondPillCheckViewController.m */,
 				BFEAA0A619A51DCF002FBD44 /* HEMWelcomeViewController.h */,
 				BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */,
 				8AC49F9A198305F600C2BD63 /* HEMAuthenticationViewController.h */,
@@ -2244,7 +2244,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "./Crashlytics.framework/run f2fb9942f53f6516c4773588af6a50481d88ba0a c1c2f12a5d26d28ba58d88e8f4045241f854d6ce829415d932df453877112636";
+			shellScript = "./Crashlytics.framework/run f464ccd280d3e5730dcdaa9b64d1d108694ee9a9 c1c2f12a5d26d28ba58d88e8f4045241f854d6ce829415d932df453877112636";
 			showEnvVarsInLog = 0;
 		};
 		C2DAFDFE628B4AE1A8B7C294 /* Copy Pods Resources */ = {
@@ -2301,7 +2301,7 @@
 				BF14E3E619EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m in Sources */,
 				8AB2684719CCFF8800017818 /* HEMAlarmUtils.m in Sources */,
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,
-				BF14E3DD19EF3C3D0006EFEA /* HEMTwoPillSetupViewController.m in Sources */,
+				BF14E3DD19EF3C3D0006EFEA /* HEMSecondPillCheckViewController.m in Sources */,
 				BF14E3D919EF3C3D0006EFEA /* HEMPillSetupViewController.m in Sources */,
 				8AB33FE6199D3F710046188F /* HEMLocationFinderViewController.m in Sources */,
 				8A03386E197DD2D300BE8327 /* HEMSettingsTableViewController.m in Sources */,

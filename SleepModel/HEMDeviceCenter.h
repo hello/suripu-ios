@@ -7,9 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <SenseKit/SENSenseManager.h>
 
 @class SENDevice;
-@class SENSenseManager;
 
 typedef NS_ENUM(NSInteger, HEMDeviceCenterError) {
     HEMDeviceCenterErrorSenseUnavailable = -1,
@@ -192,12 +192,14 @@ extern NSString* const kHEMDeviceNotificationFactorySettingsRestored;
 - (void)restoreFactorySettings:(HEMDeviceCompletionBlock)completion;
 
 /**
- * @method getConfiguredWiFiSSID
+ * @method getConfiguredWiFi
  * 
  * @discussion
  * This is just a wrapper around SENSenseManager's getConfiguredWifi method,
  * but will ensure a paired sense is detected before proceeding
  */
-- (void)getConfiguredWiFiSSID:(void(^)(NSString* ssid, NSError* error))completion;
+- (void)getConfiguredWiFi:(void(^)(NSString* ssid,
+                                   SENWiFiConnectionState state,
+                                   NSError* error))completion;
 
 @end

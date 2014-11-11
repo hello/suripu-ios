@@ -60,6 +60,7 @@
     [manager enablePairingMode:YES success:^(id response) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
+            [manager disconnectFromSense]; // must disconnect to allow other app to connect
             [[strongSelf setupButton] stopActivity];
             [strongSelf getApp];
         }

@@ -20,6 +20,7 @@
 +(NSString *)locationSegueIdentifier;
 +(NSString *)moreInfoSegueIdentifier;
 +(NSString *)noBleToSetupSegueIdentifier;
++(NSString *)secondPillCheckSegueIdentifier;
 +(NSString *)senseSetupSegueIdentifier;
 +(NSString *)senseSetupNoBleSegueIdentifier;
 +(NSString *)senseToPillSegueIdentifier;

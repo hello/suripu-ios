@@ -36,6 +36,7 @@ static NSString *const _HEMsensorViewController = @"sensorViewController";
 static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMsettingsController = @"settingsController";
 static NSString *const _HEMsettingsNavController = @"settingsNavController";
+static NSString *const _HEMshowInsight = @"showInsight";
 static NSString *const _HEMsleepGraphController = @"sleepGraphController";
 static NSString *const _HEMsleepGraphNavController = @"sleepGraphNavController";
 static NSString *const _HEMsleepHistoryController = @"sleepHistoryController";
@@ -70,6 +71,7 @@ static NSString *const _HEMunitsSettings = @"unitsSettings";
 +(NSString *)pickSoundSegueSegueIdentifier { return _HEMpickSoundSegue; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
 +(NSString *)senseSegueIdentifier { return _HEMsense; }
++(NSString *)showInsightSegueIdentifier { return _HEMshowInsight; }
 +(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
 
 /** View Controllers */

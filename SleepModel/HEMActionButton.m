@@ -20,19 +20,39 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 
 @implementation HEMActionButton
 
-- (id)initWithCoder:(NSCoder*)aDecoder {
-    if (self = [super initWithCoder:aDecoder]) {
-        self.layer.cornerRadius = kHEMActionCornerRadius;
-        self.backgroundColor = [UIColor clearColor];
-        self.layer.borderColor = [HelloStyleKit senseBlueColor].CGColor;
-        self.layer.borderWidth = kHEMActionBorderWidth;
-        [self setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
-        [self setTitleColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:kHEMActionDisabledAlpha]
-                   forState:UIControlStateDisabled];
-        [self.titleLabel setFont:[UIFont fontWithName:@"Calibre-Medium" size:kHEMActionTitleFontSize]];
-        [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];
+- (id)init {
+    self = [self init];
+    if (self) {
+        [self setDefaults];
     }
     return self;
+}
+
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self setDefaults];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder*)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        [self setDefaults];
+    }
+    return self;
+}
+
+- (void)setDefaults {
+    self.layer.cornerRadius = kHEMActionCornerRadius;
+    self.backgroundColor = [UIColor clearColor];
+    self.layer.borderColor = [HelloStyleKit senseBlueColor].CGColor;
+    self.layer.borderWidth = kHEMActionBorderWidth;
+    [self setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
+    [self setTitleColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:kHEMActionDisabledAlpha]
+               forState:UIControlStateDisabled];
+    [self.titleLabel setFont:[UIFont fontWithName:@"Calibre-Medium" size:kHEMActionTitleFontSize]];
+    [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];
 }
 
 - (void)setEnabled:(BOOL)enabled {

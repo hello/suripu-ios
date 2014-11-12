@@ -350,6 +350,40 @@
             </objects>
             <point key="canvasLocation" x="498.75" y="1501.056338028169"/>
         </scene>
+        <!--Insight View Controller-->
+        <scene sceneID="epi-Qr-5L5">
+            <objects>
+                <viewController id="6Dv-nl-Crm" customClass="HEMInsightViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1Ej-Wd-DHd"/>
+                        <viewControllerLayoutGuide type="bottom" id="XsL-Ws-6qy"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="0bK-Ph-7OC">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UCC-4X-ec1">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="UCC-4X-ec1" firstAttribute="leading" secondItem="0bK-Ph-7OC" secondAttribute="leadingMargin" constant="-16" id="DhX-vI-8Hc"/>
+                            <constraint firstItem="UCC-4X-ec1" firstAttribute="top" secondItem="1Ej-Wd-DHd" secondAttribute="bottom" id="KkF-8z-wAg"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="UCC-4X-ec1" secondAttribute="trailing" constant="-16" id="Wyq-ca-fmk"/>
+                            <constraint firstItem="XsL-Ws-6qy" firstAttribute="top" secondItem="UCC-4X-ec1" secondAttribute="bottom" id="kZy-te-Zhb"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="EEc-Uh-i2f"/>
+                    <connections>
+                        <outlet property="backgroundView" destination="UCC-4X-ec1" id="HxX-en-OcP"/>
+                        <outlet property="view" destination="0bK-Ph-7OC" id="jmv-5X-I0E"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="itE-j4-A7b" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="498" y="2285"/>
+        </scene>
         <!--Unit Preference View Controller-->
         <scene sceneID="qT1-Tp-K0g">
             <objects>
@@ -1490,6 +1524,7 @@
                     <connections>
                         <outlet property="tableView" destination="ycX-qk-h9h" id="ZOk-OR-uLm"/>
                         <outlet property="view" destination="REg-4p-5tB" id="6Xq-3J-aUv"/>
+                        <segue destination="6Dv-nl-Crm" kind="modal" identifier="showInsight" modalTransitionStyle="crossDissolve" animates="NO" id="94j-oq-GkW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Sb-DU-1Mz" userLabel="First Responder" sceneMemberID="firstResponder"/>

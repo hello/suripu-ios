@@ -31,6 +31,7 @@
 +(NSString *)pickSoundSegueSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
 +(NSString *)senseSegueIdentifier;
++(NSString *)showInsightSegueIdentifier;
 +(NSString *)unitsSettingsSegueIdentifier;
 
 /** View Controllers */

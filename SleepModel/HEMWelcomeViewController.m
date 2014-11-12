@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 8/18/14.
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
+#import <MediaPlayer/MPMoviePlayerController.h>
 #import "UIView+HEMMotionEffects.h"
 
 #import "HEMWelcomeViewController.h"
@@ -38,6 +39,9 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *playCenterYConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgCenterXConstraint;
 
+@property (strong, nonatomic) UIView* videoContainer;
+@property (strong, nonatomic) MPMoviePlayerController* videoPlayer;
+
 @end
 
 @implementation HEMWelcomeViewController
@@ -45,6 +49,7 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setupVideoPlayer];
     [self setSubtitleText];
     
     UIColor* whiteColor = [UIColor whiteColor];
@@ -249,6 +254,113 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 
 - (IBAction)cancelGettingStarted:(id)sender {
     [self showGettingStartedActions:@(NO)];
+}
+
+#pragma mark - Video
+
+- (void)setupVideoPlayer {
+    // NOTE: MPMoviePlayer is a PoS!  PoS reason #1
+    // if you try to set movieController fullScreen or controlstyle as full screen,
+    // it will randomly crash the app when you play it, stating:
+    // 'An AVPlayerItem cannot be associated with more than one instance of AVPlayer'
+    // DON'T SET FULL SCREEN PROGRAMMATICALLY!  anything that says fullScreen, whatever
+    // it is, DON'T DO IT!
+    //
+    // NOTE #2: MPMoviePlayerController is not a view controller.  There is a MPMoviePlayerViewController,
+    // but that simply just wraps the MPMoviePlayerController by adding the it's view to the view controller's
+    // view.  I'm not using the view controller b/c Kevin wants to eventually do something fancier and
+    // [self presentMoviePlayerViewControllerAnimated:] which is an actual method, is absolutely not what
+    // we want according to Kevin and James.
+    //
+    NSURL* introductoryVideoURL = [NSURL URLWithString:NSLocalizedString(@"video.url.intro", nil)];
+    MPMoviePlayerController* movieController =
+        [[MPMoviePlayerController alloc] initWithContentURL:introductoryVideoURL];
+    [movieController setAllowsAirPlay:YES];
+    [movieController setShouldAutoplay:YES];
+    [movieController setMovieSourceType:MPMovieSourceTypeFile];
+    [self setVideoPlayer:movieController];
+    
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(videoFinished:)
+                   name:MPMoviePlayerPlaybackDidFinishNotification
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(videoDidExitFullScreen:)
+                   name:MPMoviePlayerDidExitFullscreenNotification
+                 object:nil];
+}
+
+- (void)videoFinished:(NSNotification*)notification {
+    NSNumber* reason = [notification.userInfo objectForKey:MPMoviePlayerPlaybackDidFinishReasonUserInfoKey];
+    switch ([reason intValue]) {
+        // PoS reason #3?  MPMovieFinishReasonUserExited does not seem to ever be returned, anywhere.
+        // some stackoverflows mention this to be set as the reason in a WillExitFullScreenNotificaiton,
+        // but it's not there or the notification never fires
+        case MPMovieFinishReasonUserExited:
+        case MPMovieFinishReasonPlaybackEnded:
+            [self stopVideo];
+            break;
+        case MPMovieFinishReasonPlaybackError: {
+            [self stopVideo];
+            [self showMessageDialog:NSLocalizedString(@"video.error.playback-failed", nil)
+                              title:NSLocalizedString(@"video.error.title", nil)];
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+- (void)videoDidExitFullScreen:(NSNotification*)notification {
+    // NOTE: MPMoviePlayer is a PoS!  PoS reason #2
+    // minimize and done button BOTH fires this notification with no information
+    // to distinguish between the two events. For now, we will simply stop and
+    // hide the video until we create a custom video player or add custom controls
+    // based on design.  Since we simply just want to add the video in for now,
+    // we will stick with this and be aware of this annoying fact.
+    [self stopVideo];
+}
+
+- (IBAction)playVideo:(id)sender {
+    if ([self videoContainer] == nil) {
+        [self setVideoContainer:[[UIView alloc] initWithFrame:[[self view] bounds]]];
+    }
+    [[[self videoPlayer] view] setAlpha:1.0f];
+    [[self videoContainer] setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:0.0f]];
+    [[self videoContainer] setAlpha:1.0f];
+    
+    [[self view] addSubview:[self videoContainer]];
+    
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         [[self videoContainer] setBackgroundColor:[UIColor colorWithWhite:0.0f alpha:1.0f]];
+                     }
+                     completion:^(BOOL finished) {
+                         [[self videoPlayer] prepareToPlay];
+                         [[[self videoPlayer] view] setFrame:[[self videoContainer] bounds]];
+                         [[self videoContainer] addSubview:[[self videoPlayer] view]];
+                         [[self videoPlayer] play];
+                     }];
+}
+
+- (void)stopVideo {
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         [[[self videoPlayer] view] setAlpha:0.0f];
+                         [[self videoContainer] setAlpha:0.0f];
+                     }
+                     completion:^(BOOL finished) {
+                         [[self videoPlayer] stop];
+                         [[[self videoPlayer] view] removeFromSuperview];
+                         [[self videoContainer] removeFromSuperview];
+                     }];
+}
+
+#pragma mark - Cleanup
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

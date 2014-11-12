@@ -43,11 +43,13 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 #else
     analyticsToken = @"b353e69e990cfce15a9557287ce7fbf8";
 #endif
+    NSString* version = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
     [SENAuthorizationService authorizeRequestsFromKeychain];
     [SENAnalytics configure:SENAnalyticsProviderNameLogger with:nil];
     [SENAnalytics configure:SENAnalyticsProviderNameAmplitude
                        with:@{kSENAnalyticsProviderToken : analyticsToken}];
-    [SENAnalytics setUserId:accountId properties:@{}];
+    [SENAnalytics setUserId:accountId
+                 properties:@{kHEMAnalyticsUserPropVersionNumber : version}];
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];

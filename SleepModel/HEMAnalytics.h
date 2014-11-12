@@ -14,6 +14,7 @@ extern NSString* const kHEMAnalyticsEventVideo;
 extern NSString* const kHEMAnalyticsEventPropMessage;
 extern NSString* const kHEMAnalyticsEventPropAction;
 extern NSString* const kHEMAnalyticsEventPropDuration;
+extern NSString* const kHEMAnalyticsUserPropVersionNumber;
 
 // permissions
 extern NSString* const kHEMAnalyticsEventPermissionLoc;

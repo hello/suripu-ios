@@ -15,6 +15,7 @@ NSString* const kHEMAnalyticsEventVideo = @"Play Video";
 NSString* const kHEMAnalyticsEventPropMessage = @"message";
 NSString* const kHEMAnalyticsEventPropAction = @"action";
 NSString* const kHEMAnalyticsEventPropDuration = @"duration";
+NSString* const kHEMAnalyticsUserPropVersionNumber = @"version";
 
 // permissions
 NSString* const kHEMAnalyticsEventPermissionLoc = @"Permission Location";

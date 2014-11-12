@@ -116,7 +116,7 @@
                                     <constraint firstAttribute="height" constant="35" id="8wx-BM-MHi"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="done" secureTextEntry="YES"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="5ic-x1-0Fg" id="ARy-yc-hta"/>
                                 </connections>
@@ -2418,7 +2418,7 @@ Have your partner visit hello.is/app to download the Sense app and set up their 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lPc-Ik-cVb"/>
-        <segue reference="DAu-sO-H4V"/>
+        <segue reference="azr-Tk-rB7"/>
         <segue reference="JSp-ra-OqT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

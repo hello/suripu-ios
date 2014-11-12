@@ -3,6 +3,7 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENAPIRoom.h>
+#import <SenseKit/SENInsight.h>
 
 #import <markdown_peg.h>
 
@@ -18,13 +19,14 @@
 #import "HEMPagingFlowLayout.h"
 #import "HEMInsightCollectionViewCell.h"
 #import "HEMInsightsSummaryDataSource.h"
+#import "HEMInsightViewController.h"
 
 NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 static CGFloat const kHEMCurrentConditionsInsightsViewHeight = 112.0f;
 static CGFloat const kHEMCurrentConditionsInsightsMargin = 12.0f;
 static CGFloat const kHEMCurrentConditionsInsightsSpacing= 5.0f;
 
-@interface HEMCurrentConditionsTableViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface HEMCurrentConditionsTableViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegateFlowLayout, HEMInsightViewControllerDelegate>
 @property (nonatomic, strong) IBOutlet UITableView* tableView;
 @property (nonatomic, strong) NSArray* sensors;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
@@ -32,6 +34,7 @@ static CGFloat const kHEMCurrentConditionsInsightsSpacing= 5.0f;
 @property (nonatomic) CGFloat refreshRate;
 @property (nonatomic, strong) HEMInsightsSummaryDataSource* insightsDataSource;
 @property (nonatomic, strong) UICollectionView* insightsView;
+@property (nonatomic, strong) SENInsight* selectedInsight;
 @end
 
 @implementation HEMCurrentConditionsTableViewController
@@ -209,6 +212,16 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
     return CGSizeMake(itemWidth, kHEMCurrentConditionsInsightsViewHeight - kHEMCurrentConditionsInsightsSpacing);
 }
 
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    SENInsight* insight = [[self insightsDataSource] insightAtIndexPath:indexPath];
+    if (insight != nil) {
+        [self setSelectedInsight:insight];
+        [self performSegueWithIdentifier:[HEMMainStoryboard showInsightSegueIdentifier]
+                                  sender:self];
+    }
+
+}
+
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
@@ -356,6 +369,27 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
         } break;
         }
     } break;
+    }
+}
+
+#pragma mark - HEMInsightViewControllerDelegate
+
+- (UIView*)viewToShowThroughFrom:(HEMInsightViewController*)controller {
+    return [[[[[UIApplication sharedApplication] delegate] window] rootViewController] view];
+}
+
+- (void)didDismissInsightFrom:(HEMInsightViewController *)controller {
+    [self dismissViewControllerAnimated:NO completion:nil];
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    UIViewController* destVC = segue.destinationViewController;
+    if ([destVC isKindOfClass:[HEMInsightViewController class]]) {
+        HEMInsightViewController* insightVC = (HEMInsightViewController*)destVC;
+        [insightVC setInsight:[self selectedInsight]];
+        [insightVC setDelegate:self];
     }
 }
 

@@ -20,6 +20,16 @@
 + (UIFont *)insightTitleFont;
 
 /**
+ * Font for the title displayed on insight cards
+ */
++ (UIFont *)insightCardTitleFont;
+
+/**
+ * Font for the message displayed on insight cards
+ */
++ (UIFont *)insightCardMessageFont;
+
+/**
  *  Font for current sensor value and sleep score
  */
 + (UIFont *)largeNumberFont;

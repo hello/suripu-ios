@@ -12,6 +12,7 @@
 #import <SenseKit/SENQuestion.h>
 
 #import "UIImage+ImageEffects.h"
+#import "UIView+HEMSnapshot.h"
 
 #import "HEMSleepSummarySlideViewController.h"
 #import "HEMSleepGraphViewController.h"
@@ -166,24 +167,10 @@
     }];
 }
 
-- (UIImage*)snapshot {
-    UIGraphicsBeginImageContextWithOptions([[self view] bounds].size, NO, 0);
-    
-    [[self view] drawViewHierarchyInRect:[[self view] bounds] afterScreenUpdates:NO];
-    
-    UIImage *snapshot = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    
-    return snapshot;
-}
-
 - (void)showQuestions:(id)sender {
     if ([self presentedViewController] != nil) return;
     
-    UIImage* snapshot = [[self snapshot] applyBlurWithRadius:10
-                                                   tintColor:[HelloStyleKit sleepQuestionBgColor]
-                                       saturationDeltaFactor:1.2
-                                                   maskImage:nil];
+    UIImage* snapshot = [[self view] blurredSnapshotWithTint:[HelloStyleKit sleepQuestionBgColor]];
     
     [[self qAlertView] dismiss:YES completion:^{
         NSArray* questions = [[SENServiceQuestions sharedService] todaysQuestions];

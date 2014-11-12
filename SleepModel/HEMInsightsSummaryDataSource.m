@@ -49,6 +49,11 @@ static CGFloat const kHEMInsightCellDisplayDuration = 1.0f;
     return [[self insights] count] > 0;
 }
 
+- (SENInsight*)insightAtIndexPath:(NSIndexPath*)indexPath {
+    DDLogVerbose(@"row %ld", [indexPath row]);
+    return [indexPath row] < [[self insights] count] ? [self insights][[indexPath row]] : nil;
+}
+
 #pragma mark UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
@@ -64,21 +69,15 @@ static CGFloat const kHEMInsightCellDisplayDuration = 1.0f;
     [collectionView dequeueReusableCellWithReuseIdentifier:kHEMInsightCellReuseId
                                               forIndexPath:indexPath];
     
-    if ([[self insights] count] > 0) {
-        SENInsight* insight = [self insights][[indexPath row]];
-        
+    SENInsight* insight = [self insightAtIndexPath:indexPath];
+    if (insight != nil) {
         [cell setTitle:[[insight title] uppercaseString] message:[insight message]];
-        
+
     } else {
         [cell setTitle:NSLocalizedString(@"sleep.insight.title", nil)
                message:NSLocalizedString(@"sleep.insight.summary.no-data-message", nil)];
     }
     
-    [[cell contentView] setAlpha:0.0f];
-    [UIView animateWithDuration:kHEMInsightCellDisplayDuration animations:^{
-        [[cell contentView] setAlpha:1.0f];
-    }];
-
     cell.layer.cornerRadius = 2.f;
     cell.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
     cell.layer.shadowOffset = CGSizeMake(0, 0.5);

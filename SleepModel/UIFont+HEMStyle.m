@@ -31,6 +31,14 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:9.f];
 }
 
++ (UIFont *)insightCardTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
+}
+
++ (UIFont *)insightCardMessageFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.f];
+}
+
 + (UIFont *)largeNumberFont {
     return [UIFont fontWithName:HEMLargeNumberFontFamilyName size:72.f];
 }

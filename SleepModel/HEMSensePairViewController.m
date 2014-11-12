@@ -112,7 +112,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
-                DDLogVerbose(@"Sense unexpected disconnected");
                 [strongSelf stopActivityWithMessage:nil completion:^{
                     if ([strongSelf isPairing]) {
                         [strongSelf setCurrentState:HEMSensePairStatePairingError];
@@ -179,8 +178,9 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)startScan {
     // always rescan in case the user has moved or changed Sense globes or
     // whatever the reason is, that would cause a cache of the Sense object
-    // or manager to cause issues.
-    DDLogVerbose(@"scanning for sense");
+    // or manager to cause issues.  If one was already cached, make sure we
+    // disconnect from it first
+    [self disconnectSense];
     __weak typeof(self) weakSelf = self;
     if (![SENSenseManager scanForSense:^(NSArray *senses) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -262,7 +262,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)pair {
     [self setPairing:YES];
-    [self disconnectSense]; // in case one has been set
     [self observeUnexpectedDisconnects];
     
     NSString* activityMessage = NSLocalizedString(@"pairing.activity.pairing-sense", nil);

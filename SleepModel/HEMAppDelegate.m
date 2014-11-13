@@ -34,22 +34,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [HEMLogUtils enableLogger];
     [self deauthorizeIfNeeded];
     [self configureSettingsDefaults];
-    NSString* analyticsToken = nil;
-    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
-#if !DEBUG
-    [Crashlytics startWithAPIKey:@"f464ccd280d3e5730dcdaa9b64d1d108694ee9a9"];
-    if (accountId != nil) [Crashlytics setUserIdentifier:accountId];
-    analyticsToken = @"8fea5e93a27fbac95b3c19aed0b36980";
-#else
-    analyticsToken = @"b353e69e990cfce15a9557287ce7fbf8";
-#endif
-    NSString* version = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
-    [SENAuthorizationService authorizeRequestsFromKeychain];
-    [SENAnalytics configure:SENAnalyticsProviderNameLogger with:nil];
-    [SENAnalytics configure:SENAnalyticsProviderNameAmplitude
-                       with:@{kSENAnalyticsProviderToken : analyticsToken}];
-    [SENAnalytics setUserId:accountId
-                 properties:@{kHEMAnalyticsUserPropVersionNumber : version}];
+    [self setupAnalytics];
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];
@@ -74,6 +59,25 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     if (![self deauthorizeIfNeeded]) {
         [self resume:NO];
     }
+}
+
+- (void)setupAnalytics {
+    NSString* analyticsToken = nil;
+    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
+#if !DEBUG
+    [Crashlytics startWithAPIKey:@"f464ccd280d3e5730dcdaa9b64d1d108694ee9a9"];
+    if (accountId != nil) [Crashlytics setUserIdentifier:accountId];
+    analyticsToken = @"8fea5e93a27fbac95b3c19aed0b36980";
+#else
+    analyticsToken = @"b353e69e990cfce15a9557287ce7fbf8";
+#endif
+    NSString* version = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
+    [SENAuthorizationService authorizeRequestsFromKeychain];
+    [SENAnalytics configure:SENAnalyticsProviderNameLogger with:nil];
+    [SENAnalytics configure:SENAnalyticsProviderNameAmplitude
+                       with:@{kSENAnalyticsProviderToken : analyticsToken}];
+    [SENAnalytics setUserId:accountId
+                 properties:@{kHEMAnalyticsUserPropVersionNumber : version}];
 }
 
 - (BOOL)deauthorizeIfNeeded {
@@ -109,7 +113,10 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 {
     SENClearModel();
     [[HEMDeviceCenter sharedCenter] clearCache];
-    [[NSUserDefaults standardUserDefaults] removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
+    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
+    [defaults removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
+    [defaults setObject:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
+    [defaults synchronize];
     [HEMOnboardingUtils resetOnboardingCheckpoint];
     [self resume:YES];
 }

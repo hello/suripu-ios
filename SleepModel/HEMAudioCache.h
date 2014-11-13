@@ -11,4 +11,6 @@
 @interface HEMAudioCache : NSObject
 
 + (void)cacheURLforAssetAtPath:(NSString*)URLPath completion:(void(^)(NSURL* url, NSError* error))completion;
+
++ (void)clearCache;
 @end

@@ -29,6 +29,12 @@ static NSString* HEMAudioDirectory = @"audio";
     return session;
 }
 
++ (void)clearCache
+{
+    NSString* path = [self audioCacheDirectory];
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+}
+
 + (NSString*)audioCacheDirectory
 {
     NSString  *cache = [NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES) firstObject];
@@ -58,10 +64,12 @@ static NSString* HEMAudioDirectory = @"audio";
     [self cacheRemoteURL:remoteURL toTargetURL:targetURL completion:completion];
 }
 
-+ (NSString *)fileNameForPath:(NSString *)filePath
++ (NSString *)fileNameForPath:(NSString *)URLPath
 {
+    NSURLComponents* components = [NSURLComponents componentsWithString:URLPath];
+    NSString* rawPath = [components.host stringByAppendingPathComponent:components.path];
     NSCharacterSet* illegalCharacters = [NSCharacterSet characterSetWithCharactersInString:@"/:\\?%*|\"<>"];
-    return [[filePath componentsSeparatedByCharactersInSet:illegalCharacters] componentsJoinedByString:@"_"];
+    return [[rawPath componentsSeparatedByCharactersInSet:illegalCharacters] componentsJoinedByString:@"_"];
 }
 
 + (void)cacheRemoteURL:(NSURL*)remoteURL toTargetURL:(NSURL*)targetURL completion:(void (^)(NSURL *, NSError *))completion

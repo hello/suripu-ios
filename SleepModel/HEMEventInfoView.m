@@ -6,8 +6,16 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import <FDWaveformView/FDWaveformView.h>
+#import <SpinKit/RTSpinKitView.h>
 #import "HEMEventInfoView.h"
 #import "HEMPaddedRoundedLabel.h"
+#import "HelloStyleKit.h"
+
+@interface HEMEventInfoView () <AVAudioPlayerDelegate, FDWaveformViewDelegate>
+@property (nonatomic, strong) AVAudioPlayer* player;
+@property (nonatomic, strong) NSTimer* playerUpdateTimer;
+@end
 
 @implementation HEMEventInfoView
 
@@ -16,17 +24,169 @@ static CGFloat const HEMEventInfoViewCaretInset = 5.f;
 static CGFloat const HEMEventInfoViewCaretDepth = 6.f;
 static CGFloat const HEMEventInfoViewCaretYOffset = 10.f;
 static CGFloat const HEMEventInfoViewCornerRadius = 4.f;
+static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.5f;
 
 - (void)awakeFromNib
 {
     self.backgroundColor = [UIColor clearColor];
     self.caretPosition = HEMEventInfoViewCaretPositionTop;
+    self.waveformView.progressColor = [UIColor colorWithHue:0.56 saturation:1 brightness:1 alpha:1];
+    self.waveformView.wavesColor = [UIColor colorWithWhite:0.9f alpha:1.f];
+    self.waveformView.delegate = self;
+    self.spinnerView.color = self.waveformView.progressColor;
+    self.spinnerView.spinnerSize = CGRectGetHeight(self.playSoundButton.bounds);
+    self.spinnerView.style = RTSpinKitViewStyleArc;
+    self.spinnerView.hidesWhenStopped = YES;
+    self.spinnerView.backgroundColor = [UIColor clearColor];
+    [self.spinnerView stopAnimating];
+    self.playSoundButton.hidden = YES;
 }
+
+- (void)dealloc
+{
+    [_playerUpdateTimer invalidate];
+}
+
+#pragma mark - Audio
+
+- (void)showAudioPlayer:(BOOL)isVisible
+{
+    self.waveformView.hidden = !isVisible;
+    self.playSoundButton.hidden = !isVisible;
+    self.playSoundButton.enabled = NO;
+    if (isVisible)
+        [self.spinnerView startAnimating];
+    else
+        [self.spinnerView stopAnimating];
+}
+
+- (void)setAudioURL:(NSURL *)audioURL
+{
+    if ([audioURL isEqual:self.waveformView.audioURL]) {
+        self.playSoundButton.enabled = YES;
+        return;
+    }
+    self.waveformView.audioURL = audioURL;
+    __weak typeof(self) weakSelf = self;
+    self.waveformView.completion = ^(NSURL* processedURL, BOOL success) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (success && [processedURL isEqual:audioURL]) {
+            strongSelf.playSoundButton.alpha = 0;
+            strongSelf.playSoundButton.hidden = NO;
+            [UIView animateWithDuration:0.25f animations:^{
+                strongSelf.playSoundButton.alpha = 1;
+                strongSelf.spinnerView.alpha = 0;
+            } completion:^(BOOL finished) {
+                [strongSelf.spinnerView stopAnimating];
+            }];
+        }
+    };
+}
+
+- (IBAction)toggleAudio
+{
+    if ([self.player isPlaying])
+        [self stopAudio];
+    else
+        [self playAudio];
+}
+
+- (void)playAudio
+{
+    NSURL* url = self.waveformView.audioURL;
+    if (!url)
+        return;
+    if ([self.player isPlaying])
+        [self.player stop];
+    [self.playerUpdateTimer invalidate];
+    NSError* error = nil;
+    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    self.player.delegate = self;
+    if (error) {
+        [self stopAudio];
+    } else {
+        [self.waveformView setProgressRatio:0];
+        [self.player play];
+        [self.playSoundButton setImage:[UIImage imageNamed:@"stopSound"] forState:UIControlStateNormal];
+        self.playerUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:HEMEventInfoViewPlayerUpdateInterval
+                                                                  target:self
+                                                                selector:@selector(updateAudioProgress)
+                                                                userInfo:nil
+                                                                 repeats:YES];
+    }
+}
+
+- (void)stopAudio
+{
+    [self.playerUpdateTimer invalidate];
+    [self.waveformView setProgressRatio:1];
+    [self.playSoundButton setImage:[UIImage imageNamed:@"playSound"] forState:UIControlStateNormal];
+    [self.player stop];
+    self.player = nil;
+}
+
+- (void)updateAudioProgress
+{
+    [self.waveformView setProgressRatio:self.player.currentTime/self.player.duration];
+}
+
+#pragma mark AVAudioPlayerDelegate
+
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player
+{
+    [self stopAudio];
+}
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    [self stopAudio];
+}
+
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags
+{
+    [self stopAudio];
+}
+
+#pragma mark FDWaveformView
+
+- (void)waveformViewWillLoad:(FDWaveformView *)waveformView
+{
+    [self performSelectorOnMainThread:@selector(handleLoadingStart) withObject:nil waitUntilDone:NO];
+}
+
+- (void)waveformViewDidRender:(FDWaveformView *)waveformView
+{
+    [self performSelectorOnMainThread:@selector(handleLoadingSuccess) withObject:nil waitUntilDone:NO];
+}
+
+- (void)waveformViewDidFail:(FDWaveformView *)waveformView error:(NSError *)error
+{
+    [self performSelectorOnMainThread:@selector(handleLoadingFailure) withObject:nil waitUntilDone:NO];
+}
+
+- (void)handleLoadingStart
+{
+    [self.spinnerView startAnimating];
+    self.playSoundButton.enabled = NO;
+}
+
+- (void)handleLoadingFailure
+{
+    [self.spinnerView stopAnimating];
+    self.playSoundButton.enabled = NO;
+}
+
+- (void)handleLoadingSuccess
+{
+    [self.spinnerView stopAnimating];
+    self.playSoundButton.enabled = YES;
+}
+
+#pragma mark - Drawing
 
 - (void)drawRect:(CGRect)rect
 {
     [self drawRoundedContainerInRect:rect];
-//    [self drawCaretInRect:rect];
 }
 
 - (void)drawRoundedContainerInRect:(CGRect)rect

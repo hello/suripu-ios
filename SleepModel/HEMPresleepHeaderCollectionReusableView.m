@@ -1,6 +1,5 @@
 
 #import "HEMPresleepHeaderCollectionReusableView.h"
-#import "HEMTimelineDrawingUtils.h"
 #import "HelloStyleKit.h"
 
 CGFloat const HEMPresleepSummaryLineOffset = 20.f;

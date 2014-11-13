@@ -1,7 +1,6 @@
 
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
-#import "HEMTimelineDrawingUtils.h"
 #import "HelloStyleKit.h"
 
 @interface HEMSleepSummaryCollectionViewCell ()

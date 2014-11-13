@@ -314,6 +314,10 @@
 		BF770F1E1A1550E0008611E9 /* bluetooth.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F1B1A1550E0008611E9 /* bluetooth.png */; };
 		BF770F1F1A1550E0008611E9 /* bluetooth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F1C1A1550E0008611E9 /* bluetooth@2x.png */; };
 		BF770F201A1550E0008611E9 /* bluetooth@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F1D1A1550E0008611E9 /* bluetooth@3x.png */; };
+		BF770F241A155455008611E9 /* setting_up_sense.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F211A155455008611E9 /* setting_up_sense.png */; };
+		BF770F251A155455008611E9 /* setting_up_sense@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F221A155455008611E9 /* setting_up_sense@2x.png */; };
+		BF770F261A155455008611E9 /* setting_up_sense@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F231A155455008611E9 /* setting_up_sense@3x.png */; };
+		BF770F281A15559E008611E9 /* sense@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F271A15559E008611E9 /* sense@3x.png */; };
 		BF781E3119DC716F00B68EBC /* HEMUnitPreferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3019DC716F00B68EBC /* HEMUnitPreferenceViewController.m */; };
 		BF781E3519DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3419DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.m */; };
 		BF781E3C19DCE00400B68EBC /* HEMDeviceCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3B19DCE00400B68EBC /* HEMDeviceCenter.m */; };
@@ -811,6 +815,10 @@
 		BF770F1B1A1550E0008611E9 /* bluetooth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bluetooth.png; path = images/bluetooth.png; sourceTree = "<group>"; };
 		BF770F1C1A1550E0008611E9 /* bluetooth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bluetooth@2x.png"; path = "images/bluetooth@2x.png"; sourceTree = "<group>"; };
 		BF770F1D1A1550E0008611E9 /* bluetooth@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bluetooth@3x.png"; path = "images/bluetooth@3x.png"; sourceTree = "<group>"; };
+		BF770F211A155455008611E9 /* setting_up_sense.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = setting_up_sense.png; path = images/setting_up_sense.png; sourceTree = "<group>"; };
+		BF770F221A155455008611E9 /* setting_up_sense@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "setting_up_sense@2x.png"; path = "images/setting_up_sense@2x.png"; sourceTree = "<group>"; };
+		BF770F231A155455008611E9 /* setting_up_sense@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "setting_up_sense@3x.png"; path = "images/setting_up_sense@3x.png"; sourceTree = "<group>"; };
+		BF770F271A15559E008611E9 /* sense@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sense@3x.png"; path = "images/sense@3x.png"; sourceTree = "<group>"; };
 		BF781E2F19DC716F00B68EBC /* HEMUnitPreferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUnitPreferenceViewController.h; sourceTree = "<group>"; };
 		BF781E3019DC716F00B68EBC /* HEMUnitPreferenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUnitPreferenceViewController.m; sourceTree = "<group>"; };
 		BF781E3319DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDeviceInfoTableViewCell.h; sourceTree = "<group>"; };
@@ -1145,6 +1153,9 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BF770F211A155455008611E9 /* setting_up_sense.png */,
+				BF770F221A155455008611E9 /* setting_up_sense@2x.png */,
+				BF770F231A155455008611E9 /* setting_up_sense@3x.png */,
 				BF770F1B1A1550E0008611E9 /* bluetooth.png */,
 				BF770F1C1A1550E0008611E9 /* bluetooth@2x.png */,
 				BF770F1D1A1550E0008611E9 /* bluetooth@3x.png */,
@@ -1168,6 +1179,7 @@
 				BFC8215219E7441200E09D5D /* play@3x.png */,
 				BFDCC7B819D9C741007A922B /* sense.png */,
 				BFDCC7B919D9C741007A922B /* sense@2x.png */,
+				BF770F271A15559E008611E9 /* sense@3x.png */,
 				BF9C87D219B6A001003188D4 /* sleep_pill.png */,
 				BF9C87D319B6A001003188D4 /* sleep_pill@2x.png */,
 				BF5E444D19AD494500278A2F /* phoneWithEmoticons.png */,
@@ -2072,6 +2084,7 @@
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
 				BF9C87D419B6A001003188D4 /* sleep_pill.png in Resources */,
 				8AFE77FD19E8C2170000F881 /* movement-good.png in Resources */,
+				BF770F251A155455008611E9 /* setting_up_sense@2x.png in Resources */,
 				8AFE782319E8C2170000F881 /* sunset@3x.png in Resources */,
 				8AFE781019E8C2170000F881 /* phone-good@2x.png in Resources */,
 				8AFE77F319E8C2170000F881 /* light-bad@3x.png in Resources */,
@@ -2088,6 +2101,7 @@
 				8A66FC96199D24FF00922ED5 /* maleIcon@2x.png in Resources */,
 				8AFE77F219E8C2170000F881 /* light-bad@2x.png in Resources */,
 				BF14E3BF19EF3BD10006EFEA /* onboarding_bg_wide@3x.png in Resources */,
+				BF770F281A15559E008611E9 /* sense@3x.png in Resources */,
 				8AFE781E19E8C2170000F881 /* sunrise.png in Resources */,
 				8A9BD8B819DDD02100B1E57E /* Calibre-Bold.otf in Resources */,
 				8A93AFCD1A09BF0300F70A8B /* caret up.png in Resources */,
@@ -2098,6 +2112,7 @@
 				8AFE77F819E8C2170000F881 /* light-medium@2x.png in Resources */,
 				8AC4A052198A070F00C2BD63 /* alarmEnabledIcon@2x.png in Resources */,
 				8AFE77FC19E8C2170000F881 /* movement-bad@3x.png in Resources */,
+				BF770F261A155455008611E9 /* setting_up_sense@3x.png in Resources */,
 				8AFE780319E8C2170000F881 /* particulates-bad.png in Resources */,
 				8AC4A0391989C36200C2BD63 /* particleIcon.png in Resources */,
 				8A93AFC21A09BED100F70A8B /* Share.png in Resources */,
@@ -2153,6 +2168,7 @@
 				BF005C7B19FED57E00E68E87 /* lockIcon@2x.png in Resources */,
 				8A9BD8BC19DDD02100B1E57E /* Calibre-Medium.otf in Resources */,
 				8AFE77F019E8C2170000F881 /* humidity-medium@3x.png in Resources */,
+				BF770F241A155455008611E9 /* setting_up_sense.png in Resources */,
 				BF14E3BB19EF3BD10006EFEA /* map@2x.png in Resources */,
 				8AFE782919E8C2170000F881 /* temperature-good@3x.png in Resources */,
 				BF005C7D19FED57E00E68E87 /* wifiIcon.png in Resources */,

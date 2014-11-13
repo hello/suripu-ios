@@ -2269,12 +2269,21 @@ Launch the </string>
                                     <action selector="help:" destination="AER-Sm-Ec9" eventType="touchUpInside" id="LYJ-76-Wmo"/>
                                 </connections>
                             </button>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bluetooth.png" translatesAutoresizingMaskIntoConstraints="NO" id="li5-1a-hqt">
+                                <rect key="frame" x="28" y="317" width="544" height="77"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="77" id="LUt-kg-SdI"/>
+                                </constraints>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="L20-Gb-HkU" firstAttribute="top" secondItem="rIf-wQ-F1B" secondAttribute="bottom" constant="17" id="31y-VS-nFd"/>
+                            <constraint firstItem="li5-1a-hqt" firstAttribute="leading" secondItem="tO9-Ht-ejg" secondAttribute="leadingMargin" constant="12" id="4Dl-he-YIF"/>
+                            <constraint firstItem="9T9-rd-lkX" firstAttribute="bottom" secondItem="li5-1a-hqt" secondAttribute="top" constant="-70" id="9DS-fJ-q8n"/>
                             <constraint firstAttribute="centerX" secondItem="rIf-wQ-F1B" secondAttribute="centerX" id="Ah4-3j-TIz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WSp-oq-I62" secondAttribute="trailing" constant="12" id="FFL-jf-ie7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="li5-1a-hqt" secondAttribute="trailing" constant="12" id="K4O-iI-oUN"/>
                             <constraint firstItem="rIf-wQ-F1B" firstAttribute="top" secondItem="yuw-Cx-zbP" secondAttribute="top" constant="50" id="Mue-pZ-lA3"/>
                             <constraint firstItem="WSp-oq-I62" firstAttribute="top" secondItem="Viz-Vs-C9v" secondAttribute="bottom" constant="25" id="eO8-WI-Bkg"/>
                             <constraint firstItem="9T9-rd-lkX" firstAttribute="bottom" secondItem="WSp-oq-I62" secondAttribute="bottom" constant="168" id="hdL-jV-iOl"/>
@@ -2483,6 +2492,7 @@ Have your partner visit hello.is/app to download the Sense app and set up their 
         </scene>
     </scenes>
     <resources>
+        <image name="bluetooth.png" width="244" height="77"/>
         <image name="doubleArrow.png" width="35" height="63"/>
         <image name="femaleIcon.png" width="30" height="46"/>
         <image name="maleIcon.png" width="39" height="40"/>
@@ -2493,8 +2503,8 @@ Have your partner visit hello.is/app to download the Sense app and set up their 
         <image name="shake_pill.png" width="268" height="222"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="lPc-Ik-cVb"/>
-        <segue reference="azr-Tk-rB7"/>
+        <segue reference="OeC-Do-qcD"/>
+        <segue reference="DAu-sO-H4V"/>
         <segue reference="JSp-ra-OqT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

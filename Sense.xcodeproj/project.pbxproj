@@ -311,6 +311,9 @@
 		BF770F121A143E63008611E9 /* shake_pill.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F0F1A143E63008611E9 /* shake_pill.png */; };
 		BF770F131A143E63008611E9 /* shake_pill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F101A143E63008611E9 /* shake_pill@2x.png */; };
 		BF770F141A143E63008611E9 /* shake_pill@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F111A143E63008611E9 /* shake_pill@3x.png */; };
+		BF770F1E1A1550E0008611E9 /* bluetooth.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F1B1A1550E0008611E9 /* bluetooth.png */; };
+		BF770F1F1A1550E0008611E9 /* bluetooth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F1C1A1550E0008611E9 /* bluetooth@2x.png */; };
+		BF770F201A1550E0008611E9 /* bluetooth@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F1D1A1550E0008611E9 /* bluetooth@3x.png */; };
 		BF781E3119DC716F00B68EBC /* HEMUnitPreferenceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3019DC716F00B68EBC /* HEMUnitPreferenceViewController.m */; };
 		BF781E3519DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3419DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.m */; };
 		BF781E3C19DCE00400B68EBC /* HEMDeviceCenter.m in Sources */ = {isa = PBXBuildFile; fileRef = BF781E3B19DCE00400B68EBC /* HEMDeviceCenter.m */; };
@@ -805,6 +808,9 @@
 		BF770F0F1A143E63008611E9 /* shake_pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shake_pill.png; path = images/shake_pill.png; sourceTree = "<group>"; };
 		BF770F101A143E63008611E9 /* shake_pill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "shake_pill@2x.png"; path = "images/shake_pill@2x.png"; sourceTree = "<group>"; };
 		BF770F111A143E63008611E9 /* shake_pill@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "shake_pill@3x.png"; path = "images/shake_pill@3x.png"; sourceTree = "<group>"; };
+		BF770F1B1A1550E0008611E9 /* bluetooth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bluetooth.png; path = images/bluetooth.png; sourceTree = "<group>"; };
+		BF770F1C1A1550E0008611E9 /* bluetooth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bluetooth@2x.png"; path = "images/bluetooth@2x.png"; sourceTree = "<group>"; };
+		BF770F1D1A1550E0008611E9 /* bluetooth@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bluetooth@3x.png"; path = "images/bluetooth@3x.png"; sourceTree = "<group>"; };
 		BF781E2F19DC716F00B68EBC /* HEMUnitPreferenceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUnitPreferenceViewController.h; sourceTree = "<group>"; };
 		BF781E3019DC716F00B68EBC /* HEMUnitPreferenceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUnitPreferenceViewController.m; sourceTree = "<group>"; };
 		BF781E3319DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDeviceInfoTableViewCell.h; sourceTree = "<group>"; };
@@ -1139,6 +1145,9 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BF770F1B1A1550E0008611E9 /* bluetooth.png */,
+				BF770F1C1A1550E0008611E9 /* bluetooth@2x.png */,
+				BF770F1D1A1550E0008611E9 /* bluetooth@3x.png */,
 				BF770F0F1A143E63008611E9 /* shake_pill.png */,
 				BF770F101A143E63008611E9 /* shake_pill@2x.png */,
 				BF770F111A143E63008611E9 /* shake_pill@3x.png */,
@@ -2033,6 +2042,7 @@
 				8A1E723819D62C26007475D3 /* alarmSoundIcon.png in Resources */,
 				BFC8215419E7441200E09D5D /* play@2x.png in Resources */,
 				8AFE780519E8C2170000F881 /* particulates-bad@3x.png in Resources */,
+				BF770F1E1A1550E0008611E9 /* bluetooth.png in Resources */,
 				8AAEED0319A5225F006517C4 /* Agile-Extralight.otf in Resources */,
 				8AFE781419E8C2170000F881 /* phone-medium@3x.png in Resources */,
 				8AC4A0371989C36200C2BD63 /* humidityIcon.png in Resources */,
@@ -2164,6 +2174,7 @@
 				BF005C7F19FED57E00E68E87 /* wifiIcon@3x.png in Resources */,
 				8A9BD8BB19DDD02100B1E57E /* Calibre-LightItalic.otf in Resources */,
 				8AC4A04B1989D47000C2BD63 /* chevronIconRight.png in Resources */,
+				BF770F1F1A1550E0008611E9 /* bluetooth@2x.png in Resources */,
 				8AFE77F419E8C2170000F881 /* light-good.png in Resources */,
 				8AFE77E719E8C2170000F881 /* asleep@3x.png in Resources */,
 				8A66FC95199D24FF00922ED5 /* maleIcon.png in Resources */,
@@ -2232,6 +2243,7 @@
 				BF770F131A143E63008611E9 /* shake_pill@2x.png in Resources */,
 				8AAEED0519A5225F006517C4 /* Agile-Fat.otf in Resources */,
 				8AAEED0619A5225F006517C4 /* Agile-FatItalic.otf in Resources */,
+				BF770F201A1550E0008611E9 /* bluetooth@3x.png in Resources */,
 				8A93AFD01A09BF0300F70A8B /* senseIcon@3x.png in Resources */,
 				8AFE782219E8C2170000F881 /* sunset@2x.png in Resources */,
 				8AC7F8D219E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.xib in Resources */,

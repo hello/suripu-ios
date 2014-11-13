@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.0.0.34
+
+New:
+
+* Supporting 2nd sleep pill user onboarding flow
+* Skippable WiFi onboarding if set and if firmware supports it
+* Insight summaries are tappable
+* very verbose BLE logging, for when you want to send us the logs
+* introductory video on welcome screen
+* onboarding demographic info screens are skippable
+
+Fixes:
+
+* iOS7 fixes
+* fixed issue where user was automatically being logged out, even during
+  onboarding
+* fixed crashlytics
+* fixed pairing mode crasher
+* fixed birthdate
+* fixed sensor graph labels being out of order
+
 ## 1.0.0.33
 
 New:

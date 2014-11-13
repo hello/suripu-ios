@@ -20,6 +20,7 @@ Fixes:
 * fixed pairing mode crasher
 * fixed birthdate
 * fixed sensor graph labels being out of order
+* fixed sensor utc times
 
 ## 1.0.0.33
 

@@ -12,6 +12,7 @@ pod 'iCarousel', '~> 1.7.6'
 pod 'UIImageEffects', '~> 0.0.1'
 pod 'SpinKit', '~> 1.2.0'
 pod 'BEMSimpleLineGraph'
+pod 'FDWaveformView', :git => 'git@github.com:hello/FDWaveformView.git'
 
 # Private
 pod 'FCDynamicPanesNavigationController', :git => 'git@github.com:hello/FCDynamicPanesNavigationController.git'

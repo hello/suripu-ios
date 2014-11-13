@@ -21,6 +21,7 @@
 #import "HEMLogUtils.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMAudioCache.h"
 #import "HEMDeviceCenter.h"
 #import "UIFont+HEMStyle.h"
 
@@ -112,6 +113,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 - (void)resetAndShowOnboarding
 {
     SENClearModel();
+    [HEMAudioCache clearCache];
     [[HEMDeviceCenter sharedCenter] clearCache];
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];

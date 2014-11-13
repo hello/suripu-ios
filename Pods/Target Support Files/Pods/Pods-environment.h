@@ -102,6 +102,12 @@
 #define COCOAPODS_VERSION_MINOR_FCMutableArray 0
 #define COCOAPODS_VERSION_PATCH_FCMutableArray 0
 
+// FDWaveformView
+#define COCOAPODS_POD_AVAILABLE_FDWaveformView
+#define COCOAPODS_VERSION_MAJOR_FDWaveformView 0
+#define COCOAPODS_VERSION_MINOR_FDWaveformView 2
+#define COCOAPODS_VERSION_PATCH_FDWaveformView 2
+
 // FXKeychain
 #define COCOAPODS_POD_AVAILABLE_FXKeychain
 #define COCOAPODS_VERSION_MAJOR_FXKeychain 1

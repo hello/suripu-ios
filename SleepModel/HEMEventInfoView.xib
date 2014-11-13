@@ -8,9 +8,13 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view contentMode="scaleToFill" id="iN0-l3-epB" customClass="HEMEventInfoView">
-            <rect key="frame" x="0.0" y="0.0" width="238" height="100"/>
+            <rect key="frame" x="0.0" y="0.0" width="238" height="132"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="180-K8-eK7" customClass="RTSpinKitView">
+                    <rect key="frame" x="30" y="69" width="43" height="43"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                </view>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WOKE UP ― 9:17am" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lzh-0f-YUM">
                     <rect key="frame" x="30" y="14" width="88.5" height="12.5"/>
                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="9"/>
@@ -23,14 +27,40 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDP-FI-Oy3">
+                    <rect key="frame" x="30" y="69" width="43" height="43"/>
+                    <state key="normal" image="playSound.png">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="toggleAudio" destination="iN0-l3-epB" eventType="touchUpInside" id="S0S-Kc-Ig4"/>
+                    </connections>
+                </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fpk-6G-lrL" customClass="FDWaveformView">
+                    <rect key="frame" x="81" y="79" width="142" height="23"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="23" id="Q4t-Nk-0BC"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="5a4-2W-TI9" secondAttribute="bottom" id="4bg-jH-4eA"/>
+                <constraint firstItem="RDP-FI-Oy3" firstAttribute="height" secondItem="180-K8-eK7" secondAttribute="height" id="5uR-a1-GIO"/>
+                <constraint firstItem="RDP-FI-Oy3" firstAttribute="width" secondItem="180-K8-eK7" secondAttribute="width" id="CQW-2e-x2B"/>
                 <constraint firstItem="5a4-2W-TI9" firstAttribute="top" secondItem="Lzh-0f-YUM" secondAttribute="bottom" constant="13" id="J5l-S3-cZ7"/>
+                <constraint firstItem="RDP-FI-Oy3" firstAttribute="centerX" secondItem="180-K8-eK7" secondAttribute="centerX" id="PVU-CM-8Tc"/>
+                <constraint firstItem="RDP-FI-Oy3" firstAttribute="leading" secondItem="5a4-2W-TI9" secondAttribute="leading" id="PnE-Sd-yVd"/>
+                <constraint firstAttribute="trailing" secondItem="Fpk-6G-lrL" secondAttribute="trailing" constant="15" id="Z8u-gk-uAA"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="leading" secondItem="5a4-2W-TI9" secondAttribute="leading" id="aDk-Hl-JQN"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="14" id="h2Q-Go-sNa"/>
+                <constraint firstItem="RDP-FI-Oy3" firstAttribute="centerY" secondItem="180-K8-eK7" secondAttribute="centerY" id="iRp-CN-ZxR"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="u4g-wi-sCt"/>
+                <constraint firstItem="RDP-FI-Oy3" firstAttribute="top" secondItem="5a4-2W-TI9" secondAttribute="bottom" constant="12" id="vbY-Ie-4c8"/>
+                <constraint firstItem="Fpk-6G-lrL" firstAttribute="leading" secondItem="RDP-FI-Oy3" secondAttribute="trailing" constant="8" id="vji-tB-7F9"/>
+                <constraint firstItem="Fpk-6G-lrL" firstAttribute="centerY" secondItem="RDP-FI-Oy3" secondAttribute="centerY" constant="0.5" id="zJz-e6-IS6"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>
@@ -38,9 +68,15 @@
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <connections>
                 <outlet property="messageLabel" destination="5a4-2W-TI9" id="DBD-wo-Ajl"/>
+                <outlet property="playSoundButton" destination="RDP-FI-Oy3" id="flA-4U-XpZ"/>
+                <outlet property="spinnerView" destination="180-K8-eK7" id="Zwk-0a-38p"/>
                 <outlet property="titleLabel" destination="Lzh-0f-YUM" id="7rs-mY-gzB"/>
+                <outlet property="waveformView" destination="Fpk-6G-lrL" id="zMd-H3-zbL"/>
             </connections>
-            <point key="canvasLocation" x="297" y="318"/>
+            <point key="canvasLocation" x="297" y="334"/>
         </view>
     </objects>
+    <resources>
+        <image name="playSound.png" width="43" height="43"/>
+    </resources>
 </document>

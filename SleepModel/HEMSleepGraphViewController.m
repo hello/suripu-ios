@@ -1,6 +1,7 @@
 
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <SenseKit/SENSettings.h>
+#import <FDWaveformView/FDWaveformView.h>
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENSleepResult.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
@@ -14,6 +15,7 @@
 #import "HEMEventInfoView.h"
 #import "HEMPaddedRoundedLabel.h"
 #import "HEMAppDelegate.h"
+#import "HEMAudioCache.h"
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 
@@ -33,7 +35,7 @@
 @implementation HEMSleepGraphViewController
 
 static CGFloat const HEMSleepSummaryCellHeight = 350.f;
-static CGFloat const HEMSleepEventPopupFullHeight = 100.f;
+static CGFloat const HEMSleepEventPopupFullHeight = 90.f;
 static CGFloat const HEMSleepEventPopupMinimumHeight = 50.f;
 static CGFloat const HEMPresleepHeaderCellHeight = 70.f;
 static CGFloat const HEMTimelineHeaderCellHeight = 50.f;
@@ -65,6 +67,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [self.eventInfoView stopAudio];
     self.panePanGestureRecognizer.delegate = nil;
 }
 
@@ -200,19 +203,22 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 - (void)positionEventInfoViewRelativeToView:(UIView*)view
 {
+    [self.eventInfoView stopAudio];
+    NSIndexPath* eventIndexPath = [self indexPathForEventCellWithSubview:view];
+    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:eventIndexPath];
     CGFloat inset = 50.f;
     CGFloat yAdjustment = 8.f;
     CGFloat clockInset = 24.f;
     CGRect buttonFrame = [self.view convertRect:view.frame fromView:view.superview];
     CGRect frame = CGRectMake(inset, CGRectGetMinY(buttonFrame) - yAdjustment, CGRectGetWidth(self.view.bounds) - inset - clockInset, CGRectGetHeight(self.eventInfoView.bounds));
-    NSIndexPath* eventIndexPath = [self indexPathForEventCellWithSubview:view];
-    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:eventIndexPath];
     if (segment.message.length > 0) {
         frame.size.height = HEMSleepEventPopupFullHeight;
     }
     else {
         frame.size.height = HEMSleepEventPopupMinimumHeight;
     }
+    if (segment.sound)
+        frame.size.height += CGRectGetHeight(self.eventInfoView.playSoundButton.bounds);
     CGPoint bottomPoint = CGPointMake(1, CGRectGetMaxY(frame));
     NSIndexPath* popupBottomIndexPath = [self.collectionView indexPathForItemAtPoint:[self.collectionView convertPoint:bottomPoint fromView:self.view]];
     if (popupBottomIndexPath.section != HEMSleepGraphCollectionViewSegmentSection || CGRectGetMaxY(frame) > CGRectGetMaxY(self.view.bounds)) {
@@ -335,7 +341,26 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     if (segment) {
         NSString* title = [NSString stringWithFormat:NSLocalizedString(@"sleep-event.title.format", nil), [[self.dataSource localizedNameForSleepEventType:segment.eventType] uppercaseString], [[self.eventInfoDateFormatter stringFromDate:segment.date] lowercaseString]];
         self.eventInfoView.titleLabel.text = title;
-        self.eventInfoView.messageLabel.attributedText = markdown_to_attr_string(segment.message, 0, self.eventInfoMarkdownAttributes);
+        NSAttributedString* message = markdown_to_attr_string(segment.message, 0, self.eventInfoMarkdownAttributes);
+        while (message.length > 0 && [[message string] characterAtIndex:message.length - 1] == '\n')
+            message = [message attributedSubstringFromRange:NSMakeRange(0, message.length - 1)];
+        self.eventInfoView.messageLabel.attributedText = message;
+        [self.eventInfoView.messageLabel sizeToFit];
+        if (segment.sound) {
+            [self.eventInfoView showAudioPlayer:YES];
+            [self.eventInfoView setLoading:YES];
+            [HEMAudioCache cacheURLforAssetAtPath:segment.sound.URLPath completion:^(NSURL *url, NSError *error) {
+                if (url) {
+                    [self.eventInfoView setAudioURL:url];
+                } else {
+                    [self.eventInfoView setLoading:NO];
+                }
+            }];
+        } else {
+            [self.eventInfoView setLoading:NO];
+            [self.eventInfoView showAudioPlayer:NO];
+        }
+        [self.eventInfoView updateConstraintsIfNeeded];
     }
 }
 
@@ -343,6 +368,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
 {
+    [self.eventInfoView stopAudio];
     if (self.eventInfoView.alpha == 0 && self.eventBandView.alpha == 0 && self.eventBlurView.alpha == 0)
         return;
     [self hideEventBlurView];

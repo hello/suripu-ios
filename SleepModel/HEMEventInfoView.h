@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 @class HEMPaddedRoundedLabel;
+@class FDWaveformView;
+@class RTSpinKitView;
 
 typedef NS_ENUM(NSUInteger, HEMEventInfoViewCaretPosition) {
     HEMEventInfoViewCaretPositionTop,
@@ -20,5 +22,16 @@ typedef NS_ENUM(NSUInteger, HEMEventInfoViewCaretPosition) {
 
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* messageLabel;
+@property (weak, nonatomic) IBOutlet UIButton* playSoundButton;
+@property (weak, nonatomic) IBOutlet FDWaveformView* waveformView;
+@property (weak, nonatomic) IBOutlet RTSpinKitView* spinnerView;
 @property (nonatomic) HEMEventInfoViewCaretPosition caretPosition;
+
+- (void)showAudioPlayer:(BOOL)isVisible;
+- (void)setAudioURL:(NSURL*)audioURL;
+- (IBAction)toggleAudio;
+- (void)stopAudio;
+- (void)playAudio;
+
+- (void)setLoading:(BOOL)isLoading;
 @end

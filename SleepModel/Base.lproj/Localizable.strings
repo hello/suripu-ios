@@ -28,6 +28,12 @@
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "We could not set your birthdate for your account.";
 
+// video
+// urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
+"video.url.intro" = "http://player.vimeo.com/external/101139949.hd.mp4?s=28ac378e29847b77e9fb7431f05d2772";
+"video.error.title" = "Video Failed";
+"video.error.playback-failed" = "A playback error was encountered while attempting to play the video.";
+
 // no bluetooth on
 "no-bluetooth.subtitle.format" = "Sense uses Bluetooth to communicate with your mobile device.  Please turn your Bluetooth on to continue.\n\nLaunch the %@ app, tap %@, and flip the switch to %@.";
 "no-bluetooth.settings" = "Settings";
@@ -68,13 +74,14 @@
 "pairing.check.add-second-pill-subtitle" = "Are you adding a second Sleep Pill to a Sense that has been set up previously, or are you setting up Sense for the first time?";
 
 // wifi setup
-"wifi.error.title" = "WiFi setup Failed";
+"wifi.error.title" = "WiFi Setup Failed";
+"wifi.error.link-account-title" = "Link Account Failed";
+"wifi.error.timezone-title" = "Setting Time Zone Failed";
 "wifi.activity.setting-wifi" = "Setting WiFi credentials";
 "wifi.activity.setting-timezone" = "Setting timezone";
 "wifi.error.set-sense-general" = "Sense could not set up WiFi. Make sure Sense is on and nearby and try again.";
 "wifi.activity.scanning" = "Finding WiFi networks...";
 "wifi.error.set-sense-not-in-range" = "WiFi is out of Sense's range.";
-"wifi.error.missing-access-token" = "Link account failed because access token is missing from account.  Please report this and for now, restart the process";
 "wifi.error.set-sense-timeout" = "Timed out while configuring WiFi credentials on Sense.";
 "wifi.error.set-sense-failed-connection" = "Sense could not connect to the network.";
 "wifi.error.account-link-message" = "Unable to set up Sense properly.";

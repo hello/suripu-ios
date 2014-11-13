@@ -19,6 +19,7 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
 @property (weak, nonatomic) IBOutlet UIView* lineView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *fIconButtonBotConstraint;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
+@property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
 @property (assign, nonatomic) SENAccountGender selectedGender;
 
@@ -32,7 +33,9 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
     
     if ([self delegate] != nil) {
         NSString* title = NSLocalizedString(@"status.success", nil);
+        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
         [[self doneButton] setTitle:title forState:UIControlStateNormal];
+        [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
     }
     
     switch ([self defaultGender]) {
@@ -118,9 +121,21 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
         [[self delegate] didSelectGender:[self selectedGender] from:self];
     } else {
         [[[HEMUserDataCache sharedUserDataCache] account] setGender:[self selectedGender]];
-        [self performSegueWithIdentifier:[HEMOnboardingStoryboard heightSegueIdentifier]
-                                  sender:self];
+        [self next];
     }
+}
+
+- (IBAction)skip:(id)sender {
+    if ([self delegate] != nil) {
+        [[self delegate] didCancelGenderFrom:self];
+    } else {
+        [self next];
+    }
+}
+
+- (void)next {
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard heightSegueIdentifier]
+                              sender:self];
 }
 
 @end

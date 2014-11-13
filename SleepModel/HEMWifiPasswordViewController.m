@@ -190,16 +190,6 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     NSString* accessToken = [SENAuthorizationService accessToken];
     SENSenseManager* manager = [self manager];
     
-    if (accessToken == nil) {
-        // FIXME (jimmy): i've hit this case once, but have not reproduced it
-        // we need to find this problem and recover from it!
-        DDLogWarn(@"account was not set up correctly! access token missing!");
-        NSString* msg = NSLocalizedString(@"wifi.error.missing-access-token", nil);
-        NSString* title = NSLocalizedString(@"wifi.error.title", nil);
-        [self showMessageDialog:msg title:title];
-        return;
-    }
-    
     __weak typeof(self) weakSelf = self;
     [manager linkAccount:accessToken success:^(id response) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -212,7 +202,7 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
         if (strongSelf) {
             [strongSelf stopActivityWithMessage:nil renableControls:YES completion:^{
                 NSString* msg = NSLocalizedString(@"wifi.error.account-link-message", nil);
-                NSString* title = NSLocalizedString(@"wifi.error.title", nil);
+                NSString* title = NSLocalizedString(@"wifi.error.link-account-title", nil);
                 [strongSelf showMessageDialog:msg title:title];
             }];
         }
@@ -233,7 +223,7 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
                 DDLogWarn(@"failed to set timezone on the server");
                 [strongSelf stopActivityWithMessage:nil renableControls:YES completion:^{
                     NSString* msg = NSLocalizedString(@"wifi.error.time-zone-failed", nil);
-                    NSString* title = NSLocalizedString(@"wifi.error.title", nil);
+                    NSString* title = NSLocalizedString(@"wifi.error.timezone-title", nil);
                     [strongSelf showMessageDialog:msg title:title];
                 }];
                 [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];

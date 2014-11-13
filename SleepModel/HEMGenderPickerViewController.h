@@ -8,6 +8,7 @@
 
 - (void)didSelectGender:(SENAccountGender)gender
                    from:(HEMGenderPickerViewController*)controller;
+- (void)didCancelGenderFrom:(HEMGenderPickerViewController*)controller;
 
 @end
 

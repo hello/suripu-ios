@@ -20,6 +20,7 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 @property (assign, nonatomic) CGFloat weightInKgs;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint *carouselToButtonTopAlignment;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
+@property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
 @end
 
@@ -43,8 +44,10 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
     }
     
     if ([self delegate] != nil) {
-        NSString* title = NSLocalizedString(@"status.success", nil);
-        [[self doneButton] setTitle:title forState:UIControlStateNormal];
+        NSString* done = NSLocalizedString(@"status.success", nil);
+        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
+        [[self doneButton] setTitle:done forState:UIControlStateNormal];
+        [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
     }
 }
 
@@ -121,8 +124,21 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
         [[self delegate] didSelectWeightInKgs:[self weightInKgs] from:self];
     } else {
         [[[HEMUserDataCache sharedUserDataCache] account] setWeight:@(ceilf([self weightInKgs] * 1000))];
-        [self performSegueWithIdentifier:[HEMOnboardingStoryboard locationSegueIdentifier] sender:self];
+        [self next];
     }
+}
+
+- (IBAction)skip:(id)sender {
+    if ([self delegate] != nil) {
+        [[self delegate] didCancelWeightFrom:self];
+    } else {
+        [self next];
+    }
+}
+
+- (void)next {
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard locationSegueIdentifier]
+                              sender:self];
 }
 
 #pragma mark - Cleanup

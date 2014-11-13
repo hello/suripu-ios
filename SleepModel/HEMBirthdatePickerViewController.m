@@ -19,6 +19,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 @property (weak,   nonatomic) IBOutlet UILabel *titleLabel;
 @property (assign, nonatomic)          BOOL appeared;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
+@property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *dobPickerHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *dobPickerToButtonTopConstraint;
@@ -35,8 +36,10 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
     [[self titleLabel] setAccessibilityLabel:NSLocalizedString(@"user.info.accessibility.birthdate-title", nil)];
     
     if ([self delegate] != nil) {
-        NSString* title = NSLocalizedString(@"status.success", nil);
-        [[self doneButton] setTitle:title forState:UIControlStateNormal];
+        NSString* done = NSLocalizedString(@"status.success", nil);
+        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
+        [[self doneButton] setTitle:done forState:UIControlStateNormal];
+        [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
     }
     
     [SENAnalytics track:kHEMAnalyticsEventOnBBirthday];
@@ -99,6 +102,14 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 
     } else {
         [[self delegate] didSelectMonth:month day:day year:year from:self];
+    }
+}
+
+- (IBAction)skip:(id)sender {
+    if ([self delegate] != nil) {
+        [[self delegate] didCancelBirthdatePicker:self];
+    } else {
+        [self proceedToNextScreen];
     }
 }
 

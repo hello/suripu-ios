@@ -206,6 +206,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+- (void)didCancelBirthdatePicker:(HEMBirthdatePickerViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark Height Delegate
 
 - (void)didSelectHeightInCentimeters:(int)centimeters
@@ -224,6 +228,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
 }
 
+- (void)didCancelHeightFrom:(HEMHeightPickerViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark Weight Delegate
 
 - (void)didSelectWeightInKgs:(CGFloat)weightKgs
@@ -238,6 +246,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
             [strongSelf finishUpdate:error];
         }
     }];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didCancelWeightFrom:(HEMWeightPickerViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -258,6 +270,10 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [self dismissViewControllerAnimated:YES completion:nil];
     
+}
+
+- (void)didCancelGenderFrom:(HEMGenderPickerViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

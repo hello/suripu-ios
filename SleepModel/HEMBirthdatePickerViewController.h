@@ -10,6 +10,7 @@
                    day:(NSInteger)day
                   year:(NSInteger)year
                   from:(HEMBirthdatePickerViewController*)controller;
+- (void)didCancelBirthdatePicker:(HEMBirthdatePickerViewController*)controller;
 
 @end
 

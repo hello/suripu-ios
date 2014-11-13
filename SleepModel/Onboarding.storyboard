@@ -1237,9 +1237,9 @@ You can always do this later by visiting Settings.</string>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sET-vH-ZfK">
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shake_pill.png" translatesAutoresizingMaskIntoConstraints="NO" id="sET-vH-ZfK">
                                 <rect key="frame" x="28" y="215" width="544" height="148"/>
-                                <color key="backgroundColor" red="0.96470588239999999" green="0.97647058819999999" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="148" id="byU-th-qjP"/>
                                 </constraints>
@@ -2490,6 +2490,7 @@ Have your partner visit hello.is/app to download the Sense app and set up their 
         <image name="onboarding_bg_wide.png" width="470" height="588"/>
         <image name="play.png" width="75" height="75"/>
         <image name="sense.png" width="151" height="151"/>
+        <image name="shake_pill.png" width="268" height="222"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lPc-Ik-cVb"/>

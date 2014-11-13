@@ -29,6 +29,7 @@ Pod::Spec.new do |s|
     ss.source_files = 'Pod/Classes/BLE/**/*.{h,m}'
     ss.dependency 'LGBluetooth', '~> 1.1.4'
     ss.dependency 'SHSProtoBuf'
+    ss.dependency 'CocoaLumberjack'
   end
 
   s.subspec "Model" do |ss|

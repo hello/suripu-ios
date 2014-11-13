@@ -163,7 +163,7 @@ NSString* const SENAPIAccountEndpoint = @"account";
         NSNumber* weight = [self object:responseObject[SENAPIAccountPropertyWeight] mustBe:[NSNumber class]];
         NSNumber* height = [self object:responseObject[SENAPIAccountPropertyHeight] mustBe:[NSNumber class]];
         NSString* email = [self object:responseObject[SENAPIAccountPropertyEmailAddress] mustBe:[NSString class]];
-        NSNumber* birthdate = [self object:responseObject[SENAPIAccountPropertyBirthdate] mustBe:[NSNumber class]];
+        NSString* birthdate = [self object:responseObject[SENAPIAccountPropertyBirthdate] mustBe:[NSString class]];
         NSNumber* latitude = [self object:responseObject mustBe:[NSNumber class]];
         NSNumber* longitude = [self object:responseObject mustBe:[NSNumber class]];
         
@@ -175,8 +175,7 @@ NSString* const SENAPIAccountEndpoint = @"account";
         [account setEmail:email];
         [account setLatitude:latitude];
         [account setLongitude:longitude];
-        // birthdate returned from server is millis since 1970
-        [account setBirthdateInMillis:birthdate];
+        [account setBirthdate:birthdate];
     }
     return account;
 }

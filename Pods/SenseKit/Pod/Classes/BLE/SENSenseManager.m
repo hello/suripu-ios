@@ -6,7 +6,11 @@
 //  Copyright (c) 2014 Hello Inc. All rights reserved.
 //
 
+#import <CocoaLumberjack/DDLog.h>
+#import <CocoaLumberjack/DDLogMacros.h>
+
 #import <CoreBluetooth/CoreBluetooth.h>
+
 #import <LGBluetooth/LGBluetooth.h>
 
 #import "LGCentralManager.h"
@@ -15,6 +19,10 @@
 #import "SENSenseManager.h"
 #import "SENSense+Protected.h"
 #import "SENSenseMessage.pb.h"
+
+#ifndef ddLogLevel
+#define ddLogLevel LOG_LEVEL_VERBOSE
+#endif
 
 static CGFloat const kSENSenseDefaultTimeout = 20.0f;
 static CGFloat const kSENSenseRescanTimeout = 8.0f;
@@ -53,9 +61,11 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 + (BOOL)scanForSenseWithTimeout:(NSTimeInterval)timeout
                      completion:(void(^)(NSArray* senses))completion {
+    
     LGCentralManager* btManager = [LGCentralManager sharedInstance];
     if (![btManager isCentralReady]) return NO;
     
+    DDLogVerbose(@"scanning for Sense started");
     CBUUID* serviceId = [CBUUID UUIDWithString:kSENSenseServiceID];
     [btManager scanForPeripheralsByInterval:timeout
                                    services:@[serviceId]
@@ -71,12 +81,14 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                              [senses addObject:sense];
                                          }
                                      }
+                                     DDLogVerbose(@"scan completed with %ld Sense(s) found", (long)count);
                                      if (completion) completion(senses);
                                  }];
     return YES;
 }
 
 + (void)stopScan {
+    DDLogVerbose(@"scan stopped");
     if ([[LGCentralManager sharedInstance] isScanning]) {
         [[LGCentralManager sharedInstance] stopScanForPeripherals];
     }
@@ -99,6 +111,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 - (instancetype)initWithSense:(SENSense*)sense {
     self = [super init];
     if (self) {
+        DDLogVerbose(@"Sense manager initialized for %@", [sense name]);
         [self setSense:sense];
         [self setValid:YES];
         [self setMessageSuccessCallbacks:[NSMutableDictionary dictionary]];
@@ -115,6 +128,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 - (void)rediscoverToConnectThen:(void(^)(NSError* error))completion {
     __weak typeof(self) weakSelf = self;
+    DDLogVerbose(@"rediscovering Sense %@", [[self sense] name]);
     [[self class] scanForSenseWithTimeout:kSENSenseRescanTimeout completion:^(NSArray *senses) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
@@ -129,6 +143,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                 }
                 
                 if (foundAgain) {
+                    DDLogVerbose(@"Sense rediscovered");
                     [strongSelf setValid:YES];
                     LGPeripheral* peripheral = [[strongSelf sense] peripheral];
                     [peripheral connectWithTimeout:kSENSenseDefaultTimeout completion:completion];
@@ -136,6 +151,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
             }
             
             if (!foundAgain && completion) {
+                DDLogVerbose(@"Sense not found when trying to rediscover");
                 completion ([NSError errorWithDomain:kSENSenseErrorDomain
                                                 code:SENSenseManagerErrorCodeInvalidated
                                             userInfo:nil]);
@@ -175,10 +191,12 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         if (![self isValid]) {
             [self rediscoverToConnectThen:postConnectionBlock];
         } else {
+            DDLogVerbose(@"attempting to connect to Sense %@", [[self sense] name]);
             [peripheral connectWithTimeout:kSENSenseDefaultTimeout
                                 completion:postConnectionBlock];
         }
     } else {
+        DDLogVerbose(@"Sense %@ is already connected", [[self sense] name]);
         completion (nil);
     }
 }
@@ -334,6 +352,8 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         bytesWritten += actualSize;
     }
     
+    DDLogVerbose(@"protobuf message %@ with size %ld", helloBlePackets, (long)bytesWritten);
+    
     return helloBlePackets;
 }
 
@@ -355,6 +375,8 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         return [self failWithBlock:failure andCode:SENSenseManagerErrorCodeNoDeviceSpecified];
     }
     
+    DDLogVerbose(@"sending message of type %u", [message type]);
+    
     __weak typeof(self) weakSelf = self;
     [self characteristics:^(id response, NSError *error) {
         if (error != nil) {
@@ -375,6 +397,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         NSArray* packets = [strongSelf blePackets:message];
         
         if ([packets count] > 0) {
+            DDLogVerbose(@"# of packets being sent %ld", [packets count]);
             __block NSMutableArray* allPackets = nil;
             __block NSNumber* totalPackets = nil;
             __block typeof(reader) blockReader = reader;
@@ -395,6 +418,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                           throughWriter:writer
                                 success:nil
                                 failure:^(NSError *error) {
+                                    DDLogVerbose(@"message failed to send unsuccessfully with error %@, unsubscribing", error);
                                     [blockReader setNotifyValue:NO completion:nil];
                                     [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                                 }];
@@ -408,21 +432,25 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                              SENSenseUpdateBlock updateBlock = [strongSelf messageUpdateCallbacks][cbKey];
                                              // if there's no update block or there is one and block tells us to finish
                                              if (!updateBlock || (updateBlock && updateBlock(response))) {
+                                                 DDLogVerbose(@"message response received, unsubscribing");
                                                  [blockReader setNotifyValue:NO completion:nil];
                                                  [strongSelf fireSuccessMsgCbWithCbKey:cbKey andResponse:response];
                                              } else {
+                                                 DDLogVerbose(@"partial message response received, waiting for next set");
                                                  // cannot nil out the allPackets array b/c that will deallocate the instance
                                                  // in the block and messages will be sent to a deallocated instance
                                                  [allPackets removeAllObjects];
                                                  totalPackets = @(1);
                                              }
                                          } failure:^(NSError *error) {
+                                             DDLogVerbose(@"handling message response encountered error %@, unsubscribing", error);
                                              [blockReader setNotifyValue:NO completion:nil];
                                              [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                                          }];
             }];
 
         } else {
+            DDLogWarn(@"# of packets from message is 0");
             [strongSelf failWithBlock:failure andCode:SENSenseManagerErrorCodeInvalidCommand];
         }
 
@@ -461,7 +489,10 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     [self cancelMessageTimeOutWithCbKey:cbKey];
     if (cbKey != nil) {
         SENSenseSuccessBlock callback = [[self messageSuccessCallbacks] valueForKey:cbKey];
-        if (callback) callback (response); // don't need to forward response
+        if (callback) {
+            DDLogVerbose(@"firing success callback");
+            callback (response);
+        }
         [self clearMessageCallbacksForKey:cbKey];
     }
 }
@@ -470,7 +501,10 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     [self cancelMessageTimeOutWithCbKey:cbKey];
     if (cbKey != nil) {
         SENSenseFailureBlock callback = [[self messageFailureCallbacks] valueForKey:cbKey];
-        if (callback) callback (error);
+        if (callback) {
+            DDLogVerbose(@"firing failure callback");
+            callback (error);
+        }
         [self clearMessageCallbacksForKey:cbKey];
     }
 }
@@ -665,8 +699,10 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         response = [SENSenseMessage parseFromData:actualPayload];
         if ([response hasError]) {
             errCode = [self errorCodeFrom:[response error]];
+            DDLogVerbose(@"ble response has an error with device code %ld", errCode);
         }
     } @catch (NSException *exception) {
+        DDLogWarn(@"parsing ble protobuf message encountered exception %@", exception);
         errCode = SENSenseManagerErrorCodeUnexpectedResponse;
     }
     
@@ -696,6 +732,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 }
 
 - (void)timedOut:(NSTimer*)timer {
+    DDLogVerbose(@"Sense operation timed out");
     NSString* cbKey = [timer userInfo];
     if (cbKey != nil) {
         [self cancelMessageTimeOutWithCbKey:cbKey];
@@ -723,6 +760,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 - (void)pair:(SENSenseSuccessBlock)success
      failure:(SENSenseFailureBlock)failure {
     __weak typeof(self) weakSelf = self;
+    DDLogVerbose(@"attempting to pair with Sense");
     [self characteristicsFor:[NSSet setWithObject:kSENSenseCharacteristicResponseId]
                   completion:^(id response, NSError *error) {
                       __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -753,8 +791,10 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                           [strongReader setNotifyValue:NO completion:nil];
                           
                           if (error != nil) {
+                              DDLogVerbose(@"failed to pair with Sense with error %@", error);
                               [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                           } else {
+                              DDLogVerbose(@"Sense paired successfully");
                               [strongSelf fireSuccessMsgCbWithCbKey:cbKey andResponse:nil];
                           }
 
@@ -765,6 +805,8 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 - (void)enablePairingMode:(BOOL)enable
                   success:(SENSenseSuccessBlock)success
                   failure:(SENSenseFailureBlock)failure {
+    DDLogVerbose(@"%@ pairing mode on Sense", enable?@"enabling":@"disabling");
+    
     SENSenseMessageType type
         = enable
         ? SENSenseMessageTypeSwitchToPairingMode
@@ -779,6 +821,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 - (void)removeOtherPairedDevices:(SENSenseSuccessBlock)success
                          failure:(SENSenseFailureBlock)failure {
+    DDLogVerbose(@"removing paired devices from Sense");
     SENSenseMessageType type = SENSenseMessageTypeEreasePairedPhone;
     [self sendMessage:[[self messageBuilderWithType:type] build]
               timeout:kSENSenseDefaultTimeout
@@ -790,6 +833,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 - (void)linkAccount:(NSString*)accountAccessToken
             success:(SENSenseSuccessBlock)success
             failure:(SENSenseFailureBlock)failure {
+    DDLogVerbose(@"linking account %@... through Sense", accountAccessToken?[accountAccessToken substringToIndex:3]:@"");
     SENSenseMessageType type = SENSenseMessageTypePairSense;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [builder setAccountId:accountAccessToken];
@@ -803,6 +847,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 - (void)pairWithPill:(NSString*)accountAccessToken
              success:(SENSenseSuccessBlock)success
              failure:(SENSenseFailureBlock)failure {
+    DDLogVerbose(@"linking account %@... through Sense", accountAccessToken?[accountAccessToken substringToIndex:3]:@"");
     SENSenseMessageType type = SENSenseMessageTypePairPill;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [builder setAccountId:accountAccessToken];
@@ -821,6 +866,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         success:(SENSenseSuccessBlock)success
         failure:(SENSenseFailureBlock)failure {
     
+    DDLogVerbose(@"setting wifi on Sense with ssid %@", ssid);
     SENSenseMessageType type = SENSenseMessageTypeSetWifiEndpoint;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [builder setSecurityType:securityType];
@@ -835,6 +881,8 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 - (void)scanForWifiNetworks:(SENSenseSuccessBlock)success
                     failure:(SENSenseFailureBlock)failure {
+    
+    DDLogVerbose(@"scanning for wifi networks Sense can see");
     SENSenseMessageType type = SENSenseMessageTypeStartWifiscan;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     
@@ -844,6 +892,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                update:^BOOL(SENSenseMessage* updateResponse) {
                    if ([updateResponse wifisDetected]) {
                        [[updateResponse wifisDetected] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                           DDLogVerbose(@"found wifi %@", [((SENWifiEndpoint*)obj) ssid]);
                            [wifis addObject:obj];
                        }];
                    }
@@ -851,6 +900,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                }
               success:^(SENSenseMessage* response) {
                   [[response wifisDetected] enumerateObjectsUsingBlock:^(id obj, NSUInteger idx, BOOL *stop) {
+                      DDLogVerbose(@"found wifi %@", [((SENWifiEndpoint*)obj) ssid]);
                       [wifis addObject:obj];
                   }];
                   [wifis sortUsingComparator:^NSComparisonResult(SENWifiEndpoint* wifi1, SENWifiEndpoint* wifi2) {
@@ -877,6 +927,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         return;
     }
     
+    DDLogVerbose(@"retrieving configured wifi on Sense");
     __weak typeof(self) weakSelf = self;
     SENSenseMessageType type = SENSenseMessageTypeGetWifiEndpoint;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
@@ -892,6 +943,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                       state = [strongSelf wiFiStateFromMessgage:response];
                   }
 
+                  DDLogVerbose(@"wifi %@ is in state %ld", [response wifiSsid], state);
                   success ([response wifiSsid], state);
                   
               }
@@ -902,6 +954,8 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 - (void)resetToFactoryState:(SENSenseSuccessBlock)success
                     failure:(SENSenseFailureBlock)failure {
+    
+    DDLogVerbose(@"resetting Sense to factory state");
     SENSenseMessageType type = SENSenseMessageTypeFactoryReset;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [self sendMessage:[builder build]
@@ -915,6 +969,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 - (void)currentRSSI:(SENSenseSuccessBlock)success
             failure:(SENSenseFailureBlock)failure {
+    DDLogVerbose(@"getting current Sense rssi value");
     __weak typeof(self) weakSelf = self;
     [self connectThen:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -932,6 +987,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         if (error) {
             if (failure) failure (error);
         } else if (success) {
+            DDLogVerbose(@"Sense's rssi value is %ld", [RSSI longValue]);
             success (RSSI);
         }
     }];
@@ -940,9 +996,13 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 #pragma mark - Connections
 
 - (void)disconnectFromSense {
+    DDLogVerbose(@"manually disconnecting from Sense");
     if  ([self isConnected]) {
         __weak typeof(self) weakSelf = self;
         [[[self sense] peripheral] disconnectWithCompletion:^(NSError *error) {
+            if (error == nil) {
+                DDLogVerbose(@"disconnected from Sense");
+            }
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) [strongSelf setValid:NO];
         }];
@@ -964,6 +1024,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                             __strong typeof(weakSelf) strongSelf = weakSelf;
                             if (!strongSelf) return;
                             
+                            DDLogVerbose(@"Sense disconnected unexpectedly");
                             // if peripheral is disconnected, it is removed from
                             // scannedPeripherals in LGCentralManager, which causes
                             // the reference to SENSense's peripheral to not be

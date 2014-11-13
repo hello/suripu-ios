@@ -51,11 +51,11 @@ static NSInteger HEMMaxHeightInFeet = 9;
 }
 
 - (NSNumber*)sliderView:(HEMValueSliderView *)sliderView numberForRow:(NSInteger)row {
-    return @([self numberOfRows]-row-1); // show numbers in reverse
+    return @(row);
 }
 
 - (float)incrementalValuePerRowInSliderView:(HEMValueSliderView *)sliderView {
-    return -1; // it's in reverse
+    return 1;
 }
 
 - (void)sliderView:(HEMValueSliderView *)sliderView didScrollToValue:(float)value {

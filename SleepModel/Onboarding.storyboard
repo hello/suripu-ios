@@ -1417,8 +1417,17 @@ You can always do this later by visiting Settings.</string>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This information is used to provide personalized sleep insights" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5o-GP-Ma1">
+                                <rect key="frame" x="28" y="86" width="544" height="47"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="47" id="fh6-kG-3cy"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qMR-u0-kGh" userLabel="femaleIconButton">
-                                <rect key="frame" x="220" y="238" width="30" height="46"/>
+                                <rect key="frame" x="220" y="252" width="30" height="46"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="46" id="GLx-VU-mXw"/>
                                     <constraint firstAttribute="width" constant="30" id="Mu4-fC-hJq"/>
@@ -1432,7 +1441,7 @@ You can always do this later by visiting Settings.</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A6X-Ja-RGS" userLabel="maleIconButton">
-                                <rect key="frame" x="346" y="238" width="39" height="40"/>
+                                <rect key="frame" x="346" y="255" width="39" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="9tx-GJ-ogt"/>
                                     <constraint firstAttribute="width" constant="39" id="v4M-CK-uMU"/>
@@ -1445,7 +1454,7 @@ You can always do this later by visiting Settings.</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3Im-vl-hQo">
-                                <rect key="frame" x="211" y="312" width="49" height="30"/>
+                                <rect key="frame" x="211" y="326" width="49" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="UWw-lz-e0b"/>
                                     <constraint firstAttribute="width" constant="49" id="cSh-Ue-TiY"/>
@@ -1460,7 +1469,7 @@ You can always do this later by visiting Settings.</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F1J-He-hsq">
-                                <rect key="frame" x="349" y="312" width="33" height="30"/>
+                                <rect key="frame" x="349" y="329" width="33" height="30"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
                                 <state key="normal" title="Male">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1506,12 +1515,15 @@ You can always do this later by visiting Settings.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="A6X-Ja-RGS" secondAttribute="centerY" constant="42" id="2qK-q3-PJa"/>
+                            <constraint firstAttribute="centerY" secondItem="A6X-Ja-RGS" secondAttribute="centerY" constant="25" id="2qK-q3-PJa"/>
+                            <constraint firstItem="f5o-GP-Ma1" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leadingMargin" constant="12" id="4zn-Hz-ovD"/>
                             <constraint firstItem="F1J-He-hsq" firstAttribute="bottom" secondItem="A6X-Ja-RGS" secondAttribute="bottom" constant="64" id="8rw-bR-ot1"/>
                             <constraint firstItem="S9f-tS-yQg" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leadingMargin" constant="12" id="DtY-Cr-MTi"/>
                             <constraint firstItem="d85-24-UBP" firstAttribute="top" secondItem="gMf-fl-V5h" secondAttribute="bottom" constant="64" id="Et9-5b-7Pv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="f5o-GP-Ma1" secondAttribute="trailing" constant="12" id="FOY-B7-BFh"/>
                             <constraint firstAttribute="centerX" secondItem="gMf-fl-V5h" secondAttribute="centerX" id="HMx-Mg-hzR"/>
-                            <constraint firstAttribute="centerY" secondItem="qMR-u0-kGh" secondAttribute="centerY" constant="39" id="My3-Ek-Cqr"/>
+                            <constraint firstItem="S9f-tS-yQg" firstAttribute="bottom" secondItem="f5o-GP-Ma1" secondAttribute="top" constant="-24" id="I6R-4W-pJP"/>
+                            <constraint firstAttribute="centerY" secondItem="qMR-u0-kGh" secondAttribute="centerY" constant="25" id="My3-Ek-Cqr"/>
                             <constraint firstItem="F1J-He-hsq" firstAttribute="centerX" secondItem="A6X-Ja-RGS" secondAttribute="centerX" id="RSk-XH-fDL"/>
                             <constraint firstAttribute="centerX" secondItem="A6X-Ja-RGS" secondAttribute="centerX" constant="-65" id="Wcj-ax-QZK"/>
                             <constraint firstAttribute="centerX" secondItem="wdU-1v-eC1" secondAttribute="centerX" constant="0.5" id="ZCF-iw-PeG"/>
@@ -1532,6 +1544,7 @@ You can always do this later by visiting Settings.</string>
                         <outlet property="maleIconButton" destination="A6X-Ja-RGS" id="h1Q-Wu-Y0e"/>
                         <outlet property="maleTitleButton" destination="F1J-He-hsq" id="arl-cl-XdC"/>
                         <outlet property="skipButton" destination="wdU-1v-eC1" id="7rT-I4-0mN"/>
+                        <outlet property="subtitleLabel" destination="f5o-GP-Ma1" id="pBr-ey-mkq"/>
                         <segue destination="uc7-01-jZi" kind="push" identifier="height" id="2QV-xl-cNq"/>
                     </connections>
                 </viewController>
@@ -1804,14 +1817,14 @@ You can always do this later by visiting Settings.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
-                                <rect key="frame" x="225" y="121" width="151" height="151"/>
+                                <rect key="frame" x="213" y="121" width="176" height="166"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="151" id="QS5-mQ-I2e"/>
-                                    <constraint firstAttribute="height" constant="151" id="e2c-Wq-J9g"/>
+                                    <constraint firstAttribute="width" constant="176" id="QS5-mQ-I2e"/>
+                                    <constraint firstAttribute="height" constant="166" id="e2c-Wq-J9g"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
-                                <rect key="frame" x="28" y="311" width="544" height="71"/>
+                                <rect key="frame" x="28" y="326" width="544" height="71"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="71" id="CLg-sg-iK8"/>
                                 </constraints>
@@ -1863,7 +1876,7 @@ You can always do this later by visiting Settings.</string>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="12" id="Cg2-zt-8u7"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="top" secondItem="I6r-jE-jN1" secondAttribute="bottom" constant="23" id="D61-4A-EJJ"/>
                             <constraint firstAttribute="centerX" secondItem="8HN-0C-IaD" secondAttribute="centerX" constant="-0.5" id="GUN-Qt-qxF"/>
-                            <constraint firstItem="xHT-0z-rBN" firstAttribute="bottom" secondItem="Awm-Mz-tO7" secondAttribute="bottom" constant="-195" id="ITF-xb-f4C"/>
+                            <constraint firstItem="xHT-0z-rBN" firstAttribute="bottom" secondItem="Awm-Mz-tO7" secondAttribute="top" constant="-44" id="ITF-xb-f4C"/>
                             <constraint firstAttribute="centerX" secondItem="Awm-Mz-tO7" secondAttribute="centerX" constant="-0.5" id="Jnt-Q8-ole"/>
                             <constraint firstItem="mFI-cr-rhB" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="12" id="Kd1-3N-ieV"/>
                             <constraint firstItem="rNF-MR-Ds2" firstAttribute="top" secondItem="8HN-0C-IaD" secondAttribute="bottom" constant="18" id="Kgn-lX-6ws"/>
@@ -2168,7 +2181,7 @@ Cgo
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn on Bluetooth" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WSp-oq-I62">
-                                <rect key="frame" x="28" y="45" width="544" height="34"/>
+                                <rect key="frame" x="28" y="45" width="554" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="ZSy-aj-dyq"/>
                                 </constraints>
@@ -2177,9 +2190,9 @@ Cgo
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="9T9-rd-lkX">
-                                <rect key="frame" x="28" y="106" width="544" height="141"/>
+                                <rect key="frame" x="28" y="103" width="544" height="164"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="141" id="Wzu-c0-fqo"/>
+                                    <constraint firstAttribute="height" constant="164" id="Wzu-c0-fqo"/>
                                 </constraints>
                                 <attributedString key="attributedText">
                                     <fragment>
@@ -2227,7 +2240,7 @@ Launch the </string>
                                             <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
                                         </attributes>
                                     </fragment>
-                                    <fragment content=".">
+                                    <fragment content=".  Then return to the Sense app.">
                                         <attributes>
                                             <color key="NSColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
                                             <font key="NSFont" size="18" name="Calibre-Thin"/>
@@ -2270,7 +2283,7 @@ Launch the </string>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bluetooth.png" translatesAutoresizingMaskIntoConstraints="NO" id="li5-1a-hqt">
-                                <rect key="frame" x="28" y="317" width="544" height="77"/>
+                                <rect key="frame" x="28" y="327" width="544" height="77"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="77" id="LUt-kg-SdI"/>
                                 </constraints>
@@ -2280,13 +2293,13 @@ Launch the </string>
                         <constraints>
                             <constraint firstItem="L20-Gb-HkU" firstAttribute="top" secondItem="rIf-wQ-F1B" secondAttribute="bottom" constant="17" id="31y-VS-nFd"/>
                             <constraint firstItem="li5-1a-hqt" firstAttribute="leading" secondItem="tO9-Ht-ejg" secondAttribute="leadingMargin" constant="12" id="4Dl-he-YIF"/>
-                            <constraint firstItem="9T9-rd-lkX" firstAttribute="bottom" secondItem="li5-1a-hqt" secondAttribute="top" constant="-70" id="9DS-fJ-q8n"/>
+                            <constraint firstItem="9T9-rd-lkX" firstAttribute="bottom" secondItem="li5-1a-hqt" secondAttribute="top" constant="-60" id="9DS-fJ-q8n"/>
                             <constraint firstAttribute="centerX" secondItem="rIf-wQ-F1B" secondAttribute="centerX" id="Ah4-3j-TIz"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="WSp-oq-I62" secondAttribute="trailing" constant="12" id="FFL-jf-ie7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="WSp-oq-I62" secondAttribute="trailing" constant="2" id="FFL-jf-ie7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="li5-1a-hqt" secondAttribute="trailing" constant="12" id="K4O-iI-oUN"/>
                             <constraint firstItem="rIf-wQ-F1B" firstAttribute="top" secondItem="yuw-Cx-zbP" secondAttribute="top" constant="50" id="Mue-pZ-lA3"/>
                             <constraint firstItem="WSp-oq-I62" firstAttribute="top" secondItem="Viz-Vs-C9v" secondAttribute="bottom" constant="25" id="eO8-WI-Bkg"/>
-                            <constraint firstItem="9T9-rd-lkX" firstAttribute="bottom" secondItem="WSp-oq-I62" secondAttribute="bottom" constant="168" id="hdL-jV-iOl"/>
+                            <constraint firstItem="9T9-rd-lkX" firstAttribute="top" secondItem="WSp-oq-I62" secondAttribute="bottom" constant="24" id="hdL-jV-iOl"/>
                             <constraint firstAttribute="centerX" secondItem="yuw-Cx-zbP" secondAttribute="centerX" id="kyu-jV-AAG"/>
                             <constraint firstItem="WSp-oq-I62" firstAttribute="leading" secondItem="tO9-Ht-ejg" secondAttribute="leadingMargin" constant="12" id="mQM-a1-9Ex"/>
                             <constraint firstItem="9T9-rd-lkX" firstAttribute="leading" secondItem="tO9-Ht-ejg" secondAttribute="leadingMargin" constant="12" id="wqv-Mi-R54"/>
@@ -2325,15 +2338,15 @@ Launch the </string>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Bmb-Yy-ZXL">
-                                <rect key="frame" x="28" y="103" width="544" height="128"/>
-                                <color key="backgroundColor" red="0.96470588235294119" green="0.97647058823529409" blue="0.99607843137254903" alpha="1" colorSpace="calibratedRGB"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="setting_up_sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Bmb-Yy-ZXL">
+                                <rect key="frame" x="28" y="103" width="544" height="200"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="128" id="ftE-mA-40H"/>
+                                    <constraint firstAttribute="height" constant="200" id="ftE-mA-40H"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="jVF-hP-Vml">
-                                <rect key="frame" x="28" y="255" width="544" height="53"/>
+                                <rect key="frame" x="28" y="327" width="544" height="53"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="53" id="gPz-wp-vls"/>
                                 </constraints>
@@ -2392,7 +2405,7 @@ Launch the </string>
                             <constraint firstItem="EDR-nr-KxK" firstAttribute="top" secondItem="37N-ly-LlQ" secondAttribute="top" constant="48" id="iOw-p8-fxb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jVF-hP-Vml" secondAttribute="trailing" constant="12" id="ian-zu-fGm"/>
                             <constraint firstItem="jVF-hP-Vml" firstAttribute="bottom" secondItem="Bmb-Yy-ZXL" secondAttribute="bottom" constant="77" id="kU0-7M-ae2" userLabel="descriptionTopMargin"/>
-                            <constraint firstItem="bPm-8J-k4Y" firstAttribute="bottom" secondItem="Bmb-Yy-ZXL" secondAttribute="bottom" constant="-152" id="lkW-3z-jA4"/>
+                            <constraint firstItem="bPm-8J-k4Y" firstAttribute="bottom" secondItem="Bmb-Yy-ZXL" secondAttribute="bottom" constant="-224" id="lkW-3z-jA4"/>
                             <constraint firstItem="bPm-8J-k4Y" firstAttribute="leading" secondItem="4iw-TV-P6s" secondAttribute="leadingMargin" constant="12" id="rdb-YI-MWY"/>
                             <constraint firstItem="Bmb-Yy-ZXL" firstAttribute="leading" secondItem="4iw-TV-P6s" secondAttribute="leadingMargin" constant="12" id="t4a-Kb-abH"/>
                             <constraint firstItem="jVF-hP-Vml" firstAttribute="leading" secondItem="4iw-TV-P6s" secondAttribute="leadingMargin" constant="12" id="tbW-ik-a9s"/>
@@ -2441,7 +2454,7 @@ Launch the </string>
                                     <fragment>
                                         <string key="content">Your Sense is now in Pairing Mode.
 
-Have your partner visit hello.is/app to download the Sense app and set up their Sleep Pill.</string>
+Have your partner visit hello.is/app to download the Sense app and create a new account.  They will be given instructions to set up their Sleep Pill.</string>
                                         <attributes>
                                             <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <font key="NSFont" size="18" name="Calibre-Thin"/>
@@ -2499,13 +2512,14 @@ Have your partner visit hello.is/app to download the Sense app and set up their 
         <image name="map.png" width="319" height="242"/>
         <image name="onboarding_bg_wide.png" width="470" height="588"/>
         <image name="play.png" width="75" height="75"/>
-        <image name="sense.png" width="151" height="151"/>
+        <image name="sense.png" width="176" height="166"/>
+        <image name="setting_up_sense.png" width="272" height="200"/>
         <image name="shake_pill.png" width="268" height="222"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="OeC-Do-qcD"/>
         <segue reference="DAu-sO-H4V"/>
-        <segue reference="JSp-ra-OqT"/>
+        <segue reference="Owc-w0-TLK"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -35,7 +35,7 @@
 "video.error.playback-failed" = "A playback error was encountered while attempting to play the video.";
 
 // no bluetooth on
-"no-bluetooth.subtitle.format" = "Sense uses Bluetooth to communicate with your mobile device.  Please turn your Bluetooth on to continue.\n\nLaunch the %@ app, tap %@, and flip the switch to %@.";
+"no-bluetooth.subtitle.format" = "Sense uses Bluetooth to communicate with your mobile device.  Please turn your Bluetooth on to continue.\n\nLaunch the %@ app, tap %@, and flip the switch to %@.  Then return to the Sense app.";
 "no-bluetooth.settings" = "Settings";
 "no-bluetooth.bluetooth" = "Bluetooth";
 "no-bluetooth.on" = "On";
@@ -104,7 +104,7 @@
 "setup.second-pill.error.title" = "Fail to enable Pairing Mode";
 "setup.second-pill.error.failed-to-enable-pairing-mode" = "Could not enable Pairing Mode on Sense.";
 "setup.second-pill.error.sense-full" = "Sense can no longer pair with anymore devices.";
-"setup.get-app.subtitle.format" = "Your Sense is now in Pairing Mode.\n\nHave your partner visit %@ to download the Sense app and set up their Sleep Pill.";
+"setup.get-app.subtitle.format" = "Your Sense is now in Pairing Mode.\n\nHave your partner visit %@ to download the Sense app and create a new account.  They will be given instructions to set up their Sleep Pill.";
 "setup.get-app.url" = "hello.is/app";
 
 // settings
@@ -326,6 +326,7 @@
 "questions.new-question" = "New question";
 
 // account info
+"account.gender.subtitle" = "This information is used to provide personalized sleep insights.";
 "account.gender.female" = "Female";
 "account.gender.male" = "Male";
 "account.gender.other" = "Other";

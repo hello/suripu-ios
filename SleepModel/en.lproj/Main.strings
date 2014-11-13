@@ -1,0 +1,159 @@
+
+/* Class = "IBUILabel"; text = "COMFORT ZONE"; ObjectID = "1rh-FJ-NJQ"; */
+"1rh-FJ-NJQ.text" = "COMFORT ZONE";
+
+/* Class = "IBUIButton"; normalTitle = "+"; ObjectID = "2BJ-ze-ubh"; */
+"2BJ-ze-ubh.normalTitle" = "+";
+
+/* Class = "IBUIButton"; normalTitle = "I need a Sleep Pill"; ObjectID = "3U7-FU-vAo"; */
+"3U7-FU-vAo.normalTitle" = "I need a Sleep Pill";
+
+/* Class = "IBUILabel"; text = "This will reset your entire Sense System, including your Sleep Pill."; ObjectID = "4Id-oB-6lZ"; */
+"4Id-oB-6lZ.text" = "This will reset your entire Sense System, including your Sleep Pill.";
+
+/* Class = "IBUILabel"; text = "Never"; ObjectID = "5Fn-yc-usc"; */
+"5Fn-yc-usc.text" = "Never";
+
+/* Class = "IBUILabel"; text = "22"; ObjectID = "71w-49-Doa"; */
+"71w-49-Doa.text" = "22";
+
+/* Class = "IBUILabel"; text = "Last Seen:"; ObjectID = "7Kk-x7-Vqc"; */
+"7Kk-x7-Vqc.text" = "Last Seen:";
+
+/* Class = "IBUINavigationItem"; title = "Sense"; ObjectID = "7sy-8f-b6s"; */
+"7sy-8f-b6s.title" = "Sense";
+
+/* Class = "IBUIButton"; normalTitle = "Put Into Pairing Mode"; ObjectID = "99x-GA-dKO"; */
+"99x-GA-dKO.normalTitle" = "Put Into Pairing Mode";
+
+/* Class = "IBUILabel"; text = "7:30"; ObjectID = "9Mv-zP-tnC"; */
+"9Mv-zP-tnC.text" = "7:30";
+
+/* Class = "IBUILabel"; text = "Loading..."; ObjectID = "DyW-hQ-mCU"; */
+"DyW-hQ-mCU.text" = "Loading...";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "GBZ-Xr-KWw"; */
+"GBZ-Xr-KWw.text" = "Title";
+
+/* Class = "IBUISegmentedControl"; Gk2-tf-lLi.segmentTitles[0] = "Days"; ObjectID = "Gk2-tf-lLi"; */
+"Gk2-tf-lLi.segmentTitles[0]" = "Days";
+
+/* Class = "IBUISegmentedControl"; Gk2-tf-lLi.segmentTitles[1] = "Weeks"; ObjectID = "Gk2-tf-lLi"; */
+"Gk2-tf-lLi.segmentTitles[1]" = "Weeks";
+
+/* Class = "IBUILabel"; text = "Title"; ObjectID = "IgM-FH-z74"; */
+"IgM-FH-z74.text" = "Title";
+
+/* Class = "IBUILabel"; text = "Bells"; ObjectID = "KKO-pE-iRO"; */
+"KKO-pE-iRO.text" = "Bells";
+
+/* Class = "IBUILabel"; text = "Sound"; ObjectID = "Kjg-sg-8R8"; */
+"Kjg-sg-8R8.text" = "Sound";
+
+/* Class = "IBUIButton"; normalTitle = "Pair a Sleep Pill"; ObjectID = "Opb-4u-gGm"; */
+"Opb-4u-gGm.normalTitle" = "Pair a Sleep Pill";
+
+/* Class = "IBUIButton"; normalTitle = "Restore to Factory Settings"; ObjectID = "PZJ-QF-maf"; */
+"PZJ-QF-maf.normalTitle" = "Restore to Factory Settings";
+
+/* Class = "IBUIButton"; normalTitle = "LAST WEEK"; ObjectID = "U6O-Dc-1qK"; */
+"U6O-Dc-1qK.normalTitle" = "LAST WEEK";
+
+/* Class = "IBUILabel"; text = "enabling pairing mode"; ObjectID = "UXO-iS-9i6"; */
+"UXO-iS-9i6.text" = "enabling pairing mode";
+
+/* Class = "IBUINavigationItem"; title = "Settings"; ObjectID = "W0g-jJ-OWe"; */
+"W0g-jJ-OWe.title" = "Settings";
+
+/* Class = "IBUILabel"; text = "looking for your Sense"; ObjectID = "XXF-B4-zcy"; */
+"XXF-B4-zcy.text" = "looking for your Sense";
+
+/* Class = "IBUILabel"; text = "7:30am"; ObjectID = "Xgw-vw-4jI"; */
+"Xgw-vw-4jI.text" = "7:30am";
+
+/* Class = "IBUILabel"; text = "Label"; ObjectID = "Zkp-GN-ZQu"; */
+"Zkp-GN-ZQu.text" = "Label";
+
+/* Class = "IBUILabel"; text = "13"; ObjectID = "cjI-p9-hEA"; */
+"cjI-p9-hEA.text" = "13";
+
+/* Class = "IBUILabel"; text = "In the last month, you have gone to sleep earlier than before, resulting in better sleep."; ObjectID = "ctp-sa-Lyf"; */
+"ctp-sa-Lyf.text" = "In the last month, you have gone to sleep earlier than before, resulting in better sleep.";
+
+/* Class = "IBUIButton"; normalTitle = "LAST 24 HOURS"; ObjectID = "d9H-QV-uE8"; */
+"d9H-QV-uE8.normalTitle" = "LAST 24 HOURS";
+
+/* Class = "IBUILabel"; text = "THU"; ObjectID = "dGv-oi-2yL"; */
+"dGv-oi-2yL.text" = "THU";
+
+/* Class = "IBUILabel"; text = "º"; ObjectID = "dQu-Hf-dor"; */
+"dQu-Hf-dor.text" = "º";
+
+/* Class = "IBUILabel"; text = "You don't currently have a Sleep Pill paired with your Sense unit."; ObjectID = "dcF-RS-FbJ"; */
+"dcF-RS-FbJ.text" = "You don't currently have a Sleep Pill paired with your Sense unit.";
+
+/* Class = "IBUIButton"; normalTitle = "SKIP THIS QUESTION"; ObjectID = "eSP-6P-aRg"; */
+"eSP-6P-aRg.normalTitle" = "SKIP THIS QUESTION";
+
+/* Class = "IBUILabel"; text = "New Question"; ObjectID = "enr-Uk-1rN"; */
+"enr-Uk-1rN.text" = "New Question";
+
+/* Class = "IBUILabel"; text = "July 2014"; ObjectID = "fBu-FT-ARo"; */
+"fBu-FT-ARo.text" = "July 2014";
+
+/* Class = "IBUILabel"; text = "You."; ObjectID = "hUv-aF-Yqz"; */
+"hUv-aF-Yqz.text" = "You.";
+
+/* Class = "IBUILabel"; text = "Repeat"; ObjectID = "jp7-m9-V1l"; */
+"jp7-m9-V1l.text" = "Repeat";
+
+/* Class = "IBUIViewController"; title = "My Information"; ObjectID = "kmi-iD-cGd"; */
+"kmi-iD-cGd.title" = "My Information";
+
+/* Class = "IBUILabel"; text = "Remove this pill from your Sense System."; ObjectID = "lvQ-Zb-w2d"; */
+"lvQ-Zb-w2d.text" = "Remove this pill from your Sense System.";
+
+/* Class = "IBUINavigationItem"; title = "Devices"; ObjectID = "oGK-em-S7y"; */
+"oGK-em-S7y.title" = "Devices";
+
+/* Class = "IBUILabel"; text = "No Sleep Pill Paired"; ObjectID = "osF-5a-Bv8"; */
+"osF-5a-Bv8.text" = "No Sleep Pill Paired";
+
+/* Class = "IBUINavigationItem"; title = "Sleep Pill"; ObjectID = "otf-Xf-mVb"; */
+"otf-Xf-mVb.title" = "Sleep Pill";
+
+/* Class = "IBUINavigationItem"; title = "Sound"; ObjectID = "pOR-N0-kx4"; */
+"pOR-N0-kx4.title" = "Sound";
+
+/* Class = "IBUILabel"; text = "User, do you sleep better when you are:"; ObjectID = "rOa-C0-vLI"; */
+"rOa-C0-vLI.text" = "User, do you sleep better when you are:";
+
+/* Class = "IBUITabBarItem"; title = "Currently"; ObjectID = "ryY-D2-wft"; */
+"ryY-D2-wft.title" = "Currently";
+
+/* Class = "IBUINavigationItem"; title = "My Info"; ObjectID = "s1h-aS-2dI"; */
+"s1h-aS-2dI.title" = "My Info";
+
+/* Class = "IBUILabel"; text = "Thank"; ObjectID = "sqA-DT-O8i"; */
+"sqA-DT-O8i.text" = "Thank";
+
+/* Class = "IBUINavigationItem"; title = "Alarm"; ObjectID = "tQT-e0-oVd"; */
+"tQT-e0-oVd.title" = "Alarm";
+
+/* Class = "IBUILabel"; text = "Update Firmware"; ObjectID = "tfy-rm-Dqx"; */
+"tfy-rm-Dqx.text" = "Update Firmware";
+
+/* Class = "IBUILabel"; text = "Wake up between 7:00 and 7:30"; ObjectID = "vnz-9v-ebh"; */
+"vnz-9v-ebh.text" = "Wake up between 7:00 and 7:30";
+
+/* Class = "IBUILabel"; text = "Your Sense"; ObjectID = "wkh-B5-TgD"; */
+"wkh-B5-TgD.text" = "Your Sense";
+
+/* Class = "IBUILabel"; text = "Smart Alarm: Mon Wed Fri"; ObjectID = "yB4-zE-S5q"; */
+"yB4-zE-S5q.text" = "Smart Alarm: Mon Wed Fri";
+
+/* Class = "IBUILabel"; text = "Drag to adjust the time"; ObjectID = "zCx-Mw-gYU"; */
+"zCx-Mw-gYU.text" = "Drag to adjust the time";
+
+/* Class = "IBUIButton"; normalTitle = "Unpair This Pill"; ObjectID = "ze4-7f-tPo"; */
+"ze4-7f-tPo.normalTitle" = "Unpair This Pill";

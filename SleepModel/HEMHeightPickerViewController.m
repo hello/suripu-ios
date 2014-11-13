@@ -18,6 +18,7 @@ static NSInteger HEMMaxHeightInFeet = 9;
 @property (weak, nonatomic) IBOutlet UILabel *mainHeightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *otherHeightLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
+@property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
 @end
 
@@ -34,8 +35,10 @@ static NSInteger HEMMaxHeightInFeet = 9;
     [[self heightSliderView] setToValue:HEMMaxHeightInFeet - (feet + (inch/12.0f))];
     
     if ([self delegate] != nil) {
-        NSString* title = NSLocalizedString(@"status.success", nil);
-        [[self doneButton] setTitle:title forState:UIControlStateNormal];
+        NSString* done = NSLocalizedString(@"status.success", nil);
+        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
+        [[self doneButton] setTitle:done forState:UIControlStateNormal];
+        [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
     }
     
     [SENAnalytics track:kHEMAnalyticsEventOnBHeight];
@@ -79,9 +82,21 @@ static NSInteger HEMMaxHeightInFeet = 9;
     if ([self delegate] != nil) {
         [[self delegate] didSelectHeightInCentimeters:[self selectedHeightInCm] from:self];
     } else {
-        [self performSegueWithIdentifier:[HEMOnboardingStoryboard weightSegueIdentifier]
-                                  sender:self];
+        [self next];
     }
+}
+
+- (IBAction)skip:(id)sender {
+    if ([self delegate] != nil) {
+        [[self delegate] didCancelHeightFrom:self];
+    } else {
+        [self next];
+    }
+}
+
+- (void)next {
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard weightSegueIdentifier]
+                              sender:self];
 }
 
 @end

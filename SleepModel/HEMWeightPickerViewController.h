@@ -8,6 +8,7 @@
 
 - (void)didSelectWeightInKgs:(CGFloat)weightKgs
                         from:(HEMWeightPickerViewController*)controller;
+- (void)didCancelWeightFrom:(HEMWeightPickerViewController*)controller;
 
 @end
 

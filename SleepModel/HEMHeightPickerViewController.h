@@ -7,6 +7,7 @@
 
 - (void)didSelectHeightInCentimeters:(int)centimeters
                                 from:(HEMHeightPickerViewController*)controller;
+- (void)didCancelHeightFrom:(HEMHeightPickerViewController*)controller;
 
 @end
 

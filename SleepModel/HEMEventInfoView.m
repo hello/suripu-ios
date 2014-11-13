@@ -24,7 +24,7 @@ static CGFloat const HEMEventInfoViewCaretInset = 5.f;
 static CGFloat const HEMEventInfoViewCaretDepth = 6.f;
 static CGFloat const HEMEventInfoViewCaretYOffset = 10.f;
 static CGFloat const HEMEventInfoViewCornerRadius = 4.f;
-static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.5f;
+static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.15f;
 
 - (void)awakeFromNib
 {
@@ -45,6 +45,15 @@ static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.5f;
 - (void)dealloc
 {
     [_playerUpdateTimer invalidate];
+}
+
+- (void)setLoading:(BOOL)isLoading
+{
+    if (isLoading)
+        [self.spinnerView startAnimating];
+    else
+        [self.spinnerView stopAnimating];
+    self.playSoundButton.enabled = !isLoading;
 }
 
 #pragma mark - Audio
@@ -70,16 +79,8 @@ static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.5f;
     __weak typeof(self) weakSelf = self;
     self.waveformView.completion = ^(NSURL* processedURL, BOOL success) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (success && [processedURL isEqual:audioURL]) {
-            strongSelf.playSoundButton.alpha = 0;
-            strongSelf.playSoundButton.hidden = NO;
-            [UIView animateWithDuration:0.25f animations:^{
-                strongSelf.playSoundButton.alpha = 1;
-                strongSelf.spinnerView.alpha = 0;
-            } completion:^(BOOL finished) {
-                [strongSelf.spinnerView stopAnimating];
-            }];
-        }
+        if (success)
+            [strongSelf handleLoadingSuccess];
     };
 }
 
@@ -166,6 +167,8 @@ static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.5f;
 
 - (void)handleLoadingStart
 {
+    if ([self.spinnerView isAnimating])
+        return;
     [self.spinnerView startAnimating];
     self.playSoundButton.enabled = NO;
 }
@@ -178,7 +181,8 @@ static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.5f;
 
 - (void)handleLoadingSuccess
 {
-    [self.spinnerView stopAnimating];
+    if ([self.spinnerView isAnimating])
+        [self.spinnerView stopAnimating];
     self.playSoundButton.enabled = YES;
 }
 

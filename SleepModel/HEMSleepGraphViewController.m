@@ -346,14 +346,19 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
             message = [message attributedSubstringFromRange:NSMakeRange(0, message.length - 1)];
         self.eventInfoView.messageLabel.attributedText = message;
         [self.eventInfoView.messageLabel sizeToFit];
-        [self.eventInfoView showAudioPlayer:NO];
         if (segment.sound) {
+            [self.eventInfoView showAudioPlayer:YES];
+            [self.eventInfoView setLoading:YES];
             [HEMAudioCache cacheURLforAssetAtPath:segment.sound.URLPath completion:^(NSURL *url, NSError *error) {
                 if (url) {
-                    [self.eventInfoView showAudioPlayer:YES];
                     [self.eventInfoView setAudioURL:url];
+                } else {
+                    [self.eventInfoView setLoading:NO];
                 }
             }];
+        } else {
+            [self.eventInfoView setLoading:NO];
+            [self.eventInfoView showAudioPlayer:NO];
         }
         [self.eventInfoView updateConstraintsIfNeeded];
     }

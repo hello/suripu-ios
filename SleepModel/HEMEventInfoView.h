@@ -32,4 +32,6 @@ typedef NS_ENUM(NSUInteger, HEMEventInfoViewCaretPosition) {
 - (IBAction)toggleAudio;
 - (void)stopAudio;
 - (void)playAudio;
+
+- (void)setLoading:(BOOL)isLoading;
 @end

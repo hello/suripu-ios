@@ -34,6 +34,7 @@ PODS:
   - FCDynamicPanesNavigationController (1.0):
     - FCMutableArray
   - FCMutableArray (1.0)
+  - FDWaveformView (0.2.2)
   - FXKeychain (1.5.2)
   - iCarousel (1.7.6)
   - Kiwi (2.3.1)
@@ -77,6 +78,7 @@ DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`, commit `6bf420df77117f519af32a6393520ead4e7848c6`)
   - BEMSimpleLineGraph
   - FCDynamicPanesNavigationController (from `git@github.com:hello/FCDynamicPanesNavigationController.git`)
+  - FDWaveformView (from `git@github.com:hello/FDWaveformView.git`)
   - iCarousel (~> 1.7.6)
   - Kiwi
   - SenseKit (from `git@github.com:hello/SenseKit.git`)
@@ -92,6 +94,8 @@ EXTERNAL SOURCES:
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
   FCDynamicPanesNavigationController:
     :git: git@github.com:hello/FCDynamicPanesNavigationController.git
+  FDWaveformView:
+    :git: git@github.com:hello/FDWaveformView.git
   SenseKit:
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
@@ -108,6 +112,7 @@ SPEC CHECKSUMS:
   CocoaLumberjack: 24153b24b17d853d7182b22b128971fb98e8cb18
   FCDynamicPanesNavigationController: 55ee3c165a070d8d01e0b90a1029916cbcaa1b09
   FCMutableArray: 1a8dbb05952c1e9dff31d86fd366f86edce9f159
+  FDWaveformView: 6f3c2d4dfb25c90206da48ea08f5bf81d0afaa56
   FXKeychain: c97c352f1923809032339514ec4d6b0ed151bc3b
   iCarousel: c35a4e26b3c657847e523012b593e70ddbd84992
   Kiwi: 73e1400209055ee9c8ba78c6012b6b642d0fb9f7

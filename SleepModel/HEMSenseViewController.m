@@ -230,7 +230,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch ([indexPath row]) {
         case kHEMSenseRowWiFi:
-            [self configureWiFi];
+            if ([[HEMDeviceCenter sharedCenter] pairedSenseAvailable]) {
+                [self configureWiFi];
+            }
             break;
         default:
             break;

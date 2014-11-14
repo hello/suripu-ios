@@ -10,6 +10,8 @@
 #import <SenseKit/SENAPITimeZone.h>
 #import <SenseKit/SENSenseMessage.pb.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMWifiPasswordViewController.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
@@ -30,16 +32,22 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     HEMWiFiSetupStepDone = 4
 };
 
-@interface HEMWifiPasswordViewController() <UITextFieldDelegate>
+static CGFloat const kHEMWifiSecurityPickerDefaultHeight = 216.0f;
+static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
+
+@interface HEMWifiPasswordViewController() <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 @property (weak, nonatomic) IBOutlet HEMRoundedTextField *ssidField;
 @property (weak, nonatomic) IBOutlet HEMRoundedTextField *passwordField;
+@property (weak, nonatomic) IBOutlet HEMRoundedTextField *securityField;
 
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
+@property (strong, nonatomic) UIPickerView* securityPickerView;
 @property (copy,   nonatomic) NSString* ssidConfigured;
+@property (assign, nonatomic) SENWifiEndpointSecurityType securityType;
 @property (assign, nonatomic) HEMWiFiSetupStep stepFinished;
 
 @end
@@ -54,9 +62,23 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     
     if ([self endpoint] != nil) {
         [[self ssidField] setText:[[self endpoint] ssid]];
+        [self setSecurityType:[[self endpoint] security]];
+    } else { // default to WPA2
+        [self setSecurityType:SENWifiEndpointSecurityTypeWpa2];
     }
     
+    [self setupSecurityPickerView];
+    [self updateSecurityTypeLabelForRow:[self rowForSecurityType:[self securityType]]];
+    
     [SENAnalytics track:kHEMAnalyticsEventOnBSetupWiFi];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    
+    CGRect pickerBounds = [[self securityPickerView] bounds];
+    pickerBounds.size.width = CGRectGetWidth([[self view] bounds]);
+    [[self securityPickerView] setBounds:pickerBounds];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -74,6 +96,8 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
             [[self ssidField] resignFirstResponder];
         } else if ([[self passwordField] isFirstResponder]) {
             [[self passwordField] resignFirstResponder];
+        } else if ([[self securityField] isFirstResponder]) {
+            [[self securityField] resignFirstResponder];
         }
     }
     
@@ -111,17 +135,154 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
 
 - (BOOL)isValid:(NSString*)ssid pass:(NSString*)pass {
     return [ssid length] > 0
-            && ([self endpoint] == nil
-                || ([[self endpoint] security] != SENWifiEndpointSecurityTypeOpen
+            && ([self securityType] == SENWifiEndpointSecurityTypeOpen
+                || ([self securityType] != SENWifiEndpointSecurityTypeOpen
                     && [pass length] > 0));
 }
 
-- (SENWifiEndpointSecurityType)selectedSecurityType {
-    SENWifiEndpointSecurityType type = SENWifiEndpointSecurityTypeWpa2; // default, per discussion
-    if ([self endpoint] != nil) {
-        type = [[self endpoint] security];
+#pragma mark - Security Picker
+
+- (void)setupSecurityPickerView {
+    CGRect pickerFrame = CGRectZero;
+    pickerFrame.size.width = CGRectGetWidth([[self view] bounds]);
+    pickerFrame.size.height = kHEMWifiSecurityPickerDefaultHeight;
+    
+    UIPickerView* securityPicker = [[UIPickerView alloc] initWithFrame:pickerFrame];
+    [securityPicker setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [securityPicker setTranslatesAutoresizingMaskIntoConstraints:YES];
+    [securityPicker setBackgroundColor:[UIColor whiteColor]];
+    [securityPicker setDelegate:self];
+    [securityPicker setDataSource:self];
+    
+    [self setSecurityPickerView:securityPicker];
+    [[self securityField] setInputView:securityPicker];
+    
+    [self matchPickerToKeyboardHeight];
+}
+
+- (void)matchPickerToKeyboardHeight {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    // block to capture the observer, weak to ensure there won't be a leak.  w/o
+    // leak, we will need to set observer to nil after removing it
+    __weak typeof(self) weakSelf = self;
+    __block __weak id observer =
+    [center addObserverForName:UIKeyboardWillShowNotification
+                        object:nil
+                         queue:[NSOperationQueue mainQueue]
+                    usingBlock:^(NSNotification *note) {
+                        __strong typeof(weakSelf) strongSelf = weakSelf;
+                        [[NSNotificationCenter defaultCenter] removeObserver:observer];
+                        
+                        if (strongSelf) {
+                            NSDictionary* info  =[note userInfo];
+                            CGRect keyboardFrame = [info[UIKeyboardFrameBeginUserInfoKey] CGRectValue];
+                            CGRect pickerBounds = [[strongSelf securityPickerView] bounds];
+                            pickerBounds.size.height = CGRectGetHeight(keyboardFrame);
+                            [[strongSelf securityPickerView] setBounds:pickerBounds];
+                        }
+                    }];
+}
+
+- (SENWifiEndpointSecurityType)securityTypeForPickerRow:(NSInteger)row {
+    SENWifiEndpointSecurityType securityType;
+    switch (row) {
+        case 1:
+            securityType = SENWifiEndpointSecurityTypeWpa;
+            break;
+        case 2:
+            securityType = SENWifiEndpointSecurityTypeWep;
+            break;
+        case 3:
+            securityType = SENWifiEndpointSecurityTypeOpen;
+            break;
+        case 0:
+        default:
+            securityType = SENWifiEndpointSecurityTypeWpa2;
+            break;
     }
-    return type;
+    return securityType;
+}
+
+- (NSString*)securityTypeTextForPickerRow:(NSInteger)row {
+    NSString* securityType = nil;
+    switch (row) {
+        case 0:
+            securityType = NSLocalizedString(@"wifi.security.wpa2", nil);
+            break;
+        case 1:
+            securityType = NSLocalizedString(@"wifi.security.wpa", nil);
+            break;
+        case 2:
+            securityType = NSLocalizedString(@"wifi.security.wep", nil);
+            break;
+        case 3:
+            securityType = NSLocalizedString(@"wifi.security.open", nil);
+            break;
+        default:
+            break;
+    }
+    return securityType;
+}
+
+- (NSInteger)rowForSecurityType:(SENWifiEndpointSecurityType)securityType {
+    NSInteger pickerRow;
+    switch (securityType) {
+        case SENWifiEndpointSecurityTypeWpa:
+            pickerRow = 1;
+            break;
+        case SENWifiEndpointSecurityTypeWep:
+            pickerRow = 2;
+            break;
+        case SENWifiEndpointSecurityTypeOpen:
+            pickerRow = 3;
+            break;
+        case SENWifiEndpointSecurityTypeWpa2:
+        default:
+            pickerRow = 0;
+            break;
+    }
+    return pickerRow;
+}
+
+- (void)updateSecurityTypeLabelForRow:(NSInteger)row {
+    UILabel* selectedTypeLabel = (UILabel*)[[self securityField] rightView];
+    if (selectedTypeLabel == nil) {
+        CGRect labelFrame = CGRectZero;
+        labelFrame.size.height = CGRectGetHeight([[self securityField] bounds]);
+        labelFrame.size.width = kHEMWifiSecurityLabelDefaultWidth;
+        selectedTypeLabel = [[UILabel alloc] initWithFrame:labelFrame];
+        [selectedTypeLabel setFont:[UIFont onboardingFieldRightViewFont]];
+        [selectedTypeLabel setTextColor:[UIColor blackColor]];
+        [[self securityField] setRightView:selectedTypeLabel];
+        [[self securityField] setRightViewMode:UITextFieldViewModeAlways];
+    }
+    
+    [selectedTypeLabel setText:[self securityTypeTextForPickerRow:row]];
+    [selectedTypeLabel sizeToFit];
+    [self setSecurityType:[self securityTypeForPickerRow:row]];
+}
+
+#pragma mark UIPickerViewDelegate / DataSource
+
+// returns the number of 'columns' to display.
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return 1;
+}
+
+// returns the # of rows in each component..
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    return 4;
+}
+
+- (NSAttributedString *)pickerView:(UIPickerView *)pickerView attributedTitleForRow:(NSInteger)row forComponent:(NSInteger)component {
+    NSString* securityType = [self securityTypeTextForPickerRow:row];
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont singleComponentPickerViewFont]};
+    NSAttributedString* attrSecurity = [[NSAttributedString alloc] initWithString:securityType attributes:attributes];
+    return attrSecurity;
+}
+
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component {
+    [self updateSecurityTypeLabelForRow:row];
 }
 
 #pragma mark - Activity
@@ -187,6 +348,9 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
         return;
     }
     
+    NSString* message = NSLocalizedString(@"pairing.activity.linking-account", nil);
+    [self updateActivity:message];
+    
     NSString* accessToken = [SENAuthorizationService accessToken];
     SENSenseManager* manager = [self manager];
     
@@ -212,6 +376,9 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
 }
 
 - (void)setupTimezone {
+    NSString* message = NSLocalizedString(@"wifi.activity.setting-timezone", nil);
+    [self updateActivity:message];
+    
     __weak typeof(self) weakSelf = self;
     [SENAPITimeZone setCurrentTimeZone:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -261,20 +428,16 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
             if ([self isValid:ssid pass:pass]) {
                 NSString* message = NSLocalizedString(@"wifi.activity.setting-wifi", nil);
                 [self showActivityWithText:message completion:^{
-                    [self setupWiFi:ssid password:pass securityType:[self selectedSecurityType]];
+                    [self setupWiFi:ssid password:pass securityType:[self securityType]];
                 }];
             }
             break;
         }
         case HEMWiFiSetupStepConfigureWiFi: {
-            NSString* message = NSLocalizedString(@"pairing.activity.linking-account", nil);
-            [self updateActivity:message];
             [self linkAccount];
             break;
         }
         case HEMWiFiSetupStepLinkAccount: {
-            NSString* message = NSLocalizedString(@"wifi.activity.setting-timezone", nil);
-            [self updateActivity:message];
             [self setupTimezone];
             break;
         }
@@ -292,6 +455,8 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == [self ssidField]) {
         [[self passwordField] becomeFirstResponder];
+    } else if (textField == [self passwordField]){
+        [[self securityField] becomeFirstResponder];
     } else {
         [self connectWifi:self];
     }
@@ -302,14 +467,6 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
 
 - (IBAction)connectWifi:(id)sender {
     [self executeNextStep];
-}
-
-- (IBAction)help:(id)sender {
-    DDLogVerbose(@"WARNING: this has not been implemented yet!");
-    // TODO (jimmy): the help website is still being discussed / worked on.  When
-    // we know what to actually point to, we likely will open up a browser to
-    // show the help
-    [SENAnalytics track:kHEMAnalyticsEventHelp];
 }
 
 #pragma mark - Errors / Alerts

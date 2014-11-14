@@ -92,6 +92,10 @@
 "wifi.error.scan-out-of-memory" = "Sense failed to complete the scan due to a memory issue.";
 "wifi.error.scan-general" = "Sense failed to complete the scan due to an unknown issue.";
 "wifi.setup.complete" = "Success";
+"wifi.security.wpa2" = "WPA2";
+"wifi.security.wpa" = "WPA";
+"wifi.security.wep" = "WEP";
+"wifi.security.open" = "OPEN";
 
 // location
 "location.error.title" = "Unknown Location";

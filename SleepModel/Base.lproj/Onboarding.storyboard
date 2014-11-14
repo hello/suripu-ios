@@ -784,35 +784,30 @@
                                     <outlet property="delegate" destination="qC8-fd-UCX" id="uXb-zb-O0W"/>
                                 </connections>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="A3u-Ml-oGM">
-                                <rect key="frame" x="190" y="254" width="220" height="40"/>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Security" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wpX-J4-2Qc" customClass="HEMRoundedTextField">
+                                <rect key="frame" x="28" y="254" width="544" height="35"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="0Vo-Ep-W83"/>
-                                    <constraint firstAttribute="width" constant="220" id="Zi4-0I-DUa"/>
+                                    <constraint firstAttribute="height" constant="35" id="Srw-KY-nFZ"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
-                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="I'm having trouble">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
+                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="20"/>
+                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
                                 <connections>
-                                    <action selector="help:" destination="qC8-fd-UCX" eventType="touchUpInside" id="TP9-oO-lXi"/>
-                                    <action selector="help:" destination="Qk9-qi-Wt3" eventType="touchUpInside" id="pUg-ab-rHY"/>
+                                    <outlet property="delegate" destination="qC8-fd-UCX" id="xOx-Z6-87h"/>
                                 </connections>
-                            </button>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="A3u-Ml-oGM" secondAttribute="centerX" id="6TE-1y-Ao4"/>
+                            <constraint firstItem="wpX-J4-2Qc" firstAttribute="top" secondItem="eHT-GQ-6UW" secondAttribute="bottom" constant="20" id="4SE-T5-h49"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gvl-uZ-ZRh" secondAttribute="trailing" constant="12" id="6ny-AH-SP5"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4PT-Jb-KBo" secondAttribute="trailing" constant="12" id="Dr5-Hp-Bo9"/>
                             <constraint firstItem="4PT-Jb-KBo" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="HwQ-UW-XXh"/>
-                            <constraint firstItem="A3u-Ml-oGM" firstAttribute="bottom" secondItem="eHT-GQ-6UW" secondAttribute="bottom" constant="60" id="QWK-n3-7aM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="h8z-JJ-lrQ" secondAttribute="trailing" constant="12" id="SyW-Vn-fhh"/>
                             <constraint firstItem="4PT-Jb-KBo" firstAttribute="bottom" secondItem="h8z-JJ-lrQ" secondAttribute="bottom" constant="-55" id="UYq-Kq-EoL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eHT-GQ-6UW" secondAttribute="trailing" constant="12" id="Y9q-1w-BoU"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="wpX-J4-2Qc" secondAttribute="trailing" constant="12" id="fQu-az-t7z"/>
                             <constraint firstItem="h8z-JJ-lrQ" firstAttribute="bottom" secondItem="eHT-GQ-6UW" secondAttribute="bottom" constant="-55" id="h0R-BX-vBw"/>
+                            <constraint firstItem="wpX-J4-2Qc" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="jhD-Hb-ghc"/>
                             <constraint firstItem="gvl-uZ-ZRh" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="o4m-sB-PrD"/>
                             <constraint firstItem="h8z-JJ-lrQ" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="ou1-xF-pAr"/>
                             <constraint firstItem="gvl-uZ-ZRh" firstAttribute="top" secondItem="GhD-1W-lxB" secondAttribute="bottom" constant="23" id="uza-X7-dS5"/>
@@ -852,6 +847,7 @@
                     <connections>
                         <outlet property="doneButton" destination="h6O-W0-Wus" id="Ys6-Zp-igw"/>
                         <outlet property="passwordField" destination="eHT-GQ-6UW" id="wqM-rB-ezM"/>
+                        <outlet property="securityField" destination="wpX-J4-2Qc" id="6cv-bw-duX"/>
                         <outlet property="ssidField" destination="h8z-JJ-lrQ" id="md5-lZ-l61"/>
                         <outlet property="subtitleLabel" destination="4PT-Jb-KBo" id="SkV-pq-mrC"/>
                         <outlet property="titleLabel" destination="gvl-uZ-ZRh" id="fLo-xO-ZeJ"/>
@@ -2488,7 +2484,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="shake_pill.png" width="268" height="222"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DAu-sO-H4V"/>
+        <segue reference="azr-Tk-rB7"/>
         <segue reference="lPc-Ik-cVb"/>
         <segue reference="Owc-w0-TLK"/>
     </inferredMetricsTieBreakers>

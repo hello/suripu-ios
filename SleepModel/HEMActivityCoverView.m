@@ -148,6 +148,7 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
     
     if (text != nil) {
         [[self activityLabel] setText:text];
+        [self setNeedsLayout]; // update, based on text
         [[self activityLabel] setAlpha:1.0f];
     }
     

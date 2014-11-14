@@ -13,18 +13,13 @@
 #import "HelloStyleKit.h"
 #import "HEMBluetoothUtils.h"
 
-static CGFloat const kHEMLocationFinderAnimationDuration = 0.25f;
-static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
-
 @interface HEMLocationFinderViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapImageView;
-@property (weak, nonatomic)   IBOutlet HEMActionButton *locationButton;
-@property (weak, nonatomic)   IBOutlet UIButton *skipButton;
-@property (weak, nonatomic) IBOutlet UILabel *thankLabel;
-@property (weak, nonatomic) IBOutlet UILabel *youLabel;
-@property (nonatomic, copy)   NSString* locationTxId;
+@property (weak, nonatomic) IBOutlet HEMActionButton *locationButton;
+@property (weak, nonatomic) IBOutlet UIButton *skipButton;
+@property (nonatomic, copy) NSString* locationTxId;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *locateButtonWidthConstraint;
 

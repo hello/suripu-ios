@@ -13,18 +13,13 @@
 #import "HelloStyleKit.h"
 #import "HEMBluetoothUtils.h"
 
-static CGFloat const kHEMLocationFinderAnimationDuration = 0.25f;
-static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
-
 @interface HEMLocationFinderViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapImageView;
-@property (weak, nonatomic)   IBOutlet HEMActionButton *locationButton;
-@property (weak, nonatomic)   IBOutlet UIButton *skipButton;
-@property (weak, nonatomic) IBOutlet UILabel *thankLabel;
-@property (weak, nonatomic) IBOutlet UILabel *youLabel;
-@property (nonatomic, copy)   NSString* locationTxId;
+@property (weak, nonatomic) IBOutlet HEMActionButton *locationButton;
+@property (weak, nonatomic) IBOutlet UIButton *skipButton;
+@property (nonatomic, copy) NSString* locationTxId;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *locateButtonWidthConstraint;
 
@@ -68,8 +63,8 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
                 [strongSelf stopActivity];
                 [strongSelf setLocationTxId:nil];
                 [strongSelf uploadCollectedData:YES];
-                [strongSelf sayThankyouBeforeLeaving];
                 [strongSelf trackPermission:NO error:nil];
+                [strongSelf next];
             }
             return NO;
         } failure:^BOOL(NSError *error) {
@@ -91,8 +86,8 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
 
 - (IBAction)skipRequestingLocation:(id)sender {
     [self uploadCollectedData:YES];
-    [self sayThankyouBeforeLeaving];
     [self trackPermission:YES error:nil];
+    [self next];
 }
 
 #pragma mark - Tracking Actions
@@ -152,37 +147,6 @@ static CGFloat const kHEMLocationFinderThankyouDisplayTime = 1.0f;
                          [strongSelf uploadCollectedData:NO];
                      } // TODO (jimmy): else if error, no retry, what should we do?
                  }];
-}
-
-- (void)animateThankyou:(void(^)(BOOL finished))completion {
-    [UIView animateWithDuration:kHEMLocationFinderAnimationDuration
-                     animations:^{
-                         [[self thankLabel] setAlpha:1.0f];
-                     }
-                     completion:^(BOOL finished) {
-                         [UIView animateWithDuration:kHEMLocationFinderAnimationDuration
-                                          animations:^{
-                                              [[self youLabel] setAlpha:1.0f];
-                                          }
-                                          completion:completion];
-                     }];
-}
-
-- (void)sayThankyouBeforeLeaving {
-    [UIView animateWithDuration:kHEMLocationFinderAnimationDuration
-                     animations:^{
-                         [[self titleLabel] setAlpha:0.0f];
-                         [[self mapImageView] setAlpha:0.0f];
-                         [[self locationButton] setAlpha:0.0f];
-                         [[self skipButton] setAlpha:0.0f];
-                     }
-                     completion:^(BOOL finished) {
-                         [self animateThankyou:^(BOOL finished) {
-                             [self performSelector:@selector(next)
-                                        withObject:nil
-                                        afterDelay:kHEMLocationFinderThankyouDisplayTime];
-                         }];
-                     }];
 }
 
 - (void)next {

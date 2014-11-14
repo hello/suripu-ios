@@ -6,12 +6,14 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
+#import "HEMOnboardingUtils.h"
 
 static CGFloat const kHEMGenderPickerDeselectedAlpha = 0.5f;
 static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
 
 @interface HEMGenderPickerViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UIButton* femaleIconButton;
 @property (weak, nonatomic) IBOutlet UIButton* femaleTitleButton;
 @property (weak, nonatomic) IBOutlet UIButton* maleIconButton;
@@ -30,6 +32,8 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
+    
+    [self setupSubtitle];
     
     if ([self delegate] != nil) {
         NSString* title = NSLocalizedString(@"status.success", nil);
@@ -51,6 +55,17 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
     }
     
     [SENAnalytics track:kHEMAnalyticsEventOnBGender];
+}
+
+- (void)setupSubtitle {
+    NSString* subtitleFormat = NSLocalizedString(@"account.gender.subtitle", nil);
+    
+    NSMutableAttributedString* attrSubtitle =
+        [[NSMutableAttributedString alloc] initWithString:subtitleFormat];
+    
+    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
+    
+    [[self subtitleLabel] setAttributedText:attrSubtitle];
 }
 
 - (void)viewDidLayoutSubviews {

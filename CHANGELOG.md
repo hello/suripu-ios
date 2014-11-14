@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.0.35
+
+New:
+
+* Updated Onboarding with new assets
+* Updated / Added new descriptions in certain Onboarding screens
+* reversed height picker values so scrubbing up increases height
+
+Fixes:
+
+* prevent user from trying to set wifi when Sense is still being discovered
+
 ## 1.0.0.34
 
 New:

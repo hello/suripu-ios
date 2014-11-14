@@ -3,7 +3,6 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -57,8 +56,6 @@
             <string>Calibre-Light</string>
         </mutableArray>
         <mutableArray key="Calibre-Medium.otf">
-            <string>Calibre-Medium</string>
-            <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
@@ -1709,24 +1706,6 @@ You can always do this later by visiting Settings.</string>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map.png" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-9r-AQZ">
                                 <rect key="frame" x="28" y="182" width="544" height="242"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Thank" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IrN-Am-iTa">
-                                <rect key="frame" x="34" y="283" width="266" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="3d7-ID-INV"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="28"/>
-                                <color key="textColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Q2-kn-Onc">
-                                <rect key="frame" x="306" y="283" width="260" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="exn-m0-sVI"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="28"/>
-                                <color key="textColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-8C-14E" customClass="HEMActionButton">
                                 <rect key="frame" x="190" y="496" width="220" height="40"/>
                                 <constraints>
@@ -1763,18 +1742,12 @@ You can always do this later by visiting Settings.</string>
                             <constraint firstItem="shs-Q7-7yt" firstAttribute="top" secondItem="Sdf-8C-14E" secondAttribute="bottom" constant="64" id="00m-aa-3Pw"/>
                             <constraint firstItem="zaK-X5-Jnp" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="12" id="4J8-xx-n7e"/>
                             <constraint firstItem="SVC-vN-68T" firstAttribute="top" secondItem="Sdf-8C-14E" secondAttribute="bottom" constant="16" id="5GU-by-mid"/>
-                            <constraint firstAttribute="centerXWithinMargins" secondItem="IrN-Am-iTa" secondAttribute="trailing" id="5cT-Yu-a64"/>
                             <constraint firstItem="sEE-9r-AQZ" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="12" id="7do-tZ-fVQ"/>
                             <constraint firstAttribute="centerX" secondItem="SVC-vN-68T" secondAttribute="centerX" constant="0.5" id="K8O-N1-hEG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="zaK-X5-Jnp" secondAttribute="trailing" constant="12" id="OGT-qa-iDE"/>
-                            <constraint firstAttribute="centerY" secondItem="3Q2-kn-Onc" secondAttribute="centerY" id="cLH-G1-5ko"/>
-                            <constraint firstItem="3Q2-kn-Onc" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="centerXWithinMargins" constant="6" id="fu0-rb-3fy"/>
                             <constraint firstItem="zaK-X5-Jnp" firstAttribute="top" secondItem="86E-a5-OJw" secondAttribute="bottom" constant="8" id="nqM-Fv-2kJ"/>
-                            <constraint firstItem="IrN-Am-iTa" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="18" id="pnf-Z1-dHQ"/>
                             <constraint firstAttribute="centerY" secondItem="sEE-9r-AQZ" secondAttribute="centerY" constant="-3" id="rp2-Ps-Nbx"/>
-                            <constraint firstAttribute="centerY" secondItem="IrN-Am-iTa" secondAttribute="centerY" id="vh3-Vb-3Yb"/>
                             <constraint firstAttribute="centerX" secondItem="Sdf-8C-14E" secondAttribute="centerX" id="wdD-z3-Gnf"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="3Q2-kn-Onc" secondAttribute="trailing" constant="18" id="xWY-SU-sQ3"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sEE-9r-AQZ" secondAttribute="trailing" constant="12" id="zRv-0Y-zyz"/>
                         </constraints>
                     </view>
@@ -1784,9 +1757,7 @@ You can always do this later by visiting Settings.</string>
                         <outlet property="locationButton" destination="Sdf-8C-14E" id="amY-FG-Snl"/>
                         <outlet property="mapImageView" destination="sEE-9r-AQZ" id="Zx1-DL-KaU"/>
                         <outlet property="skipButton" destination="SVC-vN-68T" id="uU0-2Z-vGM"/>
-                        <outlet property="thankLabel" destination="IrN-Am-iTa" id="BjJ-T2-zoo"/>
                         <outlet property="titleLabel" destination="zaK-X5-Jnp" id="xxd-fu-A4z"/>
-                        <outlet property="youLabel" destination="3Q2-kn-Onc" id="MWB-hF-4Zs"/>
                         <segue destination="Qk9-qi-Wt3" kind="push" identifier="senseSetup" id="lPc-Ik-cVb"/>
                         <segue destination="AER-Sm-Ec9" kind="push" identifier="senseSetupNoBle" id="gZs-8Z-HGc"/>
                     </connections>
@@ -2517,8 +2488,8 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="shake_pill.png" width="268" height="222"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="OeC-Do-qcD"/>
         <segue reference="DAu-sO-H4V"/>
+        <segue reference="lPc-Ik-cVb"/>
         <segue reference="Owc-w0-TLK"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

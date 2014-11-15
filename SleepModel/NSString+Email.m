@@ -13,7 +13,7 @@ static NSPredicate* emailPredicate;
 @implementation NSString (Email)
 
 + (void)initialize {
-    NSString* regex = @".+@([A-Za-z0-9]+\\.)+[A-Za-z]{2}[A-Za-z]*";
+    NSString* regex = @"^.+@.+\\..+$";
     emailPredicate = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", regex];
 }
 

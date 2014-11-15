@@ -33,7 +33,7 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
     
-    [self setupSubtitle];
+    [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     
     if ([self delegate] != nil) {
         NSString* title = NSLocalizedString(@"status.success", nil);
@@ -55,17 +55,6 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
     }
     
     [SENAnalytics track:kHEMAnalyticsEventOnBGender];
-}
-
-- (void)setupSubtitle {
-    NSString* subtitleFormat = NSLocalizedString(@"account.gender.subtitle", nil);
-    
-    NSMutableAttributedString* attrSubtitle =
-        [[NSMutableAttributedString alloc] initWithString:subtitleFormat];
-    
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
-    
-    [[self subtitleLabel] setAttributedText:attrSubtitle];
 }
 
 - (void)viewDidLayoutSubviews {

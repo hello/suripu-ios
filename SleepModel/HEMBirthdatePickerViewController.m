@@ -8,6 +8,7 @@
 #import "HEMBirthdatePickerView.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
+#import "HEMOnboardingUtils.h"
 
 static NSInteger const kHEMBirthdatePickerDefaultMonth = 7;
 static NSInteger const kHEMBirthdatePickerDefaultDay = 15;
@@ -17,13 +18,14 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 
 @property (weak,   nonatomic) IBOutlet HEMBirthdatePickerView *dobPicker;
 @property (weak,   nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak,   nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (assign, nonatomic)          BOOL appeared;
-@property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
-@property (weak, nonatomic) IBOutlet UIButton *skipButton;
+@property (weak,   nonatomic) IBOutlet HEMActionButton *doneButton;
+@property (weak,   nonatomic) IBOutlet UIButton *skipButton;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *dobPickerHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *dobPickerToButtonTopConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *doneButtonWidthConstraint;
+@property (weak,   nonatomic) IBOutlet NSLayoutConstraint *dobPickerHeightConstraint;
+@property (weak,   nonatomic) IBOutlet NSLayoutConstraint *dobPickerToButtonTopConstraint;
+@property (weak,   nonatomic) IBOutlet NSLayoutConstraint *doneButtonWidthConstraint;
 
 @end
 
@@ -34,6 +36,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
     [[self navigationItem] setHidesBackButton:YES];
     [self loadAccount:nil]; // if does not yet exist, in case user returns to here
     [[self titleLabel] setAccessibilityLabel:NSLocalizedString(@"user.info.accessibility.birthdate-title", nil)];
+    [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     
     if ([self delegate] != nil) {
         NSString* done = NSLocalizedString(@"status.success", nil);

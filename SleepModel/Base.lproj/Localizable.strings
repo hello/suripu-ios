@@ -19,8 +19,7 @@
 "sense-pair.description" = "Now we'll pair your phone with Sense. Make sure your Sense is plugged in and nearby, then tap Continue.";
 "sign-up.title" = "Sign up";
 "sign-up.failed.title" = "Sign up failed";
-"sign-up.error.password-length" = "Your password must be at least 3 characters.";
-"sign-up.error.password-match" = "The password entered into the confirmation field does not match.";
+"sign-up.error.password-length" = "You must provide a password.";
 "sign-up.error.name-length" = "You must give a name.";
 "sign-up.error.email-invalid" = "Your email address was not recognized.";
 "sign-up.error.conflict" = "The provided email address is already attached to an account.";
@@ -92,6 +91,10 @@
 "wifi.error.scan-out-of-memory" = "Sense failed to complete the scan due to a memory issue.";
 "wifi.error.scan-general" = "Sense failed to complete the scan due to an unknown issue.";
 "wifi.setup.complete" = "Success";
+"wifi.security.wpa2" = "WPA2";
+"wifi.security.wpa" = "WPA";
+"wifi.security.wep" = "WEP";
+"wifi.security.open" = "OPEN";
 
 // location
 "location.error.title" = "Unknown Location";

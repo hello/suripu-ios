@@ -9,6 +9,7 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMMathUtil.h"
+#import "HEMOnboardingUtils.h"
 
 NSInteger const HEMWeightPickerMaxWeight = 900;
 
@@ -21,6 +22,7 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint *carouselToButtonTopAlignment;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
+@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
 @end
 
@@ -29,6 +31,7 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupCarousel];
+    [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [SENAnalytics track:kHEMAnalyticsEventOnBWeight];
 }
 

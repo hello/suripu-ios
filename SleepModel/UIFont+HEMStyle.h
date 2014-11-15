@@ -146,4 +146,15 @@
  */
 + (UIFont *)onboardingActivityFontMedium;
 
+/**
+ * Font to be used in a UIPIckerView that has 1 component
+ */
++ (UIFont *)singleComponentPickerViewFont;
+
+/**
+ * Font to be used for a selected value in the right view of a UITextField during
+ * onboarding.  Example use would be the selected security type of wifi
+ */
++ (UIFont *)onboardingFieldRightViewFont;
+
 @end

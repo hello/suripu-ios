@@ -5,6 +5,7 @@
 #import "HEMValueSliderView.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMOnboardingUtils.h"
 
 CGFloat const HEMHeightPickerCentimetersPerInch = 2.54f;
 static NSInteger HEMMaxHeightInFeet = 9;
@@ -19,6 +20,7 @@ static NSInteger HEMMaxHeightInFeet = 9;
 @property (weak, nonatomic) IBOutlet UILabel *otherHeightLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
+@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
 @end
 
@@ -29,6 +31,8 @@ static NSInteger HEMMaxHeightInFeet = 9;
     [[super navigationItem] setHidesBackButton:YES];
     [self setNumberOfRows:HEMMaxHeightInFeet+1]; // include 0
     [[self heightSliderView] reload];
+    
+    [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     
     NSInteger feet = [self feet] > 0 ? [self feet] : 5;
     NSInteger inch = [self inches] > 0 ? [self inches] : 8;

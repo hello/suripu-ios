@@ -96,4 +96,11 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
                     withTitle:(NSString*)errorTitle
                          from:(UIViewController*)controller;
 
+/**
+ * Return a description of why we collect demographic info that is meant to
+ * be displayed on every screen throughout onboarding that collects such info
+ * @param an attributed desciption
+ */
++ (NSAttributedString*)demographicReason;
+
 @end

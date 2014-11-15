@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0.36
+
+New:
+
+* added support to select wifi security type if entering wifi manually
+* relaxed sign up validation
+* minor onboarding updates
+
 ## 1.0.0.35
 
 New:

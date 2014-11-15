@@ -37,6 +37,8 @@
 @property (nonatomic, strong) NSDateFormatter* hourlyFormatter;
 @property (nonatomic, strong) NSDateFormatter* dailyFormatter;
 @property (nonatomic, strong) NSTimer* refreshTimer;
+@property (nonatomic) CGFloat maxGraphValue;
+@property (nonatomic) CGFloat minGraphValue;
 @end
 
 @implementation HEMSensorViewController
@@ -291,6 +293,9 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
                                                                          unit:self.sensor.unit];
     self.graphDataSource.dateFormatter = formatter;
     self.graphView.dataSource = self.graphDataSource;
+    NSArray* values = [[dataSeries valueForKey:@"value"] sortedArrayUsingSelector:@selector(compare:)];
+    self.maxGraphValue = [[values lastObject] floatValue];
+    self.minGraphValue = [[values firstObject] floatValue];
     [self.graphView reloadGraph];
     if (dataSeries.count == 0) {
         self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
@@ -329,6 +334,14 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [UIView animateWithDuration:0.5f animations:^{
         self.overlayView.alpha = 1;
     }];
+}
+
+- (CGFloat)maxValueForLineGraph:(BEMSimpleLineGraphView *)graph {
+    return self.maxGraphValue;
+}
+
+- (CGFloat)minValueForLineGraph:(BEMSimpleLineGraphView *)graph {
+    return self.minGraphValue;
 }
 
 @end

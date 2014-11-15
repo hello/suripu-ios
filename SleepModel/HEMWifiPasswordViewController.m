@@ -63,6 +63,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     if ([self endpoint] != nil) {
         [[self ssidField] setText:[[self endpoint] ssid]];
         [self setSecurityType:[[self endpoint] security]];
+        [[self securityField] setHidden:YES];
     } else { // default to WPA2
         [self setSecurityType:SENWifiEndpointSecurityTypeWpa2];
     }
@@ -455,8 +456,12 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
     if (textField == [self ssidField]) {
         [[self passwordField] becomeFirstResponder];
-    } else if (textField == [self passwordField]){
-        [[self securityField] becomeFirstResponder];
+    } else if (textField == [self passwordField]) {
+        if (![[self securityField] isHidden]) {
+            [[self securityField] becomeFirstResponder];
+        } else {
+            [self connectWifi:self];
+        }
     } else {
         [self connectWifi:self];
     }

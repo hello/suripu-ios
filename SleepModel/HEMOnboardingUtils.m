@@ -167,4 +167,15 @@ static CGFloat   const kHEMOnboardingDefaultFontSize = 18.0f;
     return message;
 }
 
++ (NSAttributedString*)demographicReason {
+    NSString* subtitleFormat = NSLocalizedString(@"account.gender.subtitle", nil);
+    
+    NSMutableAttributedString* attrSubtitle =
+        [[NSMutableAttributedString alloc] initWithString:subtitleFormat];
+    
+    [self applyCommonDescriptionAttributesTo:attrSubtitle];
+    
+    return attrSubtitle;
+}
+
 @end

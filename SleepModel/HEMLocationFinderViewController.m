@@ -16,6 +16,7 @@
 @interface HEMLocationFinderViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapImageView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *locationButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
@@ -30,6 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[super navigationItem] setHidesBackButton:YES];
+    [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [SENAnalytics track:kHEMAnalyticsEventOnBLocation];   
 }
 

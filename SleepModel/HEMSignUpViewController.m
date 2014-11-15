@@ -79,8 +79,6 @@
 #pragma mark - Sign Up
 
 - (void)signup {
-//    UIViewController* bluetoothController = [HEMOnboardingStoryboard instantiateBluetoothViewController];
-//    [[self navigationController] setViewControllers:@[bluetoothController] animated:YES];
     NSString* emailAddress = [self trim:self.emailAddressField.text];
     NSString* password = self.passwordField.text;
     NSString* name = [self trim:self.nameField.text];
@@ -177,29 +175,18 @@
     return [value stringByTrimmingCharactersInSet:spaces];
 }
 
-- (BOOL)isValidName:(NSString*)name
-{
-    return name.length > 1;
-}
-
-- (BOOL)isValidPassword:(NSString*)password
-{
-    return password.length >= 3;
-}
-
-// email validated through NSString+Email
-
 - (BOOL)validateFieldValuesAndShowAlert:(BOOL)shouldShowAlert {
     NSString* errorMessage = nil;
-    if (![self isValidName:[self trim:self.nameField.text]]) {
+    if ([[self trim:self.nameField.text] length] == 0) {
         errorMessage = NSLocalizedString(@"sign-up.error.name-length", nil);
     } else if (![[self trim:self.emailAddressField.text] isValidEmail]) {
         errorMessage = NSLocalizedString(@"sign-up.error.email-invalid", nil);
-    } else if (![self isValidPassword:self.passwordField.text]) { // allow spaces?
+    } else if ([self.passwordField.text length] == 0) { // allow spaces?
         errorMessage = NSLocalizedString(@"sign-up.error.password-length", nil);
     } else {
         return YES;
     }
+    
     if (errorMessage && shouldShowAlert) {
         [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"sign-up.failed.title", nil)
                                               message:errorMessage

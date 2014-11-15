@@ -49,7 +49,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.hourlyFormatter = [[NSDateFormatter alloc] init];
     self.hourlyFormatter.dateFormat = [SENSettings timeFormat] == SENTimeFormat12Hour ? @"ha" : @"H";
     self.dailyFormatter = [[NSDateFormatter alloc] init];
-    self.dailyFormatter.dateFormat = @"EEEEE";
+    self.dailyFormatter.dateFormat = @"EEEEEE";
     self.hourlyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.dailyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     [self configureGraphViewBackground];

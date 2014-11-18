@@ -240,6 +240,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
         [UIView animateWithDuration:0.25f animations:^{
             [self hideEventBlurView];
             self.eventInfoView.alpha = 0;
+        } completion:^(BOOL finished) {
+            self.eventBandView.alpha = 0;
         }];
     }
     else {
@@ -307,10 +309,11 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     self.eventBlurView.backgroundColor = [UIColor colorWithPatternImage:blurSnapshot];
     self.eventBlurView.frame = blurRect;
     self.eventBandView.backgroundColor = [UIColor colorWithPatternImage:bandSnapshot];
+    bandRect.origin.y += 1;
     self.eventBandView.frame = bandRect;
     self.eventTimelineHeaderLabel.frame = CGRectMake(CGRectGetMinX(bandRect), CGRectGetMinY(blurRect), CGRectGetWidth(self.view.bounds), HEMTimelineHeaderCellHeight);
+    self.eventBandView.alpha = 1;
     [UIView animateWithDuration:0.5f delay:0 options:(UIViewAnimationOptionCurveEaseInOut) animations:^{
-        self.eventBandView.alpha = 1;
         self.eventBlurView.alpha = 1;
         self.eventTimelineHeaderLabel.alpha = 1;
     } completion:NULL];
@@ -319,7 +322,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 - (void)hideEventBlurView
 {
     self.eventBlurView.alpha = 0;
-    self.eventBandView.alpha = 0;
     self.eventTimelineHeaderLabel.alpha = 0;
 }
 
@@ -375,6 +377,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     [UIView animateWithDuration:0.15f animations:^{
         self.eventInfoView.alpha = 0;
     }];
+    self.eventBandView.alpha = 0;
 }
 
 #pragma mark UIGestureRecognizerDelegate

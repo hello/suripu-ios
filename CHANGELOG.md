@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.0.37
+
+Fixes:
+
+* Fixed crasher that can occur if Sense unexpectedly disconnects before command completes
+
 ## 1.0.0.36
 
 New:

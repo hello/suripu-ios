@@ -300,8 +300,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     blurRect.origin.y -= HEMTimelineHeaderCellHeight;
     blurRect.size.height += (HEMTimelineHeaderCellHeight + HEMPresleepSummaryLineOffset);
     UIImage* bandSnapshot = [self timelineSnapshotInRect:bandRect];
-    UIImage* blurSnapshot = [[self timelineSnapshotInRect:blurRect] applyBlurWithRadius:15
-                                                                              tintColor:[UIColor colorWithWhite:1.f alpha:0.1]
+    UIImage* blurSnapshot = [[self timelineSnapshotInRect:blurRect] applyBlurWithRadius:0
+                                                                              tintColor:[UIColor colorWithWhite:1.f alpha:0.95]
                                                                   saturationDeltaFactor:1.2
                                                                               maskImage:nil];
     self.eventBlurView.backgroundColor = [UIColor colorWithPatternImage:blurSnapshot];

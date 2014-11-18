@@ -10,6 +10,7 @@
 #import "HEMGraphSectionOverlayView.h"
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
+#import "HEMSensorUtils.h"
 #import "UIFont+HEMStyle.h"
 
 @interface HEMSensorViewController ()<BEMSimpleLineGraphDelegate>
@@ -148,6 +149,9 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 
 - (void)configureSensorValueViews
 {
+    UIColor* conditionColor = [HEMSensorUtils colorForSensorWithCondition:self.sensor.condition];
+    self.valueLabel.textColor = conditionColor;
+    self.unitLabel.textColor = conditionColor;
     self.title = self.sensor.localizedName;
     if (self.sensor.value) {
         NSString* format = nil;
@@ -163,7 +167,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 
     self.unitLabel.text = [self.sensor localizedUnit];
     NSDictionary* attributes = @{
-        @(EMPH)  : @{ NSFontAttributeName : [UIFont settingsInsightMessageFont]},
+        @(EMPH)  : @{ NSForegroundColorAttributeName : conditionColor,
+                      NSFontAttributeName : [UIFont settingsInsightMessageFont]},
         @(PLAIN) : @{ NSFontAttributeName : [UIFont settingsInsightMessageFont]}
     };
 

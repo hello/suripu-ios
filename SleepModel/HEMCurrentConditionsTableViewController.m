@@ -20,6 +20,7 @@
 #import "HEMInsightCollectionViewCell.h"
 #import "HEMInsightsSummaryDataSource.h"
 #import "HEMInsightViewController.h"
+#import "HEMSensorUtils.h"
 
 NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 static CGFloat const kHEMCurrentConditionsInsightsViewHeight = 112.0f;
@@ -161,25 +162,6 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
     [self refreshCachedSensors];
 }
 
-- (void)colorizeSensorTextIn:(UILabel*)label forCondition:(SENSensorCondition)condition {
-    UIColor* textColor = nil;
-    switch (condition) {
-        case SENSensorConditionAlert:
-            textColor = [HelloStyleKit alertSensorColor];
-            break;
-        case SENSensorConditionWarning:
-            textColor = [HelloStyleKit warningSensorColor];
-            break;
-        case SENSensorConditionIdeal:
-            textColor = [HelloStyleKit idealSensorColor];
-            break;
-        default:
-            textColor = [HelloStyleKit backViewTextColor];
-            break;
-    }
-    [label setTextColor:textColor];
-}
-
 - (void)dealloc
 {
     [_refreshTimer invalidate];
@@ -287,8 +269,7 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 
         [cell showDetailBubble:YES];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-        
-        [self colorizeSensorTextIn:cell.detailLabel forCondition:sensor.condition];
+        cell.detailLabel.textColor = [HEMSensorUtils colorForSensorWithCondition:sensor.condition];
         
         switch (sensor.unit) {
         case SENSensorUnitDegreeCentigrade:

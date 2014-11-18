@@ -130,6 +130,8 @@
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
 "settings.wifi.other" = "Other...";
+"settings.troubleshooting" = "Help and troubleshooting";
+"settings.troubleshooting.url" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8/edit?usp=sharing";
 
 // support
 "support.options.title" = "Support options";

@@ -18,6 +18,14 @@
 
 @implementation HEMSettingsTableViewController
 
+static NSInteger const HEMSettingsMyInfoIndex = 0;
+static NSInteger const HEMSettingsAccountIndex = 1;
+static NSInteger const HEMSettingsUnitsTimeIndex = 2;
+static NSInteger const HEMSettingsDevicesIndex = 3;
+static NSInteger const HEMSettingsTroubleshootingIndex = 4;
+static NSInteger const HEMSettingsSupportIndex = 5;
+static NSInteger const HEMSettingsSignOutIndex = 6;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -28,7 +36,7 @@
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 6;
+    return 7;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
@@ -39,30 +47,7 @@
 
 - (void)tableView:(UITableView*)tableView willDisplayCell:(UITableViewCell*)cell forRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    NSString* title = nil;
-    switch ([indexPath row]) {
-    case 0:
-        title = NSLocalizedString(@"settings.info", nil);
-        break;
-    case 1:
-        title = NSLocalizedString(@"settings.account", nil);
-        break;
-    case 2:
-        title = NSLocalizedString(@"settings.units", nil);
-        break;
-    case 3:
-        title = NSLocalizedString(@"settings.devices", nil);
-        break;
-    case 4:
-        title = NSLocalizedString(@"settings.contact-support", nil);
-        break;
-    case 5:
-        title = NSLocalizedString(@"actions.sign-out", nil);
-        break;
-    default:
-        break;
-    }
-    [[cell textLabel] setText:title];
+    [[cell textLabel] setText:[self titleForRowAtIndex:indexPath.row]];
     [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
     [[cell textLabel] setFont:[UIFont settingsTitleFont]];
 }
@@ -73,22 +58,25 @@
 
     NSString* nextSegueId = nil;
     switch ([indexPath row]) {
-    case 0:
+    case HEMSettingsMyInfoIndex:
         nextSegueId = [HEMMainStoryboard infoSettingsSegueIdentifier];
         break;
-    case 1:
+    case HEMSettingsAccountIndex:
         // TODO (jimmy): account settings not implemented yet!
         break;
-    case 2:
+    case HEMSettingsUnitsTimeIndex:
         nextSegueId = [HEMMainStoryboard unitsSettingsSegueIdentifier];
         break;
-    case 3:
+    case HEMSettingsDevicesIndex:
         nextSegueId = [HEMMainStoryboard devicesSettingsSegueIdentifier];
         break;
-    case 4:
+    case HEMSettingsTroubleshootingIndex:
+        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:NSLocalizedString(@"settings.troubleshooting.url", nil)]];
+        break;
+    case HEMSettingsSupportIndex:
         [HEMSupportUtil contactSupportFrom:[self navigationController] mailDelegate:self];
         break;
-    case 5:
+    case HEMSettingsSignOutIndex:
         [SENAuthorizationService deauthorize];
         [SENAnalytics track:kHEMAnalyticsEventSignOut];
         break;
@@ -99,6 +87,26 @@
     if (nextSegueId != nil) {
         [self performSegueWithIdentifier:nextSegueId sender:self];
     }
+}
+
+- (NSString*)titleForRowAtIndex:(NSInteger)index {
+    switch (index) {
+        case HEMSettingsMyInfoIndex:
+            return NSLocalizedString(@"settings.info", nil);
+        case HEMSettingsAccountIndex:
+            return NSLocalizedString(@"settings.account", nil);
+        case HEMSettingsUnitsTimeIndex:
+            return NSLocalizedString(@"settings.units", nil);
+        case HEMSettingsDevicesIndex:
+            return NSLocalizedString(@"settings.devices", nil);
+        case HEMSettingsTroubleshootingIndex:
+            return NSLocalizedString(@"settings.troubleshooting", nil);
+        case HEMSettingsSupportIndex:
+            return NSLocalizedString(@"settings.contact-support", nil);
+        case HEMSettingsSignOutIndex:
+            return NSLocalizedString(@"actions.sign-out", nil);
+    }
+    return nil;
 }
 
 #pragma mark - Contact Support Mail Delegate

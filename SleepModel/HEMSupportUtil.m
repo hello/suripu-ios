@@ -29,8 +29,8 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
     [composer setToRecipients:@[ HEMSupportContactEmail ]];
     [composer setSubject:HEMSupportContactSubject];
     [composer addAttachmentData:[HEMLogUtils latestLogFileData]
-                         mimeType:HEMSupportLogFileName
-                         fileName:HEMSupportLogFileType];
+                       mimeType:HEMSupportLogFileType
+                       fileName:HEMSupportLogFileName];
     composer.mailComposeDelegate = delegate;
     [controller presentViewController:composer animated:YES completion:NULL];
 }

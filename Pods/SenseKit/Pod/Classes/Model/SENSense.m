@@ -58,4 +58,15 @@
     return [NSString stringWithFormat:@"Sense: %@", [self name]];
 }
 
+- (BOOL)isEqual:(id)object {
+    if (!object || ![object isKindOfClass:[self class]]) return NO;
+    
+    SENSense* other = object;
+    return [other deviceId] != nil && [[self deviceId] isEqualToString:[other deviceId]];
+}
+
+- (NSUInteger)hash {
+    return [[self deviceId] hash];
+}
+
 @end

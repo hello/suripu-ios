@@ -59,8 +59,10 @@ static NSMutableDictionary* providers;
 
 + (void)trackError:(NSError*)error withEventName:(NSString*)eventName {
     NSMutableDictionary* mutableProps = [NSMutableDictionary dictionaryWithCapacity:2];
-    [mutableProps setValue:@([error code]) forKey:kSENAnalyticsPropCode];
-    [mutableProps setValue:[error description] forKey:kSENAnalyticsPropMessage];
+    if ([error isKindOfClass:[NSError class]]) { // making sure error is an error.  sometimes it can be NSNull...
+        [mutableProps setValue:@([error code]) forKey:kSENAnalyticsPropCode];
+        [mutableProps setValue:[error description] forKey:kSENAnalyticsPropMessage];
+    }
     [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
         [provider track:eventName withProperties:mutableProps];
     }];

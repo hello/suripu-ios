@@ -1032,10 +1032,15 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                             // from the library, but also the behavior in CoreBluetooth
                             [strongSelf setValid:NO];
                             
-                            NSError* error = [[note userInfo] valueForKey:@"error"];
+                            id errorObject = [[note userInfo] valueForKey:@"error"];
+                            if ([errorObject isKindOfClass:[NSError class]]) {
+                                DDLogVerbose(@"error from disconnect: %@", errorObject);
+                            }
                             for (NSString* observerId in [strongSelf disconnectObservers]) {
                                 SENSenseFailureBlock block = [[strongSelf disconnectObservers] valueForKey:observerId];
-                                block (error);
+                                block ([NSError errorWithDomain:kSENSenseErrorDomain
+                                                           code:SENSenseManagerErrorCodeUnexpectedDisconnect
+                                                       userInfo:nil]);
                             }
                         }];
 }

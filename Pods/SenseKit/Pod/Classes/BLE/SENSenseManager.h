@@ -62,7 +62,12 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
     /**
      * If trying to set WiFi credentials and Sense can't obtain an IP
      */
-    SENSenseManagerErrorCodeFailToObtainIP = -15
+    SENSenseManagerErrorCodeFailToObtainIP = -15,
+    /**
+     * Error code returned from an instance of SENSenseManager if an unexpected
+     * disconnect occurred while connected to Sense.
+     */
+    SENSenseManagerErrorCodeUnexpectedDisconnect = -16
 };
 
 typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {

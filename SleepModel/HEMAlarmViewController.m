@@ -29,13 +29,14 @@
 @property (strong, nonatomic) CAGradientLayer* gradientLayer;
 @property (strong, nonatomic) NSDictionary* markdownAttributes;
 
-@property (nonatomic) CGFloat previousLocationY;
 @property (nonatomic, strong) HEMAlarmCache* alarmCache;
 @property (nonatomic, strong) HEMAlarmCache* originalAlarmCache;
 @property (nonatomic, getter=isUnsavedAlarm) BOOL unsavedAlarm;
 @end
 
 @implementation HEMAlarmViewController
+
+static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.5f;
 
 - (void)viewDidLoad
 {
@@ -172,17 +173,14 @@
 
 - (IBAction)panAlarmTime:(UIPanGestureRecognizer*)sender
 {
-    CGFloat currentLocationY = [sender locationInView:self.view].y;
-    if (self.previousLocationY != 0) {
-        CGFloat distanceMoved = -1 * (self.previousLocationY - currentLocationY);
-        struct SENAlarmTime alarmTime = [self timeFromCachedValues];
-        alarmTime = [SENAlarm time:alarmTime byAddingMinutes:distanceMoved];
-        self.alarmCache.hour = alarmTime.hour;
-        self.alarmCache.minute = alarmTime.minute;
-        [self updateViewWithAlarmSettings];
-        self.previousLocationY = 0;
-    }
-    self.previousLocationY = currentLocationY;
+    CGFloat distanceMoved = [sender translationInView:self.view].y;
+    CGFloat minutes = distanceMoved * HEMAlarmPanningSpeedMultiplier;
+    struct SENAlarmTime alarmTime = [self timeFromCachedValues];
+    alarmTime = [SENAlarm time:alarmTime byAddingMinutes:minutes];
+    self.alarmCache.hour = alarmTime.hour;
+    self.alarmCache.minute = alarmTime.minute;
+    [self updateViewWithAlarmSettings];
+    [sender setTranslation:CGPointZero inView:self.view];
 }
 
 - (IBAction)showAlarmTimeExplanationDialog:(UIButton*)sender
@@ -216,9 +214,9 @@
 
 #pragma mark - UIGestureRecognizerDelegate
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch
+- (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch
 {
-    self.previousLocationY = 0;
+    [gestureRecognizer setTranslation:CGPointZero inView:self.view];
     return YES;
 }
 

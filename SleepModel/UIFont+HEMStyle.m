@@ -28,7 +28,7 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)insightTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:9.f];
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:10.f];
 }
 
 + (UIFont *)insightCardTitleFont {
@@ -52,11 +52,11 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)settingsTableCellDetailFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
 }
 
 + (UIFont *)settingsTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
 }
 
 + (UIFont *)sensorRangeSelectionFont {

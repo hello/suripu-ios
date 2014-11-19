@@ -24,7 +24,7 @@
 
 NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 static CGFloat const kHEMCurrentConditionsInsightsViewHeight = 112.0f;
-static CGFloat const kHEMCurrentConditionsInsightsMargin = 12.0f;
+static CGFloat const kHEMCurrentConditionsInsightsMargin = 16.0f;
 static CGFloat const kHEMCurrentConditionsInsightsSpacing= 5.0f;
 static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
 

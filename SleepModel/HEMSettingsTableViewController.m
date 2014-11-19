@@ -71,7 +71,7 @@ static NSInteger const HEMSettingsSignOutIndex = 6;
         nextSegueId = [HEMMainStoryboard devicesSettingsSegueIdentifier];
         break;
     case HEMSettingsTroubleshootingIndex:
-        [[UIApplication sharedApplication] openURL:[NSURL URLWithString:NSLocalizedString(@"settings.troubleshooting.url", nil)]];
+        [HEMSupportUtil openHelpFrom:self];
         break;
     case HEMSettingsSupportIndex:
         [HEMSupportUtil contactSupportFrom:[self navigationController] mailDelegate:self];

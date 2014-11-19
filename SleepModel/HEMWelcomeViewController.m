@@ -14,6 +14,7 @@
 #import "HEMSignUpViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingUtils.h"
+#import "HEMSupportUtil.h"
 
 static CGFloat const kHEMWelcomeMotionEffectBorder = 10.0f;
 static CGFloat const kHEMWelcomeButtonAnimationDuration = 0.5f;
@@ -248,8 +249,9 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 - (IBAction)getSense:(id)sender {
     // TODO (jimmy): likely going to be building an embedded / in-app browser
     // when we have time so not going to do anything fancier than push people out
-    NSURL* orderURL = [NSURL URLWithString:kHEMSenseOrderURL];
-    [[UIApplication sharedApplication] openURL:orderURL];
+    [HEMSupportUtil openURL:kHEMSenseOrderURL from:self];
+//    NSURL* orderURL = [NSURL URLWithString:kHEMSenseOrderURL];
+//    [[UIApplication sharedApplication] openURL:orderURL];
 }
 
 - (IBAction)cancelGettingStarted:(id)sender {

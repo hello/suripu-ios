@@ -27,6 +27,9 @@
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "We could not set your birthdate for your account.";
 
+// help links
+"help.url.troubleshooting" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8";
+
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
 "video.url.intro" = "http://player.vimeo.com/external/101139949.hd.mp4?s=28ac378e29847b77e9fb7431f05d2772";
@@ -315,6 +318,7 @@
 "actions.sign-out" = "Sign out";
 "actions.no" = "No";
 "actions.yes" = "Yes";
+"actions.close" = "Close";
 "status.success" = "Done";
 
 // actitivity messages

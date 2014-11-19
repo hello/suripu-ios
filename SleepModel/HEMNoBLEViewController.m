@@ -14,6 +14,7 @@
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMSupportUtil.h"
 
 @interface HEMNoBLEViewController ()
 
@@ -84,7 +85,10 @@
 #if TARGET_IPHONE_SIMULATOR
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard noBleToSetupSegueIdentifier]
                               sender:self];
+    return;
 #endif
+    
+    [HEMSupportUtil openHelpFrom:self];
 }
 
 @end

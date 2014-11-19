@@ -14,6 +14,7 @@
 #import "HEMBluetoothUtils.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMUserDataCache.h"
+#import "HEMSupportUtil.h"
 
 @interface HEMSecondPillSetupViewController ()
 
@@ -66,6 +67,7 @@
     // we know what to actually point to, we likely will open up a browser to
     // show the help
     [SENAnalytics track:kHEMAnalyticsEventHelp];
+    [HEMSupportUtil openHelpFrom:self];
 }
 
 @end

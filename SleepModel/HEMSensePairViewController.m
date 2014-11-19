@@ -18,6 +18,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMSecondPillCheckViewController.h"
 #import "HelloStyleKit.h"
+#import "HEMSupportUtil.h"
 
 typedef NS_ENUM(NSUInteger, HEMSensePairState) {
     HEMSensePairStateNotStarted = 0,
@@ -140,6 +141,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     // we know what to actually point to, we likely will open up a browser to
     // show the help
     [SENAnalytics track:kHEMAnalyticsEventHelp];
+    [HEMSupportUtil openHelpFrom:self];
 }
 
 #pragma mark - Scanning

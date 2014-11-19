@@ -202,9 +202,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                          properties:@{kHEMAnalyticsEventPropMessage : @"no sense found"}];
                 
                 [strongSelf stopActivityWithMessage:nil completion:^{
-                    NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
-                    [strongSelf showErrorMessage:msg];
+                    [strongSelf setCurrentState:HEMSensePairStatePairingError];
+                    [strongSelf executeNextStep];
                 }];
+
             }
         }
     }]) {

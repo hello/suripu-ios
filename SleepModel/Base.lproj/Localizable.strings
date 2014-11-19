@@ -130,6 +130,7 @@
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
 "settings.wifi.other" = "Other...";
+"settings.troubleshooting" = "Help and troubleshooting";
 
 // support
 "support.options.title" = "Support options";

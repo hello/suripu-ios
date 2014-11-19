@@ -13,7 +13,6 @@
 #import "HEMInsightCollectionViewCell.h"
 
 static NSString* const kHEMInsightCellReuseId = @"insight";
-static CGFloat const kHEMInsightCellDisplayDuration = 1.0f;
 
 @interface HEMInsightsSummaryDataSource()
 

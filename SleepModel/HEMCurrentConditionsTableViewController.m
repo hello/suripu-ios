@@ -23,10 +23,6 @@
 #import "HEMSensorUtils.h"
 
 NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
-static CGFloat const kHEMCurrentConditionsInsightsViewHeight = 112.0f;
-static CGFloat const kHEMCurrentConditionsInsightsMargin = 16.0f;
-static CGFloat const kHEMCurrentConditionsInsightsSpacing= 5.0f;
-static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
 
 @interface HEMCurrentConditionsTableViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegateFlowLayout, HEMInsightViewControllerDelegate>
 @property (nonatomic, strong) IBOutlet UITableView* tableView;
@@ -43,6 +39,11 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
 
 static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
 static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
+
+static CGFloat const kHEMCurrentConditionsInsightsViewHeight = 112.0f;
+static CGFloat const kHEMCurrentConditionsInsightsMargin = 16.0f;
+static CGFloat const kHEMCurrentConditionsInsightsSpacing= 5.0f;
+static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
 
 - (void)viewDidLoad
 {

@@ -141,7 +141,8 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
         NSFontAttributeName : navbarTextFont
     }];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{
-        NSFontAttributeName : navbarTextFont
+        NSFontAttributeName : navbarTextFont,
+        NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor]
     } forState:UIControlStateNormal];
 }
 

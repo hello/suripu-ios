@@ -94,9 +94,9 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
     [self registerForNotifications];
     [self refreshCachedSensors];
     __weak typeof(self) weakSelf = self;
-    [[self insightsDataSource] refreshInsights:^{
+    [[self insightsDataSource] refreshInsights:^(BOOL updated) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
+        if (strongSelf && updated) {
             [[strongSelf insightsView] reloadData];
         }
     }];

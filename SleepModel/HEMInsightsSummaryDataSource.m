@@ -31,15 +31,16 @@ static NSString* const kHEMInsightCellReuseId = @"insight";
     return self;
 }
 
-- (void)refreshInsights:(void(^)(void))completion {
+- (void)refreshInsights:(void(^)(BOOL updated))completion {
     __weak typeof(self) weakSelf = self;
     [SENAPIInsight getInsights:^(NSArray* insights, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            if (error == nil) {
+            BOOL hasInsights = [insights count] > 0;
+            if (error == nil && hasInsights) {
                 [strongSelf setInsights:insights];
             }
-            if (completion) completion ();
+            if (completion) completion (hasInsights);
         }
     }];
 }

@@ -25,7 +25,7 @@
  * 
  * @param completion: the block to call when it's done
  */
-- (void)refreshInsights:(void(^)(void))completion;
+- (void)refreshInsights:(void(^)(BOOL updated))completion;
 
 /**
  * @return YES when insights exist, NO otherwise

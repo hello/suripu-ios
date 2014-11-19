@@ -12,6 +12,7 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
+#import "HEMSupportUtil.h"
 
 @interface HEMSenseSetupViewController ()
 
@@ -50,6 +51,7 @@
     // we know what to actually point to, we likely will open up a browser to
     // show the help
     [SENAnalytics track:kHEMAnalyticsEventHelp];
+    [HEMSupportUtil openHelpFrom:self];
 }
 
 @end

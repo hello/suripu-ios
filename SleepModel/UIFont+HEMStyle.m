@@ -139,4 +139,8 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:16.0f];
 }
 
++ (UIFont *)inAppBrowserTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
+}
+
 @end

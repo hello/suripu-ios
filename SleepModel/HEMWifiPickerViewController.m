@@ -18,6 +18,7 @@
 #import "HEMWifiPasswordViewController.h"
 #import "HEMActionButton.h"
 #import "HEMActivityCoverView.h"
+#import "HEMSupportUtil.h"
 
 static CGFloat const kHEMWifiCellHeight = 44.0f;
 static CGFloat const kHEMWifiPickerIconPadding = 5.0f;
@@ -250,6 +251,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     DDLogVerbose(@"WARNING: this has not been implemented yet!");
     
     [SENAnalytics track:kHEMAnalyticsEventHelp];
+    [HEMSupportUtil openHelpFrom:self];
 }
 
 - (IBAction)scan:(id)sender {

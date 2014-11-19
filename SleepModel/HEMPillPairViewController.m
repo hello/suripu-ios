@@ -18,6 +18,7 @@
 #import "HEMOnboardingUtils.h"
 #import "HEMActivityCoverView.h"
 #import "HEMDeviceCenter.h"
+#import "HEMSupportUtil.h"
 
 static CGFloat const kHEMPillPairedStateDuration = 2.0f;
 static CGFloat const kHEMPillPairStartDelay = 2.0f;
@@ -238,6 +239,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     // we know what to actually point to, we likely will open up a browser to
     // show the help
     [SENAnalytics track:kHEMAnalyticsEventHelp];
+    [HEMSupportUtil openHelpFrom:self];
 }
 
 - (IBAction)cancel:(id)sender {

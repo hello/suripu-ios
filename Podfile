@@ -13,6 +13,7 @@ pod 'UIImageEffects', '~> 0.0.1'
 pod 'SpinKit', '~> 1.2.0'
 pod 'BEMSimpleLineGraph'
 pod 'FDWaveformView', :git => 'git@github.com:hello/FDWaveformView.git'
+pod 'SVWebViewController', :git => 'https://github.com/TransitApp/SVWebViewController.git'
 
 # Private
 pod 'FCDynamicPanesNavigationController', :git => 'git@github.com:hello/FCDynamicPanesNavigationController.git'

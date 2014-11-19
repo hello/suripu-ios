@@ -157,4 +157,9 @@
  */
 + (UIFont *)onboardingFieldRightViewFont;
 
+/**
+ * Font to be used to display the in-app browser title
+ */
++ (UIFont *)inAppBrowserTitleFont;
+
 @end

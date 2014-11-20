@@ -176,8 +176,8 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)showConfidentialityNotice
 {
+    [[[[UIApplication sharedApplication] delegate] window] setWindowLevel:UIWindowLevelStatusBar+1];
     [self.window addSubview:[HEMConfidentialityWarningView viewInNewWindow]];
-    [[UIApplication sharedApplication] setStatusBarHidden:YES];
 }
 
 - (void)configureSettingsDefaults

@@ -187,4 +187,6 @@
  */
 + (UIFont *)navButtonTitleFont;
 
++ (UIFont *)confidentialityWarningFont;
+
 @end

@@ -29,8 +29,6 @@ static NSUInteger HEMAlarmListLimit = 8;
     [super viewDidLoad];
     [self setNeedsStatusBarAppearanceUpdate];
     self.title = NSLocalizedString(@"alarms.title", nil);
-    [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
-    [self.editButtonItem setTintColor:[UIColor whiteColor]];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.addButton setTitleColor:[UIColor colorWithWhite:0.9 alpha:0.25] forState:UIControlStateDisabled];
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^{
@@ -42,12 +40,7 @@ static NSUInteger HEMAlarmListLimit = 8;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [UIColor whiteColor],
-        NSFontAttributeName : [UIFont settingsTitleFont]
-    }];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self updateNavigationBarStyle];
     [self configureViewBackground];
     [self reloadData];
     [self.tableView reloadData];
@@ -62,6 +55,20 @@ static NSUInteger HEMAlarmListLimit = 8;
         NSFontAttributeName : [UIFont settingsTitleFont]
     }];
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
+}
+
+- (void)updateNavigationBarStyle
+{
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+                                                                      NSForegroundColorAttributeName : [UIColor whiteColor],
+                                                                      NSFontAttributeName : [UIFont settingsTitleFont]
+                                                                      }];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
+    [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
+    [self.editButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],
+                                                  NSFontAttributeName: [UIFont navButtonTitleFont]}
+                                       forState:UIControlStateNormal];
 }
 
 - (void)configureViewBackground

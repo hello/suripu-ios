@@ -66,12 +66,7 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.5f;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [UIColor whiteColor],
-        NSFontAttributeName : [UIFont settingsTitleFont]
-    }];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
+    [self updateNavigationBar];
     [self updateViewWithAlarmSettings];
 }
 
@@ -108,6 +103,20 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.5f;
     CGFloat y = (self.edgesForExtendedLayout & UIRectEdgeTop) ? -(CGRectGetHeight(self.navigationController.navigationBar.frame) + CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame])) : 0;
     self.gradientLayer.frame = CGRectMake(0, y, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
     [HEMColorUtils configureLayer:self.gradientLayer forHourOfDay:self.alarmCache.hour];
+}
+
+- (void)updateNavigationBar
+{
+    NSDictionary* attributes = @{NSForegroundColorAttributeName:[UIColor whiteColor],
+                                 NSFontAttributeName: [UIFont navButtonTitleFont]};
+    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
+    [self.navigationItem.leftBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
+    [self.navigationController.navigationBar setTitleTextAttributes:@{
+        NSForegroundColorAttributeName : [UIColor whiteColor],
+        NSFontAttributeName : [UIFont settingsTitleFont]
+    }];
+    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
 }
 
 - (void)updateViewWithAlarmSettings

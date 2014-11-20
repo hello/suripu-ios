@@ -1,6 +1,7 @@
 
 #import <SenseKit/SENAuthorizationService.h>
 #import "HEMConfidentialityWarningView.h"
+#import "UIFont+HEMStyle.h"
 #import "HelloStyleKit.h"
 
 @interface HEMConfidentialityWarningView ()
@@ -11,17 +12,15 @@
 
 @implementation HEMConfidentialityWarningView
 
-static CGFloat HEMConfidentialityWarningViewHeight = 11.f;
-static CGFloat HEMConfidentialityWarningViewFontPointSize = 9.5f;
+static CGFloat HEMConfidentialityWarningViewHeight = 14.f;
 
 + (UIWindow*)viewInNewWindow
 {
-    CGRect frame = CGRectMake(0,
-                              0,
+    CGRect frame = CGRectMake(0, 0,
                               CGRectGetWidth([UIScreen mainScreen].bounds),
                               HEMConfidentialityWarningViewHeight);
     UIWindow* window = [[UIWindow alloc] initWithFrame:frame];
-    window.windowLevel = UIWindowLevelStatusBar;
+    window.windowLevel = UIWindowLevelStatusBar+2;
     [window addSubview:[HEMConfidentialityWarningView new]];
     window.hidden = NO;
     window.userInteractionEnabled = NO;
@@ -46,12 +45,12 @@ static CGFloat HEMConfidentialityWarningViewFontPointSize = 9.5f;
 - (void)layoutSubviews
 {
     self.hidden = ![SENAuthorizationService isAuthorized];
-    self.backgroundColor = [HelloStyleKit deepSleepColor];
+    self.backgroundColor = [UIColor clearColor];
     if (!self.textLabel) {
         self.textLabel = [[UILabel alloc] initWithFrame:self.frame];
         self.textLabel.backgroundColor = [UIColor clearColor];
-        self.textLabel.textColor = [UIColor whiteColor];
-        self.textLabel.font = [UIFont boldSystemFontOfSize:HEMConfidentialityWarningViewFontPointSize];
+        self.textLabel.textColor = [HelloStyleKit backViewTextColor];
+        self.textLabel.font = [UIFont confidentialityWarningFont];
         self.textLabel.textAlignment = NSTextAlignmentCenter;
         [self addSubview:self.textLabel];
     }

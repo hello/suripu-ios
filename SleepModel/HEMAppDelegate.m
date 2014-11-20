@@ -131,17 +131,16 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)configureAppearance
 {
-    UIFont* navbarTextFont = [UIFont settingsTitleFont];
     [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init]
                                       forBarPosition:UIBarPositionAny
                                           barMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{
         NSForegroundColorAttributeName : [UIColor whiteColor],
-        NSFontAttributeName : navbarTextFont
+        NSFontAttributeName : [UIFont settingsTitleFont]
     }];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{
-        NSFontAttributeName : navbarTextFont,
+        NSFontAttributeName : [UIFont navButtonTitleFont],
         NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor]
     } forState:UIControlStateNormal];
 }

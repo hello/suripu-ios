@@ -56,8 +56,8 @@
 /* Class = "IBUIButton"; normalTitle = "Restore to Factory Settings"; ObjectID = "PZJ-QF-maf"; */
 "PZJ-QF-maf.normalTitle" = "Restore to Factory Settings";
 
-/* Class = "IBUIButton"; normalTitle = "LAST WEEK"; ObjectID = "U6O-Dc-1qK"; */
-"U6O-Dc-1qK.normalTitle" = "LAST WEEK";
+/* Class = "IBUIButton"; normalTitle = "PAST WEEK"; ObjectID = "U6O-Dc-1qK"; */
+"U6O-Dc-1qK.normalTitle" = "PAST WEEK";
 
 /* Class = "IBUILabel"; text = "enabling pairing mode"; ObjectID = "UXO-iS-9i6"; */
 "UXO-iS-9i6.text" = "enabling pairing mode";
@@ -80,8 +80,8 @@
 /* Class = "IBUILabel"; text = "In the last month, you have gone to sleep earlier than before, resulting in better sleep."; ObjectID = "ctp-sa-Lyf"; */
 "ctp-sa-Lyf.text" = "In the last month, you have gone to sleep earlier than before, resulting in better sleep.";
 
-/* Class = "IBUIButton"; normalTitle = "LAST 24 HOURS"; ObjectID = "d9H-QV-uE8"; */
-"d9H-QV-uE8.normalTitle" = "LAST 24 HOURS";
+/* Class = "IBUIButton"; normalTitle = "LAST DAY"; ObjectID = "d9H-QV-uE8"; */
+"d9H-QV-uE8.normalTitle" = "LAST DAY";
 
 /* Class = "IBUILabel"; text = "THU"; ObjectID = "dGv-oi-2yL"; */
 "dGv-oi-2yL.text" = "THU";

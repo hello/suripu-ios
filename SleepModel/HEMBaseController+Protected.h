@@ -14,6 +14,7 @@
 - (void)adjustConstraintsForIphone5;
 - (void)updateConstraint:(NSLayoutConstraint*)constraint withDiff:(CGFloat)diff;
 - (void)showMessageDialog:(NSString*)message title:(NSString*)title;
+- (void)showMessageDialog:(NSString*)message title:(NSString*)title image:(UIImage*)image withHelp:(BOOL)help;
 - (void)viewDidBecomeActive;
 
 @end

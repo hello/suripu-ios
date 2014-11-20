@@ -12,8 +12,8 @@
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMUserDataCache.h"
-#import "HEMAlertController.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMDialogViewController.h"
 
 static NSString* const kHEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 static CGFloat   const kHEMOnboardingDefaultFontSize = 18.0f;
@@ -130,9 +130,18 @@ static CGFloat   const kHEMOnboardingDefaultFontSize = 18.0f;
                          from:(UIViewController*)controller {
     
     NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
-    [HEMAlertController presentInfoAlertWithTitle:errorTitle
-                                          message:[self httpErrorMessageForStatusCode:[response statusCode]]
-                             presentingController:controller];
+    NSString* message = [self httpErrorMessageForStatusCode:[response statusCode]];
+    UIView* seeThroughView = [controller parentViewController] ? [[controller parentViewController] view] : [controller view];
+    HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
+    [dialogVC setTitle:errorTitle];
+    [dialogVC setMessage:message];
+    [dialogVC setViewToShowThrough:seeThroughView];
+    
+    [dialogVC showFrom:controller onDone:^{
+        // don't weak reference this since controller must remain until it has
+        // been dismissed
+        [controller dismissViewControllerAnimated:YES completion:nil];
+    }];
 }
 
 + (NSString*)httpErrorMessageForStatusCode:(NSInteger)statusCode {

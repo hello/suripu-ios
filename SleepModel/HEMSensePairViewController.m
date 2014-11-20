@@ -41,7 +41,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *bluetoothLogo;
+@property (weak, nonatomic) IBOutlet UIImageView *senseImageView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
 @property (weak, nonatomic) IBOutlet UIButton *noSenseButton;
 
@@ -119,8 +119,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                         [strongSelf executeNextStep];
                     } else {
                         NSString* message = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
-                        NSString* title = NSLocalizedString(@"pairing.failed.title", nil);
-                        [strongSelf showMessageDialog:message title:title];
+                        [strongSelf showErrorMessage:message];
                     }
                 }];
             }
@@ -370,7 +369,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 #pragma mark - Errors
 
 - (void)showErrorMessage:(NSString*)message {
-    [self showMessageDialog:message title:NSLocalizedString(@"pairing.failed.title", nil)];
+    [self showMessageDialog:message
+                      title:NSLocalizedString(@"pairing.failed.title", nil)
+                      image:nil
+                   withHelp:YES];
 }
 
 #pragma mark - Finishing

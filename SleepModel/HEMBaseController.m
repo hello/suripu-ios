@@ -8,6 +8,8 @@
 
 #import "HEMBaseController.h"
 #import "HEMAlertController.h"
+#import "HEMDialogViewController.h"
+#import "HEMSupportUtil.h"
 
 static CGFloat const kHEMIPhone4Height = 480.0f;
 static CGFloat const kHEMIPhone5Height = 568.0f;
@@ -54,7 +56,33 @@ static CGFloat const kHEMIPhone5Height = 568.0f;
 }
 
 - (void)showMessageDialog:(NSString*)message title:(NSString*)title {
-    [HEMAlertController presentInfoAlertWithTitle:title message:message presentingController:self];
+    UIView* seeThroughView = [self parentViewController] ? [[self parentViewController] view] : [self view];
+    [self showMessageDialog:message title:title image:nil seeThroughView:seeThroughView withHelp:NO];
+}
+
+- (void)showMessageDialog:(NSString*)message title:(NSString*)title image:(UIImage*)image withHelp:(BOOL)help {
+    UIView* seeThroughView = [self parentViewController] ? [[self parentViewController] view] : [self view];
+    [self showMessageDialog:message title:title image:image seeThroughView:seeThroughView withHelp:help];
+}
+
+- (void)showMessageDialog:(NSString*)message
+                    title:(NSString*)title
+                    image:(UIImage*)image
+           seeThroughView:(UIView*)seeThroughView
+                 withHelp:(BOOL)help {
+    
+    HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
+    [dialogVC setTitle:title];
+    [dialogVC setMessage:message];
+    [dialogVC setShowHelp:help];
+    [dialogVC setDialogImage:image];
+    [dialogVC setViewToShowThrough:seeThroughView];
+    
+    [dialogVC showFrom:self onDone:^{
+        // don't weak reference this since controller must remain until it has
+        // been dismissed
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
 }
 
 - (void)dealloc {

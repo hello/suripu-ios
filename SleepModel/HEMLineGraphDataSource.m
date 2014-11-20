@@ -31,7 +31,7 @@
             NSDictionary* dataPoint = [self dataPointAtIndex:[index integerValue]];
             NSDate* lastUpdated = [NSDate dateWithTimeIntervalSince1970:([dataPoint[@"datetime"] doubleValue])/1000];
             CGFloat value = [dataPoint[@"value"] floatValue];
-            NSString* formattedValue = @"";
+            NSString* formattedValue = @"0";
             if (value != 0)
                 formattedValue = [SENSensor formatValue:dataPoint[@"value"] withUnit:self.unit];
             [labels addObject:@{

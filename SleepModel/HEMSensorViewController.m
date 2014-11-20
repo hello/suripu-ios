@@ -19,17 +19,13 @@
 @property (weak, nonatomic) IBOutlet UIButton* hourlyGraphButton;
 @property (weak, nonatomic) IBOutlet UILabel* valueLabel;
 @property (weak, nonatomic) IBOutlet BEMSimpleLineGraphView* graphView;
-@property (weak, nonatomic) IBOutlet UILabel* comfortZoneInfoLabel;
-@property (weak, nonatomic) IBOutlet UILabel* comfortZoneLabel;
+@property (weak, nonatomic) IBOutlet UILabel* statusMessageLabel;
 @property (weak, nonatomic) IBOutlet UILabel* statusLabel;
-@property (weak, nonatomic) IBOutlet UIView* comfortZoneContainer;
+@property (weak, nonatomic) IBOutlet UILabel* idealLabel;
 @property (weak, nonatomic) IBOutlet UIView *graphContainerView;
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
 @property (weak, nonatomic) IBOutlet UIView* chartContainerView;
 @property (weak, nonatomic) IBOutlet HEMGraphSectionOverlayView* overlayView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionViewWidthConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectionViewLeadingConstraint;
-@property (weak, nonatomic) IBOutlet UIView *selectionView;
 
 @property (strong, nonatomic) NSArray* hourlyDataSeries;
 @property (strong, nonatomic) NSArray* dailyDataSeries;
@@ -59,16 +55,13 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [self initializeGraphDataSource];
     [self configureGraphView];
     [self configureSensorValueViews];
-    [self configureComfortLevelViews];
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     [self fadeInGraphView];
-    [self updateSelectionViewLocation];
     [UIView animateWithDuration:0.25 animations:^{
-        self.selectionView.alpha = 1;
         [self.hourlyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
     }];
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:HEMSensorRefreshInterval
@@ -135,7 +128,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 - (void)configureGraphView
 {
     self.overlayView.alpha = 0;
-    self.selectionView.alpha = 0;
     self.graphView.delegate = self;
     self.graphView.enableBezierCurve = YES;
     self.graphView.enablePopUpReport = YES;
@@ -166,23 +158,17 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     }
 
     self.unitLabel.text = [self.sensor localizedUnit];
-    NSDictionary* attributes = @{
-        @(EMPH)  : @{ NSForegroundColorAttributeName : conditionColor,
-                      NSFontAttributeName : [UIFont settingsInsightMessageFont]},
+    NSDictionary* statusAttributes = @{
+        @(EMPH)  : @{ NSForegroundColorAttributeName : conditionColor},
+        @(PLAIN) : @{ NSFontAttributeName : [UIFont settingsInsightMessageFont]}
+    };
+    NSDictionary* idealAttributes = @{
+        @(EMPH)  : @{ NSForegroundColorAttributeName : [HelloStyleKit idealSensorColor]},
         @(PLAIN) : @{ NSFontAttributeName : [UIFont settingsInsightMessageFont]}
     };
 
-    self.comfortZoneInfoLabel.attributedText = markdown_to_attr_string(self.sensor.message, 0, attributes);
-}
-
-- (void)configureComfortLevelViews
-{
-    self.comfortZoneLabel.font = [UIFont insightTitleFont];
-    self.comfortZoneContainer.layer.cornerRadius = 2.f;
-    self.comfortZoneContainer.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
-    self.comfortZoneContainer.layer.shadowOffset = CGSizeMake(0, 1);
-    self.comfortZoneContainer.layer.shadowOpacity = 1.f;
-    self.comfortZoneContainer.layer.shadowRadius = 2.f;
+    self.statusMessageLabel.attributedText = markdown_to_attr_string(self.sensor.message, 0, statusAttributes);
+    self.idealLabel.attributedText = markdown_to_attr_string(@"You sleep best when the temperature is between *68º* and *72º*", 0, idealAttributes);
 }
 
 #pragma mark - Update Graph
@@ -238,7 +224,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
         return;
     self.showHourlyData = YES;
     [self.dailyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
-    [self.hourlyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
+    [self.hourlyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
     [self toggleDataSeriesTo:self.hourlyDataSeries animated:YES];
 }
 
@@ -247,7 +233,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     if (![self isShowingHourlyData])
         return;
     self.showHourlyData = NO;
-    [self.dailyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
+    [self.dailyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
     [self.hourlyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
     [self toggleDataSeriesTo:self.dailyDataSeries animated:YES];
 }
@@ -257,7 +243,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     void (^animations)() = ^{
         self.graphView.alpha = 0;
         self.overlayView.alpha = 0;
-        [self updateSelectionViewLocation];
     };
     void (^completion)(BOOL) = ^(BOOL finished) {
         if ([self isShowingHourlyData]) {
@@ -275,13 +260,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
         animations();
         completion(YES);
     }
-}
-
-- (void)updateSelectionViewLocation {
-    UIButton* button = [self isShowingHourlyData] ? self.hourlyGraphButton : self.dailyGraphButton;
-    self.selectionViewLeadingConstraint.constant = CGRectGetMinX(button.frame);
-    self.selectionViewWidthConstraint.constant = CGRectGetWidth(button.frame);
-    [self.selectionView layoutIfNeeded];
 }
 
 - (void)updateGraphWithHourlyData:(NSArray*)dataSeries {

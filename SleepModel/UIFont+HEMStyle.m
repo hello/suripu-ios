@@ -60,7 +60,7 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)sensorRangeSelectionFont {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:13.f];
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
 }
 
 + (UIFont *)sensorGraphNumberFont {
@@ -161,6 +161,10 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
 
 + (UIFont *)navButtonTitleFont {
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:17.0f];
+}
+
++ (UIFont *)confidentialityWarningFont {
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:11.f];
 }
 
 @end

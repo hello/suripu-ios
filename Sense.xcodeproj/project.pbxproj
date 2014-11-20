@@ -499,7 +499,7 @@
 		8A59F632198C16050005B000 /* HEMSignUpViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSignUpViewController.m; sourceTree = "<group>"; };
 		8A660121199E9CF9007E6167 /* HEMUserDataCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUserDataCache.h; sourceTree = "<group>"; };
 		8A660122199E9CF9007E6167 /* HEMUserDataCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUserDataCache.m; sourceTree = "<group>"; };
-		8A660139199EBF87007E6167 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		8A660139199EBF87007E6167 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = SleepModel/README.md; sourceTree = "<group>"; };
 		8A66FC7A199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryPagingDataSource.h; sourceTree = "<group>"; };
 		8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryPagingDataSource.m; sourceTree = "<group>"; };
 		8A66FC83199C035500922ED5 /* HEMMiniSleepHistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMiniSleepHistoryView.h; sourceTree = "<group>"; };
@@ -979,6 +979,8 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
+				8AA0F57E19C2255D00556AAF /* CHANGELOG.md */,
+				8A660139199EBF87007E6167 /* README.md */,
 				6003F593195388D20070C39A /* Sense */,
 				BF7F1BCB19E304050028F799 /* SenseWidget */,
 				6003F5B5195388D20070C39A /* Tests */,
@@ -1048,13 +1050,11 @@
 			isa = PBXGroup;
 			children = (
 				BF781E3D19DF0F7400B68EBC /* Settings.bundle */,
-				8AA0F57E19C2255D00556AAF /* CHANGELOG.md */,
 				8A5402A019AE72F300FC6085 /* Makefile */,
 				6003F596195388D20070C39A /* InfoPlist.strings */,
 				8A90F9A819630C3800AFD110 /* Localizable.strings */,
 				6003F599195388D20070C39A /* main.m */,
 				8A03386A1974AFD800BE8327 /* Podfile */,
-				8A660139199EBF87007E6167 /* README.md */,
 				6003F595195388D20070C39A /* Sense-Info.plist */,
 			);
 			name = "Supporting Files";

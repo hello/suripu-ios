@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0.38
+
+New:
+
+* Visual styling for onboarding and alerts
+* Hook up "I'm having trouble" in onboarding
+* Add 'Help and troubleshooting' to Settings
+
+Fixes:
+
+* Missing line for temperature sensor graph when using Fahrenheit
+* Remove blur from timeline graph
+* Slow down alarm time panning speed
+
 ## 1.0.0.37
 
 Fixes:

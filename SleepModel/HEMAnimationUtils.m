@@ -8,6 +8,7 @@
 
 static CGFloat const kHEMAnimationActivityLineWidth = 2.0f;
 static CGFloat const kHEMAnimationActivityDuration = 3.0f;
+static CGFloat const kHEMAnimationDefaultDuration = 0.2f;
 
 #import "HEMAnimationUtils.h"
 
@@ -58,6 +59,16 @@ static CGFloat const kHEMAnimationActivityDuration = 3.0f;
     
     [CATransaction commit];
     
+}
+
++ (void)grow:(UIView*)view completion:(void(^)(BOOL finished))completion {
+    [UIView animateWithDuration:kHEMAnimationDefaultDuration animations:^{
+        [view setTransform:CGAffineTransformMakeScale(1.1f, 1.1f)];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:kHEMAnimationDefaultDuration/2 animations:^{
+            [view setTransform:CGAffineTransformIdentity];
+        } completion:completion];
+    }];
 }
 
 @end

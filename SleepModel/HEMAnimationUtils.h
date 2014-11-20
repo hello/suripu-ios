@@ -37,4 +37,12 @@
                completion:(void(^)(void))completion
                    timing:(NSString*)timingFunctionName;
 
+/**
+ * Start the view in a shrunken state, grow it passed it's normal scale, then finish
+ * at it's normal state
+ * @param view:       the view to grow
+ * @param completion: the block to call when all is done
+ */
++ (void)grow:(UIView*)view completion:(void(^)(BOOL finished))completion;
+
 @end

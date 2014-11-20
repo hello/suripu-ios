@@ -22,11 +22,11 @@
                         </constraints>
                     </view>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-AK-PaO">
-                        <rect key="frame" x="120" y="18" width="79" height="25"/>
+                        <rect key="frame" x="116" y="15" width="87" height="28"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="E5c-Hr-7wE"/>
                         </constraints>
-                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
+                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
                         <color key="textColor" white="0.40000000000000002" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -45,7 +45,7 @@
                         <color key="textColor" white="0.57999999999999996" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RAe-yJ-lzB">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RAe-yJ-lzB" customClass="HEMTimelineTopButton">
                         <rect key="frame" x="0.0" y="0.0" width="59" height="59"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="59" id="eGL-uK-2S3"/>
@@ -55,7 +55,7 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DtZ-v4-794">
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DtZ-v4-794" customClass="HEMTimelineTopButton">
                         <rect key="frame" x="261" y="0.0" width="59" height="51"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="59" id="Xwc-pS-cNB"/>
@@ -72,7 +72,7 @@
             <constraints>
                 <constraint firstItem="RAe-yJ-lzB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="2ju-2L-Tz3"/>
                 <constraint firstItem="EkC-F1-GFh" firstAttribute="top" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="20" id="2vE-SI-UEM"/>
-                <constraint firstItem="Bcg-AK-PaO" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="18" id="5TY-Zh-u8t"/>
+                <constraint firstItem="Bcg-AK-PaO" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="5TY-Zh-u8t"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="buK-Of-ZfH" secondAttribute="bottom" id="FOD-tr-5xk"/>
                 <constraint firstItem="T3i-WO-VZQ" firstAttribute="top" secondItem="Bcg-AK-PaO" secondAttribute="bottom" constant="30" id="KF5-q2-HnP"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="EkC-F1-GFh" secondAttribute="bottom" constant="14" id="KSZ-Id-dKy"/>

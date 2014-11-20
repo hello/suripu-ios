@@ -31,8 +31,21 @@
 }   
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    [self setBackButtonOnViewController:viewController];
     [[viewController view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
     [super pushViewController:viewController animated:animated];
+}
+
+- (void)setBackButtonOnViewController:(UIViewController*)viewController {
+    UIImage* defaultBackImage = [HelloStyleKit backIcon];
+    UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithImage:defaultBackImage style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    [item setTintColor:[HelloStyleKit barButtonEnabledColor]];
+    [item setAccessibilityLabel:self.topViewController.title];
+    viewController.navigationItem.leftBarButtonItem = item;
+}
+
+- (void)goBack {
+    [self popViewControllerAnimated:YES];
 }
 
 @end

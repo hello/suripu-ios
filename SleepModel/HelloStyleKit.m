@@ -74,6 +74,7 @@ static UIImage* _temperatureDarkIcon = nil;
 static UIImage* _sense = nil;
 static UIImage* _wifiIcon = nil;
 static UIImage* _lockIcon = nil;
+static UIImage* _backIcon = nil;
 
 #pragma mark Initialization
 
@@ -180,6 +181,7 @@ static UIImage* _lockIcon = nil;
 + (UIImage*)sense { return _sense ?: (_sense = [UIImage imageNamed: @"sense"]); }
 + (UIImage*)wifiIcon { return _wifiIcon ?: (_wifiIcon = [UIImage imageNamed: @"wifiIcon"]); }
 + (UIImage*)lockIcon { return _lockIcon ?: (_lockIcon = [UIImage imageNamed: @"lockIcon"]); }
++ (UIImage*)backIcon { return _backIcon ?: (_backIcon = [UIImage imageNamed: @"backIcon"]); }
 
 #pragma mark Drawing Methods
 

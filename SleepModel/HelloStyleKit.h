@@ -78,6 +78,7 @@
 + (UIImage*)sense;
 + (UIImage*)wifiIcon;
 + (UIImage*)lockIcon;
++ (UIImage*)backIcon;
 
 // Drawing Methods
 + (void)drawSleepScoreGraphWithSleepScoreLabelText: (NSString*)sleepScoreLabelText sleepScore: (CGFloat)sleepScore;

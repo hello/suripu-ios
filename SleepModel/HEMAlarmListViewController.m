@@ -29,7 +29,8 @@ static NSUInteger HEMAlarmListLimit = 8;
     [super viewDidLoad];
     [self setNeedsStatusBarAppearanceUpdate];
     self.title = NSLocalizedString(@"alarms.title", nil);
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:[HelloStyleKit chevronIconLeft] style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
+    [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
+    [self.editButtonItem setTintColor:[UIColor whiteColor]];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.addButton setTitleColor:[UIColor colorWithWhite:0.9 alpha:0.25] forState:UIControlStateDisabled];
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^{
@@ -91,11 +92,6 @@ static NSUInteger HEMAlarmListLimit = 8;
 }
 
 #pragma mark - Actions
-
-- (void)goBack
-{
-    [self.navigationController popViewControllerAnimated:YES];
-}
 
 - (IBAction)addNewAlarm:(id)sender
 {

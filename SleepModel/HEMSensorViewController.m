@@ -298,9 +298,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
                                                                          unit:self.sensor.unit];
     self.graphDataSource.dateFormatter = formatter;
     self.graphView.dataSource = self.graphDataSource;
-    NSArray* values = [[dataSeries valueForKey:@"value"] sortedArrayUsingSelector:@selector(compare:)];
-    self.maxGraphValue = [[values lastObject] floatValue];
-    self.minGraphValue = [[values firstObject] floatValue];
+    [self setGraphValueBoundsWithData:dataSeries];
     [self.graphView reloadGraph];
     if (dataSeries.count == 0) {
         self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
@@ -308,6 +306,20 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     } else {
         self.statusLabel.alpha = 0;
     }
+}
+
+- (void)setGraphValueBoundsWithData:(NSArray*)dataSeries {
+    NSArray* values = [[dataSeries valueForKey:@"value"] sortedArrayUsingSelector:@selector(compare:)];
+    NSNumber* maxValue = [values lastObject];
+    NSNumber* minValue = [values firstObject];
+    if ([maxValue floatValue] == 0)
+        self.maxGraphValue = 0;
+    else
+        self.maxGraphValue = [[SENSensor value:maxValue inPreferredUnit:self.sensor.unit] floatValue];
+    if ([minValue floatValue] == 0)
+        self.minGraphValue = 0;
+    else
+        self.minGraphValue = [[SENSensor value:minValue inPreferredUnit:self.sensor.unit] floatValue];
 }
 
 #pragma mark - BEMSimpleLineGraphDelegate

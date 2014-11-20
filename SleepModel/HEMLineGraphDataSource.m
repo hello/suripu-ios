@@ -30,8 +30,12 @@
         for (NSNumber* index in indexes) {
             NSDictionary* dataPoint = [self dataPointAtIndex:[index integerValue]];
             NSDate* lastUpdated = [NSDate dateWithTimeIntervalSince1970:([dataPoint[@"datetime"] doubleValue])/1000];
+            CGFloat value = [dataPoint[@"value"] floatValue];
+            NSString* formattedValue = @"";
+            if (value != 0)
+                formattedValue = [SENSensor formatValue:dataPoint[@"value"] withUnit:self.unit];
             [labels addObject:@{
-                                [self.dateFormatter stringFromDate:lastUpdated]:[SENSensor formatValue:dataPoint[@"value"] withUnit:self.unit]}];
+                                [self.dateFormatter stringFromDate:lastUpdated]:formattedValue}];
         }
     }
     return labels;
@@ -54,6 +58,9 @@
 
 - (CGFloat)lineGraph:(BEMSimpleLineGraphView *)graph valueForPointAtIndex:(NSInteger)index {
     NSDictionary* dataPoint = [self dataPointAtIndex:index];
+    CGFloat rawValue = [dataPoint[@"value"] floatValue];
+    if (rawValue == 0)
+        return rawValue;
     return [[SENSensor value:dataPoint[@"value"] inPreferredUnit:self.unit] floatValue];
 }
 

@@ -11,10 +11,6 @@
             <string>Agile-Bold</string>
             <string>Agile-Bold</string>
         </mutableArray>
-        <mutableArray key="Agile-Light.otf">
-            <string>Agile-Light</string>
-            <string>Agile-Light</string>
-        </mutableArray>
         <mutableArray key="Agile-Medium.otf">
             <string>Agile-Medium</string>
         </mutableArray>
@@ -56,7 +52,6 @@
             <string>Calibre-Light</string>
         </mutableArray>
         <mutableArray key="Calibre-Medium.otf">
-            <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
@@ -128,7 +123,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <state key="normal" title="I Forgot my Password">
-                                    <color key="titleColor" red="0.33333333333333331" green="0.51764705882352935" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156862745094" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -172,7 +167,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nBf-Bp-BiO">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="39"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="18"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
                                         <state key="normal" title="Done">
                                             <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -473,7 +468,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B1E-FJ-PZY">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="39"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="18"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
                                         <state key="normal" title="Done">
                                             <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -567,7 +562,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <state key="normal" title="Skip">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -696,7 +691,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <state key="normal" title="Skip">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -837,7 +832,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6O-W0-Wus">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="39"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="18"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
                                         <state key="normal" title="Done">
                                             <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -951,7 +946,7 @@
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <state key="normal" title="I'm having trouble">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1063,7 +1058,7 @@
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="I'm having trouble">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1168,7 +1163,7 @@ You can always do this later by visiting Settings.</string>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="No Thanks">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1274,7 +1269,7 @@ You can always do this later by visiting Settings.</string>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="I'm having trouble">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <state key="disabled" title=" ">
@@ -1366,7 +1361,7 @@ You can always do this later by visiting Settings.</string>
                                 <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="Skip">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1510,7 +1505,7 @@ You can always do this later by visiting Settings.</string>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <state key="normal" title="Skip">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1645,7 +1640,7 @@ You can always do this later by visiting Settings.</string>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <state key="normal" title="Skip">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1747,7 +1742,7 @@ You can always do this later by visiting Settings.</string>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <state key="normal" title="Skip">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1854,7 +1849,7 @@ You can always do this later by visiting Settings.</string>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
                                 <state key="normal" title="I'm having trouble">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1881,11 +1876,11 @@ You can always do this later by visiting Settings.</string>
                     <navigationItem key="navigationItem" id="MWW-Jm-AdT"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
-                        <outlet property="bluetoothLogo" destination="Awm-Mz-tO7" id="FWt-9M-Uwm"/>
                         <outlet property="descLabel" destination="mFI-cr-rhB" id="fc1-Xv-y71"/>
                         <outlet property="noSenseButton" destination="8HN-0C-IaD" id="eRN-vb-S2e"/>
                         <outlet property="readyButton" destination="2TQ-o7-Rs6" id="ENr-AI-Zzv"/>
                         <outlet property="readyButtonWidthConstraint" destination="SwH-wy-eha" id="UuP-nZ-lEN"/>
+                        <outlet property="senseImageView" destination="Awm-Mz-tO7" id="cqK-F9-ETs"/>
                         <outlet property="titleLabel" destination="xHT-0z-rBN" id="sOe-hX-4WK"/>
                         <outlet property="view" destination="f6K-qr-p0h" id="k5s-iP-vXI"/>
                         <segue destination="H2i-xS-f14" kind="push" identifier="wifi" id="IQX-WG-nAB"/>
@@ -1975,7 +1970,7 @@ You can always do this later by visiting Settings.</string>
                                 <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="I'm setting up a new Sense">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -2127,7 +2122,7 @@ Cgo
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="I'm having trouble">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -2268,7 +2263,7 @@ Launch the </string>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="I'm having trouble">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -2363,7 +2358,7 @@ Launch the </string>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                 <state key="normal" title="I'm having trouble">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -2510,9 +2505,9 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="shake_pill.png" width="268" height="222"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="azr-Tk-rB7"/>
-        <segue reference="lPc-Ik-cVb"/>
-        <segue reference="Owc-w0-TLK"/>
+        <segue reference="OeC-Do-qcD"/>
+        <segue reference="DAu-sO-H4V"/>
+        <segue reference="JSp-ra-OqT"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

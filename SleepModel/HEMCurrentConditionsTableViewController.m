@@ -23,9 +23,6 @@
 #import "HEMSensorUtils.h"
 
 NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
-static CGFloat const kHEMCurrentConditionsInsightsViewHeight = 112.0f;
-static CGFloat const kHEMCurrentConditionsInsightsMargin = 12.0f;
-static CGFloat const kHEMCurrentConditionsInsightsSpacing= 5.0f;
 
 @interface HEMCurrentConditionsTableViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegateFlowLayout, HEMInsightViewControllerDelegate>
 @property (nonatomic, strong) IBOutlet UITableView* tableView;
@@ -42,6 +39,11 @@ static CGFloat const kHEMCurrentConditionsInsightsSpacing= 5.0f;
 
 static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
 static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
+
+static CGFloat const kHEMCurrentConditionsInsightsViewHeight = 112.0f;
+static CGFloat const kHEMCurrentConditionsInsightsMargin = 16.0f;
+static CGFloat const kHEMCurrentConditionsInsightsSpacing= 5.0f;
+static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
 
 - (void)viewDidLoad
 {
@@ -92,9 +94,9 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
     [self registerForNotifications];
     [self refreshCachedSensors];
     __weak typeof(self) weakSelf = self;
-    [[self insightsDataSource] refreshInsights:^{
+    [[self insightsDataSource] refreshInsights:^(BOOL updated) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
+        if (strongSelf && updated) {
             [[strongSelf insightsView] reloadData];
         }
     }];
@@ -212,13 +214,18 @@ static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView* headerView = [[UIView alloc] initWithFrame:CGRectMake(0.0f, 0.0f, 320.0f, 20.0f)];
+    CGRect headerFrame = CGRectZero;
+    headerFrame.size.width = CGRectGetWidth([tableView bounds]);
+    headerFrame.size.height = kHEMCurrentConditionsHeaderHeight;
+    
+    UIView* headerView = [[UIView alloc] initWithFrame:headerFrame];
     [headerView setBackgroundColor:[UIColor clearColor]];
+    
     return headerView;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return 20.0f;
+    return kHEMCurrentConditionsHeaderHeight;
 }
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section

@@ -9,7 +9,6 @@
 #import "HEMNoPillViewController.h"
 #import "HEMPillPairViewController.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMAlertController.h"
 
 @interface HEMNoPillViewController () <HEMPillPairDelegate>
 

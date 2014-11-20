@@ -59,6 +59,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
     [[self doneButton] setTitleColor:[HelloStyleKit senseBlueColor]
                             forState:UIControlStateNormal];
+    [[[self doneButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
     
     if ([self endpoint] != nil) {
         [[self ssidField] setText:[[self endpoint] ssid]];

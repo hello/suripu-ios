@@ -279,7 +279,10 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
         }
     }
     
-    [self showMessageDialog:message title:NSLocalizedString(@"pairing.failed.title", nil)];
+    [self showMessageDialog:message
+                      title:NSLocalizedString(@"pairing.failed.title", nil)
+                      image:nil
+                   withHelp:YES];
     
     if (error) {
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];

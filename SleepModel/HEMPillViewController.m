@@ -85,7 +85,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell textLabel] setFont:[UIFont settingsTitleFont]];
     
     [[cell detailTextLabel] setText:detail];
-    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewDetailTextColor]];
     [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
     
 }

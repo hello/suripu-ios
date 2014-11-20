@@ -118,7 +118,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [[cell detailTextLabel] setText:subtitle];
     [[cell detailTextLabel] sizeToFit];
-    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewDetailTextColor]];
     [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
     
     [cell setAccessoryView:activityView];

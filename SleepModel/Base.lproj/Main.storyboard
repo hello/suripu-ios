@@ -1420,7 +1420,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="ycX-qk-h9h">
-                                <rect key="frame" x="0.0" y="20" width="600" height="533"/>
+                                <rect key="frame" x="0.0" y="20" width="600" height="530"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -1445,7 +1445,7 @@
                                                         <constraint firstAttribute="height" constant="40" id="W6c-2W-QG5"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="18"/>
-                                                    <color key="textColor" red="0.58039215686274503" green="0.58039215686274503" blue="0.58039215686274503" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="textColor" red="0.47843137254901957" green="0.47843137254901957" blue="0.47843137254901957" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qtz-Zx-z1h">
@@ -1455,7 +1455,7 @@
                                                             <rect key="frame" x="10" y="7" width="40" height="20"/>
                                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                             <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="18"/>
-                                                            <color key="textColor" red="0.58039215686274503" green="0.58039215686274503" blue="0.58039215686274503" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <color key="textColor" red="0.63137254901960782" green="0.63137254901960782" blue="0.63137254901960782" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
@@ -1511,7 +1511,7 @@
                             <constraint firstItem="ycX-qk-h9h" firstAttribute="top" secondItem="fd7-5i-ar9" secondAttribute="bottom" constant="-44" id="bJg-H0-WAf"/>
                             <constraint firstItem="fd7-5i-ar9" firstAttribute="bottom" secondItem="0rb-WB-5u8" secondAttribute="top" constant="44" id="bcr-nH-fTH"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ycX-qk-h9h" secondAttribute="trailing" constant="-16" id="ozQ-e7-jNo"/>
-                            <constraint firstItem="i2H-c6-eq3" firstAttribute="top" secondItem="ycX-qk-h9h" secondAttribute="bottom" constant="47" id="tip-ND-loA"/>
+                            <constraint firstItem="i2H-c6-eq3" firstAttribute="top" secondItem="ycX-qk-h9h" secondAttribute="bottom" constant="50" id="tip-ND-loA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="1Fk-fP-qPh">

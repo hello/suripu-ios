@@ -40,6 +40,7 @@ static UIColor* _senseBlueColor = nil;
 static UIColor* _backViewTintColor = nil;
 static UIColor* _timelineSectionBorderColor = nil;
 static UIColor* _timelineGradientDarkColor = nil;
+static UIColor* _backViewDetailTextColor = nil;
 
 static PCGradient* _blueBackgroundGradient = nil;
 
@@ -93,15 +94,16 @@ static UIImage* _lockIcon = nil;
     _deepSleepColor = [UIColor colorWithRed: 0 green: 0.333 blue: 0.847 alpha: 1];
     _awakeSleepColor = [UIColor colorWithRed: 0.32 green: 0.356 blue: 0.8 alpha: 0];
     _sleepQuestionBgColor = [UIColor colorWithRed: 0.153 green: 0.435 blue: 0.851 alpha: 0.902];
-    _onboardingGrayColor = [UIColor colorWithRed: 0.29 green: 0.29 blue: 0.322 alpha: 1];
+    _onboardingGrayColor = [UIColor colorWithRed: 0.286 green: 0.286 blue: 0.286 alpha: 1];
     _green = [UIColor colorWithRed: 0.455 green: 0.792 blue: 0.459 alpha: 1];
     _backViewBackgroundColor = [UIColor colorWithRed: 0.96 green: 0.96 blue: 0.96 alpha: 1];
-    _backViewNavTitleColor = [UIColor colorWithRed: 0.4 green: 0.4 blue: 0.4 alpha: 1];
-    _backViewTextColor = [UIColor colorWithRed: 0.49 green: 0.49 blue: 0.49 alpha: 1];
+    _backViewNavTitleColor = [UIColor colorWithRed: 0.286 green: 0.286 blue: 0.286 alpha: 1];
+    _backViewTextColor = [UIColor colorWithRed: 0.478 green: 0.478 blue: 0.478 alpha: 1];
     _senseBlueColor = [UIColor colorWithRed: 0 green: 0.604 blue: 1 alpha: 1];
     _backViewTintColor = [UIColor colorWithRed: 0.686 green: 0.686 blue: 0.686 alpha: 1];
     _timelineSectionBorderColor = [UIColor colorWithRed: 0.9 green: 0.91 blue: 0.91 alpha: 1];
     _timelineGradientDarkColor = [UIColor colorWithRed: 0.96 green: 0.96 blue: 0.97 alpha: 1];
+    _backViewDetailTextColor = [UIColor colorWithRed: 0.631 green: 0.631 blue: 0.631 alpha: 1];
 
     // Gradients Initialization
     CGFloat blueBackgroundGradientLocations[] = {0, 1};
@@ -136,6 +138,7 @@ static UIImage* _lockIcon = nil;
 + (UIColor*)backViewTintColor { return _backViewTintColor; }
 + (UIColor*)timelineSectionBorderColor { return _timelineSectionBorderColor; }
 + (UIColor*)timelineGradientDarkColor { return _timelineGradientDarkColor; }
++ (UIColor*)backViewDetailTextColor { return _backViewDetailTextColor; }
 
 #pragma mark Gradients
 
@@ -181,8 +184,6 @@ static UIImage* _lockIcon = nil;
 
     //// Color Declarations
     UIColor* sleepScoreNoValueColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.059];
-    UIColor* insightHeadingColor = [UIColor colorWithRed: 0.58 green: 0.58 blue: 0.58 alpha: 1];
-    UIColor* sleepScoreValueColor = [UIColor colorWithRed: 0.41 green: 0.41 blue: 0.41 alpha: 1];
 
     //// Variable Declarations
     UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.highSleepScoreColor)) : sleepScoreNoValueColor;
@@ -211,7 +212,7 @@ static UIImage* _lockIcon = nil;
     NSMutableParagraphStyle* sleepScoreLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNext-UltraLight" size: 75], NSForegroundColorAttributeName: sleepScoreValueColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
+    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNext-UltraLight" size: 75], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
 
     CGFloat sleepScoreLabelTextHeight = [sleepScoreText boundingRectWithSize: CGSizeMake(sleepScoreLabelRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreLabelFontAttributes context: nil].size.height;
     CGContextSaveGState(context);
@@ -225,7 +226,7 @@ static UIImage* _lockIcon = nil;
     NSMutableParagraphStyle* sleepScoreTextLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreTextLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreTextLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Avenir-Heavy" size: 9], NSForegroundColorAttributeName: insightHeadingColor, NSParagraphStyleAttributeName: sleepScoreTextLabelStyle};
+    NSDictionary* sleepScoreTextLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Avenir-Heavy" size: 9], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: sleepScoreTextLabelStyle};
 
     CGFloat sleepScoreTextLabelTextHeight = [localizedSleepScoreDescriptionLabel boundingRectWithSize: CGSizeMake(sleepScoreTextLabelRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreTextLabelFontAttributes context: nil].size.height;
     CGContextSaveGState(context);

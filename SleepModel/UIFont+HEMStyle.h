@@ -162,4 +162,29 @@
  */
 + (UIFont *)inAppBrowserTitleFont;
 
+/**
+ * Font to be used to display the title of a dialog
+ */
++ (UIFont *)dialogTitleFont;
+
+/**
+ * Font to be used to display the message of a dialog
+ */
++ (UIFont *)dialogMessageFont;
+
+/**
+ * Font used for normal UIButtons that should be the focus of the screen
+ */
++ (UIFont* )primaryButtonFont;
+
+/**
+ * Font used for normal UIButtons that are secondary actions
+ */
++ (UIFont* )secondaryButtonFont;
+
+/**
+ * Font to be used with buttons on the navigation bar
+ */
++ (UIFont *)navButtonTitleFont;
+
 @end

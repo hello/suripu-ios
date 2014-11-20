@@ -4,6 +4,8 @@
 #import <SenseKit/SENAPIClient.h>
 #import <CocoaLumberjack/DDLog.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMAuthenticationViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingUtils.h"
@@ -29,8 +31,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[[self doneButton] titleLabel] setFont:[UIFont fontWithName:@"Calibre-Medium"
-                                                            size:18.0f]];
+    [[[self doneButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
     [[self doneButton] setTitleColor:[HelloStyleKit senseBlueColor]
                             forState:UIControlStateNormal];
     

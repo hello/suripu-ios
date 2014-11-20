@@ -216,7 +216,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             detail = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"empty-data", nil)];
         }
         [detail addAttributes:@{NSFontAttributeName : [UIFont settingsTableCellDetailFont],
-                                NSForegroundColorAttributeName : [HelloStyleKit backViewTextColor]}
+                                NSForegroundColorAttributeName : [HelloStyleKit backViewDetailTextColor]}
                         range:NSMakeRange(0, [detail length])];
         [[cell detailTextLabel] setAttributedText:detail];
         

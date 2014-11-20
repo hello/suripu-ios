@@ -10,7 +10,7 @@
 #import "UIView+HEMSnapshot.h"
 
 static CGFloat const kHEMSnapshotBlurRadius = 3.0f;
-static CGFloat const kHEMSnapshotSaturationFactor = 2.0f;
+static CGFloat const kHEMSnapshotSaturationFactor = 1.5f;
 
 @implementation UIView (HEMSnapshot)
 

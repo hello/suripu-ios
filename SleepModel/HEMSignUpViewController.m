@@ -5,6 +5,8 @@
 
 #import "NSString+Email.h"
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMSignUpViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
@@ -12,7 +14,6 @@
 #import "HelloStyleKit.h"
 #import "HEMUserDataCache.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMAlertController.h"
 #import "HEMOnboardingUtils.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
@@ -33,8 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[[self doneButton] titleLabel] setFont:[UIFont fontWithName:@"Calibre-Medium"
-                                                            size:18.0f]];
+    [[[self doneButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
     [[self doneButton] setTitleColor:[HelloStyleKit senseBlueColor]
                             forState:UIControlStateNormal];
     [SENAnalytics track:kHEMAnalyticsEventOnBStart];
@@ -188,9 +188,7 @@
     }
     
     if (errorMessage && shouldShowAlert) {
-        [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"sign-up.failed.title", nil)
-                                              message:errorMessage
-                                 presentingController:self];
+        [self showMessageDialog:errorMessage title:NSLocalizedString(@"sign-up.failed.title", nil)];
     }
     return NO;
 }

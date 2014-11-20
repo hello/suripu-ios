@@ -2,10 +2,11 @@
 #import "HEMActionButton.h"
 #import "HelloStyleKit.h"
 
+#import "UIFont+HEMStyle.h"
+
 static CGFloat const kHEMActionCornerRadius = 20.0f;
 static CGFloat const kHEMActionBorderWidth = 2.0f;
 static CGFloat const kHEMActionDisabledAlpha = 0.3f;
-static CGFloat const kHEMActionTitleFontSize = 15.0f;
 static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 
 @interface HEMActionButton()
@@ -51,7 +52,7 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
     [self setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
     [self setTitleColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:kHEMActionDisabledAlpha]
                forState:UIControlStateDisabled];
-    [self.titleLabel setFont:[UIFont fontWithName:@"Calibre-Medium" size:kHEMActionTitleFontSize]];
+    [self.titleLabel setFont:[UIFont primaryButtonFont]];
     [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];
 }
 

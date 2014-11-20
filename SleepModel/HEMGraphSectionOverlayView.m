@@ -82,10 +82,17 @@ static CGFloat const HEMGraphSectionLabelHeight = 15.f;
         topLabel.textAlignment = NSTextAlignmentCenter;
         bottomLabel.textAlignment = NSTextAlignmentCenter;
         BOOL isBold = [self shouldBoldLastElement] && (i == count - 1);
-        topLabel.font = isBold ? self.topLabelBoldFont : self.topLabelFont;
-        bottomLabel.font = isBold ? self.bottomLabelBoldFont : self.bottomLabelFont;
-        topLabel.textColor = self.topLabelColor;
-        bottomLabel.textColor = self.bottomLabelColor;
+        if (isBold) {
+            topLabel.font = self.topLabelBoldFont;
+            topLabel.textColor = [UIColor blackColor];
+            bottomLabel.font = self.bottomLabelBoldFont;
+            bottomLabel.textColor = [UIColor blackColor];
+        } else {
+            topLabel.font = self.topLabelFont;
+            topLabel.textColor = self.topLabelColor;
+            bottomLabel.font = self.bottomLabelFont;
+            bottomLabel.textColor = self.bottomLabelColor;
+        }
         bottomLabel.minimumScaleFactor = 0.5;
         bottomLabel.adjustsFontSizeToFitWidth = YES;
         [self addSubview:topLabel];

@@ -72,6 +72,8 @@
 		8A72143F1A1E7797008B59C4 /* backIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A72143C1A1E7797008B59C4 /* backIcon.png */; };
 		8A7214401A1E7797008B59C4 /* backIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A72143D1A1E7797008B59C4 /* backIcon@2x.png */; };
 		8A7214411A1E7797008B59C4 /* backIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A72143E1A1E7797008B59C4 /* backIcon@3x.png */; };
+		8A7214441A1EC710008B59C4 /* HEMTodayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7214431A1EC710008B59C4 /* HEMTodayTableViewCell.m */; };
+		8A7214451A1ECD53008B59C4 /* HelloStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9AB196350D200AFD110 /* HelloStyleKit.m */; };
 		8A78267719663BB1002882A1 /* HEMSensorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A78267619663BB1002882A1 /* HEMSensorViewController.m */; };
 		8A782686196CB6C9002882A1 /* HEMSnappingFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A782685196CB6C9002882A1 /* HEMSnappingFlowLayout.m */; };
 		8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */; };
@@ -527,6 +529,8 @@
 		8A72143C1A1E7797008B59C4 /* backIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backIcon.png; path = images/backIcon.png; sourceTree = "<group>"; };
 		8A72143D1A1E7797008B59C4 /* backIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "backIcon@2x.png"; path = "images/backIcon@2x.png"; sourceTree = "<group>"; };
 		8A72143E1A1E7797008B59C4 /* backIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "backIcon@3x.png"; path = "images/backIcon@3x.png"; sourceTree = "<group>"; };
+		8A7214421A1EC710008B59C4 /* HEMTodayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTodayTableViewCell.h; sourceTree = "<group>"; };
+		8A7214431A1EC710008B59C4 /* HEMTodayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTodayTableViewCell.m; sourceTree = "<group>"; };
 		8A78267519663BB1002882A1 /* HEMSensorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorViewController.h; sourceTree = "<group>"; };
 		8A78267619663BB1002882A1 /* HEMSensorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorViewController.m; sourceTree = "<group>"; };
 		8A782684196CB6C9002882A1 /* HEMSnappingFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSnappingFlowLayout.h; sourceTree = "<group>"; };
@@ -1794,11 +1798,13 @@
 		BF7F1BCB19E304050028F799 /* SenseWidget */ = {
 			isa = PBXGroup;
 			children = (
+				8A7214421A1EC710008B59C4 /* HEMTodayTableViewCell.h */,
+				8A7214431A1EC710008B59C4 /* HEMTodayTableViewCell.m */,
 				BF7F1BCE19E304050028F799 /* HEMTodayViewController.h */,
 				BF7F1BCF19E304050028F799 /* HEMTodayViewController.m */,
-				BF7F1BD119E304050028F799 /* Widget.storyboard */,
 				BF7F1BE119E3132B0028F799 /* images */,
 				BF7F1BCC19E304050028F799 /* Supporting Files */,
+				BF7F1BD119E304050028F799 /* Widget.storyboard */,
 			);
 			path = SenseWidget;
 			sourceTree = "<group>";
@@ -2549,8 +2555,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8A7214441A1EC710008B59C4 /* HEMTodayTableViewCell.m in Sources */,
 				BF7F1BD019E304050028F799 /* HEMTodayViewController.m in Sources */,
 				8A1C94B91A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,
+				8A7214451A1ECD53008B59C4 /* HelloStyleKit.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

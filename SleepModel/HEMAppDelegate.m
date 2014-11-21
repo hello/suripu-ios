@@ -16,6 +16,7 @@
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMConfidentialityWarningView.h"
+#import "HEMCurrentConditionsTableViewController.h"
 #import "HEMDeviceCenter.h"
 #import "HelloStyleKit.h"
 #import "HEMLogUtils.h"
@@ -51,8 +52,34 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
             openURL:(NSURL *)url
   sourceApplication:(NSString *)sourceApplication
          annotation:(id)annotation {
-    // TODO (jimmy): implement custom URL actions?  don't know any requirements yet
+    NSURLComponents* components = [NSURLComponents componentsWithURL:url resolvingAgainstBaseURL:NO];
+    for (NSURLQueryItem* item in components.queryItems) {
+        if ([item.name isEqualToString:@"sensor"]) {
+            [self openDetailViewForSensorNamed:item.value];
+            break;
+        }
+    }
     return YES;
+}
+
+- (void)openDetailViewForSensorNamed:(NSString*)name
+{
+    if (![SENAuthorizationService isAuthorized] || [self deauthorizeIfNeeded])
+        return;
+    [self openSettingsDrawer];
+    FCDynamicPanesNavigationController* dynamicPanesController = (id)self.window.rootViewController;
+    FCDynamicPane* root = [[dynamicPanesController viewControllers] firstObject];
+    UINavigationController* nav = (id)root.viewController;
+    void (^presentController)() = ^{
+        [nav popToRootViewControllerAnimated:NO];
+        HEMCurrentConditionsTableViewController* controller = (id)nav.topViewController;
+        [controller openDetailViewForSensorNamed:name];
+    };
+    if (nav.presentedViewController) {
+        [nav dismissViewControllerAnimated:NO completion:presentController];
+    } else {
+        presentController();
+    }
 }
 
 - (void)applicationDidBecomeActive:(UIApplication*)application

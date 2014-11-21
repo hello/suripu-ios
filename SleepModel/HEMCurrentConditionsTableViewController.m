@@ -335,14 +335,11 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+
     switch (indexPath.section) {
     case 0: {
-        if (self.sensors.count > indexPath.row) {
-            HEMSensorViewController* controller = (HEMSensorViewController*)[storyboard instantiateViewControllerWithIdentifier:@"sensorViewController"];
-            controller.sensor = self.sensors[indexPath.row];
-            [self.navigationController pushViewController:controller animated:YES];
-        }
+        if (self.sensors.count > indexPath.row)
+            [self openDetailViewForSensor:self.sensors[indexPath.row]];
     } break;
 
     case 1: {
@@ -357,6 +354,22 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
         } break;
         }
     } break;
+    }
+}
+
+- (void)openDetailViewForSensor:(SENSensor*)sensor {
+    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
+    HEMSensorViewController* controller = (HEMSensorViewController*)[storyboard instantiateViewControllerWithIdentifier:@"sensorViewController"];
+    controller.sensor = sensor;
+    [self.navigationController pushViewController:controller animated:YES];
+}
+
+- (void)openDetailViewForSensorNamed:(NSString *)name {
+    for (SENSensor* sensor in self.sensors) {
+        if ([sensor.name isEqualToString:name]) {
+            [self openDetailViewForSensor:sensor];
+            return;
+        }
     }
 }
 

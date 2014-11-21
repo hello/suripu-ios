@@ -36,7 +36,7 @@
 
 @implementation HEMAlarmViewController
 
-static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.5f;
+static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
 
 - (void)viewDidLoad
 {
@@ -182,8 +182,10 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.5f;
 
 - (IBAction)panAlarmTime:(UIPanGestureRecognizer*)sender
 {
-    CGFloat distanceMoved = [sender translationInView:self.view].y;
-    CGFloat minutes = distanceMoved * HEMAlarmPanningSpeedMultiplier;
+    CGFloat distance = [sender translationInView:self.view].y * HEMAlarmPanningSpeedMultiplier;
+    if (distance < 0.75 && distance > -0.75)
+        return;
+    CGFloat minutes = distance < 0 ? floorf(distance) : ceilf(distance);
     struct SENAlarmTime alarmTime = [self timeFromCachedValues];
     alarmTime = [SENAlarm time:alarmTime byAddingMinutes:minutes];
     self.alarmCache.hour = alarmTime.hour;

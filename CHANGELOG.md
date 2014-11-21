@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.0.39
+
+New:
+
+* Sensor detail styling update
+* Allow opening sensor detail view from today extension
+
+Fixes:
+
+* Tuning alarm time panning speed
+
 ## 1.0.0.38
 
 New:

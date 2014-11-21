@@ -230,8 +230,13 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 #pragma mark - Actions
 
 - (IBAction)openApp:(id)sender {
-    NSURL* url = [NSURL URLWithString:kHEMTodaySenseScheme];
-    [[self extensionContext] openURL:url completionHandler:nil];
+    NSURLComponents* components = [NSURLComponents componentsWithString:kHEMTodaySenseScheme];
+    if ([sender isKindOfClass:[NSIndexPath class]]) {
+        SENSensor* sensor = [self sensorAtIndexPath:sender];
+        if (sensor.name.length > 0)
+            components.queryItems = @[[NSURLQueryItem queryItemWithName:HEMTodaySensorQueryItem value:sensor.name]];
+    }
+    [[self extensionContext] openURL:[components URL] completionHandler:nil];
 }
 
 #pragma mark - Cleanup

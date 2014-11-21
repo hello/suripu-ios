@@ -39,6 +39,7 @@ static CGFloat const HEMPresleepHeaderCellHeight = 70.f;
 static CGFloat const HEMPresleepItemCellHeight = 68.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 30.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
+static CGFloat const HEMTopItemsConstraintConstant = 10.f;
 
 - (void)viewDidLoad
 {
@@ -85,6 +86,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
         [cell.shareButton setHidden:YES];
         [cell.dateLabel setAlpha:0.5];
         [cell.drawerButton setImage:[UIImage imageNamed:@"caret up"] forState:UIControlStateNormal];
+        cell.topItemsVerticalConstraint.constant = 0;
+        [cell updateConstraintsIfNeeded];
     }];
     self.oldBarStyle = UIStatusBarStyleLightContent;
     [self setNeedsStatusBarAppearanceUpdate];
@@ -101,6 +104,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
         [cell.shareButton setHidden:[self.dataSource.sleepResult.score integerValue] == 0];
         [cell.dateLabel setAlpha:1];
         [cell.drawerButton setImage:[UIImage imageNamed:@"Menu"] forState:UIControlStateNormal];
+        cell.topItemsVerticalConstraint.constant = HEMTopItemsConstraintConstant;
+        [cell updateConstraintsIfNeeded];
     }];
     [self setNeedsStatusBarAppearanceUpdate];
 }

@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="350"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T3i-WO-VZQ" customClass="HEMSleepScoreGraphView">
-                        <rect key="frame" x="82" y="73" width="155" height="155"/>
+                        <rect key="frame" x="82" y="85" width="155" height="155"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="155" id="LxA-Wd-Yac"/>
@@ -22,7 +22,7 @@
                         </constraints>
                     </view>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-AK-PaO">
-                        <rect key="frame" x="116" y="15" width="87" height="28"/>
+                        <rect key="frame" x="116" y="27" width="87" height="28"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="E5c-Hr-7wE"/>
                         </constraints>
@@ -31,13 +31,13 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="buK-Of-ZfH">
-                        <rect key="frame" x="21" y="276" width="278" height="41"/>
+                        <rect key="frame" x="21" y="288" width="278" height="41"/>
                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BREAKDOWN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EkC-F1-GFh">
-                        <rect key="frame" x="21" y="248" width="60" height="14"/>
+                        <rect key="frame" x="21" y="260" width="60" height="14"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="14" id="Knk-Pm-euN"/>
                         </constraints>
@@ -46,7 +46,7 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RAe-yJ-lzB" customClass="HEMTimelineTopButton">
-                        <rect key="frame" x="0.0" y="0.0" width="59" height="59"/>
+                        <rect key="frame" x="0.0" y="10" width="59" height="59"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="59" id="eGL-uK-2S3"/>
                             <constraint firstAttribute="height" constant="59" id="r2B-vm-PvX"/>
@@ -56,7 +56,7 @@
                         </state>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DtZ-v4-794" customClass="HEMTimelineTopButton">
-                        <rect key="frame" x="261" y="0.0" width="59" height="51"/>
+                        <rect key="frame" x="261" y="12" width="59" height="51"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="59" id="Xwc-pS-cNB"/>
                             <constraint firstAttribute="height" constant="50.5" id="wc0-se-SsO"/>
@@ -70,19 +70,19 @@
             </view>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="RAe-yJ-lzB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="2ju-2L-Tz3"/>
+                <constraint firstItem="RAe-yJ-lzB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="2ju-2L-Tz3"/>
                 <constraint firstItem="EkC-F1-GFh" firstAttribute="top" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="20" id="2vE-SI-UEM"/>
-                <constraint firstItem="Bcg-AK-PaO" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="15" id="5TY-Zh-u8t"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="buK-Of-ZfH" secondAttribute="bottom" id="FOD-tr-5xk"/>
                 <constraint firstItem="T3i-WO-VZQ" firstAttribute="top" secondItem="Bcg-AK-PaO" secondAttribute="bottom" constant="30" id="KF5-q2-HnP"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="EkC-F1-GFh" secondAttribute="bottom" constant="14" id="KSZ-Id-dKy"/>
                 <constraint firstItem="RAe-yJ-lzB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Vj7-5X-3Z2"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="EkC-F1-GFh" secondAttribute="leading" id="Y5J-NU-9dH"/>
                 <constraint firstAttribute="trailing" secondItem="DtZ-v4-794" secondAttribute="trailing" id="dYs-Iy-gfn"/>
+                <constraint firstItem="DtZ-v4-794" firstAttribute="top" secondItem="RAe-yJ-lzB" secondAttribute="top" constant="2" id="mhY-FO-gcM"/>
                 <constraint firstAttribute="centerX" secondItem="T3i-WO-VZQ" secondAttribute="centerX" constant="0.5" id="p9I-c4-GqY"/>
                 <constraint firstAttribute="trailing" secondItem="buK-Of-ZfH" secondAttribute="trailing" constant="21" id="qyQ-fV-uRR"/>
-                <constraint firstItem="DtZ-v4-794" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="roG-Ki-elS"/>
                 <constraint firstAttribute="centerX" secondItem="Bcg-AK-PaO" secondAttribute="centerX" constant="1" id="uJ7-Wb-V2p"/>
+                <constraint firstItem="RAe-yJ-lzB" firstAttribute="top" secondItem="Bcg-AK-PaO" secondAttribute="top" constant="-17" id="vIt-0m-cDX"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="21" id="wPf-Zd-mGf"/>
             </constraints>
             <size key="customSize" width="314" height="343"/>
@@ -93,6 +93,7 @@
                 <outlet property="messageTitleLabel" destination="EkC-F1-GFh" id="daw-iv-tMM"/>
                 <outlet property="shareButton" destination="DtZ-v4-794" id="kvQ-v5-ADb"/>
                 <outlet property="sleepScoreGraphView" destination="T3i-WO-VZQ" id="nPx-1C-bLv"/>
+                <outlet property="topItemsVerticalConstraint" destination="2ju-2L-Tz3" id="iKr-df-Wkr"/>
             </connections>
             <point key="canvasLocation" x="231" y="282"/>
         </collectionViewCell>

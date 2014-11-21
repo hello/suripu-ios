@@ -14,19 +14,20 @@
 #import <NotificationCenter/NotificationCenter.h>
 
 #import "HEMTodayViewController.h"
+#import "HEMTodayTableViewCell.h"
+#import "HelloStyleKit.h"
 
 static NSString* const kHEMTodayErrorDomain = @"is.hello.sense.today";
 static NSString* const kHEMTodayEmptyData = @"--";
 static NSString* const kHEMTodaySleepScoreCellId = @"sleepScore";
 static NSString* const kHEMTodayConditionsCellId = @"info";
 static NSString* const kHEMTodaySenseScheme = @"sense://";
+static NSString* const HEMTodaySensorQueryItem = @"sensor";
 static CGFloat const kHEMTodayLeftInset = 15.0f;
 static CGFloat const kHEMTodayImageSize = 15.0f;
 static CGFloat const kHEMTodayRightInset = 15.0f;
 static CGFloat const kHEMTodayBottomInset = 15.0f;
 static CGFloat const kHEMTodayRowHeight = 44.0f;
-static CGFloat const kHEMTodayHeaderInset = 15.0f;
-static CGFloat const kHEMTodayHeaderHeight = 40.0f;
 static CGFloat const kHEMTodayButtonCornerRadius = 5.0f;
 
 typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
@@ -43,9 +44,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 @property (nonatomic, strong) NSDate* lastNight;
 @property (nonatomic, strong) SENSleepResult* sleepResult;
 @property (nonatomic, copy)   HEMWidgeUpdateBlock updateBlock;
-@property (nonatomic, assign) BOOL scoreChecked;
 @property (nonatomic, assign) BOOL sensorsChecked;
-@property (nonatomic, strong) NSError* scoreError;
 @property (nonatomic, strong) NSError* sensorsError;
 
 @end
@@ -57,16 +56,17 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     [SENAuthorizationService authorizeRequestsFromKeychain];
     [[[self signInButton] layer] setCornerRadius:kHEMTodayButtonCornerRadius];
     [self listenForSensorUpdates];
+    self.tableView.rowHeight = kHEMTodayRowHeight;
     
     if ([SENAuthorizationService accessToken] != nil) {
-        [self loadCachedSleepScore];
         [self loadCachedSensors];
-        [self updateScore];
         [SENSensor refreshCachedSensors];
     }
+}
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
     [self reloadUI];
-    
 }
 
 - (void)showSignIn:(BOOL)show {
@@ -78,39 +78,30 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     CGFloat height = 0.0f;
     if ([SENAuthorizationService accessToken] != nil) {
         NSInteger sensorCount = [[self sensors] count];
-        height = kHEMTodayRowHeight + (2 * kHEMTodayHeaderHeight); // sleep score + conditions header
-        if (sensorCount > 0) {
-            height += (sensorCount * kHEMTodayRowHeight);
-        }
+        height = (sensorCount * kHEMTodayRowHeight);
     } else {
         CGRect buttonFrame = [[self signInButton] frame];
         height = CGRectGetMaxY(buttonFrame) + CGRectGetMinY(buttonFrame);
     }
-    [self setPreferredContentSize:CGSizeMake(0, height)];
+    [self setPreferredContentSize:CGSizeMake(CGRectGetWidth(self.view.bounds), height)];
 }
 
 - (void)reloadUI {
     [self updateHeight];
-    
-    if ([SENAuthorizationService accessToken] != nil) {
-        [[self tableView] reloadData];
-        [self showSignIn:NO];
-    } else {
-        [self showSignIn:YES];
-    }
-    
+    [self showSignIn:[SENAuthorizationService accessToken] == nil];
+    [[self tableView] reloadData];
 }
 
 - (void)completeWhenDone {
-    if (![self scoreChecked] || ![self sensorsChecked]) return;
-    
+    if (![self sensorsChecked]) return;
+
     if ([NSThread isMainThread]) {
         [self reloadUI];
     }
     
     if ([self updateBlock] != nil) {
         NCUpdateResult result = NCUpdateResultNewData;
-        if ([self scoreError] != nil || [self sensorsError] != nil) {
+        if ([self sensorsError] != nil) {
             result = NCUpdateResultFailed;
         }
         [self updateBlock](result);
@@ -123,11 +114,8 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 - (void)widgetPerformUpdateWithCompletionHandler:(void (^)(NCUpdateResult))completionHandler {
     if ([SENAuthorizationService accessToken] != nil) {
         [self setUpdateBlock:completionHandler];
-        
         [self setSensorsError:nil];
         [SENSensor refreshCachedSensors];
-        
-        [self updateScore];
     } else {
         [self showSignIn:YES];
     }
@@ -136,31 +124,6 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (UIEdgeInsets)widgetMarginInsetsForProposedMarginInsets:(UIEdgeInsets)defaultMarginInsets {
     return UIEdgeInsetsMake(0.0f, kHEMTodayLeftInset, kHEMTodayBottomInset, kHEMTodayRightInset);
-}
-
-#pragma mark - Sleep Score
-
-- (void)loadCachedSleepScore {
-    [self setLastNight:[NSDate dateWithTimeInterval:-86400 sinceDate:[NSDate date]]];
-    [self setSleepResult:[SENSleepResult sleepResultForDate:[self lastNight]]];
-}
-
-- (void)updateScore {
-    [self setScoreError:nil];
-    [self setScoreChecked:NO];
-    __weak typeof(self) weakSelf = self;
-    [SENAPITimeline timelineForDate:[self lastNight] completion:^(NSArray* timelines, NSError* error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            if (error == nil) {
-                [[strongSelf sleepResult] updateWithDictionary:[timelines firstObject]];
-                [[strongSelf sleepResult] save];
-            }
-            [strongSelf setScoreError:error];
-            [strongSelf setScoreChecked:YES];
-            [strongSelf completeWhenDone];
-        }
-    }];
 }
 
 #pragma mark - Sensors
@@ -197,121 +160,71 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     
 }
 
+- (UIImage *)imageForSensor:(SENSensor *)sensor {
+    switch ([sensor unit]) {
+        case SENSensorUnitDegreeCentigrade:
+            return [UIImage imageNamed:@"temperatureIcon"];
+        case SENSensorUnitMicrogramPerCubicMeter:
+            return [UIImage imageNamed:@"particleIcon"];
+        case SENSensorUnitPercent:
+            return [UIImage imageNamed:@"humidityIcon"];
+        default:
+            return nil;
+    }
+}
+
+- (UIColor *)colorForSensor:(SENSensor *)sensor {
+    switch ([sensor condition]) {
+        case SENSensorConditionAlert:
+            return [HelloStyleKit alertSensorColor];
+        case SENSensorConditionWarning:
+            return [HelloStyleKit warningSensorColor];
+
+        default:
+            return [UIColor whiteColor];
+    }
+}
+
 #pragma mark - UITableViewDataSource / Delegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    return 2;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView
  numberOfRowsInSection:(NSInteger)section {
-    return section == 0 ? 1 : [[self sensors] count];
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return kHEMTodayHeaderHeight;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return kHEMTodayRowHeight;
-}
-
-- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    CGFloat tableWidth = CGRectGetWidth([tableView bounds]);
-    CGRect headerFrame = {0.0f, 0.0f, tableWidth, kHEMTodayHeaderHeight};
-    UIView* containerView = [[UIView alloc] initWithFrame:headerFrame];
-    [containerView setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.1f]];
-    
-    NSString* title = section == 0
-        ? NSLocalizedString(@"today.section.title.last-night", nil)
-        : NSLocalizedString(@"today.section.title.current-conditions", nil);
-    
-    CGRect labelFrame = {kHEMTodayHeaderInset, 0.0f, tableWidth-(2*kHEMTodayHeaderInset), kHEMTodayHeaderHeight};
-    UILabel* headerLabel = [[UILabel alloc] initWithFrame:labelFrame];
-    [headerLabel setBackgroundColor:[UIColor clearColor]];
-    [headerLabel setFont:[UIFont fontWithName:@"Agile-Light" size:18.0f]];
-    [headerLabel setTextColor:[UIColor whiteColor]];
-    [headerLabel setText:title];
-    
-    [containerView addSubview:headerLabel];
-    
-    return containerView;
+    return [[self sensors] count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView
         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:kHEMTodayConditionsCellId];
+    HEMTodayTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:kHEMTodayConditionsCellId];
+    [self configureConditionsCell:cell atIndexPath:indexPath];
+    return cell;
 }
 
-- (void)displaySleepScoreCell:(UITableViewCell*)cell {
-    NSNumber* score = [[self sleepResult] score];
-    NSInteger scoreValue = [score integerValue];
-    NSString* scoreText
-        = scoreValue > 0
-        ? [NSString stringWithFormat:@"%ld", (long)scoreValue]
-        : kHEMTodayEmptyData;
-    [[cell detailTextLabel] setText:scoreText];
-    [[cell textLabel] setText:NSLocalizedString(@"today.cell.title.sleep-score", nil)];
-    [[cell imageView] setImage:[UIImage imageNamed:@"sleepScoreIcon"]];
+- (SENSensor*)sensorAtIndexPath:(NSIndexPath *)indexPath {
+    if (self.sensors.count > indexPath.row)
+        return [self sensors][[indexPath row]];
+    return nil;
 }
 
-- (void)displayConditionsCell:(UITableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
-    SENSensor* sensor = [self sensors][[indexPath row]];
-    
-    UIImage* icon = nil;
-    NSString* title = [sensor localizedName];
-    NSString* detail = [sensor localizedValue]?[sensor localizedValue]:kHEMTodayEmptyData;
-    
-    switch ([sensor unit]) {
-        case SENSensorUnitDegreeCentigrade: {
-            icon = [UIImage imageNamed:@"temperatureIcon"];
-            break;
-        }
-        case SENSensorUnitMicrogramPerCubicMeter: {
-            icon = [UIImage imageNamed:@"particleIcon"];
-            break;
-        }
-        case SENSensorUnitPercent: {
-            icon = [UIImage imageNamed:@"humidityIcon"];
-            break;
-        }
-        default:
-            break;
-    }
-    
-    [[cell imageView] setImage:icon];
-    [[cell textLabel] setText:title];
-    [[cell detailTextLabel] setText:detail];
-    [[cell detailTextLabel] setTextAlignment:NSTextAlignmentRight];
-
-}
-
-- (void)tableView:(UITableView *)tableView
-  willDisplayCell:(UITableViewCell *)cell
-forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([indexPath section] == 0) {
-        [self displaySleepScoreCell:cell];
-    } else {
-        [self displayConditionsCell:cell atIndexPath:indexPath];
-    }
-    
-    CGRect bounds = [[cell imageView] bounds];
-    bounds.size.width = kHEMTodayImageSize;
-    bounds.size.height = kHEMTodayImageSize;
-    [[cell imageView] setBounds:bounds];
-    
-    [[cell detailTextLabel] sizeToFit];
-    
-    CGFloat contentWidth = CGRectGetWidth([[cell contentView] bounds]);
-    CGFloat contentHeight = CGRectGetHeight([[cell contentView] bounds]);
-    CGRect frame = [[cell detailTextLabel] frame];
-    frame.origin.x = contentWidth-CGRectGetWidth([[cell detailTextLabel] bounds]);
-    frame.origin.y = (contentHeight-CGRectGetHeight([[cell detailTextLabel] bounds]))/2;
-    [[cell detailTextLabel] setFrame:frame];
+- (void)configureConditionsCell:(HEMTodayTableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
+    SENSensor* sensor = [self sensorAtIndexPath:indexPath];
+    NSString* value = nil;
+    if (sensor.unit == SENSensorUnitMicrogramPerCubicMeter && [sensor.value floatValue] != 0)
+        value = [NSString stringWithFormat:@"%.2f", [sensor.value floatValue]];
+    else
+        value = sensor.localizedValue;
+    NSString* detail = value ?: kHEMTodayEmptyData;
+    cell.sensorIconView.image = [self imageForSensor:sensor];
+    cell.sensorNameLabel.text = [sensor localizedName];
+    cell.sensorValueLabel.text = detail;
+    cell.sensorValueLabel.textColor = [self colorForSensor:sensor];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [self openApp:self];
+    [self openApp:indexPath];
 }
 
 #pragma mark - Actions

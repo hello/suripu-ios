@@ -97,13 +97,15 @@ static NSString* const sensorTypeParticulates = @"particulates";
         self.beLoading = YES;
         [self showLoadingView];
     }
+    __weak typeof(self) weakSelf = self;
     [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError* error) {
+        typeof(weakSelf) strongSelf = weakSelf;
         if (error) {
             DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
-            [self hideLoadingViewWithSuccess:NO];
+            [strongSelf hideLoadingViewWithSuccess:NO];
             return;
         }
-        [self refreshWithTimelines:timelines];
+        [strongSelf refreshWithTimelines:timelines];
     }];
 }
 

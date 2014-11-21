@@ -12,7 +12,7 @@
 #import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 
-@interface HEMSettingsNavigationController()
+@interface HEMSettingsNavigationController()<UIGestureRecognizerDelegate, UINavigationControllerDelegate>
 
 @property (nonatomic, assign) UIStatusBarStyle previousBarStyle;
 
@@ -28,12 +28,22 @@
         NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
         NSFontAttributeName : [UIFont settingsTitleFont]
     }];
-}   
+    __weak typeof(self) weakSelf = self;
+    self.interactivePopGestureRecognizer.delegate = weakSelf;
+    self.delegate = weakSelf;
+}
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
+    self.interactivePopGestureRecognizer.enabled = NO;
     [self setBackButtonOnViewController:viewController];
     [[viewController view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
     [super pushViewController:viewController animated:animated];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController
+       didShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animate {
+    self.interactivePopGestureRecognizer.enabled = YES;
 }
 
 - (void)setBackButtonOnViewController:(UIViewController*)viewController {

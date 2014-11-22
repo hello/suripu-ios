@@ -16,6 +16,11 @@
 
 @implementation HEMMiniSleepHistoryView
 
+- (void)awakeFromNib
+{
+    self.backgroundColor = [UIColor clearColor];
+}
+
 - (void)reloadData
 {
     self.startInterval = [self timeIntervalForSegment:[self.sleepDataSegments lastObject]];
@@ -42,8 +47,6 @@
 - (void)drawSleepDepthInRect:(CGRect)rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextSetFillColorWithColor(ctx, [UIColor whiteColor].CGColor);
-    CGContextFillRect(ctx, rect);
     for (SENSleepResultSegment* segment in self.sleepDataSegments) {
         NSTimeInterval sliceStartInterval = [self timeIntervalForSegment:segment];
         NSTimeInterval sliceEndInterval = sliceStartInterval + [self durationForSegment:segment];

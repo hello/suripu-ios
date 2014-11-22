@@ -5,16 +5,19 @@
 #import "HEMMiniSleepHistoryView.h"
 #import "HEMMiniSleepScoreGraphView.h"
 
-@interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+
+@property (weak, nonatomic) IBOutlet UIView *gradientView;
 
 @property (weak, nonatomic) IBOutlet UICollectionView* historyCollectionView;
-@property (weak, nonatomic) IBOutlet UICollectionView* insightCollectionView;
 @property (weak, nonatomic) IBOutlet UILabel* timeFrameLabel;
-@property (weak, nonatomic) IBOutlet UISegmentedControl* timeScopeSegmentedControl;
 @property (strong, nonatomic) NSDateFormatter* dayOfWeekFormatter;
 @property (strong, nonatomic) NSDateFormatter* dayFormatter;
 @property (strong, nonatomic) NSDateFormatter* monthYearFormatter;
 @property (strong, nonatomic) NSMutableArray* sleepDataSummaries;
+@property (strong, nonatomic) NSDate* startDate;
+@property (nonatomic) NSInteger numberOfDays;
+@property (nonatomic, strong) NSCalendar* calendar;
 @end
 
 @implementation HEMSleepHistoryViewController
@@ -22,28 +25,61 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self configureCollectionView];
     [self configureDateFormatters];
+    [self configureCollectionView];
     [self loadData];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [self configureBackgroundColors];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self updateForSelectedDate];
 }
 
 - (void)configureCollectionView
 {
-    CGSize windowSize = [[UIScreen mainScreen] bounds].size;
-    UICollectionViewFlowLayout* layout = (UICollectionViewFlowLayout*)self.insightCollectionView.collectionViewLayout;
-    layout.itemSize = CGSizeMake(CGRectGetWidth(self.insightCollectionView.bounds) - 40, CGRectGetHeight(self.insightCollectionView.bounds) - 20);
-    CGFloat sideInset = floorf((windowSize.width - layout.itemSize.width) / 2);
-    layout.sectionInset = UIEdgeInsetsMake(0, sideInset, 0, sideInset);
+    UICollectionViewFlowLayout* layout = (id)self.historyCollectionView.collectionViewLayout;
+    layout.itemSize = CGSizeMake(90.f, CGRectGetHeight(self.historyCollectionView.bounds) - 20.f);
 }
 
 - (void)configureDateFormatters
 {
+    self.calendar = [NSCalendar currentCalendar];
     self.dayFormatter = [NSDateFormatter new];
     self.dayFormatter.dateFormat = @"d";
     self.dayOfWeekFormatter = [NSDateFormatter new];
     self.dayOfWeekFormatter.dateFormat = @"EEE";
     self.monthYearFormatter = [NSDateFormatter new];
-    self.monthYearFormatter.dateFormat = @"MMMM yyyy";
+    self.monthYearFormatter.dateFormat = @"MMMM";
+}
+
+- (void)configureBackgroundColors
+{
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = self.view.bounds;
+    gradient.colors = @[(id)[UIColor whiteColor].CGColor,
+                        (id)[UIColor colorWithHue:0 saturation:0 brightness:0.94 alpha:1].CGColor];
+    [self.view.layer insertSublayer:gradient atIndex:0];
+
+    UIColor* color = [UIColor colorWithHue:0 saturation:0 brightness:0.9f alpha:0];
+    NSArray* colors = @[(id)[color colorWithAlphaComponent:0.3].CGColor,
+                        (id)color.CGColor,
+                        (id)color.CGColor,
+                        (id)color.CGColor,
+                        (id)[color colorWithAlphaComponent:0.5].CGColor];
+    CAGradientLayer *shadowGradient = [CAGradientLayer layer];
+    CGRect gradientRect = [[UIScreen mainScreen] bounds];
+    shadowGradient.frame = gradientRect;
+    shadowGradient.startPoint = CGPointMake(0.0, 0.5);
+    shadowGradient.endPoint = CGPointMake(1.0, 0.5);
+    shadowGradient.colors = colors;
+    [self.gradientView.layer insertSublayer:shadowGradient atIndex:0];
 }
 
 - (void)loadData
@@ -54,8 +90,29 @@
         NSDate* date = [NSDate dateWithTimeIntervalSinceNow:i * -(60 * 60 * 24)];
         [self.sleepDataSummaries addObject:[SENSleepResult sleepResultForDate:date]];
     }
-    NSDate* date = [NSDate dateWithTimeIntervalSince1970:[[self.sleepDataSummaries firstObject][@"date"] doubleValue] / 1000];
-    self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:date];
+}
+
+- (void)scrollToDate:(NSDate*)date animated:(BOOL)animated
+{
+    NSDate* initialDate = [(SENSleepResult*)[self.sleepDataSummaries firstObject] date];
+    NSDateComponents *components = [self.calendar components:NSDayCalendarUnit
+                                                    fromDate:initialDate
+                                                      toDate:self.selectedDate
+                                                     options:0];
+    NSInteger index = components.day + 1;
+    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    [self.historyCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animated];
+}
+
+- (void)updateForSelectedDate
+{
+    if (self.selectedDate) {
+        [self scrollToDate:self.selectedDate animated:YES];
+        self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:self.selectedDate];
+    } else {
+        NSDate* date = [(SENSleepResult*)[self.sleepDataSummaries firstObject] date];
+        self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:date];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -67,24 +124,12 @@
 
 - (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    if ([collectionView isEqual:self.insightCollectionView]) {
-        return 4;
-    }
     return self.sleepDataSummaries.count;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    if ([collectionView isEqual:self.insightCollectionView])
-        return [self collectionView:collectionView insightCellForItemAtIndexPath:indexPath];
-
     return [self collectionView:collectionView sleepHistoryCellForItemAtIndexPath:indexPath];
-}
-
-- (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView insightCellForItemAtIndexPath:(NSIndexPath*)indexPath
-{
-    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"insightCell" forIndexPath:indexPath];
-    return cell;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView sleepHistoryCellForItemAtIndexPath:(NSIndexPath*)indexPath
@@ -103,6 +148,8 @@
 - (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
+    self.selectedDate = sleepResult.date;
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
@@ -117,9 +164,8 @@
         return [diff2 compare:diff1];
     }];
     NSIndexPath* indexPath = [self.historyCollectionView indexPathForCell:[cells firstObject]];
-    NSDictionary* sleepData = [self.sleepDataSummaries objectAtIndex:indexPath.row];
-    NSDate* date = [NSDate dateWithTimeIntervalSince1970:[sleepData[@"date"] doubleValue] / 1000];
-    self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:date];
+    SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
+    self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:sleepResult.date];
 }
 
 @end

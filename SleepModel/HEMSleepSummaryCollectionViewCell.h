@@ -6,7 +6,7 @@
 
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *drawerButton;
-@property (weak, nonatomic) IBOutlet UILabel* dateLabel;
+@property (weak, nonatomic) IBOutlet UIButton* dateButton;
 @property (weak, nonatomic) IBOutlet UILabel* messageLabel;
 @property (weak, nonatomic) IBOutlet HEMSleepScoreGraphView* sleepScoreGraphView;
 @property (weak, nonatomic) IBOutlet UILabel *messageTitleLabel;

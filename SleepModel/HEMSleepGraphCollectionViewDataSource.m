@@ -284,15 +284,13 @@ static NSString* const sensorTypeParticulates = @"particulates";
     cell.messageLabel.attributedText = markdown_to_attr_string(self.sleepResult.message, 0, attributes);
     NSString* dateText = [[[self class] sleepDateFormatter] stringFromDate:self.dateForNightOfSleep];
     NSString* lastNightDateText = [[[self class] sleepDateFormatter] stringFromDate:[NSDate dateWithTimeInterval:-60 * 60 * 24 sinceDate:[NSDate date]]];
-    if ([dateText isEqualToString:lastNightDateText]) {
-        cell.dateLabel.text = NSLocalizedString(@"sleep-history.last-night", nil);
-    }
-    else {
-        cell.dateLabel.text = dateText;
-    }
-    if ([self shouldBeLoading]) {
+    if ([dateText isEqualToString:lastNightDateText])
+        dateText = NSLocalizedString(@"sleep-history.last-night", nil);
+
+    [cell.dateButton setTitle:dateText forState:UIControlStateNormal];
+    if ([self shouldBeLoading])
         [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:0.5];
-    }
+
     if ([self.collectionView.delegate respondsToSelector:@selector(drawerButtonTapped:)])
         [cell.drawerButton addTarget:self.collectionView.delegate
                               action:@selector(drawerButtonTapped:)
@@ -302,6 +300,10 @@ static NSString* const sensorTypeParticulates = @"particulates";
         [cell.shareButton addTarget:self.collectionView.delegate
                              action:@selector(shareButtonTapped:)
                    forControlEvents:UIControlEventTouchUpInside];
+    if ([self.collectionView.delegate respondsToSelector:@selector(zoomButtonTapped:)])
+        [cell.dateButton addTarget:self.collectionView.delegate
+                            action:@selector(zoomButtonTapped:)
+                  forControlEvents:UIControlEventTouchUpInside];
     return cell;
 }
 

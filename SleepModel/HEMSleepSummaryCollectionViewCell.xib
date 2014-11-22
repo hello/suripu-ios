@@ -21,15 +21,6 @@
                             <constraint firstAttribute="height" constant="155" id="Tcm-aA-44U"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bcg-AK-PaO">
-                        <rect key="frame" x="116" y="27" width="87" height="28"/>
-                        <constraints>
-                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="E5c-Hr-7wE"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
-                        <color key="textColor" white="0.40000000000000002" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Last night you were in bed for 8.5 hours and slept for 6 hours." lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="buK-Of-ZfH">
                         <rect key="frame" x="21" y="288" width="278" height="41"/>
                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
@@ -65,6 +56,17 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FJY-IC-bU5">
+                        <rect key="frame" x="117" y="21" width="87" height="40"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="zpa-7r-HXs"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
+                        <state key="normal" title="Last night">
+                            <color key="titleColor" white="0.40205862226277378" alpha="1" colorSpace="calibratedWhite"/>
+                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                        </state>
+                    </button>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
@@ -72,22 +74,22 @@
             <constraints>
                 <constraint firstItem="RAe-yJ-lzB" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="10" id="2ju-2L-Tz3"/>
                 <constraint firstItem="EkC-F1-GFh" firstAttribute="top" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="20" id="2vE-SI-UEM"/>
+                <constraint firstItem="FJY-IC-bU5" firstAttribute="top" secondItem="RAe-yJ-lzB" secondAttribute="top" constant="11" id="55J-QY-g1p"/>
+                <constraint firstItem="T3i-WO-VZQ" firstAttribute="top" secondItem="FJY-IC-bU5" secondAttribute="bottom" constant="24" id="EsB-X4-UWP"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="buK-Of-ZfH" secondAttribute="bottom" id="FOD-tr-5xk"/>
-                <constraint firstItem="T3i-WO-VZQ" firstAttribute="top" secondItem="Bcg-AK-PaO" secondAttribute="bottom" constant="30" id="KF5-q2-HnP"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="EkC-F1-GFh" secondAttribute="bottom" constant="14" id="KSZ-Id-dKy"/>
                 <constraint firstItem="RAe-yJ-lzB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Vj7-5X-3Z2"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="EkC-F1-GFh" secondAttribute="leading" id="Y5J-NU-9dH"/>
                 <constraint firstAttribute="trailing" secondItem="DtZ-v4-794" secondAttribute="trailing" id="dYs-Iy-gfn"/>
+                <constraint firstAttribute="centerX" secondItem="FJY-IC-bU5" secondAttribute="centerX" id="diE-Gp-Wcl"/>
                 <constraint firstItem="DtZ-v4-794" firstAttribute="top" secondItem="RAe-yJ-lzB" secondAttribute="top" constant="2" id="mhY-FO-gcM"/>
                 <constraint firstAttribute="centerX" secondItem="T3i-WO-VZQ" secondAttribute="centerX" constant="0.5" id="p9I-c4-GqY"/>
                 <constraint firstAttribute="trailing" secondItem="buK-Of-ZfH" secondAttribute="trailing" constant="21" id="qyQ-fV-uRR"/>
-                <constraint firstAttribute="centerX" secondItem="Bcg-AK-PaO" secondAttribute="centerX" constant="1" id="uJ7-Wb-V2p"/>
-                <constraint firstItem="RAe-yJ-lzB" firstAttribute="top" secondItem="Bcg-AK-PaO" secondAttribute="top" constant="-17" id="vIt-0m-cDX"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="21" id="wPf-Zd-mGf"/>
             </constraints>
             <size key="customSize" width="314" height="343"/>
             <connections>
-                <outlet property="dateLabel" destination="Bcg-AK-PaO" id="IMW-mi-SBx"/>
+                <outlet property="dateButton" destination="FJY-IC-bU5" id="zA4-C0-fWZ"/>
                 <outlet property="drawerButton" destination="RAe-yJ-lzB" id="kMb-h5-7af"/>
                 <outlet property="messageLabel" destination="buK-Of-ZfH" id="wIT-cG-avW"/>
                 <outlet property="messageTitleLabel" destination="EkC-F1-GFh" id="daw-iv-tMM"/>

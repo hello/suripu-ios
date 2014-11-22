@@ -273,7 +273,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQB-Nr-cm5" userLabel="playButton">
-                                <rect key="frame" x="263" y="283" width="75" height="75"/>
+                                <rect key="frame" x="263" y="282.5" width="75" height="75"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="e99-DC-jD5"/>
                                     <constraint firstAttribute="width" constant="75" id="geP-e1-8ek"/>
@@ -452,7 +452,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="rFe-bS-5Yc" secondAttribute="trailing" constant="12" id="Srx-0h-Jel"/>
                             <constraint firstItem="rFe-bS-5Yc" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leadingMargin" constant="12" id="YQY-gM-yi0"/>
                             <constraint firstItem="cY3-74-70H" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leadingMargin" constant="12" id="agX-5X-7yp"/>
-                            <constraint firstItem="cY3-74-70H" firstAttribute="bottom" secondItem="EoV-KF-nla" secondAttribute="bottom" constant="-55" id="f2R-Qy-8eq"/>
+                            <constraint firstItem="cY3-74-70H" firstAttribute="bottom" secondItem="EoV-KF-nla" secondAttribute="top" constant="-20" id="f2R-Qy-8eq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="EoV-KF-nla" secondAttribute="trailing" constant="12" id="gi2-Jf-87R"/>
                             <constraint firstItem="EoV-KF-nla" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leadingMargin" constant="12" id="jgP-Tf-RlJ"/>
                             <constraint firstItem="AhH-RW-xFb" firstAttribute="top" secondItem="zmZ-DE-gY2" secondAttribute="bottom" id="oGV-Oy-wmc"/>
@@ -492,6 +492,7 @@
                         <outlet property="emailAddressField" destination="4H9-4w-9eg" id="oeH-wd-2GP"/>
                         <outlet property="hiddenField" destination="zmZ-DE-gY2" id="HsA-Sa-YiL"/>
                         <outlet property="nameField" destination="EoV-KF-nla" id="KGo-mo-ugC"/>
+                        <outlet property="nameTopConstraint" destination="f2R-Qy-8eq" id="bet-27-fUs"/>
                         <outlet property="passwordField" destination="rFe-bS-5Yc" id="GHP-jI-BRC"/>
                         <outlet property="titleLabel" destination="cY3-74-70H" id="884-je-W4w"/>
                         <outlet property="view" destination="NOa-KQ-y5R" id="daF-YS-tzi"/>

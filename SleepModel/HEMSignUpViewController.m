@@ -29,6 +29,7 @@
 
 @property (nonatomic, getter=isSigningUp) BOOL signingUp;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameTopConstraint;
 @end
 
 @implementation HEMSignUpViewController
@@ -45,6 +46,11 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[self nameField] becomeFirstResponder];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [self updateConstraint:[self nameTopConstraint]
+                  withDiff:8.0f];
 }
 
 #pragma mark - Activity

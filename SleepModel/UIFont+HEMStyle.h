@@ -158,6 +158,23 @@
 + (UIFont *)onboardingFieldRightViewFont;
 
 /**
+ * Font used for onboarding screen titles
+ */
++ (UIFont *)onboardingTitleFont;
+
+/**
+ * Font to be used during onboarding screens where a description of the current
+ * step is shown
+ */
++ (UIFont *)onboardingDescriptionFont;
+
+/**
+ * Font to be used during onboarding screens where a description of the current
+ * step is shown and certain words / phrases are required to be bold
+ */
++ (UIFont *)onboardingDescriptionBoldFont;
+
+/**
  * Font to be used to display the in-app browser title
  */
 + (UIFont *)inAppBrowserTitleFont;

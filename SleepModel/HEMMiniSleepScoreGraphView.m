@@ -4,6 +4,11 @@
 
 @implementation HEMMiniSleepScoreGraphView
 
+- (void)awakeFromNib
+{
+    self.backgroundColor = [UIColor clearColor];
+}
+
 - (void)drawRect:(CGRect)rect
 {
     [HelloStyleKit drawMiniSleepScoreGraphWithSleepScore:self.sleepScore];

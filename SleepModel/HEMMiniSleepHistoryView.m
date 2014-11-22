@@ -50,8 +50,8 @@
     for (SENSleepResultSegment* segment in self.sleepDataSegments) {
         NSTimeInterval sliceStartInterval = [self timeIntervalForSegment:segment];
         NSTimeInterval sliceEndInterval = sliceStartInterval + [self durationForSegment:segment];
-        CGFloat startYOffset = [self yOffsetForTimeInterval:sliceStartInterval];
-        CGFloat endYOffset = [self yOffsetForTimeInterval:sliceEndInterval];
+        CGFloat startYOffset = floorf([self yOffsetForTimeInterval:sliceStartInterval]);
+        CGFloat endYOffset = ceilf([self yOffsetForTimeInterval:sliceEndInterval]);
         CGFloat endXOffset = [self xOffsetForSleepDepth:segment.sleepDepth];
         UIColor* color = [HEMColorUtils colorForSleepDepth:segment.sleepDepth];
         CGContextSetFillColorWithColor(ctx, color.CGColor);
@@ -71,7 +71,7 @@
 
 - (CGFloat)xOffsetForSleepDepth:(NSInteger)sleepDepth
 {
-    return (CGRectGetWidth(self.bounds) / 3) * sleepDepth;
+    return CGRectGetWidth(self.bounds) * (sleepDepth * 0.01f);
 }
 
 #pragma mark - Data Parsing

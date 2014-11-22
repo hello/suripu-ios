@@ -45,7 +45,9 @@
 - (void)configureCollectionView
 {
     UICollectionViewFlowLayout* layout = (id)self.historyCollectionView.collectionViewLayout;
-    layout.itemSize = CGSizeMake(90.f, CGRectGetHeight(self.historyCollectionView.bounds) - 20.f);
+    layout.sectionInset = UIEdgeInsetsMake(10.f, 0, 10.f, 0);
+    CGFloat cellHeight = (CGRectGetHeight(self.view.bounds) * 0.65f) - layout.sectionInset.top - layout.sectionInset.bottom;
+    layout.itemSize = CGSizeMake(100.f, cellHeight);
 }
 
 - (void)configureDateFormatters

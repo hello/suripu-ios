@@ -117,6 +117,11 @@
     }
 }
 
+- (IBAction)dismissAndShowLastNight:(id)sender {
+    self.selectedDate = [NSDate dateWithTimeIntervalSinceNow:-86400];
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView

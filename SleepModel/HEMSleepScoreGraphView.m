@@ -37,14 +37,15 @@
 
 - (void)setSleepScore:(NSInteger)sleepScore animated:(BOOL)animated
 {
-    if (sleepScore == _sleepScore || self.targetSleepScore == sleepScore)
+    if (sleepScore == _sleepScore || (self.targetSleepScore == sleepScore && sleepScore != 0))
         return;
 
-    if (animated) {
+    if (sleepScore == 0) {
+        self.sleepScore = sleepScore;
+    } else if (animated) {
         self.targetSleepScore = sleepScore;
         [self animateScoreTo:sleepScore];
-    }
-    else {
+    } else {
         self.sleepScore = sleepScore;
     }
 }

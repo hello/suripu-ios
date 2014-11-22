@@ -39,7 +39,7 @@ static CGFloat const HEMBeforeSleepScrollShadowRadius = 3.0f;
 
 - (void)setup {
     [[self scrollableView] addTitle:NSLocalizedString(@"onboarding.title.before-sleep", nil)];
-    [[self scrollableView] addImage:[HelloStyleKit sense_colors]];
+    [[self scrollableView] addImage:[HelloStyleKit senseGlow]];
     [[self scrollableView] addDescription:[self attributedDescription]];
     
     [[[self buttonContainer] layer] setShadowRadius:HEMBeforeSleepScrollShadowRadius];

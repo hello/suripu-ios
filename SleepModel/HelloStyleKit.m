@@ -75,7 +75,7 @@ static UIImage* _sense = nil;
 static UIImage* _wifiIcon = nil;
 static UIImage* _lockIcon = nil;
 static UIImage* _backIcon = nil;
-static UIImage* _sense_colors = nil;
+static UIImage* _senseGlow = nil;
 
 #pragma mark Initialization
 
@@ -183,7 +183,7 @@ static UIImage* _sense_colors = nil;
 + (UIImage*)wifiIcon { return _wifiIcon ?: (_wifiIcon = [UIImage imageNamed: @"wifiIcon"]); }
 + (UIImage*)lockIcon { return _lockIcon ?: (_lockIcon = [UIImage imageNamed: @"lockIcon"]); }
 + (UIImage*)backIcon { return _backIcon ?: (_backIcon = [UIImage imageNamed: @"backIcon"]); }
-+ (UIImage*)sense_colors { return _sense_colors ?: (_sense_colors = [UIImage imageNamed: @"sense_colors"]); }
++ (UIImage*)senseGlow { return _senseGlow ?: (_senseGlow = [UIImage imageNamed: @"senseGlow"]); }
 
 #pragma mark Drawing Methods
 

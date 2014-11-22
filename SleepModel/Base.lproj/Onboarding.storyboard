@@ -255,6 +255,7 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
+                                    <segue destination="4s2-Gt-ovZ" kind="push" id="0US-Xg-VOF"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -1020,15 +1021,14 @@
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fvQ-cb-qcx" userLabel="video">
-                                <rect key="frame" x="28" y="142" width="544" height="148"/>
-                                <color key="backgroundColor" red="0.96470588235294119" green="0.97647058823529409" blue="0.99607843137254903" alpha="1" colorSpace="calibratedRGB"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clipPill.png" translatesAutoresizingMaskIntoConstraints="NO" id="e7k-8I-UvG">
+                                <rect key="frame" x="28" y="142" width="544" height="180"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="148" id="J5d-Q4-TeX"/>
+                                    <constraint firstAttribute="height" constant="180" id="hzX-9e-u99"/>
                                 </constraints>
-                            </view>
+                            </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clip your Sleep Pill to the pillowcase you sleep On." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="xuG-gW-rF9">
-                                <rect key="frame" x="28" y="323" width="544" height="53"/>
+                                <rect key="frame" x="28" y="342" width="544" height="53"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="53" id="5YN-Ly-Jcz"/>
                                 </constraints>
@@ -1072,18 +1072,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="e7k-8I-UvG" secondAttribute="trailing" constant="12" id="2AU-fo-whW"/>
                             <constraint firstItem="ccb-Ef-kXd" firstAttribute="top" secondItem="gRL-Qh-1Rv" secondAttribute="bottom" constant="17" id="4eA-Y4-m9H"/>
+                            <constraint firstItem="e7k-8I-UvG" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="12" id="5Jf-om-8bh"/>
+                            <constraint firstItem="xuG-gW-rF9" firstAttribute="top" secondItem="e7k-8I-UvG" secondAttribute="bottom" constant="20" id="CJU-Ve-j4o"/>
                             <constraint firstItem="xuG-gW-rF9" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="12" id="FBv-8R-uuF"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="fvQ-cb-qcx" secondAttribute="trailing" constant="12" id="Quz-71-lt6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ded-Ea-3CR" secondAttribute="trailing" constant="12" id="VPB-ku-pj9"/>
-                            <constraint firstItem="fvQ-cb-qcx" firstAttribute="bottom" secondItem="ded-Ea-3CR" secondAttribute="bottom" constant="172" id="XHA-2y-qpY"/>
+                            <constraint firstItem="e7k-8I-UvG" firstAttribute="top" secondItem="ded-Ea-3CR" secondAttribute="bottom" constant="24" id="W9X-ou-tAc"/>
                             <constraint firstAttribute="centerX" secondItem="gRL-Qh-1Rv" secondAttribute="centerX" id="ag7-Al-QGL"/>
                             <constraint firstItem="gRL-Qh-1Rv" firstAttribute="top" secondItem="qdG-tg-U0e" secondAttribute="top" constant="48" id="eSc-HV-tL1"/>
                             <constraint firstItem="ded-Ea-3CR" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="12" id="fiU-Xv-p0g"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xuG-gW-rF9" secondAttribute="trailing" constant="12" id="m9N-Hb-NlY"/>
-                            <constraint firstItem="fvQ-cb-qcx" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="12" id="pZR-qg-5Fa"/>
                             <constraint firstAttribute="centerX" secondItem="qdG-tg-U0e" secondAttribute="centerX" id="tQu-Yq-tQF"/>
-                            <constraint firstItem="xuG-gW-rF9" firstAttribute="bottom" secondItem="fvQ-cb-qcx" secondAttribute="bottom" constant="86" id="tlj-PI-mcR"/>
                             <constraint firstItem="ded-Ea-3CR" firstAttribute="top" secondItem="SS5-15-dp3" secondAttribute="bottom" constant="8" id="yXX-qo-gHo"/>
                         </constraints>
                     </view>
@@ -1093,7 +1093,6 @@
                         <outlet property="descLabel" destination="xuG-gW-rF9" id="Wvr-4s-SWc"/>
                         <outlet property="helpButton" destination="gRL-Qh-1Rv" id="WPm-Bw-kxA"/>
                         <outlet property="titleLabel" destination="ded-Ea-3CR" id="VPe-Cs-8q2"/>
-                        <outlet property="videoContainer" destination="fvQ-cb-qcx" id="VAP-lj-Mf9"/>
                         <outlet property="view" destination="lwn-in-ftH" id="5W8-Rh-obp"/>
                     </connections>
                 </viewController>
@@ -2486,6 +2485,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     </scenes>
     <resources>
         <image name="bluetooth.png" width="244" height="77"/>
+        <image name="clipPill.png" width="247" height="243"/>
         <image name="doubleArrow.png" width="35" height="63"/>
         <image name="femaleIcon.png" width="30" height="46"/>
         <image name="maleIcon.png" width="39" height="40"/>
@@ -2497,9 +2497,10 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="shake_pill.png" width="268" height="222"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="0US-Xg-VOF"/>
+        <segue reference="8ZE-B6-zEc"/>
         <segue reference="lPc-Ik-cVb"/>
         <segue reference="azr-Tk-rB7"/>
-        <segue reference="8ZE-B6-zEc"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

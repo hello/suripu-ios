@@ -10,7 +10,7 @@
 // welcome
 "welcome.title.meet-sense" = "Meet Sense";
 "welcome.title.welcome" = "Welcome";
-"welcome.subtitle" = "A simple system that tracks your sleep monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
+"welcome.subtitle" = "A simple system that tracks your sleep, monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
 
 // onboarding
 "onboarding.blue" = "blue";

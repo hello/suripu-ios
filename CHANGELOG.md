@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.0.40
+
+New:
+
+* Added a Before You Sleep screen to describe Sense colors.  This replaces the
+  previous well done screen. 
+* Hooked up illustration for clipping your Sleep Pill
+
+Fixes:
+
+* fix various layout issues in onboarding
+
 ## 1.0.0.39
 
 New:

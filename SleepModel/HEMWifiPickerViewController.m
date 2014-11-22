@@ -56,6 +56,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
     
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setWifiDataSource:[[HEMWiFiDataSource alloc] init]];
     [[self wifiPickerTableView] setDataSource:[self wifiDataSource]];
     [[self wifiPickerTableView] setDelegate:self];

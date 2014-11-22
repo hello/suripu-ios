@@ -8,6 +8,8 @@
 #import <SenseKit/BLE.h>
 #import <SenseKit/SENAuthorizationService.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMSensePairViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
@@ -64,6 +66,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupDescription];
     [self setCurrentState:HEMSensePairStateNotStarted];
     

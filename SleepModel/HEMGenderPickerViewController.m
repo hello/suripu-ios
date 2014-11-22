@@ -1,6 +1,8 @@
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAccount.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMGenderPickerViewController.h"
 #import "HEMUserDataCache.h"
 #import "HEMBaseController+Protected.h"
@@ -13,6 +15,7 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
 
 @interface HEMGenderPickerViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UIButton* femaleIconButton;
 @property (weak, nonatomic) IBOutlet UIButton* femaleTitleButton;
@@ -32,7 +35,7 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
-    
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     
     if ([self delegate] != nil) {

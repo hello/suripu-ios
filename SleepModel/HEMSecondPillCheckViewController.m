@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMSecondPillCheckViewController.h"
 #import "HEMActionButton.h"
 #import "HEMBluetoothUtils.h"
@@ -15,6 +17,7 @@
 
 @interface HEMSecondPillCheckViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *firstPillButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *firstPillButtonWidthConstraint;
@@ -25,6 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setSubtitleText];
     [SENAnalytics track:kHEMAnalyticsEventOnBTwoPill];
 }

@@ -9,6 +9,8 @@
 #import <SenseKit/SENSense.h>
 #import <SenseKit/SENAuthorizationService.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMPillPairViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
@@ -48,6 +50,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     
     [[self navigationItem] setHidesBackButton:YES];
     
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupSubtitle];
     [self setupCancelButton];
     

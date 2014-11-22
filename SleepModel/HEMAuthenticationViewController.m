@@ -16,6 +16,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 @interface HEMAuthenticationViewController () <UIAlertViewDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextField* usernameField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
 @property (weak, nonatomic) IBOutlet UITextField *hiddenField;
@@ -31,6 +32,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [[[self doneButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
     [[self doneButton] setTitleColor:[HelloStyleKit senseBlueColor]
                             forState:UIControlStateNormal];

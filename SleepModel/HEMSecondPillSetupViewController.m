@@ -8,6 +8,8 @@
 
 #import "NSMutableAttributedString+HEMFormat.h"
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMSecondPillSetupViewController.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMActionButton.h"
@@ -30,6 +32,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupDescription];
     [SENAnalytics track:kHEMAnalyticsEventOnBAddPill];
 }

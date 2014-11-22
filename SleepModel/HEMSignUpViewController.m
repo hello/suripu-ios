@@ -18,6 +18,7 @@
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextField* emailAddressField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
 @property (weak, nonatomic) IBOutlet UITextField* nameField;
@@ -34,6 +35,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [[[self doneButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
     [[self doneButton] setTitleColor:[HelloStyleKit senseBlueColor]
                             forState:UIControlStateNormal];

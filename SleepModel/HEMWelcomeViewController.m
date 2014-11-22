@@ -8,6 +8,8 @@
 #import <MediaPlayer/MPMoviePlayerController.h>
 #import "UIView+HEMMotionEffects.h"
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMWelcomeViewController.h"
 #import "HEMActionButton.h"
 #import "HEMAnimationUtils.h"
@@ -50,6 +52,7 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupVideoPlayer];
     [self setSubtitleText];
     

@@ -9,23 +9,26 @@
 
 #import <AFNetworking/AFURLResponseSerialization.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMUserDataCache.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMDialogViewController.h"
+#import "HEMActivityCoverView.h"
+#import "HEMSettingsTableViewController.h"
 
 static NSString* const kHEMOnboardingSettingCheckpoint = @"sense.checkpoint";
-static CGFloat   const kHEMOnboardingDefaultFontSize = 18.0f;
 
 @implementation HEMOnboardingUtils
 
 + (void)applyCommonDescriptionAttributesTo:(NSMutableAttributedString*)attrText {
-    UIFont* font = [UIFont fontWithName:@"Calibre-Thin" size:kHEMOnboardingDefaultFontSize];
+    UIFont* font = [UIFont onboardingDescriptionFont];
     UIColor* color = [HelloStyleKit onboardingGrayColor];
     
     NSMutableParagraphStyle* paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle setLineHeightMultiple:1.3f];
+    [paragraphStyle setLineHeightMultiple:1.15f];
     
     // avoid overriding any substrings that may already have attributes set
     [attrText enumerateAttributesInRange:NSMakeRange(0, [attrText length])
@@ -56,7 +59,7 @@ static CGFloat   const kHEMOnboardingDefaultFontSize = 18.0f;
 }
 
 + (NSAttributedString*)boldAttributedText:(NSString *)text withColor:(UIColor*)color {
-    UIFont* font = [UIFont fontWithName:@"Calibre-Medium" size:kHEMOnboardingDefaultFontSize];
+    UIFont* font = [UIFont onboardingDescriptionBoldFont];
     
     NSMutableDictionary* attributes = [NSMutableDictionary dictionaryWithCapacity:2];
     [attributes setValue:font forKey:NSFontAttributeName];
@@ -185,6 +188,32 @@ static CGFloat   const kHEMOnboardingDefaultFontSize = 18.0f;
     [self applyCommonDescriptionAttributesTo:attrSubtitle];
     
     return attrSubtitle;
+}
+
++ (void)dismissOnboardingFlowFrom:(UIViewController*)controller {
+    for (UIViewController* viewController in controller.navigationController.viewControllers) {
+        if ([viewController isKindOfClass:[HEMSettingsTableViewController class]]) {
+            [controller.navigationController popToViewController:viewController animated:YES];
+            return;
+        }
+    }
+    
+    [controller.navigationController dismissViewControllerAnimated:YES completion:NULL];
+}
+
++ (void)finisOnboardinghWithMessageFrom:(UIViewController*)controller {
+    HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
+    [[activityView activityLabel] setText:NSLocalizedString(@"onboarding.finished.message", nil)];
+    [activityView showInView:[[controller navigationController] view]
+                    activity:NO
+                  completion:^{
+                      float delay = 2.0f;
+                      dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay*NSEC_PER_SEC);
+                      dispatch_after(time, dispatch_get_main_queue(), ^{
+                          [self dismissOnboardingFlowFrom:controller];
+                      });
+                  }];
+
 }
 
 @end

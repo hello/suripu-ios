@@ -2,6 +2,8 @@
 #import <SenseKit/SENAccount.h>
 #import <iCarousel/iCarousel.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMWeightPickerViewController.h"
 #import "HEMUserDataCache.h"
 #import "HelloStyleKit.h"
@@ -15,6 +17,7 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 
 @interface HEMWeightPickerViewController () <iCarouselDataSource, iCarouselDelegate>
 
+@property (weak,   nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak,   nonatomic) IBOutlet iCarousel* carousel;
 @property (weak,   nonatomic) IBOutlet UILabel* topWeightLabel;
 @property (weak,   nonatomic) IBOutlet UILabel* botWeightLabel;
@@ -30,6 +33,9 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[super navigationItem] setHidesBackButton:YES];
+    
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupCarousel];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [SENAnalytics track:kHEMAnalyticsEventOnBWeight];

@@ -6,6 +6,8 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMPillSetupViewController.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
@@ -25,6 +27,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
+    
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [SENAnalytics track:kHEMAnalyticsEventOnBSetupPill];
 }
 

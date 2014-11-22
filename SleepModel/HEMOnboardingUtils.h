@@ -103,4 +103,10 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  */
 + (NSAttributedString*)demographicReason;
 
+/**
+ * Finish onboarding flow from the specified last controller in the flow and display
+ * a message before it completes
+ */
++ (void)finisOnboardinghWithMessageFrom:(UIViewController*)controller;
+
 @end

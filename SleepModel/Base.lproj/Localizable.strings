@@ -10,12 +10,14 @@
 // welcome
 "welcome.title.meet-sense" = "Meet Sense";
 "welcome.title.welcome" = "Welcome";
+"welcome.subtitle" = "A simple system that tracks your sleep, monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
 
 // onboarding
 "onboarding.blue" = "blue";
-"onboarding.green" = "green";
-"welcome.subtitle" = "A simple system that tracks your sleep monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
-"get-started.subtitle" = "Are you using Sense with one Sleep Pill or two Sleep Pills?";
+"onboarding.green" = "Green";
+"onboarding.orange" = "Orange";
+"onboarding.red" = "red";
+
 "sense-pair.description" = "Now we'll pair your phone with Sense. Make sure your Sense is plugged in and nearby, then tap Continue.";
 "sign-up.title" = "Sign up";
 "sign-up.failed.title" = "Sign up failed";
@@ -26,6 +28,9 @@
 "sign-up.error.generic" = "Something went wrong. Please try again.";
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "We could not set your birthdate for your account.";
+"onboarding.before-sleep.description.format" = "Before you go to bed, you’ll want to check that everything’s set for a good nights sleep. Simply wave your hand over Sense, and instantly you’ll know about the conditions in your room. Go ahead, give it a try now.\n\n%@ means everything’s good. %@ means something’s a little off and %@ means you should adjust something before sleep.";
+"onboarding.title.before-sleep" = "Before you sleep";
+"onboarding.finished.message" = "You're all set up.\nWell done.";
 
 // help links
 "help.url.troubleshooting" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8";

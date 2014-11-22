@@ -1,5 +1,8 @@
 #import <SenseKit/SENSettings.h>
 #import <SenseKit/SENAccount.h>
+
+#import "UIFont+HEMStyle.h"
+
 #import "HEMHeightPickerViewController.h"
 #import "HEMUserDataCache.h"
 #import "HEMValueSliderView.h"
@@ -12,6 +15,7 @@ static NSInteger HEMMaxHeightInFeet = 9;
 
 @interface HEMHeightPickerViewController () <HEMValueSliderDelegate>
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (nonatomic, getter=isUsingImperial) BOOL usingImperial;
 @property (weak, nonatomic) IBOutlet HEMValueSliderView *heightSliderView;
 @property (assign, nonatomic) NSInteger numberOfRows;
@@ -29,6 +33,8 @@ static NSInteger HEMMaxHeightInFeet = 9;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[super navigationItem] setHidesBackButton:YES];
+    
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setNumberOfRows:HEMMaxHeightInFeet+1]; // include 0
     [[self heightSliderView] reload];
     

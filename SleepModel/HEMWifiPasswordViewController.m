@@ -57,6 +57,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
+    
     [[self doneButton] setTitleColor:[HelloStyleKit senseBlueColor]
                             forState:UIControlStateNormal];
     [[[self doneButton] titleLabel] setFont:[UIFont navButtonTitleFont]];

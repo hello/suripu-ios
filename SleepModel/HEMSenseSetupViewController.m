@@ -8,6 +8,8 @@
 
 #import "NSMutableAttributedString+HEMFormat.h"
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMSenseSetupViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingUtils.h"
@@ -29,6 +31,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
+    
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupDescription];
     [SENAnalytics track:kHEMAnalyticsEventOnBSenseSetup];
 }

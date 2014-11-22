@@ -8,6 +8,8 @@
 
 #import "NSMutableAttributedString+HEMFormat.h"
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMGetAppViewController.h"
 #import "HEMOnboardingUtils.h"
 
@@ -22,6 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupSubtitle];
 }
 

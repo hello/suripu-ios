@@ -1,6 +1,8 @@
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENAPIAccount.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMBirthdatePickerViewController.h"
 #import "HEMUserDataCache.h"
 #import "HelloStyleKit.h"
@@ -36,6 +38,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
     [[self navigationItem] setHidesBackButton:YES];
     [self loadAccount:nil]; // if does not yet exist, in case user returns to here
     [[self titleLabel] setAccessibilityLabel:NSLocalizedString(@"user.info.accessibility.birthdate-title", nil)];
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     
     if ([self delegate] != nil) {

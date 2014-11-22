@@ -2,6 +2,8 @@
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAccount.h>
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMLocationFinderViewController.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMUserDataCache.h"
@@ -31,6 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[super navigationItem] setHidesBackButton:YES];
+    
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [SENAnalytics track:kHEMAnalyticsEventOnBLocation];   
 }

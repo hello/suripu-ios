@@ -8,6 +8,8 @@
 
 #import "NSMutableAttributedString+HEMFormat.h"
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMNoBLEViewController.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMBluetoothUtils.h"
@@ -18,6 +20,7 @@
 
 @interface HEMNoBLEViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 
@@ -30,6 +33,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupSubtitleText];
     [self updateContinueState];
     

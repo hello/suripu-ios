@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KoM-KU-kaf">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -255,6 +254,7 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
+                                    <segue destination="R0p-kB-1qZ" kind="push" id="PGl-75-32C"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -593,6 +593,7 @@
                     <navigationItem key="navigationItem" id="kZr-Gj-zOB"/>
                     <connections>
                         <outlet property="dobPicker" destination="7P9-ib-JRI" id="AxA-0d-3ne"/>
+                        <outlet property="dobPickerCenterYConstraint" destination="2hK-zx-inL" id="1eH-07-9ms"/>
                         <outlet property="dobPickerHeightConstraint" destination="qlT-A0-Sum" id="WWS-f8-kzJ"/>
                         <outlet property="doneButton" destination="h1g-YQ-7bC" id="zAk-SN-Lfx"/>
                         <outlet property="doneButtonWidthConstraint" destination="VtM-1F-twe" id="v2S-Y5-9UJ"/>
@@ -2498,6 +2499,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lPc-Ik-cVb"/>
+        <segue reference="PGl-75-32C"/>
         <segue reference="azr-Tk-rB7"/>
         <segue reference="8ZE-B6-zEc"/>
     </inferredMetricsTieBreakers>

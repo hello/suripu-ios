@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0.41
+
+Ensuring testflight provisioning profile is not corrupted and that there are no
+conflicting builds so that Ben Rose can install build.
+
 ## 1.0.0.40
 
 New:

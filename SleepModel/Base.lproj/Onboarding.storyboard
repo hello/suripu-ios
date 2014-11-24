@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KoM-KU-kaf">
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -254,7 +255,6 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
-                                    <segue destination="uc7-01-jZi" kind="push" id="fKP-l3-Jlh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -1667,7 +1667,12 @@ You can always do this later by visiting Settings.</string>
                     <connections>
                         <outlet property="botWeightLabel" destination="ppO-hl-bVw" id="0YZ-1B-e5N"/>
                         <outlet property="carousel" destination="7YJ-z6-26E" id="jIf-Py-Cz9"/>
+                        <outlet property="carouselCenterYConstraint" destination="dkv-NH-6gk" id="pgo-pg-2BS"/>
+                        <outlet property="carouselHeightConstraint" destination="1rb-Tq-wFg" id="z7g-pB-gjP"/>
                         <outlet property="doneButton" destination="vwe-Kd-JLe" id="1hM-p5-QYT"/>
+                        <outlet property="lbsToLineTopConstraint" destination="0QG-nf-JEM" id="pDB-kx-0t0"/>
+                        <outlet property="lineHeightConstraint" destination="cCg-XX-SdF" id="EPr-bi-qHT"/>
+                        <outlet property="lineToCarouselTopConstraint" destination="2nP-JF-Vmn" id="6aZ-In-jwf"/>
                         <outlet property="skipButton" destination="GFw-g6-B5s" id="boI-JW-uWi"/>
                         <outlet property="subtitleLabel" destination="mBp-0g-Ucq" id="XcG-zB-fu8"/>
                         <outlet property="titleLabel" destination="Vca-9S-Db1" id="3PV-w0-uNz"/>
@@ -2502,7 +2507,6 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lPc-Ik-cVb"/>
-        <segue reference="fKP-l3-Jlh"/>
         <segue reference="azr-Tk-rB7"/>
         <segue reference="8ZE-B6-zEc"/>
     </inferredMetricsTieBreakers>

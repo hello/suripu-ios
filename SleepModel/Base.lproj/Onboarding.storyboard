@@ -1714,8 +1714,11 @@ You can always do this later by visiting Settings.</string>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map.png" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-9r-AQZ">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map.png" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-9r-AQZ">
                                 <rect key="frame" x="28" y="214" width="544" height="242"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="242" id="ntv-dy-8Kv"/>
+                                </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Sdf-8C-14E" customClass="HEMActionButton">
                                 <rect key="frame" x="190" y="496" width="220" height="40"/>
@@ -1769,6 +1772,7 @@ You can always do this later by visiting Settings.</string>
                     <connections>
                         <outlet property="locateButtonWidthConstraint" destination="tse-nm-Y92" id="yte-ZT-6FS"/>
                         <outlet property="locationButton" destination="Sdf-8C-14E" id="amY-FG-Snl"/>
+                        <outlet property="mapHeightConstraint" destination="ntv-dy-8Kv" id="ONd-Pi-JbY"/>
                         <outlet property="mapImageView" destination="sEE-9r-AQZ" id="Zx1-DL-KaU"/>
                         <outlet property="skipButton" destination="SVC-vN-68T" id="uU0-2Z-vGM"/>
                         <outlet property="subtitleLabel" destination="8Sy-ck-jAh" id="MT3-Oz-m97"/>

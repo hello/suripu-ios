@@ -586,8 +586,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aNw-eX-aCs">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="aNw-eX-aCs">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="400"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -636,7 +636,7 @@
                                     <outlet property="delegate" destination="0ke-gs-abm" id="nFf-Co-DMH"/>
                                 </connections>
                             </tableView>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQC-5d-ND9">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQC-5d-ND9" userLabel="activity">
                                 <rect key="frame" x="140" y="400" width="320" height="71"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="pgd-Hu-6hb">
@@ -663,7 +663,7 @@
                                     <constraint firstAttribute="bottom" secondItem="pgd-Hu-6hb" secondAttribute="bottom" constant="21" id="skn-NB-bUp"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJS-Cn-weR">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJS-Cn-weR" userLabel="extendedAbility">
                                 <rect key="frame" x="0.0" y="400" width="600" height="142"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="99x-GA-dKO">
@@ -697,7 +697,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This will reset your entire Sense System, including your Sleep Pill." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Id-oB-6lZ">
-                                        <rect key="frame" x="28" y="98" width="544" height="20"/>
+                                        <rect key="frame" x="28" y="98" width="544" height="19.5"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                         <color key="textColor" red="0.47843137250000001" green="0.47843137250000001" blue="0.47843137250000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -720,14 +720,14 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="aNw-eX-aCs" firstAttribute="top" secondItem="wK7-6V-jaE" secondAttribute="bottom" constant="-64" id="8QY-Ez-xnm"/>
                             <constraint firstAttribute="centerX" secondItem="aNw-eX-aCs" secondAttribute="centerX" id="Ew5-Qu-4lh"/>
                             <constraint firstAttribute="centerX" secondItem="HQC-5d-ND9" secondAttribute="centerX" id="JeD-9x-3nn"/>
                             <constraint firstAttribute="centerX" secondItem="bJS-Cn-weR" secondAttribute="centerX" id="QjG-sk-uti"/>
-                            <constraint firstAttribute="height" secondItem="aNw-eX-aCs" secondAttribute="height" id="Sl1-1m-kAh"/>
-                            <constraint firstAttribute="centerY" secondItem="aNw-eX-aCs" secondAttribute="centerY" id="UIU-XF-tS1"/>
                             <constraint firstItem="PY5-Oi-hgT" firstAttribute="top" secondItem="HQC-5d-ND9" secondAttribute="bottom" constant="129" id="bkZ-R9-mqJ"/>
                             <constraint firstAttribute="width" secondItem="aNw-eX-aCs" secondAttribute="width" id="chh-Bc-RvP"/>
                             <constraint firstItem="PY5-Oi-hgT" firstAttribute="top" secondItem="bJS-Cn-weR" secondAttribute="bottom" constant="58" id="gN2-4m-6QD"/>
+                            <constraint firstItem="bJS-Cn-weR" firstAttribute="top" secondItem="aNw-eX-aCs" secondAttribute="bottom" id="kod-9V-lKb"/>
                             <constraint firstItem="bJS-Cn-weR" firstAttribute="width" secondItem="1Ml-OR-V9I" secondAttribute="width" id="wUc-vr-D8f"/>
                         </constraints>
                     </view>

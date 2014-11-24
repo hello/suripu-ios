@@ -48,7 +48,6 @@
             <string>Calibre-Light</string>
             <string>Calibre-Light</string>
             <string>Calibre-Light</string>
-            <string>Calibre-Light</string>
         </mutableArray>
         <mutableArray key="Calibre-Medium.otf">
             <string>Calibre-Medium</string>
@@ -1930,18 +1929,18 @@ You can always do this later by visiting Settings.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Adding a second Sleep Pill?" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y1Y-8p-wxu">
-                                <rect key="frame" x="28" y="45" width="544" height="90"/>
+                                <rect key="frame" x="28" y="28" width="544" height="66"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="oOc-eS-hjE"/>
+                                    <constraint firstAttribute="height" constant="66" id="oOc-eS-hjE"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="26"/>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="AO2-Sy-66K">
-                                <rect key="frame" x="28" y="142" width="544" height="94"/>
+                                <rect key="frame" x="28" y="121" width="544" height="107"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="94" id="Ypu-ph-qzC"/>
+                                    <constraint firstAttribute="height" constant="107" id="Ypu-ph-qzC"/>
                                 </constraints>
                                 <attributedString key="attributedText">
                                     <fragment content="Are you adding a second Sleep Pill to a Sense that has been set up previously, or are you setting up Sense for the first time?">
@@ -1992,11 +1991,11 @@ You can always do this later by visiting Settings.</string>
                             <constraint firstAttribute="centerX" secondItem="eFG-Ub-heZ" secondAttribute="centerX" id="BpG-OJ-W3o"/>
                             <constraint firstItem="Y1Y-8p-wxu" firstAttribute="leading" secondItem="fs7-kC-KJ1" secondAttribute="leadingMargin" constant="12" id="MAt-5f-1BC"/>
                             <constraint firstItem="AO2-Sy-66K" firstAttribute="leading" secondItem="fs7-kC-KJ1" secondAttribute="leadingMargin" constant="12" id="O6a-l5-02s"/>
-                            <constraint firstItem="Y1Y-8p-wxu" firstAttribute="top" secondItem="QmT-Pn-4Ju" secondAttribute="bottom" constant="25" id="Pv1-ws-AUM"/>
+                            <constraint firstItem="Y1Y-8p-wxu" firstAttribute="top" secondItem="QmT-Pn-4Ju" secondAttribute="bottom" constant="8" id="Pv1-ws-AUM"/>
                             <constraint firstItem="140-hN-mHL" firstAttribute="top" secondItem="eFG-Ub-heZ" secondAttribute="top" constant="50" id="R9E-zM-c1F"/>
                             <constraint firstAttribute="centerX" secondItem="140-hN-mHL" secondAttribute="centerX" id="WRx-3Q-8Qv"/>
                             <constraint firstItem="EEy-lZ-Pm4" firstAttribute="top" secondItem="140-hN-mHL" secondAttribute="bottom" constant="37" id="XVG-Rh-WXa"/>
-                            <constraint firstItem="Y1Y-8p-wxu" firstAttribute="bottom" secondItem="AO2-Sy-66K" secondAttribute="top" constant="-7" id="YtH-2m-A1J"/>
+                            <constraint firstItem="Y1Y-8p-wxu" firstAttribute="bottom" secondItem="AO2-Sy-66K" secondAttribute="top" constant="-27" id="YtH-2m-A1J"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AO2-Sy-66K" secondAttribute="trailing" constant="12" id="ahV-73-IVv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Y1Y-8p-wxu" secondAttribute="trailing" constant="12" id="oB1-3s-0mA"/>
                         </constraints>
@@ -2017,7 +2016,7 @@ You can always do this later by visiting Settings.</string>
         <!--Second Pill Setup View Controller-->
         <scene sceneID="LMT-uc-QUR">
             <objects>
-                <viewController id="ryl-bI-Ek1" customClass="HEMSecondPillSetupViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="ryl-bI-Ek1" customClass="HEMSecondPillSetupViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="qZh-QF-cdh"/>
                         <viewControllerLayoutGuide type="bottom" id="fPs-Fx-Izu"/>
@@ -2026,140 +2025,73 @@ You can always do this later by visiting Settings.</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Add a second Sleep Pill" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TLk-q6-Qrj">
-                                <rect key="frame" x="28" y="45" width="544" height="34"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XwV-AO-bJ3" customClass="HEMScrollableView">
+                                <rect key="frame" x="28" y="28" width="544" height="457"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pJw-Is-Dhw">
+                                <rect key="frame" x="0.0" y="485" width="600" height="115"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZxA-cs-sOA" customClass="HEMActionButton">
+                                        <rect key="frame" x="190" y="10" width="220" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="220" id="Af0-9W-TeM"/>
+                                            <constraint firstAttribute="height" constant="40" id="lxd-if-vWt"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Continue">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="next:" destination="ryl-bI-Ek1" eventType="touchUpInside" id="h53-6Q-t78"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5lo-MZ-9BG">
+                                        <rect key="frame" x="190" y="56" width="220" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="220" id="NWd-gE-0h8"/>
+                                            <constraint firstAttribute="height" constant="40" id="omv-fO-HHp"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="I'm having trouble">
+                                            <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="help:" destination="ryl-bI-Ek1" eventType="touchUpInside" id="J8R-ea-Z9y"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="Hjt-hP-1SB"/>
+                                    <constraint firstAttribute="height" constant="115" id="CQh-lk-1Pp"/>
+                                    <constraint firstAttribute="centerX" secondItem="ZxA-cs-sOA" secondAttribute="centerX" id="JYo-vH-DXB"/>
+                                    <constraint firstAttribute="centerX" secondItem="5lo-MZ-9BG" secondAttribute="centerX" id="Jbp-Xc-Xq9"/>
+                                    <constraint firstItem="ZxA-cs-sOA" firstAttribute="bottom" secondItem="5lo-MZ-9BG" secondAttribute="bottom" constant="-46" id="mi7-ce-cKA"/>
+                                    <constraint firstAttribute="bottom" secondItem="5lo-MZ-9BG" secondAttribute="bottom" constant="19" id="ves-r0-K3k"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="26"/>
-                                <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="6nb-0C-ijn">
-                                <rect key="frame" x="28" y="103" width="544" height="258"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="258" id="wMb-zj-dPC"/>
-                                </constraints>
-                                <attributedString key="attributedText">
-                                    <fragment content="To connect a second Sleep Pill, Sense needs to be put into pairing mode.">
-                                        <attributes>
-                                            <color key="NSColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="18" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment>
-                                        <string key="content" base64-UTF8="YES">
-Cgo
-</string>
-                                        <attributes>
-                                            <color key="NSColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="18" name="Calibre-Thin"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment>
-                                        <string key="content">Ask the owner of the first Sleep Pill to stand next to Sense and open the Sense app, then go to Settings &gt; Devices &gt; Sense and tap 'Put</string>
-                                        <attributes>
-                                            <color key="NSColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="18" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" Sense Into Pairing Mode'.">
-                                        <attributes>
-                                            <color key="NSColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="18" name="LucidaGrande-Bold"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment>
-                                        <string key="content" base64-UTF8="YES">
-Cgo
-</string>
-                                        <attributes>
-                                            <color key="NSColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="18" name="Calibre-Thin"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="Sense will glow ">
-                                        <attributes>
-                                            <color key="NSColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="18" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content="purple">
-                                        <attributes>
-                                            <color key="NSColor" red="0.47843137254901957" green="0.031372549019607843" blue="0.97647058823529409" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="18" name="Calibre-Medium"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
-                                        </attributes>
-                                    </fragment>
-                                    <fragment content=" when it is in pairing mode.">
-                                        <attributes>
-                                            <color key="NSColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
-                                            <font key="NSFont" size="18" name="LucidaGrande"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" lineHeightMultiple="1.3"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZxA-cs-sOA" customClass="HEMActionButton">
-                                <rect key="frame" x="190" y="493" width="220" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="Af0-9W-TeM"/>
-                                    <constraint firstAttribute="height" constant="40" id="lxd-if-vWt"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
-                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Continue">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="next:" destination="ryl-bI-Ek1" eventType="touchUpInside" id="h53-6Q-t78"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5lo-MZ-9BG">
-                                <rect key="frame" x="190" y="543" width="220" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="NWd-gE-0h8"/>
-                                    <constraint firstAttribute="height" constant="40" id="omv-fO-HHp"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
-                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="I'm having trouble">
-                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="help:" destination="ryl-bI-Ek1" eventType="touchUpInside" id="J8R-ea-Z9y"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="5lo-MZ-9BG" firstAttribute="top" secondItem="ZxA-cs-sOA" secondAttribute="top" constant="50" id="37Z-pJ-R1w"/>
-                            <constraint firstItem="TLk-q6-Qrj" firstAttribute="top" secondItem="qZh-QF-cdh" secondAttribute="bottom" constant="25" id="6pi-ka-uLj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="TLk-q6-Qrj" secondAttribute="trailing" constant="12" id="Bdd-Oa-r1S"/>
-                            <constraint firstAttribute="centerX" secondItem="ZxA-cs-sOA" secondAttribute="centerX" id="K9b-Ng-UPE"/>
-                            <constraint firstAttribute="centerX" secondItem="5lo-MZ-9BG" secondAttribute="centerX" id="TCM-z0-7nX"/>
-                            <constraint firstItem="6nb-0C-ijn" firstAttribute="leading" secondItem="aId-bi-YUe" secondAttribute="leadingMargin" constant="12" id="bRk-7b-ed0"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="6nb-0C-ijn" secondAttribute="trailing" constant="12" id="fma-90-Z0a"/>
-                            <constraint firstItem="TLk-q6-Qrj" firstAttribute="bottom" secondItem="6nb-0C-ijn" secondAttribute="bottom" constant="-282" id="hdu-ij-g1b"/>
-                            <constraint firstItem="TLk-q6-Qrj" firstAttribute="leading" secondItem="aId-bi-YUe" secondAttribute="leadingMargin" constant="12" id="hqW-ex-4Yl"/>
-                            <constraint firstItem="fPs-Fx-Izu" firstAttribute="top" secondItem="5lo-MZ-9BG" secondAttribute="bottom" constant="17" id="wWU-DB-F63"/>
+                            <constraint firstItem="pJw-Is-Dhw" firstAttribute="leading" secondItem="aId-bi-YUe" secondAttribute="leadingMargin" constant="-16" id="AM8-oG-Ogh"/>
+                            <constraint firstItem="pJw-Is-Dhw" firstAttribute="bottom" secondItem="XwV-AO-bJ3" secondAttribute="bottom" constant="115" id="D3O-fK-Y9L"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pJw-Is-Dhw" secondAttribute="trailing" constant="-16" id="JCw-NX-HUQ"/>
+                            <constraint firstItem="XwV-AO-bJ3" firstAttribute="leading" secondItem="aId-bi-YUe" secondAttribute="leadingMargin" constant="12" id="MTR-3B-kg2"/>
+                            <constraint firstItem="fPs-Fx-Izu" firstAttribute="top" secondItem="pJw-Is-Dhw" secondAttribute="bottom" id="NWl-FQ-zdt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="XwV-AO-bJ3" secondAttribute="trailing" constant="12" id="NuQ-vZ-mvU"/>
+                            <constraint firstItem="XwV-AO-bJ3" firstAttribute="top" secondItem="qZh-QF-cdh" secondAttribute="bottom" constant="8" id="P5X-CG-I5s"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="8qE-ql-aSN"/>
                     <connections>
+                        <outlet property="buttonContainer" destination="pJw-Is-Dhw" id="Eig-eB-N3e"/>
+                        <outlet property="contentView" destination="XwV-AO-bJ3" id="lgl-wF-A19"/>
                         <outlet property="continueButton" destination="ZxA-cs-sOA" id="Dj3-P4-9C6"/>
                         <outlet property="continueButtonWidthConstraint" destination="Af0-9W-TeM" id="gvy-kS-oT8"/>
-                        <outlet property="descLabel" destination="6nb-0C-ijn" id="03v-VQ-FTa"/>
-                        <outlet property="titleLabel" destination="TLk-q6-Qrj" id="V2g-zp-pbq"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Jhh-nN-VI1" userLabel="First Responder" sceneMemberID="firstResponder"/>

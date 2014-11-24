@@ -17,14 +17,16 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMUserDataCache.h"
 #import "HEMSupportUtil.h"
+#import "HEMScrollableView.h"
 
 @interface HEMSecondPillSetupViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descLabel;
+@property (weak, nonatomic) IBOutlet HEMScrollableView *contentView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
-
+@property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *continueButtonWidthConstraint;
+
+@property (assign, nonatomic) CGFloat shadowOpacity;
 
 @end
 
@@ -32,12 +34,16 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [self setupDescription];
+    [self setupContent];
+    
+    [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
+    
+    [self setShadowOpacity:[[[self buttonContainer] layer] shadowOpacity]];
+    
     [SENAnalytics track:kHEMAnalyticsEventOnBAddPill];
 }
 
-- (void)setupDescription {
+- (void)setupContent {
     NSString* descFormat = NSLocalizedString(@"second-pill.description.format", nil);
     NSString* senseSettings = NSLocalizedString(@"second-pill.description.sense-settings", nil);
     NSString* intoPairing = NSLocalizedString(@"second-pill.description.put-into-pairing", nil);
@@ -55,7 +61,19 @@
     
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
     
-    [[self descLabel] setAttributedText:attrDesc];
+    [[self contentView] addTitle:NSLocalizedString(@"second-pill.title", nil)];
+    [[self contentView] addDescription:attrDesc];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    CGFloat shadowOpacity
+        = [[self contentView] scrollRequired]
+        ? [self shadowOpacity]
+        : 0.0f;
+    
+    [[[self buttonContainer] layer] setShadowOpacity:shadowOpacity];
 }
 
 #pragma mark - Actions

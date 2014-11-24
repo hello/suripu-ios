@@ -52,6 +52,7 @@
 "sense-setup.description" = "Make sure Sense is plugged into a wall outlet next your bed.";
 
 // second pill
+"second-pill.title" = "Add a second Sleep Pill";
 "second-pill.description.format" = "To connect a second Sleep Pill, Sense needs to be put into pairing mode.\n\nAsk the owner of the first Sleep Pill to stand next to Sense and open the Sense app, then go to %@ and tap %@.\n\nSense will glow %@ when it is in pairing mode.";
 "second-pill.description.sense-settings" = "Settings > Devices > Sense";
 "second-pill.description.put-into-pairing" = "'Put Sense into Pairing Mode'";

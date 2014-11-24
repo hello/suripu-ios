@@ -19,7 +19,6 @@
 #import "HEMAlertController.h"
 
 static CGFloat const kHEMSleepAnswerButtonBorderWidth = 1.0f;
-static CGFloat const kHEMSleepAnswerButtonPadding = 5.0f;
 static CGFloat const kHEMSleepAnswerButtonHeight = 50.0f;
 static CGFloat const kHEMSleepAnswerSpacing = 15.0f;
 static CGFloat const kHEMSleepViewAnimDuration = 0.2f;
@@ -83,8 +82,8 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
     [[self questionLabel] setNeedsLayout];
 
     CGRect buttonFrame = CGRectZero;
-    buttonFrame.origin.x = kHEMSleepAnswerButtonPadding;
-    buttonFrame.size.width = CGRectGetWidth([[self choicesScrollView] bounds])-(kHEMSleepAnswerButtonPadding*2);
+    buttonFrame.origin.x = kHEMSleepAnswerButtonBorderWidth;
+    buttonFrame.size.width = CGRectGetWidth([[self choicesScrollView] bounds])-(kHEMSleepAnswerButtonBorderWidth*2);
     buttonFrame.size.height = kHEMSleepAnswerButtonHeight;
 
     NSArray* answerChoices = [question choices];

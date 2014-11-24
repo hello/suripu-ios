@@ -758,7 +758,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting Sense to WiFi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gvl-uZ-ZRh">
-                                <rect key="frame" x="28" y="43" width="544" height="34"/>
+                                <rect key="frame" x="28" y="28" width="544" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="BjX-xd-N8f"/>
                                 </constraints>
@@ -767,7 +767,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your WiFi credentials:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="4PT-Jb-KBo">
-                                <rect key="frame" x="28" y="99" width="544" height="25"/>
+                                <rect key="frame" x="28" y="84" width="544" height="25"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="25" id="Udr-wd-Nh2"/>
                                 </constraints>
@@ -776,7 +776,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h8z-JJ-lrQ" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="28" y="144" width="544" height="35"/>
+                                <rect key="frame" x="28" y="129" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="ryh-T1-LKQ"/>
                                 </constraints>
@@ -787,7 +787,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eHT-GQ-6UW" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="28" y="199" width="544" height="35"/>
+                                <rect key="frame" x="28" y="184" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="cex-8S-BOe"/>
                                 </constraints>
@@ -798,7 +798,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Security" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wpX-J4-2Qc" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="28" y="254" width="544" height="35"/>
+                                <rect key="frame" x="28" y="239" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Srw-KY-nFZ"/>
                                 </constraints>
@@ -816,14 +816,14 @@
                             <constraint firstAttribute="trailingMargin" secondItem="4PT-Jb-KBo" secondAttribute="trailing" constant="12" id="Dr5-Hp-Bo9"/>
                             <constraint firstItem="4PT-Jb-KBo" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="HwQ-UW-XXh"/>
                             <constraint firstAttribute="trailingMargin" secondItem="h8z-JJ-lrQ" secondAttribute="trailing" constant="12" id="SyW-Vn-fhh"/>
-                            <constraint firstItem="4PT-Jb-KBo" firstAttribute="bottom" secondItem="h8z-JJ-lrQ" secondAttribute="bottom" constant="-55" id="UYq-Kq-EoL"/>
+                            <constraint firstItem="4PT-Jb-KBo" firstAttribute="bottom" secondItem="h8z-JJ-lrQ" secondAttribute="top" constant="-20" id="UYq-Kq-EoL"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eHT-GQ-6UW" secondAttribute="trailing" constant="12" id="Y9q-1w-BoU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wpX-J4-2Qc" secondAttribute="trailing" constant="12" id="fQu-az-t7z"/>
                             <constraint firstItem="h8z-JJ-lrQ" firstAttribute="bottom" secondItem="eHT-GQ-6UW" secondAttribute="bottom" constant="-55" id="h0R-BX-vBw"/>
                             <constraint firstItem="wpX-J4-2Qc" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="jhD-Hb-ghc"/>
                             <constraint firstItem="gvl-uZ-ZRh" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="o4m-sB-PrD"/>
                             <constraint firstItem="h8z-JJ-lrQ" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="ou1-xF-pAr"/>
-                            <constraint firstItem="gvl-uZ-ZRh" firstAttribute="top" secondItem="GhD-1W-lxB" secondAttribute="bottom" constant="23" id="uza-X7-dS5"/>
+                            <constraint firstItem="gvl-uZ-ZRh" firstAttribute="top" secondItem="GhD-1W-lxB" secondAttribute="bottom" constant="8" id="uza-X7-dS5"/>
                             <constraint firstItem="eHT-GQ-6UW" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="y0m-4l-Mdt"/>
                             <constraint firstItem="4PT-Jb-KBo" firstAttribute="bottom" secondItem="gvl-uZ-ZRh" secondAttribute="bottom" constant="47" id="ySC-Mg-UDG"/>
                         </constraints>
@@ -862,6 +862,7 @@
                         <outlet property="passwordField" destination="eHT-GQ-6UW" id="wqM-rB-ezM"/>
                         <outlet property="securityField" destination="wpX-J4-2Qc" id="6cv-bw-duX"/>
                         <outlet property="ssidField" destination="h8z-JJ-lrQ" id="md5-lZ-l61"/>
+                        <outlet property="ssidTopConstraint" destination="UYq-Kq-EoL" id="NoG-cl-hnf"/>
                         <outlet property="subtitleLabel" destination="4PT-Jb-KBo" id="SkV-pq-mrC"/>
                         <outlet property="titleLabel" destination="gvl-uZ-ZRh" id="fLo-xO-ZeJ"/>
                         <outlet property="view" destination="E50-HK-wnd" id="l6c-lF-vh7"/>
@@ -885,7 +886,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting Sense to WiFi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kPY-hQ-rr3">
-                                <rect key="frame" x="28" y="43" width="544" height="34"/>
+                                <rect key="frame" x="28" y="28" width="544" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="0Iq-85-Zkf"/>
                                 </constraints>
@@ -894,7 +895,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please select your WiFi network from the list below:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="jA1-IU-BsJ">
-                                <rect key="frame" x="28" y="89" width="544" height="47"/>
+                                <rect key="frame" x="28" y="74" width="544" height="47"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="47" id="97s-1d-rxU"/>
                                 </constraints>
@@ -903,7 +904,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="uzN-XV-GHq">
-                                <rect key="frame" x="13" y="168" width="572" height="264"/>
+                                <rect key="frame" x="13" y="145" width="572" height="264"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="264" id="FTS-2E-zGG"/>
@@ -960,13 +961,13 @@
                                 </connections>
                             </button>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jKd-MI-d19" userLabel="activityView" customClass="HEMActivityCoverView">
-                                <rect key="frame" x="28" y="89" width="544" height="511"/>
+                                <rect key="frame" x="28" y="74" width="544" height="526"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="jA1-IU-BsJ" firstAttribute="bottom" secondItem="uzN-XV-GHq" secondAttribute="top" constant="-32" id="3Yx-VW-Yt6"/>
+                            <constraint firstItem="jA1-IU-BsJ" firstAttribute="bottom" secondItem="uzN-XV-GHq" secondAttribute="top" constant="-24" id="3Yx-VW-Yt6"/>
                             <constraint firstItem="Hzz-un-6Ly" firstAttribute="top" secondItem="1ao-Zs-Uri" secondAttribute="bottom" constant="18" id="7pK-OW-HbH"/>
                             <constraint firstItem="jKd-MI-d19" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="12" id="8ZX-YR-KJb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jA1-IU-BsJ" secondAttribute="trailing" constant="12" id="9p1-I1-i62"/>
@@ -975,7 +976,7 @@
                             <constraint firstAttribute="centerX" secondItem="1ao-Zs-Uri" secondAttribute="centerX" constant="-0.5" id="E1Z-8n-CpH"/>
                             <constraint firstItem="uzN-XV-GHq" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="-3" id="H8u-ui-2cP"/>
                             <constraint firstItem="jA1-IU-BsJ" firstAttribute="bottom" secondItem="kPY-hQ-rr3" secondAttribute="bottom" constant="59" id="Ivz-73-uzW"/>
-                            <constraint firstItem="kPY-hQ-rr3" firstAttribute="top" secondItem="rQr-NN-MoL" secondAttribute="bottom" constant="23" id="RHA-ee-3Oq"/>
+                            <constraint firstItem="kPY-hQ-rr3" firstAttribute="top" secondItem="rQr-NN-MoL" secondAttribute="bottom" constant="8" id="RHA-ee-3Oq"/>
                             <constraint firstItem="kPY-hQ-rr3" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="12" id="XKg-PQ-vw8"/>
                             <constraint firstItem="1ao-Zs-Uri" firstAttribute="top" secondItem="IJB-u8-jcX" secondAttribute="top" constant="46" id="Zhz-56-bJB"/>
                             <constraint firstItem="Hzz-un-6Ly" firstAttribute="top" secondItem="jKd-MI-d19" secondAttribute="bottom" id="f3h-hE-Kgf"/>
@@ -1796,7 +1797,7 @@ You can always do this later by visiting Settings.</string>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pair your Sense" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xHT-0z-rBN">
-                                <rect key="frame" x="28" y="43" width="544" height="34"/>
+                                <rect key="frame" x="28" y="28" width="544" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="mde-7P-QTN"/>
                                 </constraints>
@@ -1805,14 +1806,14 @@ You can always do this later by visiting Settings.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
-                                <rect key="frame" x="213" y="121" width="176" height="166"/>
+                                <rect key="frame" x="213" y="106" width="176" height="166"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="176" id="QS5-mQ-I2e"/>
                                     <constraint firstAttribute="height" constant="166" id="e2c-Wq-J9g"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
-                                <rect key="frame" x="28" y="307" width="544" height="107"/>
+                                <rect key="frame" x="28" y="292" width="544" height="107"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="107" id="CLg-sg-iK8"/>
                                 </constraints>
@@ -1862,7 +1863,7 @@ You can always do this later by visiting Settings.</string>
                             <constraint firstAttribute="trailingMargin" secondItem="xHT-0z-rBN" secondAttribute="trailing" constant="12" id="1TT-BV-PaI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mFI-cr-rhB" secondAttribute="trailing" constant="12" id="3hs-8I-ZbT"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="12" id="Cg2-zt-8u7"/>
-                            <constraint firstItem="xHT-0z-rBN" firstAttribute="top" secondItem="I6r-jE-jN1" secondAttribute="bottom" constant="23" id="D61-4A-EJJ"/>
+                            <constraint firstItem="xHT-0z-rBN" firstAttribute="top" secondItem="I6r-jE-jN1" secondAttribute="bottom" constant="8" id="D61-4A-EJJ"/>
                             <constraint firstAttribute="centerX" secondItem="8HN-0C-IaD" secondAttribute="centerX" constant="-0.5" id="GUN-Qt-qxF"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="bottom" secondItem="Awm-Mz-tO7" secondAttribute="top" constant="-44" id="ITF-xb-f4C"/>
                             <constraint firstAttribute="centerX" secondItem="Awm-Mz-tO7" secondAttribute="centerX" constant="-0.5" id="Jnt-Q8-ole"/>
@@ -2471,7 +2472,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="d35-VB-TRV"/>
-        <segue reference="DAu-sO-H4V"/>
+        <segue reference="azr-Tk-rB7"/>
         <segue reference="8ZE-B6-zEc"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

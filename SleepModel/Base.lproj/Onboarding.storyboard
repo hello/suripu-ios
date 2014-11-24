@@ -1804,7 +1804,7 @@ You can always do this later by visiting Settings.</string>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
                                 <rect key="frame" x="213" y="121" width="176" height="166"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="176" id="QS5-mQ-I2e"/>
@@ -1812,9 +1812,9 @@ You can always do this later by visiting Settings.</string>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
-                                <rect key="frame" x="28" y="326" width="544" height="71"/>
+                                <rect key="frame" x="28" y="307" width="544" height="107"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="71" id="CLg-sg-iK8"/>
+                                    <constraint firstAttribute="height" constant="107" id="CLg-sg-iK8"/>
                                 </constraints>
                                 <attributedString key="attributedText">
                                     <fragment content="Now we'll pair your phone with Sense.  Make sure Sense is plugged in and nearby, then tap Continue">
@@ -1869,7 +1869,7 @@ You can always do this later by visiting Settings.</string>
                             <constraint firstItem="mFI-cr-rhB" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="12" id="Kd1-3N-ieV"/>
                             <constraint firstItem="rNF-MR-Ds2" firstAttribute="top" secondItem="8HN-0C-IaD" secondAttribute="bottom" constant="18" id="Kgn-lX-6ws"/>
                             <constraint firstAttribute="centerX" secondItem="2TQ-o7-Rs6" secondAttribute="centerX" id="P48-hu-073"/>
-                            <constraint firstItem="Awm-Mz-tO7" firstAttribute="bottom" secondItem="mFI-cr-rhB" secondAttribute="bottom" constant="-110" id="QmB-15-pyI"/>
+                            <constraint firstItem="Awm-Mz-tO7" firstAttribute="bottom" secondItem="mFI-cr-rhB" secondAttribute="top" constant="-20" id="QmB-15-pyI"/>
                             <constraint firstItem="2TQ-o7-Rs6" firstAttribute="top" secondItem="8HN-0C-IaD" secondAttribute="top" constant="-46" id="mvb-UO-Vae"/>
                         </constraints>
                     </view>
@@ -1877,6 +1877,9 @@ You can always do this later by visiting Settings.</string>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
                         <outlet property="descLabel" destination="mFI-cr-rhB" id="fc1-Xv-y71"/>
+                        <outlet property="descriptionTopConstraint" destination="QmB-15-pyI" id="oZv-np-tsR"/>
+                        <outlet property="imageHeightConstraint" destination="e2c-Wq-J9g" id="bbw-x8-iyz"/>
+                        <outlet property="imageTopConstraint" destination="ITF-xb-f4C" id="MyX-oN-nlZ"/>
                         <outlet property="noSenseButton" destination="8HN-0C-IaD" id="eRN-vb-S2e"/>
                         <outlet property="readyButton" destination="2TQ-o7-Rs6" id="ENr-AI-Zzv"/>
                         <outlet property="readyButtonWidthConstraint" destination="SwH-wy-eha" id="UuP-nZ-lEN"/>

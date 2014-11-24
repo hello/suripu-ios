@@ -47,9 +47,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
 @property (weak, nonatomic) IBOutlet UIButton *noSenseButton;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *logoVSpaceConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *readyVSpaceConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *readyButtonWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTopConstraint;
 
 @property (strong, nonatomic) SENSenseManager* manager;
 @property (assign, nonatomic) HEMSensePairState currentState;
@@ -85,9 +86,9 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)adjustConstraintsForIPhone4 {
-    CGFloat diff = -40.0f;
-    [self updateConstraint:[self logoVSpaceConstraint] withDiff:diff];
-    [self updateConstraint:[self readyVSpaceConstraint] withDiff:diff];
+    [self updateConstraint:[self imageHeightConstraint] withDiff:-66];
+    [self updateConstraint:[self imageTopConstraint] withDiff:20];
+    [self updateConstraint:[self descriptionTopConstraint] withDiff:10];
 }
 
 - (void)stopActivityWithMessage:(NSString*)message completion:(void(^)(void))completion {

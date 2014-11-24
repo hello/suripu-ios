@@ -9,6 +9,7 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingUtils.h"
+#import "HEMBaseController+Protected.h"
 
 CGFloat const HEMHeightPickerCentimetersPerInch = 2.54f;
 static NSInteger HEMMaxHeightInFeet = 9;
@@ -26,6 +27,10 @@ static NSInteger HEMMaxHeightInFeet = 9;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightSliderHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *arrowHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *arrowBottomAlignmentConstraint;
+
 @end
 
 @implementation HEMHeightPickerViewController
@@ -42,7 +47,7 @@ static NSInteger HEMMaxHeightInFeet = 9;
     
     NSInteger feet = [self feet] > 0 ? [self feet] : 5;
     NSInteger inch = [self inches] > 0 ? [self inches] : 8;
-    [[self heightSliderView] setToValue:HEMMaxHeightInFeet - (feet + (inch/12.0f))];
+    [[self heightSliderView] setToInches:(feet + (inch/12.0f))];
     
     if ([self delegate] != nil) {
         NSString* done = NSLocalizedString(@"status.success", nil);
@@ -52,6 +57,12 @@ static NSInteger HEMMaxHeightInFeet = 9;
     }
     
     [SENAnalytics track:kHEMAnalyticsEventOnBHeight];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [self updateConstraint:[self heightSliderHeightConstraint] withDiff:-80.0f];
+    [self updateConstraint:[self arrowHeightConstraint] withDiff:-20.0f];
+    [self updateConstraint:[self arrowBottomAlignmentConstraint] withDiff:40.0f];
 }
 
 #pragma mark - HEMValueSliderDelegate

@@ -254,7 +254,7 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
-                                    <segue destination="R0p-kB-1qZ" kind="push" id="PGl-75-32C"/>
+                                    <segue destination="uc7-01-jZi" kind="push" id="fKP-l3-Jlh"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -273,7 +273,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dQB-Nr-cm5" userLabel="playButton">
-                                <rect key="frame" x="263" y="282.5" width="75" height="75"/>
+                                <rect key="frame" x="263" y="283" width="75" height="75"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="75" id="e99-DC-jD5"/>
                                     <constraint firstAttribute="width" constant="75" id="geP-e1-8ek"/>
@@ -665,7 +665,7 @@
                                     <outlet property="delegate" destination="uc7-01-jZi" id="ElR-iZ-e6Q"/>
                                 </connections>
                             </view>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="doubleArrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="9RP-yj-mMV">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="doubleArrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="9RP-yj-mMV">
                                 <rect key="frame" x="283" y="354" width="35" height="63"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="63" id="guU-n2-n5e"/>
@@ -730,7 +730,10 @@
                     </view>
                     <navigationItem key="navigationItem" id="Ue0-6d-1pL"/>
                     <connections>
+                        <outlet property="arrowBottomAlignmentConstraint" destination="uSG-BC-lAn" id="oKN-eU-3kC"/>
+                        <outlet property="arrowHeightConstraint" destination="guU-n2-n5e" id="npG-YB-zWV"/>
                         <outlet property="doneButton" destination="M0L-MG-dGi" id="jyM-rg-IIl"/>
+                        <outlet property="heightSliderHeightConstraint" destination="bxO-Zg-huq" id="1IH-jt-xHr"/>
                         <outlet property="heightSliderView" destination="6X3-cZ-M1A" id="fcl-i4-ek8"/>
                         <outlet property="mainHeightLabel" destination="nEX-5L-qND" id="sdk-CQ-dgp"/>
                         <outlet property="otherHeightLabel" destination="Pks-KU-Mi1" id="c8I-Dd-CLQ"/>
@@ -2499,7 +2502,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="lPc-Ik-cVb"/>
-        <segue reference="PGl-75-32C"/>
+        <segue reference="fKP-l3-Jlh"/>
         <segue reference="azr-Tk-rB7"/>
         <segue reference="8ZE-B6-zEc"/>
     </inferredMetricsTieBreakers>

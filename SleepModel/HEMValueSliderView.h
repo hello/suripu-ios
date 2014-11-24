@@ -26,6 +26,6 @@
 @property (nonatomic, weak) IBOutlet id<HEMValueSliderDelegate> delegate;
 
 - (void)reload;
-- (void)setToValue:(float)value;
+- (void)setToInches:(float)inches;
 
 @end

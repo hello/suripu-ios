@@ -295,8 +295,6 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
                 message = NSLocalizedString(@"pairing.error.pill-already-paired", nil);
                 break;
             case SENSenseManagerErrorCodeTimeout:
-                message = NSLocalizedString(@"pairing.error.timed-out", nil);
-                break;
             default:
                 message = NSLocalizedString(@"pairing.error.pill-pairing-failed", nil);
                 break;
@@ -304,7 +302,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     }
     
     [self showMessageDialog:message
-                      title:NSLocalizedString(@"pairing.failed.title", nil)
+                      title:NSLocalizedString(@"pairing.pill.error.title", nil)
                       image:nil
                    withHelp:YES];
     

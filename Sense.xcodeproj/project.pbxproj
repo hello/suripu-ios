@@ -322,9 +322,9 @@
 		BF5E444C19AD414500278A2F /* doubleArrow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5E444A19AD414500278A2F /* doubleArrow@2x.png */; };
 		BF5E444F19AD494500278A2F /* phoneWithEmoticons.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5E444D19AD494500278A2F /* phoneWithEmoticons.png */; };
 		BF5E445019AD494500278A2F /* phoneWithEmoticons@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5E444E19AD494500278A2F /* phoneWithEmoticons@2x.png */; };
-		BF770F121A143E63008611E9 /* shake_pill.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F0F1A143E63008611E9 /* shake_pill.png */; };
-		BF770F131A143E63008611E9 /* shake_pill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F101A143E63008611E9 /* shake_pill@2x.png */; };
-		BF770F141A143E63008611E9 /* shake_pill@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F111A143E63008611E9 /* shake_pill@3x.png */; };
+		BF770F121A143E63008611E9 /* shakePill.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F0F1A143E63008611E9 /* shakePill.png */; };
+		BF770F131A143E63008611E9 /* shakePill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F101A143E63008611E9 /* shakePill@2x.png */; };
+		BF770F141A143E63008611E9 /* shakePill@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F111A143E63008611E9 /* shakePill@3x.png */; };
 		BF770F1E1A1550E0008611E9 /* bluetooth.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F1B1A1550E0008611E9 /* bluetooth.png */; };
 		BF770F1F1A1550E0008611E9 /* bluetooth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F1C1A1550E0008611E9 /* bluetooth@2x.png */; };
 		BF770F201A1550E0008611E9 /* bluetooth@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF770F1D1A1550E0008611E9 /* bluetooth@3x.png */; };
@@ -842,9 +842,9 @@
 		BF5E444A19AD414500278A2F /* doubleArrow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "doubleArrow@2x.png"; path = "images/doubleArrow@2x.png"; sourceTree = "<group>"; };
 		BF5E444D19AD494500278A2F /* phoneWithEmoticons.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = phoneWithEmoticons.png; path = images/phoneWithEmoticons.png; sourceTree = "<group>"; };
 		BF5E444E19AD494500278A2F /* phoneWithEmoticons@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "phoneWithEmoticons@2x.png"; path = "images/phoneWithEmoticons@2x.png"; sourceTree = "<group>"; };
-		BF770F0F1A143E63008611E9 /* shake_pill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shake_pill.png; path = images/shake_pill.png; sourceTree = "<group>"; };
-		BF770F101A143E63008611E9 /* shake_pill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "shake_pill@2x.png"; path = "images/shake_pill@2x.png"; sourceTree = "<group>"; };
-		BF770F111A143E63008611E9 /* shake_pill@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "shake_pill@3x.png"; path = "images/shake_pill@3x.png"; sourceTree = "<group>"; };
+		BF770F0F1A143E63008611E9 /* shakePill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = shakePill.png; path = images/shakePill.png; sourceTree = "<group>"; };
+		BF770F101A143E63008611E9 /* shakePill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "shakePill@2x.png"; path = "images/shakePill@2x.png"; sourceTree = "<group>"; };
+		BF770F111A143E63008611E9 /* shakePill@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "shakePill@3x.png"; path = "images/shakePill@3x.png"; sourceTree = "<group>"; };
 		BF770F1B1A1550E0008611E9 /* bluetooth.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bluetooth.png; path = images/bluetooth.png; sourceTree = "<group>"; };
 		BF770F1C1A1550E0008611E9 /* bluetooth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bluetooth@2x.png"; path = "images/bluetooth@2x.png"; sourceTree = "<group>"; };
 		BF770F1D1A1550E0008611E9 /* bluetooth@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bluetooth@3x.png"; path = "images/bluetooth@3x.png"; sourceTree = "<group>"; };
@@ -1166,9 +1166,9 @@
 				BF770F1B1A1550E0008611E9 /* bluetooth.png */,
 				BF770F1C1A1550E0008611E9 /* bluetooth@2x.png */,
 				BF770F1D1A1550E0008611E9 /* bluetooth@3x.png */,
-				BF770F0F1A143E63008611E9 /* shake_pill.png */,
-				BF770F101A143E63008611E9 /* shake_pill@2x.png */,
-				BF770F111A143E63008611E9 /* shake_pill@3x.png */,
+				BF770F0F1A143E63008611E9 /* shakePill.png */,
+				BF770F101A143E63008611E9 /* shakePill@2x.png */,
+				BF770F111A143E63008611E9 /* shakePill@3x.png */,
 				BF005C7419FED57E00E68E87 /* lockIcon.png */,
 				BF005C7519FED57E00E68E87 /* lockIcon@2x.png */,
 				BF005C7619FED57E00E68E87 /* lockIcon@3x.png */,
@@ -2253,14 +2253,14 @@
 				8A9BD8BD19DDD02100B1E57E /* Calibre-MediumItalic.otf in Resources */,
 				8AFE781D19E8C2170000F881 /* sound-medium@3x.png in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
-				BF770F141A143E63008611E9 /* shake_pill@3x.png in Resources */,
+				BF770F141A143E63008611E9 /* shakePill@3x.png in Resources */,
 				8AAEED0A19A5225F006517C4 /* Agile-LightItalic.otf in Resources */,
 				8A93AFD21A09BF0300F70A8B /* sleepInsightsIcon@3x.png in Resources */,
 				8A9BD8B619DDD02100B1E57E /* Calibre-Black.otf in Resources */,
 				BFDCC7BB19D9C741007A922B /* sense@2x.png in Resources */,
 				8AFE781619E8C2170000F881 /* sound-bad@2x.png in Resources */,
 				8AFE782A19E8C2170000F881 /* temperature-medium.png in Resources */,
-				BF770F121A143E63008611E9 /* shake_pill.png in Resources */,
+				BF770F121A143E63008611E9 /* shakePill.png in Resources */,
 				8AC4A03F1989C5A100C2BD63 /* settingsIcon.png in Resources */,
 				BFB0FBDD19D253400056FFEC /* pillIcon@2x.png in Resources */,
 				8A9BD8BE19DDD02100B1E57E /* Calibre-Regular.otf in Resources */,
@@ -2359,7 +2359,7 @@
 				8A9BD8BF19DDD02100B1E57E /* Calibre-RegularItalic.otf in Resources */,
 				8AFE77EB19E8C2170000F881 /* humidity-good.png in Resources */,
 				BF1E2E801A04514200DDD0D0 /* humidityIcon@3x.png in Resources */,
-				BF770F131A143E63008611E9 /* shake_pill@2x.png in Resources */,
+				BF770F131A143E63008611E9 /* shakePill@2x.png in Resources */,
 				BF045B7B1A2015F90026D5B9 /* clipPill@3x.png in Resources */,
 				8AAEED0519A5225F006517C4 /* Agile-Fat.otf in Resources */,
 				8AAEED0619A5225F006517C4 /* Agile-FatItalic.otf in Resources */,

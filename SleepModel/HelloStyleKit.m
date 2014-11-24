@@ -77,6 +77,7 @@ static UIImage* _lockIcon = nil;
 static UIImage* _backIcon = nil;
 static UIImage* _senseGlow = nil;
 static UIImage* _sensePlacement = nil;
+static UIImage* _shakePill = nil;
 
 #pragma mark Initialization
 
@@ -186,6 +187,7 @@ static UIImage* _sensePlacement = nil;
 + (UIImage*)backIcon { return _backIcon ?: (_backIcon = [UIImage imageNamed: @"backIcon"]); }
 + (UIImage*)senseGlow { return _senseGlow ?: (_senseGlow = [UIImage imageNamed: @"senseGlow"]); }
 + (UIImage*)sensePlacement { return _sensePlacement ?: (_sensePlacement = [UIImage imageNamed: @"sensePlacement"]); }
++ (UIImage*)shakePill { return _shakePill ?: (_shakePill = [UIImage imageNamed: @"shakePill"]); }
 
 #pragma mark Drawing Methods
 

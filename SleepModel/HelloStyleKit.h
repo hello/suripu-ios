@@ -81,6 +81,7 @@
 + (UIImage*)backIcon;
 + (UIImage*)senseGlow;
 + (UIImage*)sensePlacement;
++ (UIImage*)shakePill;
 
 // Drawing Methods
 + (void)drawSleepScoreGraphWithSleepScoreLabelText: (NSString*)sleepScoreLabelText sleepScore: (CGFloat)sleepScore;

@@ -21,27 +21,25 @@
 #import "HEMActivityCoverView.h"
 #import "HEMDeviceCenter.h"
 #import "HEMSupportUtil.h"
+#import "HEMScrollableView.h"
+#import "HelloStyleKit.h"
 
 static CGFloat const kHEMPillPairedStateDuration = 2.0f;
 static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 @interface HEMPillPairViewController()
 
-@property (weak, nonatomic)   IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic)   IBOutlet UILabel *subtitleLabel;
-@property (weak, nonatomic)   IBOutlet UIImageView *pillDiagram;
+@property (weak, nonatomic)   IBOutlet HEMScrollableView *contentView;
 @property (weak, nonatomic)   IBOutlet HEMActionButton *retryButton;
 @property (weak, nonatomic)   IBOutlet UIButton *helpButton;
 @property (weak, nonatomic)   IBOutlet NSLayoutConstraint *retryButtonWidthConstraint;
-@property (weak, nonatomic)   IBOutlet NSLayoutConstraint *pillDiagramHeightConstraint;
-@property (weak, nonatomic)   IBOutlet NSLayoutConstraint *subtitleTopConstraint;
-@property (weak, nonatomic)   IBOutlet NSLayoutConstraint *pillDiagramTopConstraint;
+@property (weak, nonatomic)   IBOutlet UIView *buttonContainer;
 
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL pairTimedOut;
 @property (assign, nonatomic, getter=isLoaded) BOOL loaded;
-
+@property (assign, nonatomic) CGFloat shadowOpacity;
 
 @property (strong, nonatomic) id disconnectObserverId;
 
@@ -54,44 +52,29 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     
     [[self navigationItem] setHidesBackButton:YES];
     
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [self setupSubtitle];
+    [self setupContent];
     [self setupCancelButton];
     
     [self updateActivityText:NSLocalizedString(@"pairing.activity.connecting-sense", nil)];
     [self showActivity];
     
+    [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
+    
+    [self setShadowOpacity:[[[self buttonContainer] layer] shadowOpacity]];
+    
     [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    
-    if (![self isLoaded]) {
-        [self performSelector:@selector(pairPill:)
-                   withObject:self
-                   afterDelay:kHEMPillPairStartDelay];
-        [self setLoaded:YES];
-    }
-
-}
-
-- (void)adjustConstraintsForIPhone4 {
-    [self updateConstraint:[self pillDiagramHeightConstraint] withDiff:-62.0f];
-    
-    CGFloat paddingDiff = -.0f;
-    [self updateConstraint:[self subtitleTopConstraint] withDiff:paddingDiff];
-    [self updateConstraint:[self pillDiagramTopConstraint] withDiff:paddingDiff];
-}
-
-- (void)setupSubtitle {
+- (void)setupContent {
     NSString* subtitle = NSLocalizedString(@"pairing.pill.subtitle", nil);
-
-    NSMutableAttributedString* attrSubtitle = [[NSMutableAttributedString alloc] initWithString:subtitle];
-
+    NSMutableAttributedString* attrSubtitle
+        = [[NSMutableAttributedString alloc] initWithString:subtitle];
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
     
-    [[self subtitleLabel] setAttributedText:attrSubtitle];
+    [[self contentView] addTitle:NSLocalizedString(@"pairing.pill.title", nil)];
+    [[self contentView] addDescription:attrSubtitle];
+    [[self contentView] addImage:[HelloStyleKit shakePill]];
+    
 }
 
 - (void)setupCancelButton {
@@ -104,6 +87,27 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
         [[self navigationItem] setLeftBarButtonItem:cancelItem];
         [self setCancelItem:cancelItem];
     }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    if (![self isLoaded]) {
+        [self performSelector:@selector(pairPill:)
+                   withObject:self
+                   afterDelay:kHEMPillPairStartDelay];
+        [self setLoaded:YES];
+    }
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    CGFloat shadowOpacity
+        = [[self contentView] scrollRequired]
+        ? [self shadowOpacity]
+        : 0.0f;
+    [[[self contentView] layer] setShadowOpacity:shadowOpacity];
 }
 
 - (void)updateActivityText:(NSString*)text {

@@ -1209,7 +1209,7 @@ You can always do this later by visiting Settings.</string>
         <!--Pill Pair View Controller-->
         <scene sceneID="zKq-xs-xPt">
             <objects>
-                <viewController storyboardIdentifier="pillPair" id="Aoy-k8-hYr" customClass="HEMPillPairViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="pillPair" automaticallyAdjustsScrollViewInsets="NO" id="Aoy-k8-hYr" customClass="HEMPillPairViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="yNK-Bt-vqg"/>
                         <viewControllerLayoutGuide type="bottom" id="LXo-A8-xjK"/>
@@ -1218,104 +1218,79 @@ You can always do this later by visiting Settings.</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pairing your Sleep Pill" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pq7-me-JcE">
-                                <rect key="frame" x="28" y="28" width="544" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="iEl-PO-S9a"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
-                                <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KH6-Mg-9at">
-                                <rect key="frame" x="28" y="89" width="544" height="71"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="71" id="SZ7-c1-pnz"/>
-                                </constraints>
-                                <attributedString key="attributedText">
-                                    <fragment content="Gently share your Sleep Pill for three seconds.  Once Sense detects the Pill, it will light up blue.">
-                                        <attributes>
-                                            <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <font key="NSFont" size="18" name="Calibre-Thin"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shake_pill.png" translatesAutoresizingMaskIntoConstraints="NO" id="sET-vH-ZfK">
-                                <rect key="frame" x="28" y="184" width="544" height="222"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ajG-Cy-AmE" customClass="HEMScrollableView">
+                                <rect key="frame" x="28" y="28" width="544" height="457"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hSC-wJ-3sT">
+                                <rect key="frame" x="0.0" y="485" width="600" height="115"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGd-9N-cHV" customClass="HEMActionButton">
+                                        <rect key="frame" x="190" y="10" width="220" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="220" id="eTO-Et-PGf"/>
+                                            <constraint firstAttribute="height" constant="40" id="xEI-cW-YPv"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Retry">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="pairPill:" destination="Aoy-k8-hYr" eventType="touchUpInside" id="NnP-xb-lYr"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V55-X2-Vfq">
+                                        <rect key="frame" x="190" y="56" width="220" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="220" id="4rM-G0-G6F"/>
+                                            <constraint firstAttribute="height" constant="40" id="a4P-dK-B1F"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="I'm having trouble">
+                                            <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="disabled" title=" ">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="help:" destination="Qk9-qi-Wt3" eventType="touchUpInside" id="TC7-rQ-rN8"/>
+                                            <action selector="help:" destination="Aoy-k8-hYr" eventType="touchUpInside" id="fsC-3y-UcY"/>
+                                            <action selector="help:" destination="4s2-Gt-ovZ" eventType="touchUpInside" id="mCi-gs-bXj"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="222" id="byU-th-qjP"/>
+                                    <constraint firstAttribute="height" constant="115" id="VmC-Z1-lU3"/>
+                                    <constraint firstAttribute="bottom" secondItem="V55-X2-Vfq" secondAttribute="bottom" constant="19" id="Zx8-AI-LhU"/>
+                                    <constraint firstAttribute="centerX" secondItem="lGd-9N-cHV" secondAttribute="centerX" id="eH1-QI-K6G"/>
+                                    <constraint firstAttribute="centerX" secondItem="V55-X2-Vfq" secondAttribute="centerX" id="ovV-X9-sG1"/>
+                                    <constraint firstItem="lGd-9N-cHV" firstAttribute="bottom" secondItem="V55-X2-Vfq" secondAttribute="top" constant="-6" id="rXV-KU-aUm"/>
                                 </constraints>
-                            </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGd-9N-cHV" customClass="HEMActionButton">
-                                <rect key="frame" x="190" y="495" width="220" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="eTO-Et-PGf"/>
-                                    <constraint firstAttribute="height" constant="40" id="xEI-cW-YPv"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
-                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Retry">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="pairPill:" destination="Aoy-k8-hYr" eventType="touchUpInside" id="NnP-xb-lYr"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="V55-X2-Vfq">
-                                <rect key="frame" x="190" y="543" width="220" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="4rM-G0-G6F"/>
-                                    <constraint firstAttribute="height" constant="40" id="a4P-dK-B1F"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
-                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="I'm having trouble">
-                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <state key="disabled" title=" ">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="help:" destination="Qk9-qi-Wt3" eventType="touchUpInside" id="TC7-rQ-rN8"/>
-                                    <action selector="help:" destination="Aoy-k8-hYr" eventType="touchUpInside" id="fsC-3y-UcY"/>
-                                    <action selector="help:" destination="4s2-Gt-ovZ" eventType="touchUpInside" id="mCi-gs-bXj"/>
-                                </connections>
-                            </button>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerX" secondItem="V55-X2-Vfq" secondAttribute="centerX" id="1p4-tr-7Gl"/>
-                            <constraint firstItem="V55-X2-Vfq" firstAttribute="top" secondItem="lGd-9N-cHV" secondAttribute="top" constant="48" id="4XJ-dk-5FQ"/>
-                            <constraint firstItem="sET-vH-ZfK" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="12" id="83b-iB-iyJ"/>
-                            <constraint firstItem="LXo-A8-xjK" firstAttribute="top" secondItem="V55-X2-Vfq" secondAttribute="bottom" constant="17" id="BUM-fU-cDF"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="pq7-me-JcE" secondAttribute="trailing" constant="12" id="HJb-nv-OwC"/>
-                            <constraint firstItem="pq7-me-JcE" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="12" id="IJd-Ii-Edo"/>
-                            <constraint firstItem="KH6-Mg-9at" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="12" id="IPM-aD-aZU"/>
-                            <constraint firstItem="sET-vH-ZfK" firstAttribute="top" secondItem="KH6-Mg-9at" secondAttribute="bottom" constant="24" id="Nrh-KQ-qdi"/>
-                            <constraint firstItem="KH6-Mg-9at" firstAttribute="top" secondItem="pq7-me-JcE" secondAttribute="bottom" constant="27" id="Oqt-AA-Jxr"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="KH6-Mg-9at" secondAttribute="trailing" constant="12" id="dky-iF-LbS"/>
-                            <constraint firstItem="pq7-me-JcE" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="8" id="fRa-Kb-lLj"/>
-                            <constraint firstAttribute="centerX" secondItem="lGd-9N-cHV" secondAttribute="centerX" id="wNe-Xr-FXy"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="sET-vH-ZfK" secondAttribute="trailing" constant="12" id="zX6-2Z-cvw"/>
+                            <constraint firstItem="ajG-Cy-AmE" firstAttribute="bottom" secondItem="hSC-wJ-3sT" secondAttribute="top" id="G8V-On-nc9"/>
+                            <constraint firstItem="ajG-Cy-AmE" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="12" id="QvK-nL-3TP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ajG-Cy-AmE" secondAttribute="trailing" constant="12" id="Yuh-Um-XDd"/>
+                            <constraint firstItem="LXo-A8-xjK" firstAttribute="top" secondItem="hSC-wJ-3sT" secondAttribute="bottom" id="aYp-oH-0yH"/>
+                            <constraint firstItem="hSC-wJ-3sT" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="-16" id="wvT-x7-LLs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hSC-wJ-3sT" secondAttribute="trailing" constant="-16" id="yMi-LK-x8w"/>
+                            <constraint firstItem="ajG-Cy-AmE" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="8" id="ySd-Ou-jVE"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="AaY-kA-63k"/>
                     <connections>
+                        <outlet property="buttonContainer" destination="hSC-wJ-3sT" id="vZC-hz-r5h"/>
+                        <outlet property="contentView" destination="ajG-Cy-AmE" id="T3B-My-NUf"/>
                         <outlet property="helpButton" destination="V55-X2-Vfq" id="DTz-CW-3Fa"/>
-                        <outlet property="pillDiagram" destination="sET-vH-ZfK" id="62r-P2-D6A"/>
-                        <outlet property="pillDiagramHeightConstraint" destination="byU-th-qjP" id="MXn-sk-MT7"/>
-                        <outlet property="pillDiagramTopConstraint" destination="Nrh-KQ-qdi" id="1Ju-qF-BVX"/>
                         <outlet property="retryButton" destination="lGd-9N-cHV" id="q88-hx-YrG"/>
                         <outlet property="retryButtonWidthConstraint" destination="eTO-Et-PGf" id="CnM-8K-AtF"/>
-                        <outlet property="subtitleLabel" destination="KH6-Mg-9at" id="kBE-bP-8xF"/>
-                        <outlet property="subtitleTopConstraint" destination="Oqt-AA-Jxr" id="rwX-lv-Mzh"/>
-                        <outlet property="titleLabel" destination="pq7-me-JcE" id="JZq-t8-RyY"/>
                         <segue destination="4s2-Gt-ovZ" kind="push" identifier="done" id="QBf-6a-MaN"/>
                     </connections>
                 </viewController>
@@ -2405,7 +2380,6 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="onboarding_bg_wide.png" width="470" height="588"/>
         <image name="play.png" width="75" height="75"/>
         <image name="sense.png" width="176" height="166"/>
-        <image name="shake_pill.png" width="268" height="222"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="d35-VB-TRV"/>

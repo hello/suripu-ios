@@ -75,7 +75,8 @@
 "pairing.error.link-account-failed" = "Could not attach Sense to your account.";
 "pairing.error.timed-out" = "Sense did not respond in time.";
 "pairing.done" = "Paired.";
-"pairing.pill.subtitle" = "Shake your Sleep Pill for three seconds to pair it with your Sense.";
+"pairing.pill.title" = "Pairing your Sleep Pill";
+"pairing.pill.subtitle" = "Shake your Sleep Pill for three seconds to pair it with your Sense. You may need to shake it quickly for it to register.";
 "pairing.error.pill-already-paired" = "Your Sleep Pill is currently paired to an account.";
 "pairing.error.fail-to-load-paired-info" = "Could not load paired Sense information.";
 "pairing.error.sense-not-found" = "Could not connect to your Sense to pair your Sleep Pill.";

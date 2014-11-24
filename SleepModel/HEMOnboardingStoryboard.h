@@ -13,13 +13,13 @@
 +(NSString *)networkReuseIdentifier;
 
 /** Segue Identifiers */
++(NSString *)bluetoothOnSegueIdentifier;
 +(NSString *)doneSegueIdentifier;
 +(NSString *)genderSegueIdentifier;
 +(NSString *)getAppSegueIdentifier;
 +(NSString *)heightSegueIdentifier;
 +(NSString *)locationSegueIdentifier;
 +(NSString *)moreInfoSegueIdentifier;
-+(NSString *)noBleToSetupSegueIdentifier;
 +(NSString *)secondPillCheckSegueIdentifier;
 +(NSString *)senseSetupSegueIdentifier;
 +(NSString *)senseSetupNoBleSegueIdentifier;

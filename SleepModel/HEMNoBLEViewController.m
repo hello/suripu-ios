@@ -22,9 +22,10 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-@property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *continueButtonWidthConstraint;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bluetoothImageTopConstraint;
 
 @end
 
@@ -35,7 +36,6 @@
     [super viewDidLoad];
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupSubtitleText];
-    [self updateContinueState];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBNoBle];
 }
@@ -60,21 +60,26 @@
     [[self subtitleLabel] setAttributedText:attrSubtitle];
 }
 
-- (void)viewDidBecomeActive {
-    [super viewDidBecomeActive];
-    [self updateContinueState];
+- (void)adjustConstraintsForIPhone4 {
+    [self updateConstraint:[self bluetoothImageTopConstraint] withDiff:20.0f];
 }
 
-- (void)updateContinueState {
+- (void)viewDidBecomeActive {
+    [super viewDidBecomeActive];
+    [self checkBluetooth];
+}
+
+- (void)checkBluetooth {
     if (![HEMBluetoothUtils stateAvailable]) {
-        [[self continueButton] showActivityWithWidthConstraint:[self continueButtonWidthConstraint]];
-        [self performSelector:@selector(updateContinueState)
+        [self performSelector:@selector(checkBluetooth)
                    withObject:nil
                    afterDelay:0.1f];
         return;
     }
     
-    [[self continueButton] setEnabled:[HEMBluetoothUtils isBluetoothOn]];
+    if ([HEMBluetoothUtils isBluetoothOn]) {
+        [self next];
+    }
 }
 
 #pragma mark - Actions
@@ -87,12 +92,18 @@
     [SENAnalytics track:kHEMAnalyticsEventHelp];
     
 #if TARGET_IPHONE_SIMULATOR
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard noBleToSetupSegueIdentifier]
-                              sender:self];
-    return;
+    // If using the simulator, the help button will just simply let you proceed
+    // because it doesn't have BLE anyways.
+    [self next];
+#else
+    [HEMSupportUtil openHelpFrom:self];
 #endif
     
-    [HEMSupportUtil openHelpFrom:self];
+}
+
+- (void)next {
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard bluetoothOnSegueIdentifier]
+                              sender:self];
 }
 
 @end

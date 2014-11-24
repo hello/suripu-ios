@@ -61,7 +61,6 @@
             <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
-            <string>Calibre-Medium</string>
         </mutableArray>
         <mutableArray key="Calibre-Thin.otf">
             <string>Calibre-Thin</string>
@@ -2241,22 +2240,6 @@ Launch the </string>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yuw-Cx-zbP" customClass="HEMActionButton">
-                                <rect key="frame" x="190" y="493" width="220" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="5BB-XE-pYO"/>
-                                    <constraint firstAttribute="height" constant="40" id="Yfb-sg-zRZ"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
-                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Continue">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <segue destination="Qk9-qi-Wt3" kind="push" identifier="noBleToSetup" id="OeC-Do-qcD"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rIf-wQ-F1B">
                                 <rect key="frame" x="190" y="543" width="220" height="40"/>
                                 <constraints>
@@ -2288,10 +2271,8 @@ Launch the </string>
                             <constraint firstAttribute="centerX" secondItem="rIf-wQ-F1B" secondAttribute="centerX" id="Ah4-3j-TIz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WSp-oq-I62" secondAttribute="trailing" constant="2" id="FFL-jf-ie7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="li5-1a-hqt" secondAttribute="trailing" constant="12" id="K4O-iI-oUN"/>
-                            <constraint firstItem="rIf-wQ-F1B" firstAttribute="top" secondItem="yuw-Cx-zbP" secondAttribute="top" constant="50" id="Mue-pZ-lA3"/>
                             <constraint firstItem="WSp-oq-I62" firstAttribute="top" secondItem="Viz-Vs-C9v" secondAttribute="bottom" constant="25" id="eO8-WI-Bkg"/>
                             <constraint firstItem="9T9-rd-lkX" firstAttribute="top" secondItem="WSp-oq-I62" secondAttribute="bottom" constant="24" id="hdL-jV-iOl"/>
-                            <constraint firstAttribute="centerX" secondItem="yuw-Cx-zbP" secondAttribute="centerX" id="kyu-jV-AAG"/>
                             <constraint firstItem="WSp-oq-I62" firstAttribute="leading" secondItem="tO9-Ht-ejg" secondAttribute="leadingMargin" constant="12" id="mQM-a1-9Ex"/>
                             <constraint firstItem="9T9-rd-lkX" firstAttribute="leading" secondItem="tO9-Ht-ejg" secondAttribute="leadingMargin" constant="12" id="wqv-Mi-R54"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9T9-rd-lkX" secondAttribute="trailing" constant="12" id="ySj-2r-rJ4"/>
@@ -2299,10 +2280,10 @@ Launch the </string>
                     </view>
                     <navigationItem key="navigationItem" id="F61-9k-rMP"/>
                     <connections>
-                        <outlet property="continueButton" destination="yuw-Cx-zbP" id="zD4-vc-ji3"/>
-                        <outlet property="continueButtonWidthConstraint" destination="5BB-XE-pYO" id="GjF-He-mmr"/>
+                        <outlet property="bluetoothImageTopConstraint" destination="9DS-fJ-q8n" id="dOW-Rk-14K"/>
                         <outlet property="subtitleLabel" destination="9T9-rd-lkX" id="hsK-3A-UqX"/>
                         <outlet property="titleLabel" destination="WSp-oq-I62" id="4Q5-mb-N6A"/>
+                        <segue destination="Qk9-qi-Wt3" kind="push" identifier="bluetoothOn" id="d35-VB-TRV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E49-3B-dpg" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -8,6 +8,7 @@
 
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMonboarding = @"Onboarding";
+static NSString *const _HEMbluetoothOn = @"bluetoothOn";
 static NSString *const _HEMbluetoothViewController = @"bluetoothViewController";
 static NSString *const _HEMdobViewController = @"dobViewController";
 static NSString *const _HEMdone = @"done";
@@ -19,7 +20,6 @@ static NSString *const _HEMheightPicker = @"heightPicker";
 static NSString *const _HEMlocation = @"location";
 static NSString *const _HEMmoreInfo = @"moreInfo";
 static NSString *const _HEMnetwork = @"network";
-static NSString *const _HEMnoBleToSetup = @"noBleToSetup";
 static NSString *const _HEMpillPair = @"pillPair";
 static NSString *const _HEMsecondPillCheck = @"secondPillCheck";
 static NSString *const _HEMsenseSetup = @"senseSetup";
@@ -42,13 +42,13 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)networkReuseIdentifier { return _HEMnetwork; }
 
 /** Segue Identifiers */
++(NSString *)bluetoothOnSegueIdentifier { return _HEMbluetoothOn; }
 +(NSString *)doneSegueIdentifier { return _HEMdone; }
 +(NSString *)genderSegueIdentifier { return _HEMgender; }
 +(NSString *)getAppSegueIdentifier { return _HEMgetApp; }
 +(NSString *)heightSegueIdentifier { return _HEMheight; }
 +(NSString *)locationSegueIdentifier { return _HEMlocation; }
 +(NSString *)moreInfoSegueIdentifier { return _HEMmoreInfo; }
-+(NSString *)noBleToSetupSegueIdentifier { return _HEMnoBleToSetup; }
 +(NSString *)secondPillCheckSegueIdentifier { return _HEMsecondPillCheck; }
 +(NSString *)senseSetupSegueIdentifier { return _HEMsenseSetup; }
 +(NSString *)senseSetupNoBleSegueIdentifier { return _HEMsenseSetupNoBle; }

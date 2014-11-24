@@ -363,13 +363,13 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UCC-4X-ec1">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="UCC-4X-ec1" firstAttribute="leading" secondItem="0bK-Ph-7OC" secondAttribute="leadingMargin" constant="-16" id="DhX-vI-8Hc"/>
-                            <constraint firstItem="UCC-4X-ec1" firstAttribute="top" secondItem="1Ej-Wd-DHd" secondAttribute="bottom" id="KkF-8z-wAg"/>
+                            <constraint firstItem="UCC-4X-ec1" firstAttribute="top" secondItem="1Ej-Wd-DHd" secondAttribute="bottom" constant="-20" id="KkF-8z-wAg"/>
                             <constraint firstAttribute="trailingMargin" secondItem="UCC-4X-ec1" secondAttribute="trailing" constant="-16" id="Wyq-ca-fmk"/>
                             <constraint firstItem="XsL-Ws-6qy" firstAttribute="top" secondItem="UCC-4X-ec1" secondAttribute="bottom" id="kZy-te-Zhb"/>
                         </constraints>
@@ -697,7 +697,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This will reset your entire Sense System, including your Sleep Pill." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Id-oB-6lZ">
-                                        <rect key="frame" x="28" y="98" width="544" height="19.5"/>
+                                        <rect key="frame" x="28" y="98" width="544" height="20"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                         <color key="textColor" red="0.47843137250000001" green="0.47843137250000001" blue="0.47843137250000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>

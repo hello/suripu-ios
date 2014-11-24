@@ -48,6 +48,7 @@
 "no-bluetooth.on" = "On";
 
 // sense setup
+"sense-setup.title" = "Setting up Sense";
 "sense-setup.description" = "Make sure Sense is plugged into a wall outlet next your bed.";
 
 // second pill

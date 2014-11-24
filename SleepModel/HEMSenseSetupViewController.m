@@ -15,14 +15,16 @@
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMSupportUtil.h"
+#import "HEMScrollableView.h"
 
 @interface HEMSenseSetupViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *senseDiagram;
+@property (weak, nonatomic) IBOutlet HEMScrollableView *contentView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 @property (weak, nonatomic) IBOutlet UIButton *helpButton;
+@property (weak, nonatomic) IBOutlet UIView *buttonContainer;
+
+@property (assign, nonatomic) CGFloat buttonContainerShadowOpacity;
 
 @end
 
@@ -32,19 +34,34 @@
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
     
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [self setupDescription];
+    [self setupContent];
+    
+    [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
+    
+    [self setButtonContainerShadowOpacity:[[[self buttonContainer] layer] shadowOpacity]];
+    
     [SENAnalytics track:kHEMAnalyticsEventOnBSenseSetup];
 }
 
-- (void)setupDescription {
-    NSString* subtitle = NSLocalizedString(@"sense-setup.description", nil);
-
-    NSMutableAttributedString* attrText = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    
+- (void)setupContent {
+    NSString* desc = NSLocalizedString(@"sense-setup.description", nil);
+    NSMutableAttributedString* attrText =
+        [[NSMutableAttributedString alloc] initWithString:desc];
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
     
-    [[self descriptionLabel] setAttributedText:attrText];
+    [[self contentView] addTitle:NSLocalizedString(@"sense-setup.title", nil)];
+    [[self contentView] addImage:[HelloStyleKit sensePlacement]];
+    [[self contentView] addDescription:attrText];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    CGFloat shadowOpacity
+        = [[self contentView] scrollRequired]
+        ? [self buttonContainerShadowOpacity]
+        : 0.0f;
+    [[[self buttonContainer] layer] setShadowOpacity:shadowOpacity];
 }
 
 #pragma mark - Actions

@@ -216,4 +216,11 @@ static NSString* const kHEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 }
 
++ (void)applyShadowToButtonContainer:(UIView*)buttonContainer {
+    [[buttonContainer layer] setShadowRadius:3.0f];
+    [[ buttonContainer layer] setShadowOffset:CGSizeMake(0.0f, 3.0f)];
+    [[ buttonContainer layer] setShadowOpacity:0.8f];
+    [[ buttonContainer layer] setShadowColor:[[UIColor blackColor] CGColor]];
+}
+
 @end

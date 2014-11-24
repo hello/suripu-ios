@@ -455,7 +455,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="X4b-Va-8rq">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="550"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -493,8 +493,8 @@
                         <constraints>
                             <constraint firstAttribute="width" secondItem="X4b-Va-8rq" secondAttribute="width" id="8Uk-L7-xqU"/>
                             <constraint firstAttribute="centerX" secondItem="X4b-Va-8rq" secondAttribute="centerX" id="DZ0-tF-DNx"/>
-                            <constraint firstAttribute="centerY" secondItem="X4b-Va-8rq" secondAttribute="centerY" id="gO8-De-DbU"/>
-                            <constraint firstAttribute="height" secondItem="X4b-Va-8rq" secondAttribute="height" id="kry-c1-eBV"/>
+                            <constraint firstItem="X4b-Va-8rq" firstAttribute="top" secondItem="jix-Ub-MhY" secondAttribute="bottom" constant="-64" id="XC5-0M-fn7"/>
+                            <constraint firstItem="Fgn-Cc-FTR" firstAttribute="top" secondItem="X4b-Va-8rq" secondAttribute="bottom" constant="50" id="yQD-po-bq0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Settings" id="W0g-jJ-OWe"/>

@@ -45,4 +45,14 @@
     [[self subtitleLabel] setAttributedText:attrSubtitle];
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    CGSize constraint = [[self subtitleLabel] bounds].size;
+    constraint.height = MAXFLOAT;
+    
+    CGSize textSize = [[self subtitleLabel] sizeThatFits:constraint];
+    DDLogVerbose(@"text height %f", textSize.height);
+}
+
 @end

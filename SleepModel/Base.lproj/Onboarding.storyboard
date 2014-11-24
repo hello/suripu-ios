@@ -1016,22 +1016,22 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attach Sleep Pill to your pillow" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ded-Ea-3CR">
-                                <rect key="frame" x="28" y="28" width="544" height="90"/>
+                                <rect key="frame" x="28" y="28" width="544" height="66"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="CqR-lo-Ump"/>
+                                    <constraint firstAttribute="height" constant="66" id="CqR-lo-Ump"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="clipPill.png" translatesAutoresizingMaskIntoConstraints="NO" id="e7k-8I-UvG">
-                                <rect key="frame" x="28" y="142" width="544" height="180"/>
+                                <rect key="frame" x="28" y="118" width="544" height="180"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="180" id="hzX-9e-u99"/>
                                 </constraints>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clip your Sleep Pill to the pillowcase you sleep On." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="xuG-gW-rF9">
-                                <rect key="frame" x="28" y="342" width="544" height="53"/>
+                                <rect key="frame" x="28" y="318" width="544" height="53"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="53" id="5YN-Ly-Jcz"/>
                                 </constraints>
@@ -1095,6 +1095,8 @@
                         <outlet property="continueButton" destination="qdG-tg-U0e" id="PIQ-2A-zSC"/>
                         <outlet property="descLabel" destination="xuG-gW-rF9" id="Wvr-4s-SWc"/>
                         <outlet property="helpButton" destination="gRL-Qh-1Rv" id="WPm-Bw-kxA"/>
+                        <outlet property="imageHeightConstraint" destination="hzX-9e-u99" id="TBo-ZR-aeU"/>
+                        <outlet property="imageTopConstraint" destination="W9X-ou-tAc" id="l2e-IK-aCs"/>
                         <outlet property="titleLabel" destination="ded-Ea-3CR" id="VPe-Cs-8q2"/>
                         <outlet property="view" destination="lwn-in-ftH" id="5W8-Rh-obp"/>
                     </connections>
@@ -1116,16 +1118,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set up another Sleep Pill?" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDs-8j-Vd9">
-                                <rect key="frame" x="28" y="28" width="544" height="90"/>
+                                <rect key="frame" x="28" y="28" width="544" height="66"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="loi-LP-13t"/>
+                                    <constraint firstAttribute="height" constant="66" id="loi-LP-13t"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMZ-p6-gA8">
-                                <rect key="frame" x="28" y="107" width="544" height="147"/>
+                                <rect key="frame" x="28" y="83" width="544" height="147"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="147" id="RvQ-Fp-VYO"/>
                                 </constraints>
@@ -2394,18 +2396,18 @@ Launch the </string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Have your partner get the app" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pe9-oy-MXl">
-                                <rect key="frame" x="28" y="28" width="544" height="90"/>
+                                <rect key="frame" x="28" y="28" width="544" height="66"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="90" id="KPE-cU-xz9"/>
+                                    <constraint firstAttribute="height" constant="66" id="KPE-cU-xz9"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJO-3H-8zJ">
-                                <rect key="frame" x="28" y="130" width="544" height="147"/>
+                                <rect key="frame" x="28" y="121" width="544" height="187"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="147" id="YH8-5C-dn9"/>
+                                    <constraint firstAttribute="height" constant="187" id="YH8-5C-dn9"/>
                                 </constraints>
                                 <attributedString key="attributedText">
                                     <fragment>
@@ -2443,7 +2445,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
                             <constraint firstItem="sJO-3H-8zJ" firstAttribute="leading" secondItem="MIL-K3-LOc" secondAttribute="leadingMargin" constant="12" id="9cR-TI-Fqd"/>
                             <constraint firstItem="iRc-gn-ncK" firstAttribute="top" secondItem="imr-Jl-fE8" secondAttribute="bottom" constant="65" id="BOs-tw-DKm"/>
                             <constraint firstAttribute="trailingMargin" secondItem="sJO-3H-8zJ" secondAttribute="trailing" constant="12" id="EB9-5v-Yn7"/>
-                            <constraint firstItem="sJO-3H-8zJ" firstAttribute="bottom" secondItem="Pe9-oy-MXl" secondAttribute="bottom" constant="159" id="G2N-a0-QQC"/>
+                            <constraint firstItem="sJO-3H-8zJ" firstAttribute="top" secondItem="Pe9-oy-MXl" secondAttribute="bottom" constant="27" id="G2N-a0-QQC"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Pe9-oy-MXl" secondAttribute="trailing" constant="12" id="HrB-w8-nB9"/>
                             <constraint firstItem="Pe9-oy-MXl" firstAttribute="top" secondItem="MZ4-xa-XYM" secondAttribute="bottom" constant="8" id="Ifk-Ne-mBu"/>
                             <constraint firstItem="Pe9-oy-MXl" firstAttribute="leading" secondItem="MIL-K3-LOc" secondAttribute="leadingMargin" constant="12" id="QSC-x5-5Xy"/>
@@ -2476,7 +2478,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     <inferredMetricsTieBreakers>
         <segue reference="d35-VB-TRV"/>
         <segue reference="azr-Tk-rB7"/>
-        <segue reference="BJO-wU-lca"/>
+        <segue reference="8ZE-B6-zEc"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

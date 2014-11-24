@@ -33,10 +33,14 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 @property (weak, nonatomic)   IBOutlet HEMActionButton *retryButton;
 @property (weak, nonatomic)   IBOutlet UIButton *helpButton;
 @property (weak, nonatomic)   IBOutlet NSLayoutConstraint *retryButtonWidthConstraint;
+@property (weak, nonatomic)   IBOutlet NSLayoutConstraint *pillDiagramHeightConstraint;
+@property (weak, nonatomic)   IBOutlet NSLayoutConstraint *subtitleTopConstraint;
+@property (weak, nonatomic)   IBOutlet NSLayoutConstraint *pillDiagramTopConstraint;
 
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL pairTimedOut;
+@property (assign, nonatomic, getter=isLoaded) BOOL loaded;
 
 
 @property (strong, nonatomic) id disconnectObserverId;
@@ -62,9 +66,22 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self performSelector:@selector(pairPill:)
-               withObject:self
-               afterDelay:kHEMPillPairStartDelay];
+    
+    if (![self isLoaded]) {
+        [self performSelector:@selector(pairPill:)
+                   withObject:self
+                   afterDelay:kHEMPillPairStartDelay];
+        [self setLoaded:YES];
+    }
+
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [self updateConstraint:[self pillDiagramHeightConstraint] withDiff:-62.0f];
+    
+    CGFloat paddingDiff = -.0f;
+    [self updateConstraint:[self subtitleTopConstraint] withDiff:paddingDiff];
+    [self updateConstraint:[self pillDiagramTopConstraint] withDiff:paddingDiff];
 }
 
 - (void)setupSubtitle {

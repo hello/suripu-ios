@@ -1227,7 +1227,7 @@ You can always do this later by visiting Settings.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KH6-Mg-9at">
-                                <rect key="frame" x="28" y="87" width="544" height="71"/>
+                                <rect key="frame" x="28" y="89" width="544" height="71"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="71" id="SZ7-c1-pnz"/>
                                 </constraints>
@@ -1242,11 +1242,11 @@ You can always do this later by visiting Settings.</string>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shake_pill.png" translatesAutoresizingMaskIntoConstraints="NO" id="sET-vH-ZfK">
-                                <rect key="frame" x="28" y="215" width="544" height="148"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shake_pill.png" translatesAutoresizingMaskIntoConstraints="NO" id="sET-vH-ZfK">
+                                <rect key="frame" x="28" y="184" width="544" height="222"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="148" id="byU-th-qjP"/>
+                                    <constraint firstAttribute="height" constant="222" id="byU-th-qjP"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGd-9N-cHV" customClass="HEMActionButton">
@@ -1296,8 +1296,8 @@ You can always do this later by visiting Settings.</string>
                             <constraint firstAttribute="trailingMargin" secondItem="pq7-me-JcE" secondAttribute="trailing" constant="12" id="HJb-nv-OwC"/>
                             <constraint firstItem="pq7-me-JcE" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="12" id="IJd-Ii-Edo"/>
                             <constraint firstItem="KH6-Mg-9at" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="12" id="IPM-aD-aZU"/>
-                            <constraint firstItem="sET-vH-ZfK" firstAttribute="bottom" secondItem="KH6-Mg-9at" secondAttribute="bottom" constant="205" id="Nrh-KQ-qdi"/>
-                            <constraint firstItem="KH6-Mg-9at" firstAttribute="bottom" secondItem="pq7-me-JcE" secondAttribute="bottom" constant="96" id="Oqt-AA-Jxr"/>
+                            <constraint firstItem="sET-vH-ZfK" firstAttribute="top" secondItem="KH6-Mg-9at" secondAttribute="bottom" constant="24" id="Nrh-KQ-qdi"/>
+                            <constraint firstItem="KH6-Mg-9at" firstAttribute="top" secondItem="pq7-me-JcE" secondAttribute="bottom" constant="27" id="Oqt-AA-Jxr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="KH6-Mg-9at" secondAttribute="trailing" constant="12" id="dky-iF-LbS"/>
                             <constraint firstItem="pq7-me-JcE" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="8" id="fRa-Kb-lLj"/>
                             <constraint firstAttribute="centerX" secondItem="lGd-9N-cHV" secondAttribute="centerX" id="wNe-Xr-FXy"/>
@@ -1308,9 +1308,12 @@ You can always do this later by visiting Settings.</string>
                     <connections>
                         <outlet property="helpButton" destination="V55-X2-Vfq" id="DTz-CW-3Fa"/>
                         <outlet property="pillDiagram" destination="sET-vH-ZfK" id="62r-P2-D6A"/>
+                        <outlet property="pillDiagramHeightConstraint" destination="byU-th-qjP" id="MXn-sk-MT7"/>
+                        <outlet property="pillDiagramTopConstraint" destination="Nrh-KQ-qdi" id="1Ju-qF-BVX"/>
                         <outlet property="retryButton" destination="lGd-9N-cHV" id="q88-hx-YrG"/>
                         <outlet property="retryButtonWidthConstraint" destination="eTO-Et-PGf" id="CnM-8K-AtF"/>
                         <outlet property="subtitleLabel" destination="KH6-Mg-9at" id="kBE-bP-8xF"/>
+                        <outlet property="subtitleTopConstraint" destination="Oqt-AA-Jxr" id="rwX-lv-Mzh"/>
                         <outlet property="titleLabel" destination="pq7-me-JcE" id="JZq-t8-RyY"/>
                         <segue destination="4s2-Gt-ovZ" kind="push" identifier="done" id="QBf-6a-MaN"/>
                     </connections>
@@ -2473,7 +2476,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     <inferredMetricsTieBreakers>
         <segue reference="d35-VB-TRV"/>
         <segue reference="azr-Tk-rB7"/>
-        <segue reference="8ZE-B6-zEc"/>
+        <segue reference="BJO-wU-lca"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

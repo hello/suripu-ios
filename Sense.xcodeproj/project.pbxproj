@@ -174,6 +174,9 @@
 		8ACAF80B19D398E100402BB7 /* HEMConfidentialityWarningView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ACAF80A19D398E100402BB7 /* HEMConfidentialityWarningView.m */; };
 		8AD88C3A1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD88C381A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m */; };
 		8AD88C3B1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C391A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib */; };
+		8AEE83C81A24136A0094E725 /* Aria.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8AEE83C51A24136A0094E725 /* Aria.m4a */; };
+		8AEE83C91A24136A0094E725 /* Ballad.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8AEE83C61A24136A0094E725 /* Ballad.m4a */; };
+		8AEE83CA1A24136A0094E725 /* Bells.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8AEE83C71A24136A0094E725 /* Bells.m4a */; };
 		8AF4FA251A12B01E00451245 /* playSound.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF4FA221A12B01E00451245 /* playSound.png */; };
 		8AF4FA261A12B01E00451245 /* playSound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF4FA231A12B01E00451245 /* playSound@2x.png */; };
 		8AF4FA271A12B01E00451245 /* playSound@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF4FA241A12B01E00451245 /* playSound@3x.png */; };
@@ -672,6 +675,9 @@
 		8AD88C371A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimelineHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		8AD88C381A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineHeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		8AD88C391A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMTimelineHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
+		8AEE83C51A24136A0094E725 /* Aria.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aria.m4a; sourceTree = "<group>"; };
+		8AEE83C61A24136A0094E725 /* Ballad.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ballad.m4a; sourceTree = "<group>"; };
+		8AEE83C71A24136A0094E725 /* Bells.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bells.m4a; sourceTree = "<group>"; };
 		8AF4FA221A12B01E00451245 /* playSound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playSound.png; path = images/playSound.png; sourceTree = "<group>"; };
 		8AF4FA231A12B01E00451245 /* playSound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "playSound@2x.png"; path = "images/playSound@2x.png"; sourceTree = "<group>"; };
 		8AF4FA241A12B01E00451245 /* playSound@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "playSound@3x.png"; path = "images/playSound@3x.png"; sourceTree = "<group>"; };
@@ -1236,6 +1242,9 @@
 		8A66012D199EBD64007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				8AEE83C51A24136A0094E725 /* Aria.m4a */,
+				8AEE83C61A24136A0094E725 /* Ballad.m4a */,
+				8AEE83C71A24136A0094E725 /* Bells.m4a */,
 				8A1E722A19D62C26007475D3 /* alarmNoteIcon.png */,
 				8A1E722B19D62C26007475D3 /* alarmNoteIcon@2x.png */,
 				8A1E722C19D62C26007475D3 /* alarmRepeatIcon.png */,
@@ -2161,6 +2170,7 @@
 				8AFE780E19E8C2170000F881 /* phone-bad@3x.png in Resources */,
 				8A66013B199EBF87007E6167 /* README.md in Resources */,
 				8AFE782819E8C2170000F881 /* temperature-good@2x.png in Resources */,
+				8AEE83CA1A24136A0094E725 /* Bells.m4a in Resources */,
 				8AAEED0419A5225F006517C4 /* Agile-ExtralightItalic.otf in Resources */,
 				8AAEED0E19A5225F006517C4 /* Agile-ThinItalic.otf in Resources */,
 				8AAEECFF19A5225F006517C4 /* Agile-Book.otf in Resources */,
@@ -2204,6 +2214,7 @@
 				8A9BD8B819DDD02100B1E57E /* Calibre-Bold.otf in Resources */,
 				8A93AFCD1A09BF0300F70A8B /* caret up.png in Resources */,
 				BFB0FBDC19D253400056FFEC /* pillIcon.png in Resources */,
+				8AEE83C91A24136A0094E725 /* Ballad.m4a in Resources */,
 				8AFE781F19E8C2170000F881 /* sunrise@2x.png in Resources */,
 				BFB0FBF819D4C3BD0056FFEC /* alarmsIcon.png in Resources */,
 				8AC4A0401989C5A100C2BD63 /* settingsIcon@2x.png in Resources */,
@@ -2280,6 +2291,7 @@
 				8AFE77E619E8C2170000F881 /* asleep@2x.png in Resources */,
 				8AFE77EA19E8C2170000F881 /* humidity-bad@3x.png in Resources */,
 				8A1E723419D62C26007475D3 /* alarmRepeatIcon.png in Resources */,
+				8AEE83C81A24136A0094E725 /* Aria.m4a in Resources */,
 				BF5E444F19AD494500278A2F /* phoneWithEmoticons.png in Resources */,
 				8AFE781219E8C2170000F881 /* phone-medium.png in Resources */,
 				8AFE780419E8C2170000F881 /* particulates-bad@2x.png in Resources */,

@@ -292,6 +292,9 @@
 		BF045B7A1A2015F90026D5B9 /* clipPill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF045B771A2015F90026D5B9 /* clipPill@2x.png */; };
 		BF045B7B1A2015F90026D5B9 /* clipPill@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF045B781A2015F90026D5B9 /* clipPill@3x.png */; };
 		BF0F63601A2409690084E6B4 /* HEMOnboardAlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */; };
+		BF0F63641A250A050084E6B4 /* smartAlarm.png in Resources */ = {isa = PBXBuildFile; fileRef = BF0F63611A250A050084E6B4 /* smartAlarm.png */; };
+		BF0F63651A250A050084E6B4 /* smartAlarm@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF0F63621A250A050084E6B4 /* smartAlarm@2x.png */; };
+		BF0F63661A250A050084E6B4 /* smartAlarm@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF0F63631A250A050084E6B4 /* smartAlarm@3x.png */; };
 		BF14E3BA19EF3BD10006EFEA /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3B419EF3BD10006EFEA /* map.png */; };
 		BF14E3BB19EF3BD10006EFEA /* map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3B519EF3BD10006EFEA /* map@2x.png */; };
 		BF14E3BC19EF3BD10006EFEA /* map@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3B619EF3BD10006EFEA /* map@3x.png */; };
@@ -799,6 +802,9 @@
 		BF045B781A2015F90026D5B9 /* clipPill@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clipPill@3x.png"; path = "images/clipPill@3x.png"; sourceTree = "<group>"; };
 		BF0F635E1A2409690084E6B4 /* HEMOnboardAlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardAlarmViewController.h; sourceTree = "<group>"; };
 		BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardAlarmViewController.m; sourceTree = "<group>"; };
+		BF0F63611A250A050084E6B4 /* smartAlarm.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = smartAlarm.png; path = images/smartAlarm.png; sourceTree = "<group>"; };
+		BF0F63621A250A050084E6B4 /* smartAlarm@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "smartAlarm@2x.png"; path = "images/smartAlarm@2x.png"; sourceTree = "<group>"; };
+		BF0F63631A250A050084E6B4 /* smartAlarm@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "smartAlarm@3x.png"; path = "images/smartAlarm@3x.png"; sourceTree = "<group>"; };
 		BF14E3B419EF3BD10006EFEA /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = map.png; path = images/map.png; sourceTree = "<group>"; };
 		BF14E3B519EF3BD10006EFEA /* map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map@2x.png"; path = "images/map@2x.png"; sourceTree = "<group>"; };
 		BF14E3B619EF3BD10006EFEA /* map@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map@3x.png"; path = "images/map@3x.png"; sourceTree = "<group>"; };
@@ -1160,6 +1166,9 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BF0F63611A250A050084E6B4 /* smartAlarm.png */,
+				BF0F63621A250A050084E6B4 /* smartAlarm@2x.png */,
+				BF0F63631A250A050084E6B4 /* smartAlarm@3x.png */,
 				BF045B761A2015F90026D5B9 /* clipPill.png */,
 				BF045B771A2015F90026D5B9 /* clipPill@2x.png */,
 				BF045B781A2015F90026D5B9 /* clipPill@3x.png */,
@@ -2203,6 +2212,7 @@
 				8AAEED0919A5225F006517C4 /* Agile-Light.otf in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
 				BF9C87D419B6A001003188D4 /* sleep_pill.png in Resources */,
+				BF0F63661A250A050084E6B4 /* smartAlarm@3x.png in Resources */,
 				8AFE77FD19E8C2170000F881 /* movement-good.png in Resources */,
 				BF770F251A155455008611E9 /* sensePlacement@2x.png in Resources */,
 				8AFE782319E8C2170000F881 /* sunset@3x.png in Resources */,
@@ -2240,6 +2250,7 @@
 				8A93AFC21A09BED100F70A8B /* Share.png in Resources */,
 				BF14E3BA19EF3BD10006EFEA /* map.png in Resources */,
 				8A9BD8BA19DDD02100B1E57E /* Calibre-Light.otf in Resources */,
+				BF0F63651A250A050084E6B4 /* smartAlarm@2x.png in Resources */,
 				BFB0FBE319D377380056FFEC /* senseIcon.png in Resources */,
 				8A93AFCC1A09BF0300F70A8B /* alarmsIcon@3x.png in Resources */,
 				BF045B691A1EBC070026D5B9 /* senseGlow.png in Resources */,
@@ -2349,6 +2360,7 @@
 				8AFE77E219E8C2170000F881 /* alarm.png in Resources */,
 				BF005C7C19FED57E00E68E87 /* lockIcon@3x.png in Resources */,
 				8AC4A0491989D47000C2BD63 /* chevronIconLeft.png in Resources */,
+				BF0F63641A250A050084E6B4 /* smartAlarm.png in Resources */,
 				8AFEBCAA1A0C54D5009A0432 /* sound@2x.png in Resources */,
 				BF781E3E19DF0F7400B68EBC /* Settings.bundle in Resources */,
 				8AFE782619E8C2170000F881 /* temperature-bad@3x.png in Resources */,

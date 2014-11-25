@@ -1329,8 +1329,7 @@ You can always do this later by visiting Settings.</string>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="next:" destination="DIj-70-bYO" eventType="touchUpInside" id="01M-Pu-HsK"/>
-                                            <action selector="setupAnother:" destination="fc9-7S-Ult" eventType="touchUpInside" id="u5B-XL-zQD"/>
+                                            <segue destination="0qJ-qR-xla" kind="push" id="6DJ-Sp-r0R"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1368,7 +1367,7 @@ You can always do this later by visiting Settings.</string>
         <!--Onboard Alarm View Controller-->
         <scene sceneID="rm2-FM-ynv">
             <objects>
-                <viewController id="0qJ-qR-xla" customClass="HEMOnboardAlarmViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="0qJ-qR-xla" customClass="HEMOnboardAlarmViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3cs-y7-KCY"/>
                         <viewControllerLayoutGuide type="bottom" id="PUK-Ia-HH5"/>
@@ -1396,6 +1395,9 @@ You can always do this later by visiting Settings.</string>
                                             <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="setAlarmNow:" destination="0qJ-qR-xla" eventType="touchUpInside" id="1TN-MG-Xqx"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FP-vw-B5B">
                                         <rect key="frame" x="190" y="56" width="220" height="40"/>
@@ -1412,6 +1414,9 @@ You can always do this later by visiting Settings.</string>
                                         <state key="disabled" title=" ">
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="setAlarmLater:" destination="0qJ-qR-xla" eventType="touchUpInside" id="662-Kh-mZj"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1435,6 +1440,7 @@ You can always do this later by visiting Settings.</string>
                             <constraint firstAttribute="trailingMargin" secondItem="chY-AJ-Mza" secondAttribute="trailing" constant="-16" id="tac-IP-Agz"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="lge-LP-KK6"/>
                     <connections>
                         <outlet property="buttonContainer" destination="chY-AJ-Mza" id="ptZ-8l-Dfe"/>
                         <outlet property="contentView" destination="JPw-yP-yqX" id="P9D-yj-TDT"/>
@@ -2462,9 +2468,9 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="sense.png" width="176" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="d35-VB-TRV"/>
         <segue reference="DAu-sO-H4V"/>
-        <segue reference="8ZE-B6-zEc"/>
+        <segue reference="d35-VB-TRV"/>
+        <segue reference="BJO-wU-lca"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

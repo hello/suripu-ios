@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.0.42
+
+New:
+
+1. iPhone 4s support
+2. Updated copy for various onboarding screens
+
+Fixes:
+
+1. Fixed text layout issues that was previously getting cut off
+
 ## 1.0.0.41
 
 Ensuring testflight provisioning profile is not corrupted and that there are no

@@ -107,7 +107,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
         = [[self contentView] scrollRequired]
         ? [self shadowOpacity]
         : 0.0f;
-    [[[self contentView] layer] setShadowOpacity:shadowOpacity];
+    [[[self buttonContainer] layer] setShadowOpacity:shadowOpacity];
 }
 
 - (void)updateActivityText:(NSString*)text {

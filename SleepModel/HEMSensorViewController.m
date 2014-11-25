@@ -162,13 +162,9 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
         @(EMPH)  : @{ NSForegroundColorAttributeName : conditionColor},
         @(PLAIN) : @{ NSFontAttributeName : [UIFont settingsInsightMessageFont]}
     };
-    NSDictionary* idealAttributes = @{
-        @(EMPH)  : @{ NSForegroundColorAttributeName : [HelloStyleKit idealSensorColor]},
-        @(PLAIN) : @{ NSFontAttributeName : [UIFont settingsInsightMessageFont]}
-    };
 
     self.statusMessageLabel.attributedText = markdown_to_attr_string(self.sensor.message, 0, statusAttributes);
-    self.idealLabel.attributedText = markdown_to_attr_string(@"You sleep best when the temperature is between *68º* and *72º*", 0, idealAttributes);
+    self.idealLabel.attributedText = nil; // temporary, since it's only placeholder
 }
 
 #pragma mark - Update Graph

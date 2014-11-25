@@ -48,9 +48,11 @@
 "no-bluetooth.on" = "On";
 
 // sense setup
+"sense-setup.title" = "Setting up Sense";
 "sense-setup.description" = "Make sure Sense is plugged into a wall outlet next your bed.";
 
 // second pill
+"second-pill.title" = "Add a second Sleep Pill";
 "second-pill.description.format" = "To connect a second Sleep Pill, Sense needs to be put into pairing mode.\n\nAsk the owner of the first Sleep Pill to stand next to Sense and open the Sense app, then go to %@ and tap %@.\n\nSense will glow %@ when it is in pairing mode.";
 "second-pill.description.sense-settings" = "Settings > Devices > Sense";
 "second-pill.description.put-into-pairing" = "'Put Sense into Pairing Mode'";
@@ -73,11 +75,13 @@
 "pairing.error.link-account-failed" = "Could not attach Sense to your account.";
 "pairing.error.timed-out" = "Sense did not respond in time.";
 "pairing.done" = "Paired.";
-"pairing.pill.subtitle" = "Shake your Sleep Pill for three seconds to pair it with your Sense.";
+"pairing.pill.error.title" = "Pill Pairing Failed";
+"pairing.pill.title" = "Pairing your Sleep Pill";
+"pairing.pill.subtitle" = "Shake your Sleep Pill for three seconds to pair it with your Sense. You may need to shake it quickly for it to register.";
 "pairing.error.pill-already-paired" = "Your Sleep Pill is currently paired to an account.";
 "pairing.error.fail-to-load-paired-info" = "Could not load paired Sense information.";
 "pairing.error.sense-not-found" = "Could not connect to your Sense to pair your Sleep Pill.";
-"pairing.error.pill-pairing-failed" = "Sense did not detect any Sleep Pills.  Make sure Sense is on and that you shake the pill for at least 3 seconds.";
+"pairing.error.pill-pairing-failed" = "Sense couldn't register your Sleep Pill. Please try pairing again. Try moving your Sleep Pill closer to Sense, and shaking it harder.";
 "pairing.check.add-second-pill-subtitle" = "Are you adding a second Sleep Pill to a Sense that has been set up previously, or are you setting up Sense for the first time?";
 
 // wifi setup

@@ -82,7 +82,8 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
     [[self questionLabel] setNeedsLayout];
 
     CGRect buttonFrame = CGRectZero;
-    buttonFrame.size.width = CGRectGetWidth([[self choicesScrollView] bounds]);
+    buttonFrame.origin.x = kHEMSleepAnswerButtonBorderWidth;
+    buttonFrame.size.width = CGRectGetWidth([[self choicesScrollView] bounds])-(kHEMSleepAnswerButtonBorderWidth*2);
     buttonFrame.size.height = kHEMSleepAnswerButtonHeight;
 
     NSArray* answerChoices = [question choices];

@@ -21,11 +21,17 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 @property (weak,   nonatomic) IBOutlet iCarousel* carousel;
 @property (weak,   nonatomic) IBOutlet UILabel* topWeightLabel;
 @property (weak,   nonatomic) IBOutlet UILabel* botWeightLabel;
+@property (weak,   nonatomic) IBOutlet HEMActionButton *doneButton;
+@property (weak,   nonatomic) IBOutlet UIButton *skipButton;
+@property (weak,   nonatomic) IBOutlet UILabel *subtitleLabel;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *carouselHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *carouselCenterYConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineToCarouselTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lbsToLineTopConstraint;
+
 @property (assign, nonatomic) CGFloat weightInKgs;
-@property (weak,   nonatomic) IBOutlet NSLayoutConstraint *carouselToButtonTopAlignment;
-@property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
-@property (weak, nonatomic) IBOutlet UIButton *skipButton;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
 @end
 
@@ -61,8 +67,13 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
 }
 
 - (void)adjustConstraintsForIPhone4 {
-    CGFloat diff = -60;
-    [self updateConstraint:[self carouselToButtonTopAlignment] withDiff:diff];
+    CGFloat carouselCenterYDiff = 15.0f;
+    [self updateConstraint:[self carouselCenterYConstraint] withDiff:carouselCenterYDiff];
+    [self updateConstraint:[self lineToCarouselTopConstraint] withDiff:carouselCenterYDiff];
+    [self updateConstraint:[self lbsToLineTopConstraint] withDiff:carouselCenterYDiff];
+    
+    [self updateConstraint:[self carouselHeightConstraint] withDiff:-60];
+    [self updateConstraint:[self lineHeightConstraint] withDiff:-30.0f];
 }
 
 #pragma mark - iCarousel

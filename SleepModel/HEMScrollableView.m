@@ -185,4 +185,8 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
     [self setLastContentView:label];
 }
 
+- (BOOL)scrollRequired {
+    return [[self scrollView] contentSize].height > CGRectGetHeight([[self scrollView] bounds]);
+}
+
 @end

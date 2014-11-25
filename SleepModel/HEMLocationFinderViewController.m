@@ -25,6 +25,7 @@
 @property (nonatomic, copy) NSString* locationTxId;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *locateButtonWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *mapHeightConstraint;
 
 @end
 
@@ -37,6 +38,10 @@
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [SENAnalytics track:kHEMAnalyticsEventOnBLocation];   
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [self updateConstraint:[self mapHeightConstraint] withDiff:-90.0f];
 }
 
 #pragma - Activity

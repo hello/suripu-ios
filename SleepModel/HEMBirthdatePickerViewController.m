@@ -28,6 +28,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint *dobPickerHeightConstraint;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint *dobPickerToButtonTopConstraint;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint *doneButtonWidthConstraint;
+@property (weak,   nonatomic) IBOutlet NSLayoutConstraint *dobPickerCenterYConstraint;
 
 @end
 
@@ -66,9 +67,11 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 }
 
 - (void)adjustConstraintsForIPhone4 {
-    CGFloat heightDiff = -2 * kHEMBirthdateValueHeight; // show 3 rows instead
+    CGFloat heightDiff = -kHEMBirthdateValueHeight;
     [self updateConstraint:[self dobPickerHeightConstraint] withDiff:heightDiff];
     [self updateConstraint:[self dobPickerToButtonTopConstraint] withDiff:-heightDiff];
+    
+    [self updateConstraint:[self dobPickerCenterYConstraint] withDiff:-20.0f];
 }
 
 - (void)loadAccount:(void(^)(NSError* error))completion {

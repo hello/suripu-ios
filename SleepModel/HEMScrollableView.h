@@ -34,4 +34,9 @@
  */
 - (void)addDescription:(NSAttributedString*)attributedDesc;
 
+/**
+ * @return YES if content is larger than size of scrollView, NO otherwise
+ */
+- (BOOL)scrollRequired;
+
 @end

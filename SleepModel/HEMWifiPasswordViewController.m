@@ -50,6 +50,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 @property (assign, nonatomic) SENWifiEndpointSecurityType securityType;
 @property (assign, nonatomic) HEMWiFiSetupStep stepFinished;
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ssidTopConstraint;
+
 @end
 
 @implementation HEMWifiPasswordViewController
@@ -83,6 +85,16 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     CGRect pickerBounds = [[self securityPickerView] bounds];
     pickerBounds.size.width = CGRectGetWidth([[self view] bounds]);
     [[self securityPickerView] setBounds:pickerBounds];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [[self subtitleLabel] setHidden:YES];
+    
+    CGFloat reducePadding = 8.0f;
+    CGFloat currentSpacing = -([[self ssidTopConstraint] constant]);
+    CGFloat subtitleHeight = CGRectGetHeight([[self subtitleLabel] bounds]);
+    CGFloat diff = (subtitleHeight + currentSpacing + reducePadding);
+    [self updateConstraint:[self ssidTopConstraint] withDiff:diff];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -1,5 +1,6 @@
 
 #import <SenseKit/SENAlarm.h>
+#import <AVFoundation/AVAudioPlayer.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -8,17 +9,26 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
 
-@interface HEMAlarmSoundTableViewController ()
+@interface HEMAlarmSoundTableViewController () <AVAudioPlayerDelegate>
 @property (nonatomic, strong) NSArray* possibleSleepSounds;
+@property (nonatomic, strong) AVAudioPlayer* player;
 @end
 
 @implementation HEMAlarmSoundTableViewController
+
+static NSString* const HEMAlarmSoundFormat = @"m4a";
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [[self tableView] setTableFooterView:[[UIView alloc] init]];
-    self.possibleSleepSounds = @[ @"None", @"Bells", @"Birdsong", @"Chime", @"Waterfall" ];
+    self.possibleSleepSounds = @[ @"None", @"Aria", @"Ballad", @"Bells" ];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [self stopAudio];
 }
 
 #pragma mark - Table view data source
@@ -55,7 +65,9 @@
     if (indexPath.row == index)
         return;
 
-    self.alarmCache.soundName = [self.possibleSleepSounds objectAtIndex:indexPath.row];
+    NSString* soundName = [self.possibleSleepSounds objectAtIndex:indexPath.row];
+    self.alarmCache.soundName = soundName;
+    [self playAudioWithName:soundName];
     if (index != NSNotFound) {
         NSArray* indexPaths = @[
             [NSIndexPath indexPathForRow:index inSection:0],
@@ -65,6 +77,53 @@
     } else {
         [tableView reloadData];
     }
+}
+
+#pragma mark - Audio
+
+- (void)playAudioWithName:(NSString*)name
+{
+    [self stopAudio];
+    NSString* path = [[NSBundle mainBundle] pathForResource:name ofType:HEMAlarmSoundFormat];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:path])
+        return;
+
+    [self playAudioFromURL:[NSURL fileURLWithPath:path]];
+}
+
+- (void)playAudioFromURL:(NSURL*)url
+{
+    [self stopAudio];
+    NSError* error = nil;
+    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
+    self.player.delegate = self;
+    if (error)
+        [self stopAudio];
+    else
+        [self.player play];
+}
+
+- (void)stopAudio
+{
+    [self.player stop];
+    self.player = nil;
+}
+
+#pragma mark AVAudioPlayerDelegate
+
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player
+{
+    [self stopAudio];
+}
+
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    [self stopAudio];
+}
+
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags
+{
+    [self stopAudio];
 }
 
 @end

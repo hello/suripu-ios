@@ -10,4 +10,8 @@
 
 @interface HEMSleepSummarySlideViewController : UIPageViewController
 
+- (void)reloadData;
+
+- (void)reloadDataWithController:(UIViewController*)controller;
+
 @end

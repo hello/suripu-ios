@@ -34,6 +34,7 @@ CGFloat const HEMZoomActiveDistance = 20.f;
         if (CGRectIntersectsRect(attr.frame, rect)) {
             CGFloat distance = CGRectGetMidX(visibleRect) - attr.center.x;
             CGFloat normalizedDistance = distance / HEMZoomActiveDistance;
+            attr.alpha = MAX(1/(ABS(distance)/HEMZoomActiveDistance), 0.4);
             if (ABS(distance) > HEMZoomActiveDistance) {
                 CGFloat zoom = 1 + HEMZoomLevel * (1 - ABS(normalizedDistance));
                 attr.transform3D = CATransform3DMakeScale(zoom, zoom, 1.0);
@@ -47,9 +48,9 @@ CGFloat const HEMZoomActiveDistance = 20.f;
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
 {
     CGFloat offsetAdjustment = MAXFLOAT;
-    CGFloat horizontalOffset = proposedContentOffset.x + 5;
+    CGFloat horizontalOffset = proposedContentOffset.x - 10;
 
-    CGRect targetRect = CGRectMake(proposedContentOffset.x, 0, self.collectionView.bounds.size.width, self.collectionView.bounds.size.height);
+    CGRect targetRect = CGRectMake(proposedContentOffset.x, 0, CGRectGetWidth(self.collectionView.bounds), CGRectGetHeight(self.collectionView.bounds));
 
     NSArray *array = [super layoutAttributesForElementsInRect:targetRect];
 

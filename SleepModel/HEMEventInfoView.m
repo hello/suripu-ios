@@ -67,6 +67,7 @@ static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.15f;
 
 - (void)dealloc
 {
+    [_player stop];
     [_playerUpdateTimer invalidate];
 }
 

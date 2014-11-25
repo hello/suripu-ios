@@ -47,7 +47,7 @@
     UICollectionViewFlowLayout* layout = (id)self.historyCollectionView.collectionViewLayout;
     layout.sectionInset = UIEdgeInsetsMake(10.f, 0, 10.f, 0);
     CGFloat cellHeight = (CGRectGetHeight(self.view.bounds) * 0.65f) - layout.sectionInset.top - layout.sectionInset.bottom;
-    layout.itemSize = CGSizeMake(100.f, cellHeight);
+    layout.itemSize = CGSizeMake(115.f, cellHeight);
 }
 
 - (void)configureDateFormatters
@@ -56,7 +56,7 @@
     self.dayFormatter = [NSDateFormatter new];
     self.dayFormatter.dateFormat = @"d";
     self.dayOfWeekFormatter = [NSDateFormatter new];
-    self.dayOfWeekFormatter.dateFormat = @"EEE";
+    self.dayOfWeekFormatter.dateFormat = @"EEEE";
     self.monthYearFormatter = [NSDateFormatter new];
     self.monthYearFormatter.dateFormat = @"MMMM";
 }
@@ -154,7 +154,7 @@
 
 - (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    [collectionView deselectItemAtIndexPath:indexPath animated:NO];
     SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
     self.selectedDate = sleepResult.date;
     [self dismissViewControllerAnimated:YES completion:NULL];

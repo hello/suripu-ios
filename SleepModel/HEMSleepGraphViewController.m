@@ -23,6 +23,7 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
+#import "HEMSleepSummarySlideViewController.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 
@@ -127,6 +128,12 @@ static CGFloat const HEMTopItemsConstraintConstant = 10.f;
 }
 
 - (void)dealloc {
+    _historyViewController = nil;
+    _dataSource = nil;
+    _eventBandView = nil;
+    _eventBlurView = nil;
+    _eventInfoView = nil;
+    _eventTimelineHeaderLabel = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -164,8 +171,11 @@ static CGFloat const HEMTopItemsConstraintConstant = 10.f;
 
 - (void)checkForDateChanges
 {
-    if (self.historyViewController.selectedDate)
+    if (self.historyViewController.selectedDate) {
         [self loadDataSourceForDate:self.historyViewController.selectedDate];
+        HEMSleepSummarySlideViewController* parent = (id)self.parentViewController;
+        [parent reloadData];
+    }
 
     self.historyViewController = nil;
 }

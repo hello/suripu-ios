@@ -6,6 +6,7 @@ New:
 
 1. iPhone 4s support
 2. Updated copy for various onboarding screens
+3. Play the alarm sound when setting an alarm
 
 Fixes:
 

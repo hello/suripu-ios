@@ -48,8 +48,10 @@
             <string>Calibre-Light</string>
             <string>Calibre-Light</string>
             <string>Calibre-Light</string>
+            <string>Calibre-Light</string>
         </mutableArray>
         <mutableArray key="Calibre-Medium.otf">
+            <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
@@ -1068,7 +1070,6 @@
                                 </state>
                                 <connections>
                                     <action selector="help:" destination="4s2-Gt-ovZ" eventType="touchUpInside" id="2c5-cz-qdB"/>
-                                    <action selector="help:" destination="Qk9-qi-Wt3" eventType="touchUpInside" id="arZ-pB-Rv4"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1257,9 +1258,7 @@ You can always do this later by visiting Settings.</string>
                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="help:" destination="Qk9-qi-Wt3" eventType="touchUpInside" id="TC7-rQ-rN8"/>
                                             <action selector="help:" destination="Aoy-k8-hYr" eventType="touchUpInside" id="fsC-3y-UcY"/>
-                                            <action selector="help:" destination="4s2-Gt-ovZ" eventType="touchUpInside" id="mCi-gs-bXj"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -1359,11 +1358,92 @@ You can always do this later by visiting Settings.</string>
                         <outlet property="buttonContainer" destination="I0b-gc-V9v" id="7XY-Vm-ach"/>
                         <outlet property="continueButton" destination="MMQ-Qm-jOb" id="5XH-vp-jBI"/>
                         <outlet property="scrollableView" destination="Ok4-Lt-Oab" id="e5z-ZZ-lWX"/>
+                        <outlet property="view" destination="WvV-c5-RHy" id="kFz-r6-vwP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g3P-F6-Zsf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="13251" y="923"/>
+        </scene>
+        <!--Onboard Alarm View Controller-->
+        <scene sceneID="rm2-FM-ynv">
+            <objects>
+                <viewController id="0qJ-qR-xla" customClass="HEMOnboardAlarmViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3cs-y7-KCY"/>
+                        <viewControllerLayoutGuide type="bottom" id="PUK-Ia-HH5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dhI-dC-nnE">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JPw-yP-yqX" customClass="HEMScrollableView">
+                                <rect key="frame" x="28" y="28" width="544" height="457"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="chY-AJ-Mza">
+                                <rect key="frame" x="0.0" y="485" width="600" height="115"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5s-t3-orP" customClass="HEMActionButton">
+                                        <rect key="frame" x="190" y="10" width="220" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="bBF-QE-aBI"/>
+                                            <constraint firstAttribute="width" constant="220" id="rBR-bX-hKR"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Set a Smart Alarm now">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FP-vw-B5B">
+                                        <rect key="frame" x="190" y="56" width="220" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="P84-F7-SQW"/>
+                                            <constraint firstAttribute="width" constant="220" id="g5j-3c-Qyw"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="I'll do this later">
+                                            <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="disabled" title=" ">
+                                            <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="centerX" secondItem="H5s-t3-orP" secondAttribute="centerX" id="9w9-4e-wfr"/>
+                                    <constraint firstAttribute="centerX" secondItem="6FP-vw-B5B" secondAttribute="centerX" id="CGK-Q4-iia"/>
+                                    <constraint firstItem="H5s-t3-orP" firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="top" constant="-6" id="XVF-kN-UHh"/>
+                                    <constraint firstAttribute="height" constant="115" id="gLE-Ki-PfU"/>
+                                    <constraint firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="bottom" constant="19" id="xJo-1l-b5l"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="chY-AJ-Mza" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="-16" id="2ye-4P-xKB"/>
+                            <constraint firstItem="PUK-Ia-HH5" firstAttribute="top" secondItem="chY-AJ-Mza" secondAttribute="bottom" id="3Is-Yl-J8s"/>
+                            <constraint firstItem="JPw-yP-yqX" firstAttribute="top" secondItem="3cs-y7-KCY" secondAttribute="bottom" constant="8" id="BPh-Hu-srF"/>
+                            <constraint firstItem="JPw-yP-yqX" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="12" id="Hdp-9a-r1f"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="JPw-yP-yqX" secondAttribute="trailing" constant="12" id="cS0-OB-RYd"/>
+                            <constraint firstItem="chY-AJ-Mza" firstAttribute="bottom" secondItem="JPw-yP-yqX" secondAttribute="bottom" constant="115" id="gog-oG-mkq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="chY-AJ-Mza" secondAttribute="trailing" constant="-16" id="tac-IP-Agz"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="buttonContainer" destination="chY-AJ-Mza" id="ptZ-8l-Dfe"/>
+                        <outlet property="contentView" destination="JPw-yP-yqX" id="P9D-yj-TDT"/>
+                        <outlet property="view" destination="dhI-dC-nnE" id="sxj-U6-bqo"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dxo-YG-lyE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="14068" y="923"/>
         </scene>
         <!--Gender View Controller-->
         <scene sceneID="s4K-5F-Rau">
@@ -2383,7 +2463,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="d35-VB-TRV"/>
-        <segue reference="azr-Tk-rB7"/>
+        <segue reference="DAu-sO-H4V"/>
         <segue reference="8ZE-B6-zEc"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

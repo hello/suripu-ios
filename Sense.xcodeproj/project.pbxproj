@@ -288,6 +288,7 @@
 		BF045B791A2015F90026D5B9 /* clipPill.png in Resources */ = {isa = PBXBuildFile; fileRef = BF045B761A2015F90026D5B9 /* clipPill.png */; };
 		BF045B7A1A2015F90026D5B9 /* clipPill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF045B771A2015F90026D5B9 /* clipPill@2x.png */; };
 		BF045B7B1A2015F90026D5B9 /* clipPill@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF045B781A2015F90026D5B9 /* clipPill@3x.png */; };
+		BF0F63601A2409690084E6B4 /* HEMOnboardAlarmViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */; };
 		BF14E3BA19EF3BD10006EFEA /* map.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3B419EF3BD10006EFEA /* map.png */; };
 		BF14E3BB19EF3BD10006EFEA /* map@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3B519EF3BD10006EFEA /* map@2x.png */; };
 		BF14E3BC19EF3BD10006EFEA /* map@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF14E3B619EF3BD10006EFEA /* map@3x.png */; };
@@ -790,6 +791,8 @@
 		BF045B761A2015F90026D5B9 /* clipPill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = clipPill.png; path = images/clipPill.png; sourceTree = "<group>"; };
 		BF045B771A2015F90026D5B9 /* clipPill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clipPill@2x.png"; path = "images/clipPill@2x.png"; sourceTree = "<group>"; };
 		BF045B781A2015F90026D5B9 /* clipPill@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "clipPill@3x.png"; path = "images/clipPill@3x.png"; sourceTree = "<group>"; };
+		BF0F635E1A2409690084E6B4 /* HEMOnboardAlarmViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardAlarmViewController.h; sourceTree = "<group>"; };
+		BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardAlarmViewController.m; sourceTree = "<group>"; };
 		BF14E3B419EF3BD10006EFEA /* map.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = map.png; path = images/map.png; sourceTree = "<group>"; };
 		BF14E3B519EF3BD10006EFEA /* map@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map@2x.png"; path = "images/map@2x.png"; sourceTree = "<group>"; };
 		BF14E3B619EF3BD10006EFEA /* map@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "map@3x.png"; path = "images/map@3x.png"; sourceTree = "<group>"; };
@@ -1140,13 +1143,10 @@
 				BF045B6F1A1EC2480026D5B9 /* Account */,
 				BF045B701A1EC2A90026D5B9 /* Demographics */,
 				BF045B721A1EC3420026D5B9 /* Pill */,
+				BF0F635D1A2409360084E6B4 /* Post Set Up */,
 				BF045B711A1EC2F00026D5B9 /* Sense */,
 				BFEAA0A619A51DCF002FBD44 /* HEMWelcomeViewController.h */,
 				BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */,
-				BFB1F3DA1A0DA33A00E620AD /* HEMGetAppViewController.h */,
-				BFB1F3DB1A0DA33A00E620AD /* HEMGetAppViewController.m */,
-				BF045B6C1A1EC2210026D5B9 /* HEMBeforeSleepViewController.h */,
-				BF045B6D1A1EC2210026D5B9 /* HEMBeforeSleepViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1785,6 +1785,19 @@
 				BF14E3D619EF3C3D0006EFEA /* HEMSecondPillCheckViewController.m */,
 			);
 			name = Pill;
+			sourceTree = "<group>";
+		};
+		BF0F635D1A2409360084E6B4 /* Post Set Up */ = {
+			isa = PBXGroup;
+			children = (
+				BFB1F3DA1A0DA33A00E620AD /* HEMGetAppViewController.h */,
+				BFB1F3DB1A0DA33A00E620AD /* HEMGetAppViewController.m */,
+				BF045B6C1A1EC2210026D5B9 /* HEMBeforeSleepViewController.h */,
+				BF045B6D1A1EC2210026D5B9 /* HEMBeforeSleepViewController.m */,
+				BF0F635E1A2409690084E6B4 /* HEMOnboardAlarmViewController.h */,
+				BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */,
+			);
+			name = "Post Set Up";
 			sourceTree = "<group>";
 		};
 		BF1E2E5A1A0068AA00DDD0D0 /* Insights */ = {
@@ -2590,6 +2603,7 @@
 				BFEAA0BB19A578EE002FBD44 /* HEMLocationCenter.m in Sources */,
 				BFB0FBD619D243A60056FFEC /* HEMDevicesViewController.m in Sources */,
 				BF4E88EA1A1301D700831380 /* HEMInsightViewController.m in Sources */,
+				BF0F63601A2409690084E6B4 /* HEMOnboardAlarmViewController.m in Sources */,
 				BFB93C7919CB7F89005067D0 /* HEMMathUtil.m in Sources */,
 				8A4B3D5F199534F000856BDE /* HEMOnboardingStoryboard.m in Sources */,
 				BF84C2031A0C1D23009471D5 /* HEMRootViewController.m in Sources */,

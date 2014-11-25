@@ -47,7 +47,7 @@ static NSInteger HEMMaxHeightInFeet = 9;
     
     NSInteger feet = [self feet] > 0 ? [self feet] : 5;
     NSInteger inch = [self inches] > 0 ? [self inches] : 8;
-    [[self heightSliderView] setToInches:(feet + (inch/12.0f))];
+    [[self heightSliderView] setToValue:(feet + (inch/12.0f))];
     
     if ([self delegate] != nil) {
         NSString* done = NSLocalizedString(@"status.success", nil);

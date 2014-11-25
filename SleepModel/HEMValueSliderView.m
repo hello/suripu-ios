@@ -143,7 +143,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[self valuesTableView] reloadData];
 }
 
-- (void)setToInches:(float)value {
+- (void)setToValue:(float)value {
     CGPoint offset = [[self valuesTableView] contentOffset];
     offset.y = value*kHEMValueSliderValueCellHeight;
     [[self valuesTableView] setContentOffset:offset];

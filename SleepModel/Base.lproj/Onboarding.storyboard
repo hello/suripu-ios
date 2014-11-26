@@ -2468,8 +2468,8 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="sense.png" width="176" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DAu-sO-H4V"/>
         <segue reference="d35-VB-TRV"/>
+        <segue reference="DAu-sO-H4V"/>
         <segue reference="BJO-wU-lca"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

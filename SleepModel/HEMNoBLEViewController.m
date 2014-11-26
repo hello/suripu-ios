@@ -60,10 +60,6 @@
     [[self subtitleLabel] setAttributedText:attrSubtitle];
 }
 
-- (void)adjustConstraintsForIPhone4 {
-    [self updateConstraint:[self bluetoothImageTopConstraint] withDiff:20.0f];
-}
-
 - (void)viewDidBecomeActive {
     [super viewDidBecomeActive];
     [self checkBluetooth];

@@ -252,6 +252,7 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
+                                    <segue destination="AER-Sm-Ec9" kind="push" id="9lQ-3E-nTc"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -2095,9 +2096,9 @@ You can always do this later by visiting Settings.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="9T9-rd-lkX">
-                                <rect key="frame" x="28" y="86" width="544" height="164"/>
+                                <rect key="frame" x="28" y="86" width="544" height="214"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="164" id="Wzu-c0-fqo"/>
+                                    <constraint firstAttribute="height" constant="214" id="Wzu-c0-fqo"/>
                                 </constraints>
                                 <attributedString key="attributedText">
                                     <fragment>
@@ -2172,7 +2173,7 @@ Launch the </string>
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bluetooth.png" translatesAutoresizingMaskIntoConstraints="NO" id="li5-1a-hqt">
-                                <rect key="frame" x="28" y="310" width="544" height="77"/>
+                                <rect key="frame" x="28" y="324" width="544" height="77"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="77" id="LUt-kg-SdI"/>
                                 </constraints>
@@ -2182,7 +2183,7 @@ Launch the </string>
                         <constraints>
                             <constraint firstItem="L20-Gb-HkU" firstAttribute="top" secondItem="rIf-wQ-F1B" secondAttribute="bottom" constant="17" id="31y-VS-nFd"/>
                             <constraint firstItem="li5-1a-hqt" firstAttribute="leading" secondItem="tO9-Ht-ejg" secondAttribute="leadingMargin" constant="12" id="4Dl-he-YIF"/>
-                            <constraint firstItem="9T9-rd-lkX" firstAttribute="bottom" secondItem="li5-1a-hqt" secondAttribute="top" constant="-60" id="9DS-fJ-q8n"/>
+                            <constraint firstItem="9T9-rd-lkX" firstAttribute="bottom" secondItem="li5-1a-hqt" secondAttribute="top" constant="-24" id="9DS-fJ-q8n"/>
                             <constraint firstAttribute="centerX" secondItem="rIf-wQ-F1B" secondAttribute="centerX" id="Ah4-3j-TIz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WSp-oq-I62" secondAttribute="trailing" constant="2" id="FFL-jf-ie7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="li5-1a-hqt" secondAttribute="trailing" constant="12" id="K4O-iI-oUN"/>
@@ -2382,6 +2383,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="sense.png" width="176" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="9lQ-3E-nTc"/>
         <segue reference="d35-VB-TRV"/>
         <segue reference="azr-Tk-rB7"/>
         <segue reference="8ZE-B6-zEc"/>

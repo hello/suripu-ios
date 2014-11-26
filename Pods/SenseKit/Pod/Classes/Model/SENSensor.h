@@ -26,7 +26,7 @@ typedef NS_ENUM(NSUInteger, SENSensorCondition) {
 typedef NS_ENUM(NSUInteger, SENSensorUnit) {
     SENSensorUnitUnknown,
     SENSensorUnitDegreeCentigrade,
-    SENSensorUnitMicrogramPerCubicMeter,
+    SENSensorUnitAQI,
     SENSensorUnitPercent,
 };
 

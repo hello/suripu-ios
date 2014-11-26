@@ -285,7 +285,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
         [cell.drawerButton addTarget:self.collectionView.delegate
                               action:@selector(drawerButtonTapped:)
                     forControlEvents:UIControlEventTouchUpInside];
-    cell.shareButton.enabled = [self.sleepResult.score integerValue] > 0;
+    cell.shareButton.hidden = [self.sleepResult.score integerValue] == 0;
     if ([self.collectionView.delegate respondsToSelector:@selector(shareButtonTapped:)])
         [cell.shareButton addTarget:self.collectionView.delegate
                              action:@selector(shareButtonTapped:)

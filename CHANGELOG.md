@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.0.43
+
+New:
+
+* Added setting the first alarm to the onboarding process
+* 'Particulates' is now named 'Air quality index' and the measurement is adjusted accordingly
+
+Fixes:
+
+* Creating an alarm which does not repeat now works
+* Hide share button when not applicable
+
+
 ## 1.0.0.42
 
 New:

@@ -164,7 +164,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     switch ([sensor unit]) {
         case SENSensorUnitDegreeCentigrade:
             return [UIImage imageNamed:@"temperatureIcon"];
-        case SENSensorUnitMicrogramPerCubicMeter:
+        case SENSensorUnitAQI:
             return [UIImage imageNamed:@"particleIcon"];
         case SENSensorUnitPercent:
             return [UIImage imageNamed:@"humidityIcon"];
@@ -211,12 +211,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (void)configureConditionsCell:(HEMTodayTableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
     SENSensor* sensor = [self sensorAtIndexPath:indexPath];
-    NSString* value = nil;
-    if (sensor.unit == SENSensorUnitMicrogramPerCubicMeter && [sensor.value floatValue] != 0)
-        value = [NSString stringWithFormat:@"%.2f", [sensor.value floatValue]];
-    else
-        value = sensor.localizedValue;
-    NSString* detail = value ?: kHEMTodayEmptyData;
+    NSString* detail = sensor.localizedValue ?: kHEMTodayEmptyData;
     cell.sensorIconView.image = [self imageForSensor:sensor];
     cell.sensorNameLabel.text = [sensor localizedName];
     cell.sensorValueLabel.text = detail;

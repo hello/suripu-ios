@@ -19,7 +19,7 @@ NSString* const SENSensorUnitKey = @"unit";
 @implementation SENSensor
 
 static NSString* const SENSensorUnitCentigradeSymbol = @"c";
-static NSString* const SENSensorUnitMicrogCubicMeterSymbol = @"µg/m3";
+static NSString* const SENSensorUnitAQISymbol = @"AQI";
 static NSString* const SENSensorUnitPercentSymbol = @"%";
 static NSString* const SENSensorConditionIdealSymbol = @"IDEAL";
 static NSString* const SENSensorConditionAlertSymbol = @"ALERT";
@@ -69,16 +69,11 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
     NSString* prefix = [self localizedStringPrefixForUnit:unit];
     NSString* format;
     if (prefix) {
-        NSString* localizationKey = nil;
-        if (formattedValue == 0.0f) {
-            localizationKey = [NSString stringWithFormat:@"%@zero.format", prefix];
-        } else {
-            localizationKey = [NSString stringWithFormat:@"%@format", prefix];
-        }
+        NSString* localizationKey = [NSString stringWithFormat:@"%@format", prefix];
         format = NSLocalizedString(localizationKey, nil);
     }
     else {
-        format = @"%.02f";
+        format = @"%.0f";
     }
 
     return [NSString stringWithFormat:format, formattedValue];
@@ -106,7 +101,7 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
     case SENSensorUnitDegreeCentigrade:
         return @"measurement.temperature.";
 
-    case SENSensorUnitMicrogramPerCubicMeter:
+    case SENSensorUnitAQI:
         return @"measurement.particle.";
 
     case SENSensorUnitPercent:
@@ -206,8 +201,8 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
     if ([value isKindOfClass:[NSString class]]) {
         if ([value isEqualToString:SENSensorUnitCentigradeSymbol])
             return SENSensorUnitDegreeCentigrade;
-        else if ([value isEqualToString:SENSensorUnitMicrogCubicMeterSymbol])
-            return SENSensorUnitMicrogramPerCubicMeter;
+        else if ([value isEqualToString:SENSensorUnitAQISymbol])
+            return SENSensorUnitAQI;
         else if ([value isEqualToString:SENSensorUnitPercentSymbol])
             return SENSensorUnitPercent;
     }

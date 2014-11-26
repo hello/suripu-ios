@@ -144,12 +144,6 @@
 #define COCOAPODS_VERSION_MINOR_SORelativeDateTransformer 1
 #define COCOAPODS_VERSION_PATCH_SORelativeDateTransformer 10
 
-// SVProgressHUD
-#define COCOAPODS_POD_AVAILABLE_SVProgressHUD
-#define COCOAPODS_VERSION_MAJOR_SVProgressHUD 1
-#define COCOAPODS_VERSION_MINOR_SVProgressHUD 0
-#define COCOAPODS_VERSION_PATCH_SVProgressHUD 0
-
 // SVWebViewController
 #define COCOAPODS_POD_AVAILABLE_SVWebViewController
 #define COCOAPODS_VERSION_MAJOR_SVWebViewController 1

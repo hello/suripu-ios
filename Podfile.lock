@@ -65,7 +65,6 @@ PODS:
   - SHSProtoBuf/non-arc (0.9)
   - SORelativeDateTransformer (1.1.10)
   - SpinKit (1.2.0)
-  - SVProgressHUD (1.0)
   - SVWebViewController (1.0)
   - UIImageEffects (0.0.1)
   - YapDatabase (2.4.3):
@@ -86,7 +85,6 @@ DEPENDENCIES:
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
   - SORelativeDateTransformer (~> 1.1.10)
   - SpinKit (~> 1.2.0)
-  - SVProgressHUD (from `https://github.com/samvermette/SVProgressHUD.git`, commit `90e5921e0a0a782c7e06dd8d308031041c10f789`)
   - SVWebViewController (from `https://github.com/TransitApp/SVWebViewController.git`)
   - UIImageEffects (~> 0.0.1)
 
@@ -102,9 +100,6 @@ EXTERNAL SOURCES:
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :git: git@github.com:hello/protobuf-objc.git
-  SVProgressHUD:
-    :commit: 90e5921e0a0a782c7e06dd8d308031041c10f789
-    :git: https://github.com/samvermette/SVProgressHUD.git
   SVWebViewController:
     :git: https://github.com/TransitApp/SVWebViewController.git
 
@@ -126,7 +121,6 @@ SPEC CHECKSUMS:
   SHSProtoBuf: 62a02d425f5dbee00d057bae65d76f0f01737410
   SORelativeDateTransformer: de7936811c9988af8e129a097af48c828f933f5f
   SpinKit: 11fa465172473ce3d59a80bf0449020b850e5229
-  SVProgressHUD: 5e10939a296debf5fe5a5895eda9539b8b2114f1
   SVWebViewController: e23a0cf92c2185d584787f0422b14592dd160fca
   UIImageEffects: 69cd1e1f8fc4042a8fefcf4a0727cbf213e4dbfb
   YapDatabase: 2ec54726596299c88e09e899e8f17c15d7f6b18a

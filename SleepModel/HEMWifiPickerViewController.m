@@ -77,7 +77,12 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self scanWithActivity];
+    
+    // only auto start a scan if one has not yet been done before
+    if ([self scanStart] == nil) {
+        [self scanWithActivity];
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -197,7 +202,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             [SENAnalytics track:kHEMAnalyticsEventOnBWiFiScanComplete
                      properties:@{kHEMAnalyticsEventPropDuration : @(elapsed)}];
             
-            [[strongSelf activityView] dismissWithResultText:nil remove:NO completion:^{
+            [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
                 [[strongSelf wifiPickerTableView] reloadData];
                 [[strongSelf wifiPickerTableView] flashScrollIndicators];
             }];

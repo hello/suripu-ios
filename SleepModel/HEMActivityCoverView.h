@@ -47,6 +47,16 @@
 - (void)showInView:(UIView*)view activity:(BOOL)activity completion:(void(^)(void))completion;
 
 /**
+ * Show the text specified and whether or not to show an acitivity indicator.
+ * Use this only if you've explicitly added this view in to your view hierarchy.
+ *
+ * @param text:       the text to show
+ * @param activity:   YES to show activity indicator, NO otherwise
+ * @param completion: block to invoke when all is done
+ */
+- (void)showWithText:(NSString*)text activity:(BOOL)activity completion:(void(^)(void))completion;
+
+/**
  * @method updateText:completion:
  *
  * @discussion
@@ -63,14 +73,15 @@
  * block when all is done.
  * 
  * @param text:       text to display before dismissing
+ * @param showMark:   YES to show a success icon, NO otherwise
  * @param remove:     YES to automatically remove itself from super view, 
                       NO to keep it there, but hidden
  * @param completion: the block to invoke when this has been dismissed
  */
 - (void)dismissWithResultText:(NSString*)text
+              showSuccessMark:(BOOL)showMark
                        remove:(BOOL)remove
                    completion:(void(^)(void))completion;
 
-- (void)showWithText:(NSString*)text activity:(BOOL)activity completion:(void(^)(void))completion;
 
 @end

@@ -319,8 +319,9 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)stopActivityWithMessage:(NSString*)message
                 renableControls:(BOOL)enable
+                        success:(BOOL)success
                      completion:(void(^)(void))completion {
-    [[self activityView] dismissWithResultText:message remove:YES completion:^{
+    [[self activityView] dismissWithResultText:message showSuccessMark:success remove:YES completion:^{
         [self enableControls:enable];
         if (completion) completion ();
     }];
@@ -349,7 +350,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         [strongSelf executeNextStep];
     } failure:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf stopActivityWithMessage:nil renableControls:YES completion:^{
+        [strongSelf stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
             [strongSelf showSetWiFiError:error];
         }];
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
@@ -380,7 +381,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     } failure:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            [strongSelf stopActivityWithMessage:nil renableControls:YES completion:^{
+            [strongSelf stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
                 NSString* msg = NSLocalizedString(@"wifi.error.account-link-message", nil);
                 NSString* title = NSLocalizedString(@"wifi.error.link-account-title", nil);
                 [strongSelf showMessageDialog:msg title:title];
@@ -404,7 +405,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 [strongSelf executeNextStep];
             } else {
                 DDLogWarn(@"failed to set timezone on the server");
-                [strongSelf stopActivityWithMessage:nil renableControls:YES completion:^{
+                [strongSelf stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
                     NSString* msg = NSLocalizedString(@"wifi.error.time-zone-failed", nil);
                     NSString* title = NSLocalizedString(@"wifi.error.timezone-title", nil);
                     [strongSelf showMessageDialog:msg title:title];
@@ -419,7 +420,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 - (void)finish {
     NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
     __weak typeof(self) weakSelf = self;
-    [self stopActivityWithMessage:msg renableControls:NO completion:^{
+    [self stopActivityWithMessage:msg renableControls:NO success:YES completion:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             if ([strongSelf delegate] != nil) {

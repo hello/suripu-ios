@@ -246,7 +246,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 }
 
 - (void)dismissPairedState {
-    [[self activityView] dismissWithResultText:nil remove:YES completion:^{
+    [[self activityView] dismissWithResultText:nil showSuccessMark:YES remove:YES completion:^{
         [self proceed];
     }];
 }

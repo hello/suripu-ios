@@ -39,7 +39,7 @@
 }
 
 - (void)setupSubtitle {
-    NSString* format = NSLocalizedString(@"setup.second-pill.subtitle.format", nil);
+    NSString* format = NSLocalizedString(@"setupn-pill.subtitle.format", nil);
     NSString* settings = NSLocalizedString(@"setup.second-pill.settings", nil);
     
     NSArray* args = @[

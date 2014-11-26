@@ -83,7 +83,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     self.collectionView.scrollEnabled = NO;
     [UIView animateWithDuration:0.5f animations:^{
         self.collectionView.contentOffset = CGPointMake(0, 0);
-        [self.dataSource.sleepSummaryCell.shareButton setEnabled:NO];
+        [self.dataSource.sleepSummaryCell.shareButton setHidden:YES];
         [self.dataSource.sleepSummaryCell.dateLabel setAlpha:0.5];
         [self.dataSource.sleepSummaryCell.drawerButton setImage:[UIImage imageNamed:@"caret up"]
                                                        forState:UIControlStateNormal];
@@ -99,7 +99,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     self.collectionView.scrollEnabled = YES;
     [UIView animateWithDuration:0.5f animations:^{
-        [self.dataSource.sleepSummaryCell.shareButton setEnabled:[self.dataSource.sleepResult.score integerValue] > 0];
+        [self.dataSource.sleepSummaryCell.shareButton setHidden:[self.dataSource.sleepResult.score integerValue] == 0];
         [self.dataSource.sleepSummaryCell.dateLabel setAlpha:1];
         [self.dataSource.sleepSummaryCell.drawerButton setImage:[UIImage imageNamed:@"Menu"]
                                                        forState:UIControlStateNormal];

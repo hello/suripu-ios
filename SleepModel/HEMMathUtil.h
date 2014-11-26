@@ -34,3 +34,9 @@ float HEMToPounds (NSNumber* grams);
  * @return kilograms as a float
  */
 float HEMToKilograms (NSNumber* pounds);
+
+/**
+ * Convert degrees to radians
+ @ return radian value for degrees
+ */
+float HEMDegreesToRadians(float degrees);

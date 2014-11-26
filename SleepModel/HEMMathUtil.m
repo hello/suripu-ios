@@ -28,3 +28,7 @@ float HEMToPounds (NSNumber* grams) {
 float HEMToKilograms (NSNumber* pounds) {
     return [pounds integerValue] * HEMMathKilogramsPerPound;
 }
+
+float HEMDegreesToRadians(float degrees) {
+    return  (degrees / 180.0) * M_PI;
+}

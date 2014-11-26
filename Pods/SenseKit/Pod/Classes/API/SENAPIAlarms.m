@@ -54,18 +54,42 @@ static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"alarms/%.0f";
 + (NSDictionary*)dictionaryForAlarm:(SENAlarm*)alarm
 {
     BOOL repeated = alarm.repeatFlags != 0;
-    NSMutableDictionary* alarmRepresentation = [NSMutableDictionary new];
-    alarmRepresentation[@"editable"] = @([alarm isEditable]);
-    alarmRepresentation[@"enabled"] = @([alarm isOn]);
+    NSMutableDictionary* properties = [NSMutableDictionary new];
+    NSDateComponents* alarmDateComponents = [self dateComponentsForAlarm:alarm];
+    properties[@"editable"] = @([alarm isEditable]);
+    properties[@"enabled"] = @([alarm isOn]);
     if (alarm.soundName.length > 0)
-        alarmRepresentation[@"sound"] = @{ @"name" : alarm.soundName };
+        properties[@"sound"] = @{ @"name" : alarm.soundName };
     else
-        alarmRepresentation[@"sound"] = @{};
-    alarmRepresentation[@"hour"] = @(alarm.hour);
-    alarmRepresentation[@"minute"] = @(alarm.minute);
-    alarmRepresentation[@"repeated"] = @(repeated);
-    alarmRepresentation[@"day_of_week"] = [self repeatDaysForAlarm:alarm];
-    return alarmRepresentation;
+        properties[@"sound"] = @{};
+    properties[@"hour"] = @(alarmDateComponents.hour);
+    properties[@"minute"] = @(alarmDateComponents.minute);
+    properties[@"repeated"] = @(repeated);
+    properties[@"day_of_week"] = [self repeatDaysForAlarm:alarm];
+
+    if (!repeated) {
+        properties[@"day_of_month"] = @(alarmDateComponents.day);
+        properties[@"month"] = @(alarmDateComponents.month);
+        properties[@"year"] = @(alarmDateComponents.year);
+    }
+
+    return properties;
+}
+
++ (NSDateComponents*)dateComponentsForAlarm:(SENAlarm*)alarm
+{
+    NSDate* date = [NSDate date];
+    NSCalendarUnit flags = (NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitDay);
+    NSDateComponents* currentDateComponents = [[NSCalendar currentCalendar] components:flags fromDate:date];
+    NSInteger minuteOfDay = (currentDateComponents.hour * 60) + currentDateComponents.minute;
+    NSInteger alarmMinuteOfDay = (alarm.hour * 60) + alarm.minute;
+    NSDateComponents* diff = [NSDateComponents new];
+    diff.minute = alarmMinuteOfDay - minuteOfDay;
+    if (alarmMinuteOfDay < minuteOfDay)
+        diff.day = 1;
+
+    NSDate* alarmDate = [[NSCalendar currentCalendar] dateByAddingComponents:diff toDate:date options:0];
+    return [[NSCalendar currentCalendar] components:flags fromDate:alarmDate];
 }
 
 + (NSArray*)repeatDaysForAlarm:(SENAlarm*)alarm

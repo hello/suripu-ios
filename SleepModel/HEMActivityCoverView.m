@@ -86,7 +86,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
     CGSize constraint = CGSizeZero;
     constraint.width = bWidth - (2*kHEMActivityMargins);
     constraint.height = MAXFLOAT;
-    CGSize textSize = [[self indicator] sizeThatFits:constraint];
+    CGSize textSize = [[self activityLabel] sizeThatFits:constraint];
     
     activityFrame.origin.y = (bHeight -
                               (textSize.height
@@ -94,6 +94,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
                                + CGRectGetHeight(activityFrame))) / 2;
     activityFrame.origin.x = (bWidth - CGRectGetWidth(activityFrame))/2;
     [[self indicator] setFrame:activityFrame];
+    [[self successMarkView] setFrame:activityFrame]; // same as indicator
     
     CGRect labelFrame = [[self activityLabel] frame];
     labelFrame.size.width = constraint.width;
@@ -103,25 +104,34 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
     [[self activityLabel] setFrame:labelFrame];
 }
 
+- (UIView*)successMarkView {
+    if (_successMarkView == nil) {
+        UIImageView* mark = [[UIImageView alloc] initWithFrame:[[self indicator] frame]];
+        [mark setImage:[HelloStyleKit check]];
+        [mark setContentMode:UIViewContentModeScaleAspectFit];
+        _successMarkView = mark;
+    }
+    return _successMarkView;
+}
+
+- (void)showSuccessMarkAnimated:(BOOL)animate completion:(void(^)(BOOL finished))completion {
+    UIView* mark = [self successMarkView];
+    
+    if (animate) {
+        [mark setTransform:CGAffineTransformMakeScale(0.0f, 0.0f)];
+        [self addSubview:mark];
+        [HEMAnimationUtils grow:mark completion:completion];
+    } else {
+        [self addSubview:mark];
+        if (completion) completion (YES);
+    }
+    
+}
+
 #pragma mark - Updating Text
 
 - (void)updateText:(NSString*)text completion:(void(^)(BOOL finished))completion {
-    if (text == nil) {
-        if (completion) completion (YES);
-        return;
-    }
-    [UIView animateWithDuration:kHEMActivityAnimDuration
-                     animations:^{
-                         [[self activityLabel] setAlpha:0.0f];
-                     }
-                     completion:^(BOOL finished) {
-                         [[self activityLabel] setText:text];
-                         [self setNeedsLayout];
-                         [UIView animateWithDuration:kHEMActivityAnimDuration
-                                          animations:^{
-                                              [[self activityLabel] setAlpha:1.0f];
-                                          } completion:completion];
-                     }];
+    [self updateText:text hideActivity:NO completion:nil];
 }
 
 - (void)updateText:(NSString *)text hideActivity:(BOOL)hideActivity completion:(void (^)(BOOL))completion {
@@ -148,6 +158,20 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 
 #pragma mark - Show
 
+- (void)showInView:(UIView *)view
+          withText:(NSString *)text
+       successMark:(BOOL)showSuccessMark
+        completion:(void (^)(void))completion {
+    
+    [self setFrame:[view bounds]];
+    [self setNeedsLayout];
+    [self setAlpha:0.0f]; // make sure it's not visible before adding to view
+    [self showSuccessMarkAnimated:NO completion:nil];
+    [view addSubview:self];
+    [self showWithText:text activity:NO completion:completion];
+    
+}
+
 - (void)showInView:(UIView*)view completion:(void(^)(void))completion {
     [self showInView:view withText:nil activity:YES completion:completion];
 }
@@ -171,6 +195,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 - (void)showWithText:(NSString*)text
             activity:(BOOL)activity
           completion:(void(^)(void))completion {
+    
     [self setAlpha:0.0f];
     [self setHidden:NO];
     [[self indicator] stop];
@@ -196,23 +221,6 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 
 #pragma mark - Dismiss
 
-- (UIView*)successMarkView {
-    if (_successMarkView == nil) {
-        UIImageView* mark = [[UIImageView alloc] initWithFrame:[[self indicator] frame]];
-        [mark setImage:[HelloStyleKit check]];
-        [mark setContentMode:UIViewContentModeScaleAspectFit];
-        _successMarkView = mark;
-    }
-    return _successMarkView;
-}
-
-- (void)showSuccessMark:(void(^)(BOOL finished))completion {
-    UIView* mark = [self successMarkView];
-    [mark setTransform:CGAffineTransformMakeScale(0.0f, 0.0f)];
-    [self addSubview:mark];
-    [HEMAnimationUtils grow:mark completion:completion];
-}
-
 - (void)dismissWithResultText:(NSString*)text
               showSuccessMark:(BOOL)showMark
                        remove:(BOOL)remove
@@ -221,7 +229,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
     [self updateText:text hideActivity:YES completion:^(BOOL finished) {
         [[self indicator] stop];
         if (showMark) {
-            [self showSuccessMark:^(BOOL finished) {
+            [self showSuccessMarkAnimated:YES completion:^(BOOL finished) {
                 [self delayDismissWithCompletion:completion];
             }];
         } else {

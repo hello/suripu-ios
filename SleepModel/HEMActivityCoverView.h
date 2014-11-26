@@ -36,6 +36,18 @@
         completion:(void(^)(void))completion;
 
 /**
+ * Show this view with optional text and success mark
+ * @param view:            view this view should attach to
+ * @param text:            initial text to display
+ * @param showSuccessMark: YES to show a success mark, NO otherwise
+ * @param completion: block to invoke on completion
+ */
+- (void)showInView:(UIView *)view
+          withText:(NSString *)text
+       successMark:(BOOL)showSuccessMark
+        completion:(void (^)(void))completion;
+
+/**
  * @method
  * Show this activity view inside the specified view.  If you want to display this
  * over the navigationBar, then pass in the navigation controller's view

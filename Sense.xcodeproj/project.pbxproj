@@ -378,7 +378,7 @@
 		BFB0FBF919D4C3BD0056FFEC /* alarmsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB0FBF519D4C3BD0056FFEC /* alarmsIcon@2x.png */; };
 		BFB0FBFA19D4C3BD0056FFEC /* sleepInsightsIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB0FBF619D4C3BD0056FFEC /* sleepInsightsIcon.png */; };
 		BFB0FBFB19D4C3BD0056FFEC /* sleepInsightsIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFB0FBF719D4C3BD0056FFEC /* sleepInsightsIcon@2x.png */; };
-		BFB1F3D91A0D9F7600E620AD /* HEMSetupSecondPillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F3D81A0D9F7600E620AD /* HEMSetupSecondPillViewController.m */; };
+		BFB1F3D91A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F3D81A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m */; };
 		BFB1F3DC1A0DA33A00E620AD /* HEMGetAppViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB1F3DB1A0DA33A00E620AD /* HEMGetAppViewController.m */; };
 		BFB6D47619BE16D1004CA11B /* HEMBirthdatePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB6D47519BE16D1004CA11B /* HEMBirthdatePickerView.m */; };
 		BFB93C7319CB4EA9005067D0 /* HEMPersonalInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFB93C7219CB4EA9005067D0 /* HEMPersonalInfoViewController.m */; };
@@ -925,8 +925,8 @@
 		BFB0FBF519D4C3BD0056FFEC /* alarmsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "alarmsIcon@2x.png"; path = "images/alarmsIcon@2x.png"; sourceTree = "<group>"; };
 		BFB0FBF619D4C3BD0056FFEC /* sleepInsightsIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sleepInsightsIcon.png; path = images/sleepInsightsIcon.png; sourceTree = "<group>"; };
 		BFB0FBF719D4C3BD0056FFEC /* sleepInsightsIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sleepInsightsIcon@2x.png"; path = "images/sleepInsightsIcon@2x.png"; sourceTree = "<group>"; };
-		BFB1F3D71A0D9F7600E620AD /* HEMSetupSecondPillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSetupSecondPillViewController.h; sourceTree = "<group>"; };
-		BFB1F3D81A0D9F7600E620AD /* HEMSetupSecondPillViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSetupSecondPillViewController.m; sourceTree = "<group>"; };
+		BFB1F3D71A0D9F7600E620AD /* HEMSetupAnotherPillViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSetupAnotherPillViewController.h; sourceTree = "<group>"; };
+		BFB1F3D81A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSetupAnotherPillViewController.m; sourceTree = "<group>"; };
 		BFB1F3DA1A0DA33A00E620AD /* HEMGetAppViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMGetAppViewController.h; sourceTree = "<group>"; };
 		BFB1F3DB1A0DA33A00E620AD /* HEMGetAppViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMGetAppViewController.m; sourceTree = "<group>"; };
 		BFB5611019AE7C9000A44B9F /* HEMSlideViewController+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HEMSlideViewController+Protected.h"; sourceTree = "<group>"; };
@@ -1793,8 +1793,8 @@
 			children = (
 				BF9C87D619B6A199003188D4 /* HEMPillPairViewController.h */,
 				BF9C87D719B6A199003188D4 /* HEMPillPairViewController.m */,
-				BFB1F3D71A0D9F7600E620AD /* HEMSetupSecondPillViewController.h */,
-				BFB1F3D81A0D9F7600E620AD /* HEMSetupSecondPillViewController.m */,
+				BFB1F3D71A0D9F7600E620AD /* HEMSetupAnotherPillViewController.h */,
+				BFB1F3D81A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m */,
 				BF14E3CD19EF3C3D0006EFEA /* HEMPillSetupViewController.h */,
 				BF14E3CE19EF3C3D0006EFEA /* HEMPillSetupViewController.m */,
 				BF14E3CF19EF3C3D0006EFEA /* HEMSecondPillSetupViewController.h */,
@@ -2562,7 +2562,7 @@
 				BF14E3C419EF3C020006EFEA /* HEMBluetoothUtils.m in Sources */,
 				BF1E2E5D1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m in Sources */,
 				8AC4A05B198ACE4800C2BD63 /* HEMLineGraphDataSource.m in Sources */,
-				BFB1F3D91A0D9F7600E620AD /* HEMSetupSecondPillViewController.m in Sources */,
+				BFB1F3D91A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m in Sources */,
 				BFC3AA0719C2655F0055D308 /* HEMInfoAlertView.m in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,
 				8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */,

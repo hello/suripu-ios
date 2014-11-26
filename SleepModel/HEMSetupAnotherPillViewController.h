@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "HEMBaseController.h"
 
-@interface HEMSetupSecondPillViewController : HEMBaseController
+@interface HEMSetupAnotherPillViewController : HEMBaseController
 
 @end

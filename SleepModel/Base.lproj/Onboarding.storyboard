@@ -254,6 +254,7 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
+                                    <segue destination="4s2-Gt-ovZ" kind="push" id="ujA-1B-BPr"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -1105,10 +1106,10 @@
             </objects>
             <point key="canvasLocation" x="11620" y="922"/>
         </scene>
-        <!--Setup Second Pill View Controller-->
+        <!--Setup Another Pill View Controller-->
         <scene sceneID="HZY-VN-bUX">
             <objects>
-                <viewController id="fc9-7S-Ult" customClass="HEMSetupSecondPillViewController" sceneMemberID="viewController">
+                <viewController id="fc9-7S-Ult" customClass="HEMSetupAnotherPillViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="mVd-qk-DaN"/>
                         <viewControllerLayoutGuide type="bottom" id="RB7-rd-PIm"/>
@@ -1118,22 +1119,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set up another Sleep Pill?" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDs-8j-Vd9">
-                                <rect key="frame" x="28" y="28" width="544" height="66"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="66" id="loi-LP-13t"/>
-                                </constraints>
+                                <rect key="frame" x="28" y="28" width="544" height="28"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMZ-p6-gA8">
-                                <rect key="frame" x="28" y="83" width="544" height="147"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="147" id="RvQ-Fp-VYO"/>
-                                </constraints>
+                                <rect key="frame" x="28" y="80" width="544" height="54"/>
                                 <attributedString key="attributedText">
                                     <fragment>
-                                        <string key="content">Would you like to set up a second Sleep Pill at this time?
+                                        <string key="content">Would you like to set up a second Sleep Pill for your partner at this time?
 
 You can always do this later by visiting Settings.</string>
                                         <attributes>
@@ -1182,7 +1177,7 @@ You can always do this later by visiting Settings.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="iMZ-p6-gA8" firstAttribute="bottom" secondItem="eDs-8j-Vd9" secondAttribute="bottom" constant="136" id="1gs-Ml-IUQ"/>
+                            <constraint firstItem="eDs-8j-Vd9" firstAttribute="bottom" secondItem="iMZ-p6-gA8" secondAttribute="top" constant="-24" id="1gs-Ml-IUQ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eDs-8j-Vd9" secondAttribute="trailing" constant="12" id="1pn-3L-DDC"/>
                             <constraint firstAttribute="centerX" secondItem="4OB-Af-zlr" secondAttribute="centerX" id="2yW-ue-NM0"/>
                             <constraint firstItem="eDs-8j-Vd9" firstAttribute="top" secondItem="mVd-qk-DaN" secondAttribute="bottom" constant="8" id="62J-hd-6bD"/>
@@ -2468,9 +2463,10 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="sense.png" width="176" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="ujA-1B-BPr"/>
+        <segue reference="BJO-wU-lca"/>
         <segue reference="d35-VB-TRV"/>
         <segue reference="DAu-sO-H4V"/>
-        <segue reference="BJO-wU-lca"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

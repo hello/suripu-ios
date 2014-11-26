@@ -87,7 +87,7 @@
 #pragma mark - HEMAlarmControllerDelegate
 
 - (void)didCancelAlarmFrom:(HEMAlarmViewController *)alarmVC {
-    [self dismissAlarmVC:alarmVC];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)didSaveAlarm:(__unused SENAlarm *)alarm from:(HEMAlarmViewController *)alarmVC {

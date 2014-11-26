@@ -209,6 +209,8 @@ static UIImage* _smartAlarm = nil;
 
     //// Color Declarations
     UIColor* sleepScoreNoValueColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.059];
+    UIColor* sleepScoreValueColor = [UIColor colorWithRed: 0.41 green: 0.41 blue: 0.41 alpha: 1];
+    UIColor* sleepScoreLabelTextColor = [UIColor colorWithRed: 0.602 green: 0.602 blue: 0.602 alpha: 1];
 
     //// Variable Declarations
     UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.highSleepScoreColor)) : sleepScoreNoValueColor;
@@ -237,7 +239,7 @@ static UIImage* _smartAlarm = nil;
     NSMutableParagraphStyle* sleepScoreLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNext-UltraLight" size: 75], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
+    NSDictionary* sleepScoreLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNext-UltraLight" size: 75], NSForegroundColorAttributeName: sleepScoreValueColor, NSParagraphStyleAttributeName: sleepScoreLabelStyle};
 
     CGFloat sleepScoreLabelTextHeight = [sleepScoreText boundingRectWithSize: CGSizeMake(sleepScoreLabelRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreLabelFontAttributes context: nil].size.height;
     CGContextSaveGState(context);
@@ -251,7 +253,7 @@ static UIImage* _smartAlarm = nil;
     NSMutableParagraphStyle* sleepScoreTextLabelStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
     sleepScoreTextLabelStyle.alignment = NSTextAlignmentCenter;
 
-    NSDictionary* sleepScoreTextLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Avenir-Heavy" size: 9], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: sleepScoreTextLabelStyle};
+    NSDictionary* sleepScoreTextLabelFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"Avenir-Heavy" size: 9], NSForegroundColorAttributeName: sleepScoreLabelTextColor, NSParagraphStyleAttributeName: sleepScoreTextLabelStyle};
 
     CGFloat sleepScoreTextLabelTextHeight = [localizedSleepScoreDescriptionLabel boundingRectWithSize: CGSizeMake(sleepScoreTextLabelRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: sleepScoreTextLabelFontAttributes context: nil].size.height;
     CGContextSaveGState(context);

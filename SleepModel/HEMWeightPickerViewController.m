@@ -15,6 +15,9 @@
 
 NSInteger const HEMWeightPickerMaxWeight = 900;
 
+static CGFloat const HEMWeightDefaultFemale = 110.0f;
+static CGFloat const HEMWeightDefaultMale = 175.0f;
+
 @interface HEMWeightPickerViewController () <iCarouselDataSource, iCarouselDelegate>
 
 @property (weak,   nonatomic) IBOutlet UILabel *titleLabel;
@@ -42,8 +45,10 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
     [[super navigationItem] setHidesBackButton:YES];
     
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [self setupCarousel];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
+    
+    [self setupCarousel];
+    
     [SENAnalytics track:kHEMAnalyticsEventOnBWeight];
 }
 
@@ -54,9 +59,10 @@ NSInteger const HEMWeightPickerMaxWeight = 900;
     [[self carousel] setScrollToItemBoundary:NO];
     [[self carousel] setClipsToBounds:YES];
     
-    if ([self defaultWeightLbs] > 0) {
-        [[self carousel] scrollToOffset:[self defaultWeightLbs] / 10.0f duration:0.0f];
-    }
+    SENAccountGender gender = [[[HEMUserDataCache sharedUserDataCache] account] gender];
+    CGFloat genderWeight = gender == SENAccountGenderFemale ? HEMWeightDefaultFemale : HEMWeightDefaultMale;
+    CGFloat initialWeight = [self defaultWeightLbs] >0 ? [self defaultWeightLbs] : genderWeight;
+    [[self carousel] scrollToOffset:initialWeight / 10.0f duration:0.0f];
     
     if ([self delegate] != nil) {
         NSString* done = NSLocalizedString(@"status.success", nil);

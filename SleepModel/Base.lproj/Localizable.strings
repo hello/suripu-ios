@@ -263,7 +263,7 @@
 // sensors
 "sensor.temperature" = "Temperature";
 "sensor.humidity" = "Humidity";
-"sensor.particulates" = "Particulates";
+"sensor.particulates" = "Air quality index";
 "sensor.time-range.day" = "Past 24";
 "sensor.time-range.week" = "This week";
 "sensor.comfort-zone.title" = "Comfort Zone";
@@ -278,20 +278,17 @@
 "measurement.light.unit" = "lx";
 "measurement.sound.unit" = "db";
 "measurement.or" = "or";
-"measurement.particle.unit" = "µg/m³";
+"measurement.particle.unit" = "";
 "measurement.cm.unit" = "cm";
 "measurement.kg.unit" = "kg";
 "measurement.lb.unit" = "lb";
 "measurement.db.unit" = "db";
 "measurement.lx.unit" = "lx";
 "measurement.temperature.format" = "%.f°";
-"measurement.temperature.zero.format" = "%.f°";
 "measurement.percentage.format" = "%.f%%";
-"measurement.percentage.zero.format" = "%.f%%";
 "measurement.light.format" = "%.flx";
 "measurement.sound.format" = "%.fdb";
-"measurement.particle.zero.format" = "%.0f µg/m³";
-"measurement.particle.format" = "%.02f µg/m³";
+"measurement.particle.format" = "%.0f";
 "measurement.cm.format" = "%ldcm";
 "measurement.ft.format" = "%ld'";
 "measurement.in.format" = "%ld\"";

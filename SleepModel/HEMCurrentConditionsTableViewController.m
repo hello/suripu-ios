@@ -141,7 +141,7 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
         return;
     DDLogVerbose(@"Refreshing sensor data (rate: %f)", self.refreshRate);
     self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
-        return [obj1.name compare:obj2.name];
+        return [obj2.localizedName compare:obj1.localizedName];
     }];
     NSMutableArray* values = [[self.sensors valueForKey:NSStringFromSelector(@selector(value))] mutableCopy];
     [values removeObject:[NSNull null]];
@@ -277,19 +277,15 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
         [cell showDetailBubble:YES];
         [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
         cell.detailLabel.textColor = [HEMSensorUtils colorForSensorWithCondition:sensor.condition];
-        
         switch (sensor.unit) {
         case SENSensorUnitDegreeCentigrade:
             cell.glyphImageView.image = [HelloStyleKit temperatureIcon];
-            cell.detailLabel.text = sensor.localizedValue ?: NSLocalizedString(@"empty-data", nil);
             break;
-        case SENSensorUnitMicrogramPerCubicMeter:
+        case SENSensorUnitAQI:
             cell.glyphImageView.image = [HelloStyleKit particleIcon];
-            cell.detailLabel.text = sensor.value ? [NSString stringWithFormat:@"%.02f", [sensor.value doubleValue]] : NSLocalizedString(@"empty-data", nil);
             break;
         case SENSensorUnitPercent:
             cell.glyphImageView.image = [HelloStyleKit humidityIcon];
-            cell.detailLabel.text = sensor.localizedValue ?: NSLocalizedString(@"empty-data", nil);
             break;
         case SENSensorUnitUnknown:
         default:

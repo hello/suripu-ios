@@ -39,7 +39,6 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 @property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL pairTimedOut;
 @property (assign, nonatomic, getter=isLoaded) BOOL loaded;
-@property (assign, nonatomic) CGFloat shadowOpacity;
 
 @property (strong, nonatomic) id disconnectObserverId;
 
@@ -59,8 +58,6 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     [self showActivity];
     
     [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
-    
-    [self setShadowOpacity:[[[self buttonContainer] layer] shadowOpacity]];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
 }
@@ -103,10 +100,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    CGFloat shadowOpacity
-        = [[self contentView] scrollRequired]
-        ? [self shadowOpacity]
-        : 0.0f;
+    CGFloat shadowOpacity = [[self contentView] scrollRequired]?1.0f:0.0f;
     [[[self buttonContainer] layer] setShadowOpacity:shadowOpacity];
 }
 

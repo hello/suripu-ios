@@ -19,7 +19,9 @@
 #import "HEMActivityCoverView.h"
 #import "HEMSettingsTableViewController.h"
 
-static NSString* const kHEMOnboardingSettingCheckpoint = @"sense.checkpoint";
+CGFloat const HEMOnboardingShadowOpacity = 0.8f;
+
+static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 @implementation HEMOnboardingUtils
 
@@ -75,12 +77,12 @@ static NSString* const kHEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 + (void)saveOnboardingCheckpoint:(HEMOnboardingCheckpoint)checkpoint {
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:checkpoint forKey:kHEMOnboardingSettingCheckpoint];
+    [defaults setInteger:checkpoint forKey:HEMOnboardingSettingCheckpoint];
     [defaults synchronize]; // save now in case user kills app or something else
 }
 
 + (HEMOnboardingCheckpoint)onboardingCheckpoint {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:kHEMOnboardingSettingCheckpoint];
+    return [[NSUserDefaults standardUserDefaults] integerForKey:HEMOnboardingSettingCheckpoint];
 }
 
 + (void)resetOnboardingCheckpoint {
@@ -217,10 +219,13 @@ static NSString* const kHEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 }
 
 + (void)applyShadowToButtonContainer:(UIView*)buttonContainer {
-    [[buttonContainer layer] setShadowRadius:3.0f];
-    [[ buttonContainer layer] setShadowOffset:CGSizeMake(0.0f, 3.0f)];
-    [[ buttonContainer layer] setShadowOpacity:0.8f];
-    [[ buttonContainer layer] setShadowColor:[[UIColor blackColor] CGColor]];
+    NSShadow* shadow = [HelloStyleKit onboardingButtonContainerShadow];
+    CALayer* layer = [buttonContainer layer];
+    [layer setShadowRadius:[shadow shadowBlurRadius]];
+    [layer setShadowOffset:[shadow shadowOffset]];
+    [layer setShadowColor:[[shadow shadowColor] CGColor]];
+    [layer setShadowOpacity:1.0f];
+    
 }
 
 @end

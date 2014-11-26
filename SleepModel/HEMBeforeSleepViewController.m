@@ -18,8 +18,6 @@
 #import "HelloStyleKit.h"
 #import "HEMActivityCoverView.h"
 
-static CGFloat const HEMBeforeSleepScrollShadowRadius = 3.0f;
-
 @interface HEMBeforeSleepViewController()
 
 @property (weak, nonatomic) IBOutlet HEMScrollableView *scrollableView;
@@ -42,10 +40,7 @@ static CGFloat const HEMBeforeSleepScrollShadowRadius = 3.0f;
     [[self scrollableView] addImage:[HelloStyleKit senseGlow]];
     [[self scrollableView] addDescription:[self attributedDescription]];
     
-    [[[self buttonContainer] layer] setShadowRadius:HEMBeforeSleepScrollShadowRadius];
-    [[[self buttonContainer] layer] setShadowOffset:CGSizeMake(0.0f, 3.0f)];
-    [[[self buttonContainer] layer] setShadowOpacity:1.0f];
-    [[[self buttonContainer] layer] setShadowColor:[[UIColor blackColor] CGColor]];
+    [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
 }
 
 - (NSAttributedString*)attributedDescription {
@@ -66,10 +61,6 @@ static CGFloat const HEMBeforeSleepScrollShadowRadius = 3.0f;
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
     
     return attrDesc;
-}
-
-- (IBAction)next:(id)sender {
-    [HEMOnboardingUtils finisOnboardinghWithMessageFrom:self];
 }
 
 @end

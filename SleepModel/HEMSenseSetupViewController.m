@@ -24,8 +24,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *helpButton;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 
-@property (assign, nonatomic) CGFloat buttonContainerShadowOpacity;
-
 @end
 
 @implementation HEMSenseSetupViewController
@@ -37,8 +35,6 @@
     [self setupContent];
     
     [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
-    
-    [self setButtonContainerShadowOpacity:[[[self buttonContainer] layer] shadowOpacity]];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBSenseSetup];
 }
@@ -57,10 +53,7 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    CGFloat shadowOpacity
-        = [[self contentView] scrollRequired]
-        ? [self buttonContainerShadowOpacity]
-        : 0.0f;
+    CGFloat shadowOpacity = [[self contentView] scrollRequired]?1.0f:0.0f;
     [[[self buttonContainer] layer] setShadowOpacity:shadowOpacity];
 }
 

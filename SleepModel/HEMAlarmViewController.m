@@ -154,9 +154,22 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
 
 #pragma mark - Actions
 
+- (void)dismiss:(BOOL)saved {
+    if (self.delegate) {
+        if (saved) {
+            [self.delegate didSaveAlarm:self.alarm from:self];
+        } else {
+            [self.delegate didCancelAlarmFrom:self];
+        }
+    } else {
+        [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+    }
+    
+}
+
 - (IBAction)dismissFromView:(id)sender
 {
-    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+    [self dismiss:NO];
 }
 
 - (IBAction)saveAndDismissFromView:(id)sender
@@ -166,7 +179,7 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
     [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (success)
-            [strongSelf dismissFromView:nil];
+            [strongSelf dismiss:YES];
         else if ([self isUnsavedAlarm])
             [strongSelf.alarm delete];
         else

@@ -26,8 +26,6 @@
 @property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *continueButtonWidthConstraint;
 
-@property (assign, nonatomic) CGFloat shadowOpacity;
-
 @end
 
 @implementation HEMSecondPillSetupViewController
@@ -37,8 +35,6 @@
     [self setupContent];
     
     [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
-    
-    [self setShadowOpacity:[[[self buttonContainer] layer] shadowOpacity]];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBAddPill];
 }
@@ -68,11 +64,7 @@
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     
-    CGFloat shadowOpacity
-        = [[self contentView] scrollRequired]
-        ? [self shadowOpacity]
-        : 0.0f;
-    
+    CGFloat shadowOpacity = [[self contentView] scrollRequired]?1.0f:0.0f;
     [[[self buttonContainer] layer] setShadowOpacity:shadowOpacity];
 }
 

@@ -49,8 +49,8 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 
 - (void)setup {
     [self setBackgroundColor:[UIColor whiteColor]];
-    [self addLabel];
     [self addActivityIndicator];
+    [self addLabel];
 }
 
 - (void)addLabel {
@@ -76,26 +76,26 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
     CGFloat bWidth = CGRectGetWidth([self bounds]);
     CGFloat bHeight = CGRectGetHeight([self bounds]);
     
+    CGRect activityFrame = [[self activityView] frame];
+    
     CGSize constraint = CGSizeZero;
     constraint.width = bWidth - (2*kHEMActivityMargins);
     constraint.height = MAXFLOAT;
     CGSize textSize = [[self activityLabel] sizeThatFits:constraint];
     
-    CGRect activityFrame = [[self activityView] frame];
+    activityFrame.origin.y = (bHeight -
+                              (textSize.height
+                               + kHEMActivityViewSeparation
+                               + CGRectGetHeight(activityFrame))) / 2;
+    activityFrame.origin.x = (bWidth - CGRectGetWidth(activityFrame))/2;
+    [[self activityView] setFrame:activityFrame];
     
     CGRect labelFrame = [[self activityLabel] frame];
     labelFrame.size.width = constraint.width;
     labelFrame.size.height = textSize.height;
-    labelFrame.origin.y = (bHeight -
-                           (textSize.height
-                            + kHEMActivityViewSeparation
-                            + CGRectGetHeight(activityFrame))) / 2;
+    labelFrame.origin.y = CGRectGetMaxY(activityFrame) + kHEMActivityViewSeparation;
     labelFrame.origin.x = kHEMActivityMargins;
     [[self activityLabel] setFrame:labelFrame];
-    
-    activityFrame.origin.y = CGRectGetMaxY(labelFrame) + kHEMActivityViewSeparation;
-    activityFrame.origin.x = (bWidth - CGRectGetWidth(activityFrame))/2;
-    [[self activityView] setFrame:activityFrame];
 }
 
 - (void)updateText:(NSString*)text completion:(void(^)(BOOL finished))completion {

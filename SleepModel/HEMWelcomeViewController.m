@@ -250,11 +250,7 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 }
 
 - (IBAction)getSense:(id)sender {
-    // TODO (jimmy): likely going to be building an embedded / in-app browser
-    // when we have time so not going to do anything fancier than push people out
     [HEMSupportUtil openURL:kHEMSenseOrderURL from:self];
-//    NSURL* orderURL = [NSURL URLWithString:kHEMSenseOrderURL];
-//    [[UIApplication sharedApplication] openURL:orderURL];
 }
 
 - (IBAction)cancelGettingStarted:(id)sender {

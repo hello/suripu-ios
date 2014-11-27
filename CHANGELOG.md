@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.0.44
+
+New:
+
+* custom loading indicator with discrete done state during onboarding
+
+Fixes:
+
+* fixed issue where some text was being cut off during onboarding
+* setting default weight based on gender so it does not start from 0
+* various copy changes during onboarding
+* various layout fixes
+
 ## 1.0.0.43
 
 New:

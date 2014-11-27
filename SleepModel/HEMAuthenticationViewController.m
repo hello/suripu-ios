@@ -1,5 +1,4 @@
 
-#import <SVProgressHUD/SVProgressHUD.h>
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAPIClient.h>
 #import <CocoaLumberjack/DDLog.h>

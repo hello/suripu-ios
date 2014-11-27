@@ -91,8 +91,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [self updateConstraint:[self descriptionTopConstraint] withDiff:10];
 }
 
-- (void)stopActivityWithMessage:(NSString*)message completion:(void(^)(void))completion {
-    [[self activityView] dismissWithResultText:message remove:YES completion:^{
+- (void)stopActivityWithMessage:(NSString*)message success:(BOOL)sucess completion:(void(^)(void))completion {
+    [[self activityView] dismissWithResultText:message showSuccessMark:sucess remove:YES completion:^{
         [[self noSenseButton] setEnabled:YES];
         if (completion) completion ();
     }];
@@ -118,7 +118,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
-                [strongSelf stopActivityWithMessage:nil completion:^{
+                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                     if ([strongSelf isPairing]) {
                         [strongSelf setCurrentState:HEMSensePairStatePairingError];
                         [strongSelf executeNextStep];
@@ -155,7 +155,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     DDLogVerbose(@"scanning for Sense timed out, oh no!");
     [self setTimedOut:YES];
     [SENSenseManager stopScan];
-    [self stopActivityWithMessage:nil completion:^{
+    [self stopActivityWithMessage:nil success:NO completion:^{
         NSString* msg = NSLocalizedString(@"pairing.error.timed-out", nil);
         [self showErrorMessage:msg];
     }];
@@ -205,7 +205,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                 [SENAnalytics track:kHEMAnalyticsEventError
                          properties:@{kHEMAnalyticsEventPropMessage : @"no sense found"}];
                 
-                [strongSelf stopActivityWithMessage:nil completion:^{
+                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                     [strongSelf setCurrentState:HEMSensePairStatePairingError];
                     [strongSelf executeNextStep];
                 }];
@@ -291,7 +291,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             [strongSelf setPairing:NO];
-            [strongSelf stopActivityWithMessage:nil completion:^{
+            [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                 [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
                 [strongSelf setCurrentState:HEMSensePairStatePairingError];
                 [strongSelf executeNextStep];
@@ -363,7 +363,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     } failure:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            [strongSelf stopActivityWithMessage:nil completion:^{
+            [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                 NSString* msg = NSLocalizedString(@"pairing.error.link-account-failed", nil);
                 [strongSelf showErrorMessage:msg];
             }];
@@ -386,7 +386,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)finish {
     NSString* msg = NSLocalizedString(@"pairing.done", nil);
     __weak typeof(self) weakSelf = self;
-    [self stopActivityWithMessage:msg completion:^{
+    [self stopActivityWithMessage:msg success:YES completion:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             [strongSelf next];

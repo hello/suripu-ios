@@ -12,14 +12,14 @@
 
 #import "UIFont+HEMStyle.h"
 
-#import "HEMSetupSecondPillViewController.h"
+#import "HEMSetupAnotherPillViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMActionButton.h"
 #import "HEMUserDataCache.h"
 #import "HEMOnboardingStoryboard.h"
 
-@interface HEMSetupSecondPillViewController ()
+@interface HEMSetupAnotherPillViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
@@ -29,7 +29,7 @@
 
 @end
 
-@implementation HEMSetupSecondPillViewController
+@implementation HEMSetupAnotherPillViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

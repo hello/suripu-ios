@@ -10,16 +10,19 @@
 
 #import "HEMActivityCoverView.h"
 #import "HelloStyleKit.h"
+#import "HEMActivityIndicatorView.h"
+#import "HEMAnimationUtils.h"
 
 static CGFloat kHEMActivityMargins = 30.0f;
 static CGFloat kHEMActivityViewSeparation = 20.0f;
 static CGFloat kHEMActivityAnimDuration = 0.5f;
-static CGFloat kHEMActivityResultDisplayTime = 1.5f;
+static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 
 @interface HEMActivityCoverView()
 
 @property (nonatomic, strong) UILabel* activityLabel;
-@property (nonatomic, strong) UIActivityIndicatorView* activityView;
+@property (nonatomic, strong) UIImageView* successMarkView;
+@property (nonatomic, strong) HEMActivityIndicatorView* indicator;
 @property (nonatomic, assign, getter=isShowing) BOOL showing;
 
 @end
@@ -49,8 +52,8 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 
 - (void)setup {
     [self setBackgroundColor:[UIColor whiteColor]];
-    [self addLabel];
     [self addActivityIndicator];
+    [self addLabel];
 }
 
 - (void)addLabel {
@@ -64,10 +67,12 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 }
 
 - (void)addActivityIndicator {
-    [self setActivityView:[[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray]];
+    UIImage* checkImage = [HelloStyleKit check];
+    CGRect indicatorFrame = CGRectZero;
+    indicatorFrame.size = checkImage.size;
     
-    [[self activityView] setHidesWhenStopped:YES];
-    [self addSubview:[self activityView]];
+    [self setIndicator:[[HEMActivityIndicatorView alloc] initWithFrame:indicatorFrame]];
+    [self addSubview:[self indicator]];
 }
 
 - (void)layoutSubviews {
@@ -76,29 +81,60 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
     CGFloat bWidth = CGRectGetWidth([self bounds]);
     CGFloat bHeight = CGRectGetHeight([self bounds]);
     
+    CGRect activityFrame = [[self indicator] frame];
+    
     CGSize constraint = CGSizeZero;
     constraint.width = bWidth - (2*kHEMActivityMargins);
     constraint.height = MAXFLOAT;
     CGSize textSize = [[self activityLabel] sizeThatFits:constraint];
     
-    CGRect activityFrame = [[self activityView] frame];
+    activityFrame.origin.y = (bHeight -
+                              (textSize.height
+                               + kHEMActivityViewSeparation
+                               + CGRectGetHeight(activityFrame))) / 2;
+    activityFrame.origin.x = (bWidth - CGRectGetWidth(activityFrame))/2;
+    [[self indicator] setFrame:activityFrame];
+    [[self successMarkView] setFrame:activityFrame]; // same as indicator
     
     CGRect labelFrame = [[self activityLabel] frame];
     labelFrame.size.width = constraint.width;
     labelFrame.size.height = textSize.height;
-    labelFrame.origin.y = (bHeight -
-                           (textSize.height
-                            + kHEMActivityViewSeparation
-                            + CGRectGetHeight(activityFrame))) / 2;
+    labelFrame.origin.y = CGRectGetMaxY(activityFrame) + kHEMActivityViewSeparation;
     labelFrame.origin.x = kHEMActivityMargins;
     [[self activityLabel] setFrame:labelFrame];
-    
-    activityFrame.origin.y = CGRectGetMaxY(labelFrame) + kHEMActivityViewSeparation;
-    activityFrame.origin.x = (bWidth - CGRectGetWidth(activityFrame))/2;
-    [[self activityView] setFrame:activityFrame];
 }
 
+- (UIView*)successMarkView {
+    if (_successMarkView == nil) {
+        UIImageView* mark = [[UIImageView alloc] initWithFrame:[[self indicator] frame]];
+        [mark setImage:[HelloStyleKit check]];
+        [mark setContentMode:UIViewContentModeScaleAspectFit];
+        _successMarkView = mark;
+    }
+    return _successMarkView;
+}
+
+- (void)showSuccessMarkAnimated:(BOOL)animate completion:(void(^)(BOOL finished))completion {
+    UIView* mark = [self successMarkView];
+    
+    if (animate) {
+        [mark setTransform:CGAffineTransformMakeScale(0.0f, 0.0f)];
+        [self addSubview:mark];
+        [HEMAnimationUtils grow:mark completion:completion];
+    } else {
+        [self addSubview:mark];
+        if (completion) completion (YES);
+    }
+    
+}
+
+#pragma mark - Updating Text
+
 - (void)updateText:(NSString*)text completion:(void(^)(BOOL finished))completion {
+    [self updateText:text hideActivity:NO completion:nil];
+}
+
+- (void)updateText:(NSString *)text hideActivity:(BOOL)hideActivity completion:(void (^)(BOOL))completion {
     if (text == nil) {
         if (completion) completion (YES);
         return;
@@ -106,6 +142,9 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
     [UIView animateWithDuration:kHEMActivityAnimDuration
                      animations:^{
                          [[self activityLabel] setAlpha:0.0f];
+                         if (hideActivity) {
+                             [[self indicator] setAlpha:0.0f];
+                         }
                      }
                      completion:^(BOOL finished) {
                          [[self activityLabel] setText:text];
@@ -117,7 +156,21 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
                      }];
 }
 
-#pragma mark - Public Interfaces
+#pragma mark - Show
+
+- (void)showInView:(UIView *)view
+          withText:(NSString *)text
+       successMark:(BOOL)showSuccessMark
+        completion:(void (^)(void))completion {
+    
+    [self setFrame:[view bounds]];
+    [self setNeedsLayout];
+    [self setAlpha:0.0f]; // make sure it's not visible before adding to view
+    [self showSuccessMarkAnimated:NO completion:nil];
+    [view addSubview:self];
+    [self showWithText:text activity:NO completion:completion];
+    
+}
 
 - (void)showInView:(UIView*)view completion:(void(^)(void))completion {
     [self showInView:view withText:nil activity:YES completion:completion];
@@ -142,9 +195,10 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
 - (void)showWithText:(NSString*)text
             activity:(BOOL)activity
           completion:(void(^)(void))completion {
+    
     [self setAlpha:0.0f];
     [self setHidden:NO];
-    [[self activityView] stopAnimating]; // in case it's animating
+    [[self indicator] stop];
     
     if (text != nil) {
         [[self activityLabel] setText:text];
@@ -158,36 +212,52 @@ static CGFloat kHEMActivityResultDisplayTime = 1.5f;
                      }
                      completion:^(BOOL finished) {
                          if (activity) {
-                             [[self activityView] startAnimating];
+                             [[self indicator] start];
                          }
                          [self setShowing:YES];
                          if (completion) completion ();
                      }];
 }
 
+#pragma mark - Dismiss
+
 - (void)dismissWithResultText:(NSString*)text
+              showSuccessMark:(BOOL)showMark
                        remove:(BOOL)remove
                    completion:(void(^)(void))completion {
     
-    [[self activityView] stopAnimating];
-    [self updateText:text completion:^(BOOL finished) {
-        [UIView animateWithDuration:kHEMActivityAnimDuration
-                              delay:kHEMActivityResultDisplayTime
-                            options:UIViewAnimationOptionCurveEaseIn
-                         animations:^{
-                             [self setAlpha:0.0f];
-                         }
-                         completion:^(BOOL finished) {
-                             [[self activityLabel] setText:nil];
-                             [self setHidden:YES];
-                             if (remove) {
-                                 [self removeFromSuperview];
-                             }
-                             [self setShowing:NO];
-                             if (completion) completion();
-                         }];
+    [self updateText:text hideActivity:YES completion:^(BOOL finished) {
+        [[self indicator] stop];
+        if (showMark) {
+            [self showSuccessMarkAnimated:YES completion:^(BOOL finished) {
+                [self delayDismissWithCompletion:completion];
+            }];
+        } else {
+            [self delayDismissWithCompletion:completion];
+        }
     }];
     
+}
+
+- (void)delayDismissWithCompletion:(void(^)(void))completion {
+    [UIView animateWithDuration:kHEMActivityAnimDuration
+                          delay:kHEMActivityResultDisplayTime
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         [self setAlpha:0.0f];
+                     }
+                     completion:^(BOOL finished) {
+                         [[self activityLabel] setText:nil];
+                         [[self successMarkView] removeFromSuperview];
+                         [self setHidden:YES];
+                         
+                         if (remove) {
+                             [self removeFromSuperview];
+                         }
+                         
+                         [self setShowing:NO];
+                         if (completion) completion();
+                     }];
 }
 
 @end

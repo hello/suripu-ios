@@ -18,8 +18,7 @@ typedef NS_ENUM(NSUInteger, HEMScrollableContentType) {
     HEMScrollableContentTypeImage = 3
 };
 
-static CGFloat const HEMScrollableTitleBotMargin = 27.0f;
-static CGFloat const HEMScrollableDescBotMargin = 24.0f;
+static CGFloat const HEMScrollableLabelBotMargin = 24.0f;
 static CGFloat const HEMScrollableImageBotMargin = 18.0f;
 static CGFloat const HEMScrollableTitleHeight = 34.0f;
 static CGFloat const HEMScrollableBotPadding = 28.0f;
@@ -57,7 +56,29 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    [self sizeLabelsToFitText];
+    
+    CGFloat nextY = 0.0f;
+    
+    for (UIView* subview in [[self scrollView] subviews]) {
+        
+        if (nextY > 0.0f) {
+            CGRect frame = [subview frame];
+            frame.origin.y = nextY;
+            [subview setFrame:frame];
+        }
+        
+        if ([subview isKindOfClass:[UILabel class]]) {
+            UILabel* label = (UILabel*)subview;
+            [label sizeToFit];
+            nextY = CGRectGetMaxY([label frame]) + HEMScrollableLabelBotMargin;
+        } else if ([subview isKindOfClass:[UIImageView class]]){
+            nextY = CGRectGetMaxY([subview frame]) + HEMScrollableImageBotMargin;
+        } else {
+            nextY = 0.0f; // reset if not a subview we care for
+        }
+        
+    }
+
     [self updateContentSize];
 }
 
@@ -77,10 +98,8 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
     CGFloat topMargin = 0.0f;
     switch ([self prevAddedContent]) {
         case HEMScrollableContentTypeTitle:
-            topMargin = HEMScrollableTitleBotMargin;
-            break;
         case HEMScrollableContentTypeDesc:
-            topMargin = HEMScrollableDescBotMargin;
+            topMargin = HEMScrollableLabelBotMargin;
             break;
         case HEMScrollableContentTypeImage:
             topMargin = HEMScrollableImageBotMargin;
@@ -88,17 +107,7 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
         default:
             break;
     }
-    UIView* lastView = [[[self scrollView] subviews] lastObject];
-    return CGRectGetMaxY([lastView frame]) + topMargin;
-}
-
-- (void)sizeLabelsToFitText {
-    for (UIView* subview in [[self scrollView] subviews]) {
-        if ([subview isKindOfClass:[UILabel class]]) {
-            UILabel* label = (UILabel*)subview;
-            [label sizeToFit];
-        }
-    }
+    return CGRectGetMaxY([[self lastContentView] frame]) + topMargin;
 }
 
 - (void)updateContentSize {

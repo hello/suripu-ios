@@ -231,23 +231,14 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 - (void)flashPairedState {
     if ([self activityView] == nil) {
         [self setActivityView:[[HEMActivityCoverView alloc] init]];
-        
-        NSString* paired = NSLocalizedString(@"pairing.done", nil);
-        [[[self activityView] activityLabel] setText:paired];
     }
     
-    [[self activityView] showInView:[[self navigationController] view] activity:NO completion:^{
+    NSString* paired = NSLocalizedString(@"pairing.done", nil);
+    [[self activityView] showInView:[[self navigationController] view] withText:paired activity:NO completion:^{
         [[self cancelItem] setEnabled:YES];
-        
-        [self performSelector:@selector(dismissPairedState)
-                   withObject:nil
-                   afterDelay:kHEMPillPairedStateDuration];
-    }];
-}
-
-- (void)dismissPairedState {
-    [[self activityView] dismissWithResultText:nil remove:YES completion:^{
-        [self proceed];
+        [[self activityView] dismissWithResultText:nil showSuccessMark:YES remove:YES completion:^{
+            [self proceed];
+        }];
     }];
 }
 

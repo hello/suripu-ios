@@ -205,9 +205,10 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 
 + (void)finisOnboardinghWithMessageFrom:(UIViewController*)controller {
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
-    [[activityView activityLabel] setText:NSLocalizedString(@"onboarding.finished.message", nil)];
+    NSString* doneMessage = NSLocalizedString(@"onboarding.finished.message", nil);
     [activityView showInView:[[controller navigationController] view]
-                    activity:NO
+                    withText:doneMessage
+                 successMark:YES
                   completion:^{
                       float delay = 2.0f;
                       dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay*NSEC_PER_SEC);

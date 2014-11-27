@@ -101,7 +101,7 @@
 "wifi.error.scan-title" = "WiFi Scan Failed";
 "wifi.error.scan-out-of-memory" = "Sense failed to complete the scan due to a memory issue.";
 "wifi.error.scan-general" = "Sense failed to complete the scan due to an unknown issue.";
-"wifi.setup.complete" = "Success";
+"wifi.setup.complete" = "Connected.";
 "wifi.security.wpa2" = "WPA2";
 "wifi.security.wpa" = "WPA";
 "wifi.security.wep" = "WEP";
@@ -113,7 +113,7 @@
 "location.error.weak-signal" = "We were unable to obtain your location.  Try moving to a different location and try again.";
 
 // setting up second pill
-"setup.second-pill.subtitle.format" = "Would you like to set up a second Sleep Pill at this time?\n\nYou can always do this later by visiting %@.";
+"setup.second-pill.subtitle.format" = "Would you like to set up a second Sleep Pill for your partner at this time?\n\nYou can always do this later by visiting %@.";
 "setup.second-pill.settings" = "Settings";
 "setup.second-pill.error.title" = "Fail to enable Pairing Mode";
 "setup.second-pill.error.failed-to-enable-pairing-mode" = "Could not enable Pairing Mode on Sense.";

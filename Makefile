@@ -20,3 +20,6 @@ test_ios8:
 
 generate:
 	ovaltine -p Sense.xcodeproj -o SleepModel/ --prefix HEM --auto-add --auto-replace --copyright 'Hello Inc' SleepModel/
+
+deploy:
+	./Scripts/deploy.sh

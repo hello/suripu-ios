@@ -204,19 +204,18 @@
 
 - (void)showQuestions:(id)sender {
     if ([self presentedViewController] != nil) return;
-    
-    UIImage* snapshot = [[self view] blurredSnapshotWithTint:[HelloStyleKit sleepQuestionBgColor]];
-    
+
     [[self questionActionView] dismiss:YES completion:^{
-        NSArray* questions = [[SENServiceQuestions sharedService] todaysQuestions];
+        UIImage* snapshot = [[self view] blurredSnapshotWithTint:[HelloStyleKit sleepQuestionBgColor]];
         
         HEMSleepQuestionsViewController* questionsVC =
-        (HEMSleepQuestionsViewController*)[HEMMainStoryboard instantiateSleepQuestionsViewController];
-        [questionsVC setQuestions:questions];
+            (HEMSleepQuestionsViewController*)[HEMMainStoryboard instantiateSleepQuestionsViewController];
         [questionsVC setBgImage:snapshot];
-        [questionsVC setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
         
-        [self presentViewController:questionsVC animated:YES completion:nil];
+        UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:questionsVC];
+        [nav setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
+        
+        [self presentViewController:nav animated:YES completion:nil];
         
         [self setQuestionActionView:nil];
     }];

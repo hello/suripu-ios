@@ -117,11 +117,6 @@
 + (UIFont *)questionAnswerFont;
 
 /**
- *  Font for the title when display question + answers
- */
-+ (UIFont *)questionTitleFont;
-
-/**
  *  Font for actual question
  */
 + (UIFont *)questionFont;

@@ -7,15 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMSleepQuestionsViewController : UIViewController
+@class HEMSleepQuestionsDataSource;
 
-/**
- * @property
- * An array of SENQuestion objects to be asked
- */
-@property (nonatomic, copy)   NSArray* questions;
+@interface HEMSleepQuestionsViewController : HEMBaseController
 
 @property (nonatomic, strong) UIImage* bgImage;
+@property (nonatomic, strong) HEMSleepQuestionsDataSource* dataSource;
 
 @end

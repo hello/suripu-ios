@@ -326,6 +326,7 @@
 "actions.yes" = "Yes";
 "actions.close" = "Close";
 "actions.skip" = "Skip";
+"actions.answer" = "Answer";
 "status.success" = "Done";
 
 // actitivity messages

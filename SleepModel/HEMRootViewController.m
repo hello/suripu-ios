@@ -175,16 +175,21 @@
     [[[self questionActionView] okButton] addTarget:self
                                              action:@selector(showQuestions:)
                                    forControlEvents:UIControlEventTouchUpInside];
+    
+    NSString* answerText = [NSLocalizedString(@"actions.answer", nil) uppercaseString];
+    [[[self questionActionView] okButton] setTitle:answerText forState:UIControlStateNormal];
+    
     [[self questionActionView] showInView:[self view] animated:YES completion:nil];
 }
 
-- (void)hideQuestionsAlert:(BOOL)animated {
-    [NSObject cancelPreviousPerformRequestsWithTarget:self
-                                             selector:@selector(showQuestionAlertFor:)
-                                               object:nil];
-    
+- (void)hideQuestionsAlert:(BOOL)animated completion:(void(^)(void))completion{
+
     if ([self questionActionView] != nil) {
-        [[self questionActionView] dismiss:animated completion:nil];
+        [[self questionActionView] dismiss:animated completion:^{
+            [self setQuestionActionView:nil];
+            if (completion) completion ();
+        }];
+        
     }
 }
 
@@ -194,7 +199,7 @@
     // optimistically skip the question
     SENServiceQuestions* svc = [SENServiceQuestions sharedService];
     [svc skipQuestion:[self displayedQuestion] completion:nil];
-    [[self questionActionView] dismiss:YES completion:nil];
+    [self hideQuestionsAlert:YES completion:nil];
 }
 
 - (void)showQuestions:(id)sender {
@@ -220,7 +225,12 @@
 #pragma mark - Sign Out
 
 - (void)handleUserSigningOut {
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(showQuestionAlertFor:)
+                                               object:nil];
+    
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    
     __weak typeof(self) weakSelf = self;
     self.signOutObserver =
         [center addObserverForName:SENAuthorizationServiceDidDeauthorizeNotification
@@ -228,7 +238,7 @@
                              queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
                                __strong typeof(weakSelf) strongSelf = weakSelf;
                                     if (strongSelf) {
-                                        [strongSelf hideQuestionsAlert:NO];
+                                        [strongSelf hideQuestionsAlert:NO completion:nil];
                                     }
                              }];
 }

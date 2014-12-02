@@ -10,4 +10,7 @@
 
 @interface HEMAnswerCell : UITableViewCell
 
+@property (nonatomic, weak) IBOutlet UILabel* answerLabel;
+@property (nonatomic, weak) IBOutlet UIView* separator;
+
 @end

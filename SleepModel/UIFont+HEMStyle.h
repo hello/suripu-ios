@@ -206,4 +206,19 @@
 
 + (UIFont *)confidentialityWarningFont;
 
+/**
+ * Font for the title of the action alert view
+ */
++ (UIFont *)actionViewTitleFont;
+
+/**
+ * Font for the message of the action alert view
+ */
++ (UIFont *)actionViewMessageFont;
+
+/**
+ * Font for the button title of the action alert view
+ */
++ (UIFont *)actionViewButtonTitleFont;
+
 @end

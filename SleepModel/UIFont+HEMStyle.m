@@ -104,19 +104,15 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)questionAnswerFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:20.0f];
-}
-
-+ (UIFont *)questionTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];
 }
 
 + (UIFont *)questionFont {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:20.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
 }
 
 + (UIFont *)thankyouFont {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:20.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
 }
 
 + (UIFont *)infoToastFont {

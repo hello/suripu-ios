@@ -325,6 +325,7 @@
 "actions.no" = "No";
 "actions.yes" = "Yes";
 "actions.close" = "Close";
+"actions.skip" = "Skip";
 "status.success" = "Done";
 
 // actitivity messages
@@ -336,7 +337,6 @@
 // questions
 "questions.failed.title" = "Could not submit answer";
 "questions.error.unexpected" = "Oops! Probably our fault. Skip the question for now. We'll ask you again another time";
-"questions.new-question" = "New question";
 
 // account info
 "account.gender.subtitle" = "This information is used to provide personalized sleep insights.";

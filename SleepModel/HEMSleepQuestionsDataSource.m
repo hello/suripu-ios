@@ -39,7 +39,7 @@
 
 - (NSString*)selectedQuestionText {
     SENQuestion* questionObject = [self selectedQuestion];
-    return questionObject ? [questionObject question] : nil;
+    return questionObject ? [questionObject text] : nil;
 }
 
 - (SENAnswer*)answerAtIndexPath:(NSIndexPath*)indexPath {
@@ -75,7 +75,9 @@
     SENServiceQuestions* svc = [SENServiceQuestions sharedService];
     // per design, optimistically submit the answer as it's a better user experience
     // to proceed rather than wait for something that is not very important
-    [svc submitAnswer:[self answerAtIndexPath:indexPath] completion:nil];
+    [svc submitAnswer:[self answerAtIndexPath:indexPath]
+          forQuestion:[self selectedQuestion]
+           completion:nil];
     return [self hasMoreQuestions];
 }
 

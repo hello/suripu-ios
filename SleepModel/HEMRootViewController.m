@@ -155,7 +155,7 @@
     
     // just show the first question as an alert
     [self setDisplayedQuestion:questions[0]];
-    NSString* firstQuestion = [[self displayedQuestion] question];
+    NSString* firstQuestion = [[self displayedQuestion] text];
     DDLogVerbose(@"showing question %@", firstQuestion);
     NSMutableParagraphStyle* paraStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     [paraStyle setAlignment:NSTextAlignmentCenter];

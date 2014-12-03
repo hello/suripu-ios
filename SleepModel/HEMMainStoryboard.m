@@ -8,6 +8,7 @@
 
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMmain = @"Main";
+static NSString *const _HEMaccountSettings = @"accountSettings";
 static NSString *const _HEMalarmChoiceCell = @"alarmChoiceCell";
 static NSString *const _HEMalarmListCellIdentifier = @"alarmListCellIdentifier";
 static NSString *const _HEMalarmListViewController = @"alarmListViewController";
@@ -37,6 +38,7 @@ static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMsettingsController = @"settingsController";
 static NSString *const _HEMsettingsNavController = @"settingsNavController";
 static NSString *const _HEMshowInsight = @"showInsight";
+static NSString *const _HEMsingle = @"single";
 static NSString *const _HEMsleepGraphController = @"sleepGraphController";
 static NSString *const _HEMsleepGraphNavController = @"sleepGraphNavController";
 static NSString *const _HEMsleepHistoryController = @"sleepHistoryController";
@@ -60,10 +62,12 @@ static NSString *const _HEMunitsSettings = @"unitsSettings";
 +(NSString *)pillInfoCellReuseIdentifier { return _HEMpillInfoCell; }
 +(NSString *)senseInfoCellReuseIdentifier { return _HEMsenseInfoCell; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
++(NSString *)singleReuseIdentifier { return _HEMsingle; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
 +(NSString *)unitCellReuseIdentifier { return _HEMunitCell; }
 
 /** Segue Identifiers */
++(NSString *)accountSettingsSegueIdentifier { return _HEMaccountSettings; }
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)infoSettingsSegueIdentifier { return _HEMinfoSettings; }

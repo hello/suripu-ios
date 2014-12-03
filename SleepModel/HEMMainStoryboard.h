@@ -10,13 +10,14 @@
 +(UIStoryboard *)storyboard;
 
 /** Cell Reuse Identifiers */
++(NSString *)singleReuseIdentifier;
++(NSString *)infoReuseIdentifier;
 +(NSString *)unitCellReuseIdentifier;
 +(NSString *)settingsCellReuseIdentifier;
 +(NSString *)deviceCellReuseIdentifier;
 +(NSString *)senseInfoCellReuseIdentifier;
 +(NSString *)firmwareUpdateCellReuseIdentifier;
 +(NSString *)pillInfoCellReuseIdentifier;
-+(NSString *)infoReuseIdentifier;
 +(NSString *)alarmListCellIdentifier;
 +(NSString *)alarmChoiceCellReuseIdentifier;
 +(NSString *)currentConditionsCellReuseIdentifier;
@@ -24,6 +25,7 @@
 +(NSString *)insightCellReuseIdentifier;
 
 /** Segue Identifiers */
++(NSString *)accountSettingsSegueIdentifier;
 +(NSString *)alarmRepeatSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
 +(NSString *)infoSettingsSegueIdentifier;

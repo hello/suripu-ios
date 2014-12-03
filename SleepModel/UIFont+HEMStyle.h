@@ -117,11 +117,6 @@
 + (UIFont *)questionAnswerFont;
 
 /**
- *  Font for the title when display question + answers
- */
-+ (UIFont *)questionTitleFont;
-
-/**
  *  Font for actual question
  */
 + (UIFont *)questionFont;
@@ -205,5 +200,20 @@
 + (UIFont *)navButtonTitleFont;
 
 + (UIFont *)confidentialityWarningFont;
+
+/**
+ * Font for the title of the action alert view
+ */
++ (UIFont *)actionViewTitleFont;
+
+/**
+ * Font for the message of the action alert view
+ */
++ (UIFont *)actionViewMessageFont;
+
+/**
+ * Font for the button title of the action alert view
+ */
++ (UIFont *)actionViewButtonTitleFont;
 
 @end

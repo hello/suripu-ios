@@ -131,8 +131,17 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)application:(UIApplication*)application handleActionWithIdentifier:(NSString*)identifier forRemoteNotification:(NSDictionary*)userInfo completionHandler:(void (^)())completionHandler
 {
-    SENAnswer* answer = [[SENAnswer alloc] initWithId:nil answer:identifier questionId:userInfo[@"qid"]];
-    [SENAPIQuestions sendAnswer:answer completion:^(id data, NSError* error) {
+    // FIXME (jimmy): does the server even support this?  I don't see anything
+    // on the server side ...
+    NSNumber* qId = userInfo[@"qid"];
+    NSNumber* aQId = userInfo[@"aqid"];
+    SENQuestion* question = [[SENQuestion alloc] initWithId:qId
+                                          questionAccountId:aQId
+                                                   question:nil
+                                                       type:SENQuestionTypeChoice
+                                                    choices:nil];
+    SENAnswer* answer = [[SENAnswer alloc] initWithId:nil answer:identifier questionId:qId];
+    [SENAPIQuestions sendAnswer:answer forQuestion:question completion:^(id data, NSError* error) {
                                                       // something something
                                                   }];
 }

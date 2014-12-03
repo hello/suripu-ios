@@ -12,29 +12,24 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMSleepQuestionsViewController.h"
+#import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAnimationUtils.h"
-#import "HEMAlertController.h"
+#import "HEMSleepQuestionsDataSource.h"
+#import "HEMAnswerCell.h"
 
-static CGFloat const kHEMSleepAnswerButtonBorderWidth = 1.0f;
-static CGFloat const kHEMSleepAnswerButtonHeight = 50.0f;
-static CGFloat const kHEMSleepAnswerSpacing = 15.0f;
 static CGFloat const kHEMSleepViewAnimDuration = 0.2f;
-static CGFloat const kHEMSleepAnswerDisplayDelay = 0.2f;
 static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 
-@interface HEMSleepQuestionsViewController ()
+@interface HEMSleepQuestionsViewController () <UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel* titleLabel;
-@property (weak, nonatomic) IBOutlet UIView* titleSeparator;
+@property (weak, nonatomic) IBOutlet UITableView *answerTableView;
 @property (weak, nonatomic) IBOutlet UILabel* questionLabel;
-@property (weak, nonatomic) IBOutlet UIScrollView* choicesScrollView;
 @property (weak, nonatomic) IBOutlet UIButton* skipButton;
 @property (weak, nonatomic) IBOutlet UILabel* thankLabel;
 @property (weak, nonatomic) IBOutlet UILabel* youLabel;
-@property (assign, nonatomic) NSInteger questionIndex;
 
 @property (strong, nonatomic) SENQuestion* currentQuestion;
 @property (strong, nonatomic) CALayer* activityLayer;
@@ -45,18 +40,38 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self configureFonts];
-    [self setQuestionIndex:0];
+    [[self navigationItem] setHidesBackButton:YES];
+    
     [self setupBackgroundImage];
-    [self displayQuestionAtIndex:[self questionIndex]];
+    [self configure];
 }
 
-- (void)configureFonts {
-    [[self titleLabel] setFont:[UIFont questionTitleFont]];
+- (void)configure {
     [[self questionLabel] setFont:[UIFont questionFont]];
     [[self thankLabel] setFont:[UIFont thankyouFont]];
     [[self youLabel] setFont:[UIFont thankyouFont]];
     [[[self skipButton] titleLabel] setFont:[UIFont questionAnswerFont]];
+    
+    if ([self dataSource] == nil) {
+        [self setDataSource:[[HEMSleepQuestionsDataSource alloc] init]];
+    }
+    
+    [[self questionLabel] setText:[[self dataSource] selectedQuestionText]];
+    
+    CGRect questionFrame = [[self questionLabel] frame];
+    CGSize constraint = questionFrame.size;
+    constraint.height = MAXFLOAT;
+    questionFrame.size.height = [[self questionLabel] sizeThatFits:constraint].height;
+    [[self questionLabel] setFrame:questionFrame];
+    
+    [[self answerTableView] setDataSource:[self dataSource]];
+    [[self answerTableView] setDelegate:self];
+    [[self answerTableView] setTableFooterView:[[UIView alloc] init]];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [[self answerTableView] flashScrollIndicators];
 }
 
 - (void)setupBackgroundImage {
@@ -71,73 +86,6 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
     }
 }
 
-- (void)displayQuestionAtIndex:(NSInteger)index {
-    if (index >= [[self questions] count])
-        return;
-
-    SENQuestion* question = [self questions][index];
-    [self setCurrentQuestion:question];
-    // display the question text
-    [[self questionLabel] setText:[question question]];
-    [[self questionLabel] setNeedsLayout];
-
-    CGRect buttonFrame = CGRectZero;
-    buttonFrame.origin.x = kHEMSleepAnswerButtonBorderWidth;
-    buttonFrame.size.width = CGRectGetWidth([[self choicesScrollView] bounds])-(kHEMSleepAnswerButtonBorderWidth*2);
-    buttonFrame.size.height = kHEMSleepAnswerButtonHeight;
-
-    NSArray* answerChoices = [question choices];
-    UIButton* choiceButton = nil;
-    NSInteger tag = 0;
-    for (SENAnswer* choice in answerChoices) {
-        choiceButton = [self buttonForAnswer:choice withFrame:buttonFrame];
-        [choiceButton setTag:tag++];
-        [[self choicesScrollView] addSubview:choiceButton];
-        buttonFrame.origin.y = CGRectGetMaxY(buttonFrame) + kHEMSleepAnswerSpacing;
-    }
-
-    CGSize contentSize = [[self choicesScrollView] contentSize];
-    contentSize.height = CGRectGetMinY(buttonFrame);
-    [[self choicesScrollView] setContentSize:contentSize];
-}
-
-- (UIButton*)buttonForAnswer:(SENAnswer*)answer withFrame:(CGRect)frame {
-    UIButton* button = [UIButton buttonWithType:UIButtonTypeCustom];
-    [button setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [button setTranslatesAutoresizingMaskIntoConstraints:YES];
-    
-    [button addTarget:self
-                  action:@selector(selectAnswer:)
-        forControlEvents:UIControlEventTouchUpInside];
-
-    [button setTitle:[answer answer] forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [[button titleLabel] setFont:[UIFont questionAnswerFont]];
-
-    [[button layer] setCornerRadius:kHEMSleepAnswerButtonHeight / 2];
-    [[button layer] setBorderColor:[[UIColor whiteColor] CGColor]];
-    [[button layer] setBorderWidth:kHEMSleepAnswerButtonBorderWidth];
-
-    [button setFrame:frame];
-    [button setTransform:CGAffineTransformMakeScale(0.9f, 0.9f)];
-    [button setAlpha:0.0f];
-
-    return button;
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self animateIn];
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-}
-
 - (void)showActivityOn:(UIButton*)button {
     if ([self activityLayer] != nil) [[self activityLayer] removeFromSuperlayer];
     [self setActivityLayer:[HEMAnimationUtils animateActivityAround:button]];
@@ -148,32 +96,13 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
     [self setActivityLayer:nil];
 }
 
-- (void)animateIn {
-    NSInteger index = 0;
-    for (UIView* subview in [[self choicesScrollView] subviews]) {
-        if ([subview isKindOfClass:[UIButton class]]) {
-            [UIView animateWithDuration:kHEMSleepViewAnimDuration
-                                  delay:kHEMSleepAnswerDisplayDelay * index
-                                options:UIViewAnimationOptionBeginFromCurrentState
-                             animations:^{
-                                 [subview setAlpha:1.0f];
-                                 [subview setTransform:CGAffineTransformIdentity];
-                             }
-                             completion:nil];
-            index++;
-        }
-    }
-}
-
 - (void)animateOut {
     [[self activityLayer] removeFromSuperlayer];
     [UIView animateWithDuration:kHEMSleepViewAnimDuration
                      animations:^{
-                         [[self titleLabel] setAlpha:0.0f];
-                         [[self titleSeparator] setAlpha:0.0f];
                          [[self questionLabel] setAlpha:0.0f];
-                         [[self choicesScrollView] setAlpha:0.0f];
                          [[self skipButton] setAlpha:0.0f];
+                         [[self answerTableView] setAlpha:0.0f];
                      }
                      completion:^(BOOL finished) {
                          [self aniamteThankyou];
@@ -200,76 +129,52 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 }
 
 
+#pragma mark - UITableViewDelegate
 
-#pragma mark - Actions
-
-- (void)showError:(__unused NSError*)error {
-    [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"questions.failed.title", nil)
-                                          message:NSLocalizedString(@"questions.error.unexpected", nil)
-                             presentingController:self];
+- (void)tableView:(UITableView *)tableView
+  willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+    HEMAnswerCell* answerCell = (HEMAnswerCell*)cell;
+    NSString* text = [[[self dataSource] answerTextAtIndexPath:indexPath] uppercaseString];
+    [[answerCell answerLabel] setText:text];
+    [[answerCell separator] setHidden:[[self dataSource] isIndexPathLast:indexPath]];
 }
 
-- (void)enableAnswerButtons:(BOOL)enable except:(UIButton*)choiceButton {
-    for (UIView* subview in [[self choicesScrollView] subviews]) {
-        if ([subview isKindOfClass:[UIButton class]]) {
-            UIButton* button = (UIButton*)subview;
-
-            [button setEnabled:enable];
-
-            if (subview == choiceButton) {
-                [button setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:enable ? 0.0f : 0.1f]];
-            } else {
-                [button setAlpha:enable ? 1.0f : 0.3f];
-            }
-        }
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if (![[self dataSource] selectAnswerAtIndexPath:indexPath]) {
+        [self animateOut];
+    } else {
+        [self toNextQuestion];
     }
 }
 
-- (void)selectAnswer:(UIButton*)choiceButton {
-    NSInteger index = [choiceButton tag];
-    SENAnswer* answer = [[self currentQuestion] choices][index];
 
-    [self showActivityOn:choiceButton];
-    [self enableAnswerButtons:NO except:choiceButton];
-    
-    SENServiceQuestions* service = [SENServiceQuestions sharedService];
-
-    __weak typeof(self) weakSelf = self;
-    [service submitAnswer:answer completion:^(NSError* error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            
-            [strongSelf stopActivity];
-            
-            if (error == nil) {
-                NSInteger nextQIndex = [strongSelf questionIndex]+1;
-                if (nextQIndex < [[strongSelf questions] count]) {
-                    // TODO (jimmy): support multiple questions per day.  Design
-                    // is still thinking about how this will work, UX wise.
-                    [strongSelf animateOut];
-                } else {
-                    [strongSelf animateOut];
-                }
-            } else {
-                [strongSelf enableAnswerButtons:YES except:choiceButton];
-                [strongSelf showError:error];
-            }
-            
-        }
-    }];
-}
+#pragma mark - Actions
 
 - (IBAction)skip:(id)sender {
-    // optimistically skip the question
-    SENServiceQuestions* svc = [SENServiceQuestions sharedService];
-    [svc skipQuestion:[self currentQuestion] completion:nil];
-    [self dismiss];
+    if (![[self dataSource] skipQuestion]) {
+        [self dismiss];
+    } else {
+        [self toNextQuestion];
+    }
+    
 }
 
 #pragma mark - Navigation
 
 - (void)dismiss {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)toNextQuestion {
+    [[self dataSource] nextQuestion];
+    
+    HEMSleepQuestionsViewController* questionVC
+        = (HEMSleepQuestionsViewController*)[HEMMainStoryboard instantiateSleepQuestionsViewController];
+    [questionVC setBgImage:[self bgImage]];
+    [questionVC setDataSource:[self dataSource]];
+    
+    [[self navigationController] pushViewController:questionVC animated:YES];
 }
 
 @end

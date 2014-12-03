@@ -247,12 +247,12 @@
 - (void)dealloc {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     
-    if ([self signOutObserver] == nil) {
-        [center removeObserver:[self signOutObserver]];
+    if (_signOutObserver == nil) {
+        [center removeObserver:_signOutObserver];
     }
     
-    if ([self questionObserver] == nil) {
-        [center removeObserver:[self questionObserver]];
+    if (_questionObserver == nil) {
+        [center removeObserver:_questionObserver];
     }
 }
 

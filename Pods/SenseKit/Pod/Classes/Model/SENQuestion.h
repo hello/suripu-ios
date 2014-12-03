@@ -15,11 +15,13 @@ typedef NS_ENUM(NSUInteger, SENQuestionType) {
 @interface SENQuestion : NSObject
 
 @property (nonatomic, copy, readonly)   NSNumber* questionId;
-@property (nonatomic, copy, readonly)   NSString* question;
+@property (nonatomic, copy, readonly)   NSNumber* questionAccountId;
+@property (nonatomic, copy, readonly)   NSString* text;
 @property (nonatomic, assign, readonly) SENQuestionType type;
 @property (nonatomic, copy, readonly)   NSArray*  choices;
 
 - (instancetype)initWithId:(NSNumber*)questionId
+         questionAccountId:(NSNumber*)questionAccountId
                   question:(NSString*)question
                       type:(SENQuestionType)type
                    choices:(NSArray*)choices;

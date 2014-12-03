@@ -61,6 +61,7 @@
             <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
             <string>Calibre-Medium</string>
+            <string>Calibre-Medium</string>
         </mutableArray>
         <mutableArray key="Calibre-Thin.otf">
             <string>Calibre-Thin</string>
@@ -254,6 +255,7 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
+                                    <segue destination="cpr-oG-Go7" kind="push" id="QmZ-Re-5E1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -1445,6 +1447,74 @@ You can always do this later by visiting Settings.</string>
             </objects>
             <point key="canvasLocation" x="14068" y="923"/>
         </scene>
+        <!--Room Check View Controller-->
+        <scene sceneID="XHB-1W-ISz">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="cpr-oG-Go7" customClass="HEMRoomCheckViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="bQ9-yM-CGX"/>
+                        <viewControllerLayoutGuide type="bottom" id="FHw-CT-xtm"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="DTD-zX-IEN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QrR-Gx-DLp" customClass="HEMScrollableView">
+                                <rect key="frame" x="28" y="28" width="544" height="507"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ybq-zx-dgL">
+                                <rect key="frame" x="0.0" y="535" width="600" height="65"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkw-WQ-h6F" customClass="HEMActionButton">
+                                        <rect key="frame" x="190" y="13" width="220" height="40"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="40" id="21U-DL-0b4"/>
+                                            <constraint firstAttribute="width" constant="220" id="SvT-p8-0Er"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="Continue">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="next:" destination="cpr-oG-Go7" eventType="touchUpInside" id="kd2-XL-qGM"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="65" id="R2G-cY-7o6"/>
+                                    <constraint firstAttribute="centerX" secondItem="tkw-WQ-h6F" secondAttribute="centerX" id="c2D-u5-deZ"/>
+                                    <constraint firstAttribute="centerY" secondItem="tkw-WQ-h6F" secondAttribute="centerY" constant="-0.5" id="cd9-Pc-K5y"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="QrR-Gx-DLp" firstAttribute="bottom" secondItem="Ybq-zx-dgL" secondAttribute="top" id="7rj-kk-F8q"/>
+                            <constraint firstItem="QrR-Gx-DLp" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="12" id="Pnh-AW-epV"/>
+                            <constraint firstItem="FHw-CT-xtm" firstAttribute="top" secondItem="Ybq-zx-dgL" secondAttribute="bottom" id="aAW-D0-WY4"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="QrR-Gx-DLp" secondAttribute="trailing" constant="12" id="bPo-bP-eTI"/>
+                            <constraint firstItem="QrR-Gx-DLp" firstAttribute="bottom" secondItem="Ybq-zx-dgL" secondAttribute="top" priority="750" id="ch4-N0-j0Y"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Ybq-zx-dgL" secondAttribute="trailing" constant="-16" id="haO-de-0xt"/>
+                            <constraint firstItem="QrR-Gx-DLp" firstAttribute="top" secondItem="bQ9-yM-CGX" secondAttribute="bottom" constant="8" id="kwW-Mw-Qvn"/>
+                            <constraint firstItem="Ybq-zx-dgL" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-16" id="vmF-qH-dlr"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="xFV-9x-N8l"/>
+                    <connections>
+                        <outlet property="buttonContainer" destination="Ybq-zx-dgL" id="t4E-tZ-wcs"/>
+                        <outlet property="contentView" destination="QrR-Gx-DLp" id="vSe-5l-BSh"/>
+                        <outlet property="continueButton" destination="tkw-WQ-h6F" id="0VG-1m-0U0"/>
+                        <outlet property="view" destination="DTD-zX-IEN" id="koj-lQ-qim"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="sWL-6c-EWF" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="13648" y="1754"/>
+        </scene>
         <!--Gender View Controller-->
         <scene sceneID="s4K-5F-Rau">
             <objects>
@@ -2462,8 +2532,8 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="sense.png" width="176" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="DAu-sO-H4V"/>
         <segue reference="d35-VB-TRV"/>
-        <segue reference="azr-Tk-rB7"/>
         <segue reference="BJO-wU-lca"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

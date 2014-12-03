@@ -404,6 +404,38 @@
 		BFE32FAD19E4997300651946 /* sleepScoreIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE32FAA19E4997300651946 /* sleepScoreIcon.png */; };
 		BFE32FAE19E4997300651946 /* sleepScoreIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE32FAB19E4997300651946 /* sleepScoreIcon@2x.png */; };
 		BFE32FAF19E4997300651946 /* sleepScoreIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE32FAC19E4997300651946 /* sleepScoreIcon@3x.png */; };
+		BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */; };
+		BFE872EE1A2FC65600494231 /* sensorHumidity.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D01A2FC65600494231 /* sensorHumidity.png */; };
+		BFE872EF1A2FC65600494231 /* sensorHumidity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D11A2FC65600494231 /* sensorHumidity@2x.png */; };
+		BFE872F01A2FC65600494231 /* sensorHumidity@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D21A2FC65600494231 /* sensorHumidity@3x.png */; };
+		BFE872F11A2FC65600494231 /* sensorHumidityBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D31A2FC65600494231 /* sensorHumidityBlue.png */; };
+		BFE872F21A2FC65600494231 /* sensorHumidityBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D41A2FC65600494231 /* sensorHumidityBlue@2x.png */; };
+		BFE872F31A2FC65600494231 /* sensorHumidityBlue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D51A2FC65600494231 /* sensorHumidityBlue@3x.png */; };
+		BFE872F41A2FC65600494231 /* sensorLight.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D61A2FC65600494231 /* sensorLight.png */; };
+		BFE872F51A2FC65600494231 /* sensorLight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D71A2FC65600494231 /* sensorLight@2x.png */; };
+		BFE872F61A2FC65600494231 /* sensorLight@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D81A2FC65600494231 /* sensorLight@3x.png */; };
+		BFE872F71A2FC65600494231 /* sensorLightBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D91A2FC65600494231 /* sensorLightBlue.png */; };
+		BFE872F81A2FC65600494231 /* sensorLightBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872DA1A2FC65600494231 /* sensorLightBlue@2x.png */; };
+		BFE872F91A2FC65600494231 /* sensorLightBlue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872DB1A2FC65600494231 /* sensorLightBlue@3x.png */; };
+		BFE872FA1A2FC65600494231 /* sensorParticulates.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872DC1A2FC65600494231 /* sensorParticulates.png */; };
+		BFE872FB1A2FC65600494231 /* sensorParticulates@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872DD1A2FC65600494231 /* sensorParticulates@2x.png */; };
+		BFE872FC1A2FC65600494231 /* sensorParticulates@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872DE1A2FC65600494231 /* sensorParticulates@3x.png */; };
+		BFE872FD1A2FC65600494231 /* sensorParticulatesBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872DF1A2FC65600494231 /* sensorParticulatesBlue.png */; };
+		BFE872FE1A2FC65600494231 /* sensorParticulatesBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E01A2FC65600494231 /* sensorParticulatesBlue@2x.png */; };
+		BFE872FF1A2FC65600494231 /* sensorParticulatesBlue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E11A2FC65600494231 /* sensorParticulatesBlue@3x.png */; };
+		BFE873001A2FC65600494231 /* sensorSound.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E21A2FC65600494231 /* sensorSound.png */; };
+		BFE873011A2FC65600494231 /* sensorSound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E31A2FC65600494231 /* sensorSound@2x.png */; };
+		BFE873021A2FC65600494231 /* sensorSound@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E41A2FC65600494231 /* sensorSound@3x.png */; };
+		BFE873031A2FC65600494231 /* sensorSoundBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E51A2FC65600494231 /* sensorSoundBlue.png */; };
+		BFE873041A2FC65600494231 /* sensorSoundBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E61A2FC65600494231 /* sensorSoundBlue@2x.png */; };
+		BFE873051A2FC65600494231 /* sensorSoundBlue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E71A2FC65600494231 /* sensorSoundBlue@3x.png */; };
+		BFE873061A2FC65600494231 /* sensorTemperature.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E81A2FC65600494231 /* sensorTemperature.png */; };
+		BFE873071A2FC65600494231 /* sensorTemperature@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E91A2FC65600494231 /* sensorTemperature@2x.png */; };
+		BFE873081A2FC65600494231 /* sensorTemperature@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872EA1A2FC65600494231 /* sensorTemperature@3x.png */; };
+		BFE873091A2FC65600494231 /* sensorTemperatureBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872EB1A2FC65600494231 /* sensorTemperatureBlue.png */; };
+		BFE8730A1A2FC65600494231 /* sensorTemperatureBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872EC1A2FC65600494231 /* sensorTemperatureBlue@2x.png */; };
+		BFE8730B1A2FC65600494231 /* sensorTemperatureBlue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872ED1A2FC65600494231 /* sensorTemperatureBlue@3x.png */; };
+		BFE8730E1A2FC8A000494231 /* HEMSensorCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE8730D1A2FC8A000494231 /* HEMSensorCheckView.m */; };
 		BFEAA0A819A51DCF002FBD44 /* HEMWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */; };
 		BFEAA0B219A54859002FBD44 /* NSString+Email.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0B119A54859002FBD44 /* NSString+Email.m */; };
 		BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0B419A55E01002FBD44 /* UIViewController+Keyboard.m */; };
@@ -975,6 +1007,40 @@
 		BFE32FAB19E4997300651946 /* sleepScoreIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sleepScoreIcon@2x.png"; sourceTree = "<group>"; };
 		BFE32FAC19E4997300651946 /* sleepScoreIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sleepScoreIcon@3x.png"; sourceTree = "<group>"; };
 		BFE3B8FA19F5F1E50055B3B6 /* HEMAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMAnalytics.h; sourceTree = "<group>"; };
+		BFE872CC1A2F9ADC00494231 /* HEMRoomCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRoomCheckViewController.h; sourceTree = "<group>"; };
+		BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRoomCheckViewController.m; sourceTree = "<group>"; };
+		BFE872D01A2FC65600494231 /* sensorHumidity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorHumidity.png; path = images/sensorHumidity.png; sourceTree = "<group>"; };
+		BFE872D11A2FC65600494231 /* sensorHumidity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorHumidity@2x.png"; path = "images/sensorHumidity@2x.png"; sourceTree = "<group>"; };
+		BFE872D21A2FC65600494231 /* sensorHumidity@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorHumidity@3x.png"; path = "images/sensorHumidity@3x.png"; sourceTree = "<group>"; };
+		BFE872D31A2FC65600494231 /* sensorHumidityBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorHumidityBlue.png; path = images/sensorHumidityBlue.png; sourceTree = "<group>"; };
+		BFE872D41A2FC65600494231 /* sensorHumidityBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorHumidityBlue@2x.png"; path = "images/sensorHumidityBlue@2x.png"; sourceTree = "<group>"; };
+		BFE872D51A2FC65600494231 /* sensorHumidityBlue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorHumidityBlue@3x.png"; path = "images/sensorHumidityBlue@3x.png"; sourceTree = "<group>"; };
+		BFE872D61A2FC65600494231 /* sensorLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorLight.png; path = images/sensorLight.png; sourceTree = "<group>"; };
+		BFE872D71A2FC65600494231 /* sensorLight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorLight@2x.png"; path = "images/sensorLight@2x.png"; sourceTree = "<group>"; };
+		BFE872D81A2FC65600494231 /* sensorLight@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorLight@3x.png"; path = "images/sensorLight@3x.png"; sourceTree = "<group>"; };
+		BFE872D91A2FC65600494231 /* sensorLightBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorLightBlue.png; path = images/sensorLightBlue.png; sourceTree = "<group>"; };
+		BFE872DA1A2FC65600494231 /* sensorLightBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorLightBlue@2x.png"; path = "images/sensorLightBlue@2x.png"; sourceTree = "<group>"; };
+		BFE872DB1A2FC65600494231 /* sensorLightBlue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorLightBlue@3x.png"; path = "images/sensorLightBlue@3x.png"; sourceTree = "<group>"; };
+		BFE872DC1A2FC65600494231 /* sensorParticulates.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorParticulates.png; path = images/sensorParticulates.png; sourceTree = "<group>"; };
+		BFE872DD1A2FC65600494231 /* sensorParticulates@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorParticulates@2x.png"; path = "images/sensorParticulates@2x.png"; sourceTree = "<group>"; };
+		BFE872DE1A2FC65600494231 /* sensorParticulates@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorParticulates@3x.png"; path = "images/sensorParticulates@3x.png"; sourceTree = "<group>"; };
+		BFE872DF1A2FC65600494231 /* sensorParticulatesBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorParticulatesBlue.png; path = images/sensorParticulatesBlue.png; sourceTree = "<group>"; };
+		BFE872E01A2FC65600494231 /* sensorParticulatesBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorParticulatesBlue@2x.png"; path = "images/sensorParticulatesBlue@2x.png"; sourceTree = "<group>"; };
+		BFE872E11A2FC65600494231 /* sensorParticulatesBlue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorParticulatesBlue@3x.png"; path = "images/sensorParticulatesBlue@3x.png"; sourceTree = "<group>"; };
+		BFE872E21A2FC65600494231 /* sensorSound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorSound.png; path = images/sensorSound.png; sourceTree = "<group>"; };
+		BFE872E31A2FC65600494231 /* sensorSound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorSound@2x.png"; path = "images/sensorSound@2x.png"; sourceTree = "<group>"; };
+		BFE872E41A2FC65600494231 /* sensorSound@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorSound@3x.png"; path = "images/sensorSound@3x.png"; sourceTree = "<group>"; };
+		BFE872E51A2FC65600494231 /* sensorSoundBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorSoundBlue.png; path = images/sensorSoundBlue.png; sourceTree = "<group>"; };
+		BFE872E61A2FC65600494231 /* sensorSoundBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorSoundBlue@2x.png"; path = "images/sensorSoundBlue@2x.png"; sourceTree = "<group>"; };
+		BFE872E71A2FC65600494231 /* sensorSoundBlue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorSoundBlue@3x.png"; path = "images/sensorSoundBlue@3x.png"; sourceTree = "<group>"; };
+		BFE872E81A2FC65600494231 /* sensorTemperature.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorTemperature.png; path = images/sensorTemperature.png; sourceTree = "<group>"; };
+		BFE872E91A2FC65600494231 /* sensorTemperature@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorTemperature@2x.png"; path = "images/sensorTemperature@2x.png"; sourceTree = "<group>"; };
+		BFE872EA1A2FC65600494231 /* sensorTemperature@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorTemperature@3x.png"; path = "images/sensorTemperature@3x.png"; sourceTree = "<group>"; };
+		BFE872EB1A2FC65600494231 /* sensorTemperatureBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorTemperatureBlue.png; path = images/sensorTemperatureBlue.png; sourceTree = "<group>"; };
+		BFE872EC1A2FC65600494231 /* sensorTemperatureBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorTemperatureBlue@2x.png"; path = "images/sensorTemperatureBlue@2x.png"; sourceTree = "<group>"; };
+		BFE872ED1A2FC65600494231 /* sensorTemperatureBlue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorTemperatureBlue@3x.png"; path = "images/sensorTemperatureBlue@3x.png"; sourceTree = "<group>"; };
+		BFE8730C1A2FC8A000494231 /* HEMSensorCheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorCheckView.h; sourceTree = "<group>"; };
+		BFE8730D1A2FC8A000494231 /* HEMSensorCheckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorCheckView.m; sourceTree = "<group>"; };
 		BFEAA0A619A51DCF002FBD44 /* HEMWelcomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWelcomeViewController.h; sourceTree = "<group>"; };
 		BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWelcomeViewController.m; sourceTree = "<group>"; };
 		BFEAA0B019A54859002FBD44 /* NSString+Email.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Email.h"; sourceTree = "<group>"; };
@@ -1181,6 +1247,36 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BFE872D01A2FC65600494231 /* sensorHumidity.png */,
+				BFE872D11A2FC65600494231 /* sensorHumidity@2x.png */,
+				BFE872D21A2FC65600494231 /* sensorHumidity@3x.png */,
+				BFE872D31A2FC65600494231 /* sensorHumidityBlue.png */,
+				BFE872D41A2FC65600494231 /* sensorHumidityBlue@2x.png */,
+				BFE872D51A2FC65600494231 /* sensorHumidityBlue@3x.png */,
+				BFE872D61A2FC65600494231 /* sensorLight.png */,
+				BFE872D71A2FC65600494231 /* sensorLight@2x.png */,
+				BFE872D81A2FC65600494231 /* sensorLight@3x.png */,
+				BFE872D91A2FC65600494231 /* sensorLightBlue.png */,
+				BFE872DA1A2FC65600494231 /* sensorLightBlue@2x.png */,
+				BFE872DB1A2FC65600494231 /* sensorLightBlue@3x.png */,
+				BFE872DC1A2FC65600494231 /* sensorParticulates.png */,
+				BFE872DD1A2FC65600494231 /* sensorParticulates@2x.png */,
+				BFE872DE1A2FC65600494231 /* sensorParticulates@3x.png */,
+				BFE872DF1A2FC65600494231 /* sensorParticulatesBlue.png */,
+				BFE872E01A2FC65600494231 /* sensorParticulatesBlue@2x.png */,
+				BFE872E11A2FC65600494231 /* sensorParticulatesBlue@3x.png */,
+				BFE872E21A2FC65600494231 /* sensorSound.png */,
+				BFE872E31A2FC65600494231 /* sensorSound@2x.png */,
+				BFE872E41A2FC65600494231 /* sensorSound@3x.png */,
+				BFE872E51A2FC65600494231 /* sensorSoundBlue.png */,
+				BFE872E61A2FC65600494231 /* sensorSoundBlue@2x.png */,
+				BFE872E71A2FC65600494231 /* sensorSoundBlue@3x.png */,
+				BFE872E81A2FC65600494231 /* sensorTemperature.png */,
+				BFE872E91A2FC65600494231 /* sensorTemperature@2x.png */,
+				BFE872EA1A2FC65600494231 /* sensorTemperature@3x.png */,
+				BFE872EB1A2FC65600494231 /* sensorTemperatureBlue.png */,
+				BFE872EC1A2FC65600494231 /* sensorTemperatureBlue@2x.png */,
+				BFE872ED1A2FC65600494231 /* sensorTemperatureBlue@3x.png */,
 				BF5D53231A266C6B0090DD6A /* check.png */,
 				BF5D53241A266C6B0090DD6A /* check@2x.png */,
 				BF5D53251A266C6B0090DD6A /* check@3x.png */,
@@ -1488,6 +1584,8 @@
 				BFB6D47519BE16D1004CA11B /* HEMBirthdatePickerView.m */,
 				BF045B731A1FBCEF0026D5B9 /* HEMScrollableView.h */,
 				BF045B741A1FBCEF0026D5B9 /* HEMScrollableView.m */,
+				BFE8730C1A2FC8A000494231 /* HEMSensorCheckView.h */,
+				BFE8730D1A2FC8A000494231 /* HEMSensorCheckView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1832,6 +1930,8 @@
 				BF045B6D1A1EC2210026D5B9 /* HEMBeforeSleepViewController.m */,
 				BF0F635E1A2409690084E6B4 /* HEMOnboardAlarmViewController.h */,
 				BF0F635F1A2409690084E6B4 /* HEMOnboardAlarmViewController.m */,
+				BFE872CC1A2F9ADC00494231 /* HEMRoomCheckViewController.h */,
+				BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */,
 			);
 			name = "Post Set Up";
 			sourceTree = "<group>";
@@ -2191,6 +2291,7 @@
 				8AFE782B19E8C2170000F881 /* temperature-medium@2x.png in Resources */,
 				8A9BD8C319DDD02100B1E57E /* Calibre-ThinItalic.otf in Resources */,
 				8AF4FA6D1A12F46F00451245 /* stopSound@2x.png in Resources */,
+				BFE873041A2FC65600494231 /* sensorSoundBlue@2x.png in Resources */,
 				8AFE77EC19E8C2170000F881 /* humidity-good@2x.png in Resources */,
 				BF14E3BE19EF3BD10006EFEA /* onboarding_bg_wide@2x.png in Resources */,
 				8AFEBCA01A0C54D5009A0432 /* awake.png in Resources */,
@@ -2201,6 +2302,7 @@
 				8A9BD8C119DDD02100B1E57E /* Calibre-SemiboldItalic.otf in Resources */,
 				8AC4A058198A0AE900C2BD63 /* questionIcon@2x.png in Resources */,
 				8AAEECFC19A5225F006517C4 /* Agile-BlackItalic.otf in Resources */,
+				BFE872F51A2FC65600494231 /* sensorLight@2x.png in Resources */,
 				8AFE77EE19E8C2170000F881 /* humidity-medium.png in Resources */,
 				BFDCC7BA19D9C741007A922B /* sense.png in Resources */,
 				8A1E723819D62C26007475D3 /* alarmSoundIcon.png in Resources */,
@@ -2216,6 +2318,7 @@
 				8AFE780E19E8C2170000F881 /* phone-bad@3x.png in Resources */,
 				8A66013B199EBF87007E6167 /* README.md in Resources */,
 				8AFE782819E8C2170000F881 /* temperature-good@2x.png in Resources */,
+				BFE8730B1A2FC65600494231 /* sensorTemperatureBlue@3x.png in Resources */,
 				8AEE83CA1A24136A0094E725 /* Bells.m4a in Resources */,
 				8AAEED0419A5225F006517C4 /* Agile-ExtralightItalic.otf in Resources */,
 				8AAEED0E19A5225F006517C4 /* Agile-ThinItalic.otf in Resources */,
@@ -2228,6 +2331,7 @@
 				BFB0FBF919D4C3BD0056FFEC /* alarmsIcon@2x.png in Resources */,
 				8AFE782C19E8C2170000F881 /* temperature-medium@3x.png in Resources */,
 				8AFE782719E8C2170000F881 /* temperature-good.png in Resources */,
+				BFE872F11A2FC65600494231 /* sensorHumidityBlue.png in Resources */,
 				8AFEBCA31A0C54D5009A0432 /* light.png in Resources */,
 				8A4B3D50199308BB00856BDE /* wifiLogoImage.png in Resources */,
 				BFC8215519E7441200E09D5D /* play@3x.png in Resources */,
@@ -2235,6 +2339,7 @@
 				8AFE77E519E8C2170000F881 /* asleep.png in Resources */,
 				8AAEED0919A5225F006517C4 /* Agile-Light.otf in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
+				BFE872F01A2FC65600494231 /* sensorHumidity@3x.png in Resources */,
 				BF9C87D419B6A001003188D4 /* sleep_pill.png in Resources */,
 				BF0F63661A250A050084E6B4 /* smartAlarm@3x.png in Resources */,
 				8AFE77FD19E8C2170000F881 /* movement-good.png in Resources */,
@@ -2252,6 +2357,8 @@
 				8A1743C419A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.xib in Resources */,
 				8AFE780A19E8C2170000F881 /* particulates-medium@2x.png in Resources */,
 				8AFE780C19E8C2170000F881 /* phone-bad.png in Resources */,
+				BFE872F71A2FC65600494231 /* sensorLightBlue.png in Resources */,
+				BFE872EF1A2FC65600494231 /* sensorHumidity@2x.png in Resources */,
 				8A66FC96199D24FF00922ED5 /* maleIcon@2x.png in Resources */,
 				8AFE77F219E8C2170000F881 /* light-bad@2x.png in Resources */,
 				8A72143F1A1E7797008B59C4 /* backIcon.png in Resources */,
@@ -2259,7 +2366,10 @@
 				BF770F281A15559E008611E9 /* sense@3x.png in Resources */,
 				8AFE781E19E8C2170000F881 /* sunrise.png in Resources */,
 				8A9BD8B819DDD02100B1E57E /* Calibre-Bold.otf in Resources */,
+				BFE872F31A2FC65600494231 /* sensorHumidityBlue@3x.png in Resources */,
+				BFE872FA1A2FC65600494231 /* sensorParticulates.png in Resources */,
 				8A93AFCD1A09BF0300F70A8B /* caret up.png in Resources */,
+				BFE872F81A2FC65600494231 /* sensorLightBlue@2x.png in Resources */,
 				BFB0FBDC19D253400056FFEC /* pillIcon.png in Resources */,
 				8AEE83C91A24136A0094E725 /* Ballad.m4a in Resources */,
 				8AFE781F19E8C2170000F881 /* sunrise@2x.png in Resources */,
@@ -2279,8 +2389,10 @@
 				8A93AFCC1A09BF0300F70A8B /* alarmsIcon@3x.png in Resources */,
 				BF045B691A1EBC070026D5B9 /* senseGlow.png in Resources */,
 				8AFE782119E8C2170000F881 /* sunset.png in Resources */,
+				BFE873091A2FC65600494231 /* sensorTemperatureBlue.png in Resources */,
 				8AAEED0B19A5225F006517C4 /* Agile-Medium.otf in Resources */,
 				BF5D53271A266C6B0090DD6A /* check@2x.png in Resources */,
+				BFE873031A2FC65600494231 /* sensorSoundBlue.png in Resources */,
 				8A66FC94199D24FF00922ED5 /* femaleIcon@2x.png in Resources */,
 				8AAEED0C19A5225F006517C4 /* Agile-MediumItalic.otf in Resources */,
 				8A93AFBE1A09BED100F70A8B /* caret up@3x.png in Resources */,
@@ -2299,22 +2411,26 @@
 				8AC4A03C1989C36200C2BD63 /* temperatureIcon@2x.png in Resources */,
 				8AFE782D19E8C2170000F881 /* wakeup.png in Resources */,
 				8AFE781519E8C2170000F881 /* sound-bad.png in Resources */,
+				BFE872FC1A2FC65600494231 /* sensorParticulates@3x.png in Resources */,
 				8AAEED0219A5225F006517C4 /* Agile-ExtraboldItalic.otf in Resources */,
 				8A1E723219D62C26007475D3 /* alarmNoteIcon.png in Resources */,
 				8A9BD8B719DDD02100B1E57E /* Calibre-BlackItalic.otf in Resources */,
 				BF1E2E821A04514200DDD0D0 /* temperatureIcon@3x.png in Resources */,
 				BF5E445019AD494500278A2F /* phoneWithEmoticons@2x.png in Resources */,
 				8AFE77E419E8C2170000F881 /* alarm@3x.png in Resources */,
+				BFE872FE1A2FC65600494231 /* sensorParticulatesBlue@2x.png in Resources */,
 				8AF4FA261A12B01E00451245 /* playSound@2x.png in Resources */,
 				BF5E444C19AD414500278A2F /* doubleArrow@2x.png in Resources */,
 				BF9C87D519B6A001003188D4 /* sleep_pill@2x.png in Resources */,
 				8A91EEFA19E5BAA200EA6E5F /* HEMEventInfoView.xib in Resources */,
+				BFE8730A1A2FC65600494231 /* sensorTemperatureBlue@2x.png in Resources */,
 				8AC4A04A1989D47000C2BD63 /* chevronIconLeft@2x.png in Resources */,
 				BF005C7A19FED57E00E68E87 /* lockIcon.png in Resources */,
 				8A9BD8BD19DDD02100B1E57E /* Calibre-MediumItalic.otf in Resources */,
 				8AFE781D19E8C2170000F881 /* sound-medium@3x.png in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				BF770F141A143E63008611E9 /* shakePill@3x.png in Resources */,
+				BFE872EE1A2FC65600494231 /* sensorHumidity.png in Resources */,
 				8AAEED0A19A5225F006517C4 /* Agile-LightItalic.otf in Resources */,
 				8A93AFD21A09BF0300F70A8B /* sleepInsightsIcon@3x.png in Resources */,
 				8A9BD8B619DDD02100B1E57E /* Calibre-Black.otf in Resources */,
@@ -2358,24 +2474,33 @@
 				8AFE77E719E8C2170000F881 /* asleep@3x.png in Resources */,
 				8A66FC95199D24FF00922ED5 /* maleIcon.png in Resources */,
 				BFB0FBE419D377380056FFEC /* senseIcon@2x.png in Resources */,
+				BFE873051A2FC65600494231 /* sensorSoundBlue@3x.png in Resources */,
 				8AFE780D19E8C2170000F881 /* phone-bad@2x.png in Resources */,
 				8AFEBCA21A0C54D5009A0432 /* awake@3x.png in Resources */,
 				BF14E3BC19EF3BD10006EFEA /* map@3x.png in Resources */,
 				8AFEBCA51A0C54D5009A0432 /* light@3x.png in Resources */,
 				8AFE77ED19E8C2170000F881 /* humidity-good@3x.png in Resources */,
 				8AAEED0719A5225F006517C4 /* Agile-Hairline.otf in Resources */,
+				BFE872FF1A2FC65600494231 /* sensorParticulatesBlue@3x.png in Resources */,
 				8AAEED0819A5225F006517C4 /* Agile-HairlineItalic.otf in Resources */,
 				8A1E723919D62C26007475D3 /* alarmSoundIcon@2x.png in Resources */,
+				BFE873021A2FC65600494231 /* sensorSound@3x.png in Resources */,
 				8AFE782019E8C2170000F881 /* sunrise@3x.png in Resources */,
 				8AFE782F19E8C2170000F881 /* wakeup@3x.png in Resources */,
 				8A66FC93199D24FF00922ED5 /* femaleIcon.png in Resources */,
 				8A93AFBF1A09BED100F70A8B /* Menu.png in Resources */,
+				BFE873071A2FC65600494231 /* sensorTemperature@2x.png in Resources */,
+				BFE873081A2FC65600494231 /* sensorTemperature@3x.png in Resources */,
 				8AFE782E19E8C2170000F881 /* wakeup@2x.png in Resources */,
+				BFE873011A2FC65600494231 /* sensorSound@2x.png in Resources */,
 				8AC4A03A1989C36200C2BD63 /* particleIcon@2x.png in Resources */,
+				BFE872FB1A2FC65600494231 /* sensorParticulates@2x.png in Resources */,
 				8A9BD8C219DDD02100B1E57E /* Calibre-Thin.otf in Resources */,
 				8AF4FA6E1A12F46F00451245 /* stopSound@3x.png in Resources */,
 				8A93AFC11A09BED100F70A8B /* Menu@3x.png in Resources */,
 				8AFE77F719E8C2170000F881 /* light-medium.png in Resources */,
+				BFE872F41A2FC65600494231 /* sensorLight.png in Resources */,
+				BFE873001A2FC65600494231 /* sensorSound.png in Resources */,
 				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,
 				8A7214401A1E7797008B59C4 /* backIcon@2x.png in Resources */,
 				8AFE77F919E8C2170000F881 /* light-medium@3x.png in Resources */,
@@ -2384,6 +2509,7 @@
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				BFB0FBFB19D4C3BD0056FFEC /* sleepInsightsIcon@2x.png in Resources */,
 				8AFE77E219E8C2170000F881 /* alarm.png in Resources */,
+				BFE872F61A2FC65600494231 /* sensorLight@3x.png in Resources */,
 				BF005C7C19FED57E00E68E87 /* lockIcon@3x.png in Resources */,
 				8AC4A0491989D47000C2BD63 /* chevronIconLeft.png in Resources */,
 				BF0F63641A250A050084E6B4 /* smartAlarm.png in Resources */,
@@ -2415,12 +2541,14 @@
 				BF045B6B1A1EBC070026D5B9 /* senseGlow@3x.png in Resources */,
 				8A93AFCF1A09BF0300F70A8B /* pillIcon@3x.png in Resources */,
 				8A4B669519EC7EF800445883 /* HEMPresleepItemCollectionViewCell.xib in Resources */,
+				BFE872F91A2FC65600494231 /* sensorLightBlue@3x.png in Resources */,
 				8AAEECFB19A5225F006517C4 /* Agile-Black.otf in Resources */,
 				8AFE77F619E8C2170000F881 /* light-good@3x.png in Resources */,
 				8AFE780119E8C2170000F881 /* movement-medium@2x.png in Resources */,
 				8AFE77FB19E8C2170000F881 /* movement-bad@2x.png in Resources */,
 				8A9BD8BF19DDD02100B1E57E /* Calibre-RegularItalic.otf in Resources */,
 				8AFE77EB19E8C2170000F881 /* humidity-good.png in Resources */,
+				BFE872FD1A2FC65600494231 /* sensorParticulatesBlue.png in Resources */,
 				BF1E2E801A04514200DDD0D0 /* humidityIcon@3x.png in Resources */,
 				BF770F131A143E63008611E9 /* shakePill@2x.png in Resources */,
 				BF045B7B1A2015F90026D5B9 /* clipPill@3x.png in Resources */,
@@ -2430,8 +2558,10 @@
 				8A93AFD01A09BF0300F70A8B /* senseIcon@3x.png in Resources */,
 				8AFE782219E8C2170000F881 /* sunset@2x.png in Resources */,
 				8AC7F8D219E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.xib in Resources */,
+				BFE873061A2FC65600494231 /* sensorTemperature.png in Resources */,
 				8AFE780019E8C2170000F881 /* movement-medium.png in Resources */,
 				8AFEBCA71A0C54D5009A0432 /* movement@2x.png in Resources */,
+				BFE872F21A2FC65600494231 /* sensorHumidityBlue@2x.png in Resources */,
 				8AFE782519E8C2170000F881 /* temperature-bad@2x.png in Resources */,
 				BF5D53281A266C6B0090DD6A /* check@3x.png in Resources */,
 			);
@@ -2607,6 +2737,7 @@
 				BFB0FBF319D482E90056FFEC /* HEMSettingsNavigationController.m in Sources */,
 				8AF4FA731A14129C00451245 /* HEMAudioCache.m in Sources */,
 				8A7214381A1C12F1008B59C4 /* HEMSensorUtils.m in Sources */,
+				BFE8730E1A2FC8A000494231 /* HEMSensorCheckView.m in Sources */,
 				8A91EEF819E46D9900EA6E5F /* HEMAlarmCache.m in Sources */,
 				8A90F9AF196353F600AFD110 /* HEMColorUtils.m in Sources */,
 				8A66FC9C199D308B00922ED5 /* HEMWeightPickerViewController.m in Sources */,
@@ -2664,6 +2795,7 @@
 				8A1743B719A7B471001E3C15 /* HEMSleepGraphViewController.m in Sources */,
 				8AC49FA219832FE100C2BD63 /* HEMDeviceTableViewCell.m in Sources */,
 				BFEAA0B219A54859002FBD44 /* NSString+Email.m in Sources */,
+				BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */,
 				BF9C87D819B6A199003188D4 /* HEMPillPairViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

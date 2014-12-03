@@ -54,9 +54,11 @@ typedef void(^SENServiceQuestionBlock)(NSArray* questions);
  * Submit an answer to this service.  Doing so will implicityly
  * set questions as asked for today
  * @param answer: the answer to submit
+ * @param question: the question being answered
  * @param completion: the block to invoke when submission is complete
  */
 - (void)submitAnswer:(SENAnswer*)answer
+         forQuestion:(SENQuestion*)question
           completion:(void(^)(NSError* error))completion;
 
 /**

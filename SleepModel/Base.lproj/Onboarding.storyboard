@@ -255,7 +255,6 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
-                                    <segue destination="cpr-oG-Go7" kind="push" id="QmZ-Re-5E1"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -1450,7 +1449,7 @@ You can always do this later by visiting Settings.</string>
         <!--Room Check View Controller-->
         <scene sceneID="XHB-1W-ISz">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" id="cpr-oG-Go7" customClass="HEMRoomCheckViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="roomCheck" automaticallyAdjustsScrollViewInsets="NO" id="cpr-oG-Go7" customClass="HEMRoomCheckViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="bQ9-yM-CGX"/>
                         <viewControllerLayoutGuide type="bottom" id="FHw-CT-xtm"/>

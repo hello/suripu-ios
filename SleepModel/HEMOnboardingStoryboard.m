@@ -21,6 +21,7 @@ static NSString *const _HEMlocation = @"location";
 static NSString *const _HEMmoreInfo = @"moreInfo";
 static NSString *const _HEMnetwork = @"network";
 static NSString *const _HEMpillPair = @"pillPair";
+static NSString *const _HEMroomCheck = @"roomCheck";
 static NSString *const _HEMsecondPillCheck = @"secondPillCheck";
 static NSString *const _HEMsenseSetup = @"senseSetup";
 static NSString *const _HEMsenseSetupNoBle = @"senseSetupNoBle";
@@ -63,6 +64,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(UIViewController *)instantiateGenderPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMgenderPicker]; }
 +(UIViewController *)instantiateHeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMheightPicker]; }
 +(UIViewController *)instantiatePillPairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillPair]; }
++(UIViewController *)instantiateRoomCheckViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMroomCheck]; }
 +(UIViewController *)instantiateSenseSetupViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseSetup]; }
 +(UIViewController *)instantiateSignUpViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsignUpViewController]; }
 +(UIViewController *)instantiateWeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMweightPicker]; }

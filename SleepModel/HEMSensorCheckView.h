@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+extern CGFloat const HEMSensorCheckCollapsedHeight;
+
 @interface HEMSensorCheckView : UIView
 
-@property (nonatomic, strong) UIImage* icon;
-@property (nonatomic, strong) UIImage* highlightedIcon;
+- (instancetype)initWithIcon:(UIImage*)icon
+             highlightedIcon:(UIImage*)highlighedIcon
+                       title:(NSString*)title
+                     message:(NSString*)message;
 
 @end

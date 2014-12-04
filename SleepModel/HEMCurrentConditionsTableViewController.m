@@ -22,6 +22,8 @@
 #import "HEMInsightViewController.h"
 #import "HEMSensorUtils.h"
 
+#import "HEMOnboardingStoryboard.h"
+
 NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 
 @interface HEMCurrentConditionsTableViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegateFlowLayout, HEMInsightViewControllerDelegate>
@@ -346,6 +348,8 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
         } break;
 
         case 1: {
+            UIViewController* controller = [HEMOnboardingStoryboard instantiateRoomCheckViewController];
+            [self.navigationController pushViewController:controller animated:YES];
             // TODO (jimmy): sleep insights not yet implemented, I think!
         } break;
         }

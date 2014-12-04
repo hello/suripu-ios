@@ -216,4 +216,9 @@
  */
 + (UIFont *)actionViewButtonTitleFont;
 
+/**
+ * Font for the sensor check view during onboarding's room check
+ */
++ (UIFont*)onboardingRoomCheckSensorFont;
+
 @end

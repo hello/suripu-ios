@@ -221,4 +221,10 @@
  */
 + (UIFont*)onboardingRoomCheckSensorFont;
 
+/**
+ * Font for the sensor value within the sensor check view during onboarding's
+ * room check screen
+ */
++ (UIFont*)onboardingRoomCheckSensorValueFont;
+
 @end

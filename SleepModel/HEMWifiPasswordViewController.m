@@ -460,6 +460,10 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         }
         case HEMWiFiSetupStepSetTimezone:
         default: {
+            // need to start querying for sensor data so that 1, user will see
+            // it as soon as onboarding is done and 2, later step will check
+            // sensor data
+            [[HEMUserDataCache sharedUserDataCache] startPollingSensorData];
             [self finish];
             break;
         }

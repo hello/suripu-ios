@@ -439,9 +439,6 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                        <connections>
-                                            <segue destination="VtO-0e-m99" kind="modal" id="WE5-gL-TRC"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -461,6 +458,7 @@
                     <navigationItem key="navigationItem" title="Account" id="4ab-2L-Omr"/>
                     <connections>
                         <outlet property="infoTableView" destination="siy-bj-GCk" id="3SF-fY-OMA"/>
+                        <segue destination="VtO-0e-m99" kind="modal" identifier="updatePasswordSegue" id="KfO-Hu-PIG"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7MN-lT-xwN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1889,6 +1887,7 @@
         <scene sceneID="sZm-8J-nu4">
             <objects>
                 <navigationController id="VtO-0e-m99" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="44L-po-3wn"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WN8-64-RKp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -1904,7 +1903,7 @@
         <!--Update Password-->
         <scene sceneID="bhs-CU-HeM">
             <objects>
-                <viewController modalPresentationStyle="currentContext" id="8Vt-Zc-Wk5" sceneMemberID="viewController">
+                <viewController modalPresentationStyle="currentContext" id="8Vt-Zc-Wk5" customClass="HEMUpdatePasswordViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="i0L-XD-AaF"/>
                         <viewControllerLayoutGuide type="bottom" id="tCV-xV-mcY"/>
@@ -1919,22 +1918,28 @@
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Current" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8ro-rz-Ndl" userLabel="Email" customClass="HEMRoundedTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Current" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8ro-rz-Ndl" userLabel="current" customClass="HEMRoundedTextField">
                                 <rect key="frame" x="28" y="154" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="iCN-AR-HbV"/>
                                 </constraints>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="20"/>
-                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="next" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8Vt-Zc-Wk5" id="wMN-XJ-qYT"/>
+                                </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bTp-9T-Bpy" userLabel="Password" customClass="HEMRoundedTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bTp-9T-Bpy" userLabel="new" customClass="HEMRoundedTextField">
                                 <rect key="frame" x="28" y="209" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="d4O-2Z-8Q0"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" secureTextEntry="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="8Vt-Zc-Wk5" id="GUb-4y-3O6"/>
+                                </connections>
                             </textField>
                             <textField hidden="YES" opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="1AJ-zn-xWE" userLabel="hiddenField">
                                 <rect key="frame" x="167" y="570" width="266" height="30"/>
@@ -1963,6 +1968,30 @@
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" title="Update Password" id="zgA-bp-TzQ">
+                        <barButtonItem key="leftBarButtonItem" id="4V6-ea-J7t">
+                            <view key="customView" contentMode="scaleToFill" id="gl5-E2-cgQ">
+                                <rect key="frame" x="16" y="2" width="50" height="39"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ENn-um-xb3">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="39"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
+                                        <state key="normal" title="Cancel">
+                                            <color key="titleColor" red="0.0" green="0.60392156862745094" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <state key="disabled" title=" ">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="cancel:" destination="8Vt-Zc-Wk5" eventType="touchUpInside" id="zvx-nf-iHn"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" id="cHD-7i-SCF">
                             <view key="customView" contentMode="scaleToFill" id="kRa-Nd-FIH">
                                 <rect key="frame" x="451" y="5" width="50" height="39"/>
@@ -1971,14 +2000,17 @@
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vfE-Nm-ywk">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="39"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
+                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                         <state key="normal" title="Done">
-                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <state key="disabled" title=" ">
                                             <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
+                                        <connections>
+                                            <action selector="done:" destination="8Vt-Zc-Wk5" eventType="touchUpInside" id="Ae1-GE-sgP"/>
+                                        </connections>
                                     </button>
                                     <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="ShG-VF-UrC">
                                         <rect key="frame" x="30" y="9" width="20" height="20"/>
@@ -1989,6 +2021,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <nil key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="activityIndicator" destination="ShG-VF-UrC" id="BGM-4b-4Tt"/>
+                        <outlet property="cancelButton" destination="ENn-um-xb3" id="rDO-qA-yeh"/>
+                        <outlet property="currentField" destination="8ro-rz-Ndl" id="3x0-HC-dm2"/>
+                        <outlet property="descriptionLabel" destination="au5-1F-9Wo" id="6O8-FP-C3D"/>
+                        <outlet property="doneButton" destination="vfE-Nm-ywk" id="bI1-tz-iAp"/>
+                        <outlet property="hiddenField" destination="1AJ-zn-xWE" id="vgG-VO-XJa"/>
+                        <outlet property="passwordUpdateField" destination="bTp-9T-Bpy" id="n60-vo-Zaa"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b8l-um-jFk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

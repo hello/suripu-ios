@@ -46,6 +46,7 @@ static NSString *const _HEMsleepQuestions = @"sleepQuestions";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 static NSString *const _HEMunitCell = @"unitCell";
 static NSString *const _HEMunitsSettings = @"unitsSettings";
+static NSString *const _HEMupdatePasswordSegue = @"updatePasswordSegue";
 
 @implementation HEMMainStoryboard
 
@@ -77,6 +78,7 @@ static NSString *const _HEMunitsSettings = @"unitsSettings";
 +(NSString *)senseSegueIdentifier { return _HEMsense; }
 +(NSString *)showInsightSegueIdentifier { return _HEMshowInsight; }
 +(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
++(NSString *)updatePasswordSegueSegueIdentifier { return _HEMupdatePasswordSegue; }
 
 /** View Controllers */
 +(UIViewController *)instantiateAlarmListViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListViewController]; }

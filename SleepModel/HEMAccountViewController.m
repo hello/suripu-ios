@@ -10,15 +10,19 @@
 
 #import "HEMAccountViewController.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMMainStoryboard.h"
 #import "UIFont+HEMStyle.h"
 #import "HelloStyleKit.h"
+#import "HEMUpdatePasswordViewController.h"
 
 static CGFloat   const HEMAccountMaxDetailWidth = 160.0f;
 static CGFloat   const HEMAccountDetailPadding = 35.0f;
 static NSInteger const HEMAccountRowEmail = 0;
 static NSInteger const HEMAccountRowPassword = 1;
 
-@interface HEMAccountViewController() <UITableViewDelegate, UITableViewDataSource>
+@interface HEMAccountViewController() <
+    UITableViewDelegate, UITableViewDataSource, HEMUpdatePasswordDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UITableView *infoTableView;
 
@@ -86,6 +90,44 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    
+    NSString* segueId = nil;
+    switch ([indexPath row]) {
+        case HEMAccountRowPassword:
+            segueId = [HEMMainStoryboard updatePasswordSegueSegueIdentifier];
+            break;
+            
+        default:
+            break;
+    }
+    
+    if (segueId != nil) {
+        [self performSegueWithIdentifier:segueId sender:nil];
+    }
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue destinationViewController] isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* nav = (UINavigationController*)[segue destinationViewController];
+        [[nav navigationBar] setTitleTextAttributes:@{
+             NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
+             NSFontAttributeName : [UIFont settingsTitleFont]
+        }];
+        
+        if ([[nav topViewController] isKindOfClass:[HEMUpdatePasswordViewController class]]) {
+            HEMUpdatePasswordViewController* passVC
+                = (HEMUpdatePasswordViewController*)[nav topViewController];
+            [passVC setDelegate:self];
+        }
+    }
+}
+
+#pragma mark - Password Update Delegate
+
+- (void)didUpdatePassword:(BOOL)updated from:(HEMUpdatePasswordViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

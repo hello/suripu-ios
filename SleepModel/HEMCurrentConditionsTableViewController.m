@@ -22,6 +22,8 @@
 #import "HEMInsightViewController.h"
 #import "HEMSensorUtils.h"
 
+#import "HEMOnboardingStoryboard.h"
+
 NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 
 @interface HEMCurrentConditionsTableViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegateFlowLayout, HEMInsightViewControllerDelegate>

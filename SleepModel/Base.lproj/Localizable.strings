@@ -31,6 +31,13 @@
 "onboarding.alarm.title" = "Set a Smart Alarm";
 "onboarding.alarm.desc" = "The Sense Smart Alarm knows where you are in your sleep cycle and will wake you up at the right time for you.  Just wave your hand over Sense to turn it off.";
 
+"onboarding.room-check.title" = "Room Check";
+"onboarding.room-check.description" = "Sense will now check the conditions in the room to assure functionality of the sensors.";
+"onboarding.room-check.checking-sensor.format" = "Checking %@";
+"onboarding.room-check.ideal-condition-format" = "The %@ in your room is just right.";
+"onboarding.room-check.failed" = "Unsuccessful";
+"onboarding.room-check.failed-message" = "One or more sensors is not ready. Don't worry, data will show soon.  Set up a Smart Alarm first.";
+
 // help links
 "help.url.troubleshooting" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8";
 
@@ -271,14 +278,16 @@
 "sensor.comfort-zone.title" = "Comfort Zone";
 "sensor.data-unavailable" = "Sensor data is unavailable.";
 "sensor.value.none" = "No data";
+"sensor.sound" = "Sound";
+"sensor.light" = "Light";
+"sensor.light.placeholder-message" = "It's really bright in your room right now, but that's ok.  It's only Lorem Ipsum!";
+"sensor.sound.placeholder-message" = "Contrary to popular belief, Lorem Ipsum is not simply random text.";
 "graph-data.unavailable.short" = "No data";
 "graph-data.unavailable" = "No data available";
 
 // measurements
 "measurement.temperature.unit" = "°";
 "measurement.percentage.unit" = "%";
-"measurement.light.unit" = "lx";
-"measurement.sound.unit" = "db";
 "measurement.or" = "or";
 "measurement.particle.unit" = "";
 "measurement.cm.unit" = "cm";

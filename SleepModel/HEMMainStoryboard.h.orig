@@ -11,13 +11,16 @@
 
 /** Cell Reuse Identifiers */
 +(NSString *)singleReuseIdentifier;
+<<<<<<< HEAD
++(NSString *)infoReuseIdentifier;
+=======
+>>>>>>> origin
 +(NSString *)unitCellReuseIdentifier;
 +(NSString *)settingsCellReuseIdentifier;
 +(NSString *)deviceCellReuseIdentifier;
 +(NSString *)senseInfoCellReuseIdentifier;
 +(NSString *)firmwareUpdateCellReuseIdentifier;
 +(NSString *)pillInfoCellReuseIdentifier;
-+(NSString *)infoReuseIdentifier;
 +(NSString *)alarmListCellIdentifier;
 +(NSString *)alarmChoiceCellReuseIdentifier;
 +(NSString *)currentConditionsCellReuseIdentifier;

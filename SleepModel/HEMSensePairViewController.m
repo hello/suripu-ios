@@ -254,6 +254,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             break;
         }
         case HEMSensePairStateAccountLinked: {
+            [[HEMUserDataCache sharedUserDataCache] startPollingSensorData];
             [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             [self finish];
             break;

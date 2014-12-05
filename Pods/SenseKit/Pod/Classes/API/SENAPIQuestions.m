@@ -16,6 +16,7 @@ static NSString* const kSENAPIQuestionErrorDomain = @"is.hello.api.question";
 
 static NSString* const kSENAPIQuestionsPath = @"questions";
 static NSString* const kSENAPIQuestionPropId = @"id";
+static NSString* const kSENAPIQuestionPropQuestionAccountId = @"account_question_id";
 static NSString* const kSENAPIQuestionPropQuestionId = @"question_id";
 static NSString* const kSENAPIQuestionPropText = @"text";
 static NSString* const kSENAPIQuestionPropType = @"type";
@@ -61,6 +62,7 @@ static NSString* const kSENAPIQuestionTypeChoice = @"CHOICE";
 
 + (SENQuestion*)questionFromDict:(NSDictionary*)questionDict {
     NSNumber* qId = [self object:[questionDict objectForKey:kSENAPIQuestionPropId] mustBe:[NSNumber class]];
+    NSNumber* qAId = [self object:[questionDict objectForKey:kSENAPIQuestionPropQuestionAccountId] mustBe:[NSNumber class]];
     NSString* text = [self object:[questionDict objectForKey:kSENAPIQuestionPropText] mustBe:[NSString class]];
     NSString* type = [self object:[questionDict objectForKey:kSENAPIQuestionPropType] mustBe:[NSString class]];
     NSArray* choiceObjs = [self object:[questionDict objectForKey:kSENAPIQuestionPropChoices] mustBe:[NSArray class]];
@@ -70,6 +72,7 @@ static NSString* const kSENAPIQuestionTypeChoice = @"CHOICE";
     }
     
     return [[SENQuestion alloc] initWithId:qId
+                         questionAccountId:qAId
                                   question:text
                                       type:[self typeFromString:type]
                                    choices:[self answersFromReponseArray:choiceObjs]];
@@ -114,33 +117,56 @@ static NSString* const kSENAPIQuestionTypeChoice = @"CHOICE";
 
 #pragma mark - SENDING RESPONSES
 
++ (NSArray*)arrayValueForAnswers:(NSArray*)answers {
+    NSMutableArray* array = [NSMutableArray arrayWithCapacity:[answers count]];
+    for (id answerObject in answers) {
+        if ([answerObject isKindOfClass:[SENAnswer class]]) {
+            [array addObject:[self dictionaryValueForAnswer:(SENAnswer*)answerObject]];
+        }
+    }
+    return array;
+}
+
 + (NSDictionary*)dictionaryValueForAnswer:(SENAnswer*)answer {
     NSMutableDictionary* dict = [[NSMutableDictionary alloc] initWithCapacity:2];
     [dict setValue:[answer answerId] forKey:kSENAPIQuestionPropId];
     [dict setValue:[answer answer] forKey:kSENAPIQuestionPropText];
+    [dict setValue:[answer questionId] forKey:kSENAPIQuestionPropQuestionId];
     return dict;
 }
 
-+ (void)sendAnswer:(SENAnswer*)answer completion:(SENAPIDataBlock)completion {
-    if (answer == nil || [answer answerId] == nil) {
++ (void)sendAnswers:(NSArray*)answers forQuestion:(SENQuestion*)question completion:(SENAPIDataBlock)completion {
+    if ([answers count] == 0 || question == nil || [question questionAccountId] == nil) {
         if (completion) completion (nil, [self invalidParameterError]);
         return;
     }
     
-    NSDictionary* answerDict = [self dictionaryValueForAnswer:answer];
-    [SENAPIClient POST:kSENAPIQuestionsPath parameters:answerDict completion:completion];
+    NSString* path = [kSENAPIQuestionsPath stringByAppendingFormat:@"/save/?account_question_id=%ld",
+                        [[question questionAccountId] longValue]];
+    
+    NSArray* body = [self arrayValueForAnswers:answers];
+    [SENAPIClient POST:path parameters:body completion:completion];
+}
+
++ (void)sendAnswer:(SENAnswer*)answer forQuestion:(SENQuestion*)question completion:(SENAPIDataBlock)completion {
+    if (answer == nil || [answer questionId] == nil) { // the rest will be handled by sendAnswers:forQuestion:completion
+        if (completion) completion (nil, [self invalidParameterError]);
+        return;
+    }
+    return [self sendAnswers:@[answer] forQuestion:question completion:completion];
 }
 
 #pragma mark - SKIPPING QUESTIONS
 
 + (void)skipQuestion:(SENQuestion*)question completion:(SENAPIDataBlock)completion {
-    if (question == nil || [question questionId] == nil) {
+    if (question == nil || [question questionId] == nil || [question questionAccountId] == nil) {
         if (completion) completion (nil, [self invalidParameterError]);
         return;
     }
     
-    NSString* path = [kSENAPIQuestionsPath stringByAppendingFormat:@"/%ld/skip",
-                      [[question questionId] longValue]];
+    NSString* path = [kSENAPIQuestionsPath stringByAppendingFormat:@"/skip?id=%ld&account_question_id=%ld",
+                        [[question questionId] longValue],
+                        [[question questionAccountId] longValue]];
     [SENAPIClient PUT:path parameters:nil completion:completion];
 }
 

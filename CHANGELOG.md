@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.0.45
+
+* Updated questions visual design, with shortcut to skip question.
+* Answers to the questions now feed back to the Sense system.
+
 ## 1.0.0.44
 
 New:

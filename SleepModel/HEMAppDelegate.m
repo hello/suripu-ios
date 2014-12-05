@@ -15,7 +15,6 @@
 #import "HEMSleepSummarySlideViewController.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
-#import "HEMConfidentialityWarningView.h"
 #import "HEMCurrentConditionsTableViewController.h"
 #import "HEMDeviceCenter.h"
 #import "HelloStyleKit.h"
@@ -40,7 +39,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];
-    [self showConfidentialityNotice];
 
 #pragma message ("TODO - create preprocessor macro to distinguish APP_STORE from Internal")
     [application setApplicationSupportsShakeToEdit:YES];
@@ -208,12 +206,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
                selector:@selector(showOnboardingAtSenseSetup)
                    name:kHEMDeviceNotificationFactorySettingsRestored
                  object:nil];
-}
-
-- (void)showConfidentialityNotice
-{
-    [[[[UIApplication sharedApplication] delegate] window] setWindowLevel:UIWindowLevelStatusBar+1];
-    [self.window addSubview:[HEMConfidentialityWarningView viewInNewWindow]];
 }
 
 - (void)configureSettingsDefaults

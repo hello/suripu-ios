@@ -37,6 +37,7 @@ static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMsettingsController = @"settingsController";
 static NSString *const _HEMsettingsNavController = @"settingsNavController";
 static NSString *const _HEMshowInsight = @"showInsight";
+static NSString *const _HEMsingle = @"single";
 static NSString *const _HEMsleepGraphController = @"sleepGraphController";
 static NSString *const _HEMsleepGraphNavController = @"sleepGraphNavController";
 static NSString *const _HEMsleepHistoryController = @"sleepHistoryController";
@@ -60,6 +61,7 @@ static NSString *const _HEMunitsSettings = @"unitsSettings";
 +(NSString *)pillInfoCellReuseIdentifier { return _HEMpillInfoCell; }
 +(NSString *)senseInfoCellReuseIdentifier { return _HEMsenseInfoCell; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
++(NSString *)singleReuseIdentifier { return _HEMsingle; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
 +(NSString *)unitCellReuseIdentifier { return _HEMunitCell; }
 

@@ -34,6 +34,7 @@
 +(UIViewController *)instantiateGenderPickerViewController;
 +(UIViewController *)instantiateHeightPickerViewController;
 +(UIViewController *)instantiatePillPairViewController;
++(UIViewController *)instantiateRoomCheckViewController;
 +(UIViewController *)instantiateSenseSetupViewController;
 +(UIViewController *)instantiateSignUpViewController;
 +(UIViewController *)instantiateWeightPickerViewController;

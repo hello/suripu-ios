@@ -32,6 +32,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
 @property (strong, nonatomic) NSMutableArray* sensorViews;
 @property (assign, nonatomic) CGFloat currentTopY;
+@property (assign, nonatomic) BOOL sensorsOk;
 
 @property (weak, nonatomic) IBOutlet UIView *resultView;
 @property (weak, nonatomic) IBOutlet UIView *resultSeparator;
@@ -48,6 +49,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
+    [self setSensorsOk:YES];
     [self setCurrentTopY:HEMRoomCheckMinVerticalPadding];
     [self setupContent];
 }
@@ -72,11 +74,6 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     
     CGFloat shadowOpacity = [[self contentView] scrollRequired]?1.0f:0.0f;
     [[[self buttonContainer] layer] setShadowOpacity:shadowOpacity];
-    
-    CGSize constraint = [[self resultMessageLabel] frame].size;
-    constraint.height = MAXFLOAT;
-    CGSize textSize = [[self resultMessageLabel] sizeThatFits:constraint];
-    DDLogVerbose(@"text height %f", textSize.height);
 }
 
 #pragma mark - Sensor Messages
@@ -140,6 +137,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     NSArray* sensors = [SENSensor sensors];
     
     for (SENSensor* sensor in sensors) {
+        [self setSensorsOk:[self sensorsOk] && [sensor condition] != SENSensorConditionUnknown];
         nextY += CGRectGetHeight([[self addSensorViewFor:sensor atY:nextY] bounds]);
     }
     
@@ -241,6 +239,11 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 }
 
 - (void)showResult {
+    if (![self sensorsOk]) {
+        [[self resultTitleLabel] setText:NSLocalizedString(@"onboarding.room-check.failed", nil)];
+        [[self resultMessageLabel] setText:NSLocalizedString(@"onboarding.room-check.failed-message", nil)];
+    }
+    
     HEMSensorCheckView* view = [[self sensorViews] lastObject];
     CGFloat viewY = CGRectGetMinY([view frame]);
     

@@ -35,6 +35,8 @@
 "onboarding.room-check.description" = "Sense will now check the conditions in the room to assure functionality of the sensors.";
 "onboarding.room-check.checking-sensor.format" = "Checking %@";
 "onboarding.room-check.ideal-condition-format" = "The %@ in your room is just right.";
+"onboarding.room-check.failed" = "Unsuccessful";
+"onboarding.room-check.failed-message" = "One or more sensors is not ready. Don't worry, data will show soon.  Set up a Smart Alarm first.";
 
 // help links
 "help.url.troubleshooting" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8";

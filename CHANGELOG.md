@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.0.46
+
+New:
+
+* Introducing a Room Check feature in to Onboarding
+* Update your password from within Account Settings
+
+Fixes:
+
+* slight UI tweaks
+
 ## 1.0.0.45
 
 * Updated questions visual design, with shortcut to skip question.

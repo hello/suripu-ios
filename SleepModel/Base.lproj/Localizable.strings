@@ -146,6 +146,8 @@
 "settings.personal.info.weight" = "Weight";
 "settings.wifi.other" = "Other...";
 "settings.troubleshooting" = "Help and troubleshooting";
+"settings.account.email" = "Email";
+"settings.account.password" = "Password";
 
 // support
 "support.options.title" = "Support options";
@@ -355,6 +357,7 @@
 "account.gender.other" = "Other";
 "account.update.failed.title" = "Update failed";
 "account.update.error.generic" = "Unable to update your information";
+"account.update.error.password" = "Unable to update your password";
 
 // notifications
 "notifications.actions.ok" = "Okay";

@@ -2,6 +2,10 @@
 #import <Foundation/Foundation.h>
 #import "SENAPIClient.h"
 
+typedef NS_ENUM(NSUInteger, SENAPIAccountError) {
+    SENAPIAccountErrorInvalidArgument = 1
+};
+
 extern NSString* const kSENAccountNotificationAccountCreated;
 
 @class SENAccount;
@@ -39,5 +43,19 @@ extern NSString* const kSENAccountNotificationAccountCreated;
  * @param completion block invoked when asynchronous call completes
  */
 + (void)getAccount:(SENAPIDataBlock)completion;
+
+/**
+ * Change the current password to a password specified.  New password will still
+ * be require to meet minimum requirements.  Because changing the password will
+ * invalidate all access tokens, for all applications / devices, caller must
+ * re-authorize the user to ensure continue use of the account.
+ * 
+ * @param currentPassword: current password of the account
+ * @param password:        new password to replace current password
+ * @param completion:      optional block to invoke when this done.
+ */
++ (void)changePassword:(NSString*)currentPassword
+         toNewPassword:(NSString*)password
+       completionBlock:(SENAPIDataBlock)completion;
 
 @end

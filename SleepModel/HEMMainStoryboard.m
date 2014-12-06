@@ -8,6 +8,7 @@
 
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMmain = @"Main";
+static NSString *const _HEMaccountSettings = @"accountSettings";
 static NSString *const _HEMalarmChoiceCell = @"alarmChoiceCell";
 static NSString *const _HEMalarmListCellIdentifier = @"alarmListCellIdentifier";
 static NSString *const _HEMalarmListViewController = @"alarmListViewController";
@@ -45,6 +46,7 @@ static NSString *const _HEMsleepQuestions = @"sleepQuestions";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 static NSString *const _HEMunitCell = @"unitCell";
 static NSString *const _HEMunitsSettings = @"unitsSettings";
+static NSString *const _HEMupdatePasswordSegue = @"updatePasswordSegue";
 
 @implementation HEMMainStoryboard
 
@@ -66,6 +68,7 @@ static NSString *const _HEMunitsSettings = @"unitsSettings";
 +(NSString *)unitCellReuseIdentifier { return _HEMunitCell; }
 
 /** Segue Identifiers */
++(NSString *)accountSettingsSegueIdentifier { return _HEMaccountSettings; }
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)infoSettingsSegueIdentifier { return _HEMinfoSettings; }
@@ -75,6 +78,7 @@ static NSString *const _HEMunitsSettings = @"unitsSettings";
 +(NSString *)senseSegueIdentifier { return _HEMsense; }
 +(NSString *)showInsightSegueIdentifier { return _HEMshowInsight; }
 +(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
++(NSString *)updatePasswordSegueSegueIdentifier { return _HEMupdatePasswordSegue; }
 
 /** View Controllers */
 +(UIViewController *)instantiateAlarmListViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListViewController]; }

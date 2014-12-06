@@ -62,7 +62,7 @@ static NSInteger const HEMSettingsSignOutIndex = 6;
         nextSegueId = [HEMMainStoryboard infoSettingsSegueIdentifier];
         break;
     case HEMSettingsAccountIndex:
-        // TODO (jimmy): account settings not implemented yet!
+        nextSegueId = [HEMMainStoryboard accountSettingsSegueIdentifier];
         break;
     case HEMSettingsUnitsTimeIndex:
         nextSegueId = [HEMMainStoryboard unitsSettingsSegueIdentifier];

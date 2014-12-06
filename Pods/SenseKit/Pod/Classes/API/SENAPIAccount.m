@@ -21,7 +21,10 @@ NSString* const SENAPIAccountPropertyValueGenderMale = @"MALE";
 NSString* const SENAPIAccountPropertyValueGenderFemale = @"FEMALE";
 NSString* const SENAPIAccountPropertyValueLatitude = @"lat";
 NSString* const SENAPIAccountPropertyValueLongitude = @"lon";
+NSString* const SENAPIAccountPropertyCurrentPassword = @"current_password";
+NSString* const SENAPIAccountPropertyNewPassword = @"new_password";
 NSString* const SENAPIAccountEndpoint = @"account";
+NSString* const SENAPIAccountErrorDomain = @"is.hello.account";
 
 @implementation SENAPIAccount
 
@@ -77,6 +80,23 @@ NSString* const SENAPIAccountEndpoint = @"account";
                }
                completion(account, error);
            }];
+}
+
++ (void)changePassword:(NSString*)currentPassword
+         toNewPassword:(NSString*)password
+       completionBlock:(SENAPIDataBlock)completion {
+    if ([currentPassword length] == 0 || [password length] == 0) {
+        if (completion) {
+            completion (nil, [NSError errorWithDomain:SENAPIAccountErrorDomain
+                                                 code:SENAPIAccountErrorInvalidArgument
+                                             userInfo:nil]);
+        }
+        return;
+    }
+    NSDictionary* body = @{SENAPIAccountPropertyCurrentPassword : currentPassword,
+                           SENAPIAccountPropertyNewPassword : password};
+    NSString* path = [SENAPIAccountEndpoint stringByAppendingPathComponent:@"password"];
+    [SENAPIClient POST:path parameters:body completion:completion];
 }
 
 #pragma mark - Helpers

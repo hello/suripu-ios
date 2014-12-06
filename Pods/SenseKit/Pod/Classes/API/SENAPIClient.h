@@ -2,6 +2,7 @@
 #import <Foundation/Foundation.h>
 
 typedef void (^SENAPIDataBlock)(id data, NSError* error);
+typedef void (^SENAPIErrorBlock)(NSError* error);
 
 @interface SENAPIClient : NSObject
 

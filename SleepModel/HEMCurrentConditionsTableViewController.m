@@ -348,6 +348,9 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
         } break;
 
         case 1: {
+            UIViewController* controller = [HEMOnboardingStoryboard instantiateRoomCheckViewController];
+            UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:controller];
+            [self presentViewController:nav animated:YES completion:nil];
             // TODO (jimmy): sleep insights not yet implemented, I think!
         } break;
         }

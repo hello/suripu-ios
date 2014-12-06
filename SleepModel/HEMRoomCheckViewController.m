@@ -148,7 +148,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                                           highlightedIcon:[HelloStyleKit sensorSoundBlue]
                                                      name:NSLocalizedString(@"sensor.sound", nil)
                                                   message:[self attributedMessage:message]
-                                                    value:@"30"
+                                                    value:@(30)
                                             andValueColor:[HEMSensorUtils colorForSensorWithCondition:SENSensorConditionIdeal]
                                                       atY:nextY] bounds]);
     
@@ -157,7 +157,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                 highlightedIcon:[HelloStyleKit sensorLightBlue]
                            name:NSLocalizedString(@"sensor.light", nil)
                         message:[self  attributedMessage:message]
-                          value:@"200"
+                          value:@(200)
                   andValueColor:[HEMSensorUtils colorForSensorWithCondition:SENSensorConditionIdeal]
                             atY:nextY];
     
@@ -200,7 +200,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                        highlightedIcon:highlightedIcon
                                   name:[sensor localizedName]
                                message:[self messageForSensor:sensor]
-                                 value:[sensor localizedValue]
+                                 value:[sensor value]
                          andValueColor:[HEMSensorUtils colorForSensorWithCondition:[sensor condition]]
                                    atY:yOrigin];
 }
@@ -209,7 +209,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                              highlightedIcon:(UIImage*)highlightedIcon
                                         name:(NSString*)name
                                      message:(NSAttributedString*)message
-                                       value:(NSString*)value
+                                       value:(NSNumber*)value
                                andValueColor:(UIColor*)color
                                          atY:(CGFloat)yOrigin {
     

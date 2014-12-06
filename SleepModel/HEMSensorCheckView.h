@@ -32,7 +32,7 @@ extern CGFloat const HEMSensorCheckCollapsedHeight;
              highlightedIcon:(UIImage*)highlighedIcon
                        title:(NSString*)title
                      message:(NSAttributedString*)message
-                       value:(NSString*)value
+                       value:(NSNumber*)value
           withConditionColor:(UIColor*)color;
 
 /**

@@ -72,7 +72,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
                                      HEMActionViewBotPadding,
                                      HEMActionViewHorzPadding)];
     
-    [self setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.9f]];
+    [self setBackgroundColor:[UIColor colorWithWhite:1.0f alpha:0.97f]];
     
     NSShadow* shadow = [HelloStyleKit actionViewShadow];
     [[self layer] setShadowColor:[[shadow shadowColor] CGColor]];

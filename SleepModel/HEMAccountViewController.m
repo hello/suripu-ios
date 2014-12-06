@@ -15,8 +15,6 @@
 #import "HelloStyleKit.h"
 #import "HEMUpdatePasswordViewController.h"
 
-static CGFloat   const HEMAccountMaxDetailWidth = 160.0f;
-static CGFloat   const HEMAccountDetailPadding = 35.0f;
 static NSInteger const HEMAccountRowEmail = 0;
 static NSInteger const HEMAccountRowPassword = 1;
 
@@ -53,6 +51,7 @@ static NSInteger const HEMAccountRowPassword = 1;
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* text = nil;
     NSString* detail = nil;
+    UITableViewCellAccessoryType accessory = UITableViewCellAccessoryNone;
     
     switch ([indexPath row]) {
         case HEMAccountRowEmail: {
@@ -61,12 +60,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             break;
         }
         case HEMAccountRowPassword: {
+            accessory = UITableViewCellAccessoryDisclosureIndicator;
             text = NSLocalizedString(@"settings.account.password", nil);
             break;
         }
         default:
             break;
     }
+    
+    [cell setAccessoryType:accessory];
     
     [[cell textLabel] setText:text];
     [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
@@ -77,15 +79,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
     [[cell detailTextLabel] setTextAlignment:NSTextAlignmentRight];
     [[cell detailTextLabel] setLineBreakMode:NSLineBreakByTruncatingTail];
-    [[cell detailTextLabel] sizeToFit];
-    
-    CGRect detailFrame = [[cell detailTextLabel] frame];
-    CGFloat width = MIN(HEMAccountMaxDetailWidth, CGRectGetWidth(detailFrame));
-    CGFloat height = CGRectGetHeight(detailFrame);
-    detailFrame.origin.x = CGRectGetWidth([cell bounds]) - width - HEMAccountDetailPadding;
-    detailFrame.origin.y = (CGRectGetHeight([cell bounds]) - height)/2;
-    detailFrame.size.width = width;
-    [[cell detailTextLabel] setFrame:detailFrame];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

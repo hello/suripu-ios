@@ -58,7 +58,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"MMMM d, yyyy";
+        formatter.dateFormat = @"MMMM d";
     });
     return formatter;
 }

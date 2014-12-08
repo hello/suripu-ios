@@ -1,6 +1,7 @@
 
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <SenseKit/SENSettings.h>
+#import <SenseKit/SENAuthorizationService.h>
 #import <FDWaveformView/FDWaveformView.h>
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENSleepResult.h>
@@ -403,6 +404,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 - (void)reloadData
 {
+    if (![SENAuthorizationService isAuthorized])
+        return;
     self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
                                                                                   sleepDate:self.dateForNightOfSleep];
     self.collectionView.dataSource = self.dataSource;

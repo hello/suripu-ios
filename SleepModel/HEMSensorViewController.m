@@ -1,6 +1,7 @@
 
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENAPIRoom.h>
+#import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENSettings.h>
 #import <BEMSimpleLineGraph/BEMSimpleLineGraphView.h>
 #import <markdown_peg.h>
@@ -173,6 +174,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 
 - (void)refreshData
 {
+    if (![SENAuthorizationService isAuthorized])
+        return;
     self.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
     [SENAPIRoom hourlyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
         if (!data) {

@@ -40,7 +40,7 @@
     NSString* formattedDetectedTime = [[self timeFormatter] stringFromDate:detectedTime];
     NSString* formattedDate = [[self dateFormatter] stringFromDate:sleepDate];
     if (formattedWakeupTime && ![formattedWakeupTime isEqualToString:formattedDetectedTime]) {
-        params[@"time"] = formattedWakeupTime;
+        params[@"hour"] = formattedWakeupTime;
         params[@"good"] = @(NO);
     } else {
         params[@"good"] = @(YES);

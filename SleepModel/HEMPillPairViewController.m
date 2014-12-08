@@ -24,7 +24,6 @@
 #import "HEMScrollableView.h"
 #import "HelloStyleKit.h"
 
-static CGFloat const kHEMPillPairedStateDuration = 2.0f;
 static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 @interface HEMPillPairViewController()

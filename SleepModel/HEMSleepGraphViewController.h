@@ -7,6 +7,10 @@ typedef NS_ENUM(NSUInteger, HEMSleepGraphCollectionViewSection) {
     HEMSleepGraphCollectionViewPresleepSection = 2,
 };
 
+extern CGFloat const HEMTimelineHeaderCellHeight;
+
+@class HEMSleepGraphView;
+
 @protocol HEMSleepEventActionDelegate <NSObject>
 
 - (void)didTapEventButton:(UIButton*)sender;

@@ -44,17 +44,30 @@
                         <constraint firstAttribute="height" constant="23" id="Q4t-Nk-0BC"/>
                     </constraints>
                 </view>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iRN-XM-eZ8">
+                    <rect key="frame" x="65.5" y="69" width="108" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="7nV-al-8Fg"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="11"/>
+                    <state key="normal" title="  Is this incorrect?" image="verifyAlertIcon.png">
+                        <color key="titleColor" red="0.1176470667" green="0.68235296010000002" blue="0.98823535439999999" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="5a4-2W-TI9" secondAttribute="bottom" id="4bg-jH-4eA"/>
                 <constraint firstItem="RDP-FI-Oy3" firstAttribute="height" secondItem="180-K8-eK7" secondAttribute="height" id="5uR-a1-GIO"/>
                 <constraint firstItem="RDP-FI-Oy3" firstAttribute="width" secondItem="180-K8-eK7" secondAttribute="width" id="CQW-2e-x2B"/>
+                <constraint firstAttribute="centerX" secondItem="iRN-XM-eZ8" secondAttribute="centerX" id="GNz-1m-bXK"/>
                 <constraint firstItem="5a4-2W-TI9" firstAttribute="top" secondItem="Lzh-0f-YUM" secondAttribute="bottom" constant="13" id="J5l-S3-cZ7"/>
                 <constraint firstItem="RDP-FI-Oy3" firstAttribute="centerX" secondItem="180-K8-eK7" secondAttribute="centerX" id="PVU-CM-8Tc"/>
                 <constraint firstItem="RDP-FI-Oy3" firstAttribute="leading" secondItem="5a4-2W-TI9" secondAttribute="leading" id="PnE-Sd-yVd"/>
                 <constraint firstAttribute="trailing" secondItem="Fpk-6G-lrL" secondAttribute="trailing" constant="15" id="Z8u-gk-uAA"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="leading" secondItem="5a4-2W-TI9" secondAttribute="leading" id="aDk-Hl-JQN"/>
+                <constraint firstItem="iRN-XM-eZ8" firstAttribute="top" secondItem="5a4-2W-TI9" secondAttribute="bottom" constant="12" id="g5u-Rw-3pB"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="14" id="h2Q-Go-sNa"/>
                 <constraint firstItem="RDP-FI-Oy3" firstAttribute="centerY" secondItem="180-K8-eK7" secondAttribute="centerY" id="iRp-CN-ZxR"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="u4g-wi-sCt"/>
@@ -71,6 +84,7 @@
                 <outlet property="playSoundButton" destination="RDP-FI-Oy3" id="flA-4U-XpZ"/>
                 <outlet property="spinnerView" destination="180-K8-eK7" id="Zwk-0a-38p"/>
                 <outlet property="titleLabel" destination="Lzh-0f-YUM" id="7rs-mY-gzB"/>
+                <outlet property="verifyDataButton" destination="iRN-XM-eZ8" id="WT6-lu-Bwx"/>
                 <outlet property="waveformView" destination="Fpk-6G-lrL" id="zMd-H3-zbL"/>
             </connections>
             <point key="canvasLocation" x="297" y="334"/>
@@ -78,5 +92,6 @@
     </objects>
     <resources>
         <image name="playSound.png" width="43" height="43"/>
+        <image name="verifyAlertIcon.png" width="22" height="22"/>
     </resources>
 </document>

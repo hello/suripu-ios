@@ -9,10 +9,10 @@
 #import "UIImage+ImageEffects.h"
 #import "UIView+HEMSnapshot.h"
 
+@implementation UIView (HEMSnapshot)
+
 static CGFloat const kHEMSnapshotBlurRadius = 3.0f;
 static CGFloat const kHEMSnapshotSaturationFactor = 1.5f;
-
-@implementation UIView (HEMSnapshot)
 
 - (UIImage*)snapshot {
     UIGraphicsBeginImageContextWithOptions([self bounds].size, NO, 0);
@@ -23,6 +23,16 @@ static CGFloat const kHEMSnapshotSaturationFactor = 1.5f;
     UIGraphicsEndImageContext();
     
     return snapshot;
+}
+
+- (UIImage*)snapshotOfRect:(CGRect)rect {
+    UIGraphicsBeginImageContextWithOptions(rect.size, NO, [UIScreen mainScreen].scale);
+    CGRect enlargedRect = CGRectMake(-CGRectGetMinX(rect), -CGRectGetMinY(rect),
+                                     CGRectGetWidth(self.bounds), CGRectGetHeight(self.bounds));
+    [self drawViewHierarchyInRect:enlargedRect afterScreenUpdates:NO];
+    UIImage *image = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    return image;
 }
 
 - (UIImage*)blurredSnapshotWithTint:(UIColor*)color {

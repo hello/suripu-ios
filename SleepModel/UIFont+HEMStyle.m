@@ -195,5 +195,8 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMLargeNumberFontFamilyName size:80.0f];
 }
 
++ (UIFont*)onboardingRoomCheckSensorUnitFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
+}
 
 @end

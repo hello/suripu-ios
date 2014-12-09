@@ -27,14 +27,16 @@ extern CGFloat const HEMSensorCheckCollapsedHeight;
  * @param message:          attributed message describing state of sensor
  * @param value:            the value of the sensor
  * @param color:            condition color of the sensor
+ * @param unit:             unit of the sensor value
  */
 - (instancetype)initWithIcon:(UIImage*)icon
              highlightedIcon:(UIImage*)highlighedIcon
                        title:(NSString*)title
                      message:(NSAttributedString*)message
                 introMessage:(NSString*)intro
-                       value:(NSNumber*)value
-          withConditionColor:(UIColor*)color;
+                       value:(NSInteger)value
+          withConditionColor:(UIColor*)color
+                        unit:(NSString*)unit;
 
 /**
  * Move the view to y origin while expanding it's height and applying additional

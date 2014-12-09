@@ -146,21 +146,23 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     NSString* message = NSLocalizedString(@"sensor.sound.placeholder-message", nil);
     nextY += CGRectGetHeight([[self addSensorViewWithIcon:[HelloStyleKit sensorSound]
                                           highlightedIcon:[HelloStyleKit sensorSoundBlue]
-                                                     name:NSLocalizedString(@"sensor.sound", nil)
+                                                     name:NSLocalizedString(@"sensor.light", nil)
                                                   message:[self attributedMessage:message]
                                              introMessage:NSLocalizedString(@"onboarding.room-check.intro.sound", nil)
-                                                    value:@(30)
+                                                    value:30
                                             andValueColor:[HEMSensorUtils colorForSensorWithCondition:SENSensorConditionIdeal]
+                                                 withUnit:NSLocalizedString(@"measurement.db.unit", nil)
                                                       atY:nextY] bounds]);
     
     message = NSLocalizedString(@"sensor.light.placeholder-message", nil);
     [self addSensorViewWithIcon:[HelloStyleKit sensorLight]
                 highlightedIcon:[HelloStyleKit sensorLightBlue]
                            name:NSLocalizedString(@"sensor.light", nil)
-                        message:[self  attributedMessage:message]
+                        message:[self attributedMessage:message]
                    introMessage:NSLocalizedString(@"onboarding.room-check.intro.light", nil)
-                          value:@(200)
+                          value:200
                   andValueColor:[HEMSensorUtils colorForSensorWithCondition:SENSensorConditionIdeal]
+                       withUnit:NSLocalizedString(@"measurement.lx.unit", nil)
                             atY:nextY];
     
     // show each sensor view in collapsed state
@@ -207,8 +209,9 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                                   name:[sensor localizedName]
                                message:[self messageForSensor:sensor]
                           introMessage:intro
-                                 value:[sensor value]
+                                 value:[[sensor value] integerValue]
                          andValueColor:[HEMSensorUtils colorForSensorWithCondition:[sensor condition]]
+                              withUnit:[sensor localizedUnit]
                                    atY:yOrigin];
 }
 
@@ -217,8 +220,9 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                                         name:(NSString*)name
                                      message:(NSAttributedString*)message
                                 introMessage:(NSString*)introMessage
-                                       value:(NSNumber*)value
+                                       value:(NSInteger)value
                                andValueColor:(UIColor*)color
+                                    withUnit:(NSString*)unit
                                          atY:(CGFloat)yOrigin {
     
     NSString* titleFormat = NSLocalizedString(@"onboarding.room-check.checking-sensor.format", nil);
@@ -230,7 +234,8 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                                                                 message:message
                                                            introMessage:introMessage
                                                                   value:value
-                                                     withConditionColor:color];
+                                                     withConditionColor:color
+                                                                   unit:unit];
     
     CGRect frame = [view frame];
     frame.origin.y = yOrigin;

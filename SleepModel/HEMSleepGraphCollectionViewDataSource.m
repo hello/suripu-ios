@@ -58,9 +58,19 @@ static NSString* const sensorTypeParticulates = @"particulates";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"MMMM d, yyyy";
+        formatter.dateFormat = @"MMMM d";
     });
     return formatter;
+}
+
++ (NSString*)localizedNameForSleepEventType:(NSString*)eventType
+{
+    NSString* localizedFormat = [NSString stringWithFormat:@"sleep-event.type.%@.name", [eventType lowercaseString]];
+    NSString* eventName = NSLocalizedString(localizedFormat, nil);
+    if ([eventName isEqualToString:localizedFormat]) {
+        return [eventType capitalizedString];
+    }
+    return eventName;
 }
 
 - (instancetype)initWithCollectionView:(UICollectionView*)collectionView
@@ -319,7 +329,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     cell.eventTypeButton.layer.borderColor = [HEMColorUtils colorForSleepDepth:sleepDepth].CGColor;
     cell.eventTimeLabel.text = [self textForTimeInterval:[segment.date timeIntervalSince1970]];
 
-    cell.eventTitleLabel.text = [self localizedNameForSleepEventType:segment.eventType];
+    cell.eventTitleLabel.text = [[self class] localizedNameForSleepEventType:segment.eventType];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
     [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[HEMColorUtils colorForSleepDepth:sleepDepth]];
@@ -384,16 +394,6 @@ static NSString* const sensorTypeParticulates = @"particulates";
     default:
         return NSLocalizedString(@"sleep-history.depth.deep", nil);
     }
-}
-
-- (NSString*)localizedNameForSleepEventType:(NSString*)eventType
-{
-    NSString* localizedFormat = [NSString stringWithFormat:@"sleep-event.type.%@.name", [eventType lowercaseString]];
-    NSString* eventName = NSLocalizedString(localizedFormat, nil);
-    if ([eventName isEqualToString:localizedFormat]) {
-        return [eventType capitalizedString];
-    }
-    return eventName;
 }
 
 - (UIImage*)imageForEventType:(NSString*)eventType

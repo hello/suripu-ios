@@ -26,6 +26,9 @@ typedef NS_ENUM(NSUInteger, HEMEventInfoViewCaretPosition) {
 @property (weak, nonatomic) IBOutlet FDWaveformView* waveformView;
 @property (weak, nonatomic) IBOutlet RTSpinKitView* spinnerView;
 @property (nonatomic) HEMEventInfoViewCaretPosition caretPosition;
+@property (weak, nonatomic) IBOutlet UIButton *verifyDataButton;
+@property (strong, nonatomic, readonly) NSDictionary* markdownAttributes;
+@property (strong, nonatomic, readonly) NSDateFormatter* timestampDateFormatter;
 
 - (void)showAudioPlayer:(BOOL)isVisible;
 - (void)setAudioURL:(NSURL*)audioURL;

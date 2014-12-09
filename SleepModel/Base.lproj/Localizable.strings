@@ -317,6 +317,10 @@
 "sleep-event.type.partner_motion.name" = "Partner moved";
 "sleep-event.title.format" = "%@ ― %@";
 "sleep-event.timeline.title" = "Events timeline";
+"sleep-event.verify.title" = "Is this incorrect?";
+"sleep-event.verify.message" = "Please select the time at which you awakened.";
+"sleep-event.verify-complete.title" = "Thank you!";
+"sleep-event.verify-complete.message" = "Your feedback helps us provide you with a better product.";
 
 // sleep history
 "sleep-history.last-night" = "Last night";

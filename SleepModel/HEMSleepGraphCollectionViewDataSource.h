@@ -21,6 +21,8 @@ extern NSString* const HEMSleepEventTypeFallAsleep;
 
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>
 
++ (NSString*)localizedNameForSleepEventType:(NSString*)eventType;
+
 - (instancetype)initWithCollectionView:(UICollectionView*)collectionView sleepDate:(NSDate*)date;
 
 /**
@@ -56,8 +58,6 @@ extern NSString* const HEMSleepEventTypeFallAsleep;
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath*)indexPath;
 
 - (NSUInteger)numberOfSleepSegments;
-
-- (NSString*)localizedNameForSleepEventType:(NSString*)eventType;
 
 - (HEMSleepSummaryCollectionViewCell*)sleepSummaryCell;
 

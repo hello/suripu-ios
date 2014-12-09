@@ -6,15 +6,20 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import <SenseKit/SENSettings.h>
 #import <FDWaveformView/FDWaveformView.h>
 #import <SpinKit/RTSpinKitView.h>
+#import <markdown_peg.h>
 #import "HEMEventInfoView.h"
 #import "HEMPaddedRoundedLabel.h"
 #import "HelloStyleKit.h"
+#import "UIFont+HEMStyle.h"
 
 @interface HEMEventInfoView () <AVAudioPlayerDelegate, FDWaveformViewDelegate>
 @property (nonatomic, strong) AVAudioPlayer* player;
 @property (nonatomic, strong) NSTimer* playerUpdateTimer;
+@property (strong, nonatomic, readwrite) NSDictionary* markdownAttributes;
+@property (strong, nonatomic, readwrite) NSDateFormatter* timestampDateFormatter;
 @end
 
 @implementation HEMEventInfoView
@@ -29,7 +34,15 @@ static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.15f;
 - (void)awakeFromNib
 {
     self.backgroundColor = [UIColor clearColor];
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    [self configureAudioPlayer];
+    [self configureTextSettings];
     self.caretPosition = HEMEventInfoViewCaretPositionTop;
+    self.verifyDataButton.hidden = YES;
+}
+
+- (void)configureAudioPlayer
+{
     self.waveformView.progressColor = [UIColor colorWithHue:0.56 saturation:1 brightness:1 alpha:1];
     self.waveformView.wavesColor = [UIColor colorWithWhite:0.9f alpha:1.f];
     self.waveformView.delegate = self;
@@ -40,6 +53,16 @@ static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.15f;
     self.spinnerView.backgroundColor = [UIColor clearColor];
     [self.spinnerView stopAnimating];
     self.playSoundButton.hidden = YES;
+}
+
+- (void)configureTextSettings
+{
+    self.markdownAttributes = @{
+        @(STRONG) : @{ NSFontAttributeName : [UIFont timelineEventMessageBoldFont], },
+        @(PLAIN) : @{ NSFontAttributeName : [UIFont timelineEventMessageFont] }
+    };
+    self.timestampDateFormatter = [NSDateFormatter new];
+    self.timestampDateFormatter.dateFormat = ([SENSettings timeFormat] == SENTimeFormat12Hour) ? @"h:mm a" : @"H:mm";
 }
 
 - (void)dealloc

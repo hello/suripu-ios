@@ -17,6 +17,15 @@
 - (UIImage*)snapshot;
 
 /**
+ *  Take a snapshot image of a part of a view
+ *
+ *  @param rect area to snapshot
+ *
+ *  @return image of the selected area
+ */
+- (UIImage*)snapshotOfRect:(CGRect)rect;
+
+/**
  * Take a blurred snapshot of this view with the tint color specified
  * @param color: the tint color to apply to the blurred image
  * @return blurred snapshot

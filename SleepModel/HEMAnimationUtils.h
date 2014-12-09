@@ -40,17 +40,6 @@ typedef void(^HEMAnimationBlock)(void);
                    timing:(NSString*)timingFunctionName;
 
 /**
- * Animate an array of HEMAnimationBlock sequentially
- *
- * @param animationBlocks:  an array of HEMAnimationBlock blocks.
- * @param durationPerBlock: the duration for the animation for each block
- * @param completion:       the block to invoke when ALL blocks have been exexcuted
- */
-+ (void)animateSequentially:(NSArray*)animationBlocks
-           durationPerBlock:(CGFloat)durationPerBlock
-                 completion:(void(^)(void))completion;
-
-/**
  * Start the view in a shrunken state, grow it passed it's normal scale, then finish
  * at it's normal state
  * @param view:       the view to grow

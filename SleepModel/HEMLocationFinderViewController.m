@@ -53,14 +53,6 @@
     [self updateConstraint:[self mapHeightConstraint] withDiff:-90.0f];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    CGSize constraint = [[self subtitleLabel] bounds].size;
-    constraint.height = MAXFLOAT;
-    DDLogVerbose(@"text height %f", [[self subtitleLabel] sizeThatFits:constraint].height);
-}
-
 #pragma - Activity
 
 - (void)showActivity {
@@ -178,20 +170,8 @@
 }
 
 - (void)next {
-    if (![HEMBluetoothUtils stateAvailable]) {
-        [self performSelector:@selector(next)
-                   withObject:nil
-                   afterDelay:0.1f];
-        return;
-    }
-    
-    NSString* segueId
-        = ![HEMBluetoothUtils isBluetoothOn]
-        ? [HEMOnboardingStoryboard senseSetupNoBleSegueIdentifier]
-        : [HEMOnboardingStoryboard senseSetupSegueIdentifier];
-
-    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
-    [self performSegueWithIdentifier:segueId sender:self];
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard locationToPushSegueIdentifier]
+                              sender:self];
 }
 
 #pragma mark - Clean Up

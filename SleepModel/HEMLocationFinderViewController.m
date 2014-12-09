@@ -36,12 +36,29 @@
     [[super navigationItem] setHidesBackButton:YES];
     
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
+    [self setupSubtitle];
+    
     [SENAnalytics track:kHEMAnalyticsEventOnBLocation];   
+}
+
+- (void)setupSubtitle {
+    NSString* subtitle = NSLocalizedString(@"onboarding.location.description", nil);
+    NSMutableAttributedString* attrSubtitle
+        = [[NSMutableAttributedString alloc] initWithString:subtitle];
+    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
+    [[self subtitleLabel] setAttributedText:attrSubtitle];
 }
 
 - (void)adjustConstraintsForIPhone4 {
     [self updateConstraint:[self mapHeightConstraint] withDiff:-90.0f];
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    CGSize constraint = [[self subtitleLabel] bounds].size;
+    constraint.height = MAXFLOAT;
+    DDLogVerbose(@"text height %f", [[self subtitleLabel] sizeThatFits:constraint].height);
 }
 
 #pragma - Activity

@@ -29,9 +29,6 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     UIFont* font = [UIFont onboardingDescriptionFont];
     UIColor* color = [HelloStyleKit onboardingGrayColor];
     
-    NSMutableParagraphStyle* paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle setLineHeightMultiple:1.15f];
-    
     // avoid overriding any substrings that may already have attributes set
     [attrText enumerateAttributesInRange:NSMakeRange(0, [attrText length])
                                  options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
@@ -48,11 +45,6 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
                                                        range:range];
                                   }
                                   
-                                  if ([attrs valueForKey:NSParagraphStyleAttributeName] == nil) {
-                                      [attrText addAttribute:NSParagraphStyleAttributeName
-                                                       value:paragraphStyle
-                                                       range:range];
-                                  }
                               }];
 }
 

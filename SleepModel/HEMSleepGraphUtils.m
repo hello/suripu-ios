@@ -25,13 +25,13 @@
                                     completion:NULL];
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [HEMAlertController presentInfoAlertWithTitle:@"Thank you!"
-                                                  message:@"Your feedback helps us provide you with a better product."
+            [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"sleep-event.verify-complete.title", nil)
+                                                  message:NSLocalizedString(@"sleep-event.verify-complete.message", nil)
                                      presentingController:controller];
         });
     };
-    [HEMAlertController presentDatePickerAlertWithTitle:@"title"
-                                                message:@"message"
+    [HEMAlertController presentDatePickerAlertWithTitle:NSLocalizedString(@"sleep-event.verify.title", nil)
+                                                message:NSLocalizedString(@"sleep-event.verify.message", nil)
                                    presentingController:controller
                                          datePickerMode:UIDatePickerModeTime
                                             initialDate:segment.date

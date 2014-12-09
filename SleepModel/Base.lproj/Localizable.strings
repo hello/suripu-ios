@@ -43,6 +43,7 @@
 "onboarding.room-check.intro.air" = "A low Air Quality Index value represents good air quality.";
 "onboarding.room-check.intro.sound" = "Loud noises will make falling in to deep sleep difficult.";
 "onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulties falling asleep.";
+"onboarding.push.description" = "Sense will occasionally notify you with important messages about your sleep, bedroom and deliver you your Sleep Score each morning.";
 
 // help links
 "help.url.troubleshooting" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8";

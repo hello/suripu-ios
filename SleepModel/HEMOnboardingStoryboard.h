@@ -19,10 +19,11 @@
 +(NSString *)getAppSegueIdentifier;
 +(NSString *)heightSegueIdentifier;
 +(NSString *)locationSegueIdentifier;
++(NSString *)locationToPushSegueIdentifier;
 +(NSString *)moreInfoSegueIdentifier;
++(NSString *)pushToNoBleSegueIdentifier;
++(NSString *)pushToSenseSetupSegueIdentifier;
 +(NSString *)secondPillCheckSegueIdentifier;
-+(NSString *)senseSetupSegueIdentifier;
-+(NSString *)senseSetupNoBleSegueIdentifier;
 +(NSString *)senseToPillSegueIdentifier;
 +(NSString *)weightSegueIdentifier;
 +(NSString *)wifiSegueIdentifier;

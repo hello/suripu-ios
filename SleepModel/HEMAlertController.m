@@ -124,18 +124,17 @@ static NSMutableArray* alertControllers = nil;
     void (^block)() = actionProperties[HEMAlertControllerButtonActionKey];
     if (block)
         block();
+    [alertControllers removeObject:[alertControllers lastObject]];
 }
 
 - (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     [self activateActionAtIndex:buttonIndex];
-    [alertControllers removeObject:[alertControllers lastObject]];
 }
 
 - (void)actionSheet:(UIActionSheet*)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     [self activateActionAtIndex:buttonIndex];
-    [alertControllers removeObject:[alertControllers lastObject]];
 }
 
 #pragma mark - Present Alert

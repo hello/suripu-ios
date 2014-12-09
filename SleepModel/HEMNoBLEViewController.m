@@ -22,9 +22,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *continueButtonWidthConstraint;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bluetoothImageTopConstraint;
 
 @end
@@ -34,6 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self navigationItem] setHidesBackButton:YES];
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupSubtitleText];
     

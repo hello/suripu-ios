@@ -37,6 +37,11 @@
 "onboarding.room-check.ideal-condition-format" = "The %@ in your room is just right.";
 "onboarding.room-check.failed" = "Unsuccessful";
 "onboarding.room-check.failed-message" = "One or more sensors is not ready. Don't worry, data will show soon.  Set up a Smart Alarm first.";
+"onboarding.room-check.intro.temperature" = "Falling asleep can be difficult if your room is too hot or too cold.";
+"onboarding.room-check.intro.humidity" = "Proper humidity levels are important for a good night's sleep.";
+"onboarding.room-check.intro.air" = "A low Air Quality Index value represents good air quality.";
+"onboarding.room-check.intro.sound" = "Loud noises will make falling in to deep sleep difficult.";
+"onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulties falling asleep.";
 
 // help links
 "help.url.troubleshooting" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8";

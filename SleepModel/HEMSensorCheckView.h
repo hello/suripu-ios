@@ -32,6 +32,7 @@ extern CGFloat const HEMSensorCheckCollapsedHeight;
              highlightedIcon:(UIImage*)highlighedIcon
                        title:(NSString*)title
                      message:(NSAttributedString*)message
+                introMessage:(NSString*)intro
                        value:(NSNumber*)value
           withConditionColor:(UIColor*)color;
 
@@ -56,8 +57,11 @@ whileAnimating:(void(^)(void))animations
 - (void)collapse;
 
 /**
- * Show the sensor value that was initialized
+ * Show the sensor value that was initialized, but show an initial message
+ * briefly to describe the sensor value
+ *
+ * @param completion: block invoked when sensor value has been shown
  */
-- (void)showSensorValue;
+- (void)showSensorValue:(void(^)(void))completion;
 
 @end

@@ -61,6 +61,35 @@ static CGFloat const kHEMAnimationDefaultDuration = 0.2f;
     
 }
 
++ (void)animateSequentially:(NSArray*)animationBlocks
+           durationPerBlock:(CGFloat)durationPerBlock
+                 completion:(void(^)(void))completion {
+    __block NSMutableArray* blocks = nil;
+    if ([animationBlocks isKindOfClass:[NSMutableArray class]]) {
+        blocks = (NSMutableArray*)animationBlocks;
+    } else {
+        blocks = [animationBlocks mutableCopy];
+    }
+    
+    HEMAnimationBlock block = [blocks firstObject];
+    if (block) {
+        [CATransaction begin];
+        [CATransaction setCompletionBlock:^{
+            [blocks removeObjectAtIndex:0];
+            [self animateSequentially:blocks
+                     durationPerBlock:durationPerBlock
+                           completion:completion];
+        }];
+        
+        block();
+        
+        [CATransaction commit];
+    } else {
+        if (completion) completion ();
+    }
+    
+}
+
 + (void)grow:(UIView*)view completion:(void(^)(BOOL finished))completion {
     [UIView animateWithDuration:kHEMAnimationDefaultDuration animations:^{
         [view setTransform:CGAffineTransformMakeScale(1.1f, 1.1f)];

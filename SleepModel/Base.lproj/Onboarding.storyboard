@@ -1126,7 +1126,7 @@
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMZ-p6-gA8">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMZ-p6-gA8">
                                 <rect key="frame" x="28" y="80" width="544" height="54"/>
                                 <attributedString key="attributedText">
                                     <fragment>
@@ -1461,14 +1461,14 @@ You can always do this later by visiting Settings.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="QrR-Gx-DLp" customClass="HEMScrollableView">
-                                <rect key="frame" x="28" y="28" width="544" height="507"/>
+                                <rect key="frame" x="28" y="28" width="544" height="477"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ybq-zx-dgL">
-                                <rect key="frame" x="0.0" y="535" width="600" height="65"/>
+                                <rect key="frame" x="0.0" y="505" width="600" height="95"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tkw-WQ-h6F" customClass="HEMActionButton">
-                                        <rect key="frame" x="190" y="13" width="220" height="40"/>
+                                        <rect key="frame" x="190" y="28" width="220" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="21U-DL-0b4"/>
                                             <constraint firstAttribute="width" constant="220" id="SvT-p8-0Er"/>
@@ -1486,7 +1486,7 @@ You can always do this later by visiting Settings.</string>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="65" id="R2G-cY-7o6"/>
+                                    <constraint firstAttribute="height" constant="95" id="R2G-cY-7o6"/>
                                     <constraint firstAttribute="centerX" secondItem="tkw-WQ-h6F" secondAttribute="centerX" id="c2D-u5-deZ"/>
                                     <constraint firstAttribute="centerY" secondItem="tkw-WQ-h6F" secondAttribute="centerY" constant="-0.5" id="cd9-Pc-K5y"/>
                                 </constraints>

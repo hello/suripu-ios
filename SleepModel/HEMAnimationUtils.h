@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+typedef void(^HEMAnimationBlock)(void);
+
 @interface HEMAnimationUtils : NSObject
 
 /**
@@ -36,6 +38,17 @@
 + (void)transactAnimation:(void(^)(void))animation
                completion:(void(^)(void))completion
                    timing:(NSString*)timingFunctionName;
+
+/**
+ * Animate an array of HEMAnimationBlock sequentially
+ *
+ * @param animationBlocks:  an array of HEMAnimationBlock blocks.
+ * @param durationPerBlock: the duration for the animation for each block
+ * @param completion:       the block to invoke when ALL blocks have been exexcuted
+ */
++ (void)animateSequentially:(NSArray*)animationBlocks
+           durationPerBlock:(CGFloat)durationPerBlock
+                 completion:(void(^)(void))completion;
 
 /**
  * Start the view in a shrunken state, grow it passed it's normal scale, then finish

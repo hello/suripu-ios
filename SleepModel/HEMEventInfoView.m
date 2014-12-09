@@ -34,6 +34,7 @@ static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.15f;
 - (void)awakeFromNib
 {
     self.backgroundColor = [UIColor clearColor];
+    self.translatesAutoresizingMaskIntoConstraints = NO;
     [self configureAudioPlayer];
     [self configureTextSettings];
     self.caretPosition = HEMEventInfoViewCaretPositionTop;

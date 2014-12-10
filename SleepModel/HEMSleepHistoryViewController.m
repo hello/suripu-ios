@@ -22,6 +22,8 @@
 
 @implementation HEMSleepHistoryViewController
 
+static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -47,7 +49,7 @@
     UICollectionViewFlowLayout* layout = (id)self.historyCollectionView.collectionViewLayout;
     layout.sectionInset = UIEdgeInsetsMake(10.f, 0, 10.f, 0);
     CGFloat cellHeight = (CGRectGetHeight(self.view.bounds) * 0.65f) - layout.sectionInset.top - layout.sectionInset.bottom;
-    layout.itemSize = CGSizeMake(115.f, cellHeight);
+    layout.itemSize = CGSizeMake(CGRectGetWidth(self.view.bounds) * HEMSleepHistoryCellWidthRatio, cellHeight);
 }
 
 - (void)configureDateFormatters

@@ -199,7 +199,7 @@
 "settings.sense.no-sense-message" = "Ensure you are near your Sense and that Sense is powered on then try again.";
 "settings.sense.dialog.enable-pair-mode-title" = "Put Sense into Pairing Mode";
 "settings.sense.dialog.enable-pair-mode-message" = "Are you sure you want to put Sense into pairing mode?";
-"settings.sense.scanning-message" = "Looking for your Sense.";
+"settings.sense.scanning-message" = "Looking for your Sense over Bluetooth...";
 "settings.device.info-failed-to-load" = "Failed to load information";
 "settings.sense.enabling-pairing-mode" = "Enabling pairing mode.";
 "settings.device.restoring-factory-settings" = "Restoring, please wait.";

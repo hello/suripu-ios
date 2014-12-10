@@ -13,16 +13,20 @@
 +(NSString *)networkReuseIdentifier;
 
 /** Segue Identifiers */
++(NSString *)anotherPillToBeforeSleepSegueIdentifier;
++(NSString *)beforeSleepToAlarmSegueIdentifier;
++(NSString *)beforeSleeptoRoomCheckSegueIdentifier;
 +(NSString *)bluetoothOnSegueIdentifier;
 +(NSString *)doneSegueIdentifier;
 +(NSString *)genderSegueIdentifier;
 +(NSString *)getAppSegueIdentifier;
 +(NSString *)heightSegueIdentifier;
 +(NSString *)locationSegueIdentifier;
++(NSString *)locationToPushSegueIdentifier;
 +(NSString *)moreInfoSegueIdentifier;
++(NSString *)pushToNoBleSegueIdentifier;
++(NSString *)pushToSenseSetupSegueIdentifier;
 +(NSString *)secondPillCheckSegueIdentifier;
-+(NSString *)senseSetupSegueIdentifier;
-+(NSString *)senseSetupNoBleSegueIdentifier;
 +(NSString *)senseToPillSegueIdentifier;
 +(NSString *)weightSegueIdentifier;
 +(NSString *)wifiSegueIdentifier;

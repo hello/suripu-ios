@@ -12,6 +12,7 @@
 #import "HelloStyleKit.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMAnimationUtils.h"
+#import "HEMMathUtil.h"
 
 static CGFloat kHEMActivityMargins = 30.0f;
 static CGFloat kHEMActivityViewSeparation = 20.0f;
@@ -116,6 +117,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 
 - (void)showSuccessMarkAnimated:(BOOL)animate completion:(void(^)(BOOL finished))completion {
     UIView* mark = [self successMarkView];
+    [mark setAlpha:1.0f];
     
     if (animate) {
         [mark setTransform:CGAffineTransformMakeScale(0.0f, 0.0f)];
@@ -134,25 +136,39 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
     [self updateText:text hideActivity:NO completion:nil];
 }
 
-- (void)updateText:(NSString *)text hideActivity:(BOOL)hideActivity completion:(void (^)(BOOL))completion {
-    if (text == nil) {
-        if (completion) completion (YES);
-        return;
-    }
+- (void)updateText:(NSString *)text
+      hideActivity:(BOOL)hideActivity
+        completion:(void (^)(BOOL))completion {
+    [self updateText:text successIcon:nil hideActivity:hideActivity completion:completion];
+}
+
+- (void)updateText:(NSString*)text
+       successIcon:(UIImage*)icon
+      hideActivity:(BOOL)hideActivity
+        completion:(void(^)(BOOL finished))completion {
+    
     [UIView animateWithDuration:kHEMActivityAnimDuration
                      animations:^{
                          [[self activityLabel] setAlpha:0.0f];
+                         [[self successMarkView] setAlpha:0.0f];
                          if (hideActivity) {
                              [[self indicator] setAlpha:0.0f];
                          }
                      }
                      completion:^(BOOL finished) {
                          [[self activityLabel] setText:text];
+                         
+                         if (icon != nil) {
+                             [[self successMarkView] setImage:icon];
+                         }
+                         
                          [self setNeedsLayout];
                          [UIView animateWithDuration:kHEMActivityAnimDuration
                                           animations:^{
                                               [[self activityLabel] setAlpha:1.0f];
-                                          } completion:completion];
+                                              [[self successMarkView] setAlpha:1.0f];
+                                          }
+                                          completion:completion];
                      }];
 }
 
@@ -212,6 +228,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
                      }
                      completion:^(BOOL finished) {
                          if (activity) {
+                             [[self indicator] setAlpha:1.0f];
                              [[self indicator] start];
                          }
                          [self setShowing:YES];
@@ -230,16 +247,16 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
         [[self indicator] stop];
         if (showMark) {
             [self showSuccessMarkAnimated:YES completion:^(BOOL finished) {
-                [self delayDismissWithCompletion:completion];
+                [self delayDismissWithRemoval:remove completion:completion];
             }];
         } else {
-            [self delayDismissWithCompletion:completion];
+            [self delayDismissWithRemoval:remove completion:completion];
         }
     }];
     
 }
 
-- (void)delayDismissWithCompletion:(void(^)(void))completion {
+- (void)delayDismissWithRemoval:(BOOL)remove completion:(void(^)(void))completion {
     [UIView animateWithDuration:kHEMActivityAnimDuration
                           delay:kHEMActivityResultDisplayTime
                         options:UIViewAnimationOptionCurveEaseIn
@@ -250,7 +267,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
                          [[self activityLabel] setText:nil];
                          [[self successMarkView] removeFromSuperview];
                          [self setHidden:YES];
-                         
+
                          if (remove) {
                              [self removeFromSuperview];
                          }

@@ -80,6 +80,22 @@
 - (void)updateText:(NSString*)text completion:(void(^)(BOOL finished))completion;
 
 /**
+ * @method updateText:successIcon:completion:
+ *
+ * @discussion
+ * Update the current text together with the success mark icon displayed
+ *
+ * @param text:         the text to display
+ * @param icon:         the new success mark icon to display
+ * @param hideActivity: YES to hide it, NO to leave it there, if it's showing
+ * @param completion:   the block to invoke when all is done displaying
+ */
+- (void)updateText:(NSString*)text
+       successIcon:(UIImage*)icon
+      hideActivity:(BOOL)hideActivity
+        completion:(void(^)(BOOL finished))completion;
+
+/**
  * @method
  * Display the text specified, then dismiss the view after, calling the completion
  * block when all is done.

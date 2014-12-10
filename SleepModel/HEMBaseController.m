@@ -11,8 +11,8 @@
 #import "HEMDialogViewController.h"
 #import "HEMSupportUtil.h"
 
-static CGFloat const kHEMIPhone4Height = 480.0f;
-static CGFloat const kHEMIPhone5Height = 568.0f;
+CGFloat const kHEMIPhone4Height = 480.0f;
+CGFloat const kHEMIPhone5Height = 568.0f;
 
 @interface HEMBaseController()
 

@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENAPIAccount.h>
+#import <SenseKit/SENSenseManager.h>
 
 #import <AFNetworking/AFURLResponseSerialization.h>
 
@@ -18,6 +19,7 @@
 #import "HEMDialogViewController.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSettingsTableViewController.h"
+#import "HEMUserDataCache.h"
 
 CGFloat const HEMOnboardingShadowOpacity = 0.8f;
 
@@ -28,9 +30,6 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 + (void)applyCommonDescriptionAttributesTo:(NSMutableAttributedString*)attrText {
     UIFont* font = [UIFont onboardingDescriptionFont];
     UIColor* color = [HelloStyleKit onboardingGrayColor];
-    
-    NSMutableParagraphStyle* paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle setLineHeightMultiple:1.15f];
     
     // avoid overriding any substrings that may already have attributes set
     [attrText enumerateAttributesInRange:NSMakeRange(0, [attrText length])
@@ -48,11 +47,6 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
                                                        range:range];
                                   }
                                   
-                                  if ([attrs valueForKey:NSParagraphStyleAttributeName] == nil) {
-                                      [attrText addAttribute:NSParagraphStyleAttributeName
-                                                       value:paragraphStyle
-                                                       range:range];
-                                  }
                               }];
 }
 
@@ -204,18 +198,30 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 }
 
 + (void)finisOnboardinghWithMessageFrom:(UIViewController*)controller {
+    [HEMUserDataCache clearSharedUserDataCache];
+    
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
-    NSString* doneMessage = NSLocalizedString(@"onboarding.finished.message", nil);
+    
+    void (^activityShownCompletion)(void) = ^{
+        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1.0f*NSEC_PER_SEC);
+        dispatch_after(time, dispatch_get_main_queue(), ^{
+            [activityView updateText:NSLocalizedString(@"onboarding.end-message.sleep", nil)
+                         successIcon:[HelloStyleKit moon]
+                        hideActivity:YES
+                          completion:^(BOOL finished) {
+                              dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2.0f*NSEC_PER_SEC);
+                              dispatch_after(time, dispatch_get_main_queue(), ^{
+                                  [self dismissOnboardingFlowFrom:controller];
+                              });
+                          }];
+        });
+    };
+    
+    NSString* doneMessage = NSLocalizedString(@"onboarding.end-message.well-done", nil);
     [activityView showInView:[[controller navigationController] view]
                     withText:doneMessage
                  successMark:YES
-                  completion:^{
-                      float delay = 2.0f;
-                      dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay*NSEC_PER_SEC);
-                      dispatch_after(time, dispatch_get_main_queue(), ^{
-                          [self dismissOnboardingFlowFrom:controller];
-                      });
-                  }];
+                  completion:activityShownCompletion];
 
 }
 

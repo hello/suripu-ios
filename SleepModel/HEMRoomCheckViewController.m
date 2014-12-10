@@ -20,7 +20,7 @@
 #import "HEMSensorUtils.h"
 
 static CGFloat const HEMRoomCheckShowSensorDelay = 1.0f;
-static CGFloat const HEMRoomCheckDataDisplayTime = 4.0f;
+static CGFloat const HEMRoomCheckDataDisplayTime = 2.0f;
 static CGFloat const HEMRoomCheckMinVerticalPadding = 28.0f;
 static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
@@ -146,19 +146,23 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     NSString* message = NSLocalizedString(@"sensor.sound.placeholder-message", nil);
     nextY += CGRectGetHeight([[self addSensorViewWithIcon:[HelloStyleKit sensorSound]
                                           highlightedIcon:[HelloStyleKit sensorSoundBlue]
-                                                     name:NSLocalizedString(@"sensor.sound", nil)
+                                                     name:NSLocalizedString(@"sensor.light", nil)
                                                   message:[self attributedMessage:message]
-                                                    value:@"30"
+                                             introMessage:NSLocalizedString(@"onboarding.room-check.intro.sound", nil)
+                                                    value:30
                                             andValueColor:[HEMSensorUtils colorForSensorWithCondition:SENSensorConditionIdeal]
+                                                 withUnit:NSLocalizedString(@"measurement.db.unit", nil)
                                                       atY:nextY] bounds]);
     
     message = NSLocalizedString(@"sensor.light.placeholder-message", nil);
     [self addSensorViewWithIcon:[HelloStyleKit sensorLight]
                 highlightedIcon:[HelloStyleKit sensorLightBlue]
                            name:NSLocalizedString(@"sensor.light", nil)
-                        message:[self  attributedMessage:message]
-                          value:@"200"
+                        message:[self attributedMessage:message]
+                   introMessage:NSLocalizedString(@"onboarding.room-check.intro.light", nil)
+                          value:200
                   andValueColor:[HEMSensorUtils colorForSensorWithCondition:SENSensorConditionIdeal]
+                       withUnit:NSLocalizedString(@"measurement.lx.unit", nil)
                             atY:nextY];
     
     // show each sensor view in collapsed state
@@ -175,20 +179,24 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 - (HEMSensorCheckView*)addSensorViewFor:(SENSensor*)sensor atY:(CGFloat)yOrigin {
     UIImage* icon = nil;
     UIImage* highlightedIcon = nil;
+    NSString* intro = nil;
 
     switch ([sensor unit]) {
         case SENSensorUnitAQI: {
             icon = [HelloStyleKit sensorParticulates];
+            intro = NSLocalizedString(@"onboarding.room-check.intro.air", nil);
             highlightedIcon = [HelloStyleKit sensorParticulatesBlue];
             break;
         }
         case SENSensorUnitDegreeCentigrade: {
             icon = [HelloStyleKit sensorTemperature];
+            intro = NSLocalizedString(@"onboarding.room-check.intro.temperature", nil);
             highlightedIcon = [HelloStyleKit sensorTemperatureBlue];
             break;
         }
         case SENSensorUnitPercent: {
             icon = [HelloStyleKit sensorHumidity];
+            intro = NSLocalizedString(@"onboarding.room-check.intro.humidity", nil);
             highlightedIcon = [HelloStyleKit sensorHumidityBlue];
             break;
         }
@@ -200,8 +208,10 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                        highlightedIcon:highlightedIcon
                                   name:[sensor localizedName]
                                message:[self messageForSensor:sensor]
-                                 value:[sensor localizedValue]
+                          introMessage:intro
+                                 value:[[sensor value] integerValue]
                          andValueColor:[HEMSensorUtils colorForSensorWithCondition:[sensor condition]]
+                              withUnit:[sensor localizedUnit]
                                    atY:yOrigin];
 }
 
@@ -209,8 +219,10 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                              highlightedIcon:(UIImage*)highlightedIcon
                                         name:(NSString*)name
                                      message:(NSAttributedString*)message
-                                       value:(NSString*)value
+                                introMessage:(NSString*)introMessage
+                                       value:(NSInteger)value
                                andValueColor:(UIColor*)color
+                                    withUnit:(NSString*)unit
                                          atY:(CGFloat)yOrigin {
     
     NSString* titleFormat = NSLocalizedString(@"onboarding.room-check.checking-sensor.format", nil);
@@ -220,8 +232,10 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                                                         highlightedIcon:highlightedIcon
                                                                   title:title
                                                                 message:message
+                                                           introMessage:introMessage
                                                                   value:value
-                                                     withConditionColor:color];
+                                                     withConditionColor:color
+                                                                   unit:unit];
     
     CGRect frame = [view frame];
     frame.origin.y = yOrigin;
@@ -304,13 +318,13 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
         }
     } onCompletion:^(BOOL finished) {
         [self setCurrentTopY:[self currentTopY] + HEMSensorCheckCollapsedHeight];
-        [view showSensorValue];
-        
-        int64_t delaySecs = (int64_t)(HEMRoomCheckDataDisplayTime * NSEC_PER_SEC);
-        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delaySecs);
-        dispatch_after(delay, dispatch_get_main_queue(), ^{
-            [self displaySensorDataAtIndex:index + 1];
-        });
+        [view showSensorValue:^{
+            int64_t delaySecs = (int64_t)(HEMRoomCheckDataDisplayTime * NSEC_PER_SEC);
+            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delaySecs);
+            dispatch_after(delay, dispatch_get_main_queue(), ^{
+                [self displaySensorDataAtIndex:index + 1];
+            });
+        }];
         
     }];
 }

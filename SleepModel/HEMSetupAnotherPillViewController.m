@@ -76,7 +76,13 @@
     }];
 }
 
+- (IBAction)skip:(id)sender {
+    [[[HEMUserDataCache sharedUserDataCache] senseManager] disconnectFromSense];
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard anotherPillToBeforeSleepSegueIdentifier] sender:self];
+}
+
 - (void)getApp {
+    [[[HEMUserDataCache sharedUserDataCache] senseManager] disconnectFromSense];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard getAppSegueIdentifier]
                               sender:self];
 }

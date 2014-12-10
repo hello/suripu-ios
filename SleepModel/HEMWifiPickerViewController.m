@@ -254,8 +254,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Actions
 
 - (IBAction)help:(id)sender {
-    DDLogVerbose(@"WARNING: this has not been implemented yet!");
-    
     [SENAnalytics track:kHEMAnalyticsEventHelp];
     [HEMSupportUtil openHelpFrom:self];
 }

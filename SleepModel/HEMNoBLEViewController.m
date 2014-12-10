@@ -22,9 +22,6 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *continueButtonWidthConstraint;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bluetoothImageTopConstraint;
 
 @end
@@ -34,6 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self navigationItem] setHidesBackButton:YES];
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupSubtitleText];
     
@@ -81,10 +79,6 @@
 #pragma mark - Actions
 
 - (IBAction)help:(id)sender {
-    DDLogVerbose(@"WARNING: this has not been implemented yet!");
-    // TODO (jimmy): the help website is still being discussed / worked on.  When
-    // we know what to actually point to, we likely will open up a browser to
-    // show the help
     [SENAnalytics track:kHEMAnalyticsEventHelp];
     
 #if TARGET_IPHONE_SIMULATOR

@@ -36,8 +36,17 @@
     [[super navigationItem] setHidesBackButton:YES];
     
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
+    [self setupSubtitle];
+    
     [SENAnalytics track:kHEMAnalyticsEventOnBLocation];   
+}
+
+- (void)setupSubtitle {
+    NSString* subtitle = NSLocalizedString(@"onboarding.location.description", nil);
+    NSMutableAttributedString* attrSubtitle
+        = [[NSMutableAttributedString alloc] initWithString:subtitle];
+    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
+    [[self subtitleLabel] setAttributedText:attrSubtitle];
 }
 
 - (void)adjustConstraintsForIPhone4 {
@@ -161,20 +170,8 @@
 }
 
 - (void)next {
-    if (![HEMBluetoothUtils stateAvailable]) {
-        [self performSelector:@selector(next)
-                   withObject:nil
-                   afterDelay:0.1f];
-        return;
-    }
-    
-    NSString* segueId
-        = ![HEMBluetoothUtils isBluetoothOn]
-        ? [HEMOnboardingStoryboard senseSetupNoBleSegueIdentifier]
-        : [HEMOnboardingStoryboard senseSetupSegueIdentifier];
-
-    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
-    [self performSegueWithIdentifier:segueId sender:self];
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard locationToPushSegueIdentifier]
+                              sender:self];
 }
 
 #pragma mark - Clean Up

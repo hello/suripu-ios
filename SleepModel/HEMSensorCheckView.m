@@ -1,3 +1,4 @@
+
 //
 //  HEMSensorCheckView.m
 //  Sense
@@ -9,6 +10,8 @@
 #import "HEMSensorCheckView.h"
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
+#import "HEMActivityIndicatorView.h"
+#import "HEMAnimationUtils.h"
 
 CGFloat const HEMSensorCheckCollapsedHeight = 45.0f;
 
@@ -18,16 +21,30 @@ static CGFloat const HEMSensorCheckTitleHeight = 20.0f;
 static CGFloat const HEMSensorCheckMessageMaxHeight = 58.0f;
 static CGFloat const HEMSensorCheckSeparatorHeight = 0.5f;
 static CGFloat const HEMSensorCheckContentAnimationDuration = 0.7f;
+static CGFloat const HEMSensorCheckValueDigitWidth = 45.0f;
+static CGFloat const HEMSensorCheckValueDigitHeight = 110.0f;
+static CGFloat const HEMSensorCheckValueUnitHeight = 20.0f;
+static CGFloat const HEMSensorCheckValueUnitTopMargin = 18.0f;
+static CGFloat const HEMSensorCheckPickerHeight = 162.0f;
+static CGFloat const HEMSensorCheckActivitySize = 35.0f;
+static CGFloat const HEMSensorCheckActivityDuration = 2.0f;
+static CGFloat const HEMSensorCheckDigitDisplayDelay = 0.3f;
 
-@interface HEMSensorCheckView()
+@interface HEMSensorCheckView() <UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (nonatomic, weak)   UIImageView* iconImageView;
 @property (nonatomic, weak)   UILabel* titleLabel;
 @property (nonatomic, weak)   UILabel* messageLabel;
 @property (nonatomic, weak)   UILabel* valueLabel;
 @property (nonatomic, weak)   UIView* separator;
-@property (nonatomic, copy)   NSString* value;
+@property (nonatomic, weak)   UIPickerView* valueView;
+@property (nonatomic, weak)   HEMActivityIndicatorView* activityIndicator;
+@property (nonatomic, weak)   UILabel* unitLabel;
+@property (nonatomic, copy)   NSString* sensorValueString;
 @property (nonatomic, strong) UIColor* conditionColor;
+@property (nonatomic, copy)   NSAttributedString* sensorMessage;
+@property (nonatomic, copy)   NSString* introMessage;
+@property (nonatomic, copy)   NSString* sensorValueUnit;
 
 @end
 
@@ -41,8 +58,10 @@ static CGFloat const HEMSensorCheckContentAnimationDuration = 0.7f;
              highlightedIcon:(UIImage*)highlighedIcon
                        title:(NSString*)title
                      message:(NSAttributedString*)message
-                       value:(NSString*)value
-          withConditionColor:(UIColor*)color {
+                introMessage:(NSString*)intro
+                       value:(NSInteger)value
+          withConditionColor:(UIColor*)color
+                        unit:(NSString*)unit {
     
     CGRect bounds = [[UIScreen mainScreen] bounds];
     CGRect frame = CGRectZero;
@@ -52,13 +71,16 @@ static CGFloat const HEMSensorCheckContentAnimationDuration = 0.7f;
     self = [super initWithFrame:frame];
     if (self) {
         [self setClipsToBounds:YES];
+        [self setIntroMessage:intro];
+        [self setSensorMessage:message];
+        [self setConditionColor:color];
+        [self setSensorValueString:[NSString stringWithFormat:@"%ld", (long)value]];
+        [self setSensorValueUnit:unit];
+        
         [self addIconImageViewWithIcon:icon highlightedIcon:highlighedIcon];
         [self addTitleWithText:title];
-        [self addMessageWithText:message];
+        [self addMessage];
         [self addSeparator];
-        
-        [self setValue:value];
-        [self setConditionColor:color];
     }
     return self;
 }
@@ -99,9 +121,18 @@ static CGFloat const HEMSensorCheckContentAnimationDuration = 0.7f;
     [self setTitleLabel:label];
 }
 
-- (void)addMessageWithText:(NSAttributedString*)message {
+- (void)addMessage {
+    NSMutableParagraphStyle* paragraphStyle = [[NSMutableParagraphStyle alloc] init];
+    [paragraphStyle setAlignment:NSTextAlignmentCenter];
+
+    NSAttributedString* attributedIntro =
+        [[NSAttributedString alloc] initWithString:[self introMessage]
+                                        attributes:@{NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont],
+                                                     NSForegroundColorAttributeName : [UIColor blackColor],
+                                                     NSParagraphStyleAttributeName : paragraphStyle}];
+    
     UILabel* label = [[UILabel alloc] init];
-    [label setAttributedText:message];
+    [label setAttributedText:attributedIntro];
     [label setNumberOfLines:3];
     [label setAlpha:0.0f];
     
@@ -122,29 +153,145 @@ static CGFloat const HEMSensorCheckContentAnimationDuration = 0.7f;
     [self setMessageLabel:label];
 }
 
-- (void)showSensorValue {
-    UILabel* label = [[UILabel alloc] init];
-    [label setText:[self value]];
-    [label setTextColor:[self conditionColor]];
-    [label setFont:[UIFont onboardingRoomCheckSensorValueFont]];
-    [label setNumberOfLines:1];
-    [label sizeToFit];
-    [label setAlpha:0.0f];
-    
+- (void)showSensorValue:(void(^)(void))completion {
+    NSInteger digits = [[self sensorValueString] length];
+    CGFloat bWidth = CGRectGetWidth([self bounds]);
     CGFloat lastY = CGRectGetMaxY([[self messageLabel] frame]);
     CGFloat spaceLeft = CGRectGetHeight([self bounds]) - lastY;
+    CGFloat width = digits*(HEMSensorCheckValueDigitWidth + 15.0f);
+    CGRect frame = {
+        (bWidth - width)/2,
+        (lastY + (spaceLeft - HEMSensorCheckPickerHeight)/2),
+        width,
+        HEMSensorCheckPickerHeight
+    };
+    UIPickerView* digitPicker = [[UIPickerView alloc] initWithFrame:frame];
+    [digitPicker setDataSource:self];
+    [digitPicker setDelegate:self];
+    [digitPicker setUserInteractionEnabled:NO];
+    [digitPicker setBackgroundColor:[UIColor clearColor]];
+    [digitPicker setAlpha:0.0f];
     
-    CGRect frame = [label frame];
-    frame.origin.x = (CGRectGetWidth([self bounds]) - CGRectGetWidth(frame))/2;
-    frame.origin.y = lastY + (spaceLeft - CGRectGetHeight(frame))/2;
-    [label setFrame:frame];
+    // must add a top and bottom view on top of the picker to hide it's row
+    // separator, which seems impossible to remove unless you know exactly the
+    // index of the subview and remove at by index, which seems worse than covering it
+    CGFloat coverHeight = (HEMSensorCheckPickerHeight - HEMSensorCheckValueDigitHeight)/2;
+    CGRect coverFrame = CGRectZero;
+    coverFrame.origin = frame.origin;
+    coverFrame.size.width = width;
+    coverFrame.size.height = coverHeight;
     
-    [self addSubview:label];
-    [self setValueLabel:label];
+    UIView* topView = [[UIView alloc] init];
+    [topView setBackgroundColor:[UIColor whiteColor]];
+    [topView setFrame:coverFrame];
     
-    [UIView animateWithDuration:0.7f
+    coverFrame.origin.y = CGRectGetMaxY(frame) - coverHeight;
+    UIView* bottomView = [[UIView alloc] init];
+    [bottomView setBackgroundColor:[UIColor whiteColor]];
+    [bottomView setFrame:coverFrame];
+    
+    UILabel* unitLabel = nil;
+    if ([self sensorValueUnit] != nil) {
+        unitLabel = [[UILabel alloc] init];
+        [unitLabel setText:[self sensorValueUnit]];
+        [unitLabel setFont:[UIFont onboardingRoomCheckSensorUnitFont]];
+        [unitLabel setTextColor:[self conditionColor]];
+        [unitLabel setAlpha:0.0f];
+        
+        CGSize constraint = {MAXFLOAT, HEMSensorCheckValueUnitHeight};
+        CGSize textSize = [unitLabel sizeThatFits:constraint];
+        CGRect unitFrame = {
+            CGRectGetMaxX(frame),
+            CGRectGetMaxY([topView frame]) + HEMSensorCheckValueUnitTopMargin,
+            textSize.width,
+            HEMSensorCheckValueUnitHeight
+        };
+        [unitLabel setFrame:unitFrame];
+    }
+    
+    [self addSubview:digitPicker];
+    [self addSubview:topView];
+    [self addSubview:bottomView];
+    [self bringSubviewToFront:[self separator]];
+    
+    if (unitLabel != nil) {
+        [self addSubview:unitLabel];
+        [self setUnitLabel:unitLabel];
+    }
+    
+    [self setValueView:digitPicker];
+    [self addActivityIndicatorRelativeTo:digitPicker];
+    [self animateInSensorValue:[self sensorValueString] completion:completion];
+}
+
+- (void)setPicker:(UIPickerView*)picker
+     digitAtIndex:(NSInteger)index
+       usingValue:(NSString*)value
+         animated:(BOOL)animated {
+    NSInteger digit = [[NSString stringWithFormat:@"%c", [value characterAtIndex:index]] integerValue];
+    [picker selectRow:digit inComponent:index animated:YES];
+}
+
+- (void)addActivityIndicatorRelativeTo:(UIView*)view {
+    CGRect frame = [view frame];
+    CGFloat widthDiff = CGRectGetWidth(frame) - HEMSensorCheckActivitySize;
+    CGFloat heightDiff = CGRectGetHeight(frame) - HEMSensorCheckActivitySize;
+    CGRect indicatorFrame = {
+        CGRectGetMinX([view frame]) + (widthDiff/2),
+        CGRectGetMinY([view frame]) + (heightDiff/2),
+        HEMSensorCheckActivitySize,
+        HEMSensorCheckActivitySize
+    };
+    HEMActivityIndicatorView* indicator = [[HEMActivityIndicatorView alloc] initWithFrame:indicatorFrame];
+    [self addSubview:indicator];
+    [self setActivityIndicator:indicator];
+}
+
+- (void)animateInSensorValue:(NSString*)value completion:(void(^)(void))completion {
+    [[self activityIndicator] start];
+    int64_t delaySecs = (int64_t)(HEMSensorCheckActivityDuration * NSEC_PER_SEC);
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delaySecs);
+    dispatch_after(delay, dispatch_get_main_queue(), ^{
+        [[self activityIndicator] stop];
+        [[self valueView] setAlpha:1.0f];
+        [[self unitLabel] setAlpha:1.0f];
+        [self animateToDigitAtIndex:[value length]-1 withinString:value completion:^{
+            [self displaySensorMessage:completion];
+        }];
+    });
+
+}
+
+- (void)animateToDigitAtIndex:(NSInteger)index withinString:(NSString*)value completion:(void(^)(void))completion {
+    if (index < 0) {
+        if (completion) completion ();
+        return;
+    }
+    
+    [self setPicker:[self valueView] digitAtIndex:index usingValue:value animated:YES];
+    
+    // animate 1 digit at a time
+    int64_t delaySecs = (int64_t)(HEMSensorCheckDigitDisplayDelay * NSEC_PER_SEC);
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delaySecs);
+    dispatch_after(delay, dispatch_get_main_queue(), ^{
+        [self animateToDigitAtIndex:index-1 withinString:value completion:completion];
+    });
+}
+
+- (void)displaySensorMessage:(void(^)(void))completion {
+    CGFloat splitDuration = HEMSensorCheckActivityDuration/2;
+    [UIView animateWithDuration:splitDuration
                      animations:^{
-                         [label setAlpha:1.0f];
+                         [[self messageLabel] setAlpha:0.0f];
+                     } completion:^(BOOL finished) {
+                         [[self messageLabel] setAttributedText:[self sensorMessage]];
+                         [UIView animateWithDuration:splitDuration
+                                          animations:^{
+                                              [[self messageLabel] setAlpha:1.0f];
+                                          }
+                                          completion:^(BOOL finished) {
+                                              if (completion) completion();
+                                          }];
                      }];
 }
 
@@ -218,6 +365,56 @@ whileAnimating:(void(^)(void))animations
                          [[self messageLabel] setAlpha:1.0f];
                      }
                      completion:completion];
+}
+
+#pragma mark - UIPickerViewDataSource
+
+- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView {
+    return [[self sensorValueString] length];
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component {
+    unichar character = [[self sensorValueString] characterAtIndex:component];
+    return isdigit(character) ? 10 : 1; // 0 - 9 for digit, or 1 for negative sign
+}
+
+#pragma mark - UIPickerViewDelegate
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component {
+    return HEMSensorCheckValueDigitWidth;
+}
+
+- (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component {
+    return HEMSensorCheckValueDigitHeight;
+}
+
+- (UIView*)pickerView:(UIPickerView *)pickerView
+           viewForRow:(NSInteger)row
+         forComponent:(NSInteger)component
+          reusingView:(UIView *)view {
+    UILabel* rowLabel = nil;
+    
+    if (view == nil) {
+        rowLabel = [[UILabel alloc] init];
+        [rowLabel setTextColor:[self conditionColor]];
+        [rowLabel setFont:[UIFont onboardingRoomCheckSensorValueFont]];
+        [rowLabel setBackgroundColor:[UIColor clearColor]];
+    } else {
+        rowLabel = (UILabel*)view;
+    }
+    
+    NSString* labelValue = nil;
+    unichar character = [[self sensorValueString] characterAtIndex:component];
+    if (isdigit(character)) {
+        labelValue = [NSString stringWithFormat:@"%ld", (long)row];
+    } else {
+        labelValue = [NSString stringWithFormat:@"%c", character];
+    }
+    
+    [rowLabel setText:labelValue];
+    [rowLabel sizeToFit];
+
+    return rowLabel;
 }
 
 @end

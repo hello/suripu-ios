@@ -718,13 +718,17 @@
                                 </connections>
                             </tableView>
                             <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HQC-5d-ND9" userLabel="activity">
-                                <rect key="frame" x="140" y="400" width="320" height="71"/>
+                                <rect key="frame" x="28" y="400" width="544" height="71"/>
                                 <subviews>
                                     <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="pgd-Hu-6hb">
-                                        <rect key="frame" x="50" y="20" width="20" height="30"/>
+                                        <rect key="frame" x="25" y="20" width="20" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="20" id="Qlv-vh-rUm"/>
+                                            <constraint firstAttribute="height" constant="30" id="qpu-6T-hLA"/>
+                                        </constraints>
                                     </activityIndicatorView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="enabling pairing mode" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UXO-iS-9i6">
-                                        <rect key="frame" x="80" y="0.0" width="185" height="71"/>
+                                        <rect key="frame" x="55" y="0.0" width="464" height="71"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                         <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -732,19 +736,16 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="UXO-iS-9i6" secondAttribute="bottom" id="2dg-fu-YCX"/>
-                                    <constraint firstAttribute="centerY" secondItem="pgd-Hu-6hb" secondAttribute="centerY" constant="0.5" id="3eQ-Ag-9WY"/>
-                                    <constraint firstAttribute="trailing" secondItem="UXO-iS-9i6" secondAttribute="trailing" constant="55" id="5Dp-fe-4i8"/>
-                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="height" secondItem="HQC-5d-ND9" secondAttribute="height" id="5Wt-7r-Uiz"/>
-                                    <constraint firstAttribute="width" constant="320" id="Jsl-CR-ccY"/>
+                                    <constraint firstAttribute="centerY" secondItem="pgd-Hu-6hb" secondAttribute="centerY" constant="0.5" id="63L-3h-pLz"/>
+                                    <constraint firstAttribute="bottom" secondItem="UXO-iS-9i6" secondAttribute="bottom" id="9ap-3l-xe2"/>
+                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="top" secondItem="HQC-5d-ND9" secondAttribute="top" id="NrO-1I-gSQ"/>
                                     <constraint firstAttribute="height" constant="71" id="WNs-13-Zip"/>
-                                    <constraint firstItem="pgd-Hu-6hb" firstAttribute="leading" secondItem="HQC-5d-ND9" secondAttribute="leading" constant="50" id="Wnb-Cb-9Yv"/>
-                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="leading" secondItem="pgd-Hu-6hb" secondAttribute="trailing" constant="10" id="acf-Jh-uTi"/>
-                                    <constraint firstItem="UXO-iS-9i6" firstAttribute="top" secondItem="HQC-5d-ND9" secondAttribute="top" id="ivB-z7-xXQ"/>
-                                    <constraint firstAttribute="bottom" secondItem="pgd-Hu-6hb" secondAttribute="bottom" constant="21" id="skn-NB-bUp"/>
+                                    <constraint firstAttribute="trailing" secondItem="UXO-iS-9i6" secondAttribute="trailing" constant="25" id="XlO-1Y-g02"/>
+                                    <constraint firstItem="pgd-Hu-6hb" firstAttribute="leading" secondItem="UXO-iS-9i6" secondAttribute="leading" constant="-30" id="mYP-K0-9or"/>
+                                    <constraint firstItem="pgd-Hu-6hb" firstAttribute="leading" secondItem="HQC-5d-ND9" secondAttribute="leading" constant="25" id="umK-6g-NHl"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJS-Cn-weR" userLabel="extendedAbility">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bJS-Cn-weR" userLabel="extendedAbility">
                                 <rect key="frame" x="0.0" y="400" width="600" height="142"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="99x-GA-dKO">
@@ -778,7 +779,7 @@
                                         </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This will reset your entire Sense System, including your Sleep Pill." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Id-oB-6lZ">
-                                        <rect key="frame" x="28" y="98" width="544" height="20"/>
+                                        <rect key="frame" x="28" y="98" width="544" height="19.5"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                         <color key="textColor" red="0.47843137250000001" green="0.47843137250000001" blue="0.47843137250000001" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -802,8 +803,9 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="aNw-eX-aCs" firstAttribute="top" secondItem="wK7-6V-jaE" secondAttribute="bottom" constant="-64" id="8QY-Ez-xnm"/>
+                            <constraint firstItem="HQC-5d-ND9" firstAttribute="leading" secondItem="1Ml-OR-V9I" secondAttribute="leadingMargin" constant="12" id="AjD-nI-Wtm"/>
                             <constraint firstAttribute="centerX" secondItem="aNw-eX-aCs" secondAttribute="centerX" id="Ew5-Qu-4lh"/>
-                            <constraint firstAttribute="centerX" secondItem="HQC-5d-ND9" secondAttribute="centerX" id="JeD-9x-3nn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HQC-5d-ND9" secondAttribute="trailing" constant="12" id="Hwg-s9-T28"/>
                             <constraint firstAttribute="centerX" secondItem="bJS-Cn-weR" secondAttribute="centerX" id="QjG-sk-uti"/>
                             <constraint firstItem="PY5-Oi-hgT" firstAttribute="top" secondItem="HQC-5d-ND9" secondAttribute="bottom" constant="129" id="bkZ-R9-mqJ"/>
                             <constraint firstAttribute="width" secondItem="aNw-eX-aCs" secondAttribute="width" id="chh-Bc-RvP"/>

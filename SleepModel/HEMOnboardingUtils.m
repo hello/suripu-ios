@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENAPIAccount.h>
+#import <SenseKit/SENSenseManager.h>
 
 #import <AFNetworking/AFURLResponseSerialization.h>
 
@@ -18,6 +19,7 @@
 #import "HEMDialogViewController.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSettingsTableViewController.h"
+#import "HEMUserDataCache.h"
 
 CGFloat const HEMOnboardingShadowOpacity = 0.8f;
 
@@ -196,6 +198,8 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 }
 
 + (void)finisOnboardinghWithMessageFrom:(UIViewController*)controller {
+    [HEMUserDataCache clearSharedUserDataCache];
+    
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
     NSString* doneMessage = NSLocalizedString(@"onboarding.finished.message", nil);
     [activityView showInView:[[controller navigationController] view]

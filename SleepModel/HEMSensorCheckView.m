@@ -212,6 +212,7 @@ static CGFloat const HEMSensorCheckDigitDisplayDelay = 0.3f;
     [self addSubview:digitPicker];
     [self addSubview:topView];
     [self addSubview:bottomView];
+    [self bringSubviewToFront:[self separator]];
     
     if (unitLabel != nil) {
         [self addSubview:unitLabel];

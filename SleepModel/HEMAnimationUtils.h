@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-typedef void(^HEMAnimationBlock)(void);
-
 @interface HEMAnimationUtils : NSObject
 
 /**

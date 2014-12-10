@@ -130,10 +130,6 @@ static CGFloat const HEMTopItemsConstraintConstant = 10.f;
 - (void)dealloc {
     _historyViewController = nil;
     _dataSource = nil;
-    _eventBandView = nil;
-    _eventBlurView = nil;
-    _eventInfoView = nil;
-    _eventTimelineHeaderLabel = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -193,7 +189,12 @@ static CGFloat const HEMTopItemsConstraintConstant = 10.f;
 
 - (void)didTapEventButton:(UIButton*)sender
 {
-    [self positionEventInfoViewRelativeToView:sender];
+    NSIndexPath* eventIndexPath = [self indexPathForEventCellWithSubview:sender];
+    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:eventIndexPath];
+    self.eventIndex = eventIndexPath.row;
+    [self.view positionEventInfoViewRelativeToView:sender
+                                       withSegment:segment
+                                 totalSegmentCount:[self.dataSource numberOfSleepSegments]];
 }
 
 - (void)didTapDataVerifyButton:(UIButton*)sender
@@ -203,16 +204,6 @@ static CGFloat const HEMTopItemsConstraintConstant = 10.f;
     [HEMSleepGraphUtils presentTimePickerForDate:self.dateForNightOfSleep
                                          segment:[self.dataSource sleepSegmentForIndexPath:indexPath]
                                   fromController:self];
-}
-
-- (void)positionEventInfoViewRelativeToView:(UIView*)view
-{
-    NSIndexPath* eventIndexPath = [self indexPathForEventCellWithSubview:view];
-    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:eventIndexPath];
-    self.eventIndex = eventIndexPath.row;
-    [self.view positionEventInfoViewRelativeToView:view
-                                       withSegment:segment
-                                 totalSegmentCount:[self.dataSource numberOfSleepSegments]];
 }
 
 - (NSIndexPath*)indexPathForEventCellWithSubview:(UIView*)view

@@ -1173,9 +1173,7 @@ You can always do this later by visiting Settings.</string>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="help:" destination="4s2-Gt-ovZ" eventType="touchUpInside" id="UMJ-Xu-g80"/>
-                                    <action selector="help:" destination="Qk9-qi-Wt3" eventType="touchUpInside" id="ZF6-wk-nt9"/>
-                                    <segue destination="DIj-70-bYO" kind="push" id="BJO-wU-lca"/>
+                                    <action selector="skip:" destination="fc9-7S-Ult" eventType="touchUpInside" id="4Qx-Ti-hwY"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1200,6 +1198,7 @@ You can always do this later by visiting Settings.</string>
                         <outlet property="subtitleLabel" destination="iMZ-p6-gA8" id="TJj-Sz-zYw"/>
                         <outlet property="titleLabel" destination="eDs-8j-Vd9" id="5lJ-TI-eYd"/>
                         <segue destination="Ibh-UM-msk" kind="push" identifier="getApp" id="oeH-Et-htw"/>
+                        <segue destination="DIj-70-bYO" kind="push" identifier="anotherPillToBeforeSleep" id="qAo-NZ-4n9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ybc-rT-E02" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2694,7 +2693,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="sense.png" width="176" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="BJO-wU-lca"/>
+        <segue reference="qAo-NZ-4n9"/>
         <segue reference="DAu-sO-H4V"/>
         <segue reference="TuP-To-bZG"/>
         <segue reference="hqO-d4-ogr"/>

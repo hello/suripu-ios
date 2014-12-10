@@ -103,7 +103,9 @@
                                                      options:0];
     NSInteger index = components.day + 1;
     NSIndexPath* indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-    [self.historyCollectionView scrollToItemAtIndexPath:indexPath atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:animated];
+    [self.historyCollectionView scrollToItemAtIndexPath:indexPath
+                                       atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+                                               animated:animated];
 }
 
 - (void)updateForSelectedDate
@@ -117,9 +119,9 @@
     }
 }
 
-- (IBAction)dismissAndShowLastNight:(id)sender {
+- (IBAction)scrollToLastNight:(id)sender {
     self.selectedDate = [NSDate dateWithTimeIntervalSinceNow:-86400];
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self scrollToDate:self.selectedDate animated:YES];
 }
 
 #pragma mark - UICollectionViewDataSource

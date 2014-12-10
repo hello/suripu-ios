@@ -108,6 +108,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 - (void)registerForNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData)
                                                  name:UIApplicationDidBecomeActiveNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData)
+                                                 name:SENAuthorizationServiceDidAuthorizeNotification object:nil];
 }
 
 - (void)dealloc {

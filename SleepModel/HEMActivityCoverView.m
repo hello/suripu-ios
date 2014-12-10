@@ -230,16 +230,16 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
         [[self indicator] stop];
         if (showMark) {
             [self showSuccessMarkAnimated:YES completion:^(BOOL finished) {
-                [self delayDismissWithCompletion:completion];
+                [self delayDismissWithRemoval:remove completion:completion];
             }];
         } else {
-            [self delayDismissWithCompletion:completion];
+            [self delayDismissWithRemoval:remove completion:completion];
         }
     }];
     
 }
 
-- (void)delayDismissWithCompletion:(void(^)(void))completion {
+- (void)delayDismissWithRemoval:(BOOL)remove completion:(void(^)(void))completion {
     [UIView animateWithDuration:kHEMActivityAnimDuration
                           delay:kHEMActivityResultDisplayTime
                         options:UIViewAnimationOptionCurveEaseIn
@@ -250,7 +250,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
                          [[self activityLabel] setText:nil];
                          [[self successMarkView] removeFromSuperview];
                          [self setHidden:YES];
-                         
+
                          if (remove) {
                              [self removeFromSuperview];
                          }

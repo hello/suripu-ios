@@ -117,6 +117,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 
 - (void)showSuccessMarkAnimated:(BOOL)animate completion:(void(^)(BOOL finished))completion {
     UIView* mark = [self successMarkView];
+    [mark setAlpha:1.0f];
     
     if (animate) {
         [mark setTransform:CGAffineTransformMakeScale(0.0f, 0.0f)];
@@ -156,7 +157,10 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
                      }
                      completion:^(BOOL finished) {
                          [[self activityLabel] setText:text];
-                         [[self successMarkView] setImage:icon];
+                         
+                         if (icon != nil) {
+                             [[self successMarkView] setImage:icon];
+                         }
                          
                          [self setNeedsLayout];
                          [UIView animateWithDuration:kHEMActivityAnimDuration
@@ -224,6 +228,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
                      }
                      completion:^(BOOL finished) {
                          if (activity) {
+                             [[self indicator] setAlpha:1.0f];
                              [[self indicator] start];
                          }
                          [self setShowing:YES];

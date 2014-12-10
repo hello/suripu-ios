@@ -7,8 +7,6 @@
 
 @interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
-@property (weak, nonatomic) IBOutlet UIView *gradientView;
-
 @property (weak, nonatomic) IBOutlet UICollectionView* historyCollectionView;
 @property (weak, nonatomic) IBOutlet UILabel* timeFrameLabel;
 @property (strong, nonatomic) NSDateFormatter* dayOfWeekFormatter;
@@ -70,20 +68,6 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     gradient.colors = @[(id)[UIColor whiteColor].CGColor,
                         (id)[UIColor colorWithHue:0 saturation:0 brightness:0.94 alpha:1].CGColor];
     [self.view.layer insertSublayer:gradient atIndex:0];
-
-    UIColor* color = [UIColor colorWithHue:0 saturation:0 brightness:0.9f alpha:0];
-    NSArray* colors = @[(id)[color colorWithAlphaComponent:0.3].CGColor,
-                        (id)color.CGColor,
-                        (id)color.CGColor,
-                        (id)color.CGColor,
-                        (id)[color colorWithAlphaComponent:0.5].CGColor];
-    CAGradientLayer *shadowGradient = [CAGradientLayer layer];
-    CGRect gradientRect = [[UIScreen mainScreen] bounds];
-    shadowGradient.frame = gradientRect;
-    shadowGradient.startPoint = CGPointMake(0.0, 0.5);
-    shadowGradient.endPoint = CGPointMake(1.0, 0.5);
-    shadowGradient.colors = colors;
-    [self.gradientView.layer insertSublayer:shadowGradient atIndex:0];
 }
 
 - (void)loadData

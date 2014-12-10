@@ -242,8 +242,8 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
               showSuccessMark:(BOOL)showMark
                        remove:(BOOL)remove
                    completion:(void(^)(void))completion {
-    
-    [self updateText:text hideActivity:YES completion:^(BOOL finished) {
+
+    void (^finish)(BOOL finished) = ^(BOOL finished){
         [[self indicator] stop];
         if (showMark) {
             [self showSuccessMarkAnimated:YES completion:^(BOOL finished) {
@@ -252,7 +252,14 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
         } else {
             [self delayDismissWithRemoval:remove completion:completion];
         }
-    }];
+    };
+
+    if ([text length] > 0) {
+        [self updateText:text hideActivity:YES completion:finish];
+    } else {
+        finish(YES);
+    }
+
     
 }
 

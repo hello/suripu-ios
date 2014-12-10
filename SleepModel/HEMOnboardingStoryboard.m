@@ -8,6 +8,8 @@
 
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMonboarding = @"Onboarding";
+static NSString *const _HEMbeforeSleepToAlarm = @"beforeSleepToAlarm";
+static NSString *const _HEMbeforeSleeptoRoomCheck = @"beforeSleeptoRoomCheck";
 static NSString *const _HEMbluetoothOn = @"bluetoothOn";
 static NSString *const _HEMbluetoothViewController = @"bluetoothViewController";
 static NSString *const _HEMdobViewController = @"dobViewController";
@@ -45,6 +47,8 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)networkReuseIdentifier { return _HEMnetwork; }
 
 /** Segue Identifiers */
++(NSString *)beforeSleepToAlarmSegueIdentifier { return _HEMbeforeSleepToAlarm; }
++(NSString *)beforeSleeptoRoomCheckSegueIdentifier { return _HEMbeforeSleeptoRoomCheck; }
 +(NSString *)bluetoothOnSegueIdentifier { return _HEMbluetoothOn; }
 +(NSString *)doneSegueIdentifier { return _HEMdone; }
 +(NSString *)genderSegueIdentifier { return _HEMgender; }

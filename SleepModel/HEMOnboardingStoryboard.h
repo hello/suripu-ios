@@ -13,6 +13,8 @@
 +(NSString *)networkReuseIdentifier;
 
 /** Segue Identifiers */
++(NSString *)beforeSleepToAlarmSegueIdentifier;
++(NSString *)beforeSleeptoRoomCheckSegueIdentifier;
 +(NSString *)bluetoothOnSegueIdentifier;
 +(NSString *)doneSegueIdentifier;
 +(NSString *)genderSegueIdentifier;

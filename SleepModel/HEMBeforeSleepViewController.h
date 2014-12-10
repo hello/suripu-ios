@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMBeforeSleepViewController : UIViewController
+@interface HEMBeforeSleepViewController : HEMBaseController
 
 @end

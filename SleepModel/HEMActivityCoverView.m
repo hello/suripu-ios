@@ -12,6 +12,7 @@
 #import "HelloStyleKit.h"
 #import "HEMActivityIndicatorView.h"
 #import "HEMAnimationUtils.h"
+#import "HEMMathUtil.h"
 
 static CGFloat kHEMActivityMargins = 30.0f;
 static CGFloat kHEMActivityViewSeparation = 20.0f;
@@ -134,25 +135,36 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
     [self updateText:text hideActivity:NO completion:nil];
 }
 
-- (void)updateText:(NSString *)text hideActivity:(BOOL)hideActivity completion:(void (^)(BOOL))completion {
-    if (text == nil) {
-        if (completion) completion (YES);
-        return;
-    }
+- (void)updateText:(NSString *)text
+      hideActivity:(BOOL)hideActivity
+        completion:(void (^)(BOOL))completion {
+    [self updateText:text successIcon:nil hideActivity:hideActivity completion:completion];
+}
+
+- (void)updateText:(NSString*)text
+       successIcon:(UIImage*)icon
+      hideActivity:(BOOL)hideActivity
+        completion:(void(^)(BOOL finished))completion {
+    
     [UIView animateWithDuration:kHEMActivityAnimDuration
                      animations:^{
                          [[self activityLabel] setAlpha:0.0f];
+                         [[self successMarkView] setAlpha:0.0f];
                          if (hideActivity) {
                              [[self indicator] setAlpha:0.0f];
                          }
                      }
                      completion:^(BOOL finished) {
                          [[self activityLabel] setText:text];
+                         [[self successMarkView] setImage:icon];
+                         
                          [self setNeedsLayout];
                          [UIView animateWithDuration:kHEMActivityAnimDuration
                                           animations:^{
                                               [[self activityLabel] setAlpha:1.0f];
-                                          } completion:completion];
+                                              [[self successMarkView] setAlpha:1.0f];
+                                          }
+                                          completion:completion];
                      }];
 }
 

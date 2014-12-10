@@ -201,17 +201,27 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     [HEMUserDataCache clearSharedUserDataCache];
     
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
-    NSString* doneMessage = NSLocalizedString(@"onboarding.finished.message", nil);
+    
+    void (^activityShownCompletion)(void) = ^{
+        dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1.0f*NSEC_PER_SEC);
+        dispatch_after(time, dispatch_get_main_queue(), ^{
+            [activityView updateText:NSLocalizedString(@"onboarding.end-message.sleep", nil)
+                         successIcon:[HelloStyleKit moon]
+                        hideActivity:YES
+                          completion:^(BOOL finished) {
+                              dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2.0f*NSEC_PER_SEC);
+                              dispatch_after(time, dispatch_get_main_queue(), ^{
+                                  [self dismissOnboardingFlowFrom:controller];
+                              });
+                          }];
+        });
+    };
+    
+    NSString* doneMessage = NSLocalizedString(@"onboarding.end-message.well-done", nil);
     [activityView showInView:[[controller navigationController] view]
                     withText:doneMessage
                  successMark:YES
-                  completion:^{
-                      float delay = 2.0f;
-                      dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, delay*NSEC_PER_SEC);
-                      dispatch_after(time, dispatch_get_main_queue(), ^{
-                          [self dismissOnboardingFlowFrom:controller];
-                      });
-                  }];
+                  completion:activityShownCompletion];
 
 }
 

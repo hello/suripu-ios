@@ -211,6 +211,12 @@ static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.15f;
 
 #pragma mark - Drawing
 
+- (void)layoutIfNeeded
+{
+    [super layoutIfNeeded];
+    [self setNeedsDisplay];
+}
+
 - (void)drawRect:(CGRect)rect
 {
     [self drawRoundedContainerInRect:rect];
@@ -225,8 +231,7 @@ static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.15f;
     [bezierPath fill];
 
     CGFloat caretYOffset = [self yOffsetForCaretPointInRect:rect];
-    CGRect caretRect = CGRectMake(
-                                  CGRectGetMinX(rect) + HEMEventInfoViewCaretInset,
+    CGRect caretRect = CGRectMake(CGRectGetMinX(rect) + HEMEventInfoViewCaretInset,
                                   caretYOffset - HEMEventInfoViewCaretRadius,
                                   HEMEventInfoViewCaretRadius,
                                   HEMEventInfoViewCaretRadius * 2.2);

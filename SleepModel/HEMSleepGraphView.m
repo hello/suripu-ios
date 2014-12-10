@@ -24,23 +24,39 @@
 @property (strong, nonatomic) UIView* eventBlurView;
 @property (strong, nonatomic) UIView* eventBandView;
 @property (strong, nonatomic) UILabel* eventTimelineHeaderLabel;
+@property (strong, nonatomic) NSLayoutConstraint* eventInfoWidthConstraint;
+@property (strong, nonatomic) NSLayoutConstraint* eventInfoHeightConstraint;
+@property (strong, nonatomic) NSLayoutConstraint* eventInfoLeftConstraint;
+@property (strong, nonatomic) NSLayoutConstraint* eventInfoTopConstraint;
 @end
 
 @implementation HEMSleepGraphView
 
 static CGFloat const HEMSleepEventPopupFullHeight = 90.f;
 static CGFloat const HEMSleepEventPopupMinimumHeight = 50.f;
+static CGFloat const HEMSleepEventPopupLeftInset = 50.f;
+static CGFloat const HEMSleepEventPopupTopInset = 8.f;
+static CGFloat const HEMSleepEventPopupWidthInset = 74.f;
+static CGFloat const HEMSleepEventPopupMaxWidth = 400.f;
 
-- (void)awakeFromNib {
-    [self configureEventInfoViews];
+- (void)awakeFromNib
+{
+    [self configureEventInfoView];
+    [self configureEventInfoBackgroundViews];
 }
 
-- (void)configureEventInfoViews {
+- (void)configureEventInfoView
+{
     if (!self.eventInfoView) {
         UINib* nib = [UINib nibWithNibName:NSStringFromClass([HEMEventInfoView class]) bundle:nil];
         self.eventInfoView = [[nib instantiateWithOwner:self options:nil] firstObject];
         [self addSubview:self.eventInfoView];
     }
+    self.eventInfoView.alpha = 0;
+}
+
+- (void)configureEventInfoBackgroundViews
+{
     if (!self.eventBlurView) {
         self.eventBlurView = [UIView new];
         self.eventBandView = [UIView new];
@@ -55,10 +71,51 @@ static CGFloat const HEMSleepEventPopupMinimumHeight = 50.f;
         [self insertSubview:self.eventBandView aboveSubview:self.eventBlurView];
         [self insertSubview:self.eventTimelineHeaderLabel aboveSubview:self.eventBlurView];
     }
-    self.eventInfoView.alpha = 0;
+
     self.eventBlurView.alpha = 0;
     self.eventBandView.alpha = 0;
     self.eventTimelineHeaderLabel.alpha = 0;
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    if (!self.eventInfoWidthConstraint) {
+        CGFloat width = MIN(CGRectGetWidth(self.bounds) - HEMSleepEventPopupWidthInset, HEMSleepEventPopupMaxWidth);
+        self.eventInfoWidthConstraint = [NSLayoutConstraint constraintWithItem:self.eventInfoView
+                                                                     attribute:NSLayoutAttributeWidth
+                                                                     relatedBy:NSLayoutRelationEqual
+                                                                        toItem:nil
+                                                                     attribute:NSLayoutAttributeNotAnAttribute
+                                                                    multiplier:1
+                                                                      constant:width];
+        self.eventInfoHeightConstraint = [NSLayoutConstraint constraintWithItem:self.eventInfoView
+                                                                      attribute:NSLayoutAttributeHeight
+                                                                      relatedBy:NSLayoutRelationEqual
+                                                                         toItem:nil
+                                                                      attribute:NSLayoutAttributeNotAnAttribute
+                                                                     multiplier:1
+                                                                       constant:190];
+        self.eventInfoLeftConstraint = [NSLayoutConstraint constraintWithItem:self.eventInfoView
+                                                                    attribute:NSLayoutAttributeLeft
+                                                                    relatedBy:NSLayoutRelationEqual
+                                                                       toItem:self
+                                                                    attribute:NSLayoutAttributeLeft
+                                                                   multiplier:1
+                                                                     constant:HEMSleepEventPopupLeftInset];
+        self.eventInfoTopConstraint = [NSLayoutConstraint constraintWithItem:self.eventInfoView
+                                                                   attribute:NSLayoutAttributeTop
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self
+                                                                   attribute:NSLayoutAttributeTop
+                                                                  multiplier:1
+                                                                    constant:0.f];
+        [self.eventInfoView addConstraint:self.eventInfoWidthConstraint];
+        [self.eventInfoView addConstraint:self.eventInfoHeightConstraint];
+        [self addConstraint:self.eventInfoTopConstraint];
+        [self addConstraint:self.eventInfoLeftConstraint];
+        [self.eventInfoView setNeedsLayout];
+    }
 }
 
 - (void)addVerifyDataTarget:(id)target action:(SEL)action
@@ -180,21 +237,12 @@ static CGFloat const HEMSleepEventPopupMinimumHeight = 50.f;
                           totalSegmentCount:(NSUInteger)segmentCount
 {
     [self.eventInfoView stopAudio];
-    CGFloat inset = 50.f;
-    CGFloat yAdjustment = 8.f;
-    CGFloat clockInset = 24.f;
+    HEMEventInfoViewCaretPosition caretPosition = HEMEventInfoViewCaretPositionMiddle;
     CGRect buttonFrame = [self convertRect:view.frame fromView:view.superview];
-    CGRect frame = CGRectMake(inset, CGRectGetMinY(buttonFrame) - yAdjustment, CGRectGetWidth(self.bounds) - inset - clockInset, CGRectGetHeight(self.eventInfoView.bounds));
-
-    if (segment.message.length > 0)
-        frame.size.height = HEMSleepEventPopupFullHeight;
-    else
-        frame.size.height = HEMSleepEventPopupMinimumHeight;
-
-    if (segment.sound)
-        frame.size.height += CGRectGetHeight(self.eventInfoView.playSoundButton.bounds);
-    else if ([segment.eventType isEqual:HEMSleepEventTypeWakeUp])
-        frame.size.height += CGRectGetHeight(self.eventInfoView.verifyDataButton.bounds);
+    CGRect frame = CGRectMake(self.eventInfoLeftConstraint.constant,
+                              CGRectGetMinY(buttonFrame) - HEMSleepEventPopupTopInset,
+                              self.eventInfoWidthConstraint.constant,
+                              [self heightBySegment:segment]);
 
     CGPoint bottomPoint = CGPointMake(1, CGRectGetMaxY(frame));
     NSIndexPath* popupBottomIndexPath = [self.collectionView indexPathForItemAtPoint:[self.collectionView convertPoint:bottomPoint fromView:self]];
@@ -203,43 +251,78 @@ static CGFloat const HEMSleepEventPopupMinimumHeight = 50.f;
         bottomPoint = CGPointMake(1, CGRectGetMaxY(frame));
         popupBottomIndexPath = [self.collectionView indexPathForItemAtPoint:[self.collectionView convertPoint:bottomPoint fromView:self]];
         if (popupBottomIndexPath.section != HEMSleepGraphCollectionViewSegmentSection || CGRectGetMaxY(frame) > CGRectGetMaxY(self.bounds)) {
-            frame.origin.y = CGRectGetMaxY(buttonFrame) - CGRectGetHeight(frame);
-            self.eventInfoView.caretPosition = HEMEventInfoViewCaretPositionBottom;
+            frame.origin.y = CGRectGetMaxY(buttonFrame) - CGRectGetHeight(frame) + HEMSleepEventPopupTopInset;
+            caretPosition = HEMEventInfoViewCaretPositionBottom;
         } else {
-            self.eventInfoView.caretPosition = HEMEventInfoViewCaretPositionMiddle;
+            caretPosition = HEMEventInfoViewCaretPositionMiddle;
         }
     } else {
-        self.eventInfoView.caretPosition = HEMEventInfoViewCaretPositionTop;
+        caretPosition = HEMEventInfoViewCaretPositionTop;
     }
-    if ((CGRectEqualToRect(self.eventInfoView.frame, frame) || fabsf(CGRectGetMinY(frame) - CGRectGetMinY(self.eventInfoView.frame)) < 10.f) && self.eventInfoView.alpha > 0) {
-        [UIView animateWithDuration:0.25f animations:^{
-            [self hideEventBlurView];
+    if (self.eventInfoView.alpha > 0
+        && caretPosition == self.eventInfoView.caretPosition
+        && fabsf(CGRectGetMinY(frame) - CGRectGetMinY(self.eventInfoView.frame)) < 10.f) {
+        [self toggleInfoViewHidden];
+    } else {
+        self.eventInfoView.caretPosition = caretPosition;
+        [self updateEventInfoViewWithSegment:segment];
+        [self showEventInfoInFrame:frame];
+    }
+}
+
+- (CGFloat)heightBySegment:(SENSleepResultSegment*)segment
+{
+    CGFloat height;
+    if (segment.message.length > 0)
+        height = HEMSleepEventPopupFullHeight;
+    else
+        height = HEMSleepEventPopupMinimumHeight;
+
+    if (segment.sound)
+        height += CGRectGetHeight(self.eventInfoView.playSoundButton.bounds);
+    else if ([segment.eventType isEqual:HEMSleepEventTypeWakeUp])
+        height += CGRectGetHeight(self.eventInfoView.verifyDataButton.bounds);
+    return height;
+}
+
+- (void)toggleInfoViewHidden
+{
+    [UIView animateWithDuration:0.25f animations:^{
+        [self hideEventBlurView];
+        self.eventInfoView.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.eventBandView.alpha = 0;
+    }];
+}
+
+- (void)showEventInfoInFrame:(CGRect)frame
+{
+    CGFloat distanceMoved = CGRectGetMinY(self.eventInfoView.frame) - CGRectGetMinY(frame);
+    CGFloat movableDistance = CGRectGetHeight([UIScreen mainScreen].bounds) / 10;
+    if (fabsf(distanceMoved) > movableDistance) {
+        [UIView animateWithDuration:0.15f animations:^{
             self.eventInfoView.alpha = 0;
         } completion:^(BOOL finished) {
-            self.eventBandView.alpha = 0;
+            [self showEventBlurView];
+            [self moveEventInfoViewToFrame:frame];
+            [UIView animateWithDuration:0.25f animations:^{
+                self.eventInfoView.alpha = 1;
+            }];
         }];
     } else {
-        [self updateEventInfoViewWithSegment:segment];
-        if (fabsf(CGRectGetMinY(self.eventInfoView.frame) - CGRectGetMinY(frame)) > (CGRectGetHeight([UIScreen mainScreen].bounds) / 10)) {
-            [UIView animateWithDuration:0.15f animations:^{
-                self.eventInfoView.alpha = 0;
-            } completion:^(BOOL finished) {
-                [self showEventBlurView];
-                self.eventInfoView.frame = frame;
-                [self.eventInfoView setNeedsDisplay];
-                [UIView animateWithDuration:0.25f animations:^{
-                    self.eventInfoView.alpha = 1;
-                }];
-            }];
-        } else {
-            [self showEventBlurView];
-            [UIView animateWithDuration:0.25f animations:^{
-                self.eventInfoView.frame = frame;
-                self.eventInfoView.alpha = 1;
-                [self.eventInfoView setNeedsDisplay];
-            }];
-        }
+        [self showEventBlurView];
+        [UIView animateWithDuration:0.25f animations:^{
+            [self moveEventInfoViewToFrame:frame];
+            self.eventInfoView.alpha = 1;
+        }];
     }
+}
+
+- (void)moveEventInfoViewToFrame:(CGRect)frame
+{
+    self.eventInfoTopConstraint.constant = CGRectGetMinY(frame);
+    self.eventInfoHeightConstraint.constant = CGRectGetHeight(frame);
+    [self.eventInfoView layoutIfNeeded];
 }
 
 @end

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -15,19 +15,19 @@
                     <rect key="frame" x="30" y="69" width="43" height="43"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                 </view>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WOKE UP ― 9:17am" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lzh-0f-YUM">
+                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="WOKE UP ― 9:17am" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lzh-0f-YUM" userLabel="title label">
                     <rect key="frame" x="30" y="14" width="88.5" height="12.5"/>
                     <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="9"/>
                     <color key="textColor" white="0.57999999999999996" alpha="1" colorSpace="calibratedWhite"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5a4-2W-TI9">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5a4-2W-TI9" userLabel="message label">
                     <rect key="frame" x="30" y="39" width="32" height="18"/>
                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDP-FI-Oy3">
+                <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="RDP-FI-Oy3" userLabel="play button">
                     <rect key="frame" x="30" y="69" width="43" height="43"/>
                     <state key="normal" image="playSound.png">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -60,20 +60,20 @@
             <constraints>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="5a4-2W-TI9" secondAttribute="bottom" id="4bg-jH-4eA"/>
                 <constraint firstItem="RDP-FI-Oy3" firstAttribute="height" secondItem="180-K8-eK7" secondAttribute="height" id="5uR-a1-GIO"/>
+                <constraint firstItem="RDP-FI-Oy3" firstAttribute="leading" secondItem="Lzh-0f-YUM" secondAttribute="leading" id="6zq-zF-u1o"/>
                 <constraint firstItem="RDP-FI-Oy3" firstAttribute="width" secondItem="180-K8-eK7" secondAttribute="width" id="CQW-2e-x2B"/>
                 <constraint firstAttribute="centerX" secondItem="iRN-XM-eZ8" secondAttribute="centerX" id="GNz-1m-bXK"/>
+                <constraint firstItem="RDP-FI-Oy3" firstAttribute="top" secondItem="180-K8-eK7" secondAttribute="top" id="Gl9-nf-iNH"/>
                 <constraint firstItem="5a4-2W-TI9" firstAttribute="top" secondItem="Lzh-0f-YUM" secondAttribute="bottom" constant="13" id="J5l-S3-cZ7"/>
-                <constraint firstItem="RDP-FI-Oy3" firstAttribute="centerX" secondItem="180-K8-eK7" secondAttribute="centerX" id="PVU-CM-8Tc"/>
-                <constraint firstItem="RDP-FI-Oy3" firstAttribute="leading" secondItem="5a4-2W-TI9" secondAttribute="leading" id="PnE-Sd-yVd"/>
+                <constraint firstItem="RDP-FI-Oy3" firstAttribute="leading" secondItem="180-K8-eK7" secondAttribute="leading" id="Y6D-2D-nfz"/>
                 <constraint firstAttribute="trailing" secondItem="Fpk-6G-lrL" secondAttribute="trailing" constant="15" id="Z8u-gk-uAA"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="leading" secondItem="5a4-2W-TI9" secondAttribute="leading" id="aDk-Hl-JQN"/>
                 <constraint firstItem="iRN-XM-eZ8" firstAttribute="top" secondItem="5a4-2W-TI9" secondAttribute="bottom" constant="12" id="g5u-Rw-3pB"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="14" id="h2Q-Go-sNa"/>
-                <constraint firstItem="RDP-FI-Oy3" firstAttribute="centerY" secondItem="180-K8-eK7" secondAttribute="centerY" id="iRp-CN-ZxR"/>
                 <constraint firstItem="Lzh-0f-YUM" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="30" id="u4g-wi-sCt"/>
                 <constraint firstItem="RDP-FI-Oy3" firstAttribute="top" secondItem="5a4-2W-TI9" secondAttribute="bottom" constant="12" id="vbY-Ie-4c8"/>
                 <constraint firstItem="Fpk-6G-lrL" firstAttribute="leading" secondItem="RDP-FI-Oy3" secondAttribute="trailing" constant="8" id="vji-tB-7F9"/>
-                <constraint firstItem="Fpk-6G-lrL" firstAttribute="centerY" secondItem="RDP-FI-Oy3" secondAttribute="centerY" constant="0.5" id="zJz-e6-IS6"/>
+                <constraint firstItem="Fpk-6G-lrL" firstAttribute="centerY" secondItem="RDP-FI-Oy3" secondAttribute="centerY" id="zJz-e6-IS6"/>
             </constraints>
             <nil key="simulatedStatusBarMetrics"/>
             <nil key="simulatedTopBarMetrics"/>

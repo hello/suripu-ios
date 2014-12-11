@@ -107,7 +107,6 @@
 
 // Drawing Methods
 + (void)drawSleepScoreGraphWithSleepScoreLabelText: (NSString*)sleepScoreLabelText sleepScore: (CGFloat)sleepScore;
-+ (void)drawMiniSleepScoreGraphWithSleepScore: (CGFloat)sleepScore;
 
 @end
 

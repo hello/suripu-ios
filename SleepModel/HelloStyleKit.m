@@ -304,65 +304,6 @@ static UIImage* _moon = nil;
     CGContextRestoreGState(context);
 }
 
-+ (void)drawMiniSleepScoreGraphWithSleepScore: (CGFloat)sleepScore
-{
-    //// General Declarations
-    CGContextRef context = UIGraphicsGetCurrentContext();
-
-    //// Color Declarations
-    UIColor* color = [UIColor colorWithRed: 0.866 green: 0.866 blue: 0.866 alpha: 1];
-    UIColor* sleepScoreNoValueColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.059];
-
-    //// Variable Declarations
-    UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.highSleepScoreColor)) : sleepScoreNoValueColor;
-    CGFloat graphPercentageAngle = sleepScore > 0 ? (sleepScore < 100 ? 360 - sleepScore * 0.01 * 360 : 0.01) : 0.01;
-    NSString* sleepScoreText = sleepScore > 0 ? (sleepScore <= 100 ? [NSString stringWithFormat: @"%ld", (NSInteger)round(sleepScore)] : @"100") : @"";
-
-    //// gray oval Drawing
-    CGContextSaveGState(context);
-    CGContextTranslateCTM(context, 15, 15);
-    CGContextRotateCTM(context, -90 * M_PI / 180);
-
-    UIBezierPath* grayOvalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(-15, -15, 30, 30)];
-    [color setFill];
-    [grayOvalPath fill];
-
-    CGContextRestoreGState(context);
-
-
-    //// pie oval Drawing
-    CGContextSaveGState(context);
-    CGContextTranslateCTM(context, 15, 15);
-    CGContextRotateCTM(context, -90 * M_PI / 180);
-
-    CGRect pieOvalRect = CGRectMake(-15, -15, 30, 30);
-    UIBezierPath* pieOvalPath = UIBezierPath.bezierPath;
-    [pieOvalPath addArcWithCenter: CGPointMake(CGRectGetMidX(pieOvalRect), CGRectGetMidY(pieOvalRect)) radius: CGRectGetWidth(pieOvalRect) / 2 startAngle: 0 * M_PI/180 endAngle: -graphPercentageAngle * M_PI/180 clockwise: YES];
-    [pieOvalPath addLineToPoint: CGPointMake(CGRectGetMidX(pieOvalRect), CGRectGetMidY(pieOvalRect))];
-    [pieOvalPath closePath];
-
-    [sleepScoreColor setFill];
-    [pieOvalPath fill];
-
-    CGContextRestoreGState(context);
-
-
-    //// white center oval Drawing
-    UIBezierPath* whiteCenterOvalPath = [UIBezierPath bezierPathWithOvalInRect: CGRectMake(2, 2, 26, 26)];
-    [UIColor.whiteColor setFill];
-    [whiteCenterOvalPath fill];
-
-
-    //// Text Drawing
-    CGRect textRect = CGRectMake(7, 7, 17, 15);
-    NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-    textStyle.alignment = NSTextAlignmentCenter;
-
-    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"HelveticaNeue-Light" size: UIFont.smallSystemFontSize], NSForegroundColorAttributeName: UIColor.blackColor, NSParagraphStyleAttributeName: textStyle};
-
-    [sleepScoreText drawInRect: textRect withAttributes: textFontAttributes];
-}
-
 @end
 
 

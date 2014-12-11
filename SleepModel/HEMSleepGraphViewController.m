@@ -8,16 +8,22 @@
 #import <SenseKit/SENSleepResult.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
-#import "HEMSleepGraphViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMAlertController.h"
 #import "HEMAppDelegate.h"
+#import "HEMAudioCache.h"
 #import "HEMEventInfoView.h"
-#import "HEMSleepGraphView.h"
-#import "HEMSleepGraphUtils.h"
-#import "HEMSleepGraphCollectionViewDataSource.h"
-#import "HEMSleepSummaryCollectionViewCell.h"
+#import "HEMMainStoryboard.h"
+#import "HEMPaddedRoundedLabel.h"
+#import "HEMPresleepHeaderCollectionReusableView.h"
 #import "HEMSleepEventCollectionViewCell.h"
+#import "HEMSleepGraphCollectionViewDataSource.h"
+#import "HEMSleepGraphUtils.h"
+#import "HEMSleepGraphView.h"
+#import "HEMSleepGraphViewController.h"
+#import "HEMSleepHistoryViewController.h"
+#import "HEMSleepSummaryCollectionViewCell.h"
+#import "HEMSleepSummarySlideViewController.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 
@@ -25,8 +31,9 @@ CGFloat const HEMTimelineHeaderCellHeight = 50.f;
 
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, FCDynamicPaneViewController, UIGestureRecognizerDelegate>
 
-@property (strong, nonatomic) IBOutlet UICollectionView* collectionView;
+@property (nonatomic, strong) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, retain) HEMSleepGraphView* view;
+@property (nonatomic, strong) HEMSleepHistoryViewController* historyViewController;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource* dataSource;
 @property (nonatomic) UIStatusBarStyle oldBarStyle;
 @property (nonatomic) NSInteger eventIndex;
@@ -39,6 +46,7 @@ static CGFloat const HEMPresleepHeaderCellHeight = 70.f;
 static CGFloat const HEMPresleepItemCellHeight = 68.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 30.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
+static CGFloat const HEMTopItemsConstraintConstant = 10.f;
 
 - (void)viewDidLoad
 {
@@ -53,6 +61,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     self.view.backgroundColor = [UIColor whiteColor];
     self.panePanGestureRecognizer.delegate = self;
     [self.view addVerifyDataTarget:self action:@selector(didTapDataVerifyButton:)];
+    [self checkForDateChanges];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -83,8 +92,11 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     [UIView animateWithDuration:0.5f animations:^{
         self.collectionView.contentOffset = CGPointMake(0, 0);
         [cell.shareButton setHidden:YES];
-        [cell.dateLabel setAlpha:0.5];
+        [cell.dateButton setAlpha:0.5];
+        [cell.dateButton setEnabled:NO];
         [cell.drawerButton setImage:[UIImage imageNamed:@"caret up"] forState:UIControlStateNormal];
+        cell.topItemsVerticalConstraint.constant = 0;
+        [cell updateConstraintsIfNeeded];
     }];
     self.oldBarStyle = UIStatusBarStyleLightContent;
     [self setNeedsStatusBarAppearanceUpdate];
@@ -99,8 +111,11 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     HEMSleepSummaryCollectionViewCell* cell = self.dataSource.sleepSummaryCell;
     [UIView animateWithDuration:0.5f animations:^{
         [cell.shareButton setHidden:[self.dataSource.sleepResult.score integerValue] == 0];
-        [cell.dateLabel setAlpha:1];
+        [cell.dateButton setAlpha:1];
+        [cell.dateButton setEnabled:YES];
         [cell.drawerButton setImage:[UIImage imageNamed:@"Menu"] forState:UIControlStateNormal];
+        cell.topItemsVerticalConstraint.constant = HEMTopItemsConstraintConstant;
+        [cell updateConstraintsIfNeeded];
     }];
     [self setNeedsStatusBarAppearanceUpdate];
 }
@@ -113,7 +128,17 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 }
 
 - (void)dealloc {
+    _historyViewController = nil;
+    _dataSource = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark DataSourceActionDelegate
+
+- (void)toggleDrawer
+{
+    HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
+    [delegate toggleSettingsDrawer];
 }
 
 #pragma mark Top cell actions
@@ -128,23 +153,48 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     long score = [self.dataSource.sleepResult.score longValue];
     if (score > 0) {
         NSString* message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.format", nil), score];
-        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
-                                                                                         applicationActivities:nil];
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message] applicationActivities:nil];
         [self presentViewController:activityController animated:YES completion:nil];
     }
 }
 
-- (void)toggleDrawer
+- (void)zoomButtonTapped:(UIButton*)sender
 {
-    HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
-    [delegate toggleSettingsDrawer];
+    self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
+    self.historyViewController.selectedDate = self.dateForNightOfSleep;
+    [self presentViewController:self.historyViewController animated:YES completion:NULL];
+}
+
+- (void)checkForDateChanges
+{
+    if (self.historyViewController.selectedDate) {
+        [self loadDataSourceForDate:self.historyViewController.selectedDate];
+//        HEMSleepSummarySlideViewController* parent = (id)self.parentViewController;
+//        [parent reloadData];
+    }
+
+    self.historyViewController = nil;
+}
+
+- (void)loadDataSourceForDate:(NSDate*)date
+{
+    self.dateForNightOfSleep = date;
+    self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
+                                                                                  sleepDate:date];
+    self.collectionView.dataSource = self.dataSource;
+    [self.collectionView reloadData];
 }
 
 #pragma mark Event Info Popup
 
 - (void)didTapEventButton:(UIButton*)sender
 {
-    [self positionEventInfoViewRelativeToView:sender];
+    NSIndexPath* eventIndexPath = [self indexPathForEventCellWithSubview:sender];
+    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:eventIndexPath];
+    self.eventIndex = eventIndexPath.row;
+    [self.view positionEventInfoViewRelativeToView:sender
+                                       withSegment:segment
+                                 totalSegmentCount:[self.dataSource numberOfSleepSegments]];
 }
 
 - (void)didTapDataVerifyButton:(UIButton*)sender
@@ -154,16 +204,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     [HEMSleepGraphUtils presentTimePickerForDate:self.dateForNightOfSleep
                                          segment:[self.dataSource sleepSegmentForIndexPath:indexPath]
                                   fromController:self];
-}
-
-- (void)positionEventInfoViewRelativeToView:(UIView*)view
-{
-    NSIndexPath* eventIndexPath = [self indexPathForEventCellWithSubview:view];
-    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:eventIndexPath];
-    self.eventIndex = eventIndexPath.row;
-    [self.view positionEventInfoViewRelativeToView:view
-                                       withSegment:segment
-                                 totalSegmentCount:[self.dataSource numberOfSleepSegments]];
 }
 
 - (NSIndexPath*)indexPathForEventCellWithSubview:(UIView*)view
@@ -210,10 +250,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 {
     if (![SENAuthorizationService isAuthorized])
         return;
-    self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
-                                                                                  sleepDate:self.dateForNightOfSleep];
-    self.collectionView.dataSource = self.dataSource;
-    [self.collectionView reloadData];
+
+    [self loadDataSourceForDate:self.dateForNightOfSleep];
 }
 
 - (void)configureCollectionView

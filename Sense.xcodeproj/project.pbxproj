@@ -75,6 +75,7 @@
 		8A7214411A1E7797008B59C4 /* backIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A72143E1A1E7797008B59C4 /* backIcon@3x.png */; };
 		8A7214441A1EC710008B59C4 /* HEMTodayTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7214431A1EC710008B59C4 /* HEMTodayTableViewCell.m */; };
 		8A7214451A1ECD53008B59C4 /* HelloStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9AB196350D200AFD110 /* HelloStyleKit.m */; };
+		8A7214481A1FE8C3008B59C4 /* HEMDateButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A7214471A1FE8C3008B59C4 /* HEMDateButton.m */; };
 		8A78267719663BB1002882A1 /* HEMSensorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A78267619663BB1002882A1 /* HEMSensorViewController.m */; };
 		8A782686196CB6C9002882A1 /* HEMSnappingFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A782685196CB6C9002882A1 /* HEMSnappingFlowLayout.m */; };
 		8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */; };
@@ -594,6 +595,8 @@
 		8A72143E1A1E7797008B59C4 /* backIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "backIcon@3x.png"; path = "images/backIcon@3x.png"; sourceTree = "<group>"; };
 		8A7214421A1EC710008B59C4 /* HEMTodayTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTodayTableViewCell.h; sourceTree = "<group>"; };
 		8A7214431A1EC710008B59C4 /* HEMTodayTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTodayTableViewCell.m; sourceTree = "<group>"; };
+		8A7214461A1FE8C3008B59C4 /* HEMDateButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDateButton.h; sourceTree = "<group>"; };
+		8A7214471A1FE8C3008B59C4 /* HEMDateButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDateButton.m; sourceTree = "<group>"; };
 		8A78267519663BB1002882A1 /* HEMSensorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorViewController.h; sourceTree = "<group>"; };
 		8A78267619663BB1002882A1 /* HEMSensorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorViewController.m; sourceTree = "<group>"; };
 		8A782684196CB6C9002882A1 /* HEMSnappingFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSnappingFlowLayout.h; sourceTree = "<group>"; };
@@ -1638,6 +1641,8 @@
 		8A660135199EBEB8007E6167 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8A7214461A1FE8C3008B59C4 /* HEMDateButton.h */,
+				8A7214471A1FE8C3008B59C4 /* HEMDateButton.m */,
 				8A0CB13A19E5D1EE0030FC7D /* HEMEventInfoView.h */,
 				8A0CB13B19E5D1EE0030FC7D /* HEMEventInfoView.m */,
 				8A91EEF919E5BAA200EA6E5F /* HEMEventInfoView.xib */,
@@ -2820,6 +2825,7 @@
 				8A4B669419EC7EF800445883 /* HEMPresleepItemCollectionViewCell.m in Sources */,
 				8AC49F931981DC8C00C2BD63 /* HEMZoomingFlowLayout.m in Sources */,
 				BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */,
+				8A7214481A1FE8C3008B59C4 /* HEMDateButton.m in Sources */,
 				8AC49F961981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m in Sources */,
 				BFB6D47619BE16D1004CA11B /* HEMBirthdatePickerView.m in Sources */,
 				BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */,

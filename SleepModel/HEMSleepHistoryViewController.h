@@ -3,4 +3,5 @@
 
 @interface HEMSleepHistoryViewController : UIViewController
 
+@property (nonatomic, strong) NSDate* selectedDate;
 @end

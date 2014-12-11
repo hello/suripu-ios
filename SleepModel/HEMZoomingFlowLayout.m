@@ -4,20 +4,17 @@
 
 #import "HEMZoomingFlowLayout.h"
 
-CGFloat const ZOOM_FACTOR = 0.05f;
-CGFloat const ACTIVE_DISTANCE = 20.f;
-
 @implementation HEMZoomingFlowLayout
+
+CGFloat const HEMZoomLevel = 0.03f;
+CGFloat const HEMZoomActiveDistance = 20.f;
 
 - (id)init
 {
     if (self = [super init]) {
-        //        self.itemSize = CGSizeMake([[UIScreen mainScreen] bounds].size.width, 250);
-        //        self.scrollDirection = UICollectionViewScrollDirectionVertical;
         self.minimumLineSpacing = 1;
         self.minimumInteritemSpacing = 1;
     }
-
     return self;
 }
 
@@ -36,9 +33,10 @@ CGFloat const ACTIVE_DISTANCE = 20.f;
     for (UICollectionViewLayoutAttributes* attr in array) {
         if (CGRectIntersectsRect(attr.frame, rect)) {
             CGFloat distance = CGRectGetMidX(visibleRect) - attr.center.x;
-            CGFloat normalizedDistance = distance / ACTIVE_DISTANCE;
-            if (ABS(distance) > ACTIVE_DISTANCE) {
-                CGFloat zoom = 1 + ZOOM_FACTOR * (1 - ABS(normalizedDistance));
+            CGFloat normalizedDistance = distance / HEMZoomActiveDistance;
+            attr.alpha = MAX(1/(ABS(distance)/HEMZoomActiveDistance), 0.4);
+            if (ABS(distance) > HEMZoomActiveDistance) {
+                CGFloat zoom = 1 + HEMZoomLevel * (1 - ABS(normalizedDistance));
                 attr.transform3D = CATransform3DMakeScale(zoom, zoom, 1.0);
                 attr.zIndex = round(zoom);
             }
@@ -50,15 +48,16 @@ CGFloat const ACTIVE_DISTANCE = 20.f;
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
 {
     CGFloat offsetAdjustment = MAXFLOAT;
-    CGFloat center = proposedContentOffset.x + (CGRectGetWidth(self.collectionView.bounds) / 2.0);
+    CGFloat horizontalOffset = proposedContentOffset.x - 10;
 
-    CGRect targetRect = CGRectMake(0.0, proposedContentOffset.x, CGRectGetWidth(self.collectionView.bounds), CGRectGetHeight(self.collectionView.bounds));
-    NSArray* array = [super layoutAttributesForElementsInRect:targetRect];
+    CGRect targetRect = CGRectMake(proposedContentOffset.x, 0, CGRectGetWidth(self.collectionView.bounds), CGRectGetHeight(self.collectionView.bounds));
 
-    for (UICollectionViewLayoutAttributes* attr in array) {
-        CGFloat itemCenter = attr.center.x;
-        if (ABS(itemCenter - center) < ABS(offsetAdjustment)) {
-            offsetAdjustment = itemCenter - center;
+    NSArray *array = [super layoutAttributesForElementsInRect:targetRect];
+
+    for (UICollectionViewLayoutAttributes *layoutAttributes in array) {
+        CGFloat itemOffset = layoutAttributes.frame.origin.x;
+        if (ABS(itemOffset - horizontalOffset) < ABS(offsetAdjustment)) {
+            offsetAdjustment = itemOffset - horizontalOffset;
         }
     }
 

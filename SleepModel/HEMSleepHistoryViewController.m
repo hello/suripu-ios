@@ -85,7 +85,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (void)loadData
 {
-    static NSInteger const sleepDataCapacity = 80;
+    static NSInteger const sleepDataCapacity = 120;
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:sleepDataCapacity];
     for (int i = sleepDataCapacity; i > 0; i--) {
         NSDate* date = [NSDate dateWithTimeIntervalSinceNow:i * -(60 * 60 * 24)];
@@ -191,26 +191,36 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     UICollectionViewLayoutAttributes *attribute = [[layout layoutAttributesForElementsInRect:rect] firstObject];
     NSIndexPath* indexPath = attribute.indexPath;
     if (indexPath) {
-        SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
-        if (sleepResult.segments.count > 0)
+        [self fetchTimelineForResultAtRow:indexPath.row];
+        if (indexPath.row > 0)
+            [self fetchTimelineForResultAtRow:indexPath.row - 1];
+        if (indexPath.row < [self.historyCollectionView numberOfItemsInSection:indexPath.section] - 1)
+            [self fetchTimelineForResultAtRow:indexPath.row + 1];
+    }
+}
+
+- (void)fetchTimelineForResultAtRow:(NSUInteger)row
+{
+    SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:row];
+    if (sleepResult.segments.count > 0)
+        return;
+
+    __weak typeof(self) weakSelf = self;
+    [SENAPITimeline timelineForDate:sleepResult.date completion:^(NSArray* timelines, NSError* error) {
+        typeof(weakSelf) strongSelf = weakSelf;
+        if (error)
             return;
 
-        __weak typeof(self) weakSelf = self;
-        [SENAPITimeline timelineForDate:sleepResult.date completion:^(NSArray* timelines, NSError* error) {
-            typeof(weakSelf) strongSelf = weakSelf;
-            if (error)
-                return;
+        NSDictionary* timeline = [timelines firstObject];
+        NSArray* segments = timeline[@"segments"];
+        if (segments.count == 0)
+            return;
 
-            NSDictionary* timeline = [timelines firstObject];
-            NSArray* segments = timeline[@"segments"];
-            if (segments.count == 0)
-                return;
-
-            [sleepResult updateWithDictionary:[timelines firstObject]];
-            [sleepResult save];
-            [strongSelf.historyCollectionView reloadItemsAtIndexPaths:@[indexPath]];
-        }];
-    }
+        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+        [sleepResult updateWithDictionary:[timelines firstObject]];
+        [sleepResult save];
+        [strongSelf.historyCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+    }];
 }
 
 @end

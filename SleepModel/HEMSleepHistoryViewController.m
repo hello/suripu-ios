@@ -93,7 +93,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     }
 }
 
-- (void)scrollToDate:(NSDate*)date animated:(BOOL)animated
+- (void)scrollToSelectedDateAnimated:(BOOL)animated
 {
     NSDate* initialDate = [(SENSleepResult*)[self.sleepDataSummaries firstObject] date];
     NSDateComponents *components = [self.calendar components:NSHourCalendarUnit
@@ -113,7 +113,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 - (void)updateForSelectedDate
 {
     if (self.selectedDate) {
-        [self scrollToDate:self.selectedDate animated:NO];
+        [self scrollToSelectedDateAnimated:NO];
         self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:self.selectedDate];
     } else {
         NSDate* date = [(SENSleepResult*)[self.sleepDataSummaries firstObject] date];
@@ -123,7 +123,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (IBAction)scrollToLastNight:(id)sender {
     self.selectedDate = [NSDate date];
-    [self scrollToDate:self.selectedDate animated:YES];
+    [self scrollToSelectedDateAnimated:YES];
 }
 
 #pragma mark - UICollectionViewDataSource

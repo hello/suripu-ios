@@ -31,7 +31,6 @@ NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
 @interface HEMSleepGraphCollectionViewDataSource ()
 
 @property (nonatomic, weak) UICollectionView* collectionView;
-@property (nonatomic, strong) RTSpinKitView* loadingView;
 @property (nonatomic, strong) NSDateFormatter* timeDateFormatter;
 @property (nonatomic, strong) NSDateFormatter* rangeDateFormatter;
 @property (nonatomic, strong) NSDate* dateForNightOfSleep;
@@ -99,10 +98,10 @@ static NSString* const sensorTypeParticulates = @"particulates";
     }
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError* error) {
-        typeof(weakSelf) strongSelf = weakSelf;
+        HEMSleepGraphCollectionViewDataSource* strongSelf = weakSelf;
         if (error) {
             DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
-            [strongSelf hideLoadingViewWithSuccess:NO];
+            [strongSelf hideLoadingView];
             return;
         }
         [strongSelf refreshWithTimelines:timelines];
@@ -116,7 +115,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     NSDictionary* timeline = [timelines firstObject];
     [self.sleepResult updateWithDictionary:timeline];
     [self.sleepResult save];
-    [self hideLoadingViewWithSuccess:YES];
+    [self hideLoadingView];
     if ([self.sleepResult.message isEqualToString:message] && [self.sleepResult.score isEqual:score]) {
         NSMutableIndexSet* set = [NSMutableIndexSet indexSetWithIndex:HEMSleepGraphCollectionViewSegmentSection];
         [set addIndex:HEMSleepGraphCollectionViewPresleepSection];
@@ -163,6 +162,11 @@ static NSString* const sensorTypeParticulates = @"particulates";
 
 #pragma mark - Loading
 
+- (RTSpinKitView *)loadingView
+{
+    return self.sleepSummaryCell.spinnerView;
+}
+
 - (BOOL)shouldShowLoadingView
 {
     return [self numberOfSleepSegments] == 0;
@@ -170,32 +174,25 @@ static NSString* const sensorTypeParticulates = @"particulates";
 
 - (void)showLoadingView
 {
-    if (![self shouldBeLoading] || self.loadingView)
+    if (![self shouldBeLoading])
         return;
 
-    HEMSleepSummaryCollectionViewCell* cell = (id)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForItem:0 inSection:0]];
-    HEMSleepScoreGraphView* graphView = cell.sleepScoreGraphView;
-    if (graphView) {
+    if (self.loadingView) {
         [NSObject cancelPreviousPerformRequestsWithTarget:self];
-        CGFloat width = MIN(CGRectGetWidth(graphView.frame), CGRectGetHeight(graphView.frame)) * 0.5;
-        self.loadingView = [[RTSpinKitView alloc] initWithStyle:RTSpinKitViewStyleWave color:[UIColor colorWithWhite:0.1 alpha:0.06] spinnerSize:width];
-        self.loadingView.center = graphView.center;
         [self.loadingView startAnimating];
-        [cell addSubview:self.loadingView];
     } else {
         self.beLoading = YES;
     }
 }
 
-- (void)hideLoadingViewWithSuccess:(BOOL)success
+- (void)hideLoadingView
 {
     self.beLoading = NO;
-    [self.loadingView stopAnimating];
     [UIView animateWithDuration:0.25f animations:^{
         self.loadingView.alpha = 0;
     } completion:^(BOOL finished) {
-        [self.loadingView removeFromSuperview];
-        self.loadingView = nil;
+        [self.loadingView stopAnimating];
+        self.loadingView.alpha = 1;
     }];
 }
 

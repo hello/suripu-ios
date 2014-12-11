@@ -2,8 +2,10 @@
 #import <UIKit/UIKit.h>
 
 @class HEMSleepScoreGraphView;
+@class RTSpinKitView;
 @interface HEMSleepSummaryCollectionViewCell : UICollectionViewCell
 
+@property (weak, nonatomic) IBOutlet RTSpinKitView *spinnerView;
 @property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *drawerButton;
 @property (weak, nonatomic) IBOutlet UIButton* dateButton;

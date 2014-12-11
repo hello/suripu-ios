@@ -85,7 +85,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (void)loadData
 {
-    static NSInteger const sleepDataCapacity = 40;
+    static NSInteger const sleepDataCapacity = 80;
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:sleepDataCapacity];
     for (int i = sleepDataCapacity; i > 0; i--) {
         NSDate* date = [NSDate dateWithTimeIntervalSinceNow:i * -(60 * 60 * 24)];

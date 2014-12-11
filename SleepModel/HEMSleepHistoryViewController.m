@@ -58,7 +58,9 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     UICollectionViewFlowLayout* layout = (id)self.historyCollectionView.collectionViewLayout;
     layout.sectionInset = UIEdgeInsetsMake(10.f, 0, 10.f, 0);
     CGFloat cellHeight = (CGRectGetHeight(self.view.bounds) * 0.65f) - layout.sectionInset.top - layout.sectionInset.bottom;
-    layout.itemSize = CGSizeMake(CGRectGetWidth(self.view.bounds) * HEMSleepHistoryCellWidthRatio, cellHeight);
+    CGFloat cellWidth = CGRectGetWidth(self.view.bounds) * HEMSleepHistoryCellWidthRatio;
+    [self.historyCollectionView setContentInset: UIEdgeInsetsMake(0, cellWidth, 0, cellWidth)];
+    layout.itemSize = CGSizeMake(cellWidth, cellHeight);
 }
 
 - (void)configureDateFormatters
@@ -85,7 +87,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 {
     static NSInteger const sleepDataCapacity = 40;
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:sleepDataCapacity];
-    for (int i = sleepDataCapacity - 1; i >= 0; i--) {
+    for (int i = sleepDataCapacity; i > 0; i--) {
         NSDate* date = [NSDate dateWithTimeIntervalSinceNow:i * -(60 * 60 * 24)];
         [self.sleepDataSummaries addObject:[SENSleepResult sleepResultForDate:date]];
     }
@@ -158,6 +160,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
         return;
     SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
     self.selectedDate = sleepResult.date;
+    
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 

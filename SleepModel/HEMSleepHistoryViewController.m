@@ -178,7 +178,8 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
         NSNumber* diff2 = @(ABS(CGRectGetMidX(cell2.frame) - midX));
         return [diff2 compare:diff1];
     }];
-    NSIndexPath* indexPath = [self.historyCollectionView indexPathForCell:[cells firstObject]];
+    UICollectionViewCell* cell = cells.count > 1 ? cells[1] : [cells firstObject];
+    NSIndexPath* indexPath = [self.historyCollectionView indexPathForCell:cell];
     SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
     self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:sleepResult.date];
 }

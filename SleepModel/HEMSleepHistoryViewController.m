@@ -1,5 +1,6 @@
 
 #import <SenseKit/SENSleepResult.h>
+#import <SenseKit/SENAPITimeline.h>
 #import "HEMSleepHistoryViewController.h"
 #import "HEMMiniGraphCollectionViewCell.h"
 #import "HEMMiniSleepHistoryView.h"
@@ -72,7 +73,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (void)loadData
 {
-    static NSInteger const sleepDataCapacity = 80;
+    static NSInteger const sleepDataCapacity = 40;
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:sleepDataCapacity];
     for (int i = sleepDataCapacity - 1; i >= 0; i--) {
         NSDate* date = [NSDate dateWithTimeIntervalSinceNow:i * -(60 * 60 * 24)];
@@ -143,6 +144,8 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 - (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
+    if (indexPath.row == [collectionView numberOfItemsInSection:0] - 1)
+        return;
     SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
     self.selectedDate = sleepResult.date;
     [self dismissViewControllerAnimated:YES completion:NULL];
@@ -161,6 +164,36 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     NSIndexPath* indexPath = [self.historyCollectionView indexPathForCell:[cells firstObject]];
     SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
     self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:sleepResult.date];
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset
+{
+    UICollectionViewLayout* layout = self.historyCollectionView.collectionViewLayout;
+    CGRect rect = CGRectMake((*targetContentOffset).x, 0, 10, CGRectGetHeight(self.historyCollectionView.bounds));
+    UICollectionViewLayoutAttributes *attribute = [[layout layoutAttributesForElementsInRect:rect] firstObject];
+    NSIndexPath* indexPath = attribute.indexPath;
+    if (indexPath) {
+        SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
+        if (sleepResult.segments.count > 0)
+            return;
+
+        __weak typeof(self) weakSelf = self;
+        [SENAPITimeline timelineForDate:sleepResult.date completion:^(NSArray* timelines, NSError* error) {
+            typeof(weakSelf) strongSelf = weakSelf;
+            if (error)
+                return;
+
+            NSDictionary* timeline = [timelines firstObject];
+            NSArray* segments = timeline[@"segments"];
+            if (segments.count == 0)
+                return;
+
+            [sleepResult updateWithDictionary:[timelines firstObject]];
+            [sleepResult save];
+            [strongSelf.historyCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+        }];
+    }
 }
 
 @end

@@ -158,6 +158,10 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
     if (indexPath.row == [collectionView numberOfItemsInSection:0] - 1)
         return;
+
+    [collectionView scrollToItemAtIndexPath:indexPath
+                           atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+                                   animated:YES];
     SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
     self.selectedDate = sleepResult.date;
     

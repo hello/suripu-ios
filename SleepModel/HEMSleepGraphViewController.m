@@ -169,8 +169,8 @@ static CGFloat const HEMTopItemsConstraintConstant = 10.f;
 {
     if (self.historyViewController.selectedDate) {
         [self loadDataSourceForDate:self.historyViewController.selectedDate];
-        HEMSleepSummarySlideViewController* parent = (id)self.parentViewController;
-        [parent reloadData];
+//        HEMSleepSummarySlideViewController* parent = (id)self.parentViewController;
+//        [parent reloadData];
     }
 
     self.historyViewController = nil;

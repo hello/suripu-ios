@@ -78,6 +78,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                          senses = [NSMutableArray arrayWithCapacity:count];
                                          for (LGPeripheral* device in peripherals) {
                                              sense = [[SENSense alloc] initWithPeripheral:device];
+                                             DDLogVerbose(@"discovered sense %@", sense);
                                              [senses addObject:sense];
                                          }
                                      }

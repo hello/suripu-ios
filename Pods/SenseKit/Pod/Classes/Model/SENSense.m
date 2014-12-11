@@ -14,6 +14,7 @@
 @interface SENSense()
 
 @property (nonatomic, copy, readwrite) NSString* deviceId;
+@property (nonatomic, assign, readwrite) SENSenseMode mode;
 @property (nonatomic, strong) LGPeripheral* peripheral;
 
 @end
@@ -24,13 +25,13 @@
     self = [super init];
     if (self) {
         [self setPeripheral:peripheral];
-        [self processDeviceId];
+        [self processAdvertisementData:[peripheral advertisingData]];
     }
     return self;
 }
 
-- (void)processDeviceId {
-    NSDictionary* data = [[self peripheral] advertisingData];
+- (void)processAdvertisementData:(NSDictionary*)data {
+    SENSenseMode mode = SENSenseModeUnknown;
     NSDictionary* serviceData = data[CBAdvertisementDataServiceDataKey];
     NSMutableString* deviceIdInHex = nil;
     
@@ -39,15 +40,27 @@
         const unsigned char* dataBuffer = (const unsigned char*)[deviceIdData bytes];
         if (dataBuffer) {
             NSInteger len = [deviceIdData length];
-            deviceIdInHex = [[NSMutableString alloc] initWithCapacity:len];
+            NSInteger deviceIdLength = len;
             
-            for (int i = 0; i < len; i++) {
+            // per Pang, if device id data is odd in length, the last byte indicates
+            // the mode Sense is in.  If even, then that byte is not being set by the
+            // firmware.  If we don't handle it and the firmware code is pushed, then
+            // people will never be able to configure Sense b/c device id on server
+            // and one processed here will never match!
+            if (len % 2 != 0) {
+                deviceIdLength = len - 1;
+                mode = dataBuffer[deviceIdLength] == '1'?SENSenseModePairing:SENSenseModeNormal;
+            }
+            
+            deviceIdInHex = [[NSMutableString alloc] initWithCapacity:deviceIdLength];
+            for (int i = 0; i < deviceIdLength; i++) {
                 [deviceIdInHex appendString:[NSString stringWithFormat:@"%02lX", (unsigned long)dataBuffer[i]]];
             }
         }
     }
     
     [self setDeviceId:deviceIdInHex];
+    [self setMode:mode];
 }
 
 - (NSString*)name {
@@ -55,7 +68,7 @@
 }
 
 - (NSString*)description {
-    return [NSString stringWithFormat:@"Sense: %@", [self name]];
+    return [NSString stringWithFormat:@"Sense: %@, in mode: %ld", [self name], (long)[self mode]];
 }
 
 - (BOOL)isEqual:(id)object {

@@ -9,6 +9,7 @@ New:
 * Enable push notifications from onboarding
 * Added ending message for onboarding flow
 * Wake Up time validation control in wake up event within Timeline
+* added ble support for firmware update of device mode flag
 
 Fixes:
 
@@ -16,7 +17,6 @@ Fixes:
 * calls for data should not be made when signed out
 * Timeline refreshed after signing out and back in
 * syncing with Sense led changes in firmware
-
 
 ## 1.0.0.46
 

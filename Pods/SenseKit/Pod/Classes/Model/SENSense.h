@@ -10,10 +10,17 @@
 
 @class LGPeripheral;
 
+typedef NS_ENUM(NSUInteger, SENSenseMode) {
+    SENSenseModeUnknown = 0,
+    SENSenseModeNormal = 1,
+    SENSenseModePairing = 2
+};
+
 @interface SENSense : NSObject
 
 @property (nonatomic, copy, readonly) NSString* name;
 @property (nonatomic, copy, readonly) NSString* deviceId;
+@property (nonatomic, assign, readonly) SENSenseMode mode;
 
 - (instancetype)initWithPeripheral:(LGPeripheral*)peripheral;
 

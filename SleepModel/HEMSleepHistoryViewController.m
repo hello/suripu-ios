@@ -17,6 +17,7 @@
 @property (strong, nonatomic) NSDate* startDate;
 @property (nonatomic) NSInteger numberOfDays;
 @property (nonatomic, strong) NSCalendar* calendar;
+@property (nonatomic, getter=didLayoutSubviews) BOOL laidOutSubviews;
 @end
 
 @implementation HEMSleepHistoryViewController
@@ -40,7 +41,16 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    [self updateForSelectedDate];
+
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    if (![self didLayoutSubviews]) {
+        [self updateForSelectedDate];
+        self.laidOutSubviews = YES;
+    }
 }
 
 - (void)configureCollectionView
@@ -98,7 +108,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 - (void)updateForSelectedDate
 {
     if (self.selectedDate) {
-        [self scrollToDate:self.selectedDate animated:YES];
+        [self scrollToDate:self.selectedDate animated:NO];
         self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:self.selectedDate];
     } else {
         NSDate* date = [(SENSleepResult*)[self.sleepDataSummaries firstObject] date];

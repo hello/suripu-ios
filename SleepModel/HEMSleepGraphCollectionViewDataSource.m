@@ -98,7 +98,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     }
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError* error) {
-        HEMSleepGraphCollectionViewDataSource* strongSelf = weakSelf;
+        __strong HEMSleepGraphCollectionViewDataSource* strongSelf = weakSelf;
         if (error) {
             DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
             [strongSelf hideLoadingView];

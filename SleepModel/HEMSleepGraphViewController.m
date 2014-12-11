@@ -26,6 +26,7 @@
 #import "HEMSleepSummarySlideViewController.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
+#import "HEMZoomAnimationTransitionDelegate.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 50.f;
 
@@ -35,6 +36,7 @@ CGFloat const HEMTimelineHeaderCellHeight = 50.f;
 @property (nonatomic, retain) HEMSleepGraphView* view;
 @property (nonatomic, strong) HEMSleepHistoryViewController* historyViewController;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource* dataSource;
+@property (nonatomic, strong) HEMZoomAnimationTransitionDelegate* animationDelegate;
 @property (nonatomic) UIStatusBarStyle oldBarStyle;
 @property (nonatomic) NSInteger eventIndex;
 @end
@@ -53,6 +55,8 @@ static CGFloat const HEMTopItemsConstraintConstant = 10.f;
     [super viewDidLoad];
     [self configureCollectionView];
     [self reloadData];
+    self.animationDelegate = [HEMZoomAnimationTransitionDelegate new];
+    self.transitioningDelegate = self.animationDelegate;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -74,8 +78,8 @@ static CGFloat const HEMTopItemsConstraintConstant = 10.f;
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.view.eventInfoView stopAudio];
     self.panePanGestureRecognizer.delegate = nil;
+    [self.view hideEventInfoView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -162,6 +166,7 @@ static CGFloat const HEMTopItemsConstraintConstant = 10.f;
 {
     self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
     self.historyViewController.selectedDate = self.dateForNightOfSleep;
+    self.historyViewController.transitioningDelegate = self.animationDelegate;
     [self presentViewController:self.historyViewController animated:YES completion:NULL];
 }
 

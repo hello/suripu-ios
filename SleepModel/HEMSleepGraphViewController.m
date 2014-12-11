@@ -78,8 +78,8 @@ static CGFloat const HEMTopItemsConstraintConstant = 10.f;
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
-    [self.view.eventInfoView stopAudio];
     self.panePanGestureRecognizer.delegate = nil;
+    [self.view hideEventInfoView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

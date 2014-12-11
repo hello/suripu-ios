@@ -16,6 +16,8 @@
 
 @implementation HEMMiniSleepHistoryView
 
+static CGFloat const HEMMiniSleepBandWidth = 2.f;
+
 - (void)awakeFromNib
 {
     self.backgroundColor = [UIColor clearColor];
@@ -51,11 +53,15 @@
         NSTimeInterval sliceStartInterval = [self timeIntervalForSegment:segment];
         NSTimeInterval sliceEndInterval = sliceStartInterval + [self durationForSegment:segment];
         CGFloat startYOffset = floorf([self yOffsetForTimeInterval:sliceStartInterval]);
-        CGFloat endYOffset = ceilf([self yOffsetForTimeInterval:sliceEndInterval]);
+        CGFloat endYOffset = floorf([self yOffsetForTimeInterval:sliceEndInterval]);
         CGFloat endXOffset = [self xOffsetForSleepDepth:segment.sleepDepth];
-        UIColor* color = [HEMColorUtils colorForSleepDepth:segment.sleepDepth];
-        CGContextSetFillColorWithColor(ctx, color.CGColor);
-        CGContextFillRect(ctx, CGRectMake(CGRectGetMinX(rect), startYOffset, endXOffset, endYOffset - startYOffset));
+        CGContextSetFillColorWithColor(ctx, [self colorForSegment:segment].CGColor);
+        CGRect fillRect = CGRectMake(CGRectGetMinX(rect), startYOffset, endXOffset, endYOffset - startYOffset);
+        CGContextFillRect(ctx, fillRect);
+
+        fillRect.size.width = HEMMiniSleepBandWidth;
+        CGContextSetFillColorWithColor(ctx, [HEMColorUtils colorForSleepDepth:segment.sleepDepth].CGColor);
+        CGContextFillRect(ctx, fillRect);
     }
 }
 
@@ -75,6 +81,19 @@
 }
 
 #pragma mark - Data Parsing
+
+- (UIColor*)colorForSegment:(SENSleepResultSegment*)segment
+{
+    CGFloat sleepDepth = segment.sleepDepth;
+    if (sleepDepth == 0)
+        return [UIColor clearColor];
+    else if (sleepDepth == 100)
+        return [UIColor colorWithHue:0.6 saturation:0.81 brightness:0.85 alpha:1];
+    else if (sleepDepth < 60)
+        return [UIColor colorWithHue:0.56 saturation:0.15 brightness:0.95 alpha:1];
+    else
+        return [UIColor colorWithHue:0.58 saturation:0.29 brightness:0.95 alpha:1];
+}
 
 - (NSTimeInterval)timeIntervalForSegment:(SENSleepResultSegment*)segment
 {

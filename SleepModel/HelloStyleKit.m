@@ -304,50 +304,6 @@ static UIImage* _moon = nil;
     CGContextRestoreGState(context);
 }
 
-+ (void)drawMiniSleepScoreGraphWithSleepScore: (CGFloat)sleepScore
-{
-    //// General Declarations
-    CGContextRef context = UIGraphicsGetCurrentContext();
-
-    //// Color Declarations
-    UIColor* sleepScoreNoValueColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.059];
-    UIColor* sleepScoreTextColor = [UIColor colorWithRed: 0.3 green: 0.3 blue: 0.3 alpha: 1];
-
-    //// Variable Declarations
-    UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.highSleepScoreColor)) : sleepScoreNoValueColor;
-    CGFloat graphPercentageAngle = sleepScore > 0 ? (sleepScore < 100 ? 360 - sleepScore * 0.01 * 360 : 0.01) : 0.01;
-    NSString* sleepScoreText = sleepScore > 0 ? (sleepScore <= 100 ? [NSString stringWithFormat: @"%ld", (NSInteger)round(sleepScore)] : @"100") : @"";
-
-    //// Text Drawing
-    CGRect textRect = CGRectMake(0, 11, 53, 31);
-    NSMutableParagraphStyle* textStyle = NSMutableParagraphStyle.defaultParagraphStyle.mutableCopy;
-    textStyle.alignment = NSTextAlignmentCenter;
-
-    NSDictionary* textFontAttributes = @{NSFontAttributeName: [UIFont fontWithName: @"AvenirNext-UltraLight" size: 23], NSForegroundColorAttributeName: sleepScoreTextColor, NSParagraphStyleAttributeName: textStyle};
-
-    CGFloat textTextHeight = [sleepScoreText boundingRectWithSize: CGSizeMake(textRect.size.width, INFINITY)  options: NSStringDrawingUsesLineFragmentOrigin attributes: textFontAttributes context: nil].size.height;
-    CGContextSaveGState(context);
-    CGContextClipToRect(context, textRect);
-    [sleepScoreText drawInRect: CGRectMake(CGRectGetMinX(textRect), CGRectGetMinY(textRect) + (CGRectGetHeight(textRect) - textTextHeight) / 2, CGRectGetWidth(textRect), textTextHeight) withAttributes: textFontAttributes];
-    CGContextRestoreGState(context);
-
-
-    //// pie oval Drawing
-    CGContextSaveGState(context);
-    CGContextTranslateCTM(context, -0, 1);
-    CGContextRotateCTM(context, -90 * M_PI / 180);
-
-    CGRect pieOvalRect = CGRectMake(-50.5, 1.5, 50, 50);
-    UIBezierPath* pieOvalPath = UIBezierPath.bezierPath;
-    [pieOvalPath addArcWithCenter: CGPointMake(CGRectGetMidX(pieOvalRect), CGRectGetMidY(pieOvalRect)) radius: CGRectGetWidth(pieOvalRect) / 2 startAngle: 0 * M_PI/180 endAngle: -graphPercentageAngle * M_PI/180 clockwise: YES];
-
-    [sleepScoreColor setStroke];
-    pieOvalPath.lineWidth = 2;
-    [pieOvalPath stroke];
-
-    CGContextRestoreGState(context);
-}
-
 @end
 
 

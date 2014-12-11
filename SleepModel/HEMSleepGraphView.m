@@ -43,6 +43,7 @@ static CGFloat const HEMSleepEventPopupMaxWidth = 400.f;
 {
     [self configureEventInfoView];
     [self configureEventInfoBackgroundViews];
+    [self configureConstraints];
 }
 
 - (void)configureEventInfoView
@@ -77,18 +78,16 @@ static CGFloat const HEMSleepEventPopupMaxWidth = 400.f;
     self.eventTimelineHeaderLabel.alpha = 0;
 }
 
-- (void)layoutSubviews
+- (void)configureConstraints
 {
-    [super layoutSubviews];
     if (!self.eventInfoWidthConstraint) {
-        CGFloat width = MIN(CGRectGetWidth(self.bounds) - HEMSleepEventPopupWidthInset, HEMSleepEventPopupMaxWidth);
         self.eventInfoWidthConstraint = [NSLayoutConstraint constraintWithItem:self.eventInfoView
                                                                      attribute:NSLayoutAttributeWidth
                                                                      relatedBy:NSLayoutRelationEqual
                                                                         toItem:nil
                                                                      attribute:NSLayoutAttributeNotAnAttribute
                                                                     multiplier:1
-                                                                      constant:width];
+                                                                      constant:300];
         self.eventInfoHeightConstraint = [NSLayoutConstraint constraintWithItem:self.eventInfoView
                                                                       attribute:NSLayoutAttributeHeight
                                                                       relatedBy:NSLayoutRelationEqual
@@ -241,7 +240,7 @@ static CGFloat const HEMSleepEventPopupMaxWidth = 400.f;
     CGRect buttonFrame = [self convertRect:view.frame fromView:view.superview];
     CGRect frame = CGRectMake(self.eventInfoLeftConstraint.constant,
                               CGRectGetMinY(buttonFrame) - HEMSleepEventPopupTopInset,
-                              self.eventInfoWidthConstraint.constant,
+                              MIN(CGRectGetWidth(self.bounds) - HEMSleepEventPopupWidthInset, HEMSleepEventPopupMaxWidth),
                               [self heightBySegment:segment]);
 
     CGPoint bottomPoint = CGPointMake(1, CGRectGetMaxY(frame));
@@ -322,6 +321,7 @@ static CGFloat const HEMSleepEventPopupMaxWidth = 400.f;
 {
     self.eventInfoTopConstraint.constant = CGRectGetMinY(frame);
     self.eventInfoHeightConstraint.constant = CGRectGetHeight(frame);
+    self.eventInfoWidthConstraint.constant = CGRectGetWidth(frame);
     [self.eventInfoView layoutIfNeeded];
 }
 

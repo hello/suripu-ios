@@ -96,11 +96,13 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 - (void)scrollToDate:(NSDate*)date animated:(BOOL)animated
 {
     NSDate* initialDate = [(SENSleepResult*)[self.sleepDataSummaries firstObject] date];
-    NSDateComponents *components = [self.calendar components:NSDayCalendarUnit
+    NSDateComponents *components = [self.calendar components:NSHourCalendarUnit
                                                     fromDate:initialDate
                                                       toDate:self.selectedDate
                                                      options:0];
-    NSInteger index = components.day + 1;
+    NSInteger index = components.hour / 24;
+    if (components.hour % 24 > 0)
+        index++;
     NSIndexPath* indexPath = [NSIndexPath indexPathForItem:index inSection:0];
     [self.historyCollectionView scrollToItemAtIndexPath:indexPath
                                        atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
@@ -119,7 +121,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 }
 
 - (IBAction)scrollToLastNight:(id)sender {
-    self.selectedDate = [NSDate dateWithTimeIntervalSinceNow:-86400];
+    self.selectedDate = [NSDate date];
     [self scrollToDate:self.selectedDate animated:YES];
 }
 
@@ -156,9 +158,6 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 - (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-    if (indexPath.row == [collectionView numberOfItemsInSection:0] - 1)
-        return;
-
     [collectionView scrollToItemAtIndexPath:indexPath
                            atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
                                    animated:YES];

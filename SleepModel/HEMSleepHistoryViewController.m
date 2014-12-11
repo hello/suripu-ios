@@ -103,7 +103,8 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     NSInteger index = components.hour / 24;
     if (components.hour % 24 > 0)
         index++;
-    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:MIN(index, [self.historyCollectionView numberOfItemsInSection:0] - 1)
+                                                 inSection:0];
     [self.historyCollectionView scrollToItemAtIndexPath:indexPath
                                        atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
                                                animated:animated];

@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.0.47
+
+New:
+
+* Work in progress of a zoomed out view for the Timeline
+* Room Check sensor values now animate in
+* Enable push notifications from onboarding
+* Added ending message for onboarding flow
+* Wake Up time validation control in wake up event within Timeline
+
+Fixes:
+
+* various copy changes
+* calls for data should not be made when signed out
+* Timeline refreshed after signing out and back in
+* syncing with Sense led changes in firmware
+
+
 ## 1.0.0.46
 
 New:

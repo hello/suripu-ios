@@ -50,7 +50,6 @@ static NSString* const kHEMInsightCellReuseId = @"insight";
 }
 
 - (SENInsight*)insightAtIndexPath:(NSIndexPath*)indexPath {
-    DDLogVerbose(@"row %ld", [indexPath row]);
     return [indexPath row] < [[self insights] count] ? [self insights][[indexPath row]] : nil;
 }
 

@@ -328,6 +328,15 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     return NO;
 }
 
+- (void)lineGraph:(BEMSimpleLineGraphView *)graph didTouchGraphWithClosestIndex:(NSInteger)index {
+    CGFloat value = [self.graphDataSource lineGraph:graph valueForPointAtIndex:index];
+    self.valueLabel.text = [NSString stringWithFormat:@"%.0f", value];
+}
+
+- (void)lineGraph:(BEMSimpleLineGraphView *)graph didReleaseTouchFromGraphWithClosestIndex:(CGFloat)index {
+    [self updateValueLabelWithValue:self.sensor.value];
+}
+
 - (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {
     NSArray* labels = self.graphDataSource.valuesForSectionIndexes;
     if ([self isShowingHourlyData]) {

@@ -18,7 +18,8 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAnimationUtils.h"
 #import "HEMSleepQuestionsDataSource.h"
-#import "HEMAnswerCell.h"
+#import "HEMSingleResponseCell.h"
+#import "HEMMultipleResponseCell.h"
 
 static CGFloat const kHEMSleepViewAnimDuration = 0.2f;
 static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
@@ -28,11 +29,13 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 @property (weak, nonatomic) IBOutlet UITableView *answerTableView;
 @property (weak, nonatomic) IBOutlet UILabel* questionLabel;
 @property (weak, nonatomic) IBOutlet UIButton* skipButton;
+@property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UILabel* thankLabel;
 @property (weak, nonatomic) IBOutlet UILabel* youLabel;
 
 @property (strong, nonatomic) SENQuestion* currentQuestion;
 @property (strong, nonatomic) CALayer* activityLayer;
+@property (strong, nonatomic) NSMutableSet* selectedAnswerPaths; // for multi selections only
 
 @end
 
@@ -67,6 +70,12 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
     [[self answerTableView] setDataSource:[self dataSource]];
     [[self answerTableView] setDelegate:self];
     [[self answerTableView] setTableFooterView:[[UIView alloc] init]];
+    
+    BOOL multiple = [[self dataSource] allowMultipleSelectionForSelectedQuestion];
+    if (multiple) {
+        [self setSelectedAnswerPaths:[NSMutableSet set]];
+    }
+    [[self answerTableView] setAllowsMultipleSelection:multiple];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -134,18 +143,48 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    HEMAnswerCell* answerCell = (HEMAnswerCell*)cell;
     NSString* text = [[[self dataSource] answerTextAtIndexPath:indexPath] uppercaseString];
-    [[answerCell answerLabel] setText:text];
-    [[answerCell separator] setHidden:[[self dataSource] isIndexPathLast:indexPath]];
+    BOOL isLastCell = [[self dataSource] isIndexPathLast:indexPath];
+    
+    if ([cell isKindOfClass:[HEMSingleResponseCell class]]) {
+        HEMSingleResponseCell* answerCell = (HEMSingleResponseCell*)cell;
+
+        [[answerCell answerLabel] setText:text];
+        [[answerCell separator] setHidden:isLastCell];
+    } else if ([cell isKindOfClass:[HEMMultipleResponseCell class]]) {
+        HEMMultipleResponseCell* multiCell = (HEMMultipleResponseCell*)cell;
+        
+        BOOL selected = [[self selectedAnswerPaths] containsObject:indexPath];
+        [multiCell setSelected:selected];
+        [[multiCell answerLabel] setText:text];
+        [[multiCell separator] setHidden:isLastCell];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (![[self dataSource] selectAnswerAtIndexPath:indexPath]) {
-        [self animateOut];
+    if (![tableView allowsMultipleSelection]) {
+        if (![[self dataSource] selectAnswerAtIndexPath:indexPath]) {
+            [self animateOut];
+        } else {
+            [self toNextQuestion];
+        }
     } else {
-        [self toNextQuestion];
+        [[self selectedAnswerPaths] addObject:[indexPath copy]];
+        [self updateButtonsBasedOnSelection];
     }
+}
+
+- (void)tableView:(UITableView *)tableView didDeselectRowAtIndexPath:(NSIndexPath *)indexPath {
+    if ([tableView allowsMultipleSelection]) {
+        [[self selectedAnswerPaths] removeObject:indexPath];
+        [self updateButtonsBasedOnSelection];
+    }
+}
+
+- (void)updateButtonsBasedOnSelection {
+    BOOL hasSelectedAnswers = [[self selectedAnswerPaths] count]>0;
+    [[self doneButton] setHidden:!hasSelectedAnswers];
+    [[self skipButton] setHidden:hasSelectedAnswers];
 }
 
 
@@ -158,6 +197,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [self toNextQuestion];
     }
     
+}
+
+- (IBAction)done:(id)sender {
+    if (![[self dataSource] selectAnswersAtIndexPaths:[self selectedAnswerPaths]]) {
+        [self dismiss];
+    } else {
+        [self toNextQuestion];
+    }
 }
 
 #pragma mark - Navigation

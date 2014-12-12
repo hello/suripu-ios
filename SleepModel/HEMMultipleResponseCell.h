@@ -1,14 +1,14 @@
 //
-//  HEMAnswerCell.h
+//  HEMMultpleResponseCell.h
 //  Sense
 //
-//  Created by Jimmy Lu on 12/2/14.
+//  Created by Jimmy Lu on 12/11/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 #import "HEMResponseCell.h"
 
-@interface HEMSingleResponseCell : HEMResponseCell
+@interface HEMMultipleResponseCell : HEMResponseCell
 
 @end

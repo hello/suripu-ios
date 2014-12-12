@@ -131,11 +131,10 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.overlayView.alpha = 0;
     self.graphView.delegate = self;
     self.graphView.enableBezierCurve = YES;
-    self.graphView.enablePopUpReport = YES;
+    self.graphView.enableTouchReport = YES;
     self.graphView.colorBottom = [UIColor clearColor];
     self.graphView.colorTop = [UIColor clearColor];
     self.graphView.colorPoint = [UIColor clearColor];
-    self.graphView.colorLine = [HelloStyleKit backViewTextColor];
     self.graphView.widthLine = 1.f;
     self.graphView.labelFont = [UIFont sensorGraphNumberFont];
 }
@@ -146,11 +145,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.valueLabel.textColor = conditionColor;
     self.unitLabel.textColor = conditionColor;
     self.title = self.sensor.localizedName;
-    if (self.sensor.value) {
-        self.valueLabel.text = [NSString stringWithFormat:@"%.0f", [[self.sensor valueInPreferredUnit] floatValue]];
-    } else {
-        self.valueLabel.text = NSLocalizedString(@"empty-data", nil);
-    }
+    [self updateValueLabelWithValue:self.sensor.value];
 
     self.unitLabel.text = [self.sensor localizedUnit];
     NSDictionary* statusAttributes = @{
@@ -160,6 +155,32 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 
     self.statusMessageLabel.attributedText = markdown_to_attr_string(self.sensor.message, 0, statusAttributes);
     self.idealLabel.attributedText = nil; // temporary, since it's only placeholder
+    self.graphView.colorLine = conditionColor;
+    self.graphView.gradientBottom = [self gradientForColor:conditionColor];
+}
+
+- (void)updateValueLabelWithValue:(NSNumber*)value
+{
+    if (value) {
+        CGFloat formattedValue = [[SENSensor value:value inPreferredUnit:self.sensor.unit] floatValue];
+        self.valueLabel.text = [NSString stringWithFormat:@"%.0f", formattedValue];
+    } else {
+        self.valueLabel.text = NSLocalizedString(@"empty-data", nil);
+    }
+}
+
+- (CGGradientRef)gradientForColor:(UIColor*)color
+{
+    CGFloat red, green, blue, alpha;
+    [color getRed:&red green:&green blue:&blue alpha:&alpha];
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    size_t num_locations = 2;
+    CGFloat locations[2] = { 0.0, 0.85 };
+    CGFloat components[8] = {
+        red, green, blue, alpha,
+        1.0, 1.0, 1.0, 0.0
+    };
+    return CGGradientCreateWithColorComponents(colorspace, components, locations, num_locations);
 }
 
 #pragma mark - Update Graph

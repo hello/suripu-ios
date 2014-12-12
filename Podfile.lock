@@ -23,13 +23,13 @@ PODS:
   - Amplitude-iOS (2.2.2)
   - AttributedMarkdown (0.9.2)
   - BEMSimpleLineGraph (3.2)
-  - CocoaLumberjack (2.0.0-beta4):
+  - CocoaLumberjack (2.0.0-rc):
     - CocoaLumberjack/Default
     - CocoaLumberjack/Extensions
-  - CocoaLumberjack/Core (2.0.0-beta4)
-  - CocoaLumberjack/Default (2.0.0-beta4):
+  - CocoaLumberjack/Core (2.0.0-rc)
+  - CocoaLumberjack/Default (2.0.0-rc):
     - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.0.0-beta4):
+  - CocoaLumberjack/Extensions (2.0.0-rc):
     - CocoaLumberjack/Default
   - FCDynamicPanesNavigationController (1.0):
     - FCMutableArray
@@ -108,7 +108,7 @@ SPEC CHECKSUMS:
   Amplitude-iOS: cc96a1aca607fc37ff31613d3e8bddcdf670a398
   AttributedMarkdown: de3267724c9e2175e1fc398184d03ba6697766ef
   BEMSimpleLineGraph: 68e349eb22320d1a21a29e390d0f67772f6f6f44
-  CocoaLumberjack: 24153b24b17d853d7182b22b128971fb98e8cb18
+  CocoaLumberjack: 6186e27827fc574b50b16c10102fcc591437f06c
   FCDynamicPanesNavigationController: 55ee3c165a070d8d01e0b90a1029916cbcaa1b09
   FCMutableArray: 1a8dbb05952c1e9dff31d86fd366f86edce9f159
   FDWaveformView: 6f3c2d4dfb25c90206da48ea08f5bf81d0afaa56

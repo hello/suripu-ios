@@ -22,6 +22,7 @@ static NSString* const kSENAPIQuestionPropText = @"text";
 static NSString* const kSENAPIQuestionPropType = @"type";
 static NSString* const kSENAPIQuestionPropChoices = @"choices";
 static NSString* const kSENAPIQuestionTypeChoice = @"CHOICE";
+static NSString* const kSENAPIQuestionTypeCheckbox = @"CHECKBOX";
 
 @implementation SENAPIQuestions
 
@@ -39,8 +40,11 @@ static NSString* const kSENAPIQuestionTypeChoice = @"CHOICE";
 
 + (SENQuestionType)typeFromString:(NSString*)typeString {
     SENQuestionType type = SENQuestionTypeChoice;
-    if ([[typeString uppercaseString] isEqualToString:kSENAPIQuestionTypeChoice]) {
+    NSString* upperType = [typeString uppercaseString];
+    if ([upperType isEqualToString:kSENAPIQuestionTypeChoice]) {
         type = SENQuestionTypeChoice;
+    } else if ([upperType isEqualToString:kSENAPIQuestionTypeCheckbox]) {
+        type = SENQuestionTypeCheckbox;
     }
     return type;
 }

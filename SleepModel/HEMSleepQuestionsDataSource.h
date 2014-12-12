@@ -24,6 +24,12 @@
 - (NSString*)selectedQuestionText;
 
 /**
+ * @return YES if current question is a checkbox type, meaning that multiple answers
+ *         are allowed.  Returns NO otherwise
+ */
+- (BOOL)allowMultipleSelectionForSelectedQuestion;
+
+/**
  * The text of the answer at the specified index path, if it maps to one
  * 
  * @param indexPath: the path of the row in the table view
@@ -52,6 +58,15 @@
  * @return           YES if there are more questions.  Caller should proceed to next
  */
 - (BOOL)selectAnswerAtIndexPath:(NSIndexPath*)indexPath;
+
+/**
+ * Select 1 or more answers to the currently selected question by providing a
+ * set of NSIndexPath objects that corresponding to the tableview's indexPaths
+ *
+ * @param indexPaths: an array of NSIndexPath that have been selected
+ * @return            YES if there are more questions.  Caller should proceed to next
+ */
+- (BOOL)selectAnswersAtIndexPaths:(NSSet*)indexPaths;
 
 /**
  * Is the specified indexPath the last in the list?

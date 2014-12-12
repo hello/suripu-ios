@@ -62,6 +62,18 @@ typedef void(^SENServiceQuestionBlock)(NSArray* questions);
           completion:(void(^)(NSError* error))completion;
 
 /**
+ * Submit multiple answers to the same question.  This is meant for questions
+ * that allow multiple answers.
+ *
+ * @param answers: an array of SENAnswer objects
+ * @param question: the question being answered
+ * @param completion: the block to invoke when submission is complete
+ */
+- (void)submitAnswers:(NSArray*)answers
+          forQuestion:(SENQuestion*)question
+           completion:(void(^)(NSError* error))completion;
+
+/**
  * Skip the question specified.
  *
  * @param question:   the question to skip

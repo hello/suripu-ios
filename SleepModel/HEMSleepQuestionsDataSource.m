@@ -12,6 +12,9 @@
 
 #import "HEMSleepQuestionsDataSource.h"
 
+static NSString* const HEMSleepQuestionCellIdSingle = @"single";
+static NSString* const HEMSleepQuestionCellIdMulti = @"multiple";
+
 @interface HEMSleepQuestionsDataSource()
 
 @property (nonatomic, strong) NSArray* questions;
@@ -35,6 +38,11 @@
         question = [self questions][[self selectedQuestionIndex]];
     }
     return question;
+}
+
+- (BOOL)allowMultipleSelectionForSelectedQuestion {
+    SENQuestion* questionObj = [self selectedQuestion];
+    return [questionObj type] == SENQuestionTypeCheckbox;
 }
 
 - (NSString*)selectedQuestionText {
@@ -81,6 +89,25 @@
     return [self hasMoreQuestions];
 }
 
+- (BOOL)selectAnswersAtIndexPaths:(NSSet*)indexPaths {
+    DDLogVerbose(@"selected %ld answers by paths", [indexPaths count]);
+    SENServiceQuestions* svc = [SENServiceQuestions sharedService];
+    NSMutableArray* answers = [NSMutableArray arrayWithCapacity:[indexPaths count]];
+    for (NSIndexPath* path in indexPaths) {
+        SENAnswer* answer = [self answerAtIndexPath:path];
+        if (answer) {
+            [answers addObject:answer];
+        }
+    }
+    
+    SENQuestion* question = [self selectedQuestion];
+    DDLogVerbose(@"submitting %ld answers to question %@", [answers count], [question text]);
+    // per design, optimistically submit the answer as it's a better user experience
+    // to proceed rather than wait for something that is not very important
+    [svc submitAnswers:answers forQuestion:question completion:nil];
+    return [self hasMoreQuestions];
+}
+
 - (NSInteger)numberOfAnswersForSelectedQuestion {
     SENQuestion* question = [self selectedQuestion];
     return [[question choices] count];
@@ -98,7 +125,16 @@
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString* cellId = @"single";
+    SENQuestion* question = [self selectedQuestion];
+    NSString* cellId = nil;
+    switch ([question type]) {
+        case SENQuestionTypeCheckbox:
+            cellId = HEMSleepQuestionCellIdMulti;
+            break;
+        default:
+            cellId = HEMSleepQuestionCellIdSingle;
+            break;
+    }
     return [tableView dequeueReusableCellWithIdentifier:cellId];
 }
 

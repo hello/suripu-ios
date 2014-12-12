@@ -7,10 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMResponseCell.h"
 
-@interface HEMAnswerCell : UITableViewCell
-
-@property (nonatomic, weak) IBOutlet UILabel* answerLabel;
-@property (nonatomic, weak) IBOutlet UIView* separator;
+@interface HEMSingleResponseCell : HEMResponseCell
 
 @end

@@ -161,9 +161,16 @@ static NSString* const kSENServiceQuestionsKeyDate = @"kSENServiceQuestionsKeyDa
 - (void)submitAnswer:(SENAnswer*)answer
          forQuestion:(SENQuestion*)question
           completion:(void(^)(NSError* error))completion {
+    [self submitAnswers:@[answer] forQuestion:question completion:completion];
+}
+
+- (void)submitAnswers:(NSArray*)answers
+          forQuestion:(SENQuestion*)question
+           completion:(void(^)(NSError* error))completion {
+    
     // Let the API to fail with callback if answer parameter is insuffcient
     __weak typeof (self) weakSelf = self;
-    [SENAPIQuestions sendAnswer:answer forQuestion:question completion:^(id data, NSError *error) {
+    [SENAPIQuestions sendAnswers:answers forQuestion:question completion:^(id data, NSError *error) {
         __strong typeof (weakSelf) strongSelf = weakSelf;
         if (strongSelf && !error) {
             // note that by answering one question, we aren't neccessarily saying

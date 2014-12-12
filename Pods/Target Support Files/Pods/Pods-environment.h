@@ -63,7 +63,7 @@
 // BEMSimpleLineGraph
 #define COCOAPODS_POD_AVAILABLE_BEMSimpleLineGraph
 #define COCOAPODS_VERSION_MAJOR_BEMSimpleLineGraph 3
-#define COCOAPODS_VERSION_MINOR_BEMSimpleLineGraph 2
+#define COCOAPODS_VERSION_MINOR_BEMSimpleLineGraph 3
 #define COCOAPODS_VERSION_PATCH_BEMSimpleLineGraph 0
 
 // CocoaLumberjack

@@ -22,7 +22,7 @@ PODS:
     - AFNetworking/NSURLSession
   - Amplitude-iOS (2.2.2)
   - AttributedMarkdown (0.9.2)
-  - BEMSimpleLineGraph (3.2)
+  - BEMSimpleLineGraph (3.3)
   - CocoaLumberjack (2.0.0-rc):
     - CocoaLumberjack/Default
     - CocoaLumberjack/Extensions
@@ -76,7 +76,7 @@ PODS:
 
 DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`, commit `6bf420df77117f519af32a6393520ead4e7848c6`)
-  - BEMSimpleLineGraph
+  - BEMSimpleLineGraph (from `git@github.com:Boris-Em/BEMSimpleLineGraph.git`, commit `fde1eede34357745998e977503a3cba21f423532`)
   - FCDynamicPanesNavigationController (from `git@github.com:hello/FCDynamicPanesNavigationController.git`)
   - FDWaveformView (from `git@github.com:hello/FDWaveformView.git`)
   - iCarousel (~> 1.7.6)
@@ -92,6 +92,9 @@ EXTERNAL SOURCES:
   AttributedMarkdown:
     :commit: 6bf420df77117f519af32a6393520ead4e7848c6
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
+  BEMSimpleLineGraph:
+    :commit: fde1eede34357745998e977503a3cba21f423532
+    :git: git@github.com:Boris-Em/BEMSimpleLineGraph.git
   FCDynamicPanesNavigationController:
     :git: git@github.com:hello/FCDynamicPanesNavigationController.git
   FDWaveformView:
@@ -107,7 +110,7 @@ SPEC CHECKSUMS:
   AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
   Amplitude-iOS: cc96a1aca607fc37ff31613d3e8bddcdf670a398
   AttributedMarkdown: de3267724c9e2175e1fc398184d03ba6697766ef
-  BEMSimpleLineGraph: 68e349eb22320d1a21a29e390d0f67772f6f6f44
+  BEMSimpleLineGraph: a3c78bfd5d2919324d970e42c028ebffc6ad7bcd
   CocoaLumberjack: 6186e27827fc574b50b16c10102fcc591437f06c
   FCDynamicPanesNavigationController: 55ee3c165a070d8d01e0b90a1029916cbcaa1b09
   FCMutableArray: 1a8dbb05952c1e9dff31d86fd366f86edce9f159

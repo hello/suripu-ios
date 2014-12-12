@@ -29,6 +29,13 @@ typedef NS_ENUM(NSInteger, BEMLineAnimation) {
     BEMLineAnimationNone
 };
 
+/// The drawing direction of the gradient used to draw the graph line (if any)
+typedef NS_ENUM(NSUInteger, BEMLineGradientDirection) {
+    /// The gradient is drawn from left to right
+    BEMLineGradientDirectionHorizontal = 0,
+    /// The gradient is drawn from top to bottom
+    BEMLineGradientDirectionVertical = 1
+};
 
 
 /// Class to draw the line of the graph
@@ -79,18 +86,27 @@ typedef NS_ENUM(NSInteger, BEMLineAnimation) {
 /// The color of the area above the line, inside of its superview
 @property (strong, nonatomic) UIColor *topColor;
 
+/// A color gradient applied to the area above the line, inside of its superview. If set, it will be drawn on top of the fill from the \p topColor property.
+@property (assign, nonatomic) CGGradientRef topGradient;
+
 /// The color of the area below the line, inside of its superview
 @property (strong, nonatomic) UIColor *bottomColor;
+
+/// A color gradient applied to the area below the line, inside of its superview. If set, it will be drawn on top of the fill from the \p bottomColor property.
+@property (assign, nonatomic) CGGradientRef bottomGradient;
 
 @property (strong, nonatomic) UIColor *xAxisBackgroundColor;
 
 @property (nonatomic) CGFloat xAxisBackgroundAlpha;
 
-/** A color gradient to be applied to the line. If this property is set, it will mask (override) the \p color property.
- @todo This property is non-functional at this point in time. It only serves as a marker for further implementation. */
-@property (assign, nonatomic) CGGradientRef gradient;
+/// A color gradient to be applied to the line. If this property is set, it will mask (override) the \p color property.
+@property (assign, nonatomic) CGGradientRef lineGradient;
 
+/// The drawing direction of the line gradient color
+@property (nonatomic) BEMLineGradientDirection lineGradientDirection;
 
+/// The reference line color. Defaults to `color`.
+@property (strong, nonatomic) UIColor *refrenceLineColor;
 
 //----- ALPHA -----//
 

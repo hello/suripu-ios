@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0.48
+
+New:
+
+* Animated Zoomed out view of Timeline.
+* Updated sleep score loading indicator
+* Questions now support multiple answers, when applicable
+
 ## 1.0.0.47
 
 New:

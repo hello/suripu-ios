@@ -10,7 +10,7 @@
 
 <b>BEMSimpleLineGraph</b> is a charting library that makes it easy to create beautiful line graphs for iOS. It is easy to set-up and to use in any iOS Project. It's focused on highly customizable and interactive line graphs. Plus, it is lightweight and can be integrated in minutes (maybe even seconds). 
 
-<b>BEMSimpleLineGraph's</b> implementation, data source, and delgate are all modeled off of UITableView and UICollectionView. If you're familiar with using a UITableView, UITableViewController, or UICollectionView, using BEMSimpleLineGraph should be a breeze!
+<b>BEMSimpleLineGraph's</b> implementation, data source, and delegate are all modeled off of UITableView and UICollectionView. If you're familiar with using a UITableView, UITableViewController, or UICollectionView, using BEMSimpleLineGraph should be a breeze!
 
 The full documentation of the project is available on its [wiki.](https://github.com/Boris-Em/BEMSimpleLineGraph/wiki)
 
@@ -77,7 +77,7 @@ The other way to install <b>BEMSimpleLineGraph</b>, is to drag and drop the *Cla
 ####Swift Projects
 To use <b>BEMSimpleLineGraph</b> in a Swift project add the following to your bridging header:
 
-    #import "BEMSimpleLineGraph.h"
+    #import "BEMSimpleLineGraphView.h”
 
 ### Setup
 Setting up <b>BEMSimpleLineGraph</b> in your project is simple. If you're familiar with UITableView, then <b>BEMSimpleLineGraph </b>should be a breeze. Follow the steps below to get everything up and running.

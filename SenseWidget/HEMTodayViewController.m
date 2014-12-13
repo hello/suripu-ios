@@ -24,7 +24,6 @@ static NSString* const kHEMTodayConditionsCellId = @"info";
 static NSString* const kHEMTodaySenseScheme = @"sense://";
 static NSString* const HEMTodaySensorQueryItem = @"sensor";
 static CGFloat const kHEMTodayLeftInset = 15.0f;
-static CGFloat const kHEMTodayImageSize = 15.0f;
 static CGFloat const kHEMTodayRightInset = 15.0f;
 static CGFloat const kHEMTodayBottomInset = 15.0f;
 static CGFloat const kHEMTodayRowHeight = 44.0f;

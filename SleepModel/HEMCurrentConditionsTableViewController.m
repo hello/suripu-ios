@@ -51,7 +51,7 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
 {
     [super viewDidLoad];
     
-    self.title = NSLocalizedString(@"current-conditions.title", nil);
+    self.tabBarItem.title = NSLocalizedString(@"current-conditions.title", nil);
     [[self tableView] setTableFooterView:[[UIView alloc] init]];
     [self configureInsightsView];
     self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
@@ -212,7 +212,7 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
 {
-    return 3; // empty section below
+    return 1; // empty section below
 }
 
 - (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -232,33 +232,12 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    switch (section) {
-    case 0:
-        return self.sensors.count == 0 ? 1 : self.sensors.count;
-
-    case 1:
-        return 2;
-
-    default:
-        return 0;
-    }
+    return self.sensors.count == 0 ? 1 : self.sensors.count;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    UITableViewCell* cell = nil;
-
-    switch (indexPath.section) {
-    case 0:
-        cell = [self tableView:tableView sensorCellForRowAtIndexPath:indexPath];
-        break;
-
-    case 1:
-        cell = [self tableView:tableView menuCellForRowAtIndexPath:indexPath];
-        break;
-    }
-
-    return cell;
+    return [self tableView:tableView sensorCellForRowAtIndexPath:indexPath];
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView sensorCellForRowAtIndexPath:(NSIndexPath*)indexPath
@@ -299,30 +278,6 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
     return cell;
 }
 
-- (UITableViewCell*)tableView:(UITableView*)tableView menuCellForRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
-    cell.detailLabel.text = nil;
-    cell.detailLabel.textColor = [HelloStyleKit backViewTextColor];
-    
-    [cell showDetailBubble:NO];
-    
-    switch (indexPath.row) {
-    case 0: {
-        cell.titleLabel.text = NSLocalizedString(@"alarms.title", nil);
-        cell.detailLabel.text = nil;
-        cell.glyphImageView.image = [HelloStyleKit alarmsIcon];
-    } break;
-
-    case 1: {
-        cell.titleLabel.text = NSLocalizedString(@"sleep.trends.title", nil);
-        cell.detailLabel.text = nil;
-        cell.glyphImageView.image = [HelloStyleKit sleepInsightsIcon];
-    } break;
-    }
-    return cell;
-}
-
 #pragma mark - UITableViewDelegate
 
 - (BOOL)tableView:(UITableView*)tableView shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
@@ -333,26 +288,8 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-    switch (indexPath.section) {
-    case 0: {
-        if (self.sensors.count > indexPath.row)
-            [self openDetailViewForSensor:self.sensors[indexPath.row]];
-    } break;
-
-    case 1: {
-        switch (indexPath.row) {
-        case 0: {
-            UIViewController* controller = [HEMMainStoryboard instantiateAlarmListViewController];
-            [self.navigationController pushViewController:controller animated:YES];
-        } break;
-
-        case 1: {
-            // TODO (jimmy): sleep insights not yet implemented, I think!
-        } break;
-        }
-    } break;
-    }
+    if (self.sensors.count > indexPath.row)
+        [self openDetailViewForSensor:self.sensors[indexPath.row]];
 }
 
 - (void)openDetailViewForSensor:(SENSensor*)sensor {

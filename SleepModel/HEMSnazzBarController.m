@@ -10,18 +10,23 @@
 #import "HEMSnazzBar.h"
 #import "HelloStyleKit.h"
 
-@interface HEMSnazzBarController ()<HEMSnazzBarDelegate>
+@interface HEMSnazzBarController ()<HEMSnazzBarDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) HEMSnazzBar* buttonsBar;
 @property (nonatomic, strong) UIView* contentView;
+@property (nonatomic, strong) UISwipeGestureRecognizer* swipeToNextGestureRecognizer;
+@property (nonatomic, strong) UISwipeGestureRecognizer* swipeToPreviousGestureRecognizer;
 @end
 
 @implementation HEMSnazzBarController
 
 static CGFloat const HEMSnazzBarHeight = 66.f;
+static CGFloat const HEMSnazzContentGestureMargin = 34.f;
 
 - (void)dealloc
 {
+    _swipeToNextGestureRecognizer.delegate = nil;
+    _swipeToPreviousGestureRecognizer.delegate = nil;
     _buttonsBar = nil;
     _contentView = nil;
 }
@@ -30,6 +35,7 @@ static CGFloat const HEMSnazzBarHeight = 66.f;
 {
     [super viewDidLoad];
     [self configureContainerViews];
+    [self configureGestureRecognizers];
     [self reloadButtonsBar];
     [self showControllerAtIndex:self.selectedIndex animated:NO];
 }
@@ -45,6 +51,18 @@ static CGFloat const HEMSnazzBarHeight = 66.f;
     self.buttonsBar.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
     self.buttonsBar.selectionColor = [HelloStyleKit senseBlueColor];
     self.contentView.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
+}
+
+- (void)configureGestureRecognizers
+{
+    self.swipeToNextGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(didSwipe:)];
+    self.swipeToNextGestureRecognizer.delegate = self;
+    self.swipeToNextGestureRecognizer.direction = UISwipeGestureRecognizerDirectionRight;
+    self.swipeToPreviousGestureRecognizer = [[UISwipeGestureRecognizer alloc] initWithTarget:self
+                                                                                      action:@selector(didSwipe:)];
+    self.swipeToPreviousGestureRecognizer.delegate = self;
+    self.swipeToPreviousGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
 }
 
 - (void)reloadButtonsBar
@@ -125,6 +143,8 @@ static CGFloat const HEMSnazzBarHeight = 66.f;
 
     if (animated && fromController) {
         self.contentView.userInteractionEnabled = NO;
+        [fromController.view removeGestureRecognizer:self.swipeToPreviousGestureRecognizer];
+        [fromController.view removeGestureRecognizer:self.swipeToNextGestureRecognizer];
         CGRect toStartFrame = self.contentView.bounds;
         CGRect fromFinalFrame = self.contentView.bounds;
         CGFloat frameWidth = CGRectGetWidth(self.contentView.bounds);
@@ -136,6 +156,8 @@ static CGFloat const HEMSnazzBarHeight = 66.f;
         void (^completion)(BOOL) = ^(BOOL finished) {
             [fromController.view removeFromSuperview];
             self.contentView.userInteractionEnabled = YES;
+            [toController.view addGestureRecognizer:self.swipeToNextGestureRecognizer];
+            [toController.view addGestureRecognizer:self.swipeToPreviousGestureRecognizer];
         };
         void (^animations)() = ^{
             toController.view.frame = self.contentView.bounds;
@@ -146,7 +168,11 @@ static CGFloat const HEMSnazzBarHeight = 66.f;
                          animations:animations completion:completion];
     } else {
         [fromController.view removeFromSuperview];
+        [fromController.view removeGestureRecognizer:self.swipeToPreviousGestureRecognizer];
+        [fromController.view removeGestureRecognizer:self.swipeToNextGestureRecognizer];
         toController.view.frame = self.contentView.bounds;
+        [toController.view addGestureRecognizer:self.swipeToNextGestureRecognizer];
+        [toController.view addGestureRecognizer:self.swipeToPreviousGestureRecognizer];
         [self.contentView addSubview:toController.view];
     }
 
@@ -176,6 +202,32 @@ static CGFloat const HEMSnazzBarHeight = 66.f;
 - (void)bar:(HEMSnazzBar *)bar didReceiveTouchUpInsideAtIndex:(NSUInteger)index
 {
     [self setSelectedIndex:index animated:YES];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (void)didSwipe:(UISwipeGestureRecognizer*)recognizer
+{
+    if (recognizer.direction == UISwipeGestureRecognizerDirectionRight) {
+        if (self.selectedIndex > 0)
+            [self setSelectedIndex:self.selectedIndex - 1 animated:YES];
+    } else if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft) {
+        if (self.selectedIndex < self.viewControllers.count - 1)
+            [self setSelectedIndex:self.selectedIndex + 1 animated:YES];
+    }
+}
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
+{
+    UIViewController* controller = self.selectedViewController;
+    if ([controller isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* nav = (id)controller;
+        if (![nav.topViewController isEqual:[nav.viewControllers firstObject]])
+            return NO;
+    }
+    CGPoint location = [touch locationInView:self.contentView];
+    return location.x > HEMSnazzContentGestureMargin
+        && location.x < CGRectGetWidth(self.contentView.bounds) - HEMSnazzContentGestureMargin;
 }
 
 @end

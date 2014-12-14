@@ -5,7 +5,4 @@
 
 @property (strong, nonatomic) UIWindow* window;
 
-- (void)openSettingsDrawer;
-- (void)closeSettingsDrawer;
-- (void)toggleSettingsDrawer;
 @end

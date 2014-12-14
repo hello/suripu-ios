@@ -8,6 +8,22 @@
 
 #import "FCDynamicPanesNavigationController.h"
 
+typedef NS_ENUM(NSUInteger, HEMRootDrawerTab) {
+    HEMRootDrawerTabConditions = 0,
+    HEMRootDrawerTabTrends = 1,
+    HEMRootDrawerTabInsights = 2,
+    HEMRootDrawerTabAlarms = 3,
+    HEMRootDrawerTabSettings = 4
+};
+
 @interface HEMRootViewController : FCDynamicPanesNavigationController
+
+- (void)hideSettingsDrawerTopBar:(BOOL)hidden animated:(BOOL)animated;
+- (void)showPartialSettingsDrawerTopBarWithRatio:(CGFloat)ratio;
+- (void)showSettingsDrawerTabAtIndex:(HEMRootDrawerTab)tabIndex animated:(BOOL)animated;
+
+- (void)openSettingsDrawer;
+- (void)closeSettingsDrawer;
+- (void)toggleSettingsDrawer;
 
 @end

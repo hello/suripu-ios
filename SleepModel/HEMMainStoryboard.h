@@ -11,6 +11,7 @@
 
 /** Cell Reuse Identifiers */
 +(NSString *)singleReuseIdentifier;
++(NSString *)multipleReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
 +(NSString *)unitCellReuseIdentifier;
 +(NSString *)settingsCellReuseIdentifier;
@@ -22,7 +23,6 @@
 +(NSString *)alarmChoiceCellReuseIdentifier;
 +(NSString *)currentConditionsCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
-+(NSString *)insightCellReuseIdentifier;
 
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier;
@@ -38,20 +38,23 @@
 +(NSString *)updatePasswordSegueSegueIdentifier;
 
 /** View Controllers */
-+(UIViewController *)instantiateAlarmListViewController;
-+(UIViewController *)instantiateAlarmNavController;
-+(UIViewController *)instantiateAlarmRepeatTableViewController;
-+(UIViewController *)instantiateAlarmSoundTableViewController;
-+(UIViewController *)instantiateAlarmViewController;
-+(UIViewController *)instantiateCurrentNavController;
-+(UIViewController *)instantiateNoSleepPillController;
-+(UIViewController *)instantiatePersonalInfoViewController;
-+(UIViewController *)instantiateSensorViewController;
-+(UIViewController *)instantiateSettingsController;
-+(UIViewController *)instantiateSettingsNavController;
-+(UIViewController *)instantiateSleepGraphController;
-+(UIViewController *)instantiateSleepGraphNavController;
-+(UIViewController *)instantiateSleepHistoryController;
-+(UIViewController *)instantiateSleepQuestionsViewController;
++(id)instantiateAlarmListNavViewController;
++(id)instantiateAlarmListViewController;
++(id)instantiateAlarmNavController;
++(id)instantiateAlarmRepeatTableViewController;
++(id)instantiateAlarmSoundTableViewController;
++(id)instantiateAlarmViewController;
++(id)instantiateCurrentNavController;
++(id)instantiateInsightFeedViewController;
++(id)instantiateNoSleepPillController;
++(id)instantiatePersonalInfoViewController;
++(id)instantiateSensorViewController;
++(id)instantiateSettingsController;
++(id)instantiateSettingsNavController;
++(id)instantiateSleepGraphController;
++(id)instantiateSleepGraphNavController;
++(id)instantiateSleepHistoryController;
++(id)instantiateSleepQuestionsViewController;
++(id)instantiateTrendsViewController;
 
 @end

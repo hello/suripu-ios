@@ -11,6 +11,7 @@
 #import "HelloStyleKit.h"
 #import "HEMAlertController.h"
 #import "HEMAppDelegate.h"
+#import "HEMRootViewController.h"
 #import "HEMAudioCache.h"
 #import "HEMEventInfoView.h"
 #import "HEMMainStoryboard.h"
@@ -142,7 +143,8 @@ static CGFloat const HEMTopItemsConstraintConstant = 10.f;
 - (void)toggleDrawer
 {
     HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
-    [delegate toggleSettingsDrawer];
+    HEMRootViewController* root = (id)delegate.window.rootViewController;
+    [root toggleSettingsDrawer];
 }
 
 #pragma mark Top cell actions

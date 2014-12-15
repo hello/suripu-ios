@@ -16,11 +16,13 @@
 
 #import "HEMRootViewController.h"
 #import "HEMSleepQuestionsViewController.h"
+#import "HEMSleepSummarySlideViewController.h"
 #import "HEMAlertController.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMSupportUtil.h"
 #import "HEMActionView.h"
 #import "HelloStyleKit.h"
+#import "HEMSnazzBarController.h"
 #import "HEMMainStoryboard.h"
 
 @interface HEMRootViewController () <MFMailComposeViewControllerDelegate>
@@ -36,6 +38,27 @@
 
 @implementation HEMRootViewController
 
++ (NSArray*)instantiateInitialControllers {
+    HEMSnazzBarController* barController = [HEMSnazzBarController new];
+    barController.viewControllers = @[
+        [HEMMainStoryboard instantiateCurrentNavController],
+        [HEMMainStoryboard instantiateTrendsViewController],
+        [HEMMainStoryboard instantiateInsightFeedViewController],
+        [HEMMainStoryboard instantiateAlarmListNavViewController],
+        [HEMMainStoryboard instantiateSettingsNavController]];
+    barController.selectedIndex = 1;
+
+    return @[barController, [HEMSleepSummarySlideViewController new]];
+}
+
+- (instancetype)init {
+
+    self = [super initWithViewControllers:[HEMRootViewController instantiateInitialControllers]
+                               hintOnLoad:YES];
+    return self;
+}
+
+
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if ([self questionObserver] == nil) {
@@ -45,6 +68,52 @@
         [self handleUserSigningOut];
     }
 }
+
+#pragma mark - Drawer
+
+- (void)showSettingsDrawerTabAtIndex:(HEMRootDrawerTab)tabIndex animated:(BOOL)animated {
+    [self openSettingsDrawer];
+    FCDynamicPane* pane = [self.viewControllers firstObject];
+    HEMSnazzBarController* controller = (id)pane.viewController;
+    [controller setSelectedIndex:tabIndex animated:animated];
+}
+
+- (void)hideSettingsDrawerTopBar:(BOOL)hidden animated:(BOOL)animated {
+    FCDynamicPane* pane = [self.viewControllers firstObject];
+    HEMSnazzBarController* controller = (id)pane.viewController;
+    [controller hideBar:hidden animated:animated];
+}
+
+- (void)showPartialSettingsDrawerTopBarWithRatio:(CGFloat)ratio {
+    FCDynamicPane* pane = [self.viewControllers firstObject];
+    HEMSnazzBarController* controller = (id)pane.viewController;
+    [controller showPartialBarWithRatio:ratio];
+}
+
+- (void)openSettingsDrawer {
+    FCDynamicPane* foregroundPane = [[self viewControllers] lastObject];
+    if (foregroundPane != nil) {
+        [foregroundPane setState:FCDynamicPaneStateRetracted];
+    }
+}
+
+- (void)closeSettingsDrawer {
+    FCDynamicPane* foregroundPane = [[self viewControllers] lastObject];
+    if (foregroundPane != nil) {
+        [foregroundPane setState:FCDynamicPaneStateActive];
+    }
+}
+
+- (void)toggleSettingsDrawer {
+    FCDynamicPane* foregroundPane = [[self viewControllers] lastObject];
+    if (foregroundPane != nil) {
+        FCDynamicPaneState state = foregroundPane.state == FCDynamicPaneStateActive
+            ? FCDynamicPaneStateRetracted
+            : FCDynamicPaneStateActive;
+        [foregroundPane setState:state];
+    }
+}
+
 
 #pragma mark - Shake to Show Support Options
 

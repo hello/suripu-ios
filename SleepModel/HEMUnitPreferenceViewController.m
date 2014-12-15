@@ -27,6 +27,7 @@ static CGFloat const kHemUnitPrefSegControlWidth = 157;
 @implementation HEMUnitPreferenceViewController
 
 - (void)viewDidLoad {
+    self.title = NSLocalizedString(@"settings.units", nil);
     [super viewDidLoad];
     [[self unitTableView] setTableFooterView:[[UIView alloc] init]];
     [self setupClockControl];

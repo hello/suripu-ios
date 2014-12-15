@@ -11,8 +11,6 @@
 
 #import "HEMAppDelegate.h"
 #import "HEMRootViewController.h"
-#import "HEMMainStoryboard.h"
-#import "HEMSleepSummarySlideViewController.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMCurrentConditionsTableViewController.h"
@@ -64,10 +62,11 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 {
     if (![SENAuthorizationService isAuthorized] || [self deauthorizeIfNeeded])
         return;
-    [self openSettingsDrawer];
-    FCDynamicPanesNavigationController* dynamicPanesController = (id)self.window.rootViewController;
-    FCDynamicPane* root = [[dynamicPanesController viewControllers] firstObject];
-    UINavigationController* nav = (id)root.viewController;
+
+    HEMRootViewController* root = (id)self.window.rootViewController;
+    [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:NO];
+    UINavigationController* nav = [root.viewControllers firstObject];
+
     void (^presentController)() = ^{
         [nav popToRootViewControllerAnimated:NO];
         HEMCurrentConditionsTableViewController* controller = (id)nav.topViewController;
@@ -182,14 +181,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 - (void)createAndShowWindow
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-
-    NSArray* viewControllers = @[
-        [HEMMainStoryboard instantiateCurrentNavController],
-        [[HEMSleepSummarySlideViewController alloc] init]
-    ];
-
-    FCDynamicPanesNavigationController* dynamicPanes = [[HEMRootViewController alloc] initWithViewControllers:viewControllers hintOnLoad:YES];
-    self.window.rootViewController = dynamicPanes;
+    self.window.rootViewController = [HEMRootViewController new];
     [self.window makeKeyAndVisible];
 }
 
@@ -218,33 +210,8 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 }
 
 - (void)openSettingsDrawer {
-    FCDynamicPanesNavigationController* dynamicPanesController
-    = (FCDynamicPanesNavigationController*)self.window.rootViewController;
-    FCDynamicPane* foregroundPane = [[dynamicPanesController viewControllers] lastObject];
-    if (foregroundPane != nil) {
-        [foregroundPane setState:FCDynamicPaneStateRetracted];
-    }
-}
-
-- (void)closeSettingsDrawer {
-    FCDynamicPanesNavigationController* dynamicPanesController
-    = (FCDynamicPanesNavigationController*)self.window.rootViewController;
-    FCDynamicPane* foregroundPane = [[dynamicPanesController viewControllers] lastObject];
-    if (foregroundPane != nil) {
-        [foregroundPane setState:FCDynamicPaneStateActive];
-    }
-}
-
-- (void)toggleSettingsDrawer {
-    FCDynamicPanesNavigationController* dynamicPanesController
-    = (FCDynamicPanesNavigationController*)self.window.rootViewController;
-    FCDynamicPane* foregroundPane = [[dynamicPanesController viewControllers] lastObject];
-    if (foregroundPane != nil) {
-        FCDynamicPaneState state = foregroundPane.state == FCDynamicPaneStateActive
-            ? FCDynamicPaneStateRetracted
-            : FCDynamicPaneStateActive;
-        [foregroundPane setState:state];
-    }
+    HEMRootViewController* controller = (id)self.window.rootViewController;
+    [controller openSettingsDrawer];
 }
 
 #pragma mark - App Notifications
@@ -278,10 +245,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     UIViewController* onboardingController = [HEMOnboardingUtils onboardingControllerForCheckpoint:checkpoint authorized:authorized];
     
     if (onboardingController != nil) {
-        UINavigationController* navController = (UINavigationController*)((FCDynamicPane*)[dynamicPanesController.viewControllers firstObject]).viewController;
-        [navController popToRootViewControllerAnimated:NO];
-        [dynamicPanesController popViewControllerAnimated:animated];
-        
         UINavigationController* onboardingNav = [[UINavigationController alloc] initWithRootViewController:onboardingController];
         [[onboardingNav navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];
         

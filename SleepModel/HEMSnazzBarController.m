@@ -141,6 +141,7 @@ static CGFloat const HEMSnazzContentGestureMargin = 34.f;
     UIViewController* fromController = self.selectedViewController;
     UIViewController* toController = self.viewControllers[index];
 
+    [self hideBar:NO animated:animated];
     if (animated && fromController) {
         self.contentView.userInteractionEnabled = NO;
         [fromController.view removeGestureRecognizer:self.swipeToPreviousGestureRecognizer];

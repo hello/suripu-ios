@@ -9,9 +9,8 @@
 #import "HEMSensorViewController.h"
 #import "HEMLineGraphDataSource.h"
 #import "HEMGraphSectionOverlayView.h"
-#import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
-#import "HEMSensorUtils.h"
+#import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 
 @interface HEMSensorViewController ()<BEMSimpleLineGraphDelegate>
@@ -141,7 +140,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 
 - (void)configureSensorValueViews
 {
-    UIColor* conditionColor = [HEMSensorUtils colorForSensorWithCondition:self.sensor.condition];
+    UIColor* conditionColor = [UIColor colorForSensorWithCondition:self.sensor.condition];
     self.valueLabel.textColor = conditionColor;
     self.unitLabel.textColor = conditionColor;
     self.title = self.sensor.localizedName;

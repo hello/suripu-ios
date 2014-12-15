@@ -35,6 +35,8 @@
     [super viewDidLoad];
     [[self navigationItem] setHidesBackButton:YES];
     [self setup];
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBSenseColors];
 }
 
 - (void)setup {

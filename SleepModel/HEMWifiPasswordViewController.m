@@ -76,7 +76,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     [self setupSecurityPickerView];
     [self updateSecurityTypeLabelForRow:[self rowForSecurityType:[self securityType]]];
     
-    [SENAnalytics track:kHEMAnalyticsEventOnBSetupWiFi];
+    [SENAnalytics track:kHEMAnalyticsEventOnBWiFiPass];
 }
 
 - (void)viewWillLayoutSubviews {

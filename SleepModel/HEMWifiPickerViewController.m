@@ -43,10 +43,10 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *scanButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet HEMActivityCoverView *activityView;
 
-@property (strong, nonatomic) NSDate* scanStart;
 @property (strong, nonatomic) SENWifiEndpoint* selectedWifiEndpont;
 @property (strong, nonatomic) HEMWiFiDataSource* wifiDataSource;
 @property (assign, nonatomic, getter=isVisible) BOOL visible;
+@property (assign, nonatomic, getter=hasScanned) BOOL scanned;
 
 @end
 
@@ -67,7 +67,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     
     [self setupCancelButton];
     
-    [SENAnalytics track:kHEMAnalyticsEventOnBWiFiPass];
+    [SENAnalytics track:kHEMAnalyticsEventOnBWiFi];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -79,8 +79,9 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     [super viewDidAppear:animated];
     
     // only auto start a scan if one has not yet been done before
-    if ([self scanStart] == nil) {
+    if (![self hasScanned]) {
         [self scanWithActivity];
+        [self setScanned:YES];
     }
     
 }
@@ -188,7 +189,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)scanWithActivity {
-    [self setScanStart:[NSDate date]];
+    [SENAnalytics startEvent:kHEMAnalyticsEventOnBWiFiScan];
+    DDLogVerbose(@"wifi scan started");
     
     NSString* message = NSLocalizedString(@"wifi.activity.scanning", nil);
     [[self activityView] showWithText:message activity:YES completion:nil];
@@ -197,10 +199,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self scanUntilDoneWithCount:0 completion:^(NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            NSTimeInterval elapsed = abs([[strongSelf scanStart] timeIntervalSinceNow]);
-            DDLogVerbose(@"wifi scan took %lds", (long)elapsed);
-            [SENAnalytics track:kHEMAnalyticsEventOnBWiFiScanComplete
-                     properties:@{kHEMAnalyticsEventPropDuration : @(elapsed)}];
+            DDLogVerbose(@"wifi scan completed");
+            [SENAnalytics endEvent:kHEMAnalyticsEventOnBWiFiScan];
             
             [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
                 [[strongSelf wifiPickerTableView] reloadData];

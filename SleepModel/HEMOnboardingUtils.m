@@ -202,6 +202,8 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
     
+    [SENAnalytics track:kHEMAnalyticsEventOnBEnd];
+    
     void (^activityShownCompletion)(void) = ^{
         dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1.0f*NSEC_PER_SEC);
         dispatch_after(time, dispatch_get_main_queue(), ^{

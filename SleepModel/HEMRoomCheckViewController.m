@@ -52,6 +52,8 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     [self setSensorsOk:YES];
     [self setCurrentTopY:HEMRoomCheckMinVerticalPadding];
     [self setupContent];
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBRoomCheck];
 }
 
 - (void)setupContent {

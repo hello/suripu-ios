@@ -30,6 +30,8 @@
     [[self navigationItem] setHidesBackButton:YES];
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupDescription];
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBNotification];
 }
 
 - (void)setupDescription {

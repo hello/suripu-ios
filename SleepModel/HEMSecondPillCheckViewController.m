@@ -30,7 +30,7 @@
     [super viewDidLoad];
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setSubtitleText];
-    [SENAnalytics track:kHEMAnalyticsEventOnBTwoPill];
+    [SENAnalytics track:kHEMAnalyticsEventOnBSecondPillCheck];
 }
 
 - (void)setSubtitleText {

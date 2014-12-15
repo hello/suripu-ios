@@ -7,101 +7,44 @@
 
 #import <markdown_peg.h>
 
-#import "UIFont+HEMStyle.h"
-
 #import "HEMCurrentConditionsTableViewController.h"
-#import "HEMAlarmViewController.h"
-#import "HEMInsetGlyphTableViewCell.h"
 #import "HEMSensorViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMPagingFlowLayout.h"
 #import "HEMInsightCollectionViewCell.h"
-#import "HEMInsightsSummaryDataSource.h"
-#import "HEMInsightViewController.h"
-#import "HEMSensorUtils.h"
-
 #import "HEMOnboardingStoryboard.h"
+#import "UIColor+HEMStyle.h"
+#import "UIFont+HEMStyle.h"
 
 NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 
-@interface HEMCurrentConditionsTableViewController () <UITableViewDataSource, UITableViewDelegate, UICollectionViewDelegateFlowLayout, HEMInsightViewControllerDelegate>
-@property (nonatomic, strong) IBOutlet UITableView* tableView;
+@interface HEMCurrentConditionsTableViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) NSArray* sensors;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSTimer* refreshTimer;
 @property (nonatomic) CGFloat refreshRate;
-@property (nonatomic, strong) HEMInsightsSummaryDataSource* insightsDataSource;
-@property (nonatomic, strong) UICollectionView* insightsView;
-@property (nonatomic, strong) SENInsight* selectedInsight;
+@property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @end
 
 @implementation HEMCurrentConditionsTableViewController
 
 static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
 static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
-
-static CGFloat const kHEMCurrentConditionsInsightsViewHeight = 112.0f;
-static CGFloat const kHEMCurrentConditionsInsightsMargin = 16.0f;
-static CGFloat const kHEMCurrentConditionsInsightsSpacing= 5.0f;
-static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
+static CGFloat const HEMCurrentConditionsSensorViewHeight = 112.0f;
+static CGFloat const HEMCurrentConditionsSensorViewMargin = 16.0f;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
     self.tabBarItem.title = NSLocalizedString(@"current-conditions.title", nil);
-    [[self tableView] setTableFooterView:[[UIView alloc] init]];
-    [self configureInsightsView];
     self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
-}
-
-- (void)configureInsightsView {
-    HEMPagingFlowLayout* layout = [[HEMPagingFlowLayout alloc] init];
-    [layout setScrollDirection:UICollectionViewScrollDirectionHorizontal];
-    [layout setSectionInset:UIEdgeInsetsMake(0.0f,
-                                             kHEMCurrentConditionsInsightsMargin,
-                                             0.0f,
-                                             kHEMCurrentConditionsInsightsMargin)];
-    [layout setMinimumLineSpacing:kHEMCurrentConditionsInsightsSpacing];
-    
-    CGRect collectionFrame = CGRectZero;
-    collectionFrame.size.width = CGRectGetWidth([[self tableView] bounds]);
-    collectionFrame.size.height = kHEMCurrentConditionsInsightsViewHeight;
-    
-    UICollectionView* collectView = [[UICollectionView alloc] initWithFrame:collectionFrame
-                                                       collectionViewLayout:layout];
-    [collectView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [collectView setTranslatesAutoresizingMaskIntoConstraints:YES];
-    [collectView setBackgroundColor:[[self tableView] backgroundColor]];
-    [collectView setDelegate:self];
-    [collectView setShowsHorizontalScrollIndicator:NO];
-    
-    [self setInsightsDataSource:[[HEMInsightsSummaryDataSource alloc] initWithCollectionView:collectView]];
-    [collectView setDataSource:[self insightsDataSource]];
-    [collectView setDelegate:self];
-    
-    [self setInsightsView:collectView];
-    [[self tableView] setTableHeaderView:collectView];
-}
-
-- (IBAction)dismissCurrentConditionsController:(id)sender
-{
-    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self registerForNotifications];
     [self refreshCachedSensors];
-    __weak typeof(self) weakSelf = self;
-    [[self insightsDataSource] refreshInsights:^(BOOL updated) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf && updated) {
-            [[strongSelf insightsView] reloadData];
-        }
-    }];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -109,61 +52,6 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
     [self.refreshTimer invalidate];
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)configureRefreshTimer
-{
-    self.refreshRate = HEMCurrentConditionsRefreshIntervalInSeconds;
-    [self updateTimer];
-}
-
-- (void)configureFailureRefreshTimer
-{
-    self.refreshRate = MIN(HEMCurrentConditionsRefreshIntervalInSeconds, self.refreshRate * 2);
-    [self updateTimer];
-}
-
-- (void)updateTimer
-{
-    [self.refreshTimer invalidate];
-    self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:self.refreshRate
-                                                         target:self
-                                                       selector:@selector(refreshCachedSensors)
-                                                       userInfo:nil
-                                                        repeats:YES];
-}
-
-- (void)refreshCachedSensors {
-    [self setLoading:YES];
-    [SENSensor refreshCachedSensors];
-}
-
-- (void)refreshSensors {
-    if (![SENAuthorizationService isAuthorized])
-        return;
-    DDLogVerbose(@"Refreshing sensor data (rate: %f)", self.refreshRate);
-    self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
-        return [obj2.localizedName compare:obj1.localizedName];
-    }];
-    NSMutableArray* values = [[self.sensors valueForKey:NSStringFromSelector(@selector(value))] mutableCopy];
-    [values removeObject:[NSNull null]];
-    if (values.count == 0)
-        [self configureFailureRefreshTimer];
-    else
-        [self configureRefreshTimer];
-    
-    [self setLoading:NO];
-    [self.tableView reloadData];
-}
-
-- (void)failedToRefreshSensors {
-    [self setLoading:NO];
-    [self.tableView reloadData];
-}
-
-- (void)restartRefreshTimers {
-    self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
-    [self refreshCachedSensors];
 }
 
 - (void)dealloc
@@ -187,109 +75,95 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
                  object:nil];
 }
 
-#pragma mark - UICollectionViewDelegate
+#pragma mark - Data Loading
 
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat itemWidth
-        = CGRectGetWidth([collectionView bounds])
-        - (2*kHEMCurrentConditionsInsightsMargin);
-    return CGSizeMake(itemWidth, kHEMCurrentConditionsInsightsViewHeight - kHEMCurrentConditionsInsightsSpacing);
+- (void)refreshCachedSensors {
+    [self setLoading:YES];
+    [SENSensor refreshCachedSensors];
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    SENInsight* insight = [[self insightsDataSource] insightAtIndexPath:indexPath];
-    if (insight != nil) {
-        [self setSelectedInsight:insight];
-        [self performSegueWithIdentifier:[HEMMainStoryboard showInsightSegueIdentifier]
-                                  sender:self];
-    }
+- (void)refreshSensors {
+    if (![SENAuthorizationService isAuthorized])
+        return;
+    DDLogVerbose(@"Refreshing sensor data (rate: %f)", self.refreshRate);
+    self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
+        return [obj2.localizedName compare:obj1.localizedName];
+    }];
+    NSMutableArray* values = [[self.sensors valueForKey:NSStringFromSelector(@selector(value))] mutableCopy];
+    [values removeObject:[NSNull null]];
+    if (values.count == 0)
+        [self configureFailureRefreshTimer];
+    else
+        [self configureRefreshTimer];
 
+    [self setLoading:NO];
+    [self.collectionView reloadData];
 }
 
-#pragma mark - UITableViewDataSource
+- (void)failedToRefreshSensors {
+    [self setLoading:NO];
+    [self.collectionView reloadData];
+}
 
-- (NSInteger)numberOfSectionsInTableView:(UITableView*)tableView
+#pragma mark Refresh Timer
+
+- (void)configureRefreshTimer
 {
-    return 1; // empty section below
+    self.refreshRate = HEMCurrentConditionsRefreshIntervalInSeconds;
+    [self updateTimer];
 }
 
-- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    CGRect headerFrame = CGRectZero;
-    headerFrame.size.width = CGRectGetWidth([tableView bounds]);
-    headerFrame.size.height = kHEMCurrentConditionsHeaderHeight;
-    
-    UIView* headerView = [[UIView alloc] initWithFrame:headerFrame];
-    [headerView setBackgroundColor:[UIColor clearColor]];
-    
-    return headerView;
-}
-
-- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
-    return kHEMCurrentConditionsHeaderHeight;
-}
-
-- (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
+- (void)configureFailureRefreshTimer
 {
-    return self.sensors.count == 0 ? 1 : self.sensors.count;
+    self.refreshRate = MIN(HEMCurrentConditionsRefreshIntervalInSeconds, self.refreshRate * 2);
+    [self updateTimer];
 }
 
-- (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
+- (void)updateTimer
 {
-    return [self tableView:tableView sensorCellForRowAtIndexPath:indexPath];
+    [self.refreshTimer invalidate];
+    self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:self.refreshRate
+                                                         target:self
+                                                       selector:@selector(refreshCachedSensors)
+                                                       userInfo:nil
+                                                        repeats:YES];
 }
 
-- (UITableViewCell*)tableView:(UITableView*)tableView sensorCellForRowAtIndexPath:(NSIndexPath*)indexPath
+- (void)restartRefreshTimers {
+    self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
+    [self refreshCachedSensors];
+}
+
+#pragma mark - UICollectionViewDatasource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    HEMInsetGlyphTableViewCell* cell = (HEMInsetGlyphTableViewCell*)[tableView dequeueReusableCellWithIdentifier:HEMCurrentConditionsCellIdentifier forIndexPath:indexPath];
+    return 5;
+}
 
-    if (self.sensors.count <= indexPath.row) {
-        cell.titleLabel.text = [self isLoading] ? NSLocalizedString(@"activity.loading", nil) : NSLocalizedString(@"sensor.data-unavailable", nil);
-        cell.detailLabel.text = nil;
-        cell.glyphImageView.image = nil;
-        [cell showDetailBubble:NO];
-        [cell setAccessoryType:UITableViewCellAccessoryNone];
-    } else {
-        SENSensor* sensor = self.sensors[indexPath.row];
-        cell.titleLabel.text = sensor.localizedName;
-        cell.detailLabel.text = sensor.localizedValue ?: NSLocalizedString(@"empty-data", nil);
-
-        [cell showDetailBubble:YES];
-        [cell setAccessoryType:UITableViewCellAccessoryDisclosureIndicator];
-        cell.detailLabel.textColor = [HEMSensorUtils colorForSensorWithCondition:sensor.condition];
-        switch (sensor.unit) {
-        case SENSensorUnitDegreeCentigrade:
-            cell.glyphImageView.image = [HelloStyleKit temperatureIcon];
-            break;
-        case SENSensorUnitAQI:
-            cell.glyphImageView.image = [HelloStyleKit particleIcon];
-            break;
-        case SENSensorUnitPercent:
-            cell.glyphImageView.image = [HelloStyleKit humidityIcon];
-            break;
-        case SENSensorUnitUnknown:
-        default:
-            cell.glyphImageView.image = nil;
-            break;
-        }
-    }
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* identifier = [HEMMainStoryboard sensorGraphCellReuseIdentifier];
+    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
+                                                                           forIndexPath:indexPath];
 
     return cell;
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - UICollectionViewDelegate
 
-- (BOOL)tableView:(UITableView*)tableView shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    return !(indexPath.section == 0 && self.sensors.count == 0);
+    CGFloat itemWidth = CGRectGetWidth([collectionView bounds]) - (2*HEMCurrentConditionsSensorViewMargin);
+    return CGSizeMake(itemWidth, HEMCurrentConditionsSensorViewHeight);
 }
 
-- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
     if (self.sensors.count > indexPath.row)
-        [self openDetailViewForSensor:self.sensors[indexPath.row]];
+        [self openDetailViewForSensor:self.sensors[indexPath.item]];
 }
 
 - (void)openDetailViewForSensor:(SENSensor*)sensor {
@@ -305,27 +179,6 @@ static CGFloat const kHEMCurrentConditionsHeaderHeight = 10.0f;
             [self openDetailViewForSensor:sensor];
             return;
         }
-    }
-}
-
-#pragma mark - HEMInsightViewControllerDelegate
-
-- (UIView*)viewToShowThroughFrom:(HEMInsightViewController*)controller {
-    return [[[[[UIApplication sharedApplication] delegate] window] rootViewController] view];
-}
-
-- (void)didDismissInsightFrom:(HEMInsightViewController *)controller {
-    [self dismissViewControllerAnimated:NO completion:nil];
-}
-
-#pragma mark - Segues
-
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    UIViewController* destVC = segue.destinationViewController;
-    if ([destVC isKindOfClass:[HEMInsightViewController class]]) {
-        HEMInsightViewController* insightVC = (HEMInsightViewController*)destVC;
-        [insightVC setInsight:[self selectedInsight]];
-        [insightVC setDelegate:self];
     }
 }
 

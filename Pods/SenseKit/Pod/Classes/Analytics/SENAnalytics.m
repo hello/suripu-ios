@@ -8,7 +8,7 @@
 
 #import "SENAnalytics.h"
 #import "SENAuthorizationService.h"
-#import "SENAnalyticsAmplitude.h"
+#import "SENAnalyticsMixpanel.h"
 #import "SENAnalyticsLogger.h"
 
 NSString* const kSENAnalyticsConfigAPIKey = @"kSENAnalyticsConfigAPIKey";
@@ -24,8 +24,8 @@ static NSMutableDictionary* providers;
     id<SENAnalyticsProvider> provider;
 
     switch (name) {
-        case SENAnalyticsProviderNameAmplitude:
-            provider = [[SENAnalyticsAmplitude alloc] init];
+        case SENAnalyticsProviderNameMixpanel:
+            provider = [[SENAnalyticsMixpanel alloc] init];
             break;
         case SENAnalyticsProviderNameLogger:
             provider = [[SENAnalyticsLogger alloc] init];
@@ -47,6 +47,24 @@ static NSMutableDictionary* providers;
     }];
 }
 
++ (void)userWithId:(NSString*)userId didSignUpWithProperties:(NSDictionary*)properties {
+    [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
+        [provider userWithId:userId didSignupWithProperties:properties];
+    }];
+}
+
++ (void)setGlobalEventProperties:(NSDictionary*)properties {
+    [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
+        [provider setGlobalEventProperties:properties];
+    }];
+}
+
++ (void)setUserProperties:(NSDictionary*)properties {
+    [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
+        [provider setUserProperties:properties];
+    }];
+}
+
 + (void)track:(NSString*)eventName {
     [self track:eventName properties:nil];
 }
@@ -65,6 +83,18 @@ static NSMutableDictionary* providers;
     }
     [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
         [provider track:eventName withProperties:mutableProps];
+    }];
+}
+
++ (void)startEvent:(NSString *)eventName {
+    [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
+        [provider startEvent:eventName];
+    }];
+}
+
++ (void)endEvent:(NSString *)eventName {
+    [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
+        [provider endEvent:eventName];
     }];
 }
 

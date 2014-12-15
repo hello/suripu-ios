@@ -1,1 +1,0 @@
-../../../Amplitude-iOS/AMPDeviceInfo.h

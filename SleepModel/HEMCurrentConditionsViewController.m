@@ -3,8 +3,9 @@
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENAPIRoom.h>
 #import <AttributedMarkdown/markdown_peg.h>
+#import <BEMSimpleLineGraph/BEMSimpleLineGraphView.h>
 
-#import "HEMCurrentConditionsTableViewController.h"
+#import "HEMCurrentConditionsViewController.h"
 #import "HEMSensorViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
@@ -13,9 +14,7 @@
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 
-NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
-
-@interface HEMCurrentConditionsTableViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
+@interface HEMCurrentConditionsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) NSArray* sensors;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSTimer* refreshTimer;
@@ -23,12 +22,11 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @end
 
-@implementation HEMCurrentConditionsTableViewController
+@implementation HEMCurrentConditionsViewController
 
 static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
 static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
-static CGFloat const HEMCurrentConditionsSensorViewMargin = 16.0f;
 
 - (void)viewDidLoad
 {
@@ -182,15 +180,23 @@ static CGFloat const HEMCurrentConditionsSensorViewMargin = 16.0f;
 - (void)configureSensorCell:(HEMSensorGraphCollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SENSensor* sensor = self.sensors[indexPath.row];
-    cell.sensorValueLabel.text = [sensor localizedValue];
-    // message
+    cell.sensorValueLabel.text = sensor.localizedValue;
+    cell.sensorValueLabel.hidden = NO;
+    cell.sensorMessageLabel.text = sensor.message;
+    cell.sensorMessageLabel.hidden = NO;
+    cell.separatorView.hidden = NO;
+    cell.statusLabel.hidden = YES;
 }
 
 - (void)configureNoSensorsCell:(HEMSensorGraphCollectionViewCell *)cell
 {
-    cell.graphStateLabel.text = [self isLoading]
+    cell.statusLabel.text = [self isLoading]
         ? NSLocalizedString(@"activity.loading", nil)
         : NSLocalizedString(@"sensor.data-unavailable", nil);
+    cell.statusLabel.hidden = NO;
+    cell.sensorValueLabel.hidden = YES;
+    cell.sensorMessageLabel.hidden = YES;
+    cell.separatorView.hidden = YES;
 }
 
 #pragma mark UICollectionViewDelegate

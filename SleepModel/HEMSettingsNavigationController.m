@@ -11,7 +11,6 @@
 #import "HEMSettingsNavigationController.h"
 #import "HEMRootViewController.h"
 #import "HEMAppDelegate.h"
-#import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 
 @interface HEMSettingsNavigationController()<UIGestureRecognizerDelegate, UINavigationControllerDelegate>

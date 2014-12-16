@@ -17,7 +17,6 @@
 #import "HEMPresleepItemCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HelloStyleKit.h"
-#import "HEMColorUtils.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 

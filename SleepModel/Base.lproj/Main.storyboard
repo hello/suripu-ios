@@ -1550,10 +1550,10 @@
             </objects>
             <point key="canvasLocation" x="1295" y="-1388"/>
         </scene>
-        <!--Current Conditions Table View Controller-->
+        <!--Current Conditions View Controller-->
         <scene sceneID="wdh-a0-O9B">
             <objects>
-                <viewController id="kT5-aR-lha" customClass="HEMCurrentConditionsTableViewController" sceneMemberID="viewController">
+                <viewController id="kT5-aR-lha" customClass="HEMCurrentConditionsViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="fd7-5i-ar9"/>
                         <viewControllerLayoutGuide type="bottom" id="i2H-c6-eq3"/>
@@ -1581,7 +1581,7 @@
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="79" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="can-BL-pKK">
                                                     <rect key="frame" x="8" y="8" width="34" height="40"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="29"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3TU-LC-75s" userLabel="graph view" customClass="BEMSimpleLineGraphView">
@@ -1589,29 +1589,51 @@
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>
                                                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No graph available" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bEK-bM-6TS">
-                                                    <rect key="frame" x="407" y="63" width="145" height="24"/>
+                                                    <rect key="frame" x="208" y="36" width="145" height="24"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
                                                     <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fiq-hi-kqe" userLabel="message label">
+                                                    <rect key="frame" x="85" y="16" width="69" height="24"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Z9C-JN-lTS" userLabel="separator">
+                                                    <rect key="frame" x="70" y="8" width="1" height="38"/>
+                                                    <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="1" id="54M-uW-8pa"/>
+                                                        <constraint firstAttribute="height" constant="38" id="PdD-zK-RT9"/>
+                                                    </constraints>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="can-BL-pKK" firstAttribute="leading" secondItem="Dcm-5V-93r" secondAttribute="leading" constant="8" id="0F9-zW-0cr"/>
+                                            <constraint firstItem="Z9C-JN-lTS" firstAttribute="leading" secondItem="Dcm-5V-93r" secondAttribute="leadingMargin" constant="62" id="0Le-Eq-lt2"/>
                                             <constraint firstItem="can-BL-pKK" firstAttribute="top" secondItem="Dcm-5V-93r" secondAttribute="top" constant="8" id="3jd-M3-a6d"/>
-                                            <constraint firstItem="bEK-bM-6TS" firstAttribute="trailing" secondItem="Dcm-5V-93r" secondAttribute="trailing" constant="-8" id="D5t-h2-MFA"/>
+                                            <constraint firstItem="can-BL-pKK" firstAttribute="centerY" secondItem="Z9C-JN-lTS" secondAttribute="centerY" constant="1" id="7DY-ML-o3C"/>
+                                            <constraint firstItem="Z9C-JN-lTS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="can-BL-pKK" secondAttribute="trailing" constant="8" id="9RK-F1-x2s"/>
                                             <constraint firstItem="3TU-LC-75s" firstAttribute="leading" secondItem="Dcm-5V-93r" secondAttribute="leading" id="Fx6-rk-6Ks"/>
                                             <constraint firstAttribute="bottom" secondItem="3TU-LC-75s" secondAttribute="bottom" id="Rrw-DG-c6K"/>
-                                            <constraint firstItem="bEK-bM-6TS" firstAttribute="bottom" secondItem="Dcm-5V-93r" secondAttribute="bottom" constant="-8" id="myN-dK-rRq"/>
+                                            <constraint firstItem="fiq-hi-kqe" firstAttribute="leading" secondItem="Z9C-JN-lTS" secondAttribute="trailing" constant="14" id="UnQ-QA-8zZ"/>
+                                            <constraint firstItem="fiq-hi-kqe" firstAttribute="centerY" secondItem="can-BL-pKK" secondAttribute="centerY" id="Z7f-F7-t4s"/>
+                                            <constraint firstAttribute="centerY" secondItem="bEK-bM-6TS" secondAttribute="centerY" id="oRd-TQ-wKE"/>
+                                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="fiq-hi-kqe" secondAttribute="trailing" id="p1K-mE-LuA"/>
                                             <constraint firstItem="3TU-LC-75s" firstAttribute="top" secondItem="can-BL-pKK" secondAttribute="bottom" id="pas-dw-agm"/>
                                             <constraint firstAttribute="trailing" secondItem="3TU-LC-75s" secondAttribute="trailing" id="pnp-9T-Jc0"/>
+                                            <constraint firstAttribute="centerX" secondItem="bEK-bM-6TS" secondAttribute="centerX" id="scu-RE-NIa"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="graphStateLabel" destination="bEK-bM-6TS" id="xNJ-Cr-N7S"/>
                                             <outlet property="graphView" destination="3TU-LC-75s" id="Ick-oY-fm7"/>
+                                            <outlet property="sensorMessageLabel" destination="fiq-hi-kqe" id="eqU-eu-2Pr"/>
                                             <outlet property="sensorValueLabel" destination="can-BL-pKK" id="ZY4-d3-svk"/>
+                                            <outlet property="separatorView" destination="Z9C-JN-lTS" id="Kcl-1W-Iql"/>
+                                            <outlet property="statusLabel" destination="bEK-bM-6TS" id="bnT-d0-aIu"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

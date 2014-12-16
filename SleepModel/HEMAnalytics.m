@@ -84,7 +84,7 @@ NSString* const kHEMAnalyticsEventDevicePairingMode = @"enable pairing mode";
     }
     
     [SENAnalytics userWithId:[SENAuthorizationService accountIdOfAuthorizedUser]
-     didSignUpWithProperties:@{kHEMAnalyticsEventMpPropName : userName,
+     didSignUpWithProperties:@{kHEMAnalyticsEventMpPropName : userName ?: @"",
                                kHEMAnalyticsEventMpPropCreated : [NSDate date],
                                kHEMAnalyticsEventPropAccount : accountId,
                                kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];

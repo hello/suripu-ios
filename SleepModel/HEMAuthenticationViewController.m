@@ -10,10 +10,7 @@
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 
-static NSInteger const HEPURLAlertButtonIndexSave = 1;
-static NSInteger const HEPURLAlertButtonIndexReset = 2;
-
-@interface HEMAuthenticationViewController () <UIAlertViewDelegate>
+@interface HEMAuthenticationViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextField* usernameField;
@@ -42,21 +39,6 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [[self usernameField] becomeFirstResponder];
-}
-
-- (void)showURLUpdateAlertView
-{
-    UIAlertView* URLAlertView =
-        [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.set-url.title", nil)
-                                   message:NSLocalizedString(@"authorization.set-url.message", nil)
-                                  delegate:self
-                         cancelButtonTitle:NSLocalizedString(@"actions.cancel", nil)
-                         otherButtonTitles:NSLocalizedString(@"actions.save", nil), NSLocalizedString(@"authorization.set-url.action.reset", nil), nil];
-    URLAlertView.alertViewStyle = UIAlertViewStylePlainTextInput;
-    UITextField* URLField = [URLAlertView textFieldAtIndex:0];
-    URLField.text = [SENAPIClient baseURL].absoluteString;
-    URLField.clearButtonMode = UITextFieldViewModeWhileEditing;
-    [URLAlertView show];
 }
 
 - (BOOL)validateInputValues
@@ -108,7 +90,7 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
             return;
         }
 
-        [SENAnalytics setUserId:[SENAuthorizationService accountIdOfAuthorizedUser] properties:nil];
+        [HEMAnalytics trackUserSession]; // update user session, since it maybe a different user now
         [SENAnalytics track:kHEMAnalyticsEventSignIn];
 
         [[strongSelf view] endEditing:NO];
@@ -128,35 +110,6 @@ static NSInteger const HEPURLAlertButtonIndexReset = 2;
 
 - (IBAction)didTapForgotPasswordButton:(UIButton*)sender {
     DDLogVerbose(@"WARNING: this has not been implemented!");
-}
-
-- (IBAction)setAPIURL:(id)sender
-{
-    // TODO (jimmy): what is this and how do get to it? :P
-    [self showURLUpdateAlertView];
-}
-
-#pragma mark - UIAlertViewDelegate
-
-- (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex) {
-    case HEPURLAlertButtonIndexReset: {
-        [SENAPIClient resetToDefaultBaseURL];
-        break;
-    }
-    case HEPURLAlertButtonIndexSave: {
-        UITextField* URLField = [alertView textFieldAtIndex:0];
-        if (![SENAPIClient setBaseURLFromPath:URLField.text]) {
-            [[[UIAlertView alloc] initWithTitle:NSLocalizedString(@"authorization.failed-url.title", nil)
-                                        message:NSLocalizedString(@"authorization.failed-url.message", nil)
-                                       delegate:self
-                              cancelButtonTitle:NSLocalizedString(@"actions.cancel", nil)
-                              otherButtonTitles:nil] show];
-        }
-        break;
-    }
-    }
 }
 
 #pragma mark - UITextFieldDelegate

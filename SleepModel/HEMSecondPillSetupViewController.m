@@ -36,7 +36,7 @@
     
     [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
     
-    [SENAnalytics track:kHEMAnalyticsEventOnBAddPill];
+    [SENAnalytics track:kHEMAnalyticsEventOnBPairingOff];
 }
 
 - (void)setupContent {

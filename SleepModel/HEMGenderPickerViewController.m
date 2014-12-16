@@ -141,6 +141,8 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
 }
 
 - (void)next {
+    // update analytics property for gender
+    [HEMAnalytics updateGender:[self selectedGender]];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard heightSegueIdentifier]
                               sender:self];
 }

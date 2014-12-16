@@ -154,7 +154,7 @@
 
 #pragma mark - Finishing Up
 
-- (void)uploadCollectedData:(BOOL)retry {
+- (void)uploadCollectedData:(BOOL)retry {    
     __weak typeof(self) weakSelf = self;
     [SENAPIAccount updateAccount:[[HEMUserDataCache sharedUserDataCache] account]
                  completionBlock:^(id data, NSError *error) {

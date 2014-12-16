@@ -33,7 +33,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [HEMLogUtils enableLogger];
     [self deauthorizeIfNeeded];
     [self configureSettingsDefaults];
-    [self setupAnalytics];
+    [self configureAnalytics];
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];
@@ -86,23 +86,21 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     }
 }
 
-- (void)setupAnalytics {
+- (void)configureAnalytics {
     NSString* analyticsToken = nil;
-    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
 #if !DEBUG
+    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
     [Crashlytics startWithAPIKey:@"f464ccd280d3e5730dcdaa9b64d1d108694ee9a9"];
     if (accountId != nil) [Crashlytics setUserIdentifier:accountId];
-    analyticsToken = @"8fea5e93a27fbac95b3c19aed0b36980";
+    analyticsToken = @"43c61cc553f0ccf2b3e1f73bc30bbfb4";
 #else
-    analyticsToken = @"b353e69e990cfce15a9557287ce7fbf8";
+    analyticsToken = @"d62a169fe4856dea26f3a322750613a8";
 #endif
-    NSString* version = [[NSBundle mainBundle] objectForInfoDictionaryKey:(NSString *)kCFBundleVersionKey];
     [SENAuthorizationService authorizeRequestsFromKeychain];
     [SENAnalytics configure:SENAnalyticsProviderNameLogger with:nil];
-    [SENAnalytics configure:SENAnalyticsProviderNameAmplitude
+    [SENAnalytics configure:SENAnalyticsProviderNameMixpanel
                        with:@{kSENAnalyticsProviderToken : analyticsToken}];
-    [SENAnalytics setUserId:accountId
-                 properties:@{kHEMAnalyticsUserPropVersionNumber : version}];
+    [HEMAnalytics trackUserSession];
 }
 
 - (BOOL)deauthorizeIfNeeded {

@@ -144,7 +144,9 @@
             return;
         }
         
-        [SENAnalytics setUserId:[SENAuthorizationService accountIdOfAuthorizedUser] properties:nil];
+        NSString* userName = [strongSelf trim:strongSelf.nameField.text];
+        [HEMAnalytics trackSignUpWithName:userName];
+        
         [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard moreInfoSegueIdentifier]
                                         sender:strongSelf];
     }];

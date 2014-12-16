@@ -33,6 +33,8 @@
     [self setupContent];
     
     [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBFirstAlarm];
 }
 
 - (void)setupContent {

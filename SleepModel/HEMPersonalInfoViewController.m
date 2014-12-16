@@ -265,6 +265,7 @@ didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             [strongSelf finishUpdate:error];
+            [HEMAnalytics updateGender:gender];
         }
     }];
     

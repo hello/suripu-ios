@@ -1,7 +1,6 @@
 
 #import <Foundation/Foundation.h>
-
-@protocol SENAnalyticsProvider;
+#import "SENAnalyticsProvider.h"
 
 @interface SENAnalyticsLogger : NSObject <SENAnalyticsProvider>
 

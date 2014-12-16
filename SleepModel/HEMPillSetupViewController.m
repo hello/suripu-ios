@@ -34,7 +34,7 @@
     [[self navigationItem] setHidesBackButton:YES];
     
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [SENAnalytics track:kHEMAnalyticsEventOnBSetupPill];
+    [SENAnalytics track:kHEMAnalyticsEventOnBPillPlacement];
 }
 
 - (void)adjustConstraintsForIPhone4 {

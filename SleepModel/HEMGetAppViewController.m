@@ -27,6 +27,8 @@
     
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupSubtitle];
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBGetApp];
 }
 
 - (void)setupSubtitle {

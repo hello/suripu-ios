@@ -36,6 +36,8 @@
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupSubtitle];
     [[self navigationItem] setHidesBackButton:YES];
+    
+    [SENAnalytics track:kHEMAnalyticsEventOnBAnotherPill];
 }
 
 - (void)setupSubtitle {

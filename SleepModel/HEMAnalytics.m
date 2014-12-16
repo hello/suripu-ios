@@ -76,6 +76,7 @@ NSString* const kHEMAnalyticsEventDevicePairingMode = @"enable pairing mode";
 @implementation HEMAnalytics
 
 + (void)trackSignUpWithName:(NSString*)userName {
+    NSString* name = userName ?: @"";
     NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
     if ([accountId length] == 0) {
         // checking this case as it seemed to have happened before
@@ -84,13 +85,13 @@ NSString* const kHEMAnalyticsEventDevicePairingMode = @"enable pairing mode";
     }
     
     [SENAnalytics userWithId:[SENAuthorizationService accountIdOfAuthorizedUser]
-     didSignUpWithProperties:@{kHEMAnalyticsEventMpPropName : userName ?: @"",
+     didSignUpWithProperties:@{kHEMAnalyticsEventMpPropName : name,
                                kHEMAnalyticsEventMpPropCreated : [NSDate date],
                                kHEMAnalyticsEventPropAccount : accountId,
                                kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
     
     // these are properties that will be sent up for every event
-    [SENAnalytics setGlobalEventProperties:@{kHEMAnalyticsEventPropName : userName,
+    [SENAnalytics setGlobalEventProperties:@{kHEMAnalyticsEventPropName : name,
                                              kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform}];
 }
 

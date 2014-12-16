@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMCardCollectionViewCell.h"
 
 @class BEMSimpleLineGraphView;
 
-@interface HEMSensorGraphCollectionViewCell : UICollectionViewCell
+@interface HEMSensorGraphCollectionViewCell : HEMCardCollectionViewCell
 @property (weak, nonatomic) IBOutlet BEMSimpleLineGraphView *graphView;
 @property (weak, nonatomic) IBOutlet UILabel *graphStateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *sensorValueLabel;

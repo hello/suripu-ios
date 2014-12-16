@@ -1,19 +1,15 @@
-#import <SenseKit/SENAlarm.h>
-#import <SenseKit/SENBackgroundNoise.h>
+
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENAPIRoom.h>
-#import <SenseKit/SENInsight.h>
-
-#import <markdown_peg.h>
+#import <AttributedMarkdown/markdown_peg.h>
 
 #import "HEMCurrentConditionsTableViewController.h"
 #import "HEMSensorViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
-#import "HEMPagingFlowLayout.h"
-#import "HEMInsightCollectionViewCell.h"
-#import "HEMOnboardingStoryboard.h"
+#import "HEMSensorGraphCollectionViewCell.h"
+#import "HEMCardFlowLayout.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 
@@ -31,12 +27,13 @@ NSString* const HEMCurrentConditionsCellIdentifier = @"currentConditionsCell";
 
 static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
 static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
-static CGFloat const HEMCurrentConditionsSensorViewHeight = 112.0f;
+static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 static CGFloat const HEMCurrentConditionsSensorViewMargin = 16.0f;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureCollectionView];
     self.tabBarItem.title = NSLocalizedString(@"current-conditions.title", nil);
     self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
 }
@@ -134,41 +131,18 @@ static CGFloat const HEMCurrentConditionsSensorViewMargin = 16.0f;
     [self refreshCachedSensors];
 }
 
-#pragma mark - UICollectionViewDatasource
+#pragma mark - UICollectionView
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+
+- (void)configureCollectionView
 {
-    return 5;
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString* identifier = [HEMMainStoryboard sensorGraphCellReuseIdentifier];
-    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
-                                                                           forIndexPath:indexPath];
-
-    return cell;
-}
-
-#pragma mark - UICollectionViewDelegate
-
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    CGFloat itemWidth = CGRectGetWidth([collectionView bounds]) - (2*HEMCurrentConditionsSensorViewMargin);
-    return CGSizeMake(itemWidth, HEMCurrentConditionsSensorViewHeight);
-}
-
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if (self.sensors.count > indexPath.row)
-        [self openDetailViewForSensor:self.sensors[indexPath.item]];
+    self.collectionView.backgroundColor = [UIColor clearColor];
+    HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
+    [layout setItemHeight:HEMCurrentConditionsSensorViewHeight];
 }
 
 - (void)openDetailViewForSensor:(SENSensor*)sensor {
-    UIStoryboard* storyboard = [UIStoryboard storyboardWithName:@"Main" bundle:[NSBundle mainBundle]];
-    HEMSensorViewController* controller = (HEMSensorViewController*)[storyboard instantiateViewControllerWithIdentifier:@"sensorViewController"];
+    HEMSensorViewController* controller = [HEMMainStoryboard instantiateSensorViewController];
     controller.sensor = sensor;
     [self.navigationController pushViewController:controller animated:YES];
 }
@@ -180,6 +154,51 @@ static CGFloat const HEMCurrentConditionsSensorViewMargin = 16.0f;
             return;
         }
     }
+}
+
+#pragma mark UICollectionViewDatasource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
+{
+    return self.sensors.count > 0 ? self.sensors.count : 1;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* identifier = [HEMMainStoryboard sensorGraphCellReuseIdentifier];
+    HEMSensorGraphCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
+                                                                                       forIndexPath:indexPath];
+
+    if (self.sensors.count > indexPath.row) {
+        [self configureSensorCell:cell forItemAtIndexPath:indexPath];
+    } else {
+        [self configureNoSensorsCell:cell];
+    }
+    return cell;
+}
+
+
+- (void)configureSensorCell:(HEMSensorGraphCollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    SENSensor* sensor = self.sensors[indexPath.row];
+    cell.sensorValueLabel.text = [sensor localizedValue];
+    // message
+}
+
+- (void)configureNoSensorsCell:(HEMSensorGraphCollectionViewCell *)cell
+{
+    cell.graphStateLabel.text = [self isLoading]
+        ? NSLocalizedString(@"activity.loading", nil)
+        : NSLocalizedString(@"sensor.data-unavailable", nil);
+}
+
+#pragma mark UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (self.sensors.count > indexPath.row)
+        [self openDetailViewForSensor:self.sensors[indexPath.item]];
 }
 
 @end

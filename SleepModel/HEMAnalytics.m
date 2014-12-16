@@ -42,7 +42,6 @@ NSString* const kHEMAnalyticsEventOnBHeight = @"Onboarding Height";
 NSString* const kHEMAnalyticsEventOnBWeight = @"Onboarding Weight";
 NSString* const kHEMAnalyticsEventOnBLocation = @"Onboarding Location";
 NSString* const kHEMAnalyticsEventOnBNotification = @"Onboarding Notifications";
-NSString* const kHEMAnalyticsEventOnBSetupStart = @"Onboarding Setup Start";
 NSString* const kHEMAnalyticsEventOnBSecondPillCheck = @"Onboarding Second Pill Check";
 NSString* const kHEMAnalyticsEventOnBNoBle = @"Onboarding No BLE";
 NSString* const kHEMAnalyticsEventOnBSenseSetup = @"Onboarding Sense Setup";

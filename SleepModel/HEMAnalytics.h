@@ -37,7 +37,6 @@ extern NSString* const kHEMAnalyticsEventOnBHeight;
 extern NSString* const kHEMAnalyticsEventOnBWeight;
 extern NSString* const kHEMAnalyticsEventOnBLocation;
 extern NSString* const kHEMAnalyticsEventOnBNotification;
-extern NSString* const kHEMAnalyticsEventOnBSetupStart;
 extern NSString* const kHEMAnalyticsEventOnBSecondPillCheck;
 extern NSString* const kHEMAnalyticsEventOnBNoBle;
 extern NSString* const kHEMAnalyticsEventOnBSenseSetup;

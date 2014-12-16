@@ -18,6 +18,7 @@
 @property (nonatomic, strong) NSArray* sensors;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSTimer* refreshTimer;
+@property (nonatomic, strong) NSMutableDictionary* sensorGraphData;
 @property (nonatomic) CGFloat refreshRate;
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @end
@@ -81,6 +82,7 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
     if (![SENAuthorizationService isAuthorized])
         return;
     DDLogVerbose(@"Refreshing sensor data (rate: %f)", self.refreshRate);
+    self.sensorGraphData = [[NSMutableDictionary alloc] init];
     self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
         return [obj2.localizedName compare:obj1.localizedName];
     }];
@@ -90,9 +92,29 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
         [self configureFailureRefreshTimer];
     else
         [self configureRefreshTimer];
-
+    [self fetchGraphData];
     [self setLoading:NO];
     [self.collectionView reloadData];
+}
+
+- (void)fetchGraphData {
+    NSArray* sensors = [self.sensors copy];
+    __weak typeof(self) weakSelf = self;
+    SENAPIDataBlock (^completion)(SENSensor *, int) = ^SENAPIDataBlock(SENSensor *sensor, int index) {
+        return ^(id data, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error) {
+                strongSelf.sensorGraphData[sensor.name] = nil;
+            } else {
+                strongSelf.sensorGraphData[sensor.name] = data;
+            }
+            [strongSelf updateCellAtIndex:index];
+        };
+    };
+    for (int i = 0; i < sensors.count; i++) {
+        SENSensor* sensor = sensors[i];
+        [SENAPIRoom hourlyHistoricalDataForSensorWithName:sensor.name completion:completion(sensor, i)];
+    }
 }
 
 - (void)failedToRefreshSensors {
@@ -139,6 +161,13 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
     [layout setItemHeight:HEMCurrentConditionsSensorViewHeight];
 }
 
+- (void)updateCellAtIndex:(NSUInteger)index
+{
+    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    HEMSensorGraphCollectionViewCell* cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+    [self configureSensorCell:cell forItemAtIndexPath:indexPath];
+}
+
 - (void)openDetailViewForSensor:(SENSensor*)sensor {
     HEMSensorViewController* controller = [HEMMainStoryboard instantiateSensorViewController];
     controller.sensor = sensor;
@@ -181,10 +210,17 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 {
     SENSensor* sensor = self.sensors[indexPath.row];
     cell.sensorValueLabel.text = sensor.localizedValue;
+    cell.sensorValueLabel.textColor = [UIColor colorForSensorWithCondition:sensor.condition];
     cell.sensorValueLabel.hidden = NO;
-    cell.sensorMessageLabel.text = sensor.message;
-    cell.sensorMessageLabel.hidden = NO;
-    cell.separatorView.hidden = NO;
+    if (sensor.message.length > 0) {
+        cell.sensorMessageLabel.hidden = NO;
+        cell.separatorView.hidden = NO;
+        [cell setMessageText:sensor.message];
+    } else {
+        cell.sensorMessageLabel.hidden = YES;
+        cell.separatorView.hidden = YES;
+    }
+    [cell setGraphData:self.sensorGraphData[sensor.name] sensor:sensor];
     cell.statusLabel.hidden = YES;
 }
 

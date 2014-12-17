@@ -26,10 +26,10 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
 - (instancetype)initWithFrame:(CGRect)frame
 {
     if (self = [super initWithFrame:frame]) {
-        self.layer.shadowOffset = CGSizeMake(1, 0);
+        self.layer.shadowOffset = CGSizeMake(0, 0.5);
         self.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
-        self.layer.shadowRadius = 2.f;
-        self.layer.shadowOpacity = 0.5f;
+        self.layer.shadowRadius = 0;
+        self.layer.shadowOpacity = 0.85f;
     }
     return self;
 }

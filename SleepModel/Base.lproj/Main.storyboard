@@ -1614,7 +1614,7 @@
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="can-BL-pKK" firstAttribute="leading" secondItem="Dcm-5V-93r" secondAttribute="leading" constant="8" id="0F9-zW-0cr"/>
-                                            <constraint firstItem="Z9C-JN-lTS" firstAttribute="leading" secondItem="Dcm-5V-93r" secondAttribute="leadingMargin" constant="100" id="0Le-Eq-lt2"/>
+                                            <constraint firstItem="Z9C-JN-lTS" firstAttribute="leading" secondItem="Dcm-5V-93r" secondAttribute="leading" constant="108" id="0Le-Eq-lt2"/>
                                             <constraint firstItem="can-BL-pKK" firstAttribute="top" secondItem="Dcm-5V-93r" secondAttribute="top" constant="20" id="3jd-M3-a6d"/>
                                             <constraint firstItem="can-BL-pKK" firstAttribute="centerY" secondItem="Z9C-JN-lTS" secondAttribute="centerY" id="7DY-ML-o3C"/>
                                             <constraint firstItem="Z9C-JN-lTS" firstAttribute="leading" secondItem="can-BL-pKK" secondAttribute="trailing" constant="8" id="9RK-F1-x2s"/>
@@ -1623,7 +1623,7 @@
                                             <constraint firstItem="fiq-hi-kqe" firstAttribute="leading" secondItem="Z9C-JN-lTS" secondAttribute="trailing" constant="24" id="UnQ-QA-8zZ"/>
                                             <constraint firstItem="fiq-hi-kqe" firstAttribute="centerY" secondItem="can-BL-pKK" secondAttribute="centerY" id="Z7f-F7-t4s"/>
                                             <constraint firstAttribute="centerY" secondItem="bEK-bM-6TS" secondAttribute="centerY" id="oRd-TQ-wKE"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="fiq-hi-kqe" secondAttribute="trailing" id="p1K-mE-LuA"/>
+                                            <constraint firstAttribute="trailing" secondItem="fiq-hi-kqe" secondAttribute="trailing" constant="8" id="p1K-mE-LuA"/>
                                             <constraint firstItem="3TU-LC-75s" firstAttribute="top" secondItem="can-BL-pKK" secondAttribute="bottom" id="pas-dw-agm"/>
                                             <constraint firstAttribute="trailing" secondItem="3TU-LC-75s" secondAttribute="trailing" id="pnp-9T-Jc0"/>
                                             <constraint firstAttribute="centerX" secondItem="bEK-bM-6TS" secondAttribute="centerX" id="scu-RE-NIa"/>

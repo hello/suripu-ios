@@ -3,7 +3,7 @@
 #import <SenseKit/SENSleepResult.h>
 
 #import "HEMMiniSleepHistoryView.h"
-#import "HEMColorUtils.h"
+#import "UIColor+HEMStyle.h"
 #import "HelloStyleKit.h"
 
 @interface HEMMiniSleepHistoryView ()
@@ -60,7 +60,7 @@ static CGFloat const HEMMiniSleepBandWidth = 2.f;
         CGContextFillRect(ctx, fillRect);
 
         fillRect.size.width = HEMMiniSleepBandWidth;
-        CGContextSetFillColorWithColor(ctx, [HEMColorUtils colorForSleepDepth:segment.sleepDepth].CGColor);
+        CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);
         CGContextFillRect(ctx, fillRect);
     }
 }

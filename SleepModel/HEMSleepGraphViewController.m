@@ -50,6 +50,7 @@ static CGFloat const HEMPresleepItemCellHeight = 68.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 30.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMTopItemsConstraintConstant = 10.f;
+static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)viewDidLoad
 {
@@ -100,7 +101,7 @@ static CGFloat const HEMTopItemsConstraintConstant = 10.f;
         [cell.dateButton setAlpha:0.5];
         [cell.dateButton setEnabled:NO];
         [cell.drawerButton setImage:[UIImage imageNamed:@"caret up"] forState:UIControlStateNormal];
-        cell.topItemsVerticalConstraint.constant = 0;
+        cell.topItemsVerticalConstraint.constant = HEMTopItemsMinimumConstraintConstant;
         [cell updateConstraintsIfNeeded];
     }];
     self.oldBarStyle = UIStatusBarStyleLightContent;

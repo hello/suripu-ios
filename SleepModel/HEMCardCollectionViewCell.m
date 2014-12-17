@@ -10,6 +10,14 @@
 
 @implementation HEMCardCollectionViewCell
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super initWithCoder:aDecoder]) {
+        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+    }
+    return self;
+}
+
 - (void)awakeFromNib
 {
     self.layer.cornerRadius = 2.f;

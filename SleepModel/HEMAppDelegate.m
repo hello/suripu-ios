@@ -13,7 +13,7 @@
 #import "HEMRootViewController.h"
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
-#import "HEMCurrentConditionsTableViewController.h"
+#import "HEMCurrentConditionsViewController.h"
 #import "HEMDeviceCenter.h"
 #import "HelloStyleKit.h"
 #import "HEMLogUtils.h"
@@ -69,7 +69,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
     void (^presentController)() = ^{
         [nav popToRootViewControllerAnimated:NO];
-        HEMCurrentConditionsTableViewController* controller = (id)nav.topViewController;
+        HEMCurrentConditionsViewController* controller = (id)nav.topViewController;
         [controller openDetailViewForSensorNamed:name];
     };
     if (nav.presentedViewController) {

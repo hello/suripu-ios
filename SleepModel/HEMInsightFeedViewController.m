@@ -90,5 +90,13 @@
     
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        self.tabBarItem.image = [HelloStyleKit senseBarIcon];
+    }
+    return self;
+
+}
+
 @end
 

@@ -55,6 +55,12 @@
  */
 + (UIFont*)settingsTitleFont;
 
++ (UIFont *)sensorListValueFont;
+
++ (UIFont *)sensorListMessageFont;
+
++ (UIFont *)sensorListBoldMessageFont;
+
 /**
  *  Font for sensor range selection from 'last 24 hours' and
  *  'last week'

@@ -8,18 +8,31 @@
 
 #import "HEMSnazzBar.h"
 #import "HEMSnazzBarButton.h"
+#import "HelloStyleKit.h"
 
 CGFloat const HEMSnazzBarAnimationDuration = 0.25f;
 
 @interface HEMSnazzBar ()
 
 @property (nonatomic, strong) UIView* indicatorView;
+@property (nonatomic) NSUInteger selectionIndex;
 @end
 
 @implementation HEMSnazzBar
 
-static CGFloat const HEMSnazzBarMargin = 8.f;
-static CGFloat const HEMSnazzBarIndicatorHeight = 2.f;
+static CGFloat const HEMSnazzBarTopMargin = 20.f;
+static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if (self = [super initWithFrame:frame]) {
+        self.layer.shadowOffset = CGSizeMake(1, 0);
+        self.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
+        self.layer.shadowRadius = 2.f;
+        self.layer.shadowOpacity = 0.5f;
+    }
+    return self;
+}
 
 - (void)layoutSubviews
 {
@@ -33,14 +46,12 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 2.f;
     if (buttons.count == 0)
         return;
 
-    CGFloat outerMargin = HEMSnazzBarMargin * 2;
-    CGFloat innerMargin = HEMSnazzBarMargin * (buttons.count - 1);
-    CGFloat width = ((CGRectGetWidth(self.bounds) - outerMargin - innerMargin) / buttons.count);
-    CGSize buttonSize = CGSizeMake(width, CGRectGetHeight(self.bounds) - outerMargin);
+    CGFloat width = ((CGRectGetWidth(self.bounds)) / buttons.count);
+    CGSize buttonSize = CGSizeMake(width, CGRectGetHeight(self.bounds) - HEMSnazzBarTopMargin);
     for (int i = 0; i < buttons.count; i++) {
         UIButton* button = buttons[i];
-        CGFloat x = (i * buttonSize.width) + (HEMSnazzBarMargin * (i + 1));
-        button.frame = (CGRect){ .size = buttonSize, .origin = CGPointMake(x, HEMSnazzBarMargin)};
+        CGFloat x = i * buttonSize.width;
+        button.frame = (CGRect){ .size = buttonSize, .origin = CGPointMake(x, HEMSnazzBarTopMargin)};
         if ([button isSelected])
             [self indicateButtonSelected:button];
     }
@@ -64,8 +75,12 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 2.f;
 - (void)setSelectionColor:(UIColor *)selectionColor
 {
     self.indicatorView.backgroundColor = selectionColor;
-    for (UIButton* button in self.buttons) {
-        [button setTintColor:self.selectionColor];
+    for (int i = 0; i < self.buttons.count; i++) {
+        UIButton* button = self.buttons[i];
+        if (i == self.selectionIndex)
+            button.tintColor = self.selectionColor;
+        else
+            button.tintColor = [HelloStyleKit tabBarUnselectedColor];
     }
     _selectionColor = selectionColor;
 }
@@ -102,7 +117,7 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 2.f;
     [button setImage:template forState:UIControlStateNormal];
     [button addTarget:self action:@selector(buttonPressed:)
      forControlEvents:UIControlEventTouchUpInside];
-    [button setTintColor:self.selectionColor];
+    [button setTintColor:[HelloStyleKit tabBarUnselectedColor]];
     [self addSubview:button];
     [self setNeedsLayout];
 }
@@ -113,11 +128,13 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 2.f;
     if (index >= buttons.count)
         return;
 
+    self.selectionIndex = index;
     for (int i = 0; i < buttons.count; i++) {
         UIButton* button = buttons[i];
         if ((button.selected = (i == index))) {
             void (^animations)() = ^{
                 [self indicateButtonSelected:button];
+                button.tintColor = self.selectionColor;
             };
             if (animated)
                 [UIView animateWithDuration:HEMSnazzBarAnimationDuration
@@ -129,6 +146,8 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 2.f;
                                  completion:NULL];
             else
                 animations();
+        } else {
+            button.tintColor = [HelloStyleKit tabBarUnselectedColor];
         }
     }
 }

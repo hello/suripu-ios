@@ -3,7 +3,7 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAccount.h>
 
-#import "NSString+Email.h"
+#import "NSString+HEMUtils.h"
 
 #import "UIFont+HEMStyle.h"
 
@@ -87,9 +87,9 @@
 #pragma mark - Sign Up
 
 - (void)signup {
-    NSString* emailAddress = [self trim:self.emailAddressField.text];
+    NSString* emailAddress = [self.emailAddressField.text trim];
     NSString* password = self.passwordField.text;
-    NSString* name = [self trim:self.nameField.text];
+    NSString* name = [self.nameField.text trim];
     
     __weak typeof(self) weakSelf = self;
     [SENAPIAccount createAccountWithName:name
@@ -121,6 +121,7 @@
 }
 
 - (void)authenticate:(NSString*)email password:(NSString*)password rety:(BOOL)retry {
+    NSString* userName = [self.nameField.text trim];
     __weak typeof(self) weakSelf = self;
     [SENAuthorizationService authorizeWithUsername:email password:password callback:^(NSError *signInError) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -143,10 +144,8 @@
             [strongSelf authenticate:email password:password rety:NO];
             return;
         }
-        
-        NSString* userName = [strongSelf trim:strongSelf.nameField.text];
+
         [HEMAnalytics trackSignUpWithName:userName];
-        
         [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard moreInfoSegueIdentifier]
                                         sender:strongSelf];
     }];
@@ -180,18 +179,13 @@
 
 #pragma mark - Field Validation
 
-- (NSString*)trim:(NSString*)value {
-    NSCharacterSet* spaces = [NSCharacterSet whitespaceAndNewlineCharacterSet];
-    return [value stringByTrimmingCharactersInSet:spaces];
-}
-
 - (BOOL)validateFieldValuesAndShowAlert:(BOOL)shouldShowAlert {
     NSString* errorMessage = nil;
-    if ([[self trim:self.nameField.text] length] == 0) {
+    if ([[self.nameField.text trim] length] == 0) {
         errorMessage = NSLocalizedString(@"sign-up.error.name-length", nil);
-    } else if (![[self trim:self.emailAddressField.text] isValidEmail]) {
+    } else if (![[self.emailAddressField.text trim] isValidEmail]) {
         errorMessage = NSLocalizedString(@"sign-up.error.email-invalid", nil);
-    } else if ([self.passwordField.text length] == 0) { // allow spaces?
+    } else if ([self.passwordField.text length] == 0) {
         errorMessage = NSLocalizedString(@"sign-up.error.password-length", nil);
     } else {
         return YES;

@@ -16,6 +16,7 @@
 #import "HEMSleepSegmentCollectionViewCell.h"
 #import "HEMPresleepHeaderCollectionReusableView.h"
 #import "HEMSleepGraphViewController.h"
+#import "NSAttributedString+HEMUtils.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 #import "HEMAudioCache.h"
@@ -209,9 +210,7 @@ static CGFloat const HEMSleepEventPopupMaxWidth = 400.f;
 
         self.eventInfoView.verifyDataButton.hidden = ![segment.eventType isEqual:HEMSleepEventTypeWakeUp];
         NSAttributedString* message = markdown_to_attr_string(segment.message, 0, self.eventInfoView.markdownAttributes);
-        while (message.length > 0 && [[message string] characterAtIndex:message.length - 1] == '\n')
-            message = [message attributedSubstringFromRange:NSMakeRange(0, message.length - 1)];
-        self.eventInfoView.messageLabel.attributedText = message;
+        self.eventInfoView.messageLabel.attributedText = [message trim];
         [self.eventInfoView.messageLabel sizeToFit];
         if (segment.sound) {
             [self.eventInfoView showAudioPlayer:YES];

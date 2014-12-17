@@ -20,7 +20,7 @@
 
 @implementation HEMSnazzBarController
 
-static CGFloat const HEMSnazzBarHeight = 66.f;
+static CGFloat const HEMSnazzBarHeight = 72.f;
 static CGFloat const HEMSnazzContentGestureMargin = 34.f;
 
 - (void)dealloc
@@ -48,8 +48,8 @@ static CGFloat const HEMSnazzContentGestureMargin = 34.f;
     self.buttonsBar = [[HEMSnazzBar alloc] initWithFrame:barFrame];
     self.buttonsBar.delegate = self;
     [self.view addSubview:self.buttonsBar];
-    self.buttonsBar.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
-    self.buttonsBar.selectionColor = [HelloStyleKit senseBlueColor];
+    self.buttonsBar.backgroundColor = [UIColor whiteColor];
+    self.buttonsBar.selectionColor = [HelloStyleKit lightSleepColor];
     self.contentView.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
 }
 

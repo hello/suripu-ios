@@ -28,8 +28,9 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         attributes = @{
-            @(PARA) : [UIFont sensorListMessageFont],
-            @(STRONG) : [UIFont sensorListBoldMessageFont]
+            @(EMPH) : @{ NSFontAttributeName : [UIFont sensorListBoldMessageFont] },
+            @(STRONG) : @{ NSFontAttributeName : [UIFont sensorListBoldMessageFont] },
+            @(PLAIN) : @{ NSFontAttributeName : [UIFont sensorListMessageFont] }
         };
     });
     return attributes;

@@ -39,6 +39,10 @@ static NSUInteger HEMAlarmListLimit = 8;
         [self reloadData];
         [self.tableView reloadData];
     }];
+    [self.addButton addTarget:self action:@selector(touchDownAddAlarmButton:)
+             forControlEvents:UIControlEventTouchDown];
+    [self.addButton addTarget:self action:@selector(touchUpOutsideAddAlarmButton:)
+             forControlEvents:UIControlEventTouchUpOutside];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -46,6 +50,11 @@ static NSUInteger HEMAlarmListLimit = 8;
     [super viewWillAppear:animated];
     [self reloadData];
     [self.tableView reloadData];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [self touchUpOutsideAddAlarmButton:nil];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated
@@ -66,10 +75,45 @@ static NSUInteger HEMAlarmListLimit = 8;
 
 #pragma mark - Actions
 
+- (void)touchDownAddAlarmButton:(id)sender
+{
+    [UIView animateWithDuration:0.15f animations:^{
+        self.addButton.layer.transform = CATransform3DMakeScale(HEMAlarmListButtonMinimumScale,
+                                                                HEMAlarmListButtonMinimumScale, 1.f);
+    }];
+}
+
+static CGFloat const HEMAlarmListButtonMinimumScale = 0.8f;
+static CGFloat const HEMAlarmListButtonMaximumScale = 1.4f;
+- (void)touchUpOutsideAddAlarmButton:(id)sender
+{
+    [UIView animateWithDuration:0.2f animations:^{
+        self.addButton.layer.transform = CATransform3DIdentity;
+    }];
+}
+
 - (IBAction)addNewAlarm:(id)sender
 {
-    SENAlarm* alarm = [SENAlarm createDefaultAlarm];
-    [self presentViewControllerForAlarm:alarm];
+    void (^animations)() = ^{
+        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.75 animations:^{
+            self.addButton.layer.transform = CATransform3DMakeScale(HEMAlarmListButtonMaximumScale,
+                                                                    HEMAlarmListButtonMaximumScale, 1.f);
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.75 relativeDuration:0.25 animations:^{
+            self.addButton.layer.transform = CATransform3DIdentity;
+        }];
+    };
+
+    void (^completion)(BOOL) = ^(BOOL finished) {
+        SENAlarm* alarm = [SENAlarm createDefaultAlarm];
+        [self presentViewControllerForAlarm:alarm];
+    };
+
+    [UIView animateKeyframesWithDuration:0.25
+                                   delay:0
+                                 options:(UIViewKeyframeAnimationOptionCalculationModeCubicPaced|UIViewAnimationOptionCurveEaseInOut)
+                              animations:animations
+                              completion:completion];
 }
 
 - (IBAction)flippedEnabledSwitch:(UISwitch*)sender
@@ -102,8 +146,9 @@ static NSUInteger HEMAlarmListLimit = 8;
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
+    NSString* identifier = [HEMMainStoryboard alarmListCellIdentifier];
     SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
-    HEMAlarmListTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmListCellIdentifier]];
+    HEMAlarmListTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     cell.timeLabel.text = [alarm localizedValue];
     cell.timeLabel.font = [UIFont settingsTitleFont];
     
@@ -122,7 +167,8 @@ static NSUInteger HEMAlarmListLimit = 8;
     return YES;
 }
 
-- (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath*)indexPath
+- (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
+forRowAtIndexPath:(NSIndexPath*)indexPath
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];

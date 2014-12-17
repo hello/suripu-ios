@@ -5,6 +5,7 @@
 @implementation HEMAlarmAddButton
 
 static NSString* const HEMAlarmAddText = @"+";
+static CGFloat const HEMAlarmAddTextVerticalOffset = 2.f;
 
 - (void)awakeFromNib
 {
@@ -21,8 +22,8 @@ static NSString* const HEMAlarmAddText = @"+";
     UIFont* font = [UIFont systemFontOfSize:24.f];
     NSDictionary* attributes = @{NSForegroundColorAttributeName : color, NSFontAttributeName : font};
     CGSize size = [HEMAlarmAddText sizeWithAttributes:attributes];
-    CGPoint point = CGPointMake(floorf(CGRectGetWidth(rect)/2 - size.width/2),
-                                floorf(CGRectGetHeight(rect)/2 - size.height/2));
+    CGPoint point = CGPointMake(ceilf(CGRectGetWidth(rect)/2 - size.width/2),
+                                ceilf(CGRectGetHeight(rect)/2 - size.height/2) - HEMAlarmAddTextVerticalOffset);
     [HEMAlarmAddText drawAtPoint:point withAttributes:attributes];
 }
 

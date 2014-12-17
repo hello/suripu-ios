@@ -233,4 +233,14 @@
  */
 + (UIFont*)onboardingRoomCheckSensorUnitFont;
 
+/**
+ * Font used to display the question inside the insight feed tab
+ */
++ (UIFont*)feedQuestionFont;
+
+/**
+ * Font used to display the insight message inside the insight feed tab
+ */
++ (UIFont*)feedInsightMessageFont;
+
 @end

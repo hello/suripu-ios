@@ -199,4 +199,12 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
 }
 
++ (UIFont*)feedQuestionFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+}
+
++ (UIFont*)feedInsightMessageFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:13.0];
+}
+
 @end

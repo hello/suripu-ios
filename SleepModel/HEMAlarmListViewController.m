@@ -1,27 +1,37 @@
 
 #import <SenseKit/SENAlarm.h>
+#import <SenseKit/SENSettings.h>
 
 #import "UIFont+HEMStyle.h"
 
 #import "HEMAlarmListViewController.h"
+#import "HEMCardFlowLayout.h"
 #import "HEMAlarmViewController.h"
-#import "HEMAlarmListTableViewCell.h"
+#import "HEMAlarmListCell.h"
 #import "HelloStyleKit.h"
 #import "HEMAlarmAddButton.h"
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
 
-@interface HEMAlarmListViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (strong, nonatomic) CAGradientLayer* gradientLayer;
 @property (strong, nonatomic) NSArray* alarms;
-@property (weak, nonatomic) IBOutlet UITableView* tableView;
+@property (weak, nonatomic) IBOutlet UICollectionView* collectionView;
 @property (weak, nonatomic) IBOutlet HEMAlarmAddButton* addButton;
+@property (strong, nonatomic) NSDateFormatter* hour24Formatter;
+@property (strong, nonatomic) NSDateFormatter* hour12Formatter;
+@property (strong, nonatomic) NSDateFormatter* meridiemFormatter;
 @end
 
 @implementation HEMAlarmListViewController
 
-static NSUInteger HEMAlarmListLimit = 8;
+static CGFloat const HEMAlarmListButtonMinimumScale = 0.8f;
+static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
+static CGFloat const HEMAlarmListCellHeight = 96.f;
+static NSString* const HEMAlarmTimeFormat = @"%ld:%@";
+static NSString* const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
+static NSUInteger const HEMAlarmListLimit = 8;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -34,33 +44,51 @@ static NSUInteger HEMAlarmListLimit = 8;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^{
-        [self reloadData];
-        [self.tableView reloadData];
-    }];
-    [self.addButton addTarget:self action:@selector(touchDownAddAlarmButton:)
-             forControlEvents:UIControlEventTouchDown];
-    [self.addButton addTarget:self action:@selector(touchUpOutsideAddAlarmButton:)
-             forControlEvents:UIControlEventTouchUpOutside];
+    [self configureCollectionView];
+    [self configureAddButton];
+    [self configureDateFormatters];
+    [self refreshAlarmList];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     [self reloadData];
-    [self.tableView reloadData];
+    [self.collectionView reloadData];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
+    [super viewWillDisappear:animated];
     [self touchUpOutsideAddAlarmButton:nil];
 }
 
-- (void)setEditing:(BOOL)editing animated:(BOOL)animated
+- (void)configureAddButton
 {
-    [super setEditing:editing animated:animated];
-    [self.tableView setEditing:editing animated:animated];
+    [self.addButton addTarget:self action:@selector(touchDownAddAlarmButton:)
+             forControlEvents:UIControlEventTouchDown];
+    [self.addButton addTarget:self action:@selector(touchUpOutsideAddAlarmButton:)
+             forControlEvents:UIControlEventTouchUpOutside];
+}
+
+- (void)configureDateFormatters
+{
+    self.hour12Formatter = [NSDateFormatter new];
+    self.hour12Formatter.dateFormat = @"hh:mm";
+    self.hour24Formatter = [NSDateFormatter new];
+    self.hour24Formatter.dateFormat = @"H:mm";
+    self.meridiemFormatter = [NSDateFormatter new];
+    self.meridiemFormatter.dateFormat = @"a";
+}
+
+- (void)refreshAlarmList
+{
+    self.addButton.enabled = NO;
+    [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^{
+        [self reloadData];
+        [self.collectionView reloadData];
+        self.addButton.enabled = YES;
+    }];
 }
 
 - (void)reloadData
@@ -78,13 +106,11 @@ static NSUInteger HEMAlarmListLimit = 8;
 - (void)touchDownAddAlarmButton:(id)sender
 {
     [UIView animateWithDuration:0.15f animations:^{
-        self.addButton.layer.transform = CATransform3DMakeScale(HEMAlarmListButtonMinimumScale,
-                                                                HEMAlarmListButtonMinimumScale, 1.f);
+        self.addButton.layer.transform = CATransform3DMakeScale(HEMAlarmListButtonMaximumScale,
+                                                                HEMAlarmListButtonMaximumScale, 1.f);
     }];
 }
 
-static CGFloat const HEMAlarmListButtonMinimumScale = 0.8f;
-static CGFloat const HEMAlarmListButtonMaximumScale = 1.4f;
 - (void)touchUpOutsideAddAlarmButton:(id)sender
 {
     [UIView animateWithDuration:0.2f animations:^{
@@ -95,11 +121,7 @@ static CGFloat const HEMAlarmListButtonMaximumScale = 1.4f;
 - (IBAction)addNewAlarm:(id)sender
 {
     void (^animations)() = ^{
-        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.75 animations:^{
-            self.addButton.layer.transform = CATransform3DMakeScale(HEMAlarmListButtonMaximumScale,
-                                                                    HEMAlarmListButtonMaximumScale, 1.f);
-        }];
-        [UIView addKeyframeWithRelativeStartTime:0.75 relativeDuration:0.25 animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:1 animations:^{
             self.addButton.layer.transform = CATransform3DIdentity;
         }];
     };
@@ -109,9 +131,10 @@ static CGFloat const HEMAlarmListButtonMaximumScale = 1.4f;
         [self presentViewControllerForAlarm:alarm];
     };
 
+    NSUInteger options = (UIViewKeyframeAnimationOptionCalculationModeCubicPaced|UIViewAnimationOptionCurveEaseInOut);
     [UIView animateKeyframesWithDuration:0.25
                                    delay:0
-                                 options:(UIViewKeyframeAnimationOptionCalculationModeCubicPaced|UIViewAnimationOptionCurveEaseInOut)
+                                 options:options
                               animations:animations
                               completion:completion];
 }
@@ -137,60 +160,99 @@ static CGFloat const HEMAlarmListButtonMaximumScale = 1.4f;
     [self.navigationController presentViewController:controller animated:YES completion:NULL];
 }
 
-#pragma mark - UITableViewDataSource
+#pragma mark - Collection View
 
-- (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
+- (void)configureCollectionView
+{
+    CGRect bounds = [[UIScreen mainScreen] bounds];
+    HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
+    [layout setItemHeight:HEMAlarmListCellHeight];
+    UIEdgeInsets sectionInsets = layout.sectionInset;
+    sectionInsets.bottom = CGRectGetHeight(bounds) - CGRectGetMinY(self.addButton.frame);
+    layout.sectionInset = sectionInsets;
+}
+
+#pragma mark UICollectionViewDatasource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
     return self.alarms.count;
 }
 
-- (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString* identifier = [HEMMainStoryboard alarmListCellIdentifier];
-    SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
-    HEMAlarmListTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
-    cell.timeLabel.text = [alarm localizedValue];
-    cell.timeLabel.font = [UIFont settingsTitleFont];
-    
-    cell.detailLabel.text = [HEMAlarmUtils repeatTextForUnitFlags:alarm.repeatFlags];
-    cell.detailLabel.font = [UIFont settingsTableCellDetailFont];
-    
-    cell.enabledSwitch.on = [alarm isOn];
-    cell.enabledSwitch.tag = indexPath.row;
+    NSString* identifier = [HEMMainStoryboard alarmListCellReuseIdentifier];
+    HEMAlarmListCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    [self configureCell:cell atIndexPath:indexPath];
     return cell;
 }
 
-#pragma mark - UITableViewDelegate
-
-- (BOOL)tableView:(UITableView*)tableView canEditRowAtIndexPath:(NSIndexPath*)indexPath
+- (void)configureCell:(HEMAlarmListCell *)cell atIndexPath:(NSIndexPath *)indexPath
 {
-    return YES;
+    SENAlarm* alarm = self.alarms[indexPath.item];
+
+    cell.enabledSwitch.on = [alarm isOn];
+    cell.enabledSwitch.tag = indexPath.item;
+    [self updateDetailTextInCell:cell fromAlarm:alarm];
+    [self updateTimeTextInCell:cell fromAlarm:alarm];
 }
 
-- (void)tableView:(UITableView*)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle
-forRowAtIndexPath:(NSIndexPath*)indexPath
+- (void)updateTimeTextInCell:(HEMAlarmListCell *)cell fromAlarm:(SENAlarm *)alarm
 {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
-        [alarm delete];
-        [self reloadData];
-        __weak typeof(self) weakSelf = self;
-        [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (!success) {
-                [alarm save];
-                [strongSelf reloadData];
-                [strongSelf.tableView reloadData];
-            }
-        }];
-        [tableView deleteRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
+    cell.timeLabel.text = [self localizedTimeForAlarm:alarm];
+    if ([SENSettings timeFormat] == SENTimeFormat12Hour) {
+        NSString* meridiem = alarm.hour < 12 ? @"am" : @"pm";
+        NSString* key = [NSString stringWithFormat:HEMAlarmListTimeKey, meridiem];
+        cell.meridiemLabel.text = NSLocalizedString(key, nil);
+    } else {
+        cell.meridiemLabel.text = nil;
     }
 }
 
-- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
+- (void)updateDetailTextInCell:(HEMAlarmListCell *)cell fromAlarm:(SENAlarm *)alarm
 {
-    [self.tableView deselectRowAtIndexPath:indexPath animated:YES];
-    SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.row];
+    NSString* detailFormat;
+
+    if ([alarm isSmartAlarm])
+        detailFormat = NSLocalizedString(@"alarms.smart-alarm.format", nil);
+    else
+        detailFormat = NSLocalizedString(@"alarms.alarm.format", nil);
+
+    NSString* repeatText = [HEMAlarmUtils repeatTextForUnitFlags:alarm.repeatFlags];
+    NSString* detailText = [[NSString stringWithFormat:detailFormat, repeatText] uppercaseString];
+    NSDictionary* attributes = @{
+        NSFontAttributeName : cell.detailLabel.font,
+        NSForegroundColorAttributeName : cell.detailLabel.textColor,
+        NSKernAttributeName : @(1.3f)
+    };
+
+    cell.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:detailText attributes:attributes];
+}
+
+- (NSString *)localizedTimeForAlarm:(SENAlarm *)alarm
+{
+    struct SENAlarmTime time = (struct SENAlarmTime){ .hour = alarm.hour, .minute = alarm.minute };
+    NSString* minuteText = time.minute < 10
+        ? [NSString stringWithFormat:@"0%ld", (long)time.minute]
+        : [NSString stringWithFormat:@"%ld", (long)time.minute];
+    if ([SENSettings timeFormat] == SENTimeFormat12Hour) {
+        if (time.hour > 12) {
+            time.hour = (long)(time.hour - 12);
+        }
+        else if (time.hour == 0) {
+            time.hour = 12;
+        }
+    }
+    return [NSString stringWithFormat:HEMAlarmTimeFormat, time.hour, minuteText];
+}
+
+#pragma mark UICollectionViewDelegate
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    [collectionView deselectItemAtIndexPath:indexPath animated:YES];
+    SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.item];
     [self presentViewControllerForAlarm:alarm];
 }
 

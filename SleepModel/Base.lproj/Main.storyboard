@@ -1357,26 +1357,74 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3hH-M3-tDn">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3hH-M3-tDn">
+                                <rect key="frame" x="0.0" y="72" width="600" height="480"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="tml-Wh-kmO">
-                                    <size key="itemSize" width="50" height="50"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="tml-Wh-kmO" customClass="HEMCardFlowLayout">
+                                    <size key="itemSize" width="568.5" height="96"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="qn6-Ss-e8C">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="alarmListCell" id="qn6-Ss-e8C" customClass="HEMAlarmListCell">
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="568.5" height="96"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RM9-XI-qde">
+                                                    <rect key="frame" x="16" y="38" width="71" height="49.5"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="36"/>
+                                                    <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SMART ALARM – WEEKDAYS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tbK-mA-0ly">
+                                                    <rect key="frame" x="16" y="16" width="138.5" height="14"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="10"/>
+                                                    <color key="textColor" white="0.75240162037037039" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6IN-Cs-tBU">
+                                                    <rect key="frame" x="503" y="48" width="51" height="31"/>
+                                                    <color key="onTintColor" red="0.1176470667" green="0.68235296010000002" blue="0.98823535439999999" alpha="1" colorSpace="deviceRGB"/>
+                                                    <connections>
+                                                        <action selector="flippedEnabledSwitch:" destination="Mem-QL-GCW" eventType="valueChanged" id="wXu-yW-WQo"/>
+                                                    </connections>
+                                                </switch>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2r6-zA-JWU">
+                                                    <rect key="frame" x="87" y="57.5" width="25.5" height="22"/>
+                                                    <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="16"/>
+                                                    <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="RM9-XI-qde" firstAttribute="leading" secondItem="tbK-mA-0ly" secondAttribute="leading" id="7kC-sd-bEK"/>
+                                            <constraint firstItem="tbK-mA-0ly" firstAttribute="leading" secondItem="qn6-Ss-e8C" secondAttribute="leading" constant="16" id="Ovn-C6-BjM"/>
+                                            <constraint firstItem="6IN-Cs-tBU" firstAttribute="centerY" secondItem="RM9-XI-qde" secondAttribute="centerY" id="Qmp-v4-mgg"/>
+                                            <constraint firstAttribute="bottom" secondItem="RM9-XI-qde" secondAttribute="bottom" constant="8" id="g8S-Yx-qA1"/>
+                                            <constraint firstItem="tbK-mA-0ly" firstAttribute="top" secondItem="qn6-Ss-e8C" secondAttribute="top" constant="16" id="hy2-3c-Cdg"/>
+                                            <constraint firstAttribute="trailing" secondItem="6IN-Cs-tBU" secondAttribute="trailing" constant="16" id="swi-yE-jda"/>
+                                            <constraint firstItem="RM9-XI-qde" firstAttribute="centerY" secondItem="2r6-zA-JWU" secondAttribute="centerY" constant="-5.5" id="uWE-bk-gxt"/>
+                                            <constraint firstItem="2r6-zA-JWU" firstAttribute="leading" secondItem="RM9-XI-qde" secondAttribute="trailing" id="zy9-zb-T6U"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="detailLabel" destination="tbK-mA-0ly" id="GE1-Qx-Itc"/>
+                                            <outlet property="enabledSwitch" destination="6IN-Cs-tBU" id="XuJ-hB-PHs"/>
+                                            <outlet property="meridiemLabel" destination="2r6-zA-JWU" id="auf-ZM-zN7"/>
+                                            <outlet property="timeLabel" destination="RM9-XI-qde" id="uxJ-1W-UBC"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="Mem-QL-GCW" id="Y1K-l1-RVd"/>
+                                    <outlet property="delegate" destination="Mem-QL-GCW" id="hjH-3c-UDi"/>
+                                </connections>
                             </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2BJ-ze-ubh" customClass="HEMAlarmAddButton">
                                 <rect key="frame" x="275" y="479" width="50" height="50"/>
@@ -1397,17 +1445,22 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="2BJ-ze-ubh" secondAttribute="centerX" id="P2e-61-uUp"/>
+                            <constraint firstItem="9Gu-MH-hXF" firstAttribute="top" secondItem="3hH-M3-tDn" secondAttribute="bottom" constant="48" id="eLI-4v-Ofx"/>
+                            <constraint firstItem="3hH-M3-tDn" firstAttribute="top" secondItem="2cE-92-oPr" secondAttribute="top" constant="8" id="hOg-kp-4SK"/>
+                            <constraint firstItem="3hH-M3-tDn" firstAttribute="leading" secondItem="S2E-t2-8bL" secondAttribute="leadingMargin" constant="-16" id="s8d-2g-Jlt"/>
                             <constraint firstItem="9Gu-MH-hXF" firstAttribute="top" secondItem="2BJ-ze-ubh" secondAttribute="bottom" constant="71" id="yVF-as-vqJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3hH-M3-tDn" secondAttribute="trailing" constant="-16" id="zMm-dG-LcW"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7Hs-Rn-K1S"/>
                     <connections>
                         <outlet property="addButton" destination="2BJ-ze-ubh" id="u08-zi-1Yb"/>
+                        <outlet property="collectionView" destination="3hH-M3-tDn" id="8Ya-4u-glT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ita-56-GRs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3426" y="-1450"/>
+            <point key="canvasLocation" x="3409.5" y="-1450"/>
         </scene>
         <!--Sound-->
         <scene sceneID="hmY-EV-EJQ">
@@ -1513,7 +1566,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="2SF-Wz-APV">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="72" width="600" height="480"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="Kxy-bs-n5o" customClass="HEMCardFlowLayout">
                                     <size key="itemSize" width="560" height="95"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
@@ -1595,8 +1648,8 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="i2H-c6-eq3" firstAttribute="top" secondItem="2SF-Wz-APV" secondAttribute="bottom" id="4RJ-ll-K4i"/>
-                            <constraint firstItem="2SF-Wz-APV" firstAttribute="top" secondItem="fd7-5i-ar9" secondAttribute="bottom" constant="-64" id="Jtc-8H-0Zc"/>
+                            <constraint firstItem="i2H-c6-eq3" firstAttribute="top" secondItem="2SF-Wz-APV" secondAttribute="bottom" constant="48" id="4RJ-ll-K4i"/>
+                            <constraint firstItem="2SF-Wz-APV" firstAttribute="top" secondItem="fd7-5i-ar9" secondAttribute="top" constant="8" id="Jtc-8H-0Zc"/>
                             <constraint firstItem="2SF-Wz-APV" firstAttribute="leading" secondItem="REg-4p-5tB" secondAttribute="leading" id="N2Q-YD-ECI"/>
                             <constraint firstAttribute="trailing" secondItem="2SF-Wz-APV" secondAttribute="trailing" id="yrU-0Q-sIG"/>
                         </constraints>

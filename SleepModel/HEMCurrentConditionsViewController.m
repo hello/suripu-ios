@@ -45,14 +45,9 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 
 - (void)viewDidDisappear:(BOOL)animated
 {
-    [self.refreshTimer invalidate];
+    [self invalidateTimers];
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
-- (void)dealloc
-{
-    [_refreshTimer invalidate];
 }
 
 - (void)registerForNotifications
@@ -68,6 +63,10 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
     [center addObserver:self
                selector:@selector(restartRefreshTimers)
                    name:SENAuthorizationServiceDidAuthorizeNotification
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(invalidateTimers)
+                   name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
 }
 
@@ -138,7 +137,7 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 
 - (void)updateTimer
 {
-    [self.refreshTimer invalidate];
+    [self invalidateTimers];
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:self.refreshRate
                                                          target:self
                                                        selector:@selector(refreshCachedSensors)
@@ -149,6 +148,11 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 - (void)restartRefreshTimers {
     self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
     [self refreshCachedSensors];
+}
+
+- (void)invalidateTimers
+{
+    [self.refreshTimer invalidate];
 }
 
 #pragma mark - UICollectionView

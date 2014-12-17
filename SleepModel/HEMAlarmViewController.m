@@ -9,9 +9,9 @@
 #import "HEMAlarmSoundTableViewController.h"
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMAlarmCache.h"
-#import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMAlarmUtils.h"
+#import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMMainStoryboard.h"
 
@@ -94,17 +94,6 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
     }
 }
 
-- (void)configureViewBackground
-{
-    if (!self.gradientLayer) {
-        self.gradientLayer = [CAGradientLayer new];
-        [self.view.layer insertSublayer:self.gradientLayer atIndex:0];
-    }
-    CGFloat y = (self.edgesForExtendedLayout & UIRectEdgeTop) ? -(CGRectGetHeight(self.navigationController.navigationBar.frame) + CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame])) : 0;
-    self.gradientLayer.frame = CGRectMake(0, y, CGRectGetWidth(self.view.bounds), CGRectGetHeight(self.view.bounds));
-    [HEMColorUtils configureLayer:self.gradientLayer forHourOfDay:self.alarmCache.hour];
-}
-
 - (void)updateNavigationBar
 {
     NSDictionary* attributes = @{NSForegroundColorAttributeName:[UIColor whiteColor],
@@ -133,7 +122,6 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
     NSString* rawText = [NSString stringWithFormat:NSLocalizedString(@"alarm.time-range.format", nil), earliestAlarmTimeText, currentAlarmTimeText];
     self.wakeUpInstructionsLabel.attributedText = markdown_to_attr_string(rawText, 0, self.markdownAttributes);
     self.alarmChangeInstructionsLabel.attributedText = markdown_to_attr_string(NSLocalizedString(@"alarm.update.instructions", nil), 0, self.markdownAttributes);
-    [self configureViewBackground];
 }
 
 - (struct SENAlarmTime)timeFromCachedValues

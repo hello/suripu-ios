@@ -17,7 +17,7 @@
 #import "HEMOnboardingUtils.h"
 #import "HEMActionButton.h"
 #import "HEMSensorCheckView.h"
-#import "HEMSensorUtils.h"
+#import "UIColor+HEMStyle.h"
 
 static CGFloat const HEMRoomCheckShowSensorDelay = 1.0f;
 static CGFloat const HEMRoomCheckDataDisplayTime = 2.0f;
@@ -87,7 +87,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
         NSString* message = [NSString stringWithFormat:format, [sensor localizedName]];
         attrMessage = [self attributedMessage:message];
     } else {
-        UIColor* conditionColor = [HEMSensorUtils colorForSensorWithCondition:[sensor condition]];
+        UIColor* conditionColor = [UIColor colorForSensorWithCondition:[sensor condition]];
         NSDictionary* statusAttributes = @{
             @(EMPH)  : @{ NSForegroundColorAttributeName : conditionColor},
             @(PLAIN) : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont]}
@@ -152,7 +152,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                                                   message:[self attributedMessage:message]
                                              introMessage:NSLocalizedString(@"onboarding.room-check.intro.sound", nil)
                                                     value:30
-                                            andValueColor:[HEMSensorUtils colorForSensorWithCondition:SENSensorConditionIdeal]
+                                            andValueColor:[UIColor colorForSensorWithCondition:SENSensorConditionIdeal]
                                                  withUnit:NSLocalizedString(@"measurement.db.unit", nil)
                                                       atY:nextY] bounds]);
     
@@ -163,7 +163,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                         message:[self attributedMessage:message]
                    introMessage:NSLocalizedString(@"onboarding.room-check.intro.light", nil)
                           value:200
-                  andValueColor:[HEMSensorUtils colorForSensorWithCondition:SENSensorConditionIdeal]
+                  andValueColor:[UIColor colorForSensorWithCondition:SENSensorConditionIdeal]
                        withUnit:NSLocalizedString(@"measurement.lx.unit", nil)
                             atY:nextY];
     
@@ -212,7 +212,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                                message:[self messageForSensor:sensor]
                           introMessage:intro
                                  value:[[sensor value] integerValue]
-                         andValueColor:[HEMSensorUtils colorForSensorWithCondition:[sensor condition]]
+                         andValueColor:[UIColor colorForSensorWithCondition:[sensor condition]]
                               withUnit:[sensor localizedUnit]
                                    atY:yOrigin];
 }

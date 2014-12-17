@@ -1,7 +1,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HEMCurrentConditionsTableViewController : UIViewController
+@interface HEMCurrentConditionsViewController : UIViewController
 
 - (void)openDetailViewForSensorNamed:(NSString *)name;
 @end

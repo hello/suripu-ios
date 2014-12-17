@@ -7,7 +7,6 @@
 #import "HEMAlarmViewController.h"
 #import "HEMAlarmListTableViewCell.h"
 #import "HelloStyleKit.h"
-#import "HEMColorUtils.h"
 #import "HEMAlarmAddButton.h"
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
@@ -27,7 +26,6 @@ static NSUInteger HEMAlarmListLimit = 8;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setNeedsStatusBarAppearanceUpdate];
     self.title = NSLocalizedString(@"alarms.title", nil);
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.addButton setTitleColor:[UIColor colorWithWhite:0.9 alpha:0.25] forState:UIControlStateDisabled];
@@ -40,46 +38,8 @@ static NSUInteger HEMAlarmListLimit = 8;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self updateNavigationBarStyle];
-    [self configureViewBackground];
     [self reloadData];
     [self.tableView reloadData];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setTintColor:[HelloStyleKit backViewNavTitleColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
-        NSFontAttributeName : [UIFont settingsTitleFont]
-    }];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-}
-
-- (void)updateNavigationBarStyle
-{
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-                                                                      NSForegroundColorAttributeName : [UIColor whiteColor],
-                                                                      NSFontAttributeName : [UIFont settingsTitleFont]
-                                                                      }];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent];
-    [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
-    [self.editButtonItem setTitleTextAttributes:@{NSForegroundColorAttributeName:[UIColor whiteColor],
-                                                  NSFontAttributeName: [UIFont navButtonTitleFont]}
-                                       forState:UIControlStateNormal];
-}
-
-- (void)configureViewBackground
-{
-    if (!self.gradientLayer) {
-        self.gradientLayer = [CAGradientLayer new];
-        [self.view.layer insertSublayer:self.gradientLayer atIndex:0];
-    }
-    self.gradientLayer.frame = CGRectMake(0, 0, CGRectGetWidth(self.view.bounds), CGRectGetHeight([UIScreen mainScreen].bounds));
-    [HEMColorUtils configureLayer:self.gradientLayer forHourOfDay:7];
-    self.tableView.backgroundColor = [UIColor clearColor];
 }
 
 - (void)setEditing:(BOOL)editing animated:(BOOL)animated

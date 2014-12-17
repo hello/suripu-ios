@@ -14,7 +14,6 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSlideViewController+Protected.h"
-#import "HEMColorUtils.h"
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HelloStyleKit.h"
 
@@ -48,7 +47,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self addBackgroundGradientLayer];
     [self addTopShadow];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
@@ -68,14 +66,6 @@
      | UIPageViewControllerNavigationDirectionReverse
                     animated:NO
                   completion:nil];
-}
-
-- (void)addBackgroundGradientLayer {
-    CAGradientLayer* layer = [CAGradientLayer layer];
-    [layer setFrame:[[self view] bounds]];
-    [HEMColorUtils configureLayer:layer forHourOfDay:24];
-    [[[self view] layer] insertSublayer:layer atIndex:0];
-    [self setBgGradientLayer:layer];
 }
 
 - (void)addTopShadow {

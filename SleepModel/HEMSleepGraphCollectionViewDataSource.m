@@ -17,8 +17,8 @@
 #import "HEMPresleepItemCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HelloStyleKit.h"
-#import "HEMColorUtils.h"
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
 NSString* const HEMSleepEventTypeLight = @"LIGHT";
@@ -310,7 +310,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMNoSleepEventCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
-    [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[HEMColorUtils colorForSleepDepth:sleepDepth]];
+    [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[UIColor colorForSleepDepth:sleepDepth]];
     return cell;
 }
 
@@ -327,13 +327,13 @@ static NSString* const sensorTypeParticulates = @"particulates";
     BOOL showLargeButton = [segment.eventType isEqualToString:HEMSleepEventTypeWakeUp]
         || [segment.eventType isEqualToString:HEMSleepEventTypeFallAsleep];
     [cell showLargeButton:showLargeButton];
-    cell.eventTypeButton.layer.borderColor = [HEMColorUtils colorForSleepDepth:sleepDepth].CGColor;
+    cell.eventTypeButton.layer.borderColor = [UIColor colorForSleepDepth:sleepDepth].CGColor;
     cell.eventTimeLabel.text = [self textForTimeInterval:[segment.date timeIntervalSince1970]];
 
     cell.eventTitleLabel.text = [[self class] localizedNameForSleepEventType:segment.eventType];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
-    [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[HEMColorUtils colorForSleepDepth:sleepDepth]];
+    [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[UIColor colorForSleepDepth:sleepDepth]];
     return cell;
 }
 

@@ -1,7 +1,6 @@
 
 #import <SenseKit/SENBackgroundNoise.h>
 #import "HEMSleepSoundTableViewController.h"
-#import "HEMColorUtils.h"
 #import "HelloStyleKit.h"
 
 static NSString* const SleepSoundCellIdentifier = @"sleepSoundCell";

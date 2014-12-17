@@ -18,7 +18,6 @@ static NSString *const _HEMalarmRepeat = @"alarmRepeat";
 static NSString *const _HEMalarmRepeatTableViewController = @"alarmRepeatTableViewController";
 static NSString *const _HEMalarmSoundTableViewController = @"alarmSoundTableViewController";
 static NSString *const _HEMalarmViewController = @"alarmViewController";
-static NSString *const _HEMcurrentConditionsCell = @"currentConditionsCell";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdeviceCell = @"deviceCell";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
@@ -35,6 +34,7 @@ static NSString *const _HEMpill = @"pill";
 static NSString *const _HEMpillInfoCell = @"pillInfoCell";
 static NSString *const _HEMsense = @"sense";
 static NSString *const _HEMsenseInfoCell = @"senseInfoCell";
+static NSString *const _HEMsensorGraphCell = @"sensorGraphCell";
 static NSString *const _HEMsensorViewController = @"sensorViewController";
 static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMsettingsController = @"settingsController";
@@ -58,13 +58,13 @@ static NSString *const _HEMupdatePasswordSegue = @"updatePasswordSegue";
 /** Cell Reuse Identifiers */
 +(NSString *)alarmChoiceCellReuseIdentifier { return _HEMalarmChoiceCell; }
 +(NSString *)alarmListCellIdentifier { return _HEMalarmListCellIdentifier; }
-+(NSString *)currentConditionsCellReuseIdentifier { return _HEMcurrentConditionsCell; }
 +(NSString *)deviceCellReuseIdentifier { return _HEMdeviceCell; }
 +(NSString *)firmwareUpdateCellReuseIdentifier { return _HEMfirmwareUpdateCell; }
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
 +(NSString *)pillInfoCellReuseIdentifier { return _HEMpillInfoCell; }
 +(NSString *)senseInfoCellReuseIdentifier { return _HEMsenseInfoCell; }
++(NSString *)sensorGraphCellReuseIdentifier { return _HEMsensorGraphCell; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
 +(NSString *)singleReuseIdentifier { return _HEMsingle; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }

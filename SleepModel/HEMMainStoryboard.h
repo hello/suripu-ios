@@ -21,7 +21,7 @@
 +(NSString *)pillInfoCellReuseIdentifier;
 +(NSString *)alarmListCellIdentifier;
 +(NSString *)alarmChoiceCellReuseIdentifier;
-+(NSString *)currentConditionsCellReuseIdentifier;
++(NSString *)sensorGraphCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 
 /** Segue Identifiers */

@@ -18,8 +18,19 @@ CGFloat const HEMSnazzBarAnimationDuration = 0.25f;
 
 @implementation HEMSnazzBar
 
-static CGFloat const HEMSnazzBarMargin = 8.f;
-static CGFloat const HEMSnazzBarIndicatorHeight = 2.f;
+static CGFloat const HEMSnazzBarMargin = 0.f;
+static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
+
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    if (self = [super initWithFrame:frame]) {
+        self.layer.shadowOffset = CGSizeMake(1, 0);
+        self.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
+        self.layer.shadowRadius = 2.f;
+        self.layer.shadowOpacity = 0.5f;
+    }
+    return self;
+}
 
 - (void)layoutSubviews
 {

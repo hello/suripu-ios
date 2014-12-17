@@ -23,10 +23,17 @@
 
 static NSUInteger HEMAlarmListLimit = 8;
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        self.tabBarItem.title = NSLocalizedString(@"alarms.title", nil);
+        self.tabBarItem.image = [HelloStyleKit alarmBarIcon];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.title = NSLocalizedString(@"alarms.title", nil);
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
     [self.addButton setTitleColor:[UIColor colorWithWhite:0.9 alpha:0.25] forState:UIControlStateDisabled];
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^{

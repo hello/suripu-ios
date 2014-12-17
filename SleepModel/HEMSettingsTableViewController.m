@@ -26,6 +26,13 @@ static NSInteger const HEMSettingsTroubleshootingIndex = 4;
 static NSInteger const HEMSettingsSupportIndex = 5;
 static NSInteger const HEMSettingsSignOutIndex = 6;
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        self.tabBarItem.image = [HelloStyleKit settingsBarIcon];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

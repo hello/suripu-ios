@@ -7,11 +7,25 @@
 //
 
 #import "HEMTrendsViewController.h"
+#import "HelloStyleKit.h"
 
 @interface HEMTrendsViewController ()
 
 @end
 
 @implementation HEMTrendsViewController
+
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        self.tabBarItem.image = [HelloStyleKit trendsBarIcon];
+    }
+    return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+
+}
 
 @end

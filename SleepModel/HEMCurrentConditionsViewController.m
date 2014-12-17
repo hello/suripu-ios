@@ -29,11 +29,18 @@ static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
 static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        self.tabBarItem.title = NSLocalizedString(@"current-conditions.title", nil);
+        self.tabBarItem.image = [HelloStyleKit sensorsBarIcon];
+    }
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self configureCollectionView];
-    self.tabBarItem.title = NSLocalizedString(@"current-conditions.title", nil);
     self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
 }
 

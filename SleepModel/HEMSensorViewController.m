@@ -148,7 +148,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 
     self.unitLabel.text = [self.sensor localizedUnit];
     NSDictionary* statusAttributes = @{
-        @(EMPH)  : @{ NSForegroundColorAttributeName : conditionColor},
+        @(STRONG)  : @{ NSForegroundColorAttributeName : conditionColor},
         @(PLAIN) : @{ NSFontAttributeName : [UIFont settingsInsightMessageFont]}
     };
 

@@ -25,10 +25,6 @@
             <string>Agile-Light</string>
             <string>Agile-Light</string>
             <string>Agile-Light</string>
-            <string>Agile-Light</string>
-        </mutableArray>
-        <mutableArray key="Agile-Thin.otf">
-            <string>Agile-Thin</string>
         </mutableArray>
         <mutableArray key="Calibre-Light.otf">
             <string>Calibre-Light</string>
@@ -1361,78 +1357,36 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="75" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="x7f-NG-ha0">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="separatorColor" white="0.81421076640000001" alpha="0.29999999999999999" colorSpace="calibratedWhite"/>
-                                <view key="tableFooterView" contentMode="scaleToFill" id="xtu-dn-RSF">
-                                    <rect key="frame" x="0.0" y="96" width="600" height="160"/>
-                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                </view>
-                                <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="alarmListCellIdentifier" id="YD4-ny-bh9" customClass="HEMAlarmListTableViewCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="3hH-M3-tDn">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="tml-Wh-kmO">
+                                    <size key="itemSize" width="50" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="qn6-Ss-e8C">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="YD4-ny-bh9" id="Bf7-2L-uny">
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="7:30am" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xgw-vw-4jI">
-                                                    <rect key="frame" x="18" y="4" width="111" height="41"/>
-                                                    <fontDescription key="fontDescription" name="Agile-Thin" family="Agile" pointSize="34"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Smart Alarm: Mon Wed Fri" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yB4-zE-S5q">
-                                                    <rect key="frame" x="18" y="46" width="489" height="17"/>
-                                                    <fontDescription key="fontDescription" name="Agile-Light" family="Agile" pointSize="14"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="chevronIconRight.png" translatesAutoresizingMaskIntoConstraints="NO" id="9pV-CA-cJw">
-                                                    <rect key="frame" x="574" y="28" width="10" height="18"/>
-                                                </imageView>
-                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tzw-bG-wHw">
-                                                    <rect key="frame" x="515" y="22" width="51" height="31"/>
-                                                    <connections>
-                                                        <action selector="flippedEnabledSwitch:" destination="Mem-QL-GCW" eventType="valueChanged" id="cH4-aT-k6h"/>
-                                                    </connections>
-                                                </switch>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Xgw-vw-4jI" firstAttribute="leading" secondItem="Bf7-2L-uny" secondAttribute="leadingMargin" constant="10" id="24Y-G0-n47"/>
-                                                <constraint firstItem="9pV-CA-cJw" firstAttribute="trailing" secondItem="Bf7-2L-uny" secondAttribute="trailingMargin" constant="-8" id="3yW-st-rK2"/>
-                                                <constraint firstItem="9pV-CA-cJw" firstAttribute="leading" secondItem="tzw-bG-wHw" secondAttribute="trailing" constant="10" id="4XG-2u-ekG"/>
-                                                <constraint firstAttribute="centerY" secondItem="tzw-bG-wHw" secondAttribute="centerY" id="9qP-Eg-5uE"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="yB4-zE-S5q" secondAttribute="bottom" constant="4" id="HDw-0f-OTk"/>
-                                                <constraint firstItem="Xgw-vw-4jI" firstAttribute="leading" secondItem="yB4-zE-S5q" secondAttribute="leading" id="HlY-jb-gcV"/>
-                                                <constraint firstAttribute="centerY" secondItem="9pV-CA-cJw" secondAttribute="centerY" id="Lfz-Vj-oHU"/>
-                                                <constraint firstItem="yB4-zE-S5q" firstAttribute="top" secondItem="Xgw-vw-4jI" secondAttribute="bottom" constant="1" id="YgP-2b-5wQ"/>
-                                                <constraint firstItem="tzw-bG-wHw" firstAttribute="leading" secondItem="yB4-zE-S5q" secondAttribute="trailing" constant="8" id="pvQ-b1-O8R"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <connections>
-                                            <outlet property="detailLabel" destination="yB4-zE-S5q" id="BRS-ez-0Wg"/>
-                                            <outlet property="enabledSwitch" destination="tzw-bG-wHw" id="KQE-zC-cVJ"/>
-                                            <outlet property="timeLabel" destination="Xgw-vw-4jI" id="dov-sH-4PJ"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                                <connections>
-                                    <outlet property="dataSource" destination="Mem-QL-GCW" id="1ak-ct-wJe"/>
-                                    <outlet property="delegate" destination="Mem-QL-GCW" id="ZxZ-PN-uqZ"/>
-                                </connections>
-                            </tableView>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                    </collectionViewCell>
+                                </cells>
+                            </collectionView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2BJ-ze-ubh" customClass="HEMAlarmAddButton">
-                                <rect key="frame" x="270" y="469" width="60" height="60"/>
+                                <rect key="frame" x="275" y="479" width="50" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="60" id="jab-b1-CFU"/>
-                                    <constraint firstAttribute="height" constant="60" id="wrd-CX-Wzr"/>
+                                    <constraint firstAttribute="width" constant="50" id="jab-b1-CFU"/>
+                                    <constraint firstAttribute="height" constant="50" id="wrd-CX-Wzr"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="36"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <state key="normal" title="+">
-                                    <color key="titleColor" red="0.26274511218070984" green="0.27843138575553894" blue="0.29411765933036804" alpha="1" colorSpace="deviceRGB"/>
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1440,19 +1394,15 @@
                                 </connections>
                             </button>
                         </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="9Gu-MH-hXF" firstAttribute="top" secondItem="x7f-NG-ha0" secondAttribute="bottom" id="86e-Wt-0eM"/>
-                            <constraint firstItem="x7f-NG-ha0" firstAttribute="leading" secondItem="S2E-t2-8bL" secondAttribute="leading" id="Nbu-rP-Lcl"/>
                             <constraint firstAttribute="centerX" secondItem="2BJ-ze-ubh" secondAttribute="centerX" id="P2e-61-uUp"/>
-                            <constraint firstItem="x7f-NG-ha0" firstAttribute="top" secondItem="2cE-92-oPr" secondAttribute="top" id="nxH-bO-3Ac"/>
-                            <constraint firstAttribute="trailing" secondItem="x7f-NG-ha0" secondAttribute="trailing" id="oIr-8R-cis"/>
                             <constraint firstItem="9Gu-MH-hXF" firstAttribute="top" secondItem="2BJ-ze-ubh" secondAttribute="bottom" constant="71" id="yVF-as-vqJ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="7Hs-Rn-K1S"/>
                     <connections>
                         <outlet property="addButton" destination="2BJ-ze-ubh" id="u08-zi-1Yb"/>
-                        <outlet property="tableView" destination="x7f-NG-ha0" id="KgQ-Zl-787"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ita-56-GRs" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2144,7 +2094,6 @@
     <resources>
         <image name="alarmRepeatIcon.png" width="22" height="22"/>
         <image name="alarmSoundIcon.png" width="21" height="23"/>
-        <image name="chevronIconRight.png" width="10" height="18"/>
         <image name="questionIcon.png" width="18" height="19"/>
         <image name="questions_check.png" width="20" height="15"/>
         <image name="questions_circle.png" width="21" height="21"/>

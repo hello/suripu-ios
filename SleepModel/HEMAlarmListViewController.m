@@ -35,7 +35,6 @@ static NSUInteger HEMAlarmListLimit = 8;
 {
     [super viewDidLoad];
     self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    [self.addButton setTitleColor:[UIColor colorWithWhite:0.9 alpha:0.25] forState:UIControlStateDisabled];
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^{
         [self reloadData];
         [self.tableView reloadData];

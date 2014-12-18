@@ -67,6 +67,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 #pragma mark - Insights
 
 - (SENInsight*)insightAtIndexPath:(NSIndexPath*)indexPath {
+    if ([indexPath row] >= [[self data] count]) return nil;
+    
     id dataObj = [self data][[indexPath row]];
     return [dataObj isKindOfClass:[SENInsight class]] ? dataObj : nil;
 }
@@ -93,6 +95,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 #pragma mark - Questions
 
 - (void)removeQuestionAtIndexPath:(NSIndexPath*)indexPath {
+    if ([indexPath row] >= [[self data] count]) return;
+    
     id dataObj = [self data][[indexPath row]];
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
         NSMutableArray* mutableData = [[self data] mutableCopy];
@@ -102,6 +106,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 }
 
 - (SENQuestion*)questionAtIndexPath:(NSIndexPath*)indexPath {
+    if ([indexPath row] >= [[self data] count]) return nil;
+    
     id dataObj = [self data][[indexPath row]];
     return [dataObj isKindOfClass:[SENQuestion class]] ? dataObj : nil;
 }
@@ -135,9 +141,9 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 #pragma mark - CollectionView
 
 - (CGFloat)bodyTextPaddingForCellAtIndexPath:(NSIndexPath*)indexPath {
+    if ([indexPath row] >= [[self data] count]) return 0.0f;
+    
     CGFloat padding = 0.0f;
-    if ([[self data] count] >= [indexPath row])
-        return 0;
     id dataObj = [self data][[indexPath row]];
     
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
@@ -150,6 +156,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 }
 
 - (NSString*)dateForCellAtIndexPath:(NSIndexPath*)indexPath {
+    if ([indexPath row] >= [[self data] count]) return nil;
+    
     NSString* date = nil;
     id dataObj = [self data][[indexPath row]];
 
@@ -162,6 +170,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 }
 
 - (NSString*)insightTitleForCellAtIndexPath:(NSIndexPath*)indexPath {
+    if ([indexPath row] >= [[self data] count]) return nil;
+    
     NSString* title = nil;
     id dataObj = [self data][[indexPath row]];
     
@@ -174,6 +184,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 }
 
 - (NSString*)bodyTextForCellAtIndexPath:(NSIndexPath*)indexPath {
+    if ([indexPath row] >= [[self data] count]) return nil;
+    
     NSString* body = nil;
     id dataObj = [self data][[indexPath row]];
     

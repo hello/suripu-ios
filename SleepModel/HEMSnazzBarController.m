@@ -92,6 +92,7 @@ static CGFloat const HEMSnazzContentGestureMargin = 34.f;
     CGFloat minX = -floorf(CGRectGetWidth(self.view.bounds)/3);
     CGRect frame = self.buttonsBar.frame;
     frame.origin.x = (1 - ratio) * minX;
+    self.buttonsBar.backgroundColor = [UIColor colorWithWhite:1 alpha:ratio];
     self.buttonsBar.frame = frame;
 }
 

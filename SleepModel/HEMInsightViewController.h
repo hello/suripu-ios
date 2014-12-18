@@ -9,20 +9,9 @@
 #import <UIKit/UIKit.h>
 
 @class SENInsight;
-@class HEMInsightViewController;
-
-@protocol HEMInsightViewControllerDelegate <NSObject>
-
-- (void)didDismissInsightFrom:(HEMInsightViewController*)controller;
-
-@optional
-- (UIView*)viewToShowThroughFrom:(HEMInsightViewController*)controller;
-
-@end
 
 @interface HEMInsightViewController : UIViewController
 
 @property (nonatomic, strong) SENInsight* insight;
-@property (nonatomic, weak)   id<HEMInsightViewControllerDelegate> delegate;
 
 @end

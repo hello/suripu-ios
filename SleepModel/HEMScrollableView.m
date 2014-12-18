@@ -118,9 +118,19 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
 }
 
 - (void)addTitle:(NSString*)title {
+    NSDictionary* attributes = @{NSFontAttributeName : [UIFont onboardingTitleFont],
+                                 NSForegroundColorAttributeName : [UIColor blackColor]};
+    NSAttributedString* attributedTitle
+        = [[NSAttributedString alloc] initWithString:title attributes:attributes];
+    
+    [self addAttributedTitle:attributedTitle withYOffset:0.0f];
+}
+
+- (void)addAttributedTitle:(NSAttributedString*)title withYOffset:(CGFloat)y {
+    
     CGRect labelFrame = {
         0.0f,
-        [self nextY],
+        [self nextY] + y,
         CGRectGetWidth([[self scrollView] bounds]),
         HEMScrollableTitleHeight
     };
@@ -129,16 +139,15 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [label setTranslatesAutoresizingMaskIntoConstraints:YES];
     [label setBackgroundColor:[[self scrollView] backgroundColor]];
-    [label setFont:[UIFont onboardingTitleFont]];
-    [label setText:title];
+    [label setAttributedText:title];
     [label setNumberOfLines:2]; // max two lines
-    [label setTextColor:[UIColor blackColor]];
     [[self scrollView] addSubview:label];
     
     [self updateContentSize];
     
     [self setPrevAddedContent:HEMScrollableContentTypeTitle];
     [self setLastContentView:label];
+    
 }
 
 - (void)addImage:(UIImage*)image {

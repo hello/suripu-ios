@@ -20,14 +20,14 @@
 + (UIFont *)insightTitleFont;
 
 /**
- * Font for the title displayed on insight cards
+ * Font for the message displayed on insight full view
  */
-+ (UIFont *)insightCardTitleFont;
++ (UIFont *)insightFullMessageFont;
 
 /**
- * Font for the message displayed on insight cards
+ * Font for the bold message displayed on insight full view
  */
-+ (UIFont *)insightCardMessageFont;
++ (UIFont *)insightFullMessageBoldFont;
 
 /**
  *  Font for current sensor value and sleep score
@@ -238,5 +238,20 @@
  * room check screen
  */
 + (UIFont*)onboardingRoomCheckSensorUnitFont;
+
+/**
+ * Font used to display the question inside the insight feed tab
+ */
++ (UIFont*)feedQuestionFont;
+
+/**
+ * Font used to display the insight message inside the insight feed tab
+ */
++ (UIFont*)feedInsightMessageFont;
+
+/**
+ * Font used to display the insight message with bold font inside the insight feed tab
+ */
++ (UIFont*)feedInsightMessageBoldFont;
 
 @end

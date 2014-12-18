@@ -5,11 +5,10 @@
 //  Created by Jimmy Lu on 9/24/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <SORelativeDateTransformer/SORelativeDateTransformer.h>
-
 #import <SenseKit/SENDevice.h>
 
 #import "UIFont+HEMStyle.h"
+#import "NSDate+HEMRelative.h"
 
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
@@ -60,8 +59,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         case 1: {
             title = NSLocalizedString(@"settings.device.last-seen", nil);
             if ([info lastSeen] != nil) {
-                NSValueTransformer* transformer = [SORelativeDateTransformer registeredTransformer];
-                detail = [transformer transformedValue:[info lastSeen]];
+                detail = [[info lastSeen] timeAgo];
             }
             break;
         }

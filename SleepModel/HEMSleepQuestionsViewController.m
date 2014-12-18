@@ -196,12 +196,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     } else {
         [self toNextQuestion];
     }
-    
 }
 
 - (IBAction)done:(id)sender {
     if (![[self dataSource] selectAnswersAtIndexPaths:[self selectedAnswerPaths]]) {
-        [self dismiss];
+        [self animateOut];
     } else {
         [self toNextQuestion];
     }

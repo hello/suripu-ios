@@ -13,9 +13,19 @@
 /**
  * Append a title view to the scrollable content view.  This will set the
  * default attributes for a title and ensure proper padding around subviews.
+ *
  * @param title: title of view
  */
 - (void)addTitle:(NSString*)title;
+
+/**
+ * Add a title using an attributed stsring
+ *
+ * @param ttitle: title for the view
+ * @param y:      additional y pixels to offset the title by.  This is added
+ *                in addition to what the current nextY is
+ */
+- (void)addAttributedTitle:(NSAttributedString*)title withYOffset:(CGFloat)y;
 
 /**
  * Append an image to be displayed in the scrollable content, which will properly

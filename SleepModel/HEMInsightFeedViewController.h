@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMInsightFeedViewController : UIViewController
+@interface HEMInsightFeedViewController : HEMBaseController
 
 @end

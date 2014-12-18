@@ -7,11 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMCardCollectionViewCell.h"
 
-@interface HEMInsightCollectionViewCell : UICollectionViewCell
+extern CGFloat const HEMInsightCellMessagePadding;
+extern CGFloat const HEMInsightCellBaseHeight;
+extern CGFloat const HEMInsightCellMaxMessageHeight;
 
-+ (CGRect)defaultFrame;
-- (id)initWithTitle:(NSString*)title message:(NSString*)message;
-- (void)setTitle:(NSString*)title message:(NSString*)message;
+@interface HEMInsightCollectionViewCell : HEMCardCollectionViewCell
+
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *dateLabel;
+@property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+
++ (NSDictionary*)messageTextAttributes;
+- (void)setMessage:(NSString*)message;
 
 @end

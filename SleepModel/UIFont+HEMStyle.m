@@ -31,12 +31,12 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:10.f];
 }
 
-+ (UIFont *)insightCardTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
++ (UIFont *)insightFullMessageFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
 }
 
-+ (UIFont *)insightCardMessageFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.f];
++ (UIFont *)insightFullMessageBoldFont {
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:16.f];
 }
 
 + (UIFont *)largeNumberFont {
@@ -209,6 +209,18 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
 
 + (UIFont*)onboardingRoomCheckSensorUnitFont {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
+}
+
++ (UIFont*)feedQuestionFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+}
+
++ (UIFont*)feedInsightMessageFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:13.0];
+}
+
++ (UIFont*)feedInsightMessageBoldFont {
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.0];
 }
 
 @end

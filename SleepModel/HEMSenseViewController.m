@@ -5,12 +5,11 @@
 //  Created by Jimmy Lu on 9/24/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <SORelativeDateTransformer/SORelativeDateTransformer.h>
-
 #import <SenseKit/SENDevice.h>
 #import <SenseKit/SENSenseManager.h>
 
 #import "UIFont+HEMStyle.h"
+#import "NSDate+HEMRelative.h"
 
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
@@ -176,8 +175,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             case kHEMSenseRowLastSeen: {
                 title = NSLocalizedString(@"settings.device.last-seen", nil);
                 if ([info lastSeen] != nil) {
-                    NSValueTransformer* transformer = [SORelativeDateTransformer registeredTransformer];
-                    detail = [[NSMutableAttributedString alloc] initWithString:[transformer transformedValue:[info lastSeen]]];
+                    detail = [[NSMutableAttributedString alloc] initWithString:[[info lastSeen] timeAgo]];
                 }
                 break;
             }

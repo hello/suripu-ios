@@ -25,6 +25,11 @@ typedef void(^SENServiceQuestionBlock)(NSArray* questions);
 + (id)sharedService;
 
 /**
+ * @return YES if currently checking for answers, NO otherwise
+ */
+- (BOOL)isUpdating;
+
+/**
  * Inform the service that the questions have been presented
  * to the user, which will stop any further actions until the
  * next cycle

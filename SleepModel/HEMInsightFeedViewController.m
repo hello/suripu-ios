@@ -51,6 +51,7 @@
     
     [[self collectionView] setDataSource:[self dataSource]];
     [[self collectionView] setDelegate:self];
+    [[self collectionView] setAlwaysBounceVertical:YES];
 }
 
 - (void)viewDidBecomeActive {
@@ -125,6 +126,14 @@
     }
 }
 
+
+- (void)removeCellAtIndexPath:(NSIndexPath*)indexPath {
+    [[self collectionView] performBatchUpdates:^{
+        [[self dataSource] removeQuestionAtIndexPath:indexPath];
+        [[self collectionView] deleteItemsAtIndexPaths:@[indexPath]];
+    } completion:nil];
+}
+
 #pragma mark - Insights
 
 - (void)showInsight:(SENInsight*)insight {
@@ -151,12 +160,7 @@
     [qVC setModalPresentationStyle:UIModalPresentationCustom];
     [qVC setTransitioningDelegate:[self animTransitionDelegate]];
     [self presentViewController:qVC animated:YES completion:^{
-        [[self collectionView] performBatchUpdates:^{
-            [[self dataSource] removeQuestionAtIndexPath:path];
-            [[self collectionView] deleteItemsAtIndexPaths:@[path]];
-        } completion:^(BOOL finished) {
-            [[[self collectionView] collectionViewLayout] invalidateLayout];
-        }];
+        [self removeCellAtIndexPath:path];
     }];
 }
 
@@ -165,15 +169,7 @@
     SENQuestion* question = [[self dataSource] questionAtIndexPath:path];
     __weak typeof(self) weakSelf = self;
     [[SENServiceQuestions sharedService] skipQuestion:question completion:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [[strongSelf collectionView] performBatchUpdates:^{
-                [[strongSelf dataSource] removeQuestionAtIndexPath:path];
-                [[strongSelf collectionView] deleteItemsAtIndexPaths:@[path]];
-            } completion:^(BOOL finished) {
-                [[[strongSelf collectionView] collectionViewLayout] invalidateLayout];
-            }];
-        }
+        [weakSelf removeCellAtIndexPath:path];
     }];
 }
 

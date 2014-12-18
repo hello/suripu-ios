@@ -95,6 +95,17 @@ static CGFloat const HEMCardDefaultItemHeight = 100.f;
     }
 }
 
+- (void)prepareForCollectionViewUpdates:(NSArray *)updateItems
+{
+    for (UICollectionViewUpdateItem* item in updateItems) {
+        if (item.updateAction == UICollectionUpdateActionDelete) {
+            [self.dynamicAnimator removeAllBehaviors];
+            [self.visibleIndexPathsSet removeAllObjects];
+            break;
+        }
+    }
+}
+
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
 {
     return [self.dynamicAnimator itemsInRect:rect];

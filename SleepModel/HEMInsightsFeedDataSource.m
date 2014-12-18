@@ -138,6 +138,8 @@ NSInteger const HEMInsightsFeedSections = 2;
 
 - (CGFloat)bodyTextPaddingForCellAtIndexPath:(NSIndexPath*)indexPath {
     CGFloat padding = 0.0f;
+    if ([[self data] count] >= [indexPath row])
+        return 0;
     id dataObj = [self data][[indexPath row]];
     
     if ([dataObj isKindOfClass:[SENQuestion class]]) {

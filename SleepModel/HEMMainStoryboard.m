@@ -10,7 +10,7 @@ static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMmain = @"Main";
 static NSString *const _HEMaccountSettings = @"accountSettings";
 static NSString *const _HEMalarmChoiceCell = @"alarmChoiceCell";
-static NSString *const _HEMalarmListCellIdentifier = @"alarmListCellIdentifier";
+static NSString *const _HEMalarmListCell = @"alarmListCell";
 static NSString *const _HEMalarmListNavViewController = @"alarmListNavViewController";
 static NSString *const _HEMalarmListViewController = @"alarmListViewController";
 static NSString *const _HEMalarmNavController = @"alarmNavController";
@@ -57,7 +57,7 @@ static NSString *const _HEMupdatePasswordSegue = @"updatePasswordSegue";
 
 /** Cell Reuse Identifiers */
 +(NSString *)alarmChoiceCellReuseIdentifier { return _HEMalarmChoiceCell; }
-+(NSString *)alarmListCellIdentifier { return _HEMalarmListCellIdentifier; }
++(NSString *)alarmListCellReuseIdentifier { return _HEMalarmListCell; }
 +(NSString *)deviceCellReuseIdentifier { return _HEMdeviceCell; }
 +(NSString *)firmwareUpdateCellReuseIdentifier { return _HEMfirmwareUpdateCell; }
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }

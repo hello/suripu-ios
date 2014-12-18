@@ -8,15 +8,22 @@
 
 #import <Foundation/Foundation.h>
 
-NSInteger const HEMInsightsFeedSectQuestions;
-NSInteger const HEMInsightsFeedSectInsights;
+@class SENInsight;
+@class SENQuestion;
+
 NSInteger const HEMInsightsFeedSections;
 
 @interface HEMInsightsFeedDataSource : NSObject <UICollectionViewDataSource>
 
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withWidth:(CGFloat)width;
+- (CGFloat)bodyTextPaddingForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (BOOL)isLoading;
 - (void)refresh:(void(^)(void))completion;
+- (SENQuestion*)questionAtIndexPath:(NSIndexPath*)indexPath;
+- (SENInsight*)insightAtIndexPath:(NSIndexPath*)indexPath;
+- (void)removeQuestionAtIndexPath:(NSIndexPath*)indexPath;
+- (NSString*)dateForCellAtIndexPath:(NSIndexPath*)indexPath;
+- (NSString*)insightTitleForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (NSString*)bodyTextForCellAtIndexPath:(NSIndexPath*)indexPath;
 
 @end

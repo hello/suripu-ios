@@ -23,6 +23,8 @@
 +(NSString *)alarmChoiceCellReuseIdentifier;
 +(NSString *)sensorGraphCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
++(NSString *)questionReuseIdentifier;
++(NSString *)insightReuseIdentifier;
 
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier;
@@ -38,23 +40,24 @@
 +(NSString *)updatePasswordSegueSegueIdentifier;
 
 /** View Controllers */
-+(id)instantiateAlarmListNavViewController;
-+(id)instantiateAlarmListViewController;
-+(id)instantiateAlarmNavController;
-+(id)instantiateAlarmRepeatTableViewController;
-+(id)instantiateAlarmSoundTableViewController;
-+(id)instantiateAlarmViewController;
-+(id)instantiateCurrentNavController;
-+(id)instantiateInsightFeedViewController;
-+(id)instantiateNoSleepPillController;
-+(id)instantiatePersonalInfoViewController;
-+(id)instantiateSensorViewController;
-+(id)instantiateSettingsController;
-+(id)instantiateSettingsNavController;
-+(id)instantiateSleepGraphController;
-+(id)instantiateSleepGraphNavController;
-+(id)instantiateSleepHistoryController;
-+(id)instantiateSleepQuestionsViewController;
-+(id)instantiateTrendsViewController;
++(UIViewController *)instantiateAlarmListNavViewController;
++(UIViewController *)instantiateAlarmListViewController;
++(UIViewController *)instantiateAlarmNavController;
++(UIViewController *)instantiateAlarmRepeatTableViewController;
++(UIViewController *)instantiateAlarmSoundTableViewController;
++(UIViewController *)instantiateAlarmViewController;
++(UIViewController *)instantiateCurrentNavController;
++(UIViewController *)instantiateInsightFeedViewController;
++(UIViewController *)instantiateNoSleepPillController;
++(UIViewController *)instantiatePersonalInfoViewController;
++(UIViewController *)instantiateSensorViewController;
++(UIViewController *)instantiateSettingsController;
++(UIViewController *)instantiateSettingsNavController;
++(UIViewController *)instantiateSleepGraphController;
++(UIViewController *)instantiateSleepGraphNavController;
++(UIViewController *)instantiateSleepHistoryController;
++(UIViewController *)instantiateSleepInsightViewController;
++(UIViewController *)instantiateSleepQuestionsViewController;
++(UIViewController *)instantiateTrendsViewController;
 
 @end

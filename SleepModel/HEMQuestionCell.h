@@ -9,7 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "HEMCardCollectionViewCell.h"
 
-extern CGFloat const HEMQuestionTextPadding;
+extern CGFloat const HEMQuestionCellTextPadding;
+extern CGFloat const HEMQuestionCellBaseHeight;
 
 @interface HEMQuestionCell : HEMCardCollectionViewCell
 
@@ -17,6 +18,6 @@ extern CGFloat const HEMQuestionTextPadding;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 @property (weak, nonatomic) IBOutlet UIButton *answerButton;
 
-+ (NSDictionary*)questionaTextAttributes;
++ (NSDictionary*)questionTextAttributes;
 
 @end

@@ -249,4 +249,9 @@
  */
 + (UIFont*)feedInsightMessageFont;
 
+/**
+ * Font used to display the insight message with bold font inside the insight feed tab
+ */
++ (UIFont*)feedInsightMessageBoldFont;
+
 @end

@@ -26,7 +26,7 @@
 
 @implementation HEMAlarmListViewController
 
-static CGFloat const HEMAlarmListButtonMinimumScale = 0.8f;
+static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
 static NSString* const HEMAlarmTimeFormat = @"%ld:%@";
@@ -53,6 +53,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
+    if (self.alarms.count == 0)
+        [self refreshAlarmList];
     [self reloadData];
     [self.collectionView reloadData];
 }
@@ -105,23 +107,27 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)touchDownAddAlarmButton:(id)sender
 {
-    [UIView animateWithDuration:0.15f animations:^{
-        self.addButton.layer.transform = CATransform3DMakeScale(HEMAlarmListButtonMaximumScale,
-                                                                HEMAlarmListButtonMaximumScale, 1.f);
-    }];
+    [UIView animateWithDuration:0.05f delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+        self.addButton.layer.transform = CATransform3DMakeScale(HEMAlarmListButtonMinimumScale,
+                                                                HEMAlarmListButtonMinimumScale, 1.f);
+    } completion:NULL];
 }
 
 - (void)touchUpOutsideAddAlarmButton:(id)sender
 {
-    [UIView animateWithDuration:0.2f animations:^{
+    [UIView animateWithDuration:0.2f delay:0 options:UIViewAnimationOptionBeginFromCurrentState animations:^{
         self.addButton.layer.transform = CATransform3DIdentity;
-    }];
+    } completion:NULL];
 }
 
 - (IBAction)addNewAlarm:(id)sender
 {
     void (^animations)() = ^{
-        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:1 animations:^{
+        [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.5 animations:^{
+            self.addButton.layer.transform = CATransform3DMakeScale(HEMAlarmListButtonMaximumScale,
+                                                                    HEMAlarmListButtonMaximumScale, 1.f);
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.5 relativeDuration:0.5 animations:^{
             self.addButton.layer.transform = CATransform3DIdentity;
         }];
     };
@@ -131,9 +137,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
         [self presentViewControllerForAlarm:alarm];
     };
 
-    NSUInteger options = (UIViewKeyframeAnimationOptionCalculationModeCubicPaced|UIViewAnimationOptionCurveEaseInOut);
-    [UIView animateKeyframesWithDuration:0.25
-                                   delay:0
+    NSUInteger options = (UIViewKeyframeAnimationOptionCalculationModeCubicPaced|UIViewAnimationOptionCurveEaseIn
+                          |UIViewKeyframeAnimationOptionBeginFromCurrentState);
+    [UIView animateKeyframesWithDuration:0.35f
+                                   delay:0.15f
                                  options:options
                               animations:animations
                               completion:completion];

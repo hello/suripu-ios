@@ -361,8 +361,7 @@
 		BF1E2E821A04514200DDD0D0 /* temperatureIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1E2E7F1A04514200DDD0D0 /* temperatureIcon@3x.png */; };
 		BF257EE71A1D1C2600DAF923 /* HEMDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE61A1D1C2600DAF923 /* HEMDialogViewController.m */; };
 		BF257EEA1A1D269300DAF923 /* HEMDialogView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE91A1D269300DAF923 /* HEMDialogView.m */; };
-		BF4AFE171A3FDCB100863E15 /* HEMInsightsFeedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4AFE161A3FDCB100863E15 /* HEMInsightsFeedDataSource.m */; };
-		BF4E88E41A12946800831380 /* HEMInsightCardView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E88E31A12946800831380 /* HEMInsightCardView.m */; };
+		BF28856C1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF28856B1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m */; };
 		BF4E88E71A12FB3700831380 /* UIView+HEMSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E88E61A12FB3700831380 /* UIView+HEMSnapshot.m */; };
 		BF4E88EA1A1301D700831380 /* HEMInsightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E88E91A1301D700831380 /* HEMInsightViewController.m */; };
 		BF50BD4F19E8D21F00F3B687 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
@@ -983,10 +982,8 @@
 		BF257EE81A1D269300DAF923 /* HEMDialogView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDialogView.h; sourceTree = "<group>"; };
 		BF257EE91A1D269300DAF923 /* HEMDialogView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDialogView.m; sourceTree = "<group>"; };
 		BF27816C1A0964FF00A8868D /* HEMWiFiConfigurationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMWiFiConfigurationDelegate.h; sourceTree = "<group>"; };
-		BF4AFE151A3FDCB100863E15 /* HEMInsightsFeedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightsFeedDataSource.h; sourceTree = "<group>"; };
-		BF4AFE161A3FDCB100863E15 /* HEMInsightsFeedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightsFeedDataSource.m; sourceTree = "<group>"; };
-		BF4E88E21A12946800831380 /* HEMInsightCardView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightCardView.h; sourceTree = "<group>"; };
-		BF4E88E31A12946800831380 /* HEMInsightCardView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightCardView.m; sourceTree = "<group>"; };
+		BF28856A1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightsFeedDataSource.h; sourceTree = "<group>"; };
+		BF28856B1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightsFeedDataSource.m; sourceTree = "<group>"; };
 		BF4E88E51A12FB3700831380 /* UIView+HEMSnapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HEMSnapshot.h"; sourceTree = "<group>"; };
 		BF4E88E61A12FB3700831380 /* UIView+HEMSnapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HEMSnapshot.m"; sourceTree = "<group>"; };
 		BF4E88E81A1301D700831380 /* HEMInsightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightViewController.h; sourceTree = "<group>"; };
@@ -2157,8 +2154,8 @@
 			children = (
 				BF4E88EC1A1307CE00831380 /* Views */,
 				BF4E88EB1A1307C400831380 /* View Controllers */,
-				BF4AFE151A3FDCB100863E15 /* HEMInsightsFeedDataSource.h */,
-				BF4AFE161A3FDCB100863E15 /* HEMInsightsFeedDataSource.m */,
+				BF28856A1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.h */,
+				BF28856B1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m */,
 			);
 			name = Insights;
 			sourceTree = "<group>";
@@ -2192,8 +2189,6 @@
 			children = (
 				BF1E2E5B1A00691000DDD0D0 /* HEMInsightCollectionViewCell.h */,
 				BF1E2E5C1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m */,
-				BF4E88E21A12946800831380 /* HEMInsightCardView.h */,
-				BF4E88E31A12946800831380 /* HEMInsightCardView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2984,7 +2979,6 @@
 				8A660123199E9CF9007E6167 /* HEMUserDataCache.m in Sources */,
 				BF14E3E019EF3C520006EFEA /* HEMOnboardingUtils.m in Sources */,
 				BF14E3C419EF3C020006EFEA /* HEMBluetoothUtils.m in Sources */,
-				BF4AFE171A3FDCB100863E15 /* HEMInsightsFeedDataSource.m in Sources */,
 				BF05C8E11A3A52CB002A1307 /* HEMMultipleResponseCell.m in Sources */,
 				BF1E2E5D1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m in Sources */,
 				8AC4A05B198ACE4800C2BD63 /* HEMLineGraphDataSource.m in Sources */,
@@ -3004,6 +2998,7 @@
 				BF6E3A9A1A2D27450019C110 /* HEMActionView.m in Sources */,
 				8AAEECBC19A431E1006517C4 /* HEMSleepEventButton.m in Sources */,
 				BF84C2001A0C111E009471D5 /* HEMSupportUtil.m in Sources */,
+				BF28856C1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m in Sources */,
 				BFB0FBF319D482E90056FFEC /* HEMSettingsNavigationController.m in Sources */,
 				8AF4FA731A14129C00451245 /* HEMAudioCache.m in Sources */,
 				BFE8730E1A2FC8A000494231 /* HEMSensorCheckView.m in Sources */,
@@ -3012,7 +3007,6 @@
 				BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */,
 				BF98E4461A42378900E3CDEB /* HEMSinkModalTransitionDelegate.m in Sources */,
 				8A0CB13C19E5D1EE0030FC7D /* HEMEventInfoView.m in Sources */,
-				BF4E88E41A12946800831380 /* HEMInsightCardView.m in Sources */,
 				8A7D80201A40DCA400B0BFD7 /* HEMCardFlowLayout.m in Sources */,
 				8A1743C319A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.m in Sources */,
 				8A66FC85199C035500922ED5 /* HEMMiniSleepHistoryView.m in Sources */,

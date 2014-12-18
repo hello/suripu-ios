@@ -151,8 +151,12 @@
     [qVC setModalPresentationStyle:UIModalPresentationCustom];
     [qVC setTransitioningDelegate:[self animTransitionDelegate]];
     [self presentViewController:qVC animated:YES completion:^{
-        [[self dataSource] removeQuestionAtIndexPath:path];
-        [[self collectionView] deleteItemsAtIndexPaths:@[path]];
+        [[self collectionView] performBatchUpdates:^{
+            [[self dataSource] removeQuestionAtIndexPath:path];
+            [[self collectionView] deleteItemsAtIndexPaths:@[path]];
+        } completion:^(BOOL finished) {
+            [[[self collectionView] collectionViewLayout] invalidateLayout];
+        }];
     }];
 }
 
@@ -168,8 +172,6 @@
                 [[strongSelf collectionView] deleteItemsAtIndexPaths:@[path]];
             } completion:^(BOOL finished) {
                 [[[strongSelf collectionView] collectionViewLayout] invalidateLayout];
-                UICollectionViewLayoutAttributes* attribute = [[strongSelf collectionView] layoutAttributesForItemAtIndexPath:path];
-                DLog(@"attribute %@", attribute);
             }];
         }
     }];

@@ -109,7 +109,7 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
     SENAPIDataBlock (^completion)(SENSensor *, int) = ^SENAPIDataBlock(SENSensor *sensor, int index) {
         return ^(id data, NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            [[strongSelf sensorGraphData] setValue:data forKey:sensor.name];
+            [[strongSelf sensorGraphData] setValue:error?nil:data forKey:sensor.name];
             [strongSelf updateCellAtIndex:index];
         };
     };

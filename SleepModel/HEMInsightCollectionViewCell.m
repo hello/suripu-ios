@@ -5,7 +5,6 @@
 //  Created by Jimmy Lu on 10/28/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <markdown_peg.h>
 #import "UIFont+HEMStyle.h"
 
 #import "HEMInsightCollectionViewCell.h"
@@ -38,16 +37,11 @@ static CGFloat const HEMInsightCellNaturalPadding = 8.0f;
         [style setAlignment:NSTextAlignmentLeft];
         
         UIColor* color = [UIColor colorWithWhite:0.0f alpha:0.7f];
-        attributes = @{@(STRONG)  : @{ NSFontAttributeName : [UIFont feedInsightMessageBoldFont],
-                                       NSParagraphStyleAttributeName : style,
-                                       NSForegroundColorAttributeName : color},
-                       @(PLAIN) : @{ NSFontAttributeName : [UIFont settingsInsightMessageFont],
-                                     NSParagraphStyleAttributeName : style,
-                                     NSForegroundColorAttributeName : color},
-                       NSParagraphStyleAttributeName : style,
-                       NSFontAttributeName : [UIFont settingsInsightMessageFont],
-                       NSForegroundColorAttributeName : color
-                      };
+        attributes = @{
+            NSParagraphStyleAttributeName : style,
+            NSFontAttributeName : [UIFont settingsInsightMessageFont],
+            NSForegroundColorAttributeName : color
+        };
     });
     return attributes;
 }
@@ -79,7 +73,8 @@ static CGFloat const HEMInsightCellNaturalPadding = 8.0f;
                                          attributes:attributes
                                             context:nil];
     
-    NSAttributedString* text = markdown_to_attr_string(message, 0, [[self class] messageTextAttributes]);
+    NSAttributedString* text
+        = [[NSAttributedString alloc] initWithString:message attributes:[[self class] messageTextAttributes]];
     [[self messageLabel] setAttributedText:text];
     
     BOOL more = CGRectGetHeight(textSize) > HEMInsightCellMaxMessageHeight;

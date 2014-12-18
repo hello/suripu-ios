@@ -23,7 +23,7 @@
 #import "HEMSinkModalTransitionDelegate.h"
 
 @interface HEMInsightFeedViewController () <
-    UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, HEMInsightViewControllerDelegate>
+    UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
 @property (weak,   nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) HEMInsightsFeedDataSource* dataSource;
@@ -140,14 +140,9 @@
     HEMInsightViewController* insightVC
         = (HEMInsightViewController*)[HEMMainStoryboard instantiateSleepInsightViewController];
     [insightVC setInsight:insight];
-    [insightVC setDelegate:self];
     [insightVC setModalPresentationStyle:UIModalPresentationCustom];
     [insightVC setTransitioningDelegate:[self animTransitionDelegate]];
     [self presentViewController:insightVC animated:YES completion:nil];
-}
-
-- (void)didDismissInsightFrom:(HEMInsightViewController*)controller {
-    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Questions

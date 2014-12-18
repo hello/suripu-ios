@@ -18,9 +18,12 @@
 @implementation HEMCardFlowLayout
 
 static CGFloat const HEMCardOutsideMargin = 16.f;
-static CGFloat const HEMCardTopMargin = 24.f;
 static CGFloat const HEMCardInsideMargin = 8.f;
 static CGFloat const HEMCardDefaultItemHeight = 100.f;
+static CGFloat const HEMCardAttachmentLength = 1.f;
+static CGFloat const HEMCardAttachmentDamping = 0.8f;
+static CGFloat const HEMCardAttachmentFrequency = 0.8f;
+static CGFloat const HEMCardResistanceCoefficient = 1350.f;
 
 - (instancetype)init
 {
@@ -42,7 +45,7 @@ static CGFloat const HEMCardDefaultItemHeight = 100.f;
 {
     CGRect bounds = [[UIScreen mainScreen] bounds];
     self.itemSize = CGSizeMake(CGRectGetWidth(bounds) - HEMCardOutsideMargin * 2, HEMCardDefaultItemHeight);
-    self.sectionInset = UIEdgeInsetsMake(HEMCardTopMargin, 0, HEMCardOutsideMargin, 0);
+    self.sectionInset = UIEdgeInsetsMake(HEMCardOutsideMargin, 0, HEMCardOutsideMargin, 0);
     self.minimumInteritemSpacing = HEMCardInsideMargin;
     self.minimumLineSpacing = HEMCardInsideMargin;
     self.scrollDirection = UICollectionViewScrollDirectionVertical;
@@ -84,9 +87,9 @@ static CGFloat const HEMCardDefaultItemHeight = 100.f;
     for (UICollectionViewLayoutAttributes* item in newlyVisibleItems) {
         [self.visibleIndexPathsSet addObject:item.indexPath];
         UIAttachmentBehavior *behaviour = [[UIAttachmentBehavior alloc] initWithItem:item attachedToAnchor:item.center];
-        behaviour.length = 1.0f;
-        behaviour.damping = 0.7f;
-        behaviour.frequency = 0.8f;
+        behaviour.length = HEMCardAttachmentLength;
+        behaviour.damping = HEMCardAttachmentDamping;
+        behaviour.frequency = HEMCardAttachmentFrequency;
 
         if (!CGPointEqualToPoint(CGPointZero, touchLocation))
             item.center = [self centerForTouchLocation:touchLocation behaviour:behaviour];
@@ -136,7 +139,7 @@ static CGFloat const HEMCardDefaultItemHeight = 100.f;
 {
     CGFloat yDistanceFromTouch = fabsf(touchLocation.y - springBehaviour.anchorPoint.y);
     CGFloat xDistanceFromTouch = fabsf(touchLocation.x - springBehaviour.anchorPoint.x);
-    CGFloat scrollResistance = (yDistanceFromTouch + xDistanceFromTouch) / 1200.0f;
+    CGFloat scrollResistance = (yDistanceFromTouch + xDistanceFromTouch) / HEMCardResistanceCoefficient;
     UICollectionViewLayoutAttributes *item = [springBehaviour.items firstObject];
     CGPoint center = item.center;
     if (self.latestDelta < 0) {

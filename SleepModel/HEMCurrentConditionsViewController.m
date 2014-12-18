@@ -41,6 +41,7 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 {
     [super viewDidLoad];
     [self configureCollectionView];
+    self.loading = YES;
     self.refreshRate = HEMCurrentConditionsFailureIntervalInSeconds;
 }
 

@@ -20,10 +20,11 @@
 
 - (void)awakeFromNib
 {
+    self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = 2.f;
-    self.layer.shadowOffset = CGSizeMake(0, -1.f);
+    self.layer.shadowOffset = CGSizeMake(0, 1.f);
     self.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
-    self.layer.shadowRadius = 2.f;
+    self.layer.shadowRadius = 1.f;
     self.layer.shadowOpacity = 0.5f;
     self.layer.masksToBounds = NO;
 }

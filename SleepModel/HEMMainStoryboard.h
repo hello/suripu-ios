@@ -19,7 +19,7 @@
 +(NSString *)senseInfoCellReuseIdentifier;
 +(NSString *)firmwareUpdateCellReuseIdentifier;
 +(NSString *)pillInfoCellReuseIdentifier;
-+(NSString *)alarmListCellIdentifier;
++(NSString *)alarmListCellReuseIdentifier;
 +(NSString *)alarmChoiceCellReuseIdentifier;
 +(NSString *)sensorGraphCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;

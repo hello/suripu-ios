@@ -233,8 +233,10 @@
 
 // alarm list
 "alarms.title" = "Alarms";
-"alarms.smart-alarm.format" = "*Smart Alarm* %@";
-"alarms.alarm.format" = "*Alarm* %@";
+"alarms.smart-alarm.format" = "Smart alarm — %@";
+"alarms.alarm.format" = "Alarm — %@";
+"alarms.alarm.meridiem.am" = "AM";
+"alarms.alarm.meridiem.pm" = "PM";
 
 // alarm settings
 "alarm.time-range.format" = "Wake up between *%@* and *%@*";

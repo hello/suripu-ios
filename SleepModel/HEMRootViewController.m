@@ -38,7 +38,7 @@
         [HEMMainStoryboard instantiateInsightFeedViewController],
         [HEMMainStoryboard instantiateAlarmListNavViewController],
         [HEMMainStoryboard instantiateSettingsNavController]];
-    barController.selectedIndex = 1;
+    barController.selectedIndex = 2;
 
     return @[barController, [HEMSleepSummarySlideViewController new]];
 }

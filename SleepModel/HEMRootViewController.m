@@ -11,6 +11,7 @@
 
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
+#import "UIView+HEMMotionEffects.h"
 
 #import "HEMRootViewController.h"
 #import "HEMSleepQuestionsViewController.h"
@@ -30,6 +31,8 @@
 
 @implementation HEMRootViewController
 
+static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
+
 + (NSArray*)instantiateInitialControllers {
     HEMSnazzBarController* barController = [HEMSnazzBarController new];
     barController.viewControllers = @[
@@ -39,8 +42,10 @@
         [HEMMainStoryboard instantiateAlarmListNavViewController],
         [HEMMainStoryboard instantiateSettingsNavController]];
     barController.selectedIndex = 2;
-
-    return @[barController, [HEMSleepSummarySlideViewController new]];
+    HEMSleepSummarySlideViewController* slideController = [HEMSleepSummarySlideViewController new];
+    [slideController.view add3DEffectWithBorder:HEMRootTopPaneParallaxDepth
+                                      direction:HEMMotionEffectsDirectionVertical];
+    return @[barController, slideController];
 }
 
 - (instancetype)init {

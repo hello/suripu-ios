@@ -11,8 +11,6 @@
 @class SENInsight;
 @class SENQuestion;
 
-NSInteger const HEMInsightsFeedSections;
-
 @interface HEMInsightsFeedDataSource : NSObject <UICollectionViewDataSource>
 
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withWidth:(CGFloat)width;

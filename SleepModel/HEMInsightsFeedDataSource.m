@@ -20,8 +20,6 @@
 static NSString* const HEMInsightsFeedReuseIdQuestion = @"question";
 static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 
-NSInteger const HEMInsightsFeedSections = 2;
-
 @interface HEMInsightsFeedDataSource()
 
 @property (nonatomic, strong) NSMutableArray* data;

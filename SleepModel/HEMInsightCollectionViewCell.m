@@ -66,6 +66,8 @@ static CGFloat const HEMInsightCellNaturalPadding = 8.0f;
 }
 
 - (void)setMessage:(NSString*)message {
+    if ([message length] == 0) return;
+    
     NSDictionary* attributes = [[self class] messageTextAttributes];
     CGSize constraint = CGSizeMake(CGRectGetWidth([[self contentView] bounds])-HEMInsightCellMessagePadding, MAXFLOAT);
     CGRect textSize = [message boundingRectWithSize:constraint

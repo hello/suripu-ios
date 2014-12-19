@@ -156,7 +156,10 @@
         = (HEMSleepQuestionsViewController*)[HEMMainStoryboard instantiateSleepQuestionsViewController];
     [qVC setModalPresentationStyle:UIModalPresentationCustom];
     [qVC setTransitioningDelegate:[self animTransitionDelegate]];
-    [self presentViewController:qVC animated:YES completion:^{
+    
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:qVC];
+    
+    [self presentViewController:nav animated:YES completion:^{
         [self removeCellAtIndexPath:path];
     }];
 }

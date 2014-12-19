@@ -9,7 +9,6 @@
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMonboarding = @"Onboarding";
 static NSString *const _HEManotherPillToBeforeSleep = @"anotherPillToBeforeSleep";
-static NSString *const _HEMbeforeSleepToAlarm = @"beforeSleepToAlarm";
 static NSString *const _HEMbeforeSleeptoRoomCheck = @"beforeSleeptoRoomCheck";
 static NSString *const _HEMbluetoothOn = @"bluetoothOn";
 static NSString *const _HEMbluetoothViewController = @"bluetoothViewController";
@@ -49,7 +48,6 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 
 /** Segue Identifiers */
 +(NSString *)anotherPillToBeforeSleepSegueIdentifier { return _HEManotherPillToBeforeSleep; }
-+(NSString *)beforeSleepToAlarmSegueIdentifier { return _HEMbeforeSleepToAlarm; }
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier { return _HEMbeforeSleeptoRoomCheck; }
 +(NSString *)bluetoothOnSegueIdentifier { return _HEMbluetoothOn; }
 +(NSString *)doneSegueIdentifier { return _HEMdone; }
@@ -68,17 +66,17 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)wifiPasswordSegueIdentifier { return _HEMwifiPassword; }
 
 /** View Controllers */
-+(UIViewController *)instantiateBluetoothViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbluetoothViewController]; }
-+(UIViewController *)instantiateDobViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMdobViewController]; }
-+(UIViewController *)instantiateGenderPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMgenderPicker]; }
-+(UIViewController *)instantiateHeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMheightPicker]; }
-+(UIViewController *)instantiatePillPairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillPair]; }
-+(UIViewController *)instantiateRoomCheckViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMroomCheck]; }
-+(UIViewController *)instantiateSenseSetupViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseSetup]; }
-+(UIViewController *)instantiateSignUpViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsignUpViewController]; }
-+(UIViewController *)instantiateWeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMweightPicker]; }
-+(UIViewController *)instantiateWelcomeViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwelcome]; }
-+(UIViewController *)instantiateWifiPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwifiPicker]; }
-+(UIViewController *)instantiateWifiViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwifiViewController]; }
++(id)instantiateBluetoothViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMbluetoothViewController]; }
++(id)instantiateDobViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMdobViewController]; }
++(id)instantiateGenderPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMgenderPicker]; }
++(id)instantiateHeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMheightPicker]; }
++(id)instantiatePillPairViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpillPair]; }
++(id)instantiateRoomCheckViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMroomCheck]; }
++(id)instantiateSenseSetupViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsenseSetup]; }
++(id)instantiateSignUpViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsignUpViewController]; }
++(id)instantiateWeightPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMweightPicker]; }
++(id)instantiateWelcomeViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwelcome]; }
++(id)instantiateWifiPickerViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwifiPicker]; }
++(id)instantiateWifiViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMwifiViewController]; }
 
 @end

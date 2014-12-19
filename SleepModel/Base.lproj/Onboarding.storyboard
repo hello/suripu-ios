@@ -1357,7 +1357,6 @@ You can always do this later by visiting Settings.</string>
                         <outlet property="scrollableView" destination="Ok4-Lt-Oab" id="e5z-ZZ-lWX"/>
                         <outlet property="view" destination="WvV-c5-RHy" id="kFz-r6-vwP"/>
                         <segue destination="cpr-oG-Go7" kind="push" identifier="beforeSleeptoRoomCheck" id="M7J-nW-DOf"/>
-                        <segue destination="0qJ-qR-xla" kind="push" identifier="beforeSleepToAlarm" id="hqO-d4-ogr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g3P-F6-Zsf" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1588,7 +1587,7 @@ You can always do this later by visiting Settings.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sWL-6c-EWF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14037" y="738"/>
+            <point key="canvasLocation" x="14034" y="922"/>
         </scene>
         <!--Gender View Controller-->
         <scene sceneID="s4K-5F-Rau">
@@ -2693,10 +2692,9 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="sense.png" width="176" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qAo-NZ-4n9"/>
         <segue reference="DAu-sO-H4V"/>
         <segue reference="TuP-To-bZG"/>
-        <segue reference="hqO-d4-ogr"/>
+        <segue reference="qAo-NZ-4n9"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

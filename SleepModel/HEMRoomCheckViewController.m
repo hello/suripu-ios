@@ -24,6 +24,8 @@ static CGFloat const HEMRoomCheckDataDisplayTime = 2.0f;
 static CGFloat const HEMRoomCheckMinVerticalPadding = 28.0f;
 static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
+static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
+
 @interface HEMRoomCheckViewController()
 
 @property (weak, nonatomic) IBOutlet HEMScrollableView *contentView;
@@ -211,7 +213,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                                   name:[sensor localizedName]
                                message:[self messageForSensor:sensor]
                           introMessage:intro
-                                 value:[[sensor value] integerValue]
+                                 value:[[sensor valueInPreferredUnit] integerValue]
                          andValueColor:[UIColor colorForSensorWithCondition:[sensor condition]]
                               withUnit:[sensor localizedUnit]
                                    atY:yOrigin];
@@ -262,6 +264,8 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     
     HEMSensorCheckView* view = [[self sensorViews] lastObject];
     CGFloat viewY = CGRectGetMinY([view frame]);
+    CGFloat configuredHeight = [[self resultHeightConstraint] constant];
+    CGFloat statusHeight = CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]);
     
     [UIView animateWithDuration:HEMRoomCheckAnimationDuration
                      animations:^{
@@ -273,11 +277,55 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                             - viewY
                             - HEMSensorCheckCollapsedHeight
                             - HEMRoomCheckMinVerticalPadding;
+                         CGFloat resultHeight = remainingHeight;
                          
-                         [[self resultHeightConstraint] setConstant:remainingHeight];
+                         if (remainingHeight < configuredHeight) {
+                             resultHeight = configuredHeight;
+                             CGFloat diff = configuredHeight - remainingHeight;
+                             for (HEMSensorCheckView* sensorView in [self sensorViews]) {
+                                 CGRect frame = [sensorView frame];
+                                 frame.origin.y -= diff;
+                                 [sensorView setFrame:frame];
+                                 
+                                 CGFloat y = CGRectGetMinY(frame);
+                                 if (y < statusHeight) {
+                                     CGFloat percentageOff = (fabsf(y)/CGRectGetHeight(frame)) * 2; // 2 to make it fade sooner
+                                     [sensorView setAlpha:1-percentageOff];
+                                 }
+                             }
+                         }
+                         
+                         [[self resultHeightConstraint] setConstant:resultHeight];
                          [[self resultBottomConstraint] setConstant:0.0f];
                          [[self view] layoutIfNeeded];
                      }];
+}
+
+- (CGFloat)minimumYForLastSensorInCollapsedState {
+    CGFloat totalSensors = [[self sensorViews] count];
+    CGFloat collapsedSensors = totalSensors - 1; // first 1 will be expanded
+    CGFloat lastCollapsedY = (collapsedSensors - 1) * HEMSensorCheckCollapsedHeight;
+    return [self currentTopY]
+            + HEMRoomCheckMinimumExpandedHeight
+            + lastCollapsedY;
+}
+
+- (void)moveOtherSensorsDownToMakeRoom {
+    CGFloat bHeight = CGRectGetHeight([[self view] bounds]);
+    CGFloat lastSensorYOffset = HEMSensorCheckCollapsedHeight - HEMRoomCheckMinVerticalPadding;
+    CGFloat suggestedMinY = bHeight - lastSensorYOffset;
+    CGFloat requiredMinY = [self minimumYForLastSensorInCollapsedState];
+    CGFloat y = MAX(suggestedMinY, requiredMinY);
+    
+    for (NSInteger i = [[self sensorViews] count] - 1; i > 0; i--) {
+        UIView* otherView = [self sensorViews][i];
+        
+        CGRect frame = [otherView frame];
+        frame.origin.y = y;
+        [otherView setFrame:frame];
+        
+        y -= CGRectGetHeight([otherView bounds]);
+    }
 }
 
 - (void)displaySensorDataAtIndex:(NSInteger)index {
@@ -296,6 +344,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
         - [self currentTopY]
         - HEMRoomCheckMinVerticalPadding
         - ((collapsedCount-1)*HEMSensorCheckCollapsedHeight);
+    viewHeight = MAX(viewHeight, HEMRoomCheckMinimumExpandedHeight);
     
     if (index == sensorCount - 1) { // last
         viewHeight = bHeight - [self currentTopY];
@@ -308,15 +357,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
         }
         
         if (index == 0) {
-            CGFloat minY = bHeight - HEMSensorCheckCollapsedHeight - HEMRoomCheckMinVerticalPadding;
-            for (NSInteger i = [[self sensorViews] count] - 1; i > index; i--) {
-                UIView* otherView = [self sensorViews][i];
-                CGRect frame = [otherView frame];
-                frame.origin.y = minY;
-                [otherView setFrame:frame];
-                
-                minY -= CGRectGetHeight([otherView bounds]);
-            }
+            [self moveOtherSensorsDownToMakeRoom];
         }
     } onCompletion:^(BOOL finished) {
         [self setCurrentTopY:[self currentTopY] + HEMSensorCheckCollapsedHeight];

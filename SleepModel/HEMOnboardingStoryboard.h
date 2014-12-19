@@ -14,7 +14,6 @@
 
 /** Segue Identifiers */
 +(NSString *)anotherPillToBeforeSleepSegueIdentifier;
-+(NSString *)beforeSleepToAlarmSegueIdentifier;
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier;
 +(NSString *)bluetoothOnSegueIdentifier;
 +(NSString *)doneSegueIdentifier;
@@ -33,17 +32,17 @@
 +(NSString *)wifiPasswordSegueIdentifier;
 
 /** View Controllers */
-+(UIViewController *)instantiateBluetoothViewController;
-+(UIViewController *)instantiateDobViewController;
-+(UIViewController *)instantiateGenderPickerViewController;
-+(UIViewController *)instantiateHeightPickerViewController;
-+(UIViewController *)instantiatePillPairViewController;
-+(UIViewController *)instantiateRoomCheckViewController;
-+(UIViewController *)instantiateSenseSetupViewController;
-+(UIViewController *)instantiateSignUpViewController;
-+(UIViewController *)instantiateWeightPickerViewController;
-+(UIViewController *)instantiateWelcomeViewController;
-+(UIViewController *)instantiateWifiPickerViewController;
-+(UIViewController *)instantiateWifiViewController;
++(id)instantiateBluetoothViewController;
++(id)instantiateDobViewController;
++(id)instantiateGenderPickerViewController;
++(id)instantiateHeightPickerViewController;
++(id)instantiatePillPairViewController;
++(id)instantiateRoomCheckViewController;
++(id)instantiateSenseSetupViewController;
++(id)instantiateSignUpViewController;
++(id)instantiateWeightPickerViewController;
++(id)instantiateWelcomeViewController;
++(id)instantiateWifiPickerViewController;
++(id)instantiateWifiViewController;
 
 @end

@@ -331,7 +331,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)hideActivity {
-    [[self manageSenseView] setHidden:![[HEMDeviceCenter sharedCenter] pairedSenseAvailable]];
+    [[self manageSenseView] setHidden:[[self wifiSSID] length] == 0];
 
     // still need to hide status view regardless of whether manageSenseView is hidden.
     [UIView animateWithDuration:0.25f

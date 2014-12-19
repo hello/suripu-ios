@@ -68,13 +68,7 @@
 }
 
 - (IBAction)next:(id)sender {
-    // FIXME (jimmy): work with design to see how Room Check actually can work on
-    // a iphone 4 screen size.  currently, it looks like shit.
-    CGRect screenBounds = [[UIScreen mainScreen] bounds];
     NSString* nextSegueId = [HEMOnboardingStoryboard beforeSleeptoRoomCheckSegueIdentifier];
-    if (CGRectGetHeight(screenBounds) == kHEMIPhone4Height) {
-        nextSegueId = [HEMOnboardingStoryboard beforeSleepToAlarmSegueIdentifier];
-    }
     [self performSegueWithIdentifier:nextSegueId sender:self];
 }
 

@@ -31,6 +31,7 @@ static CGFloat const HEMActivityIndicatorThickness = 2.0f;
 }
 
 - (void)setup {
+    [self setBackgroundColor:[UIColor clearColor]];
     // circular indicator shape
     CGRect bounds = {
         HEMActivityIndicatorThickness,

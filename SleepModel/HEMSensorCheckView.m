@@ -209,9 +209,11 @@ static CGFloat const HEMSensorCheckDigitDisplayDelay = 0.3f;
         [unitLabel setFrame:unitFrame];
     }
     
-    [self addSubview:digitPicker];
-    [self addSubview:topView];
-    [self addSubview:bottomView];
+    // make sure picker doesn't cover any of the text because of it's extra
+    // padding and cover views
+    [self insertSubview:digitPicker atIndex:0];
+    [self insertSubview:topView aboveSubview:digitPicker];
+    [self insertSubview:bottomView aboveSubview:digitPicker];
     [self bringSubviewToFront:[self separator]];
     
     if (unitLabel != nil) {

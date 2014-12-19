@@ -65,6 +65,8 @@
 }
 
 - (void)reload {
+    if ([[self dataSource] isLoading]) return;
+    
     __weak typeof(self) weakSelf = self;
     [[self dataSource] refresh:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;

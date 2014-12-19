@@ -12,11 +12,11 @@
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMOnboardingUtils.h"
 
 @interface HEMPillSetupViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UIView *videoContainer;
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UIButton *helpButton;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
@@ -34,7 +34,16 @@
     [[self navigationItem] setHidesBackButton:YES];
     
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
+    [self setupDescription];
+    
     [SENAnalytics track:kHEMAnalyticsEventOnBPillPlacement];
+}
+
+- (void)setupDescription {
+    NSString* desc = NSLocalizedString(@"onboarding.pill-setup.description", nil);
+    NSMutableAttributedString* attributedDesc = [[NSMutableAttributedString alloc] initWithString:desc];
+    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attributedDesc];
+    [[self descLabel] setAttributedText:attributedDesc];
 }
 
 - (void)adjustConstraintsForIPhone4 {

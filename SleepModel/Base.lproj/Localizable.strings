@@ -46,6 +46,8 @@
 "onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulties falling asleep.";
 "onboarding.push.description" = "Sense will occasionally notify you with important messages about your sleep, bedroom and deliver you your Sleep Score each morning.";
 
+"onboarding.pill-setup.description" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands.";
+
 // help links
 "help.url.troubleshooting" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8";
 

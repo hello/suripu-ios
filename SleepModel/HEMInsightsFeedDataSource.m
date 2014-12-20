@@ -23,6 +23,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 @interface HEMInsightsFeedDataSource()
 
 @property (nonatomic, strong) NSMutableArray* data;
+@property (nonatomic, strong) NSCache* heightCache;
 @property (nonatomic, assign, getter=isLoadingInsights) BOOL loadingInsights;
 
 @end
@@ -33,6 +34,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     self = [super init];
     if (self) {
         [self setData:[NSMutableArray array]];
+        [self setHeightCache:[[NSCache alloc] init]];
     }
     return self;
 }
@@ -42,38 +44,44 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 }
 
 - (void)refresh:(void(^)(void))completion {
-    [[self data] removeAllObjects];
-    
+    __block NSMutableArray* tmpData = [NSMutableArray array];
     __block BOOL insightsRefreshed = NO;
     __block BOOL questionsRefreshed = NO;
-
+    __weak typeof(self) weakSelf = self;
+    
     void(^refreshCompletion)(void) = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (insightsRefreshed && questionsRefreshed) {
+            if (strongSelf) [strongSelf setData:tmpData];
             if (completion) completion ();
         }
     };
     
-    [self refreshInsights:^{
+    [self refreshInsights:^(NSArray* insights){
         insightsRefreshed = YES;
+        if ([insights count] > 0) [tmpData addObjectsFromArray:insights];
         refreshCompletion();
     }];
-    [self refreshQuestions:^{
+    [self refreshQuestions:^(NSArray* questions){
         questionsRefreshed = YES;
+        if ([questions count] > 0) [tmpData insertObject:questions[0] atIndex:0];
         refreshCompletion();
     }];
     
+}
+
+- (id)objectAtIndexPath:(NSIndexPath*)indexPath {
+    return [indexPath row] >= [[self data] count] ? nil : [self data][[indexPath row]];
 }
 
 #pragma mark - Insights
 
 - (SENInsight*)insightAtIndexPath:(NSIndexPath*)indexPath {
-    if ([indexPath row] >= [[self data] count]) return nil;
-    
-    id dataObj = [self data][[indexPath row]];
+    id dataObj = [self objectAtIndexPath:indexPath];
     return [dataObj isKindOfClass:[SENInsight class]] ? dataObj : nil;
 }
 
-- (void)refreshInsights:(void(^)(void))completion {
+- (void)refreshInsights:(void(^)(NSArray* insights))completion {
     [self setLoadingInsights:YES];
     
     __weak typeof(self) weakSelf = self;
@@ -81,13 +89,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             [strongSelf setLoadingInsights:NO];
-            
-            BOOL hasInsights = [insights count] > 0;
-            if (error == nil && hasInsights) {
-                [[strongSelf data] addObjectsFromArray:insights];
-            }
-            
-            if (completion) completion ();
+            if (completion) completion (insights);
         }
     }];
 }
@@ -95,9 +97,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 #pragma mark - Questions
 
 - (void)removeQuestionAtIndexPath:(NSIndexPath*)indexPath {
-    if ([indexPath row] >= [[self data] count]) return;
-    
-    id dataObj = [self data][[indexPath row]];
+    id dataObj = [self objectAtIndexPath:indexPath];
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
         NSMutableArray* mutableData = [[self data] mutableCopy];
         [mutableData removeObjectAtIndex:[indexPath row]];
@@ -106,45 +106,31 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 }
 
 - (SENQuestion*)questionAtIndexPath:(NSIndexPath*)indexPath {
-    if ([indexPath row] >= [[self data] count]) return nil;
-    
-    id dataObj = [self data][[indexPath row]];
+    id dataObj = [self objectAtIndexPath:indexPath];
     return [dataObj isKindOfClass:[SENQuestion class]] ? dataObj : nil;
 }
 
-- (void)updateDataWithQuestion {
+- (void)updateDataWithQuestions:(NSMutableArray*)data {
     NSArray* questions = [[SENServiceQuestions sharedService] todaysQuestions];
-    NSInteger count = [[[SENServiceQuestions sharedService] todaysQuestions] count];
+    NSInteger count = [questions count];
     if (count > 0) {
-        [[self data] insertObject:questions[0] atIndex:0];
+        [data insertObject:questions[0] atIndex:0];
     }
 }
 
-- (void)refreshQuestions:(void(^)(void))completion {
-    if (![[SENServiceQuestions sharedService] isUpdating]) {
-        [self updateDataWithQuestion];
-        if (completion) completion ();
-        return;
-    }
-    
-    __weak typeof(self) weakSelf = self;
-    __weak __block id observer =
-        [[SENServiceQuestions sharedService] listenForNewQuestions:^(NSArray *questions) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [[SENServiceQuestions sharedService] stopListening:observer];
-            
-            if (strongSelf) [strongSelf updateDataWithQuestion];
-            if (completion) completion ();
+- (void)refreshQuestions:(void(^)(NSArray* questions))completion {
+        [[SENServiceQuestions sharedService] updateQuestions:^(NSArray *questions, NSError *error) {
+            if (error) DDLogVerbose(@"error updating questions %@", error);
+            NSArray* updatedQuestions = error != nil ? nil : [[SENServiceQuestions sharedService] todaysQuestions];
+            if (completion) completion (updatedQuestions);
         }];
 }
 
 #pragma mark - CollectionView
 
 - (CGFloat)bodyTextPaddingForCellAtIndexPath:(NSIndexPath*)indexPath {
-    if ([indexPath row] >= [[self data] count]) return 0.0f;
-    
     CGFloat padding = 0.0f;
-    id dataObj = [self data][[indexPath row]];
+    id dataObj = [self objectAtIndexPath:indexPath];
     
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
         padding = HEMQuestionCellTextPadding;
@@ -156,10 +142,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 }
 
 - (NSString*)dateForCellAtIndexPath:(NSIndexPath*)indexPath {
-    if ([indexPath row] >= [[self data] count]) return nil;
-    
     NSString* date = nil;
-    id dataObj = [self data][[indexPath row]];
+    id dataObj = [self objectAtIndexPath:indexPath];
 
     if ([dataObj isKindOfClass:[SENInsight class]]) {
         SENInsight* insight = (SENInsight*)dataObj;
@@ -170,10 +154,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 }
 
 - (NSString*)insightTitleForCellAtIndexPath:(NSIndexPath*)indexPath {
-    if ([indexPath row] >= [[self data] count]) return nil;
-    
     NSString* title = nil;
-    id dataObj = [self data][[indexPath row]];
+    id dataObj = [self objectAtIndexPath:indexPath];;
     
     if ([dataObj isKindOfClass:[SENInsight class]]) {
         SENInsight* insight = (SENInsight*)dataObj;
@@ -184,10 +166,8 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 }
 
 - (NSString*)bodyTextForCellAtIndexPath:(NSIndexPath*)indexPath {
-    if ([indexPath row] >= [[self data] count]) return nil;
-    
     NSString* body = nil;
-    id dataObj = [self data][[indexPath row]];
+    id dataObj = [self objectAtIndexPath:indexPath];
     
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
         SENQuestion* quest = (SENQuestion*)dataObj;
@@ -203,6 +183,10 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withWidth:(CGFloat)width {
     NSString* body = [self bodyTextForCellAtIndexPath:indexPath];
     if ([body length] == 0) return 0.0f;
+    
+    if ([[self heightCache] objectForKey:body] != nil) {
+        return [[[self heightCache] objectForKey:body] floatValue];
+    }
     
     CGFloat baseHeight = 0.0f;
     CGFloat maxHeight = MAXFLOAT;
@@ -228,7 +212,9 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
                                              |NSStringDrawingUsesFontLeading
                                   attributes:textAttributes
                                      context:nil];
-    return ceilf(CGRectGetHeight(rect)) + baseHeight;
+    CGFloat calculatedHeight = ceilf(CGRectGetHeight(rect)) + baseHeight;
+    [[self heightCache] setObject:@(calculatedHeight) forKey:body];
+    return calculatedHeight;
     
 }
 
@@ -241,7 +227,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
     NSString* reuseId = nil;
-    id dataObj = [self data][[indexPath row]];
+    id dataObj = [self objectAtIndexPath:indexPath];
     
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
         reuseId = HEMInsightsFeedReuseIdQuestion;

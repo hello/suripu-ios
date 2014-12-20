@@ -71,6 +71,9 @@
     [[self dataSource] refresh:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
+            HEMCardFlowLayout* layout
+                = (HEMCardFlowLayout*)[[strongSelf collectionView] collectionViewLayout];
+            [layout clearCache];
             [[strongSelf collectionView] reloadData];
         }
     }];
@@ -165,11 +168,13 @@
 }
 
 - (void)skipQuestions:(UIButton*)sender {
+    [sender setEnabled:NO];
     NSIndexPath* path = [NSIndexPath indexPathForRow:[sender tag] inSection:0];
     SENQuestion* question = [[self dataSource] questionAtIndexPath:path];
     __weak typeof(self) weakSelf = self;
     [[SENServiceQuestions sharedService] skipQuestion:question completion:^(NSError *error) {
         [weakSelf removeCellAtIndexPath:path];
+        [sender setEnabled:YES];
     }];
 }
 

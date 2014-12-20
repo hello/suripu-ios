@@ -21,6 +21,8 @@
 @property (weak, nonatomic) IBOutlet UITableView* tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* tableViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIPickerView* pickerView;
+@property (weak, nonatomic) IBOutlet UIView* pickerContainerView;
+@property (weak, nonatomic) IBOutlet UIView* gradientView;
 
 @property (nonatomic, strong) HEMAlarmCache* alarmCache;
 @property (nonatomic, strong) HEMAlarmCache* originalAlarmCache;
@@ -44,13 +46,14 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
 {
     [super viewDidLoad];
     self.use12Hour = [SENSettings timeFormat] == SENTimeFormat12Hour;
+    [self configurePickerContainerView];
     [self configureAlarmCache];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self configurePicker];
+    [self updatePicker];
     [self.tableView reloadData];
 }
 
@@ -67,6 +70,26 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
     }
 }
 
+- (void)configurePickerContainerView
+{
+    self.pickerContainerView.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:1.f].CGColor;
+    self.pickerContainerView.layer.borderWidth = 0.5f;
+    NSArray* colors = @[
+        (id)[UIColor colorWithWhite:0.98f alpha:1.f].CGColor,
+        (id)[UIColor whiteColor].CGColor,
+        (id)[UIColor whiteColor].CGColor,
+        (id)[UIColor colorWithWhite:0.98f alpha:1.f].CGColor,
+    ];
+
+    CAGradientLayer* layer = [CAGradientLayer layer];
+    layer.colors = colors;
+    layer.frame = self.gradientView.bounds;
+    layer.locations = @[ @0, @(0.4), @(0.6), @1 ];
+    layer.startPoint = CGPointZero;
+    layer.endPoint = CGPointMake(0, 1);
+    [self.gradientView.layer insertSublayer:layer atIndex:0];
+}
+
 - (void)configureAlarmCache
 {
     self.alarmCache = [HEMAlarmCache new];
@@ -78,38 +101,6 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
     }
     if ([self isUnsavedAlarm])
         self.tableViewHeightConstraint.constant -= self.tableView.rowHeight;
-}
-
-- (void)configurePicker
-{
-    NSInteger minuteRow = self.alarmCache.minute / HEMAlarmMinuteIncrement;
-    NSInteger hourRow = self.alarmCache.hour;
-    NSInteger meridiemRow = self.alarmCache.hour <= 11 ? 0 : 1;
-    if ([self shouldUse12Hour]) {
-        if (hourRow > 12)
-            hourRow -= 12;
-        hourRow--;
-    }
-    [self.pickerView selectRow:hourRow inComponent:HEMAlarmHourIndex animated:NO];
-    [self.pickerView selectRow:minuteRow
-                   inComponent:HEMAlarmMinuteIndex animated:NO];
-
-    self.selectedHourLabel = (id)[self.pickerView viewForRow:hourRow
-                                                forComponent:HEMAlarmHourIndex];
-    self.selectedMinuteLabel = (id)[self.pickerView viewForRow:minuteRow
-                                                  forComponent:HEMAlarmMinuteIndex];
-    [self configureLabel:self.selectedHourLabel
-                selected:YES component:HEMAlarmHourIndex];
-    [self configureLabel:self.selectedMinuteLabel
-                selected:YES component:HEMAlarmMinuteIndex];
-    if ([self shouldUse12Hour]) {
-        [self.pickerView selectRow:meridiemRow
-                       inComponent:HEMAlarmMeridiemIndex animated:NO];
-        self.selectedMeridiemLabel = (id)[self.pickerView viewForRow:meridiemRow
-                                                        forComponent:HEMAlarmMeridiemIndex];
-        [self configureLabel:self.selectedMeridiemLabel
-                    selected:YES component:HEMAlarmMeridiemIndex];
-    }
 }
 
 - (struct SENAlarmTime)timeFromCachedValues
@@ -162,6 +153,8 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (success)
             [strongSelf dismiss:NO];
+        else
+            [self.alarm save];
     }];
 }
 
@@ -233,6 +226,38 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
 }
 
 #pragma mark - UIPickerView
+
+- (void)updatePicker
+{
+    NSInteger minuteRow = self.alarmCache.minute / HEMAlarmMinuteIncrement;
+    NSInteger hourRow = self.alarmCache.hour;
+    NSInteger meridiemRow = self.alarmCache.hour <= 11 ? 0 : 1;
+    if ([self shouldUse12Hour]) {
+        if (hourRow > 12)
+            hourRow -= 12;
+        hourRow--;
+    }
+    [self.pickerView selectRow:hourRow inComponent:HEMAlarmHourIndex animated:NO];
+    [self.pickerView selectRow:minuteRow
+                   inComponent:HEMAlarmMinuteIndex animated:NO];
+
+    self.selectedHourLabel = (id)[self.pickerView viewForRow:hourRow
+                                                forComponent:HEMAlarmHourIndex];
+    self.selectedMinuteLabel = (id)[self.pickerView viewForRow:minuteRow
+                                                  forComponent:HEMAlarmMinuteIndex];
+    [self configureLabel:self.selectedHourLabel
+                selected:YES component:HEMAlarmHourIndex];
+    [self configureLabel:self.selectedMinuteLabel
+                selected:YES component:HEMAlarmMinuteIndex];
+    if ([self shouldUse12Hour]) {
+        [self.pickerView selectRow:meridiemRow
+                       inComponent:HEMAlarmMeridiemIndex animated:NO];
+        self.selectedMeridiemLabel = (id)[self.pickerView viewForRow:meridiemRow
+                                                        forComponent:HEMAlarmMeridiemIndex];
+        [self configureLabel:self.selectedMeridiemLabel
+                    selected:YES component:HEMAlarmMeridiemIndex];
+    }
+}
 
 - (void)configureLabel:(UILabel *)label selected:(BOOL)isSelected component:(NSUInteger)component
 {

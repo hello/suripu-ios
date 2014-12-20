@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.0.49
+
+New:
+
+* Completely revamped the back view design
+* Sensor graphs are colorized based on current condition
+* Analytics by Mixpanel
+* Insights now show in full screen
+* Updated onboarding screen to better show how to attach Sleep Pill to pillow
+* Onboarding now fully instrumented with analytics to understand problem areas
+
+Fixes:
+
+* Room Check during onboarding works on 4s
+
+
 ## 1.0.0.48
 
 New:

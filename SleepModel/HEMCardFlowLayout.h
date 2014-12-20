@@ -11,4 +11,6 @@
 @interface HEMCardFlowLayout : UICollectionViewFlowLayout
 
 - (void)setItemHeight:(CGFloat)itemHeight;
+- (void)clearCache;
+
 @end

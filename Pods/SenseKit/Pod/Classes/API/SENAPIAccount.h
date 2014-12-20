@@ -58,4 +58,13 @@ extern NSString* const kSENAccountNotificationAccountCreated;
          toNewPassword:(NSString*)password
        completionBlock:(SENAPIDataBlock)completion;
 
+/**
+ * Change the email for the specified account.  The email in the account object
+ * is a
+ * 
+ * @param email: the new email to be used instead, which will still undergo
+ *               various validation.
+ */
++ (void)changeEmailInAccount:(SENAccount*)account completionBlock:(SENAPIDataBlock)completion;
+
 @end

@@ -102,8 +102,7 @@ static CGFloat const HEMCardResistanceCoefficient = 1350.f;
 {
     for (UICollectionViewUpdateItem* item in updateItems) {
         if (item.updateAction == UICollectionUpdateActionDelete) {
-            [self.dynamicAnimator removeAllBehaviors];
-            [self.visibleIndexPathsSet removeAllObjects];
+            [self clearCache];
             break;
         }
     }
@@ -148,6 +147,11 @@ static CGFloat const HEMCardResistanceCoefficient = 1350.f;
         center.y += MIN(self.latestDelta, self.latestDelta * scrollResistance);
     }
     return center;
+}
+
+- (void)clearCache {
+    [self.dynamicAnimator removeAllBehaviors];
+    [self.visibleIndexPathsSet removeAllObjects];
 }
 
 @end

@@ -14,7 +14,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSinkModalTransitionDelegate.h"
 
-@interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate, HEMAlarmControllerDelegate>
 
 @property (strong, nonatomic) NSArray* alarms;
 @property (weak, nonatomic) IBOutlet UICollectionView* collectionView;
@@ -58,7 +58,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [super viewWillAppear:animated];
     if (self.alarms.count == 0)
         [self refreshAlarmList];
-    [self reloadData];
     [self.collectionView reloadData];
 }
 
@@ -167,9 +166,24 @@ static NSUInteger const HEMAlarmListLimit = 8;
     UINavigationController* controller = (UINavigationController*)[HEMMainStoryboard instantiateAlarmNavController];
     HEMAlarmViewController* alarmController = (HEMAlarmViewController*)controller.topViewController;
     alarmController.alarm = alarm;
+    alarmController.delegate = self;
     controller.modalPresentationStyle = UIModalPresentationCustom;
     controller.transitioningDelegate = self.presentationTransitionDelegate;
-    [self presentViewController:controller animated:YES completion:NULL];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+#pragma mark - HEMAlarmControllerDelegate
+
+- (void)didCancelAlarmFrom:(HEMAlarmViewController *)alarmVC
+{
+    [self refreshAlarmList];
+    [alarmVC dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didSaveAlarm:(SENAlarm *)alarm from:(HEMAlarmViewController *)alarmVC
+{
+    [self refreshAlarmList];
+    [alarmVC dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Collection View
@@ -251,8 +265,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     if ([SENSettings timeFormat] == SENTimeFormat12Hour) {
         if (time.hour > 12) {
             time.hour = (long)(time.hour - 12);
-        }
-        else if (time.hour == 0) {
+        } else if (time.hour == 0) {
             time.hour = 12;
         }
     }

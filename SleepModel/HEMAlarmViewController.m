@@ -24,6 +24,7 @@
 @property (weak, nonatomic) IBOutlet UILabel* alarmSoundLabel;
 @property (weak, nonatomic) IBOutlet UILabel* alarmSoundNameLabel;
 @property (weak, nonatomic) IBOutlet UILabel* alarmRepeatLabel;
+@property (weak, nonatomic) IBOutlet UIButton* alarmDeleteButton;
 @property (strong, nonatomic) IBOutlet UISwitch* alarmSmartSwitch;
 @property (weak, nonatomic) IBOutlet UILabel* wakeUpInstructionsLabel;
 @property (strong, nonatomic) CAGradientLayer* gradientLayer;
@@ -41,7 +42,6 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [self setNeedsStatusBarAppearanceUpdate];
     self.alarmTimeLabel.font = [UIFont largeNumberFont];
     self.alarmCache = [HEMAlarmCache new];
     self.originalAlarmCache = [HEMAlarmCache new];
@@ -54,31 +54,18 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
         @(EMPH) : @{
             NSFontAttributeName : [UIFont alarmMessageBoldFont],
         },
-        @(PARA) : @{
-            NSForegroundColorAttributeName : [UIColor whiteColor],
-        },
         @(PLAIN) : @{
             NSFontAttributeName : [UIFont alarmMessageFont]
         }
     };
+
+    self.alarmDeleteButton.hidden = [self isUnsavedAlarm];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self updateNavigationBar];
     [self updateViewWithAlarmSettings];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    [self.navigationController.navigationBar setTintColor:[HelloStyleKit backViewNavTitleColor]];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
-        NSFontAttributeName : [UIFont settingsTitleFont]
-    }];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault animated:YES];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
@@ -92,20 +79,6 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
         controller.alarmCache = self.alarmCache;
         controller.alarm = self.alarm;
     }
-}
-
-- (void)updateNavigationBar
-{
-    NSDictionary* attributes = @{NSForegroundColorAttributeName:[UIColor whiteColor],
-                                 NSFontAttributeName: [UIFont navButtonTitleFont]};
-    [self.navigationController.navigationBar setTintColor:[UIColor whiteColor]];
-    [self.navigationItem.leftBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    [self.navigationItem.rightBarButtonItem setTitleTextAttributes:attributes forState:UIControlStateNormal];
-    [self.navigationController.navigationBar setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [UIColor whiteColor],
-        NSFontAttributeName : [UIFont settingsTitleFont]
-    }];
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleLightContent animated:YES];
 }
 
 - (void)updateViewWithAlarmSettings
@@ -172,6 +145,17 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
             [strongSelf.alarm delete];
         else
             [strongSelf updateAlarmFromCache:strongSelf.originalAlarmCache];
+    }];
+}
+
+- (IBAction)deleteAndDismissFromView:(id)sender
+{
+    [self.alarm delete];
+    __weak typeof(self) weakSelf = self;
+    [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (success)
+            [strongSelf dismiss:NO];
     }];
 }
 

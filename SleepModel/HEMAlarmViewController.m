@@ -236,9 +236,6 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
 
 - (void)configureLabel:(UILabel *)label selected:(BOOL)isSelected component:(NSUInteger)component
 {
-//    CGAffineTransform transform = isSelected ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.5f, 0.5f);
-//    if (!CGAffineTransformEqualToTransform(label.transform, transform))
-//        label.transform = transform;
     CGFloat fontSize;
     if (component == HEMAlarmMeridiemIndex) {
         fontSize = 20.f;
@@ -307,7 +304,13 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
 {
     switch (component) {
         case HEMAlarmDividerIndex: return 12.f;
-        case HEMAlarmMeridiemIndex: return 40.f;
+        case HEMAlarmMeridiemIndex: return 60.f;
+        case HEMAlarmMinuteIndex: {
+            if (![self shouldUse12Hour])
+                return 120.f;
+            else
+                return 90.f;
+        }
         default: return 90.f;
     }
 }
@@ -374,8 +377,15 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
 - (NSTextAlignment)textAlignmentForComponent:(NSInteger)component
 {
     switch (component) {
-        case HEMAlarmHourIndex: return NSTextAlignmentRight;
-        case HEMAlarmMeridiemIndex: return NSTextAlignmentLeft;
+        case HEMAlarmHourIndex:
+            return NSTextAlignmentRight;
+        case HEMAlarmDividerIndex:
+        case HEMAlarmMeridiemIndex:
+            return NSTextAlignmentLeft;
+        case HEMAlarmMinuteIndex: {
+            if (![self shouldUse12Hour])
+                return NSTextAlignmentLeft;
+        }
         default: return NSTextAlignmentCenter;
     }
 }

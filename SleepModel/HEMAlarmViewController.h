@@ -6,12 +6,13 @@
 
 @protocol HEMAlarmControllerDelegate <NSObject>
 
+@required
 - (void)didCancelAlarmFrom:(HEMAlarmViewController*)alarmVC;
 - (void)didSaveAlarm:(SENAlarm*)alarm from:(HEMAlarmViewController*)alarmVC;
 
 @end
 
-@interface HEMAlarmViewController : UITableViewController
+@interface HEMAlarmViewController : UIViewController
 
 @property (nonatomic, strong) SENAlarm* alarm;
 @property (nonatomic, weak)   id<HEMAlarmControllerDelegate> delegate;

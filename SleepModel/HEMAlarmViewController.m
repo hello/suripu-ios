@@ -14,49 +14,49 @@
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMMainStoryboard.h"
+#import "HEMAlarmTableViewCell.h"
 
-@interface HEMAlarmViewController () <UITableViewDelegate, UIPickerViewDelegate, UIPickerViewDataSource>
+@interface HEMAlarmViewController()<UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource>
 
-@property (weak, nonatomic) IBOutlet UILabel* alarmEnabledLabel;
-@property (weak, nonatomic) IBOutlet UILabel* alarmSoundLabel;
-@property (weak, nonatomic) IBOutlet UILabel* alarmSoundNameLabel;
-@property (weak, nonatomic) IBOutlet UILabel* alarmRepeatLabel;
-@property (strong, nonatomic) IBOutlet UISwitch* alarmSmartSwitch;
-@property (strong, nonatomic) CAGradientLayer* gradientLayer;
-@property (strong, nonatomic) NSDictionary* markdownAttributes;
+@property (weak, nonatomic) IBOutlet UITableView* tableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* tableViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIPickerView* pickerView;
 
 @property (nonatomic, strong) HEMAlarmCache* alarmCache;
 @property (nonatomic, strong) HEMAlarmCache* originalAlarmCache;
 @property (nonatomic, getter=isUnsavedAlarm) BOOL unsavedAlarm;
 @property (nonatomic, getter=shouldUse12Hour) BOOL use12Hour;
+
+@property (nonatomic, strong) UILabel* selectedHourLabel;
+@property (nonatomic, strong) UILabel* selectedMinuteLabel;
+@property (nonatomic, strong) UILabel* selectedMeridiemLabel;
 @end
 
 @implementation HEMAlarmViewController
 
-static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
+static NSUInteger const HEMAlarmHourIndex = 0;
+static NSUInteger const HEMAlarmDividerIndex = 1;
+static NSUInteger const HEMAlarmMinuteIndex = 2;
+static NSUInteger const HEMAlarmMeridiemIndex = 3;
+static NSUInteger const HEMAlarmMinuteIncrement = 5;
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.alarmCache = [HEMAlarmCache new];
-    self.originalAlarmCache = [HEMAlarmCache new];
     self.use12Hour = [SENSettings timeFormat] == SENTimeFormat12Hour;
-    if (self.alarm) {
-        [self.alarmCache cacheValuesFromAlarm:self.alarm];
-        [self.originalAlarmCache cacheValuesFromAlarm:self.alarm];
-        self.unsavedAlarm = ![self.alarm isSaved];
-    }
+    [self configureAlarmCache];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self updateViewWithAlarmSettings];
+    [self configurePicker];
+    [self.tableView reloadData];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender
 {
-    if ([segue.identifier isEqualToString:[HEMMainStoryboard pickSoundSegueSegueIdentifier]]) {
+    if ([segue.identifier isEqualToString:[HEMMainStoryboard pickSoundSegueIdentifier]]) {
         HEMAlarmSoundTableViewController* controller = segue.destinationViewController;
         controller.alarmCache = self.alarmCache;
     }
@@ -67,11 +67,43 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
     }
 }
 
-- (void)updateViewWithAlarmSettings
+- (void)configureAlarmCache
 {
-    self.alarmSmartSwitch.on = [self.alarmCache isSmart];
-    self.alarmSoundNameLabel.text = self.alarmCache.soundName;
-    self.alarmRepeatLabel.text = [HEMAlarmUtils repeatTextForUnitFlags:self.alarmCache.repeatFlags];
+    self.alarmCache = [HEMAlarmCache new];
+    self.originalAlarmCache = [HEMAlarmCache new];
+    if (self.alarm) {
+        [self.alarmCache cacheValuesFromAlarm:self.alarm];
+        [self.originalAlarmCache cacheValuesFromAlarm:self.alarm];
+        self.unsavedAlarm = ![self.alarm isSaved];
+    }
+    if ([self isUnsavedAlarm])
+        self.tableViewHeightConstraint.constant -= self.tableView.rowHeight;
+}
+
+- (void)configurePicker
+{
+    NSInteger minuteRow = self.alarmCache.minute / HEMAlarmMinuteIncrement;
+    NSInteger hourRow = self.alarmCache.hour;
+    NSInteger meridiemRow = self.alarmCache.hour <= 11 ? 0 : 1;
+    if ([self shouldUse12Hour]) {
+        if (hourRow > 12)
+            hourRow -= 12;
+        hourRow--;
+    }
+    [self.pickerView selectRow:hourRow inComponent:HEMAlarmHourIndex animated:NO];
+    [self.pickerView selectRow:minuteRow
+                   inComponent:HEMAlarmMinuteIndex animated:NO];
+
+    [self configureLabel:(id)[self.pickerView viewForRow:hourRow forComponent:HEMAlarmHourIndex]
+                selected:YES component:HEMAlarmHourIndex];
+    [self configureLabel:(id)[self.pickerView viewForRow:minuteRow forComponent:HEMAlarmMinuteIndex]
+                selected:YES component:HEMAlarmMinuteIndex];
+    if ([self shouldUse12Hour]) {
+        [self.pickerView selectRow:meridiemRow
+                       inComponent:HEMAlarmMeridiemIndex animated:NO];
+        [self configureLabel:(id)[self.pickerView viewForRow:meridiemRow forComponent:HEMAlarmMeridiemIndex]
+                    selected:YES component:HEMAlarmMeridiemIndex];
+    }
 }
 
 - (struct SENAlarmTime)timeFromCachedValues
@@ -80,14 +112,6 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
         .hour = self.alarmCache.hour,
         .minute = self.alarmCache.minute
     };
-}
-
-- (NSString*)textForHour:(NSInteger)hour minute:(NSInteger)minute
-{
-    struct SENAlarmTime time;
-    time.hour = hour;
-    time.minute = minute;
-    return [SENAlarm localizedValueForTime:time];
 }
 
 #pragma mark - Actions
@@ -102,7 +126,6 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
     } else {
         [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
     }
-    
 }
 
 - (IBAction)dismissFromView:(id)sender
@@ -125,31 +148,20 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
     }];
 }
 
+- (IBAction)deleteAndDismissFromView:(id)sender
+{
+    [self.alarm delete];
+    __weak typeof(self) weakSelf = self;
+    [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (success)
+            [strongSelf dismiss:NO];
+    }];
+}
+
 - (IBAction)updateAlarmState:(UISwitch*)sender
 {
     self.alarmCache.smart = [sender isOn];
-    [self updateViewWithAlarmSettings];
-}
-
-- (IBAction)panAlarmTime:(UIPanGestureRecognizer*)sender
-{
-    CGFloat distance = [sender translationInView:self.view].y * HEMAlarmPanningSpeedMultiplier;
-    if (distance < 0.75 && distance > -0.75)
-        return;
-    CGFloat minutes = distance < 0 ? floorf(distance) : ceilf(distance);
-    struct SENAlarmTime alarmTime = [self timeFromCachedValues];
-    alarmTime = [SENAlarm time:alarmTime byAddingMinutes:minutes];
-    self.alarmCache.hour = alarmTime.hour;
-    self.alarmCache.minute = alarmTime.minute;
-    [self updateViewWithAlarmSettings];
-    [sender setTranslation:CGPointZero inView:self.view];
-}
-
-- (IBAction)showAlarmTimeExplanationDialog:(UIButton*)sender
-{
-    [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.time-explanation.title", nil)
-                                          message:NSLocalizedString(@"alarm.time-explanation.message", nil)
-                             presentingController:self];
 }
 
 - (void)updateAlarmFromCache:(HEMAlarmCache*)cache
@@ -162,11 +174,51 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
     [self.alarm save];
 }
 
+#pragma mark - UITableViewDatasource
+
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+{
+    return [self isUnsavedAlarm] ? 3 : 4;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* identifier, *title = nil, *detail = nil;
+    BOOL switchState = NO;
+    switch (indexPath.row) {
+        case 0:
+            identifier = [HEMMainStoryboard alarmSwitchCellReuseIdentifier];
+            switchState = [self.alarmCache isSmart];
+            title = NSLocalizedString(@"alarm.smart.title", nil);
+            break;
+        case 1:
+            identifier = [HEMMainStoryboard alarmSoundCellReuseIdentifier];
+            title = NSLocalizedString(@"alarm.sound.title", nil);
+            detail = self.alarmCache.soundName;
+            break;
+        case 2:
+            identifier = [HEMMainStoryboard alarmRepeatCellReuseIdentifier];
+            title = NSLocalizedString(@"alarm.repeat.title", nil);
+            detail = [HEMAlarmUtils repeatTextForUnitFlags:self.alarmCache.repeatFlags];
+            break;
+        case 3:
+            identifier = [HEMMainStoryboard alarmDeleteCellReuseIdentifier];
+            title = NSLocalizedString(@"alarm.delete.title", nil);
+    }
+    HEMAlarmTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
+    cell.titleLabel.text = title;
+    cell.detailLabel.text = detail;
+    cell.smartSwitch.on = switchState;
+    return cell;
+}
+
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
+    if (indexPath.row == 4)
+        [self deleteAndDismissFromView:nil];
 }
 
 - (BOOL)tableView:(UITableView*)tableView shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
@@ -176,16 +228,79 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
 
 #pragma mark - UIPickerView
 
+- (void)configureLabel:(UILabel *)label selected:(BOOL)isSelected component:(NSUInteger)component
+{
+//    CGAffineTransform transform = isSelected ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.5f, 0.5f);
+//    if (!CGAffineTransformEqualToTransform(label.transform, transform))
+//        label.transform = transform;
+    CGFloat fontSize;
+    if (component == HEMAlarmMeridiemIndex) {
+        fontSize = 20.f;
+    } else if (isSelected) {
+        fontSize = 72.f;
+    } else {
+        fontSize = 50.f;
+    }
+    label.font = [UIFont fontWithName:@"AvenirNext-UltraLight" size:fontSize];
+    label.textColor = isSelected ? [HelloStyleKit lightSleepColor] : [UIColor grayColor];
+}
+
+- (void)updateAlarmCacheHourWithSelectedRow:(NSUInteger)row
+{
+    NSUInteger adjustedRow = row;
+    if ([self shouldUse12Hour]) {
+        NSString* pmText = [self textForRow:1 forComponent:HEMAlarmMeridiemIndex];
+        if ([self.selectedMeridiemLabel.text isEqualToString:pmText]) {
+            adjustedRow = row + 13;
+        } else {
+            adjustedRow = row + 1;
+        }
+        if (adjustedRow == 24)
+            adjustedRow = 12;
+        else if (adjustedRow == 12)
+            adjustedRow = 0;
+    }
+    self.alarmCache.hour = adjustedRow;
+}
+
 #pragma mark UIPickerViewDelegate
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    [pickerView reloadComponent:component];
+    UILabel* oldSelectedLabel;
+    UILabel* selectedLabel = (id)[pickerView viewForRow:row forComponent:component];
+    switch (component) {
+        case HEMAlarmHourIndex: {
+            oldSelectedLabel = self.selectedHourLabel;
+            self.selectedHourLabel = selectedLabel;
+            [self updateAlarmCacheHourWithSelectedRow:row];
+        } break;
+        case HEMAlarmMinuteIndex: {
+            oldSelectedLabel = self.selectedMinuteLabel;
+            self.selectedMinuteLabel = selectedLabel;
+            self.alarmCache.minute = row * HEMAlarmMinuteIncrement;
+        } break;
+        case HEMAlarmMeridiemIndex: {
+            oldSelectedLabel = self.selectedMeridiemLabel;
+            self.selectedMeridiemLabel = selectedLabel;
+            NSUInteger selectedHourRow = [pickerView selectedRowInComponent:HEMAlarmHourIndex];
+            [self updateAlarmCacheHourWithSelectedRow:selectedHourRow];
+        } break;
+        default:
+            break;
+    }
+    if (![selectedLabel isEqual:oldSelectedLabel]) {
+        [UIView animateWithDuration:0.2f animations:^{
+            [self configureLabel:selectedLabel selected:YES component:component];
+            if (oldSelectedLabel)
+                [self configureLabel:oldSelectedLabel selected:NO component:component];
+        }];
+    }
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
 {
-    return component == 1 ? 15.f : 100.f;
+    return component == HEMAlarmDividerIndex ? 12.f : 90.f;
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
@@ -203,10 +318,10 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     switch (component) {
-        case 0: return [self shouldUse12Hour] ? 12 : 24;
-        case 1: return 1;
-        case 2: return 12;
-        case 3: return 2;
+        case HEMAlarmHourIndex: return [self shouldUse12Hour] ? 12 : 24;
+        case HEMAlarmDividerIndex: return 1;
+        case HEMAlarmMinuteIndex: return 60 / HEMAlarmMinuteIncrement;
+        case HEMAlarmMeridiemIndex: return 2;
         default: return 0;
     }
 }
@@ -218,34 +333,31 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
     UILabel* label = (id)view ?: [UILabel new];
     label.text = text;
     label.textAlignment = [self textAlignmentForComponent:component];
-    label.font = [UIFont fontWithName:@"AvenirNext-UltraLight" size: component == 3 ? 20.f : 72.f];
-    [UIView animateWithDuration:0.2f animations:^{
-        BOOL isSelectedRow = [pickerView selectedRowInComponent:component] == row;
-        CGAffineTransform transform = isSelectedRow ? CGAffineTransformIdentity : CGAffineTransformMakeScale(0.5f, 0.5f);
-        if (!CGAffineTransformEqualToTransform(label.transform, transform))
-            label.transform = transform;
-        label.textColor = isSelectedRow ? [HelloStyleKit lightSleepColor] : [UIColor grayColor];
-    }];
+    BOOL isSelectedRow = (component == HEMAlarmHourIndex && label == self.selectedHourLabel)
+        || (component == HEMAlarmMinuteIndex && label == self.selectedMinuteLabel)
+        || (component == HEMAlarmDividerIndex)
+        || (component == HEMAlarmMeridiemIndex && label == self.selectedMeridiemLabel);
+    [self configureLabel:label selected:isSelectedRow component:component];
     return label;
 }
 
 - (NSString *)textForRow:(NSInteger)row forComponent:(NSInteger)component
 {
     switch (component) {
-        case 0: {
+        case HEMAlarmHourIndex: {
             NSInteger hour = [self shouldUse12Hour] ? row + 1 : row;
             return [NSString stringWithFormat:@"%ld", hour];
         }
-        case 1: return @":";
-        case 2: {
-            NSInteger minute = row * 5;
+        case HEMAlarmMinuteIndex: {
+            NSInteger minute = row * HEMAlarmMinuteIncrement;
             NSString* format = minute < 10 ? @"0%ld" : @"%ld";
             return [NSString stringWithFormat:format, minute];
         }
-        case 3: {
+        case HEMAlarmMeridiemIndex: {
             NSString* format = row == 0 ? @"alarms.alarm.meridiem.am" : @"alarms.alarm.meridiem.pm";
             return [NSLocalizedString(format, nil) uppercaseString];
         }
+        case HEMAlarmDividerIndex: return NSLocalizedString(@"alarm.clock.divider", nil);
         default: return nil;
     }
 }
@@ -253,11 +365,9 @@ static CGFloat const HEMAlarmPanningSpeedMultiplier = 0.25f;
 - (NSTextAlignment)textAlignmentForComponent:(NSInteger)component
 {
     switch (component) {
-        case 0: return NSTextAlignmentRight;
-        case 1: return NSTextAlignmentCenter;
-        case 2: return NSTextAlignmentCenter;
-        case 3:
-        default: return NSTextAlignmentLeft;
+        case HEMAlarmHourIndex: return NSTextAlignmentRight;
+        case HEMAlarmMeridiemIndex: return NSTextAlignmentLeft;
+        default: return NSTextAlignmentCenter;
     }
 }
 

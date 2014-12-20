@@ -251,10 +251,13 @@
 "alarm.repeat.title" = "Repeat";
 "alarm.repeat.days.none" = "Not repeating";
 "alarm.repeat.days.all" = "Everyday";
+"alarm.smart.title" = "Smart Alarm";
+"alarm.delete.title" = "Delete Alarm";
 "alarm.save-error.title" = "Alarms could not be saved";
 "alarm.load-error.title" = "Alarms could not be loaded";
 "alarm.time-explanation.title" = "Why is alarm time flexible?";
 "alarm.time-explanation.message" = "Sense monitors your sleep depth and determines the best time to start the alarm in the minutes before you need to awaken.";
+"alarm.clock.divider" = ":";
 
 "alarm.repeat.days.weekdays" = "Weekdays";
 "alarm.repeat.days.weekends" = "Weekends";

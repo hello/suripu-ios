@@ -107,6 +107,7 @@
 		8A90F9BC19637F9400AFD110 /* HEMSleepSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9BB19637F9400AFD110 /* HEMSleepSoundTableViewController.m */; };
 		8A91EEF819E46D9900EA6E5F /* HEMAlarmCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A91EEF719E46D9900EA6E5F /* HEMAlarmCache.m */; };
 		8A91EEFA19E5BAA200EA6E5F /* HEMEventInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A91EEF919E5BAA200EA6E5F /* HEMEventInfoView.xib */; };
+		8A91F2A61A44DB3D00F211B4 /* HEMAlarmTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A91F2A51A44DB3D00F211B4 /* HEMAlarmTableViewCell.m */; };
 		8A93AFBE1A09BED100F70A8B /* caret up@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A93AFB71A09BED100F70A8B /* caret up@3x.png */; };
 		8A93AFBF1A09BED100F70A8B /* Menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A93AFB81A09BED100F70A8B /* Menu.png */; };
 		8A93AFC01A09BED100F70A8B /* Menu@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A93AFB91A09BED100F70A8B /* Menu@2x.png */; };
@@ -674,6 +675,8 @@
 		8A91EEF619E46D9900EA6E5F /* HEMAlarmCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmCache.h; sourceTree = "<group>"; };
 		8A91EEF719E46D9900EA6E5F /* HEMAlarmCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmCache.m; sourceTree = "<group>"; };
 		8A91EEF919E5BAA200EA6E5F /* HEMEventInfoView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMEventInfoView.xib; sourceTree = "<group>"; };
+		8A91F2A41A44DB3D00F211B4 /* HEMAlarmTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmTableViewCell.h; sourceTree = "<group>"; };
+		8A91F2A51A44DB3D00F211B4 /* HEMAlarmTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmTableViewCell.m; sourceTree = "<group>"; };
 		8A93AFB71A09BED100F70A8B /* caret up@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "caret up@3x.png"; path = "images/caret up@3x.png"; sourceTree = "<group>"; };
 		8A93AFB81A09BED100F70A8B /* Menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = Menu.png; path = images/Menu.png; sourceTree = "<group>"; };
 		8A93AFB91A09BED100F70A8B /* Menu@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Menu@2x.png"; path = "images/Menu@2x.png"; sourceTree = "<group>"; };
@@ -1927,6 +1930,8 @@
 				8AB2683819CCFDB400017818 /* HEMAlarmAddButton.m */,
 				8A7D80471A421B7300B0BFD7 /* HEMAlarmListCell.h */,
 				8A7D80481A421B7300B0BFD7 /* HEMAlarmListCell.m */,
+				8A91F2A41A44DB3D00F211B4 /* HEMAlarmTableViewCell.h */,
+				8A91F2A51A44DB3D00F211B4 /* HEMAlarmTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2981,6 +2986,7 @@
 				BF14E3C419EF3C020006EFEA /* HEMBluetoothUtils.m in Sources */,
 				BF05C8E11A3A52CB002A1307 /* HEMMultipleResponseCell.m in Sources */,
 				BF1E2E5D1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m in Sources */,
+				8A91F2A61A44DB3D00F211B4 /* HEMAlarmTableViewCell.m in Sources */,
 				8AC4A05B198ACE4800C2BD63 /* HEMLineGraphDataSource.m in Sources */,
 				BFB1F3D91A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m in Sources */,
 				BF6E3AA01A2E51290019C110 /* HEMSingleResponseCell.m in Sources */,

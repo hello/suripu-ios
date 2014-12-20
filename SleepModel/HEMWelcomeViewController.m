@@ -257,10 +257,6 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     NSURL* introductoryVideoURL = [NSURL URLWithString:NSLocalizedString(@"video.url.intro", nil)];
     MPMoviePlayerViewController* videoPlayer
         = [[MPMoviePlayerViewController alloc] initWithContentURL:introductoryVideoURL];
-    
-    [videoPlayer setModalPresentationStyle:UIModalPresentationFullScreen];
-    [videoPlayer setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    
     [self presentMoviePlayerViewControllerAnimated:videoPlayer];
 }
 

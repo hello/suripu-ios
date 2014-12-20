@@ -36,11 +36,23 @@
 
 @implementation HEMAlarmViewController
 
+static CGFloat const HEMAlarmPickerRowHeight = 80.f;
+static CGFloat const HEMAlarmPickerDividerWidth = 12.f;
+static CGFloat const HEMAlarmPickerMeridiemWidth = 60.f;
+static CGFloat const HEMAlarmPickerDefaultWidth = 90.f;
+static CGFloat const HEMAlarmPickerExpandedWidth = 120.f;
+static NSUInteger const HEMAlarmTableSmartIndex = 0;
+static NSUInteger const HEMAlarmTableSoundIndex = 1;
+static NSUInteger const HEMAlarmTableRepeatIndex = 2;
+static NSUInteger const HEMAlarmTableDeletionIndex = 3;
 static NSUInteger const HEMAlarmHourIndex = 0;
 static NSUInteger const HEMAlarmDividerIndex = 1;
 static NSUInteger const HEMAlarmMinuteIndex = 2;
 static NSUInteger const HEMAlarmMeridiemIndex = 3;
 static NSUInteger const HEMAlarmMinuteIncrement = 5;
+static NSUInteger const HEMAlarmMinuteCount = 60;
+static NSUInteger const HEMAlarm12HourCount = 12;
+static NSUInteger const HEMAlarm24HourCount = 24;
 
 - (void)viewDidLoad
 {
@@ -185,22 +197,22 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
     NSString* identifier, *title = nil, *detail = nil;
     BOOL switchState = NO;
     switch (indexPath.row) {
-        case 0:
+        case HEMAlarmTableSmartIndex:
             identifier = [HEMMainStoryboard alarmSwitchCellReuseIdentifier];
             switchState = [self.alarmCache isSmart];
             title = NSLocalizedString(@"alarm.smart.title", nil);
             break;
-        case 1:
+        case HEMAlarmTableSoundIndex:
             identifier = [HEMMainStoryboard alarmSoundCellReuseIdentifier];
             title = NSLocalizedString(@"alarm.sound.title", nil);
             detail = self.alarmCache.soundName;
             break;
-        case 2:
+        case HEMAlarmTableRepeatIndex:
             identifier = [HEMMainStoryboard alarmRepeatCellReuseIdentifier];
             title = NSLocalizedString(@"alarm.repeat.title", nil);
             detail = [HEMAlarmUtils repeatTextForUnitFlags:self.alarmCache.repeatFlags];
             break;
-        case 3:
+        case HEMAlarmTableDeletionIndex:
             identifier = [HEMMainStoryboard alarmDeleteCellReuseIdentifier];
             title = NSLocalizedString(@"alarm.delete.title", nil);
     }
@@ -216,13 +228,13 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    if (indexPath.row == 4)
+    if (indexPath.row == HEMAlarmTableDeletionIndex)
         [self deleteAndDismissFromView:nil];
 }
 
 - (BOOL)tableView:(UITableView*)tableView shouldHighlightRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    return indexPath.row != 0;
+    return indexPath.row != HEMAlarmTableSmartIndex;
 }
 
 #pragma mark - UIPickerView
@@ -231,10 +243,10 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
 {
     NSInteger minuteRow = self.alarmCache.minute / HEMAlarmMinuteIncrement;
     NSInteger hourRow = self.alarmCache.hour;
-    NSInteger meridiemRow = self.alarmCache.hour <= 11 ? 0 : 1;
+    NSInteger meridiemRow = self.alarmCache.hour <= (HEMAlarm12HourCount - 1) ? 0 : 1;
     if ([self shouldUse12Hour]) {
-        if (hourRow > 12)
-            hourRow -= 12;
+        if (hourRow > HEMAlarm12HourCount)
+            hourRow -= HEMAlarm12HourCount;
         hourRow--;
     }
     [self.pickerView selectRow:hourRow inComponent:HEMAlarmHourIndex animated:NO];
@@ -261,15 +273,20 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
 
 - (void)configureLabel:(UILabel *)label selected:(BOOL)isSelected component:(NSUInteger)component
 {
-    CGFloat fontSize;
     if (component == HEMAlarmMeridiemIndex) {
-        fontSize = 20.f;
-    } else if (isSelected) {
-        fontSize = 72.f;
+        label.font = [UIFont alarmMeridiemFont];
     } else {
-        fontSize = 50.f;
+        label.font = [UIFont alarmNumberFont];
+        CGAffineTransform scaleTransform = CGAffineTransformMakeScale(1.4f, 1.4f);
+        CGAffineTransform selectedTransform;
+        if (component == HEMAlarmHourIndex)
+            selectedTransform = CGAffineTransformTranslate(scaleTransform, -CGRectGetWidth(label.bounds)/7, 0);
+        else
+            selectedTransform = scaleTransform;
+        CGAffineTransform transform = isSelected ? selectedTransform : CGAffineTransformIdentity;
+        if (!CGAffineTransformEqualToTransform(transform, label.transform))
+            label.transform = transform;
     }
-    label.font = [UIFont fontWithName:@"AvenirNext-UltraLight" size:fontSize];
     label.textColor = isSelected ? [HelloStyleKit lightSleepColor] : [UIColor grayColor];
 }
 
@@ -318,31 +335,32 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
             break;
     }
     if (![selectedLabel isEqual:oldSelectedLabel]) {
-        [self configureLabel:selectedLabel selected:YES component:component];
-        if (oldSelectedLabel)
-            [self configureLabel:oldSelectedLabel selected:NO component:component];
-        [self.pickerView setNeedsLayout];
+        [UIView animateWithDuration:0.25f animations:^{
+            [self configureLabel:selectedLabel selected:YES component:component];
+            if (oldSelectedLabel)
+                [self configureLabel:oldSelectedLabel selected:NO component:component];
+        } completion:^(BOOL finished) {
+            [self.pickerView setNeedsLayout];
+        }];
     }
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
 {
     switch (component) {
-        case HEMAlarmDividerIndex: return 12.f;
-        case HEMAlarmMeridiemIndex: return 60.f;
+        case HEMAlarmDividerIndex: return HEMAlarmPickerDividerWidth;
+        case HEMAlarmMeridiemIndex: return HEMAlarmPickerMeridiemWidth;
         case HEMAlarmMinuteIndex: {
             if (![self shouldUse12Hour])
-                return 120.f;
-            else
-                return 90.f;
+                return HEMAlarmPickerExpandedWidth;
         }
-        default: return 90.f;
+        default: return HEMAlarmPickerDefaultWidth;
     }
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
 {
-    return 80.f;
+    return HEMAlarmPickerRowHeight;
 }
 
 #pragma mark UIPickerViewDatasource
@@ -355,9 +373,9 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
     switch (component) {
-        case HEMAlarmHourIndex: return [self shouldUse12Hour] ? 12 : 24;
+        case HEMAlarmHourIndex: return [self shouldUse12Hour] ? HEMAlarm12HourCount : HEMAlarm24HourCount;
         case HEMAlarmDividerIndex: return 1;
-        case HEMAlarmMinuteIndex: return 60 / HEMAlarmMinuteIncrement;
+        case HEMAlarmMinuteIndex: return HEMAlarmMinuteCount / HEMAlarmMinuteIncrement;
         case HEMAlarmMeridiemIndex: return 2;
         default: return 0;
     }

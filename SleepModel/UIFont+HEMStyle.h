@@ -11,6 +11,16 @@
 @interface UIFont (HEMStyle)
 
 /**
+ *  Alarm picker view selected number font
+ */
++ (UIFont *)alarmNumberFont;
+
+/**
+ *  Alarm picker view meridiem font
+ */
++ (UIFont *)alarmMeridiemFont;
+
+/**
  *  Font for section and insight headings
  */
 + (UIFont *)insightTitleFont;

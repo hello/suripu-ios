@@ -94,14 +94,20 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
     [self.pickerView selectRow:minuteRow
                    inComponent:HEMAlarmMinuteIndex animated:NO];
 
-    [self configureLabel:(id)[self.pickerView viewForRow:hourRow forComponent:HEMAlarmHourIndex]
+    self.selectedHourLabel = (id)[self.pickerView viewForRow:hourRow
+                                                forComponent:HEMAlarmHourIndex];
+    self.selectedMinuteLabel = (id)[self.pickerView viewForRow:minuteRow
+                                                  forComponent:HEMAlarmMinuteIndex];
+    [self configureLabel:self.selectedHourLabel
                 selected:YES component:HEMAlarmHourIndex];
-    [self configureLabel:(id)[self.pickerView viewForRow:minuteRow forComponent:HEMAlarmMinuteIndex]
+    [self configureLabel:self.selectedMinuteLabel
                 selected:YES component:HEMAlarmMinuteIndex];
     if ([self shouldUse12Hour]) {
         [self.pickerView selectRow:meridiemRow
                        inComponent:HEMAlarmMeridiemIndex animated:NO];
-        [self configureLabel:(id)[self.pickerView viewForRow:meridiemRow forComponent:HEMAlarmMeridiemIndex]
+        self.selectedMeridiemLabel = (id)[self.pickerView viewForRow:meridiemRow
+                                                        forComponent:HEMAlarmMeridiemIndex];
+        [self configureLabel:self.selectedMeridiemLabel
                     selected:YES component:HEMAlarmMeridiemIndex];
     }
 }
@@ -290,17 +296,20 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
             break;
     }
     if (![selectedLabel isEqual:oldSelectedLabel]) {
-        [UIView animateWithDuration:0.2f animations:^{
-            [self configureLabel:selectedLabel selected:YES component:component];
-            if (oldSelectedLabel)
-                [self configureLabel:oldSelectedLabel selected:NO component:component];
-        }];
+        [self configureLabel:selectedLabel selected:YES component:component];
+        if (oldSelectedLabel)
+            [self configureLabel:oldSelectedLabel selected:NO component:component];
+        [self.pickerView setNeedsLayout];
     }
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView widthForComponent:(NSInteger)component
 {
-    return component == HEMAlarmDividerIndex ? 12.f : 90.f;
+    switch (component) {
+        case HEMAlarmDividerIndex: return 12.f;
+        case HEMAlarmMeridiemIndex: return 40.f;
+        default: return 90.f;
+    }
 }
 
 - (CGFloat)pickerView:(UIPickerView *)pickerView rowHeightForComponent:(NSInteger)component
@@ -333,10 +342,10 @@ static NSUInteger const HEMAlarmMinuteIncrement = 5;
     UILabel* label = (id)view ?: [UILabel new];
     label.text = text;
     label.textAlignment = [self textAlignmentForComponent:component];
-    BOOL isSelectedRow = (component == HEMAlarmHourIndex && label == self.selectedHourLabel)
-        || (component == HEMAlarmMinuteIndex && label == self.selectedMinuteLabel)
+    BOOL isSelectedRow = (component == HEMAlarmHourIndex && [label.text isEqualToString:self.selectedHourLabel.text])
+        || (component == HEMAlarmMinuteIndex && [label.text isEqualToString:self.selectedMinuteLabel.text])
         || (component == HEMAlarmDividerIndex)
-        || (component == HEMAlarmMeridiemIndex && label == self.selectedMeridiemLabel);
+        || (component == HEMAlarmMeridiemIndex && [label.text isEqualToString:self.selectedMeridiemLabel.text]);
     [self configureLabel:label selected:isSelectedRow component:component];
     return label;
 }

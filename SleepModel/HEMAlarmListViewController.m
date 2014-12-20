@@ -12,16 +12,17 @@
 #import "HEMAlarmAddButton.h"
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSinkModalTransitionDelegate.h"
 
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
-@property (strong, nonatomic) CAGradientLayer* gradientLayer;
 @property (strong, nonatomic) NSArray* alarms;
 @property (weak, nonatomic) IBOutlet UICollectionView* collectionView;
 @property (weak, nonatomic) IBOutlet HEMAlarmAddButton* addButton;
 @property (strong, nonatomic) NSDateFormatter* hour24Formatter;
 @property (strong, nonatomic) NSDateFormatter* hour12Formatter;
 @property (strong, nonatomic) NSDateFormatter* meridiemFormatter;
+@property (strong, nonatomic) HEMSinkModalTransitionDelegate *presentationTransitionDelegate;
 @end
 
 @implementation HEMAlarmListViewController
@@ -44,6 +45,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.presentationTransitionDelegate = [HEMSinkModalTransitionDelegate new];
+    self.presentationTransitionDelegate.sinkView = self.view;
     [self configureCollectionView];
     [self configureAddButton];
     [self configureDateFormatters];
@@ -164,7 +167,9 @@ static NSUInteger const HEMAlarmListLimit = 8;
     UINavigationController* controller = (UINavigationController*)[HEMMainStoryboard instantiateAlarmNavController];
     HEMAlarmViewController* alarmController = (HEMAlarmViewController*)controller.topViewController;
     alarmController.alarm = alarm;
-    [self.navigationController presentViewController:controller animated:YES completion:NULL];
+    controller.modalPresentationStyle = UIModalPresentationCustom;
+    controller.transitioningDelegate = self.presentationTransitionDelegate;
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 #pragma mark - Collection View

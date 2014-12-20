@@ -99,6 +99,21 @@ NSString* const SENAPIAccountErrorDomain = @"is.hello.account";
     [SENAPIClient POST:path parameters:body completion:completion];
 }
 
++ (void)changeEmailInAccount:(SENAccount*)account completionBlock:(SENAPIDataBlock)completion {
+    if (account == nil || [[account email] length] == 0) {
+        if (completion) {
+            completion (nil, [NSError errorWithDomain:SENAPIAccountErrorDomain
+                                                 code:SENAPIAccountErrorInvalidArgument
+                                             userInfo:nil]);
+        }
+        return;
+    }
+    
+    NSDictionary* body = [self dictionaryValue:account];
+    NSString* path = [SENAPIAccountEndpoint stringByAppendingPathComponent:@"email"];
+    [SENAPIClient POST:path parameters:body completion:completion];
+}
+
 #pragma mark - Helpers
 
 + (NSString*)stringValueOfGender:(SENAccountGender)gender {

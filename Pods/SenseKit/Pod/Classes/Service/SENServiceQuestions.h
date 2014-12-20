@@ -16,7 +16,11 @@
 @class SENAnswer;
 @class SENQuestion;
 
-typedef void(^SENServiceQuestionBlock)(NSArray* questions);
+typedef void(^SENServiceQuestionBlock)(NSArray* questions, NSError* error);
+
+typedef NS_ENUM(NSUInteger, SENServiceQuestionsErrorCode) {
+    SENServiceQuestionsErrorCodeUpdateInProgress = 1
+};
 
 @interface SENServiceQuestions : SENService
 
@@ -30,30 +34,11 @@ typedef void(^SENServiceQuestionBlock)(NSArray* questions);
 - (BOOL)isUpdating;
 
 /**
- * Inform the service that the questions have been presented
- * to the user, which will stop any further actions until the
- * next cycle
+ * Update questions, if any.
+ *
+ * @param completion: called upon completion of updating questions.
  */
-- (void)setQuestionsAskedToday;
-
-/**
- * Listen for new questions that should be presented to the
- * user.  This will happen twice per session, if questions
- * are available.  Once shortly after service is allocated
- * and another time when app becomes active again
- * @param callback: the callback to invoke when questions are
- *                  updated / available
- * @return observer to use when calling stopListening:
- */
-- (id)listenForNewQuestions:(SENServiceQuestionBlock)callback;
-
-/**
- * Stop listening for new questions with the observer returned
- * from the listenForNewQuestions: call.  If listener is nil,
- * nothing will happen.
- * @param observer
- */
-- (void)stopListening:(id)listener;
+- (void)updateQuestions:(SENServiceQuestionBlock)completion;
 
 /**
  * Submit an answer to this service.  Doing so will implicityly

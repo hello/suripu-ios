@@ -37,4 +37,16 @@
     return self;
 }
 
+- (BOOL)isEqual:(id)object {
+    if (object == nil) return NO;
+    if (![object isKindOfClass:[self class]]) return NO;
+    
+    SENQuestion* otherQuestion = (SENQuestion*)object;
+    return [[otherQuestion questionId] isEqualToNumber:[self questionId]];
+}
+
+- (NSUInteger)hash {
+    return [[self questionId] hash];
+}
+
 @end

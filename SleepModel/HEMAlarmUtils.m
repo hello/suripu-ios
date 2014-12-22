@@ -66,7 +66,7 @@
 + (void)updateAlarmsFromPresentingController:(UIViewController*)controller completion:(void (^)(BOOL))completion
 {
     UIBarButtonItem* rightButton = controller.navigationItem.rightBarButtonItem;
-    UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+    UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     UIBarButtonItem* loadItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
     controller.navigationItem.rightBarButtonItem = loadItem;
     [indicatorView startAnimating];

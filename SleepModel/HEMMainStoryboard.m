@@ -10,13 +10,17 @@ static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMmain = @"Main";
 static NSString *const _HEMaccountSettings = @"accountSettings";
 static NSString *const _HEMalarmChoiceCell = @"alarmChoiceCell";
+static NSString *const _HEMalarmDeleteCell = @"alarmDeleteCell";
 static NSString *const _HEMalarmListCell = @"alarmListCell";
 static NSString *const _HEMalarmListNavViewController = @"alarmListNavViewController";
 static NSString *const _HEMalarmListViewController = @"alarmListViewController";
 static NSString *const _HEMalarmNavController = @"alarmNavController";
 static NSString *const _HEMalarmRepeat = @"alarmRepeat";
+static NSString *const _HEMalarmRepeatCell = @"alarmRepeatCell";
 static NSString *const _HEMalarmRepeatTableViewController = @"alarmRepeatTableViewController";
+static NSString *const _HEMalarmSoundCell = @"alarmSoundCell";
 static NSString *const _HEMalarmSoundTableViewController = @"alarmSoundTableViewController";
+static NSString *const _HEMalarmSwitchCell = @"alarmSwitchCell";
 static NSString *const _HEMalarmViewController = @"alarmViewController";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdeviceCell = @"deviceCell";
@@ -30,7 +34,7 @@ static NSString *const _HEMmultiple = @"multiple";
 static NSString *const _HEMnoSleepPill = @"noSleepPill";
 static NSString *const _HEMnoSleepPillController = @"noSleepPillController";
 static NSString *const _HEMpersonalInfo = @"personalInfo";
-static NSString *const _HEMpickSoundSegue = @"pickSoundSegue";
+static NSString *const _HEMpickSound = @"pickSound";
 static NSString *const _HEMpill = @"pill";
 static NSString *const _HEMpillInfoCell = @"pillInfoCell";
 static NSString *const _HEMquestion = @"question";
@@ -41,7 +45,6 @@ static NSString *const _HEMsensorViewController = @"sensorViewController";
 static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMsettingsController = @"settingsController";
 static NSString *const _HEMsettingsNavController = @"settingsNavController";
-static NSString *const _HEMshowInsight = @"showInsight";
 static NSString *const _HEMsingle = @"single";
 static NSString *const _HEMsleepGraphController = @"sleepGraphController";
 static NSString *const _HEMsleepGraphNavController = @"sleepGraphNavController";
@@ -60,7 +63,11 @@ static NSString *const _HEMupdatePasswordSegue = @"updatePasswordSegue";
 
 /** Cell Reuse Identifiers */
 +(NSString *)alarmChoiceCellReuseIdentifier { return _HEMalarmChoiceCell; }
++(NSString *)alarmDeleteCellReuseIdentifier { return _HEMalarmDeleteCell; }
 +(NSString *)alarmListCellReuseIdentifier { return _HEMalarmListCell; }
++(NSString *)alarmRepeatCellReuseIdentifier { return _HEMalarmRepeatCell; }
++(NSString *)alarmSoundCellReuseIdentifier { return _HEMalarmSoundCell; }
++(NSString *)alarmSwitchCellReuseIdentifier { return _HEMalarmSwitchCell; }
 +(NSString *)deviceCellReuseIdentifier { return _HEMdeviceCell; }
 +(NSString *)firmwareUpdateCellReuseIdentifier { return _HEMfirmwareUpdateCell; }
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
@@ -81,32 +88,31 @@ static NSString *const _HEMupdatePasswordSegue = @"updatePasswordSegue";
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)infoSettingsSegueIdentifier { return _HEMinfoSettings; }
 +(NSString *)noSleepPillSegueIdentifier { return _HEMnoSleepPill; }
-+(NSString *)pickSoundSegueSegueIdentifier { return _HEMpickSoundSegue; }
++(NSString *)pickSoundSegueIdentifier { return _HEMpickSound; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
 +(NSString *)senseSegueIdentifier { return _HEMsense; }
-+(NSString *)showInsightSegueIdentifier { return _HEMshowInsight; }
 +(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
-+(NSString *)updatePasswordSegueSegueIdentifier { return _HEMupdatePasswordSegue; }
++(NSString *)updatePasswordSegue { return _HEMupdatePasswordSegue; }
 
 /** View Controllers */
-+(UIViewController *)instantiateAlarmListNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListNavViewController]; }
-+(UIViewController *)instantiateAlarmListViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListViewController]; }
-+(UIViewController *)instantiateAlarmNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmNavController]; }
-+(UIViewController *)instantiateAlarmRepeatTableViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmRepeatTableViewController]; }
-+(UIViewController *)instantiateAlarmSoundTableViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmSoundTableViewController]; }
-+(UIViewController *)instantiateAlarmViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmViewController]; }
-+(UIViewController *)instantiateCurrentNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentNavController]; }
-+(UIViewController *)instantiateInsightFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightFeed]; }
-+(UIViewController *)instantiateNoSleepPillController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMnoSleepPillController]; }
-+(UIViewController *)instantiatePersonalInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpersonalInfo]; }
-+(UIViewController *)instantiateSensorViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensorViewController]; }
-+(UIViewController *)instantiateSettingsController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsController]; }
-+(UIViewController *)instantiateSettingsNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsNavController]; }
-+(UIViewController *)instantiateSleepGraphController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepGraphController]; }
-+(UIViewController *)instantiateSleepGraphNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepGraphNavController]; }
-+(UIViewController *)instantiateSleepHistoryController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepHistoryController]; }
-+(UIViewController *)instantiateSleepInsightViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepInsight]; }
-+(UIViewController *)instantiateSleepQuestionsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepQuestions]; }
-+(UIViewController *)instantiateTrendsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtrends]; }
++(id)instantiateAlarmListNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListNavViewController]; }
++(id)instantiateAlarmListViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListViewController]; }
++(id)instantiateAlarmNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmNavController]; }
++(id)instantiateAlarmRepeatTableViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmRepeatTableViewController]; }
++(id)instantiateAlarmSoundTableViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmSoundTableViewController]; }
++(id)instantiateAlarmViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmViewController]; }
++(id)instantiateCurrentNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentNavController]; }
++(id)instantiateInsightFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightFeed]; }
++(id)instantiateNoSleepPillController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMnoSleepPillController]; }
++(id)instantiatePersonalInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpersonalInfo]; }
++(id)instantiateSensorViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensorViewController]; }
++(id)instantiateSettingsController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsController]; }
++(id)instantiateSettingsNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsNavController]; }
++(id)instantiateSleepGraphController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepGraphController]; }
++(id)instantiateSleepGraphNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepGraphNavController]; }
++(id)instantiateSleepHistoryController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepHistoryController]; }
++(id)instantiateSleepInsightViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepInsight]; }
++(id)instantiateSleepQuestionsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepQuestions]; }
++(id)instantiateTrendsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtrends]; }
 
 @end

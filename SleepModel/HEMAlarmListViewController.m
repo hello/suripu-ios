@@ -12,16 +12,17 @@
 #import "HEMAlarmAddButton.h"
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSinkModalTransitionDelegate.h"
 
-@interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate, HEMAlarmControllerDelegate>
 
-@property (strong, nonatomic) CAGradientLayer* gradientLayer;
 @property (strong, nonatomic) NSArray* alarms;
 @property (weak, nonatomic) IBOutlet UICollectionView* collectionView;
 @property (weak, nonatomic) IBOutlet HEMAlarmAddButton* addButton;
 @property (strong, nonatomic) NSDateFormatter* hour24Formatter;
 @property (strong, nonatomic) NSDateFormatter* hour12Formatter;
 @property (strong, nonatomic) NSDateFormatter* meridiemFormatter;
+@property (strong, nonatomic) HEMSinkModalTransitionDelegate *presentationTransitionDelegate;
 @end
 
 @implementation HEMAlarmListViewController
@@ -44,6 +45,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.presentationTransitionDelegate = [HEMSinkModalTransitionDelegate new];
+    self.presentationTransitionDelegate.sinkView = self.view;
     [self configureCollectionView];
     [self configureAddButton];
     [self configureDateFormatters];
@@ -55,7 +58,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [super viewWillAppear:animated];
     if (self.alarms.count == 0)
         [self refreshAlarmList];
-    [self reloadData];
     [self.collectionView reloadData];
 }
 
@@ -164,7 +166,24 @@ static NSUInteger const HEMAlarmListLimit = 8;
     UINavigationController* controller = (UINavigationController*)[HEMMainStoryboard instantiateAlarmNavController];
     HEMAlarmViewController* alarmController = (HEMAlarmViewController*)controller.topViewController;
     alarmController.alarm = alarm;
-    [self.navigationController presentViewController:controller animated:YES completion:NULL];
+    alarmController.delegate = self;
+    controller.modalPresentationStyle = UIModalPresentationCustom;
+    controller.transitioningDelegate = self.presentationTransitionDelegate;
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
+#pragma mark - HEMAlarmControllerDelegate
+
+- (void)didCancelAlarmFrom:(HEMAlarmViewController *)alarmVC
+{
+    [self refreshAlarmList];
+    [alarmVC dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didSaveAlarm:(SENAlarm *)alarm from:(HEMAlarmViewController *)alarmVC
+{
+    [self refreshAlarmList];
+    [alarmVC dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Collection View
@@ -246,8 +265,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     if ([SENSettings timeFormat] == SENTimeFormat12Hour) {
         if (time.hour > 12) {
             time.hour = (long)(time.hour - 12);
-        }
-        else if (time.hour == 0) {
+        } else if (time.hour == 0) {
             time.hour = 12;
         }
     }

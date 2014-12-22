@@ -48,7 +48,9 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self registerForNotifications];
-    [self refreshCachedSensors];
+    [self configureRefreshTimer];
+    if (self.sensors.count == 0)
+        [self refreshCachedSensors];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

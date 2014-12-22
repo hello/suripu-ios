@@ -63,49 +63,7 @@ static CGFloat const HEMCardResistanceCoefficient = 1350.f;
 - (void)prepareLayout
 {
     [super prepareLayout];
-    CGPoint touchLocation = [self.collectionView.panGestureRecognizer locationInView:self.collectionView];
-    NSArray *itemsInVisibleRectArray = [super layoutAttributesForElementsInRect:CGRectInset(self.collectionView.bounds, -100, -100)];
-    NSString* key = NSStringFromSelector(@selector(indexPath));
-    NSSet *itemsIndexPathsInVisibleRectSet = [NSSet setWithArray:[itemsInVisibleRectArray valueForKey:key]];
-
-    NSPredicate *removedPredicate = [NSPredicate predicateWithBlock:^BOOL(UIAttachmentBehavior *behaviour, NSDictionary *bindings) {
-        return [itemsIndexPathsInVisibleRectSet member:[[[behaviour items] firstObject] indexPath]] == nil;
-    }];
-
-    NSPredicate *visiblePredicate = [NSPredicate predicateWithBlock:^BOOL(UICollectionViewLayoutAttributes *item, NSDictionary *bindings) {
-        return [self.visibleIndexPathsSet member:item.indexPath] == nil;
-    }];
-
-    NSArray *noLongerVisibleBehaviours = [self.dynamicAnimator.behaviors filteredArrayUsingPredicate:removedPredicate];
-    NSArray *newlyVisibleItems = [itemsInVisibleRectArray filteredArrayUsingPredicate:visiblePredicate];
-
-    for (id obj in noLongerVisibleBehaviours) {
-        [self.dynamicAnimator removeBehavior:obj];
-        [self.visibleIndexPathsSet removeObject:[[[obj items] firstObject] indexPath]];
-    }
-
-    for (UICollectionViewLayoutAttributes* item in newlyVisibleItems) {
-        [self.visibleIndexPathsSet addObject:item.indexPath];
-        UIAttachmentBehavior *behaviour = [[UIAttachmentBehavior alloc] initWithItem:item attachedToAnchor:item.center];
-        behaviour.length = HEMCardAttachmentLength;
-        behaviour.damping = HEMCardAttachmentDamping;
-        behaviour.frequency = HEMCardAttachmentFrequency;
-
-        if (!CGPointEqualToPoint(CGPointZero, touchLocation))
-            item.center = [self centerForTouchLocation:touchLocation behaviour:behaviour];
-
-        [self.dynamicAnimator addBehavior:behaviour];
-    }
-}
-
-- (void)prepareForCollectionViewUpdates:(NSArray *)updateItems
-{
-    for (UICollectionViewUpdateItem* item in updateItems) {
-        if (item.updateAction == UICollectionUpdateActionDelete) {
-            [self clearCache];
-            break;
-        }
-    }
+    [self updateBehaviorsForVisibleItems];
 }
 
 - (NSArray *)layoutAttributesForElementsInRect:(CGRect)rect
@@ -125,21 +83,74 @@ static CGFloat const HEMCardResistanceCoefficient = 1350.f;
 
     self.latestDelta = delta;
 
-    for (UIAttachmentBehavior* springBehaviour in self.dynamicAnimator.behaviors) {
-        UICollectionViewLayoutAttributes *item = [springBehaviour.items firstObject];
-        item.center = [self centerForTouchLocation:touchLocation behaviour:springBehaviour];
+    for (UIAttachmentBehavior* springBehavior in self.dynamicAnimator.behaviors) {
+        UICollectionViewLayoutAttributes *item = [springBehavior.items firstObject];
+        item.center = [self centerForTouchLocation:touchLocation behavior:springBehavior];
         [self.dynamicAnimator updateItemUsingCurrentState:item];
     }
 
     return NO;
 }
 
-- (CGPoint)centerForTouchLocation:(CGPoint)touchLocation behaviour:(UIAttachmentBehavior*)springBehaviour
+- (void)prepareForCollectionViewUpdates:(NSArray *)updateItems
 {
-    CGFloat yDistanceFromTouch = fabsf(touchLocation.y - springBehaviour.anchorPoint.y);
-    CGFloat xDistanceFromTouch = fabsf(touchLocation.x - springBehaviour.anchorPoint.x);
+    for (UICollectionViewUpdateItem* item in updateItems) {
+        if (item.updateAction == UICollectionUpdateActionDelete) {
+            [self clearCache];
+            break;
+        }
+    }
+}
+
+- (void)updateBehaviorsForVisibleItems
+{
+    NSArray *itemsInVisibleRectArray = [super layoutAttributesForElementsInRect:CGRectInset(self.collectionView.bounds, -100, -100)];
+    NSString* key = NSStringFromSelector(@selector(indexPath));
+    NSSet *itemsIndexPathsInVisibleRectSet = [NSSet setWithArray:[itemsInVisibleRectArray valueForKey:key]];
+
+    NSPredicate *removedPredicate = [NSPredicate predicateWithBlock:^BOOL(UIAttachmentBehavior *behavior, NSDictionary *bindings) {
+        return [itemsIndexPathsInVisibleRectSet member:[[[behavior items] firstObject] indexPath]] == nil;
+    }];
+
+    NSPredicate *visiblePredicate = [NSPredicate predicateWithBlock:^BOOL(UICollectionViewLayoutAttributes *item, NSDictionary *bindings) {
+        return [self.visibleIndexPathsSet member:item.indexPath] == nil;
+    }];
+
+    NSArray *noLongerVisibleBehaviors = [self.dynamicAnimator.behaviors filteredArrayUsingPredicate:removedPredicate];
+    NSArray *newlyVisibleItems = [itemsInVisibleRectArray filteredArrayUsingPredicate:visiblePredicate];
+
+    for (id obj in noLongerVisibleBehaviors) {
+        [self.dynamicAnimator removeBehavior:obj];
+        [self.visibleIndexPathsSet removeObject:[[[obj items] firstObject] indexPath]];
+    }
+
+    for (UICollectionViewLayoutAttributes* attributes in newlyVisibleItems) {
+        [self addBehaviorToAttributes:attributes];
+    }
+}
+
+- (void)addBehaviorToAttributes:(UICollectionViewLayoutAttributes *)item
+{
+    CGPoint touchLocation = [self.collectionView.panGestureRecognizer locationInView:self.collectionView];
+    [self.visibleIndexPathsSet addObject:item.indexPath];
+    UIAttachmentBehavior *behavior = [[UIAttachmentBehavior alloc] initWithItem:item attachedToAnchor:item.center];
+    behavior.length = HEMCardAttachmentLength;
+    behavior.damping = HEMCardAttachmentDamping;
+    behavior.frequency = HEMCardAttachmentFrequency;
+
+    if (!CGPointEqualToPoint(CGPointZero, touchLocation))
+        item.center = [self centerForTouchLocation:touchLocation behavior:behavior];
+
+    [self.dynamicAnimator addBehavior:behavior];
+}
+
+
+- (CGPoint)centerForTouchLocation:(CGPoint)touchLocation behavior:(UIAttachmentBehavior*)springBehavior
+{
+    CGFloat yDistanceFromTouch = fabsf(touchLocation.y - springBehavior.anchorPoint.y);
+    CGFloat xDistanceFromTouch = fabsf(touchLocation.x - springBehavior.anchorPoint.x);
     CGFloat scrollResistance = (yDistanceFromTouch + xDistanceFromTouch) / HEMCardResistanceCoefficient;
-    UICollectionViewLayoutAttributes *item = [springBehaviour.items firstObject];
+    UICollectionViewLayoutAttributes *item = [springBehavior.items firstObject];
     CGPoint center = item.center;
     if (self.latestDelta < 0) {
         center.y += MAX(self.latestDelta, self.latestDelta * scrollResistance);

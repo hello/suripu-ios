@@ -1,11 +1,13 @@
 
 #import "HEMAlarmAddButton.h"
 #import "HelloStyleKit.h"
+#import "UIView+HEMMotionEffects.h"
 
 @implementation HEMAlarmAddButton
 
 static NSString* const HEMAlarmAddText = @"+";
 static CGFloat const HEMAlarmAddTextVerticalOffset = 2.f;
+static CGFloat const HEMAlarmAddParallaxDepth = 3.f;
 
 - (void)awakeFromNib
 {
@@ -16,6 +18,7 @@ static CGFloat const HEMAlarmAddTextVerticalOffset = 2.f;
     self.layer.shadowOpacity = 0.5f;
     self.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.2f].CGColor;
     self.layer.masksToBounds = NO;
+    [self add3DEffectWithBorder:HEMAlarmAddParallaxDepth];
 }
 
 - (void)drawRect:(CGRect)rect

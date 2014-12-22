@@ -21,6 +21,7 @@
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"alarm.repeat.title", nil);
+    self.tableView.tableFooterView = [UIView new];
     self.repeatOptions = @[
         NSLocalizedString(@"alarm.repeat.days.sunday", nil),
         NSLocalizedString(@"alarm.repeat.days.monday", nil),
@@ -51,8 +52,6 @@
     NSString* text = [self.repeatOptions objectAtIndex:indexPath.row];
     NSUInteger day = [self repeatDayForIndexPath:indexPath];
     cell.textLabel.text = text;
-    cell.textLabel.textColor = [HelloStyleKit backViewTextColor];
-    cell.textLabel.font = [UIFont settingsTitleFont];
 
     if ((self.alarmCache.repeatFlags & day) == day) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;

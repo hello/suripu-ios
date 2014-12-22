@@ -8,6 +8,11 @@
 
 #import <UIKit/UIKit.h>
 
+typedef NS_ENUM(NSUInteger, HEMMotionEffectsDirection) {
+    HEMMotionEffectsDirectionHorizontal = 1 << 2,
+    HEMMotionEffectsDirectionVertical = 1 << 3,
+};
+
 @interface UIView (HEMMotionEffects)
 
 /**
@@ -18,5 +23,7 @@
  * @param border: the amount of space around the view that can be moved
  */
 - (void)add3DEffectWithBorder:(CGFloat)border;
+
+- (void)add3DEffectWithBorder:(CGFloat)border direction:(HEMMotionEffectsDirection)direction;
 
 @end

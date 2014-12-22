@@ -177,6 +177,8 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)zoomButtonTapped:(UIButton*)sender
 {
+    if (![self isViewPushed])
+        return;
     self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
     self.historyViewController.selectedDate = self.dateForNightOfSleep;
     self.historyViewController.transitioningDelegate = self.animationDelegate;

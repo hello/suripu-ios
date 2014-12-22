@@ -11,6 +11,7 @@
 #import <SpinKit/RTSpinKitView.h>
 #import <markdown_peg.h>
 #import "HEMEventInfoView.h"
+#import "HEMMarkdown.h"
 #import "HEMPaddedRoundedLabel.h"
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
@@ -57,10 +58,7 @@ static NSTimeInterval const HEMEventInfoViewPlayerUpdateInterval = 0.15f;
 
 - (void)configureTextSettings
 {
-    self.markdownAttributes = @{
-        @(STRONG) : @{ NSFontAttributeName : [UIFont timelineEventMessageBoldFont], },
-        @(PLAIN) : @{ NSFontAttributeName : [UIFont timelineEventMessageFont] }
-    };
+    self.markdownAttributes = [HEMMarkdown attributesForEventInfoViewText];
     self.timestampDateFormatter = [NSDateFormatter new];
     self.timestampDateFormatter.dateFormat = ([SENSettings timeFormat] == SENTimeFormat12Hour) ? @"h:mm a" : @"H:mm";
 }

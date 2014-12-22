@@ -19,6 +19,7 @@
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
+#import "HEMMarkdown.h"
 
 NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
 NSString* const HEMSleepEventTypeLight = @"LIGHT";
@@ -270,14 +271,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
         cell.messageTitleLabel.hidden = NO;
         cell.messageLabel.textAlignment = NSTextAlignmentLeft;
     }
-    NSDictionary* attributes = @{
-        @(STRONG) : @{
-            NSFontAttributeName : [UIFont timelineMessageBoldFont],
-        },
-        @(PLAIN) : @{
-            NSFontAttributeName : [UIFont timelineMessageFont]
-        }
-    };
+    NSDictionary* attributes = [HEMMarkdown attributesForTimelineMessageText];
     cell.messageLabel.attributedText = markdown_to_attr_string(self.sleepResult.message, 0, attributes);
     NSString* dateText = [[[self class] sleepDateFormatter] stringFromDate:self.dateForNightOfSleep];
     NSString* lastNightDateText = [[[self class] sleepDateFormatter] stringFromDate:[NSDate dateWithTimeInterval:-60 * 60 * 24 sinceDate:[NSDate date]]];

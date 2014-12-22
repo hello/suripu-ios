@@ -5,8 +5,9 @@
 //  Created by Jimmy Lu on 10/28/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
+#import <AttributedMarkdown/markdown_peg.h>
 #import "UIFont+HEMStyle.h"
-
+#import "HEMMarkdown.h"
 #import "HEMInsightCollectionViewCell.h"
 
 CGFloat const HEMInsightCellMessagePadding = 16.0f;
@@ -39,11 +40,23 @@ static CGFloat const HEMInsightCellNaturalPadding = 8.0f;
         UIColor* color = [UIColor colorWithWhite:0.0f alpha:0.7f];
         attributes = @{
             NSParagraphStyleAttributeName : style,
-            NSFontAttributeName : [UIFont settingsInsightMessageFont],
             NSForegroundColorAttributeName : color
         };
     });
     return attributes;
+}
+
++ (NSAttributedString*)attributedTextForMessage:(NSString*)message {
+    NSMutableDictionary* markdownAttributes = [[HEMMarkdown attributesForBackViewText] mutableCopy];
+    markdownAttributes[@(PARA)] = [[self class] messageTextAttributes];
+    return markdown_to_attr_string(message, 0, markdownAttributes);
+}
+
++ (CGSize)textSizeForMessage:(NSString*)message inWidth:(CGFloat)contentWidth {
+    NSAttributedString* text = [self attributedTextForMessage:message];
+    CGSize constraint = CGSizeMake(contentWidth, MAXFLOAT);
+    NSStringDrawingOptions options = NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin;
+    return [text boundingRectWithSize:constraint options:options context:nil].size;
 }
 
 - (void)awakeFromNib {
@@ -67,21 +80,15 @@ static CGFloat const HEMInsightCellNaturalPadding = 8.0f;
 
 - (void)setMessage:(NSString*)message {
     if ([message length] == 0) return;
-    
-    NSDictionary* attributes = [[self class] messageTextAttributes];
-    CGSize constraint = CGSizeMake(CGRectGetWidth([[self contentView] bounds])-HEMInsightCellMessagePadding, MAXFLOAT);
-    CGRect textSize = [message boundingRectWithSize:constraint
-                                            options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin
-                                         attributes:attributes
-                                            context:nil];
-    
-    NSAttributedString* text
-        = [[NSAttributedString alloc] initWithString:message attributes:[[self class] messageTextAttributes]];
+
+    NSAttributedString* text = [[self class] attributedTextForMessage:message];
+    CGFloat contentWidth = CGRectGetWidth([[self contentView] bounds])-HEMInsightCellMessagePadding;
+    CGSize textSize = [[self class] textSizeForMessage:message inWidth:contentWidth];
+
     [[self messageLabel] setAttributedText:text];
     
-    BOOL more = CGRectGetHeight(textSize) > HEMInsightCellMaxMessageHeight;
+    BOOL more = textSize.height > HEMInsightCellMaxMessageHeight;
     if (more) {
-        textSize.size.height = HEMInsightCellMaxMessageHeight;
         [[self moreLabel] setHidden:NO];
         CGFloat constant = [self fullMessageBottomConstraintConstant];
         CGFloat moreHeight = CGRectGetHeight([[self moreLabel] bounds]);

@@ -93,16 +93,9 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 - (void)viewDidPop
 {
     [[UIApplication sharedApplication] setStatusBarStyle:self.oldBarStyle];
-    self.collectionView.scrollEnabled = NO;
-    HEMSleepSummaryCollectionViewCell* cell = self.dataSource.sleepSummaryCell;
     [UIView animateWithDuration:0.5f animations:^{
         self.collectionView.contentOffset = CGPointMake(0, 0);
-        [cell.shareButton setHidden:YES];
-        [cell.dateButton setAlpha:0.5];
-        [cell.dateButton setEnabled:NO];
-        [cell.drawerButton setImage:[UIImage imageNamed:@"caret up"] forState:UIControlStateNormal];
-        cell.topItemsVerticalConstraint.constant = HEMTopItemsMinimumConstraintConstant;
-        [cell updateConstraintsIfNeeded];
+        [self updateTopBarActionsWithState:NO];
     }];
     self.oldBarStyle = UIStatusBarStyleLightContent;
     [self setNeedsStatusBarAppearanceUpdate];
@@ -113,15 +106,8 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     self.panePanGestureRecognizer.delegate = self;
     self.oldBarStyle = [UIApplication sharedApplication].statusBarStyle;
     [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
-    self.collectionView.scrollEnabled = YES;
-    HEMSleepSummaryCollectionViewCell* cell = self.dataSource.sleepSummaryCell;
     [UIView animateWithDuration:0.5f animations:^{
-        [cell.shareButton setHidden:[self.dataSource.sleepResult.score integerValue] == 0];
-        [cell.dateButton setAlpha:1];
-        [cell.dateButton setEnabled:YES];
-        [cell.drawerButton setImage:[UIImage imageNamed:@"Menu"] forState:UIControlStateNormal];
-        cell.topItemsVerticalConstraint.constant = HEMTopItemsConstraintConstant;
-        [cell updateConstraintsIfNeeded];
+        [self updateTopBarActionsWithState:YES];
     }];
     [self setNeedsStatusBarAppearanceUpdate];
 }
@@ -139,7 +125,7 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark DataSourceActionDelegate
+#pragma mark HEMSleepGraphActionDelegate
 
 - (void)toggleDrawer
 {
@@ -148,7 +134,31 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     [root toggleSettingsDrawer];
 }
 
+- (BOOL)shouldEnableZoomButton
+{
+    return [self isViewPushed];
+}
+
+- (BOOL)shouldHideShareButton
+{
+    return ![self isViewPushed] || [self.dataSource.sleepResult.score integerValue] == 0;
+}
+
 #pragma mark Top cell actions
+
+- (void)updateTopBarActionsWithState:(BOOL)pushed
+{
+    self.collectionView.scrollEnabled = !pushed;
+    UIImage* drawerIcon = pushed ? [UIImage imageNamed:@"Menu"] : [UIImage imageNamed:@"caret up"];
+    CGFloat constant = pushed ? HEMTopItemsConstraintConstant : HEMTopItemsMinimumConstraintConstant;
+    HEMSleepSummaryCollectionViewCell* cell = self.dataSource.sleepSummaryCell;
+    [cell.shareButton setHidden:!pushed || self.dataSource.numberOfSleepSegments == 0];
+    [cell.dateButton setAlpha:pushed ? 1.f : 0.5f];
+    [cell.dateButton setEnabled:pushed];
+    [cell.drawerButton setImage:drawerIcon forState:UIControlStateNormal];
+    cell.topItemsVerticalConstraint.constant = constant;
+    [cell updateConstraintsIfNeeded];
+}
 
 - (void)drawerButtonTapped:(UIButton*)button
 {
@@ -167,6 +177,8 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)zoomButtonTapped:(UIButton*)sender
 {
+    if (![self isViewPushed])
+        return;
     self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
     self.historyViewController.selectedDate = self.dateForNightOfSleep;
     self.historyViewController.transitioningDelegate = self.animationDelegate;
@@ -227,6 +239,12 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 }
 
 #pragma mark UIGestureRecognizerDelegate
+
+- (BOOL)isViewPushed
+{
+    CGPoint location = [self.view.superview convertPoint:self.view.frame.origin fromView:nil];
+    return location.y > -10.f;
+}
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch
 {

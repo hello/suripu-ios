@@ -17,6 +17,8 @@ extern NSString* const HEMSleepEventTypeFallAsleep;
 - (void)drawerButtonTapped:(UIButton*)button;
 - (void)shareButtonTapped:(UIButton*)button;
 - (void)zoomButtonTapped:(UIButton*)sender;
+- (BOOL)shouldHideShareButton;
+- (BOOL)shouldEnableZoomButton;
 
 @end
 

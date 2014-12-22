@@ -292,7 +292,12 @@ static NSString* const sensorTypeParticulates = @"particulates";
         [cell.drawerButton addTarget:self.collectionView.delegate
                               action:@selector(drawerButtonTapped:)
                     forControlEvents:UIControlEventTouchUpInside];
-    cell.shareButton.hidden = [self.sleepResult.score integerValue] == 0;
+    if ([self.collectionView.delegate respondsToSelector:@selector(shouldHideShareButton)])
+        cell.shareButton.hidden = [(id<HEMSleepGraphActionDelegate>)self.collectionView.delegate
+                                   shouldHideShareButton];
+    if ([self.collectionView.delegate respondsToSelector:@selector(shouldEnableZoomButton)])
+        cell.dateButton.enabled = [(id<HEMSleepGraphActionDelegate>)self.collectionView.delegate
+                                   shouldEnableZoomButton];
     if ([self.collectionView.delegate respondsToSelector:@selector(shareButtonTapped:)])
         [cell.shareButton addTarget:self.collectionView.delegate
                              action:@selector(shareButtonTapped:)

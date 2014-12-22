@@ -14,6 +14,7 @@
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMMainStoryboard.h"
+#import "HEMAlertController.h"
 #import "HEMAlarmTableViewCell.h"
 
 @interface HEMAlarmViewController()<UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource>
@@ -159,15 +160,27 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 
 - (IBAction)deleteAndDismissFromView:(id)sender
 {
-    [self.alarm delete];
+    NSString* title = NSLocalizedString(@"alarm.delete.confirm.title", nil);
+    NSString* message = NSLocalizedString(@"alarm.delete.confirm.message", nil);
+    HEMAlertControllerStyle style = HEMAlertControllerStyleAlert;
+    HEMAlertController* alertController = [[HEMAlertController alloc] initWithTitle:title
+                                                                            message:message
+                                                                              style:style
+                                                               presentingController:self];
+
     __weak typeof(self) weakSelf = self;
-    [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
+    [alertController addActionWithText:NSLocalizedString(@"actions.no", nil) block:NULL];
+    [alertController addActionWithText:NSLocalizedString(@"actions.yes", nil) block:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (success)
-            [strongSelf dismiss:NO];
-        else
-            [self.alarm save];
+        [strongSelf.alarm delete];
+        [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
+            if (success)
+                [strongSelf dismiss:NO];
+            else
+                [strongSelf.alarm save];
+        }];
     }];
+    [alertController show];
 }
 
 - (IBAction)updateAlarmState:(UISwitch*)sender

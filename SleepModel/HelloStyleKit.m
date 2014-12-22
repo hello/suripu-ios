@@ -119,9 +119,9 @@ static UIImage* _sensorsBarIcon = nil;
     _averageSleepScoreColor = [UIColor colorWithRed: 0.947 green: 0.901 blue: 0.5 alpha: 1];
     _lightBlueColor = [UIColor colorWithRed: 0.733 green: 0.851 blue: 0.929 alpha: 1];
     _lightestBlueColor = [UIColor colorWithRed: 0.918 green: 0.945 blue: 0.949 alpha: 1];
-    _alertSensorColor = [UIColor colorWithRed: 1 green: 0.604 blue: 0 alpha: 1];
+    _warningSensorColor = [UIColor colorWithRed: 1 green: 0.604 blue: 0 alpha: 1];
     _idealSensorColor = [UIColor colorWithRed: 0.255 green: 0.843 blue: 0.675 alpha: 1];
-    _warningSensorColor = [UIColor colorWithRed: 1 green: 0 blue: 0 alpha: 1];
+    _alertSensorColor = [UIColor colorWithRed: 1 green: 0 blue: 0 alpha: 1];
     _lightSleepColor = [UIColor colorWithRed: 0 green: 0.612 blue: 1 alpha: 1];
     _intermediateSleepColor = [UIColor colorWithRed: 0.027 green: 0.49 blue: 0.969 alpha: 1];
     _deepSleepColor = [UIColor colorWithRed: 0 green: 0.333 blue: 0.847 alpha: 1];
@@ -268,7 +268,7 @@ static UIImage* _sensorsBarIcon = nil;
     UIColor* sleepScoreLabelTextColor = [UIColor colorWithRed: 0.602 green: 0.602 blue: 0.602 alpha: 1];
 
     //// Variable Declarations
-    UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.highSleepScoreColor)) : sleepScoreNoValueColor;
+    UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? HelloStyleKit.alertSensorColor : (sleepScore < 80 ? HelloStyleKit.warningSensorColor : HelloStyleKit.highSleepScoreColor)) : sleepScoreNoValueColor;
     CGFloat graphPercentageAngle = sleepScore > 0 ? (sleepScore < 100 ? 360 - sleepScore * 0.01 * 360 : 0.01) : 0.01;
     NSString* sleepScoreText = sleepScore > 0 ? (sleepScore <= 100 ? [NSString stringWithFormat: @"%ld", (NSInteger)round(sleepScore)] : @"100") : @"";
     NSString* localizedSleepScoreDescriptionLabel = sleepScore > 0 ? sleepScoreLabelText : @"";

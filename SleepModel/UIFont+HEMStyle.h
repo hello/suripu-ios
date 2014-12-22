@@ -41,11 +41,6 @@
 + (UIFont *)largeNumberFont;
 
 /**
- *  Font for insight message text
- */
-+ (UIFont *)settingsInsightMessageFont;
-
-/**
  *  Font for settings table cell titles
  */
 + (UIFont *)settingsTableCellFont;
@@ -63,9 +58,9 @@
 
 + (UIFont *)sensorListValueFont;
 
-+ (UIFont *)sensorListMessageFont;
++ (UIFont *)backViewTextFont;
 
-+ (UIFont *)sensorListBoldMessageFont;
++ (UIFont *)backViewBoldFont;
 
 /**
  *  Font for sensor range selection from 'last 24 hours' and

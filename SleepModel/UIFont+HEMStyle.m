@@ -43,10 +43,6 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMLargeNumberFontFamilyName size:72.f];
 }
 
-+ (UIFont *)settingsInsightMessageFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:13.f];
-}
-
 + (UIFont *)settingsTableCellFont {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
 }
@@ -83,11 +79,11 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMLargeNumberFontFamilyName size:36.f];
 }
 
-+ (UIFont *)sensorListMessageFont {
++ (UIFont *)backViewTextFont {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:13.f];
 }
 
-+ (UIFont *)sensorListBoldMessageFont {
++ (UIFont *)backViewBoldFont {
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
 }
 

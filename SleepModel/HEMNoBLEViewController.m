@@ -92,7 +92,7 @@
 }
 
 - (void)next {
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard bluetoothOnSegueIdentifier]
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard noBleToBirthdaySegueIdentifier]
                               sender:self];
 }
 

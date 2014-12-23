@@ -10,7 +10,6 @@ static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMonboarding = @"Onboarding";
 static NSString *const _HEManotherPillToBeforeSleep = @"anotherPillToBeforeSleep";
 static NSString *const _HEMbeforeSleeptoRoomCheck = @"beforeSleeptoRoomCheck";
-static NSString *const _HEMbluetoothOn = @"bluetoothOn";
 static NSString *const _HEMbluetoothViewController = @"bluetoothViewController";
 static NSString *const _HEMdobViewController = @"dobViewController";
 static NSString *const _HEMdone = @"done";
@@ -23,14 +22,15 @@ static NSString *const _HEMlocation = @"location";
 static NSString *const _HEMlocationToPush = @"locationToPush";
 static NSString *const _HEMmoreInfo = @"moreInfo";
 static NSString *const _HEMnetwork = @"network";
+static NSString *const _HEMnoBleToBirthday = @"noBleToBirthday";
 static NSString *const _HEMpillPair = @"pillPair";
-static NSString *const _HEMpushToNoBle = @"pushToNoBle";
 static NSString *const _HEMpushToSenseSetup = @"pushToSenseSetup";
 static NSString *const _HEMroomCheck = @"roomCheck";
 static NSString *const _HEMsecondPillCheck = @"secondPillCheck";
 static NSString *const _HEMsenseSetup = @"senseSetup";
 static NSString *const _HEMsenseToPill = @"senseToPill";
 static NSString *const _HEMsignUpViewController = @"signUpViewController";
+static NSString *const _HEMsignupToNoBle = @"signupToNoBle";
 static NSString *const _HEMweight = @"weight";
 static NSString *const _HEMweightPicker = @"weightPicker";
 static NSString *const _HEMwelcome = @"welcome";
@@ -49,7 +49,6 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 /** Segue Identifiers */
 +(NSString *)anotherPillToBeforeSleepSegueIdentifier { return _HEManotherPillToBeforeSleep; }
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier { return _HEMbeforeSleeptoRoomCheck; }
-+(NSString *)bluetoothOnSegueIdentifier { return _HEMbluetoothOn; }
 +(NSString *)doneSegueIdentifier { return _HEMdone; }
 +(NSString *)genderSegueIdentifier { return _HEMgender; }
 +(NSString *)getAppSegueIdentifier { return _HEMgetApp; }
@@ -57,10 +56,11 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)locationSegueIdentifier { return _HEMlocation; }
 +(NSString *)locationToPushSegueIdentifier { return _HEMlocationToPush; }
 +(NSString *)moreInfoSegueIdentifier { return _HEMmoreInfo; }
-+(NSString *)pushToNoBleSegueIdentifier { return _HEMpushToNoBle; }
++(NSString *)noBleToBirthdaySegueIdentifier { return _HEMnoBleToBirthday; }
 +(NSString *)pushToSenseSetupSegueIdentifier { return _HEMpushToSenseSetup; }
 +(NSString *)secondPillCheckSegueIdentifier { return _HEMsecondPillCheck; }
 +(NSString *)senseToPillSegueIdentifier { return _HEMsenseToPill; }
++(NSString *)signupToNoBleSegueIdentifier { return _HEMsignupToNoBle; }
 +(NSString *)weightSegueIdentifier { return _HEMweight; }
 +(NSString *)wifiSegueIdentifier { return _HEMwifi; }
 +(NSString *)wifiPasswordSegueIdentifier { return _HEMwifiPassword; }

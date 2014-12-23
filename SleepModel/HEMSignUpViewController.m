@@ -15,6 +15,7 @@
 #import "HEMOnboardingCache.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingUtils.h"
+#import "HEMBluetoothUtils.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
@@ -146,8 +147,7 @@
         }
 
         [HEMAnalytics trackSignUpWithName:userName];
-        [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard moreInfoSegueIdentifier]
-                                        sender:strongSelf];
+        [strongSelf next];
     }];
 }
 
@@ -195,6 +195,24 @@
         [self showMessageDialog:errorMessage title:NSLocalizedString(@"sign-up.failed.title", nil)];
     }
     return NO;
+}
+
+#pragma mark - Segues / Navigation
+
+- (void)next {
+    if (![HEMBluetoothUtils stateAvailable]) {
+        [self performSelector:@selector(next)
+                   withObject:nil
+                   afterDelay:0.1f];
+        return;
+    }
+    
+    NSString* segueId
+        = ![HEMBluetoothUtils isBluetoothOn]
+        ? [HEMOnboardingStoryboard signupToNoBleSegueIdentifier]
+        : [HEMOnboardingStoryboard moreInfoSegueIdentifier];
+
+    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 @end

@@ -203,7 +203,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="PCr-dK-BgT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2463.75" y="150"/>
+            <point key="canvasLocation" x="1503" y="173"/>
         </scene>
         <!--Welcome View Controller-->
         <scene sceneID="LBD-4x-arD">
@@ -379,7 +379,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1rj-em-luD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1646" y="573"/>
+            <point key="canvasLocation" x="722" y="571"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="9ON-DX-PXS">
@@ -501,11 +501,12 @@
                         <outlet property="titleLabel" destination="cY3-74-70H" id="884-je-W4w"/>
                         <outlet property="view" destination="NOa-KQ-y5R" id="daF-YS-tzi"/>
                         <segue destination="R0p-kB-1qZ" kind="push" identifier="moreInfo" id="ZOJ-Sh-Dzx"/>
+                        <segue destination="AER-Sm-Ec9" kind="push" identifier="signupToNoBle" id="gnj-0L-LWR"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Twr-BC-O7O" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2463" y="922"/>
+            <point key="canvasLocation" x="1503" y="922"/>
         </scene>
         <!--DoB View Controller-->
         <scene sceneID="J5f-Jz-Trm">
@@ -2065,7 +2066,6 @@ You can always do this later by visiting Settings.</string>
                         <outlet property="enableButton" destination="je6-JT-9YZ" id="lwA-lc-eEF"/>
                         <outlet property="skipButton" destination="9ia-GF-Swk" id="aFd-NJ-3lO"/>
                         <outlet property="titleLabel" destination="Go7-Z7-kmw" id="rG7-w3-c7Q"/>
-                        <segue destination="AER-Sm-Ec9" kind="push" identifier="pushToNoBle" id="Vr0-aO-Z9B"/>
                         <segue destination="Qk9-qi-Wt3" kind="push" identifier="pushToSenseSetup" id="TuP-To-bZG"/>
                     </connections>
                 </viewController>
@@ -2508,12 +2508,12 @@ Launch the </string>
                         <outlet property="bluetoothImageTopConstraint" destination="9DS-fJ-q8n" id="dOW-Rk-14K"/>
                         <outlet property="subtitleLabel" destination="9T9-rd-lkX" id="hsK-3A-UqX"/>
                         <outlet property="titleLabel" destination="WSp-oq-I62" id="4Q5-mb-N6A"/>
-                        <segue destination="Qk9-qi-Wt3" kind="push" identifier="bluetoothOn" id="d35-VB-TRV"/>
+                        <segue destination="R0p-kB-1qZ" kind="push" identifier="noBleToBirthday" id="d9a-nc-483"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="E49-3B-dpg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7829" y="144"/>
+            <point key="canvasLocation" x="2351" y="587"/>
         </scene>
         <!--Sense Setup View Controller-->
         <scene sceneID="1ot-8w-aZb">
@@ -2692,9 +2692,9 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="sense.png" width="176" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DAu-sO-H4V"/>
-        <segue reference="TuP-To-bZG"/>
         <segue reference="qAo-NZ-4n9"/>
+        <segue reference="DAu-sO-H4V"/>
+        <segue reference="d9a-nc-483"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

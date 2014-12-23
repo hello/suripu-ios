@@ -65,20 +65,9 @@
 #pragma mark -
 
 - (void)next {
-    if (![HEMBluetoothUtils stateAvailable]) {
-        [self performSelector:@selector(next)
-                   withObject:nil
-                   afterDelay:0.1f];
-        return;
-    }
-    
-    NSString* segueId
-        = ![HEMBluetoothUtils isBluetoothOn]
-        ? [HEMOnboardingStoryboard pushToNoBleSegueIdentifier]
-        : [HEMOnboardingStoryboard pushToSenseSetupSegueIdentifier];
-    
     [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
-    [self performSegueWithIdentifier:segueId sender:self];
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard pushToSenseSetupSegueIdentifier]
+                              sender:self];
 }
 
 @end

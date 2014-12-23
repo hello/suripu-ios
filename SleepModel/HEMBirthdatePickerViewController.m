@@ -4,7 +4,7 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMBirthdatePickerViewController.h"
-#import "HEMUserDataCache.h"
+#import "HEMOnboardingCache.h"
 #import "HelloStyleKit.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBirthdatePickerView.h"
@@ -49,6 +49,11 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
         [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
     }
     
+    // start looking for a sense right away here.  We want this step here b/c
+    // this is one of the checkpoints and if user lands back here, this optimizatin
+    // will also apply
+    [[HEMOnboardingCache sharedCache] preScanForSenses];
+    
     [SENAnalytics track:kHEMAnalyticsEventOnBBirthday];
 }
 
@@ -75,10 +80,10 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 }
 
 - (void)loadAccount:(void(^)(NSError* error))completion {
-    if ([[HEMUserDataCache sharedUserDataCache] account] == nil) {
+    if ([[HEMOnboardingCache sharedCache] account] == nil) {
         [SENAPIAccount getAccount:^(SENAccount* account, NSError *error) {
             if (account != nil) {
-                [[HEMUserDataCache sharedUserDataCache] setAccount:account];
+                [[HEMOnboardingCache sharedCache] setAccount:account];
             }
             if (completion) completion (error);
         }];
@@ -100,7 +105,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
     NSInteger year = [[self dobPicker] selectedYear];
     
     if ([self delegate] == nil) {
-        HEMUserDataCache* cache = [HEMUserDataCache sharedUserDataCache];
+        HEMOnboardingCache* cache = [HEMOnboardingCache sharedCache];
         
         if ([cache account] == nil) {
             [self loadAccountThenProceedWithMonth:month day:day year:year];
@@ -134,7 +139,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
             if (error != nil) {
                 [strongSelf showIssueLoadingAccountAlert];
             } else {
-                [[[HEMUserDataCache sharedUserDataCache] account] setBirthMonth:month
+                [[[HEMOnboardingCache sharedCache] account] setBirthMonth:month
                                                                             day:day
                                                                         andYear:year];
                 [strongSelf proceedToNextScreen];

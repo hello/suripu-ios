@@ -14,7 +14,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMUserDataCache.h"
+#import "HEMOnboardingCache.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMActivityCoverView.h"
@@ -99,7 +99,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)cacheManager {
-    [[HEMUserDataCache sharedUserDataCache] setSenseManager:[self manager]];
+    [[HEMOnboardingCache sharedCache] setSenseManager:[self manager]];
 }
 
 - (void)disconnectSense {
@@ -146,6 +146,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 #pragma mark - Scanning
 
+- (BOOL)preScannedSensesFound {
+    return [[[HEMOnboardingCache sharedCache] nearbySensesFound] count] > 0;
+}
+
 - (void)scanTimeout {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(scanTimeout) object:nil];
     DDLogVerbose(@"scanning for Sense timed out, oh no!");
@@ -167,22 +171,34 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [self setTimedOut:NO];
     [[self noSenseButton] setEnabled:NO];
     
-    NSString* activityMessage = NSLocalizedString(@"pairing.activity.scanning-sense", nil);
+    BOOL preScanned = [self preScannedSensesFound];
+    
+    NSString* activityMessage
+        = preScanned
+        ? NSLocalizedString(@"pairing.activity.connecting-sense", nil)
+        : NSLocalizedString(@"pairing.activity.scanning-sense", nil);
+    
     UIView* viewToAttach = [[self navigationController] view];
     [[self activityView] showInView:viewToAttach withText:activityMessage activity:YES completion:^{
-        [self startScan];
-        [self performSelector:@selector(scanTimeout)
-                   withObject:nil
-                   afterDelay:kHEMSensePairScanTimeout];
+        if (preScanned) {
+            [self useSense:[[[HEMOnboardingCache sharedCache] nearbySensesFound] firstObject]];
+        } else {
+            [self startScan];
+        }
     }];
 }
 
 - (void)startScan {
-    // always rescan in case the user has moved or changed Sense globes or
-    // whatever the reason is, that would cause a cache of the Sense object
-    // or manager to cause issues.  If one was already cached, make sure we
-    // disconnect from it first
+    // if a Sense has been found and the peripheral connected, disconnect from it
+    // first to avoid causing issues when atttempting the process
     [self disconnectSense];
+    
+    [SENSenseManager stopScan]; // stop scanning in case one is already on it's way
+    
+    [self performSelector:@selector(scanTimeout)
+               withObject:nil
+               afterDelay:kHEMSensePairScanTimeout];
+    
     __weak typeof(self) weakSelf = self;
     if (![SENSenseManager scanForSense:^(NSArray *senses) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -193,10 +209,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                 // per team consensus, it is expected that the app pairs with the
                 // first sense with the highest average RSSI value that is found.
                 // In our case, the first object matches that spec.
-                [strongSelf setManager:[[SENSenseManager alloc] initWithSense:[senses firstObject]]];
-                [strongSelf setCurrentState:HEMSensePairStateSenseFound];
-                [strongSelf executeNextStep];
-                DDLogVerbose(@"sense found, %@", [[strongSelf manager] sense]);
+                [strongSelf useSense:[senses firstObject]];
             } else {
                 [SENAnalytics track:kHEMAnalyticsEventError
                          properties:@{kHEMAnalyticsEventPropMessage : @"no sense found"}];
@@ -214,6 +227,13 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                    withObject:nil
                    afterDelay:0.1f];
     }
+}
+
+- (void)useSense:(SENSense*)sense {
+    DDLogVerbose(@"using sense %@", [[self manager] sense]);
+    [self setManager:[[SENSenseManager alloc] initWithSense:sense]];
+    [self setCurrentState:HEMSensePairStateSenseFound];
+    [self executeNextStep];
 }
 
 #pragma mark - States
@@ -250,7 +270,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             break;
         }
         case HEMSensePairStateAccountLinked: {
-            [[HEMUserDataCache sharedUserDataCache] startPollingSensorData];
+            [[HEMOnboardingCache sharedCache] startPollingSensorData];
             [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             [self finish];
             break;
@@ -348,7 +368,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     DDLogVerbose(@"linking account");
     
     NSString* accessToken = [SENAuthorizationService accessToken];
-    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    SENSenseManager* manager = [[HEMOnboardingCache sharedCache] senseManager];
     
     __weak typeof(self) weakSelf = self;
     [manager linkAccount:accessToken success:^(id response) {
@@ -383,6 +403,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)finish {
     NSString* msg = NSLocalizedString(@"pairing.done", nil);
     __weak typeof(self) weakSelf = self;
+    [[self manager] setLED:SENSenseLEDStateSuccess success:nil failure:nil];
     [self stopActivityWithMessage:msg success:YES completion:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {

@@ -19,7 +19,8 @@ extern CGFloat const HEMInsightCellMaxMessageHeight;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 
-+ (NSDictionary*)messageTextAttributes;
++ (NSAttributedString*)attributedTextForMessage:(NSString*)message;
++ (CGSize)textSizeForMessage:(NSString*)message inWidth:(CGFloat)contentWidth;
 - (void)setMessage:(NSString*)message;
 
 @end

@@ -2,7 +2,6 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENAPIRoom.h>
-#import <AttributedMarkdown/markdown_peg.h>
 #import <BEMSimpleLineGraph/BEMSimpleLineGraphView.h>
 
 #import "HEMCurrentConditionsViewController.h"

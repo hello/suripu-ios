@@ -187,35 +187,25 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     if ([[self heightCache] objectForKey:body] != nil) {
         return [[[self heightCache] objectForKey:body] floatValue];
     }
-    
-    CGFloat baseHeight = 0.0f;
-    CGFloat maxHeight = MAXFLOAT;
-    UIFont* font = nil;
-    NSDictionary* textAttributes = nil;
-    
+
+    CGFloat calculatedHeight = 0;
     id dataObj = [self data][[indexPath row]];
     
     if ([dataObj isKindOfClass:[SENQuestion class]]) {
-        baseHeight = HEMQuestionCellBaseHeight;
-        font = [UIFont feedQuestionFont];
-        textAttributes = [HEMQuestionCell questionTextAttributes];
+        NSStringDrawingOptions options = NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading;
+        CGRect rect = [body boundingRectWithSize:CGSizeMake(width, MAXFLOAT)
+                                         options:options
+                                      attributes:[HEMQuestionCell questionTextAttributes]
+                                         context:nil];
+        calculatedHeight = ceilf(CGRectGetHeight(rect)) + HEMQuestionCellBaseHeight;
     } else if ([dataObj isKindOfClass:[SENInsight class]]) {
-        maxHeight = HEMInsightCellMaxMessageHeight;
-        baseHeight = HEMInsightCellBaseHeight;
-        font = [UIFont feedInsightMessageFont];
-        textAttributes = [HEMInsightCollectionViewCell messageTextAttributes];
+        CGSize textSize = [HEMInsightCollectionViewCell textSizeForMessage:body inWidth:width];
+        calculatedHeight = MIN(textSize.height, HEMInsightCellMaxMessageHeight) + HEMInsightCellBaseHeight;
     }
-    
-    CGSize size = CGSizeMake(width, maxHeight);
-    CGRect rect = [body boundingRectWithSize:size
-                                     options:NSStringDrawingUsesLineFragmentOrigin
-                                             |NSStringDrawingUsesFontLeading
-                                  attributes:textAttributes
-                                     context:nil];
-    CGFloat calculatedHeight = ceilf(CGRectGetHeight(rect)) + baseHeight;
+
     [[self heightCache] setObject:@(calculatedHeight) forKey:body];
     return calculatedHeight;
-    
+
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView

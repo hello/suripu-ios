@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 11/11/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <markdown_peg.h>
+#import <AttributedMarkdown/markdown_peg.h>
 
 #import <SenseKit/SENInsight.h>
 
@@ -14,6 +14,7 @@
 
 #import "HEMInsightViewController.h"
 #import "HEMScrollableView.h"
+#import "HEMMarkdown.h"
 
 static CGFloat const HEMInsightTitleWithoutImageYOffset = 70.0f;
 
@@ -34,25 +35,13 @@ static CGFloat const HEMInsightTitleWithoutImageYOffset = 70.0f;
 }
 
 - (void)configureContent {
-    NSDictionary* titleAttributes = @{
-        NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.4f],
-        NSFontAttributeName : [UIFont insightTitleFont]
-    };
     NSAttributedString* title =
         [[NSAttributedString alloc] initWithString:[[[self insight] title] uppercaseString]
-                                        attributes:titleAttributes];
-    
-    UIColor* messageColor = [UIColor colorWithWhite:0.0f alpha:0.7f];
-    
-    // we do not yet supported mark down in insights so i will leave that out
-    // for now
-    NSDictionary* messageAttributes = @{
-        NSFontAttributeName : [UIFont insightFullMessageFont],
-        NSForegroundColorAttributeName : messageColor
-    };
-    NSAttributedString* message =
-        [[NSAttributedString alloc] initWithString:[[self insight] message] attributes:messageAttributes];
-    
+                                        attributes:[HEMMarkdown attributesForInsightTitleViewText][@(PARA)]];
+
+    NSDictionary* attributes = [HEMMarkdown attributesForInsightViewText];
+    NSAttributedString* message = markdown_to_attr_string([[self insight] message], 0, attributes);
+
     [[self contentView] addAttributedTitle:title withYOffset:HEMInsightTitleWithoutImageYOffset];
     [[self contentView] addDescription:message];
 }

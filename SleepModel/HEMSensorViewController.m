@@ -12,6 +12,7 @@
 #import "HelloStyleKit.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
+#import "HEMMarkdown.h"
 
 @interface HEMSensorViewController ()<BEMSimpleLineGraphDelegate>
 
@@ -140,22 +141,19 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 
 - (void)configureSensorValueViews
 {
-    UIColor* conditionColor = [UIColor colorForSensorWithCondition:self.sensor.condition];
-    self.valueLabel.textColor = conditionColor;
-    self.unitLabel.textColor = conditionColor;
+    UIColor* color = [UIColor colorForSensorWithCondition:self.sensor.condition];
+    self.valueLabel.textColor = color;
+    self.unitLabel.textColor = color;
     self.title = self.sensor.localizedName;
     [self updateValueLabelWithValue:self.sensor.value];
 
     self.unitLabel.text = [self.sensor localizedUnit];
-    NSDictionary* statusAttributes = @{
-        @(STRONG)  : @{ NSForegroundColorAttributeName : conditionColor},
-        @(PLAIN) : @{ NSFontAttributeName : [UIFont settingsInsightMessageFont]}
-    };
+    NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckWithConditionColor:color];
 
     self.statusMessageLabel.attributedText = markdown_to_attr_string(self.sensor.message, 0, statusAttributes);
-    self.idealLabel.attributedText = nil; // temporary, since it's only placeholder
-    self.graphView.colorLine = conditionColor;
-    self.graphView.gradientBottom = [self gradientForColor:conditionColor];
+    self.idealLabel.attributedText = nil;
+    self.graphView.colorLine = color;
+    self.graphView.gradientBottom = [self gradientForColor:color];
 }
 
 - (void)updateValueLabelWithValue:(NSNumber*)value

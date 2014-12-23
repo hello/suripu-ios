@@ -4,19 +4,19 @@
 @class SENAccount;
 @class SENSenseManager;
 
-@interface HEMUserDataCache : NSObject
+@interface HEMOnboardingCache : NSObject
 
 /**
  *  An accessible instance of user data for use in onboarding data collection
  *
- *  @return an instance of HEMUserDataCache
+ *  @return an instance of HEMOnboardingCache
  */
-+ (instancetype)sharedUserDataCache;
++ (instancetype)sharedCache;
 
 /**
- *  Clears all saved user data for when the cache is no longer needed
+ *  Clears all saved data for when the cache is no longer needed
  */
-+ (void)clearSharedUserDataCache;
++ (void)clearCache;
 
 /**
  *  Starts to poll sensor data until values are returned, at which point the
@@ -24,8 +24,14 @@
  */
 - (void)startPollingSensorData;
 
+/**
+ * Begin early caching of nearby Senses found, wh
+ */
+- (void)preScanForSenses;
+
 @property (nonatomic, strong) SENAccount* account;
 @property (nonatomic, strong) SENSenseManager* senseManager;
-@property (nonatomic, assign) BOOL pollingSensor;
+@property (nonatomic, assign, readonly) BOOL pollingSensor;
+@property (nonatomic, copy,   readonly)   NSArray* nearbySensesFound;
 
 @end

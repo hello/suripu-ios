@@ -16,7 +16,7 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMActionButton.h"
-#import "HEMUserDataCache.h"
+#import "HEMOnboardingCache.h"
 #import "HEMOnboardingStoryboard.h"
 
 @interface HEMSetupAnotherPillViewController ()
@@ -61,7 +61,7 @@
     
     __weak typeof(self) weakSelf = self;
     
-    SENSenseManager* manager = [[HEMUserDataCache sharedUserDataCache] senseManager];
+    SENSenseManager* manager = [[HEMOnboardingCache sharedCache] senseManager];
     [manager enablePairingMode:YES success:^(id response) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
@@ -79,12 +79,12 @@
 }
 
 - (IBAction)skip:(id)sender {
-    [[[HEMUserDataCache sharedUserDataCache] senseManager] disconnectFromSense];
+    [[[HEMOnboardingCache sharedCache] senseManager] disconnectFromSense];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard anotherPillToBeforeSleepSegueIdentifier] sender:self];
 }
 
 - (void)getApp {
-    [[[HEMUserDataCache sharedUserDataCache] senseManager] disconnectFromSense];
+    [[[HEMOnboardingCache sharedCache] senseManager] disconnectFromSense];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard getAppSegueIdentifier]
                               sender:self];
 }

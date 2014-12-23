@@ -5,7 +5,7 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMWeightPickerViewController.h"
-#import "HEMUserDataCache.h"
+#import "HEMOnboardingCache.h"
 #import "HelloStyleKit.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
@@ -59,7 +59,7 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     [[self carousel] setScrollToItemBoundary:NO];
     [[self carousel] setClipsToBounds:YES];
     
-    SENAccountGender gender = [[[HEMUserDataCache sharedUserDataCache] account] gender];
+    SENAccountGender gender = [[[HEMOnboardingCache sharedCache] account] gender];
     CGFloat genderWeight = gender == SENAccountGenderFemale ? HEMWeightDefaultFemale : HEMWeightDefaultMale;
     CGFloat initialWeight = [self defaultWeightLbs] >0 ? [self defaultWeightLbs] : genderWeight;
     [[self carousel] scrollToOffset:initialWeight / 10.0f duration:0.0f];
@@ -149,7 +149,7 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     if ([self delegate] != nil) {
         [[self delegate] didSelectWeightInKgs:[self weightInKgs] from:self];
     } else {
-        [[[HEMUserDataCache sharedUserDataCache] account] setWeight:@(ceilf([self weightInKgs] * 1000))];
+        [[[HEMOnboardingCache sharedCache] account] setWeight:@(ceilf([self weightInKgs] * 1000))];
         [self next];
     }
 }

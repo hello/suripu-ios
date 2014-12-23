@@ -14,12 +14,11 @@
 
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
-#import "HEMUserDataCache.h"
+#import "HEMOnboardingCache.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMDialogViewController.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSettingsTableViewController.h"
-#import "HEMUserDataCache.h"
 
 CGFloat const HEMOnboardingShadowOpacity = 0.8f;
 
@@ -198,7 +197,7 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 }
 
 + (void)finisOnboardinghWithMessageFrom:(UIViewController*)controller {
-    [HEMUserDataCache clearSharedUserDataCache];
+    [HEMOnboardingCache clearCache];
     
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
     

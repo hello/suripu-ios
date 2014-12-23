@@ -4,7 +4,7 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMGenderPickerViewController.h"
-#import "HEMUserDataCache.h"
+#import "HEMOnboardingCache.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
@@ -127,7 +127,7 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
     if ([self delegate] != nil) {
         [[self delegate] didSelectGender:[self selectedGender] from:self];
     } else {
-        [[[HEMUserDataCache sharedUserDataCache] account] setGender:[self selectedGender]];
+        [[[HEMOnboardingCache sharedCache] account] setGender:[self selectedGender]];
         [self next];
     }
 }

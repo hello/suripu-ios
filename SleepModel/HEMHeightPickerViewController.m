@@ -4,7 +4,7 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMHeightPickerViewController.h"
-#import "HEMUserDataCache.h"
+#import "HEMOnboardingCache.h"
 #import "HEMValueSliderView.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
@@ -96,7 +96,7 @@ static NSInteger HEMMaxHeightInFeet = 9;
     [[self otherHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"measurement.or", nil), cmFormat]];
     
     [self setSelectedHeightInCm:(int)cm];
-    [[[HEMUserDataCache sharedUserDataCache] account] setHeight:@(cm)];
+    [[[HEMOnboardingCache sharedCache] account] setHeight:@(cm)];
 }
 
 - (IBAction)done:(id)sender {

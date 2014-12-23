@@ -1,30 +1,36 @@
 
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENSensor.h>
+#import <SenseKit/SENSenseManager.h>
 
-#import "HEMUserDataCache.h"
+#import "HEMOnboardingCache.h"
+#import "HEMBluetoothUtils.h"
 
-static CGFloat   const HEMUserDataCacheSensorPollIntervalDelay = 5.0f;
-static NSInteger const HEMUserDataCacheMaxSensorPollingAttempts = 10;
-static HEMUserDataCache* sharedUserDataCache = nil;
+static CGFloat   const HEMOnboardingCacheSensorPollIntervalDelay = 5.0f;
+static NSInteger const HEMOnboardingCacheMaxSensorPollingAttempts = 10;
+static NSInteger const HEMOnboardingCacheMaxSenseScanAttempts = 10;
+static HEMOnboardingCache* sharedUserDataCache = nil;
 
-@interface HEMUserDataCache()
+@interface HEMOnboardingCache()
 
 @property (nonatomic, assign) NSInteger sensorPollingAttempts;
+@property (nonatomic, assign) NSInteger senseScanAttempts;
+@property (nonatomic, copy)   NSArray* nearbySensesFound;
+@property (nonatomic, assign) BOOL pollingSensor;
 
 @end
 
-@implementation HEMUserDataCache
+@implementation HEMOnboardingCache
 
-+ (instancetype)sharedUserDataCache
++ (instancetype)sharedCache
 {
     if (!sharedUserDataCache) {
-        sharedUserDataCache = [HEMUserDataCache new];
+        sharedUserDataCache = [HEMOnboardingCache new];
     }
     return sharedUserDataCache;
 }
 
-+ (void)clearSharedUserDataCache
++ (void)clearCache
 {
     sharedUserDataCache = nil;
 }
@@ -33,6 +39,7 @@ static HEMUserDataCache* sharedUserDataCache = nil;
     self = [super init];
     if (self) {
         [self setSensorPollingAttempts:0];
+        [self setSenseScanAttempts:0];
     }
     return self;
 }
@@ -40,7 +47,7 @@ static HEMUserDataCache* sharedUserDataCache = nil;
 - (void)startPollingSensorData
 {
     if (![self pollingSensor]
-        && [self sensorPollingAttempts] < HEMUserDataCacheMaxSensorPollingAttempts) {
+        && [self sensorPollingAttempts] < HEMOnboardingCacheMaxSensorPollingAttempts) {
         
         [self setSensorPollingAttempts:[self sensorPollingAttempts]+1];
         [self setPollingSensor:YES];
@@ -64,7 +71,7 @@ static HEMUserDataCache* sharedUserDataCache = nil;
                                 DDLogVerbose(@"sensors returned %ld", (long)sensorCount);
                                 if (sensorCount == 0
                                     || [((SENSensor*)sensors[0]) condition] == SENSensorConditionUnknown) {
-                                    int64_t delayInSec = (int64_t)(HEMUserDataCacheSensorPollIntervalDelay * NSEC_PER_SEC);
+                                    int64_t delayInSec = (int64_t)(HEMOnboardingCacheSensorPollIntervalDelay * NSEC_PER_SEC);
                                     dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSec);
                                     dispatch_after(delay, dispatch_get_main_queue(), ^{
                                         [strongSelf startPollingSensorData];
@@ -81,6 +88,40 @@ static HEMUserDataCache* sharedUserDataCache = nil;
         DDLogVerbose(@"polling stopped, attempts %ld", (long)[self sensorPollingAttempts]);
     }
     
+}
+
+- (void)preScanForSenses {
+    if ([self senseScanAttempts] == HEMOnboardingCacheMaxSenseScanAttempts
+        || ([HEMBluetoothUtils stateAvailable]
+            && ![HEMBluetoothUtils isBluetoothOn])) {
+        return;
+    }
+    
+    float retryInterval = 0.2f;
+    
+    [SENSenseManager stopScan]; // stop a scan if one is in progress;
+    
+    DDLogVerbose(@"pre-scanning for nearby senses");
+    __weak typeof(self) weakSelf = self;
+    [self setSenseScanAttempts:[self senseScanAttempts] + 1];
+    
+    if (![SENSenseManager scanForSense:^(NSArray *senses) {
+        DDLogVerbose(@"found some senses to cache %@", senses);
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!strongSelf) return;
+        
+        if ([senses count] == 0) {
+            [strongSelf performSelector:@selector(preScanForSenses)
+                             withObject:nil
+                             afterDelay:retryInterval];
+        } else {
+            [strongSelf setNearbySensesFound:senses];
+        }
+    }]) {
+        [self performSelector:@selector(preScanForSenses)
+                   withObject:nil
+                   afterDelay:retryInterval];
+    }
 }
 
 @end

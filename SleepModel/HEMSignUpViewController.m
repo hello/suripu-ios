@@ -12,7 +12,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBaseController+Protected.h"
 #import "HelloStyleKit.h"
-#import "HEMUserDataCache.h"
+#import "HEMOnboardingCache.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingUtils.h"
 
@@ -111,7 +111,7 @@
                                   }
                                   // cache the account as that is needed post sign up
                                   // to update the account with further information
-                                  [[HEMUserDataCache sharedUserDataCache] setAccount:account];
+                                  [[HEMOnboardingCache sharedCache] setAccount:account];
                                   [strongSelf authenticate:emailAddress password:password rety:YES];
                                   
                                   // save a checkpoint so that user does not have to try and create

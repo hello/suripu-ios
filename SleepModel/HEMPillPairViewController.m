@@ -15,7 +15,7 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMUserDataCache.h"
+#import "HEMOnboardingCache.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMActivityCoverView.h"
@@ -133,7 +133,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 - (SENSenseManager*)manager {
     SENSenseManager* manager = [[HEMDeviceCenter sharedCenter] senseManager];
-    return manager ? manager : [[HEMUserDataCache sharedUserDataCache] senseManager];
+    return manager ? manager : [[HEMOnboardingCache sharedCache] senseManager];
 }
 
 - (void)listenForDisconnects {

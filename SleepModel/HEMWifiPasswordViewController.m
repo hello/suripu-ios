@@ -16,7 +16,7 @@
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMUserDataCache.h"
+#import "HEMOnboardingCache.h"
 #import "HEMWifiUtils.h"
 #import "HEMRoundedTextField.h"
 #import "HEMDeviceCenter.h"
@@ -146,7 +146,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (SENSenseManager*)manager {
     SENSenseManager* manager = [[HEMDeviceCenter sharedCenter] senseManager];
-    return manager ? manager : [[HEMUserDataCache sharedUserDataCache] senseManager];
+    return manager ? manager : [[HEMOnboardingCache sharedCache] senseManager];
 }
 
 - (BOOL)isValid:(NSString*)ssid pass:(NSString*)pass {
@@ -463,7 +463,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             // need to start querying for sensor data so that 1, user will see
             // it as soon as onboarding is done and 2, later step will check
             // sensor data
-            [[HEMUserDataCache sharedUserDataCache] startPollingSensorData];
+            [[HEMOnboardingCache sharedCache] startPollingSensorData];
             [self finish];
             break;
         }

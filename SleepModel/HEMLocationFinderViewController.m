@@ -6,7 +6,7 @@
 
 #import "HEMLocationFinderViewController.h"
 #import "HEMSettingsTableViewController.h"
-#import "HEMUserDataCache.h"
+#import "HEMOnboardingCache.h"
 #import "HEMLocationCenter.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
@@ -76,7 +76,7 @@
         [[HEMLocationCenter sharedCenter] locate:&error success:^BOOL(double lat, double lon, double accuracy) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
-                SENAccount* account = [[HEMUserDataCache sharedUserDataCache] account];
+                SENAccount* account = [[HEMOnboardingCache sharedCache] account];
                 [account setLatitude:@(lat)];
                 [account setLongitude:@(lon)];
                 
@@ -156,7 +156,7 @@
 
 - (void)uploadCollectedData:(BOOL)retry {    
     __weak typeof(self) weakSelf = self;
-    [SENAPIAccount updateAccount:[[HEMUserDataCache sharedUserDataCache] account]
+    [SENAPIAccount updateAccount:[[HEMOnboardingCache sharedCache] account]
                  completionBlock:^(id data, NSError *error) {
                      if (error)
                          DDLogVerbose(@"update completed with error %@", error);

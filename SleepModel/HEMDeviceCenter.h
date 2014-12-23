@@ -202,4 +202,15 @@ extern NSString* const kHEMDeviceNotificationFactorySettingsRestored;
                                    SENWiFiConnectionState state,
                                    NSError* error))completion;
 
+/**
+ * @method: setLEDState:completion
+ *
+ * @discussion
+ * Set the LED state of the currently paired Sense.
+ *
+ * @param state:      state of the LED on Sense to set
+ * @param completion: the block to invoke when done
+ */
+- (void)setLEDState:(SENSenseLEDState)state completion:(HEMDeviceCompletionBlock)completion;
+
 @end

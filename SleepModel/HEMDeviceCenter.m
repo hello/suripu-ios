@@ -62,6 +62,7 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
     if (!completion) return;
     
     __weak typeof(self) weakSelf = self;
+    
     if ([self pairedSenseAvailable]) {
         
         completion (nil);
@@ -428,6 +429,28 @@ static NSString* const kHEMDeviceCenterErrorDomain = @"is.hello.app.device";
         }];
 
     }
+    
+}
+
+#pragma mark - LED
+
+- (void)setLEDState:(SENSenseLEDState)state
+         completion:(HEMDeviceCompletionBlock)completion {
+    
+    __strong typeof(self) weakSelf = self;
+    [self whenPairedSenseIsReadyDo:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error != nil) {
+            if (completion) completion (error);
+            return;
+        }
+        
+        if (strongSelf) {
+            [[strongSelf senseManager] setLED:state success:^(id response) {
+                if (completion) completion (nil);
+            } failure:completion];
+        }
+    }];
     
 }
 

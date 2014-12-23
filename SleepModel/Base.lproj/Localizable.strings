@@ -160,9 +160,15 @@
 "settings.account.password" = "Password";
 
 // support
-"support.options.title" = "Support options";
-"support.option.contact-support" = "Contact support";
-"support.option.reset" = "Start Over";
+"debug.options.title" = "Debug options";
+"debug.option.contact-support" = "Contact support";
+"debug.option.reset" = "Start Over";
+"debug.option.led" = "LED";
+"debug.option.led.title" = "LED options";
+"debug.led.option.pair" = "Pair";
+"debug.led.option.off" = "Off";
+"debug.led.option.success" = "Success";
+"debug.led.option.activity" = "Activity";
 "settings.contact-support" = "Contact support";
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";

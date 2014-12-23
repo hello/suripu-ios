@@ -12,6 +12,13 @@
 @class SENSense;
 @class LGCentralManager;
 
+typedef NS_ENUM(NSUInteger, SENSenseLEDState) {
+    SENSenseLEDStateOff,
+    SENSenseLEDStatePair,
+    SENSenseLEDStateSuccess,
+    SENSenseLEDStateActivity
+};
+
 typedef void(^SENSenseCompletionBlock)(id response, NSError* error);
 typedef void(^SENSenseSuccessBlock)(id response);
 typedef void(^SENSenseFailureBlock)(NSError* error);
@@ -270,6 +277,19 @@ typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {
  */
 - (void)scanForWifiNetworks:(SENSenseSuccessBlock)success
                     failure:(SENSenseFailureBlock)failure;
+
+#pragma mark - LED
+
+/**
+ * Set the LED state on Sense
+ *
+ * @param state:   the state in which the LED on Sense should be
+ * @param success: the block to invoke once this operation succeeded
+ * @param failure: the block to invoke if anything went wrong
+ */
+- (void)setLED:(SENSenseLEDState)state
+       success:(SENSenseSuccessBlock)success
+       failure:(SENSenseFailureBlock)failure;
 
 #pragma mark - Factory Reset
 

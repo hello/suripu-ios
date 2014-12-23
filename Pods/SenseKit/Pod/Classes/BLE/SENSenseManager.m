@@ -25,6 +25,7 @@
 #endif
 
 static CGFloat const kSENSenseDefaultTimeout = 20.0f;
+static CGFloat const kSENSenseScanTimeout = 10.0f;
 static CGFloat const kSENSenseRescanTimeout = 8.0f;
 static CGFloat const kSENSenseSetWifiTimeout = 60.0f; // firmware suggestion
 static CGFloat const kSENSenseScanWifiTimeout = 45.0f; // firmware actually suggests 60, but 45 seems to work consistently
@@ -55,7 +56,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 @implementation SENSenseManager
 
 + (BOOL)scanForSense:(void(^)(NSArray* senses))completion {
-    return [self scanForSenseWithTimeout:kSENSenseDefaultTimeout
+    return [self scanForSenseWithTimeout:kSENSenseScanTimeout
                               completion:completion];
 }
 
@@ -994,6 +995,43 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     }];
 }
 
+#pragma mark - LED
+
+- (SENSenseMessageType)commandForLEDState:(SENSenseLEDState)state {
+    SENSenseMessageType type = SENSenseMessageTypeLedOff;
+    switch (state) {
+        case SENSenseLEDStatePair:
+            type = SENSenseMessageTypeLedTrippy;
+            break;
+        case SENSenseLEDStateActivity:
+            type = SENSenseMessageTypeLedBusy;
+            break;
+        case SENSenseLEDStateSuccess:
+            type = SENSenseMessageTypeLedSuccess;
+            break;
+        case SENSenseLEDStateOff:
+        default:
+            type = SENSenseMessageTypeLedOff;
+            break;
+    }
+    return type;
+}
+
+- (void)setLED:(SENSenseLEDState)state
+       success:(SENSenseSuccessBlock)success
+       failure:(SENSenseFailureBlock)failure {
+    
+    DDLogVerbose(@"setting LED to state %ld", (long)state);
+    SENSenseMessageType type = [self commandForLEDState:state];
+    SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
+    
+    [self sendMessage:[builder build]
+              timeout:kSENSenseDefaultTimeout
+               update:nil
+              success:success
+              failure:failure];
+}
+
 #pragma mark - Connections
 
 - (void)disconnectFromSense {
@@ -1064,16 +1102,16 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 #pragma mark - Cleanup
 
 - (void)dealloc {
-    for (NSTimer* timer in [[self messageTimeoutTimers] allValues]) {
+    for (NSTimer* timer in [_messageTimeoutTimers allValues]) {
         [timer invalidate];
     }
     
     if ([self isConnected]) {
-        [[[self sense] peripheral] disconnectWithCompletion:nil];
+        [[_sense peripheral] disconnectWithCompletion:nil];
     }
     
-    if ([self disconnectNotifyObserver]) {
-        [[NSNotificationCenter defaultCenter] removeObserver:[self disconnectNotifyObserver]];
+    if (_disconnectNotifyObserver) {
+        [[NSNotificationCenter defaultCenter] removeObserver:_disconnectNotifyObserver];
     }
 }
 

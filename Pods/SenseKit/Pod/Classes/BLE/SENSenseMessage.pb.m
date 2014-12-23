@@ -418,6 +418,670 @@ BOOL SENWifiEndpointSecurityTypeIsValidValue(SENWifiEndpointSecurityType value) 
 }
 @end
 
+@interface PillData ()
+@property (strong) NSString* deviceId;
+@property long batteryLevel;
+@property long uptime;
+@property (strong) NSData* motionDataEntrypted;
+@property long firmwareVersion;
+@end
+
+@implementation PillData
+
+- (BOOL) hasDeviceId {
+  return !!hasDeviceId_;
+}
+- (void) setHasDeviceId:(BOOL) value_ {
+  hasDeviceId_ = !!value_;
+}
+@synthesize deviceId;
+- (BOOL) hasBatteryLevel {
+  return !!hasBatteryLevel_;
+}
+- (void) setHasBatteryLevel:(BOOL) value_ {
+  hasBatteryLevel_ = !!value_;
+}
+@synthesize batteryLevel;
+- (BOOL) hasUptime {
+  return !!hasUptime_;
+}
+- (void) setHasUptime:(BOOL) value_ {
+  hasUptime_ = !!value_;
+}
+@synthesize uptime;
+- (BOOL) hasMotionDataEntrypted {
+  return !!hasMotionDataEntrypted_;
+}
+- (void) setHasMotionDataEntrypted:(BOOL) value_ {
+  hasMotionDataEntrypted_ = !!value_;
+}
+@synthesize motionDataEntrypted;
+- (BOOL) hasFirmwareVersion {
+  return !!hasFirmwareVersion_;
+}
+- (void) setHasFirmwareVersion:(BOOL) value_ {
+  hasFirmwareVersion_ = !!value_;
+}
+@synthesize firmwareVersion;
+- (void) dealloc {
+  self.deviceId = nil;
+  self.motionDataEntrypted = nil;
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.deviceId = @"";
+    self.batteryLevel = 0;
+    self.uptime = 0;
+    self.motionDataEntrypted = [NSData data];
+    self.firmwareVersion = 0;
+  }
+  return self;
+}
+static PillData* defaultPillDataInstance = nil;
++ (void) initialize {
+  if (self == [PillData class]) {
+    defaultPillDataInstance = [[PillData alloc] init];
+  }
+}
++ (PillData*) defaultInstance {
+  return defaultPillDataInstance;
+}
+- (PillData*) defaultInstance {
+  return defaultPillDataInstance;
+}
+- (BOOL) isInitialized {
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  if (self.hasDeviceId) {
+    [output writeString:1 value:self.deviceId];
+  }
+  if (self.hasBatteryLevel) {
+    [output writeInt32:2 value:self.batteryLevel];
+  }
+  if (self.hasUptime) {
+    [output writeInt32:3 value:self.uptime];
+  }
+  if (self.hasMotionDataEntrypted) {
+    [output writeData:4 value:self.motionDataEntrypted];
+  }
+  if (self.hasFirmwareVersion) {
+    [output writeInt32:5 value:self.firmwareVersion];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (long) serializedSize {
+  long size_ = memoizedSerializedSize;
+  if (size_ != -1) {
+    return size_;
+  }
+
+  size_ = 0;
+  if (self.hasDeviceId) {
+    size_ += computeStringSize(1, self.deviceId);
+  }
+  if (self.hasBatteryLevel) {
+    size_ += computeInt32Size(2, self.batteryLevel);
+  }
+  if (self.hasUptime) {
+    size_ += computeInt32Size(3, self.uptime);
+  }
+  if (self.hasMotionDataEntrypted) {
+    size_ += computeDataSize(4, self.motionDataEntrypted);
+  }
+  if (self.hasFirmwareVersion) {
+    size_ += computeInt32Size(5, self.firmwareVersion);
+  }
+  size_ += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size_;
+  return size_;
+}
++ (PillData*) parseFromData:(NSData*) data {
+  return (PillData*)[[[PillData builder] mergeFromData:data] build];
+}
++ (PillData*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (PillData*)[[[PillData builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (PillData*) parseFromInputStream:(NSInputStream*) input {
+  return (PillData*)[[[PillData builder] mergeFromInputStream:input] build];
+}
++ (PillData*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (PillData*)[[[PillData builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (PillData*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (PillData*)[[[PillData builder] mergeFromCodedInputStream:input] build];
+}
++ (PillData*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (PillData*)[[[PillData builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (PillDataBuilder*) builder {
+  return [[PillDataBuilder alloc] init];
+}
++ (PillDataBuilder*) builderWithPrototype:(PillData*) prototype {
+  return [[PillData builder] mergeFrom:prototype];
+}
+- (PillDataBuilder*) builder {
+  return [PillData builder];
+}
+- (PillDataBuilder*) toBuilder {
+  return [PillData builderWithPrototype:self];
+}
+- (void) writeDescriptionTo:(NSMutableString*) output withIndent:(NSString*) indent {
+  if (self.hasDeviceId) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"deviceId", self.deviceId];
+  }
+  if (self.hasBatteryLevel) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"batteryLevel", [NSNumber numberWithInteger:self.batteryLevel]];
+  }
+  if (self.hasUptime) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"uptime", [NSNumber numberWithInteger:self.uptime]];
+  }
+  if (self.hasMotionDataEntrypted) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"motionDataEntrypted", self.motionDataEntrypted];
+  }
+  if (self.hasFirmwareVersion) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"firmwareVersion", [NSNumber numberWithInteger:self.firmwareVersion]];
+  }
+  [self.unknownFields writeDescriptionTo:output withIndent:indent];
+}
+- (BOOL) isEqual:(id)other {
+  if (other == self) {
+    return YES;
+  }
+  if (![other isKindOfClass:[PillData class]]) {
+    return NO;
+  }
+  PillData *otherMessage = other;
+  return
+      self.hasDeviceId == otherMessage.hasDeviceId &&
+      (!self.hasDeviceId || [self.deviceId isEqual:otherMessage.deviceId]) &&
+      self.hasBatteryLevel == otherMessage.hasBatteryLevel &&
+      (!self.hasBatteryLevel || self.batteryLevel == otherMessage.batteryLevel) &&
+      self.hasUptime == otherMessage.hasUptime &&
+      (!self.hasUptime || self.uptime == otherMessage.uptime) &&
+      self.hasMotionDataEntrypted == otherMessage.hasMotionDataEntrypted &&
+      (!self.hasMotionDataEntrypted || [self.motionDataEntrypted isEqual:otherMessage.motionDataEntrypted]) &&
+      self.hasFirmwareVersion == otherMessage.hasFirmwareVersion &&
+      (!self.hasFirmwareVersion || self.firmwareVersion == otherMessage.firmwareVersion) &&
+      (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
+}
+- (NSUInteger) hash {
+  NSUInteger hashCode = 7;
+  if (self.hasDeviceId) {
+    hashCode = hashCode * 31 + [self.deviceId hash];
+  }
+  if (self.hasBatteryLevel) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.batteryLevel] hash];
+  }
+  if (self.hasUptime) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.uptime] hash];
+  }
+  if (self.hasMotionDataEntrypted) {
+    hashCode = hashCode * 31 + [self.motionDataEntrypted hash];
+  }
+  if (self.hasFirmwareVersion) {
+    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.firmwareVersion] hash];
+  }
+  hashCode = hashCode * 31 + [self.unknownFields hash];
+  return hashCode;
+}
+@end
+
+@interface PillDataBuilder()
+@property (strong) PillData* result;
+@end
+
+@implementation PillDataBuilder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[PillData alloc] init];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (PillDataBuilder*) clear {
+  self.result = [[PillData alloc] init];
+  return self;
+}
+- (PillDataBuilder*) clone {
+  return [PillData builderWithPrototype:result];
+}
+- (PillData*) defaultInstance {
+  return [PillData defaultInstance];
+}
+- (PillData*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (PillData*) buildPartial {
+  PillData* returnMe = result;
+  self.result = nil;
+  return returnMe;
+}
+- (PillDataBuilder*) mergeFrom:(PillData*) other {
+  if (other == [PillData defaultInstance]) {
+    return self;
+  }
+  if (other.hasDeviceId) {
+    [self setDeviceId:other.deviceId];
+  }
+  if (other.hasBatteryLevel) {
+    [self setBatteryLevel:other.batteryLevel];
+  }
+  if (other.hasUptime) {
+    [self setUptime:other.uptime];
+  }
+  if (other.hasMotionDataEntrypted) {
+    [self setMotionDataEntrypted:other.motionDataEntrypted];
+  }
+  if (other.hasFirmwareVersion) {
+    [self setFirmwareVersion:other.firmwareVersion];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (PillDataBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (PillDataBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSetBuilder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    NSInteger tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        [self setDeviceId:[input readString]];
+        break;
+      }
+      case 16: {
+        [self setBatteryLevel:[input readInt32]];
+        break;
+      }
+      case 24: {
+        [self setUptime:[input readInt32]];
+        break;
+      }
+      case 34: {
+        [self setMotionDataEntrypted:[input readData]];
+        break;
+      }
+      case 40: {
+        [self setFirmwareVersion:[input readInt32]];
+        break;
+      }
+    }
+  }
+}
+- (BOOL) hasDeviceId {
+  return result.hasDeviceId;
+}
+- (NSString*) deviceId {
+  return result.deviceId;
+}
+- (PillDataBuilder*) setDeviceId:(NSString*) value {
+  result.hasDeviceId = YES;
+  result.deviceId = value;
+  return self;
+}
+- (PillDataBuilder*) clearDeviceId {
+  result.hasDeviceId = NO;
+  result.deviceId = @"";
+  return self;
+}
+- (BOOL) hasBatteryLevel {
+  return result.hasBatteryLevel;
+}
+- (long) batteryLevel {
+  return result.batteryLevel;
+}
+- (PillDataBuilder*) setBatteryLevel:(long) value {
+  result.hasBatteryLevel = YES;
+  result.batteryLevel = value;
+  return self;
+}
+- (PillDataBuilder*) clearBatteryLevel {
+  result.hasBatteryLevel = NO;
+  result.batteryLevel = 0;
+  return self;
+}
+- (BOOL) hasUptime {
+  return result.hasUptime;
+}
+- (long) uptime {
+  return result.uptime;
+}
+- (PillDataBuilder*) setUptime:(long) value {
+  result.hasUptime = YES;
+  result.uptime = value;
+  return self;
+}
+- (PillDataBuilder*) clearUptime {
+  result.hasUptime = NO;
+  result.uptime = 0;
+  return self;
+}
+- (BOOL) hasMotionDataEntrypted {
+  return result.hasMotionDataEntrypted;
+}
+- (NSData*) motionDataEntrypted {
+  return result.motionDataEntrypted;
+}
+- (PillDataBuilder*) setMotionDataEntrypted:(NSData*) value {
+  result.hasMotionDataEntrypted = YES;
+  result.motionDataEntrypted = value;
+  return self;
+}
+- (PillDataBuilder*) clearMotionDataEntrypted {
+  result.hasMotionDataEntrypted = NO;
+  result.motionDataEntrypted = [NSData data];
+  return self;
+}
+- (BOOL) hasFirmwareVersion {
+  return result.hasFirmwareVersion;
+}
+- (long) firmwareVersion {
+  return result.firmwareVersion;
+}
+- (PillDataBuilder*) setFirmwareVersion:(long) value {
+  result.hasFirmwareVersion = YES;
+  result.firmwareVersion = value;
+  return self;
+}
+- (PillDataBuilder*) clearFirmwareVersion {
+  result.hasFirmwareVersion = NO;
+  result.firmwareVersion = 0;
+  return self;
+}
+@end
+
+@interface BatchedPillData ()
+@property (strong) PBAppendableArray * pillsArray;
+@property (strong) NSString* deviceId;
+@end
+
+@implementation BatchedPillData
+
+@synthesize pillsArray;
+@dynamic pills;
+- (BOOL) hasDeviceId {
+  return !!hasDeviceId_;
+}
+- (void) setHasDeviceId:(BOOL) value_ {
+  hasDeviceId_ = !!value_;
+}
+@synthesize deviceId;
+- (void) dealloc {
+  self.pillsArray = nil;
+  self.deviceId = nil;
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.deviceId = @"";
+  }
+  return self;
+}
+static BatchedPillData* defaultBatchedPillDataInstance = nil;
++ (void) initialize {
+  if (self == [BatchedPillData class]) {
+    defaultBatchedPillDataInstance = [[BatchedPillData alloc] init];
+  }
+}
++ (BatchedPillData*) defaultInstance {
+  return defaultBatchedPillDataInstance;
+}
+- (BatchedPillData*) defaultInstance {
+  return defaultBatchedPillDataInstance;
+}
+- (PBArray *)pills {
+  return pillsArray;
+}
+- (PillData*)pillsAtIndex:(NSUInteger)index {
+  return [pillsArray objectAtIndex:index];
+}
+- (BOOL) isInitialized {
+  if (!self.hasDeviceId) {
+    return NO;
+  }
+  return YES;
+}
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
+  for (PillData *element in self.pillsArray) {
+    [output writeMessage:1 value:element];
+  }
+  if (self.hasDeviceId) {
+    [output writeString:2 value:self.deviceId];
+  }
+  [self.unknownFields writeToCodedOutputStream:output];
+}
+- (long) serializedSize {
+  long size_ = memoizedSerializedSize;
+  if (size_ != -1) {
+    return size_;
+  }
+
+  size_ = 0;
+  for (PillData *element in self.pillsArray) {
+    size_ += computeMessageSize(1, element);
+  }
+  if (self.hasDeviceId) {
+    size_ += computeStringSize(2, self.deviceId);
+  }
+  size_ += self.unknownFields.serializedSize;
+  memoizedSerializedSize = size_;
+  return size_;
+}
++ (BatchedPillData*) parseFromData:(NSData*) data {
+  return (BatchedPillData*)[[[BatchedPillData builder] mergeFromData:data] build];
+}
++ (BatchedPillData*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (BatchedPillData*)[[[BatchedPillData builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
+}
++ (BatchedPillData*) parseFromInputStream:(NSInputStream*) input {
+  return (BatchedPillData*)[[[BatchedPillData builder] mergeFromInputStream:input] build];
+}
++ (BatchedPillData*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (BatchedPillData*)[[[BatchedPillData builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (BatchedPillData*) parseFromCodedInputStream:(PBCodedInputStream*) input {
+  return (BatchedPillData*)[[[BatchedPillData builder] mergeFromCodedInputStream:input] build];
+}
++ (BatchedPillData*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  return (BatchedPillData*)[[[BatchedPillData builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
+}
++ (BatchedPillDataBuilder*) builder {
+  return [[BatchedPillDataBuilder alloc] init];
+}
++ (BatchedPillDataBuilder*) builderWithPrototype:(BatchedPillData*) prototype {
+  return [[BatchedPillData builder] mergeFrom:prototype];
+}
+- (BatchedPillDataBuilder*) builder {
+  return [BatchedPillData builder];
+}
+- (BatchedPillDataBuilder*) toBuilder {
+  return [BatchedPillData builderWithPrototype:self];
+}
+- (void) writeDescriptionTo:(NSMutableString*) output withIndent:(NSString*) indent {
+  for (PillData* element in self.pillsArray) {
+    [output appendFormat:@"%@%@ {\n", indent, @"pills"];
+    [element writeDescriptionTo:output
+                     withIndent:[NSString stringWithFormat:@"%@  ", indent]];
+    [output appendFormat:@"%@}\n", indent];
+  }
+  if (self.hasDeviceId) {
+    [output appendFormat:@"%@%@: %@\n", indent, @"deviceId", self.deviceId];
+  }
+  [self.unknownFields writeDescriptionTo:output withIndent:indent];
+}
+- (BOOL) isEqual:(id)other {
+  if (other == self) {
+    return YES;
+  }
+  if (![other isKindOfClass:[BatchedPillData class]]) {
+    return NO;
+  }
+  BatchedPillData *otherMessage = other;
+  return
+      [self.pillsArray isEqualToArray:otherMessage.pillsArray] &&
+      self.hasDeviceId == otherMessage.hasDeviceId &&
+      (!self.hasDeviceId || [self.deviceId isEqual:otherMessage.deviceId]) &&
+      (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
+}
+- (NSUInteger) hash {
+  NSUInteger hashCode = 7;
+  for (PillData* element in self.pillsArray) {
+    hashCode = hashCode * 31 + [element hash];
+  }
+  if (self.hasDeviceId) {
+    hashCode = hashCode * 31 + [self.deviceId hash];
+  }
+  hashCode = hashCode * 31 + [self.unknownFields hash];
+  return hashCode;
+}
+@end
+
+@interface BatchedPillDataBuilder()
+@property (strong) BatchedPillData* result;
+@end
+
+@implementation BatchedPillDataBuilder
+@synthesize result;
+- (void) dealloc {
+  self.result = nil;
+}
+- (id) init {
+  if ((self = [super init])) {
+    self.result = [[BatchedPillData alloc] init];
+  }
+  return self;
+}
+- (PBGeneratedMessage*) internalGetResult {
+  return result;
+}
+- (BatchedPillDataBuilder*) clear {
+  self.result = [[BatchedPillData alloc] init];
+  return self;
+}
+- (BatchedPillDataBuilder*) clone {
+  return [BatchedPillData builderWithPrototype:result];
+}
+- (BatchedPillData*) defaultInstance {
+  return [BatchedPillData defaultInstance];
+}
+- (BatchedPillData*) build {
+  [self checkInitialized];
+  return [self buildPartial];
+}
+- (BatchedPillData*) buildPartial {
+  BatchedPillData* returnMe = result;
+  self.result = nil;
+  return returnMe;
+}
+- (BatchedPillDataBuilder*) mergeFrom:(BatchedPillData*) other {
+  if (other == [BatchedPillData defaultInstance]) {
+    return self;
+  }
+  if (other.pillsArray.count > 0) {
+    if (result.pillsArray == nil) {
+      result.pillsArray = [other.pillsArray copy];
+    } else {
+      [result.pillsArray appendArray:other.pillsArray];
+    }
+  }
+  if (other.hasDeviceId) {
+    [self setDeviceId:other.deviceId];
+  }
+  [self mergeUnknownFields:other.unknownFields];
+  return self;
+}
+- (BatchedPillDataBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
+  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
+}
+- (BatchedPillDataBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
+  PBUnknownFieldSetBuilder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
+  while (YES) {
+    NSInteger tag = [input readTag];
+    switch (tag) {
+      case 0:
+        [self setUnknownFields:[unknownFields build]];
+        return self;
+      default: {
+        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
+          [self setUnknownFields:[unknownFields build]];
+          return self;
+        }
+        break;
+      }
+      case 10: {
+        PillDataBuilder* subBuilder = [PillData builder];
+        [input readMessage:subBuilder extensionRegistry:extensionRegistry];
+        [self addPills:[subBuilder buildPartial]];
+        break;
+      }
+      case 18: {
+        [self setDeviceId:[input readString]];
+        break;
+      }
+    }
+  }
+}
+- (PBAppendableArray *)pills {
+  return result.pillsArray;
+}
+- (PillData*)pillsAtIndex:(NSUInteger)index {
+  return [result pillsAtIndex:index];
+}
+- (BatchedPillDataBuilder *)addPills:(PillData*)value {
+  if (result.pillsArray == nil) {
+    result.pillsArray = [PBAppendableArray arrayWithValueType:PBArrayValueTypeObject];
+  }
+  [result.pillsArray addObject:value];
+  return self;
+}
+- (BatchedPillDataBuilder *)setPillsArray:(NSArray *)array {
+  result.pillsArray = [PBAppendableArray arrayWithArray:array valueType:PBArrayValueTypeObject];
+  return self;
+}
+- (BatchedPillDataBuilder *)setPillsValues:(const PillData* __strong *)values count:(NSUInteger)count {
+  result.pillsArray = [PBAppendableArray arrayWithValues:values count:count valueType:PBArrayValueTypeObject];
+  return self;
+}
+- (BatchedPillDataBuilder *)clearPills {
+  result.pillsArray = nil;
+  return self;
+}
+- (BOOL) hasDeviceId {
+  return result.hasDeviceId;
+}
+- (NSString*) deviceId {
+  return result.deviceId;
+}
+- (BatchedPillDataBuilder*) setDeviceId:(NSString*) value {
+  result.hasDeviceId = YES;
+  result.deviceId = value;
+  return self;
+}
+- (BatchedPillDataBuilder*) clearDeviceId {
+  result.hasDeviceId = NO;
+  result.deviceId = @"";
+  return self;
+}
+@end
+
 @interface SENSenseMessage ()
 @property long version;
 @property SENSenseMessageType type;
@@ -434,7 +1098,7 @@ BOOL SENWifiEndpointSecurityTypeIsValidValue(SENWifiEndpointSecurityType value) 
 @property long firmwareVersion;
 @property (strong) PBAppendableArray * wifisDetectedArray;
 @property SENWifiEndpointSecurityType securityType;
-@property (strong) SENSenseMessagePillData* pillData;
+@property (strong) PillData* pillData;
 @property WiFiState wifiState;
 @end
 
@@ -580,7 +1244,7 @@ BOOL SENWifiEndpointSecurityTypeIsValidValue(SENWifiEndpointSecurityType value) 
     self.motionDataEncrypted = [NSData data];
     self.firmwareVersion = 0;
     self.securityType = SENWifiEndpointSecurityTypeOpen;
-    self.pillData = [SENSenseMessagePillData defaultInstance];
+    self.pillData = [PillData defaultInstance];
     self.wifiState = WiFiStateNoWlanConnected;
   }
   return self;
@@ -948,402 +1612,17 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
     case SENSenseMessageTypePillHeartbeat:
     case SENSenseMessageTypePillDfuBegin:
     case SENSenseMessageTypeFactoryReset:
+    case SENSenseMessageTypeLedBusy:
+    case SENSenseMessageTypeLedTrippy:
+    case SENSenseMessageTypeLedOff:
+    case SENSenseMessageTypeScanWifi:
+    case SENSenseMessageTypeGetNextWifiAp:
+    case SENSenseMessageTypeLedSuccess:
       return YES;
     default:
       return NO;
   }
 }
-@interface SENSenseMessagePillData ()
-@property (strong) NSString* deviceId;
-@property long batteryLevel;
-@property long uptime;
-@property (strong) NSData* motionDataEntrypted;
-@property long firmwareVersion;
-@end
-
-@implementation SENSenseMessagePillData
-
-- (BOOL) hasDeviceId {
-  return !!hasDeviceId_;
-}
-- (void) setHasDeviceId:(BOOL) value_ {
-  hasDeviceId_ = !!value_;
-}
-@synthesize deviceId;
-- (BOOL) hasBatteryLevel {
-  return !!hasBatteryLevel_;
-}
-- (void) setHasBatteryLevel:(BOOL) value_ {
-  hasBatteryLevel_ = !!value_;
-}
-@synthesize batteryLevel;
-- (BOOL) hasUptime {
-  return !!hasUptime_;
-}
-- (void) setHasUptime:(BOOL) value_ {
-  hasUptime_ = !!value_;
-}
-@synthesize uptime;
-- (BOOL) hasMotionDataEntrypted {
-  return !!hasMotionDataEntrypted_;
-}
-- (void) setHasMotionDataEntrypted:(BOOL) value_ {
-  hasMotionDataEntrypted_ = !!value_;
-}
-@synthesize motionDataEntrypted;
-- (BOOL) hasFirmwareVersion {
-  return !!hasFirmwareVersion_;
-}
-- (void) setHasFirmwareVersion:(BOOL) value_ {
-  hasFirmwareVersion_ = !!value_;
-}
-@synthesize firmwareVersion;
-- (void) dealloc {
-  self.deviceId = nil;
-  self.motionDataEntrypted = nil;
-}
-- (id) init {
-  if ((self = [super init])) {
-    self.deviceId = @"";
-    self.batteryLevel = 0;
-    self.uptime = 0;
-    self.motionDataEntrypted = [NSData data];
-    self.firmwareVersion = 0;
-  }
-  return self;
-}
-static SENSenseMessagePillData* defaultSENSenseMessagePillDataInstance = nil;
-+ (void) initialize {
-  if (self == [SENSenseMessagePillData class]) {
-    defaultSENSenseMessagePillDataInstance = [[SENSenseMessagePillData alloc] init];
-  }
-}
-+ (SENSenseMessagePillData*) defaultInstance {
-  return defaultSENSenseMessagePillDataInstance;
-}
-- (SENSenseMessagePillData*) defaultInstance {
-  return defaultSENSenseMessagePillDataInstance;
-}
-- (BOOL) isInitialized {
-  return YES;
-}
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output {
-  if (self.hasDeviceId) {
-    [output writeString:1 value:self.deviceId];
-  }
-  if (self.hasBatteryLevel) {
-    [output writeInt32:2 value:self.batteryLevel];
-  }
-  if (self.hasUptime) {
-    [output writeInt32:3 value:self.uptime];
-  }
-  if (self.hasMotionDataEntrypted) {
-    [output writeData:4 value:self.motionDataEntrypted];
-  }
-  if (self.hasFirmwareVersion) {
-    [output writeInt32:5 value:self.firmwareVersion];
-  }
-  [self.unknownFields writeToCodedOutputStream:output];
-}
-- (long) serializedSize {
-  long size_ = memoizedSerializedSize;
-  if (size_ != -1) {
-    return size_;
-  }
-
-  size_ = 0;
-  if (self.hasDeviceId) {
-    size_ += computeStringSize(1, self.deviceId);
-  }
-  if (self.hasBatteryLevel) {
-    size_ += computeInt32Size(2, self.batteryLevel);
-  }
-  if (self.hasUptime) {
-    size_ += computeInt32Size(3, self.uptime);
-  }
-  if (self.hasMotionDataEntrypted) {
-    size_ += computeDataSize(4, self.motionDataEntrypted);
-  }
-  if (self.hasFirmwareVersion) {
-    size_ += computeInt32Size(5, self.firmwareVersion);
-  }
-  size_ += self.unknownFields.serializedSize;
-  memoizedSerializedSize = size_;
-  return size_;
-}
-+ (SENSenseMessagePillData*) parseFromData:(NSData*) data {
-  return (SENSenseMessagePillData*)[[[SENSenseMessagePillData builder] mergeFromData:data] build];
-}
-+ (SENSenseMessagePillData*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (SENSenseMessagePillData*)[[[SENSenseMessagePillData builder] mergeFromData:data extensionRegistry:extensionRegistry] build];
-}
-+ (SENSenseMessagePillData*) parseFromInputStream:(NSInputStream*) input {
-  return (SENSenseMessagePillData*)[[[SENSenseMessagePillData builder] mergeFromInputStream:input] build];
-}
-+ (SENSenseMessagePillData*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (SENSenseMessagePillData*)[[[SENSenseMessagePillData builder] mergeFromInputStream:input extensionRegistry:extensionRegistry] build];
-}
-+ (SENSenseMessagePillData*) parseFromCodedInputStream:(PBCodedInputStream*) input {
-  return (SENSenseMessagePillData*)[[[SENSenseMessagePillData builder] mergeFromCodedInputStream:input] build];
-}
-+ (SENSenseMessagePillData*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  return (SENSenseMessagePillData*)[[[SENSenseMessagePillData builder] mergeFromCodedInputStream:input extensionRegistry:extensionRegistry] build];
-}
-+ (SENSenseMessagePillDataBuilder*) builder {
-  return [[SENSenseMessagePillDataBuilder alloc] init];
-}
-+ (SENSenseMessagePillDataBuilder*) builderWithPrototype:(SENSenseMessagePillData*) prototype {
-  return [[SENSenseMessagePillData builder] mergeFrom:prototype];
-}
-- (SENSenseMessagePillDataBuilder*) builder {
-  return [SENSenseMessagePillData builder];
-}
-- (SENSenseMessagePillDataBuilder*) toBuilder {
-  return [SENSenseMessagePillData builderWithPrototype:self];
-}
-- (void) writeDescriptionTo:(NSMutableString*) output withIndent:(NSString*) indent {
-  if (self.hasDeviceId) {
-    [output appendFormat:@"%@%@: %@\n", indent, @"deviceId", self.deviceId];
-  }
-  if (self.hasBatteryLevel) {
-    [output appendFormat:@"%@%@: %@\n", indent, @"batteryLevel", [NSNumber numberWithInteger:self.batteryLevel]];
-  }
-  if (self.hasUptime) {
-    [output appendFormat:@"%@%@: %@\n", indent, @"uptime", [NSNumber numberWithInteger:self.uptime]];
-  }
-  if (self.hasMotionDataEntrypted) {
-    [output appendFormat:@"%@%@: %@\n", indent, @"motionDataEntrypted", self.motionDataEntrypted];
-  }
-  if (self.hasFirmwareVersion) {
-    [output appendFormat:@"%@%@: %@\n", indent, @"firmwareVersion", [NSNumber numberWithInteger:self.firmwareVersion]];
-  }
-  [self.unknownFields writeDescriptionTo:output withIndent:indent];
-}
-- (BOOL) isEqual:(id)other {
-  if (other == self) {
-    return YES;
-  }
-  if (![other isKindOfClass:[SENSenseMessagePillData class]]) {
-    return NO;
-  }
-  SENSenseMessagePillData *otherMessage = other;
-  return
-      self.hasDeviceId == otherMessage.hasDeviceId &&
-      (!self.hasDeviceId || [self.deviceId isEqual:otherMessage.deviceId]) &&
-      self.hasBatteryLevel == otherMessage.hasBatteryLevel &&
-      (!self.hasBatteryLevel || self.batteryLevel == otherMessage.batteryLevel) &&
-      self.hasUptime == otherMessage.hasUptime &&
-      (!self.hasUptime || self.uptime == otherMessage.uptime) &&
-      self.hasMotionDataEntrypted == otherMessage.hasMotionDataEntrypted &&
-      (!self.hasMotionDataEntrypted || [self.motionDataEntrypted isEqual:otherMessage.motionDataEntrypted]) &&
-      self.hasFirmwareVersion == otherMessage.hasFirmwareVersion &&
-      (!self.hasFirmwareVersion || self.firmwareVersion == otherMessage.firmwareVersion) &&
-      (self.unknownFields == otherMessage.unknownFields || (self.unknownFields != nil && [self.unknownFields isEqual:otherMessage.unknownFields]));
-}
-- (NSUInteger) hash {
-  NSUInteger hashCode = 7;
-  if (self.hasDeviceId) {
-    hashCode = hashCode * 31 + [self.deviceId hash];
-  }
-  if (self.hasBatteryLevel) {
-    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.batteryLevel] hash];
-  }
-  if (self.hasUptime) {
-    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.uptime] hash];
-  }
-  if (self.hasMotionDataEntrypted) {
-    hashCode = hashCode * 31 + [self.motionDataEntrypted hash];
-  }
-  if (self.hasFirmwareVersion) {
-    hashCode = hashCode * 31 + [[NSNumber numberWithInteger:self.firmwareVersion] hash];
-  }
-  hashCode = hashCode * 31 + [self.unknownFields hash];
-  return hashCode;
-}
-@end
-
-@interface SENSenseMessagePillDataBuilder()
-@property (strong) SENSenseMessagePillData* result;
-@end
-
-@implementation SENSenseMessagePillDataBuilder
-@synthesize result;
-- (void) dealloc {
-  self.result = nil;
-}
-- (id) init {
-  if ((self = [super init])) {
-    self.result = [[SENSenseMessagePillData alloc] init];
-  }
-  return self;
-}
-- (PBGeneratedMessage*) internalGetResult {
-  return result;
-}
-- (SENSenseMessagePillDataBuilder*) clear {
-  self.result = [[SENSenseMessagePillData alloc] init];
-  return self;
-}
-- (SENSenseMessagePillDataBuilder*) clone {
-  return [SENSenseMessagePillData builderWithPrototype:result];
-}
-- (SENSenseMessagePillData*) defaultInstance {
-  return [SENSenseMessagePillData defaultInstance];
-}
-- (SENSenseMessagePillData*) build {
-  [self checkInitialized];
-  return [self buildPartial];
-}
-- (SENSenseMessagePillData*) buildPartial {
-  SENSenseMessagePillData* returnMe = result;
-  self.result = nil;
-  return returnMe;
-}
-- (SENSenseMessagePillDataBuilder*) mergeFrom:(SENSenseMessagePillData*) other {
-  if (other == [SENSenseMessagePillData defaultInstance]) {
-    return self;
-  }
-  if (other.hasDeviceId) {
-    [self setDeviceId:other.deviceId];
-  }
-  if (other.hasBatteryLevel) {
-    [self setBatteryLevel:other.batteryLevel];
-  }
-  if (other.hasUptime) {
-    [self setUptime:other.uptime];
-  }
-  if (other.hasMotionDataEntrypted) {
-    [self setMotionDataEntrypted:other.motionDataEntrypted];
-  }
-  if (other.hasFirmwareVersion) {
-    [self setFirmwareVersion:other.firmwareVersion];
-  }
-  [self mergeUnknownFields:other.unknownFields];
-  return self;
-}
-- (SENSenseMessagePillDataBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input {
-  return [self mergeFromCodedInputStream:input extensionRegistry:[PBExtensionRegistry emptyRegistry]];
-}
-- (SENSenseMessagePillDataBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry {
-  PBUnknownFieldSetBuilder* unknownFields = [PBUnknownFieldSet builderWithUnknownFields:self.unknownFields];
-  while (YES) {
-    NSInteger tag = [input readTag];
-    switch (tag) {
-      case 0:
-        [self setUnknownFields:[unknownFields build]];
-        return self;
-      default: {
-        if (![self parseUnknownField:input unknownFields:unknownFields extensionRegistry:extensionRegistry tag:tag]) {
-          [self setUnknownFields:[unknownFields build]];
-          return self;
-        }
-        break;
-      }
-      case 10: {
-        [self setDeviceId:[input readString]];
-        break;
-      }
-      case 16: {
-        [self setBatteryLevel:[input readInt32]];
-        break;
-      }
-      case 24: {
-        [self setUptime:[input readInt32]];
-        break;
-      }
-      case 34: {
-        [self setMotionDataEntrypted:[input readData]];
-        break;
-      }
-      case 40: {
-        [self setFirmwareVersion:[input readInt32]];
-        break;
-      }
-    }
-  }
-}
-- (BOOL) hasDeviceId {
-  return result.hasDeviceId;
-}
-- (NSString*) deviceId {
-  return result.deviceId;
-}
-- (SENSenseMessagePillDataBuilder*) setDeviceId:(NSString*) value {
-  result.hasDeviceId = YES;
-  result.deviceId = value;
-  return self;
-}
-- (SENSenseMessagePillDataBuilder*) clearDeviceId {
-  result.hasDeviceId = NO;
-  result.deviceId = @"";
-  return self;
-}
-- (BOOL) hasBatteryLevel {
-  return result.hasBatteryLevel;
-}
-- (long) batteryLevel {
-  return result.batteryLevel;
-}
-- (SENSenseMessagePillDataBuilder*) setBatteryLevel:(long) value {
-  result.hasBatteryLevel = YES;
-  result.batteryLevel = value;
-  return self;
-}
-- (SENSenseMessagePillDataBuilder*) clearBatteryLevel {
-  result.hasBatteryLevel = NO;
-  result.batteryLevel = 0;
-  return self;
-}
-- (BOOL) hasUptime {
-  return result.hasUptime;
-}
-- (long) uptime {
-  return result.uptime;
-}
-- (SENSenseMessagePillDataBuilder*) setUptime:(long) value {
-  result.hasUptime = YES;
-  result.uptime = value;
-  return self;
-}
-- (SENSenseMessagePillDataBuilder*) clearUptime {
-  result.hasUptime = NO;
-  result.uptime = 0;
-  return self;
-}
-- (BOOL) hasMotionDataEntrypted {
-  return result.hasMotionDataEntrypted;
-}
-- (NSData*) motionDataEntrypted {
-  return result.motionDataEntrypted;
-}
-- (SENSenseMessagePillDataBuilder*) setMotionDataEntrypted:(NSData*) value {
-  result.hasMotionDataEntrypted = YES;
-  result.motionDataEntrypted = value;
-  return self;
-}
-- (SENSenseMessagePillDataBuilder*) clearMotionDataEntrypted {
-  result.hasMotionDataEntrypted = NO;
-  result.motionDataEntrypted = [NSData data];
-  return self;
-}
-- (BOOL) hasFirmwareVersion {
-  return result.hasFirmwareVersion;
-}
-- (long) firmwareVersion {
-  return result.firmwareVersion;
-}
-- (SENSenseMessagePillDataBuilder*) setFirmwareVersion:(long) value {
-  result.hasFirmwareVersion = YES;
-  result.firmwareVersion = value;
-  return self;
-}
-- (SENSenseMessagePillDataBuilder*) clearFirmwareVersion {
-  result.hasFirmwareVersion = NO;
-  result.firmwareVersion = 0;
-  return self;
-}
-@end
-
 @interface SENSenseMessageBuilder()
 @property (strong) SENSenseMessage* result;
 @end
@@ -1539,7 +1818,7 @@ static SENSenseMessagePillData* defaultSENSenseMessagePillDataInstance = nil;
         break;
       }
       case 130: {
-        SENSenseMessagePillDataBuilder* subBuilder = [SENSenseMessagePillData builder];
+        PillDataBuilder* subBuilder = [PillData builder];
         if (self.hasPillData) {
           [subBuilder mergeFrom:self.pillData];
         }
@@ -1811,22 +2090,22 @@ static SENSenseMessagePillData* defaultSENSenseMessagePillDataInstance = nil;
 - (BOOL) hasPillData {
   return result.hasPillData;
 }
-- (SENSenseMessagePillData*) pillData {
+- (PillData*) pillData {
   return result.pillData;
 }
-- (SENSenseMessageBuilder*) setPillData:(SENSenseMessagePillData*) value {
+- (SENSenseMessageBuilder*) setPillData:(PillData*) value {
   result.hasPillData = YES;
   result.pillData = value;
   return self;
 }
-- (SENSenseMessageBuilder*) setPillDataBuilder:(SENSenseMessagePillDataBuilder*) builderForValue {
+- (SENSenseMessageBuilder*) setPillDataBuilder:(PillDataBuilder*) builderForValue {
   return [self setPillData:[builderForValue build]];
 }
-- (SENSenseMessageBuilder*) mergePillData:(SENSenseMessagePillData*) value {
+- (SENSenseMessageBuilder*) mergePillData:(PillData*) value {
   if (result.hasPillData &&
-      result.pillData != [SENSenseMessagePillData defaultInstance]) {
+      result.pillData != [PillData defaultInstance]) {
     result.pillData =
-      [[[SENSenseMessagePillData builderWithPrototype:result.pillData] mergeFrom:value] buildPartial];
+      [[[PillData builderWithPrototype:result.pillData] mergeFrom:value] buildPartial];
   } else {
     result.pillData = value;
   }
@@ -1835,7 +2114,7 @@ static SENSenseMessagePillData* defaultSENSenseMessagePillDataInstance = nil;
 }
 - (SENSenseMessageBuilder*) clearPillData {
   result.hasPillData = NO;
-  result.pillData = [SENSenseMessagePillData defaultInstance];
+  result.pillData = [PillData defaultInstance];
   return self;
 }
 - (BOOL) hasWifiState {

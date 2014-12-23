@@ -4,10 +4,12 @@
 
 // @@protoc_insertion_point(imports)
 
+@class BatchedPillData;
+@class BatchedPillDataBuilder;
+@class PillData;
+@class PillDataBuilder;
 @class SENSenseMessage;
 @class SENSenseMessageBuilder;
-@class SENSenseMessagePillData;
-@class SENSenseMessagePillDataBuilder;
 @class SENWifiEndpoint;
 @class SENWifiEndpointBuilder;
 #ifndef __has_feature
@@ -77,6 +79,12 @@ typedef enum {
   SENSenseMessageTypePillHeartbeat = 18,
   SENSenseMessageTypePillDfuBegin = 19,
   SENSenseMessageTypeFactoryReset = 20,
+  SENSenseMessageTypeLedBusy = 25,
+  SENSenseMessageTypeLedTrippy = 26,
+  SENSenseMessageTypeLedOff = 27,
+  SENSenseMessageTypeScanWifi = 28,
+  SENSenseMessageTypeGetNextWifiAp = 29,
+  SENSenseMessageTypeLedSuccess = 30,
 } SENSenseMessageType;
 
 BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
@@ -164,6 +172,150 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 - (SENWifiEndpointBuilder*) clearSecurity;
 @end
 
+@interface PillData : PBGeneratedMessage {
+@private
+  BOOL hasBatteryLevel_:1;
+  BOOL hasUptime_:1;
+  BOOL hasFirmwareVersion_:1;
+  BOOL hasDeviceId_:1;
+  BOOL hasMotionDataEntrypted_:1;
+  long batteryLevel;
+  long uptime;
+  long firmwareVersion;
+  NSString* deviceId;
+  NSData* motionDataEntrypted;
+}
+- (BOOL) hasDeviceId;
+- (BOOL) hasBatteryLevel;
+- (BOOL) hasUptime;
+- (BOOL) hasMotionDataEntrypted;
+- (BOOL) hasFirmwareVersion;
+@property (readonly, strong) NSString* deviceId;
+@property (readonly) long batteryLevel;
+@property (readonly) long uptime;
+@property (readonly, strong) NSData* motionDataEntrypted;
+@property (readonly) long firmwareVersion;
+
++ (PillData*) defaultInstance;
+- (PillData*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (PillDataBuilder*) builder;
++ (PillDataBuilder*) builder;
++ (PillDataBuilder*) builderWithPrototype:(PillData*) prototype;
+- (PillDataBuilder*) toBuilder;
+
++ (PillData*) parseFromData:(NSData*) data;
++ (PillData*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (PillData*) parseFromInputStream:(NSInputStream*) input;
++ (PillData*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (PillData*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (PillData*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface PillDataBuilder : PBGeneratedMessageBuilder {
+@private
+  PillData* result;
+}
+
+- (PillData*) defaultInstance;
+
+- (PillDataBuilder*) clear;
+- (PillDataBuilder*) clone;
+
+- (PillData*) build;
+- (PillData*) buildPartial;
+
+- (PillDataBuilder*) mergeFrom:(PillData*) other;
+- (PillDataBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (PillDataBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (BOOL) hasDeviceId;
+- (NSString*) deviceId;
+- (PillDataBuilder*) setDeviceId:(NSString*) value;
+- (PillDataBuilder*) clearDeviceId;
+
+- (BOOL) hasBatteryLevel;
+- (long) batteryLevel;
+- (PillDataBuilder*) setBatteryLevel:(long) value;
+- (PillDataBuilder*) clearBatteryLevel;
+
+- (BOOL) hasUptime;
+- (long) uptime;
+- (PillDataBuilder*) setUptime:(long) value;
+- (PillDataBuilder*) clearUptime;
+
+- (BOOL) hasMotionDataEntrypted;
+- (NSData*) motionDataEntrypted;
+- (PillDataBuilder*) setMotionDataEntrypted:(NSData*) value;
+- (PillDataBuilder*) clearMotionDataEntrypted;
+
+- (BOOL) hasFirmwareVersion;
+- (long) firmwareVersion;
+- (PillDataBuilder*) setFirmwareVersion:(long) value;
+- (PillDataBuilder*) clearFirmwareVersion;
+@end
+
+@interface BatchedPillData : PBGeneratedMessage {
+@private
+  BOOL hasDeviceId_:1;
+  NSString* deviceId;
+  PBAppendableArray * pillsArray;
+}
+- (BOOL) hasDeviceId;
+@property (readonly, strong) PBArray * pills;
+@property (readonly, strong) NSString* deviceId;
+- (PillData*)pillsAtIndex:(NSUInteger)index;
+
++ (BatchedPillData*) defaultInstance;
+- (BatchedPillData*) defaultInstance;
+
+- (BOOL) isInitialized;
+- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
+- (BatchedPillDataBuilder*) builder;
++ (BatchedPillDataBuilder*) builder;
++ (BatchedPillDataBuilder*) builderWithPrototype:(BatchedPillData*) prototype;
+- (BatchedPillDataBuilder*) toBuilder;
+
++ (BatchedPillData*) parseFromData:(NSData*) data;
++ (BatchedPillData*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (BatchedPillData*) parseFromInputStream:(NSInputStream*) input;
++ (BatchedPillData*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
++ (BatchedPillData*) parseFromCodedInputStream:(PBCodedInputStream*) input;
++ (BatchedPillData*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+@end
+
+@interface BatchedPillDataBuilder : PBGeneratedMessageBuilder {
+@private
+  BatchedPillData* result;
+}
+
+- (BatchedPillData*) defaultInstance;
+
+- (BatchedPillDataBuilder*) clear;
+- (BatchedPillDataBuilder*) clone;
+
+- (BatchedPillData*) build;
+- (BatchedPillData*) buildPartial;
+
+- (BatchedPillDataBuilder*) mergeFrom:(BatchedPillData*) other;
+- (BatchedPillDataBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
+- (BatchedPillDataBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
+
+- (PBAppendableArray *)pills;
+- (PillData*)pillsAtIndex:(NSUInteger)index;
+- (BatchedPillDataBuilder *)addPills:(PillData*)value;
+- (BatchedPillDataBuilder *)setPillsArray:(NSArray *)array;
+- (BatchedPillDataBuilder *)setPillsValues:(const PillData* __strong *)values count:(NSUInteger)count;
+- (BatchedPillDataBuilder *)clearPills;
+
+- (BOOL) hasDeviceId;
+- (NSString*) deviceId;
+- (BatchedPillDataBuilder*) setDeviceId:(NSString*) value;
+- (BatchedPillDataBuilder*) clearDeviceId;
+@end
+
 @interface SENSenseMessage : PBGeneratedMessage {
 @private
   BOOL hasVersion_:1;
@@ -192,7 +344,7 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
   NSString* wifiName;
   NSString* wifiSsid;
   NSString* wifiPassword;
-  SENSenseMessagePillData* pillData;
+  PillData* pillData;
   NSData* motionDataEncrypted;
   SENSenseMessageType type;
   ErrorType error;
@@ -231,7 +383,7 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 @property (readonly) long firmwareVersion;
 @property (readonly, strong) PBArray * wifisDetected;
 @property (readonly) SENWifiEndpointSecurityType securityType;
-@property (readonly, strong) SENSenseMessagePillData* pillData;
+@property (readonly, strong) PillData* pillData;
 @property (readonly) WiFiState wifiState;
 - (SENWifiEndpoint*)wifisDetectedAtIndex:(NSUInteger)index;
 
@@ -251,91 +403,6 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 + (SENSenseMessage*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
 + (SENSenseMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input;
 + (SENSenseMessage*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-@end
-
-@interface SENSenseMessagePillData : PBGeneratedMessage {
-@private
-  BOOL hasBatteryLevel_:1;
-  BOOL hasUptime_:1;
-  BOOL hasFirmwareVersion_:1;
-  BOOL hasDeviceId_:1;
-  BOOL hasMotionDataEntrypted_:1;
-  long batteryLevel;
-  long uptime;
-  long firmwareVersion;
-  NSString* deviceId;
-  NSData* motionDataEntrypted;
-}
-- (BOOL) hasDeviceId;
-- (BOOL) hasBatteryLevel;
-- (BOOL) hasUptime;
-- (BOOL) hasMotionDataEntrypted;
-- (BOOL) hasFirmwareVersion;
-@property (readonly, strong) NSString* deviceId;
-@property (readonly) long batteryLevel;
-@property (readonly) long uptime;
-@property (readonly, strong) NSData* motionDataEntrypted;
-@property (readonly) long firmwareVersion;
-
-+ (SENSenseMessagePillData*) defaultInstance;
-- (SENSenseMessagePillData*) defaultInstance;
-
-- (BOOL) isInitialized;
-- (void) writeToCodedOutputStream:(PBCodedOutputStream*) output;
-- (SENSenseMessagePillDataBuilder*) builder;
-+ (SENSenseMessagePillDataBuilder*) builder;
-+ (SENSenseMessagePillDataBuilder*) builderWithPrototype:(SENSenseMessagePillData*) prototype;
-- (SENSenseMessagePillDataBuilder*) toBuilder;
-
-+ (SENSenseMessagePillData*) parseFromData:(NSData*) data;
-+ (SENSenseMessagePillData*) parseFromData:(NSData*) data extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (SENSenseMessagePillData*) parseFromInputStream:(NSInputStream*) input;
-+ (SENSenseMessagePillData*) parseFromInputStream:(NSInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-+ (SENSenseMessagePillData*) parseFromCodedInputStream:(PBCodedInputStream*) input;
-+ (SENSenseMessagePillData*) parseFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-@end
-
-@interface SENSenseMessagePillDataBuilder : PBGeneratedMessageBuilder {
-@private
-  SENSenseMessagePillData* result;
-}
-
-- (SENSenseMessagePillData*) defaultInstance;
-
-- (SENSenseMessagePillDataBuilder*) clear;
-- (SENSenseMessagePillDataBuilder*) clone;
-
-- (SENSenseMessagePillData*) build;
-- (SENSenseMessagePillData*) buildPartial;
-
-- (SENSenseMessagePillDataBuilder*) mergeFrom:(SENSenseMessagePillData*) other;
-- (SENSenseMessagePillDataBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input;
-- (SENSenseMessagePillDataBuilder*) mergeFromCodedInputStream:(PBCodedInputStream*) input extensionRegistry:(PBExtensionRegistry*) extensionRegistry;
-
-- (BOOL) hasDeviceId;
-- (NSString*) deviceId;
-- (SENSenseMessagePillDataBuilder*) setDeviceId:(NSString*) value;
-- (SENSenseMessagePillDataBuilder*) clearDeviceId;
-
-- (BOOL) hasBatteryLevel;
-- (long) batteryLevel;
-- (SENSenseMessagePillDataBuilder*) setBatteryLevel:(long) value;
-- (SENSenseMessagePillDataBuilder*) clearBatteryLevel;
-
-- (BOOL) hasUptime;
-- (long) uptime;
-- (SENSenseMessagePillDataBuilder*) setUptime:(long) value;
-- (SENSenseMessagePillDataBuilder*) clearUptime;
-
-- (BOOL) hasMotionDataEntrypted;
-- (NSData*) motionDataEntrypted;
-- (SENSenseMessagePillDataBuilder*) setMotionDataEntrypted:(NSData*) value;
-- (SENSenseMessagePillDataBuilder*) clearMotionDataEntrypted;
-
-- (BOOL) hasFirmwareVersion;
-- (long) firmwareVersion;
-- (SENSenseMessagePillDataBuilder*) setFirmwareVersion:(long) value;
-- (SENSenseMessagePillDataBuilder*) clearFirmwareVersion;
 @end
 
 @interface SENSenseMessageBuilder : PBGeneratedMessageBuilder {
@@ -433,10 +500,10 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);
 - (SENSenseMessageBuilder*) clearSecurityType;
 
 - (BOOL) hasPillData;
-- (SENSenseMessagePillData*) pillData;
-- (SENSenseMessageBuilder*) setPillData:(SENSenseMessagePillData*) value;
-- (SENSenseMessageBuilder*) setPillDataBuilder:(SENSenseMessagePillDataBuilder*) builderForValue;
-- (SENSenseMessageBuilder*) mergePillData:(SENSenseMessagePillData*) value;
+- (PillData*) pillData;
+- (SENSenseMessageBuilder*) setPillData:(PillData*) value;
+- (SENSenseMessageBuilder*) setPillDataBuilder:(PillDataBuilder*) builderForValue;
+- (SENSenseMessageBuilder*) mergePillData:(PillData*) value;
 - (SENSenseMessageBuilder*) clearPillData;
 
 - (BOOL) hasWifiState;

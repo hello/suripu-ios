@@ -78,7 +78,7 @@
 - (void)navigationController:(UINavigationController *)navigationController
        didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
-    self.interactivePopGestureRecognizer.enabled = YES;
+    self.interactivePopGestureRecognizer.enabled = ![viewController isEqual:[self.viewControllers firstObject]];
 }
 
 - (void)setBackButtonOnViewController:(UIViewController*)viewController {

@@ -18,6 +18,7 @@
 #import "HEMActionButton.h"
 #import "HEMSensorCheckView.h"
 #import "UIColor+HEMStyle.h"
+#import "HEMMarkdown.h"
 
 static CGFloat const HEMRoomCheckShowSensorDelay = 1.0f;
 static CGFloat const HEMRoomCheckDataDisplayTime = 2.0f;
@@ -89,11 +90,8 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
         NSString* message = [NSString stringWithFormat:format, [sensor localizedName]];
         attrMessage = [self attributedMessage:message];
     } else {
-        UIColor* conditionColor = [UIColor colorForSensorWithCondition:[sensor condition]];
-        NSDictionary* statusAttributes = @{
-            @(EMPH)  : @{ NSForegroundColorAttributeName : conditionColor},
-            @(PLAIN) : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont]}
-        };
+        UIColor* color = [UIColor colorForSensorWithCondition:[sensor condition]];
+        NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckWithConditionColor:color];
         
         attrMessage = markdown_to_attr_string([sensor message], 0, statusAttributes);
         NSMutableParagraphStyle* paragraphStyle = [[NSMutableParagraphStyle alloc] init];

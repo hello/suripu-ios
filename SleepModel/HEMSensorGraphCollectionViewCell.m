@@ -14,6 +14,7 @@
 #import "NSAttributedString+HEMUtils.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
+#import "HEMMarkdown.h"
 
 @interface HEMSensorGraphCollectionViewCell ()<BEMSimpleLineGraphDelegate>
 
@@ -21,20 +22,6 @@
 @end
 
 @implementation HEMSensorGraphCollectionViewCell
-
-+ (NSDictionary *)markdownAttributes
-{
-    static NSDictionary* attributes;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        attributes = @{
-            @(EMPH) : @{ NSFontAttributeName : [UIFont sensorListBoldMessageFont] },
-            @(STRONG) : @{ NSFontAttributeName : [UIFont sensorListBoldMessageFont] },
-            @(PLAIN) : @{ NSFontAttributeName : [UIFont sensorListMessageFont] }
-        };
-    });
-    return attributes;
-}
 
 - (void)awakeFromNib
 {
@@ -67,7 +54,7 @@
 
 - (void)setMessageText:(NSString *)markupMessageText
 {
-    NSAttributedString* text = markdown_to_attr_string(markupMessageText, 0, [[self class] markdownAttributes]);
+    NSAttributedString* text = markdown_to_attr_string(markupMessageText, 0, [HEMMarkdown attributesForBackViewText]);
     self.sensorMessageLabel.attributedText = [text trim];
 }
 

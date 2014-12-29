@@ -168,6 +168,7 @@
 		8AAEED0C19A5225F006517C4 /* Agile-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECF819A5225F006517C4 /* Agile-MediumItalic.otf */; };
 		8AAEED0D19A5225F006517C4 /* Agile-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECF919A5225F006517C4 /* Agile-Thin.otf */; };
 		8AAEED0E19A5225F006517C4 /* Agile-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECFA19A5225F006517C4 /* Agile-ThinItalic.otf */; };
+		8AB006311A48C382000CF62F /* HEMMarkdown.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB006301A48C382000CF62F /* HEMMarkdown.m */; };
 		8AB2683919CCFDB400017818 /* HEMAlarmAddButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2683819CCFDB400017818 /* HEMAlarmAddButton.m */; };
 		8AB2683C19CCFDBF00017818 /* HEMAlarmListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2683B19CCFDBF00017818 /* HEMAlarmListViewController.m */; };
 		8AB2684719CCFF8800017818 /* HEMAlarmUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2684619CCFF8800017818 /* HEMAlarmUtils.m */; };
@@ -748,6 +749,8 @@
 		8AAEECF819A5225F006517C4 /* Agile-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-MediumItalic.otf"; path = "fonts/Agile-MediumItalic.otf"; sourceTree = "<group>"; };
 		8AAEECF919A5225F006517C4 /* Agile-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-Thin.otf"; path = "fonts/Agile-Thin.otf"; sourceTree = "<group>"; };
 		8AAEECFA19A5225F006517C4 /* Agile-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-ThinItalic.otf"; path = "fonts/Agile-ThinItalic.otf"; sourceTree = "<group>"; };
+		8AB0062F1A48C382000CF62F /* HEMMarkdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMarkdown.h; sourceTree = "<group>"; };
+		8AB006301A48C382000CF62F /* HEMMarkdown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMarkdown.m; sourceTree = "<group>"; };
 		8AB2683719CCFDB400017818 /* HEMAlarmAddButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmAddButton.h; sourceTree = "<group>"; };
 		8AB2683819CCFDB400017818 /* HEMAlarmAddButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmAddButton.m; sourceTree = "<group>"; };
 		8AB2683A19CCFDBF00017818 /* HEMAlarmListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmListViewController.h; sourceTree = "<group>"; };
@@ -2338,6 +2341,8 @@
 				BF98E4421A422D0B00E3CDEB /* NSDate+HEMRelative.m */,
 				BF98E4441A42378900E3CDEB /* HEMSinkModalTransitionDelegate.h */,
 				BF98E4451A42378900E3CDEB /* HEMSinkModalTransitionDelegate.m */,
+				8AB0062F1A48C382000CF62F /* HEMMarkdown.h */,
+				8AB006301A48C382000CF62F /* HEMMarkdown.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -3007,6 +3012,7 @@
 				8A91F2A61A44DB3D00F211B4 /* HEMAlarmTableViewCell.m in Sources */,
 				8AC4A05B198ACE4800C2BD63 /* HEMLineGraphDataSource.m in Sources */,
 				BFB1F3D91A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m in Sources */,
+				8AB006311A48C382000CF62F /* HEMMarkdown.m in Sources */,
 				BF6E3AA01A2E51290019C110 /* HEMSingleResponseCell.m in Sources */,
 				8A98AC071A2E776E00A1296E /* HEMSleepGraphUtils.m in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,

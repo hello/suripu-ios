@@ -40,7 +40,8 @@
 +(NSString *)pillSegueIdentifier;
 +(NSString *)senseSegueIdentifier;
 +(NSString *)unitsSettingsSegueIdentifier;
-+(NSString *)updatePasswordSegueSegueIdentifier;
++(NSString *)updateEmailSegueIdentifier;
++(NSString *)updatePasswordSegueIdentifier;
 
 /** View Controllers */
 +(id)instantiateAlarmListNavViewController;

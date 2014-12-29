@@ -217,6 +217,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     [manager pairWithPill:token success:^(id response) {
         __block typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
+            [manager setLED:SENSenseLEDStateSuccess success:nil failure:nil];
             [strongSelf flashPairedState];
         }
     } failure:^(NSError *error) {

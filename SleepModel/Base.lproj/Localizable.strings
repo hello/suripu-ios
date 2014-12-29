@@ -238,6 +238,8 @@
 "authorization.sign-in.loading-message" = "Signing in";
 "authorization.sign-in.failed.title" = "Sign in failed";
 "authorization.sign-in.failed.message" = "The provided email address and password were not recognized. Please try again.";
+"authorization.sign-in.device.error.message" = "We were unable to determine the state of your account at this time.\n\nPlease try again.";
+"authorization.sign-in.device.error.title" = "Account check failed";
 
 // alarm list
 "alarms.title" = "Alarms";

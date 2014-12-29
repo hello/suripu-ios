@@ -82,7 +82,9 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     [self saveOnboardingCheckpoint:HEMOnboardingCheckpointStart];
 }
 
-+ (UIViewController*)onboardingControllerForCheckpoint:(HEMOnboardingCheckpoint)checkpoint authorized:(BOOL)authorized {
++ (UIViewController*)onboardingControllerForCheckpoint:(HEMOnboardingCheckpoint)checkpoint
+                                            authorized:(BOOL)authorized {
+    
     UIViewController* onboardingController = nil;
     switch (checkpoint) {
         case HEMOnboardingCheckpointStart: {

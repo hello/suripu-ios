@@ -9,6 +9,8 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
+#import "HEMDeviceCenter.h"
+#import "HEMBaseController+Protected.h"
 
 @interface HEMAuthenticationViewController ()
 
@@ -80,23 +82,64 @@
         if (!strongSelf) return;
         
         [strongSelf setSigningIn:NO];
-    
+        
         if (error) {
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             [strongSelf stopActivity];
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             [HEMOnboardingUtils showAlertForHTTPError:error
                                             withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)
                                                  from:strongSelf];
             return;
         }
-
-        [HEMAnalytics trackUserSession]; // update user session, since it maybe a different user now
-        [SENAnalytics track:kHEMAnalyticsEventSignIn];
-
-        [[strongSelf view] endEditing:NO];
-        [strongSelf.navigationController dismissViewControllerAnimated:YES completion:nil];
+        
+        [strongSelf checkDevices:^(BOOL hasSense, NSError* error) {
+            [strongSelf stopActivity];
+            
+            if (error != nil) {
+                [strongSelf failDeviceCheck:error];
+            } else if (!hasSense) {
+                [strongSelf makeUserSetupSense];
+            } else {
+                [strongSelf letUserIntoApp];
+            }
+        }];
         
     }];
+}
+
+- (void)checkDevices:(void(^)(BOOL hasSense, NSError* error))completion {
+    [[HEMDeviceCenter sharedCenter] loadDeviceInfo:^(NSError *error) {
+        BOOL hasSense
+            = error == nil
+            && [[HEMDeviceCenter sharedCenter] senseInfo] != nil;
+        completion (hasSense, error);
+    }];
+}
+
+- (void)failDeviceCheck:(NSError*)error {
+    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+    NSString* msg = NSLocalizedString(@"authorization.sign-in.device.error.message", nil);
+    NSString* title = NSLocalizedString(@"authorization.sign-in.device.error.title", nil);
+    [SENAuthorizationService deauthorize];
+    [self showMessageDialog:msg title:title];
+}
+
+- (void)letUserIntoApp {
+    [HEMAnalytics trackUserSession]; // update user session, since it maybe a different user now
+    [SENAnalytics track:kHEMAnalyticsEventSignIn];
+    [[self view] endEditing:NO];
+    [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)makeUserSetupSense {
+    HEMOnboardingCheckpoint checkpoint = HEMOnboardingCheckpointAccountDone;
+    UIViewController* checkpointVC =[HEMOnboardingUtils onboardingControllerForCheckpoint:checkpoint
+                                                                               authorized:YES];
+    
+    // save this checkpoint in case user bails out at the checkpoint and app thinks
+    // user is logged in
+    [HEMOnboardingUtils saveOnboardingCheckpoint:checkpoint];
+    [[self navigationController] setViewControllers:@[checkpointVC] animated:YES];
 }
 
 #pragma mark - Actions

@@ -14,6 +14,7 @@
 #import "HEMSupportUtil.h"
 #import "HEMDeviceCenter.h"
 #import "HEMOnboardingUtils.h"
+#import "HEMOnboardingCache.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -141,7 +142,12 @@
         if (strongSelf) {
             [strongSelf setLedOptionController:nil];
         }
-        [[HEMDeviceCenter sharedCenter] setLEDState:ledState completion:nil];
+        
+        if ([[HEMOnboardingCache sharedCache] senseManager] != nil) {
+            [[[HEMOnboardingCache sharedCache] senseManager] setLED:ledState success:nil failure:nil];
+        } else {
+            [[HEMDeviceCenter sharedCenter] setLEDState:ledState completion:nil];
+        }
         
     }];
 }

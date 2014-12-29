@@ -110,8 +110,8 @@
 /* Class = "IBUIViewController"; title = "My Information"; ObjectID = "kmi-iD-cGd"; */
 "kmi-iD-cGd.title" = "My Information";
 
-/* Class = "IBUILabel"; text = "Remove this pill from your Sense System."; ObjectID = "lvQ-Zb-w2d"; */
-"lvQ-Zb-w2d.text" = "Remove this pill from your Sense System.";
+/* Class = "IBUILabel"; text = "A Pill is required to track your sleep"; ObjectID = "lvQ-Zb-w2d"; */
+"lvQ-Zb-w2d.text" = "A Pill is required to track your sleep";
 
 /* Class = "IBUINavigationItem"; title = "Devices"; ObjectID = "oGK-em-S7y"; */
 "oGK-em-S7y.title" = "Devices";
@@ -155,5 +155,5 @@
 /* Class = "IBUILabel"; text = "Drag to adjust the time"; ObjectID = "zCx-Mw-gYU"; */
 "zCx-Mw-gYU.text" = "Drag to adjust the time";
 
-/* Class = "IBUIButton"; normalTitle = "Unpair This Pill"; ObjectID = "ze4-7f-tPo"; */
-"ze4-7f-tPo.normalTitle" = "Unpair This Pill";
+/* Class = "IBUIButton"; normalTitle = "Remove this Pill from my account"; ObjectID = "ze4-7f-tPo"; */
+"ze4-7f-tPo.normalTitle" = "Remove this Pill from my account";

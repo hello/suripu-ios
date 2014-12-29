@@ -1080,7 +1080,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
-                                        <state key="normal" title="Unpair This Pill">
+                                        <state key="normal" title="Remove this Pill from my account">
                                             <color key="titleColor" red="0.50196078431372548" green="0.50196078431372548" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1088,7 +1088,7 @@
                                             <action selector="showUnpairConfirmation:" destination="S23-X6-9pb" eventType="touchUpInside" id="e5X-5V-Ugo"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Remove this pill from your Sense System." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvQ-Zb-w2d">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Your Pill is required to track your sleep" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lvQ-Zb-w2d">
                                         <rect key="frame" x="15" y="44" width="290" height="34"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
@@ -2096,13 +2096,13 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Updating your account information will sign you out from all other devices." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="au5-1F-9Wo">
-                                <rect key="frame" x="28" y="84" width="544" height="50"/>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
+                                <rect key="frame" x="28" y="84" width="544" height="22"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Current" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="8ro-rz-Ndl" userLabel="current" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="28" y="154" width="544" height="35"/>
+                                <rect key="frame" x="28" y="126" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="iCN-AR-HbV"/>
                                 </constraints>
@@ -2114,7 +2114,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="New" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bTp-9T-Bpy" userLabel="new" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="28" y="209" width="544" height="35"/>
+                                <rect key="frame" x="28" y="181" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="d4O-2Z-8Q0"/>
                                 </constraints>
@@ -2235,7 +2235,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="bD8-KI-O2L"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>

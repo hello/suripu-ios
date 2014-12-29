@@ -385,6 +385,7 @@
 "account.update.failed.title" = "Update failed";
 "account.update.error.generic" = "Unable to update your information";
 "account.update.error.password" = "Unable to update your password";
+"account.update.error.email" = "Unable to update your email.  Please make sure the email you used is unique and not already used.";
 
 // notifications
 "notifications.actions.ok" = "Okay";

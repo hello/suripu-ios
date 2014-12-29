@@ -49,7 +49,9 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     
     [self setupCarousel];
     
-    [SENAnalytics track:kHEMAnalyticsEventOnBWeight];
+    if ([self delegate] == nil) {
+        [SENAnalytics track:kHEMAnalyticsEventOnBWeight];
+    }
 }
 
 - (void)setupCarousel {

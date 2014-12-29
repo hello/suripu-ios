@@ -54,9 +54,10 @@ static NSInteger HEMMaxHeightInFeet = 9;
         NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
         [[self doneButton] setTitle:done forState:UIControlStateNormal];
         [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
+    } else {
+        [SENAnalytics track:kHEMAnalyticsEventOnBHeight];
     }
-    
-    [SENAnalytics track:kHEMAnalyticsEventOnBHeight];
+
 }
 
 - (void)adjustConstraintsForIPhone4 {

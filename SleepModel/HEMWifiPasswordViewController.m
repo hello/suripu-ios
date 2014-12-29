@@ -418,6 +418,13 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (void)finish {
+    // need to start querying for sensor data so that 1, user will see
+    // it as soon as onboarding is done and 2, later step will check
+    // sensor data
+    [[HEMOnboardingCache sharedCache] startPollingSensorData];
+    
+    [[self manager] setLED:SENSenseLEDStateSuccess success:nil failure:nil];
+    
     NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
     __weak typeof(self) weakSelf = self;
     [self stopActivityWithMessage:msg renableControls:NO success:YES completion:^{
@@ -460,10 +467,6 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         }
         case HEMWiFiSetupStepSetTimezone:
         default: {
-            // need to start querying for sensor data so that 1, user will see
-            // it as soon as onboarding is done and 2, later step will check
-            // sensor data
-            [[HEMOnboardingCache sharedCache] startPollingSensorData];
             [self finish];
             break;
         }

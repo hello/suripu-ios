@@ -38,13 +38,6 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     
-    if ([self delegate] != nil) {
-        NSString* title = NSLocalizedString(@"status.success", nil);
-        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
-        [[self doneButton] setTitle:title forState:UIControlStateNormal];
-        [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
-    }
-    
     switch ([self defaultGender]) {
         case SENAccountGenderMale:
             [self setGenderAsMale:nil];
@@ -57,7 +50,14 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
             break;
     }
     
-    [SENAnalytics track:kHEMAnalyticsEventOnBGender];
+    if ([self delegate] != nil) {
+        NSString* title = NSLocalizedString(@"status.success", nil);
+        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
+        [[self doneButton] setTitle:title forState:UIControlStateNormal];
+        [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
+    } else {
+        [SENAnalytics track:kHEMAnalyticsEventOnBGender];
+    }
 }
 
 - (void)viewDidLayoutSubviews {

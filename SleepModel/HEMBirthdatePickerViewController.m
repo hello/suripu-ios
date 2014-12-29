@@ -47,14 +47,15 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
         NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
         [[self doneButton] setTitle:done forState:UIControlStateNormal];
         [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
+    } else {
+        // start looking for a sense right away here.  We want this step here b/c
+        // this is one of the checkpoints and if user lands back here, this optimizatin
+        // will also apply.  If there is a delegate, we do not want to pre scan
+        // as it should already be set up.
+        [[HEMOnboardingCache sharedCache] preScanForSenses];
+        [SENAnalytics track:kHEMAnalyticsEventOnBBirthday];
     }
     
-    // start looking for a sense right away here.  We want this step here b/c
-    // this is one of the checkpoints and if user lands back here, this optimizatin
-    // will also apply
-    [[HEMOnboardingCache sharedCache] preScanForSenses];
-    
-    [SENAnalytics track:kHEMAnalyticsEventOnBBirthday];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

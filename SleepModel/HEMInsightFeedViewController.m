@@ -44,10 +44,12 @@
     [super viewDidLoad];
     
     HEMSinkModalTransitionDelegate* modalTransitionDelegate = [[HEMSinkModalTransitionDelegate alloc] init];
-    [modalTransitionDelegate setSinkView:[self collectionView]];
+    [modalTransitionDelegate setSinkView:[self view]];
     [self setAnimTransitionDelegate:modalTransitionDelegate];
     
-    [self setDataSource:[[HEMInsightsFeedDataSource alloc] init]];
+    [self setDataSource:[[HEMInsightsFeedDataSource alloc] initWithQuestionTarget:self
+                                                             questionSkipSelector:@selector(answerQuestions:)
+                                                           questionAnswerSelector:@selector(skipQuestions:)]];
     
     [[self collectionView] setDataSource:[self dataSource]];
     [[self collectionView] setDelegate:self];
@@ -99,28 +101,7 @@
        willDisplayCell:(UICollectionViewCell *)cell
     forItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString* body = [[self dataSource] bodyTextForCellAtIndexPath:indexPath];
-   
-    if ([cell isKindOfClass:[HEMQuestionCell class]]) {
-        HEMQuestionCell* qCell = (HEMQuestionCell*)cell;
-        NSDictionary* attributes = [HEMQuestionCell questionTextAttributes];
-        NSMutableAttributedString* attrBody
-            = [[NSMutableAttributedString alloc] initWithString:body attributes:attributes];
-        [[qCell questionLabel] setAttributedText:attrBody];
-        [[qCell answerButton] addTarget:self
-                                 action:@selector(answerQuestions:)
-                       forControlEvents:UIControlEventTouchUpInside];
-        [[qCell answerButton] setTag:[indexPath row]];
-        [[qCell skipButton] addTarget:self
-                               action:@selector(skipQuestions:)
-                     forControlEvents:UIControlEventTouchUpInside];
-        [[qCell skipButton] setTag:[indexPath row]];
-    } else if ([cell isKindOfClass:[HEMInsightCollectionViewCell class]]) {
-        HEMInsightCollectionViewCell* iCell = (HEMInsightCollectionViewCell*)cell;
-        [iCell setMessage:body];
-        [[iCell titleLabel] setText:[[self dataSource] insightTitleForCellAtIndexPath:indexPath]];
-        [[iCell dateLabel] setText:[[self dataSource] dateForCellAtIndexPath:indexPath]];
-    }
+    [[self dataSource] displayCell:cell atIndexPath:indexPath];
     
 }
 

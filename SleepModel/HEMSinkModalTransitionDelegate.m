@@ -63,7 +63,8 @@ static CGFloat const HEMSinkAnimationDuration = 0.5f;
 }
 
 - (void)animateDismissalWithContext:(id<UIViewControllerContextTransitioning>)context {
-    UIView* fromView = [context viewForKey:UITransitionContextFromViewKey];
+    UIViewController* fromVC = [context viewControllerForKey:UITransitionContextFromViewControllerKey];
+    UIView* fromView = [fromVC view];
     
     [UIView animateWithDuration:HEMSinkAnimationDuration
                      animations:^{

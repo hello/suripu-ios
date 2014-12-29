@@ -13,6 +13,8 @@
 
 @interface HEMInsightsFeedDataSource : NSObject <UICollectionViewDataSource>
 
+- (id)initWithQuestionTarget:(id)target questionSkipSelector:(SEL)skipSelector questionAnswerSelector:(SEL)answerSelector;
+
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withWidth:(CGFloat)width;
 - (CGFloat)bodyTextPaddingForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (BOOL)isLoading;
@@ -23,5 +25,6 @@
 - (NSString*)dateForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (NSString*)insightTitleForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (NSString*)bodyTextForCellAtIndexPath:(NSIndexPath*)indexPath;
+- (void)displayCell:(UICollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath;
 
 @end

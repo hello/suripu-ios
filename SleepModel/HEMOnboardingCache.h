@@ -29,6 +29,11 @@
  */
 - (void)preScanForSenses;
 
+/**
+ * Clear the pre scanned Senses
+ */
+- (void)clearPreScannedSenses;
+
 @property (nonatomic, strong) SENAccount* account;
 @property (nonatomic, strong) SENSenseManager* senseManager;
 @property (nonatomic, assign, readonly) BOOL pollingSensor;

@@ -182,6 +182,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [[self activityView] showInView:viewToAttach withText:activityMessage activity:YES completion:^{
         if (preScanned) {
             [self useSense:[[[HEMOnboardingCache sharedCache] nearbySensesFound] firstObject]];
+            [[HEMOnboardingCache sharedCache] clearPreScannedSenses];
         } else {
             [self startScan];
         }

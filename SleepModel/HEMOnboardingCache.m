@@ -124,4 +124,8 @@ static HEMOnboardingCache* sharedUserDataCache = nil;
     }
 }
 
+- (void)clearPreScannedSenses {
+    [self setNearbySensesFound:nil];
+}
+
 @end

@@ -48,8 +48,8 @@
     [self setAnimTransitionDelegate:modalTransitionDelegate];
     
     [self setDataSource:[[HEMInsightsFeedDataSource alloc] initWithQuestionTarget:self
-                                                             questionSkipSelector:@selector(answerQuestions:)
-                                                           questionAnswerSelector:@selector(skipQuestions:)]];
+                                                             questionSkipSelector:@selector(skipQuestions:)
+                                                           questionAnswerSelector:@selector(answerQuestions:)]];
     
     [[self collectionView] setDataSource:[self dataSource]];
     [[self collectionView] setDelegate:self];

@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.0.0.50
+
+New:
+
+* Faster Sense pairing during onboarding
+* Return user to onboarding upon authentication if Sense has not been set up
+* Update your email from within Account Settings
+* Smart Alarm switch added to alarms
+* Updated Alarm design
+* Sense LED updates, with supporting firmware
+
+Fixes:
+
+* Fix a crasher when tapping through insights from iOS7 devices
+* Fixed sensor colors
+* Zoomed out Timeline will not be triggered acciddentally when swiping down
+* Menu bar in the back screen will no longer be dismissed when dragged from the
+  edge from the Alarms screen
+* Share icon no longer show when bringing back to foreground, even though there
+  is nothing to share.
+
 ## 1.0.0.49
 
 New:

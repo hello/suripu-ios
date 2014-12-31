@@ -98,6 +98,7 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
         [self updateTopBarActionsWithState:NO];
     }];
     self.oldBarStyle = UIStatusBarStyleLightContent;
+    self.collectionView.scrollEnabled = NO;
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -109,6 +110,7 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     [UIView animateWithDuration:0.5f animations:^{
         [self updateTopBarActionsWithState:YES];
     }];
+    self.collectionView.scrollEnabled = YES;
     [self setNeedsStatusBarAppearanceUpdate];
 }
 

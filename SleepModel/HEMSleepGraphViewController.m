@@ -98,7 +98,6 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
         [self updateTopBarActionsWithState:NO];
     }];
     self.oldBarStyle = UIStatusBarStyleLightContent;
-    self.collectionView.scrollEnabled = NO;
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -110,7 +109,6 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     [UIView animateWithDuration:0.5f animations:^{
         [self updateTopBarActionsWithState:YES];
     }];
-    self.collectionView.scrollEnabled = YES;
     [self setNeedsStatusBarAppearanceUpdate];
 }
 
@@ -150,7 +148,7 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)updateTopBarActionsWithState:(BOOL)pushed
 {
-    self.collectionView.scrollEnabled = !pushed;
+    self.collectionView.scrollEnabled = pushed;
     UIImage* drawerIcon = pushed ? [UIImage imageNamed:@"Menu"] : [UIImage imageNamed:@"caret up"];
     CGFloat constant = pushed ? HEMTopItemsConstraintConstant : HEMTopItemsMinimumConstraintConstant;
     HEMSleepSummaryCollectionViewCell* cell = self.dataSource.sleepSummaryCell;

@@ -50,6 +50,7 @@
 
 // help links
 "help.url.troubleshooting" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8";
+"help.url.order-form" = "https://order.hello.is/";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
@@ -367,6 +368,8 @@
 "actions.close" = "Close";
 "actions.skip" = "Skip";
 "actions.answer" = "Answer";
+"actions.later" = "Later";
+"actions.fix-now" = "Fix now";
 "status.success" = "Done";
 
 // actitivity messages
@@ -421,3 +424,11 @@
 "date.elapsed.days.format" = "%ldd";
 "date.elapsed.weeks.format" = "%ldw";
 "date.elapsed.years.format" = "%ldy";
+
+// device alerts
+"alerts.device.sense-wifi.title" = "Sense Cannot Upload Data";
+"alerts.device.no-wifi" = "Sense either lost connection to WiFi or your WiFi network is having issues.";
+"alerts.device.no-sense.title" = "Sense Not Paired";
+"alerts.device.no-sense.message" = "Your account does not seem to have a Sense paired.  Sense is required for this app.";
+"alerts.device.no-pill.title" = "Sleep Pill Not Paired";
+"alerts.device.no-pill.message" = "Your account does not seem to have a Sleep Pill paired.  A Sleep Pill is required to track your sleep behavior.";

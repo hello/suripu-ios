@@ -19,6 +19,12 @@
               mailDelegate:(id<MFMailComposeViewControllerDelegate>)delegate;
 
 /**
+ * Open up an in-app browser that points to a page to order Sense / Pill
+ * @param controller: the controller to present the new screen
+ */
++ (void)openOrderFormFrom:(UIViewController*)controller;
+
+/**
  * Opens up a screen that shows help / troubleshooting tips
  * @param controller: the controller to present the new screen
  */

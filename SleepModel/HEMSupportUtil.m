@@ -40,6 +40,11 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
     [controller presentViewController:composer animated:YES completion:NULL];
 }
 
++ (void)openOrderFormFrom:(UIViewController*)controller {
+    NSString* orderURLString = NSLocalizedString(@"help.url.order-form", nil);
+    [self openURL:orderURLString from:controller];
+}
+
 + (void)openHelpFrom:(UIViewController*)controller {
     NSString* helpURLString = NSLocalizedString(@"help.url.troubleshooting", nil);
     [self openURL:helpURLString from:controller];

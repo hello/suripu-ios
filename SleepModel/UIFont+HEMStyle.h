@@ -255,4 +255,9 @@
  */
 + (UIFont*)feedInsightMessageBoldFont;
 
+/**
+ * Font used to display the device alert message;
+ */
++ (UIFont*)deviceAlertMessageFont;
+
 @end

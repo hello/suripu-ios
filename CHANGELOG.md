@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.0.51
+
+New:
+
+* Updated to control Sense LED activity indicator in onboarding.  This requires
+  the latest firmware.
+* During onboarding, Sensor data is immediately pushed for Room Check to pick
+  up.  This requires the latest firmware.
+* Global alerts to indicate when Sense cannot connect to network and when you
+  do not yet have a pill paired.  More alerts to come to help you troubleshoot
+  problems.
+
+Fixes:
+
+* Fix issue with Timeline scrolling issues
+* Fix issue with Trends Questions action button states
+
 ## 1.0.0.50
 
 New:

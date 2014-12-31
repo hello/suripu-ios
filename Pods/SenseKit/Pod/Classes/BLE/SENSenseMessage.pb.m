@@ -1618,6 +1618,7 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
     case SENSenseMessageTypeScanWifi:
     case SENSenseMessageTypeGetNextWifiAp:
     case SENSenseMessageTypeLedSuccess:
+    case SENSenseMessageTypePushData:
       return YES;
     default:
       return NO;

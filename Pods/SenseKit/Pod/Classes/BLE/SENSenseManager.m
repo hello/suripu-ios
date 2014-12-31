@@ -29,7 +29,7 @@ static CGFloat const kSENSenseScanTimeout = 10.0f;
 static CGFloat const kSENSenseRescanTimeout = 8.0f;
 static CGFloat const kSENSenseSetWifiTimeout = 60.0f; // firmware suggestion
 static CGFloat const kSENSenseScanWifiTimeout = 45.0f; // firmware actually suggests 60, but 45 seems to work consistently
-static CGFloat const kSENSensePillPairTimeout = 90.0f; // firmware timesout at 60, we need this to be longer.  90 was ok'ed by firwmare
+static CGFloat const kSENSensePillPairTimeout = 30.0f; // firmware timesout at 20, we need this to be longer.
 
 static NSString* const kSENSenseErrorDomain = @"is.hello.ble";
 static NSString* const kSENSenseServiceID = @"0000FEE1-1212-EFDE-1523-785FEABCD123";
@@ -479,6 +479,12 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     return key;
 }
 
+- (void)clearAllMessageCallbacks {
+    [[self messageFailureCallbacks] removeAllObjects];
+    [[self messageSuccessCallbacks] removeAllObjects];
+    [[self messageUpdateCallbacks] removeAllObjects];
+}
+
 - (void)clearMessageCallbacksForKey:(NSString*)key {
     if (key != nil) {
         [[self messageFailureCallbacks] removeObjectForKey:key];
@@ -734,9 +740,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 }
 
 - (void)timedOut:(NSTimer*)timer {
-    DDLogVerbose(@"Sense operation timed out");
     NSString* cbKey = [timer userInfo];
     if (cbKey != nil) {
+        DDLogVerbose(@"Sense operation timed out");
         [self cancelMessageTimeOutWithCbKey:cbKey];
         
         SENSenseFailureBlock failureCb = [[self messageFailureCallbacks] valueForKey:cbKey];
@@ -1018,8 +1024,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 }
 
 - (void)setLED:(SENSenseLEDState)state
-       success:(SENSenseSuccessBlock)success
-       failure:(SENSenseFailureBlock)failure {
+    completion:(SENSenseCompletionBlock)completion {
     
     DDLogVerbose(@"setting LED to state %ld", (long)state);
     SENSenseMessageType type = [self commandForLEDState:state];
@@ -1028,8 +1033,28 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     [self sendMessage:[builder build]
               timeout:kSENSenseDefaultTimeout
                update:nil
-              success:success
-              failure:failure];
+              success:^(id response) {
+                  if (completion) completion (response, nil);
+              } failure:^(NSError *error) {
+                  if (completion) completion (nil, error);
+              }];
+}
+
+#pragma mark - Data
+
+- (void)forceDataUpload:(SENSenseCompletionBlock)completion {
+    DDLogVerbose(@"forcing data upload");
+    SENSenseMessageType type = SENSenseMessageTypePushData;
+    SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
+    
+    [self sendMessage:[builder build]
+              timeout:kSENSenseDefaultTimeout
+               update:nil
+              success:^(id response) {
+                  if (completion) completion (response, nil);
+              } failure:^(NSError *error) {
+                  if (completion) completion (nil, error);
+              }];
 }
 
 #pragma mark - Connections
@@ -1039,11 +1064,12 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     if  ([self isConnected]) {
         __weak typeof(self) weakSelf = self;
         [[[self sense] peripheral] disconnectWithCompletion:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error == nil) {
                 DDLogVerbose(@"disconnected from Sense");
             }
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) [strongSelf setValid:NO];
+            [strongSelf clearAllMessageCallbacks];
+            [strongSelf setValid:NO];
         }];
     }
 }
@@ -1070,6 +1096,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                             // recognized.  This is actually not a logic problem
                             // from the library, but also the behavior in CoreBluetooth
                             [strongSelf setValid:NO];
+                            [strongSelf clearAllMessageCallbacks];
                             
                             id errorObject = [[note userInfo] valueForKey:@"error"];
                             if ([errorObject isKindOfClass:[NSError class]]) {

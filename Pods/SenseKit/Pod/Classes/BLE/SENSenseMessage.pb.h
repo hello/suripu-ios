@@ -85,6 +85,7 @@ typedef enum {
   SENSenseMessageTypeScanWifi = 28,
   SENSenseMessageTypeGetNextWifiAp = 29,
   SENSenseMessageTypeLedSuccess = 30,
+  SENSenseMessageTypePushData = 31,
 } SENSenseMessageType;
 
 BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value);

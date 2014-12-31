@@ -28,10 +28,15 @@
                selector:@selector(serviceWillBecomeInactive)
                    name:UIApplicationWillResignActiveNotification
                  object:nil];
+    [center addObserver:self
+               selector:@selector(serviceReceivedMemoryWarning)
+                   name:UIApplicationDidReceiveMemoryWarningNotification
+                 object:nil];
 }
 
 - (void)serviceBecameActive {}
 - (void)serviceWillBecomeInactive {}
+- (void)serviceReceivedMemoryWarning {}
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];

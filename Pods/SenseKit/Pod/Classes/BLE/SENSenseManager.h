@@ -283,13 +283,11 @@ typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {
 /**
  * Set the LED state on Sense
  *
- * @param state:   the state in which the LED on Sense should be
- * @param success: the block to invoke once this operation succeeded
- * @param failure: the block to invoke if anything went wrong
+ * @param state:      the state in which the LED on Sense should be
+ * @param completion: block to invoke when led has been set successfully or not
  */
 - (void)setLED:(SENSenseLEDState)state
-       success:(SENSenseSuccessBlock)success
-       failure:(SENSenseFailureBlock)failure;
+    completion:(SENSenseCompletionBlock)completion;
 
 #pragma mark - Factory Reset
 
@@ -302,5 +300,15 @@ typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {
  */
 - (void)resetToFactoryState:(SENSenseSuccessBlock)success
                     failure:(SENSenseFailureBlock)failure;
+
+#pragma mark - Data
+
+/**
+ * Force sensor data to be uploaded immediately rather than have Sense upload the
+ * data at the next set interval
+ *
+ * @param completion: the block to invoke when this is done
+ */
+- (void)forceDataUpload:(SENSenseCompletionBlock)completion;
 
 @end

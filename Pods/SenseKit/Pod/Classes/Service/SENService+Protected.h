@@ -23,4 +23,10 @@
  */
 - (void)serviceWillBecomeInactive;
 
+/**
+ * Subclasses can optionally override this to receive such event and
+ * blow away any cache that can be easily recreated.
+ */
+- (void)serviceReceivedMemoryWarning;
+
 @end

@@ -127,16 +127,17 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [label setTranslatesAutoresizingMaskIntoConstraints:YES];
     [label setNumberOfLines:1];
-    [label setText:title];
+    [label setText:[title uppercaseString]];
     
     [self addSubview:label];
     [self setTitleView:label];
 }
 
 - (void)addMessageLabelWithText:(NSAttributedString*)message {
+    CGFloat titleHeight = CGRectGetHeight([[self titleView] bounds]);
     CGRect frame = {
         [self insets].left,
-        [self titleView] == nil ? HEMActionViewTopPaddingWithoutTitle : 0.0f,
+        MAX(titleHeight + HEMActionViewTopPadding, HEMActionViewTopPaddingWithoutTitle),
         CGRectGetWidth([self bounds])-[self insets].left-[self insets].right,
         0.0f // will update based on message
     };

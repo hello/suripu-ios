@@ -8,10 +8,10 @@
 
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENSenseMessage.pb.h>
+#import <SenseKit/SENServiceDevice.h>
 
 #import "HEMWiFiDataSource.h"
 #import "HEMOnboardingCache.h"
-#import "HEMDeviceCenter.h"
 
 NSString* const kHEMWifiOtherCellId = @"other";
 NSString* const kHEMWifiNetworkCellId = @"network";
@@ -74,7 +74,7 @@ static NSString* const kHEMWifiNetworkErrorDomain = @"is.hello.ble.wifi";
 }
 
 - (SENSenseManager*)manager {
-    SENSenseManager* manager = [[HEMDeviceCenter sharedCenter] senseManager];
+    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
     if (manager == nil) {
         manager = [[HEMOnboardingCache sharedCache] senseManager];
     }
@@ -95,26 +95,31 @@ static NSString* const kHEMWifiNetworkErrorDomain = @"is.hello.ble.wifi";
         [self setScanning:YES];
         
         __weak typeof(self) weakSelf = self;
-        [manager scanForWifiNetworks:^(id response) {
+
+        [manager setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                [strongSelf setScanning:NO];
-                [strongSelf setScanned:YES];
-                [strongSelf addDetectedNetworksFromArray:response];
-            }
-            if (completion) completion (nil);
-        } failure:^(NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                [strongSelf setScanning:NO];
-                [strongSelf setScanned:YES];
-            }
-            if (completion) completion (error);
+            [[strongSelf manager] scanForWifiNetworks:^(id response) {
+                __block id wifiResponse = response;
+                [[strongSelf manager] setLED:SENSenseLEDStateOff completion:^(id ledResponse, NSError *error) {
+                    [strongSelf setScanning:NO];
+                    [strongSelf setScanned:YES];
+                    [strongSelf addDetectedNetworksFromArray:wifiResponse];
+                    completion (nil);
+                }];
+                
+            } failure:^(NSError *error) {
+                
+                [[strongSelf manager] setLED:SENSenseLEDStateOff completion:^(id response, NSError *error) {
+                    [strongSelf setScanning:NO];
+                    [strongSelf setScanned:YES];
+                    completion (error);
+                }];
+            }];
         }];
     } else {
-        if (completion) completion ([NSError errorWithDomain:kHEMWifiNetworkErrorDomain
-                                                        code:HEMWiFiErrorCodeInvalidArgument
-                                                    userInfo:nil]);
+        completion ([NSError errorWithDomain:kHEMWifiNetworkErrorDomain
+                                        code:HEMWiFiErrorCodeInvalidArgument
+                                    userInfo:nil]);
     }
 }
 

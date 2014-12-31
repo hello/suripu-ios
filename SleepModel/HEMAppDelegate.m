@@ -5,6 +5,7 @@
 #import <SenseKit/SENServiceQuestions.h>
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAnalytics.h>
+#import <SenseKit/SENServiceDevice.h>
 
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <Crashlytics/Crashlytics.h>
@@ -14,13 +15,11 @@
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMCurrentConditionsViewController.h"
-#import "HEMDeviceCenter.h"
 #import "HelloStyleKit.h"
 #import "HEMLogUtils.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMAudioCache.h"
-#import "HEMDeviceCenter.h"
 #import "UIFont+HEMStyle.h"
 
 @implementation HEMAppDelegate
@@ -145,7 +144,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 {
     SENClearModel();
     [HEMAudioCache clearCache];
-    [[HEMDeviceCenter sharedCenter] clearCache];
     NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
     [defaults removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
     [defaults setObject:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
@@ -194,7 +192,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     
     [center addObserver:self
                selector:@selector(showOnboardingAtSenseSetup)
-                   name:kHEMDeviceNotificationFactorySettingsRestored
+                   name:SENServiceDeviceNotificationFactorySettingsRestored
                  object:nil];
 }
 

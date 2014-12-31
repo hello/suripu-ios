@@ -31,7 +31,8 @@ typedef NS_ENUM(NSUInteger, HEMSensePairState) {
     HEMSensePairStateSettingUpNewSense = 5,
     HEMSensePairStateWiFiNotDetected = 6,
     HEMSensePairStateWiFiDetected = 7,
-    HEMSensePairStateAccountLinked = 8
+    HEMSensePairStateAccountLinked = 8,
+    HEMSensePairStateForceDataUpload = 9
 };
 
 // I've tested the scanning process multiple times starting with a timeout of
@@ -271,6 +272,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             break;
         }
         case HEMSensePairStateAccountLinked: {
+            [self forceSensorDataUpload];
+            break;
+        }
+        case HEMSensePairStateForceDataUpload: {
             [[HEMOnboardingCache sharedCache] startPollingSensorData];
             [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             [self finish];
@@ -290,31 +295,34 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [self setPairing:YES];
     [self observeUnexpectedDisconnects];
     
-    NSString* activityMessage = NSLocalizedString(@"pairing.activity.pairing-sense", nil);
-    [[self activityView] updateText:activityMessage completion:nil];
-    DDLogVerbose(@"pairing with sense %@", [[[self manager] sense] name]);
-    
     __weak typeof(self) weakSelf = self;
-    [[self manager] pair:^(id response) {
-        DDLogVerbose(@"paired!");
+    // led will be turned off when everything is finished, failed or not
+    [[self manager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf && ![strongSelf isTimedOut]) {
-            [strongSelf setPairing:NO];
-            [strongSelf cacheManager];
-            [strongSelf setCurrentState:HEMSensePairStateSensePaired];
-            [strongSelf executeNextStep];
-        }
-    } failure:^(NSError *error) {
-        DDLogVerbose(@"failed to pair %@", error);
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf setPairing:NO];
-            [strongSelf stopActivityWithMessage:nil success:NO completion:^{
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                [strongSelf setCurrentState:HEMSensePairStatePairingError];
+        NSString* activityMessage = NSLocalizedString(@"pairing.activity.pairing-sense", nil);
+        [[strongSelf activityView] updateText:activityMessage completion:nil];
+        DDLogVerbose(@"pairing with sense %@", [[[strongSelf manager] sense] name]);
+        
+        [[strongSelf manager] pair:^(id response) {
+            DDLogVerbose(@"paired!");
+            if (strongSelf && ![strongSelf isTimedOut]) {
+                [strongSelf setPairing:NO];
+                [strongSelf cacheManager];
+                [strongSelf setCurrentState:HEMSensePairStateSensePaired];
                 [strongSelf executeNextStep];
-            }];
-        }
+            }
+        } failure:^(NSError *error) {
+            DDLogVerbose(@"failed to pair %@", error);
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                [strongSelf setPairing:NO];
+                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
+                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                    [strongSelf setCurrentState:HEMSensePairStatePairingError];
+                    [strongSelf executeNextStep];
+                }];
+            }
+        }];
     }];
 }
 
@@ -356,9 +364,12 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 #pragma mark - Second Pill
 
 - (void)checkIfAddingSecondPill {
-    DDLogVerbose(@"asking if user has a second pill to set up");
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard secondPillCheckSegueIdentifier]
-                              sender:self];
+    __weak typeof(self) weakSelf = self;
+    [[self manager] setLED:SENSenseLEDStateOff completion:^(id response, NSError *error) {
+        DDLogVerbose(@"asking if user has a second pill to set up");
+        [weakSelf performSegueWithIdentifier:[HEMOnboardingStoryboard secondPillCheckSegueIdentifier]
+                                      sender:weakSelf];
+    }];
 }
 
 #pragma mark - Link Account
@@ -369,7 +380,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     DDLogVerbose(@"linking account");
     
     NSString* accessToken = [SENAuthorizationService accessToken];
-    SENSenseManager* manager = [[HEMOnboardingCache sharedCache] senseManager];
+    SENSenseManager* manager = [self manager];
     
     __weak typeof(self) weakSelf = self;
     [manager linkAccount:accessToken success:^(id response) {
@@ -390,26 +401,59 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     }];
 }
 
+#pragma mark - Data Upload
+
+- (void)forceSensorDataUpload {
+    __weak typeof(self) weakSelf = self;
+    [[self manager] forceDataUpload:^(id response, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error != nil) {
+            DDLogVerbose(@"failed to upload data %@", error);
+        }
+        
+        // whether there was an error or not, simply proceed b/c it's not
+        // required that the data is uploaded
+        [strongSelf setCurrentState:HEMSensePairStateForceDataUpload];
+        [strongSelf executeNextStep];
+    }];
+}
+
 #pragma mark - Errors
 
 - (void)showErrorMessage:(NSString*)message {
-    [self showMessageDialog:message
-                      title:NSLocalizedString(@"pairing.failed.title", nil)
-                      image:nil
-                   withHelp:YES];
+    __weak typeof(self) weakSelf = self;
+    [[self manager] setLED:SENSenseLEDStateOff completion:^(id response, NSError *error) {
+        [weakSelf showMessageDialog:message
+                              title:NSLocalizedString(@"pairing.failed.title", nil)
+                              image:nil
+                           withHelp:YES];
+    }];
 }
 
 #pragma mark - Finishing
 
 - (void)finish {
     NSString* msg = NSLocalizedString(@"pairing.done", nil);
+    __block BOOL ledSet = NO;
+    __block BOOL activityStopped = NO;
     __weak typeof(self) weakSelf = self;
-    [[self manager] setLED:SENSenseLEDStateSuccess success:nil failure:nil];
-    [self stopActivityWithMessage:msg success:YES completion:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf next];
+    
+    // need to do this to stop the activity and set the LED simultaneously or
+    // else the LED does not properly sync up with the success mark
+    void(^done)(void) = ^{
+        if (activityStopped && ledSet) {
+            [weakSelf next];
         }
+    };
+    
+    [self stopActivityWithMessage:msg success:YES completion:^{
+        activityStopped = YES;
+        done();
+    }];
+    
+    [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
+        ledSet = YES;
+        done();
     }];
 }
 

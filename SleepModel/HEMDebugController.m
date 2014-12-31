@@ -8,11 +8,11 @@
 #import <MessageUI/MessageUI.h>
 
 #import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENServiceDevice.h>
 
 #import "HEMDebugController.h"
 #import "HEMAlertController.h"
 #import "HEMSupportUtil.h"
-#import "HEMDeviceCenter.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMOnboardingCache.h"
 
@@ -34,7 +34,6 @@
     self = [super init];
     if (self) {
         [self setPresentingController:[controller presentedViewController] ?: controller];
-        [[HEMDeviceCenter sharedCenter] loadDeviceInfo:nil];
     }
     return self;
 }
@@ -144,9 +143,9 @@
         }
         
         if ([[HEMOnboardingCache sharedCache] senseManager] != nil) {
-            [[[HEMOnboardingCache sharedCache] senseManager] setLED:ledState success:nil failure:nil];
+            [[[HEMOnboardingCache sharedCache] senseManager] setLED:ledState completion:nil];
         } else {
-            [[HEMDeviceCenter sharedCenter] setLEDState:ledState completion:nil];
+            [[SENServiceDevice sharedService] setLEDState:ledState completion:nil];
         }
         
     }];

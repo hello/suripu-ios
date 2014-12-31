@@ -9,6 +9,7 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAPITimeZone.h>
 #import <SenseKit/SENSenseMessage.pb.h>
+#import <SenseKit/SENServiceDevice.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -19,7 +20,6 @@
 #import "HEMOnboardingCache.h"
 #import "HEMWifiUtils.h"
 #import "HEMRoundedTextField.h"
-#import "HEMDeviceCenter.h"
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMActivityCoverView.h"
@@ -29,7 +29,7 @@ typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     HEMWiFiSetupStepConfigureWiFi = 1,
     HEMWiFiSetupStepLinkAccount = 2,
     HEMWiFiSetupStepSetTimezone = 3,
-    HEMWiFiSetupStepDone = 4
+    HEMWiFiSetupStepForceDataUpload = 4
 };
 
 static CGFloat const kHEMWifiSecurityPickerDefaultHeight = 216.0f;
@@ -130,7 +130,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 - (BOOL)shouldLinkAccount {
     // When we reuse this controller in settings, pairedSenseAvailable will
     // be true and in that case, we should not need to linkAccount again.
-    return ![[HEMDeviceCenter sharedCenter] pairedSenseAvailable];
+    return ![[SENServiceDevice sharedService] pairedSenseAvailable];
 }
 
 - (void)setTimeZone {
@@ -145,7 +145,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (SENSenseManager*)manager {
-    SENSenseManager* manager = [[HEMDeviceCenter sharedCenter] senseManager];
+    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
     return manager ? manager : [[HEMOnboardingCache sharedCache] senseManager];
 }
 
@@ -306,15 +306,21 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 - (void)showActivityWithText:(NSString*)text completion:(void(^)(void))completion {
     [self enableControls:NO];
     
-    if ([self activityView] == nil) {
-        [self setActivityView:[[HEMActivityCoverView alloc] init]];
-    }
+    __weak typeof(self) weakSelf = self;
     
-    UIView* viewToAttach = [[self navigationController] view];
-    [[self activityView] showInView:viewToAttach
-                           withText:text
-                           activity:YES
-                         completion:completion];
+    [[self manager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        if ([strongSelf activityView] == nil) {
+            [strongSelf setActivityView:[[HEMActivityCoverView alloc] init]];
+        }
+        
+        UIView* viewToAttach = [[strongSelf navigationController] view];
+        [[strongSelf activityView] showInView:viewToAttach
+                                     withText:text
+                                     activity:YES
+                                   completion:completion];
+    }];
 }
 
 - (void)stopActivityWithMessage:(NSString*)message
@@ -323,7 +329,9 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                      completion:(void(^)(void))completion {
     [[self activityView] dismissWithResultText:message showSuccessMark:success remove:YES completion:^{
         [self enableControls:enable];
-        if (completion) completion ();
+        [[self manager] setLED:SENSenseLEDStateOff completion:^(id response, NSError *error) {
+            if (completion) completion ();
+        }];
     }];
 }
 
@@ -417,19 +425,33 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     }];
 }
 
+- (void)forceSensorDataUpload {
+    __weak typeof(self) weakSelf = self;
+    [[self manager] forceDataUpload:^(id response, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error != nil) {
+            DDLogVerbose(@"failed to upload data %@", error);
+        }
+        [strongSelf setStepFinished:HEMWiFiSetupStepForceDataUpload];
+        [strongSelf executeNextStep];
+    }];
+}
+
 - (void)finish {
     // need to start querying for sensor data so that 1, user will see
     // it as soon as onboarding is done and 2, later step will check
     // sensor data
     [[HEMOnboardingCache sharedCache] startPollingSensorData];
     
-    [[self manager] setLED:SENSenseLEDStateSuccess success:nil failure:nil];
-    
-    NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
     __weak typeof(self) weakSelf = self;
-    [self stopActivityWithMessage:msg renableControls:NO success:YES completion:^{
+    
+    [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
+        
+        NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
+        
+        [strongSelf stopActivityWithMessage:msg renableControls:NO success:YES completion:^{
+            
             if ([strongSelf delegate] != nil) {
                 [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
             } else {
@@ -437,7 +459,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard senseToPillSegueIdentifier]
                                                 sender:nil];
             }
-        }
+            
+        }];
     }];
 }
 
@@ -465,7 +488,11 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             [self setupTimezone];
             break;
         }
-        case HEMWiFiSetupStepSetTimezone:
+        case HEMWiFiSetupStepSetTimezone: {
+            [self forceSensorDataUpload];
+            break;
+        }
+        case HEMWiFiSetupStepForceDataUpload:
         default: {
             [self finish];
             break;

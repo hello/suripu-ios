@@ -67,6 +67,13 @@
     return attrDesc;
 }
 
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    CGFloat shadowOpacity = [[self scrollableView] scrollRequired]?1.0f:0.0f;
+    [[[self buttonContainer] layer] setShadowOpacity:shadowOpacity];
+}
+
 - (IBAction)next:(id)sender {
     NSString* nextSegueId = [HEMOnboardingStoryboard beforeSleeptoRoomCheckSegueIdentifier];
     [self performSegueWithIdentifier:nextSegueId sender:self];

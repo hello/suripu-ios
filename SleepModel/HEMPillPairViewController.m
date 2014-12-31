@@ -8,6 +8,7 @@
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENSense.h>
 #import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENServiceDevice.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -19,7 +20,6 @@
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMActivityCoverView.h"
-#import "HEMDeviceCenter.h"
 #import "HEMSupportUtil.h"
 #import "HEMScrollableView.h"
 #import "HelloStyleKit.h"
@@ -132,7 +132,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 }
 
 - (SENSenseManager*)manager {
-    SENSenseManager* manager = [[HEMDeviceCenter sharedCenter] senseManager];
+    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
     return manager ? manager : [[HEMOnboardingCache sharedCache] senseManager];
 }
 
@@ -162,7 +162,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
         DDLogVerbose(@"sense not found, loading account info to scan existing paired sense");
         [self updateActivityText:NSLocalizedString(@"pairing.activity.loading-paired-sense", nil)];
         
-        [[HEMDeviceCenter sharedCenter] loadDeviceInfo:^(NSError *error) {
+        [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
             __block typeof(weakSelf) strongSelf = weakSelf;
             if (!strongSelf) return;
             
@@ -178,7 +178,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
             DDLogVerbose(@"looking for sense to trigger pill pairing");
             [strongSelf updateActivityText:NSLocalizedString(@"pairing.activity.scanning-sense", nil)];
             
-            [[HEMDeviceCenter sharedCenter] scanForPairedSense:^(NSError *error) {
+            [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
                 if (error != nil) {
                     
                     NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
@@ -188,7 +188,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
                     return;
                 }
                 
-                completion ([[HEMDeviceCenter sharedCenter] senseManager]);
+                completion ([[SENServiceDevice sharedService] senseManager]);
             }];
         }];
     }
@@ -210,21 +210,17 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     
     [self updateActivityText:NSLocalizedString(@"pairing.activity.looking-for-pill", nil)];
     
-    NSString* token = [SENAuthorizationService accessToken];
-    
     __weak typeof(self) weakSelf = self;
-    DDLogVerbose(@"attempting to pair pill through %@", [[manager sense] name]);
-    [manager pairWithPill:token success:^(id response) {
+    [manager setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [manager setLED:SENSenseLEDStateSuccess success:nil failure:nil];
+        DDLogVerbose(@"attempting to pair pill through %@", [[[strongSelf manager] sense] name]);
+        [[strongSelf manager] pairWithPill:[SENAuthorizationService accessToken] success:^(id response) {
             [strongSelf flashPairedState];
-        }
-    } failure:^(NSError *error) {
-        __block typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf showError:error customMessage:nil];
-        }
+        } failure:^(NSError *error) {
+            [[strongSelf manager] setLED:SENSenseLEDStateOff completion:^(id response, NSError *error) {
+                [strongSelf showError:error customMessage:nil];
+            }];
+        }];
     }];
 }
 
@@ -236,8 +232,25 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     NSString* paired = NSLocalizedString(@"pairing.done", nil);
     [[self activityView] showInView:[[self navigationController] view] withText:paired activity:NO completion:^{
         [[self cancelItem] setEnabled:YES];
+        
+        __block BOOL ledSet = NO;
+        __block BOOL activityDimissed = NO;
+        __weak typeof(self) weakSelf = self;
+        
+        void(^finish)(void) = ^{
+            if (ledSet && activityDimissed) {
+                [weakSelf proceed];
+            }
+        };
+        
         [[self activityView] dismissWithResultText:nil showSuccessMark:YES remove:YES completion:^{
-            [self proceed];
+            activityDimissed = YES;
+            finish();
+        }];
+        
+        [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
+            ledSet = YES;
+            finish();
         }];
     }];
 }

@@ -6,12 +6,12 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENDevice.h>
+#import <SenseKit/SENServiceDevice.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 
 #import "HEMDevicesViewController.h"
-#import "HEMDeviceCenter.h"
 #import "HEMPillViewController.h"
 #import "HEMSenseViewController.h"
 #import "HEMNoPillViewController.h"
@@ -42,8 +42,8 @@
     // coming to, and only if devices are not configured so that we can check
     // if it has happened.
     if ([self loaded]) {
-        if ([[HEMDeviceCenter sharedCenter] pillInfo] == nil
-            || [[HEMDeviceCenter sharedCenter] senseInfo] == nil) {
+        if ([[SENServiceDevice sharedService] pillInfo] == nil
+            || [[SENServiceDevice sharedService] senseInfo] == nil) {
             [self loadDevices];
         } else {
             [[self devicesTableView] reloadData];
@@ -59,10 +59,10 @@
     // always load device information.  previous bug was that it will never reload
     // to show updated "Last Seen" unless you killed the app because data is always
     // loaded after once
-    [[HEMDeviceCenter sharedCenter] loadDeviceInfo:^(NSError *error) {
+    [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            if (error != nil && [error code] != HEMDeviceCenterErrorInProgress) {
+            if (error != nil && [error code] != SENServiceDeviceErrorInProgress) {
                 [strongSelf setLoadError:error];
             }
             // if loading in progress, will re-call itself.  otherwise, just update
@@ -74,7 +74,7 @@
 }
 
 - (void)updateTableWhenDoneLoadingInfo {
-    if ([[HEMDeviceCenter sharedCenter] isLoadingInfo]) {
+    if ([[SENServiceDevice sharedService] isLoadingInfo]) {
         [self performSelector:@selector(updateTableWhenDoneLoadingInfo)
                    withObject:nil
                    afterDelay:0.1f];
@@ -120,12 +120,12 @@
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    HEMDeviceCenter* deviceCenter = [HEMDeviceCenter sharedCenter];
+    SENServiceDevice* service = [SENServiceDevice sharedService];
     
     SENDevice* deviceInfo
         = [indexPath row] == 0
-        ? [deviceCenter senseInfo]
-        : [deviceCenter pillInfo];
+        ? [service senseInfo]
+        : [service pillInfo];
     
     CGFloat alpha = 1.0f;
     NSString* status = nil;
@@ -133,7 +133,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCellSelectionStyle selectionStyle = UITableViewCellSelectionStyleNone;
     UITableViewCellAccessoryType accessoryType = UITableViewCellAccessoryDisclosureIndicator;
     
-    if ([[HEMDeviceCenter sharedCenter] isLoadingInfo] || ![self loaded]) {
+    if ([[SENServiceDevice sharedService] isLoadingInfo] || ![self loaded]) {
         status = NSLocalizedString(@"empty-data", nil);
         activity =
             [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -177,7 +177,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[HEMDeviceCenter sharedCenter] isLoadingInfo] || [self loadError] != nil) {
+    if ([[SENServiceDevice sharedService] isLoadingInfo] || [self loadError] != nil) {
         return;
     }
     
@@ -186,7 +186,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* segueId = nil;
     if ([indexPath row] == 0) {
         segueId = [HEMMainStoryboard senseSegueIdentifier];
-    } else if ([[HEMDeviceCenter sharedCenter] pillInfo] == nil){
+    } else if ([[SENServiceDevice sharedService] pillInfo] == nil){
         segueId = [HEMMainStoryboard noSleepPillSegueIdentifier];
     } else {
         segueId = [HEMMainStoryboard pillSegueIdentifier];

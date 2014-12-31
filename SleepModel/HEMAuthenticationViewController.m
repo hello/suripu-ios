@@ -1,6 +1,7 @@
 
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAPIClient.h>
+#import <SenseKit/SENServiceDevice.h>
 #import <CocoaLumberjack/DDLog.h>
 
 #import "UIFont+HEMStyle.h"
@@ -9,7 +10,6 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
-#import "HEMDeviceCenter.h"
 #import "HEMBaseController+Protected.h"
 
 @interface HEMAuthenticationViewController ()
@@ -108,10 +108,8 @@
 }
 
 - (void)checkDevices:(void(^)(BOOL hasSense, NSError* error))completion {
-    [[HEMDeviceCenter sharedCenter] loadDeviceInfo:^(NSError *error) {
-        BOOL hasSense
-            = error == nil
-            && [[HEMDeviceCenter sharedCenter] senseInfo] != nil;
+    [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
+        BOOL hasSense = error == nil && [[SENServiceDevice sharedService] senseInfo] != nil;
         completion (hasSense, error);
     }];
 }

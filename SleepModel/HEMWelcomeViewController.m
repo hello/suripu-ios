@@ -246,7 +246,7 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 }
 
 - (IBAction)getSense:(id)sender {
-    [HEMSupportUtil openURL:kHEMSenseOrderURL from:self];
+    [HEMSupportUtil openOrderFormFrom:self];
 }
 
 - (IBAction)cancelGettingStarted:(id)sender {

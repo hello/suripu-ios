@@ -6,13 +6,13 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENDevice.h>
+#import <SenseKit/SENServiceDevice.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMDeviceCenter.h"
 #import "HelloStyleKit.h"
 
 @interface HEMPillViewController() <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self pillInfoTableView] setTableFooterView:[[UIView alloc] init]];
-    [[self unpairView] setHidden:[[HEMDeviceCenter sharedCenter] pillInfo] == nil];
+    [[self unpairView] setHidden:[[SENServiceDevice sharedService] pillInfo] == nil];
     [[self activityLabel] setTextColor:[HelloStyleKit backViewTextColor]];
 }
 
@@ -47,7 +47,7 @@
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
 
-    SENDevice* info = [[HEMDeviceCenter sharedCenter] pillInfo];
+    SENDevice* info = [[SENServiceDevice sharedService] pillInfo];
     NSString* title = nil;
     NSString* detail = NSLocalizedString(@"empty-data", nil);
     
@@ -98,7 +98,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[self unpairView] setHidden:YES];
     [[self unpairView] setAlpha:0.0f];
     [[self activityView] setAlpha:0.0f];
-    [[self activityView] setHidden:[[HEMDeviceCenter sharedCenter] pillInfo] == nil];
+    [[self activityView] setHidden:[[SENServiceDevice sharedService] pillInfo] == nil];
     
     if (![[self activityView] isHidden]) {
         [UIView animateWithDuration:0.25f
@@ -110,7 +110,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)hideActivity {
-    [[self unpairView] setHidden:[[HEMDeviceCenter sharedCenter] pillInfo] == nil];
+    [[self unpairView] setHidden:[[SENServiceDevice sharedService] pillInfo] == nil];
     
     if (![[self unpairView] isHidden]) {
         [UIView animateWithDuration:0.25f
@@ -139,16 +139,16 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)showUnpairMessageForError:(NSError*)error {
     NSString* message = nil;
     switch ([error code]) {
-        case HEMDeviceCenterErrorSenseUnavailable:
+        case SENServiceDeviceErrorSenseUnavailable:
             message = NSLocalizedString(@"settings.pill.unpair-no-sense-found", nil);
             break;
-        case HEMDeviceCenterErrorSenseNotPaired:
+        case SENServiceDeviceErrorSenseNotPaired:
             message = NSLocalizedString(@"settings.pill.dialog.no-paired-sense-message", nil);
             break;
-        case HEMDeviceCenterErrorUnpairPillFromSense:
+        case SENServiceDeviceErrorUnpairPillFromSense:
             message = NSLocalizedString(@"settings.pill.dialog.unable-to-unpair-from-sense", nil);
             break;
-        case HEMDeviceCenterErrorUnlinkPillFromAccount:
+        case SENServiceDeviceErrorUnlinkPillFromAccount:
             message = NSLocalizedString(@"settings.pill.dialog.unable-to-unlink-from-account", nil);
             break;
         default:
@@ -177,7 +177,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self showActivity];
     [[self activityLabel] setText:NSLocalizedString(@"settings.pill.unpairing-message", nil)];
     __weak typeof(self) weakSelf = self;
-    [[HEMDeviceCenter sharedCenter] unpairSleepPill:^(NSError *error) {
+    [[SENServiceDevice sharedService] unpairSleepPill:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             [strongSelf hideActivity];

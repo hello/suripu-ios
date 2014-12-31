@@ -17,8 +17,9 @@
 #import "HEMWifiPickerViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSupportUtil.h"
+#import "HEMPillPairViewController.h"
 
-@interface HEMSystemAlertController()<HEMWiFiConfigurationDelegate>
+@interface HEMSystemAlertController()<HEMWiFiConfigurationDelegate, HEMPillPairDelegate>
 
 @property (nonatomic, strong) HEMActionView* alertView;
 @property (nonatomic, weak)   UIViewController* viewController;
@@ -138,13 +139,14 @@
 }
 
 - (void)launchHandlerForDeviceState {
+    // supported warnings are handled below
     switch ([self warningState]) {
         case SENServiceDeviceStateNotConnectedToWiFi:
             [self configureWiFi];
             break;
-        case SENServiceDeviceStateSenseNotPaired:
         case SENServiceDeviceStatePillNotPaired:
-            [HEMSupportUtil openOrderFormFrom:[self viewController]];
+            [self showPillPairController];
+            break;
         default:
             break;
     }
@@ -173,6 +175,26 @@
 
 - (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Pill Problems
+
+- (void)showPillPairController {
+    HEMPillPairViewController* pairVC =
+    (HEMPillPairViewController*) [HEMOnboardingStoryboard instantiatePillPairViewController];
+    [pairVC setDelegate:self];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:pairVC];
+    [[self viewController] presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark - HEMPillPairDelegate
+
+- (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
+    [[self viewController] dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didCancelPairing:(HEMPillPairViewController *)controller {
+    [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

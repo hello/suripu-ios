@@ -7,13 +7,13 @@
 //
 #import <SenseKit/SENDevice.h>
 #import <SenseKit/SENSenseManager.h>
+#import <SenseKit/SENServiceDevice.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMDeviceCenter.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMAlertController.h"
 #import "HelloStyleKit.h"
@@ -63,7 +63,7 @@ static NSInteger const kHEMSenseRowWiFi = 3;
     
     __weak typeof(self) weakSelf = self;
     DDLogVerbose(@"scanning for sense");
-    [[HEMDeviceCenter sharedCenter] scanForPairedSense:^(NSError *error) {
+    [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         DDLogVerbose(@"finished scanning, error ? %@", error);
         if (strongSelf) {
@@ -90,7 +90,7 @@ static NSInteger const kHEMSenseRowWiFi = 3;
 - (void)loadRSSIThen:(void(^)(void))completion {
     __weak typeof(self) weakSelf = self;
     DDLogVerbose(@"reading rssi value");
-    [[HEMDeviceCenter sharedCenter] currentSenseRSSI:^(NSNumber *rssi, NSError *error) {
+    [[SENServiceDevice sharedService] currentSenseRSSI:^(NSNumber *rssi, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!strongSelf) return;
         
@@ -114,7 +114,7 @@ static NSInteger const kHEMSenseRowWiFi = 3;
 - (void)loadWifiThen:(void(^)(void))completion {
     __weak typeof(self) weakSelf = self;
     DDLogVerbose(@"getting Sense wifi ssid");
-    [[HEMDeviceCenter sharedCenter] getConfiguredWiFi:^(NSString *ssid,
+    [[SENServiceDevice sharedService] getConfiguredWiFi:^(NSString *ssid,
                                                         SENWiFiConnectionState state,
                                                         NSError *error) {
         
@@ -143,7 +143,7 @@ static NSInteger const kHEMSenseRowWiFi = 3;
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     NSInteger sections = 1; // the info
-    if ([[[HEMDeviceCenter sharedCenter] senseInfo] state] == SENDeviceStateFirmwareUpdate) {
+    if ([[[SENServiceDevice sharedService] senseInfo] state] == SENDeviceStateFirmwareUpdate) {
         sections++; // need to show firmware update cell / section
     }
     return sections;
@@ -166,7 +166,7 @@ static NSInteger const kHEMSenseRowWiFi = 3;
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     if ([indexPath section] == 0) {
-        SENDevice* info = [[HEMDeviceCenter sharedCenter] senseInfo];
+        SENDevice* info = [[SENServiceDevice sharedService] senseInfo];
         NSString* title = nil;
         NSMutableAttributedString* detail = nil;
         UITableViewCellSelectionStyle selection = UITableViewCellSelectionStyleNone;
@@ -228,7 +228,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     switch ([indexPath row]) {
         case kHEMSenseRowWiFi:
-            if ([[HEMDeviceCenter sharedCenter] pairedSenseAvailable]) {
+            if ([[SENServiceDevice sharedService] pairedSenseAvailable]) {
                 [self configureWiFi];
             }
             break;
@@ -289,14 +289,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* message = nil;
     
     switch ([error code]) {
-        case HEMDeviceCenterErrorUnlinkPillFromAccount:
+        case SENServiceDeviceErrorUnlinkPillFromAccount:
             message = NSLocalizedString(@"settings.factory-restore.error.unlink-pill", nil);
             break;
-        case HEMDeviceCenterErrorUnlinkSenseFromAccount:
+        case SENServiceDeviceErrorUnlinkSenseFromAccount:
             message = NSLocalizedString(@"settings.factory-restore.error.unlink-sense", nil);
             break;
-        case HEMDeviceCenterErrorInProgress:
-        case HEMDeviceCenterErrorSenseUnavailable: {
+        case SENServiceDeviceErrorInProgress:
+        case SENServiceDeviceErrorSenseUnavailable: {
             title = NSLocalizedString(@"settings.sense.not-found-title", nil);
             message = NSLocalizedString(@"settings.sense.no-sense-message", nil);
             break;
@@ -319,7 +319,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[self manageSenseView] setHidden:YES];
     [[self manageSenseView] setAlpha:0.0f];
     [[self actionStatusView] setAlpha:0.0f];
-    [[self actionStatusView] setHidden:[[HEMDeviceCenter sharedCenter] senseInfo] == nil];
+    [[self actionStatusView] setHidden:[[SENServiceDevice sharedService] senseInfo] == nil];
     
     if (![[self actionStatusView] isHidden]) {
         [UIView animateWithDuration:0.25f
@@ -352,15 +352,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self showActivity];
     
     __weak typeof(self) weakSelf = self;
-    HEMDeviceCenter* center = [HEMDeviceCenter sharedCenter];
-    [center scanForPairedSense:^(NSError *error) {
+    SENServiceDevice* service = [SENServiceDevice sharedService];
+    [service scanForPairedSense:^(NSError *error) {
         if (error != nil) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             
             [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
 
             if (strongSelf) {
-                if ([error code] == HEMDeviceCenterErrorSenseUnavailable) {
+                if ([error code] == SENServiceDeviceErrorSenseUnavailable) {
                     NSString* message = NSLocalizedString(@"settings.sense.no-sense-message", nil);
                     [strongSelf showNoSenseWithMessage:message];
                 } else {
@@ -371,7 +371,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             }
             
         } else {
-            [[HEMDeviceCenter sharedCenter] putSenseIntoPairingMode:^(NSError *error) {
+            [[SENServiceDevice sharedService] putSenseIntoPairingMode:^(NSError *error) {
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 if (strongSelf) {
                     if (error != nil) {
@@ -400,7 +400,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self showActivity];
     
     __weak typeof(self) weakSelf = self;
-    [[HEMDeviceCenter sharedCenter] restoreFactorySettings:^(NSError *error) {
+    [[SENServiceDevice sharedService] restoreFactorySettings:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf && error != nil) {
             [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
@@ -443,7 +443,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Cleanup
 
 - (void)dealloc {
-    [[HEMDeviceCenter sharedCenter] stopScanning];
+    [[SENServiceDevice sharedService] stopScanning];
 }
 
 @end

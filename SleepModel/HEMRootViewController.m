@@ -8,6 +8,7 @@
 #import <MessageUI/MessageUI.h>
 
 #import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENServiceDevice.h>
 
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
@@ -20,10 +21,14 @@
 #import "HEMSnazzBarController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDebugController.h"
+#import "HEMActionView.h"
+#import "HEMOnboardingUtils.h"
+#import "HEMSystemAlertController.h"
 
 @interface HEMRootViewController ()
 
 @property (strong, nonatomic) HEMDebugController* debugController;
+@property (strong, nonatomic) HEMSystemAlertController* alertController;
 
 @end
 
@@ -50,6 +55,9 @@ static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 
     self = [super initWithViewControllers:[HEMRootViewController instantiateInitialControllers]
                                hintOnLoad:YES];
+    if (self) {
+        [self setAlertController:[[HEMSystemAlertController alloc] initWithViewController:self]];
+    }
     return self;
 }
 
@@ -112,6 +120,13 @@ static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
         }
         [[self debugController] showSupportOptions];
     }
+}
+
+#pragma mark - Cleanup
+
+- (void)dealloc {
+    // really shouldn't have to since this is root
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

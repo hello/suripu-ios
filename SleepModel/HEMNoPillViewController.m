@@ -9,6 +9,7 @@
 #import "HEMNoPillViewController.h"
 #import "HEMPillPairViewController.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMSupportUtil.h"
 
 @interface HEMNoPillViewController () <HEMPillPairDelegate>
 
@@ -67,10 +68,7 @@
 }
 
 - (IBAction)needPill:(id)sender {
-    // TODO (jimmy): if there's a design for an in-app browser, we can implement
-    // it or if there's more time, we will think of something nice
-    NSURL* orderURL = [NSURL URLWithString:kHEMSenseOrderURL];
-    [[UIApplication sharedApplication] openURL:orderURL];
+    [HEMSupportUtil openOrderFormFrom:self];
 }
 
 #pragma mark - HEMPillPairDelegate

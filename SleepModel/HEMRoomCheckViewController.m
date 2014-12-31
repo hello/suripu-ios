@@ -148,7 +148,7 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
     NSString* message = NSLocalizedString(@"sensor.sound.placeholder-message", nil);
     nextY += CGRectGetHeight([[self addSensorViewWithIcon:[HelloStyleKit sensorSound]
                                           highlightedIcon:[HelloStyleKit sensorSoundBlue]
-                                                     name:NSLocalizedString(@"sensor.light", nil)
+                                                     name:NSLocalizedString(@"sensor.sound", nil)
                                                   message:[self attributedMessage:message]
                                              introMessage:NSLocalizedString(@"onboarding.room-check.intro.sound", nil)
                                                     value:30

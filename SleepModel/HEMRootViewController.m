@@ -57,8 +57,28 @@ static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
                                hintOnLoad:YES];
     if (self) {
         [self setAlertController:[[HEMSystemAlertController alloc] initWithViewController:self]];
+        [self listenForActiveState];
     }
     return self;
+}
+
+- (void)listenForActiveState {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(didBecomeActive)
+                   name:UIApplicationDidBecomeActiveNotification
+                 object:nil];
+}
+
+- (void)didBecomeActive {
+    [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
+}
+
+- (BOOL)shouldMonitorDevices {
+    HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
+    return [SENAuthorizationService isAuthorized]
+            && (checkpoint == HEMOnboardingCheckpointStart
+                || checkpoint == HEMOnboardingCheckpointPillDone);
 }
 
 #pragma mark - Drawer

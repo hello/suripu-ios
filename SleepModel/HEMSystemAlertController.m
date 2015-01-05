@@ -33,30 +33,28 @@
     self = [super init];
     if (self) {
         [self setViewController:viewController];
-        [self listenForSystemAlerts];
     }
     return self;
 }
 
-- (void)listenForSystemAlerts {
-    [[SENServiceDevice sharedService] setMonitorDeviceStates:YES];
+- (void)enableDeviceMonitoring:(BOOL)enable {
+    // if already in current state, ignore
+    if ([[SENServiceDevice sharedService] monitorDeviceStates] == enable) return;
+    
+    [[SENServiceDevice sharedService] setMonitorDeviceStates:enable];
+    
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(showDeviceWarning)
-                   name:SENServiceDeviceNotificationWarning
-                 object:nil];
-}
-
-- (BOOL)shouldShowAlerts {
-    HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
-    return [SENAuthorizationService isAuthorized]
-            && (checkpoint == HEMOnboardingCheckpointStart
-                || checkpoint == HEMOnboardingCheckpointPillDone);
+    if (enable) {
+        [center addObserver:self
+                   selector:@selector(showDeviceWarning)
+                       name:SENServiceDeviceNotificationWarning
+                     object:nil];
+    } else {
+        [center removeObserver:self name:SENServiceDeviceNotificationWarning object:nil];
+    }
 }
 
 - (void)showDeviceWarning {
-    if (![self shouldShowAlerts]) return;
-    
     if ([self alertView] != nil) {
         SENServiceDevice* service = [SENServiceDevice sharedService];
         DDLogVerbose(@"another device warning (%ld) received, but alert already showing somethig",
@@ -173,10 +171,6 @@
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)dealloc {
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
-}
-
 #pragma mark - Pill Problems
 
 - (void)showPillPairController {
@@ -195,6 +189,12 @@
 
 - (void)didCancelPairing:(HEMPillPairViewController *)controller {
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Clean Up
+
+- (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

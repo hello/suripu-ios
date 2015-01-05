@@ -62,8 +62,9 @@
 + (NSDictionary*)attributesForRoomCheckWithConditionColor:(UIColor*)color
 {
     return @{
-        @(EMPH)  : @{ NSForegroundColorAttributeName : color },
-        @(PLAIN) : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont] }
+        @(EMPH)   : @{ NSForegroundColorAttributeName : color },
+        @(STRONG) : @{ NSForegroundColorAttributeName : color },
+        @(PLAIN)  : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont] }
     };
 }
 

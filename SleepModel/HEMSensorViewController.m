@@ -142,16 +142,16 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 - (void)configureSensorValueViews
 {
     UIColor* color = [UIColor colorForSensorWithCondition:self.sensor.condition];
+    NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckWithConditionColor:color];
+    NSDictionary* idealAttributes = [HEMMarkdown attributesForRoomCheckWithConditionColor:[HelloStyleKit idealSensorColor]];
+
     self.valueLabel.textColor = color;
     self.unitLabel.textColor = color;
     self.title = self.sensor.localizedName;
     [self updateValueLabelWithValue:self.sensor.value];
-
     self.unitLabel.text = [self.sensor localizedUnit];
-    NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckWithConditionColor:color];
-
     self.statusMessageLabel.attributedText = markdown_to_attr_string(self.sensor.message, 0, statusAttributes);
-    self.idealLabel.attributedText = nil;
+    self.idealLabel.attributedText = markdown_to_attr_string(self.sensor.idealConditionsMessage, 0, idealAttributes);
     self.graphView.colorLine = color;
     self.graphView.gradientBottom = [self gradientForColor:color];
 }

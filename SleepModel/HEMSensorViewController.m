@@ -234,8 +234,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     if ([self isShowingHourlyData])
         return;
     self.showHourlyData = YES;
-    [self.dailyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
-    [self.hourlyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
     [self toggleDataSeriesTo:self.hourlyDataSeries animated:YES];
 }
 
@@ -244,8 +242,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     if (![self isShowingHourlyData])
         return;
     self.showHourlyData = NO;
-    [self.dailyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
-    [self.hourlyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
     [self toggleDataSeriesTo:self.dailyDataSeries animated:YES];
 }
 
@@ -274,10 +270,14 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 }
 
 - (void)updateGraphWithHourlyData:(NSArray*)dataSeries {
+    [self.dailyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
+    [self.hourlyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
     [self updateGraphWithData:dataSeries formatter:self.hourlyFormatter];
 }
 
 - (void)updateGraphWithDailyData:(NSArray*)dataSeries {
+    [self.hourlyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
+    [self.dailyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
     [self updateGraphWithData:dataSeries formatter:self.dailyFormatter];
 }
 

@@ -28,14 +28,12 @@
     if (self.dateFormatter) {
         NSArray* indexes = [[self.labeledIndexes allObjects] sortedArrayUsingSelector:@selector(compare:)];
         for (NSNumber* index in indexes) {
-            NSDictionary* dataPoint = [self dataPointAtIndex:[index integerValue]];
-            NSDate* lastUpdated = [NSDate dateWithTimeIntervalSince1970:([dataPoint[@"datetime"] doubleValue])/1000];
-            CGFloat value = [dataPoint[@"value"] floatValue];
+            SENSensorDataPoint* dataPoint = [self dataPointAtIndex:[index integerValue]];
+            NSDate* lastUpdated = dataPoint.date;
             NSString* formattedValue = @"0";
-            if (value != 0)
-                formattedValue = [SENSensor formatValue:dataPoint[@"value"] withUnit:self.unit];
-            [labels addObject:@{
-                                [self.dateFormatter stringFromDate:lastUpdated]:formattedValue}];
+            if ([dataPoint.value floatValue] != 0)
+                formattedValue = [SENSensor formatValue:dataPoint.value withUnit:self.unit];
+            [labels addObject:@{ [self.dateFormatter stringFromDate:lastUpdated]:formattedValue }];
         }
     }
     return labels;
@@ -43,7 +41,7 @@
 
 #pragma mark - BEMSimpleLineGraphDataSource
 
-- (NSDictionary*)dataPointAtIndex:(NSInteger)index {
+- (SENSensorDataPoint*)dataPointAtIndex:(NSInteger)index {
     return self.dataSeries[index];
 }
 
@@ -57,11 +55,11 @@
 }
 
 - (CGFloat)lineGraph:(BEMSimpleLineGraphView *)graph valueForPointAtIndex:(NSInteger)index {
-    NSDictionary* dataPoint = [self dataPointAtIndex:index];
-    CGFloat rawValue = [dataPoint[@"value"] floatValue];
+    SENSensorDataPoint* dataPoint = [self dataPointAtIndex:index];
+    CGFloat rawValue = [dataPoint.value floatValue];
     if (rawValue == 0)
         return rawValue;
-    return [[SENSensor value:dataPoint[@"value"] inPreferredUnit:self.unit] floatValue];
+    return [[SENSensor value:dataPoint.value inPreferredUnit:self.unit] floatValue];
 }
 
 @end

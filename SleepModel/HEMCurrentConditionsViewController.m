@@ -117,7 +117,7 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
     };
     for (int i = 0; i < sensors.count; i++) {
         SENSensor* sensor = sensors[i];
-        [SENAPIRoom hourlyHistoricalDataForSensorWithName:sensor.name completion:completion(sensor, i)];
+        [SENAPIRoom hourlyHistoricalDataForSensor:sensor completion:completion(sensor, i)];
     }
 }
 

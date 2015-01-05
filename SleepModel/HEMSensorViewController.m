@@ -195,7 +195,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     if (![SENAuthorizationService isAuthorized])
         return;
     self.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
-    [SENAPIRoom hourlyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
+    [SENAPIRoom hourlyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         if (!data) {
             self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
             self.statusLabel.alpha = 1;
@@ -205,7 +205,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
         if ([self isShowingHourlyData])
             [self updateGraphWithHourlyData:data];
     }];
-    [SENAPIRoom dailyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
+    [SENAPIRoom dailyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         if (!data) {
             self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
             self.statusLabel.alpha = 1;
@@ -298,7 +298,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 }
 
 - (void)setGraphValueBoundsWithData:(NSArray*)dataSeries {
-    NSArray* values = [[dataSeries valueForKey:@"value"] sortedArrayUsingSelector:@selector(compare:)];
+    NSArray* values = [[dataSeries valueForKey:NSStringFromSelector(@selector(value))]
+                       sortedArrayUsingSelector:@selector(compare:)];
     NSNumber* maxValue = [values lastObject];
     NSNumber* minValue = [values firstObject];
     if ([maxValue floatValue] == 0)

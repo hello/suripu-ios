@@ -8,15 +8,34 @@ NSString* const SENSensorUpdatedNotification = @"SENSensorUpdatedNotification";
 NSString* const SENSensorsUpdatedNotification = @"SENSensorsUpdatedNotification";
 NSString* const SENSensorUpdateFailedNotification = @"SENSensorUpdateFailedNotification";
 
-NSString* const SENSensorArchiveKey = @"Sensors";
-NSString* const SENSensorNameKey = @"name";
-NSString* const SENSensorValueKey = @"value";
-NSString* const SENSensorMessageKey = @"message";
-NSString* const SENSensorConditionKey = @"condition";
-NSString* const SENSensorLastUpdatedKey = @"last_updated_utc";
-NSString* const SENSensorUnitKey = @"unit";
+@implementation SENSensorDataPoint
+
+static NSString* const SENSensorDataPointValueKey = @"value";
+static NSString* const SENSensorDataPointDateKey = @"datetime";
+static NSString* const SENSensorDataPointDateOffsetKey = @"offset_millis";
+
+- (instancetype)initWithDictionary:(NSDictionary *)dict
+{
+    if (self = [super init]) {
+        _value = dict[SENSensorDataPointValueKey];
+        _dateOffset = dict[SENSensorDataPointDateOffsetKey];
+        _date = [NSDate dateWithTimeIntervalSince1970:([dict[SENSensorDataPointDateKey] doubleValue])/1000];
+    }
+    return self;
+}
+
+@end
 
 @implementation SENSensor
+
+static NSString* const SENSensorArchiveKey = @"Sensors";
+static NSString* const SENSensorNameKey = @"name";
+static NSString* const SENSensorValueKey = @"value";
+static NSString* const SENSensorMessageKey = @"message";
+static NSString* const SENSensorConditionKey = @"condition";
+static NSString* const SENSensorLastUpdatedKey = @"last_updated_utc";
+static NSString* const SENSensorIdealMessageKey = @"ideal_conditions";
+static NSString* const SENSensorUnitKey = @"unit";
 
 static NSString* const SENSensorUnitCentigradeSymbol = @"c";
 static NSString* const SENSensorUnitAQISymbol = @"AQI";
@@ -118,6 +137,7 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
         _name = dict[SENSensorNameKey];
         _value = dict[SENSensorValueKey];
         _message = dict[SENSensorMessageKey];
+        _idealConditionsMessage = dict[SENSensorIdealMessageKey];
         _condition = [SENSensor conditionFromValue:dict[SENSensorConditionKey]];
         _unit = [SENSensor unitFromValue:dict[SENSensorUnitKey]];
         _lastUpdated = [NSDate dateWithTimeIntervalSince1970:[dict[SENSensorLastUpdatedKey] floatValue] / 1000];
@@ -131,6 +151,7 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
         _name = [aDecoder decodeObjectForKey:SENSensorNameKey];
         _value = [aDecoder decodeObjectForKey:SENSensorValueKey];
         _message = [aDecoder decodeObjectForKey:SENSensorMessageKey];
+        _idealConditionsMessage = [aDecoder decodeObjectForKey:SENSensorIdealMessageKey];
         _condition = [[aDecoder decodeObjectForKey:SENSensorConditionKey] integerValue];
         _unit = [[aDecoder decodeObjectForKey:SENSensorUnitKey] integerValue];
         _lastUpdated = [aDecoder decodeObjectForKey:SENSensorLastUpdatedKey];
@@ -146,6 +167,7 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
     [aCoder encodeObject:@(_condition) forKey:SENSensorConditionKey];
     [aCoder encodeObject:@(_unit) forKey:SENSensorUnitKey];
     [aCoder encodeObject:_lastUpdated forKey:SENSensorLastUpdatedKey];
+    [aCoder encodeObject:_idealConditionsMessage forKey:SENSensorIdealMessageKey];
 }
 
 - (NSNumber*)valueInPreferredUnit

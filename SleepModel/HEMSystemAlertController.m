@@ -33,6 +33,7 @@
     self = [super init];
     if (self) {
         [self setViewController:viewController];
+        [self listenForSignOut];
     }
     return self;
 }
@@ -121,18 +122,14 @@
 }
 
 - (void)fixDeviceProblemLater:(id)sender {
-    [[self alertView] dismiss:YES completion:^{
+    [self dismissAlert:^{
         // TODO (jimmy): what is later?
-        [self setAlertView:nil];
-        [self setWarningState:SENServiceDeviceStateUnknown];
     }];
 }
 
 - (void)fixDeviceProblemNow:(id)sender {
-    [[self alertView] dismiss:YES completion:^{
+    [self dismissAlert:^{
         [self launchHandlerForDeviceState];
-        [self setAlertView:nil];
-        [self setWarningState:SENServiceDeviceStateUnknown];
     }];
 }
 
@@ -148,6 +145,14 @@
         default:
             break;
     }
+}
+
+- (void)dismissAlert:(void(^)(void))completion {
+    [[self alertView] dismiss:YES completion:^{
+        [self setAlertView:nil];
+        [self setWarningState:SENServiceDeviceStateUnknown];
+        if (completion) completion ();
+    }];
 }
 
 #pragma mark - WiFi Problems
@@ -189,6 +194,20 @@
 
 - (void)didCancelPairing:(HEMPillPairViewController *)controller {
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Sign Outs
+
+- (void)listenForSignOut {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(userDidSignOut)
+                   name:SENAuthorizationServiceDidDeauthorizeNotification
+                 object:nil];
+}
+
+- (void)userDidSignOut {
+    [self dismissAlert:nil];
 }
 
 #pragma mark - Clean Up

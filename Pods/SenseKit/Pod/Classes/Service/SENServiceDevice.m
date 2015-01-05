@@ -61,22 +61,37 @@ static NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 - (void)serviceBecameActive {
     [super serviceBecameActive];
-    
+    [self checkDevicesIfEnabled];
+}
+
+- (void)checkDevicesIfEnabled {
     if ([SENAuthorizationService isAuthorized] && [self monitorDeviceStates]) {
         __weak typeof(self) weakSelf = self;
         [self loadDeviceInfo:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error == nil) {
-                [strongSelf checkSystemState];
+                [strongSelf checkDevicesState];
             }
         }];
     }
-
 }
 
 #pragma mark - Device State / Warnings
 
-- (void)checkSystemState {
+- (void)setMonitorDeviceStates:(BOOL)monitorDeviceStates {
+    if (_monitorDeviceStates == monitorDeviceStates) return; // do nothing
+    
+    _monitorDeviceStates = monitorDeviceStates;
+    
+    // if states changed from not monitoring to now monitoring, check devices now
+    // as it likely will not automatically check
+    if (monitorDeviceStates) {
+        [self checkDevicesIfEnabled];
+    }
+
+}
+
+- (void)checkDevicesState {
     if ([self isCheckingStates]) return;
     
     [self setCheckingStates:YES];
@@ -172,7 +187,7 @@ static NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
     [center addObserver:self
-               selector:@selector(checkSystemState)
+               selector:@selector(checkDevicesState)
                    name:SENAuthorizationServiceDidAuthorizeNotification
                  object:nil];
 }

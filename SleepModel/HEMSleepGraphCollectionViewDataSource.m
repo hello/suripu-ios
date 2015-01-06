@@ -96,13 +96,16 @@ static NSString* const sensorTypeParticulates = @"particulates";
     if ([self shouldShowLoadingView]) {
         self.beLoading = YES;
         [self showLoadingView];
+    } else {
+        self.beLoading = NO;
+        [self hideLoadingViewAnimated:NO];
     }
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError* error) {
         __strong HEMSleepGraphCollectionViewDataSource* strongSelf = weakSelf;
         if (error) {
             DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
-            [strongSelf hideLoadingView];
+            [strongSelf hideLoadingViewAnimated:YES];
             return;
         }
         [strongSelf refreshWithTimelines:timelines];
@@ -116,7 +119,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     NSDictionary* timeline = [timelines firstObject];
     [self.sleepResult updateWithDictionary:timeline];
     [self.sleepResult save];
-    [self hideLoadingView];
+    [self hideLoadingViewAnimated:YES];
     if ([self.sleepResult.message isEqualToString:message] && [self.sleepResult.score isEqual:score]) {
         NSMutableIndexSet* set = [NSMutableIndexSet indexSetWithIndex:HEMSleepGraphCollectionViewSegmentSection];
         [set addIndex:HEMSleepGraphCollectionViewPresleepSection];
@@ -186,10 +189,11 @@ static NSString* const sensorTypeParticulates = @"particulates";
     }
 }
 
-- (void)hideLoadingView
+- (void)hideLoadingViewAnimated:(BOOL)animated
 {
     self.beLoading = NO;
-    [UIView animateWithDuration:0.25f animations:^{
+    CGFloat duration = animated ? 0.25f : 0;
+    [UIView animateWithDuration:duration animations:^{
         self.loadingView.alpha = 0;
     } completion:^(BOOL finished) {
         [self.loadingView stopAnimating];
@@ -223,14 +227,20 @@ static NSString* const sensorTypeParticulates = @"particulates";
     UICollectionReusableView* view = nil;
     switch (indexPath.section) {
         case HEMSleepGraphCollectionViewPresleepSection: {
-            view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:presleepHeaderReuseIdentifier forIndexPath:indexPath];
-            view.hidden = !([kind isEqualToString:UICollectionElementKindSectionHeader] && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewPresleepSection] > 0);
+            view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                      withReuseIdentifier:presleepHeaderReuseIdentifier
+                                                             forIndexPath:indexPath];
+            view.hidden = !([kind isEqualToString:UICollectionElementKindSectionHeader]
+                            && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewPresleepSection] > 0);
         } break;
 
         case HEMSleepGraphCollectionViewSegmentSection:
         default: {
-            view = [collectionView dequeueReusableSupplementaryViewOfKind:kind withReuseIdentifier:timelineHeaderReuseIdentifier forIndexPath:indexPath];
-            view.hidden = !([kind isEqualToString:UICollectionElementKindSectionHeader] && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] > 0);
+            view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                      withReuseIdentifier:timelineHeaderReuseIdentifier
+                                                             forIndexPath:indexPath];
+            view.hidden = !([kind isEqualToString:UICollectionElementKindSectionHeader]
+                            && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] > 0);
         }    break;
     }
     return view;

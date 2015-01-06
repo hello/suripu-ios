@@ -12,19 +12,11 @@
 #import <UIKit/UIKit.h>
 
 
-@class PCGradient;
 
 @interface HelloStyleKit : NSObject
 
 // Colors
-+ (UIColor*)darkBlueColor;
-+ (UIColor*)mediumBlueColor;
 + (UIColor*)currentConditionsBackgroundColor;
-+ (UIColor*)highSleepScoreColor;
-+ (UIColor*)poorSleepScoreColor;
-+ (UIColor*)averageSleepScoreColor;
-+ (UIColor*)lightBlueColor;
-+ (UIColor*)lightestBlueColor;
 + (UIColor*)warningSensorColor;
 + (UIColor*)idealSensorColor;
 + (UIColor*)alertSensorColor;
@@ -34,7 +26,6 @@
 + (UIColor*)awakeSleepColor;
 + (UIColor*)sleepQuestionBgColor;
 + (UIColor*)onboardingGrayColor;
-+ (UIColor*)green;
 + (UIColor*)backViewBackgroundColor;
 + (UIColor*)backViewNavTitleColor;
 + (UIColor*)backViewTextColor;
@@ -52,11 +43,8 @@
 + (UIColor*)questionAnswerSelectedTextColor;
 + (UIColor*)tabBarUnselectedColor;
 + (UIColor*)deviceAlertMessageColor;
-+ (UIColor*)settingsSeparatorColor;
 + (UIColor*)timelineLineColor;
-
-// Gradients
-+ (PCGradient*)blueBackgroundGradient;
++ (UIColor*)settingsSeparatorColor;
 
 // Shadows
 + (NSShadow*)onboardingButtonContainerShadow;
@@ -116,17 +104,6 @@
 
 // Drawing Methods
 + (void)drawSleepScoreGraphWithSleepScoreLabelText: (NSString*)sleepScoreLabelText sleepScore: (CGFloat)sleepScore;
-
-@end
-
-
-
-@interface PCGradient : NSObject
-@property(nonatomic, readonly) CGGradientRef CGGradient;
-- (CGGradientRef)CGGradient NS_RETURNS_INNER_POINTER;
-
-+ (instancetype)gradientWithColors: (NSArray*)colors locations: (const CGFloat*)locations;
-+ (instancetype)gradientWithStartingColor: (UIColor*)startingColor endingColor: (UIColor*)endingColor;
 
 @end
 

@@ -15,14 +15,7 @@
 
 #pragma mark Cache
 
-static UIColor* _darkBlueColor = nil;
-static UIColor* _mediumBlueColor = nil;
 static UIColor* _currentConditionsBackgroundColor = nil;
-static UIColor* _highSleepScoreColor = nil;
-static UIColor* _poorSleepScoreColor = nil;
-static UIColor* _averageSleepScoreColor = nil;
-static UIColor* _lightBlueColor = nil;
-static UIColor* _lightestBlueColor = nil;
 static UIColor* _warningSensorColor = nil;
 static UIColor* _idealSensorColor = nil;
 static UIColor* _alertSensorColor = nil;
@@ -32,7 +25,6 @@ static UIColor* _deepSleepColor = nil;
 static UIColor* _awakeSleepColor = nil;
 static UIColor* _sleepQuestionBgColor = nil;
 static UIColor* _onboardingGrayColor = nil;
-static UIColor* _green = nil;
 static UIColor* _backViewBackgroundColor = nil;
 static UIColor* _backViewNavTitleColor = nil;
 static UIColor* _backViewTextColor = nil;
@@ -50,10 +42,8 @@ static UIColor* _questionAnswerSelectedBgColor = nil;
 static UIColor* _questionAnswerSelectedTextColor = nil;
 static UIColor* _tabBarUnselectedColor = nil;
 static UIColor* _deviceAlertMessageColor = nil;
-static UIColor* _settingsSeparatorColor = nil;
 static UIColor* _timelineLineColor = nil;
-
-static PCGradient* _blueBackgroundGradient = nil;
+static UIColor* _settingsSeparatorColor = nil;
 
 static NSShadow* _onboardingButtonContainerShadow = nil;
 static NSShadow* _actionViewShadow = nil;
@@ -114,24 +104,16 @@ static UIImage* _pillIcon = nil;
 + (void)initialize
 {
     // Colors Initialization
-    _darkBlueColor = [UIColor colorWithRed: 0.314 green: 0.325 blue: 0.529 alpha: 1];
-    _mediumBlueColor = [UIColor colorWithRed: 0.184 green: 0.514 blue: 0.639 alpha: 1];
     _currentConditionsBackgroundColor = [UIColor colorWithRed: 0.902 green: 0.91 blue: 0.906 alpha: 1];
-    _highSleepScoreColor = [UIColor colorWithRed: 0.252 green: 0.84 blue: 0.664 alpha: 1];
-    _poorSleepScoreColor = [UIColor colorWithRed: 0.8 green: 0.339 blue: 0.32 alpha: 1];
-    _averageSleepScoreColor = [UIColor colorWithRed: 0.947 green: 0.901 blue: 0.5 alpha: 1];
-    _lightBlueColor = [UIColor colorWithRed: 0.733 green: 0.851 blue: 0.929 alpha: 1];
-    _lightestBlueColor = [UIColor colorWithRed: 0.918 green: 0.945 blue: 0.949 alpha: 1];
-    _warningSensorColor = [UIColor colorWithRed: 1 green: 0.604 blue: 0 alpha: 1];
-    _idealSensorColor = [UIColor colorWithRed: 0.255 green: 0.843 blue: 0.675 alpha: 1];
-    _alertSensorColor = [UIColor colorWithRed: 1 green: 0 blue: 0 alpha: 1];
-    _lightSleepColor = [UIColor colorWithRed: 0 green: 0.612 blue: 1 alpha: 1];
-    _intermediateSleepColor = [UIColor colorWithRed: 0.027 green: 0.49 blue: 0.969 alpha: 1];
-    _deepSleepColor = [UIColor colorWithRed: 0 green: 0.333 blue: 0.847 alpha: 1];
+    _warningSensorColor = [UIColor colorWithRed: 0.996 green: 0.796 blue: 0.184 alpha: 1];
+    _idealSensorColor = [UIColor colorWithRed: 0.188 green: 0.839 blue: 0.671 alpha: 1];
+    _alertSensorColor = [UIColor colorWithRed: 0.992 green: 0.592 blue: 0.329 alpha: 1];
+    _lightSleepColor = [UIColor colorWithRed: 0.922 green: 0.973 blue: 1 alpha: 1];
+    _intermediateSleepColor = [UIColor colorWithRed: 0.843 green: 0.941 blue: 0.996 alpha: 1];
+    _deepSleepColor = [UIColor colorWithRed: 0.765 green: 0.91 blue: 0.996 alpha: 1];
     _awakeSleepColor = [UIColor colorWithRed: 0.32 green: 0.356 blue: 0.8 alpha: 0];
     _sleepQuestionBgColor = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 0.9];
     _onboardingGrayColor = [UIColor colorWithRed: 0.286 green: 0.286 blue: 0.286 alpha: 1];
-    _green = [UIColor colorWithRed: 0.455 green: 0.792 blue: 0.459 alpha: 1];
     _backViewBackgroundColor = [UIColor colorWithRed: 0.96 green: 0.96 blue: 0.96 alpha: 1];
     _backViewNavTitleColor = [UIColor colorWithRed: 0.286 green: 0.286 blue: 0.286 alpha: 1];
     _backViewTextColor = [UIColor colorWithRed: 0.478 green: 0.478 blue: 0.478 alpha: 1];
@@ -149,12 +131,8 @@ static UIImage* _pillIcon = nil;
     _questionAnswerSelectedTextColor = [UIColor colorWithRed: 0.804 green: 0.91 blue: 1 alpha: 1];
     _tabBarUnselectedColor = [UIColor colorWithRed: 0.75 green: 0.75 blue: 0.75 alpha: 1];
     _deviceAlertMessageColor = [UIColor colorWithRed: 0.302 green: 0.302 blue: 0.302 alpha: 1];
-    _settingsSeparatorColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.039];
     _timelineLineColor = [UIColor colorWithRed: 0.549 green: 0.827 blue: 0.992 alpha: 0.804];
-
-    // Gradients Initialization
-    CGFloat blueBackgroundGradientLocations[] = {0, 1};
-    _blueBackgroundGradient = [PCGradient gradientWithColors: @[HelloStyleKit.darkBlueColor, HelloStyleKit.mediumBlueColor] locations: blueBackgroundGradientLocations];
+    _settingsSeparatorColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.039];
 
     // Shadows Initialization
     _onboardingButtonContainerShadow = [NSShadow shadowWithColor: [UIColor.blackColor colorWithAlphaComponent: 0.1] offset: CGSizeMake(0.1, -2.1) blurRadius: 5];
@@ -164,14 +142,7 @@ static UIImage* _pillIcon = nil;
 
 #pragma mark Colors
 
-+ (UIColor*)darkBlueColor { return _darkBlueColor; }
-+ (UIColor*)mediumBlueColor { return _mediumBlueColor; }
 + (UIColor*)currentConditionsBackgroundColor { return _currentConditionsBackgroundColor; }
-+ (UIColor*)highSleepScoreColor { return _highSleepScoreColor; }
-+ (UIColor*)poorSleepScoreColor { return _poorSleepScoreColor; }
-+ (UIColor*)averageSleepScoreColor { return _averageSleepScoreColor; }
-+ (UIColor*)lightBlueColor { return _lightBlueColor; }
-+ (UIColor*)lightestBlueColor { return _lightestBlueColor; }
 + (UIColor*)warningSensorColor { return _warningSensorColor; }
 + (UIColor*)idealSensorColor { return _idealSensorColor; }
 + (UIColor*)alertSensorColor { return _alertSensorColor; }
@@ -181,7 +152,6 @@ static UIImage* _pillIcon = nil;
 + (UIColor*)awakeSleepColor { return _awakeSleepColor; }
 + (UIColor*)sleepQuestionBgColor { return _sleepQuestionBgColor; }
 + (UIColor*)onboardingGrayColor { return _onboardingGrayColor; }
-+ (UIColor*)green { return _green; }
 + (UIColor*)backViewBackgroundColor { return _backViewBackgroundColor; }
 + (UIColor*)backViewNavTitleColor { return _backViewNavTitleColor; }
 + (UIColor*)backViewTextColor { return _backViewTextColor; }
@@ -199,12 +169,8 @@ static UIImage* _pillIcon = nil;
 + (UIColor*)questionAnswerSelectedTextColor { return _questionAnswerSelectedTextColor; }
 + (UIColor*)tabBarUnselectedColor { return _tabBarUnselectedColor; }
 + (UIColor*)deviceAlertMessageColor { return _deviceAlertMessageColor; }
-+ (UIColor*)settingsSeparatorColor { return _settingsSeparatorColor; }
 + (UIColor*)timelineLineColor { return _timelineLineColor; }
-
-#pragma mark Gradients
-
-+ (PCGradient*)blueBackgroundGradient { return _blueBackgroundGradient; }
++ (UIColor*)settingsSeparatorColor { return _settingsSeparatorColor; }
 
 #pragma mark Shadows
 
@@ -272,12 +238,13 @@ static UIImage* _pillIcon = nil;
     CGContextRef context = UIGraphicsGetCurrentContext();
 
     //// Color Declarations
+    UIColor* highSleepScoreColor = [UIColor colorWithRed: 0.252 green: 0.84 blue: 0.664 alpha: 1];
     UIColor* sleepScoreNoValueColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.059];
     UIColor* sleepScoreLabelTextColor = [UIColor colorWithRed: 0.602 green: 0.602 blue: 0.602 alpha: 1];
     UIColor* sleepScoreOvalColor = [UIColor colorWithRed: 0.898 green: 0.898 blue: 0.898 alpha: 1];
 
     //// Variable Declarations
-    UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? HelloStyleKit.alertSensorColor : (sleepScore < 80 ? HelloStyleKit.warningSensorColor : HelloStyleKit.highSleepScoreColor)) : sleepScoreNoValueColor;
+    UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? HelloStyleKit.alertSensorColor : (sleepScore < 80 ? HelloStyleKit.warningSensorColor : highSleepScoreColor)) : sleepScoreNoValueColor;
     CGFloat graphPercentageAngle = sleepScore > 0 ? (sleepScore < 100 ? 360 - sleepScore * 0.01 * 360 : 0.01) : 0.01;
     NSString* sleepScoreText = sleepScore > 0 ? (sleepScore <= 100 ? [NSString stringWithFormat: @"%ld", (NSInteger)round(sleepScore)] : @"100") : @"";
     NSString* localizedSleepScoreDescriptionLabel = sleepScore > 0 ? sleepScoreLabelText : @"";
@@ -337,50 +304,6 @@ static UIImage* _pillIcon = nil;
     CGContextClipToRect(context, sleepScoreTextLabelRect);
     [localizedSleepScoreDescriptionLabel drawInRect: CGRectMake(CGRectGetMinX(sleepScoreTextLabelRect), CGRectGetMinY(sleepScoreTextLabelRect) + (CGRectGetHeight(sleepScoreTextLabelRect) - sleepScoreTextLabelTextHeight) / 2, CGRectGetWidth(sleepScoreTextLabelRect), sleepScoreTextLabelTextHeight) withAttributes: sleepScoreTextLabelFontAttributes];
     CGContextRestoreGState(context);
-}
-
-@end
-
-
-
-@interface PCGradient ()
-{
-    CGGradientRef _CGGradient;
-}
-@end
-
-@implementation PCGradient
-
-- (instancetype)initWithColors: (NSArray*)colors locations: (const CGFloat*)locations
-{
-    self = super.init;
-    if (self)
-    {
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-        NSMutableArray* cgColors = NSMutableArray.array;
-        for (UIColor* color in colors)
-            [cgColors addObject: (id)color.CGColor];
-
-        _CGGradient = CGGradientCreateWithColors(colorSpace, (__bridge CFArrayRef)cgColors, locations);
-        CGColorSpaceRelease(colorSpace);
-    }
-    return self;
-}
-
-+ (instancetype)gradientWithColors: (NSArray*)colors locations: (const CGFloat*)locations
-{
-    return [self.alloc initWithColors: colors locations: locations];
-}
-
-+ (instancetype)gradientWithStartingColor: (UIColor*)startingColor endingColor: (UIColor*)endingColor
-{
-    CGFloat locations[] = {0, 1};
-    return [self.alloc initWithColors: @[startingColor, endingColor] locations: locations];
-}
-
-- (void)dealloc
-{
-    CGGradientRelease(_CGGradient);
 }
 
 @end

@@ -51,6 +51,7 @@ static UIColor* _questionAnswerSelectedTextColor = nil;
 static UIColor* _tabBarUnselectedColor = nil;
 static UIColor* _deviceAlertMessageColor = nil;
 static UIColor* _settingsSeparatorColor = nil;
+static UIColor* _timelineLineColor = nil;
 
 static PCGradient* _blueBackgroundGradient = nil;
 
@@ -149,6 +150,7 @@ static UIImage* _pillIcon = nil;
     _tabBarUnselectedColor = [UIColor colorWithRed: 0.75 green: 0.75 blue: 0.75 alpha: 1];
     _deviceAlertMessageColor = [UIColor colorWithRed: 0.302 green: 0.302 blue: 0.302 alpha: 1];
     _settingsSeparatorColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.039];
+    _timelineLineColor = [UIColor colorWithRed: 0.549 green: 0.827 blue: 0.992 alpha: 0.804];
 
     // Gradients Initialization
     CGFloat blueBackgroundGradientLocations[] = {0, 1};
@@ -198,6 +200,7 @@ static UIImage* _pillIcon = nil;
 + (UIColor*)tabBarUnselectedColor { return _tabBarUnselectedColor; }
 + (UIColor*)deviceAlertMessageColor { return _deviceAlertMessageColor; }
 + (UIColor*)settingsSeparatorColor { return _settingsSeparatorColor; }
++ (UIColor*)timelineLineColor { return _timelineLineColor; }
 
 #pragma mark Gradients
 

@@ -22,16 +22,22 @@ static CGFloat const HEMSleepEventLargeButtonSize = 28.f;
 {
     [super drawRect:rect];
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGFloat inset = HEMLinedCollectionViewCellLineOffset + HEMLinedCollectionViewCellLineWidth;
-    CGFloat width = HEMSleepSegmentMinimumFillWidth;
-    CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
+    CGFloat width = HEMSleepLineWidth;
+    CGFloat height = 0;
+    CGFloat x = CGRectGetMidX(rect)  - width;
+    CGFloat y = CGRectGetMinY(rect);
+    CGFloat halfButton = ceilf(HEMSleepEventSmallButtonSize/2);
+    CGContextSetFillColorWithColor(ctx, [HelloStyleKit timelineLineColor].CGColor);
     if ([self isLastSegment] && ![self isFirstSegment]) {
-        CGRect contentRect = CGRectMake(CGRectGetMinX(rect) + inset, CGRectGetMinY(rect), width, CGRectGetMidY(rect));
-        CGContextFillRect(ctx, contentRect);
+        height = halfButton;
     } else if ([self isFirstSegment] && ![self isLastSegment]) {
-        CGRect contentRect = CGRectMake(CGRectGetMinX(rect) + inset, CGRectGetMidY(rect), width, CGRectGetMidY(rect));
-        CGContextFillRect(ctx, contentRect);
+        height = CGRectGetHeight(rect) - halfButton;
+        y = halfButton;
+    } else {
+        height = CGRectGetHeight(rect);
     }
+    CGRect contentRect = CGRectMake(x, CGRectGetMidY(rect), width, height);
+    CGContextFillRect(ctx, contentRect);
 }
 
 - (void)showLargeButton:(BOOL)buttonIsLarge

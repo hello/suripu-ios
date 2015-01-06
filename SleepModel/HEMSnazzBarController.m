@@ -49,7 +49,7 @@ static CGFloat const HEMSnazzContentGestureMargin = 34.f;
     self.buttonsBar.delegate = self;
     [self.view addSubview:self.buttonsBar];
     self.buttonsBar.backgroundColor = [UIColor whiteColor];
-    self.buttonsBar.selectionColor = [HelloStyleKit lightSleepColor];
+    self.buttonsBar.selectionColor = [HelloStyleKit barButtonEnabledColor];
     self.contentView.backgroundColor = [HelloStyleKit backViewBackgroundColor];
 }
 

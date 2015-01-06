@@ -53,6 +53,7 @@
 + (UIColor*)tabBarUnselectedColor;
 + (UIColor*)deviceAlertMessageColor;
 + (UIColor*)settingsSeparatorColor;
++ (UIColor*)timelineLineColor;
 
 // Gradients
 + (PCGradient*)blueBackgroundGradient;

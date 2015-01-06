@@ -1,21 +1,37 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
-        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="sleepEventCell" id="gTV-IL-0wX" customClass="HEMSleepEventCollectionViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="165"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="30"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="165"/>
                 <subviews>
+                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:59 am" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JFc-fa-7rh" customClass="HEMPaddedRoundedLabel">
+                        <rect key="frame" x="232" y="36" width="64" height="24"/>
+                        <color key="backgroundColor" white="1" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="24" id="0Xq-m6-7LT"/>
+                            <constraint firstAttribute="width" constant="64" id="awX-fN-ACH"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="11"/>
+                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Woke up" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5DK-SE-Ybo">
+                        <rect key="frame" x="138" y="40" width="45" height="16"/>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="11"/>
+                        <color key="textColor" red="0.0" green="0.50588235294117645" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IoS-vS-i2i" customClass="HEMSleepEventButton">
-                        <rect key="frame" x="26" y="5" width="20" height="20"/>
+                        <rect key="frame" x="150" y="0.0" width="20" height="20"/>
                         <constraints>
                             <constraint firstAttribute="width" constant="20" id="9Uu-mh-086"/>
                             <constraint firstAttribute="height" constant="20" id="Vxc-dy-Ohk"/>
@@ -24,34 +40,18 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:59 am" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JFc-fa-7rh" customClass="HEMPaddedRoundedLabel">
-                        <rect key="frame" x="232" y="3" width="64" height="24"/>
-                        <color key="backgroundColor" white="1" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstAttribute="height" constant="24" id="0Xq-m6-7LT"/>
-                            <constraint firstAttribute="width" constant="64" id="awX-fN-ACH"/>
-                        </constraints>
-                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
-                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                        <nil key="highlightedColor"/>
-                    </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Woke up" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5DK-SE-Ybo">
-                        <rect key="frame" x="66" y="5" width="60" height="20.5"/>
-                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
-                        <nil key="highlightedColor"/>
-                    </label>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
+                <constraint firstAttribute="centerX" secondItem="IoS-vS-i2i" secondAttribute="centerX" id="21k-z7-23w"/>
                 <constraint firstItem="JFc-fa-7rh" firstAttribute="centerY" secondItem="5DK-SE-Ybo" secondAttribute="centerY" id="4Vp-dI-0u4"/>
-                <constraint firstAttribute="centerY" secondItem="IoS-vS-i2i" secondAttribute="centerY" id="HOK-6d-8Tk"/>
-                <constraint firstItem="IoS-vS-i2i" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="36" id="WA3-3y-zyN"/>
-                <constraint firstItem="5DK-SE-Ybo" firstAttribute="leading" secondItem="IoS-vS-i2i" secondAttribute="trailing" constant="20" id="auz-yc-5ZZ"/>
+                <constraint firstAttribute="centerX" secondItem="5DK-SE-Ybo" secondAttribute="centerX" id="6k3-HX-tTg"/>
+                <constraint firstItem="IoS-vS-i2i" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7UW-R9-StW"/>
+                <constraint firstItem="5DK-SE-Ybo" firstAttribute="top" secondItem="IoS-vS-i2i" secondAttribute="bottom" constant="20" id="BTz-p3-c4N"/>
                 <constraint firstAttribute="trailing" secondItem="JFc-fa-7rh" secondAttribute="trailing" constant="24" id="c8h-7m-ZlV"/>
-                <constraint firstItem="5DK-SE-Ybo" firstAttribute="centerY" secondItem="IoS-vS-i2i" secondAttribute="centerY" id="r6z-yw-Pjh"/>
             </constraints>
-            <size key="customSize" width="293" height="30"/>
+            <size key="customSize" width="293" height="165"/>
             <connections>
                 <outlet property="eventTimeLabel" destination="JFc-fa-7rh" id="T6n-yv-ZhQ"/>
                 <outlet property="eventTitleLabel" destination="5DK-SE-Ybo" id="4yA-50-O4F"/>
@@ -59,7 +59,7 @@
                 <outlet property="sleepEventButtonHeightConstraint" destination="Vxc-dy-Ohk" id="lU6-Di-drL"/>
                 <outlet property="sleepEventButtonWidthConstraint" destination="9Uu-mh-086" id="i1Y-du-aW9"/>
             </connections>
-            <point key="canvasLocation" x="260" y="85"/>
+            <point key="canvasLocation" x="260" y="152.5"/>
         </collectionViewCell>
     </objects>
 </document>

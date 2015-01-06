@@ -45,6 +45,11 @@ NSString* const SENSettingsDidUpdateNotification = @"SENSettingsDidUpdateNotific
     return tempFormat;
 }
 
++ (BOOL)useCentigrade
+{
+    return [self temperatureFormat] == SENTemperatureFormatCentigrade;
+}
+
 + (void)setTemperatureFormat:(SENTemperatureFormat)temperatureFormat
 {
     [[self userDefaults] setInteger:temperatureFormat forKey:SENSettingsTemperatureFormat];

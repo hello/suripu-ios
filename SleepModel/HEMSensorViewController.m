@@ -142,16 +142,16 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 - (void)configureSensorValueViews
 {
     UIColor* color = [UIColor colorForSensorWithCondition:self.sensor.condition];
+    NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckWithConditionColor:color];
+    NSDictionary* idealAttributes = [HEMMarkdown attributesForRoomCheckWithConditionColor:[HelloStyleKit idealSensorColor]];
+
     self.valueLabel.textColor = color;
     self.unitLabel.textColor = color;
     self.title = self.sensor.localizedName;
     [self updateValueLabelWithValue:self.sensor.value];
-
     self.unitLabel.text = [self.sensor localizedUnit];
-    NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckWithConditionColor:color];
-
     self.statusMessageLabel.attributedText = markdown_to_attr_string(self.sensor.message, 0, statusAttributes);
-    self.idealLabel.attributedText = nil;
+    self.idealLabel.attributedText = markdown_to_attr_string(self.sensor.idealConditionsMessage, 0, idealAttributes);
     self.graphView.colorLine = color;
     self.graphView.gradientBottom = [self gradientForColor:color];
 }
@@ -195,7 +195,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     if (![SENAuthorizationService isAuthorized])
         return;
     self.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
-    [SENAPIRoom hourlyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
+    [SENAPIRoom hourlyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         if (!data) {
             self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
             self.statusLabel.alpha = 1;
@@ -205,7 +205,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
         if ([self isShowingHourlyData])
             [self updateGraphWithHourlyData:data];
     }];
-    [SENAPIRoom dailyHistoricalDataForSensorWithName:self.sensor.name completion:^(id data, NSError* error) {
+    [SENAPIRoom dailyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         if (!data) {
             self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
             self.statusLabel.alpha = 1;
@@ -234,8 +234,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     if ([self isShowingHourlyData])
         return;
     self.showHourlyData = YES;
-    [self.dailyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
-    [self.hourlyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
     [self toggleDataSeriesTo:self.hourlyDataSeries animated:YES];
 }
 
@@ -244,8 +242,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     if (![self isShowingHourlyData])
         return;
     self.showHourlyData = NO;
-    [self.dailyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
-    [self.hourlyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
     [self toggleDataSeriesTo:self.dailyDataSeries animated:YES];
 }
 
@@ -274,10 +270,14 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 }
 
 - (void)updateGraphWithHourlyData:(NSArray*)dataSeries {
+    [self.dailyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
+    [self.hourlyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
     [self updateGraphWithData:dataSeries formatter:self.hourlyFormatter];
 }
 
 - (void)updateGraphWithDailyData:(NSArray*)dataSeries {
+    [self.hourlyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
+    [self.dailyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
     [self updateGraphWithData:dataSeries formatter:self.dailyFormatter];
 }
 
@@ -298,7 +298,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 }
 
 - (void)setGraphValueBoundsWithData:(NSArray*)dataSeries {
-    NSArray* values = [[dataSeries valueForKey:@"value"] sortedArrayUsingSelector:@selector(compare:)];
+    NSArray* values = [[dataSeries valueForKey:NSStringFromSelector(@selector(value))]
+                       sortedArrayUsingSelector:@selector(compare:)];
     NSNumber* maxValue = [values lastObject];
     NSNumber* minValue = [values firstObject];
     if ([maxValue floatValue] == 0)

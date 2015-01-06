@@ -58,6 +58,13 @@ extern NSString* const SENSettingsAppGroup;
 + (SENTemperatureFormat)temperatureFormat;
 
 /**
+ *  Convenience method for obtaining the temperature format.
+ *
+ *  @return YES if the temperature format represents centigrade
+ */
++ (BOOL)useCentigrade;
+
+/**
  *  Change the preferred clock format. When the change is saved, it emits a
  *  SENSettingsDidUpdateNotification
  *

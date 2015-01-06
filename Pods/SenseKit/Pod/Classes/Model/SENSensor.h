@@ -125,8 +125,18 @@ typedef NS_ENUM(NSUInteger, SENSensorUnit) {
 
 @property (nonatomic, strong, readonly) NSString* name;
 @property (nonatomic, strong, readonly) NSString* message;
+@property (nonatomic, strong, readonly) NSString* idealConditionsMessage;
 @property (nonatomic, strong, readonly) NSDate* lastUpdated;
 @property (nonatomic, readonly) NSNumber* value;
 @property (nonatomic, readonly) SENSensorCondition condition;
 @property (nonatomic, readonly) SENSensorUnit unit;
+@end
+
+@interface SENSensorDataPoint : NSObject
+
+- (instancetype)initWithDictionary:(NSDictionary*)dict;
+
+@property (nonatomic, strong, readonly) NSDate* date;
+@property (nonatomic, strong, readonly) NSNumber* value;
+@property (nonatomic, strong, readonly) NSNumber* dateOffset;
 @end

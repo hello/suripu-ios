@@ -124,7 +124,7 @@
 
 - (void)interactivePopGestureActivated:(UIGestureRecognizer*)recognizer {
     CGFloat ratio = [recognizer locationInView:self.view].x/CGRectGetWidth(self.view.bounds);
-    if (recognizer.state == UIGestureRecognizerStateChanged) {
+    if (recognizer.state == UIGestureRecognizerStateChanged && self.viewControllers.count < 2) {
         [self updateBarVisibilityWithRatio:ratio];
     }
 }

@@ -2,7 +2,7 @@
 #import "HEMSleepSegmentCollectionViewCell.h"
 #import "HelloStyleKit.h"
 
-CGFloat const HEMLinedCollectionViewCellLineOffset = 20.f;
+CGFloat const HEMLinedCollectionViewCellLineOffset = 28.f;
 CGFloat const HEMLinedCollectionViewCellLineWidth = 2.f;
 CGFloat const HEMSleepSegmentMinimumFillWidth = 28.f;
 CGFloat const HEMSleepLineWidth = 1.f;

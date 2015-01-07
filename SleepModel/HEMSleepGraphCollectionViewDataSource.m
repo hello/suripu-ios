@@ -216,7 +216,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     case HEMSleepGraphCollectionViewSegmentSection:
         return self.numberOfSleepSegments;
     case HEMSleepGraphCollectionViewPresleepSection:
-        return self.numberOfSleepSegments > 0 ? self.sleepResult.sensorInsights.count : 0;
+        return self.numberOfSleepSegments > 0 && self.sleepResult.sensorInsights.count > 0 ? 1 : 0;
     default:
         return 0;
     }
@@ -224,25 +224,12 @@ static NSString* const sensorTypeParticulates = @"particulates";
 
 - (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView viewForSupplementaryElementOfKind:(NSString*)kind atIndexPath:(NSIndexPath*)indexPath
 {
-    UICollectionReusableView* view = nil;
-    switch (indexPath.section) {
-        case HEMSleepGraphCollectionViewPresleepSection: {
-            view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                      withReuseIdentifier:presleepHeaderReuseIdentifier
-                                                             forIndexPath:indexPath];
-            view.hidden = !([kind isEqualToString:UICollectionElementKindSectionHeader]
-                            && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewPresleepSection] > 0);
-        } break;
-
-        case HEMSleepGraphCollectionViewSegmentSection:
-        default: {
-            view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                      withReuseIdentifier:timelineHeaderReuseIdentifier
-                                                             forIndexPath:indexPath];
-            view.hidden = !([kind isEqualToString:UICollectionElementKindSectionHeader]
-                            && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] > 0);
-        }    break;
-    }
+    UICollectionReusableView* view = view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                               withReuseIdentifier:timelineHeaderReuseIdentifier
+                                                                                      forIndexPath:indexPath];
+    view.hidden = !(indexPath.section == HEMSleepGraphCollectionViewSegmentSection
+                    && [kind isEqualToString:UICollectionElementKindSectionHeader]
+                    && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] > 0);
     return view;
 }
 

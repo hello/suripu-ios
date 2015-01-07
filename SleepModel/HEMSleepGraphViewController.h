@@ -3,8 +3,8 @@
 
 typedef NS_ENUM(NSUInteger, HEMSleepGraphCollectionViewSection) {
     HEMSleepGraphCollectionViewSummarySection = 0,
-    HEMSleepGraphCollectionViewSegmentSection = 1,
-    HEMSleepGraphCollectionViewPresleepSection = 2,
+    HEMSleepGraphCollectionViewSegmentSection = 2,
+    HEMSleepGraphCollectionViewPresleepSection = 1,
 };
 
 extern CGFloat const HEMTimelineHeaderCellHeight;

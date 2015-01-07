@@ -46,7 +46,7 @@ CGFloat const HEMTimelineHeaderCellHeight = 50.f;
 
 static CGFloat const HEMSleepSummaryCellHeight = 350.f;
 static CGFloat const HEMPresleepHeaderCellHeight = 70.f;
-static CGFloat const HEMPresleepItemCellHeight = 68.f;
+static CGFloat const HEMPresleepItemCellHeight = 160.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 30.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMTopItemsConstraintConstant = 10.f;

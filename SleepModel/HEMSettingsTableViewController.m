@@ -5,11 +5,15 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMSettingsTableViewController.h"
+#import "HEMSettingsTableViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlertController.h"
 #import "HEMLogUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMSupportUtil.h"
+
+static NSUInteger const HEMSettingsTableViewRows = 7;
+static CGFloat const HEMSettingsTableViewMargin = 16.0f;
 
 @interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 
@@ -36,14 +40,18 @@ static NSInteger const HEMSettingsSignOutIndex = 6;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    [[self settingsTableView] setTableFooterView:[[UIView alloc] init]];
+    CGRect frame = CGRectZero;
+    frame.size.height = HEMSettingsTableViewMargin;
+    frame.size.width = CGRectGetWidth([[self settingsTableView] bounds]);
+    [[self settingsTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
+    [[self settingsTableView] setTableFooterView:[[UIView alloc] initWithFrame:frame]];
 }
 
 #pragma mark UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return 7;
+    return HEMSettingsTableViewRows;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
@@ -54,9 +62,17 @@ static NSInteger const HEMSettingsSignOutIndex = 6;
 
 - (void)tableView:(UITableView*)tableView willDisplayCell:(UITableViewCell*)cell forRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    [[cell textLabel] setText:[self titleForRowAtIndex:indexPath.row]];
-    [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
-    [[cell textLabel] setFont:[UIFont settingsTitleFont]];
+    HEMSettingsTableViewCell* settingsCell = (HEMSettingsTableViewCell*)cell;
+    [[settingsCell titleLabel] setText:[self titleForRowAtIndex:indexPath.row]];
+    
+    if ([indexPath row] == 0) {
+        [settingsCell showTopCorners];
+    } else if ([indexPath row] == HEMSettingsTableViewRows - 1){
+        [settingsCell showBottomCorners];
+    } else {
+        [settingsCell showNoCorners];
+    }
+    
 }
 
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath

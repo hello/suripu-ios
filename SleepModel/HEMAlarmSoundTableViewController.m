@@ -9,8 +9,7 @@
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
-
-
+#import "HEMAlertController.h"
 
 @interface HEMAlarmSoundTableViewController () <AVAudioPlayerDelegate>
 @property (nonatomic, strong) NSArray* possibleSleepSounds;
@@ -28,7 +27,7 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
     [super viewDidLoad];
     self.loadingQueue = [NSOperationQueue new];
     self.loadingQueue.maxConcurrentOperationCount = 1;
-    [self loadAlarmSoundsWithRetryCount:3];
+    [self loadAlarmSounds];
     [[self tableView] setTableFooterView:[[UIView alloc] init]];
 }
 
@@ -38,10 +37,16 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
     [self stopAudio];
 }
 
+- (void)loadAlarmSounds
+{
+    [self loadAlarmSoundsWithRetryCount:3];
+}
+
 - (void)loadAlarmSoundsWithRetryCount:(NSInteger)count
 {
     if ([self isLoading])
         return;
+    self.navigationItem.rightBarButtonItem = nil;
     self.loading = YES;
     [SENAPIAlarms availableSoundsWithCompletion:^(NSArray* sounds, NSError *error) {
         if (error) {
@@ -49,7 +54,7 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
             if (count > 0)
                 [self loadAlarmSoundsWithRetryCount:count - 1];
             else {
-                // show error and reload button
+                [self showAlertForError:error];
             }
             return;
         }
@@ -59,6 +64,17 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
         [self.tableView reloadData];
         self.loading = NO;
     }];
+}
+
+- (void)showAlertForError:(NSError*)error
+{
+    DDLogError(@"Failed to load alarm sounds: %@", error.localizedDescription);
+    [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.sounds.error.title", nil)
+                                          message:NSLocalizedString(@"alarm.sounds.error.message", nil)
+                             presentingController:self];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                                           target:self
+                                                                                           action:@selector(loadAlarmSounds)];
 }
 
 #pragma mark - Table view data source

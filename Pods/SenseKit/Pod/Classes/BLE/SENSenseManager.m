@@ -104,6 +104,19 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     return [[LGCentralManager sharedInstance] isCentralReady];
 }
 
++ (void)whenBleStateAvailable:(void(^)(BOOL on))block {
+    CBCentralManagerState state = [[[LGCentralManager sharedInstance] manager] state];
+    if (state == CBCentralManagerStateUnknown) {
+        NSTimeInterval delayInSeconds = 0.2f;
+        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
+            [self whenBleStateAvailable:block];
+        });
+    } else {
+        block (state == CBCentralManagerStatePoweredOn);
+    }
+}
+
 + (BOOL)canScan {
     CBCentralManagerState state = [[[LGCentralManager sharedInstance] manager] state];
     return state != CBCentralManagerStateUnauthorized

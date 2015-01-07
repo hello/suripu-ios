@@ -13,6 +13,7 @@
 @property (nonatomic) NSUInteger hour;
 @property (nonatomic) NSUInteger minute;
 @property (nonatomic, strong) NSString* soundName;
+@property (nonatomic, strong) NSString* soundID;
 @property (nonatomic) NSUInteger repeatFlags;
 @property (nonatomic, getter=isSmart) BOOL smart;
 

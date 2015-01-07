@@ -1,17 +1,22 @@
 
+#import <AVFoundation/AVFoundation.h>
+#import <SenseKit/SENAPIAlarms.h>
 #import <SenseKit/SENAlarm.h>
-#import <AVFoundation/AVAudioPlayer.h>
+#import <SenseKit/SENSound.h>
 
 #import "UIFont+HEMStyle.h"
-
 #import "HEMAlarmSoundTableViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
 
+
+
 @interface HEMAlarmSoundTableViewController () <AVAudioPlayerDelegate>
 @property (nonatomic, strong) NSArray* possibleSleepSounds;
 @property (nonatomic, strong) AVAudioPlayer* player;
+@property (nonatomic, getter=isLoading) BOOL loading;
+@property (nonatomic, strong) NSOperationQueue* loadingQueue;
 @end
 
 @implementation HEMAlarmSoundTableViewController
@@ -21,14 +26,39 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.loadingQueue = [NSOperationQueue new];
+    self.loadingQueue.maxConcurrentOperationCount = 1;
+    [self loadAlarmSoundsWithRetryCount:3];
     [[self tableView] setTableFooterView:[[UIView alloc] init]];
-    self.possibleSleepSounds = @[ @"None", @"Aria", @"Ballad", @"Bells" ];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [self stopAudio];
+}
+
+- (void)loadAlarmSoundsWithRetryCount:(NSInteger)count
+{
+    if ([self isLoading])
+        return;
+    self.loading = YES;
+    [SENAPIAlarms availableSoundsWithCompletion:^(NSArray* sounds, NSError *error) {
+        if (error) {
+            self.loading = NO;
+            if (count > 0)
+                [self loadAlarmSoundsWithRetryCount:count - 1];
+            else {
+                // show error and reload button
+            }
+            return;
+        }
+        self.possibleSleepSounds = [sounds sortedArrayUsingComparator:^NSComparisonResult(SENSound* obj1, SENSound* obj2) {
+            return [obj1.displayName compare:obj2.displayName];
+        }];
+        [self.tableView reloadData];
+        self.loading = NO;
+    }];
 }
 
 #pragma mark - Table view data source
@@ -42,10 +72,10 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
 {
     UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmChoiceCellReuseIdentifier] forIndexPath:indexPath];
 
-    NSString* sleepSoundText = [self.possibleSleepSounds objectAtIndex:indexPath.row];
-    cell.textLabel.text = sleepSoundText;
+    SENSound* sound = [self.possibleSleepSounds objectAtIndex:indexPath.row];
+    cell.textLabel.text = sound.displayName;
 
-    if ([sleepSoundText isEqualToString:self.alarmCache.soundName]) {
+    if ([sound.displayName isEqualToString:self.alarmCache.soundName]) {
         cell.accessoryType = UITableViewCellAccessoryCheckmark;
     } else {
         cell.accessoryType = UITableViewCellAccessoryNone;
@@ -59,13 +89,21 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSUInteger index = [self.possibleSleepSounds indexOfObject:self.alarmCache.soundName];
-    if (indexPath.row == index)
-        return;
+    NSUInteger index = NSNotFound;
+    for (int i = 0; i < self.possibleSleepSounds.count; i++) {
+        SENSound* sound = self.possibleSleepSounds[i];
+        if ([sound.displayName isEqualToString:self.alarmCache.soundName]) {
+            index = i;
+            if (indexPath.row == index)
+                return;
+            break;
+        }
+    }
 
-    NSString* soundName = [self.possibleSleepSounds objectAtIndex:indexPath.row];
-    self.alarmCache.soundName = soundName;
-    [self playAudioWithName:soundName];
+    SENSound* sound = [self.possibleSleepSounds objectAtIndex:indexPath.row];
+    self.alarmCache.soundName = sound.displayName;
+    self.alarmCache.soundID = sound.identifier;
+    [self playAudioForSound:sound];
     if (index != NSNotFound) {
         NSArray* indexPaths = @[
             [NSIndexPath indexPathForRow:index inSection:0],
@@ -79,26 +117,26 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
 
 #pragma mark - Audio
 
-- (void)playAudioWithName:(NSString*)name
+- (void)playAudioForSound:(SENSound*)sound
 {
     [self stopAudio];
-    NSString* path = [[NSBundle mainBundle] pathForResource:name ofType:HEMAlarmSoundFormat];
-    if (![[NSFileManager defaultManager] fileExistsAtPath:path])
-        return;
+    [self.loadingQueue cancelAllOperations];
+    NSURL* url = [NSURL URLWithString:sound.URLPath];
 
-    [self playAudioFromURL:[NSURL fileURLWithPath:path]];
-}
-
-- (void)playAudioFromURL:(NSURL*)url
-{
-    [self stopAudio];
-    NSError* error = nil;
-    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
-    self.player.delegate = self;
-    if (error)
-        [self stopAudio];
-    else
-        [self.player play];
+    [self.loadingQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        NSData* urlData = [NSData dataWithContentsOfURL:url];
+        if (!urlData)
+            return;
+        [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
+            NSError* error = nil;
+            self.player = [[AVAudioPlayer alloc] initWithData:urlData error:&error];
+            self.player.delegate = self;
+            if (error)
+                [self stopAudio];
+            else
+                [self.player play];
+        }]];
+    }]];
 }
 
 - (void)stopAudio

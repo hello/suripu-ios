@@ -490,6 +490,10 @@
 		BFEAA0CA19A66746002FBD44 /* HEMValueSliderView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0C919A66746002FBD44 /* HEMValueSliderView.m */; };
 		BFEAA0CD19A6D9E6002FBD44 /* HEMBaseController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0CC19A6D9E6002FBD44 /* HEMBaseController.m */; };
 		BFF03ECA1A536D8C00BD65D4 /* HEMSystemAlertController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF03EC91A536D8C00BD65D4 /* HEMSystemAlertController.m */; };
+		BFF3B43E1A5B831200B11643 /* HEMSettingsTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */; };
+		BFF3B4421A5CBF6800B11643 /* accessory.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF3B43F1A5CBF6800B11643 /* accessory.png */; };
+		BFF3B4431A5CBF6800B11643 /* accessory@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF3B4401A5CBF6800B11643 /* accessory@2x.png */; };
+		BFF3B4441A5CBF6800B11643 /* accessory@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF3B4411A5CBF6800B11643 /* accessory@3x.png */; };
 		D12BBDB2950F47EDA9F85F68 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -1170,6 +1174,11 @@
 		BFEAA0CE19A6D9F8002FBD44 /* HEMBaseController+Protected.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "HEMBaseController+Protected.h"; sourceTree = "<group>"; };
 		BFF03EC81A536D8C00BD65D4 /* HEMSystemAlertController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSystemAlertController.h; sourceTree = "<group>"; };
 		BFF03EC91A536D8C00BD65D4 /* HEMSystemAlertController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSystemAlertController.m; sourceTree = "<group>"; };
+		BFF3B43C1A5B831200B11643 /* HEMSettingsTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSettingsTableViewCell.h; sourceTree = "<group>"; };
+		BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsTableViewCell.m; sourceTree = "<group>"; };
+		BFF3B43F1A5CBF6800B11643 /* accessory.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = accessory.png; path = images/accessory.png; sourceTree = "<group>"; };
+		BFF3B4401A5CBF6800B11643 /* accessory@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "accessory@2x.png"; path = "images/accessory@2x.png"; sourceTree = "<group>"; };
+		BFF3B4411A5CBF6800B11643 /* accessory@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "accessory@3x.png"; path = "images/accessory@3x.png"; sourceTree = "<group>"; };
 		ED068BEFEEBEC0C48801356C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FD539145AF784DC3AA0DAF13 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1681,6 +1690,9 @@
 		8A660132199EBE37007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BFF3B43F1A5CBF6800B11643 /* accessory.png */,
+				BFF3B4401A5CBF6800B11643 /* accessory@2x.png */,
+				BFF3B4411A5CBF6800B11643 /* accessory@3x.png */,
 				BFB0FBF419D4C3BD0056FFEC /* alarmsIcon.png */,
 				BFB0FBF519D4C3BD0056FFEC /* alarmsIcon@2x.png */,
 				8A93AFC51A09BF0300F70A8B /* alarmsIcon@3x.png */,
@@ -1766,6 +1778,8 @@
 				8AC49FA119832FE100C2BD63 /* HEMDeviceTableViewCell.m */,
 				BF781E3319DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.h */,
 				BF781E3419DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.m */,
+				BFF3B43C1A5B831200B11643 /* HEMSettingsTableViewCell.h */,
+				BFF3B43D1A5B831200B11643 /* HEMSettingsTableViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2570,6 +2584,7 @@
 				BF05C8EA1A3A6AD6002A1307 /* questions_check@3x.png in Resources */,
 				BF05C8ED1A3A6AD6002A1307 /* questions_circle@3x.png in Resources */,
 				8AFE781419E8C2170000F881 /* phone-medium@3x.png in Resources */,
+				BFF3B4441A5CBF6800B11643 /* accessory@3x.png in Resources */,
 				8AC4A0371989C36200C2BD63 /* humidityIcon.png in Resources */,
 				8AFE77E319E8C2170000F881 /* alarm@2x.png in Resources */,
 				8A1E723519D62C26007475D3 /* alarmRepeatIcon@2x.png in Resources */,
@@ -2674,6 +2689,7 @@
 				8A93AFCE1A09BF0300F70A8B /* caret up@2x.png in Resources */,
 				8AFE781A19E8C2170000F881 /* sound-good@3x.png in Resources */,
 				8AC4A03C1989C36200C2BD63 /* temperatureIcon@2x.png in Resources */,
+				BFF3B4421A5CBF6800B11643 /* accessory.png in Resources */,
 				8AFE782D19E8C2170000F881 /* wakeup.png in Resources */,
 				8AFE781519E8C2170000F881 /* sound-bad.png in Resources */,
 				BFE872FC1A2FC65600494231 /* sensorParticulates@3x.png in Resources */,
@@ -2742,6 +2758,7 @@
 				BF770F1F1A1550E0008611E9 /* bluetooth@2x.png in Resources */,
 				8AFE77F419E8C2170000F881 /* light-good.png in Resources */,
 				8A7D80451A41094300B0BFD7 /* trendsBarIcon@2x.png in Resources */,
+				BFF3B4431A5CBF6800B11643 /* accessory@2x.png in Resources */,
 				8AFE77E719E8C2170000F881 /* asleep@3x.png in Resources */,
 				8A66FC95199D24FF00922ED5 /* maleIcon.png in Resources */,
 				BFB0FBE419D377380056FFEC /* senseIcon@2x.png in Resources */,
@@ -3094,6 +3111,7 @@
 				BFB93C7919CB7F89005067D0 /* HEMMathUtil.m in Sources */,
 				8A4B3D5F199534F000856BDE /* HEMOnboardingStoryboard.m in Sources */,
 				BF84C2031A0C1D23009471D5 /* HEMRootViewController.m in Sources */,
+				BFF3B43E1A5B831200B11643 /* HEMSettingsTableViewCell.m in Sources */,
 				8A1743B719A7B471001E3C15 /* HEMSleepGraphViewController.m in Sources */,
 				8AC49FA219832FE100C2BD63 /* HEMDeviceTableViewCell.m in Sources */,
 				BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */,

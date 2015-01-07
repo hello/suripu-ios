@@ -195,6 +195,7 @@ static NSUInteger const HEMAlarm24HourCount = 24;
     self.alarm.hour = cache.hour;
     self.alarm.repeatFlags = cache.repeatFlags;
     self.alarm.soundName = cache.soundName;
+    self.alarm.soundID = cache.soundID;
     [self.alarm save];
 }
 

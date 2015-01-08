@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.0.52
+
+New:
+
+* Artisanal selection of alarm ringtones for your listening pleasure
+* Added a message to the sensor view indicating at what values you sleep best
+
+Fixes:
+
+* Fix issue with device monitoring occuring during onboarding
+* Fix for the top bar briefly appearing when panning between views
+
 ## 1.0.0.51
 
 New:

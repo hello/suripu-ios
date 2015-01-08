@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="165"/>
                 <subviews>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:59 am" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JFc-fa-7rh" customClass="HEMPaddedRoundedLabel">
-                        <rect key="frame" x="232" y="36" width="64" height="24"/>
+                        <rect key="frame" x="232" y="56" width="64" height="24"/>
                         <color key="backgroundColor" white="1" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="24" id="0Xq-m6-7LT"/>
@@ -25,16 +25,16 @@
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Woke up" lineBreakMode="tailTruncation" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5DK-SE-Ybo">
-                        <rect key="frame" x="138" y="40" width="45" height="16"/>
+                        <rect key="frame" x="138" y="60" width="44.5" height="15.5"/>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="11"/>
                         <color key="textColor" red="0.0" green="0.50588235294117645" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IoS-vS-i2i" customClass="HEMSleepEventButton">
-                        <rect key="frame" x="150" y="0.0" width="20" height="20"/>
+                        <rect key="frame" x="140" y="0.0" width="40" height="40"/>
                         <constraints>
-                            <constraint firstAttribute="width" constant="20" id="9Uu-mh-086"/>
-                            <constraint firstAttribute="height" constant="20" id="Vxc-dy-Ohk"/>
+                            <constraint firstAttribute="width" constant="40" id="9Uu-mh-086"/>
+                            <constraint firstAttribute="height" constant="40" id="Vxc-dy-Ohk"/>
                         </constraints>
                         <state key="normal">
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>

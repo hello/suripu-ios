@@ -10,8 +10,8 @@
 
 @implementation HEMSleepEventCollectionViewCell
 
-static CGFloat const HEMSleepEventSmallButtonSize = 20.f;
-static CGFloat const HEMSleepEventLargeButtonSize = 28.f;
+static CGFloat const HEMSleepEventSmallButtonSize = 40.f;
+static CGFloat const HEMSleepEventLargeButtonSize = 40.f;
 
 - (void)awakeFromNib
 {

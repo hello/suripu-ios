@@ -392,25 +392,25 @@ static NSString* const sensorTypeParticulates = @"particulates";
 - (UIImage*)imageForEventType:(NSString*)eventType
 {
     if ([eventType isEqualToString:HEMSleepEventTypeWakeUp]) {
-        return [UIImage imageNamed:@"wakeup"];
+        return [HelloStyleKit wakeupEventIcon];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeFallAsleep]) {
-        return [UIImage imageNamed:@"asleep"];
+        return [HelloStyleKit sleepEventIcon];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeLight]) {
-        return [UIImage imageNamed:@"light"];
+        return [HelloStyleKit lightEventIcon];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeNoise]) {
-        return [UIImage imageNamed:@"sound"];
+        return [HelloStyleKit noiseEventIcon];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeMotion]) {
-        return [UIImage imageNamed:@"movement"];
+        return [HelloStyleKit motionEventIcon];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeSunrise]) {
-        return [UIImage imageNamed:@"sunrise"];
+        return [HelloStyleKit sunriseEventIcon];
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeSunset]) {
-        return [UIImage imageNamed:@"sunset"];
+        return [HelloStyleKit sunsetEventIcon];
     }
     return nil;
 }

@@ -16,7 +16,6 @@
 #import "HEMEventInfoView.h"
 #import "HEMMainStoryboard.h"
 #import "HEMPaddedRoundedLabel.h"
-#import "HEMPresleepHeaderCollectionReusableView.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphUtils.h"

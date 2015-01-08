@@ -13,7 +13,6 @@
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMNoSleepEventCollectionViewCell.h"
 #import "HEMTimelineHeaderCollectionReusableView.h"
-#import "HEMPresleepHeaderCollectionReusableView.h"
 #import "HEMPresleepItemCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HelloStyleKit.h"
@@ -138,9 +137,6 @@ static NSString* const sensorTypeParticulates = @"particulates";
           forCellWithReuseIdentifier:sleepSummaryReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSleepEventCollectionViewCell class]) bundle:bundle]
           forCellWithReuseIdentifier:sleepEventReuseIdentifier];
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMPresleepHeaderCollectionReusableView class]) bundle:bundle]
-          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                 withReuseIdentifier:presleepHeaderReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMTimelineHeaderCollectionReusableView class]) bundle:bundle]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                  withReuseIdentifier:timelineHeaderReuseIdentifier];

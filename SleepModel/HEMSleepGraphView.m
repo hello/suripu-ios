@@ -14,7 +14,6 @@
 #import "HEMEventInfoView.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepSegmentCollectionViewCell.h"
-#import "HEMPresleepHeaderCollectionReusableView.h"
 #import "HEMSleepGraphViewController.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "UIFont+HEMStyle.h"
@@ -163,7 +162,7 @@ static CGFloat const HEMSleepEventPopupMaxWidth = 400.f;
                                  HEMSleepSegmentMinimumFillWidth,
                                  CGRectGetHeight(blurRect) - bandYOffset/2);
     blurRect.origin.y -= HEMTimelineHeaderCellHeight;
-    blurRect.size.height += (HEMTimelineHeaderCellHeight + HEMPresleepSummaryLineOffset);
+    blurRect.size.height += HEMTimelineHeaderCellHeight;
     UIImage* bandSnapshot = [self.collectionView snapshotOfRect:bandRect];
     UIImage* blurSnapshot = [[self.collectionView snapshotOfRect:blurRect] applyBlurWithRadius:0
                                                                                      tintColor:[UIColor colorWithWhite:1.f alpha:0.95]

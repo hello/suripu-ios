@@ -203,8 +203,6 @@
 		8AC4A057198A0AE900C2BD63 /* questionIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A055198A0AE900C2BD63 /* questionIcon.png */; };
 		8AC4A058198A0AE900C2BD63 /* questionIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */; };
 		8AC4A05B198ACE4800C2BD63 /* HEMLineGraphDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC4A05A198ACE4800C2BD63 /* HEMLineGraphDataSource.m */; };
-		8AC7F8D119E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AC7F8CF19E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.m */; };
-		8AC7F8D219E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AC7F8D019E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.xib */; };
 		8AD88C3A1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD88C381A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m */; };
 		8AD88C3B1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C391A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib */; };
 		8AF4FA251A12B01E00451245 /* playSound.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF4FA221A12B01E00451245 /* playSound.png */; };
@@ -813,9 +811,6 @@
 		8AC4A056198A0AE900C2BD63 /* questionIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "questionIcon@2x.png"; path = "images/questionIcon@2x.png"; sourceTree = "<group>"; };
 		8AC4A059198ACE4800C2BD63 /* HEMLineGraphDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLineGraphDataSource.h; sourceTree = "<group>"; };
 		8AC4A05A198ACE4800C2BD63 /* HEMLineGraphDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLineGraphDataSource.m; sourceTree = "<group>"; };
-		8AC7F8CE19E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPresleepHeaderCollectionReusableView.h; sourceTree = "<group>"; };
-		8AC7F8CF19E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPresleepHeaderCollectionReusableView.m; sourceTree = "<group>"; };
-		8AC7F8D019E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMPresleepHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
 		8AD11AD318ECD0AA0775D047 /* Pods-Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-Tests/Pods-Tests.release.xcconfig"; sourceTree = "<group>"; };
 		8AD88C371A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimelineHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		8AD88C381A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineHeaderCollectionReusableView.m; sourceTree = "<group>"; };
@@ -1906,9 +1901,6 @@
 				8A1743C019A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.h */,
 				8A1743C119A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.m */,
 				8A1743C219A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.xib */,
-				8AC7F8CE19E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.h */,
-				8AC7F8CF19E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.m */,
-				8AC7F8D019E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.xib */,
 				8A4B669119EC7EF800445883 /* HEMPresleepItemCollectionViewCell.h */,
 				8A4B669219EC7EF800445883 /* HEMPresleepItemCollectionViewCell.m */,
 				8A4B669319EC7EF800445883 /* HEMPresleepItemCollectionViewCell.xib */,
@@ -2880,7 +2872,6 @@
 				BF05C8EB1A3A6AD6002A1307 /* questions_circle.png in Resources */,
 				8A93AFD01A09BF0300F70A8B /* senseIcon@3x.png in Resources */,
 				8AFE782219E8C2170000F881 /* sunset@2x.png in Resources */,
-				8AC7F8D219E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.xib in Resources */,
 				BFE873061A2FC65600494231 /* sensorTemperature.png in Resources */,
 				8A7D80391A41094300B0BFD7 /* alarmBarIcon@2x.png in Resources */,
 				8AFE780019E8C2170000F881 /* movement-medium.png in Resources */,
@@ -3065,7 +3056,6 @@
 				8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */,
 				8A90F9B319635CAE00AFD110 /* HEMCurrentConditionsViewController.m in Sources */,
 				8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */,
-				8AC7F8D119E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.m in Sources */,
 				BF14E3D819EF3C3D0006EFEA /* HEMNoBLEViewController.m in Sources */,
 				8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */,
 				BF98E4431A422D0B00E3CDEB /* NSDate+HEMRelative.m in Sources */,

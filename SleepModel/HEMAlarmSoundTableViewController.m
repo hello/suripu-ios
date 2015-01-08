@@ -48,22 +48,28 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
         return;
     self.navigationItem.rightBarButtonItem = nil;
     self.loading = YES;
+    __weak typeof(self) weakSelf = self;
     [SENAPIAlarms availableSoundsWithCompletion:^(NSArray* sounds, NSError *error) {
-        if (error) {
-            self.loading = NO;
-            if (count > 0)
-                [self loadAlarmSoundsWithRetryCount:count - 1];
-            else {
-                [self showAlertForError:error];
-            }
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (!error) {
+            [strongSelf updateTableWithSounds:sounds];
+            strongSelf.loading = NO;
             return;
         }
-        self.possibleSleepSounds = [sounds sortedArrayUsingComparator:^NSComparisonResult(SENSound* obj1, SENSound* obj2) {
-            return [obj1.displayName compare:obj2.displayName];
-        }];
-        [self.tableView reloadData];
-        self.loading = NO;
+        strongSelf.loading = NO;
+        if (count > 0)
+            [strongSelf loadAlarmSoundsWithRetryCount:count - 1];
+        else
+            [strongSelf showAlertForError:error];
     }];
+}
+
+- (void)updateTableWithSounds:(NSArray*)sounds
+{
+    self.possibleSleepSounds = [sounds sortedArrayUsingComparator:^NSComparisonResult(SENSound* obj1, SENSound* obj2) {
+        return [obj1.displayName compare:obj2.displayName];
+    }];
+    [self.tableView reloadData];
 }
 
 - (void)showAlertForError:(NSError*)error

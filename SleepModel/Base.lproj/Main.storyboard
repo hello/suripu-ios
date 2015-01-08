@@ -2029,7 +2029,7 @@
         <!--Alarm Navigation Controller-->
         <scene sceneID="DWr-yB-iBh">
             <objects>
-                <navigationController storyboardIdentifier="alarmNavController" automaticallyAdjustsScrollViewInsets="NO" id="88V-1f-xf4" userLabel="Alarm Navigation Controller" customClass="HEMSettingsNavigationController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="alarmNavController" automaticallyAdjustsScrollViewInsets="NO" id="88V-1f-xf4" userLabel="Alarm Navigation Controller" customClass="HEMStyledNavigationViewController" sceneMemberID="viewController">
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
                     <toolbarItems/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>

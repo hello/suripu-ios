@@ -124,6 +124,21 @@ typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {
 + (BOOL)isReady;
 
 /**
+ * @method whenBleStateAvailable:
+ *
+ * @discussion
+ * Some hardware needs to be fired up before you can even see if the device has
+ * BLE turned on.  If it's not fired up, you must check back again in a few ms.  
+ * This method is a convenient way to not have to repeatedly check the state 
+ * yourself, but instead invoke your block to tell you if BLE is on or in a 
+ * different state.
+ *
+ * @param block: the block to invoke when the BLE state can be queried
+ *
+ */
++ (void)whenBleStateAvailable:(void(^)(BOOL on))block;
+
+/**
  * Determine, as best as possible, whether if manager can actually start a scan
  * based on whether BLE is supported and enabled.  If the radio is resetting or
  * in some unknown state, this will assume it's still functional and thus can scan,

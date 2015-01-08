@@ -143,6 +143,7 @@
 		8A9BD8D019DF28F400B1E57E /* HEMPaddedRoundedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9BD8CF19DF28F400B1E57E /* HEMPaddedRoundedLabel.m */; };
 		8A9D380B1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D380A1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m */; };
 		8A9F574519F873110009E50A /* HEMLogUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9F574419F873110009E50A /* HEMLogUtils.m */; };
+		8AA157B51A5E194100BF1D4A /* HEMStyledNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA157B41A5E194100BF1D4A /* HEMStyledNavigationViewController.m */; };
 		8AA8D92A19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D92819ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m */; };
 		8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AA8D92919ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib */; };
 		8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D93919AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m */; };
@@ -206,9 +207,6 @@
 		8AC7F8D219E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AC7F8D019E8C930009D8218 /* HEMPresleepHeaderCollectionReusableView.xib */; };
 		8AD88C3A1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD88C381A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m */; };
 		8AD88C3B1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C391A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib */; };
-		8AEE83C81A24136A0094E725 /* Aria.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8AEE83C51A24136A0094E725 /* Aria.m4a */; };
-		8AEE83C91A24136A0094E725 /* Ballad.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8AEE83C61A24136A0094E725 /* Ballad.m4a */; };
-		8AEE83CA1A24136A0094E725 /* Bells.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 8AEE83C71A24136A0094E725 /* Bells.m4a */; };
 		8AF4FA251A12B01E00451245 /* playSound.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF4FA221A12B01E00451245 /* playSound.png */; };
 		8AF4FA261A12B01E00451245 /* playSound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF4FA231A12B01E00451245 /* playSound@2x.png */; };
 		8AF4FA271A12B01E00451245 /* playSound@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF4FA241A12B01E00451245 /* playSound@3x.png */; };
@@ -720,6 +718,8 @@
 		8A9F574319F873110009E50A /* HEMLogUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMLogUtils.h; sourceTree = "<group>"; };
 		8A9F574419F873110009E50A /* HEMLogUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMLogUtils.m; sourceTree = "<group>"; };
 		8AA0F57E19C2255D00556AAF /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = CHANGELOG.md; sourceTree = SOURCE_ROOT; };
+		8AA157B31A5E194100BF1D4A /* HEMStyledNavigationViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMStyledNavigationViewController.h; sourceTree = "<group>"; };
+		8AA157B41A5E194100BF1D4A /* HEMStyledNavigationViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMStyledNavigationViewController.m; sourceTree = "<group>"; };
 		8AA8D92719ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryCollectionViewCell.h; sourceTree = "<group>"; };
 		8AA8D92819ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryCollectionViewCell.m; sourceTree = "<group>"; };
 		8AA8D92919ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMSleepSummaryCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -809,9 +809,6 @@
 		8AD88C371A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimelineHeaderCollectionReusableView.h; sourceTree = "<group>"; };
 		8AD88C381A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineHeaderCollectionReusableView.m; sourceTree = "<group>"; };
 		8AD88C391A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMTimelineHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
-		8AEE83C51A24136A0094E725 /* Aria.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Aria.m4a; sourceTree = "<group>"; };
-		8AEE83C61A24136A0094E725 /* Ballad.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Ballad.m4a; sourceTree = "<group>"; };
-		8AEE83C71A24136A0094E725 /* Bells.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = Bells.m4a; sourceTree = "<group>"; };
 		8AF4FA221A12B01E00451245 /* playSound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playSound.png; path = images/playSound.png; sourceTree = "<group>"; };
 		8AF4FA231A12B01E00451245 /* playSound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "playSound@2x.png"; path = "images/playSound@2x.png"; sourceTree = "<group>"; };
 		8AF4FA241A12B01E00451245 /* playSound@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "playSound@3x.png"; path = "images/playSound@3x.png"; sourceTree = "<group>"; };
@@ -1494,9 +1491,6 @@
 		8A66012D199EBD64007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				8AEE83C51A24136A0094E725 /* Aria.m4a */,
-				8AEE83C61A24136A0094E725 /* Ballad.m4a */,
-				8AEE83C71A24136A0094E725 /* Bells.m4a */,
 				8A1E722A19D62C26007475D3 /* alarmNoteIcon.png */,
 				8A1E722B19D62C26007475D3 /* alarmNoteIcon@2x.png */,
 				8A1E722C19D62C26007475D3 /* alarmRepeatIcon.png */,
@@ -1835,6 +1829,8 @@
 				BFE873101A323C2800494231 /* HEMUpdatePasswordViewController.m */,
 				BF8F89841A4A1DA400D8374F /* HEMUpdateEmailViewController.h */,
 				BF8F89851A4A1DA400D8374F /* HEMUpdateEmailViewController.m */,
+				8AA157B31A5E194100BF1D4A /* HEMStyledNavigationViewController.h */,
+				8AA157B41A5E194100BF1D4A /* HEMStyledNavigationViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2578,7 +2574,6 @@
 				8A66013B199EBF87007E6167 /* README.md in Resources */,
 				8AFE782819E8C2170000F881 /* temperature-good@2x.png in Resources */,
 				BFE8730B1A2FC65600494231 /* sensorTemperatureBlue@3x.png in Resources */,
-				8AEE83CA1A24136A0094E725 /* Bells.m4a in Resources */,
 				8AAEED0419A5225F006517C4 /* Agile-ExtralightItalic.otf in Resources */,
 				8AAEED0E19A5225F006517C4 /* Agile-ThinItalic.otf in Resources */,
 				8AAEECFF19A5225F006517C4 /* Agile-Book.otf in Resources */,
@@ -2635,7 +2630,6 @@
 				8A93AFCD1A09BF0300F70A8B /* caret up.png in Resources */,
 				BFE872F81A2FC65600494231 /* sensorLightBlue@2x.png in Resources */,
 				BFB0FBDC19D253400056FFEC /* pillIcon.png in Resources */,
-				8AEE83C91A24136A0094E725 /* Ballad.m4a in Resources */,
 				8AFE781F19E8C2170000F881 /* sunrise@2x.png in Resources */,
 				BFB0FBF819D4C3BD0056FFEC /* alarmsIcon.png in Resources */,
 				8AC4A0401989C5A100C2BD63 /* settingsIcon@2x.png in Resources */,
@@ -2727,7 +2721,6 @@
 				8AFE77E619E8C2170000F881 /* asleep@2x.png in Resources */,
 				8AFE77EA19E8C2170000F881 /* humidity-bad@3x.png in Resources */,
 				8A1E723419D62C26007475D3 /* alarmRepeatIcon.png in Resources */,
-				8AEE83C81A24136A0094E725 /* Aria.m4a in Resources */,
 				BF5E444F19AD494500278A2F /* phoneWithEmoticons.png in Resources */,
 				8AFE781219E8C2170000F881 /* phone-medium.png in Resources */,
 				8AFE780419E8C2170000F881 /* particulates-bad@2x.png in Resources */,
@@ -2971,6 +2964,7 @@
 				8AC3C2DC1A3C7FF00074A87F /* HEMSnazzBarController.m in Sources */,
 				BF14E3C519EF3C020006EFEA /* HEMWifiUtils.m in Sources */,
 				6003F59E195388D20070C39A /* HEMAppDelegate.m in Sources */,
+				8AA157B51A5E194100BF1D4A /* HEMStyledNavigationViewController.m in Sources */,
 				8AB2684A19CCFF9200017818 /* HEMAlarmRepeatTableViewController.m in Sources */,
 				8A7D80231A40EADE00B0BFD7 /* NSString+HEMUtils.m in Sources */,
 				8A9BD8D019DF28F400B1E57E /* HEMPaddedRoundedLabel.m in Sources */,

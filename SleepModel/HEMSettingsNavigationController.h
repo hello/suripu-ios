@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMStyledNavigationViewController.h"
 
-@interface HEMSettingsNavigationController : UINavigationController
+@interface HEMSettingsNavigationController : HEMStyledNavigationViewController
 
 @end

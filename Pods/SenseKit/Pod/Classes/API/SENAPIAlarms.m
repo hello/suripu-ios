@@ -1,10 +1,12 @@
 
 #import "SENAPIAlarms.h"
 #import "SENAlarm.h"
+#import "SENSound.h"
 
 @implementation SENAPIAlarms
 
 static NSString* const SENAPIAlarmsEndpoint = @"alarms";
+static NSString* const SENAPIAlarmSoundsEndpoint = @"alarms/sounds";
 static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"alarms/%.0f";
 
 + (void)alarmsWithCompletion:(SENAPIDataBlock)completion
@@ -14,7 +16,7 @@ static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"alarms/%.0f";
     [SENAPIClient GET:SENAPIAlarmsEndpoint
            parameters:nil
            completion:^(NSArray* data, NSError* error) {
-               if (error) {
+               if (error || ![data isKindOfClass:[NSArray class]]) {
                    completion(nil, error);
                    return;
                }
@@ -35,6 +37,26 @@ static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"alarms/%.0f";
     [SENAPIClient POST:[NSString stringWithFormat:SENAPIAlarmsUpdateEndpointFormat, clientTimeUTC]
             parameters:alarmData
             completion:completion];
+}
+
++ (void)availableSoundsWithCompletion:(SENAPIDataBlock)completion
+{
+    if (!completion)
+        return;
+
+    [SENAPIClient GET:SENAPIAlarmSoundsEndpoint parameters:nil completion:^(NSArray* data, NSError *error) {
+        if (error || ![data isKindOfClass:[NSArray class]]) {
+            completion(nil, error);
+            return;
+        }
+        NSMutableArray* sounds = [[NSMutableArray alloc] initWithCapacity:data.count];
+        for (NSDictionary* soundData in data) {
+            SENSound* sound = [[SENSound alloc] initWithDictionary:soundData];
+            if (sound)
+                [sounds addObject:sound];
+        }
+        completion(sounds, nil);
+    }];
 }
 
 + (NSArray*)parameterArrayForAlarms:(NSArray*)alarms
@@ -58,10 +80,10 @@ static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"alarms/%.0f";
     NSDateComponents* alarmDateComponents = [self dateComponentsForAlarm:alarm];
     properties[@"editable"] = @([alarm isEditable]);
     properties[@"enabled"] = @([alarm isOn]);
-    if (alarm.soundName.length > 0)
-        properties[@"sound"] = @{ @"name" : alarm.soundName };
-    else
-        properties[@"sound"] = @{};
+    properties[@"sound"] = @{
+        @"name" : alarm.soundName ?: @"",
+        @"id" : alarm.soundID ?: @""
+    };
     properties[@"hour"] = @(alarmDateComponents.hour);
     properties[@"minute"] = @(alarmDateComponents.minute);
     properties[@"repeated"] = @(repeated);

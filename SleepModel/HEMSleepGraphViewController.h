@@ -14,6 +14,7 @@ extern CGFloat const HEMTimelineHeaderCellHeight;
 @protocol HEMSleepEventActionDelegate <NSObject>
 
 - (void)didTapEventButton:(UIButton*)sender;
+- (void)didTapDataVerifyButton:(UIButton*)sender;
 
 @end
 

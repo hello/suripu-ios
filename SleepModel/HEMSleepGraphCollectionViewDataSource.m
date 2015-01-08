@@ -5,6 +5,7 @@
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
 #import <SpinKit/RTSpinKitView.h>
+#import <FDWaveformView/FDWaveformView.h>
 #import <markdown_peg.h>
 
 #import "HEMSleepGraphCollectionViewDataSource.h"
@@ -13,6 +14,7 @@
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMNoSleepEventCollectionViewCell.h"
 #import "HEMTimelineHeaderCollectionReusableView.h"
+#import "HEMTimelineFooterCollectionReusableView.h"
 #import "HEMPresleepItemCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HelloStyleKit.h"
@@ -45,6 +47,7 @@ static NSString* const sleepSegmentReuseIdentifier = @"sleepSegmentCell";
 static NSString* const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
 static NSString* const presleepHeaderReuseIdentifier = @"presleepCell";
 static NSString* const timelineHeaderReuseIdentifier = @"timelineHeaderCell";
+static NSString* const timelineFooterReuseIdentifier = @"timelineHeaderCell";
 static NSString* const presleepItemReuseIdentifier = @"presleepItemCell";
 static NSString* const sleepEventReuseIdentifier = @"sleepEventCell";
 static NSString* const sensorTypeTemperature = @"temperature";
@@ -140,6 +143,9 @@ static NSString* const sensorTypeParticulates = @"particulates";
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMTimelineHeaderCollectionReusableView class]) bundle:bundle]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                  withReuseIdentifier:timelineHeaderReuseIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMTimelineFooterCollectionReusableView class]) bundle:bundle]
+          forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
+                 withReuseIdentifier:timelineFooterReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMPresleepItemCollectionViewCell class]) bundle:bundle]
           forCellWithReuseIdentifier:presleepItemReuseIdentifier];
 }
@@ -220,11 +226,12 @@ static NSString* const sensorTypeParticulates = @"particulates";
 
 - (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView viewForSupplementaryElementOfKind:(NSString*)kind atIndexPath:(NSIndexPath*)indexPath
 {
-    UICollectionReusableView* view = view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                                               withReuseIdentifier:timelineHeaderReuseIdentifier
-                                                                                      forIndexPath:indexPath];
+    NSString* identifier = [kind isEqualToString:UICollectionElementKindSectionHeader]
+        ? timelineHeaderReuseIdentifier : timelineFooterReuseIdentifier;
+    UICollectionReusableView* view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                                        withReuseIdentifier:identifier
+                                                                               forIndexPath:indexPath];
     view.hidden = !(indexPath.section == HEMSleepGraphCollectionViewSegmentSection
-                    && [kind isEqualToString:UICollectionElementKindSectionHeader]
                     && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] > 0);
     return view;
 }
@@ -313,16 +320,25 @@ static NSString* const sensorTypeParticulates = @"particulates";
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMSleepEventCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepEventReuseIdentifier forIndexPath:indexPath];
     if ([collectionView.delegate respondsToSelector:@selector(didTapEventButton:)]) {
-        [cell.eventTypeButton addTarget:collectionView.delegate action:@selector(didTapEventButton:) forControlEvents:UIControlEventTouchUpInside];
+        [cell.eventTypeButton addTarget:collectionView.delegate
+                                 action:@selector(didTapEventButton:) forControlEvents:UIControlEventTouchUpInside];
     }
+    if (segment.sound) {
+        cell.waveformView.hidden = NO;
+        cell.playSoundButton.hidden = NO;
+        [cell setAudioURL:[NSURL URLWithString:segment.sound.URLPath]];
+    } else if ([collectionView.delegate respondsToSelector:@selector(didTapDataVerifyButton:)]
+               && [segment.eventType isEqualToString:HEMSleepEventTypeWakeUp]) {
+        cell.verifyDataButton.hidden = NO;
+        [cell.verifyDataButton addTarget:collectionView.delegate
+                                  action:@selector(didTapDataVerifyButton:) forControlEvents:UIControlEventTouchUpInside];
+    }
+
     [cell.eventTypeButton setImage:[self imageForEventType:segment.eventType] forState:UIControlStateNormal];
-    BOOL showLargeButton = [segment.eventType isEqualToString:HEMSleepEventTypeWakeUp]
-        || [segment.eventType isEqualToString:HEMSleepEventTypeFallAsleep];
-    [cell showLargeButton:showLargeButton];
-    cell.eventTypeButton.layer.borderColor = [UIColor colorForSleepDepth:sleepDepth].CGColor;
     cell.eventTimeLabel.text = [self textForTimeInterval:[segment.date timeIntervalSince1970]];
 
-    cell.eventTitleLabel.text = [[self class] localizedNameForSleepEventType:segment.eventType];
+    cell.eventTitleLabel.text = [[[self class] localizedNameForSleepEventType:segment.eventType] uppercaseString];
+    cell.eventMessageLabel.attributedText = markdown_to_attr_string(segment.message, 0, [HEMMarkdown attributesForEventMessageText]);
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
     [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[UIColor colorForSleepDepth:sleepDepth]];

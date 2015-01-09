@@ -67,7 +67,10 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     
     [self setupCancelButton];
     
-    [SENAnalytics track:kHEMAnalyticsEventOnBWiFi];
+    if ([self delegate] == nil && [self sensePairDelegate] == nil) {
+        [SENAnalytics track:kHEMAnalyticsEventOnBWiFi];
+    }
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -102,7 +105,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 }
 
 - (void)setupCancelButton {
-    if ([self delegate] != nil) {
+    if ([self delegate] != nil || [self sensePairDelegate] != nil) {
         NSString* title = NSLocalizedString(@"actions.cancel", nil);
         UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:title
                                                                        style:UIBarButtonItemStyleBordered
@@ -268,6 +271,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (IBAction)cancel:(id)sender {
     [[self delegate] didCancelWiFiConfigurationFrom:self];
+    [[self sensePairDelegate] didSetupWiFiForPairedSense:NO from:self];
 }
 
 #pragma mark - Navigation
@@ -283,6 +287,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         HEMWifiPasswordViewController* wifiVC = (HEMWifiPasswordViewController*)destVC;
         [wifiVC setEndpoint:[self selectedWifiEndpont]];
         [wifiVC setDelegate:[self delegate]];
+        [wifiVC setSensePairDelegate:[self sensePairDelegate]];
     }
 }
 

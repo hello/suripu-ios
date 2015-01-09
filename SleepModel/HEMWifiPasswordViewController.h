@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "HEMBaseController.h"
 #import "HEMWiFiConfigurationDelegate.h"
+#import "HEMSensePairDelegate.h"
 
 @class SENWifiEndpoint;
 
@@ -16,5 +17,6 @@
 
 @property (nonatomic, strong) SENWifiEndpoint* endpoint;
 @property (nonatomic, weak)   id<HEMWiFiConfigurationDelegate> delegate;
+@property (nonatomic, weak)   id<HEMSensePairingDelegate> sensePairDelegate;
 
 @end

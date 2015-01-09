@@ -76,7 +76,10 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     [self setupSecurityPickerView];
     [self updateSecurityTypeLabelForRow:[self rowForSecurityType:[self securityType]]];
     
-    [SENAnalytics track:kHEMAnalyticsEventOnBWiFiPass];
+    if ([self delegate] == nil && [self sensePairDelegate] == nil) {
+        [SENAnalytics track:kHEMAnalyticsEventOnBWiFiPass];
+    }
+    
 }
 
 - (void)viewWillLayoutSubviews {
@@ -154,6 +157,10 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             && ([self securityType] == SENWifiEndpointSecurityTypeOpen
                 || ([self securityType] != SENWifiEndpointSecurityTypeOpen
                     && [pass length] > 0));
+}
+
+- (void)saveSSIDConfigured {
+    
 }
 
 #pragma mark - Security Picker
@@ -353,6 +360,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     SENSenseManager* manager = [self manager];
     [manager setWiFi:ssid password:password securityType:type success:^(id response) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [HEMOnboardingUtils saveConfiguredSSID:ssid];
         [strongSelf setSsidConfigured:ssid];
         [strongSelf setStepFinished:HEMWiFiSetupStepConfigureWiFi];
         [strongSelf executeNextStep];
@@ -441,7 +449,9 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     // need to start querying for sensor data so that 1, user will see
     // it as soon as onboarding is done and 2, later step will check
     // sensor data
-    [[HEMOnboardingCache sharedCache] startPollingSensorData];
+    if ([self delegate] == nil && [self sensePairDelegate] == nil) {
+        [[HEMOnboardingCache sharedCache] startPollingSensorData];
+    }
     
     __weak typeof(self) weakSelf = self;
     
@@ -454,6 +464,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             
             if ([strongSelf delegate] != nil) {
                 [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
+            } else if ([strongSelf sensePairDelegate] != nil) {
+                [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:YES from:self];
             } else {
                 [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
                 [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard senseToPillSegueIdentifier]

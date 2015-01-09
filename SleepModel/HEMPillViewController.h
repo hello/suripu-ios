@@ -10,4 +10,6 @@
 
 @interface HEMPillViewController : UIViewController
 
+@property (nonatomic, copy) NSOrderedSet* warnings;
+
 @end

@@ -10,17 +10,25 @@
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
+#import "NSMutableAttributedString+HEMFormat.h"
 
 #import "HEMPillViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
+#import "HEMCardFlowLayout.h"
+#import "HEMDeviceActionCollectionViewCell.h"
+#import "HEMActivityCoverView.h"
+#import "HEMSupportUtil.h"
+#import "HEMWarningCollectionViewCell.h"
+#import "HEMDeviceDataSource.h"
+#import "HEMActionButton.h"
 
-@interface HEMPillViewController() <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
+static NSInteger const HEMPillActionsCellHeight = 124.0f;
 
-@property (weak, nonatomic) IBOutlet UIView *unpairView;
-@property (weak, nonatomic) IBOutlet UIView *activityView;
-@property (weak, nonatomic) IBOutlet UILabel *activityLabel;
-@property (weak, nonatomic) IBOutlet UITableView *pillInfoTableView;
+@interface HEMPillViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate>
+
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic) HEMActivityCoverView* activityView;
 
 @end
 
@@ -28,103 +36,131 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self pillInfoTableView] setTableFooterView:[[UIView alloc] init]];
-    [[self unpairView] setHidden:[[SENServiceDevice sharedService] pillInfo] == nil];
-    [[self activityLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [self configureCollectionView];
 }
 
-#pragma mark - UITableViewDelegate / DataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 4;
+- (void)configureCollectionView {
+    [[self collectionView] setDataSource:self];
+    [[self collectionView] setDelegate:self];
+    [[self collectionView] setAlwaysBounceVertical:YES];
 }
 
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard pillInfoCellReuseIdentifier]];
+- (NSAttributedString*)redMessage:(NSString*)message {
+    NSDictionary* attributes = @{NSForegroundColorAttributeName : [UIColor redColor]};
+    return [[NSAttributedString alloc] initWithString:message attributes:attributes];
 }
 
-- (void)tableView:(UITableView *)tableView
-  willDisplayCell:(UITableViewCell *)cell
-forRowAtIndexPath:(NSIndexPath *)indexPath {
-
-    SENDevice* info = [[SENServiceDevice sharedService] pillInfo];
-    NSString* title = nil;
-    NSString* detail = NSLocalizedString(@"empty-data", nil);
+- (NSAttributedString*)attributedLongLastSeenMessage {
+    NSString* format = NSLocalizedString(@"settings.pill.warning.last-seen-format", nil);
+    NSString* lastSeen = [[[[SENServiceDevice sharedService] senseInfo] lastSeen] timeAgo];
+    NSArray* args = @[[self redMessage:lastSeen ?: NSLocalizedString(@"settings.device.warning.last-seen-generic", nil)]];
     
-    switch ([indexPath row]) {
-        case 0: {
-            title = NSLocalizedString(@"settings.device.battery", nil);
+    NSMutableAttributedString* attrWarning =
+        [[NSMutableAttributedString alloc] initWithFormat:format args:args];
+    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]}
+                         range:NSMakeRange(0, [attrWarning length])];
+    
+    return attrWarning;
+}
+
+- (NSAttributedString*)attributedMessageForWarning:(HEMDeviceWarning)warning {
+    NSAttributedString* message = nil;
+    switch (warning) {
+        case HEMDeviceWarningLongLastSeen:
+            message = [self attributedLongLastSeenMessage];
             break;
-        }
-        case 1: {
-            title = NSLocalizedString(@"settings.device.last-seen", nil);
-            if ([info lastSeen] != nil) {
-                detail = [[info lastSeen] timeAgo];
-            }
-            break;
-        }
-        case 2: {
-            title = NSLocalizedString(@"settings.device.color", nil);
-            break;
-        }
-        case 3: {
-            title = NSLocalizedString(@"settings.device.firmware-version", nil);
-            if ([[info firmwareVersion] length] > 0) {
-                detail = [info firmwareVersion];
-            }
-            break;
-        }
         default:
             break;
     }
-    
-    [[cell textLabel] setText:title];
-    [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
-    [[cell textLabel] setFont:[UIFont settingsTitleFont]];
-    
-    [[cell detailTextLabel] setText:detail];
-    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewDetailTextColor]];
-    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
-    
+    return message;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
+- (CGFloat)heightForWarning:(HEMDeviceWarning)warning withDefaultItemSize:(CGSize)size {
+    NSAttributedString* message = [self attributedMessageForWarning:warning];
+    CGRect bounds = [message boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT)
+                                          options:NSStringDrawingUsesFontLeading
+                     |NSStringDrawingUsesLineFragmentOrigin
+                                          context:nil];
+    return CGRectGetHeight(bounds);
+}
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+    return [[self warnings] count] + 1; // actions always available
+}
+
+- (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString* reuseId
+        = [indexPath row] < [[self warnings] count]
+        ? [HEMMainStoryboard warningReuseIdentifier]
+        : [HEMMainStoryboard actionsReuseIdentifier];
+    
+    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
+                                                                           forIndexPath:indexPath];
+    
+    if ([cell isKindOfClass:[HEMDeviceActionCollectionViewCell class]]) {
+        HEMDeviceActionCollectionViewCell* actionCell = (HEMDeviceActionCollectionViewCell*)cell;
+        [[actionCell action1Button] addTarget:self
+                                       action:@selector(replacePill:)
+                             forControlEvents:UIControlEventTouchUpInside];
+        [[actionCell action2Button] addTarget:self
+                                       action:@selector(replaceBattery:)
+                             forControlEvents:UIControlEventTouchUpInside];
+    } else if ([cell isKindOfClass:[HEMWarningCollectionViewCell class]]) {
+        HEMDeviceWarning warning = (HEMDeviceWarning)[[self warnings][[indexPath row]] integerValue];
+        HEMWarningCollectionViewCell* warningCell = (HEMWarningCollectionViewCell*)cell;
+        [[warningCell warningMessageLabel] setAttributedText:[self attributedMessageForWarning:warning]];
+        [[warningCell actionButton] setTitle:[NSLocalizedString(@"actions.troubleshoot", nil) uppercaseString]
+                                    forState:UIControlStateNormal];
+        [[warningCell actionButton] setTag:warning];
+        [[warningCell actionButton] addTarget:self
+                                       action:@selector(takeWarningAction:)
+                             forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return cell;
+}
+
+#pragma mark - UICollectionViewDelegate
+
+- (CGSize)collectionView:(UICollectionView*)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    HEMCardFlowLayout* layout = (HEMCardFlowLayout*)collectionViewLayout;
+    CGSize size = [layout itemSize];
+    if ([indexPath row] < [[self warnings] count]) {
+        HEMDeviceWarning warning = [[self warnings][[indexPath row]] integerValue];
+        NSAttributedString* message = [self attributedMessageForWarning:warning];
+        CGRect bounds = [message boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT)
+                                              options:NSStringDrawingUsesFontLeading
+                                                     |NSStringDrawingUsesLineFragmentOrigin
+                                              context:nil];
+        size.height = CGRectGetHeight(bounds) + HEMWarningCellBaseHeight;
+    } else if ([indexPath row] == [[self warnings] count]) {
+        size.height = HEMPillActionsCellHeight;
+    }
+    return size;
 }
 
 #pragma mark - Actions
 
-- (void)showActivity {
-    [[self unpairView] setHidden:YES];
-    [[self unpairView] setAlpha:0.0f];
-    [[self activityView] setAlpha:0.0f];
-    [[self activityView] setHidden:[[SENServiceDevice sharedService] pillInfo] == nil];
-    
-    if (![[self activityView] isHidden]) {
-        [UIView animateWithDuration:0.25f
-                         animations:^{
-                             [[self activityView] setAlpha:1.0f];
-                         }];
-    }
-    
-}
-
-- (void)hideActivity {
-    [[self unpairView] setHidden:[[SENServiceDevice sharedService] pillInfo] == nil];
-    
-    if (![[self unpairView] isHidden]) {
-        [UIView animateWithDuration:0.25f
-                         animations:^{
-                             [[self unpairView] setAlpha:1.0f];
-                             [[self activityView] setAlpha:0.0f];
-                         }
-                         completion:^(BOOL finished) {
-                             [[self activityView] setHidden:YES];
-                         }];
+- (void)takeWarningAction:(UIButton*)sender {
+    HEMDeviceWarning warning = [sender tag];
+    switch (warning) {
+        case HEMDeviceWarningLongLastSeen:
+            [HEMSupportUtil openHelpFrom:self];
+            break;
+        default:
+            break;
     }
 }
 
-- (IBAction)showUnpairConfirmation:(id)sender {
+- (void)replacePill:(id)sender {
     NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-title", nil);
     NSString* message = NSLocalizedString(@"settings.pill.dialog.unpair-message", nil);
     UIAlertView* confirmDialog = [[UIAlertView alloc] initWithTitle:title
@@ -135,6 +171,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [confirmDialog setDelegate:self];
     [confirmDialog show];
 }
+
+- (void)replaceBattery:(id)sender {
+    [HEMSupportUtil openHelpFrom:self];
+}
+
+#pragma mark - Unpairing the pill
 
 - (void)showUnpairMessageForError:(NSError*)error {
     NSString* message = nil;
@@ -169,26 +211,36 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
     if (buttonIndex != [alertView cancelButtonIndex]) {
         [self unpair];
-        [self showActivity];
     }
 }
 
 - (void)unpair {
-    [self showActivity];
-    [[self activityLabel] setText:NSLocalizedString(@"settings.pill.unpairing-message", nil)];
-    __weak typeof(self) weakSelf = self;
-    [[SENServiceDevice sharedService] unpairSleepPill:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf hideActivity];
-            if (error != nil) {
-                [strongSelf showUnpairMessageForError:error];
-            } else {
-                // pop then push no pill view controller
-                [[strongSelf navigationController] popViewControllerAnimated:YES];
+    if ([self activityView] == nil) {
+        [self setActivityView:[[HEMActivityCoverView alloc] init]];
+    }
+    
+    id<UIApplicationDelegate> delegate = (id)[UIApplication sharedApplication].delegate;
+    UIViewController* root = (id)delegate.window.rootViewController;
+    
+    NSString* message = NSLocalizedString(@"settings.pill.unpairing-message", nil);
+    [[self activityView] showInView:[root view] withText:message activity:YES completion:^{
+        __weak typeof(self) weakSelf = self;
+        [[SENServiceDevice sharedService] unpairSleepPill:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                if (error != nil) {
+                    [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                        [strongSelf showUnpairMessageForError:error];
+                    }];
+                } else {
+                    [[strongSelf navigationController] popViewControllerAnimated:YES];
+                    NSString* success = NSLocalizedString(@"settings.pill.unpaired-message", nil);
+                    [[strongSelf activityView] dismissWithResultText:success showSuccessMark:YES remove:YES completion:nil];
+                }
             }
-        }
+        }];
     }];
+
 }
 
 @end

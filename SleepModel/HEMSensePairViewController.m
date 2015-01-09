@@ -21,6 +21,7 @@
 #import "HEMSecondPillCheckViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMSupportUtil.h"
+#import "HEMWifiPickerViewController.h"
 
 typedef NS_ENUM(NSUInteger, HEMSensePairState) {
     HEMSensePairStateNotStarted = 0,
@@ -53,6 +54,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTopConstraint;
 
+@property (strong, nonatomic) UIBarButtonItem* cancelItem;
 @property (strong, nonatomic) SENSenseManager* manager;
 @property (assign, nonatomic) HEMSensePairState currentState;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
@@ -71,9 +73,24 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupDescription];
+    [self setupCancelButton];
     [self setCurrentState:HEMSensePairStateNotStarted];
     
-    [SENAnalytics track:kHEMAnalyticsEventOnBPairSense];
+    if ([self delegate] == nil) {
+        [SENAnalytics track:kHEMAnalyticsEventOnBPairSense];
+    }
+}
+
+- (void)setupCancelButton {
+    if ([self delegate] != nil) {
+        NSString* title = NSLocalizedString(@"actions.cancel", nil);
+        UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:title
+                                                                       style:UIBarButtonItemStyleBordered
+                                                                      target:self
+                                                                      action:@selector(cancel:)];
+        [[self navigationItem] setLeftBarButtonItem:cancelItem];
+        [self setCancelItem:cancelItem];
+    }
 }
 
 - (void)setupDescription {
@@ -133,6 +150,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 #pragma mark - Actions
+
+- (void)cancel:(id)sender {
+    [[self delegate] didPairSense:NO from:self];
+}
 
 - (IBAction)enablePairing:(id)sender {
     // restart the scanning
@@ -276,8 +297,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             break;
         }
         case HEMSensePairStateForceDataUpload: {
-            [[HEMOnboardingCache sharedCache] startPollingSensorData];
-            [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
+            if ([self delegate] == nil) {
+                [[HEMOnboardingCache sharedCache] startPollingSensorData];
+                [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
+            }
             [self finish];
             break;
         }
@@ -341,6 +364,9 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             if (state == SENWiFiConnectionStateConnected) {
                 pairState = HEMSensePairStateWiFiDetected;
                 [strongSelf setDetectedSSID:ssid];
+            }
+            if ([ssid length] > 0) {
+                [HEMOnboardingUtils saveConfiguredSSID:ssid];
             }
             DDLogVerbose(@"wifi %@ is in state detected %ld", ssid, (long)state);
             [strongSelf setCurrentState:pairState];
@@ -458,14 +484,18 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)next {
-    NSString* segueId = nil;
-    if ([self detectedSSID] != nil) {
-        DDLogVerbose(@"detected SSID %@, skipping wifi set up", [self detectedSSID]);
-        segueId = [HEMOnboardingStoryboard senseToPillSegueIdentifier];
+    if ([self delegate] == nil) {
+        NSString* segueId = nil;
+        if ([self detectedSSID] != nil) {
+            DDLogVerbose(@"detected SSID %@, skipping wifi set up", [self detectedSSID]);
+            segueId = [HEMOnboardingStoryboard senseToPillSegueIdentifier];
+        } else {
+            segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
+        }
+        [self performSegueWithIdentifier:segueId sender:self];
     } else {
-        segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
+        [[self delegate] didPairSense:YES from:nil];
     }
-    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -475,6 +505,9 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         [[nav navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];
         HEMSecondPillCheckViewController* pairingCheckVC = (HEMSecondPillCheckViewController*)[nav topViewController];
         [pairingCheckVC setDelegate:self];
+    } else if ([destVC isKindOfClass:[HEMWifiPickerViewController class]]) {
+        HEMWifiPickerViewController* pickerVC = (HEMWifiPickerViewController*)destVC;
+        [pickerVC setSensePairDelegate:[self delegate]]; // if one is set, pass it along
     }
 }
 

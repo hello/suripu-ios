@@ -9,9 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "HEMBaseController.h"
 #import "HEMWiFiConfigurationDelegate.h"
+#import "HEMSensePairDelegate.h"
 
 @interface HEMWifiPickerViewController : HEMBaseController
 
 @property (nonatomic, weak) id<HEMWiFiConfigurationDelegate> delegate;
+@property (nonatomic, weak) id<HEMSensePairingDelegate> sensePairDelegate;
 
 @end

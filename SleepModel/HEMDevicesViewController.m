@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENDevice.h>
-#import <SenseKit/SENServiceDevice.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
@@ -14,15 +13,27 @@
 #import "HEMDevicesViewController.h"
 #import "HEMPillViewController.h"
 #import "HEMSenseViewController.h"
-#import "HEMNoPillViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
+#import "HEMCardFlowLayout.h"
+#import "HEMDeviceCollectionViewCell.h"
+#import "HEMNoDeviceCollectionViewCell.h"
+#import "HEMActionButton.h"
+#import "HEMPillPairViewController.h"
+#import "HEMOnboardingStoryboard.h"
+#import "HEMDeviceDataSource.h"
+#import "HEMSensePairViewController.h"
+#import "HEMSensePairDelegate.h"
 
-@interface HEMDevicesViewController() <UITableViewDelegate, UITableViewDataSource>
+static CGFloat const HEMDeviceInfoHeight = 190.0f;
+static CGFloat const HEMNoDeviceHeight = 205.0f;
 
-@property (weak,   nonatomic) IBOutlet UITableView *devicesTableView;
-@property (strong, nonatomic) NSError* loadError;
+@interface HEMDevicesViewController() <UICollectionViewDelegate, HEMPillPairDelegate, HEMSenseControllerDelegate, HEMSensePairingDelegate>
+
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (strong, nonatomic) HEMDeviceDataSource* dataSource;
 @property (assign, nonatomic) BOOL loaded;
+@property (strong, nonatomic) SENDevice* selectedDevice;
 
 @end
 
@@ -30,176 +41,167 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self devicesTableView] setDelegate:self];
-    [[self devicesTableView] setDataSource:self];
-    [[self devicesTableView] setTableFooterView:[[UIView alloc] init]];
+    [self configureCollectionView];
+}
+
+- (void)configureCollectionView {
+    HEMDeviceDataSource* dataSource = [[HEMDeviceDataSource alloc] init];
+    [self setDataSource:dataSource];
+    
+    [[self collectionView] setDelegate:self];
+    [[self collectionView] setDataSource:dataSource];
+    [[self collectionView] setAlwaysBounceVertical:YES];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self setSelectedDevice:nil];
     
     // only load devices again on appearance if user is coming back, not when
     // coming to, and only if devices are not configured so that we can check
     // if it has happened.
-    if ([self loaded]) {
-        if ([[SENServiceDevice sharedService] pillInfo] == nil
-            || [[SENServiceDevice sharedService] senseInfo] == nil) {
-            [self loadDevices];
-        } else {
-            [[self devicesTableView] reloadData];
-        }
+    if ([self loaded] && ![[self dataSource] isMissingADevice]) {
+        [self reloadData];
     } else {
-        [self loadDevices];
+        __weak typeof(self) weakSelf = self;
+        [[self dataSource] loadDeviceInfo:^(NSError *error) {
+            [weakSelf reloadData];
+        }];
+        
+        [self setLoaded:YES];
     }
     
 }
 
-- (void)loadDevices {
-    __weak typeof(self) weakSelf = self;
-    // always load device information.  previous bug was that it will never reload
-    // to show updated "Last Seen" unless you killed the app because data is always
-    // loaded after once
-    [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            if (error != nil && [error code] != SENServiceDeviceErrorInProgress) {
-                [strongSelf setLoadError:error];
+- (void)reloadData {
+    HEMCardFlowLayout* layout
+        = (HEMCardFlowLayout*)[[self collectionView] collectionViewLayout];
+    [layout clearCache];
+    [[self collectionView] reloadData];
+}
+
+#pragma mark - UICollectionViewDelegate
+
+- (CGSize)collectionView:(UICollectionView*)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    HEMCardFlowLayout* layout = (HEMCardFlowLayout*)collectionViewLayout;
+    SENDevice* device = [[self dataSource] deviceAtIndexPath:indexPath];
+    CGSize size = [layout itemSize];
+    size.height = device != nil ? HEMDeviceInfoHeight : HEMNoDeviceHeight;
+    return size;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView
+       willDisplayCell:(UICollectionViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
+    [[self dataSource] updateCell:cell atIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([[self dataSource] isObtainingData]) {
+        return;
+    }
+
+    UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
+    SENDeviceType type = [[self dataSource] deviceTypeAtIndexPath:indexPath];
+    
+    switch (type) {
+        case SENDeviceTypeSense:
+            if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
+                [self showSensePairingController];
+            } else {
+                [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
+                [self performSegueWithIdentifier:[HEMMainStoryboard senseSegueIdentifier]
+                                          sender:self];
             }
-            // if loading in progress, will re-call itself.  otherwise, just update
-            [strongSelf updateTableWhenDoneLoadingInfo];
-        }
+            break;
+        case SENDeviceTypePill:
+            if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
+                [self showPillPairingController];
+            } else {
+                [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
+                [self performSegueWithIdentifier:[HEMMainStoryboard pillSegueIdentifier]
+                                          sender:self];
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - Pair Pill
+
+- (void)showPillPairingController {
+    HEMPillPairViewController* pairVC =
+        (HEMPillPairViewController*) [HEMOnboardingStoryboard instantiatePillPairViewController];
+    [pairVC setDelegate:self];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:pairVC];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark - Pair Sense
+
+- (void)showSensePairingController {
+    HEMSensePairViewController* pairVC =
+        (HEMSensePairViewController*) [HEMOnboardingStoryboard instantiateSensePairViewController];
+    [pairVC setDelegate:self];
+    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:pairVC];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark HEMPillPairDelegate
+
+- (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
+    [self reloadData];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didCancelPairing:(HEMPillPairViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - HEMSensePairDelegate
+
+- (void)refreshDataSource {
+    __weak typeof(self) weakSelf = self;
+    [[self dataSource] refresh:^(NSError *error) {
+        [weakSelf reloadData];
     }];
-    [[self devicesTableView] reloadData];
-    [self setLoaded:YES];
+    [self reloadData]; // clear current sta
 }
 
-- (void)updateTableWhenDoneLoadingInfo {
-    if ([[SENServiceDevice sharedService] isLoadingInfo]) {
-        [self performSelector:@selector(updateTableWhenDoneLoadingInfo)
-                   withObject:nil
-                   afterDelay:0.1f];
-        return;
+- (void)didPairSense:(BOOL)pair from:(UIViewController *)controller {
+    if (pair) {
+        [self refreshDataSource];
     }
-    
-    [[self devicesTableView] reloadSections:[NSIndexSet indexSetWithIndex:0]
-                           withRowAnimation:UITableViewRowAnimationAutomatic];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (NSString*)lastSeen:(SENDevice*)device {
-    NSString* desc = nil;
-    if ([device lastSeen] != nil) {
-        NSString* lastSeen = NSLocalizedString(@"settings.device.last-seen", nil);
-        desc = [NSString stringWithFormat:@"%@ %@", lastSeen, [[device lastSeen] timeAgo]];
-    } else {
-        desc = NSLocalizedString(@"settings.device.never-seen", nil);
-    }
-    return desc;
+- (void)didSetupWiFiForPairedSense:(BOOL)setup from:(UIViewController *)controller {
+    [self refreshDataSource];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - UITableViewDataSource
+#pragma mark - Segues
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2; // even if you don't have either a Sense or a Pill, show 2
-}
-
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString* reuseId = [HEMMainStoryboard deviceCellReuseIdentifier];
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:reuseId];
-    if (cell == nil) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
-                                      reuseIdentifier:reuseId];
-        [cell setIndentationLevel:1];
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue destinationViewController] isKindOfClass:[HEMSenseViewController class]]) {
+        HEMSenseViewController* senseVC = [segue destinationViewController];
+        [senseVC setWarnings:[[self dataSource] deviceWarningsFor:[self selectedDevice]]];
+        [senseVC setDelegate:self];
+    } else if ([[segue destinationViewController] isKindOfClass:[HEMPillViewController class]]) {
+        HEMPillViewController* pillVC = [segue destinationViewController];
+        [pillVC setWarnings:[[self dataSource] deviceWarningsFor:[self selectedDevice]]];
     }
-    
-    return cell;
-}
-
-#pragma mark - UITableViewDelegate
-
-- (void)tableView:(UITableView *)tableView
-  willDisplayCell:(UITableViewCell *)cell
-forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
-    SENServiceDevice* service = [SENServiceDevice sharedService];
-    
-    SENDevice* deviceInfo
-        = [indexPath row] == 0
-        ? [service senseInfo]
-        : [service pillInfo];
-    
-    CGFloat alpha = 1.0f;
-    NSString* status = nil;
-    UIActivityIndicatorView* activity = nil;
-    UITableViewCellSelectionStyle selectionStyle = UITableViewCellSelectionStyleNone;
-    UITableViewCellAccessoryType accessoryType = UITableViewCellAccessoryDisclosureIndicator;
-    
-    if ([[SENServiceDevice sharedService] isLoadingInfo] || ![self loaded]) {
-        status = NSLocalizedString(@"empty-data", nil);
-        activity =
-            [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        [activity startAnimating];
-    } else if ([self loadError] != nil) {
-        status = NSLocalizedString(@"settings.device.info-failed-to-load", nil);
-        alpha = 0.5f;
-        selectionStyle = UITableViewCellSelectionStyleNone;
-        accessoryType = UITableViewCellAccessoryNone;
-    } else {
-        status
-            = deviceInfo == nil
-            ? NSLocalizedString(@"settings.device.status.not-paired", nil)
-            : [self lastSeen:deviceInfo];
-        selectionStyle = UITableViewCellSelectionStyleDefault;
-    }
-    
-    NSString* name
-        = [indexPath row] == 0
-        ? NSLocalizedString(@"settings.device.sense", nil)
-        : NSLocalizedString(@"settings.device.pill", nil);
-    
-    UIImage* icon
-        = [indexPath row] == 0
-        ? [HelloStyleKit senseIcon]
-        : [HelloStyleKit pillIcon];
-    
-    [[cell textLabel] setText:name];
-    [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
-    [[cell textLabel] setFont:[UIFont settingsTitleFont]];
-    
-    [[cell detailTextLabel] setText:status];
-    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewTextColor]];
-    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
-    
-    [[cell imageView] setImage:icon];
-    [[cell contentView] setAlpha:alpha];
-    [cell setAccessoryView:activity];
-    [cell setAccessoryType:accessoryType];
-    [cell setSelectionStyle:selectionStyle];
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[SENServiceDevice sharedService] isLoadingInfo] || [self loadError] != nil) {
-        return;
-    }
-    
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
-    NSString* segueId = nil;
-    if ([indexPath row] == 0) {
-        segueId = [HEMMainStoryboard senseSegueIdentifier];
-    } else if ([[SENServiceDevice sharedService] pillInfo] == nil){
-        segueId = [HEMMainStoryboard noSleepPillSegueIdentifier];
-    } else {
-        segueId = [HEMMainStoryboard pillSegueIdentifier];
-    }
-    
-    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 #pragma mark - Cleanup
 
 - (void)dealloc {
-    [[self devicesTableView] setDelegate:nil];
-    [[self devicesTableView] setDataSource:nil];
+    [_collectionView setDelegate:nil];
+    [_collectionView setDataSource:nil];
 }
 
 @end

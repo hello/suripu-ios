@@ -383,8 +383,8 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
                     [strongSelf showFactoryRestoreErrorMessage:error];
                 }];
             } else {
-                if ([[self delegate] respondsToSelector:@selector(didFactoryRestoreFrom:)]) {
-                    [[self delegate] didFactoryRestoreFrom:self];
+                if ([[strongSelf delegate] respondsToSelector:@selector(didFactoryRestoreFrom:)]) {
+                    [[strongSelf delegate] didFactoryRestoreFrom:strongSelf];
                 }
                 [strongSelf dismissActivityWithSuccess:nil];
             }

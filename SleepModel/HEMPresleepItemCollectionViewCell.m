@@ -23,6 +23,7 @@ static CGFloat const HEMPresleepItemBorderWidth = 1.f;
 static CGFloat const HEMBorderDashLength[] = {4,4};
 static CGFloat const HEMInsightButtonWidth = 40.f;
 static CGFloat const HEMInsightButtonMaximumSpacing = 90.f;
+static CGFloat const HEMInsightAnimationDuration = 0.2f;
 static int const HEMInsightButtonTagOffset = 90032;
 static int const HEMBorderDashLengthCount = 2;
 
@@ -32,14 +33,16 @@ static int const HEMBorderDashLengthCount = 2;
     [self layoutInsightButtons];
 }
 
-- (IBAction)didTapInsightButton:(UIButton*)sender
+- (void)didTapInsightButton:(UIButton*)sender
 {
     long index = sender.tag - HEMInsightButtonTagOffset;
     if (index < self.sensorInsights.count) {
         SENSleepResultSensorInsight* insight = self.sensorInsights[index];
         if ([self.messageLabel.text isEqualToString:insight.message]) {
+            if ([self.actionDelegate respondsToSelector:@selector(willHideInsightDetails)])
+                [self.actionDelegate willHideInsightDetails];
             self.selectedIndex = NSNotFound;
-            [UIView animateWithDuration:0.25f animations:^{
+            [UIView animateWithDuration:HEMInsightAnimationDuration animations:^{
                 self.messageLabel.alpha = 0;
             } completion:^(BOOL finished) {
                 self.messageLabel.text = nil;
@@ -47,13 +50,15 @@ static int const HEMBorderDashLengthCount = 2;
             }];
             [self unhighlightAllButtons];
         } else {
+            if ([self.actionDelegate respondsToSelector:@selector(willShowDetailsForInsight:)])
+                [self.actionDelegate willShowDetailsForInsight:insight];
             self.selectedIndex = index;
-            [UIView animateWithDuration:0.2f animations:^{
+            [UIView animateWithDuration:0.1f animations:^{
                 self.messageLabel.alpha = 0;
             } completion:^(BOOL finished) {
                 [self highlightButton:sender];
                 self.messageLabel.text = insight.message;
-                [UIView animateWithDuration:0.25f animations:^{
+                [UIView animateWithDuration:HEMInsightAnimationDuration animations:^{
                     self.messageLabel.alpha = 1;
                 }];
             }];
@@ -63,7 +68,7 @@ static int const HEMBorderDashLengthCount = 2;
 
 - (void)highlightButton:(UIButton*)highlightedButton
 {
-    [UIView animateWithDuration:0.25f animations:^{
+    [UIView animateWithDuration:HEMInsightAnimationDuration animations:^{
         for (UIView* view in self.buttonContainerView.subviews) {
             if ([view isKindOfClass:[UIButton class]]) {
                 UIButton* button = (id)view;
@@ -86,7 +91,7 @@ static int const HEMBorderDashLengthCount = 2;
 
 - (void)unhighlightAllButtons
 {
-    [UIView animateWithDuration:0.25f animations:^{
+    [UIView animateWithDuration:HEMInsightAnimationDuration animations:^{
         for (UIView* view in self.buttonContainerView.subviews) {
             if ([view isKindOfClass:[UIButton class]]) {
                 UIButton* button = (id)view;

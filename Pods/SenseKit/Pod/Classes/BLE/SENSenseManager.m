@@ -493,6 +493,10 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 }
 
 - (void)clearAllMessageCallbacks {
+    for (NSTimer* timer in [[self messageTimeoutTimers] allValues]) {
+        [timer invalidate];
+    }
+    [[self messageTimeoutTimers] removeAllObjects];
     [[self messageFailureCallbacks] removeAllObjects];
     [[self messageSuccessCallbacks] removeAllObjects];
     [[self messageUpdateCallbacks] removeAllObjects];

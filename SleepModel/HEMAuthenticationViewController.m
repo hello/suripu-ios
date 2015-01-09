@@ -1,7 +1,6 @@
 
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAPIClient.h>
-#import <SenseKit/SENServiceDevice.h>
 #import <CocoaLumberjack/DDLog.h>
 
 #import "UIFont+HEMStyle.h"
@@ -92,34 +91,10 @@
             return;
         }
         
-        [strongSelf checkDevices:^(BOOL hasSense, NSError* error) {
-            [strongSelf stopActivity];
-            
-            if (error != nil) {
-                [strongSelf failDeviceCheck:error];
-            } else if (!hasSense) {
-                [strongSelf makeUserSetupSense];
-            } else {
-                [strongSelf letUserIntoApp];
-            }
-        }];
+        [strongSelf stopActivity];
+        [strongSelf letUserIntoApp];
         
     }];
-}
-
-- (void)checkDevices:(void(^)(BOOL hasSense, NSError* error))completion {
-    [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
-        BOOL hasSense = error == nil && [[SENServiceDevice sharedService] senseInfo] != nil;
-        completion (hasSense, error);
-    }];
-}
-
-- (void)failDeviceCheck:(NSError*)error {
-    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-    NSString* msg = NSLocalizedString(@"authorization.sign-in.device.error.message", nil);
-    NSString* title = NSLocalizedString(@"authorization.sign-in.device.error.title", nil);
-    [SENAuthorizationService deauthorize];
-    [self showMessageDialog:msg title:title];
 }
 
 - (void)letUserIntoApp {
@@ -127,17 +102,6 @@
     [SENAnalytics track:kHEMAnalyticsEventSignIn];
     [[self view] endEditing:NO];
     [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)makeUserSetupSense {
-    HEMOnboardingCheckpoint checkpoint = HEMOnboardingCheckpointAccountDone;
-    UIViewController* checkpointVC =[HEMOnboardingUtils onboardingControllerForCheckpoint:checkpoint
-                                                                               authorized:YES];
-    
-    // save this checkpoint in case user bails out at the checkpoint and app thinks
-    // user is logged in
-    [HEMOnboardingUtils saveOnboardingCheckpoint:checkpoint];
-    [[self navigationController] setViewControllers:@[checkpointVC] animated:YES];
 }
 
 #pragma mark - Actions

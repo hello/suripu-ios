@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.0.53
+
+Fixes:
+
+* Fix issue where some people would be brought back to Birthdate form during
+  onboarding.  This affected people who had BLE turned off when going through
+  onboarding.
+
 ## 1.0.0.52
 
 New:

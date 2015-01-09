@@ -428,7 +428,7 @@ static NSString* const sensorTypeParticulates = @"particulates";
     else if ([eventType isEqualToString:HEMSleepEventTypeSunset]) {
         return [HelloStyleKit sunsetEventIcon];
     }
-    return nil;
+    return [HelloStyleKit unknownEventIcon];
 }
 
 - (NSString*)textForTimeInterval:(NSTimeInterval)timeInterval

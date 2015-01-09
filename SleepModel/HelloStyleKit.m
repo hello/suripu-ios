@@ -93,6 +93,7 @@ static UIImage* _grayHumidityIcon = nil;
 static UIImage* _graySoundIcon = nil;
 static UIImage* _alarmEventIcon = nil;
 static UIImage* _sleepEventIcon = nil;
+static UIImage* _unknownEventIcon = nil;
 static UIImage* _senseIcon = nil;
 static UIImage* _pillIcon = nil;
 
@@ -221,6 +222,7 @@ static UIImage* _pillIcon = nil;
 + (UIImage*)graySoundIcon { return _graySoundIcon ?: (_graySoundIcon = [UIImage imageNamed: @"graySoundIcon"]); }
 + (UIImage*)alarmEventIcon { return _alarmEventIcon ?: (_alarmEventIcon = [UIImage imageNamed: @"alarmEventIcon"]); }
 + (UIImage*)sleepEventIcon { return _sleepEventIcon ?: (_sleepEventIcon = [UIImage imageNamed: @"sleepEventIcon"]); }
++ (UIImage*)unknownEventIcon { return _unknownEventIcon ?: (_unknownEventIcon = [UIImage imageNamed: @"unknownEventIcon"]); }
 + (UIImage*)senseIcon { return _senseIcon ?: (_senseIcon = [UIImage imageNamed: @"senseIcon"]); }
 + (UIImage*)pillIcon { return _pillIcon ?: (_pillIcon = [UIImage imageNamed: @"pillIcon"]); }
 

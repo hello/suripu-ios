@@ -96,6 +96,7 @@
 + (UIImage*)graySoundIcon;
 + (UIImage*)alarmEventIcon;
 + (UIImage*)sleepEventIcon;
++ (UIImage*)unknownEventIcon;
 + (UIImage*)senseIcon;
 + (UIImage*)pillIcon;
 

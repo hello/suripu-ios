@@ -2076,7 +2076,7 @@ You can always do this later by visiting Settings.</string>
         <!--Sense Pair View Controller-->
         <scene sceneID="cKk-Qb-F4O">
             <objects>
-                <viewController storyboardIdentifier="bluetoothViewController" id="cgk-PX-LxG" customClass="HEMSensePairViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="sensePairViewController" id="cgk-PX-LxG" customClass="HEMSensePairViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="I6r-jE-jN1"/>
                         <viewControllerLayoutGuide type="bottom" id="rNF-MR-Ds2"/>
@@ -2692,9 +2692,9 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="sense.png" width="176" height="166"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qAo-NZ-4n9"/>
-        <segue reference="DAu-sO-H4V"/>
         <segue reference="d9a-nc-483"/>
+        <segue reference="DAu-sO-H4V"/>
+        <segue reference="qAo-NZ-4n9"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

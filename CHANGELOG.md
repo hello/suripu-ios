@@ -2,6 +2,10 @@
 
 ## 1.0.0.54
 
+* Added guard for Light sensor in room check, which was crashing it
+
+## 1.0.0.53
+
 Fixes:
 
 * Fix issue where some people would be brought back to Birthdate form during

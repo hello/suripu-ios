@@ -21,6 +21,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMAudioCache.h"
 #import "UIFont+HEMStyle.h"
+#import "HEMStyledNavigationViewController.h"
 
 @implementation HEMAppDelegate
 
@@ -241,7 +242,8 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     UIViewController* onboardingController = [HEMOnboardingUtils onboardingControllerForCheckpoint:checkpoint authorized:authorized];
     
     if (onboardingController != nil) {
-        UINavigationController* onboardingNav = [[UINavigationController alloc] initWithRootViewController:onboardingController];
+        UINavigationController* onboardingNav
+            = [[HEMStyledNavigationViewController alloc] initWithRootViewController:onboardingController];
         [[onboardingNav navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];
         
         if (checkpoint == HEMOnboardingCheckpointStart) {

@@ -13,7 +13,7 @@
 #import "HEMAppDelegate.h"
 #import "HelloStyleKit.h"
 
-@interface HEMSettingsNavigationController()<UIGestureRecognizerDelegate, UINavigationControllerDelegate>
+@interface HEMSettingsNavigationController()
 
 @property (nonatomic, assign) UIStatusBarStyle previousBarStyle;
 
@@ -23,20 +23,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
+    
+    [self configureNavigationBar];
+    
+    [self.interactivePopGestureRecognizer addTarget:self
+                                             action:@selector(interactivePopGestureActivated:)];
+}
+
+- (void)configureNavigationBar {
     [[self navigationBar] setBarTintColor:[HelloStyleKit backViewTintColor]];
     [[self navigationBar] setTranslucent:NO];
     [[self navigationBar] setClipsToBounds:NO];
     [[self navigationBar] setShadowImage:nil];
-    [[self navigationBar] setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
-        NSFontAttributeName : [UIFont settingsTitleFont]
-    }];
-    __weak typeof(self) weakSelf = self;
-    self.interactivePopGestureRecognizer.delegate = weakSelf;
-    self.delegate = weakSelf;
-    [self.interactivePopGestureRecognizer addTarget:self
-                                             action:@selector(interactivePopGestureActivated:)];
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {

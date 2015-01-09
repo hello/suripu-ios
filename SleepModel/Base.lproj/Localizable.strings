@@ -242,6 +242,8 @@
 
 // authentication/sign in
 "authorization.title" = "Sign in";
+"authorization.sign-in.activity.message" = "Authenticating...";
+"authorization.forgot-pass" = "Forgot password";
 "authorization.no-token" = "No access token present";
 "authorization.set-url.button" = "Set URL";
 "authorization.sign-in.button" = "Sign in";

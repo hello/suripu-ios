@@ -4,7 +4,6 @@
 
 #import "UIFont+HEMStyle.h"
 
-static CGFloat const kHEMActionBorderWidth = 2.0f;
 static CGFloat const kHEMActionDisabledAlpha = 0.3f;
 static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 
@@ -45,11 +44,9 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 
 - (void)setDefaults {
     self.layer.cornerRadius = CGRectGetHeight([self bounds])/2;
-    self.backgroundColor = [UIColor clearColor];
-    self.layer.borderColor = [HelloStyleKit senseBlueColor].CGColor;
-    self.layer.borderWidth = kHEMActionBorderWidth;
-    [self setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
-    [self setTitleColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:kHEMActionDisabledAlpha]
+    self.backgroundColor = [HelloStyleKit senseBlueColor];
+    [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    [self setTitleColor:[UIColor colorWithWhite:1.0f alpha:0.7f]
                forState:UIControlStateDisabled];
     [self.titleLabel setFont:[UIFont primaryButtonFont]];
     [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];

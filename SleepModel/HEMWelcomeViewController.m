@@ -50,6 +50,7 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self navigationItem] setLeftBarButtonItem:nil];
     
     [self configureSubtitle];
     [self configureButtonStyles];
@@ -67,20 +68,26 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 }
 
 - (void)configureButtonStyles {
+    CGFloat borderWidth = 2.0f;
     UIColor* bgColor = [UIColor colorWithWhite:1.0f alpha:0.4f];
     UIColor* whiteColor = [UIColor whiteColor];
     CGColorRef white = [whiteColor CGColor];
     
     [[self getStartedButton] setBackgroundColor:bgColor];
     [[self getStartedButton] setTitleColor:whiteColor forState:UIControlStateNormal];
+    
     [[self signinButton] setTitleColor:whiteColor forState:UIControlStateNormal];
     [[self signinButton] setBackgroundColor:bgColor];
+    
     [[self signupButton] setTitleColor:whiteColor forState:UIControlStateNormal];
     [[self signupButton] setBackgroundColor:bgColor];
     
+    [[[self getStartedButton] layer] setBorderWidth:borderWidth];
     [[[self getStartedButton] layer] setBorderColor:white];
+    [[[self signinButton] layer] setBorderWidth:borderWidth];
     [[[self signinButton] layer] setBorderColor:white];
     [[[self signupButton] layer] setBorderColor:white];
+    [[[self signupButton] layer] setBorderWidth:borderWidth];
     
     [[[self noSenseButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [[[self cancelGetStartedButton] titleLabel] setFont:[UIFont secondaryButtonFont]];

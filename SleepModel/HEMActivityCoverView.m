@@ -249,8 +249,10 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
             [self showSuccessMarkAnimated:YES completion:^(BOOL finished) {
                 [self delayDismissWithRemoval:remove completion:completion];
             }];
-        } else {
+        } else if ([text length] > 0) {
             [self delayDismissWithRemoval:remove completion:completion];
+        } else {
+            [self dismissImmediatelyWithRemoval:remove completion:completion];
         }
     };
 
@@ -263,6 +265,17 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
     
 }
 
+- (void)dismissImmediatelyWithRemoval:(BOOL)remove completion:(void(^)(void))completion {
+    [UIView animateWithDuration:kHEMActivityAnimDuration
+                     animations:^{
+                         [self setAlpha:0.0f];
+                     }
+                     completion:^(BOOL finished) {
+                         [self finishDismissal:remove];
+                         if (completion) completion();
+                     }];
+}
+
 - (void)delayDismissWithRemoval:(BOOL)remove completion:(void(^)(void))completion {
     [UIView animateWithDuration:kHEMActivityAnimDuration
                           delay:kHEMActivityResultDisplayTime
@@ -271,17 +284,21 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
                          [self setAlpha:0.0f];
                      }
                      completion:^(BOOL finished) {
-                         [[self activityLabel] setText:nil];
-                         [[self successMarkView] removeFromSuperview];
-                         [self setHidden:YES];
-
-                         if (remove) {
-                             [self removeFromSuperview];
-                         }
-                         
-                         [self setShowing:NO];
+                         [self finishDismissal:remove];
                          if (completion) completion();
                      }];
+}
+
+- (void)finishDismissal:(BOOL)remove {
+    [[self activityLabel] setText:nil];
+    [[self successMarkView] removeFromSuperview];
+    [self setHidden:YES];
+    
+    if (remove) {
+        [self removeFromSuperview];
+    }
+    
+    [self setShowing:NO];
 }
 
 @end

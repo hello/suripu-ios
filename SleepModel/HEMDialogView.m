@@ -21,7 +21,7 @@ static CGFloat const kHEMDialogContentTopPadding = 34.0f;
 static CGFloat const kHEMDialogContentBotPadding = 10.0f;
 static CGFloat const kHEMDialogContentMaxImageHeight = 150.0f;
 static CGFloat const kHEMDialogButtonBorderWidth = 1.0f;
-static CGFloat const kHEMDialogButtonHorzPadding = 35.0f;
+static CGFloat const kHEMDialogButtonHorzPadding = 20.0f;
 static CGFloat const kHEMDialogButtonHeight = 40.0f;
 static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 
@@ -166,12 +166,11 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 
 - (CGFloat)addOkButtonAtY:(CGFloat)y {
     NSString* title = NSLocalizedString(@"actions.ok", nil);
-    HEMActionButton* ok = [HEMActionButton buttonWithType:UIButtonTypeCustom];
+    HEMActionButton* ok = [[HEMActionButton alloc] initWithFrame:[self buttonFrameAtY:y]];
     [ok setTitle:title forState:UIControlStateNormal];
     [ok setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [ok setTranslatesAutoresizingMaskIntoConstraints:YES];
     [ok addTarget:self action:@selector(customAction:) forControlEvents:UIControlEventTouchUpInside];
-    [ok setFrame:[self buttonFrameAtY:y]];
 
     [self setOkButton:ok];
     [self addSubview:ok];
@@ -196,7 +195,7 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     
     if (primary) {
         buttonFrame = [self buttonFrameAtY:CGRectGetMinY(okFrame)];
-        button = [HEMActionButton buttonWithType:UIButtonTypeCustom];
+        button = [[HEMActionButton alloc] initWithFrame:buttonFrame];
     } else {
         buttonFrame = [self buttonFrameAtY:CGRectGetMaxY(okFrame) + kHEMDialogButtonSpacing];
         button = [UIButton buttonWithType:UIButtonTypeCustom];

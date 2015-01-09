@@ -11,6 +11,8 @@
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
+#import "NSMutableAttributedString+HEMFormat.h"
+#import "NSDate+HEMRelative.h"
 
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
@@ -20,24 +22,23 @@
 #import "HEMWiFiConfigurationDelegate.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMDeviceActionCollectionViewCell.h"
+#import "HEMCardFlowLayout.h"
+#import "HEMActivityCoverView.h"
+#import "HEMWarningCollectionViewCell.h"
+#import "HEMDeviceDataSource.h"
+#import "HEMActionButton.h"
+#import "HEMSupportUtil.h"
 
-static NSInteger const kHEMSenseRowLastSeen = 0;
-static NSInteger const kHEMSenseRowVersion = 1;
-static NSInteger const kHEMSenseRowSignal = 2;
-static NSInteger const kHEMSenseRowWiFi = 3;
+static CGFloat const HEMSenseActionsCellHeight = 248.0f;
 
-@interface HEMSenseViewController() <UITableViewDataSource, UITableViewDelegate, HEMWiFiConfigurationDelegate>
+@interface HEMSenseViewController() <UICollectionViewDataSource, UICollectionViewDelegate, HEMWiFiConfigurationDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView *senseInfoTableView;
-@property (weak, nonatomic) IBOutlet UIView *manageSenseView;
-@property (weak, nonatomic) IBOutlet UIView *actionStatusView;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *actionStatusActivity;
-@property (weak, nonatomic) IBOutlet UILabel *actionStatusLabel;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
-@property (assign, nonatomic, getter=isLoaded) BOOL loaded;
-@property (copy, nonatomic)   NSString* senseSignalStrength;
-@property (copy, nonatomic)   NSString* wifiSSID;
+@property (assign, nonatomic) BOOL updatedWiFi;
 @property (strong, nonatomic) HEMAlertController* alertController;
+@property (strong, nonatomic) HEMActivityCoverView* activityView;
 
 @end
 
@@ -45,204 +46,182 @@ static NSInteger const kHEMSenseRowWiFi = 3;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self senseInfoTableView] setTableFooterView:[[UIView alloc] init]];
+    [self configureCollectionView];
+}
+
+- (void)configureCollectionView {
+    [[self collectionView] setDataSource:self];
+    [[self collectionView] setDelegate:self];
+    [[self collectionView] setAlwaysBounceVertical:YES];
+}
+
+- (NSAttributedString*)redMessage:(NSString*)message {
+    NSDictionary* attributes = @{NSForegroundColorAttributeName : [UIColor redColor]};
+    return [[NSAttributedString alloc] initWithString:message attributes:attributes];
+}
+
+- (NSAttributedString*)attributedLastSeenWarning {
+    NSString* format = NSLocalizedString(@"settings.sense.warning.last-seen-format", nil);
+    NSString* lastSeen = [[[[SENServiceDevice sharedService] senseInfo] lastSeen] timeAgo];
+    NSArray* args = @[[self redMessage:lastSeen ?: NSLocalizedString(@"settings.device.warning.last-seen-generic", nil)]];
     
-    [[self actionStatusLabel] setText:NSLocalizedString(@"settings.sense.scanning-message", nil)];
-    [[self actionStatusLabel] setTintColor:[HelloStyleKit backViewTextColor]];
-    [self showActivity];
-
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self loadSense];
-}
-
-- (void)loadSense {
-    if ([self isLoaded]) return;
+    NSMutableAttributedString* attrWarning =
+        [[NSMutableAttributedString alloc] initWithFormat:format args:args];
+    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]}
+                         range:NSMakeRange(0, [attrWarning length])];
     
-    __weak typeof(self) weakSelf = self;
-    DDLogVerbose(@"scanning for sense");
-    [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        DDLogVerbose(@"finished scanning, error ? %@", error);
-        if (strongSelf) {
-            if (error != nil) {
-                [strongSelf setSenseSignalStrength:NSLocalizedString(@"empty.data", nil)];
-                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                [strongSelf hideActivity];
-            } else {
-                // MUST do 1 BLE operation at a time or else top board will crash, or
-                // do unexpected things
-                [strongSelf loadRSSIThen:^{
-                    [[strongSelf actionStatusLabel] setText:NSLocalizedString(@"settings.sense.getting-wifi-configured", nil)];
-                    [strongSelf loadWifiThen:^{
-                        [strongSelf hideActivity];
-                    }];
-                }];
-            }
-            
-            [strongSelf setLoaded:YES];
-        }
-    }];
+    return attrWarning;
 }
 
-- (void)loadRSSIThen:(void(^)(void))completion {
-    __weak typeof(self) weakSelf = self;
-    DDLogVerbose(@"reading rssi value");
-    [[SENServiceDevice sharedService] currentSenseRSSI:^(NSNumber *rssi, NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf) return;
-        
-        NSInteger value = [rssi integerValue];
-        DDLogVerbose(@"rssi value %ld", (long)value);
-        NSString* strength = nil;
-        if (value <= -30) {
-            strength = NSLocalizedString(@"settings.sense.signal.strong", nil);
-        } else if (value <= -50) {
-            strength = NSLocalizedString(@"settings.sense.signal.good", nil);
-        } else {
-            strength = NSLocalizedString(@"settings.sense.signal.weak", nil);
-        }
-        [strongSelf setSenseSignalStrength:strength];
-        [strongSelf reloadRow:kHEMSenseRowSignal];
-        
-        if (completion) completion();
-    }];
-}
-
-- (void)loadWifiThen:(void(^)(void))completion {
-    __weak typeof(self) weakSelf = self;
-    DDLogVerbose(@"getting Sense wifi ssid");
-    [[SENServiceDevice sharedService] getConfiguredWiFi:^(NSString *ssid,
-                                                        SENWiFiConnectionState state,
-                                                        NSError *error) {
-        
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf) return;
-        
-        if (error == nil) {
-            [strongSelf setWifiSSID:ssid];
-            [strongSelf reloadRow:kHEMSenseRowWiFi];
-        } else {
-            DDLogVerbose(@"failed to retrieve ssid configured with Sense");
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-        }
-        
-        if (completion) completion ();
-    }];
-}
-
-- (void)reloadRow:(NSInteger)row {
-    NSIndexPath* path = [NSIndexPath indexPathForItem:row inSection:0];
-    [[self senseInfoTableView] reloadRowsAtIndexPaths:@[path]
-                                     withRowAnimation:UITableViewRowAnimationAutomatic];
-}
-
-#pragma mark - UITableViewDelegate / DataSource
-
-- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-    NSInteger sections = 1; // the info
-    if ([[[SENServiceDevice sharedService] senseInfo] state] == SENDeviceStateFirmwareUpdate) {
-        sections++; // need to show firmware update cell / section
-    }
-    return sections;
-}
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return section == 0 ? 4 : 1;
-}
-
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString* cellId
-        = [indexPath section] == 0
-        ? [HEMMainStoryboard senseInfoCellReuseIdentifier]
-        : [HEMMainStoryboard firmwareUpdateCellReuseIdentifier];
-    return [tableView dequeueReusableCellWithIdentifier:cellId];
-}
-
-- (void)tableView:(UITableView *)tableView
-  willDisplayCell:(UITableViewCell *)cell
-forRowAtIndexPath:(NSIndexPath *)indexPath {
+- (NSAttributedString*)attributedWiFiWarning {
+    NSString* format = NSLocalizedString(@"settings.sense.warning.wifi-format", nil);
+    NSString* connectProblem = NSLocalizedString(@"settings.sense.warning.cannont-connect-wifi", nil);
+    NSArray* args = @[[self redMessage:connectProblem]];
     
-    if ([indexPath section] == 0) {
-        SENDevice* info = [[SENServiceDevice sharedService] senseInfo];
-        NSString* title = nil;
-        NSMutableAttributedString* detail = nil;
-        UITableViewCellSelectionStyle selection = UITableViewCellSelectionStyleNone;
-        
-        switch ([indexPath row]) {
-            case kHEMSenseRowLastSeen: {
-                title = NSLocalizedString(@"settings.device.last-seen", nil);
-                if ([info lastSeen] != nil) {
-                    detail = [[NSMutableAttributedString alloc] initWithString:[[info lastSeen] timeAgo]];
-                }
-                break;
-            }
-            case kHEMSenseRowVersion: {
-                title = NSLocalizedString(@"settings.device.firmware-version", nil);
-                if ([[info firmwareVersion] length] > 0) {
-                    detail = [[NSMutableAttributedString alloc] initWithString:[info firmwareVersion]];
-                }
-                break;
-            }
-            case kHEMSenseRowSignal: {
-                title = NSLocalizedString(@"settings.sense.signal", nil);
-                if ([self senseSignalStrength] != nil) {
-                    detail = [[NSMutableAttributedString alloc] initWithString:[self senseSignalStrength]];
-                }
-                break;
-            }
-            case kHEMSenseRowWiFi: {
-                title = NSLocalizedString(@"settings.sense.wifi", nil);
-                if ([[self wifiSSID] length] > 0) {
-                    detail = [[NSMutableAttributedString alloc] initWithString:[self wifiSSID]
-                                                                    attributes:@{NSUnderlineStyleAttributeName : @(NSUnderlineStyleSingle)}];
-                    selection = UITableViewCellSelectionStyleDefault;
-                }
-                break;
-            }
-            default:
-                break;
-        }
-        
-        [[cell textLabel] setText:title];
-        [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
-        [[cell textLabel] setFont:[UIFont settingsTitleFont]];
-        
-        if (detail == nil) {
-            detail = [[NSMutableAttributedString alloc] initWithString:NSLocalizedString(@"empty-data", nil)];
-        }
-        [detail addAttributes:@{NSFontAttributeName : [UIFont settingsTableCellDetailFont],
-                                NSForegroundColorAttributeName : [HelloStyleKit backViewDetailTextColor]}
-                        range:NSMakeRange(0, [detail length])];
-        [[cell detailTextLabel] setAttributedText:detail];
-        
-        [cell setSelectionStyle:selection];
-        
-    } // else, look at the storyboard
+    NSMutableAttributedString* attrWarning =
+        [[NSMutableAttributedString alloc] initWithFormat:format args:args];
+    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]}
+                         range:NSMakeRange(0, [attrWarning length])];
     
+    return attrWarning;
 }
 
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    switch ([indexPath row]) {
-        case kHEMSenseRowWiFi:
-            if ([[SENServiceDevice sharedService] pairedSenseAvailable]) {
-                [self configureWiFi];
-            }
+- (NSAttributedString*)attributedSenseNotConnectedWarning {
+    NSString* message = NSLocalizedString(@"settings.sense.warning.not-connected-sense", nil);
+    NSMutableAttributedString* attrWarning = [[NSMutableAttributedString alloc] initWithString:message];
+    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]}
+                         range:NSMakeRange(0, [attrWarning length])];
+    return attrWarning;
+}
+
+- (NSAttributedString*)attributedMessageForWarning:(HEMDeviceWarning)warning {
+    NSAttributedString* message = nil;
+    switch (warning) {
+        case HEMDeviceWarningLongLastSeen:
+            message = [self attributedLastSeenWarning];
+            break;
+        case HEMSenseWarningNoInternet:
+            message = [self attributedWiFiWarning];
+            break;
+        case HEMSenseWarningNotConnectedToSense:
+            message = [self attributedSenseNotConnectedWarning];
             break;
         default:
             break;
     }
+    return message;
 }
 
-#pragma mark - Alerts
+- (CGFloat)heightForWarning:(HEMDeviceWarning)warning withDefaultItemSize:(CGSize)size {
+    NSAttributedString* message = [self attributedMessageForWarning:warning];
+    CGRect bounds = [message boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT)
+                                          options:NSStringDrawingUsesFontLeading
+                                                 |NSStringDrawingUsesLineFragmentOrigin
+                                          context:nil];
+    return CGRectGetHeight(bounds);
+}
 
-- (void)showFailureToEnablePairingModeAlert {
-    NSString* title = NSLocalizedString(@"settings.sense.dialog.pair-failed-title", nil);
-    NSString* message = NSLocalizedString(@"settings.sense.dialog.pair-failed-message", nil);
-    [self showMessageDialog:message title:title];
+- (NSString*)actionButtonTitleForWarning:(HEMDeviceWarning)warning {
+    NSString* title = nil;
+    switch (warning) {
+        case HEMDeviceWarningLongLastSeen:
+        case HEMSenseWarningNotConnectedToSense:
+            title = NSLocalizedString(@"actions.troubleshoot", nil);
+            break;
+        case HEMSenseWarningNoInternet:
+            title = NSLocalizedString(@"actions.edit.wifi", nil);
+            break;
+        default:
+            break;
+    }
+    return [title uppercaseString];
+}
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView
+     numberOfItemsInSection:(NSInteger)section {
+    return 1 + [[self warnings] count];
+}
+
+- (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
+                 cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString* reuseId
+        = [indexPath row] < [[self warnings] count]
+        ? [HEMMainStoryboard warningReuseIdentifier]
+        : [HEMMainStoryboard actionsReuseIdentifier];
+    
+    UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
+                                                                           forIndexPath:indexPath];
+    
+    if ([cell isKindOfClass:[HEMDeviceActionCollectionViewCell class]]) {
+        BOOL senseAvailable = [[SENServiceDevice sharedService] pairedSenseAvailable];
+        HEMDeviceActionCollectionViewCell* actionCell = (HEMDeviceActionCollectionViewCell*)cell;
+        [[actionCell action1Button] addTarget:self
+                                       action:@selector(replaceSense:)
+                             forControlEvents:UIControlEventTouchUpInside];
+        [[actionCell action2Button] addTarget:self
+                                       action:@selector(pairingMode:)
+                             forControlEvents:UIControlEventTouchUpInside];
+        [[actionCell action2Button] setEnabled:senseAvailable];
+        [[actionCell action3Button] addTarget:self
+                                       action:@selector(factoryReset:)
+                             forControlEvents:UIControlEventTouchUpInside];
+        [[actionCell action3Button] setEnabled:senseAvailable];
+        [[actionCell action4Button] addTarget:self
+                                       action:@selector(changeWiFi:)
+                             forControlEvents:UIControlEventTouchUpInside];
+        [[actionCell action4Button] setEnabled:senseAvailable];
+    } else if ([cell isKindOfClass:[HEMWarningCollectionViewCell class]]) {
+        HEMDeviceWarning warning = (HEMDeviceWarning)[[self warnings][[indexPath row]] integerValue];
+        HEMWarningCollectionViewCell* warningCell = (HEMWarningCollectionViewCell*)cell;
+        [[warningCell warningMessageLabel] setAttributedText:[self attributedMessageForWarning:warning]];
+        [[warningCell actionButton] setTitle:[self actionButtonTitleForWarning:warning]
+                                    forState:UIControlStateNormal];
+        [[warningCell actionButton] setTag:warning];
+        [[warningCell actionButton] addTarget:self
+                                       action:@selector(takeWarningAction:)
+                             forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    return cell;
+}
+
+#pragma mark - UICollectionViewDelegate
+
+- (CGSize)collectionView:(UICollectionView*)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    HEMCardFlowLayout* layout = (HEMCardFlowLayout*)collectionViewLayout;
+    CGSize size = [layout itemSize];
+    
+    if ([indexPath row] < [[self warnings] count]) {
+        size.height = [self heightForWarning:[[self warnings][[indexPath row]] integerValue]
+                         withDefaultItemSize:size] + HEMWarningCellBaseHeight;
+    } else if ([indexPath row] == [[self warnings] count]) {
+        size.height = HEMSenseActionsCellHeight;
+    }
+    
+    return size;
+}
+
+#pragma mark - Actions
+
+- (void)takeWarningAction:(UIButton*)sender {
+    HEMDeviceWarning warning = [sender tag];
+    switch (warning) {
+        case HEMSenseWarningNotConnectedToSense:
+        case HEMDeviceWarningLongLastSeen:
+            [HEMSupportUtil openHelpFrom:self];
+            break;
+        case HEMSenseWarningNoInternet:
+            [self changeWiFi:self];
+            break;
+        default:
+            break;
+    }
 }
 
 - (void)showConfirmation:(NSString*)title message:(NSString*)message action:(void(^)(void))action {
@@ -258,23 +237,101 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [[self alertController] show];
 }
 
-- (void)showPairingModeConfirmation {
+- (void)showActivityText:(NSString*)text completion:(void(^)(void))completion {
+    if ([self activityView] == nil) {
+        [self setActivityView:[[HEMActivityCoverView alloc] init]];
+    }
+    
+    id<UIApplicationDelegate> delegate = (id)[UIApplication sharedApplication].delegate;
+    UIViewController* root = (id)delegate.window.rootViewController;
+    
+    [[self activityView] showInView:[root view] withText:text activity:YES completion:completion];
+}
+
+- (void)dismissActivityWithSuccess:(void(^)(void))completion {
+    NSString* done = NSLocalizedString(@"status.success", nil);
+    [[self activityView] dismissWithResultText:done showSuccessMark:YES remove:YES completion:completion];
+}
+
+#pragma mark Unpair Sense
+
+- (void)showUnpairError {
+    NSString* title = NSLocalizedString(@"settings.sense.dialog.pair-failed-title", nil);
+    NSString* message = NSLocalizedString(@"settings.sense.unpair.failed-message", nil);
+    [self showMessageDialog:message title:title];
+}
+
+- (void)unlinkSense {
+    NSString* message = NSLocalizedString(@"settings.sense.unpairing-message", nil);
+    [self showActivityText:message completion:^{
+        __weak typeof(self) weakSelf = self;
+        [[SENServiceDevice sharedService] unlinkSenseFromAccount:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error != nil) {
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                    [strongSelf showUnpairError];
+                }];
+            } else {
+                [strongSelf dismissActivityWithSuccess:nil];
+            }
+        }];
+    }];
+}
+
+- (void)replaceSense:(id)sender {
+    NSString* title = NSLocalizedString(@"settings.sense.unpair.title", nil);
+    NSString* question = NSLocalizedString(@"settings.sense.unpair.confirmation", nil);
+    [self showConfirmation:title message:question action:^{
+        [self unlinkSense];
+    }];
+}
+
+#pragma mark Enable Pairing Mode
+
+- (void)pairingMode:(id)sender {
     NSString* title = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-title", nil);
     NSString* message = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-message", nil);
     
     __weak typeof(self) weakSelf = self;
     [self showConfirmation:title message:message action:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf enablePairingMode];
-        }
+        [weakSelf enablePairingMode];
     }];
 }
 
-- (void)showFactoryRestoreConfirmation {
+- (void)showFailureToEnablePairingModeAlert {
+    NSString* title = NSLocalizedString(@"settings.sense.dialog.pair-failed-title", nil);
+    NSString* message = NSLocalizedString(@"settings.sense.dialog.pair-failed-message", nil);
+    [self showMessageDialog:message title:title];
+}
+
+- (void)enablePairingMode {
+    [SENAnalytics track:kHEMAnalyticsEventDeviceAction
+             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDevicePairingMode}];
+    
+    NSString* message = NSLocalizedString(@"settings.sense.enabling-pairing-mode", nil);
+    [self showActivityText:message completion:^{
+        __weak typeof(self) weakSelf = self;
+        [[SENServiceDevice sharedService] putSenseIntoPairingMode:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error != nil) {
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                    [strongSelf showFailureToEnablePairingModeAlert];
+                }];
+            } else {
+                [strongSelf dismissActivityWithSuccess:nil];
+            }
+        }];
+    }];
+}
+
+#pragma mark Factory Reset
+
+- (void)factoryReset:(id)sender {
     NSString* title = NSLocalizedString(@"settings.device.dialog.factory-restore-title", nil);
     NSString* message = NSLocalizedString(@"settings.device.dialog.factory-restore-message", nil);
-
+    
     __weak typeof(self) weakSelf = self;
     [self showConfirmation:title message:message action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -308,142 +365,58 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self showMessageDialog:message title:title];
 }
 
-- (void)showNoSenseWithMessage:(NSString*)message {
-    NSString* title = NSLocalizedString(@"settings.sense.not-found-title", nil);
-    [self showMessageDialog:message title:title];
-}
-
-#pragma mark - Actions
-
-- (void)showActivity {
-    [[self manageSenseView] setHidden:YES];
-    [[self manageSenseView] setAlpha:0.0f];
-    [[self actionStatusView] setAlpha:0.0f];
-    [[self actionStatusView] setHidden:[[SENServiceDevice sharedService] senseInfo] == nil];
-    
-    if (![[self actionStatusView] isHidden]) {
-        [UIView animateWithDuration:0.25f
-                         animations:^{
-                             [[self actionStatusView] setAlpha:1.0f];
-                         }];
-    }
-
-}
-
-- (void)hideActivity {
-    [[self manageSenseView] setHidden:[[self wifiSSID] length] == 0];
-
-    // still need to hide status view regardless of whether manageSenseView is hidden.
-    [UIView animateWithDuration:0.25f
-                     animations:^{
-                         [[self manageSenseView] setAlpha:1.0f];
-                         [[self actionStatusView] setAlpha:0.0f];
-                     }
-                     completion:^(BOOL finished) {
-                         [[self actionStatusView] setHidden:YES];
-                     }];
-}
-
-- (void)enablePairingMode {
-    [SENAnalytics track:kHEMAnalyticsEventDeviceAction
-             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDevicePairingMode}];
-    
-    [[self actionStatusLabel] setText:NSLocalizedString(@"settings.sense.enabling-pairing-mode", nil)];
-    [self showActivity];
-    
-    __weak typeof(self) weakSelf = self;
-    SENServiceDevice* service = [SENServiceDevice sharedService];
-    [service scanForPairedSense:^(NSError *error) {
-        if (error != nil) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-
-            if (strongSelf) {
-                if ([error code] == SENServiceDeviceErrorSenseUnavailable) {
-                    NSString* message = NSLocalizedString(@"settings.sense.no-sense-message", nil);
-                    [strongSelf showNoSenseWithMessage:message];
-                } else {
-                    [strongSelf showFailureToEnablePairingModeAlert];
-                }
-                
-                [strongSelf hideActivity];
-            }
-            
-        } else {
-            [[SENServiceDevice sharedService] putSenseIntoPairingMode:^(NSError *error) {
-                __strong typeof(weakSelf) strongSelf = weakSelf;
-                if (strongSelf) {
-                    if (error != nil) {
-                        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                        return [strongSelf showFailureToEnablePairingModeAlert];
-                    }
-                    // TODO (jimmy): what to actually show?
-                    [strongSelf hideActivity];
-                }
-            }];
-        }
-    }];
-}
-
-- (IBAction)putSenseInPairingMode:(id)sender {
-    [self showPairingModeConfirmation];
-}
-
-#pragma mark Factory Reset
 
 - (void)restore {
     [SENAnalytics track:kHEMAnalyticsEventDeviceAction
              properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceFactoryRestore}];
-    
-    [[self actionStatusLabel] setText:NSLocalizedString(@"settings.device.restoring-factory-settings", nil)];
-    [self showActivity];
-    
-    __weak typeof(self) weakSelf = self;
-    [[SENServiceDevice sharedService] restoreFactorySettings:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf && error != nil) {
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-            // if there's no error, notification of factory restore will fire,
-            // which will trigger app to be put back at checkpoint
-            [strongSelf hideActivity];
-            [strongSelf showFactoryRestoreErrorMessage:error];
-        }
+
+    NSString* message = NSLocalizedString(@"settings.device.restoring-factory-settings", nil);
+    [self showActivityText:message completion:^{
+        __weak typeof(self) weakSelf = self;
+        [[SENServiceDevice sharedService] restoreFactorySettings:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error != nil) {
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                // if there's no error, notification of factory restore will fire,
+                // which will trigger app to be put back at checkpoint
+                [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                    [strongSelf showFactoryRestoreErrorMessage:error];
+                }];
+            } else {
+                if ([[strongSelf delegate] respondsToSelector:@selector(didFactoryRestoreFrom:)]) {
+                    [[strongSelf delegate] didFactoryRestoreFrom:strongSelf];
+                }
+                [strongSelf dismissActivityWithSuccess:nil];
+            }
+        }];
     }];
+
 }
 
-- (IBAction)restoreToFactoryDefaults:(id)sender {
-    [self showFactoryRestoreConfirmation];
-}
 
-#pragma mark Configure WiFi
+#pragma mark Change WiFi
 
-- (void)configureWiFi {
+- (void)changeWiFi:(id)sender {
     HEMWifiPickerViewController* picker =
         (HEMWifiPickerViewController*) [HEMOnboardingStoryboard instantiateWifiPickerViewController];
     [picker setDelegate:self];
     
     UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:picker];
     [self presentViewController:nav animated:YES completion:nil];
+
 }
 
-#pragma mark HEMWifiConfigurationDelegate
+#pragma mark - HEMWifiConfigurationDelegate
 
 - (void)didCancelWiFiConfigurationFrom:(id)controller {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didConfigureWiFiTo:(NSString *)ssid from:(id)controller {
-    [self setWifiSSID:ssid];
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self reloadRow:kHEMSenseRowWiFi];
-    }];
-}
-
-#pragma mark - Cleanup
-
-- (void)dealloc {
-    [[SENServiceDevice sharedService] stopScanning];
+    if ([[self delegate] respondsToSelector:@selector(didUpdateWiFiFrom:)]) {
+        [[self delegate] didUpdateWiFiFrom:self];
+    }
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

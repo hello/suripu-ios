@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENSenseManager.h>
+#import <SenseKit/SENSettings.h>
 
 #import <AFNetworking/AFURLResponseSerialization.h>
 
@@ -23,6 +24,7 @@
 CGFloat const HEMOnboardingShadowOpacity = 0.8f;
 
 static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
+static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
 
 @implementation HEMOnboardingUtils
 
@@ -236,6 +238,21 @@ static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
     [layer setShadowColor:[[shadow shadowColor] CGColor]];
     [layer setShadowOpacity:1.0f];
     
+}
+
+#pragma mark - SSID
+
++ (void)saveConfiguredSSID:(NSString*)ssid {
+    if ([ssid length] == 0) return;
+    
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:SENSettingsAppGroup];
+    [defaults setObject:ssid forKey:HEMOnboardingSettingSSID];
+    [defaults synchronize];
+}
+
++ (NSString*)lastConfiguredSSID {
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:SENSettingsAppGroup];
+    return [defaults stringForKey:HEMOnboardingSettingSSID];
 }
 
 @end

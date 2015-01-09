@@ -8,7 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "HEMBaseController.h"
+#import "HEMSensePairDelegate.h"
 
 @interface HEMSensePairViewController : HEMBaseController
+
+@property (nonatomic, weak) id<HEMSensePairingDelegate> delegate;
 
 @end

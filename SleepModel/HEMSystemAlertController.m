@@ -208,6 +208,11 @@
 
 - (void)userDidSignOut {
     [self dismissAlert:nil];
+    
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:SENServiceDeviceNotificationWarning object:nil];
+    
+    [[SENServiceDevice sharedService] setMonitorDeviceStates:NO];
 }
 
 #pragma mark - Clean Up

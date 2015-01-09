@@ -23,6 +23,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
+    [[self navigationBar] setBarTintColor:[HelloStyleKit backViewTintColor]];
+    [[self navigationBar] setTranslucent:NO];
+    [[self navigationBar] setClipsToBounds:NO];
+    [[self navigationBar] setShadowImage:nil];
+    [[self navigationBar] setTitleTextAttributes:@{
+        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
+        NSFontAttributeName : [UIFont settingsTitleFont]
+    }];
     __weak typeof(self) weakSelf = self;
     self.interactivePopGestureRecognizer.delegate = weakSelf;
     self.delegate = weakSelf;

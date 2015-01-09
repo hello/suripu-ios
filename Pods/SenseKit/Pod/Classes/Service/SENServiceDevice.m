@@ -16,8 +16,7 @@
 
 NSString* const SENServiceDeviceNotificationFactorySettingsRestored = @"sense.restored";
 NSString* const SENServiceDeviceNotificationWarning = @"sense.warning";
-
-static NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
+NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 @interface SENServiceDevice()
 
@@ -402,6 +401,10 @@ static NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
                     break;
                 }
             }
+        } else {
+            // if another scan was issued and we now no longer find a sense, we
+            // need to make sure this service reflects this condition
+            [strongSelf setSenseManager:nil];
         }
         
         if (completion) {
@@ -483,8 +486,11 @@ static NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         
         NSError* deviceError = nil;
         
-        if (error != nil && strongSelf) {
+        if (error != nil) {
             deviceError = [strongSelf errorWithType:SENServiceDeviceErrorUnlinkPillFromAccount];
+        } else {
+            [strongSelf setSenseInfo:nil];
+            [strongSelf setSenseManager:nil];
         }
         
         if (completion) completion (deviceError);

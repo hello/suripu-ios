@@ -77,6 +77,7 @@ static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 - (BOOL)shouldMonitorDevices {
     HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
     return [SENAuthorizationService isAuthorized]
+            && [self presentedViewController] == nil
             && (checkpoint == HEMOnboardingCheckpointStart
                 || checkpoint == HEMOnboardingCheckpointPillDone);
 }

@@ -260,4 +260,9 @@
  */
 + (UIFont*)deviceAlertMessageFont;
 
+/**
+ * Font used to display a warning message for the device in a collection view cell
+ */
++ (UIFont*)deviceCellWarningMessageFont;
+
 @end

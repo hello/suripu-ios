@@ -14,6 +14,7 @@
 
 extern NSString* const SENServiceDeviceNotificationFactorySettingsRestored;
 extern NSString* const SENServiceDeviceNotificationWarning;
+extern NSString* const SENServiceDeviceErrorDomain;
 
 typedef NS_ENUM(NSUInteger, SENServiceDeviceState) {
     SENServiceDeviceStateUnknown = 0,
@@ -190,6 +191,18 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
  * @see @property pillInfo
  */
 - (void)unpairSleepPill:(SENServiceDeviceCompletionBlock)completion;
+
+/**
+ * @method unlinkSenseFromACcount:
+ *
+ * @discussion
+ * Unlink / unpair the Sense, if one is paired, from the currently signed in
+ * account.  After doing so, the service will remove any sense device information
+ * as well as disconnect / remove SenseManager upon successful unlinking
+ *
+ * @param completion: the block to invoke when this is done
+ */
+- (void)unlinkSenseFromAccount:(SENServiceDeviceCompletionBlock)completion;
 
 /**
  * @method restoreFactorySettings:

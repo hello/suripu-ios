@@ -139,8 +139,11 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
     NSArray* sensors = [SENSensor sensors];
     
     for (SENSensor* sensor in sensors) {
-        [self setSensorsOk:[self sensorsOk] && [sensor condition] != SENSensorConditionUnknown];
-        nextY += CGRectGetHeight([[self addSensorViewFor:sensor atY:nextY] bounds]);
+#pragma message ("once we add support for Light sensor, fix it here and remove the placeholder!")
+        if ([sensor unit] != SENSensorUnitUnknown) {
+            [self setSensorsOk:[self sensorsOk] && [sensor condition] != SENSensorConditionUnknown];
+            nextY += CGRectGetHeight([[self addSensorViewFor:sensor atY:nextY] bounds]);
+        }
     }
     
     // add a couple of placeholder sensors since we don't have them yet, but were

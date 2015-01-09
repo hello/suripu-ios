@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.0.54
+
+* Added guard for Light sensor in room check, which was crashing it
+
+## 1.0.0.53
+
+Fixes:
+
+* Fix issue where some people would be brought back to Birthdate form during
+  onboarding.  This affected people who had BLE turned off when going through
+  onboarding.
+
 ## 1.0.0.52
 
 New:

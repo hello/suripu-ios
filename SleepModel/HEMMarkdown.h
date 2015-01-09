@@ -13,7 +13,7 @@
 + (NSDictionary*)attributesForBackViewText;
 + (NSDictionary*)attributesForInsightViewText;
 + (NSDictionary*)attributesForInsightTitleViewText;
-+ (NSDictionary*)attributesForEventInfoViewText;
++ (NSDictionary*)attributesForEventMessageText;
 + (NSDictionary*)attributesForTimelineMessageText;
 + (NSDictionary*)attributesForRoomCheckWithConditionColor:(UIColor*)color;
 + (NSDictionary*)attributesForSensorMessageWithConditionColor:(UIColor*)color;

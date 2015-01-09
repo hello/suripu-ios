@@ -9,7 +9,6 @@
 #import <Foundation/Foundation.h>
 
 @class SENSleepResultSegment;
-@class HEMEventInfoView;
 
 @interface HEMSleepGraphUtils : NSObject
 

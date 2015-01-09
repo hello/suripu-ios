@@ -43,7 +43,7 @@
     };
 }
 
-+ (NSDictionary*)attributesForEventInfoViewText
++ (NSDictionary*)attributesForEventMessageText
 {
     return @{
         @(STRONG) : @{ NSFontAttributeName : [UIFont timelineEventMessageBoldFont] },

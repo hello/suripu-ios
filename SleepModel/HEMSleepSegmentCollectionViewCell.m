@@ -2,9 +2,10 @@
 #import "HEMSleepSegmentCollectionViewCell.h"
 #import "HelloStyleKit.h"
 
-CGFloat HEMLinedCollectionViewCellLineOffset = 20.f;
-CGFloat HEMLinedCollectionViewCellLineWidth = 2.f;
-CGFloat HEMSleepSegmentMinimumFillWidth = 28.f;
+CGFloat const HEMLinedCollectionViewCellLineOffset = 28.f;
+CGFloat const HEMLinedCollectionViewCellLineWidth = 2.f;
+CGFloat const HEMSleepSegmentMinimumFillWidth = 28.f;
+CGFloat const HEMSleepLineWidth = 1.f;
 
 @interface HEMSleepSegmentCollectionViewCell ()
 
@@ -34,19 +35,9 @@ CGFloat HEMSleepSegmentMinimumFillWidth = 28.f;
         CGFloat inset = HEMLinedCollectionViewCellLineOffset + HEMLinedCollectionViewCellLineWidth;
         CGFloat maximumFillWidth = (CGRectGetWidth(rect) - (inset*2));
         CGFloat width = MAX(maximumFillWidth * self.fillRatio, HEMSleepSegmentMinimumFillWidth);
-        CGRect fillRect = CGRectMake(inset, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
-        CGContextClearRect(ctx, fillRect);
+        CGFloat x = (CGRectGetWidth(rect) - width)/2;
+        CGRect fillRect = CGRectMake(x, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
         CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
-        CGContextFillRect(ctx, fillRect);
-
-        inset += HEMSleepSegmentMinimumFillWidth;
-        width = (CGRectGetWidth(rect) - inset);
-        fillRect = CGRectMake(inset, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
-        CGContextSetBlendMode(ctx, kCGBlendModeOverlay);
-        CGContextSetFillColorWithColor(ctx, [UIColor colorWithWhite:1.f alpha:0.2].CGColor);
-        CGContextFillRect(ctx, fillRect);
-        CGContextSetBlendMode(ctx, kCGBlendModeLighten);
-        CGContextSetFillColorWithColor(ctx, [UIColor colorWithWhite:1.f alpha:0.85].CGColor);
         CGContextFillRect(ctx, fillRect);
     }
 }

@@ -64,6 +64,10 @@
 }
 
 - (void)checkBluetooth {
+    // if this controller is left on the stack, this controller is called and if
+    // bluetooth is on, it will push the next controller on to the stack again
+    if ([[self navigationController] topViewController] != self) return;
+    
     if (![HEMBluetoothUtils stateAvailable]) {
         [self performSelector:@selector(checkBluetooth)
                    withObject:nil

@@ -47,6 +47,7 @@ static CGFloat const HEMSleepSummaryCellHeight = 350.f;
 static CGFloat const HEMPresleepItemExpandedCellHeight = 196.f;
 static CGFloat const HEMPresleepItemDefaultCellHeight = 134.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 40.f;
+static CGFloat const HEMSleepGraphCollectionViewEventTitleOnlyHeight = 92.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMaximumHeight = 184.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMTopItemsConstraintConstant = 10.f;
@@ -351,6 +352,11 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
         if ([self.dataSource segmentForSleepExistsAtIndexPath:indexPath]) {
             return CGSizeMake(width, ceilf(durationHeight));
         } else if ([self.expandedIndexPath isEqual:indexPath]) {
+            if (segment.message.length == 0
+                && ![segment.eventType isEqualToString:HEMSleepEventTypeWakeUp]
+                && !segment.sound) {
+                return CGSizeMake(width, HEMSleepGraphCollectionViewEventTitleOnlyHeight);
+            }
             return CGSizeMake(width, HEMSleepGraphCollectionViewEventMaximumHeight);
         } else {
             return CGSizeMake(width, MAX(durationHeight, HEMSleepGraphCollectionViewEventMinimumHeight));

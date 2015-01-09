@@ -22,6 +22,8 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMMarkdown.h"
 
+NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
+
 @interface HEMSleepGraphCollectionViewDataSource ()
 
 @property (nonatomic, weak) UICollectionView* collectionView;
@@ -35,7 +37,6 @@
 
 @implementation HEMSleepGraphCollectionViewDataSource
 
-static NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
 static NSString* const HEMSleepEventTypeLight = @"LIGHT";
 static NSString* const HEMSleepEventTypeMotion = @"MOTION";
 static NSString* const HEMSleepEventTypeNoise = @"NOISE";

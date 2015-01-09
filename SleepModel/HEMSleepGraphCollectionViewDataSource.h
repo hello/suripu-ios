@@ -4,6 +4,8 @@
 @class SENSleepResultSegment;
 @class HEMSleepSummaryCollectionViewCell;
 
+extern NSString* const HEMSleepEventTypeWakeUp;
+
 @protocol HEMSleepGraphActionDelegate <NSObject>
 
 @optional

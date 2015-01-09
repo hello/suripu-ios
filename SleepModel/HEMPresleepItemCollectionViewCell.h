@@ -10,6 +10,7 @@
 
 @interface HEMPresleepItemCollectionViewCell : UICollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIImageView *typeImageView;
+- (void)addButtonsForInsights:(NSArray*)insights;
+
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @end

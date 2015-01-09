@@ -349,39 +349,8 @@ static NSString* const sensorTypeParticulates = @"particulates";
          presleepCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMPresleepItemCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:presleepItemReuseIdentifier forIndexPath:indexPath];
-    SENSleepResultSensorInsight* insight = self.sleepResult.sensorInsights[indexPath.row];
-    cell.messageLabel.text = insight.message;
-    [self configureImageView:cell.typeImageView forInsight:insight];
+    [cell addButtonsForInsights:self.sleepResult.sensorInsights];
     return cell;
-}
-
-- (void)configureImageView:(UIImageView*)imageView forInsight:(SENSleepResultSensorInsight*)insight
-{
-    NSString* suffix = nil;
-    UIColor* color = nil;
-    switch (insight.condition) {
-        case SENSensorConditionIdeal:
-            suffix = @"good";
-            color = [HelloStyleKit idealSensorColor];
-            break;
-        case SENSensorConditionWarning:
-            suffix = @"bad";
-            color = [HelloStyleKit warningSensorColor];
-            break;
-        case SENSensorConditionUnknown:
-        case SENSensorConditionAlert:
-        default:
-            suffix = @"medium";
-            color = [HelloStyleKit alertSensorColor];
-            break;
-    }
-    if (suffix && color) {
-        imageView.image = [UIImage imageNamed:[NSString stringWithFormat:@"%@-%@", insight.name, suffix]];
-        imageView.layer.borderColor = color.CGColor;
-    } else {
-        imageView.image = nil;
-        imageView.layer.borderColor = [HelloStyleKit alertSensorColor].CGColor;
-    }
 }
 
 #pragma mark - Data Parsing

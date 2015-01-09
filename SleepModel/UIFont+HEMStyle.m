@@ -223,4 +223,8 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
++ (UIFont*)deviceCellWarningMessageFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:13.0f];
+}
+
 @end

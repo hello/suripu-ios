@@ -17,6 +17,7 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMSupportUtil.h"
+#import "HelloStyleKit.h"
 
 static CGFloat const kHEMWelcomeMotionEffectBorder = 10.0f;
 static CGFloat const kHEMWelcomeButtonAnimationDuration = 0.5f;
@@ -34,7 +35,8 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 @property (weak, nonatomic) IBOutlet UIButton *cancelGetStartedButton;
 @property (weak, nonatomic) IBOutlet UIButton *playButton;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *getStartedCenterXConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *getStartedLeadingConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *getStartedTrailingConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *noSenseCenterXConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginCenterXConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *signupCenterXConstraint;
@@ -49,33 +51,55 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [self setSubtitleText];
-    
-    UIColor* whiteColor = [UIColor whiteColor];
-    CGColorRef white = [whiteColor CGColor];
-    
-    [[self getStartedButton] setTitleColor:whiteColor forState:UIControlStateNormal];
-    [[self signinButton] setTitleColor:whiteColor forState:UIControlStateNormal];
-    [[self signupButton] setTitleColor:whiteColor forState:UIControlStateNormal];
-    [[[self getStartedButton] layer] setBorderColor:white];
-    [[[self signinButton] layer] setBorderColor:white];
-    [[[self signupButton] layer] setBorderColor:white];
-    
-    CGFloat width = CGRectGetWidth([[self view] bounds]);
-    [[self loginCenterXConstraint] setConstant:-width];
-    [[self signupCenterXConstraint] setConstant:-width];
-    [[self cancelCenterXConstraint] setConstant:-width];
+    [self configureSubtitle];
+    [self configureButtonStyles];
+    [self configureDefaultConstraints];
  
     [[self bgImageView] add3DEffectWithBorder:kHEMWelcomeMotionEffectBorder];
     
 }
 
-- (void)setSubtitleText {
+- (void)configureDefaultConstraints {
+    CGFloat width = CGRectGetWidth([[self view] bounds]);
+    [[self loginCenterXConstraint] setConstant:-width];
+    [[self signupCenterXConstraint] setConstant:-width];
+    [[self cancelCenterXConstraint] setConstant:-width];
+}
+
+- (void)configureButtonStyles {
+    UIColor* bgColor = [UIColor colorWithWhite:1.0f alpha:0.4f];
+    UIColor* whiteColor = [UIColor whiteColor];
+    CGColorRef white = [whiteColor CGColor];
+    
+    [[self getStartedButton] setBackgroundColor:bgColor];
+    [[self getStartedButton] setTitleColor:whiteColor forState:UIControlStateNormal];
+    [[self signinButton] setTitleColor:whiteColor forState:UIControlStateNormal];
+    [[self signinButton] setBackgroundColor:bgColor];
+    [[self signupButton] setTitleColor:whiteColor forState:UIControlStateNormal];
+    [[self signupButton] setBackgroundColor:bgColor];
+    
+    [[[self getStartedButton] layer] setBorderColor:white];
+    [[[self signinButton] layer] setBorderColor:white];
+    [[[self signupButton] layer] setBorderColor:white];
+    
+    [[[self noSenseButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [[[self cancelGetStartedButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+}
+
+- (void)configureTitle {
+    [[self titleLabel] setFont:[UIFont onboardingTitleLargeFont]];
+    [[self titleLabel] setTextColor:[HelloStyleKit onboardingGrayColor]];
+}
+
+- (void)configureSubtitle {
     NSString* text = NSLocalizedString(@"welcome.subtitle", nil);
     
     NSMutableAttributedString* attrText = [[NSMutableAttributedString alloc] initWithString:text];
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
+    // make the text the larger font, regardless of what the common attribute sets it as
+    [attrText addAttribute:NSFontAttributeName
+                     value:[UIFont onboardingDescriptionLargeFont]
+                     range:NSMakeRange(0, [attrText length])];
     
     [[self subtitleLabel] setAttributedText:attrText];
 }
@@ -168,9 +192,12 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 
 - (void)showInitialActions:(NSNumber*)showValue {
     BOOL show = [showValue boolValue];
-    CGFloat constant = CGRectGetWidth([[self view] bounds]);
+    CGFloat width = CGRectGetWidth([[self view] bounds]);
+    CGFloat getStartedLeadConstant = -width;
+    CGFloat getStartedTrailConstant = width;
+    CGFloat noSenseConstant = width;
     CGFloat alpha = 0.0f;
-    CGFloat bgXConstant = ((CGRectGetWidth([[self bgImageView] bounds]) - constant)/2)
+    CGFloat bgXConstant = ((CGRectGetWidth([[self bgImageView] bounds]) - noSenseConstant)/2)
                             - kHEMWelcomeMotionEffectBorder;
     NSString* timingFunction = kCAMediaTimingFunctionEaseIn;
     NSString* title = NSLocalizedString(@"welcome.title.welcome", nil);
@@ -179,7 +206,9 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     if (show) {
         alpha = 1.0f;
         bgXConstant = -(bgXConstant);
-        constant = 0.0f;
+        getStartedLeadConstant = 4.0f;
+        getStartedTrailConstant = 4.0f;
+        noSenseConstant = 0.0f;
         timingFunction = kCAMediaTimingFunctionEaseOut;
         alignment = NSTextAlignmentLeft;
         title = NSLocalizedString(@"welcome.title.meet-sense", nil);
@@ -198,7 +227,17 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
                             options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              [[self getStartedButton] setAlpha:alpha];
-                             [[self getStartedCenterXConstraint] setConstant:constant];
+                            
+                             // order matters, otherwise logs will show constraints
+                             // being broken
+                             if (!show) {
+                                 [[self getStartedLeadingConstraint] setConstant:getStartedLeadConstant];
+                                 [[self getStartedTrailingConstraint] setConstant: getStartedTrailConstant];
+                             } else {
+                                 [[self getStartedTrailingConstraint] setConstant: getStartedTrailConstant];
+                                 [[self getStartedLeadingConstraint] setConstant:getStartedLeadConstant];
+                             }
+
                              [[self view] layoutIfNeeded];
                          }
                          completion:nil];
@@ -208,7 +247,9 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
                             options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                              [[self noSenseButton] setAlpha:alpha];
-                             [[self noSenseCenterXConstraint] setConstant:constant];
+                             
+                             [[self noSenseCenterXConstraint] setConstant:noSenseConstant];
+                             
                              [[self view] layoutIfNeeded];
                          }
                          completion:nil];

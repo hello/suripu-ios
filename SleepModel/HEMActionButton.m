@@ -4,7 +4,6 @@
 
 #import "UIFont+HEMStyle.h"
 
-static CGFloat const kHEMActionCornerRadius = 20.0f;
 static CGFloat const kHEMActionBorderWidth = 2.0f;
 static CGFloat const kHEMActionDisabledAlpha = 0.3f;
 static CGFloat const kHEMActionTitleTopOffset = 3.0f;
@@ -45,7 +44,7 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 }
 
 - (void)setDefaults {
-    self.layer.cornerRadius = kHEMActionCornerRadius;
+    self.layer.cornerRadius = CGRectGetHeight([self bounds])/2;
     self.backgroundColor = [UIColor clearColor];
     self.layer.borderColor = [HelloStyleKit senseBlueColor].CGColor;
     self.layer.borderWidth = kHEMActionBorderWidth;

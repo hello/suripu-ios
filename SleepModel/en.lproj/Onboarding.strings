@@ -18,7 +18,7 @@
 "3Q2-kn-Onc.text" = "You.";
 
 /* Class = "IBUIButton"; normalTitle = "Sign Up"; ObjectID = "3dT-qJ-kIJ"; */
-"3dT-qJ-kIJ.normalTitle" = "Sign Up";
+"3dT-qJ-kIJ.normalTitle" = "SIGN UP";
 
 /* Class = "IBUILabel"; text = "scroll horizontally"; ObjectID = "3jl-2r-2nX"; */
 "3jl-2r-2nX.text" = "scroll horizontally";
@@ -66,7 +66,7 @@
 "F1J-He-hsq.normalTitle" = "Male";
 
 /* Class = "IBUILabel"; text = "Log in"; ObjectID = "Fcs-EL-Ys6"; */
-"Fcs-EL-Ys6.text" = "Log in";
+"Fcs-EL-Ys6.text" = "LOG IN";
 
 /* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "GFw-g6-B5s"; */
 "GFw-g6-B5s.normalTitle" = "Skip";
@@ -90,7 +90,7 @@
 "M0L-MG-dGi.normalTitle" = "Next";
 
 /* Class = "IBUIButton"; normalTitle = "Get Started"; ObjectID = "NxD-eY-cDC"; */
-"NxD-eY-cDC.normalTitle" = "Get Started";
+"NxD-eY-cDC.normalTitle" = "GET STARTED";
 
 /* Class = "IBUILabel"; text = "Have your partner get the app"; ObjectID = "Pe9-oy-MXl"; */
 "Pe9-oy-MXl.text" = "Have your partner get the app";
@@ -228,7 +228,7 @@
 "tOK-gj-1np.normalTitle" = "Skip";
 
 /* Class = "IBUIButton"; normalTitle = "Log In"; ObjectID = "tuz-ez-XXK"; */
-"tuz-ez-XXK.normalTitle" = "Log In";
+"tuz-ez-XXK.normalTitle" = "LOG IN";
 
 /* Class = "IBUILabel"; text = "scroll vertically"; ObjectID = "uXe-Qh-ePF"; */
 "uXe-Qh-ePF.text" = "scroll vertically";

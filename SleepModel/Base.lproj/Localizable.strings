@@ -307,6 +307,9 @@
 "alarm.repeat.day-reuse-error.title" = "Another alarm is already set";
 "alarm.repeat.day-reuse-error.message" = "Sense monitors your environment and predicts the perfect moment for you to awaken. Only one such alarm can be set for each day.";
 
+"alarm.sounds.error.title" = "Could not load sounds";
+"alarm.sounds.error.message" = "Available alarm sounds could not be loaded at this time. Tap 'Refresh' to try again.";
+
 // background noise
 "noise.state.enabled" = "Enabled";
 "noise.state.disabled" = "Disabled";

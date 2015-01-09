@@ -23,12 +23,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
-    [[self navigationBar] setTintColor:[HelloStyleKit backViewTintColor]];
-    [[self navigationBar] setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
-        NSFontAttributeName : [UIFont settingsTitleFont]
-    }];
     __weak typeof(self) weakSelf = self;
     self.interactivePopGestureRecognizer.delegate = weakSelf;
     self.delegate = weakSelf;
@@ -38,8 +32,6 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     self.interactivePopGestureRecognizer.enabled = NO;
-    [self setBackButtonOnViewController:viewController];
-    [[viewController view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
     [super pushViewController:viewController animated:animated];
     [self updateTopBarVisibilityAnimated:animated];
 }
@@ -81,18 +73,6 @@
     self.interactivePopGestureRecognizer.enabled = ![viewController isEqual:[self.viewControllers firstObject]];
 }
 
-- (void)setBackButtonOnViewController:(UIViewController*)viewController {
-    UIImage* defaultBackImage = [HelloStyleKit backIcon];
-    UIBarButtonItem* item = [[UIBarButtonItem alloc] initWithImage:defaultBackImage style:UIBarButtonItemStylePlain target:self action:@selector(goBack)];
-    [item setTintColor:[HelloStyleKit barButtonEnabledColor]];
-    [item setAccessibilityLabel:self.topViewController.title];
-    viewController.navigationItem.leftBarButtonItem = item;
-}
-
-- (void)goBack {
-    [self popViewControllerAnimated:YES];
-}
-
 #pragma mark - Top Bar Handling
 
 - (void)updateBarVisibilityWithRatio:(CGFloat)ratio {
@@ -124,7 +104,7 @@
 
 - (void)interactivePopGestureActivated:(UIGestureRecognizer*)recognizer {
     CGFloat ratio = [recognizer locationInView:self.view].x/CGRectGetWidth(self.view.bounds);
-    if (recognizer.state == UIGestureRecognizerStateChanged) {
+    if (recognizer.state == UIGestureRecognizerStateChanged && self.viewControllers.count < 2) {
         [self updateBarVisibilityWithRatio:ratio];
     }
 }

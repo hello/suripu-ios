@@ -13,7 +13,7 @@
 #import "HEMSupportUtil.h"
 
 static NSUInteger const HEMSettingsTableViewRows = 7;
-static CGFloat const HEMSettingsTableViewMargin = 16.0f;
+static CGFloat const HEMSettingsTableViewMargin = 20.0f;
 
 @interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 

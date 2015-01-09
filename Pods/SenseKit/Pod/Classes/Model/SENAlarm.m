@@ -161,6 +161,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
         _repeatFlags = [[aDecoder decodeObjectForKey:SENAlarmRepeatKey] unsignedIntegerValue];
         _smartAlarm = [[aDecoder decodeObjectForKey:SENAlarmSmartKey] boolValue];
         _soundName = [aDecoder decodeObjectForKey:SENAlarmSoundNameKey];
+        _soundID = [aDecoder decodeObjectForKey:SENAlarmSoundIDKey];
     }
     return self;
 }
@@ -171,6 +172,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     [aCoder encodeObject:@([self hour]) forKey:SENAlarmHourKey];
     [aCoder encodeObject:@([self minute]) forKey:SENAlarmMinuteKey];
     [aCoder encodeObject:[self soundName] forKey:SENAlarmSoundNameKey];
+    [aCoder encodeObject:[self soundID] forKey:SENAlarmSoundIDKey];
     [aCoder encodeObject:[self identifier] forKey:SENAlarmIdentifierKey];
     [aCoder encodeObject:@([self isEditable]) forKey:SENAlarmEditableKey];
     [aCoder encodeObject:@([self repeatFlags]) forKey:SENAlarmRepeatKey];

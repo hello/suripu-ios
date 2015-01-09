@@ -16,8 +16,7 @@
 
 NSString* const SENServiceDeviceNotificationFactorySettingsRestored = @"sense.restored";
 NSString* const SENServiceDeviceNotificationWarning = @"sense.warning";
-
-static NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
+NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 @interface SENServiceDevice()
 
@@ -134,21 +133,32 @@ static NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 }
 
 - (void)checkSenseWiFiState:(void(^)(SENServiceDeviceState state))completion {
-    [self getConfiguredWiFi:^(NSString *ssid, SENWiFiConnectionState state, NSError *error) {
-        // if no ble connection, assume everything is normal
-        SENServiceDeviceState wifiState = SENServiceDeviceStateNormal;
-        if (error != nil) {
-            switch (state) {
-                case SENWifiConnectionStateDisconnected:
-                case SENWiFiConnectionStateNoInternet:
-                    wifiState = SENServiceDeviceStateNotConnectedToWiFi;
-                    break;
-                default:
-                    break;
-            }
+    __weak typeof(self) weakSelf = self;
+    [SENSenseManager whenBleStateAvailable:^(BOOL on) {
+        __block typeof(weakSelf) strongSelf = weakSelf;
+        // if no ble, assume everything is normal since we can't warn of a problem
+        // that is not for sure
+        __block SENServiceDeviceState wifiState = SENServiceDeviceStateNormal;
+        
+        if (on) {
+            [strongSelf getConfiguredWiFi:^(NSString *ssid, SENWiFiConnectionState state, NSError *error) {
+                if (error != nil) {
+                    switch (state) {
+                        case SENWifiConnectionStateDisconnected:
+                        case SENWiFiConnectionStateNoInternet:
+                            wifiState = SENServiceDeviceStateNotConnectedToWiFi;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                completion (wifiState);
+            }];
+        } else {
+            completion (wifiState);
         }
-        completion (wifiState);
     }];
+
 }
 
 - (void)checkPillPairingState:(void(^)(SENServiceDeviceState state))completion {
@@ -391,6 +401,10 @@ static NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
                     break;
                 }
             }
+        } else {
+            // if another scan was issued and we now no longer find a sense, we
+            // need to make sure this service reflects this condition
+            [strongSelf setSenseManager:nil];
         }
         
         if (completion) {
@@ -472,8 +486,11 @@ static NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         
         NSError* deviceError = nil;
         
-        if (error != nil && strongSelf) {
+        if (error != nil) {
             deviceError = [strongSelf errorWithType:SENServiceDeviceErrorUnlinkPillFromAccount];
+        } else {
+            [strongSelf setSenseInfo:nil];
+            [strongSelf setSenseManager:nil];
         }
         
         if (completion) completion (deviceError);

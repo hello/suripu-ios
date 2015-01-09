@@ -31,4 +31,12 @@ typedef NS_ENUM(NSUInteger, SENAPIAlarmsRepeatDay) {
  */
 + (void)updateAlarms:(NSArray*)alarms completion:(SENAPIDataBlock)completion;
 
+/**
+ *  Fetch available sounds for alarms
+ *
+ *  @param completion block invoked when call completes asynchronously
+ *                    with the data parameter set to sounds data
+ */
++ (void)availableSoundsWithCompletion:(SENAPIDataBlock)completion;
+
 @end

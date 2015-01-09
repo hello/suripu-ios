@@ -105,5 +105,5 @@ struct SENAlarmTime {
 @property (nonatomic) NSUInteger minute;
 @property (nonatomic) NSUInteger repeatFlags;
 @property (nonatomic, copy) NSString* soundName;
-@property (nonatomic, strong) NSNumber* soundID;
+@property (nonatomic, strong) NSString* soundID;
 @end

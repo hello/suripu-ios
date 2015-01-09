@@ -22,14 +22,6 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMMarkdown.h"
 
-NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
-NSString* const HEMSleepEventTypeLight = @"LIGHT";
-NSString* const HEMSleepEventTypeMotion = @"MOTION";
-NSString* const HEMSleepEventTypeNoise = @"NOISE";
-NSString* const HEMSleepEventTypeSunrise = @"SUNRISE";
-NSString* const HEMSleepEventTypeSunset = @"SUNSET";
-NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
-
 @interface HEMSleepGraphCollectionViewDataSource ()
 
 @property (nonatomic, weak) UICollectionView* collectionView;
@@ -42,6 +34,16 @@ NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
 @end
 
 @implementation HEMSleepGraphCollectionViewDataSource
+
+static NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
+static NSString* const HEMSleepEventTypeLight = @"LIGHT";
+static NSString* const HEMSleepEventTypeMotion = @"MOTION";
+static NSString* const HEMSleepEventTypeNoise = @"NOISE";
+static NSString* const HEMSleepEventTypeSunrise = @"SUNRISE";
+static NSString* const HEMSleepEventTypeSunset = @"SUNSET";
+static NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
+static NSString* const HEMSleepEventTypePartnerMotion = @"PARTNER_MOTION";
+static NSString* const HEMSleepEventTypeLightsOut = @"LIGHTS_OUT";
 
 static NSString* const sleepSegmentReuseIdentifier = @"sleepSegmentCell";
 static NSString* const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
@@ -362,20 +364,6 @@ static NSString* const sensorTypeParticulates = @"particulates";
     return indexPath.section == HEMSleepGraphCollectionViewSegmentSection ? self.sleepResult.segments[indexPath.row] : nil;
 }
 
-- (NSString*)localizedSleepDepth:(NSUInteger)sleepDepth
-{
-    switch (sleepDepth) {
-    case 0:
-        return NSLocalizedString(@"sleep-history.depth.awake", nil);
-    case 1:
-        return NSLocalizedString(@"sleep-history.depth.light", nil);
-    case 2:
-        return NSLocalizedString(@"sleep-history.depth.medium", nil);
-    default:
-        return NSLocalizedString(@"sleep-history.depth.deep", nil);
-    }
-}
-
 - (UIImage*)imageForEventType:(NSString*)eventType
 {
     if ([eventType isEqualToString:HEMSleepEventTypeWakeUp]) {
@@ -398,6 +386,12 @@ static NSString* const sensorTypeParticulates = @"particulates";
     }
     else if ([eventType isEqualToString:HEMSleepEventTypeSunset]) {
         return [HelloStyleKit sunsetEventIcon];
+    }
+    else if ([eventType isEqualToString:HEMSleepEventTypeLightsOut]) {
+        return [HelloStyleKit lightsOutEventIcon];
+    }
+    else if ([eventType isEqualToString:HEMSleepEventTypePartnerMotion]) {
+        return [HelloStyleKit partnerEventIcon];
     }
     return [HelloStyleKit unknownEventIcon];
 }

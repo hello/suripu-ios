@@ -99,6 +99,7 @@
 + (UIImage*)unknownEventIcon;
 + (UIImage*)senseIcon;
 + (UIImage*)pillIcon;
++ (UIImage*)lightsOutEventIcon;
 
 // Drawing Methods
 + (void)drawSleepScoreGraphWithSleepScoreLabelText: (NSString*)sleepScoreLabelText sleepScore: (CGFloat)sleepScore;

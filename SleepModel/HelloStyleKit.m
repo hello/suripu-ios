@@ -96,6 +96,7 @@ static UIImage* _sleepEventIcon = nil;
 static UIImage* _unknownEventIcon = nil;
 static UIImage* _senseIcon = nil;
 static UIImage* _pillIcon = nil;
+static UIImage* _lightsOutEventIcon = nil;
 
 #pragma mark Initialization
 
@@ -225,6 +226,7 @@ static UIImage* _pillIcon = nil;
 + (UIImage*)unknownEventIcon { return _unknownEventIcon ?: (_unknownEventIcon = [UIImage imageNamed: @"unknownEventIcon"]); }
 + (UIImage*)senseIcon { return _senseIcon ?: (_senseIcon = [UIImage imageNamed: @"senseIcon"]); }
 + (UIImage*)pillIcon { return _pillIcon ?: (_pillIcon = [UIImage imageNamed: @"pillIcon"]); }
++ (UIImage*)lightsOutEventIcon { return _lightsOutEventIcon ?: (_lightsOutEventIcon = [UIImage imageNamed: @"lightsOutEventIcon"]); }
 
 #pragma mark Drawing Methods
 

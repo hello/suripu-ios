@@ -85,7 +85,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     [[self dataSource] refresh:^(NSError *error) {
         [weakSelf reloadData];
     }];
-    [self reloadData]; // clear current sta
+    [self reloadData]; // clear current display state to show activity
 }
 
 #pragma mark - UICollectionViewDelegate

@@ -159,10 +159,6 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                     && [pass length] > 0));
 }
 
-- (void)saveSSIDConfigured {
-    
-}
-
 #pragma mark - Security Picker
 
 - (void)setupSecurityPickerView {

@@ -117,7 +117,8 @@ static NSInteger const HEMDeviceRowPill = 1;
     if ([self lostInternetConnection:device]) {
         [set addObject:@(HEMSenseWarningNoInternet)];
     }
-    if (![[SENServiceDevice sharedService] pairedSenseAvailable]) {
+    if (![[SENServiceDevice sharedService] pairedSenseAvailable]
+        && [device type] == SENDeviceTypeSense) {
         [set addObject:@(HEMSenseWarningNotConnectedToSense)];
     }
     return set;

@@ -76,8 +76,8 @@
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
                     </button>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kh-Q1-akT">
-                        <rect key="frame" x="32" y="95.5" width="270" height="22"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kh-Q1-akT">
+                        <rect key="frame" x="32" y="95.5" width="256" height="22"/>
                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -88,7 +88,7 @@
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="IoS-vS-i2i" secondAttribute="centerX" id="21k-z7-23w"/>
                 <constraint firstItem="k6K-A1-70h" firstAttribute="top" secondItem="ry2-xq-WWj" secondAttribute="top" id="27v-SH-0Y7"/>
-                <constraint firstAttribute="trailing" secondItem="7kh-Q1-akT" secondAttribute="trailing" constant="18" id="2JO-zL-Fp5"/>
+                <constraint firstAttribute="trailing" secondItem="7kh-Q1-akT" secondAttribute="trailing" constant="32" id="2JO-zL-Fp5"/>
                 <constraint firstItem="k6K-A1-70h" firstAttribute="leading" secondItem="ry2-xq-WWj" secondAttribute="leading" id="2QO-ZD-79e"/>
                 <constraint firstItem="JFc-fa-7rh" firstAttribute="centerY" secondItem="5DK-SE-Ybo" secondAttribute="centerY" id="4Vp-dI-0u4"/>
                 <constraint firstItem="MQC-tj-fHb" firstAttribute="top" secondItem="IoS-vS-i2i" secondAttribute="top" constant="20" id="4at-62-2bH"/>

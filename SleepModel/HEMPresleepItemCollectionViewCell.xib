@@ -13,8 +13,8 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="184"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your bedroom was a bit noisy." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXN-Z3-Ncu">
-                        <rect key="frame" x="61" y="145.5" width="198" height="20.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Your bedroom was a bit noisy." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXN-Z3-Ncu">
+                        <rect key="frame" x="32" y="145" width="256" height="20.5"/>
                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
@@ -33,7 +33,8 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstAttribute="centerX" secondItem="IXN-Z3-Ncu" secondAttribute="centerX" constant="-0.5" id="3TV-vB-yuj"/>
+                <constraint firstItem="IXN-Z3-Ncu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="32" id="9NT-Ey-HTi"/>
+                <constraint firstAttribute="trailing" secondItem="IXN-Z3-Ncu" secondAttribute="trailing" constant="32" id="KTW-AN-rab"/>
                 <constraint firstItem="IXN-Z3-Ncu" firstAttribute="top" secondItem="lGO-EQ-243" secondAttribute="bottom" constant="30" id="OHU-ZF-eS1"/>
                 <constraint firstItem="lGO-EQ-243" firstAttribute="top" secondItem="mmc-1z-29g" secondAttribute="bottom" constant="20" id="SbZ-IH-b96"/>
                 <constraint firstAttribute="centerX" secondItem="mmc-1z-29g" secondAttribute="centerX" id="ZvB-gy-sLi"/>

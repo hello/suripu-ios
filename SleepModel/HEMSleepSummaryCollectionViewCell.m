@@ -22,6 +22,8 @@
 
 - (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated
 {
+    if (sleepScore > 0)
+        [self.spinnerView stopAnimating];
     [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];
 }
 

@@ -219,19 +219,24 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 - (void)didTapEventButton:(UIButton*)sender
 {
     NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
+    HEMSleepEventCollectionViewCell* cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
     BOOL shouldExpand = ![self.expandedIndexPath isEqual:indexPath];
     if (shouldExpand) {
+        if (self.expandedIndexPath) {
+            HEMSleepEventCollectionViewCell* oldCell = (id)[self.collectionView cellForItemAtIndexPath:self.expandedIndexPath];
+            [oldCell useExpandedLayout:NO animated:YES];
+        }
         self.expandedIndexPath = indexPath;
     } else {
         self.expandedIndexPath = nil;
     }
+    [cell useExpandedLayout:shouldExpand animated:YES];
     [self animateAllCellHeightChanges];
-    UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     CGRect cellRect = [self.collectionView convertRect:cell.frame toView:self.collectionView.superview];
     if (shouldExpand && !CGRectContainsRect(self.collectionView.frame, cellRect))
-        [self.collectionView scrollToItemAtIndexPath:indexPath
-                                    atScrollPosition:UICollectionViewScrollPositionCenteredVertically
-                                            animated:YES];
+            [self.collectionView scrollToItemAtIndexPath:indexPath
+                                        atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                                animated:YES];
 }
 
 - (void)didTapDataVerifyButton:(UIButton*)sender
@@ -310,6 +315,14 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
         [eventCell.eventTypeButton sendActionsForControlEvents:UIControlEventTouchUpInside];
     }
     return NO;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.expandedIndexPath isEqual:indexPath]) {
+        HEMSleepEventCollectionViewCell* eventCell = (id)cell;
+        [eventCell useExpandedLayout:YES animated:NO];
+    }
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout

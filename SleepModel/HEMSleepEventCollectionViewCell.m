@@ -11,12 +11,15 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sleepEventButtonHeightConstraint;
 @property (nonatomic, strong) AVAudioPlayer* player;
 @property (nonatomic, strong) NSTimer* playerUpdateTimer;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* timeLabelTopConstraint;
 @end
 
 @implementation HEMSleepEventCollectionViewCell
 
 static CGFloat const HEMEventButtonSize = 40.f;
 static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
+static CGFloat const HEMEventTimeLabelRetractedConstant = 5.f;
+static CGFloat const HEMEventTimeLabelExpandedConstant = 53.f;
 
 - (void)awakeFromNib
 {
@@ -51,6 +54,18 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 {
     [self setNeedsDisplay];
     [super setNeedsLayout];
+}
+
+- (void)useExpandedLayout:(BOOL)isExpanded animated:(BOOL)animated
+{
+    void (^animations)() = ^{
+        self.timeLabelTopConstraint.constant = isExpanded
+        ? HEMEventTimeLabelExpandedConstant : HEMEventTimeLabelRetractedConstant;
+    };
+    if (animated)
+        [UIView animateWithDuration:0.2f animations:animations];
+    else
+        animations();
 }
 
 - (void)drawRect:(CGRect)rect

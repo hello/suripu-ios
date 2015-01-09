@@ -18,8 +18,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:59 am" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JFc-fa-7rh" customClass="HEMPaddedRoundedLabel">
-                        <rect key="frame" x="232" y="56" width="64" height="24"/>
-                        <color key="backgroundColor" white="1" alpha="0.59999999999999998" colorSpace="calibratedWhite"/>
+                        <rect key="frame" x="232" y="5" width="64" height="24"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="24" id="0Xq-m6-7LT"/>
                             <constraint firstAttribute="width" constant="64" id="awX-fN-ACH"/>
@@ -90,7 +90,6 @@
                 <constraint firstItem="k6K-A1-70h" firstAttribute="top" secondItem="ry2-xq-WWj" secondAttribute="top" id="27v-SH-0Y7"/>
                 <constraint firstAttribute="trailing" secondItem="7kh-Q1-akT" secondAttribute="trailing" constant="32" id="2JO-zL-Fp5"/>
                 <constraint firstItem="k6K-A1-70h" firstAttribute="leading" secondItem="ry2-xq-WWj" secondAttribute="leading" id="2QO-ZD-79e"/>
-                <constraint firstItem="JFc-fa-7rh" firstAttribute="centerY" secondItem="5DK-SE-Ybo" secondAttribute="centerY" id="4Vp-dI-0u4"/>
                 <constraint firstItem="MQC-tj-fHb" firstAttribute="top" secondItem="IoS-vS-i2i" secondAttribute="top" constant="20" id="4at-62-2bH"/>
                 <constraint firstAttribute="centerX" secondItem="5DK-SE-Ybo" secondAttribute="centerX" id="6k3-HX-tTg"/>
                 <constraint firstItem="IoS-vS-i2i" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="7UW-R9-StW"/>
@@ -104,6 +103,7 @@
                 <constraint firstItem="k6K-A1-70h" firstAttribute="top" secondItem="7kh-Q1-akT" secondAttribute="bottom" constant="18" id="acC-nz-Goc"/>
                 <constraint firstAttribute="trailing" secondItem="JFc-fa-7rh" secondAttribute="trailing" constant="24" id="c8h-7m-ZlV"/>
                 <constraint firstItem="k6K-A1-70h" firstAttribute="height" secondItem="ry2-xq-WWj" secondAttribute="height" id="frc-LG-jhS"/>
+                <constraint firstItem="JFc-fa-7rh" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="fxX-3N-KQk"/>
                 <constraint firstItem="7kh-Q1-akT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="32" id="jnd-ED-e93"/>
                 <constraint firstItem="1QB-6m-XRf" firstAttribute="leading" secondItem="k6K-A1-70h" secondAttribute="trailing" constant="8" id="luQ-RO-XC4"/>
                 <constraint firstItem="7kh-Q1-akT" firstAttribute="top" secondItem="5DK-SE-Ybo" secondAttribute="bottom" constant="20" id="nlX-tV-0eS"/>
@@ -121,6 +121,7 @@
                 <outlet property="sleepEventButtonHeightConstraint" destination="Vxc-dy-Ohk" id="lU6-Di-drL"/>
                 <outlet property="sleepEventButtonWidthConstraint" destination="9Uu-mh-086" id="i1Y-du-aW9"/>
                 <outlet property="spinnerView" destination="ry2-xq-WWj" id="cmt-Y2-sht"/>
+                <outlet property="timeLabelTopConstraint" destination="fxX-3N-KQk" id="35g-wY-Bwy"/>
                 <outlet property="verifyDataButton" destination="Mmt-xt-XiU" id="m2F-wT-WYT"/>
                 <outlet property="waveformView" destination="1QB-6m-XRf" id="MZA-5k-WEV"/>
             </connections>

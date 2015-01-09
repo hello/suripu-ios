@@ -28,6 +28,9 @@
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lGO-EQ-243" userLabel="button container view">
                         <rect key="frame" x="0.0" y="75" width="320" height="40.5"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="40.5" id="Kn1-Qh-qBw"/>
+                        </constraints>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -38,7 +41,6 @@
                 <constraint firstItem="IXN-Z3-Ncu" firstAttribute="top" secondItem="lGO-EQ-243" secondAttribute="bottom" constant="30" id="OHU-ZF-eS1"/>
                 <constraint firstItem="lGO-EQ-243" firstAttribute="top" secondItem="mmc-1z-29g" secondAttribute="bottom" constant="20" id="SbZ-IH-b96"/>
                 <constraint firstAttribute="centerX" secondItem="mmc-1z-29g" secondAttribute="centerX" id="ZvB-gy-sLi"/>
-                <constraint firstAttribute="bottom" secondItem="IXN-Z3-Ncu" secondAttribute="bottom" constant="18" id="arC-Sk-BPS"/>
                 <constraint firstItem="mmc-1z-29g" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="40" id="cBX-ls-ikE"/>
                 <constraint firstItem="lGO-EQ-243" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="oJH-9L-7IY"/>
                 <constraint firstAttribute="trailing" secondItem="lGO-EQ-243" secondAttribute="trailing" id="tOJ-2w-dcg"/>

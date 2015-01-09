@@ -39,8 +39,8 @@ static int const HEMBorderDashLengthCount = 2;
     if (index < self.sensorInsights.count) {
         SENSleepResultSensorInsight* insight = self.sensorInsights[index];
         if ([self.messageLabel.text isEqualToString:insight.message]) {
-            if ([self.actionDelegate respondsToSelector:@selector(willHideInsightDetails)])
-                [self.actionDelegate willHideInsightDetails];
+            if ([self.presleepActionDelegate respondsToSelector:@selector(willHideInsightDetails)])
+                [self.presleepActionDelegate willHideInsightDetails];
             self.selectedIndex = NSNotFound;
             [UIView animateWithDuration:HEMInsightAnimationDuration animations:^{
                 self.messageLabel.alpha = 0;
@@ -50,8 +50,8 @@ static int const HEMBorderDashLengthCount = 2;
             }];
             [self unhighlightAllButtons];
         } else {
-            if ([self.actionDelegate respondsToSelector:@selector(willShowDetailsForInsight:)])
-                [self.actionDelegate willShowDetailsForInsight:insight];
+            if ([self.presleepActionDelegate respondsToSelector:@selector(willShowDetailsForInsight:)])
+                [self.presleepActionDelegate willShowDetailsForInsight:insight];
             self.selectedIndex = index;
             [UIView animateWithDuration:0.1f animations:^{
                 self.messageLabel.alpha = 0;
@@ -114,14 +114,22 @@ static int const HEMBorderDashLengthCount = 2;
     self.selectedIndex = NSNotFound;
 }
 
+- (void)setNeedsLayout
+{
+    [super setNeedsLayout];
+    [self setNeedsDisplay];
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     if (!self.gradientLayer) {
+        UIColor* borderColor = [HelloStyleKit timelineInsightTintColor];
         UIColor* topColor = [HelloStyleKit timelineGradientDarkColor];
         UIColor* bottomColor = [UIColor whiteColor];
         self.gradientLayer = [CAGradientLayer layer];
-        self.gradientLayer.colors = @[(id)topColor.CGColor, (id)bottomColor.CGColor];
+        self.gradientLayer.colors = @[(id)borderColor.CGColor,(id)topColor.CGColor, (id)bottomColor.CGColor];
+        self.gradientLayer.locations = @[@0, @(1/CGRectGetHeight(self.bounds)), @1];
         [self.layer insertSublayer:self.gradientLayer atIndex:0];
     }
     CGRect gradientRect = self.bounds;
@@ -208,14 +216,9 @@ static int const HEMBorderDashLengthCount = 2;
 - (void)drawBordersInRect:(CGRect)rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGRect shadowRect = rect;
-    shadowRect.size.height = HEMPresleepItemBorderWidth;
     CGColorRef color = [HelloStyleKit timelineSectionBorderColor].CGColor;
-    CGContextSetFillColorWithColor(ctx, color);
     CGContextSetStrokeColorWithColor(ctx, color);
     CGContextSetLineWidth(ctx, HEMPresleepItemBorderWidth);
-    CGContextFillRect(ctx, shadowRect);
-
     CGContextSetLineDash(ctx, 0, HEMBorderDashLength, HEMBorderDashLengthCount);
     CGFloat y = CGRectGetHeight(rect) - HEMPresleepItemBorderWidth;
     CGContextMoveToPoint(ctx, CGRectGetMinX(rect), y);

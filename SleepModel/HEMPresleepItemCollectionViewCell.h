@@ -8,9 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+@class SENSleepResultSensorInsight;
+
+@protocol HEMPresleepActionDelegate <NSObject>
+
+@optional
+
+- (void)willShowDetailsForInsight:(SENSleepResultSensorInsight*)insight;
+- (void)willHideInsightDetails;
+
+@end
+
 @interface HEMPresleepItemCollectionViewCell : UICollectionViewCell
 
 - (void)addButtonsForInsights:(NSArray*)insights;
 
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
+@property (weak, nonatomic) id<HEMPresleepActionDelegate> presleepActionDelegate;
 @end

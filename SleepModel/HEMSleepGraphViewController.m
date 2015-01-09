@@ -38,13 +38,14 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource* dataSource;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate* animationDelegate;
 @property (nonatomic, strong) NSIndexPath* expandedIndexPath;
+@property (nonatomic, getter=presleepSectionIsExpanded) BOOL presleepExpanded;
 @end
 
 @implementation HEMSleepGraphViewController
 
 static CGFloat const HEMSleepSummaryCellHeight = 350.f;
-static CGFloat const HEMPresleepHeaderCellHeight = 70.f;
-static CGFloat const HEMPresleepItemCellHeight = 184.f;
+static CGFloat const HEMPresleepItemExpandedCellHeight = 196.f;
+static CGFloat const HEMPresleepItemDefaultCellHeight = 134.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 40.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMaximumHeight = 184.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
@@ -135,6 +136,22 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     return ![self isViewPushed] || [self.dataSource.sleepResult.score integerValue] == 0;
 }
 
+- (void)willShowDetailsForInsight:(SENSleepResultSensorInsight *)insight
+{
+    if (![self presleepSectionIsExpanded]) {
+        self.presleepExpanded = YES;
+        [self animateAllCellHeightChanges];
+    }
+}
+
+- (void)willHideInsightDetails
+{
+    if ([self presleepSectionIsExpanded]) {
+        self.presleepExpanded = NO;
+        [self animateAllCellHeightChanges];
+    }
+}
+
 #pragma mark Top cell actions
 
 - (void)updateTopBarActionsWithState:(BOOL)pushed
@@ -190,6 +207,7 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 - (void)loadDataSourceForDate:(NSDate*)date
 {
     self.dateForNightOfSleep = date;
+    self.expandedIndexPath = nil;
     self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
                                                                                   sleepDate:date];
     self.collectionView.dataSource = self.dataSource;
@@ -207,7 +225,7 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     } else {
         self.expandedIndexPath = nil;
     }
-    [self.collectionView setCollectionViewLayout:[UICollectionViewFlowLayout new] animated:YES];
+    [self animateAllCellHeightChanges];
     UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
     CGRect cellRect = [self.collectionView convertRect:cell.frame toView:self.collectionView.superview];
     if (shouldExpand && !CGRectContainsRect(self.collectionView.frame, cellRect))
@@ -296,6 +314,11 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 #pragma mark UICollectionViewDelegateFlowLayout
 
+- (void)animateAllCellHeightChanges
+{
+    [self.collectionView setCollectionViewLayout:[UICollectionViewFlowLayout new] animated:YES];
+}
+
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -305,9 +328,10 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     case HEMSleepGraphCollectionViewSummarySection:
         return CGSizeMake(width, hasSegments ? HEMSleepSummaryCellHeight : CGRectGetHeight(self.view.bounds));
 
-    case HEMSleepGraphCollectionViewPresleepSection:
-        return CGSizeMake(width, HEMPresleepItemCellHeight);
-
+    case HEMSleepGraphCollectionViewPresleepSection: {
+        return CGSizeMake(width, [self presleepSectionIsExpanded]
+                          ? HEMPresleepItemExpandedCellHeight : HEMPresleepItemDefaultCellHeight);
+    }
     case HEMSleepGraphCollectionViewSegmentSection: {
         SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
         CGFloat durationHeight = [self heightForCellWithSegment:segment];

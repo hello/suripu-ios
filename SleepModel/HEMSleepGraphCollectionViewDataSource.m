@@ -350,6 +350,8 @@ static NSString* const sensorTypeParticulates = @"particulates";
 {
     HEMPresleepItemCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:presleepItemReuseIdentifier forIndexPath:indexPath];
     [cell addButtonsForInsights:self.sleepResult.sensorInsights];
+    if ([collectionView.delegate conformsToProtocol:@protocol(HEMPresleepActionDelegate)])
+        cell.presleepActionDelegate = (id<HEMPresleepActionDelegate>)collectionView.delegate;
     return cell;
 }
 

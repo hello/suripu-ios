@@ -44,6 +44,7 @@
 + (UIColor*)tabBarUnselectedColor;
 + (UIColor*)deviceAlertMessageColor;
 + (UIColor*)timelineLineColor;
++ (UIColor*)timelineInsightTintColor;
 + (UIColor*)settingsSeparatorColor;
 
 // Shadows

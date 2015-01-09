@@ -80,6 +80,14 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     [[self collectionView] reloadData];
 }
 
+- (void)refreshDataSource {
+    __weak typeof(self) weakSelf = self;
+    [[self dataSource] refresh:^(NSError *error) {
+        [weakSelf reloadData];
+    }];
+    [self reloadData]; // clear current sta
+}
+
 #pragma mark - UICollectionViewDelegate
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
@@ -162,15 +170,14 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - HEMSensePairDelegate
+#pragma mark - HEMSenseControllerDelegate
 
-- (void)refreshDataSource {
-    __weak typeof(self) weakSelf = self;
-    [[self dataSource] refresh:^(NSError *error) {
-        [weakSelf reloadData];
-    }];
-    [self reloadData]; // clear current sta
+- (void)didUpdateWiFiFrom:(HEMSenseViewController *)viewController {
+    
+    [self refreshDataSource];
 }
+
+#pragma mark - HEMSensePairDelegate
 
 - (void)didPairSense:(BOOL)pair from:(UIViewController *)controller {
     if (pair) {

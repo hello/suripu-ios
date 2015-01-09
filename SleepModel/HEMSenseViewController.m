@@ -370,23 +370,27 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
     [SENAnalytics track:kHEMAnalyticsEventDeviceAction
              properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceFactoryRestore}];
 
-    __weak typeof(self) weakSelf = self;
-    [[SENServiceDevice sharedService] restoreFactorySettings:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error != nil) {
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-            // if there's no error, notification of factory restore will fire,
-            // which will trigger app to be put back at checkpoint
-            [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                [strongSelf showFactoryRestoreErrorMessage:error];
-            }];
-        } else {
-            if ([[self delegate] respondsToSelector:@selector(didFactoryRestoreFrom:)]) {
-                [[self delegate] didFactoryRestoreFrom:self];
+    NSString* message = NSLocalizedString(@"settings.device.restoring-factory-settings", nil);
+    [self showActivityText:message completion:^{
+        __weak typeof(self) weakSelf = self;
+        [[SENServiceDevice sharedService] restoreFactorySettings:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error != nil) {
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                // if there's no error, notification of factory restore will fire,
+                // which will trigger app to be put back at checkpoint
+                [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                    [strongSelf showFactoryRestoreErrorMessage:error];
+                }];
+            } else {
+                if ([[self delegate] respondsToSelector:@selector(didFactoryRestoreFrom:)]) {
+                    [[self delegate] didFactoryRestoreFrom:self];
+                }
+                [strongSelf dismissActivityWithSuccess:nil];
             }
-            [strongSelf dismissActivityWithSuccess:nil];
-        }
+        }];
     }];
+
 }
 
 

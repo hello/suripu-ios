@@ -2416,21 +2416,66 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Trends are coming soon." textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zXH-zG-PqZ">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="22"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="SGI-8T-ZVx">
+                                <rect key="frame" x="0.0" y="72" width="600" height="467"/>
+                                <color key="backgroundColor" red="0.96078431369999995" green="0.96078431369999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="yR9-IH-qIm" customClass="HEMCardFlowLayout">
+                                    <size key="itemSize" width="540" height="235"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="overTime" id="guW-fA-0W9" userLabel="empty">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="540" height="235"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SLEEP TRENDS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LV7-gY-Z7H">
+                                                    <rect key="frame" x="22" y="30" width="496" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="14"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                                    <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not enough data yet, check back later" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9qC-jO-Gfz">
+                                                    <rect key="frame" x="152" y="110" width="237" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="9qC-jO-Gfz" firstAttribute="top" secondItem="LV7-gY-Z7H" secondAttribute="bottom" constant="60" id="012-73-GoV"/>
+                                            <constraint firstItem="LV7-gY-Z7H" firstAttribute="top" secondItem="guW-fA-0W9" secondAttribute="topMargin" constant="22" id="Jm0-RR-LGc"/>
+                                            <constraint firstAttribute="centerX" secondItem="9qC-jO-Gfz" secondAttribute="centerX" id="SKf-Jm-3oE"/>
+                                            <constraint firstItem="LV7-gY-Z7H" firstAttribute="leading" secondItem="guW-fA-0W9" secondAttribute="leadingMargin" priority="750" constant="14" id="gHq-bm-vxd"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="LV7-gY-Z7H" secondAttribute="trailing" constant="14" id="gwr-ml-CER"/>
+                                        </constraints>
+                                        <size key="customSize" width="540" height="235"/>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="dvl-ut-646" id="jV2-uh-3TV"/>
+                                    <outlet property="delegate" destination="dvl-ut-646" id="RQ2-0m-Tgh"/>
+                                </connections>
+                            </collectionView>
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="zXH-zG-PqZ" secondAttribute="trailing" constant="-16" id="5VG-yv-5oR"/>
-                            <constraint firstItem="UtJ-3J-Jha" firstAttribute="top" secondItem="zXH-zG-PqZ" secondAttribute="bottom" id="Jmu-vW-jJm"/>
-                            <constraint firstItem="zXH-zG-PqZ" firstAttribute="top" secondItem="tI0-Lz-X3V" secondAttribute="bottom" constant="-20" id="kuy-bt-HhC"/>
-                            <constraint firstItem="zXH-zG-PqZ" firstAttribute="leading" secondItem="jdC-gn-VDp" secondAttribute="leadingMargin" constant="-16" id="llk-ZU-b3p"/>
+                            <constraint firstItem="UtJ-3J-Jha" firstAttribute="top" secondItem="SGI-8T-ZVx" secondAttribute="bottom" constant="61" id="2ts-RR-ar1"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SGI-8T-ZVx" secondAttribute="trailing" constant="-16" id="5Zc-Vh-f83"/>
+                            <constraint firstItem="SGI-8T-ZVx" firstAttribute="leading" secondItem="jdC-gn-VDp" secondAttribute="leadingMargin" constant="-16" id="7Ml-MA-i9J"/>
+                            <constraint firstItem="SGI-8T-ZVx" firstAttribute="top" secondItem="tI0-Lz-X3V" secondAttribute="bottom" constant="52" id="mY5-kP-sTr"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="collectionView" destination="SGI-8T-ZVx" id="C2E-AN-SMg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="XFy-Nv-a7F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

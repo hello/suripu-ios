@@ -209,6 +209,7 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 {
     self.dateForNightOfSleep = date;
     self.expandedIndexPath = nil;
+    self.presleepExpanded = NO;
     self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
                                                                                   sleepDate:date];
     self.collectionView.dataSource = self.dataSource;

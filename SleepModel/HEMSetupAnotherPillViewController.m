@@ -80,7 +80,7 @@
 
 - (IBAction)skip:(id)sender {
     [[[HEMOnboardingCache sharedCache] senseManager] disconnectFromSense];
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard anotherPillToBeforeSleepSegueIdentifier] sender:self];
+    [HEMOnboardingUtils finisOnboardinghWithMessageFrom:self];
 }
 
 - (void)getApp {

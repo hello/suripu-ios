@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.0.0.55
+
+New:
+
+* Sleep timeline design overhaul
+* Settings design overhaul
+* Device Management design overhaul
+* Device Management screen will show you warnings if an issue is known
+* Sense settings screen now allows you to remove the Sense from your account
+* Device Management will allow you to pair with a Sense, if one is not
+* Signing in to the account, no longer pushes you out to pair a Sense if one is not paired.  Do so through Device Management.
+* Updated Onboarding flow to ask if you want to set up another pill at the end
+* Updated LEDs throughout onboading flow to show you when everything is done
+* Updated sensor graph colors
+* Updated your app icons
+
+Fixes:
+
+* Fixed Sense pairing in onboarding, which may have caused random errors to show
+
 ## 1.0.0.54
 
 * Added guard for Light sensor in room check, which was crashing it

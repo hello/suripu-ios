@@ -52,10 +52,15 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.dailyFormatter.dateFormat = @"EEEEEE";
     self.hourlyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.dailyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
-    [self configureGraphViewBackground];
     [self initializeGraphDataSource];
     [self configureGraphView];
     [self configureSensorValueViews];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    self.view.backgroundColor = [UIColor whiteColor];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -114,23 +119,11 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [self refreshData];
 }
 
-- (void)configureGraphViewBackground
-{
-    self.view.backgroundColor = [HelloStyleKit currentConditionsBackgroundColor];
-    CAGradientLayer *gradient = [CAGradientLayer layer];
-    gradient.frame = self.graphContainerView.bounds;
-    gradient.colors = @[
-                        (id)[[UIColor whiteColor] CGColor],
-                        (id)[[HelloStyleKit backViewBackgroundColor] CGColor]];
-    gradient.locations = @[@0, @(0.8)];
-    [self.graphContainerView.layer insertSublayer:gradient atIndex:0];
-}
-
 - (void)configureGraphView
 {
     self.overlayView.alpha = 0;
     self.graphView.delegate = self;
-    self.graphView.enableBezierCurve = YES;
+    self.graphView.enableBezierCurve = NO;
     self.graphView.enableTouchReport = YES;
     self.graphView.colorBottom = [UIColor clearColor];
     self.graphView.colorTop = [UIColor clearColor];
@@ -153,7 +146,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.statusMessageLabel.attributedText = markdown_to_attr_string(self.sensor.message, 0, statusAttributes);
     self.idealLabel.attributedText = markdown_to_attr_string(self.sensor.idealConditionsMessage, 0, idealAttributes);
     self.graphView.colorLine = color;
-    self.graphView.gradientBottom = [self gradientForColor:color];
+    self.graphView.alphaLine = 0.2;
+    self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];
 }
 
 - (void)updateValueLabelWithValue:(NSNumber*)value
@@ -164,20 +158,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     } else {
         self.valueLabel.text = NSLocalizedString(@"empty-data", nil);
     }
-}
-
-- (CGGradientRef)gradientForColor:(UIColor*)color
-{
-    CGFloat red, green, blue, alpha;
-    [color getRed:&red green:&green blue:&blue alpha:&alpha];
-    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
-    size_t num_locations = 2;
-    CGFloat locations[2] = { 0.0, 0.85 };
-    CGFloat components[8] = {
-        red, green, blue, alpha,
-        1.0, 1.0, 1.0, 0.0
-    };
-    return CGGradientCreateWithColorComponents(colorspace, components, locations, num_locations);
 }
 
 #pragma mark - Update Graph
@@ -199,6 +179,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
         if (!data) {
             self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
             self.statusLabel.alpha = 1;
+            self.overlayView.alpha = 0;
             return;
         }
         self.hourlyDataSeries = data;
@@ -209,6 +190,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
         if (!data) {
             self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
             self.statusLabel.alpha = 1;
+            self.overlayView.alpha = 0;
             return;
         }
         self.dailyDataSeries = data;
@@ -307,7 +289,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     else
         self.maxGraphValue = [[SENSensor value:maxValue inPreferredUnit:self.sensor.unit] floatValue];
     if ([minValue floatValue] == 0)
-        self.minGraphValue = 0;
+        self.minGraphValue = 1;
     else
         self.minGraphValue = [[SENSensor value:minValue inPreferredUnit:self.sensor.unit] floatValue];
 }

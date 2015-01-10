@@ -18,7 +18,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
     [[self navigationBar] setTintColor:[HelloStyleKit backViewTintColor]];
     [[self navigationBar] setTitleTextAttributes:@{
         NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
@@ -33,7 +32,6 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     [self setBackButtonOnViewController:viewController];
-    [[viewController view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
     [super pushViewController:viewController animated:animated];
 }
 

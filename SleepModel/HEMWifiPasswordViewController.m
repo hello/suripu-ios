@@ -336,7 +336,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                      completion:(void(^)(void))completion {
     [[self activityView] dismissWithResultText:message showSuccessMark:success remove:YES completion:^{
         [self enableControls:enable];
-        [[self manager] setLED:SENSenseLEDStateOff completion:^(id response, NSError *error) {
+        [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
             if (completion) completion ();
         }];
     }];
@@ -458,21 +458,24 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
-        
-        [strongSelf stopActivityWithMessage:msg renableControls:NO success:YES completion:^{
+        [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+            NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
             
-            if ([strongSelf delegate] != nil) {
-                [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
-            } else if ([strongSelf sensePairDelegate] != nil) {
-                [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:YES from:self];
-            } else {
-                [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
-                [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard senseToPillSegueIdentifier]
-                                                sender:nil];
-            }
-            
+            [strongSelf stopActivityWithMessage:msg renableControls:NO success:YES completion:^{
+                
+                if ([strongSelf delegate] != nil) {
+                    [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
+                } else if ([strongSelf sensePairDelegate] != nil) {
+                    [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:YES from:self];
+                } else {
+                    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
+                    [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard senseToPillSegueIdentifier]
+                                                    sender:nil];
+                }
+                
+            }];
         }];
+        
     }];
 }
 

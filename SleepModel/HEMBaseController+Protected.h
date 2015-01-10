@@ -10,6 +10,7 @@
 
 @interface HEMBaseController (Protected)
 
+- (void)enableBackButton:(BOOL)enable;
 - (void)adjustConstraintsForIPhone4;
 - (void)adjustConstraintsForIphone5;
 - (void)updateConstraint:(NSLayoutConstraint*)constraint withDiff:(CGFloat)diff;

@@ -16,6 +16,8 @@
 "onboarding.red" = "red";
 
 "sense-pair.description" = "Now we'll pair your phone with Sense. Make sure your Sense is plugged in and nearby, then tap Continue.";
+
+"sign-up.activity.message" = "Creating your account";
 "sign-up.title" = "Sign up";
 "sign-up.failed.title" = "Sign up failed";
 "sign-up.error.password-length" = "You must provide a password.";
@@ -23,6 +25,7 @@
 "sign-up.error.email-invalid" = "Your email address was not recognized.";
 "sign-up.error.conflict" = "The provided email address is already attached to an account.";
 "sign-up.error.generic" = "Something went wrong. Please try again.";
+
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "We could not set your birthdate for your account.";
 "onboarding.before-sleep.description.format" = "Before you go to bed, you’ll want to check that everything’s set for a good nights sleep. Simply wave your hand over Sense, and instantly you’ll know about the conditions in your room. Go ahead, give it a try now.\n\n%@ means everything’s good. %@ means something’s a little off and %@ means you should adjust something before sleep.";

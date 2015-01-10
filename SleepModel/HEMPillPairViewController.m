@@ -217,7 +217,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
         [[strongSelf manager] pairWithPill:[SENAuthorizationService accessToken] success:^(id response) {
             [strongSelf flashPairedState];
         } failure:^(NSError *error) {
-            [[strongSelf manager] setLED:SENSenseLEDStateOff completion:^(id response, NSError *error) {
+            [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
                 [strongSelf showError:error customMessage:nil];
             }];
         }];

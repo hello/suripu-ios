@@ -17,6 +17,7 @@ CGFloat const kHEMIPhone5Height = 568.0f;
 @interface HEMBaseController()
 
 @property (nonatomic, assign) BOOL adjustedConstraints;
+@property (nonatomic, strong) UIBarButtonItem* leftBarItem;
 
 @end
 
@@ -54,6 +55,24 @@ CGFloat const kHEMIPhone5Height = 568.0f;
     CGFloat constant = [constraint constant];
     [constraint setConstant:constant + diff];
 }
+
+#pragma mark - navigation
+
+- (void)enableBackButton:(BOOL)enable {
+    if (enable) {
+        if ([self leftBarItem] != nil) {
+            [[self navigationItem] setLeftBarButtonItem:[self leftBarItem]];
+        }
+    } else {
+        [self setLeftBarItem:[[self navigationItem] leftBarButtonItem]];
+        [[self navigationItem] setLeftBarButtonItem:nil];
+    }
+    
+    [[self navigationItem] setHidesBackButton:!enable];
+    [[[self navigationController] interactivePopGestureRecognizer] setEnabled:enable];
+}
+
+#pragma mark - alerts
 
 - (void)showMessageDialog:(NSString*)message title:(NSString*)title {
     UIView* seeThroughView = [self parentViewController] ? [[self parentViewController] view] : [self view];

@@ -31,7 +31,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
+    [self enableBackButton:NO];
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupSubtitleText];
     

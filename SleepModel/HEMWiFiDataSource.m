@@ -100,7 +100,7 @@ static NSString* const kHEMWifiNetworkErrorDomain = @"is.hello.ble.wifi";
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [[strongSelf manager] scanForWifiNetworks:^(id response) {
                 __block id wifiResponse = response;
-                [[strongSelf manager] setLED:SENSenseLEDStateOff completion:^(id ledResponse, NSError *error) {
+                [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id ledResponse, NSError *error) {
                     [strongSelf setScanning:NO];
                     [strongSelf setScanned:YES];
                     [strongSelf addDetectedNetworksFromArray:wifiResponse];
@@ -109,7 +109,7 @@ static NSString* const kHEMWifiNetworkErrorDomain = @"is.hello.ble.wifi";
                 
             } failure:^(NSError *error) {
                 
-                [[strongSelf manager] setLED:SENSenseLEDStateOff completion:^(id response, NSError *error) {
+                [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
                     [strongSelf setScanning:NO];
                     [strongSelf setScanned:YES];
                     completion (error);

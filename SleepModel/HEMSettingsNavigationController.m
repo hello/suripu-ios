@@ -24,6 +24,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[self view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
+    
     [self configureNavigationBar];
     
     [self.interactivePopGestureRecognizer addTarget:self
@@ -39,6 +41,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     self.interactivePopGestureRecognizer.enabled = NO;
+    [[viewController view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
     [super pushViewController:viewController animated:animated];
     [self updateTopBarVisibilityAnimated:animated];
 }

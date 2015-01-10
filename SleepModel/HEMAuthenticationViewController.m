@@ -16,7 +16,6 @@
 
 @property (weak, nonatomic) IBOutlet UITextField* usernameField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
-@property (weak, nonatomic) IBOutlet UITextField *hiddenField;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPassButton;
 @property (weak, nonatomic) IBOutlet HEMActionButton *logInButton;
 
@@ -63,11 +62,7 @@
 - (void)enableControls:(BOOL)enable {
     
     if (!enable) {
-        if ([[self usernameField] isFirstResponder]) {
-            [[self usernameField] resignFirstResponder];
-        } else if ([[self passwordField] isFirstResponder]) {
-            [[self passwordField] resignFirstResponder];
-        }
+        [[self view] endEditing:NO];
     }
 
     [[self forgotPassButton] setEnabled:enable];
@@ -83,7 +78,6 @@
     [self enableControls:NO];
     
     NSString* message = NSLocalizedString(@"authorization.sign-in.activity.message", nil);
-    
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
     [activityView showInView:[[self navigationController] view] withText:message activity:YES completion:completion];
 

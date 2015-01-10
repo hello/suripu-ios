@@ -36,7 +36,8 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
+    [[self navigationItem] setLeftBarButtonItem:nil];
+    
     [self loadAccount:nil]; // if does not yet exist, in case user returns to here
     [[self titleLabel] setAccessibilityLabel:NSLocalizedString(@"user.info.accessibility.birthdate-title", nil)];
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];

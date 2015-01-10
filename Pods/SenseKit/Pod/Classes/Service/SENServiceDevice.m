@@ -197,7 +197,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
     [center addObserver:self
-               selector:@selector(checkDevicesState)
+               selector:@selector(checkDevicesIfEnabled)
                    name:SENAuthorizationServiceDidAuthorizeNotification
                  object:nil];
 }

@@ -391,7 +391,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)checkIfAddingSecondPill {
     __weak typeof(self) weakSelf = self;
-    [[self manager] setLED:SENSenseLEDStateOff completion:^(id response, NSError *error) {
+    [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
         DDLogVerbose(@"asking if user has a second pill to set up");
         [weakSelf performSegueWithIdentifier:[HEMOnboardingStoryboard secondPillCheckSegueIdentifier]
                                       sender:weakSelf];
@@ -448,7 +448,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)showErrorMessage:(NSString*)message {
     __weak typeof(self) weakSelf = self;
-    [[self manager] setLED:SENSenseLEDStateOff completion:^(id response, NSError *error) {
+    [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
         [weakSelf showMessageDialog:message
                               title:NSLocalizedString(@"pairing.failed.title", nil)
                               image:nil
@@ -478,8 +478,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     }];
     
     [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
-        ledSet = YES;
-        done();
+        [[weakSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+            ledSet = YES;
+            done();
+        }];
     }];
 }
 

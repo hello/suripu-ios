@@ -1059,7 +1059,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="fc9-7S-Ult" kind="push" id="BiI-h4-9Cj"/>
+                                    <action selector="next:" destination="4s2-Gt-ovZ" eventType="touchUpInside" id="VjE-Z2-HDO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gRL-Qh-1Rv">
@@ -1105,6 +1105,7 @@
                         <outlet property="imageTopConstraint" destination="W9X-ou-tAc" id="l2e-IK-aCs"/>
                         <outlet property="titleLabel" destination="ded-Ea-3CR" id="VPe-Cs-8q2"/>
                         <outlet property="view" destination="lwn-in-ftH" id="5W8-Rh-obp"/>
+                        <segue destination="DIj-70-bYO" kind="push" identifier="pillSetupToColors" id="gUR-KW-V2G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z94-uI-D3y" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1199,12 +1200,11 @@ You can always do this later by visiting Settings.</string>
                         <outlet property="subtitleLabel" destination="iMZ-p6-gA8" id="TJj-Sz-zYw"/>
                         <outlet property="titleLabel" destination="eDs-8j-Vd9" id="5lJ-TI-eYd"/>
                         <segue destination="Ibh-UM-msk" kind="push" identifier="getApp" id="oeH-Et-htw"/>
-                        <segue destination="DIj-70-bYO" kind="push" identifier="anotherPillToBeforeSleep" id="qAo-NZ-4n9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ybc-rT-E02" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12437" y="923"/>
+            <point key="canvasLocation" x="15005" y="922"/>
         </scene>
         <!--Pill Pair View Controller-->
         <scene sceneID="zKq-xs-xPt">
@@ -1362,7 +1362,7 @@ You can always do this later by visiting Settings.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g3P-F6-Zsf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13251" y="923"/>
+            <point key="canvasLocation" x="12480" y="922"/>
         </scene>
         <!--Onboard Alarm View Controller-->
         <scene sceneID="rm2-FM-ynv">
@@ -1445,11 +1445,12 @@ You can always do this later by visiting Settings.</string>
                         <outlet property="buttonContainer" destination="chY-AJ-Mza" id="ptZ-8l-Dfe"/>
                         <outlet property="contentView" destination="JPw-yP-yqX" id="P9D-yj-TDT"/>
                         <outlet property="view" destination="dhI-dC-nnE" id="sxj-U6-bqo"/>
+                        <segue destination="fc9-7S-Ult" kind="push" identifier="alarmToAnotherPill" id="eyP-2h-xaH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxo-YG-lyE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14817" y="922"/>
+            <point key="canvasLocation" x="14173" y="922"/>
         </scene>
         <!--Room Check View Controller-->
         <scene sceneID="XHB-1W-ISz">
@@ -1588,7 +1589,7 @@ You can always do this later by visiting Settings.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sWL-6c-EWF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14034" y="922"/>
+            <point key="canvasLocation" x="13322" y="922"/>
         </scene>
         <!--Gender View Controller-->
         <scene sceneID="s4K-5F-Rau">
@@ -2653,7 +2654,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="DIj-70-bYO" kind="push" id="8ZE-B6-zEc"/>
+                                    <action selector="finish:" destination="Ibh-UM-msk" eventType="touchUpInside" id="ROM-3N-sVX"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -2677,7 +2678,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4BU-cG-ggd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12437" y="1754"/>
+            <point key="canvasLocation" x="15005" y="1727"/>
         </scene>
     </scenes>
     <resources>
@@ -2694,7 +2695,6 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     <inferredMetricsTieBreakers>
         <segue reference="d9a-nc-483"/>
         <segue reference="DAu-sO-H4V"/>
-        <segue reference="qAo-NZ-4n9"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

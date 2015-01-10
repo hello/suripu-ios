@@ -18,7 +18,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="12:59 am" textAlignment="center" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JFc-fa-7rh" customClass="HEMPaddedRoundedLabel">
-                        <rect key="frame" x="232" y="5" width="64" height="24"/>
+                        <rect key="frame" x="224" y="7" width="64" height="24"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="24" id="0Xq-m6-7LT"/>
@@ -101,9 +101,9 @@
                 <constraint firstItem="MQC-tj-fHb" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Rt8-2b-U0l"/>
                 <constraint firstItem="1QB-6m-XRf" firstAttribute="centerY" secondItem="k6K-A1-70h" secondAttribute="centerY" id="YTM-Nj-tzg"/>
                 <constraint firstItem="k6K-A1-70h" firstAttribute="top" secondItem="7kh-Q1-akT" secondAttribute="bottom" constant="18" id="acC-nz-Goc"/>
-                <constraint firstAttribute="trailing" secondItem="JFc-fa-7rh" secondAttribute="trailing" constant="24" id="c8h-7m-ZlV"/>
+                <constraint firstAttribute="trailing" secondItem="JFc-fa-7rh" secondAttribute="trailing" constant="32" id="c8h-7m-ZlV"/>
                 <constraint firstItem="k6K-A1-70h" firstAttribute="height" secondItem="ry2-xq-WWj" secondAttribute="height" id="frc-LG-jhS"/>
-                <constraint firstItem="JFc-fa-7rh" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="5" id="fxX-3N-KQk"/>
+                <constraint firstItem="JFc-fa-7rh" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="7" id="fxX-3N-KQk"/>
                 <constraint firstItem="7kh-Q1-akT" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="32" id="jnd-ED-e93"/>
                 <constraint firstItem="1QB-6m-XRf" firstAttribute="leading" secondItem="k6K-A1-70h" secondAttribute="trailing" constant="8" id="luQ-RO-XC4"/>
                 <constraint firstItem="7kh-Q1-akT" firstAttribute="top" secondItem="5DK-SE-Ybo" secondAttribute="bottom" constant="20" id="nlX-tV-0eS"/>

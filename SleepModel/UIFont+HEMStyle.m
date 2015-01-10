@@ -95,6 +95,14 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
 }
 
++ (UIFont *)timelineEventTimestampFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:13.f];
+}
+
++ (UIFont *)timelineEventTimestampBoldFont {
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
+}
+
 + (UIFont *)timelineEventTipFont {
     return [UIFont fontWithName:HEMFontFamilyNameLightOblique size:13.f];
 }

@@ -119,6 +119,16 @@
 + (UIFont *)timelineMessageBoldFont;
 
 /**
+ *  Font for timestamps on events in the timeline
+ */
++ (UIFont *)timelineEventTimestampFont;
+
+/**
+ *  Bold font for timestamps on important events in the timeline
+ */
++ (UIFont *)timelineEventTimestampBoldFont;
+
+/**
  *  Font to display the answers for questions
  */
 + (UIFont *)questionAnswerFont;

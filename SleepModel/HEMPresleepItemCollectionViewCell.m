@@ -120,6 +120,12 @@ static int const HEMBorderDashLengthCount = 2;
     [self setNeedsDisplay];
 }
 
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    [self unhighlightAllButtons];
+}
+
 - (void)layoutSubviews
 {
     [super layoutSubviews];

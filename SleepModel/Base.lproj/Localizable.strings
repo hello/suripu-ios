@@ -360,7 +360,7 @@
 "sleep-event.type.noise.name" = "Noise disturbance";
 "sleep-event.type.motion.name" = "Tossing and turning";
 "sleep-event.type.partner_motion.name" = "Partner moved";
-"sleep-event.type.lights_out.name" = "Turned off the lights";
+"sleep-event.type.lights_out.name" = "Lights out";
 "sleep-event.verify.title" = "Is this incorrect?";
 "sleep-event.verify.message" = "Please select the time at which you awakened.";
 "sleep-event.verify-complete.title" = "Thank you!";

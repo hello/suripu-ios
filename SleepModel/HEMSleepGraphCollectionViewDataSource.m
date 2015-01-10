@@ -339,7 +339,9 @@ static NSString* const sensorTypeParticulates = @"particulates";
 
     [cell.eventTypeButton setImage:[self imageForEventType:segment.eventType] forState:UIControlStateNormal];
     cell.eventTimeLabel.text = [self textForTimeInterval:[segment.date timeIntervalSince1970]];
-
+    BOOL isImportantEvent = [segment.eventType isEqualToString:HEMSleepEventTypeWakeUp]
+        || [segment.eventType isEqualToString:HEMSleepEventTypeFallAsleep];
+    cell.eventTimeLabel.font = isImportantEvent ? [UIFont timelineEventTimestampBoldFont] : [UIFont timelineEventTimestampFont];
     cell.eventTitleLabel.text = [[[self class] localizedNameForSleepEventType:segment.eventType] uppercaseString];
     cell.eventMessageLabel.attributedText = markdown_to_attr_string(segment.message, 0, [HEMMarkdown attributesForEventMessageText]);
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;

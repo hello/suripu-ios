@@ -18,7 +18,7 @@
 
 static CGFloat const HEMEventButtonSize = 40.f;
 static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
-static CGFloat const HEMEventTimeLabelRetractedConstant = 5.f;
+static CGFloat const HEMEventTimeLabelRetractedConstant = 7.f;
 static CGFloat const HEMEventTimeLabelExpandedConstant = 53.f;
 
 - (void)awakeFromNib

@@ -1532,10 +1532,10 @@ You can always do this later by visiting Settings.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uO2-mX-vGj">
-                                <rect key="frame" x="20" y="167" width="560" height="284"/>
+                                <rect key="frame" x="20" y="167" width="560" height="263"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1t-tO-D6Q">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="291"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="271"/>
                                         <inset key="titleEdgeInsets" minX="0.0" minY="100" maxX="45" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="65" minY="0.0" maxX="0.0" maxY="40"/>
                                         <state key="normal" title="Female" image="female.png">
@@ -1554,7 +1554,7 @@ You can always do this later by visiting Settings.</string>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yLf-ik-ger">
-                                        <rect key="frame" x="280" y="0.0" width="280" height="291"/>
+                                        <rect key="frame" x="280" y="0.0" width="280" height="271"/>
                                         <inset key="titleEdgeInsets" minX="0.0" minY="100" maxX="45" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="40"/>
                                         <state key="normal" title="Male" image="male.png">
@@ -1618,7 +1618,7 @@ You can always do this later by visiting Settings.</string>
                             <constraint firstAttribute="trailingMargin" secondItem="gMf-fl-V5h" secondAttribute="trailing" constant="4" id="9hM-Rn-MBo"/>
                             <constraint firstItem="d85-24-UBP" firstAttribute="top" secondItem="gMf-fl-V5h" secondAttribute="bottom" constant="64" id="Et9-5b-7Pv"/>
                             <constraint firstItem="f5o-GP-Ma1" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leadingMargin" constant="4" id="IfZ-ah-ESD"/>
-                            <constraint firstItem="gMf-fl-V5h" firstAttribute="bottom" secondItem="uO2-mX-vGj" secondAttribute="bottom" constant="86" id="JRz-y5-EUo"/>
+                            <constraint firstItem="gMf-fl-V5h" firstAttribute="bottom" secondItem="uO2-mX-vGj" secondAttribute="bottom" constant="106" id="JRz-y5-EUo"/>
                             <constraint firstAttribute="trailingMargin" secondItem="S9f-tS-yQg" secondAttribute="trailing" constant="4" id="Kwx-pN-8Ej"/>
                             <constraint firstItem="uO2-mX-vGj" firstAttribute="leading" secondItem="zvn-d7-Xkt" secondAttribute="leadingMargin" constant="4" id="Qyp-Ph-iee"/>
                             <constraint firstAttribute="centerX" secondItem="wdU-1v-eC1" secondAttribute="centerX" constant="0.5" id="ZCF-iw-PeG"/>

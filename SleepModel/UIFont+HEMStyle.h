@@ -308,4 +308,9 @@
  */
 + (UIFont*)helpButtonTitleFont;
 
+/**
+ * Font used to diplay scanned wifi ssids
+ */
++ (UIFont*)wifiTitleFont;
+
 @end

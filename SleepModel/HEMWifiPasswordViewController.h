@@ -7,13 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HEMBaseController.h"
+#import "HEMOnboardingController.h"
 #import "HEMWiFiConfigurationDelegate.h"
 #import "HEMSensePairDelegate.h"
 
 @class SENWifiEndpoint;
 
-@interface HEMWifiPasswordViewController : HEMBaseController
+@interface HEMWifiPasswordViewController : HEMOnboardingController
 
 @property (nonatomic, strong) SENWifiEndpoint* endpoint;
 @property (nonatomic, weak)   id<HEMWiFiConfigurationDelegate> delegate;

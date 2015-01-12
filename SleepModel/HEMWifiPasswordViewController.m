@@ -37,12 +37,10 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 @interface HEMWifiPasswordViewController() <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-@property (weak, nonatomic) IBOutlet UIButton *doneButton;
 @property (weak, nonatomic) IBOutlet HEMRoundedTextField *ssidField;
 @property (weak, nonatomic) IBOutlet HEMRoundedTextField *passwordField;
 @property (weak, nonatomic) IBOutlet HEMRoundedTextField *securityField;
+@property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (strong, nonatomic) UIPickerView* securityPickerView;
@@ -50,21 +48,21 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 @property (assign, nonatomic) SENWifiEndpointSecurityType securityType;
 @property (assign, nonatomic) HEMWiFiSetupStep stepFinished;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ssidTopConstraint;
-
 @end
 
 @implementation HEMWifiPasswordViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    [self configureForm];
+    
+    if ([self delegate] == nil && [self sensePairDelegate] == nil) {
+        [SENAnalytics track:kHEMAnalyticsEventOnBWiFiPass];
+    }
+}
 
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    
-    [[self doneButton] setTitleColor:[HelloStyleKit senseBlueColor]
-                            forState:UIControlStateNormal];
-    [[[self doneButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
-    
+- (void)configureForm {
     if ([self endpoint] != nil) {
         [[self ssidField] setText:[[self endpoint] ssid]];
         [self setSecurityType:[[self endpoint] security]];
@@ -75,11 +73,6 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     
     [self setupSecurityPickerView];
     [self updateSecurityTypeLabelForRow:[self rowForSecurityType:[self securityType]]];
-    
-    if ([self delegate] == nil && [self sensePairDelegate] == nil) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBWiFiPass];
-    }
-    
 }
 
 - (void)viewWillLayoutSubviews {
@@ -88,16 +81,6 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     CGRect pickerBounds = [[self securityPickerView] bounds];
     pickerBounds.size.width = CGRectGetWidth([[self view] bounds]);
     [[self securityPickerView] setBounds:pickerBounds];
-}
-
-- (void)adjustConstraintsForIPhone4 {
-    [[self subtitleLabel] setHidden:YES];
-    
-    CGFloat reducePadding = 8.0f;
-    CGFloat currentSpacing = -([[self ssidTopConstraint] constant]);
-    CGFloat subtitleHeight = CGRectGetHeight([[self subtitleLabel] bounds]);
-    CGFloat diff = (subtitleHeight + currentSpacing + reducePadding);
-    [self updateConstraint:[self ssidTopConstraint] withDiff:diff];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -122,7 +105,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     
     [[self ssidField] setEnabled:enable];
     [[self passwordField] setEnabled:enable];
-    [[self doneButton] setEnabled:enable];
+    [[self continueButton] setEnabled:enable];
     [[self navigationItem] setHidesBackButton:!enable animated:YES];
     
     if (enable) {

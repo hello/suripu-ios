@@ -34,7 +34,6 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 @interface HEMWifiPickerViewController() <UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *wifiPickerTableView;
 @property (weak, nonatomic) IBOutlet UIButton *helpButton;
@@ -54,9 +53,8 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
     
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
+    [self showHelpButton];
     [self setWifiDataSource:[[HEMWiFiDataSource alloc] init]];
     [[self wifiPickerTableView] setDataSource:[self wifiDataSource]];
     [[self wifiPickerTableView] setDelegate:self];
@@ -68,6 +66,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     [self setupCancelButton];
     
     if ([self delegate] == nil && [self sensePairDelegate] == nil) {
+        [self enableBackButton:NO];
         [SENAnalytics track:kHEMAnalyticsEventOnBWiFi];
     }
     
@@ -181,7 +180,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIImageView* wifiView = (UIImageView*)[accessoryView viewWithTag:kHEMWifiPickerTagWifi];
     [wifiView setHidden:!showWifiIcon];
     
-    [[cell textLabel] setFont:[UIFont fontWithName:@"Calibre-Regular" size:18.0f]];
+    [[cell textLabel] setFont:[UIFont wifiTitleFont]];
     [[cell textLabel] setText:ssid];
 }
 
@@ -255,11 +254,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark - Actions
-
-- (IBAction)help:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventHelp];
-    [HEMSupportUtil openHelpFrom:self];
-}
 
 - (IBAction)scan:(id)sender {
     [SENAnalytics track:kHEMAnalyticsEventOnBWiFiScan];

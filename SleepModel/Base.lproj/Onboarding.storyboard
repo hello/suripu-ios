@@ -65,7 +65,6 @@
         <mutableArray key="Calibre-Thin.otf">
             <string>Calibre-Thin</string>
             <string>Calibre-Thin</string>
-            <string>Calibre-Thin</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -715,17 +714,8 @@
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter your WiFi credentials:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="4PT-Jb-KBo">
-                                <rect key="frame" x="28" y="84" width="544" height="25"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="25" id="Udr-wd-Nh2"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Thin" family="Calibre" pointSize="18"/>
-                                <color key="textColor" red="0.22352941176470587" green="0.22352941176470587" blue="0.22352941176470587" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h8z-JJ-lrQ" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="28" y="129" width="544" height="35"/>
+                                <rect key="frame" x="28" y="96" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="ryh-T1-LKQ"/>
                                 </constraints>
@@ -736,7 +726,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eHT-GQ-6UW" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="28" y="184" width="544" height="35"/>
+                                <rect key="frame" x="28" y="151" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="cex-8S-BOe"/>
                                 </constraints>
@@ -747,7 +737,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Security" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wpX-J4-2Qc" customClass="HEMRoundedTextField">
-                                <rect key="frame" x="28" y="239" width="544" height="35"/>
+                                <rect key="frame" x="28" y="206" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Srw-KY-nFZ"/>
                                 </constraints>
@@ -757,16 +747,29 @@
                                     <outlet property="delegate" destination="qC8-fd-UCX" id="xOx-Z6-87h"/>
                                 </connections>
                             </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HTd-VJ-D0f" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="261" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="QHc-d2-Zcx"/>
+                                </constraints>
+                                <state key="normal" title="CONTINUE">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="connectWifi:" destination="qC8-fd-UCX" eventType="touchUpInside" id="ePT-7A-4KI"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="gvl-uZ-ZRh" firstAttribute="top" secondItem="h8z-JJ-lrQ" secondAttribute="top" constant="-68" id="2Z7-vb-Xw5"/>
                             <constraint firstItem="wpX-J4-2Qc" firstAttribute="top" secondItem="eHT-GQ-6UW" secondAttribute="bottom" constant="20" id="4SE-T5-h49"/>
                             <constraint firstAttribute="trailingMargin" secondItem="gvl-uZ-ZRh" secondAttribute="trailing" constant="12" id="6ny-AH-SP5"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4PT-Jb-KBo" secondAttribute="trailing" constant="12" id="Dr5-Hp-Bo9"/>
-                            <constraint firstItem="4PT-Jb-KBo" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="HwQ-UW-XXh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HTd-VJ-D0f" secondAttribute="trailing" constant="4" id="AIC-xb-04T"/>
                             <constraint firstAttribute="trailingMargin" secondItem="h8z-JJ-lrQ" secondAttribute="trailing" constant="12" id="SyW-Vn-fhh"/>
-                            <constraint firstItem="4PT-Jb-KBo" firstAttribute="bottom" secondItem="h8z-JJ-lrQ" secondAttribute="top" constant="-20" id="UYq-Kq-EoL"/>
+                            <constraint firstItem="HTd-VJ-D0f" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="4" id="WkU-qC-aUz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eHT-GQ-6UW" secondAttribute="trailing" constant="12" id="Y9q-1w-BoU"/>
+                            <constraint firstItem="eHT-GQ-6UW" firstAttribute="top" secondItem="HTd-VJ-D0f" secondAttribute="top" constant="-110" id="bpL-kb-EJf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="wpX-J4-2Qc" secondAttribute="trailing" constant="12" id="fQu-az-t7z"/>
                             <constraint firstItem="h8z-JJ-lrQ" firstAttribute="bottom" secondItem="eHT-GQ-6UW" secondAttribute="bottom" constant="-55" id="h0R-BX-vBw"/>
                             <constraint firstItem="wpX-J4-2Qc" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="jhD-Hb-ghc"/>
@@ -774,45 +777,17 @@
                             <constraint firstItem="h8z-JJ-lrQ" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="ou1-xF-pAr"/>
                             <constraint firstItem="gvl-uZ-ZRh" firstAttribute="top" secondItem="GhD-1W-lxB" secondAttribute="bottom" constant="8" id="uza-X7-dS5"/>
                             <constraint firstItem="eHT-GQ-6UW" firstAttribute="leading" secondItem="E50-HK-wnd" secondAttribute="leadingMargin" constant="12" id="y0m-4l-Mdt"/>
-                            <constraint firstItem="4PT-Jb-KBo" firstAttribute="bottom" secondItem="gvl-uZ-ZRh" secondAttribute="bottom" constant="47" id="ySC-Mg-UDG"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
-                    <navigationItem key="navigationItem" id="6X9-vU-bjE">
-                        <barButtonItem key="rightBarButtonItem" id="ohe-P0-cw4">
-                            <view key="customView" contentMode="scaleToFill" id="MWk-ni-epq">
-                                <rect key="frame" x="16" y="6" width="50" height="39"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="right" contentVerticalAlignment="bottom" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h6O-W0-Wus">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="39"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
-                                        <state key="normal" title="Done">
-                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <state key="disabled" title=" ">
-                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="connectWifi:" destination="qC8-fd-UCX" eventType="touchUpInside" id="4t1-Ds-ZaR"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                            </view>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="6X9-vU-bjE"/>
                     <nil key="simulatedTopBarMetrics"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="doneButton" destination="h6O-W0-Wus" id="Ys6-Zp-igw"/>
+                        <outlet property="continueButton" destination="HTd-VJ-D0f" id="EDf-P8-fw8"/>
                         <outlet property="passwordField" destination="eHT-GQ-6UW" id="wqM-rB-ezM"/>
                         <outlet property="securityField" destination="wpX-J4-2Qc" id="6cv-bw-duX"/>
                         <outlet property="ssidField" destination="h8z-JJ-lrQ" id="md5-lZ-l61"/>
-                        <outlet property="ssidTopConstraint" destination="UYq-Kq-EoL" id="NoG-cl-hnf"/>
-                        <outlet property="subtitleLabel" destination="4PT-Jb-KBo" id="SkV-pq-mrC"/>
                         <outlet property="titleLabel" destination="gvl-uZ-ZRh" id="fLo-xO-ZeJ"/>
                         <outlet property="view" destination="E50-HK-wnd" id="l6c-lF-vh7"/>
                         <segue destination="Aoy-k8-hYr" kind="push" identifier="senseToPill" id="azr-Tk-rB7"/>
@@ -835,7 +810,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connecting Sense to WiFi" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.80000000000000004" translatesAutoresizingMaskIntoConstraints="NO" id="kPY-hQ-rr3">
-                                <rect key="frame" x="28" y="28" width="544" height="34"/>
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="0Iq-85-Zkf"/>
                                 </constraints>
@@ -843,21 +818,15 @@
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please select your WiFi network from the list below:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="jA1-IU-BsJ">
-                                <rect key="frame" x="28" y="74" width="544" height="47"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="47" id="97s-1d-rxU"/>
-                                </constraints>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Please select your WiFi network from the list below:" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="jA1-IU-BsJ">
+                                <rect key="frame" x="20" y="68" width="560" height="28"/>
                                 <fontDescription key="fontDescription" name="Calibre-Thin" family="Calibre" pointSize="18"/>
                                 <color key="textColor" red="0.22352941179999999" green="0.22352941179999999" blue="0.22352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="uzN-XV-GHq">
-                                <rect key="frame" x="13" y="145" width="572" height="264"/>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="uzN-XV-GHq">
+                                <rect key="frame" x="13" y="131" width="572" height="352"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="264" id="FTS-2E-zGG"/>
-                                </constraints>
                                 <color key="separatorColor" red="0.75686274509803919" green="0.75686274509803919" blue="0.75686274509803919" alpha="1" colorSpace="calibratedRGB"/>
                                 <inset key="separatorInset" minX="15" minY="0.0" maxX="15" maxY="0.0"/>
                                 <prototypes>
@@ -879,10 +848,9 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJB-u8-jcX" customClass="HEMActionButton">
-                                <rect key="frame" x="190" y="496" width="220" height="40"/>
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="BBu-2B-TEd"/>
-                                    <constraint firstAttribute="height" constant="40" id="GAk-sB-XJT"/>
+                                    <constraint firstAttribute="height" constant="50" id="mSv-MI-GYb"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="Scan">
@@ -894,55 +862,37 @@
                                     <action selector="scan:" destination="H2i-xS-f14" eventType="touchUpInside" id="1UJ-wx-z9P"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1ao-Zs-Uri">
-                                <rect key="frame" x="197" y="542" width="207" height="40"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="dhb-tw-R9Z"/>
-                                    <constraint firstAttribute="width" constant="207" id="f1B-IQ-jwS"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="12"/>
-                                <state key="normal" title="I'm having trouble">
-                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="help:" destination="H2i-xS-f14" eventType="touchUpInside" id="089-tY-7mw"/>
-                                </connections>
-                            </button>
-                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jKd-MI-d19" userLabel="activityView" customClass="HEMActivityCoverView">
-                                <rect key="frame" x="28" y="74" width="544" height="526"/>
+                            <view hidden="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jKd-MI-d19" userLabel="activityView" customClass="HEMActivityCoverView">
+                                <rect key="frame" x="20" y="68" width="560" height="530"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="jA1-IU-BsJ" firstAttribute="bottom" secondItem="uzN-XV-GHq" secondAttribute="top" constant="-24" id="3Yx-VW-Yt6"/>
-                            <constraint firstItem="Hzz-un-6Ly" firstAttribute="top" secondItem="1ao-Zs-Uri" secondAttribute="bottom" constant="18" id="7pK-OW-HbH"/>
-                            <constraint firstItem="jKd-MI-d19" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="12" id="8ZX-YR-KJb"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="jA1-IU-BsJ" secondAttribute="trailing" constant="12" id="9p1-I1-i62"/>
-                            <constraint firstItem="jA1-IU-BsJ" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="12" id="AsE-8L-TM8"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="jKd-MI-d19" secondAttribute="trailing" constant="12" id="DJj-Wj-HOe"/>
-                            <constraint firstAttribute="centerX" secondItem="1ao-Zs-Uri" secondAttribute="centerX" constant="-0.5" id="E1Z-8n-CpH"/>
+                            <constraint firstItem="IJB-u8-jcX" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="4" id="38g-QA-Bie"/>
+                            <constraint firstItem="jA1-IU-BsJ" firstAttribute="bottom" secondItem="uzN-XV-GHq" secondAttribute="top" constant="-35" id="3Yx-VW-Yt6"/>
+                            <constraint firstItem="kPY-hQ-rr3" firstAttribute="bottom" secondItem="jA1-IU-BsJ" secondAttribute="top" constant="-10" id="8hW-7u-PQL"/>
                             <constraint firstItem="uzN-XV-GHq" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="-3" id="H8u-ui-2cP"/>
-                            <constraint firstItem="jA1-IU-BsJ" firstAttribute="bottom" secondItem="kPY-hQ-rr3" secondAttribute="bottom" constant="59" id="Ivz-73-uzW"/>
-                            <constraint firstItem="kPY-hQ-rr3" firstAttribute="top" secondItem="rQr-NN-MoL" secondAttribute="bottom" constant="8" id="RHA-ee-3Oq"/>
-                            <constraint firstItem="kPY-hQ-rr3" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="12" id="XKg-PQ-vw8"/>
-                            <constraint firstItem="1ao-Zs-Uri" firstAttribute="top" secondItem="IJB-u8-jcX" secondAttribute="top" constant="46" id="Zhz-56-bJB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jKd-MI-d19" secondAttribute="trailing" constant="4" id="JHb-oM-NYd"/>
+                            <constraint firstItem="uzN-XV-GHq" firstAttribute="bottom" secondItem="IJB-u8-jcX" secondAttribute="bottom" constant="-97" id="Kdf-77-5Tl"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="kPY-hQ-rr3" secondAttribute="trailing" constant="4" id="N4h-Yt-1XI"/>
+                            <constraint firstItem="kPY-hQ-rr3" firstAttribute="top" secondItem="rQr-NN-MoL" secondAttribute="bottom" constant="4" id="RHA-ee-3Oq"/>
+                            <constraint firstItem="kPY-hQ-rr3" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="4" id="S69-Ge-f3h"/>
+                            <constraint firstItem="jA1-IU-BsJ" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="4" id="Wiu-CO-VVy"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="jA1-IU-BsJ" secondAttribute="trailing" constant="4" id="Y4d-yV-xTH"/>
+                            <constraint firstItem="jKd-MI-d19" firstAttribute="leading" secondItem="9Vm-4j-dzQ" secondAttribute="leadingMargin" constant="4" id="YAK-kL-7sg"/>
+                            <constraint firstItem="Hzz-un-6Ly" firstAttribute="top" secondItem="IJB-u8-jcX" secondAttribute="bottom" constant="20" id="ezc-fb-pul"/>
                             <constraint firstItem="Hzz-un-6Ly" firstAttribute="top" secondItem="jKd-MI-d19" secondAttribute="bottom" id="f3h-hE-Kgf"/>
-                            <constraint firstAttribute="centerX" secondItem="IJB-u8-jcX" secondAttribute="centerX" id="fW9-53-9Cq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uzN-XV-GHq" secondAttribute="trailing" constant="-1" id="hHj-JH-Db7"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="kPY-hQ-rr3" secondAttribute="trailing" constant="12" id="obU-Dc-KC1"/>
                             <constraint firstItem="jKd-MI-d19" firstAttribute="top" secondItem="jA1-IU-BsJ" secondAttribute="top" id="pX5-ut-3oZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="IJB-u8-jcX" secondAttribute="trailing" constant="4" id="tQ3-B1-r60"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="e2M-Su-lpO"/>
                     <connections>
                         <outlet property="activityView" destination="jKd-MI-d19" id="4uh-Kg-uv6"/>
-                        <outlet property="helpButton" destination="1ao-Zs-Uri" id="1KD-s4-9cR"/>
                         <outlet property="scanButton" destination="IJB-u8-jcX" id="V8l-nH-HV4"/>
-                        <outlet property="scanButtonWidthConstraint" destination="BBu-2B-TEd" id="Uz6-8G-8ju"/>
                         <outlet property="subtitleLabel" destination="jA1-IU-BsJ" id="tfF-OV-b7c"/>
-                        <outlet property="tableViewHeightConstraint" destination="FTS-2E-zGG" id="MUs-fX-RdV"/>
                         <outlet property="titleLabel" destination="kPY-hQ-rr3" id="PEQ-YG-Jkm"/>
                         <outlet property="wifiPickerTableView" destination="uzN-XV-GHq" id="ffT-TW-d5f"/>
                         <segue destination="qC8-fd-UCX" kind="push" identifier="wifiPassword" id="Rko-UE-A3y"/>
@@ -2573,7 +2523,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ZOJ-Sh-Dzx"/>
-        <segue reference="DAu-sO-H4V"/>
+        <segue reference="azr-Tk-rB7"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

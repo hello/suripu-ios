@@ -7,11 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HEMBaseController.h"
+#import "HEMOnboardingController.h"
 #import "HEMWiFiConfigurationDelegate.h"
 #import "HEMSensePairDelegate.h"
 
-@interface HEMWifiPickerViewController : HEMBaseController
+@interface HEMWifiPickerViewController : HEMOnboardingController
 
 @property (nonatomic, weak) id<HEMWiFiConfigurationDelegate> delegate;
 @property (nonatomic, weak) id<HEMSensePairingDelegate> sensePairDelegate;

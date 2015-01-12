@@ -160,11 +160,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [self executeNextStep];
 }
 
-- (IBAction)help:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventHelp];
-    [HEMSupportUtil openHelpFrom:self];
-}
-
 #pragma mark - Scanning
 
 - (BOOL)preScannedSensesFound {

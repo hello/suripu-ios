@@ -49,6 +49,7 @@
 }
 
 - (void)help:(id)sender {
+    [SENAnalytics track:kHEMAnalyticsEventHelp];
     [HEMSupportUtil openHelpFrom:self];
 }
 

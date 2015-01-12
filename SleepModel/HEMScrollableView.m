@@ -135,7 +135,7 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
     };
     
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:imageFrame];
-    [imageView setContentMode:UIViewContentModeCenter];
+    [imageView setContentMode:UIViewContentModeScaleAspectFill];
     [imageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [imageView setImage:image];
     [imageView setBackgroundColor:[[self scrollView] backgroundColor]];

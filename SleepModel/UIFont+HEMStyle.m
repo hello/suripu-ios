@@ -264,4 +264,8 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
++ (UIFont*)bluetoothStepsFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
+}
+
 @end

@@ -62,10 +62,7 @@
 "video.error.playback-failed" = "A playback error was encountered while attempting to play the video.";
 
 // no bluetooth on
-"no-bluetooth.subtitle.format" = "Sense uses Bluetooth to communicate with your mobile device.  Please turn your Bluetooth on to continue.\n\nLaunch the %@ app, tap %@, and flip the switch to %@.  Then return to the Sense app.";
-"no-bluetooth.settings" = "Settings";
-"no-bluetooth.bluetooth" = "Bluetooth";
-"no-bluetooth.on" = "On";
+"no-bluetooth.subtitle" = "Sense uses Bluetooth to communicate with your mobile device.  Please turn your Bluetooth on to continue.";
 
 // sense setup
 "sense-setup.title" = "Setting up Sense";

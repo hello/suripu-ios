@@ -313,4 +313,9 @@
  */
 + (UIFont*)wifiTitleFont;
 
+/**
+ * Font used to display the steps to turn on bluetooth in onboarding
+ */
++ (UIFont*)bluetoothStepsFont;
+
 @end

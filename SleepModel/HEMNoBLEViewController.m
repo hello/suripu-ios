@@ -21,7 +21,13 @@
 @interface HEMNoBLEViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bluetoothImageTopConstraint;
+@property (weak, nonatomic) IBOutlet UILabel *instructionView;
+@property (weak, nonatomic) IBOutlet UILabel *step1Label;
+@property (weak, nonatomic) IBOutlet UILabel *step1DescLabel;
+@property (weak, nonatomic) IBOutlet UILabel *step2Label;
+@property (weak, nonatomic) IBOutlet UILabel *step2DescLabel;
+@property (weak, nonatomic) IBOutlet UILabel *step3Label;
+@property (weak, nonatomic) IBOutlet UILabel *step3DescLabel;
 
 @end
 
@@ -31,28 +37,31 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self enableBackButton:NO];
+    [self showHelpButton];
     [self setupSubtitleText];
+    [self configureSteps];
     [SENAnalytics track:kHEMAnalyticsEventOnBNoBle];
 }
 
 - (void)setupSubtitleText {
-    NSString* subtitleFormat = NSLocalizedString(@"no-bluetooth.subtitle.format", nil);
-    NSString* settings = NSLocalizedString(@"no-bluetooth.settings", nil);
-    NSString* bluetooth = NSLocalizedString(@"no-bluetooth.bluetooth", nil);
-    NSString* on = NSLocalizedString(@"no-bluetooth.on", nil);
-
-    NSArray* args = @[
-        [HEMOnboardingUtils boldAttributedText:settings],
-        [HEMOnboardingUtils boldAttributedText:bluetooth],
-        [HEMOnboardingUtils boldAttributedText:on]
-    ];
+    NSString* subtitle = NSLocalizedString(@"no-bluetooth.subtitle", nil);
     
     NSMutableAttributedString* attrSubtitle =
-        [[NSMutableAttributedString alloc] initWithFormat:subtitleFormat args:args];
+        [[NSMutableAttributedString alloc] initWithString:subtitle];
     
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
     
     [[self subtitleLabel] setAttributedText:attrSubtitle];
+}
+
+- (void)configureSteps {
+    UIFont* font = [UIFont bluetoothStepsFont];
+    [[self step1Label] setFont:font];
+    [[self step1DescLabel] setFont:font];
+    [[self step2Label] setFont:font];
+    [[self step2DescLabel] setFont:font];
+    [[self step3Label] setFont:font];
+    [[self step3DescLabel] setFont:font];
 }
 
 - (void)viewDidBecomeActive {

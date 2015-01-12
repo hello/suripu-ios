@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMOnboardingController.h"
 
 @protocol HEMSecondPillCheckDelegate <NSObject>
 
@@ -24,7 +25,7 @@
 
 @end
 
-@interface HEMSecondPillCheckViewController : UIViewController
+@interface HEMSecondPillCheckViewController : HEMOnboardingController
 
 @property (nonatomic, assign) id<HEMSecondPillCheckDelegate> delegate;
 

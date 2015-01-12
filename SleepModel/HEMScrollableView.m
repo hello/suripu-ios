@@ -126,7 +126,9 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
     
 }
 
-- (void)addImage:(UIImage *)image withYOffset:(CGFloat)yOffset {
+- (void)addImage:(UIImage *)image
+     contentMode:(UIViewContentMode)mode
+     withYOffset:(CGFloat)yOffset {
     CGRect imageFrame = {
         0.0f,
         CGRectGetMaxY([[self lastContentView] frame]) + yOffset,
@@ -135,7 +137,7 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
     };
     
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:imageFrame];
-    [imageView setContentMode:UIViewContentModeScaleAspectFill];
+    [imageView setContentMode:mode];
     [imageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [imageView setImage:image];
     [imageView setBackgroundColor:[[self scrollView] backgroundColor]];
@@ -143,6 +145,12 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
     [[self scrollView] addSubview:imageView];
     [[self yOffsets] addObject:@(yOffset)];
     [self setLastContentView:imageView];
+}
+
+- (void)addImage:(UIImage *)image withYOffset:(CGFloat)yOffset {
+    [self addImage:image
+       contentMode:UIViewContentModeScaleAspectFill
+       withYOffset:yOffset];
 }
 
 - (void)addImage:(UIImage*)image {
@@ -169,13 +177,15 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
 }
 
 - (void)addShadowIfScrollRequired {
+    CALayer* layer = [self layer];
     if ([[self scrollView] contentSize].height > CGRectGetHeight([[self scrollView] bounds])) {
         NSShadow* shadow = [HelloStyleKit onboardingButtonContainerShadow];
-        CALayer* layer = [self layer];
         [layer setShadowRadius:[shadow shadowBlurRadius]];
         [layer setShadowOffset:[shadow shadowOffset]];
         [layer setShadowColor:[[shadow shadowColor] CGColor]];
         [layer setShadowOpacity:1.0f];
+    } else {
+        [layer setShadowOpacity:0.0f];
     }
 }
 

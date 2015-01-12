@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "HEMSecondPillCheckViewController.h"
+#import "HEMOnboardingController.h"
 
-@interface HEMSecondPillSetupViewController : UIViewController
+@interface HEMSecondPillSetupViewController : HEMOnboardingController
 
 @property (nonatomic, weak) id<HEMSecondPillCheckDelegate> delegate;
 

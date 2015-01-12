@@ -21,9 +21,7 @@
 
 @interface HEMPillSetupViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
-@property (weak, nonatomic) IBOutlet UIButton *helpButton;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraint;
@@ -36,10 +34,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
     
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupDescription];
+    [self enableBackButton:NO];
+    [self showHelpButton];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBPillPlacement];
 }
@@ -62,11 +60,6 @@
 }
 
 #pragma mark - Actions
-
-- (IBAction)help:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventHelp];
-    [HEMSupportUtil openHelpFrom:self];
-}
 
 - (IBAction)next:(id)sender {
     [[self manager] setLED:SENSenseLEDStateOff completion:nil];

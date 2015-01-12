@@ -15,7 +15,6 @@
 
 @interface HEMGetAppViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
 @end
@@ -24,10 +23,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
+
     [self setupSubtitle];
     
+    [self enableBackButton:NO];
     [SENAnalytics track:kHEMAnalyticsEventOnBGetApp];
 }
 

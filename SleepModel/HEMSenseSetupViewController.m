@@ -52,13 +52,6 @@ static CGFloat const HEMSenseSetupImageYPadding = 44.0f;
                      withYOffset:HEMSenseSetupImageYPadding];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    CGFloat shadowOpacity = [[self contentView] scrollRequired]?1.0f:0.0f;
-    [[[self buttonContainer] layer] setShadowOpacity:shadowOpacity];
-}
-
 #pragma mark - Actions
 
 - (IBAction)help:(id)sender {

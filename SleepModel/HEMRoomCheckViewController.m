@@ -20,6 +20,7 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMMarkdown.h"
 
+static CGFloat const HEMRoomCheckImageYOffset = 50.0f;
 static CGFloat const HEMRoomCheckShowSensorDelay = 1.0f;
 static CGFloat const HEMRoomCheckDataDisplayTime = 2.0f;
 static CGFloat const HEMRoomCheckMinVerticalPadding = 28.0f;
@@ -55,7 +56,7 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
     [self setSensorsOk:YES];
     [self setCurrentTopY:HEMRoomCheckMinVerticalPadding];
     [self setupContent];
-    
+    [self enableBackButton:NO];
     [SENAnalytics track:kHEMAnalyticsEventOnBRoomCheck];
 }
 
@@ -66,19 +67,12 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
     
     [[self contentView] addTitle:NSLocalizedString(@"onboarding.room-check.title", nil)];
-    [[self contentView] addImage:[HelloStyleKit sensePlacement]];
     [[self contentView] addDescription:attrText];
+    [[self contentView] addImage:[HelloStyleKit sensePlacement] withYOffset:HEMRoomCheckImageYOffset];
     
     CGRect resultSeparatorFrame = [[self resultSeparator] frame];
     resultSeparatorFrame.size.height = 0.5f;
     [[self resultSeparator] setFrame:resultSeparatorFrame];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    CGFloat shadowOpacity = [[self contentView] scrollRequired]?1.0f:0.0f;
-    [[[self buttonContainer] layer] setShadowOpacity:shadowOpacity];
 }
 
 #pragma mark - Sensor Messages
@@ -124,7 +118,7 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
                          CGRect contentFrame = [[self contentView] frame];
                          contentFrame.origin.y -= CGRectGetHeight(contentFrame)/2;
                          [[self contentView] setFrame:contentFrame];
-                         
+
                          [[self buttonContainer] setAlpha:0.0f];
                          CGRect containerFrame = [[self buttonContainer] frame];
                          containerFrame.origin.y += CGRectGetHeight(containerFrame)/2;

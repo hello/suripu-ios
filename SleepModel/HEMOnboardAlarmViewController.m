@@ -29,31 +29,24 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
     
     [self setupContent];
-    
-    [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
+    [self enableBackButton:NO];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBFirstAlarm];
 }
 
 - (void)setupContent {
     [[self contentView] addTitle:NSLocalizedString(@"onboarding.alarm.title", nil)];
-    [[self contentView] addImage:[HelloStyleKit smartAlarm]];
 
     NSString* desc = NSLocalizedString(@"onboarding.alarm.desc", nil);
     NSMutableAttributedString* attrDesc = [[NSMutableAttributedString alloc] initWithString:desc];
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
     
     [[self contentView] addDescription:attrDesc];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    CGFloat opacity = [[self contentView] scrollRequired]?1.0f:0.0f;
-    [[[self buttonContainer] layer] setShadowOpacity:opacity];
+    [[self contentView] addImage:[HelloStyleKit smartAlarm]
+                     contentMode:UIViewContentModeScaleAspectFit
+                     withYOffset:40.0f];
 }
 
 - (void)dismissAlarmVC:(HEMAlarmViewController*)alarmVC {

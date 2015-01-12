@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HEMBaseController.h"
+#import "HEMOnboardingController.h"
 
-@interface HEMSetupAnotherPillViewController : HEMBaseController
+@interface HEMSetupAnotherPillViewController : HEMOnboardingController
 
 @end

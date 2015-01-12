@@ -21,11 +21,8 @@
 
 @interface HEMSetupAnotherPillViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *setupButton;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *setupButtonWidthConstraint;
 
 @end
 
@@ -33,10 +30,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupSubtitle];
-    [[self navigationItem] setHidesBackButton:YES];
-    
+    [self enableBackButton:NO];
     [SENAnalytics track:kHEMAnalyticsEventOnBAnotherPill];
 }
 
@@ -57,8 +52,6 @@
 }
 
 - (IBAction)setupAnother:(UIButton *)sender {
-    [[self setupButton] showActivityWithWidthConstraint:[self setupButtonWidthConstraint]];
-    
     __weak typeof(self) weakSelf = self;
     
     SENSenseManager* manager = [[HEMOnboardingCache sharedCache] senseManager];
@@ -66,13 +59,11 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             [manager disconnectFromSense]; // must disconnect to allow other app to connect
-            [[strongSelf setupButton] stopActivity];
             [strongSelf getApp];
         }
     } failure:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
-            [[strongSelf setupButton] stopActivity];
             [strongSelf showError:error];
         }
     }];

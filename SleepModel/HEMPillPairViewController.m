@@ -48,15 +48,13 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[self navigationItem] setHidesBackButton:YES];
-    
     [self setupContent];
+    [self showHelpButton];
     [self setupCancelButton];
+    [self enableBackButton:NO];
     
     [self updateActivityText:NSLocalizedString(@"pairing.activity.connecting-sense", nil)];
     [self showActivity];
-    
-    [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
 }
@@ -94,13 +92,6 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
                    afterDelay:kHEMPillPairStartDelay];
         [self setLoaded:YES];
     }
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    CGFloat shadowOpacity = [[self contentView] scrollRequired]?1.0f:0.0f;
-    [[[self buttonContainer] layer] setShadowOpacity:shadowOpacity];
 }
 
 - (void)updateActivityText:(NSString*)text {

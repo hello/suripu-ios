@@ -12,13 +12,12 @@
 
 @interface HEMGraphSectionOverlayView ()
 
-@property (nonatomic, strong) NSMutableArray* sectionHeaders;
-@property (nonatomic, strong) NSMutableArray* sectionFooters;
+@property (nonatomic, strong) NSArray* sectionFooters;
 @end
 
 @implementation HEMGraphSectionOverlayView
 
-static NSInteger const HEMGraphSectionLineWidth = 0.5f;
+static NSInteger const HEMGraphSectionLineWidth = 1.f;
 static CGFloat const HEMGraphSectionLabelHeight = 15.f;
 
 - (instancetype)init {
@@ -53,58 +52,32 @@ static CGFloat const HEMGraphSectionLabelHeight = 15.f;
 }
 
 - (void)setSectionValues:(NSArray *)sectionValues {
-    self.sectionHeaders = [[NSMutableArray alloc] initWithCapacity:sectionValues.count];
-    self.sectionFooters = [[NSMutableArray alloc] initWithCapacity:sectionValues.count];
-    for (NSDictionary* dict in sectionValues) {
-        [self.sectionHeaders addObject:[[dict allKeys] firstObject]];
-        [self.sectionFooters addObject:[[dict allValues] firstObject]];
-    }
+    self.sectionFooters = sectionValues;
     [self layoutSections];
 }
 
 - (void)layoutSections {
     [self.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
-    NSInteger count = self.sectionHeaders.count;
-    CGFloat sectionWidth = (CGRectGetWidth(self.bounds)/count) - ((count - 1) * HEMGraphSectionLineWidth);
-    CGFloat sectionHeight = CGRectGetHeight(self.bounds) * 0.9;
+    NSInteger count = self.sectionFooters.count;
+    CGFloat sectionWidth = floorf(CGRectGetWidth(self.bounds)/count);
     CGFloat bottomLabelOffset = CGRectGetHeight(self.bounds) * 0.8;
-    CGFloat yOffset = 0.f;
-    NSArray* locations = @[@(0.2), @1];
-    NSArray* colors = @[
-                        (id)[[UIColor colorWithWhite:0.87f alpha:1] CGColor],
-                        (id)[[UIColor colorWithWhite:0.87f alpha:0.2] CGColor]];
     for (int i = 0 ; i < count; i++) {
         CGFloat xOffset = (i * sectionWidth) + (i * HEMGraphSectionLineWidth);
-        UILabel* topLabel = [[UILabel alloc] initWithFrame:CGRectMake(xOffset, yOffset, sectionWidth, HEMGraphSectionLabelHeight)];
-        UILabel* bottomLabel = [[UILabel alloc] initWithFrame:CGRectInset(CGRectMake(xOffset, bottomLabelOffset, sectionWidth, HEMGraphSectionLabelHeight), 5.f, 0)];
-//        topLabel.text = self.sectionHeaders[i];
+        CGRect bottomLabelRect = CGRectInset(CGRectMake(xOffset, bottomLabelOffset, sectionWidth, HEMGraphSectionLabelHeight), 5.f, 0);
+        UILabel* bottomLabel = [[UILabel alloc] initWithFrame:bottomLabelRect];
         bottomLabel.text = self.sectionFooters[i];
-        topLabel.textAlignment = NSTextAlignmentCenter;
         bottomLabel.textAlignment = NSTextAlignmentCenter;
         BOOL isBold = [self shouldBoldLastElement] && (i == count - 1);
         if (isBold) {
-            topLabel.font = self.topLabelBoldFont;
-            topLabel.textColor = [UIColor blackColor];
             bottomLabel.font = self.bottomLabelBoldFont;
             bottomLabel.textColor = [UIColor blackColor];
         } else {
-            topLabel.font = self.topLabelFont;
-            topLabel.textColor = self.topLabelColor;
             bottomLabel.font = self.bottomLabelFont;
             bottomLabel.textColor = self.bottomLabelColor;
         }
         bottomLabel.minimumScaleFactor = 0.5;
         bottomLabel.adjustsFontSizeToFitWidth = YES;
-        [self addSubview:topLabel];
         [self addSubview:bottomLabel];
-        if (i > 0) {
-            CAGradientLayer *gradient = [CAGradientLayer layer];
-            gradient.frame = CGRectMake(xOffset, yOffset,
-                                        HEMGraphSectionLineWidth, sectionHeight);
-            gradient.colors = colors;
-            gradient.locations = locations;
-            [self.layer insertSublayer:gradient atIndex:0];
-        }
     }
 }
 @end

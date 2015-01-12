@@ -25,16 +25,13 @@
 
 - (NSArray*)valuesForSectionIndexes {
     NSMutableArray* labels = [[NSMutableArray alloc] initWithCapacity:self.labeledIndexes.count];
-    if (self.dateFormatter) {
-        NSArray* indexes = [[self.labeledIndexes allObjects] sortedArrayUsingSelector:@selector(compare:)];
-        for (NSNumber* index in indexes) {
-            SENSensorDataPoint* dataPoint = [self dataPointAtIndex:[index integerValue]];
-            NSDate* lastUpdated = dataPoint.date;
-            NSString* formattedValue = @"0";
-            if ([dataPoint.value floatValue] != 0)
-                formattedValue = [SENSensor formatValue:dataPoint.value withUnit:self.unit];
-            [labels addObject:@{ [self.dateFormatter stringFromDate:lastUpdated]:formattedValue }];
-        }
+    NSArray* indexes = [[self.labeledIndexes allObjects] sortedArrayUsingSelector:@selector(compare:)];
+    for (NSNumber* index in indexes) {
+        SENSensorDataPoint* dataPoint = [self dataPointAtIndex:[index integerValue]];
+        NSString* formattedValue = @"0";
+        if ([dataPoint.value floatValue] != 0)
+            formattedValue = [SENSensor formatValue:dataPoint.value withUnit:self.unit];
+        [labels addObject:formattedValue];
     }
     return labels;
 }

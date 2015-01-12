@@ -38,6 +38,7 @@
 @property (nonatomic, strong) NSTimer* refreshTimer;
 @property (nonatomic) CGFloat maxGraphValue;
 @property (nonatomic) CGFloat minGraphValue;
+@property (nonatomic, getter=isPanning) BOOL panning;
 @end
 
 @implementation HEMSensorViewController
@@ -47,10 +48,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.hourlyFormatter = [[NSDateFormatter alloc] init];
-    self.hourlyFormatter.dateFormat = [SENSettings timeFormat] == SENTimeFormat12Hour ? @"ha" : @"H";
-    self.dailyFormatter = [[NSDateFormatter alloc] init];
-    self.dailyFormatter.dateFormat = @"EEEEEE";
+    [self configureDateFormatters];
     self.hourlyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.dailyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     [self initializeGraphDataSource];
@@ -120,6 +118,19 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [self refreshData];
 }
 
+- (void)configureDateFormatters
+{
+    self.hourlyFormatter = [NSDateFormatter new];
+    self.dailyFormatter = [NSDateFormatter new];
+    if ([SENSettings timeFormat] == SENTimeFormat12Hour) {
+        self.hourlyFormatter.dateFormat = @"h:mma";
+        self.dailyFormatter.dateFormat = @"EEEE — h:mma";
+    } else {
+        self.hourlyFormatter.dateFormat = @"H:mm";
+        self.dailyFormatter.dateFormat = @"EEEE — H:mm";
+    }
+}
+
 - (void)configureGraphView
 {
     self.overlayView.alpha = 0;
@@ -136,7 +147,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 - (void)configureSensorValueViews
 {
     UIColor* color = [UIColor colorForSensorWithCondition:self.sensor.condition];
-    NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckWithConditionColor:color];
+    NSDictionary* statusAttributes = [HEMMarkdown attributesForSensorMessageWithConditionColor:color];
     NSDictionary* idealAttributes = [HEMMarkdown attributesForRoomCheckWithConditionColor:[HelloStyleKit idealSensorColor]];
 
     self.valueLabel.textColor = color;
@@ -144,6 +155,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.title = self.sensor.localizedName;
     [self updateValueLabelWithValue:self.sensor.value];
     self.unitLabel.text = [self.sensor localizedUnit];
+    self.statusMessageLabel.textAlignment = NSTextAlignmentLeft;
     self.statusMessageLabel.attributedText = [markdown_to_attr_string(self.sensor.message, 0, statusAttributes) trim];
     self.idealLabel.attributedText = [markdown_to_attr_string(self.sensor.idealConditionsMessage, 0, idealAttributes) trim];
     self.graphView.colorLine = color;
@@ -255,23 +267,23 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 - (void)updateGraphWithHourlyData:(NSArray*)dataSeries {
     [self.dailyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
     [self.hourlyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
-    [self updateGraphWithData:dataSeries formatter:self.hourlyFormatter];
+    [self updateGraphWithData:dataSeries];
 }
 
 - (void)updateGraphWithDailyData:(NSArray*)dataSeries {
     [self.hourlyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
     [self.dailyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
-    [self updateGraphWithData:dataSeries formatter:self.dailyFormatter];
+    [self updateGraphWithData:dataSeries];
 }
 
-- (void)updateGraphWithData:(NSArray*)dataSeries formatter:(NSDateFormatter*)formatter
+- (void)updateGraphWithData:(NSArray*)dataSeries
 {
     self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:dataSeries
                                                                          unit:self.sensor.unit];
-    self.graphDataSource.dateFormatter = formatter;
     self.graphView.dataSource = self.graphDataSource;
     [self setGraphValueBoundsWithData:dataSeries];
-    [self.graphView reloadGraph];
+    if (![self isPanning])
+        [self.graphView reloadGraph];
     if (dataSeries.count == 0) {
         self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
         self.statusLabel.alpha = 1;
@@ -310,26 +322,31 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 }
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didTouchGraphWithClosestIndex:(NSInteger)index {
-    CGFloat value = [self.graphDataSource lineGraph:graph valueForPointAtIndex:index];
-    self.valueLabel.text = [NSString stringWithFormat:@"%.0f", value];
+    self.panning = YES;
+    SENSensorDataPoint* dataPoint = [self.graphDataSource dataPointAtIndex:index];
+    self.statusMessageLabel.textAlignment = NSTextAlignmentCenter;
+    NSDateFormatter* formatter = [self isShowingHourlyData] ? self.hourlyFormatter : self.dailyFormatter;
+    self.statusMessageLabel.text = [formatter stringFromDate:dataPoint.date];
+    CGFloat value = [[SENSensor value:dataPoint.value inPreferredUnit:self.sensor.unit] floatValue];
+    if ([dataPoint.value floatValue] > 0)
+        self.valueLabel.text = [NSString stringWithFormat:@"%.0f", value];
+    else
+        self.valueLabel.text = @"0";
+    [UIView animateWithDuration:0.2f animations:^{
+        self.overlayView.alpha = 0;
+    }];
 }
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didReleaseTouchFromGraphWithClosestIndex:(CGFloat)index {
-    [self updateValueLabelWithValue:self.sensor.value];
+    [self configureSensorValueViews];
+    self.panning = NO;
+    [UIView animateWithDuration:0.2f animations:^{
+        self.overlayView.alpha = 1;
+    }];
 }
 
 - (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {
-    NSArray* labels = self.graphDataSource.valuesForSectionIndexes;
-    if ([self isShowingHourlyData]) {
-        NSMutableArray* modifiedLabels = [[NSMutableArray alloc] initWithCapacity:labels.count];
-        for (NSDictionary* label in labels) {
-            NSString* dateLabelText = [[label allKeys] firstObject];
-            NSString* sensorValue = [[label allValues] firstObject];
-            [modifiedLabels addObject:@{[dateLabelText lowercaseString]:sensorValue}];
-        }
-        labels = modifiedLabels;
-    }
-    [self.overlayView setSectionValues:labels];
+    [self.overlayView setSectionValues:self.graphDataSource.valuesForSectionIndexes];
     [UIView animateWithDuration:0.5f animations:^{
         self.overlayView.alpha = 1;
     }];

@@ -6,10 +6,12 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMOnboardingController.h"
 #import "HelloStyleKit.h"
-#import "UIFont+HEMStyle.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMSupportUtil.h"
 
 @interface HEMOnboardingController()
 
@@ -29,7 +31,26 @@
     [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
 }
 
-#pragma mark - navigation
+#pragma mark - Nav
+
+- (void)showHelpButton {
+    UIBarButtonItem* item =
+    [[UIBarButtonItem alloc] initWithTitle:@"?"
+                                     style:UIBarButtonItemStyleBordered
+                                    target:self
+                                    action:@selector(help:)];
+    [item setTitlePositionAdjustment:UIOffsetMake(-10.0f, 0.0f)
+                       forBarMetrics:UIBarMetricsDefault];
+    [item setTitleTextAttributes:@{
+        NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor],
+        NSFontAttributeName : [UIFont helpButtonTitleFont]
+    } forState:UIControlStateNormal];
+    [[self navigationItem] setRightBarButtonItem:item];
+}
+
+- (void)help:(id)sender {
+    [HEMSupportUtil openHelpFrom:self];
+}
 
 - (void)enableBackButton:(BOOL)enable {
     if (enable) {

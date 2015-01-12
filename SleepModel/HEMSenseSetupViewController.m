@@ -17,6 +17,8 @@
 #import "HEMSupportUtil.h"
 #import "HEMScrollableView.h"
 
+static CGFloat const HEMSenseSetupImageYPadding = 44.0f;
+
 @interface HEMSenseSetupViewController ()
 
 @property (weak, nonatomic) IBOutlet HEMScrollableView *contentView;
@@ -30,11 +32,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
     
     [self setupContent];
-    
-    [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
+    [self showHelpButton];
+    [self enableBackButton:NO];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBSenseSetup];
 }
@@ -46,8 +47,9 @@
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
     
     [[self contentView] addTitle:NSLocalizedString(@"sense-setup.title", nil)];
-    [[self contentView] addImage:[HelloStyleKit sensePlacement]];
     [[self contentView] addDescription:attrText];
+    [[self contentView] addImage:[HelloStyleKit sensePlacement]
+                     withYOffset:HEMSenseSetupImageYPadding];
 }
 
 - (void)viewDidLayoutSubviews {

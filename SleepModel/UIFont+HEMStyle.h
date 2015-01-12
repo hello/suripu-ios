@@ -303,4 +303,9 @@
  */
 + (UIFont*)genderButtonTitleFont;
 
+/**
+ * Font used to display the help button title during onboarding
+ */
++ (UIFont*)helpButtonTitleFont;
+
 @end

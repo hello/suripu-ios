@@ -43,7 +43,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 @interface HEMSensePairViewController() <HEMSecondPillCheckDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *senseImageView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
@@ -71,8 +70,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupDescription];
+    [self showHelpButton];
     [self setupCancelButton];
     [self setCurrentState:HEMSensePairStateNotStarted];
     

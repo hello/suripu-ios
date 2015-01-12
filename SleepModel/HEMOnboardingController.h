@@ -13,5 +13,6 @@
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 
 - (void)enableBackButton:(BOOL)enable;
+- (void)showHelpButton;
 
 @end

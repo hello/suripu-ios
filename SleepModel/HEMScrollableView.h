@@ -28,6 +28,15 @@
 - (void)addAttributedTitle:(NSAttributedString*)title withYOffset:(CGFloat)y;
 
 /**
+ * Append an image to be displayed in the scrollable content with the given
+ * y offset from the last content.
+ *
+ * @param image: image to be added.
+ * @param yOffset: y offset from previous view added
+ */
+- (void)addImage:(UIImage *)image withYOffset:(CGFloat)yOffset;
+
+/**
  * Append an image to be displayed in the scrollable content, which will properly
  * set the content size of the scrollable view and add proper padding to content
  * that follow

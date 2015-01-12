@@ -6,10 +6,10 @@
 "1ao-Zs-Uri.normalTitle" = "I'm having trouble";
 
 /* Class = "IBUIButton"; normalTitle = "Continue"; ObjectID = "2TQ-o7-Rs6"; */
-"2TQ-o7-Rs6.normalTitle" = "Continue";
+"2TQ-o7-Rs6.normalTitle" = "CONTINUE";
 
 /* Class = "IBUIButton"; normalTitle = "Continue"; ObjectID = "37N-ly-LlQ"; */
-"37N-ly-LlQ.normalTitle" = "Continue";
+"37N-ly-LlQ.normalTitle" = "CONTINUE";
 
 /* Class = "IBUIButton"; normalTitle = "Female"; ObjectID = "3Im-vl-hQo"; */
 "3Im-vl-hQo.normalTitle" = "Female";
@@ -216,7 +216,7 @@
 "pq7-me-JcE.text" = "Pairing your Sleep Pill";
 
 /* Class = "IBUIButton"; normalTitle = "Continue"; ObjectID = "qdG-tg-U0e"; */
-"qdG-tg-U0e.normalTitle" = "Continue";
+"qdG-tg-U0e.normalTitle" = "CONTINUE";
 
 /* Class = "IBUITextField"; placeholder = "Password"; ObjectID = "rFe-bS-5Yc"; */
 "rFe-bS-5Yc.placeholder" = "Password";
@@ -252,7 +252,7 @@
 "yK4-z9-er1.text" = "Well Done.";
 
 /* Class = "IBUIButton"; normalTitle = "Continue"; ObjectID = "yuw-Cx-zbP"; */
-"yuw-Cx-zbP.normalTitle" = "Continue";
+"yuw-Cx-zbP.normalTitle" = "CONTINUE";
 
 /* Class = "IBUILabel"; text = "What's your location?"; ObjectID = "zaK-X5-Jnp"; */
 "zaK-X5-Jnp.text" = "What's your location?";

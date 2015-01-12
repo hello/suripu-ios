@@ -59,6 +59,8 @@ static CGFloat const HEMGraphSectionLabelHeight = 15.f;
 - (void)layoutSections {
     [self.layer.sublayers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
     NSInteger count = self.sectionFooters.count;
+    if (count == 0)
+        return;
     CGFloat sectionWidth = floorf(CGRectGetWidth(self.bounds)/count);
     CGFloat bottomLabelOffset = CGRectGetHeight(self.bounds) * 0.8;
     for (int i = 0 ; i < count; i++) {

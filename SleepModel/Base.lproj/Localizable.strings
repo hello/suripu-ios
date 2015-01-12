@@ -15,7 +15,7 @@
 "onboarding.orange" = "Orange";
 "onboarding.red" = "red";
 
-"sense-pair.description" = "Now we'll pair your phone with Sense. Make sure your Sense is plugged in and nearby, then tap Continue.";
+"sense-pair.description" = "Now we'll pair your phone with Sense. Make sure your Sense is plugged in and nearby.";
 
 "sign-up.activity.message" = "Creating your account";
 "sign-up.title" = "Sign up";
@@ -30,13 +30,13 @@
 "onboarding.account.dob-not-updated" = "We could not set your birthdate for your account.";
 "onboarding.before-sleep.description" = "Before you go to bed, you’ll want to check that everything’s set for a good nights sleep. Simply wave your hand over Sense, and instantly you’ll know about the conditions in your room. Go ahead, give it a try now.\n\nGreen means everything’s good. Yellow means something’s a little off and red means you should adjust something before sleep.";
 "onboarding.title.before-sleep" = "Before you sleep";
-"onboarding.end-message.well-done" = "You're all set up.\nWell done.";
-"onboarding.end-message.sleep" = "All you you need to do\nnow is sleep.";
+"onboarding.end-message.well-done" = "You're all set up";
+"onboarding.end-message.sleep" = "Now all you need to\ndo is sleep";
 "onboarding.alarm.title" = "Set a Smart Alarm";
 "onboarding.alarm.desc" = "The Sense Smart Alarm knows where you are in your sleep cycle and will wake you up at the right time for you.  Just wave your hand over Sense to turn it off.";
 "onboarding.location.description" = "Sense uses your location to know sunrise and sunset times, local weather and more.";
 
-"onboarding.room-check.title" = "Room Check";
+"onboarding.room-check.title" = "Room check";
 "onboarding.room-check.description" = "Sense will now check the conditions in the room to assure functionality of the sensors.";
 "onboarding.room-check.checking-sensor.format" = "Checking %@";
 "onboarding.room-check.ideal-condition-format" = "The %@ in your room is just right.";
@@ -92,7 +92,7 @@
 "pairing.error.unexpected-disconnect" = "Connection from Sense was broken. Please try again.";
 "pairing.error.link-account-failed" = "Could not attach Sense to your account.";
 "pairing.error.timed-out" = "Sense did not respond in time.";
-"pairing.done" = "Paired.";
+"pairing.done" = "Paired";
 "pairing.pill.error.title" = "Pill Pairing Failed";
 "pairing.pill.title" = "Pairing your Sleep Pill";
 "pairing.pill.subtitle" = "Shake your Sleep Pill for three seconds to pair it with your Sense. You may need to shake it quickly for it to register.";
@@ -405,7 +405,7 @@
 "questions.error.unexpected" = "Oops! Probably our fault. Skip the question for now. We'll ask you again another time";
 
 // account info
-"account.gender.subtitle" = "This information is used to provide personalized sleep insights.";
+"account.gender.subtitle" = "This is used to provide you with more personalized sleep insights.";
 "account.gender.female" = "Female";
 "account.gender.male" = "Male";
 "account.gender.other" = "Other";

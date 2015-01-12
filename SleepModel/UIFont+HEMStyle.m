@@ -229,7 +229,7 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)onboardingDescriptionFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
 }
 
 + (UIFont *)onboardingDescriptionLargeFont {

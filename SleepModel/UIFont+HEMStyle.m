@@ -94,6 +94,14 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
 }
 
++ (UIFont *)timelineEventTimestampFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:13.f];
+}
+
++ (UIFont *)timelineEventTimestampBoldFont {
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
+}
+
 + (UIFont *)timelineEventTipFont {
     return [UIFont fontWithName:HEMFontFamilyNameLightOblique size:13.f];
 }
@@ -186,6 +194,10 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:13.0f];
 }
 
++ (UIFont *)textfieldPlaceholderFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+}
+
 #pragma mark - Onboarding
 
 + (UIFont *)onboardingActivityFontLarge {
@@ -198,6 +210,10 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
 
 + (UIFont *)singleComponentPickerViewFont {
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:18.0f];
+}
+
++ (UIFont *)birthdatePickerTextFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:20.0f];
 }
 
 + (UIFont *)onboardingFieldRightViewFont {

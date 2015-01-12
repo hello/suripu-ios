@@ -17,7 +17,6 @@ CGFloat const kHEMIPhone5Height = 568.0f;
 @interface HEMBaseController()
 
 @property (nonatomic, assign) BOOL adjustedConstraints;
-@property (nonatomic, strong) UIBarButtonItem* leftBarItem;
 
 @end
 
@@ -54,22 +53,6 @@ CGFloat const kHEMIPhone5Height = 568.0f;
 - (void)updateConstraint:(NSLayoutConstraint*)constraint withDiff:(CGFloat)diff {
     CGFloat constant = [constraint constant];
     [constraint setConstant:constant + diff];
-}
-
-#pragma mark - navigation
-
-- (void)enableBackButton:(BOOL)enable {
-    if (enable) {
-        if ([self leftBarItem] != nil) {
-            [[self navigationItem] setLeftBarButtonItem:[self leftBarItem]];
-        }
-    } else {
-        [self setLeftBarItem:[[self navigationItem] leftBarButtonItem]];
-        [[self navigationItem] setLeftBarButtonItem:nil];
-    }
-    
-    [[self navigationItem] setHidesBackButton:!enable];
-    [[[self navigationController] interactivePopGestureRecognizer] setEnabled:enable];
 }
 
 #pragma mark - alerts

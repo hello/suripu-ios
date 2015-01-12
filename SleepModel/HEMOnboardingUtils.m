@@ -30,7 +30,7 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
 
 + (void)applyCommonDescriptionAttributesTo:(NSMutableAttributedString*)attrText {
     UIFont* font = [UIFont onboardingDescriptionFont];
-    UIColor* color = [HelloStyleKit onboardingGrayColor];
+    UIColor* color = [HelloStyleKit onboardingDescriptionColor];
     
     // avoid overriding any substrings that may already have attributes set
     [attrText enumerateAttributesInRange:NSMakeRange(0, [attrText length])

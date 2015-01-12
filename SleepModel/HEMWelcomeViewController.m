@@ -52,12 +52,18 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     [super viewDidLoad];
     [[self navigationItem] setLeftBarButtonItem:nil];
     
+    [self configureTitle];
     [self configureSubtitle];
     [self configureButtonStyles];
     [self configureDefaultConstraints];
  
     [[self bgImageView] add3DEffectWithBorder:kHEMWelcomeMotionEffectBorder];
     
+}
+
+- (void)configureTitle {
+    [[self titleLabel] setTextColor:[UIColor blackColor]];
+    [[self titleLabel] setFont:[UIFont onboardingTitleLargeFont]];
 }
 
 - (void)configureDefaultConstraints {
@@ -91,11 +97,6 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     
     [[[self noSenseButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [[[self cancelGetStartedButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-}
-
-- (void)configureTitle {
-    [[self titleLabel] setFont:[UIFont onboardingTitleLargeFont]];
-    [[self titleLabel] setTextColor:[HelloStyleKit onboardingGrayColor]];
 }
 
 - (void)configureSubtitle {

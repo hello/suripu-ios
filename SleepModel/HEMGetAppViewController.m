@@ -47,4 +47,8 @@
     [[self subtitleLabel] setAttributedText:attrSubtitle];
 }
 
+- (IBAction)finish:(id)sender {
+    [HEMOnboardingUtils finisOnboardinghWithMessageFrom:self];
+}
+
 @end

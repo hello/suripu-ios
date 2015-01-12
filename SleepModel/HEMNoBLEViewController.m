@@ -20,7 +20,6 @@
 
 @interface HEMNoBLEViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bluetoothImageTopConstraint;
 
@@ -32,9 +31,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self enableBackButton:NO];
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [self setupSubtitleText];
-    
     [SENAnalytics track:kHEMAnalyticsEventOnBNoBle];
 }
 

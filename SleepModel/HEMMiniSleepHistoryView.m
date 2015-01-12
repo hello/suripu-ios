@@ -16,7 +16,7 @@
 
 @implementation HEMMiniSleepHistoryView
 
-static CGFloat const HEMMiniSleepBandWidth = 2.f;
+static CGFloat const HEMMiniSleepBandWidth = 1.f;
 
 - (void)awakeFromNib
 {
@@ -55,13 +55,16 @@ static CGFloat const HEMMiniSleepBandWidth = 2.f;
         CGFloat startYOffset = floorf([self yOffsetForTimeInterval:sliceStartInterval]);
         CGFloat endYOffset = floorf([self yOffsetForTimeInterval:sliceEndInterval]);
         CGFloat endXOffset = [self xOffsetForSleepDepth:segment.sleepDepth];
-        CGContextSetFillColorWithColor(ctx, [self colorForSegment:segment].CGColor);
-        CGRect fillRect = CGRectMake(CGRectGetMinX(rect), startYOffset, endXOffset, endYOffset - startYOffset);
+        CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);
+        CGRect fillRect = CGRectMake(CGRectGetMinX(rect) + (CGRectGetWidth(rect) - endXOffset)/2, startYOffset, endXOffset, endYOffset - startYOffset);
         CGContextFillRect(ctx, fillRect);
 
-        fillRect.size.width = HEMMiniSleepBandWidth;
+        CGRect bandRect = fillRect;
+        bandRect.size.width = HEMMiniSleepBandWidth;
+        bandRect.origin.x = CGRectGetMidX(rect) - HEMMiniSleepBandWidth/2;
+        CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
         CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);
-        CGContextFillRect(ctx, fillRect);
+        CGContextFillRect(ctx, bandRect);
     }
 }
 
@@ -81,19 +84,6 @@ static CGFloat const HEMMiniSleepBandWidth = 2.f;
 }
 
 #pragma mark - Data Parsing
-
-- (UIColor*)colorForSegment:(SENSleepResultSegment*)segment
-{
-    CGFloat sleepDepth = segment.sleepDepth;
-    if (sleepDepth == 0)
-        return [UIColor clearColor];
-    else if (sleepDepth == 100)
-        return [UIColor colorWithHue:0.6 saturation:0.81 brightness:0.85 alpha:1];
-    else if (sleepDepth < 60)
-        return [UIColor colorWithHue:0.56 saturation:0.15 brightness:0.95 alpha:1];
-    else
-        return [UIColor colorWithHue:0.58 saturation:0.29 brightness:0.95 alpha:1];
-}
 
 - (NSTimeInterval)timeIntervalForSegment:(SENSleepResultSegment*)segment
 {

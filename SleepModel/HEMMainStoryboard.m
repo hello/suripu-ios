@@ -31,6 +31,7 @@ static NSString *const _HEMinfoSettings = @"infoSettings";
 static NSString *const _HEMinsight = @"insight";
 static NSString *const _HEMinsightFeed = @"insightFeed";
 static NSString *const _HEMmultiple = @"multiple";
+static NSString *const _HEMoverTime = @"overTime";
 static NSString *const _HEMpair = @"pair";
 static NSString *const _HEMpersonalInfo = @"personalInfo";
 static NSString *const _HEMpickSound = @"pickSound";
@@ -72,6 +73,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)insightReuseIdentifier { return _HEMinsight; }
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
++(NSString *)overTimeReuseIdentifier { return _HEMoverTime; }
 +(NSString *)pairReuseIdentifier { return _HEMpair; }
 +(NSString *)questionReuseIdentifier { return _HEMquestion; }
 +(NSString *)sensorGraphCellReuseIdentifier { return _HEMsensorGraphCell; }

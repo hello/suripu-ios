@@ -159,10 +159,6 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                     && [pass length] > 0));
 }
 
-- (void)saveSSIDConfigured {
-    
-}
-
 #pragma mark - Security Picker
 
 - (void)setupSecurityPickerView {
@@ -457,7 +453,6 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     
     [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        
         [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
             NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
             
@@ -475,7 +470,6 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 
             }];
         }];
-        
     }];
 }
 

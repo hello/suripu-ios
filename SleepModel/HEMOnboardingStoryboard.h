@@ -13,7 +13,7 @@
 +(NSString *)networkReuseIdentifier;
 
 /** Segue Identifiers */
-+(NSString *)anotherPillToBeforeSleepSegueIdentifier;
++(NSString *)alarmToAnotherPillSegueIdentifier;
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier;
 +(NSString *)doneSegueIdentifier;
 +(NSString *)genderSegueIdentifier;
@@ -23,6 +23,7 @@
 +(NSString *)locationToPushSegueIdentifier;
 +(NSString *)moreInfoSegueIdentifier;
 +(NSString *)noBleToBirthdaySegueIdentifier;
++(NSString *)pillSetupToColorsSegueIdentifier;
 +(NSString *)pushToSenseSetupSegueIdentifier;
 +(NSString *)secondPillCheckSegueIdentifier;
 +(NSString *)senseToPillSegueIdentifier;

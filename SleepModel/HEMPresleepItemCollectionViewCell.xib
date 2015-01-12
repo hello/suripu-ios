@@ -1,50 +1,56 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="presleepItemCell" id="gTV-IL-0wX" customClass="HEMPresleepItemCollectionViewCell">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+            <rect key="frame" x="0.0" y="0.0" width="320" height="184"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="320" height="50"/>
+                <rect key="frame" x="0.0" y="0.0" width="320" height="184"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your bedroom was a bit noisy." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXN-Z3-Ncu">
-                        <rect key="frame" x="62" y="9" width="241" height="20.5"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Your bedroom was a bit noisy." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXN-Z3-Ncu">
+                        <rect key="frame" x="32" y="145" width="256" height="20.5"/>
                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sound-medium.png" translatesAutoresizingMaskIntoConstraints="NO" id="8Tk-is-EFE">
-                        <rect key="frame" x="22" y="6" width="24" height="24"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BEFORE SLEEP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mmc-1z-29g">
+                        <rect key="frame" x="121" y="40" width="77.5" height="15.5"/>
+                        <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="11"/>
+                        <color key="textColor" white="0.57999999999999996" alpha="1" colorSpace="calibratedWhite"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lGO-EQ-243" userLabel="button container view">
+                        <rect key="frame" x="0.0" y="75" width="320" height="40.5"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="24" id="8bN-S7-5R8"/>
-                            <constraint firstAttribute="width" constant="24" id="tjt-lJ-HDQ"/>
+                            <constraint firstAttribute="height" constant="40.5" id="Kn1-Qh-qBw"/>
                         </constraints>
-                    </imageView>
+                    </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstAttribute="centerY" secondItem="IXN-Z3-Ncu" secondAttribute="centerY" constant="6" id="D5e-We-iuE"/>
-                <constraint firstItem="IXN-Z3-Ncu" firstAttribute="leading" secondItem="8Tk-is-EFE" secondAttribute="trailing" constant="16" id="Dxo-1S-6uU"/>
-                <constraint firstAttribute="trailing" secondItem="IXN-Z3-Ncu" secondAttribute="trailing" constant="17" id="IBg-6n-fYd"/>
-                <constraint firstItem="8Tk-is-EFE" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="22" id="NWI-FL-IMF"/>
-                <constraint firstItem="8Tk-is-EFE" firstAttribute="centerY" secondItem="IXN-Z3-Ncu" secondAttribute="centerY" constant="-0.5" id="UjL-Ck-GLH"/>
+                <constraint firstItem="IXN-Z3-Ncu" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="32" id="9NT-Ey-HTi"/>
+                <constraint firstAttribute="trailing" secondItem="IXN-Z3-Ncu" secondAttribute="trailing" constant="32" id="KTW-AN-rab"/>
+                <constraint firstItem="IXN-Z3-Ncu" firstAttribute="top" secondItem="lGO-EQ-243" secondAttribute="bottom" constant="30" id="OHU-ZF-eS1"/>
+                <constraint firstItem="lGO-EQ-243" firstAttribute="top" secondItem="mmc-1z-29g" secondAttribute="bottom" constant="20" id="SbZ-IH-b96"/>
+                <constraint firstAttribute="centerX" secondItem="mmc-1z-29g" secondAttribute="centerX" id="ZvB-gy-sLi"/>
+                <constraint firstItem="mmc-1z-29g" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="40" id="cBX-ls-ikE"/>
+                <constraint firstItem="lGO-EQ-243" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="oJH-9L-7IY"/>
+                <constraint firstAttribute="trailing" secondItem="lGO-EQ-243" secondAttribute="trailing" id="tOJ-2w-dcg"/>
             </constraints>
-            <size key="customSize" width="320" height="50"/>
+            <size key="customSize" width="320" height="160"/>
             <connections>
+                <outlet property="buttonContainerView" destination="lGO-EQ-243" id="alv-Ys-cMg"/>
                 <outlet property="messageLabel" destination="IXN-Z3-Ncu" id="XCs-pn-PQ9"/>
-                <outlet property="typeImageView" destination="8Tk-is-EFE" id="UAe-V3-cgT"/>
             </connections>
-            <point key="canvasLocation" x="306" y="228"/>
+            <point key="canvasLocation" x="306" y="283"/>
         </collectionViewCell>
     </objects>
-    <resources>
-        <image name="sound-medium.png" width="15" height="12"/>
-    </resources>
 </document>

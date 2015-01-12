@@ -49,9 +49,6 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
     [layer setShadowOpacity:HEMSettingsCellShadowOpacity];
     [layer setShadowColor:[[UIColor blackColor] CGColor]];
     
-    CGRect shadowInset = CGRectInset([self layerFrame], 0.0f, HEMSettingsCellShadowRadius);
-    [layer setShadowPath:[[UIBezierPath bezierPathWithRect:shadowInset] CGPath]];
-    
     [self setContentLayer:layer];
     [[self layer] insertSublayer:layer atIndex:0];
 }
@@ -65,10 +62,18 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
         HEMSettingsCellSeparatorSize
     };
     UIView* separator = [[UIView alloc] initWithFrame:separatorFrame];
-    [separator setBackgroundColor:[HelloStyleKit settingsSeparatorColor]];
+    [separator setBackgroundColor:[HelloStyleKit separatorColor]];
     [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth
                                    | UIViewAutoresizingFlexibleTopMargin];
     [[self contentView] addSubview:separator];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    // update the shadow based on updated bounds, if resized
+    CGRect shadowInset = CGRectInset([self layerFrame], 0.0f, HEMSettingsCellShadowRadius);
+    [[self contentLayer] setShadowPath:[[UIBezierPath bezierPathWithRect:shadowInset] CGPath]];
 }
 
 - (void)roundContentLayerCorners:(UIRectCorner)corners {

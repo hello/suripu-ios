@@ -8,7 +8,7 @@
 
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMonboarding = @"Onboarding";
-static NSString *const _HEManotherPillToBeforeSleep = @"anotherPillToBeforeSleep";
+static NSString *const _HEMalarmToAnotherPill = @"alarmToAnotherPill";
 static NSString *const _HEMbeforeSleeptoRoomCheck = @"beforeSleeptoRoomCheck";
 static NSString *const _HEMdobViewController = @"dobViewController";
 static NSString *const _HEMdone = @"done";
@@ -23,6 +23,7 @@ static NSString *const _HEMmoreInfo = @"moreInfo";
 static NSString *const _HEMnetwork = @"network";
 static NSString *const _HEMnoBleToBirthday = @"noBleToBirthday";
 static NSString *const _HEMpillPair = @"pillPair";
+static NSString *const _HEMpillSetupToColors = @"pillSetupToColors";
 static NSString *const _HEMpushToSenseSetup = @"pushToSenseSetup";
 static NSString *const _HEMroomCheck = @"roomCheck";
 static NSString *const _HEMsecondPillCheck = @"secondPillCheck";
@@ -47,7 +48,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)networkReuseIdentifier { return _HEMnetwork; }
 
 /** Segue Identifiers */
-+(NSString *)anotherPillToBeforeSleepSegueIdentifier { return _HEManotherPillToBeforeSleep; }
++(NSString *)alarmToAnotherPillSegueIdentifier { return _HEMalarmToAnotherPill; }
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier { return _HEMbeforeSleeptoRoomCheck; }
 +(NSString *)doneSegueIdentifier { return _HEMdone; }
 +(NSString *)genderSegueIdentifier { return _HEMgender; }
@@ -57,6 +58,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)locationToPushSegueIdentifier { return _HEMlocationToPush; }
 +(NSString *)moreInfoSegueIdentifier { return _HEMmoreInfo; }
 +(NSString *)noBleToBirthdaySegueIdentifier { return _HEMnoBleToBirthday; }
++(NSString *)pillSetupToColorsSegueIdentifier { return _HEMpillSetupToColors; }
 +(NSString *)pushToSenseSetupSegueIdentifier { return _HEMpushToSenseSetup; }
 +(NSString *)secondPillCheckSegueIdentifier { return _HEMsecondPillCheck; }
 +(NSString *)senseToPillSegueIdentifier { return _HEMsenseToPill; }

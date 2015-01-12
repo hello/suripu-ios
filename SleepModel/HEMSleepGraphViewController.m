@@ -13,10 +13,8 @@
 #import "HEMAppDelegate.h"
 #import "HEMRootViewController.h"
 #import "HEMAudioCache.h"
-#import "HEMEventInfoView.h"
 #import "HEMMainStoryboard.h"
 #import "HEMPaddedRoundedLabel.h"
-#import "HEMPresleepHeaderCollectionReusableView.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphUtils.h"
@@ -30,6 +28,7 @@
 #import "HEMZoomAnimationTransitionDelegate.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 50.f;
+CGFloat const HEMTimelineFooterCellHeight = 50.f;
 
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, FCDynamicPaneViewController, UIGestureRecognizerDelegate>
 
@@ -38,16 +37,18 @@ CGFloat const HEMTimelineHeaderCellHeight = 50.f;
 @property (nonatomic, strong) HEMSleepHistoryViewController* historyViewController;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource* dataSource;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate* animationDelegate;
-@property (nonatomic) UIStatusBarStyle oldBarStyle;
-@property (nonatomic) NSInteger eventIndex;
+@property (nonatomic, strong) NSIndexPath* expandedIndexPath;
+@property (nonatomic, getter=presleepSectionIsExpanded) BOOL presleepExpanded;
 @end
 
 @implementation HEMSleepGraphViewController
 
 static CGFloat const HEMSleepSummaryCellHeight = 350.f;
-static CGFloat const HEMPresleepHeaderCellHeight = 70.f;
-static CGFloat const HEMPresleepItemCellHeight = 68.f;
-static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 30.f;
+static CGFloat const HEMPresleepItemExpandedCellHeight = 196.f;
+static CGFloat const HEMPresleepItemDefaultCellHeight = 134.f;
+static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 40.f;
+static CGFloat const HEMSleepGraphCollectionViewEventTitleOnlyHeight = 106.f;
+static CGFloat const HEMSleepGraphCollectionViewEventMaximumHeight = 184.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMTopItemsConstraintConstant = 10.f;
 static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
@@ -66,7 +67,6 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor whiteColor];
     self.panePanGestureRecognizer.delegate = self;
-    [self.view addVerifyDataTarget:self action:@selector(didTapDataVerifyButton:)];
     [self checkForDateChanges];
 }
 
@@ -81,7 +81,6 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 {
     [super viewWillDisappear:animated];
     self.panePanGestureRecognizer.delegate = nil;
-    [self.view hideEventInfoView];
 }
 
 - (void)viewDidDisappear:(BOOL)animated
@@ -92,24 +91,18 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)viewDidPop
 {
-    [[UIApplication sharedApplication] setStatusBarStyle:self.oldBarStyle];
     [UIView animateWithDuration:0.5f animations:^{
         self.collectionView.contentOffset = CGPointMake(0, 0);
         [self updateTopBarActionsWithState:NO];
     }];
-    self.oldBarStyle = UIStatusBarStyleLightContent;
-    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (void)viewDidPush
 {
     self.panePanGestureRecognizer.delegate = self;
-    self.oldBarStyle = [UIApplication sharedApplication].statusBarStyle;
-    [[UIApplication sharedApplication] setStatusBarStyle:UIStatusBarStyleDefault];
     [UIView animateWithDuration:0.5f animations:^{
         [self updateTopBarActionsWithState:YES];
     }];
-    [self setNeedsStatusBarAppearanceUpdate];
 }
 
 - (void)registerForNotifications {
@@ -142,6 +135,22 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 - (BOOL)shouldHideShareButton
 {
     return ![self isViewPushed] || [self.dataSource.sleepResult.score integerValue] == 0;
+}
+
+- (void)willShowDetailsForInsight:(SENSleepResultSensorInsight *)insight
+{
+    if (![self presleepSectionIsExpanded]) {
+        self.presleepExpanded = YES;
+        [self animateAllCellHeightChanges];
+    }
+}
+
+- (void)willHideInsightDetails
+{
+    if ([self presleepSectionIsExpanded]) {
+        self.presleepExpanded = NO;
+        [self animateAllCellHeightChanges];
+    }
 }
 
 #pragma mark Top cell actions
@@ -199,28 +208,43 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 - (void)loadDataSourceForDate:(NSDate*)date
 {
     self.dateForNightOfSleep = date;
+    self.expandedIndexPath = nil;
+    self.presleepExpanded = NO;
     self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
                                                                                   sleepDate:date];
     self.collectionView.dataSource = self.dataSource;
     [self.collectionView reloadData];
 }
 
-#pragma mark Event Info Popup
+#pragma mark Event Info
 
 - (void)didTapEventButton:(UIButton*)sender
 {
-    NSIndexPath* eventIndexPath = [self indexPathForEventCellWithSubview:sender];
-    SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:eventIndexPath];
-    self.eventIndex = eventIndexPath.row;
-    [self.view positionEventInfoViewRelativeToView:sender
-                                       withSegment:segment
-                                 totalSegmentCount:[self.dataSource numberOfSleepSegments]];
+    NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
+    HEMSleepEventCollectionViewCell* cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+    BOOL shouldExpand = ![self.expandedIndexPath isEqual:indexPath];
+    if (shouldExpand) {
+        if (self.expandedIndexPath) {
+            HEMSleepEventCollectionViewCell* oldCell = (id)[self.collectionView cellForItemAtIndexPath:self.expandedIndexPath];
+            [oldCell useExpandedLayout:NO animated:YES];
+        }
+        self.expandedIndexPath = indexPath;
+    } else {
+        self.expandedIndexPath = nil;
+    }
+    [cell useExpandedLayout:shouldExpand animated:YES];
+    [self animateAllCellHeightChanges];
+    CGRect cellRect = [self.collectionView convertRect:cell.frame toView:self.collectionView.superview];
+    if (shouldExpand && !CGRectContainsRect(self.collectionView.frame, cellRect))
+            [self.collectionView scrollToItemAtIndexPath:indexPath
+                                        atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                                animated:YES];
 }
 
 - (void)didTapDataVerifyButton:(UIButton*)sender
 {
-    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:self.eventIndex
-                                                 inSection:HEMSleepGraphCollectionViewSegmentSection];
+
+    NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
     [HEMSleepGraphUtils presentTimePickerForDate:self.dateForNightOfSleep
                                          segment:[self.dataSource sleepSegmentForIndexPath:indexPath]
                                   fromController:self];
@@ -263,13 +287,6 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     return fabsf(translation.y) > fabsf(translation.x);
 }
 
-#pragma mark UIScrollViewDelegate
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
-{
-    [self.view hideEventInfoView];
-}
-
 #pragma mark UICollectionViewDelegate
 
 - (void)reloadData
@@ -282,7 +299,6 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)configureCollectionView
 {
-    self.view.collectionView = self.collectionView;
     self.collectionView.backgroundColor = [UIColor whiteColor];
     self.collectionView.delegate = self;
 }
@@ -303,7 +319,20 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     return NO;
 }
 
+- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.expandedIndexPath isEqual:indexPath]) {
+        HEMSleepEventCollectionViewCell* eventCell = (id)cell;
+        [eventCell useExpandedLayout:YES animated:NO];
+    }
+}
+
 #pragma mark UICollectionViewDelegateFlowLayout
+
+- (void)animateAllCellHeightChanges
+{
+    [self.collectionView setCollectionViewLayout:[UICollectionViewFlowLayout new] animated:YES];
+}
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath*)indexPath
@@ -314,16 +343,23 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     case HEMSleepGraphCollectionViewSummarySection:
         return CGSizeMake(width, hasSegments ? HEMSleepSummaryCellHeight : CGRectGetHeight(self.view.bounds));
 
-    case HEMSleepGraphCollectionViewPresleepSection:
-        return CGSizeMake(width, HEMPresleepItemCellHeight);
-
+    case HEMSleepGraphCollectionViewPresleepSection: {
+        return CGSizeMake(width, [self presleepSectionIsExpanded]
+                          ? HEMPresleepItemExpandedCellHeight : HEMPresleepItemDefaultCellHeight);
+    }
     case HEMSleepGraphCollectionViewSegmentSection: {
         SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-        CGFloat durationHeight = ([segment.duration doubleValue] / 3600) * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
+        CGFloat durationHeight = [self heightForCellWithSegment:segment];
         if ([self.dataSource segmentForSleepExistsAtIndexPath:indexPath]) {
             return CGSizeMake(width, ceilf(durationHeight));
-        }
-        else {
+        } else if ([self.expandedIndexPath isEqual:indexPath]) {
+            if (segment.message.length == 0
+                && ![segment.eventType isEqualToString:HEMSleepEventTypeWakeUp]
+                && !segment.sound) {
+                return CGSizeMake(width, HEMSleepGraphCollectionViewEventTitleOnlyHeight);
+            }
+            return CGSizeMake(width, HEMSleepGraphCollectionViewEventMaximumHeight);
+        } else {
             return CGSizeMake(width, MAX(durationHeight, HEMSleepGraphCollectionViewEventMinimumHeight));
         }
     }
@@ -333,21 +369,30 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     }
 }
 
+- (CGFloat)heightForCellWithSegment:(SENSleepResultSegment*)segment
+{
+    return ([segment.duration doubleValue] / 3600) * (CGRectGetHeight([UIScreen mainScreen].bounds)
+                                                      / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
+}
+
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
 {
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
-    if (!hasSegments)
+    if (!hasSegments || section != HEMSleepGraphCollectionViewSegmentSection)
         return CGSizeZero;
 
-    switch (section) {
-    case HEMSleepGraphCollectionViewPresleepSection:
-        return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMPresleepHeaderCellHeight);
-    case HEMSleepGraphCollectionViewSegmentSection:
-        return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMTimelineHeaderCellHeight);
-    default:
+    return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMTimelineHeaderCellHeight);
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
+{
+    BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
+    if (!hasSegments || section != HEMSleepGraphCollectionViewSegmentSection)
         return CGSizeZero;
-    }
+
+    return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMTimelineFooterCellHeight);
 }
 
 - (CGFloat)collectionView:(UICollectionView*)collectionView

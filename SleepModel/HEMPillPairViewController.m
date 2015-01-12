@@ -249,8 +249,10 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
         }];
         
         [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
-            ledSet = YES;
-            finish();
+            [[weakSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+                ledSet = YES;
+                finish();
+            }];
         }];
     }];
 }

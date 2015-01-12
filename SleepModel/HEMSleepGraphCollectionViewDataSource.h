@@ -5,10 +5,6 @@
 @class HEMSleepSummaryCollectionViewCell;
 
 extern NSString* const HEMSleepEventTypeWakeUp;
-extern NSString* const HEMSleepEventTypeLight;
-extern NSString* const HEMSleepEventTypeMotion;
-extern NSString* const HEMSleepEventTypeNoise;
-extern NSString* const HEMSleepEventTypeFallAsleep;
 
 @protocol HEMSleepGraphActionDelegate <NSObject>
 

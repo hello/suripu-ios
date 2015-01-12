@@ -36,7 +36,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [SENAnalytics track:kHEMAnalyticsEventOnBStart];
 }
 

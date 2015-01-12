@@ -1,9 +1,10 @@
 
 #import <UIKit/UIKit.h>
 
-extern CGFloat HEMLinedCollectionViewCellLineOffset;
-extern CGFloat HEMLinedCollectionViewCellLineWidth;
-extern CGFloat HEMSleepSegmentMinimumFillWidth;
+extern CGFloat const HEMLinedCollectionViewCellLineOffset;
+extern CGFloat const HEMLinedCollectionViewCellLineWidth;
+extern CGFloat const HEMSleepSegmentMinimumFillWidth;
+extern CGFloat const HEMSleepLineWidth;
 
 @interface HEMSleepSegmentCollectionViewCell : UICollectionViewCell
 

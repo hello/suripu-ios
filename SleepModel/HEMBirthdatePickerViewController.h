@@ -1,6 +1,6 @@
 
 #import <UIKit/UIKit.h>
-#import "HEMBaseController.h"
+#import "HEMOnboardingController.h"
 
 @class HEMBirthdatePickerViewController;
 
@@ -14,7 +14,7 @@
 
 @end
 
-@interface HEMBirthdatePickerViewController : HEMBaseController
+@interface HEMBirthdatePickerViewController : HEMOnboardingController
 
 @property (nonatomic, assign) id <HEMBirthdatePickerDelegate> delegate;
 @property (nonatomic, assign) NSInteger initialMonth;

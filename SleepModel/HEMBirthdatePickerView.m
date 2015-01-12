@@ -6,10 +6,12 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMBirthdatePickerView.h"
 #import "HelloStyleKit.h"
 
-CGFloat const kHEMBirthdateValueHeight = 60.0f;
+CGFloat const kHEMBirthdateValueHeight = 50.0f;
 
 static CGFloat const kHEMBirthdatePickerWidth = 270.0f;
 static CGFloat const kHEMBirthdatePickerHeight = 300.0f;
@@ -76,7 +78,7 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
     [[self monthFormatter] setLocale:[NSLocale currentLocale]];
     
     [self setPickerTextColor:[UIColor colorWithWhite:56.0f/255.0f alpha:1.0f]];
-    [self setPickerTextFont:[UIFont fontWithName:@"HelveticaNeue-Medium" size:17]];
+    [self setPickerTextFont:[UIFont birthdatePickerTextFont]];
     
     [self setMonthTableView:[self componentTableView]];
     [self addSubview:[self monthTableView]];
@@ -161,16 +163,17 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
     CGContextSetStrokeColorWithColor(context, [[HelloStyleKit senseBlueColor] CGColor]);
     CGContextSetLineWidth(context, lineWidth);
     
-    CGFloat padding = 8.0f;
+    CGFloat padding = 10.0f;
+    CGFloat sideInset = 12.0f;
     CGFloat y = CGRectGetMinY([[self botTransparentView] frame]) - lineWidth;
-    CGContextMoveToPoint(context, 0.0f, y);
+    CGContextMoveToPoint(context, sideInset, y);
     CGContextAddLineToPoint(context, CGRectGetMaxX([[self monthTableView] frame]) - padding, y);
     
     CGContextMoveToPoint(context, CGRectGetMinX([[self dayTableView] frame]), y);
     CGContextAddLineToPoint(context, CGRectGetMaxX([[self dayTableView] frame]), y);
     
     CGContextMoveToPoint(context, CGRectGetMinX([[self yearTableView] frame]) + padding, y);
-    CGContextAddLineToPoint(context, CGRectGetMaxX([[self yearTableView] frame]), y);
+    CGContextAddLineToPoint(context, CGRectGetMaxX([[self yearTableView] frame])-sideInset, y);
     
     CGContextStrokePath(context);
     CGContextRestoreGState(context);
@@ -317,6 +320,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         }
     }
     
+    [cell setIndentationLevel:-1];
     [[cell textLabel] setText:title];
     [[cell textLabel] setTextAlignment:alignment];
     [[cell textLabel] setFont:[self pickerTextFont]];

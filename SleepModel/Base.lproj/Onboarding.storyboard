@@ -476,32 +476,28 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="When is your birthday?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="znD-8e-Xes">
-                                <rect key="frame" x="28" y="24" width="544" height="34"/>
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="9bJ-7x-vuM"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="26"/>
-                                <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="This information is used to provide personalized sleep insights" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hpH-00-fqv">
-                                <rect key="frame" x="28" y="68" width="544" height="40"/>
+                                <rect key="frame" x="20" y="68" width="560" height="40"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7P9-ib-JRI" customClass="HEMBirthdatePickerView">
-                                <rect key="frame" x="20" y="220" width="560" height="200"/>
+                            <view clipsSubviews="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7P9-ib-JRI" customClass="HEMBirthdatePickerView">
+                                <rect key="frame" x="8" y="164" width="584" height="292"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="qlT-A0-Sum"/>
-                                </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="h1g-YQ-7bC" customClass="HEMActionButton">
-                                <rect key="frame" x="20" y="496" width="560" height="40"/>
+                                <rect key="frame" x="20" y="486" width="560" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="6fN-Mb-Rff"/>
+                                    <constraint firstAttribute="height" constant="50" id="6fN-Mb-Rff"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
                                 <state key="normal" title="Next">
@@ -533,27 +529,25 @@
                         <constraints>
                             <constraint firstItem="h1g-YQ-7bC" firstAttribute="leading" secondItem="234-Uu-w8v" secondAttribute="leadingMargin" constant="4" id="0Rc-Ma-3lc"/>
                             <constraint firstAttribute="centerX" secondItem="h1g-YQ-7bC" secondAttribute="centerX" constant="-0.5" id="2Ah-nm-PZ1"/>
-                            <constraint firstAttribute="centerY" secondItem="7P9-ib-JRI" secondAttribute="centerY" constant="-20" id="2hK-zx-inL"/>
+                            <constraint firstItem="7P9-ib-JRI" firstAttribute="bottom" secondItem="h1g-YQ-7bC" secondAttribute="top" constant="-30" id="2Nk-wW-Lup"/>
+                            <constraint firstItem="7P9-ib-JRI" firstAttribute="top" secondItem="hpH-00-fqv" secondAttribute="bottom" constant="56" id="3Tp-kY-cTI"/>
                             <constraint firstItem="hpH-00-fqv" firstAttribute="top" secondItem="znD-8e-Xes" secondAttribute="bottom" constant="10" id="7B6-Iy-ufJ"/>
-                            <constraint firstAttribute="centerX" secondItem="7P9-ib-JRI" secondAttribute="centerX" id="8MD-I2-8Us"/>
                             <constraint firstAttribute="centerX" secondItem="v1o-Yc-LWQ" secondAttribute="centerX" constant="0.5" id="Ok6-hB-4YG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="h1g-YQ-7bC" secondAttribute="trailing" constant="4" id="U5s-2x-nPX"/>
                             <constraint firstItem="GdX-Ok-5df" firstAttribute="top" secondItem="v1o-Yc-LWQ" secondAttribute="bottom" constant="20" id="UI6-nu-rbo"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="hpH-00-fqv" secondAttribute="trailing" constant="12" id="Zdl-Yt-JTs"/>
-                            <constraint firstItem="znD-8e-Xes" firstAttribute="leading" secondItem="234-Uu-w8v" secondAttribute="leadingMargin" constant="12" id="Zuu-tO-RxQ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="7P9-ib-JRI" secondAttribute="trailing" constant="4" id="cb8-e8-eql"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hpH-00-fqv" secondAttribute="trailing" constant="4" id="Zdl-Yt-JTs"/>
+                            <constraint firstItem="znD-8e-Xes" firstAttribute="leading" secondItem="234-Uu-w8v" secondAttribute="leadingMargin" constant="4" id="Zuu-tO-RxQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7P9-ib-JRI" secondAttribute="trailing" constant="-8" id="cb8-e8-eql"/>
                             <constraint firstItem="GdX-Ok-5df" firstAttribute="top" secondItem="h1g-YQ-7bC" secondAttribute="bottom" constant="64" id="gef-Wm-GJ8"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="znD-8e-Xes" secondAttribute="trailing" constant="12" id="mjn-bc-0S8"/>
-                            <constraint firstItem="7P9-ib-JRI" firstAttribute="leading" secondItem="234-Uu-w8v" secondAttribute="leadingMargin" constant="4" id="mpK-ot-Ofq"/>
-                            <constraint firstItem="hpH-00-fqv" firstAttribute="leading" secondItem="234-Uu-w8v" secondAttribute="leadingMargin" constant="12" id="qRn-A9-czm"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="znD-8e-Xes" secondAttribute="trailing" constant="4" id="mjn-bc-0S8"/>
+                            <constraint firstItem="7P9-ib-JRI" firstAttribute="leading" secondItem="234-Uu-w8v" secondAttribute="leadingMargin" constant="-8" id="mpK-ot-Ofq"/>
+                            <constraint firstItem="hpH-00-fqv" firstAttribute="leading" secondItem="234-Uu-w8v" secondAttribute="leadingMargin" constant="4" id="qRn-A9-czm"/>
                             <constraint firstItem="znD-8e-Xes" firstAttribute="top" secondItem="CiX-HD-SQL" secondAttribute="bottom" constant="4" id="rJ6-Qb-ccS"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kZr-Gj-zOB"/>
                     <connections>
                         <outlet property="dobPicker" destination="7P9-ib-JRI" id="AxA-0d-3ne"/>
-                        <outlet property="dobPickerCenterYConstraint" destination="2hK-zx-inL" id="1eH-07-9ms"/>
-                        <outlet property="dobPickerHeightConstraint" destination="qlT-A0-Sum" id="WWS-f8-kzJ"/>
                         <outlet property="doneButton" destination="h1g-YQ-7bC" id="zAk-SN-Lfx"/>
                         <outlet property="skipButton" destination="v1o-Yc-LWQ" id="eGj-za-SdX"/>
                         <outlet property="subtitleLabel" destination="hpH-00-fqv" id="b0q-mX-xyq"/>
@@ -1012,7 +1006,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="fc9-7S-Ult" kind="push" id="BiI-h4-9Cj"/>
+                                    <action selector="next:" destination="4s2-Gt-ovZ" eventType="touchUpInside" id="VjE-Z2-HDO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gRL-Qh-1Rv">
@@ -1058,6 +1052,7 @@
                         <outlet property="imageTopConstraint" destination="W9X-ou-tAc" id="l2e-IK-aCs"/>
                         <outlet property="titleLabel" destination="ded-Ea-3CR" id="VPe-Cs-8q2"/>
                         <outlet property="view" destination="lwn-in-ftH" id="5W8-Rh-obp"/>
+                        <segue destination="DIj-70-bYO" kind="push" identifier="pillSetupToColors" id="gUR-KW-V2G"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z94-uI-D3y" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1152,12 +1147,11 @@ You can always do this later by visiting Settings.</string>
                         <outlet property="subtitleLabel" destination="iMZ-p6-gA8" id="TJj-Sz-zYw"/>
                         <outlet property="titleLabel" destination="eDs-8j-Vd9" id="5lJ-TI-eYd"/>
                         <segue destination="Ibh-UM-msk" kind="push" identifier="getApp" id="oeH-Et-htw"/>
-                        <segue destination="DIj-70-bYO" kind="push" identifier="anotherPillToBeforeSleep" id="qAo-NZ-4n9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ybc-rT-E02" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12437" y="923"/>
+            <point key="canvasLocation" x="15005" y="922"/>
         </scene>
         <!--Pill Pair View Controller-->
         <scene sceneID="zKq-xs-xPt">
@@ -1315,7 +1309,7 @@ You can always do this later by visiting Settings.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g3P-F6-Zsf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13251" y="923"/>
+            <point key="canvasLocation" x="12480" y="922"/>
         </scene>
         <!--Onboard Alarm View Controller-->
         <scene sceneID="rm2-FM-ynv">
@@ -1398,11 +1392,12 @@ You can always do this later by visiting Settings.</string>
                         <outlet property="buttonContainer" destination="chY-AJ-Mza" id="ptZ-8l-Dfe"/>
                         <outlet property="contentView" destination="JPw-yP-yqX" id="P9D-yj-TDT"/>
                         <outlet property="view" destination="dhI-dC-nnE" id="sxj-U6-bqo"/>
+                        <segue destination="fc9-7S-Ult" kind="push" identifier="alarmToAnotherPill" id="eyP-2h-xaH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxo-YG-lyE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14817" y="922"/>
+            <point key="canvasLocation" x="14173" y="922"/>
         </scene>
         <!--Room Check View Controller-->
         <scene sceneID="XHB-1W-ISz">
@@ -1541,7 +1536,7 @@ You can always do this later by visiting Settings.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sWL-6c-EWF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14034" y="922"/>
+            <point key="canvasLocation" x="13322" y="922"/>
         </scene>
         <!--Gender View Controller-->
         <scene sceneID="s4K-5F-Rau">
@@ -2606,7 +2601,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="DIj-70-bYO" kind="push" id="8ZE-B6-zEc"/>
+                                    <action selector="finish:" destination="Ibh-UM-msk" eventType="touchUpInside" id="ROM-3N-sVX"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -2630,7 +2625,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4BU-cG-ggd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12437" y="1754"/>
+            <point key="canvasLocation" x="15005" y="1727"/>
         </scene>
     </scenes>
     <resources>
@@ -2647,7 +2642,6 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     <inferredMetricsTieBreakers>
         <segue reference="ZOJ-Sh-Dzx"/>
         <segue reference="DAu-sO-H4V"/>
-        <segue reference="qAo-NZ-4n9"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

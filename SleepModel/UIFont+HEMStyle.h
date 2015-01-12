@@ -119,6 +119,16 @@
 + (UIFont *)timelineMessageBoldFont;
 
 /**
+ *  Font for timestamps on events in the timeline
+ */
++ (UIFont *)timelineEventTimestampFont;
+
+/**
+ *  Bold font for timestamps on important events in the timeline
+ */
++ (UIFont *)timelineEventTimestampBoldFont;
+
+/**
  *  Font to display the answers for questions
  */
 + (UIFont *)questionAnswerFont;
@@ -142,6 +152,11 @@
  * Font to be used in a UIPIckerView that has 1 component
  */
 + (UIFont *)singleComponentPickerViewFont;
+
+/**
+ * Font to be used in a HEMBirthdatePickerView
+ */
++ (UIFont *)birthdatePickerTextFont;
 
 /**
  * Font to be used to display the in-app browser title
@@ -214,6 +229,11 @@
  * Font used to display a warning message for the device in a collection view cell
  */
 + (UIFont*)deviceCellWarningMessageFont;
+
+/**
+ * Font used for the placeholder text within an UITextField
+ */
++ (UIFont *)textfieldPlaceholderFont;
 
 #pragma mark - Onboarding
 

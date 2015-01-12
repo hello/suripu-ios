@@ -30,7 +30,7 @@
     UIColor* sleepScoreTextColor = [UIColor colorWithRed: 0.3 green: 0.3 blue: 0.3 alpha: 1];
 
     //// Variable Declarations
-    UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? HelloStyleKit.warningSensorColor : (sleepScore < 80 ? HelloStyleKit.alertSensorColor : HelloStyleKit.highSleepScoreColor)) : sleepScoreNoValueColor;
+    UIColor* sleepScoreColor = sleepScore > 0 ? (sleepScore < 45 ? [HelloStyleKit alertSensorColor] : (sleepScore < 80 ? [HelloStyleKit warningSensorColor] : [HelloStyleKit idealSensorColor])) : sleepScoreNoValueColor;
     CGFloat graphPercentageAngle = sleepScore > 0 ? (sleepScore < 100 ? 360 - sleepScore * 0.01 * 360 : 0.01) : 0.01;
     NSString* sleepScoreText = sleepScore > 0 ? (sleepScore <= 100 ? [NSString stringWithFormat: @"%ld", (NSInteger)round(sleepScore)] : @"100") : @"";
     CGFloat sleepScoreTextSize = sleepScoreHeight * 0.35;

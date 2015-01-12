@@ -16,6 +16,7 @@
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmViewController.h"
+#import "HEMOnboardingStoryboard.h"
 
 @interface HEMOnboardAlarmViewController() <HEMAlarmControllerDelegate>
 
@@ -63,8 +64,13 @@
     [containingView addSubview:snapView];
 
     [self dismissViewControllerAnimated:NO completion:^{
-        [HEMOnboardingUtils finisOnboardinghWithMessageFrom:self];
+        [self next];
     }];
+}
+
+- (void)next {
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard alarmToAnotherPillSegueIdentifier]
+                              sender:self];
 }
 
 #pragma mark - Actions
@@ -83,7 +89,7 @@
 }
 
 - (IBAction)setAlarmLater:(id)sender {
-    [HEMOnboardingUtils finisOnboardinghWithMessageFrom:self];
+    [self next];
 }
 
 #pragma mark - HEMAlarmControllerDelegate

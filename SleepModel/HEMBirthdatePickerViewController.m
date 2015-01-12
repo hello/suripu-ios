@@ -36,11 +36,11 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setLeftBarButtonItem:nil];
     
+    NSString* msg = NSLocalizedString(@"user.info.accessibility.birthdate-title", nil);
+    [[self titleLabel] setAccessibilityLabel:msg];
+
     [self loadAccount:nil]; // if does not yet exist, in case user returns to here
-    [[self titleLabel] setAccessibilityLabel:NSLocalizedString(@"user.info.accessibility.birthdate-title", nil)];
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     
     if ([self delegate] != nil) {
@@ -49,6 +49,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
         [[self doneButton] setTitle:done forState:UIControlStateNormal];
         [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
     } else {
+        [self enableBackButton:NO];
         // start looking for a sense right away here.  We want this step here b/c
         // this is one of the checkpoints and if user lands back here, this optimizatin
         // will also apply.  If there is a delegate, we do not want to pre scan

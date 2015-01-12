@@ -126,6 +126,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             [self setDisconnectObserverId:nil];
         }
         [[self manager] disconnectFromSense];
+        [self setManager:nil];
     }
 }
 
@@ -172,6 +173,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     DDLogVerbose(@"scanning for Sense timed out, oh no!");
     [self setTimedOut:YES];
     [SENSenseManager stopScan];
+    [self setManager:nil];
     [self stopActivityWithMessage:nil success:NO completion:^{
         NSString* msg = NSLocalizedString(@"pairing.error.timed-out", nil);
         [self showErrorMessage:msg];
@@ -443,19 +445,18 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 #pragma mark - Errors
 
 - (void)showErrorMessage:(NSString*)message {
+    __weak typeof(self) weakSelf = self;
+    void(^show)(id response, NSError* error) = ^(__unused id response, __unused NSError* error){
+        [weakSelf showMessageDialog:message
+                              title:NSLocalizedString(@"pairing.failed.title", nil)
+                              image:nil
+                           withHelp:YES];
+    };
+    
     if ([self manager] == nil) {
-        [self showMessageDialog:message
-                          title:NSLocalizedString(@"pairing.failed.title", nil)
-                          image:nil
-                       withHelp:YES];
+        show(nil, nil);
     } else {
-        __weak typeof(self) weakSelf = self;
-        [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
-            [weakSelf showMessageDialog:message
-                                  title:NSLocalizedString(@"pairing.failed.title", nil)
-                                  image:nil
-                               withHelp:YES];
-        }];
+        [[self manager] setLED:SENSenseLEDStatePair completion:show];
     }
 
 }

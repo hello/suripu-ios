@@ -292,20 +292,15 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 - (void)showActivityWithText:(NSString*)text completion:(void(^)(void))completion {
     [self enableControls:NO];
     
-    __weak typeof(self) weakSelf = self;
+    if ([self activityView] == nil) {
+        [self setActivityView:[[HEMActivityCoverView alloc] init]];
+    }
     
-    [[self manager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        if ([strongSelf activityView] == nil) {
-            [strongSelf setActivityView:[[HEMActivityCoverView alloc] init]];
-        }
-        
-        UIView* viewToAttach = [[strongSelf navigationController] view];
-        [[strongSelf activityView] showInView:viewToAttach
-                                     withText:text
-                                     activity:YES
-                                   completion:completion];
+    UIView* viewToAttach = [[self navigationController] view];
+    [[self activityView] showInView:viewToAttach withText:text activity:YES completion:^{
+        [[self manager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
+            if (completion) completion();
+        }];
     }];
 }
 

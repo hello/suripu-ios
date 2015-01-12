@@ -52,7 +52,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 
 - (NSAttributedString*)attributedLongLastSeenMessage {
     NSString* format = NSLocalizedString(@"settings.pill.warning.last-seen-format", nil);
-    NSString* lastSeen = [[[[SENServiceDevice sharedService] senseInfo] lastSeen] timeAgo];
+    NSString* lastSeen = [[[[SENServiceDevice sharedService] pillInfo] lastSeen] timeAgo];
     NSArray* args = @[[self redMessage:lastSeen ?: NSLocalizedString(@"settings.device.warning.last-seen-generic", nil)]];
     
     NSMutableAttributedString* attrWarning =

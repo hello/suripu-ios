@@ -21,10 +21,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *mapImageView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *locationButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
-@property (nonatomic, copy) NSString* locationTxId;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *locateButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *mapHeightConstraint;
+
+@property (nonatomic, copy) NSString* locationTxId;
 
 @end
 
@@ -55,12 +54,12 @@
 
 - (void)showActivity {
     [[self skipButton] setEnabled:NO];
-    [[self locationButton] showActivityWithWidthConstraint:[self locateButtonWidthConstraint]];
+    [[self locationButton] setEnabled:NO];
 }
 
 - (void)stopActivity {
     [[self skipButton] setEnabled:YES];
-    [[self locationButton] stopActivity];
+    [[self locationButton] setEnabled:YES];
 }
 
 #pragma mark - Actions

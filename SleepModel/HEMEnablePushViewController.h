@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMOnboardingController.h"
 
-@interface HEMEnablePushViewController : UIViewController
+@interface HEMEnablePushViewController : HEMOnboardingController
 
 @end

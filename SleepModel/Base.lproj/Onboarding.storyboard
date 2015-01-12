@@ -1923,7 +1923,7 @@ You can always do this later by visiting Settings.</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable notifications" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Go7-Z7-kmw">
-                                <rect key="frame" x="28" y="28" width="544" height="34"/>
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="eFQ-oR-ERS"/>
                                 </constraints>
@@ -1932,20 +1932,19 @@ You can always do this later by visiting Settings.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxR-ry-GIM">
-                                <rect key="frame" x="28" y="86" width="544" height="41"/>
+                                <rect key="frame" x="20" y="68" width="560" height="41"/>
                                 <string key="text">Sense will occasionally notify you with important messages about your sleep, bedroom and deliver you your Sleep Score each morning.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="je6-JT-9YZ" customClass="HEMActionButton">
-                                <rect key="frame" x="190" y="486" width="220" height="40"/>
+                                <rect key="frame" x="20" y="486" width="560" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="Zhc-cc-6Gl"/>
-                                    <constraint firstAttribute="width" constant="220" id="svl-Km-3kd"/>
+                                    <constraint firstAttribute="height" constant="50" id="Zhc-cc-6Gl"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                <state key="normal" title="Enable Notifications">
+                                <state key="normal" title="ALLOW NOTIFICATIONS">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1954,7 +1953,7 @@ You can always do this later by visiting Settings.</string>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ia-GF-Swk">
-                                <rect key="frame" x="240" y="542" width="119" height="28"/>
+                                <rect key="frame" x="240" y="552" width="119" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="7NR-fL-ivH"/>
                                     <constraint firstAttribute="width" constant="119" id="Ovf-IN-Xab"/>
@@ -1972,16 +1971,31 @@ You can always do this later by visiting Settings.</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Go7-Z7-kmw" firstAttribute="leading" secondItem="Znx-od-CyB" secondAttribute="leadingMargin" constant="12" id="23J-QS-psQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Go7-Z7-kmw" secondAttribute="trailing" constant="4" id="5iy-Om-dqh"/>
+                            <constraint firstItem="Go7-Z7-kmw" firstAttribute="leading" secondItem="Znx-od-CyB" secondAttribute="leadingMargin" constant="4" id="7Po-tv-ajw"/>
                             <constraint firstAttribute="centerX" secondItem="9ia-GF-Swk" secondAttribute="centerX" constant="0.5" id="GCD-ax-FCl"/>
-                            <constraint firstItem="PKh-qW-k4b" firstAttribute="top" secondItem="9ia-GF-Swk" secondAttribute="bottom" constant="30" id="KJq-ji-N78"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="je6-JT-9YZ" secondAttribute="trailing" constant="4" id="Gst-YJ-a8H"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cxR-ry-GIM" secondAttribute="trailing" constant="4" id="HKo-ef-yJM"/>
+                            <constraint firstItem="PKh-qW-k4b" firstAttribute="top" secondItem="9ia-GF-Swk" secondAttribute="bottom" constant="20" id="KJq-ji-N78"/>
                             <constraint firstItem="9ia-GF-Swk" firstAttribute="top" secondItem="je6-JT-9YZ" secondAttribute="bottom" constant="16" id="NbQ-dq-eMt"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Go7-Z7-kmw" secondAttribute="trailing" constant="12" id="Rzq-8b-ZA2"/>
+                            <constraint firstItem="je6-JT-9YZ" firstAttribute="leading" secondItem="Znx-od-CyB" secondAttribute="leadingMargin" constant="4" id="ejN-WE-E3m"/>
                             <constraint firstItem="cxR-ry-GIM" firstAttribute="leading" secondItem="Znx-od-CyB" secondAttribute="leadingMargin" constant="12" id="exI-kE-8og"/>
                             <constraint firstAttribute="centerX" secondItem="je6-JT-9YZ" secondAttribute="centerX" id="khU-SD-BBR"/>
-                            <constraint firstItem="Go7-Z7-kmw" firstAttribute="bottom" secondItem="cxR-ry-GIM" secondAttribute="top" constant="-24" id="nPu-Ti-TQt"/>
+                            <constraint firstItem="Go7-Z7-kmw" firstAttribute="bottom" secondItem="cxR-ry-GIM" secondAttribute="top" constant="-10" id="nPu-Ti-TQt"/>
+                            <constraint firstItem="cxR-ry-GIM" firstAttribute="leading" secondItem="Znx-od-CyB" secondAttribute="leadingMargin" constant="4" id="wGH-uH-0oI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cxR-ry-GIM" secondAttribute="trailing" constant="12" id="wpB-E2-E5U"/>
-                            <constraint firstItem="Go7-Z7-kmw" firstAttribute="top" secondItem="Ugf-82-uRd" secondAttribute="bottom" constant="8" id="ybY-rO-ulf"/>
+                            <constraint firstItem="Go7-Z7-kmw" firstAttribute="top" secondItem="Ugf-82-uRd" secondAttribute="bottom" constant="4" id="ybY-rO-ulf"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="23J-QS-psQ"/>
+                                <exclude reference="Rzq-8b-ZA2"/>
+                                <exclude reference="exI-kE-8og"/>
+                                <exclude reference="wpB-E2-E5U"/>
+                                <exclude reference="khU-SD-BBR"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="yM2-3E-fzs"/>
                     <connections>

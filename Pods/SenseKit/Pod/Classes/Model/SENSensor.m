@@ -40,6 +40,8 @@ static NSString* const SENSensorUnitKey = @"unit";
 static NSString* const SENSensorUnitCentigradeSymbol = @"c";
 static NSString* const SENSensorUnitAQISymbol = @"AQI";
 static NSString* const SENSensorUnitPercentSymbol = @"%";
+static NSString* const SENSensorUnitLuxSymbol = @"lux";
+static NSString* const SENSensorUnitDecibelSymbol = @"db";
 static NSString* const SENSensorConditionIdealSymbol = @"IDEAL";
 static NSString* const SENSensorConditionAlertSymbol = @"ALERT";
 static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
@@ -125,6 +127,12 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
 
     case SENSensorUnitPercent:
         return @"measurement.percentage.";
+
+    case SENSensorUnitDecibel:
+        return @"measurement.sound.";
+
+    case SENSensorUnitLux:
+        return @"measurement.light.";
 
     default:
         return nil;
@@ -227,6 +235,10 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
             return SENSensorUnitAQI;
         else if ([value isEqualToString:SENSensorUnitPercentSymbol])
             return SENSensorUnitPercent;
+        else if ([value isEqualToString:SENSensorUnitLuxSymbol])
+            return SENSensorUnitLux;
+        else if ([value isEqualToString:SENSensorUnitDecibelSymbol])
+            return SENSensorUnitDecibel;
     }
     else if ([value respondsToSelector:@selector(integerValue)]) {
         return [value integerValue];

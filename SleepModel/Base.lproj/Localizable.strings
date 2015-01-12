@@ -335,6 +335,8 @@
 "measurement.percentage.unit" = "%";
 "measurement.or" = "or";
 "measurement.particle.unit" = "";
+"measurement.light.unit" = "lx";
+"measurement.sound.unit" = "db";
 "measurement.cm.unit" = "cm";
 "measurement.kg.unit" = "kg";
 "measurement.lb.unit" = "lb";

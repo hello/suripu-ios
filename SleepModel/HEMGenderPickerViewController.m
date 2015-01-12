@@ -9,23 +9,21 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingUtils.h"
-
-static CGFloat const kHEMGenderPickerDeselectedAlpha = 0.5f;
-static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
+#import "HelloStyleKit.h"
 
 @interface HEMGenderPickerViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-@property (weak, nonatomic) IBOutlet UIButton* femaleIconButton;
-@property (weak, nonatomic) IBOutlet UIButton* femaleTitleButton;
-@property (weak, nonatomic) IBOutlet UIButton* maleIconButton;
-@property (weak, nonatomic) IBOutlet UIButton* maleTitleButton;
-@property (weak, nonatomic) IBOutlet UIView* lineView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *fIconButtonBotConstraint;
+@property (weak, nonatomic) IBOutlet UIView *selectorContainer;
+@property (weak, nonatomic) IBOutlet UIView *selectorDivider;
+@property (weak, nonatomic) IBOutlet UIButton *femaleSelectorButton;
+@property (weak, nonatomic) IBOutlet UIButton *maleSelectorButton;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
+@property (strong, nonatomic) UIColor* selectedColor;
+@property (strong, nonatomic) UIColor* selectedBorderColor;
 @property (assign, nonatomic) SENAccountGender selectedGender;
 
 @end
@@ -34,9 +32,34 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
+
+    [self setSelectedColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.05f]];
+    [self setSelectedBorderColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.4f]];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
+    [self configureSelectors];
+    
+    if ([self delegate] != nil) {
+        NSString* title = NSLocalizedString(@"status.success", nil);
+        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
+        [[self doneButton] setTitle:title forState:UIControlStateNormal];
+        [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
+    } else {
+        [self enableBackButton:NO];
+        [SENAnalytics track:kHEMAnalyticsEventOnBGender];
+    }
+}
+
+- (void)configureSelectors {
+    [[self selectorDivider] setBackgroundColor:[HelloStyleKit separatorColor]];
+    [[[self selectorContainer] layer] setBorderWidth:1.0f];
+    [[[self selectorContainer] layer] setBorderColor:[[HelloStyleKit separatorColor] CGColor]];
+    
+    [[[self femaleSelectorButton] layer] setBorderWidth:0.0f];
+    [[[self femaleSelectorButton] layer] setBorderColor:[[self selectedBorderColor] CGColor]];
+    [[[self femaleSelectorButton] titleLabel] setFont:[UIFont genderButtonTitleFont]];
+    [[[self maleSelectorButton] layer] setBorderWidth:0.0f];
+    [[[self maleSelectorButton] layer] setBorderColor:[[self selectedBorderColor] CGColor]];
+    [[[self maleSelectorButton] titleLabel] setFont:[UIFont genderButtonTitleFont]];
     
     switch ([self defaultGender]) {
         case SENAccountGenderMale:
@@ -49,78 +72,54 @@ static CGFloat const kHEMGenderPickerSelectedAlpha = 1.0f;
             [self setGenderAsOther];
             break;
     }
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [self centerButtonContent:[self femaleSelectorButton]];
+    [self centerButtonContent:[self maleSelectorButton]];
+}
+
+- (void)centerButtonContent:(UIButton*)button {
+    CGSize imageSize = [[button imageView] frame].size;
+    CGSize titleSize = [[button titleLabel] frame].size;
     
-    if ([self delegate] != nil) {
-        NSString* title = NSLocalizedString(@"status.success", nil);
-        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
-        [[self doneButton] setTitle:title forState:UIControlStateNormal];
-        [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
+    CGFloat spacing = 20.0f;
+    CGFloat totalHeight = (imageSize.height + titleSize.height + spacing);
+    
+    [button setImageEdgeInsets:UIEdgeInsetsMake(-(totalHeight-imageSize.height), 0.0, 0.0, -titleSize.width)];
+    [button setTitleEdgeInsets:UIEdgeInsetsMake(0.0, -imageSize.width, -(totalHeight-titleSize.height),0.0)];
+}
+
+- (void)button:(UIButton*)button isSelected:(BOOL)selected {
+    [button setSelected:selected];
+    
+    if (selected) {
+        [button setBackgroundColor:[self selectedColor]];
+        [[button layer] setBorderWidth:1.0f];
     } else {
-        [SENAnalytics track:kHEMAnalyticsEventOnBGender];
+        [button setBackgroundColor:[UIColor clearColor]];
+        [[button layer] setBorderWidth:0.0f];
     }
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
     
-    switch ([self selectedGender]) {
-        case SENAccountGenderFemale:
-            [self moveLineUnderButton:[self femaleTitleButton]];
-            break;
-        default:
-            [self moveLineUnderButton:[self maleTitleButton]];
-            break;
-    }
-}
-
-- (void)moveLineUnderButton:(UIButton*)button {
-    CGRect frame = CGRectMake(CGRectGetMinX(button.frame), CGRectGetMaxY(button.frame) + 3.f, CGRectGetWidth(button.frame), 1.f);
-    self.lineView.frame = frame;
-}
-
-- (void)adjustConstraintsForIPhone4 {
-    CGFloat diff = -40.0f;
-    [self updateConstraint:[self fIconButtonBotConstraint] withDiff:diff];
 }
 
 - (IBAction)setGenderAsFemale:(id)sender {
-    [[self lineView] setHidden:NO];
+    [self button:[self femaleSelectorButton] isSelected:YES];
+    [self button:[self maleSelectorButton] isSelected:NO];
     [self setSelectedGender:SENAccountGenderFemale];
-    [self selectButton:self.femaleTitleButton];
-    [UIView animateWithDuration:0.5f animations:^{
-        self.femaleTitleButton.alpha = kHEMGenderPickerSelectedAlpha;
-        self.femaleIconButton.alpha = kHEMGenderPickerSelectedAlpha;
-        self.maleIconButton.alpha = kHEMGenderPickerDeselectedAlpha;
-        self.maleTitleButton.alpha = kHEMGenderPickerDeselectedAlpha;
-    }];
 }
 
 - (IBAction)setGenderAsMale:(id)sender {
-    [[self lineView] setHidden:NO];
+    [self button:[self femaleSelectorButton] isSelected:NO];
+    [self button:[self maleSelectorButton] isSelected:YES];
     [self setSelectedGender:SENAccountGenderMale];
-    [self selectButton:self.maleTitleButton];
-    [UIView animateWithDuration:0.5f animations:^{
-        self.femaleTitleButton.alpha = kHEMGenderPickerDeselectedAlpha;
-        self.femaleIconButton.alpha = kHEMGenderPickerDeselectedAlpha;
-        self.maleIconButton.alpha = kHEMGenderPickerSelectedAlpha;
-        self.maleTitleButton.alpha = kHEMGenderPickerSelectedAlpha;
-    }];
 }
 
 - (void)setGenderAsOther {
+    [self button:[self femaleSelectorButton] isSelected:NO];
+    [self button:[self maleSelectorButton] isSelected:NO];
     [self setSelectedGender:SENAccountGenderOther];
-    [[self lineView] setHidden:YES];
-    [[self femaleIconButton] setAlpha:kHEMGenderPickerDeselectedAlpha];
-    [[self femaleTitleButton] setAlpha:kHEMGenderPickerDeselectedAlpha];
-    [[self maleIconButton] setAlpha:kHEMGenderPickerDeselectedAlpha];
-    [[self maleTitleButton] setAlpha:kHEMGenderPickerDeselectedAlpha];
-    [self moveLineUnderButton:[self maleTitleButton]]; // just move it somewhere
-}
-
-- (void)selectButton:(UIButton*)button {
-    [UIView animateWithDuration:0.25f animations:^{
-        [self moveLineUnderButton:button];
-    }];
 }
 
 - (IBAction)done:(id)sender {

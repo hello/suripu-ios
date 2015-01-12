@@ -298,4 +298,9 @@
  */
 + (UIFont *)onboardingDescriptionBoldFont;
 
+/**
+ * Font used for the gender selectors during onboarding / settings
+ */
++ (UIFont*)genderButtonTitleFont;
+
 @end

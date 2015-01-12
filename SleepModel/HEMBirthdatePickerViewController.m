@@ -19,7 +19,6 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 @interface HEMBirthdatePickerViewController ()
 
 @property (weak,   nonatomic) IBOutlet HEMBirthdatePickerView *dobPicker;
-@property (weak,   nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak,   nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (assign, nonatomic)          BOOL appeared;
 @property (weak,   nonatomic) IBOutlet HEMActionButton *doneButton;

@@ -13,7 +13,6 @@
 
 @interface HEMOnboardingController()
 
-@property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (strong, nonatomic) UIBarButtonItem* leftBarItem;
 
 @end

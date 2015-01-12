@@ -68,10 +68,6 @@
 		8A66FC85199C035500922ED5 /* HEMMiniSleepHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC84199C035500922ED5 /* HEMMiniSleepHistoryView.m */; };
 		8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC8A199D115D00922ED5 /* HEMBirthdatePickerViewController.m */; };
 		8A66FC8E199D17C000922ED5 /* HEMHeightPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC8D199D17C000922ED5 /* HEMHeightPickerViewController.m */; };
-		8A66FC93199D24FF00922ED5 /* femaleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A66FC8F199D24FF00922ED5 /* femaleIcon.png */; };
-		8A66FC94199D24FF00922ED5 /* femaleIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A66FC90199D24FF00922ED5 /* femaleIcon@2x.png */; };
-		8A66FC95199D24FF00922ED5 /* maleIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A66FC91199D24FF00922ED5 /* maleIcon.png */; };
-		8A66FC96199D24FF00922ED5 /* maleIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A66FC92199D24FF00922ED5 /* maleIcon@2x.png */; };
 		8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC98199D295F00922ED5 /* HEMGenderPickerViewController.m */; };
 		8A66FC9C199D308B00922ED5 /* HEMWeightPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC9B199D308B00922ED5 /* HEMWeightPickerViewController.m */; };
 		8A72143B1A1E6CEC008B59C4 /* HEMTimelineTopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A72143A1A1E6CEC008B59C4 /* HEMTimelineTopButton.m */; };
@@ -382,6 +378,12 @@
 		BF257EEA1A1D269300DAF923 /* HEMDialogView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE91A1D269300DAF923 /* HEMDialogView.m */; };
 		BF28856C1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF28856B1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m */; };
 		BF4473501A6341F600389ECE /* HEMOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF44734F1A6341F600389ECE /* HEMOnboardingController.m */; };
+		BF4473571A63535F00389ECE /* female.png in Resources */ = {isa = PBXBuildFile; fileRef = BF4473511A63535F00389ECE /* female.png */; };
+		BF4473581A63535F00389ECE /* female@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF4473521A63535F00389ECE /* female@2x.png */; };
+		BF4473591A63535F00389ECE /* female@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF4473531A63535F00389ECE /* female@3x.png */; };
+		BF44735A1A63535F00389ECE /* male.png in Resources */ = {isa = PBXBuildFile; fileRef = BF4473541A63535F00389ECE /* male.png */; };
+		BF44735B1A63535F00389ECE /* male@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF4473551A63535F00389ECE /* male@2x.png */; };
+		BF44735C1A63535F00389ECE /* male@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF4473561A63535F00389ECE /* male@3x.png */; };
 		BF4E88E71A12FB3700831380 /* UIView+HEMSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E88E61A12FB3700831380 /* UIView+HEMSnapshot.m */; };
 		BF4E88EA1A1301D700831380 /* HEMInsightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E88E91A1301D700831380 /* HEMInsightViewController.m */; };
 		BF50BD4F19E8D21F00F3B687 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
@@ -653,10 +655,6 @@
 		8A66FC8A199D115D00922ED5 /* HEMBirthdatePickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBirthdatePickerViewController.m; sourceTree = "<group>"; };
 		8A66FC8C199D17C000922ED5 /* HEMHeightPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHeightPickerViewController.h; sourceTree = "<group>"; };
 		8A66FC8D199D17C000922ED5 /* HEMHeightPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHeightPickerViewController.m; sourceTree = "<group>"; };
-		8A66FC8F199D24FF00922ED5 /* femaleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = femaleIcon.png; path = images/femaleIcon.png; sourceTree = "<group>"; };
-		8A66FC90199D24FF00922ED5 /* femaleIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "femaleIcon@2x.png"; path = "images/femaleIcon@2x.png"; sourceTree = "<group>"; };
-		8A66FC91199D24FF00922ED5 /* maleIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = maleIcon.png; path = images/maleIcon.png; sourceTree = "<group>"; };
-		8A66FC92199D24FF00922ED5 /* maleIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "maleIcon@2x.png"; path = "images/maleIcon@2x.png"; sourceTree = "<group>"; };
 		8A66FC97199D295F00922ED5 /* HEMGenderPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMGenderPickerViewController.h; sourceTree = "<group>"; };
 		8A66FC98199D295F00922ED5 /* HEMGenderPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMGenderPickerViewController.m; sourceTree = "<group>"; };
 		8A66FC9A199D308B00922ED5 /* HEMWeightPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWeightPickerViewController.h; sourceTree = "<group>"; };
@@ -1043,6 +1041,12 @@
 		BF28856B1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightsFeedDataSource.m; sourceTree = "<group>"; };
 		BF44734E1A6341F600389ECE /* HEMOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingController.h; sourceTree = "<group>"; };
 		BF44734F1A6341F600389ECE /* HEMOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingController.m; sourceTree = "<group>"; };
+		BF4473511A63535F00389ECE /* female.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = female.png; path = images/female.png; sourceTree = "<group>"; };
+		BF4473521A63535F00389ECE /* female@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "female@2x.png"; path = "images/female@2x.png"; sourceTree = "<group>"; };
+		BF4473531A63535F00389ECE /* female@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "female@3x.png"; path = "images/female@3x.png"; sourceTree = "<group>"; };
+		BF4473541A63535F00389ECE /* male.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = male.png; path = images/male.png; sourceTree = "<group>"; };
+		BF4473551A63535F00389ECE /* male@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "male@2x.png"; path = "images/male@2x.png"; sourceTree = "<group>"; };
+		BF4473561A63535F00389ECE /* male@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "male@3x.png"; path = "images/male@3x.png"; sourceTree = "<group>"; };
 		BF4E88E51A12FB3700831380 /* UIView+HEMSnapshot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HEMSnapshot.h"; sourceTree = "<group>"; };
 		BF4E88E61A12FB3700831380 /* UIView+HEMSnapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HEMSnapshot.m"; sourceTree = "<group>"; };
 		BF4E88E81A1301D700831380 /* HEMInsightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightViewController.h; sourceTree = "<group>"; };
@@ -1446,6 +1450,12 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BF4473511A63535F00389ECE /* female.png */,
+				BF4473521A63535F00389ECE /* female@2x.png */,
+				BF4473531A63535F00389ECE /* female@3x.png */,
+				BF4473541A63535F00389ECE /* male.png */,
+				BF4473551A63535F00389ECE /* male@2x.png */,
+				BF4473561A63535F00389ECE /* male@3x.png */,
 				BF71AFC61A43C22600D1208B /* PillHands.png */,
 				BF71AFC71A43C22600D1208B /* PillHands@2x.png */,
 				BF71AFC81A43C22600D1208B /* PillHands@3x.png */,
@@ -1528,10 +1538,6 @@
 				BFACC71519A41CFE00FC77EE /* whitenavbar@2x.png */,
 				8A4B3D4A199308BB00856BDE /* bluetoothLogoImage.png */,
 				8A4B3D4B199308BB00856BDE /* bluetoothLogoImage@2x.png */,
-				8A66FC8F199D24FF00922ED5 /* femaleIcon.png */,
-				8A66FC90199D24FF00922ED5 /* femaleIcon@2x.png */,
-				8A66FC91199D24FF00922ED5 /* maleIcon.png */,
-				8A66FC92199D24FF00922ED5 /* maleIcon@2x.png */,
 				8A4B3D4C199308BB00856BDE /* wifiLogoImage.png */,
 				8A4B3D4D199308BB00856BDE /* wifiLogoImage@2x.png */,
 			);
@@ -2664,6 +2670,7 @@
 				8AFEBCA61A0C54D5009A0432 /* movement.png in Resources */,
 				8AA157F61A5EFD6B00BF1D4A /* motionEventIcon.png in Resources */,
 				8AFE780919E8C2170000F881 /* particulates-medium.png in Resources */,
+				BF44735B1A63535F00389ECE /* male@2x.png in Resources */,
 				8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */,
 				8AA157F91A5EFD6B00BF1D4A /* noiseEventIcon.png in Resources */,
 				8AFE77EF19E8C2170000F881 /* humidity-medium@2x.png in Resources */,
@@ -2733,6 +2740,7 @@
 				BF0F63661A250A050084E6B4 /* smartAlarm@3x.png in Resources */,
 				8AFE77FD19E8C2170000F881 /* movement-good.png in Resources */,
 				BF770F251A155455008611E9 /* sensePlacement@2x.png in Resources */,
+				BF44735C1A63535F00389ECE /* male@3x.png in Resources */,
 				8AFE781019E8C2170000F881 /* phone-good@2x.png in Resources */,
 				8AFE77F319E8C2170000F881 /* light-bad@3x.png in Resources */,
 				8A93AFD11A09BF0300F70A8B /* settingsIcon@3x.png in Resources */,
@@ -2742,6 +2750,7 @@
 				8AAEECFD19A5225F006517C4 /* Agile-Bold.otf in Resources */,
 				8AA157EE1A5EFD6B00BF1D4A /* graySoundIcon@2x.png in Resources */,
 				8AA158011A5EFD6B00BF1D4A /* sleepEventIcon@3x.png in Resources */,
+				BF4473571A63535F00389ECE /* female.png in Resources */,
 				BF71AFC91A43C22600D1208B /* PillHands.png in Resources */,
 				8AFE780619E8C2170000F881 /* particulates-good.png in Resources */,
 				BF5E444B19AD414500278A2F /* doubleArrow.png in Resources */,
@@ -2752,7 +2761,6 @@
 				BFE872F71A2FC65600494231 /* sensorLightBlue.png in Resources */,
 				BFE872EF1A2FC65600494231 /* sensorHumidity@2x.png in Resources */,
 				8A7D80381A41094300B0BFD7 /* alarmBarIcon.png in Resources */,
-				8A66FC96199D24FF00922ED5 /* maleIcon@2x.png in Resources */,
 				8AFE77F219E8C2170000F881 /* light-bad@2x.png in Resources */,
 				8A72143F1A1E7797008B59C4 /* backIcon.png in Resources */,
 				BF14E3BF19EF3BD10006EFEA /* onboarding_bg_wide@3x.png in Resources */,
@@ -2780,6 +2788,7 @@
 				BF14E3BA19EF3BD10006EFEA /* map.png in Resources */,
 				8A9BD8BA19DDD02100B1E57E /* Calibre-Light.otf in Resources */,
 				8AA157E51A5EFD6B00BF1D4A /* grayHumidityIcon@2x.png in Resources */,
+				BF4473591A63535F00389ECE /* female@3x.png in Resources */,
 				BF0F63651A250A050084E6B4 /* smartAlarm@2x.png in Resources */,
 				BFB0FBE319D377380056FFEC /* senseIcon.png in Resources */,
 				8A93AFCC1A09BF0300F70A8B /* alarmsIcon@3x.png in Resources */,
@@ -2790,7 +2799,6 @@
 				8AAEED0B19A5225F006517C4 /* Agile-Medium.otf in Resources */,
 				BF5D53271A266C6B0090DD6A /* check@2x.png in Resources */,
 				BFE873031A2FC65600494231 /* sensorSoundBlue.png in Resources */,
-				8A66FC94199D24FF00922ED5 /* femaleIcon@2x.png in Resources */,
 				8AAEED0C19A5225F006517C4 /* Agile-MediumItalic.otf in Resources */,
 				8AA157EA1A5EFD6B00BF1D4A /* grayParticulatesIcon.png in Resources */,
 				8A93AFBE1A09BED100F70A8B /* caret up@3x.png in Resources */,
@@ -2863,6 +2871,7 @@
 				8AFE77E619E8C2170000F881 /* asleep@2x.png in Resources */,
 				8AFE77EA19E8C2170000F881 /* humidity-bad@3x.png in Resources */,
 				8A1E723419D62C26007475D3 /* alarmRepeatIcon.png in Resources */,
+				BF4473581A63535F00389ECE /* female@2x.png in Resources */,
 				BF5E444F19AD494500278A2F /* phoneWithEmoticons.png in Resources */,
 				8AA158091A5EFD6B00BF1D4A /* wakeupEventIcon@2x.png in Resources */,
 				8AFE781219E8C2170000F881 /* phone-medium.png in Resources */,
@@ -2877,10 +2886,10 @@
 				BF770F1F1A1550E0008611E9 /* bluetooth@2x.png in Resources */,
 				8AA157FB1A5EFD6B00BF1D4A /* noiseEventIcon@3x.png in Resources */,
 				8AFE77F419E8C2170000F881 /* light-good.png in Resources */,
+				BF44735A1A63535F00389ECE /* male.png in Resources */,
 				8A7D80451A41094300B0BFD7 /* trendsBarIcon@2x.png in Resources */,
 				BFF3B4431A5CBF6800B11643 /* accessory@2x.png in Resources */,
 				8AFE77E719E8C2170000F881 /* asleep@3x.png in Resources */,
-				8A66FC95199D24FF00922ED5 /* maleIcon.png in Resources */,
 				BFB0FBE419D377380056FFEC /* senseIcon@2x.png in Resources */,
 				BFE873051A2FC65600494231 /* sensorSoundBlue@3x.png in Resources */,
 				8AFE780D19E8C2170000F881 /* phone-bad@2x.png in Resources */,
@@ -2894,7 +2903,6 @@
 				8AAEED0819A5225F006517C4 /* Agile-HairlineItalic.otf in Resources */,
 				8A1E723919D62C26007475D3 /* alarmSoundIcon@2x.png in Resources */,
 				BFE873021A2FC65600494231 /* sensorSound@3x.png in Resources */,
-				8A66FC93199D24FF00922ED5 /* femaleIcon.png in Resources */,
 				8A93AFBF1A09BED100F70A8B /* Menu.png in Resources */,
 				BFE873071A2FC65600494231 /* sensorTemperature@2x.png in Resources */,
 				BFE873081A2FC65600494231 /* sensorTemperature@3x.png in Resources */,

@@ -1,6 +1,6 @@
 
 #import <UIKit/UIKit.h>
-#import "HEMBaseController.h"
+#import "HEMOnboardingController.h"
 
 @class HEMGenderPickerViewController;
 
@@ -12,7 +12,7 @@
 
 @end
 
-@interface HEMGenderPickerViewController : HEMBaseController
+@interface HEMGenderPickerViewController : HEMOnboardingController
 
 @property (nonatomic, assign) SENAccountGender defaultGender;
 @property (nonatomic, weak) id<HEMGenderPickerDelegate> delegate;

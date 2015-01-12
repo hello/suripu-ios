@@ -20,7 +20,6 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
 
 @interface HEMWeightPickerViewController () <iCarouselDataSource, iCarouselDelegate>
 
-@property (weak,   nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak,   nonatomic) IBOutlet iCarousel* carousel;
 @property (weak,   nonatomic) IBOutlet UILabel* topWeightLabel;
 @property (weak,   nonatomic) IBOutlet UILabel* botWeightLabel;
@@ -42,14 +41,12 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[super navigationItem] setHidesBackButton:YES];
     
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
-    
     [self setupCarousel];
     
     if ([self delegate] == nil) {
+        [self enableBackButton:NO];
         [SENAnalytics track:kHEMAnalyticsEventOnBWeight];
     }
 }

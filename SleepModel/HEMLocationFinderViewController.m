@@ -17,7 +17,6 @@
 
 @interface HEMLocationFinderViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapImageView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *locationButton;
@@ -33,10 +32,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[super navigationItem] setHidesBackButton:YES];
-    
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
+
     [self setupSubtitle];
+    [self enableBackButton:NO];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBLocation];   
 }

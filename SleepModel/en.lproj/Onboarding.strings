@@ -86,8 +86,8 @@
 /* Class = "IBUIButton"; normalTitle = "I Forgot my Password"; ObjectID = "Lnm-XS-wFM"; */
 "Lnm-XS-wFM.normalTitle" = "I Forgot my Password";
 
-/* Class = "IBUIButton"; normalTitle = "Next"; ObjectID = "M0L-MG-dGi"; */
-"M0L-MG-dGi.normalTitle" = "Next";
+/* Class = "IBUIButton"; normalTitle = "NEXT"; ObjectID = "M0L-MG-dGi"; */
+"M0L-MG-dGi.normalTitle" = "NEXT";
 
 /* Class = "IBUIButton"; normalTitle = "Get Started"; ObjectID = "NxD-eY-cDC"; */
 "NxD-eY-cDC.normalTitle" = "GET STARTED";
@@ -105,7 +105,7 @@
 "SVC-vN-68T.normalTitle" = "Skip";
 
 /* Class = "IBUIButton"; normalTitle = "Set Location"; ObjectID = "Sdf-8C-14E"; */
-"Sdf-8C-14E.normalTitle" = "Set Location";
+"Sdf-8C-14E.normalTitle" = "SET LOCATION";
 
 /* Class = "IBUILabel"; text = "Add a second Sleep Pill"; ObjectID = "TLk-q6-Qrj"; */
 "TLk-q6-Qrj.text" = "Add a second Sleep Pill";
@@ -129,7 +129,7 @@
 "YLN-GF-KON.text" = "0lbs";
 
 /* Class = "IBUIButton"; normalTitle = "Continue"; ObjectID = "ZxA-cs-sOA"; */
-"ZxA-cs-sOA.normalTitle" = "Continue";
+"ZxA-cs-sOA.normalTitle" = "CONTINUE";
 
 /* Class = "IBUILabel"; text = "Setting up Sense"; ObjectID = "bPm-8J-k4Y"; */
 "bPm-8J-k4Y.text" = "Setting up Sense";
@@ -155,8 +155,8 @@
 /* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "f7Z-44-JvY"; */
 "f7Z-44-JvY.normalTitle" = "Skip";
 
-/* Class = "IBUIButton"; normalTitle = "Next"; ObjectID = "gMf-fl-V5h"; */
-"gMf-fl-V5h.normalTitle" = "Next";
+/* Class = "IBUIButton"; normalTitle = "NEXT"; ObjectID = "gMf-fl-V5h"; */
+"gMf-fl-V5h.normalTitle" = "NEXT";
 
 /* Class = "IBUITextField"; placeholder = "Email"; ObjectID = "gMo-0B-UJM"; */
 "gMo-0B-UJM.placeholder" = "Email";
@@ -167,8 +167,8 @@
 /* Class = "IBUILabel"; text = "Connecting Sense to WiFi"; ObjectID = "gvl-uZ-ZRh"; */
 "gvl-uZ-ZRh.text" = "Connecting Sense to WiFi";
 
-/* Class = "IBUIButton"; normalTitle = "Next"; ObjectID = "h1g-YQ-7bC"; */
-"h1g-YQ-7bC.normalTitle" = "Next";
+/* Class = "IBUIButton"; normalTitle = "NEXT"; ObjectID = "h1g-YQ-7bC"; */
+"h1g-YQ-7bC.normalTitle" = "NEXT";
 
 /* Class = "IBUIButton"; disabledTitle = " "; ObjectID = "h6O-W0-Wus"; */
 "h6O-W0-Wus.disabledTitle" = " ";
@@ -183,7 +183,7 @@
 "hPf-UR-a80.placeholder" = "Password";
 
 /* Class = "IBUIButton"; normalTitle = "Continue"; ObjectID = "imr-Jl-fE8"; */
-"imr-Jl-fE8.normalTitle" = "Continue";
+"imr-Jl-fE8.normalTitle" = "CONTINUE";
 
 /* Class = "IBUILabel"; text = "How tall are you?"; ObjectID = "iyM-PD-FTT"; */
 "iyM-PD-FTT.text" = "How tall are you?";
@@ -195,7 +195,7 @@
 "kPY-hQ-rr3.text" = "Connecting Sense to WiFi";
 
 /* Class = "IBUIButton"; normalTitle = "Retry"; ObjectID = "lGd-9N-cHV"; */
-"lGd-9N-cHV.normalTitle" = "Retry";
+"lGd-9N-cHV.normalTitle" = "RETRY";
 
 /* Class = "IBUIButton"; disabledTitle = " "; ObjectID = "nBf-Bp-BiO"; */
 "nBf-Bp-BiO.disabledTitle" = " ";
@@ -236,8 +236,8 @@
 /* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "v1o-Yc-LWQ"; */
 "v1o-Yc-LWQ.normalTitle" = "Skip";
 
-/* Class = "IBUIButton"; normalTitle = "Next"; ObjectID = "vwe-Kd-JLe"; */
-"vwe-Kd-JLe.normalTitle" = "Next";
+/* Class = "IBUIButton"; normalTitle = "NEXT"; ObjectID = "vwe-Kd-JLe"; */
+"vwe-Kd-JLe.normalTitle" = "NEXT";
 
 /* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "wdU-1v-eC1"; */
 "wdU-1v-eC1.normalTitle" = "Skip";

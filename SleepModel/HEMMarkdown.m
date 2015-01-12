@@ -71,7 +71,8 @@
 + (NSDictionary*)attributesForSensorMessageWithConditionColor:(UIColor*)color
 {
     return @{
-        @(STRONG) : @{ NSForegroundColorAttributeName : color },
+        @(STRONG) : @{ NSForegroundColorAttributeName : color, NSFontAttributeName : [UIFont backViewBoldFont] },
+        @(EMPH)   : @{ NSForegroundColorAttributeName : color, NSFontAttributeName : [UIFont backViewBoldFont] },
         @(PLAIN)  : @{ NSFontAttributeName : [UIFont backViewTextFont] }
     };
 }

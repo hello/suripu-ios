@@ -26,6 +26,7 @@ static CGFloat const HEMRoomCheckMinVerticalPadding = 28.0f;
 static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
 static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
+static NSInteger const HEMRoomCheckMaxSensorCount = 5;
 
 @interface HEMRoomCheckViewController()
 
@@ -137,38 +138,27 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
     CGFloat totalCollapsedHeight = HEMSensorCheckCollapsedHeight * 5;
     CGFloat nextY = (CGRectGetHeight([[self view] bounds]) - totalCollapsedHeight)/2;
     NSArray* sensors = [SENSensor sensors];
-    
+    NSArray* units = [sensors valueForKeyPath:NSStringFromSelector(@selector(unit))];
     for (SENSensor* sensor in sensors) {
-#pragma message ("once we add support for Light sensor, fix it here and remove the placeholder!")
         if ([sensor unit] != SENSensorUnitUnknown) {
             [self setSensorsOk:[self sensorsOk] && [sensor condition] != SENSensorConditionUnknown];
             nextY += CGRectGetHeight([[self addSensorViewFor:sensor atY:nextY] bounds]);
         }
     }
-    
-    // add a couple of placeholder sensors since we don't have them yet, but were
-    // asked for by design.  probably will end up throwing this away soon after tho
-    NSString* message = NSLocalizedString(@"sensor.sound.placeholder-message", nil);
-    nextY += CGRectGetHeight([[self addSensorViewWithIcon:[HelloStyleKit sensorSound]
-                                          highlightedIcon:[HelloStyleKit sensorSoundBlue]
-                                                     name:NSLocalizedString(@"sensor.sound", nil)
-                                                  message:[self attributedMessage:message]
-                                             introMessage:NSLocalizedString(@"onboarding.room-check.intro.sound", nil)
-                                                    value:30
-                                            andValueColor:[UIColor colorForSensorWithCondition:SENSensorConditionIdeal]
-                                                 withUnit:NSLocalizedString(@"measurement.db.unit", nil)
-                                                      atY:nextY] bounds]);
-    
-    message = NSLocalizedString(@"sensor.light.placeholder-message", nil);
-    [self addSensorViewWithIcon:[HelloStyleKit sensorLight]
-                highlightedIcon:[HelloStyleKit sensorLightBlue]
-                           name:NSLocalizedString(@"sensor.light", nil)
-                        message:[self attributedMessage:message]
-                   introMessage:NSLocalizedString(@"onboarding.room-check.intro.light", nil)
-                          value:200
-                  andValueColor:[UIColor colorForSensorWithCondition:SENSensorConditionIdeal]
-                       withUnit:NSLocalizedString(@"measurement.lx.unit", nil)
-                            atY:nextY];
+
+    // placeholder for sound sensor
+    if (![units containsObject:@(SENSensorUnitDecibel)] && [sensors count] < HEMRoomCheckMaxSensorCount) {
+        NSString* message = NSLocalizedString(@"sensor.sound.placeholder-message", nil);
+        nextY += CGRectGetHeight([[self addSensorViewWithIcon:[HelloStyleKit sensorSound]
+                                              highlightedIcon:[HelloStyleKit sensorSoundBlue]
+                                                         name:NSLocalizedString(@"sensor.sound", nil)
+                                                      message:[self attributedMessage:message]
+                                                 introMessage:NSLocalizedString(@"onboarding.room-check.intro.sound", nil)
+                                                        value:30
+                                                andValueColor:[UIColor colorForSensorWithCondition:SENSensorConditionIdeal]
+                                                     withUnit:NSLocalizedString(@"measurement.db.unit", nil)
+                                                          atY:nextY] bounds]);
+    }
     
     // show each sensor view in collapsed state
     [UIView animateWithDuration:HEMRoomCheckAnimationDuration

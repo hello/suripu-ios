@@ -28,6 +28,8 @@ typedef NS_ENUM(NSUInteger, SENSensorUnit) {
     SENSensorUnitDegreeCentigrade,
     SENSensorUnitAQI,
     SENSensorUnitPercent,
+    SENSensorUnitLux,
+    SENSensorUnitDecibel,
 };
 
 @interface SENSensor : NSObject <NSCoding>

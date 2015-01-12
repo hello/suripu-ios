@@ -582,7 +582,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="5' 3&quot;" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nEX-5L-qND">
-                                <rect key="frame" x="34" y="207.5" width="532" height="28"/>
+                                <rect key="frame" x="34" y="208" width="532" height="28"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="28" id="TdT-Bm-FcP"/>
                                 </constraints>
@@ -591,7 +591,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="or 170 cm" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pks-KU-Mi1">
-                                <rect key="frame" x="34" y="251.5" width="532" height="21"/>
+                                <rect key="frame" x="34" y="252" width="532" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="KSX-lh-lrV"/>
                                 </constraints>
@@ -600,7 +600,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6X3-cZ-M1A" userLabel="heightSlider" customClass="HEMValueSliderView">
-                                <rect key="frame" x="34" y="207.5" width="532" height="225"/>
+                                <rect key="frame" x="34" y="208" width="532" height="225"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="225" id="bxO-Zg-huq"/>
@@ -610,7 +610,7 @@
                                 </connections>
                             </view>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="doubleArrow.png" translatesAutoresizingMaskIntoConstraints="NO" id="9RP-yj-mMV">
-                                <rect key="frame" x="283" y="322.5" width="35" height="63"/>
+                                <rect key="frame" x="283" y="323" width="35" height="63"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="63" id="guU-n2-n5e"/>
                                     <constraint firstAttribute="width" constant="35" id="qZK-AX-UhM"/>
@@ -1001,7 +1001,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMZ-p6-gA8">
-                                <rect key="frame" x="20" y="68.5" width="560" height="54"/>
+                                <rect key="frame" x="20" y="69" width="560" height="54"/>
                                 <attributedString key="attributedText">
                                     <fragment>
                                         <string key="content">Would you like to set up a second Sleep Pill for your partner at this time?
@@ -1532,10 +1532,10 @@ You can always do this later by visiting Settings.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uO2-mX-vGj">
-                                <rect key="frame" x="20" y="166.5" width="560" height="283.5"/>
+                                <rect key="frame" x="20" y="167" width="560" height="284"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1t-tO-D6Q">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="290.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="291"/>
                                         <inset key="titleEdgeInsets" minX="0.0" minY="100" maxX="45" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="65" minY="0.0" maxX="0.0" maxY="40"/>
                                         <state key="normal" title="Female" image="female.png">
@@ -1554,7 +1554,7 @@ You can always do this later by visiting Settings.</string>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yLf-ik-ger">
-                                        <rect key="frame" x="280" y="0.0" width="280" height="290.5"/>
+                                        <rect key="frame" x="280" y="0.0" width="280" height="291"/>
                                         <inset key="titleEdgeInsets" minX="0.0" minY="100" maxX="45" maxY="0.0"/>
                                         <inset key="imageEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="40"/>
                                         <state key="normal" title="Male" image="male.png">

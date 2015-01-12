@@ -24,6 +24,7 @@
 #import "HEMScrollableView.h"
 #import "HelloStyleKit.h"
 
+static CGFloat const HEMPillPairImageYOffset = 80.0f;
 static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 @interface HEMPillPairViewController()
@@ -48,6 +49,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self configureButton];
     [self setupContent];
     [self showHelpButton];
     [self setupCancelButton];
@@ -59,6 +61,11 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
 }
 
+- (void)configureButton {
+    [[self retryButton] setBackgroundColor:[UIColor clearColor]];
+    [[self retryButton] setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
+}
+
 - (void)setupContent {
     NSString* subtitle = NSLocalizedString(@"pairing.pill.subtitle", nil);
     NSMutableAttributedString* attrSubtitle
@@ -67,7 +74,8 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     
     [[self contentView] addTitle:NSLocalizedString(@"pairing.pill.title", nil)];
     [[self contentView] addDescription:attrSubtitle];
-    [[self contentView] addImage:[HelloStyleKit shakePill]];
+    [[self contentView] addImage:[HelloStyleKit shakePill]
+                     withYOffset:HEMPillPairImageYOffset];
     
 }
 

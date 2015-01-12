@@ -140,6 +140,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                         [strongSelf setCurrentState:HEMSensePairStatePairingError];
                         [strongSelf executeNextStep];
                     } else {
+                        [strongSelf setManager:nil];
                         NSString* message = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
                         [strongSelf showErrorMessage:message];
                     }
@@ -333,6 +334,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
                 [strongSelf setPairing:NO];
+                [strongSelf setManager:nil];
                 [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                     [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
                     [strongSelf setCurrentState:HEMSensePairStatePairingError];
@@ -441,13 +443,21 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 #pragma mark - Errors
 
 - (void)showErrorMessage:(NSString*)message {
-    __weak typeof(self) weakSelf = self;
-    [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
-        [weakSelf showMessageDialog:message
-                              title:NSLocalizedString(@"pairing.failed.title", nil)
-                              image:nil
-                           withHelp:YES];
-    }];
+    if ([self manager] == nil) {
+        [self showMessageDialog:message
+                          title:NSLocalizedString(@"pairing.failed.title", nil)
+                          image:nil
+                       withHelp:YES];
+    } else {
+        __weak typeof(self) weakSelf = self;
+        [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+            [weakSelf showMessageDialog:message
+                                  title:NSLocalizedString(@"pairing.failed.title", nil)
+                                  image:nil
+                               withHelp:YES];
+        }];
+    }
+
 }
 
 #pragma mark - Finishing

@@ -12,6 +12,7 @@
 #import "HelloStyleKit.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
+#import "NSAttributedString+HEMUtils.h"
 #import "HEMMarkdown.h"
 
 @interface HEMSensorViewController ()<BEMSimpleLineGraphDelegate>
@@ -143,8 +144,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.title = self.sensor.localizedName;
     [self updateValueLabelWithValue:self.sensor.value];
     self.unitLabel.text = [self.sensor localizedUnit];
-    self.statusMessageLabel.attributedText = markdown_to_attr_string(self.sensor.message, 0, statusAttributes);
-    self.idealLabel.attributedText = markdown_to_attr_string(self.sensor.idealConditionsMessage, 0, idealAttributes);
+    self.statusMessageLabel.attributedText = [markdown_to_attr_string(self.sensor.message, 0, statusAttributes) trim];
+    self.idealLabel.attributedText = [markdown_to_attr_string(self.sensor.idealConditionsMessage, 0, idealAttributes) trim];
     self.graphView.colorLine = color;
     self.graphView.alphaLine = 0.2;
     self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];

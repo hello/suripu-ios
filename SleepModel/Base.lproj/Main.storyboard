@@ -1547,7 +1547,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6IN-Cs-tBU">
-                                                    <rect key="frame" x="503" y="48" width="51" height="31"/>
+                                                    <rect key="frame" x="504" y="48" width="51" height="31"/>
                                                     <color key="onTintColor" red="0.1176470667" green="0.68235296010000002" blue="0.98823535439999999" alpha="1" colorSpace="deviceRGB"/>
                                                     <connections>
                                                         <action selector="flippedEnabledSwitch:" destination="Mem-QL-GCW" eventType="valueChanged" id="wXu-yW-WQo"/>
@@ -1574,10 +1574,47 @@
                                             <constraint firstItem="2r6-zA-JWU" firstAttribute="leading" secondItem="RM9-XI-qde" secondAttribute="trailing" id="zy9-zb-T6U"/>
                                         </constraints>
                                         <connections>
-                                            <outlet property="detailLabel" destination="tbK-mA-0ly" id="GE1-Qx-Itc"/>
                                             <outlet property="enabledSwitch" destination="6IN-Cs-tBU" id="XuJ-hB-PHs"/>
                                             <outlet property="meridiemLabel" destination="2r6-zA-JWU" id="auf-ZM-zN7"/>
                                             <outlet property="timeLabel" destination="RM9-XI-qde" id="uxJ-1W-UBC"/>
+                                            <outlet property="titleLabel" destination="tbK-mA-0ly" id="aGX-EA-VIX"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="alarmListEmptyCell" id="Yyh-iI-O4j" customClass="HEMAlarmListCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="569" height="178"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SMART ALARMS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GlN-SR-oNV">
+                                                    <rect key="frame" x="16" y="24" width="78" height="14"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="10"/>
+                                                    <color key="textColor" white="0.75240162040000003" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bus-ep-dfy">
+                                                    <rect key="frame" x="16" y="62" width="553" height="39"/>
+                                                    <string key="text">Sense's Smart Alarm will wake you up at just the right moment in your sleep cycle, so you wake feeling rested. Once set, your alarms will appear here.</string>
+                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="Bus-ep-dfy" firstAttribute="leading" secondItem="Yyh-iI-O4j" secondAttribute="leadingMargin" constant="8" id="HpE-i2-arC"/>
+                                            <constraint firstItem="Bus-ep-dfy" firstAttribute="top" secondItem="GlN-SR-oNV" secondAttribute="bottom" constant="24" id="RaH-vL-kYh"/>
+                                            <constraint firstItem="GlN-SR-oNV" firstAttribute="top" secondItem="Yyh-iI-O4j" secondAttribute="top" constant="24" id="chj-x3-HNr"/>
+                                            <constraint firstItem="Bus-ep-dfy" firstAttribute="trailing" secondItem="Yyh-iI-O4j" secondAttribute="trailingMargin" constant="8" id="qVr-tu-crl"/>
+                                            <constraint firstItem="GlN-SR-oNV" firstAttribute="leading" secondItem="Yyh-iI-O4j" secondAttribute="leading" constant="16" id="wv0-Cy-NqY"/>
+                                        </constraints>
+                                        <size key="customSize" width="568.5" height="178"/>
+                                        <connections>
+                                            <outlet property="detailLabel" destination="Bus-ep-dfy" id="fRP-Fp-3HJ"/>
+                                            <outlet property="titleLabel" destination="GlN-SR-oNV" id="yxV-9z-eRx"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -1601,10 +1638,18 @@
                                     <action selector="addNewAlarm:" destination="Mem-QL-GCW" eventType="touchUpInside" id="pdo-f8-7Yu"/>
                                 </connections>
                             </button>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SET YOUR FIRST SMART ALARM" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F7L-4U-HrL">
+                                <rect key="frame" x="216" y="437" width="169" height="16"/>
+                                <fontDescription key="fontDescription" name="Avenir-Heavy" family="Avenir" pointSize="11"/>
+                                <color key="textColor" red="0.72006647099447507" green="0.72006647099447507" blue="0.72006647099447507" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="centerX" secondItem="2BJ-ze-ubh" secondAttribute="centerX" id="P2e-61-uUp"/>
+                            <constraint firstAttribute="centerX" secondItem="F7L-4U-HrL" secondAttribute="centerX" id="RXK-Gh-6aL"/>
+                            <constraint firstItem="2BJ-ze-ubh" firstAttribute="top" secondItem="F7L-4U-HrL" secondAttribute="bottom" constant="26" id="Rrh-DL-91R"/>
                             <constraint firstItem="9Gu-MH-hXF" firstAttribute="top" secondItem="3hH-M3-tDn" secondAttribute="bottom" constant="48" id="eLI-4v-Ofx"/>
                             <constraint firstItem="3hH-M3-tDn" firstAttribute="top" secondItem="2cE-92-oPr" secondAttribute="top" constant="8" id="hOg-kp-4SK"/>
                             <constraint firstItem="3hH-M3-tDn" firstAttribute="leading" secondItem="S2E-t2-8bL" secondAttribute="leadingMargin" constant="-16" id="s8d-2g-Jlt"/>
@@ -1616,11 +1661,12 @@
                     <connections>
                         <outlet property="addButton" destination="2BJ-ze-ubh" id="u08-zi-1Yb"/>
                         <outlet property="collectionView" destination="3hH-M3-tDn" id="8Ya-4u-glT"/>
+                        <outlet property="noAlarmLabel" destination="F7L-4U-HrL" id="tPH-bO-hsI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ita-56-GRs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3409.5" y="-1450"/>
+            <point key="canvasLocation" x="3409" y="-1450"/>
         </scene>
         <!--Sound-->
         <scene sceneID="hmY-EV-EJQ">

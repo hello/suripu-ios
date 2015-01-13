@@ -264,6 +264,9 @@
 "alarms.alarm.format" = "Alarm — %@";
 "alarms.alarm.meridiem.am" = "AM";
 "alarms.alarm.meridiem.pm" = "PM";
+"alarms.no-alarm.title" = "Smart alarms";
+"alarms.no-alarm.message" = "Sense's Smart Alarm will wake you up at just the right moment in your sleep cycle, so you wake feeling rested. Once set, your alarms will appear here.";
+"alarms.no-alarm.instructions" = "Set your first smart alarm";
 
 // alarm settings
 "alarm.time-range.format" = "Wake up between *%@* and *%@*";

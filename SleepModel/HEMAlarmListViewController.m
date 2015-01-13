@@ -84,9 +84,11 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)refreshAlarmList
 {
     self.addButton.enabled = NO;
-    [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^{
-        [self reloadData];
-        [self.collectionView reloadData];
+    [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^(NSError* error) {
+        if (!error) {
+            [self reloadData];
+            [self.collectionView reloadData];
+        }
         self.addButton.enabled = YES;
     }];
 }

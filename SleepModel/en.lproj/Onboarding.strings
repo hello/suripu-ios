@@ -27,7 +27,7 @@
 "4H9-4w-9eg.placeholder" = "Email";
 
 /* Class = "IBUIButton"; normalTitle = "Set up another Sleep Pill"; ObjectID = "4OB-Af-zlr"; */
-"4OB-Af-zlr.normalTitle" = "Set up another Sleep Pill";
+"4OB-Af-zlr.normalTitle" = "Add another Sleep Pill";
 
 /* Class = "IBUILabel"; text = "Enter your WiFi credentials:"; ObjectID = "4PT-Jb-KBo"; */
 "4PT-Jb-KBo.text" = "Enter your WiFi credentials:";

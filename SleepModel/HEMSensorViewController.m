@@ -296,15 +296,19 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     NSArray* values = [[dataSeries valueForKey:NSStringFromSelector(@selector(value))]
                        sortedArrayUsingSelector:@selector(compare:)];
     NSNumber* maxValue = [values lastObject];
-    NSNumber* minValue = [values firstObject];
+    NSNumber* minValue = @1;
     if ([maxValue floatValue] == 0)
         self.maxGraphValue = 0;
     else
         self.maxGraphValue = [[SENSensor value:maxValue inPreferredUnit:self.sensor.unit] floatValue];
-    if ([minValue floatValue] == 0)
-        self.minGraphValue = 1;
-    else
-        self.minGraphValue = [[SENSensor value:minValue inPreferredUnit:self.sensor.unit] floatValue];
+    for (NSNumber* value in values) {
+        CGFloat number = [value floatValue];
+        if (number  > 0) {
+            minValue = value;
+            break;
+        }
+    }
+    self.minGraphValue = [[SENSensor value:minValue inPreferredUnit:self.sensor.unit] floatValue] * 0.75;
 }
 
 #pragma mark - BEMSimpleLineGraphDelegate

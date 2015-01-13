@@ -1310,7 +1310,7 @@
                                             <constraint firstAttribute="height" constant="1" id="Zz7-a2-qob"/>
                                         </constraints>
                                     </view>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eKU-VY-IW0" customClass="BEMSimpleLineGraphView">
+                                    <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eKU-VY-IW0" customClass="BEMSimpleLineGraphView">
                                         <rect key="frame" x="0.0" y="22" width="600" height="246"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                     </view>
@@ -1323,11 +1323,11 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="eKU-VY-IW0" firstAttribute="bottom" secondItem="oVZ-oK-eUb" secondAttribute="bottom" constant="-5" id="AaZ-Q6-dZm"/>
                                     <constraint firstItem="oVZ-oK-eUb" firstAttribute="top" secondItem="eKU-VY-IW0" secondAttribute="top" constant="-16" id="Et4-X8-tCp"/>
                                     <constraint firstItem="xE4-J4-AJU" firstAttribute="top" secondItem="jXq-nN-8Qt" secondAttribute="top" id="PlQ-Bb-XLU"/>
                                     <constraint firstItem="DyW-hQ-mCU" firstAttribute="trailing" secondItem="jXq-nN-8Qt" secondAttribute="trailing" id="Urb-jc-Zba"/>
                                     <constraint firstItem="DyW-hQ-mCU" firstAttribute="top" secondItem="jXq-nN-8Qt" secondAttribute="top" id="X6s-7t-MUn"/>
-                                    <constraint firstAttribute="bottom" secondItem="oVZ-oK-eUb" secondAttribute="bottom" constant="8" id="Zsd-vn-vjh"/>
                                     <constraint firstItem="xE4-J4-AJU" firstAttribute="leading" secondItem="jXq-nN-8Qt" secondAttribute="leading" id="aqa-r6-V7B"/>
                                     <constraint firstItem="DyW-hQ-mCU" firstAttribute="leading" secondItem="jXq-nN-8Qt" secondAttribute="leading" id="e9E-Yn-YPE"/>
                                     <constraint firstItem="DyW-hQ-mCU" firstAttribute="bottom" secondItem="jXq-nN-8Qt" secondAttribute="bottom" id="hPI-wD-VXy"/>
@@ -1827,7 +1827,7 @@
                                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3TU-LC-75s" userLabel="graph view" customClass="BEMSimpleLineGraphView">
+                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3TU-LC-75s" userLabel="graph view" customClass="BEMSimpleLineGraphView">
                                                     <rect key="frame" x="0.0" y="70" width="560" height="25"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 </view>

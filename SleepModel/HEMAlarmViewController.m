@@ -232,7 +232,6 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 {
     NSString* identifier, *title = nil, *detail = nil;
     BOOL switchState = NO;
-    UIColor* textColor = [UIColor darkGrayColor];
     switch (indexPath.row) {
         case HEMAlarmTableSmartIndex:
             identifier = [HEMMainStoryboard alarmSwitchCellReuseIdentifier];
@@ -242,12 +241,7 @@ static NSUInteger const HEMAlarm24HourCount = 24;
         case HEMAlarmTableSoundIndex:
             identifier = [HEMMainStoryboard alarmSoundCellReuseIdentifier];
             title = NSLocalizedString(@"alarm.sound.title", nil);
-            if (self.alarmCache.soundName) {
-                detail = self.alarmCache.soundName;
-            } else {
-                detail = NSLocalizedString(@"alarm.sound.no-selection", nil);
-                textColor = [UIColor redColor];
-            }
+            detail = self.alarmCache.soundName ?: NSLocalizedString(@"alarm.sound.no-selection", nil);
             break;
         case HEMAlarmTableRepeatIndex:
             identifier = [HEMMainStoryboard alarmRepeatCellReuseIdentifier];
@@ -261,7 +255,6 @@ static NSUInteger const HEMAlarm24HourCount = 24;
     HEMAlarmTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     cell.titleLabel.text = title;
     cell.detailLabel.text = detail;
-    cell.detailLabel.textColor = textColor;
     cell.smartSwitch.on = switchState;
     return cell;
 }

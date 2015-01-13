@@ -45,11 +45,13 @@
     UIBarButtonItem* loadItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
     controller.navigationItem.rightBarButtonItem = loadItem;
     [indicatorView startAnimating];
+    __weak typeof(controller) weakController = controller;
     [SENAPIAlarms alarmsWithCompletion:^(NSArray* alarms, NSError* error) {
+        __strong typeof(weakController) strongController = weakController;
         if (error) {
             [self showError:error
                   withTitle:NSLocalizedString(@"alarm.load-error.title", nil)
-               onController:controller];
+               onController:strongController];
         } else {
             [SENAlarm clearSavedAlarms];
             for (SENAlarm* alarm in alarms) {
@@ -57,7 +59,7 @@
             }
         }
         [indicatorView stopAnimating];
-        controller.navigationItem.rightBarButtonItem = rightButton;
+        strongController.navigationItem.rightBarButtonItem = rightButton;
         if (completion)
             completion(error);
     }];

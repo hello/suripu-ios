@@ -288,6 +288,7 @@
 "alarm.time-explanation.title" = "Why is alarm time flexible?";
 "alarm.time-explanation.message" = "Sense monitors your sleep depth and determines the best time to start the alarm in the minutes before you need to awaken.";
 "alarm.clock.divider" = ":";
+"alarm.sound.no-selection" = "None selected";
 
 "alarm.repeat.days.weekdays" = "Weekdays";
 "alarm.repeat.days.weekends" = "Weekends";

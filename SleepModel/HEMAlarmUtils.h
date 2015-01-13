@@ -30,5 +30,5 @@
  *  @param completion block invoked at completion
  */
 + (void)refreshAlarmsFromPresentingController:(UIViewController*)controller
-                                   completion:(void (^)())completion;
+                                   completion:(void (^)(NSError*))completion;
 @end

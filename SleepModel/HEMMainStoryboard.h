@@ -24,6 +24,7 @@
 +(NSString *)warningReuseIdentifier;
 +(NSString *)actionsReuseIdentifier;
 +(NSString *)alarmListCellReuseIdentifier;
++(NSString *)alarmListEmptyCellReuseIdentifier;
 +(NSString *)alarmChoiceCellReuseIdentifier;
 +(NSString *)sensorGraphCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;

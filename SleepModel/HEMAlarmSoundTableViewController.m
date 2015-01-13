@@ -3,9 +3,11 @@
 #import <SenseKit/SENAPIAlarms.h>
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENSound.h>
+#import <SpinKit/RTSpinKitView.h>
 
 #import "UIFont+HEMStyle.h"
 #import "HEMAlarmSoundTableViewController.h"
+#import "HEMAlarmPropertyTableViewCell.h"
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
@@ -16,6 +18,7 @@
 @property (nonatomic, strong) AVAudioPlayer* player;
 @property (nonatomic, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSOperationQueue* loadingQueue;
+@property (nonatomic, strong) NSIndexPath* loadingIndexPath;
 @end
 
 @implementation HEMAlarmSoundTableViewController
@@ -92,17 +95,17 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmChoiceCellReuseIdentifier] forIndexPath:indexPath];
+    NSString* identifier = [HEMMainStoryboard alarmChoiceCellReuseIdentifier];
+    HEMAlarmPropertyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier
+                                                                          forIndexPath:indexPath];
 
     SENSound* sound = [self.possibleSleepSounds objectAtIndex:indexPath.row];
-    cell.textLabel.text = sound.displayName;
-
-    if ([sound.displayName isEqualToString:self.alarmCache.soundName]) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    } else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
-
+    cell.titleLabel.text = sound.displayName;
+    cell.disclosureImageView.hidden = ![sound.displayName isEqualToString:self.alarmCache.soundName];
+    if ([self.loadingIndexPath isEqual:indexPath])
+        [cell.loadingIndicatorView startAnimating];
+    else
+        [cell.loadingIndicatorView stopAnimating];
     return cell;
 }
 
@@ -111,12 +114,12 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSUInteger index = NSNotFound;
+    NSUInteger previousSelectionIndex = NSNotFound;
     for (int i = 0; i < self.possibleSleepSounds.count; i++) {
         SENSound* sound = self.possibleSleepSounds[i];
         if ([sound.displayName isEqualToString:self.alarmCache.soundName]) {
-            index = i;
-            if (indexPath.row == index)
+            previousSelectionIndex = i;
+            if (indexPath.row == previousSelectionIndex)
                 return;
             break;
         }
@@ -125,21 +128,22 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
     SENSound* sound = [self.possibleSleepSounds objectAtIndex:indexPath.row];
     self.alarmCache.soundName = sound.displayName;
     self.alarmCache.soundID = sound.identifier;
-    [self playAudioForSound:sound];
-    if (index != NSNotFound) {
+    self.loadingIndexPath = indexPath;
+    if (previousSelectionIndex != NSNotFound) {
         NSArray* indexPaths = @[
-            [NSIndexPath indexPathForRow:index inSection:0],
+            [NSIndexPath indexPathForRow:previousSelectionIndex inSection:0],
             indexPath
         ];
         [tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
     } else {
         [tableView reloadData];
     }
+    [self playAudioForSound:sound atIndexPath:indexPath];
 }
 
 #pragma mark - Audio
 
-- (void)playAudioForSound:(SENSound*)sound
+- (void)playAudioForSound:(SENSound*)sound atIndexPath:(NSIndexPath*)indexPath
 {
     [self stopAudio];
     [self.loadingQueue cancelAllOperations];
@@ -150,21 +154,36 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
         if (!urlData)
             return;
         [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
+            [self stopLoadingAnimation];
             NSError* error = nil;
             self.player = [[AVAudioPlayer alloc] initWithData:urlData error:&error];
             self.player.delegate = self;
             if (error)
                 [self stopAudio];
             else
-                [self.player play];
+                [self playAudio];
         }]];
     }]];
+}
+
+- (void)playAudio
+{
+    [self.player play];
 }
 
 - (void)stopAudio
 {
     [self.player stop];
     self.player = nil;
+}
+
+- (void)stopLoadingAnimation
+{
+    if (self.loadingIndexPath) {
+        NSIndexPath* indexPath = self.loadingIndexPath;
+        self.loadingIndexPath = nil;
+        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
+    }
 }
 
 #pragma mark AVAudioPlayerDelegate

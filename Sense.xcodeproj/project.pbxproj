@@ -258,6 +258,10 @@
 		8AF4FA6E1A12F46F00451245 /* stopSound@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF4FA6B1A12F46F00451245 /* stopSound@3x.png */; };
 		8AF4FA731A14129C00451245 /* HEMAudioCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF4FA721A14129C00451245 /* HEMAudioCache.m */; };
 		8AF5A39C19C102D30009A499 /* chevronIconRight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AC4A0481989D47000C2BD63 /* chevronIconRight@2x.png */; };
+		8AFD8A191A649F3900124CCE /* checkmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD8A161A649F3900124CCE /* checkmark.png */; };
+		8AFD8A1A1A649F3900124CCE /* checkmark@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD8A171A649F3900124CCE /* checkmark@2x.png */; };
+		8AFD8A1B1A649F3900124CCE /* checkmark@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFD8A181A649F3900124CCE /* checkmark@3x.png */; };
+		8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AFD8A1D1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m */; };
 		8AFE77E519E8C2170000F881 /* asleep.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE779719E8C2170000F881 /* asleep.png */; };
 		8AFE77E619E8C2170000F881 /* asleep@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE779819E8C2170000F881 /* asleep@2x.png */; };
 		8AFE77E719E8C2170000F881 /* asleep@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AFE779919E8C2170000F881 /* asleep@3x.png */; };
@@ -892,6 +896,11 @@
 		8AF4FA6B1A12F46F00451245 /* stopSound@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "stopSound@3x.png"; path = "images/stopSound@3x.png"; sourceTree = "<group>"; };
 		8AF4FA711A14129C00451245 /* HEMAudioCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAudioCache.h; sourceTree = "<group>"; };
 		8AF4FA721A14129C00451245 /* HEMAudioCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAudioCache.m; sourceTree = "<group>"; };
+		8AFD8A161A649F3900124CCE /* checkmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = checkmark.png; path = images/checkmark.png; sourceTree = "<group>"; };
+		8AFD8A171A649F3900124CCE /* checkmark@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checkmark@2x.png"; path = "images/checkmark@2x.png"; sourceTree = "<group>"; };
+		8AFD8A181A649F3900124CCE /* checkmark@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "checkmark@3x.png"; path = "images/checkmark@3x.png"; sourceTree = "<group>"; };
+		8AFD8A1C1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmPropertyTableViewCell.h; sourceTree = "<group>"; };
+		8AFD8A1D1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmPropertyTableViewCell.m; sourceTree = "<group>"; };
 		8AFE779719E8C2170000F881 /* asleep.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = asleep.png; path = images/asleep.png; sourceTree = "<group>"; };
 		8AFE779819E8C2170000F881 /* asleep@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "asleep@2x.png"; path = "images/asleep@2x.png"; sourceTree = "<group>"; };
 		8AFE779919E8C2170000F881 /* asleep@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "asleep@3x.png"; path = "images/asleep@3x.png"; sourceTree = "<group>"; };
@@ -1571,6 +1580,9 @@
 				8A1E723019D62C26007475D3 /* alarmSoundIcon.png */,
 				8A1E723119D62C26007475D3 /* alarmSoundIcon@2x.png */,
 				8AA1580D1A5EFD9500BF1D4A /* alarmSoundIcon@3x.png */,
+				8AFD8A161A649F3900124CCE /* checkmark.png */,
+				8AFD8A171A649F3900124CCE /* checkmark@2x.png */,
+				8AFD8A181A649F3900124CCE /* checkmark@3x.png */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -2053,6 +2065,8 @@
 				8AB2683819CCFDB400017818 /* HEMAlarmAddButton.m */,
 				8A7D80471A421B7300B0BFD7 /* HEMAlarmListCell.h */,
 				8A7D80481A421B7300B0BFD7 /* HEMAlarmListCell.m */,
+				8AFD8A1C1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.h */,
+				8AFD8A1D1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m */,
 				8A91F2A41A44DB3D00F211B4 /* HEMAlarmTableViewCell.h */,
 				8A91F2A51A44DB3D00F211B4 /* HEMAlarmTableViewCell.m */,
 			);
@@ -2719,6 +2733,7 @@
 				8AAEED0919A5225F006517C4 /* Agile-Light.otf in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
 				8A63D55B1A5F47A300F5307D /* unknownEventIcon.png in Resources */,
+				8AFD8A1A1A649F3900124CCE /* checkmark@2x.png in Resources */,
 				BFE872F01A2FC65600494231 /* sensorHumidity@3x.png in Resources */,
 				BF9C87D419B6A001003188D4 /* sleep_pill.png in Resources */,
 				8AA157F51A5EFD6B00BF1D4A /* lightEventIcon@3x.png in Resources */,
@@ -2878,6 +2893,7 @@
 				8A66FC95199D24FF00922ED5 /* maleIcon.png in Resources */,
 				BFB0FBE419D377380056FFEC /* senseIcon@2x.png in Resources */,
 				BFE873051A2FC65600494231 /* sensorSoundBlue@3x.png in Resources */,
+				8AFD8A1B1A649F3900124CCE /* checkmark@3x.png in Resources */,
 				8AFE780D19E8C2170000F881 /* phone-bad@2x.png in Resources */,
 				BF14E3BC19EF3BD10006EFEA /* map@3x.png in Resources */,
 				8A7D803D1A41094300B0BFD7 /* senseBarIcon@3x.png in Resources */,
@@ -2953,6 +2969,7 @@
 				8A93AFCF1A09BF0300F70A8B /* pillIcon@3x.png in Resources */,
 				8A4B669519EC7EF800445883 /* HEMPresleepItemCollectionViewCell.xib in Resources */,
 				BFE872F91A2FC65600494231 /* sensorLightBlue@3x.png in Resources */,
+				8AFD8A191A649F3900124CCE /* checkmark.png in Resources */,
 				8AAEECFB19A5225F006517C4 /* Agile-Black.otf in Resources */,
 				8AA157E91A5EFD6B00BF1D4A /* grayLightIcon@3x.png in Resources */,
 				8AA158021A5EFD6B00BF1D4A /* sunriseEventIcon.png in Resources */,
@@ -3195,6 +3212,7 @@
 				BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */,
 				8A4B3D491992CB4500856BDE /* HEMRoundedTextField.m in Sources */,
 				BFF03ECA1A536D8C00BD65D4 /* HEMSystemAlertController.m in Sources */,
+				8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */,
 				8A1743BB19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m in Sources */,
 				BF05C8F01A3A830D002A1307 /* HEMResponseCell.m in Sources */,
 				8AC3C2E21A3C8CC90074A87F /* HEMSnazzBarButton.m in Sources */,

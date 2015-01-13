@@ -1,6 +1,7 @@
 
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENSettings.h>
+#import <SpinKit/RTSpinKitView.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -12,17 +13,18 @@
 #import "HEMAlarmAddButton.h"
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
-#import "HEMSinkModalTransitionDelegate.h"
+#import "HEMMarkdown.h"
 
-@interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate, HEMAlarmControllerDelegate>
+@interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate>
 
 @property (strong, nonatomic) NSArray* alarms;
 @property (weak, nonatomic) IBOutlet UICollectionView* collectionView;
 @property (weak, nonatomic) IBOutlet HEMAlarmAddButton* addButton;
+@property (weak, nonatomic) IBOutlet UILabel* noAlarmLabel;
+@property (weak, nonatomic) IBOutlet RTSpinKitView* spinnerView;
 @property (strong, nonatomic) NSDateFormatter* hour24Formatter;
 @property (strong, nonatomic) NSDateFormatter* hour12Formatter;
 @property (strong, nonatomic) NSDateFormatter* meridiemFormatter;
-@property (strong, nonatomic) HEMSinkModalTransitionDelegate *presentationTransitionDelegate;
 @end
 
 @implementation HEMAlarmListViewController
@@ -30,6 +32,7 @@
 static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
+static CGFloat const HEMAlarmListEmptyCellHeight = 208.f;
 static NSString* const HEMAlarmTimeFormat = @"%ld:%@";
 static NSString* const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 static NSUInteger const HEMAlarmListLimit = 8;
@@ -45,10 +48,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.presentationTransitionDelegate = [HEMSinkModalTransitionDelegate new];
-    self.presentationTransitionDelegate.sinkView = self.view;
     [self configureCollectionView];
     [self configureAddButton];
+    [self configureSpinnerView];
+    [self configureNoAlarmInstructions];
     [self configureDateFormatters];
     [self refreshAlarmList];
 }
@@ -75,6 +78,26 @@ static NSUInteger const HEMAlarmListLimit = 8;
              forControlEvents:UIControlEventTouchUpOutside];
 }
 
+- (void)configureNoAlarmInstructions
+{
+    NSDictionary* attributes = @{ NSKernAttributeName: @(1.2), NSFontAttributeName: [UIFont insightTitleFont] };
+    NSString* instructions = NSLocalizedString(@"alarms.no-alarm.instructions", nil);
+    self.noAlarmLabel.attributedText = [[NSAttributedString alloc] initWithString:[instructions uppercaseString]
+                                                                       attributes:attributes];
+
+}
+
+- (void)configureSpinnerView
+{
+    self.spinnerView.hidesWhenStopped = YES;
+    self.spinnerView.color = [UIColor whiteColor];
+    self.spinnerView.spinnerSize = CGRectGetHeight(self.spinnerView.bounds);
+    self.spinnerView.style = RTSpinKitViewStyleThreeBounce;
+    self.spinnerView.hidesWhenStopped = YES;
+    self.spinnerView.backgroundColor = [UIColor clearColor];
+    [self.spinnerView stopAnimating];
+}
+
 - (void)configureDateFormatters
 {
     self.hour12Formatter = [NSDateFormatter new];
@@ -88,9 +111,15 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)refreshAlarmList
 {
     self.addButton.enabled = NO;
-    [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^{
-        [self reloadData];
-        [self.collectionView reloadData];
+    [self.spinnerView startAnimating];
+    [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^(NSError* error) {
+        [self.spinnerView stopAnimating];
+        if (!error) {
+            HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
+            [layout clearCache];
+            [self reloadData];
+            [self.collectionView reloadData];
+        }
         self.addButton.enabled = YES;
     }];
 }
@@ -102,6 +131,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
         NSNumber* alarmValue2 = @(obj2.hour * 60 + obj2.minute);
         return [alarmValue1 compare:alarmValue2];
     }];
+    self.noAlarmLabel.hidden = self.alarms.count > 0;
     self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
 }
 
@@ -167,8 +197,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
     HEMAlarmViewController* alarmController = (HEMAlarmViewController*)controller.topViewController;
     alarmController.alarm = alarm;
     alarmController.delegate = self;
-    controller.modalPresentationStyle = UIModalPresentationCustom;
-    controller.transitioningDelegate = self.presentationTransitionDelegate;
     [self presentViewController:controller animated:YES completion:nil];
 }
 
@@ -192,7 +220,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
 {
     CGRect bounds = [[UIScreen mainScreen] bounds];
     HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
-    [layout setItemHeight:HEMAlarmListCellHeight];
     UIEdgeInsets sectionInsets = layout.sectionInset;
     sectionInsets.bottom = CGRectGetHeight(bounds) - CGRectGetMinY(self.addButton.frame);
     layout.sectionInset = sectionInsets;
@@ -202,26 +229,47 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.alarms.count;
+    return self.alarms.count > 0 ? self.alarms.count : 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString* identifier = [HEMMainStoryboard alarmListCellReuseIdentifier];
-    HEMAlarmListCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    [self configureCell:cell atIndexPath:indexPath];
-    return cell;
+    if (self.alarms.count > 0) {
+        return [self collectionView:collectionView alarmCellAtIndexPath:indexPath];
+    } else {
+        return [self collectionView:collectionView emptyCellAtIndexPath:indexPath];
+    }
 }
 
-- (void)configureCell:(HEMAlarmListCell *)cell atIndexPath:(NSIndexPath *)indexPath
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                    alarmCellAtIndexPath:(NSIndexPath *)indexPath
 {
+    NSString* identifier = [HEMMainStoryboard alarmListCellReuseIdentifier];
+    HEMAlarmListCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     SENAlarm* alarm = self.alarms[indexPath.item];
 
     cell.enabledSwitch.on = [alarm isOn];
     cell.enabledSwitch.tag = indexPath.item;
     [self updateDetailTextInCell:cell fromAlarm:alarm];
     [self updateTimeTextInCell:cell fromAlarm:alarm];
+    return cell;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                    emptyCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* identifier = [HEMMainStoryboard alarmListEmptyCellReuseIdentifier];
+    HEMAlarmListCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
+    style.lineSpacing = 8.f;
+    NSDictionary* detailAttributes = @{NSParagraphStyleAttributeName:style};
+    cell.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"alarms.no-alarm.message", nil)
+                                                                      attributes:detailAttributes];
+    NSDictionary* attributes = [HEMMarkdown attributesForInsightTitleViewText];
+    NSString* title = [NSLocalizedString(@"alarms.no-alarm.title", nil) uppercaseString];
+    cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:title attributes:attributes];
+    return cell;
 }
 
 - (void)updateTimeTextInCell:(HEMAlarmListCell *)cell fromAlarm:(SENAlarm *)alarm
@@ -248,12 +296,12 @@ static NSUInteger const HEMAlarmListLimit = 8;
     NSString* repeatText = [HEMAlarmUtils repeatTextForUnitFlags:alarm.repeatFlags];
     NSString* detailText = [[NSString stringWithFormat:detailFormat, repeatText] uppercaseString];
     NSDictionary* attributes = @{
-        NSFontAttributeName : cell.detailLabel.font,
-        NSForegroundColorAttributeName : cell.detailLabel.textColor,
+        NSFontAttributeName : cell.titleLabel.font,
+        NSForegroundColorAttributeName : cell.titleLabel.textColor,
         NSKernAttributeName : @(1.3f)
     };
 
-    cell.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:detailText attributes:attributes];
+    cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:detailText attributes:attributes];
 }
 
 - (NSString *)localizedTimeForAlarm:(SENAlarm *)alarm
@@ -279,6 +327,12 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];
     SENAlarm* alarm = [self.alarms objectAtIndex:indexPath.item];
     [self presentViewControllerForAlarm:alarm];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    UICollectionViewFlowLayout* layout = (id)collectionViewLayout;
+    return CGSizeMake(layout.itemSize.width, self.alarms.count > 0 ? HEMAlarmListCellHeight : HEMAlarmListEmptyCellHeight);
 }
 
 @end

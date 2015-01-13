@@ -264,6 +264,9 @@
 "alarms.alarm.format" = "Alarm — %@";
 "alarms.alarm.meridiem.am" = "AM";
 "alarms.alarm.meridiem.pm" = "PM";
+"alarms.no-alarm.title" = "Smart alarms";
+"alarms.no-alarm.message" = "Sense's Smart Alarm will wake you up at just the right moment in your sleep cycle, so you wake feeling rested. Once set, your alarms will appear here.";
+"alarms.no-alarm.instructions" = "Set your first smart alarm";
 
 // alarm settings
 "alarm.time-range.format" = "Wake up between *%@* and *%@*";
@@ -278,13 +281,14 @@
 "alarm.repeat.days.all" = "Everyday";
 "alarm.smart.title" = "Smart Alarm";
 "alarm.delete.title" = "Delete Alarm";
-"alarm.save-error.title" = "Alarms could not be saved";
+"alarm.save-error.title" = "Alarm could not be saved";
 "alarm.load-error.title" = "Alarms could not be loaded";
 "alarm.delete.confirm.title" = "Delete Alarm";
 "alarm.delete.confirm.message" = "Are you sure you wish to delete this alarm?";
 "alarm.time-explanation.title" = "Why is alarm time flexible?";
 "alarm.time-explanation.message" = "Sense monitors your sleep depth and determines the best time to start the alarm in the minutes before you need to awaken.";
 "alarm.clock.divider" = ":";
+"alarm.sound.no-selection" = "None selected";
 
 "alarm.repeat.days.weekdays" = "Weekdays";
 "alarm.repeat.days.weekends" = "Weekends";
@@ -309,6 +313,7 @@
 
 "alarm.sounds.error.title" = "Could not load sounds";
 "alarm.sounds.error.message" = "Available alarm sounds could not be loaded at this time. Tap 'Refresh' to try again.";
+"alarm.sounds.error.no-selection.message" = "Please select a sound for this alarm.";
 
 // background noise
 "noise.state.enabled" = "Enabled";

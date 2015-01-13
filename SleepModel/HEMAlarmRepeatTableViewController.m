@@ -7,6 +7,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
 #import "HEMAlertController.h"
+#import "HEMAlarmPropertyTableViewCell.h"
 #import "HelloStyleKit.h"
 
 @interface HEMAlarmRepeatTableViewController ()
@@ -47,18 +48,14 @@
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
 {
-    UITableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard alarmChoiceCellReuseIdentifier] forIndexPath:indexPath];
+    NSString* identifier = [HEMMainStoryboard alarmChoiceCellReuseIdentifier];
+    HEMAlarmPropertyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier
+                                                                          forIndexPath:indexPath];
 
     NSString* text = [self.repeatOptions objectAtIndex:indexPath.row];
     NSUInteger day = [self repeatDayForIndexPath:indexPath];
-    cell.textLabel.text = text;
-
-    if ((self.alarmCache.repeatFlags & day) == day) {
-        cell.accessoryType = UITableViewCellAccessoryCheckmark;
-    }
-    else {
-        cell.accessoryType = UITableViewCellAccessoryNone;
-    }
+    cell.titleLabel.text = text;
+    cell.disclosureImageView.hidden = (self.alarmCache.repeatFlags & day) != day;
 
     return cell;
 }

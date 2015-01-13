@@ -145,6 +145,12 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 
 - (IBAction)saveAndDismissFromView:(id)sender
 {
+    if (!self.alarmCache.soundID) {
+        [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.save-error.title", nil)
+                                              message:NSLocalizedString(@"alarm.sounds.error.no-selection.message", nil)
+                                 presentingController:self];
+        return;
+    }
     [self updateAlarmFromCache:self.alarmCache];
     __weak typeof(self) weakSelf = self;
     [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {

@@ -33,6 +33,7 @@
     [super viewDidLoad];
 
     [self setupSubtitle];
+    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [self enableBackButton:NO];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBLocation];   

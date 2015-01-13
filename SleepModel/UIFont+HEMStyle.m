@@ -151,7 +151,7 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont* )secondaryButtonFont {
-    return [UIFont fontWithName:HEMFontFamilyNameBook size:15.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameBook size:16.0f];
 }
 
 + (UIFont *)navButtonTitleFont {

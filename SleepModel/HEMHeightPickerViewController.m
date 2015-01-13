@@ -38,6 +38,7 @@ static NSInteger HEMMaxHeightInFeet = 9;
     [super viewDidLoad];
 
     [self setNumberOfRows:HEMMaxHeightInFeet+1]; // include 0
+    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [self configureSlider];
     

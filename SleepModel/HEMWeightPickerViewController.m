@@ -42,6 +42,7 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [self setupCarousel];
     

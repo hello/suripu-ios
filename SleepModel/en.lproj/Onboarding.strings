@@ -68,8 +68,8 @@
 /* Class = "IBUILabel"; text = "Log in"; ObjectID = "Fcs-EL-Ys6"; */
 "Fcs-EL-Ys6.text" = "LOG IN";
 
-/* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "GFw-g6-B5s"; */
-"GFw-g6-B5s.normalTitle" = "Skip";
+/* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "GFw-g6-B5s"; */
+"GFw-g6-B5s.normalTitle" = "Skip for now";
 
 /* Class = "IBUIButton"; normalTitle = "Scan"; ObjectID = "IJB-u8-jcX"; */
 "IJB-u8-jcX.normalTitle" = "Scan";
@@ -101,8 +101,8 @@
 /* Class = "IBUILabel"; text = "Are you male or female?"; ObjectID = "S9f-tS-yQg"; */
 "S9f-tS-yQg.text" = "Are you male or female?";
 
-/* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "SVC-vN-68T"; */
-"SVC-vN-68T.normalTitle" = "Skip";
+/* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "SVC-vN-68T"; */
+"SVC-vN-68T.normalTitle" = "Skip for now";
 
 /* Class = "IBUIButton"; normalTitle = "Set Location"; ObjectID = "Sdf-8C-14E"; */
 "Sdf-8C-14E.normalTitle" = "SET LOCATION";
@@ -152,8 +152,8 @@
 /* Class = "IBUILabel"; text = "This information is used to provide personalized sleep insights"; ObjectID = "f5o-GP-Ma1"; */
 "f5o-GP-Ma1.text" = "This information is used to provide personalized sleep insights";
 
-/* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "f7Z-44-JvY"; */
-"f7Z-44-JvY.normalTitle" = "Skip";
+/* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "f7Z-44-JvY"; */
+"f7Z-44-JvY.normalTitle" = "Skip for now";
 
 /* Class = "IBUIButton"; normalTitle = "NEXT"; ObjectID = "gMf-fl-V5h"; */
 "gMf-fl-V5h.normalTitle" = "NEXT";
@@ -224,8 +224,8 @@
 /* Class = "IBUIButton"; normalTitle = "I'm having trouble"; ObjectID = "rIf-wQ-F1B"; */
 "rIf-wQ-F1B.normalTitle" = "I'm having trouble";
 
-/* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "tOK-gj-1np"; */
-"tOK-gj-1np.normalTitle" = "Skip";
+/* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "tOK-gj-1np"; */
+"tOK-gj-1np.normalTitle" = "Skip for now";
 
 /* Class = "IBUIButton"; normalTitle = "Log In"; ObjectID = "tuz-ez-XXK"; */
 "tuz-ez-XXK.normalTitle" = "LOG IN";
@@ -233,14 +233,14 @@
 /* Class = "IBUILabel"; text = "scroll vertically"; ObjectID = "uXe-Qh-ePF"; */
 "uXe-Qh-ePF.text" = "scroll vertically";
 
-/* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "v1o-Yc-LWQ"; */
-"v1o-Yc-LWQ.normalTitle" = "Skip";
+/* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "v1o-Yc-LWQ"; */
+"v1o-Yc-LWQ.normalTitle" = "Skip for now";
 
 /* Class = "IBUIButton"; normalTitle = "NEXT"; ObjectID = "vwe-Kd-JLe"; */
 "vwe-Kd-JLe.normalTitle" = "NEXT";
 
-/* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "wdU-1v-eC1"; */
-"wdU-1v-eC1.normalTitle" = "Skip";
+/* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "wdU-1v-eC1"; */
+"wdU-1v-eC1.normalTitle" = "Skip for now";
 
 /* Class = "IBUILabel"; text = "Pair your Sense"; ObjectID = "xHT-0z-rBN"; */
 "xHT-0z-rBN.text" = "Pair your Sense";

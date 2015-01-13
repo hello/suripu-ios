@@ -35,6 +35,8 @@
 
     [self setSelectedColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.05f]];
     [self setSelectedBorderColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.4f]];
+    
+    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [self configureSelectors];
     

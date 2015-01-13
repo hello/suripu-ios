@@ -41,6 +41,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
 
     [self loadAccount:nil]; // if does not yet exist, in case user returns to here
     [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
+    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     
     if ([self delegate] != nil) {
         NSString* done = NSLocalizedString(@"status.success", nil);

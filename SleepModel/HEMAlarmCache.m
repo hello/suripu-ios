@@ -20,6 +20,7 @@
     self.soundName = alarm.soundName;
     self.smart = [alarm isSmartAlarm];
     self.repeatFlags = alarm.repeatFlags;
+    self.soundID = alarm.soundID;
 }
 
 @end

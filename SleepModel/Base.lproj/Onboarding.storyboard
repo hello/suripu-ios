@@ -223,6 +223,7 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
+                                    <segue destination="fc9-7S-Ult" kind="push" id="AeH-we-M5c"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -993,32 +994,37 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Set up another Sleep Pill?" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDs-8j-Vd9">
-                                <rect key="frame" x="20" y="24" width="560" height="34"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set up another Sleep Pill?" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDs-8j-Vd9">
+                                <rect key="frame" x="20" y="24" width="560" height="29"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMZ-p6-gA8">
-                                <rect key="frame" x="20" y="69" width="560" height="54"/>
-                                <attributedString key="attributedText">
-                                    <fragment>
-                                        <string key="content">Would you like to set up a second Sleep Pill for your partner at this time?
-
-You can always do this later by visiting Settings.</string>
-                                        <attributes>
-                                            <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <font key="NSFont" size="18" name="Calibre-Thin"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You can always do this later by visiting Settings." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iMZ-p6-gA8">
+                                <rect key="frame" x="20" y="63" width="560" height="25"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4OB-Af-zlr" customClass="HEMActionButton">
-                                <rect key="frame" x="20" y="485" width="560" height="50"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bxA-UX-1gL">
+                                <rect key="frame" x="20" y="108" width="560" height="301"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pairOfPills.png" translatesAutoresizingMaskIntoConstraints="NO" id="woJ-aC-K2e">
+                                        <rect key="frame" x="70" y="70" width="420" height="161"/>
+                                    </imageView>
+                                </subviews>
+                                <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="RjA-PZ-gHY"/>
+                                    <constraint firstAttribute="bottom" secondItem="woJ-aC-K2e" secondAttribute="bottom" constant="70" id="Gac-75-ZcL"/>
+                                    <constraint firstItem="woJ-aC-K2e" firstAttribute="leading" secondItem="bxA-UX-1gL" secondAttribute="leading" constant="70" id="Lpf-YQ-JkS"/>
+                                    <constraint firstAttribute="trailing" secondItem="woJ-aC-K2e" secondAttribute="trailing" constant="70" id="V4r-tx-z2d"/>
+                                    <constraint firstItem="woJ-aC-K2e" firstAttribute="top" secondItem="bxA-UX-1gL" secondAttribute="top" constant="70" id="zbF-St-jcn"/>
+                                </constraints>
+                            </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4OB-Af-zlr">
+                                <rect key="frame" x="20" y="480" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="2ud-UG-uNl"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -1030,16 +1036,15 @@ You can always do this later by visiting Settings.</string>
                                     <action selector="setupAnother:" destination="fc9-7S-Ult" eventType="touchUpInside" id="zRR-q2-uq1"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kgp-n3-6dl">
-                                <rect key="frame" x="190" y="543" width="220" height="40"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kgp-n3-6dl" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="40" id="4VF-7S-2VN"/>
-                                    <constraint firstAttribute="width" constant="220" id="puQ-iD-jxx"/>
+                                    <constraint firstAttribute="height" constant="50" id="RO7-yz-HfF"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="No Thanks">
-                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="NO THANKS">
+                                    <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -1049,24 +1054,23 @@ You can always do this later by visiting Settings.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="eDs-8j-Vd9" firstAttribute="bottom" secondItem="iMZ-p6-gA8" secondAttribute="top" constant="-16" id="1gs-Ml-IUQ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="eDs-8j-Vd9" secondAttribute="trailing" constant="4" id="1pn-3L-DDC"/>
-                            <constraint firstAttribute="centerX" secondItem="4OB-Af-zlr" secondAttribute="centerX" id="2yW-ue-NM0"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="4OB-Af-zlr" secondAttribute="trailing" constant="4" id="3ex-26-792"/>
-                            <constraint firstItem="eDs-8j-Vd9" firstAttribute="top" secondItem="mVd-qk-DaN" secondAttribute="bottom" constant="4" id="62J-hd-6bD"/>
-                            <constraint firstItem="Kgp-n3-6dl" firstAttribute="top" secondItem="4OB-Af-zlr" secondAttribute="top" constant="58" id="Rkc-LI-And"/>
-                            <constraint firstItem="RB7-rd-PIm" firstAttribute="top" secondItem="Kgp-n3-6dl" secondAttribute="bottom" constant="17" id="ST9-a9-Md8"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="iMZ-p6-gA8" secondAttribute="trailing" constant="4" id="ayV-M9-Zqt"/>
-                            <constraint firstAttribute="centerX" secondItem="Kgp-n3-6dl" secondAttribute="centerX" id="b7Y-0w-KoC"/>
-                            <constraint firstItem="4OB-Af-zlr" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="eAs-vU-wOf"/>
-                            <constraint firstItem="eDs-8j-Vd9" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="eGN-Fi-WW7"/>
-                            <constraint firstItem="iMZ-p6-gA8" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="jff-ga-LHX"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Kgp-n3-6dl" secondAttribute="trailing" constant="4" id="0ed-rE-cy9"/>
+                            <constraint firstItem="Kgp-n3-6dl" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="1ii-id-Ci0"/>
+                            <constraint firstItem="iMZ-p6-gA8" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="62G-n0-Vzc"/>
+                            <constraint firstItem="bxA-UX-1gL" firstAttribute="top" secondItem="iMZ-p6-gA8" secondAttribute="top" constant="45" id="8Iu-YI-SuT"/>
+                            <constraint firstItem="bxA-UX-1gL" firstAttribute="bottom" secondItem="4OB-Af-zlr" secondAttribute="bottom" constant="-121" id="Gty-nN-UHQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4OB-Af-zlr" secondAttribute="trailing" constant="4" id="PpE-iw-cAS"/>
+                            <constraint firstItem="Kgp-n3-6dl" firstAttribute="bottom" secondItem="4OB-Af-zlr" secondAttribute="bottom" constant="50" id="QvA-9p-3oy"/>
+                            <constraint firstItem="4OB-Af-zlr" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="WCu-NK-N0Z"/>
+                            <constraint firstItem="bxA-UX-1gL" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="YVg-7c-msQ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="bxA-UX-1gL" secondAttribute="trailing" constant="4" id="eOw-0b-h8N"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="iMZ-p6-gA8" secondAttribute="trailing" constant="4" id="fMd-wB-3nL"/>
+                            <constraint firstItem="eDs-8j-Vd9" firstAttribute="top" secondItem="mVd-qk-DaN" secondAttribute="bottom" constant="4" id="jPS-Yj-gaY"/>
+                            <constraint firstItem="RB7-rd-PIm" firstAttribute="top" secondItem="Kgp-n3-6dl" secondAttribute="bottom" constant="20" id="nLa-ju-6nb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="eDs-8j-Vd9" secondAttribute="trailing" constant="4" id="qtY-Yd-pW4"/>
+                            <constraint firstItem="eDs-8j-Vd9" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="upH-x0-BN0"/>
+                            <constraint firstItem="iMZ-p6-gA8" firstAttribute="top" secondItem="eDs-8j-Vd9" secondAttribute="top" constant="39" id="yxX-Tu-wZS"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="2yW-ue-NM0"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="k5R-E8-szC"/>
                     <connections>
@@ -2542,6 +2546,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="male.png" width="75" height="72"/>
         <image name="map.png" width="320" height="229"/>
         <image name="onboarding_bg_wide.png" width="470" height="588"/>
+        <image name="pairOfPills.png" width="180" height="117"/>
         <image name="play.png" width="75" height="75"/>
         <image name="sense.png" width="176" height="166"/>
         <image name="senseAppIcon.png" width="32" height="32"/>
@@ -2550,6 +2555,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     <inferredMetricsTieBreakers>
         <segue reference="azr-Tk-rB7"/>
         <segue reference="d9a-nc-483"/>
+        <segue reference="AeH-we-M5c"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

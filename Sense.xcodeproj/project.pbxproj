@@ -466,6 +466,9 @@
 		BFBA2B7A1A6482DA00C3AB80 /* senseAppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFBA2B771A6482DA00C3AB80 /* senseAppIcon.png */; };
 		BFBA2B7B1A6482DA00C3AB80 /* senseAppIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFBA2B781A6482DA00C3AB80 /* senseAppIcon@2x.png */; };
 		BFBA2B7C1A6482DA00C3AB80 /* senseAppIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFBA2B791A6482DA00C3AB80 /* senseAppIcon@3x.png */; };
+		BFBA2B801A64A3F400C3AB80 /* pairOfPills.png in Resources */ = {isa = PBXBuildFile; fileRef = BFBA2B7D1A64A3F400C3AB80 /* pairOfPills.png */; };
+		BFBA2B811A64A3F400C3AB80 /* pairOfPills@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFBA2B7E1A64A3F400C3AB80 /* pairOfPills@2x.png */; };
+		BFBA2B821A64A3F400C3AB80 /* pairOfPills@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFBA2B7F1A64A3F400C3AB80 /* pairOfPills@3x.png */; };
 		BFBECCE21A15706700335CC6 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFBECCE41A15706700335CC6 /* Onboarding.storyboard */; };
 		BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3AA0F19C27A610055D308 /* HEMSleepQuestionsViewController.m */; };
 		BFC8215319E7441200E09D5D /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215019E7441200E09D5D /* play.png */; };
@@ -1170,6 +1173,9 @@
 		BFBA2B771A6482DA00C3AB80 /* senseAppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = senseAppIcon.png; path = images/senseAppIcon.png; sourceTree = "<group>"; };
 		BFBA2B781A6482DA00C3AB80 /* senseAppIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "senseAppIcon@2x.png"; path = "images/senseAppIcon@2x.png"; sourceTree = "<group>"; };
 		BFBA2B791A6482DA00C3AB80 /* senseAppIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "senseAppIcon@3x.png"; path = "images/senseAppIcon@3x.png"; sourceTree = "<group>"; };
+		BFBA2B7D1A64A3F400C3AB80 /* pairOfPills.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pairOfPills.png; path = images/pairOfPills.png; sourceTree = "<group>"; };
+		BFBA2B7E1A64A3F400C3AB80 /* pairOfPills@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pairOfPills@2x.png"; path = "images/pairOfPills@2x.png"; sourceTree = "<group>"; };
+		BFBA2B7F1A64A3F400C3AB80 /* pairOfPills@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pairOfPills@3x.png"; path = "images/pairOfPills@3x.png"; sourceTree = "<group>"; };
 		BFBECCE31A15706700335CC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		BFBECCE61A15707100335CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
 		BFBECCE81A15707800335CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
@@ -1462,6 +1468,9 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BFBA2B7D1A64A3F400C3AB80 /* pairOfPills.png */,
+				BFBA2B7E1A64A3F400C3AB80 /* pairOfPills@2x.png */,
+				BFBA2B7F1A64A3F400C3AB80 /* pairOfPills@3x.png */,
 				BFBA2B771A6482DA00C3AB80 /* senseAppIcon.png */,
 				BFBA2B781A6482DA00C3AB80 /* senseAppIcon@2x.png */,
 				BFBA2B791A6482DA00C3AB80 /* senseAppIcon@3x.png */,
@@ -2674,6 +2683,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFBA2B821A64A3F400C3AB80 /* pairOfPills@3x.png in Resources */,
 				8A7D80441A41094300B0BFD7 /* trendsBarIcon.png in Resources */,
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
 				8AA158041A5EFD6B00BF1D4A /* sunriseEventIcon@3x.png in Resources */,
@@ -2806,6 +2816,7 @@
 				8AFE780319E8C2170000F881 /* particulates-bad.png in Resources */,
 				8AC4A0391989C36200C2BD63 /* particleIcon.png in Resources */,
 				8A93AFC21A09BED100F70A8B /* Share.png in Resources */,
+				BFBA2B811A64A3F400C3AB80 /* pairOfPills@2x.png in Resources */,
 				BF14E3BA19EF3BD10006EFEA /* map.png in Resources */,
 				8A9BD8BA19DDD02100B1E57E /* Calibre-Light.otf in Resources */,
 				8AA157E51A5EFD6B00BF1D4A /* grayHumidityIcon@2x.png in Resources */,
@@ -2952,6 +2963,7 @@
 				8AAEED0D19A5225F006517C4 /* Agile-Thin.otf in Resources */,
 				8AA158001A5EFD6B00BF1D4A /* sleepEventIcon@2x.png in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
+				BFBA2B801A64A3F400C3AB80 /* pairOfPills.png in Resources */,
 				BFB0FBFB19D4C3BD0056FFEC /* sleepInsightsIcon@2x.png in Resources */,
 				8AA157E81A5EFD6B00BF1D4A /* grayLightIcon@2x.png in Resources */,
 				8AA157FC1A5EFD6B00BF1D4A /* partnerEventIcon.png in Resources */,

@@ -15,14 +15,14 @@
 #import "HEMSetupAnotherPillViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingUtils.h"
-#import "HEMActionButton.h"
 #import "HEMOnboardingCache.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HelloStyleKit.h"
 
 @interface HEMSetupAnotherPillViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-@property (weak, nonatomic) IBOutlet HEMActionButton *setupButton;
+@property (weak, nonatomic) IBOutlet UIButton *setupButton;
 
 @end
 
@@ -31,20 +31,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self setupSubtitle];
+    [self configureButtons];
     [self enableBackButton:NO];
     [SENAnalytics track:kHEMAnalyticsEventOnBAnotherPill];
 }
 
+- (void)configureButtons {
+    [[[self setupButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [[self setupButton] setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
+}
+
 - (void)setupSubtitle {
-    NSString* format = NSLocalizedString(@"setup.second-pill.subtitle.format", nil);
-    NSString* settings = NSLocalizedString(@"setup.second-pill.settings", nil);
-    
-    NSArray* args = @[
-        [HEMOnboardingUtils boldAttributedText:settings withColor:[UIColor blackColor]]
-    ];
+    NSString* subtitle = NSLocalizedString(@"setup.second-pill.subtitle", nil);
 
     NSMutableAttributedString* attrSubtitle
-        = [[NSMutableAttributedString alloc] initWithFormat:format args:args];
+        = [[NSMutableAttributedString alloc] initWithString:subtitle];
     
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
     

@@ -289,8 +289,8 @@
 "alarm.repeat.days.saturday" = "Saturday";
 "alarm.repeat.days.sunday" = "Sunday";
 
-"alarm.repeat.day-reuse-error.title" = "Another alarm is already set";
-"alarm.repeat.day-reuse-error.message" = "Sense monitors your environment and predicts the perfect moment for you to awaken. Only one such alarm can be set for each day.";
+"alarm.repeat.day-reuse-error.title" = "Another Smart Alarm is set";
+"alarm.repeat.day-reuse-error.message" = "Currently, you can only set one Smart Alarm per day. You already have a Smart Alarm scheduled for this day.";
 
 "alarm.sounds.error.title" = "Could not load sounds";
 "alarm.sounds.error.message" = "Available alarm sounds could not be loaded at this time. Tap 'Refresh' to try again.";

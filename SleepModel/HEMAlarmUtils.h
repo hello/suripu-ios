@@ -31,4 +31,23 @@
  */
 + (void)refreshAlarmsFromPresentingController:(UIViewController*)controller
                                    completion:(void (^)(NSError*))completion;
+
+/**
+ *  Checks whether a repeating day is in use for a smart alarm
+ *
+ *  @param day           day of week
+ *  @param excludedAlarm an alarm to allow to use a particular day
+ *
+ *  @return YES if the day is in use by an alarm other than excludedAlarm
+ */
++ (BOOL)dayInUse:(NSUInteger)day excludingAlarm:(SENAlarm*)excludedAlarm;
+
+/**
+ *  Indicates which day of the week on which a non-repeating alarm will fire
+ *
+ *  @param alarm non-repeating alarm
+ *
+ *  @return a repeat day corresponding to the weekday of the alarm
+ */
++ (SENAlarmRepeatDays)fireDayForNonRepeatingAlarm:(SENAlarm*)alarm;
 @end

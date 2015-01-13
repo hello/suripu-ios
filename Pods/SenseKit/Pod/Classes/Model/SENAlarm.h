@@ -58,12 +58,11 @@ struct SENAlarmTime {
 - (instancetype)initWithDictionary:(NSDictionary*)dict;
 
 /**
- *  Change the time of an alarm by a specified number of minutes. Use of a
- *  negative number sets the time earlier.
+ *  The next date and time at which this alarm will fire
  *
- *  @param minutes number of minutes by which the alarm is incremented
+ *  @return a date
  */
-- (void)incrementAlarmTimeByMinutes:(NSInteger)minutes;
+- (NSDate*)nextRingDate;
 
 /**
  *  Calculates the time when a specified number of minutes are added.

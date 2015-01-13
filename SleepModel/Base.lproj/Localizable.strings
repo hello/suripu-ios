@@ -336,7 +336,7 @@
 "measurement.or" = "or";
 "measurement.particle.unit" = "";
 "measurement.light.unit" = "lx";
-"measurement.sound.unit" = "db";
+"measurement.sound.unit" = "dB";
 "measurement.cm.unit" = "cm";
 "measurement.kg.unit" = "kg";
 "measurement.lb.unit" = "lb";
@@ -345,7 +345,7 @@
 "measurement.temperature.format" = "%.f°";
 "measurement.percentage.format" = "%.f%%";
 "measurement.light.format" = "%.flx";
-"measurement.sound.format" = "%.fdb";
+"measurement.sound.format" = "%.fdB";
 "measurement.particle.format" = "%.0f";
 "measurement.cm.format" = "%ldcm";
 "measurement.ft.format" = "%ld'";

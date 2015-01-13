@@ -1644,14 +1644,24 @@
                                 <color key="textColor" red="0.72006647099447507" green="0.72006647099447507" blue="0.72006647099447507" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="On9-CD-o6r" customClass="RTSpinKitView">
+                                <rect key="frame" x="290" y="492" width="20" height="20"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="20" id="YyF-7X-lCb"/>
+                                    <constraint firstAttribute="height" constant="20" id="wFk-mt-EsJ"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="On9-CD-o6r" firstAttribute="centerY" secondItem="2BJ-ze-ubh" secondAttribute="centerY" constant="-2" id="DRc-NX-B7G"/>
                             <constraint firstAttribute="centerX" secondItem="2BJ-ze-ubh" secondAttribute="centerX" id="P2e-61-uUp"/>
                             <constraint firstAttribute="centerX" secondItem="F7L-4U-HrL" secondAttribute="centerX" id="RXK-Gh-6aL"/>
                             <constraint firstItem="2BJ-ze-ubh" firstAttribute="top" secondItem="F7L-4U-HrL" secondAttribute="bottom" constant="26" id="Rrh-DL-91R"/>
                             <constraint firstItem="9Gu-MH-hXF" firstAttribute="top" secondItem="3hH-M3-tDn" secondAttribute="bottom" constant="48" id="eLI-4v-Ofx"/>
                             <constraint firstItem="3hH-M3-tDn" firstAttribute="top" secondItem="2cE-92-oPr" secondAttribute="top" constant="8" id="hOg-kp-4SK"/>
+                            <constraint firstItem="On9-CD-o6r" firstAttribute="centerX" secondItem="2BJ-ze-ubh" secondAttribute="centerX" id="nhu-Bg-B6c"/>
                             <constraint firstItem="3hH-M3-tDn" firstAttribute="leading" secondItem="S2E-t2-8bL" secondAttribute="leadingMargin" constant="-16" id="s8d-2g-Jlt"/>
                             <constraint firstItem="9Gu-MH-hXF" firstAttribute="top" secondItem="2BJ-ze-ubh" secondAttribute="bottom" constant="71" id="yVF-as-vqJ"/>
                             <constraint firstAttribute="trailingMargin" secondItem="3hH-M3-tDn" secondAttribute="trailing" constant="-16" id="zMm-dG-LcW"/>
@@ -1662,6 +1672,7 @@
                         <outlet property="addButton" destination="2BJ-ze-ubh" id="u08-zi-1Yb"/>
                         <outlet property="collectionView" destination="3hH-M3-tDn" id="8Ya-4u-glT"/>
                         <outlet property="noAlarmLabel" destination="F7L-4U-HrL" id="tPH-bO-hsI"/>
+                        <outlet property="spinnerView" destination="On9-CD-o6r" id="L3w-L1-sxJ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ita-56-GRs" userLabel="First Responder" sceneMemberID="firstResponder"/>

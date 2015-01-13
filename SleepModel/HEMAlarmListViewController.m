@@ -1,6 +1,7 @@
 
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENSettings.h>
+#import <SpinKit/RTSpinKitView.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -20,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UICollectionView* collectionView;
 @property (weak, nonatomic) IBOutlet HEMAlarmAddButton* addButton;
 @property (weak, nonatomic) IBOutlet UILabel* noAlarmLabel;
+@property (weak, nonatomic) IBOutlet RTSpinKitView* spinnerView;
 @property (strong, nonatomic) NSDateFormatter* hour24Formatter;
 @property (strong, nonatomic) NSDateFormatter* hour12Formatter;
 @property (strong, nonatomic) NSDateFormatter* meridiemFormatter;
@@ -48,6 +50,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [super viewDidLoad];
     [self configureCollectionView];
     [self configureAddButton];
+    [self configureSpinnerView];
     [self configureNoAlarmInstructions];
     [self configureDateFormatters];
     [self refreshAlarmList];
@@ -84,6 +87,17 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 }
 
+- (void)configureSpinnerView
+{
+    self.spinnerView.hidesWhenStopped = YES;
+    self.spinnerView.color = [UIColor whiteColor];
+    self.spinnerView.spinnerSize = CGRectGetHeight(self.spinnerView.bounds);
+    self.spinnerView.style = RTSpinKitViewStyleThreeBounce;
+    self.spinnerView.hidesWhenStopped = YES;
+    self.spinnerView.backgroundColor = [UIColor clearColor];
+    [self.spinnerView stopAnimating];
+}
+
 - (void)configureDateFormatters
 {
     self.hour12Formatter = [NSDateFormatter new];
@@ -97,7 +111,9 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)refreshAlarmList
 {
     self.addButton.enabled = NO;
+    [self.spinnerView startAnimating];
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^(NSError* error) {
+        [self.spinnerView stopAnimating];
         if (!error) {
             HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
             [layout clearCache];

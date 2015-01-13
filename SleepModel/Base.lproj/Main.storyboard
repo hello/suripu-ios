@@ -576,7 +576,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="siy-bj-GCk">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="486"/>
+                                <rect key="frame" x="0.0" y="8" width="600" height="478"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -611,10 +611,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="siy-bj-GCk" firstAttribute="leading" secondItem="ham-L3-QgE" secondAttribute="leadingMargin" constant="-16" id="BUa-78-MrY"/>
-                            <constraint firstItem="siy-bj-GCk" firstAttribute="top" secondItem="DGk-KI-7ln" secondAttribute="bottom" id="UnJ-NM-DFd"/>
+                            <constraint firstItem="siy-bj-GCk" firstAttribute="leading" secondItem="ham-L3-QgE" secondAttribute="leading" id="BUa-78-MrY"/>
+                            <constraint firstItem="siy-bj-GCk" firstAttribute="top" secondItem="DGk-KI-7ln" secondAttribute="top" constant="8" id="UnJ-NM-DFd"/>
                             <constraint firstItem="Fqd-V7-7oa" firstAttribute="top" secondItem="siy-bj-GCk" secondAttribute="bottom" constant="50" id="bgn-Gx-fCs"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="siy-bj-GCk" secondAttribute="trailing" constant="-16" id="c9C-kb-PV3"/>
+                            <constraint firstAttribute="trailing" secondItem="siy-bj-GCk" secondAttribute="trailing" id="c9C-kb-PV3"/>
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
@@ -642,7 +642,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelection="NO" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4nR-Z8-UZV">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="72" width="600" height="478"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -671,10 +671,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="centerY" secondItem="4nR-Z8-UZV" secondAttribute="centerY" id="GTc-3a-gFD"/>
-                            <constraint firstAttribute="centerX" secondItem="4nR-Z8-UZV" secondAttribute="centerX" id="S4f-jW-VCf"/>
-                            <constraint firstItem="4nR-Z8-UZV" firstAttribute="height" secondItem="tIo-Tw-mI0" secondAttribute="height" id="Vsd-ZR-38P"/>
-                            <constraint firstItem="4nR-Z8-UZV" firstAttribute="width" secondItem="tIo-Tw-mI0" secondAttribute="width" id="tbu-I8-FM5"/>
+                            <constraint firstItem="Bk4-5f-XN3" firstAttribute="top" secondItem="4nR-Z8-UZV" secondAttribute="bottom" constant="50" id="FzH-OQ-tYL"/>
+                            <constraint firstItem="4nR-Z8-UZV" firstAttribute="leading" secondItem="tIo-Tw-mI0" secondAttribute="leading" id="Zgm-q5-jfm"/>
+                            <constraint firstItem="4nR-Z8-UZV" firstAttribute="top" secondItem="8Pf-Ey-WRv" secondAttribute="top" constant="8" id="tDW-8q-IU0"/>
+                            <constraint firstAttribute="trailing" secondItem="4nR-Z8-UZV" secondAttribute="trailing" id="zQC-Qg-u4T"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="zJQ-jT-Bn2"/>
@@ -700,7 +700,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="X4b-Va-8rq">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="486"/>
+                                <rect key="frame" x="0.0" y="5" width="600" height="481"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingsCell" id="dAf-ei-RdP" customClass="HEMSettingsTableViewCell">
@@ -749,7 +749,7 @@
                         <constraints>
                             <constraint firstAttribute="width" secondItem="X4b-Va-8rq" secondAttribute="width" id="8Uk-L7-xqU"/>
                             <constraint firstAttribute="centerX" secondItem="X4b-Va-8rq" secondAttribute="centerX" id="DZ0-tF-DNx"/>
-                            <constraint firstItem="X4b-Va-8rq" firstAttribute="top" secondItem="jix-Ub-MhY" secondAttribute="bottom" id="XC5-0M-fn7"/>
+                            <constraint firstItem="X4b-Va-8rq" firstAttribute="top" secondItem="jix-Ub-MhY" secondAttribute="top" constant="5" id="XC5-0M-fn7"/>
                             <constraint firstItem="Fgn-Cc-FTR" firstAttribute="top" secondItem="X4b-Va-8rq" secondAttribute="bottom" constant="50" id="yQD-po-bq0"/>
                         </constraints>
                     </view>
@@ -1454,7 +1454,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="rbm-KW-3zr">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <rect key="frame" x="0.0" y="72" width="600" height="478"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="0.10000000000000001" colorSpace="calibratedRGB"/>
                                 <prototypes>
@@ -1490,10 +1490,10 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="width" secondItem="rbm-KW-3zr" secondAttribute="width" id="56E-vJ-XbN"/>
-                            <constraint firstAttribute="height" secondItem="rbm-KW-3zr" secondAttribute="height" id="QQJ-0v-fsW"/>
-                            <constraint firstAttribute="centerX" secondItem="rbm-KW-3zr" secondAttribute="centerX" id="TWY-WC-nkz"/>
-                            <constraint firstAttribute="centerY" secondItem="rbm-KW-3zr" secondAttribute="centerY" id="WLN-2t-gPH"/>
+                            <constraint firstItem="rbm-KW-3zr" firstAttribute="top" secondItem="k9b-0e-N8w" secondAttribute="top" constant="8" id="2aA-2c-vCw"/>
+                            <constraint firstAttribute="trailing" secondItem="rbm-KW-3zr" secondAttribute="trailing" id="XxW-Zk-AtA"/>
+                            <constraint firstItem="rbm-KW-3zr" firstAttribute="leading" secondItem="XkK-Ka-16U" secondAttribute="leading" id="YOR-nL-rCo"/>
+                            <constraint firstItem="BAh-On-yZF" firstAttribute="top" secondItem="rbm-KW-3zr" secondAttribute="bottom" constant="50" id="gEa-ze-W2G"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="My Info" id="s1h-aS-2dI"/>

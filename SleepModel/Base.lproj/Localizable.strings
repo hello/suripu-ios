@@ -172,8 +172,8 @@
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 
 // device management
-"settings.device.sense" = "Your Sense";
-"settings.device.pill" = "Your Sleep Pill";
+"settings.device.sense" = "Sense";
+"settings.device.pill" = "Sleep Pill";
 "settings.device.status.low-battery" = "Battery low";
 "settings.device.status.not-paired" = "Not paired";
 "settings.device.firmware-version" = "Firmware";

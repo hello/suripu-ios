@@ -10,6 +10,8 @@
 #import "HEMSnazzBar.h"
 #import "HelloStyleKit.h"
 
+CGFloat const HEMSnazzBarHeight = 72.f;
+
 @interface HEMSnazzBarController ()<HEMSnazzBarDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) HEMSnazzBar* buttonsBar;
@@ -20,7 +22,6 @@
 
 @implementation HEMSnazzBarController
 
-static CGFloat const HEMSnazzBarHeight = 72.f;
 static CGFloat const HEMSnazzContentGestureMargin = 34.f;
 
 - (void)dealloc

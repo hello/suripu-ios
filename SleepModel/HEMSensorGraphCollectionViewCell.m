@@ -19,6 +19,8 @@
 @interface HEMSensorGraphCollectionViewCell ()<BEMSimpleLineGraphDelegate>
 
 @property (nonatomic, strong) HEMLineGraphDataSource* graphDataSource;
+@property (nonatomic) CGFloat maxGraphValue;
+@property (nonatomic) CGFloat minGraphValue;
 @end
 
 @implementation HEMSensorGraphCollectionViewCell
@@ -39,7 +41,7 @@
 - (void)configureGraphView
 {
     self.graphView.userInteractionEnabled = NO;
-    self.graphView.enableBezierCurve = YES;
+    self.graphView.enableBezierCurve = NO;
     self.graphView.enableReferenceXAxisLines = NO;
     self.graphView.enableReferenceYAxisLines = NO;
     self.graphView.enableXAxisLabel = NO;
@@ -60,6 +62,7 @@
 
 - (void)setGraphData:(NSArray *)graphData sensor:(SENSensor *)sensor
 {
+    [self setGraphValueBoundsWithData:graphData forSensor:sensor];
     [UIView animateWithDuration:0.15 animations:^{
         self.graphView.alpha = 0;
     }];
@@ -77,6 +80,25 @@
     [self.graphView reloadGraph];
 }
 
+- (void)setGraphValueBoundsWithData:(NSArray*)dataSeries forSensor:(SENSensor*)sensor {
+    NSArray* values = [[dataSeries valueForKey:NSStringFromSelector(@selector(value))]
+                       sortedArrayUsingSelector:@selector(compare:)];
+    NSNumber* maxValue = [values lastObject];
+    NSNumber* minValue = @1;
+    if ([maxValue floatValue] == 0)
+        self.maxGraphValue = 0;
+    else
+        self.maxGraphValue = [[SENSensor value:maxValue inPreferredUnit:sensor.unit] floatValue];
+    for (NSNumber* value in values) {
+        CGFloat number = [value floatValue];
+        if (number  > 0) {
+            minValue = value;
+            break;
+        }
+    }
+    self.minGraphValue = [[SENSensor value:minValue inPreferredUnit:sensor.unit] floatValue];
+}
+
 - (CGGradientRef)gradientForColor:(UIColor*)color
 {
     CGFloat red, green, blue, alpha;
@@ -92,6 +114,16 @@
 }
 
 #pragma mark - BEMSimpleLineGraphDelegate
+
+- (CGFloat)maxValueForLineGraph:(BEMSimpleLineGraphView *)graph
+{
+    return self.maxGraphValue;
+}
+
+- (CGFloat)minValueForLineGraph:(BEMSimpleLineGraphView *)graph
+{
+    return self.minGraphValue;
+}
 
 - (BOOL)noDataLabelEnableForLineGraph:(BEMSimpleLineGraphView *)graph
 {

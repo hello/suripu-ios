@@ -201,60 +201,83 @@
 
 - (void)setState:(FCDynamicPaneState)state
 {
-    if (state == FCDynamicPaneStateRoot) {
+    if (state == FCDynamicPaneStateRoot)
         self.swipeEnabled = NO;
-    }
 
-    if (state == _state) {
+    if (state == _state)
         return;
-    }
 
-    CGFloat fullWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
-    CGFloat fullHeight = CGRectGetHeight([UIScreen mainScreen].bounds);
-    if (state == FCDynamicPaneStateRoot) {
-        self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);
-        __weak FCDynamicPane* weakSelf = self;
-        self.gravityBehavior.action = ^{
-			__strong typeof(weakSelf) strongSelf = weakSelf;
-			if (strongSelf.view.frame.origin.y <= 10) {
-				strongSelf.attachmentBehavior.anchorPoint = CGPointMake(fullWidth/2, fullHeight / 2);
-				strongSelf.attachmentBehavior.damping = 0.7f;
-				strongSelf.attachmentBehavior.frequency = 1.0f;
-				[strongSelf.behavior addChildBehavior:strongSelf.attachmentBehavior];
-			}
-            if ([strongSelf.viewController respondsToSelector:@selector(viewDidPush)]) {
-                [(UIViewController<FCDynamicPaneViewController>*)strongSelf.viewController viewDidPush];
-            }
-        };
-    } else if (state == FCDynamicPaneStateRetracted) {
-        self.attachmentBehavior.anchorPoint = CGPointMake(fullWidth/2, fullHeight/ 2 + TILE_Y);
-        self.attachmentBehavior.damping = 0.4f;
-        self.attachmentBehavior.frequency = 4.0f;
-        self.gravityBehavior.gravityDirection = CGVectorMake(0, 1.5);
-        [self.behavior addChildBehavior:self.attachmentBehavior];
-        if (CGRectGetMinY(self.view.layer.frame) < 50) {
-            [self.pushBehavior setPushDirection:CGVectorMake(0, 4000)];
-            self.pushBehavior.active = YES;
-        }
-        if ([self.viewController respondsToSelector:@selector(viewDidPop)]) {
-            [(UIViewController<FCDynamicPaneViewController>*)self.viewController viewDidPop];
-        }
-    } else if (state == FCDynamicPaneStateActive) {
-        self.attachmentBehavior.anchorPoint = CGPointMake(fullWidth/2, fullHeight / 2 + TILE_Y);
-        self.attachmentBehavior.damping = 0.4f;
-        self.attachmentBehavior.frequency = 2.0f;
-        self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);
-        [self.behavior addChildBehavior:self.attachmentBehavior];
-        if (CGRectGetMinY(self.view.layer.frame) > 50) {
-            [self.pushBehavior setPushDirection:CGVectorMake(0, -10000)];
-            self.pushBehavior.active = YES;
-        }
-        if ([self.viewController respondsToSelector:@selector(viewDidPush)]) {
-            [(UIViewController<FCDynamicPaneViewController>*)self.viewController viewDidPush];
-        }
+    switch (state) {
+        case FCDynamicPaneStateActive:
+            [self activatePane];
+            break;
+        case FCDynamicPaneStateRetracted:
+            [self retractPane];
+            break;
+        case FCDynamicPaneStateRoot:
+            [self makePaneRoot];
+            break;
+        case FCDynamicPaneLeavingScreen:
+        default:
+            break;
     }
 
     _state = state;
+}
+
+- (void)makePaneRoot
+{
+    CGFloat fullWidth = CGRectGetWidth([UIScreen mainScreen].bounds);
+    CGFloat fullHeight = CGRectGetHeight([UIScreen mainScreen].bounds);
+    self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);
+    __weak FCDynamicPane* weakSelf = self;
+    self.gravityBehavior.action = ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf.view.frame.origin.y <= 10) {
+            strongSelf.attachmentBehavior.anchorPoint = CGPointMake(fullWidth/2, fullHeight / 2);
+            strongSelf.attachmentBehavior.damping = 0.7f;
+            strongSelf.attachmentBehavior.frequency = 1.0f;
+            [strongSelf.behavior addChildBehavior:strongSelf.attachmentBehavior];
+        }
+        if ([strongSelf.viewController respondsToSelector:@selector(viewDidPush)]) {
+            [(UIViewController<FCDynamicPaneViewController>*)strongSelf.viewController viewDidPush];
+        }
+    };
+}
+
+- (void)retractPane
+{
+    [self updateAttachmentAnchorPoint];
+    self.attachmentBehavior.damping = 0.4f;
+    self.attachmentBehavior.frequency = 4.0f;
+    self.gravityBehavior.gravityDirection = CGVectorMake(0, 1.5);
+    [self.behavior addChildBehavior:self.attachmentBehavior];
+    if ([self.viewController respondsToSelector:@selector(viewDidPop)]) {
+        [(UIViewController<FCDynamicPaneViewController>*)self.viewController viewDidPop];
+    }
+}
+
+- (void)activatePane
+{
+    if (CGRectGetMinY(self.view.layer.frame) > 50) {
+        CGFloat yForce = -22 * CGRectGetHeight(self.view.bounds);
+        self.pushBehavior.pushDirection = CGVectorMake(0, yForce);
+        self.pushBehavior.active = YES;
+    }
+    [self updateAttachmentAnchorPoint];
+    self.attachmentBehavior.damping = 0.4f;
+    self.attachmentBehavior.frequency = 2.0f;
+    self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);
+    [self.behavior addChildBehavior:self.attachmentBehavior];
+    if ([self.viewController respondsToSelector:@selector(viewDidPush)]) {
+        [(UIViewController<FCDynamicPaneViewController>*)self.viewController viewDidPush];
+    }
+}
+
+- (void)updateAttachmentAnchorPoint
+{
+    CGSize screenSize = [UIScreen mainScreen].bounds.size;
+    self.attachmentBehavior.anchorPoint = CGPointMake(screenSize.width/2, screenSize.height/2 + TILE_Y);
 }
 
 - (void)setSwipeEnabled:(BOOL)swipeEnabled

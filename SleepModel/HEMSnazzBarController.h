@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+extern CGFloat const HEMSnazzBarHeight;
+
 @class HEMSnazzBarController;
 
 @protocol HEMSnazzBarControllerDelegate <NSObject>

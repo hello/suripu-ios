@@ -106,7 +106,7 @@
     } else {
         FCDynamicPane* includingViewController = ((FCDynamicPane*)[array objectAtIndex:[array indexOfObject:object] - 1]);
         UIView* includingView = includingViewController.view;
-        object.view.frame = CGRectMake(0, 0, object.view.frame.size.width, object.view.frame.size.height);
+        object.view.frame = object.view.bounds;
 
         [object removeFromParentViewController];
         [includingViewController addChildViewController:object];

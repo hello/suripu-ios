@@ -19,6 +19,7 @@
 #import "HEMLogUtils.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMSnazzBarController.h"
 #import "HEMAudioCache.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMStyledNavigationViewController.h"
@@ -65,7 +66,9 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
     HEMRootViewController* root = (id)self.window.rootViewController;
     [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:NO];
-    UINavigationController* nav = [root.viewControllers firstObject];
+    FCDynamicPane* pane = [root.viewControllers firstObject];
+    HEMSnazzBarController* controller = (id)[pane viewController];
+    UINavigationController* nav = (id)[controller selectedViewController];
 
     void (^presentController)() = ^{
         [nav popToRootViewControllerAnimated:NO];

@@ -322,6 +322,11 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 #pragma mark UICollectionViewDelegate
 
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return self.alarms.count > indexPath.item;
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:YES];

@@ -16,8 +16,6 @@
 
 @interface HEMEnablePushViewController()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *enableButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
@@ -27,27 +25,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [self setupDescription];
-    
+    [self enableBackButton:NO];
     [SENAnalytics track:kHEMAnalyticsEventOnBNotification];
-}
-
-- (void)setupDescription {
-    NSString* description = NSLocalizedString(@"onboarding.push.description", nil);
-    NSMutableAttributedString* attrDesc
-        = [[NSMutableAttributedString alloc] initWithString:description];
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
-    [[self descriptionLabel] setAttributedText:attrDesc];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    CGSize constraint = [[self descriptionLabel] bounds].size;
-    constraint.height = MAXFLOAT;
-    DDLogVerbose(@"text height %f", [[self descriptionLabel] sizeThatFits:constraint].height);
 }
 
 #pragma mark - Actions

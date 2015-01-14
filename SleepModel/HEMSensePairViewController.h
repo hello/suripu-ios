@@ -7,10 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HEMBaseController.h"
+#import "HEMOnboardingController.h"
 #import "HEMSensePairDelegate.h"
 
-@interface HEMSensePairViewController : HEMBaseController
+@interface HEMSensePairViewController : HEMOnboardingController
 
 @property (nonatomic, weak) id<HEMSensePairingDelegate> delegate;
 

@@ -5,7 +5,6 @@
 //  Created by Delisa Mason on 11/3/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-
 #import "UIFont+HEMStyle.h"
 
 @implementation UIFont (HEMStyle)
@@ -17,14 +16,14 @@ static NSString* const HEMFontFamilyNameLight = @"Avenir-Light";
 static NSString* const HEMFontFamilyNameLightOblique = @"Avenir-LightOblique";
 static NSString* const HEMFontFamilyNameHeavyOblique = @"Avenir-HeavyOblique";
 static NSString* const HEMFontFamilyNameMedium = @"Avenir-Medium";
-static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
+static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
 
 + (UIFont *)alarmMeridiemFont {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
 }
 
 + (UIFont *)alarmNumberFont {
-    return [UIFont fontWithName:HEMLargeNumberFontFamilyName size:50.f];
+    return [UIFont fontWithName:HEMLargeFontFamilyName size:50.f];
 }
 
 + (UIFont *)insightTitleFont {
@@ -40,7 +39,7 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)largeNumberFont {
-    return [UIFont fontWithName:HEMLargeNumberFontFamilyName size:72.f];
+    return [UIFont fontWithName:HEMLargeFontFamilyName size:72.f];
 }
 
 + (UIFont *)settingsTableCellFont {
@@ -52,7 +51,7 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)settingsTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.f];
 }
 
 + (UIFont *)sensorRangeSelectionFont {
@@ -76,7 +75,7 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)sensorListValueFont {
-    return [UIFont fontWithName:HEMLargeNumberFontFamilyName size:36.f];
+    return [UIFont fontWithName:HEMLargeFontFamilyName size:36.f];
 }
 
 + (UIFont *)backViewTextFont {
@@ -135,34 +134,6 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:20.0f];
 }
 
-+ (UIFont *)onboardingActivityFontLarge {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
-}
-
-+ (UIFont *)onboardingActivityFontMedium {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
-}
-
-+ (UIFont *)singleComponentPickerViewFont {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:18.0f];
-}
-
-+ (UIFont *)onboardingFieldRightViewFont {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:16.0f];
-}
-
-+ (UIFont *)onboardingTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
-}
-
-+ (UIFont *)onboardingDescriptionFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:17.0f];
-}
-
-+ (UIFont *)onboardingDescriptionBoldFont {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:17.0f];
-}
-
 + (UIFont *)inAppBrowserTitleFont {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
 }
@@ -176,15 +147,15 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont* )primaryButtonFont {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:16.0f];
 }
 
 + (UIFont* )secondaryButtonFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:12.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameBook size:16.0f];
 }
 
 + (UIFont *)navButtonTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:17.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
 }
 
 + (UIFont *)confidentialityWarningFont {
@@ -201,18 +172,6 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
 
 + (UIFont *)actionViewButtonTitleFont {
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];
-}
-
-+ (UIFont*)onboardingRoomCheckSensorFont {
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:15.0f];
-}
-
-+ (UIFont*)onboardingRoomCheckSensorValueFont {
-    return [UIFont fontWithName:HEMLargeNumberFontFamilyName size:80.0f];
-}
-
-+ (UIFont*)onboardingRoomCheckSensorUnitFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
 }
 
 + (UIFont*)feedQuestionFont {
@@ -233,6 +192,80 @@ static NSString* const HEMLargeNumberFontFamilyName = @"AvenirNext-UltraLight";
 
 + (UIFont*)deviceCellWarningMessageFont {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:13.0f];
+}
+
++ (UIFont *)textfieldPlaceholderFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+}
+
+#pragma mark - Onboarding
+
++ (UIFont *)onboardingActivityFontLarge {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
+}
+
++ (UIFont *)onboardingActivityFontMedium {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+}
+
++ (UIFont *)singleComponentPickerViewFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:18.0f];
+}
+
++ (UIFont *)birthdatePickerTextFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:20.0f];
+}
+
++ (UIFont *)onboardingFieldRightViewFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:16.0f];
+}
+
++ (UIFont *)onboardingTitleFont {
+    return [UIFont fontWithName:HEMLargeFontFamilyName size:24.0f];
+}
+
++ (UIFont *)onboardingTitleLargeFont {
+    return [UIFont fontWithName:HEMLargeFontFamilyName size:32.0f];
+}
+
++ (UIFont *)onboardingDescriptionFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
+}
+
++ (UIFont *)onboardingDescriptionLargeFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+}
+
++ (UIFont *)onboardingDescriptionBoldFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.0f];
+}
+
++ (UIFont*)onboardingRoomCheckSensorFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:15.0f];
+}
+
++ (UIFont*)onboardingRoomCheckSensorValueFont {
+    return [UIFont fontWithName:HEMLargeFontFamilyName size:80.0f];
+}
+
++ (UIFont*)onboardingRoomCheckSensorUnitFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
+}
+
++ (UIFont*)genderButtonTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:20.0f];
+}
+
++ (UIFont*)helpButtonTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
+}
+
++ (UIFont*)wifiTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+}
+
++ (UIFont*)bluetoothStepsFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
 }
 
 @end

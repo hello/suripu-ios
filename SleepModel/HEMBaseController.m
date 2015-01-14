@@ -33,13 +33,22 @@ CGFloat const kHEMIPhone5Height = 568.0f;
 
 - (void)viewDidBecomeActive {}
 
+- (BOOL)isIPhone4Family {
+    CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
+    return screenHeight == kHEMIPhone4Height;
+}
+
+- (BOOL)isIPhone5Family {
+    CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
+    return screenHeight == kHEMIPhone5Height;
+}
+
 - (void)updateViewConstraints {
     [super updateViewConstraints];
     if (![self adjustedConstraints]) {
-        CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
-        if (screenHeight == kHEMIPhone4Height) {
+        if ([self isIPhone4Family]) {
             [self adjustConstraintsForIPhone4];
-        } else if (screenHeight == kHEMIPhone5Height) {
+        } else if ([self isIPhone5Family]) {
             [self adjustConstraintsForIphone5];
         }
         [self setAdjustedConstraints:YES];
@@ -54,6 +63,8 @@ CGFloat const kHEMIPhone5Height = 568.0f;
     CGFloat constant = [constraint constant];
     [constraint setConstant:constant + diff];
 }
+
+#pragma mark - alerts
 
 - (void)showMessageDialog:(NSString*)message title:(NSString*)title {
     UIView* seeThroughView = [self parentViewController] ? [[self parentViewController] view] : [self view];

@@ -149,42 +149,14 @@
 + (UIFont *)infoToastFont;
 
 /**
- * Font used to display activity status full screen
- */
-+ (UIFont *)onboardingActivityFontLarge;
-
-/**
- * Font used to display activity status within another view, typically
- */
-+ (UIFont *)onboardingActivityFontMedium;
-
-/**
  * Font to be used in a UIPIckerView that has 1 component
  */
 + (UIFont *)singleComponentPickerViewFont;
 
 /**
- * Font to be used for a selected value in the right view of a UITextField during
- * onboarding.  Example use would be the selected security type of wifi
+ * Font to be used in a HEMBirthdatePickerView
  */
-+ (UIFont *)onboardingFieldRightViewFont;
-
-/**
- * Font used for onboarding screen titles
- */
-+ (UIFont *)onboardingTitleFont;
-
-/**
- * Font to be used during onboarding screens where a description of the current
- * step is shown
- */
-+ (UIFont *)onboardingDescriptionFont;
-
-/**
- * Font to be used during onboarding screens where a description of the current
- * step is shown and certain words / phrases are required to be bold
- */
-+ (UIFont *)onboardingDescriptionBoldFont;
++ (UIFont *)birthdatePickerTextFont;
 
 /**
  * Font to be used to display the in-app browser title
@@ -234,23 +206,6 @@
 + (UIFont *)actionViewButtonTitleFont;
 
 /**
- * Font for the sensor check view during onboarding's room check
- */
-+ (UIFont*)onboardingRoomCheckSensorFont;
-
-/**
- * Font for the sensor value within the sensor check view during onboarding's
- * room check screen
- */
-+ (UIFont*)onboardingRoomCheckSensorValueFont;
-
-/**
- * Font for the sensor unit within the sensor check view during onboarding's
- * room check screen
- */
-+ (UIFont*)onboardingRoomCheckSensorUnitFont;
-
-/**
  * Font used to display the question inside the insight feed tab
  */
 + (UIFont*)feedQuestionFont;
@@ -274,5 +229,93 @@
  * Font used to display a warning message for the device in a collection view cell
  */
 + (UIFont*)deviceCellWarningMessageFont;
+
+/**
+ * Font used for the placeholder text within an UITextField
+ */
++ (UIFont *)textfieldPlaceholderFont;
+
+#pragma mark - Onboarding
+
+/**
+ * Font for the sensor check view during onboarding's room check
+ */
++ (UIFont*)onboardingRoomCheckSensorFont;
+
+/**
+ * Font for the sensor value within the sensor check view during onboarding's
+ * room check screen
+ */
++ (UIFont*)onboardingRoomCheckSensorValueFont;
+
+/**
+ * Font for the sensor unit within the sensor check view during onboarding's
+ * room check screen
+ */
++ (UIFont*)onboardingRoomCheckSensorUnitFont;
+
+/**
+ * Font used to display activity status full screen
+ */
++ (UIFont *)onboardingActivityFontLarge;
+
+/**
+ * Font used to display activity status within another view, typically
+ */
++ (UIFont *)onboardingActivityFontMedium;
+
+/**
+ * Font to be used for a selected value in the right view of a UITextField during
+ * onboarding.  Example use would be the selected security type of wifi
+ */
++ (UIFont *)onboardingFieldRightViewFont;
+
+/**
+ * Font used for onboarding screen titles
+ */
++ (UIFont *)onboardingTitleFont;
+
+/**
+ * Large Font used for onboarding screen titles
+ */
++ (UIFont *)onboardingTitleLargeFont;
+
+/**
+ * Font to be used during onboarding screens where a description of the current
+ * step is shown
+ */
++ (UIFont *)onboardingDescriptionFont;
+
+/**
+ * Large Font to be used during onboarding screens where a description of the 
+ * current step is shown
+ */
++ (UIFont *)onboardingDescriptionLargeFont;
+
+/**
+ * Font to be used during onboarding screens where a description of the current
+ * step is shown and certain words / phrases are required to be bold
+ */
++ (UIFont *)onboardingDescriptionBoldFont;
+
+/**
+ * Font used for the gender selectors during onboarding / settings
+ */
++ (UIFont*)genderButtonTitleFont;
+
+/**
+ * Font used to display the help button title during onboarding
+ */
++ (UIFont*)helpButtonTitleFont;
+
+/**
+ * Font used to diplay scanned wifi ssids
+ */
++ (UIFont*)wifiTitleFont;
+
+/**
+ * Font used to display the steps to turn on bluetooth in onboarding
+ */
++ (UIFont*)bluetoothStepsFont;
 
 @end

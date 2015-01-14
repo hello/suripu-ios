@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HEMBaseController.h"
+#import "HEMOnboardingController.h"
 
-@interface HEMBeforeSleepViewController : HEMBaseController
+@interface HEMBeforeSleepViewController : HEMOnboardingController
 
 @end

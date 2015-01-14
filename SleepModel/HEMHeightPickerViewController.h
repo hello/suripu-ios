@@ -1,6 +1,6 @@
 
 #import <UIKit/UIKit.h>
-#import "HEMBaseController.h"
+#import "HEMOnboardingController.h"
 
 @class HEMHeightPickerViewController;
 
@@ -12,7 +12,7 @@
 
 @end
 
-@interface HEMHeightPickerViewController : HEMBaseController
+@interface HEMHeightPickerViewController : HEMOnboardingController
 
 @property (assign, nonatomic) NSInteger feet;
 @property (assign, nonatomic) NSInteger inches;

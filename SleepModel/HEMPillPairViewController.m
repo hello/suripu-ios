@@ -21,14 +21,12 @@
 #import "HEMOnboardingUtils.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
-#import "HEMScrollableView.h"
 #import "HelloStyleKit.h"
 
 static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 @interface HEMPillPairViewController()
 
-@property (weak, nonatomic)   IBOutlet HEMScrollableView *contentView;
 @property (weak, nonatomic)   IBOutlet HEMActionButton *retryButton;
 @property (weak, nonatomic)   IBOutlet UIButton *helpButton;
 @property (weak, nonatomic)   IBOutlet NSLayoutConstraint *retryButtonWidthConstraint;
@@ -48,29 +46,20 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[self navigationItem] setHidesBackButton:YES];
-    
-    [self setupContent];
+    [self configureButton];
+    [self showHelpButton];
     [self setupCancelButton];
+    [self enableBackButton:NO];
     
     [self updateActivityText:NSLocalizedString(@"pairing.activity.connecting-sense", nil)];
     [self showActivity];
     
-    [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
-    
     [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
 }
 
-- (void)setupContent {
-    NSString* subtitle = NSLocalizedString(@"pairing.pill.subtitle", nil);
-    NSMutableAttributedString* attrSubtitle
-        = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
-    
-    [[self contentView] addTitle:NSLocalizedString(@"pairing.pill.title", nil)];
-    [[self contentView] addDescription:attrSubtitle];
-    [[self contentView] addImage:[HelloStyleKit shakePill]];
-    
+- (void)configureButton {
+    [[self retryButton] setBackgroundColor:[UIColor clearColor]];
+    [[self retryButton] setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
 }
 
 - (void)setupCancelButton {
@@ -94,13 +83,6 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
                    afterDelay:kHEMPillPairStartDelay];
         [self setLoaded:YES];
     }
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    CGFloat shadowOpacity = [[self contentView] scrollRequired]?1.0f:0.0f;
-    [[[self buttonContainer] layer] setShadowOpacity:shadowOpacity];
 }
 
 - (void)updateActivityText:(NSString*)text {

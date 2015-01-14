@@ -8,6 +8,7 @@
 #import <SenseKit/SENAlarm.h>
 
 #import "UIView+HEMSnapshot.h"
+#import "UIFont+HEMStyle.h"
 
 #import "HEMOnboardAlarmViewController.h"
 #import "HEMBaseController+Protected.h"
@@ -20,8 +21,7 @@
 
 @interface HEMOnboardAlarmViewController() <HEMAlarmControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet HEMScrollableView *contentView;
-@property (weak, nonatomic) IBOutlet UIView *buttonContainer;
+@property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
 @end
 
@@ -29,31 +29,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
-    
-    [self setupContent];
-    
-    [HEMOnboardingUtils applyShadowToButtonContainer:[self buttonContainer]];
-    
+    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [self enableBackButton:NO];
     [SENAnalytics track:kHEMAnalyticsEventOnBFirstAlarm];
-}
-
-- (void)setupContent {
-    [[self contentView] addTitle:NSLocalizedString(@"onboarding.alarm.title", nil)];
-    [[self contentView] addImage:[HelloStyleKit smartAlarm]];
-
-    NSString* desc = NSLocalizedString(@"onboarding.alarm.desc", nil);
-    NSMutableAttributedString* attrDesc = [[NSMutableAttributedString alloc] initWithString:desc];
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
-    
-    [[self contentView] addDescription:attrDesc];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    CGFloat opacity = [[self contentView] scrollRequired]?1.0f:0.0f;
-    [[[self buttonContainer] layer] setShadowOpacity:opacity];
 }
 
 - (void)dismissAlarmVC:(HEMAlarmViewController*)alarmVC {

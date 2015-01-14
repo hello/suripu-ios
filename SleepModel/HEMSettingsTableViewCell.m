@@ -62,7 +62,7 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
         HEMSettingsCellSeparatorSize
     };
     UIView* separator = [[UIView alloc] initWithFrame:separatorFrame];
-    [separator setBackgroundColor:[HelloStyleKit settingsSeparatorColor]];
+    [separator setBackgroundColor:[HelloStyleKit separatorColor]];
     [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth
                                    | UIViewAutoresizingFlexibleTopMargin];
     [[self contentView] addSubview:separator];

@@ -15,7 +15,7 @@
 "onboarding.orange" = "Orange";
 "onboarding.red" = "red";
 
-"sense-pair.description" = "Now we'll pair your phone with Sense. Make sure your Sense is plugged in and nearby, then tap Continue.";
+"sign-up.activity.message" = "Creating your account";
 "sign-up.title" = "Sign up";
 "sign-up.failed.title" = "Sign up failed";
 "sign-up.error.password-length" = "You must provide a password.";
@@ -23,17 +23,18 @@
 "sign-up.error.email-invalid" = "Your email address was not recognized.";
 "sign-up.error.conflict" = "The provided email address is already attached to an account.";
 "sign-up.error.generic" = "Something went wrong. Please try again.";
+
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "We could not set your birthdate for your account.";
-"onboarding.before-sleep.description.format" = "Before you go to bed, you’ll want to check that everything’s set for a good nights sleep. Simply wave your hand over Sense, and instantly you’ll know about the conditions in your room. Go ahead, give it a try now.\n\n%@ means everything’s good. %@ means something’s a little off and %@ means you should adjust something before sleep.";
+"onboarding.before-sleep.description" = "Before you go to bed, you’ll want to check that everything’s set for a good nights sleep. Simply wave your hand over Sense, and instantly you’ll know about the conditions in your room. Go ahead, give it a try now.\n\nGreen means everything’s good. Yellow means something’s a little off and red means you should adjust something before sleep.";
 "onboarding.title.before-sleep" = "Before you sleep";
-"onboarding.end-message.well-done" = "You're all set up.\nWell done.";
-"onboarding.end-message.sleep" = "All you you need to do\nnow is sleep.";
+"onboarding.end-message.well-done" = "You're all set up";
+"onboarding.end-message.sleep" = "Now all you need to\ndo is sleep";
 "onboarding.alarm.title" = "Set a Smart Alarm";
 "onboarding.alarm.desc" = "The Sense Smart Alarm knows where you are in your sleep cycle and will wake you up at the right time for you.  Just wave your hand over Sense to turn it off.";
 "onboarding.location.description" = "Sense uses your location to know sunrise and sunset times, local weather and more.";
 
-"onboarding.room-check.title" = "Room Check";
+"onboarding.room-check.title" = "Room check";
 "onboarding.room-check.description" = "Sense will now check the conditions in the room to assure functionality of the sensors.";
 "onboarding.room-check.checking-sensor.format" = "Checking %@";
 "onboarding.room-check.ideal-condition-format" = "The %@ in your room is just right.";
@@ -44,9 +45,6 @@
 "onboarding.room-check.intro.air" = "A low Air Quality Index value represents good air quality.";
 "onboarding.room-check.intro.sound" = "Loud noises will make falling in to deep sleep difficult.";
 "onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulties falling asleep.";
-"onboarding.push.description" = "Sense will occasionally notify you with important messages about your sleep, bedroom and deliver you your Sleep Score each morning.";
-
-"onboarding.pill-setup.description" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands.";
 
 // help links
 "help.url.troubleshooting" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8";
@@ -57,22 +55,6 @@
 "video.url.intro" = "http://player.vimeo.com/external/101139949.hd.mp4?s=28ac378e29847b77e9fb7431f05d2772";
 "video.error.title" = "Video Failed";
 "video.error.playback-failed" = "A playback error was encountered while attempting to play the video.";
-
-// no bluetooth on
-"no-bluetooth.subtitle.format" = "Sense uses Bluetooth to communicate with your mobile device.  Please turn your Bluetooth on to continue.\n\nLaunch the %@ app, tap %@, and flip the switch to %@.  Then return to the Sense app.";
-"no-bluetooth.settings" = "Settings";
-"no-bluetooth.bluetooth" = "Bluetooth";
-"no-bluetooth.on" = "On";
-
-// sense setup
-"sense-setup.title" = "Setting up Sense";
-"sense-setup.description" = "Make sure Sense is plugged into a wall outlet next your bed.";
-
-// second pill
-"second-pill.title" = "Add a second Sleep Pill";
-"second-pill.description.format" = "To connect a second Sleep Pill, Sense needs to be put into pairing mode.\n\nAsk the owner of the first Sleep Pill to stand next to Sense and open the Sense app, then go to %@ and tap %@.\n\nSense will glow %@ when it is in pairing mode.";
-"second-pill.description.sense-settings" = "Settings > Devices > Sense";
-"second-pill.description.put-into-pairing" = "'Put Sense into Pairing Mode'";
 
 // user information
 "user.info.accessibility.birthdate-title" = "Select the month, day, and year of your birthday";
@@ -91,10 +73,8 @@
 "pairing.error.unexpected-disconnect" = "Connection from Sense was broken. Please try again.";
 "pairing.error.link-account-failed" = "Could not attach Sense to your account.";
 "pairing.error.timed-out" = "Sense did not respond in time.";
-"pairing.done" = "Paired.";
+"pairing.done" = "Paired";
 "pairing.pill.error.title" = "Pill Pairing Failed";
-"pairing.pill.title" = "Pairing your Sleep Pill";
-"pairing.pill.subtitle" = "Shake your Sleep Pill for three seconds to pair it with your Sense. You may need to shake it quickly for it to register.";
 "pairing.error.pill-already-paired" = "Your Sleep Pill is currently paired to an account.";
 "pairing.error.fail-to-load-paired-info" = "Could not load paired Sense information.";
 "pairing.error.sense-not-found" = "Could not connect to your Sense to pair your Sleep Pill.";
@@ -131,12 +111,11 @@
 "location.error.weak-signal" = "We were unable to obtain your location.  Try moving to a different location and try again.";
 
 // setting up second pill
-"setup.second-pill.subtitle.format" = "Would you like to set up a second Sleep Pill for your partner at this time?\n\nYou can always do this later by visiting %@.";
-"setup.second-pill.settings" = "Settings";
+"setup.second-pill.subtitle" = "You can always do this later by visiting Settings.";
 "setup.second-pill.error.title" = "Fail to enable Pairing Mode";
 "setup.second-pill.error.failed-to-enable-pairing-mode" = "Could not enable Pairing Mode on Sense.";
 "setup.second-pill.error.sense-full" = "Sense can no longer pair with anymore devices.";
-"setup.get-app.subtitle.format" = "Your Sense is now in Pairing Mode.\n\nHave your partner visit %@ to download the Sense app and create a new account.  They will be given instructions to set up their Sleep Pill.";
+"setup.get-app.subtitle.format" = "Your Sense is now in Pairing Mode.\n\nHave your partner visit %@ to download the Sense app and create a new account.\n\nThey will be given instructions to set up their Sleep Pill.";
 "setup.get-app.url" = "hello.is/app";
 
 // settings
@@ -175,8 +154,8 @@
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 
 // device management
-"settings.device.sense" = "Your Sense";
-"settings.device.pill" = "Your Sleep Pill";
+"settings.device.sense" = "Sense";
+"settings.device.pill" = "Sleep Pill";
 "settings.device.status.low-battery" = "Battery low";
 "settings.device.status.not-paired" = "Not paired";
 "settings.device.firmware-version" = "Firmware";
@@ -242,6 +221,8 @@
 
 // authentication/sign in
 "authorization.title" = "Sign in";
+"authorization.sign-in.activity.message" = "Authenticating...";
+"authorization.forgot-pass" = "Forgot password";
 "authorization.no-token" = "No access token present";
 "authorization.set-url.button" = "Set URL";
 "authorization.sign-in.button" = "Sign in";
@@ -409,7 +390,7 @@
 "questions.error.unexpected" = "Oops! Probably our fault. Skip the question for now. We'll ask you again another time";
 
 // account info
-"account.gender.subtitle" = "This information is used to provide personalized sleep insights.";
+"account.gender.subtitle" = "This is used to provide you with more personalized sleep insights.";
 "account.gender.female" = "Female";
 "account.gender.male" = "Male";
 "account.gender.other" = "Other";

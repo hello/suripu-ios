@@ -6,10 +6,10 @@
 "1ao-Zs-Uri.normalTitle" = "I'm having trouble";
 
 /* Class = "IBUIButton"; normalTitle = "Continue"; ObjectID = "2TQ-o7-Rs6"; */
-"2TQ-o7-Rs6.normalTitle" = "Continue";
+"2TQ-o7-Rs6.normalTitle" = "CONTINUE";
 
 /* Class = "IBUIButton"; normalTitle = "Continue"; ObjectID = "37N-ly-LlQ"; */
-"37N-ly-LlQ.normalTitle" = "Continue";
+"37N-ly-LlQ.normalTitle" = "CONTINUE";
 
 /* Class = "IBUIButton"; normalTitle = "Female"; ObjectID = "3Im-vl-hQo"; */
 "3Im-vl-hQo.normalTitle" = "Female";
@@ -18,7 +18,7 @@
 "3Q2-kn-Onc.text" = "You.";
 
 /* Class = "IBUIButton"; normalTitle = "Sign Up"; ObjectID = "3dT-qJ-kIJ"; */
-"3dT-qJ-kIJ.normalTitle" = "Sign Up";
+"3dT-qJ-kIJ.normalTitle" = "SIGN UP";
 
 /* Class = "IBUILabel"; text = "scroll horizontally"; ObjectID = "3jl-2r-2nX"; */
 "3jl-2r-2nX.text" = "scroll horizontally";
@@ -27,7 +27,7 @@
 "4H9-4w-9eg.placeholder" = "Email";
 
 /* Class = "IBUIButton"; normalTitle = "Set up another Sleep Pill"; ObjectID = "4OB-Af-zlr"; */
-"4OB-Af-zlr.normalTitle" = "Set up another Sleep Pill";
+"4OB-Af-zlr.normalTitle" = "Add another Sleep Pill";
 
 /* Class = "IBUILabel"; text = "Enter your WiFi credentials:"; ObjectID = "4PT-Jb-KBo"; */
 "4PT-Jb-KBo.text" = "Enter your WiFi credentials:";
@@ -66,10 +66,10 @@
 "F1J-He-hsq.normalTitle" = "Male";
 
 /* Class = "IBUILabel"; text = "Log in"; ObjectID = "Fcs-EL-Ys6"; */
-"Fcs-EL-Ys6.text" = "Log in";
+"Fcs-EL-Ys6.text" = "LOG IN";
 
-/* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "GFw-g6-B5s"; */
-"GFw-g6-B5s.normalTitle" = "Skip";
+/* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "GFw-g6-B5s"; */
+"GFw-g6-B5s.normalTitle" = "Skip for now";
 
 /* Class = "IBUIButton"; normalTitle = "Scan"; ObjectID = "IJB-u8-jcX"; */
 "IJB-u8-jcX.normalTitle" = "Scan";
@@ -78,19 +78,19 @@
 "IrN-Am-iTa.text" = "Thank";
 
 /* Class = "IBUIButton"; normalTitle = "No Thanks"; ObjectID = "Kgp-n3-6dl"; */
-"Kgp-n3-6dl.normalTitle" = "No Thanks";
+"Kgp-n3-6dl.normalTitle" = "NO THANKS";
 
 /* Class = "IBUILabel"; text = "Meet Sense."; ObjectID = "LK8-dI-wjg"; */
-"LK8-dI-wjg.text" = "Meet Sense.";
+"LK8-dI-wjg.text" = "Meet Sense";
 
 /* Class = "IBUIButton"; normalTitle = "I Forgot my Password"; ObjectID = "Lnm-XS-wFM"; */
 "Lnm-XS-wFM.normalTitle" = "I Forgot my Password";
 
-/* Class = "IBUIButton"; normalTitle = "Next"; ObjectID = "M0L-MG-dGi"; */
-"M0L-MG-dGi.normalTitle" = "Next";
+/* Class = "IBUIButton"; normalTitle = "NEXT"; ObjectID = "M0L-MG-dGi"; */
+"M0L-MG-dGi.normalTitle" = "NEXT";
 
 /* Class = "IBUIButton"; normalTitle = "Get Started"; ObjectID = "NxD-eY-cDC"; */
-"NxD-eY-cDC.normalTitle" = "Get Started";
+"NxD-eY-cDC.normalTitle" = "GET STARTED";
 
 /* Class = "IBUILabel"; text = "Have your partner get the app"; ObjectID = "Pe9-oy-MXl"; */
 "Pe9-oy-MXl.text" = "Have your partner get the app";
@@ -101,11 +101,11 @@
 /* Class = "IBUILabel"; text = "Are you male or female?"; ObjectID = "S9f-tS-yQg"; */
 "S9f-tS-yQg.text" = "Are you male or female?";
 
-/* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "SVC-vN-68T"; */
-"SVC-vN-68T.normalTitle" = "Skip";
+/* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "SVC-vN-68T"; */
+"SVC-vN-68T.normalTitle" = "Skip for now";
 
 /* Class = "IBUIButton"; normalTitle = "Set Location"; ObjectID = "Sdf-8C-14E"; */
-"Sdf-8C-14E.normalTitle" = "Set Location";
+"Sdf-8C-14E.normalTitle" = "SET LOCATION";
 
 /* Class = "IBUILabel"; text = "Add a second Sleep Pill"; ObjectID = "TLk-q6-Qrj"; */
 "TLk-q6-Qrj.text" = "Add a second Sleep Pill";
@@ -129,7 +129,7 @@
 "YLN-GF-KON.text" = "0lbs";
 
 /* Class = "IBUIButton"; normalTitle = "Continue"; ObjectID = "ZxA-cs-sOA"; */
-"ZxA-cs-sOA.normalTitle" = "Continue";
+"ZxA-cs-sOA.normalTitle" = "CONTINUE";
 
 /* Class = "IBUILabel"; text = "Setting up Sense"; ObjectID = "bPm-8J-k4Y"; */
 "bPm-8J-k4Y.text" = "Setting up Sense";
@@ -152,11 +152,11 @@
 /* Class = "IBUILabel"; text = "This information is used to provide personalized sleep insights"; ObjectID = "f5o-GP-Ma1"; */
 "f5o-GP-Ma1.text" = "This information is used to provide personalized sleep insights";
 
-/* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "f7Z-44-JvY"; */
-"f7Z-44-JvY.normalTitle" = "Skip";
+/* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "f7Z-44-JvY"; */
+"f7Z-44-JvY.normalTitle" = "Skip for now";
 
-/* Class = "IBUIButton"; normalTitle = "Next"; ObjectID = "gMf-fl-V5h"; */
-"gMf-fl-V5h.normalTitle" = "Next";
+/* Class = "IBUIButton"; normalTitle = "NEXT"; ObjectID = "gMf-fl-V5h"; */
+"gMf-fl-V5h.normalTitle" = "NEXT";
 
 /* Class = "IBUITextField"; placeholder = "Email"; ObjectID = "gMo-0B-UJM"; */
 "gMo-0B-UJM.placeholder" = "Email";
@@ -167,8 +167,8 @@
 /* Class = "IBUILabel"; text = "Connecting Sense to WiFi"; ObjectID = "gvl-uZ-ZRh"; */
 "gvl-uZ-ZRh.text" = "Connecting Sense to WiFi";
 
-/* Class = "IBUIButton"; normalTitle = "Next"; ObjectID = "h1g-YQ-7bC"; */
-"h1g-YQ-7bC.normalTitle" = "Next";
+/* Class = "IBUIButton"; normalTitle = "NEXT"; ObjectID = "h1g-YQ-7bC"; */
+"h1g-YQ-7bC.normalTitle" = "NEXT";
 
 /* Class = "IBUIButton"; disabledTitle = " "; ObjectID = "h6O-W0-Wus"; */
 "h6O-W0-Wus.disabledTitle" = " ";
@@ -183,7 +183,7 @@
 "hPf-UR-a80.placeholder" = "Password";
 
 /* Class = "IBUIButton"; normalTitle = "Continue"; ObjectID = "imr-Jl-fE8"; */
-"imr-Jl-fE8.normalTitle" = "Continue";
+"imr-Jl-fE8.normalTitle" = "CONTINUE";
 
 /* Class = "IBUILabel"; text = "How tall are you?"; ObjectID = "iyM-PD-FTT"; */
 "iyM-PD-FTT.text" = "How tall are you?";
@@ -195,7 +195,7 @@
 "kPY-hQ-rr3.text" = "Connecting Sense to WiFi";
 
 /* Class = "IBUIButton"; normalTitle = "Retry"; ObjectID = "lGd-9N-cHV"; */
-"lGd-9N-cHV.normalTitle" = "Retry";
+"lGd-9N-cHV.normalTitle" = "RETRY";
 
 /* Class = "IBUIButton"; disabledTitle = " "; ObjectID = "nBf-Bp-BiO"; */
 "nBf-Bp-BiO.disabledTitle" = " ";
@@ -216,7 +216,7 @@
 "pq7-me-JcE.text" = "Pairing your Sleep Pill";
 
 /* Class = "IBUIButton"; normalTitle = "Continue"; ObjectID = "qdG-tg-U0e"; */
-"qdG-tg-U0e.normalTitle" = "Continue";
+"qdG-tg-U0e.normalTitle" = "CONTINUE";
 
 /* Class = "IBUITextField"; placeholder = "Password"; ObjectID = "rFe-bS-5Yc"; */
 "rFe-bS-5Yc.placeholder" = "Password";
@@ -224,35 +224,35 @@
 /* Class = "IBUIButton"; normalTitle = "I'm having trouble"; ObjectID = "rIf-wQ-F1B"; */
 "rIf-wQ-F1B.normalTitle" = "I'm having trouble";
 
-/* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "tOK-gj-1np"; */
-"tOK-gj-1np.normalTitle" = "Skip";
+/* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "tOK-gj-1np"; */
+"tOK-gj-1np.normalTitle" = "Skip for now";
 
 /* Class = "IBUIButton"; normalTitle = "Log In"; ObjectID = "tuz-ez-XXK"; */
-"tuz-ez-XXK.normalTitle" = "Log In";
+"tuz-ez-XXK.normalTitle" = "LOG IN";
 
 /* Class = "IBUILabel"; text = "scroll vertically"; ObjectID = "uXe-Qh-ePF"; */
 "uXe-Qh-ePF.text" = "scroll vertically";
 
-/* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "v1o-Yc-LWQ"; */
-"v1o-Yc-LWQ.normalTitle" = "Skip";
+/* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "v1o-Yc-LWQ"; */
+"v1o-Yc-LWQ.normalTitle" = "Skip for now";
 
-/* Class = "IBUIButton"; normalTitle = "Next"; ObjectID = "vwe-Kd-JLe"; */
-"vwe-Kd-JLe.normalTitle" = "Next";
+/* Class = "IBUIButton"; normalTitle = "NEXT"; ObjectID = "vwe-Kd-JLe"; */
+"vwe-Kd-JLe.normalTitle" = "NEXT";
 
-/* Class = "IBUIButton"; normalTitle = "Skip"; ObjectID = "wdU-1v-eC1"; */
-"wdU-1v-eC1.normalTitle" = "Skip";
+/* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "wdU-1v-eC1"; */
+"wdU-1v-eC1.normalTitle" = "Skip for now";
 
 /* Class = "IBUILabel"; text = "Pair your Sense"; ObjectID = "xHT-0z-rBN"; */
 "xHT-0z-rBN.text" = "Pair your Sense";
 
-/* Class = "IBUILabel"; text = "Clip your Sleep Pill to the pillowcase you sleep On."; ObjectID = "xuG-gW-rF9"; */
-"xuG-gW-rF9.text" = "Clip your Sleep Pill to the pillowcase you sleep On.";
+/* Class = "IBUILabel"; text = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands."; ObjectID = "xuG-gW-rF9"; */
+"xuG-gW-rF9.text" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands.";
 
 /* Class = "IBUILabel"; text = "Well Done."; ObjectID = "yK4-z9-er1"; */
 "yK4-z9-er1.text" = "Well Done.";
 
 /* Class = "IBUIButton"; normalTitle = "Continue"; ObjectID = "yuw-Cx-zbP"; */
-"yuw-Cx-zbP.normalTitle" = "Continue";
+"yuw-Cx-zbP.normalTitle" = "CONTINUE";
 
 /* Class = "IBUILabel"; text = "What's your location?"; ObjectID = "zaK-X5-Jnp"; */
 "zaK-X5-Jnp.text" = "What's your location?";

@@ -17,15 +17,12 @@
 
 @interface HEMLocationFinderViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapImageView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *locationButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
-@property (nonatomic, copy) NSString* locationTxId;
-
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *locateButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *mapHeightConstraint;
+
+@property (nonatomic, copy) NSString* locationTxId;
 
 @end
 
@@ -33,20 +30,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[super navigationItem] setHidesBackButton:YES];
-    
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [self setupSubtitle];
+    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [self enableBackButton:NO];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBLocation];   
-}
-
-- (void)setupSubtitle {
-    NSString* subtitle = NSLocalizedString(@"onboarding.location.description", nil);
-    NSMutableAttributedString* attrSubtitle
-        = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
-    [[self subtitleLabel] setAttributedText:attrSubtitle];
 }
 
 - (void)adjustConstraintsForIPhone4 {
@@ -57,12 +44,12 @@
 
 - (void)showActivity {
     [[self skipButton] setEnabled:NO];
-    [[self locationButton] showActivityWithWidthConstraint:[self locateButtonWidthConstraint]];
+    [[self locationButton] setEnabled:NO];
 }
 
 - (void)stopActivity {
     [[self skipButton] setEnabled:YES];
-    [[self locationButton] stopActivity];
+    [[self locationButton] setEnabled:YES];
 }
 
 #pragma mark - Actions

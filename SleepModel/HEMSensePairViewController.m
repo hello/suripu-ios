@@ -43,15 +43,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 @interface HEMSensePairViewController() <HEMSecondPillCheckDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *senseImageView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
-@property (weak, nonatomic) IBOutlet UIButton *noSenseButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *readyButtonWidthConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTopConstraint;
 
 @property (strong, nonatomic) UIBarButtonItem* cancelItem;
@@ -71,8 +66,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [self setupDescription];
+    [self showHelpButton];
     [self setupCancelButton];
     [self setCurrentState:HEMSensePairStateNotStarted];
     
@@ -93,27 +87,13 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     }
 }
 
-- (void)setupDescription {
-    NSString* desc = NSLocalizedString(@"sense-pair.description", nil);
-    
-    NSMutableAttributedString* attrDesc = [[NSMutableAttributedString alloc] initWithString:desc];
-    
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
-    
-    [[self descLabel] setAttributedText:attrDesc];
-}
-
 - (void)adjustConstraintsForIPhone4 {
     [self updateConstraint:[self imageHeightConstraint] withDiff:-66];
-    [self updateConstraint:[self imageTopConstraint] withDiff:20];
     [self updateConstraint:[self descriptionTopConstraint] withDiff:10];
 }
 
 - (void)stopActivityWithMessage:(NSString*)message success:(BOOL)sucess completion:(void(^)(void))completion {
-    [[self activityView] dismissWithResultText:message showSuccessMark:sucess remove:YES completion:^{
-        [[self noSenseButton] setEnabled:YES];
-        if (completion) completion ();
-    }];
+    [[self activityView] dismissWithResultText:message showSuccessMark:sucess remove:YES completion:completion];
 }
 
 - (void)cacheManager {
@@ -127,6 +107,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             [self setDisconnectObserverId:nil];
         }
         [[self manager] disconnectFromSense];
+        [self setManager:nil];
     }
 }
 
@@ -141,6 +122,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                         [strongSelf setCurrentState:HEMSensePairStatePairingError];
                         [strongSelf executeNextStep];
                     } else {
+                        [strongSelf setManager:nil];
                         NSString* message = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
                         [strongSelf showErrorMessage:message];
                     }
@@ -161,11 +143,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [self executeNextStep];
 }
 
-- (IBAction)help:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventHelp];
-    [HEMSupportUtil openHelpFrom:self];
-}
-
 #pragma mark - Scanning
 
 - (BOOL)preScannedSensesFound {
@@ -177,6 +154,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     DDLogVerbose(@"scanning for Sense timed out, oh no!");
     [self setTimedOut:YES];
     [SENSenseManager stopScan];
+    [self setManager:nil];
     [self stopActivityWithMessage:nil success:NO completion:^{
         NSString* msg = NSLocalizedString(@"pairing.error.timed-out", nil);
         [self showErrorMessage:msg];
@@ -191,7 +169,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     }
     
     [self setTimedOut:NO];
-    [[self noSenseButton] setEnabled:NO];
     
     BOOL preScanned = [self preScannedSensesFound];
     
@@ -339,6 +316,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
                 [strongSelf setPairing:NO];
+                [strongSelf setManager:nil];
                 [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                     [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
                     [strongSelf setCurrentState:HEMSensePairStatePairingError];
@@ -448,12 +426,19 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)showErrorMessage:(NSString*)message {
     __weak typeof(self) weakSelf = self;
-    [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+    void(^show)(id response, NSError* error) = ^(__unused id response, __unused NSError* error){
         [weakSelf showMessageDialog:message
                               title:NSLocalizedString(@"pairing.failed.title", nil)
                               image:nil
                            withHelp:YES];
-    }];
+    };
+    
+    if ([self manager] == nil) {
+        show(nil, nil);
+    } else {
+        [[self manager] setLED:SENSenseLEDStatePair completion:show];
+    }
+
 }
 
 #pragma mark - Finishing

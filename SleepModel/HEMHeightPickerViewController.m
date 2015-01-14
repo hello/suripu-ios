@@ -16,7 +16,6 @@ static NSInteger HEMMaxHeightInFeet = 9;
 
 @interface HEMHeightPickerViewController () <HEMValueSliderDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (nonatomic, getter=isUsingImperial) BOOL usingImperial;
 @property (weak, nonatomic) IBOutlet HEMValueSliderView *heightSliderView;
 @property (assign, nonatomic) NSInteger numberOfRows;
@@ -25,7 +24,6 @@ static NSInteger HEMMaxHeightInFeet = 9;
 @property (weak, nonatomic) IBOutlet UILabel *otherHeightLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightSliderHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *arrowHeightConstraint;
@@ -37,17 +35,11 @@ static NSInteger HEMMaxHeightInFeet = 9;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[super navigationItem] setHidesBackButton:YES];
-    
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
+
     [self setNumberOfRows:HEMMaxHeightInFeet+1]; // include 0
-    [[self heightSliderView] reload];
-    
-    [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
-    
-    NSInteger feet = [self feet] > 0 ? [self feet] : 5;
-    NSInteger inch = [self inches] > 0 ? [self inches] : 8;
-    [[self heightSliderView] setToValue:(feet + (inch/12.0f))];
+    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [[self descriptionLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
+    [self configureSlider];
     
     if ([self delegate] != nil) {
         NSString* done = NSLocalizedString(@"status.success", nil);
@@ -55,9 +47,18 @@ static NSInteger HEMMaxHeightInFeet = 9;
         [[self doneButton] setTitle:done forState:UIControlStateNormal];
         [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
     } else {
+        [self enableBackButton:NO];
         [SENAnalytics track:kHEMAnalyticsEventOnBHeight];
     }
 
+}
+
+- (void)configureSlider {
+    [[self heightSliderView] reload];
+    
+    NSInteger feet = [self feet] > 0 ? [self feet] : 5;
+    NSInteger inch = [self inches] > 0 ? [self inches] : 8;
+    [[self heightSliderView] setToValue:(feet + (inch/12.0f))];
 }
 
 - (void)adjustConstraintsForIPhone4 {

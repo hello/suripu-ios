@@ -10,24 +10,18 @@
 
 #import "HEMScrollableView.h"
 #import "HEMOnboardingUtils.h"
+#import "HelloStyleKit.h"
 
-typedef NS_ENUM(NSUInteger, HEMScrollableContentType) {
-    HEMScrollableContentTypeEmpty = 0,
-    HEMScrollableContentTypeTitle = 1,
-    HEMScrollableContentTypeDesc = 2,
-    HEMScrollableContentTypeImage = 3
-};
-
-static CGFloat const HEMScrollableLabelBotMargin = 24.0f;
-static CGFloat const HEMScrollableImageBotMargin = 18.0f;
+static CGFloat const HEMScrollabelLabelHorzMargin = 20.0f;
+static CGFloat const HEMScrollabelDefaultContentPadding = 10.0f;
 static CGFloat const HEMScrollableTitleHeight = 34.0f;
 static CGFloat const HEMScrollableBotPadding = 28.0f;
 
 @interface HEMScrollableView()
 
 @property (nonatomic, weak) UIScrollView* scrollView;
-@property (nonatomic, assign) HEMScrollableContentType prevAddedContent;
 @property (nonatomic, weak) UIView* lastContentView; // not the same as lastObject of scrollView subviews
+@property (nonatomic, strong) NSMutableArray* yOffsets;
 
 @end
 
@@ -51,35 +45,37 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
 
 - (void)setup {
     [self setClipsToBounds:YES];
+    [self setYOffsets:[NSMutableArray array]];
     [self addScrollView];
 }
 
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-    CGFloat nextY = 0.0f;
+    NSInteger index = 0;
+    UIView* prevView = nil;
+    CGFloat margins = (HEMScrollabelLabelHorzMargin*2);
+    CGFloat labelMaxWidth = CGRectGetWidth([[self scrollView] bounds])-margins;
+    CGSize labelConstraint = CGSizeMake(labelMaxWidth, MAXFLOAT);
     
     for (UIView* subview in [[self scrollView] subviews]) {
-        
-        if (nextY > 0.0f) {
-            CGRect frame = [subview frame];
-            frame.origin.y = nextY;
-            [subview setFrame:frame];
-        }
-        
+        CGFloat yOffset = [[self yOffsets][index++] floatValue];
+        CGRect frame = [subview frame];
+
         if ([subview isKindOfClass:[UILabel class]]) {
             UILabel* label = (UILabel*)subview;
-            [label sizeToFit];
-            nextY = CGRectGetMaxY([label frame]) + HEMScrollableLabelBotMargin;
+            frame.size.height = [label sizeThatFits:labelConstraint].height;
+            frame.origin.y = CGRectGetMaxY([prevView frame]) + yOffset;
         } else if ([subview isKindOfClass:[UIImageView class]]){
-            nextY = CGRectGetMaxY([subview frame]) + HEMScrollableImageBotMargin;
-        } else {
-            nextY = 0.0f; // reset if not a subview we care for
+            frame.origin.y = CGRectGetMaxY([prevView frame]) + yOffset;
         }
         
+        [subview setFrame:frame];
+        prevView = subview;
     }
 
     [self updateContentSize];
+    [self addShadowIfScrollRequired];
 }
 
 - (void)addScrollView {
@@ -92,22 +88,6 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
     
     [self addSubview:scrollView];
     [self setScrollView:scrollView];
-}
-
-- (CGFloat)nextY {
-    CGFloat topMargin = 0.0f;
-    switch ([self prevAddedContent]) {
-        case HEMScrollableContentTypeTitle:
-        case HEMScrollableContentTypeDesc:
-            topMargin = HEMScrollableLabelBotMargin;
-            break;
-        case HEMScrollableContentTypeImage:
-            topMargin = HEMScrollableImageBotMargin;
-            break;
-        default:
-            break;
-    }
-    return CGRectGetMaxY([[self lastContentView] frame]) + topMargin;
 }
 
 - (void)updateContentSize {
@@ -129,78 +109,84 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
 - (void)addAttributedTitle:(NSAttributedString*)title withYOffset:(CGFloat)y {
     
     CGRect labelFrame = {
-        0.0f,
-        [self nextY] + y,
-        CGRectGetWidth([[self scrollView] bounds]),
+        HEMScrollabelLabelHorzMargin,
+        CGRectGetMaxY([[self lastContentView] frame])+ y,
+        CGRectGetWidth([[self scrollView] bounds])-(HEMScrollabelLabelHorzMargin*2),
         HEMScrollableTitleHeight
     };
     
     UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [label setTranslatesAutoresizingMaskIntoConstraints:YES];
     [label setBackgroundColor:[[self scrollView] backgroundColor]];
     [label setAttributedText:title];
     [label setNumberOfLines:2]; // max two lines
     [[self scrollView] addSubview:label];
-    
-    [self updateContentSize];
-    
-    [self setPrevAddedContent:HEMScrollableContentTypeTitle];
+    [[self yOffsets] addObject:@(y)];
     [self setLastContentView:label];
     
 }
 
-- (void)addImage:(UIImage*)image {
+- (void)addImage:(UIImage *)image
+     contentMode:(UIViewContentMode)mode
+     withYOffset:(CGFloat)yOffset {
     CGRect imageFrame = {
         0.0f,
-        [self nextY],
+        CGRectGetMaxY([[self lastContentView] frame]) + yOffset,
         CGRectGetWidth([[self scrollView] bounds]),
         image.size.height
     };
     
     UIImageView* imageView = [[UIImageView alloc] initWithFrame:imageFrame];
-    [imageView setContentMode:UIViewContentModeCenter];
+    [imageView setContentMode:mode];
     [imageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [imageView setTranslatesAutoresizingMaskIntoConstraints:YES];
     [imageView setImage:image];
     [imageView setBackgroundColor:[[self scrollView] backgroundColor]];
     
     [[self scrollView] addSubview:imageView];
-    
-    [self updateContentSize];
-    
-    [self setPrevAddedContent:HEMScrollableContentTypeImage];
+    [[self yOffsets] addObject:@(yOffset)];
     [self setLastContentView:imageView];
 }
 
-- (void)addDescription:(NSAttributedString*)attributedDes {
-    UILabel* label = [[UILabel alloc] init];
-    [label setAttributedText:attributedDes];
-    [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    [label setTranslatesAutoresizingMaskIntoConstraints:YES];
-    [label setBackgroundColor:[[self scrollView] backgroundColor]];
-    [label setNumberOfLines:0];
+- (void)addImage:(UIImage *)image withYOffset:(CGFloat)yOffset {
+    [self addImage:image
+       contentMode:UIViewContentModeScaleAspectFill
+       withYOffset:yOffset];
+}
 
-    CGSize constraint = CGSizeZero;
-    constraint.width = CGRectGetWidth([[self scrollView] bounds]);
-    constraint.height = MAXFLOAT;
-    
-    CGSize textSize = [label sizeThatFits:constraint];
+- (void)addImage:(UIImage*)image {
+    [self addImage:image withYOffset:0.0f];
+}
+
+- (void)addDescription:(NSAttributedString*)attributedDes {
     CGRect labelFrame = {
-        0.0f,
-        [self nextY],
-        CGRectGetWidth([[self scrollView] bounds]),
-        textSize.height
+        HEMScrollabelLabelHorzMargin,
+        CGRectGetMaxY([[self lastContentView] frame])+ HEMScrollabelDefaultContentPadding,
+        CGRectGetWidth([[self scrollView] bounds])-(HEMScrollabelLabelHorzMargin*2),
+        0.0f // will be updated on relayout
     };
     
-    [label setFrame:labelFrame];
+    UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
+    [label setAttributedText:attributedDes];
+    [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [label setBackgroundColor:[[self scrollView] backgroundColor]];
+    [label setNumberOfLines:0];
     
     [[self scrollView] addSubview:label];
-    
-    [self updateContentSize];
-    
-    [self setPrevAddedContent:HEMScrollableContentTypeDesc];
+    [[self yOffsets] addObject:@(HEMScrollabelDefaultContentPadding)];
     [self setLastContentView:label];
+}
+
+- (void)addShadowIfScrollRequired {
+    CALayer* layer = [self layer];
+    if ([[self scrollView] contentSize].height > CGRectGetHeight([[self scrollView] bounds])) {
+        NSShadow* shadow = [HelloStyleKit onboardingButtonContainerShadow];
+        [layer setShadowRadius:[shadow shadowBlurRadius]];
+        [layer setShadowOffset:[shadow shadowOffset]];
+        [layer setShadowColor:[[shadow shadowColor] CGColor]];
+        [layer setShadowOpacity:1.0f];
+    } else {
+        [layer setShadowOpacity:0.0f];
+    }
 }
 
 - (BOOL)scrollRequired {

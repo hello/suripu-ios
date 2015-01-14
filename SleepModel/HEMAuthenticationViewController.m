@@ -10,17 +10,16 @@
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMActivityCoverView.h"
 
 @interface HEMAuthenticationViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextField* usernameField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
-@property (weak, nonatomic) IBOutlet UITextField *hiddenField;
-@property (weak, nonatomic) IBOutlet UIButton *forgotPasswordButton;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (weak, nonatomic) IBOutlet UIButton *doneButton;
+@property (weak, nonatomic) IBOutlet UIButton *forgotPassButton;
+@property (weak, nonatomic) IBOutlet HEMActionButton *logInButton;
 
+@property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (assign, nonatomic) BOOL signingIn;
 
 @end
@@ -29,12 +28,25 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [[[self doneButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
-    [[self doneButton] setTitleColor:[HelloStyleKit senseBlueColor]
-                            forState:UIControlStateNormal];
+
+    [self configureForgotPassword];
     
     [SENAnalytics track:kHEMAnalyticsEventSignInStart];
+}
+
+- (void)configureForgotPassword {
+    [[self forgotPassButton] setTitleColor:[HelloStyleKit senseBlueColor]
+                                  forState:UIControlStateNormal];
+    [[[self forgotPassButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
+    [[self forgotPassButton] setTitle:NSLocalizedString(@"authorization.forgot-pass", nil)
+                             forState:UIControlStateNormal];
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    [[self forgotPassButton] sizeToFit];
+    DDLogVerbose(@"%f %f", CGRectGetWidth([[self forgotPassButton] bounds]),
+                 CGRectGetHeight([[self forgotPassButton] bounds]));
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -48,52 +60,67 @@
 }
 
 - (void)enableControls:(BOOL)enable {
+    
     if (!enable) {
-        [[self hiddenField] becomeFirstResponder];
+        [[self view] endEditing:NO];
     }
-    [[self forgotPasswordButton] setEnabled:enable];
+
+    [[self forgotPassButton] setEnabled:enable];
     [[self usernameField] setEnabled:enable];
     [[self passwordField] setEnabled:enable];
-    [[self doneButton] setEnabled:enable];
-    [[self navigationItem] setHidesBackButton:!enable animated:YES];
     
     if (enable) {
         [[self usernameField] becomeFirstResponder];
     }
 }
 
-- (void)showActivity {
+- (void)showActivity:(void(^)(void))completion {
     [self enableControls:NO];
-    [[self activityIndicator] startAnimating];
+    
+    NSString* message = NSLocalizedString(@"authorization.sign-in.activity.message", nil);
+    HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
+    [activityView showInView:[[self navigationController] view] withText:message activity:YES completion:completion];
+
+    [self setActivityView:activityView];
 }
 
-- (void)stopActivity {
-    [[self activityIndicator] stopAnimating];
-    [self enableControls:YES];
+- (void)stopActivity:(void(^)(void))completion {
+    if ([self activityView] == nil) {
+        [self enableControls:YES];
+        if (completion) completion ();
+    } else {
+        [[self activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+            [self setActivityView:nil];
+            [self enableControls:YES];
+            if (completion) completion ();
+        }];
+    }
 }
 
 - (void)signIn {
-    [self setSigningIn:YES];
-
-    __weak typeof(self) weakSelf = self;
-    [SENAuthorizationService authorizeWithUsername:self.usernameField.text password:self.passwordField.text callback:^(NSError* error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf) return;
+    [self showActivity:^{
+        [self setSigningIn:YES];
         
-        [strongSelf setSigningIn:NO];
-        
-        if (error) {
-            [strongSelf stopActivity];
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-            [HEMOnboardingUtils showAlertForHTTPError:error
-                                            withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)
-                                                 from:strongSelf];
-            return;
-        }
-        
-        [strongSelf stopActivity];
-        [strongSelf letUserIntoApp];
-        
+        __weak typeof(self) weakSelf = self;
+        [SENAuthorizationService authorizeWithUsername:self.usernameField.text password:self.passwordField.text callback:^(NSError* error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            
+            [strongSelf setSigningIn:NO];
+            
+            if (error) {
+                [strongSelf stopActivity:^{
+                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                    [HEMOnboardingUtils showAlertForHTTPError:error
+                                                    withTitle:NSLocalizedString(@"authorization.sign-in.failed.title", nil)
+                                                         from:strongSelf];
+                    return;
+                }];
+            } else {
+                [strongSelf letUserIntoApp];
+                [strongSelf stopActivity:nil];
+            }
+            
+        }];
     }];
 }
 
@@ -108,7 +135,6 @@
 
 - (IBAction)didTapLogInButton:(id)sender {
     if ([self validateInputValues] && ![self signingIn]) {
-        [self showActivity];
         [self signIn];
     }
 }
@@ -126,7 +152,6 @@
     } else {
         [textField resignFirstResponder];
         if ([self validateInputValues]) {
-            [self showActivity];
             [self signIn];
             
         }

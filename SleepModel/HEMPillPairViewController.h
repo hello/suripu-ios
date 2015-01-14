@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HEMBaseController.h"
+#import "HEMOnboardingController.h"
 
 @class HEMPillPairViewController;
 
@@ -18,7 +18,7 @@
 
 @end
 
-@interface HEMPillPairViewController : HEMBaseController
+@interface HEMPillPairViewController : HEMOnboardingController
 
 @property (nonatomic, weak) id<HEMPillPairDelegate> delegate;
 

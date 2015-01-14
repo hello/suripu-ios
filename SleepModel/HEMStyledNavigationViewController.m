@@ -10,7 +10,7 @@
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 
-@interface HEMStyledNavigationViewController ()
+@interface HEMStyledNavigationViewController ()<UIGestureRecognizerDelegate, UINavigationControllerDelegate>
 
 @end
 
@@ -18,17 +18,20 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
     [[self navigationBar] setTintColor:[HelloStyleKit backViewTintColor]];
     [[self navigationBar] setTitleTextAttributes:@{
         NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
         NSFontAttributeName : [UIFont settingsTitleFont]
     }];
+    
+    // required since we are adding custom back button
+    __weak typeof(self) weakSelf = self;
+    self.interactivePopGestureRecognizer.delegate = weakSelf;
+    self.delegate = weakSelf;
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     [self setBackButtonOnViewController:viewController];
-    [[viewController view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
     [super pushViewController:viewController animated:animated];
 }
 

@@ -34,13 +34,8 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 @interface HEMWifiPickerViewController() <UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *wifiPickerTableView;
-@property (weak, nonatomic) IBOutlet UIButton *helpButton;
 @property (weak, nonatomic) IBOutlet HEMActionButton *scanButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scanButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet HEMActivityCoverView *activityView;
 
 @property (strong, nonatomic) SENWifiEndpoint* selectedWifiEndpont;
@@ -54,12 +49,9 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
     
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [self setWifiDataSource:[[HEMWiFiDataSource alloc] init]];
-    [[self wifiPickerTableView] setDataSource:[self wifiDataSource]];
-    [[self wifiPickerTableView] setDelegate:self];
+    [self showHelpButton];
+    [self configurePicker];
     
     [[[self activityView] activityLabel] setFont:[UIFont onboardingActivityFontMedium]];
     
@@ -68,9 +60,16 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     [self setupCancelButton];
     
     if ([self delegate] == nil && [self sensePairDelegate] == nil) {
+        [self enableBackButton:NO];
         [SENAnalytics track:kHEMAnalyticsEventOnBWiFi];
     }
     
+}
+
+- (void)configurePicker {
+    [self setWifiDataSource:[[HEMWiFiDataSource alloc] init]];
+    [[self wifiPickerTableView] setDataSource:[self wifiDataSource]];
+    [[self wifiPickerTableView] setDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -92,16 +91,6 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self setVisible:NO];
-}
-
-- (void)adjustConstraintsForIphone5 {
-    CGFloat diff = -kHEMWifiCellHeight;
-    [self updateConstraint:[self tableViewHeightConstraint] withDiff:diff];
-}
-
-- (void)adjustConstraintsForIPhone4 {
-    CGFloat diff = -(2*kHEMWifiCellHeight);
-    [self updateConstraint:[self tableViewHeightConstraint] withDiff:diff];
 }
 
 - (void)setupCancelButton {
@@ -181,7 +170,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIImageView* wifiView = (UIImageView*)[accessoryView viewWithTag:kHEMWifiPickerTagWifi];
     [wifiView setHidden:!showWifiIcon];
     
-    [[cell textLabel] setFont:[UIFont fontWithName:@"Calibre-Regular" size:18.0f]];
+    [[cell textLabel] setFont:[UIFont wifiTitleFont]];
     [[cell textLabel] setText:ssid];
 }
 
@@ -255,11 +244,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark - Actions
-
-- (IBAction)help:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventHelp];
-    [HEMSupportUtil openHelpFrom:self];
-}
 
 - (IBAction)scan:(id)sender {
     [SENAnalytics track:kHEMAnalyticsEventOnBWiFiScan];

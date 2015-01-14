@@ -1,6 +1,6 @@
 
 #import <UIKit/UIKit.h>
-#import "HEMBaseController.h"
+#import "HEMOnboardingController.h"
 
 @class HEMWeightPickerViewController;
 
@@ -12,7 +12,7 @@
 
 @end
 
-@interface HEMWeightPickerViewController : HEMBaseController
+@interface HEMWeightPickerViewController : HEMOnboardingController
 
 @property (nonatomic, assign) NSInteger defaultWeightLbs;
 @property (nonatomic, weak) id<HEMWeightPickerDelegate> delegate;

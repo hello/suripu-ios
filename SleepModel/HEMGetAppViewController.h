@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMOnboardingController.h"
 
-@interface HEMGetAppViewController : UIViewController
+@interface HEMGetAppViewController : HEMOnboardingController
 
 @end

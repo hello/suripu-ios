@@ -16,6 +16,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMBluetoothUtils.h"
+#import "HEMActivityCoverView.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
@@ -23,11 +24,9 @@
 @property (weak, nonatomic) IBOutlet UITextField* emailAddressField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
 @property (weak, nonatomic) IBOutlet UITextField* nameField;
-@property (weak, nonatomic) IBOutlet UITextField *hiddenField;
-@property (weak, nonatomic) IBOutlet UIButton *doneButton;
-@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
-@property (copy, nonatomic) NSString* doneButtonTitle;
+@property (weak, nonatomic) IBOutlet HEMActionButton *nextButton;
 
+@property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (nonatomic, getter=isSigningUp) BOOL signingUp;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameTopConstraint;
@@ -37,10 +36,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
-    [[[self doneButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
-    [[self doneButton] setTitleColor:[HelloStyleKit senseBlueColor]
-                            forState:UIControlStateNormal];
     [SENAnalytics track:kHEMAnalyticsEventOnBStart];
 }
 
@@ -50,75 +45,86 @@
 }
 
 - (void)adjustConstraintsForIPhone4 {
-    [self updateConstraint:[self nameTopConstraint]
-                  withDiff:8.0f];
+    [self updateConstraint:[self nameTopConstraint] withDiff:40.0f];
 }
 
 #pragma mark - Activity
 
 - (void)enableControls:(BOOL)enable {
     if (!enable) {
-        // keep the keyboard up at all times
-        [[self hiddenField] becomeFirstResponder];
+        [[self view] endEditing:NO];
     }
     
     [[self nameField] setEnabled:enable];
     [[self emailAddressField] setEnabled:enable];
     [[self passwordField] setEnabled:enable];
-    [[self doneButton] setEnabled:enable];
-    [[self navigationItem] setHidesBackButton:!enable animated:YES];
+    [[self nextButton] setEnabled:enable];
     
     if (enable) {
         [[self nameField] becomeFirstResponder];
     }
 }
 
-- (void)showActivity {
+- (void)showActivity:(void(^)(void))completion {
     self.signingUp = YES;
     [self enableControls:NO];
-    [[self activityIndicator] startAnimating];
+    NSString* message = NSLocalizedString(@"sign-up.activity.message", nil);
+    HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
+    [activityView showInView:[[self navigationController] view] withText:message activity:YES completion:completion];
+    [self setActivityView:activityView];
 }
 
-- (void)stopActivity {
+- (void)stopActivity:(void(^)(void))completion enableControls:(BOOL)enable {
     self.signingUp = NO;
-    [[self activityIndicator] stopAnimating];
-    [self enableControls:YES];
+    
+    if ([self activityView] == nil) {
+        [self enableControls:enable];
+        if (completion) completion ();
+    } else {
+        [[self activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+            [self setActivityView:nil];
+            [self enableControls:enable];
+            if (completion) completion ();
+        }];
+    }
 }
 
 #pragma mark - Sign Up
 
 - (void)signup {
-    NSString* emailAddress = [self.emailAddressField.text trim];
-    NSString* password = self.passwordField.text;
-    NSString* name = [self.nameField.text trim];
-    
-    __weak typeof(self) weakSelf = self;
-    [SENAPIAccount createAccountWithName:name
-                            emailAddress:emailAddress
-                                password:password
-                              completion:^(SENAccount* account, NSError* error) {
-                                  __strong typeof(weakSelf) strongSelf = weakSelf;
-                                  if (!strongSelf) return;
-                                  
-                                  if (error) {
-                                      [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                                      [strongSelf stopActivity];
+    [self showActivity:^{
+        NSString* emailAddress = [self.emailAddressField.text trim];
+        NSString* password = self.passwordField.text;
+        NSString* name = [self.nameField.text trim];
+        
+        __weak typeof(self) weakSelf = self;
+        [SENAPIAccount createAccountWithName:name
+                                emailAddress:emailAddress
+                                    password:password
+                                  completion:^(SENAccount* account, NSError* error) {
+                                      __strong typeof(weakSelf) strongSelf = weakSelf;
                                       
-                                      NSString* title = NSLocalizedString(@"sign-up.failed.title", nil);
-                                      [HEMOnboardingUtils showAlertForHTTPError:error
-                                                                      withTitle:title
-                                                                           from:strongSelf];
-                                      return;
-                                  }
-                                  // cache the account as that is needed post sign up
-                                  // to update the account with further information
-                                  [[HEMOnboardingCache sharedCache] setAccount:account];
-                                  [strongSelf authenticate:emailAddress password:password rety:YES];
-                                  
-                                  // save a checkpoint so that user does not have to try and create
-                                  // another account
-                                  [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountCreated];
-                              }];
+                                      if (error) {
+                                          [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                                          [strongSelf stopActivity:^{
+                                              NSString* title = NSLocalizedString(@"sign-up.failed.title", nil);
+                                              [HEMOnboardingUtils showAlertForHTTPError:error
+                                                                              withTitle:title
+                                                                                   from:strongSelf];
+                                          } enableControls:YES];
+                                          
+                                          return;
+                                      }
+                                      // cache the account as that is needed post sign up
+                                      // to update the account with further information
+                                      [[HEMOnboardingCache sharedCache] setAccount:account];
+                                      [strongSelf authenticate:emailAddress password:password rety:YES];
+                                      
+                                      // save a checkpoint so that user does not have to try and create
+                                      // another account
+                                      [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountCreated];
+                                  }];
+    }];
 }
 
 - (void)authenticate:(NSString*)email password:(NSString*)password rety:(BOOL)retry {
@@ -126,34 +132,37 @@
     __weak typeof(self) weakSelf = self;
     [SENAuthorizationService authorizeWithUsername:email password:password callback:^(NSError *signInError) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf) return;
         
-        [strongSelf stopActivity];
-        
-        if (signInError && !retry) {
-            // TODO: what should happen if we land in this case?
-            DDLogInfo(@"authentication failed post sign up %@", signInError);
-            [SENAnalytics trackError:signInError withEventName:kHEMAnalyticsEventError];
-            NSString* errTitle = NSLocalizedString(@"sign-up.failed.title", nil);
-            [HEMOnboardingUtils showAlertForHTTPError:signInError
-                                            withTitle:errTitle
-                                                 from:strongSelf];
-            return;
-        } else if (signInError) { // retry once
-            [SENAnalytics trackError:signInError withEventName:kHEMAnalyticsEventError];
-            DDLogInfo(@"retrying authentication post sign up %@", signInError);
-            [strongSelf authenticate:email password:password rety:NO];
-            return;
+        if (signInError) {
+            [strongSelf stopActivity:^{
+                if (!retry) {
+                    // TODO: what should happen if we land in this case?
+                    DDLogInfo(@"authentication failed post sign up %@", signInError);
+                    [SENAnalytics trackError:signInError withEventName:kHEMAnalyticsEventError];
+                    NSString* errTitle = NSLocalizedString(@"sign-up.failed.title", nil);
+                    [HEMOnboardingUtils showAlertForHTTPError:signInError
+                                                    withTitle:errTitle
+                                                         from:strongSelf];
+                    return;
+                } else { // retry once
+                    [SENAnalytics trackError:signInError withEventName:kHEMAnalyticsEventError];
+                    DDLogInfo(@"retrying authentication post sign up %@", signInError);
+                    [strongSelf authenticate:email password:password rety:NO];
+                    return;
+                }
+            } enableControls:YES];
+        } else {
+            [HEMAnalytics trackSignUpWithName:userName];
+            [strongSelf next];
+            [strongSelf stopActivity:nil enableControls:NO];
         }
 
-        [HEMAnalytics trackSignUpWithName:userName];
-        [strongSelf next];
+
     }];
 }
 
 - (IBAction)didTapSignUp:(id)sender {
     if ([self validateFieldValuesAndShowAlert:YES] && ![self isSigningUp]) {
-        [self showActivity];
         [self signup];
     }
 }
@@ -169,7 +178,6 @@
         [self.passwordField becomeFirstResponder];
     } else if ([textField isEqual:self.passwordField]) {
         if ([self validateFieldValuesAndShowAlert:YES]) {
-            [self showActivity];
             [self signup];
         }
     }

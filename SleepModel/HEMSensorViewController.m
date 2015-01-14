@@ -159,7 +159,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.statusMessageLabel.attributedText = [markdown_to_attr_string(self.sensor.message, 0, statusAttributes) trim];
     self.idealLabel.attributedText = [markdown_to_attr_string(self.sensor.idealConditionsMessage, 0, idealAttributes) trim];
     self.graphView.colorLine = color;
-    self.graphView.alphaLine = 0.2;
+    self.graphView.alphaLine = 0.7;
     self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];
 }
 

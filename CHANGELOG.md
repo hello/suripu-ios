@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.0.56
+
+New:
+
+* Onboarding flow design overhaul
+* Updated alarm styling
+* Updated sensor view styling
+
+Fixes:
+
+* better handling for errors during onboarding
+* fixed issue where menu button was not responding in 6+
+
 ## 1.0.0.55
 
 New:

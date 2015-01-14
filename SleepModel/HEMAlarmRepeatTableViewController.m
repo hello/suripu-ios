@@ -6,6 +6,7 @@
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
+#import "HEMAlarmUtils.h"
 #import "HEMAlertController.h"
 #import "HEMAlarmPropertyTableViewCell.h"
 #import "HelloStyleKit.h"
@@ -70,7 +71,7 @@
     if ((repeatFlags & day) == day) {
         repeatFlags -= day;
     }
-    else if ([self dayInUse:day]) {
+    else if ([HEMAlarmUtils dayInUse:day excludingAlarm:self.alarm]) {
         [self showAlertForRepeatRestriction];
     }
     else {
@@ -78,17 +79,6 @@
     }
     self.alarmCache.repeatFlags = repeatFlags;
     [tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
-}
-
-- (BOOL)dayInUse:(NSUInteger)day
-{
-    NSUInteger daysInUse = 0;
-    for (SENAlarm* alarm in [SENAlarm savedAlarms]) {
-        if ([alarm isEqual:self.alarm])
-            continue;
-        daysInUse |= alarm.repeatFlags;
-    }
-    return (daysInUse & day) == day;
 }
 
 - (void)showAlertForRepeatRestriction

@@ -161,12 +161,8 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 
 - (IBAction)saveAndDismissFromView:(id)sender
 {
-    if (!self.alarmCache.soundID) {
-        [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.save-error.title", nil)
-                                              message:NSLocalizedString(@"alarm.sounds.error.no-selection.message", nil)
-                                 presentingController:self];
+    if (![self isAlarmCacheValid])
         return;
-    }
     [self updateAlarmFromCache:self.alarmCache];
     __weak typeof(self) weakSelf = self;
     [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
@@ -178,6 +174,29 @@ static NSUInteger const HEMAlarm24HourCount = 24;
         else
             [strongSelf updateAlarmFromCache:strongSelf.originalAlarmCache];
     }];
+}
+
+- (BOOL)isAlarmCacheValid
+{
+    if (!self.alarmCache.soundID) {
+        [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.save-error.title", nil)
+                                              message:NSLocalizedString(@"alarm.sounds.error.no-selection.message", nil)
+                                 presentingController:self];
+        return NO;
+    }
+    if (self.alarmCache.repeatFlags == 0 && [self.alarmCache isSmart]) {
+        SENAlarm* dummyAlarm = [SENAlarm new];
+        dummyAlarm.minute = self.alarmCache.minute;
+        dummyAlarm.hour = self.alarmCache.hour;
+        SENAlarmRepeatDays day = [HEMAlarmUtils fireDayForNonRepeatingAlarm:dummyAlarm];
+        if ([HEMAlarmUtils dayInUse:day excludingAlarm:self.alarm]) {
+            [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.repeat.day-reuse-error.title", nil)
+                                                  message:NSLocalizedString(@"alarm.repeat.day-reuse-error.message", nil)
+                                     presentingController:self];
+            return NO;
+        }
+    }
+    return YES;
 }
 
 - (IBAction)deleteAndDismissFromView:(id)sender
@@ -232,7 +251,6 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 {
     NSString* identifier, *title = nil, *detail = nil;
     BOOL switchState = NO;
-    UIColor* textColor = [UIColor darkGrayColor];
     switch (indexPath.row) {
         case HEMAlarmTableSmartIndex:
             identifier = [HEMMainStoryboard alarmSwitchCellReuseIdentifier];
@@ -242,12 +260,7 @@ static NSUInteger const HEMAlarm24HourCount = 24;
         case HEMAlarmTableSoundIndex:
             identifier = [HEMMainStoryboard alarmSoundCellReuseIdentifier];
             title = NSLocalizedString(@"alarm.sound.title", nil);
-            if (self.alarmCache.soundName) {
-                detail = self.alarmCache.soundName;
-            } else {
-                detail = NSLocalizedString(@"alarm.sound.no-selection", nil);
-                textColor = [UIColor redColor];
-            }
+            detail = self.alarmCache.soundName ?: NSLocalizedString(@"alarm.sound.no-selection", nil);
             break;
         case HEMAlarmTableRepeatIndex:
             identifier = [HEMMainStoryboard alarmRepeatCellReuseIdentifier];
@@ -261,7 +274,6 @@ static NSUInteger const HEMAlarm24HourCount = 24;
     HEMAlarmTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier];
     cell.titleLabel.text = title;
     cell.detailLabel.text = detail;
-    cell.detailLabel.textColor = textColor;
     cell.smartSwitch.on = switchState;
     return cell;
 }

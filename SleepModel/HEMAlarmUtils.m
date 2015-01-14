@@ -38,6 +38,39 @@
     }
 }
 
++ (BOOL)dayInUse:(NSUInteger)day excludingAlarm:(SENAlarm*)excludedAlarm
+{
+    NSUInteger daysInUse = 0;
+    for (SENAlarm* alarm in [SENAlarm savedAlarms]) {
+        if ([alarm isEqual:excludedAlarm] || ![alarm isSmartAlarm])
+            continue;
+        if (alarm.repeatFlags != 0) {
+            daysInUse |= alarm.repeatFlags;
+        } else {
+            daysInUse |= [self fireDayForNonRepeatingAlarm:alarm];
+        }
+    }
+    return (daysInUse & day) == day;
+}
+
++ (SENAlarmRepeatDays)fireDayForNonRepeatingAlarm:(SENAlarm*)alarm
+{
+    NSDate* fireDate = [alarm nextRingDate];
+    NSCalendar* calendar = [NSCalendar calendarWithIdentifier:NSGregorianCalendar];
+    NSDateComponents* components = [calendar components:NSCalendarUnitWeekday fromDate:fireDate];
+    switch (components.weekday) {
+        case 1: return SENAlarmRepeatSunday;
+        case 2: return SENAlarmRepeatMonday;
+        case 3: return SENAlarmRepeatTuesday;
+        case 4: return SENAlarmRepeatWednesday;
+        case 5: return SENAlarmRepeatThursday;
+        case 6: return SENAlarmRepeatFriday;
+        case 7: return SENAlarmRepeatSaturday;
+        default:
+            return 0;
+    }
+}
+
 + (void)refreshAlarmsFromPresentingController:(UIViewController*)controller completion:(void (^)(NSError*))completion
 {
     UIBarButtonItem* rightButton = controller.navigationItem.rightBarButtonItem;

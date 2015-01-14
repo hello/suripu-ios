@@ -87,6 +87,7 @@ static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"alarms/%.0f";
     properties[@"hour"] = @(alarmDateComponents.hour);
     properties[@"minute"] = @(alarmDateComponents.minute);
     properties[@"repeated"] = @(repeated);
+    properties[@"smart"] = @([alarm isSmartAlarm]);
     properties[@"day_of_week"] = [self repeatDaysForAlarm:alarm];
 
     if (!repeated) {
@@ -100,18 +101,8 @@ static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"alarms/%.0f";
 
 + (NSDateComponents*)dateComponentsForAlarm:(SENAlarm*)alarm
 {
-    NSDate* date = [NSDate date];
     NSCalendarUnit flags = (NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitDay);
-    NSDateComponents* currentDateComponents = [[NSCalendar currentCalendar] components:flags fromDate:date];
-    NSInteger minuteOfDay = (currentDateComponents.hour * 60) + currentDateComponents.minute;
-    NSInteger alarmMinuteOfDay = (alarm.hour * 60) + alarm.minute;
-    NSDateComponents* diff = [NSDateComponents new];
-    diff.minute = alarmMinuteOfDay - minuteOfDay;
-    if (alarmMinuteOfDay < minuteOfDay)
-        diff.day = 1;
-
-    NSDate* alarmDate = [[NSCalendar currentCalendar] dateByAddingComponents:diff toDate:date options:0];
-    return [[NSCalendar currentCalendar] components:flags fromDate:alarmDate];
+    return [[NSCalendar currentCalendar] components:flags fromDate:[alarm nextRingDate]];
 }
 
 + (NSArray*)repeatDaysForAlarm:(SENAlarm*)alarm

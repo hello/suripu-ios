@@ -38,7 +38,7 @@
     
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [[self descriptionLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
-    [self configureSelectors];
+    [self configureGenderSelectors];
     
     if ([self delegate] != nil) {
         NSString* title = NSLocalizedString(@"status.success", nil);
@@ -56,7 +56,7 @@
     [self updateConstraint:[self selectorTopConstraint] withDiff:40];
 }
 
-- (void)configureSelectors {
+- (void)configureGenderSelectors {
     [[self selectorDivider] setBackgroundColor:[HelloStyleKit separatorColor]];
     [[[self selectorContainer] layer] setBorderWidth:1.0f];
     [[[self selectorContainer] layer] setBorderColor:[[HelloStyleKit separatorColor] CGColor]];

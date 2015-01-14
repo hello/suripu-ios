@@ -14,13 +14,13 @@
 @interface HEMGenderPickerViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UIView *selectorContainer;
 @property (weak, nonatomic) IBOutlet UIView *selectorDivider;
 @property (weak, nonatomic) IBOutlet UIButton *femaleSelectorButton;
 @property (weak, nonatomic) IBOutlet UIButton *maleSelectorButton;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *selectorTopConstraint;
 
 @property (strong, nonatomic) UIColor* selectedColor;
 @property (strong, nonatomic) UIColor* selectedBorderColor;
@@ -37,7 +37,7 @@
     [self setSelectedBorderColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.4f]];
     
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-    [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
+    [[self descriptionLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [self configureSelectors];
     
     if ([self delegate] != nil) {
@@ -49,6 +49,11 @@
         [self enableBackButton:NO];
         [SENAnalytics track:kHEMAnalyticsEventOnBGender];
     }
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [super adjustConstraintsForIPhone4];
+    [self updateConstraint:[self selectorTopConstraint] withDiff:40];
 }
 
 - (void)configureSelectors {

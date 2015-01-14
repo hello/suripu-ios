@@ -245,8 +245,8 @@
 /* Class = "IBUILabel"; text = "Pair your Sense"; ObjectID = "xHT-0z-rBN"; */
 "xHT-0z-rBN.text" = "Pair your Sense";
 
-/* Class = "IBUILabel"; text = "Clip your Sleep Pill to the pillowcase you sleep On."; ObjectID = "xuG-gW-rF9"; */
-"xuG-gW-rF9.text" = "Clip your Sleep Pill to the pillowcase you sleep On.";
+/* Class = "IBUILabel"; text = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands."; ObjectID = "xuG-gW-rF9"; */
+"xuG-gW-rF9.text" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands.";
 
 /* Class = "IBUILabel"; text = "Well Done."; ObjectID = "yK4-z9-er1"; */
 "yK4-z9-er1.text" = "Well Done.";

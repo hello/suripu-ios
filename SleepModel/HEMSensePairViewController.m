@@ -43,14 +43,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 @interface HEMSensePairViewController() <HEMSecondPillCheckDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *senseImageView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
-@property (weak, nonatomic) IBOutlet UIButton *noSenseButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *readyButtonWidthConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTopConstraint;
 
 @property (strong, nonatomic) UIBarButtonItem* cancelItem;
@@ -70,7 +66,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupDescription];
     [self showHelpButton];
     [self setupCancelButton];
     [self setCurrentState:HEMSensePairStateNotStarted];
@@ -92,27 +87,13 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     }
 }
 
-- (void)setupDescription {
-    NSString* desc = NSLocalizedString(@"sense-pair.description", nil);
-    
-    NSMutableAttributedString* attrDesc = [[NSMutableAttributedString alloc] initWithString:desc];
-    
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
-    
-    [[self descLabel] setAttributedText:attrDesc];
-}
-
 - (void)adjustConstraintsForIPhone4 {
     [self updateConstraint:[self imageHeightConstraint] withDiff:-66];
-    [self updateConstraint:[self imageTopConstraint] withDiff:20];
     [self updateConstraint:[self descriptionTopConstraint] withDiff:10];
 }
 
 - (void)stopActivityWithMessage:(NSString*)message success:(BOOL)sucess completion:(void(^)(void))completion {
-    [[self activityView] dismissWithResultText:message showSuccessMark:sucess remove:YES completion:^{
-        [[self noSenseButton] setEnabled:YES];
-        if (completion) completion ();
-    }];
+    [[self activityView] dismissWithResultText:message showSuccessMark:sucess remove:YES completion:completion];
 }
 
 - (void)cacheManager {
@@ -188,7 +169,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     }
     
     [self setTimedOut:NO];
-    [[self noSenseButton] setEnabled:NO];
     
     BOOL preScanned = [self preScannedSensesFound];
     

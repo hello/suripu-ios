@@ -20,7 +20,6 @@
 
 @interface HEMNoBLEViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *instructionView;
 @property (weak, nonatomic) IBOutlet UILabel *step1Label;
 @property (weak, nonatomic) IBOutlet UILabel *step1DescLabel;
@@ -38,20 +37,8 @@
     [super viewDidLoad];
     [self enableBackButton:NO];
     [self showHelpButton];
-    [self setupSubtitleText];
     [self configureSteps];
     [SENAnalytics track:kHEMAnalyticsEventOnBNoBle];
-}
-
-- (void)setupSubtitleText {
-    NSString* subtitle = NSLocalizedString(@"no-bluetooth.subtitle", nil);
-    
-    NSMutableAttributedString* attrSubtitle =
-        [[NSMutableAttributedString alloc] initWithString:subtitle];
-    
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
-    
-    [[self subtitleLabel] setAttributedText:attrSubtitle];
 }
 
 - (void)configureSteps {

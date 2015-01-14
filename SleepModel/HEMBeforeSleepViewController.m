@@ -32,20 +32,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self subtitleLabel] setAttributedText:[self attributedDescription]];
     [self enableBackButton:NO];
     [SENAnalytics track:kHEMAnalyticsEventOnBSenseColors];
-}
-
-- (NSAttributedString*)attributedDescription {
-    NSString* desc = NSLocalizedString(@"onboarding.before-sleep.description", nil);
-    
-    NSMutableAttributedString* attrDesc =
-        [[NSMutableAttributedString alloc] initWithString:desc];
-    
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
-    
-    return attrDesc;
 }
 
 - (IBAction)next:(id)sender {

@@ -51,7 +51,7 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)settingsTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.f];
 }
 
 + (UIFont *)sensorRangeSelectionFont {

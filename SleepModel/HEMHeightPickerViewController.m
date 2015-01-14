@@ -24,7 +24,6 @@ static NSInteger HEMMaxHeightInFeet = 9;
 @property (weak, nonatomic) IBOutlet UILabel *otherHeightLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightSliderHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *arrowHeightConstraint;
@@ -39,7 +38,7 @@ static NSInteger HEMMaxHeightInFeet = 9;
 
     [self setNumberOfRows:HEMMaxHeightInFeet+1]; // include 0
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-    [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
+    [[self descriptionLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [self configureSlider];
     
     if ([self delegate] != nil) {

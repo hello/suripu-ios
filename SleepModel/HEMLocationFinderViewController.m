@@ -17,7 +17,6 @@
 
 @interface HEMLocationFinderViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *mapImageView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *locationButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
@@ -31,20 +30,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
-    [self setupSubtitle];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [self enableBackButton:NO];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBLocation];   
-}
-
-- (void)setupSubtitle {
-    NSString* subtitle = NSLocalizedString(@"onboarding.location.description", nil);
-    NSMutableAttributedString* attrSubtitle
-        = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
-    [[self subtitleLabel] setAttributedText:attrSubtitle];
 }
 
 - (void)adjustConstraintsForIPhone4 {

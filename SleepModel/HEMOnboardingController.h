@@ -11,6 +11,7 @@
 @interface HEMOnboardingController : HEMBaseController
 
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel* descriptionLabel;
 
 - (void)enableBackButton:(BOOL)enable;
 - (void)showHelpButton;

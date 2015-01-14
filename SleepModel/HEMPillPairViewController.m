@@ -21,15 +21,12 @@
 #import "HEMOnboardingUtils.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
-#import "HEMScrollableView.h"
 #import "HelloStyleKit.h"
 
-static CGFloat const HEMPillPairImageYOffset = 80.0f;
 static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 @interface HEMPillPairViewController()
 
-@property (weak, nonatomic)   IBOutlet HEMScrollableView *contentView;
 @property (weak, nonatomic)   IBOutlet HEMActionButton *retryButton;
 @property (weak, nonatomic)   IBOutlet UIButton *helpButton;
 @property (weak, nonatomic)   IBOutlet NSLayoutConstraint *retryButtonWidthConstraint;
@@ -50,7 +47,6 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     [super viewDidLoad];
     
     [self configureButton];
-    [self setupContent];
     [self showHelpButton];
     [self setupCancelButton];
     [self enableBackButton:NO];
@@ -64,19 +60,6 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 - (void)configureButton {
     [[self retryButton] setBackgroundColor:[UIColor clearColor]];
     [[self retryButton] setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
-}
-
-- (void)setupContent {
-    NSString* subtitle = NSLocalizedString(@"pairing.pill.subtitle", nil);
-    NSMutableAttributedString* attrSubtitle
-        = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
-    
-    [[self contentView] addTitle:NSLocalizedString(@"pairing.pill.title", nil)];
-    [[self contentView] addDescription:attrSubtitle];
-    [[self contentView] addImage:[HelloStyleKit shakePill]
-                     withYOffset:HEMPillPairImageYOffset];
-    
 }
 
 - (void)setupCancelButton {

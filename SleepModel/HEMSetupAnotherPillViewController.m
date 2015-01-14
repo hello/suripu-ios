@@ -21,7 +21,6 @@
 
 @interface HEMSetupAnotherPillViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UIButton *setupButton;
 
 @end
@@ -30,7 +29,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupSubtitle];
     [self configureButtons];
     [self enableBackButton:NO];
     [SENAnalytics track:kHEMAnalyticsEventOnBAnotherPill];
@@ -38,18 +36,8 @@
 
 - (void)configureButtons {
     [[[self setupButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-    [[self setupButton] setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
-}
-
-- (void)setupSubtitle {
-    NSString* subtitle = NSLocalizedString(@"setup.second-pill.subtitle", nil);
-
-    NSMutableAttributedString* attrSubtitle
-        = [[NSMutableAttributedString alloc] initWithString:subtitle];
-    
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
-    
-    [[self subtitleLabel] setAttributedText:attrSubtitle];
+    [[self setupButton] setTitleColor:[HelloStyleKit senseBlueColor]
+                             forState:UIControlStateNormal];
 }
 
 - (IBAction)setupAnother:(UIButton *)sender {

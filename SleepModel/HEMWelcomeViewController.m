@@ -103,11 +103,9 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     NSString* text = NSLocalizedString(@"welcome.subtitle", nil);
     
     NSMutableAttributedString* attrText = [[NSMutableAttributedString alloc] initWithString:text];
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
-    // make the text the larger font, regardless of what the common attribute sets it as
-    [attrText addAttribute:NSFontAttributeName
-                     value:[UIFont onboardingDescriptionLargeFont]
-                     range:NSMakeRange(0, [attrText length])];
+    [attrText addAttributes:@{NSFontAttributeName : [UIFont onboardingDescriptionLargeFont],
+                              NSForegroundColorAttributeName : [HelloStyleKit onboardingDescriptionColor]}
+                      range:NSMakeRange(0, [attrText length])];
     
     [[self subtitleLabel] setAttributedText:attrText];
 }

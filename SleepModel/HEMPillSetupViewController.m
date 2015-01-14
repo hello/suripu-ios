@@ -21,11 +21,8 @@
 
 @interface HEMPillSetupViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *descLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
-
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopConstraint;
 
 
 @end
@@ -34,24 +31,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self setupDescription];
+
     [self enableBackButton:NO];
     [self showHelpButton];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBPillPlacement];
-}
-
-- (void)setupDescription {
-    NSString* desc = NSLocalizedString(@"onboarding.pill-setup.description", nil);
-    NSMutableAttributedString* attributedDesc = [[NSMutableAttributedString alloc] initWithString:desc];
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attributedDesc];
-    [[self descLabel] setAttributedText:attributedDesc];
-}
-
-- (void)adjustConstraintsForIPhone4 {
-    [self updateConstraint:[self imageHeightConstraint] withDiff:-60.0f];
-    [self updateConstraint:[self imageTopConstraint] withDiff:-10.0f];
 }
 
 - (SENSenseManager*)manager {

@@ -34,12 +34,8 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 @interface HEMWifiPickerViewController() <UITableViewDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet UITableView *wifiPickerTableView;
-@property (weak, nonatomic) IBOutlet UIButton *helpButton;
 @property (weak, nonatomic) IBOutlet HEMActionButton *scanButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableViewHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *scanButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet HEMActivityCoverView *activityView;
 
 @property (strong, nonatomic) SENWifiEndpoint* selectedWifiEndpont;
@@ -55,9 +51,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     [super viewDidLoad];
     
     [self showHelpButton];
-    [self setWifiDataSource:[[HEMWiFiDataSource alloc] init]];
-    [[self wifiPickerTableView] setDataSource:[self wifiDataSource]];
-    [[self wifiPickerTableView] setDelegate:self];
+    [self configurePicker];
     
     [[[self activityView] activityLabel] setFont:[UIFont onboardingActivityFontMedium]];
     
@@ -70,6 +64,12 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
         [SENAnalytics track:kHEMAnalyticsEventOnBWiFi];
     }
     
+}
+
+- (void)configurePicker {
+    [self setWifiDataSource:[[HEMWiFiDataSource alloc] init]];
+    [[self wifiPickerTableView] setDataSource:[self wifiDataSource]];
+    [[self wifiPickerTableView] setDelegate:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -91,16 +91,6 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self setVisible:NO];
-}
-
-- (void)adjustConstraintsForIphone5 {
-    CGFloat diff = -kHEMWifiCellHeight;
-    [self updateConstraint:[self tableViewHeightConstraint] withDiff:diff];
-}
-
-- (void)adjustConstraintsForIPhone4 {
-    CGFloat diff = -(2*kHEMWifiCellHeight);
-    [self updateConstraint:[self tableViewHeightConstraint] withDiff:diff];
 }
 
 - (void)setupCancelButton {

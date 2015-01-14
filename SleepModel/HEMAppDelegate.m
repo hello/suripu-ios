@@ -166,7 +166,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
                                           barMetrics:UIBarMetricsDefault];
     [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
     [[UINavigationBar appearance] setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [UIColor whiteColor],
+        NSForegroundColorAttributeName : [UIColor blackColor],
         NSFontAttributeName : [UIFont settingsTitleFont]
     }];
     [[UIBarButtonItem appearance] setTitleTextAttributes:@{

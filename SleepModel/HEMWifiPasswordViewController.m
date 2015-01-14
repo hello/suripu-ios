@@ -41,6 +41,10 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 @property (weak, nonatomic) IBOutlet HEMRoundedTextField *passwordField;
 @property (weak, nonatomic) IBOutlet HEMRoundedTextField *securityField;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *ssidTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *passTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *securityTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *continueTopConstraint;
 
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (strong, nonatomic) UIPickerView* securityPickerView;
@@ -73,6 +77,15 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     
     [self setupSecurityPickerView];
     [self updateSecurityTypeLabelForRow:[self rowForSecurityType:[self securityType]]];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    CGFloat paddingDiff = 10.0f;
+    [self updateConstraint:[self ssidTopConstraint] withDiff:50.0f];
+    [self updateConstraint:[self passTopConstraint] withDiff:paddingDiff];
+    [self updateConstraint:[self securityTopConstraint] withDiff:paddingDiff];
+    [self updateConstraint:[self continueTopConstraint] withDiff:paddingDiff];
+    [super adjustConstraintsForIPhone4];
 }
 
 - (void)viewWillLayoutSubviews {

@@ -17,7 +17,6 @@
 
 @interface HEMSecondPillCheckViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *firstPillButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *firstPillButtonWidthConstraint;
 
@@ -27,18 +26,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setSubtitleText];
     [SENAnalytics track:kHEMAnalyticsEventOnBSecondPillCheck];
-}
-
-- (void)setSubtitleText {
-    NSString* text = NSLocalizedString(@"pairing.check.add-second-pill-subtitle", nil);
-    
-    NSMutableAttributedString* attrText =
-        [[NSMutableAttributedString alloc] initWithString:text];
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
-    
-    [[self subtitleLabel] setAttributedText:attrText];
 }
 
 #pragma mark - Actions

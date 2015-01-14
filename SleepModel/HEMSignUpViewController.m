@@ -45,8 +45,7 @@
 }
 
 - (void)adjustConstraintsForIPhone4 {
-    [self updateConstraint:[self nameTopConstraint]
-                  withDiff:8.0f];
+    [self updateConstraint:[self nameTopConstraint] withDiff:40.0f];
 }
 
 #pragma mark - Activity

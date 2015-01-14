@@ -25,7 +25,6 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
 @property (weak,   nonatomic) IBOutlet UILabel* botWeightLabel;
 @property (weak,   nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak,   nonatomic) IBOutlet UIButton *skipButton;
-@property (weak,   nonatomic) IBOutlet UILabel *subtitleLabel;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *carouselHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *lineHeightConstraint;
@@ -43,7 +42,7 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     [super viewDidLoad];
     
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-    [[self subtitleLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
+    [[self descriptionLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [self setupCarousel];
     
     if ([self delegate] == nil) {

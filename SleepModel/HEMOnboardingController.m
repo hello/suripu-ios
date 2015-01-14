@@ -16,6 +16,8 @@
 @interface HEMOnboardingController()
 
 @property (strong, nonatomic) UIBarButtonItem* leftBarItem;
+@property (weak,   nonatomic) IBOutlet NSLayoutConstraint* titleHeightConstraint;
+@property (weak,   nonatomic) IBOutlet NSLayoutConstraint* descriptionTopConstraint;
 
 @end
 
@@ -24,11 +26,64 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureTitle];
+    [self configureDescription];
 }
 
 - (void)configureTitle {
-    [[self titleLabel] setTextColor:[HelloStyleKit onboardingTitleColor]];
-    [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
+    if ([self isIPhone4Family]) {
+        [self setTitle:[[self titleLabel] text]];
+        [[self titleHeightConstraint] setConstant:0.0f];
+        [[self titleLabel] setHidden:YES];
+    } else {
+        [[self titleLabel] setTextColor:[HelloStyleKit onboardingTitleColor]];
+        [[self titleLabel] setFont:[UIFont onboardingTitleFont]];
+    }
+}
+
+- (void)configureDescription {
+    if ([self descriptionLabel] != nil) {
+        UIColor* color = [HelloStyleKit onboardingDescriptionColor];
+        UIFont* font = [UIFont onboardingDescriptionFont];
+        NSMutableAttributedString* attrDesc = [[[self descriptionLabel] attributedText] mutableCopy];
+        
+        if ([attrDesc length] > 0) {
+            [attrDesc addAttributes:@{NSFontAttributeName : font,
+                                      NSForegroundColorAttributeName : color}
+                              range:NSMakeRange(0, [attrDesc length])];
+            
+            if ([self isIPhone4Family]) {
+                NSMutableParagraphStyle* style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+                [style setAlignment:NSTextAlignmentCenter];
+                [attrDesc addAttribute:NSParagraphStyleAttributeName
+                                 value:style
+                                 range:NSMakeRange(0, [attrDesc length])];
+            }
+            
+            [[self descriptionLabel] setAttributedText:attrDesc];
+        } else {
+            [[self descriptionLabel] setTextColor:color];
+            [[self descriptionLabel] setFont:font];
+            
+            if ([self isIPhone4Family]) {
+                [[self descriptionLabel] setTextAlignment:NSTextAlignmentCenter];
+            }
+            
+        }
+
+    }
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    CGFloat constant = 10.0f;
+    
+    if ([self titleHeightConstraint] != nil) {
+        [[self descriptionTopConstraint] setConstant:constant];
+    } else {
+        constant = CGRectGetHeight([[self titleLabel] bounds]);
+        [[self descriptionTopConstraint] setConstant:constant];
+    }
+    
+    [super adjustConstraintsForIPhone4];
 }
 
 #pragma mark - Nav

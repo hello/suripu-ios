@@ -16,7 +16,6 @@
 
 @interface HEMEnablePushViewController()
 
-@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
 @property (weak, nonatomic) IBOutlet HEMActionButton *enableButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
@@ -26,17 +25,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setupDescription];
     [self enableBackButton:NO];
     [SENAnalytics track:kHEMAnalyticsEventOnBNotification];
-}
-
-- (void)setupDescription {
-    NSString* description = NSLocalizedString(@"onboarding.push.description", nil);
-    NSMutableAttributedString* attrDesc
-        = [[NSMutableAttributedString alloc] initWithString:description];
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrDesc];
-    [[self descriptionLabel] setAttributedText:attrDesc];
 }
 
 #pragma mark - Actions

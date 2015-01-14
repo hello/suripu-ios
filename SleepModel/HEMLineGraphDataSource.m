@@ -28,7 +28,7 @@
     NSArray* indexes = [[self.labeledIndexes allObjects] sortedArrayUsingSelector:@selector(compare:)];
     for (NSNumber* index in indexes) {
         SENSensorDataPoint* dataPoint = [self dataPointAtIndex:[index integerValue]];
-        NSString* formattedValue = @"0";
+        NSString* formattedValue = self.unit == SENSensorUnitLux ? @"0" : NSLocalizedString(@"empty-data", nil);
         if ([dataPoint.value floatValue] != 0)
             formattedValue = [SENSensor formatValue:dataPoint.value withUnit:self.unit];
         [labels addObject:formattedValue];

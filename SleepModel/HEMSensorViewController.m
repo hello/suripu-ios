@@ -190,7 +190,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
     [SENAPIRoom hourlyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         if (!data) {
-            self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
+            self.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
             self.statusLabel.alpha = 1;
             self.overlayView.alpha = 0;
             return;
@@ -201,7 +201,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     }];
     [SENAPIRoom dailyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         if (!data) {
-            self.statusLabel.text = NSLocalizedString(@"sensor.value.none", nil);
+            self.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
             self.statusLabel.alpha = 1;
             self.overlayView.alpha = 0;
             return;
@@ -334,8 +334,10 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     CGFloat value = [[SENSensor value:dataPoint.value inPreferredUnit:self.sensor.unit] floatValue];
     if ([dataPoint.value floatValue] > 0)
         self.valueLabel.text = [NSString stringWithFormat:@"%.0f", value];
-    else
+    else if (self.sensor.unit == SENSensorUnitLux)
         self.valueLabel.text = @"0";
+    else
+        self.valueLabel.text = NSLocalizedString(@"empty-data", nil);
     [UIView animateWithDuration:0.2f animations:^{
         self.overlayView.alpha = 0;
     }];

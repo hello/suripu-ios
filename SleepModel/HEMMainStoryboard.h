@@ -29,6 +29,7 @@
 +(NSString *)sensorGraphCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)overTimeReuseIdentifier;
++(NSString *)trendGraphReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
 

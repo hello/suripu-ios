@@ -51,6 +51,7 @@ static NSString *const _HEMsleepHistoryController = @"sleepHistoryController";
 static NSString *const _HEMsleepInsight = @"sleepInsight";
 static NSString *const _HEMsleepQuestions = @"sleepQuestions";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
+static NSString *const _HEMtrendGraph = @"trendGraph";
 static NSString *const _HEMtrends = @"trends";
 static NSString *const _HEMunitCell = @"unitCell";
 static NSString *const _HEMunitsSettings = @"unitsSettings";
@@ -82,6 +83,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
 +(NSString *)singleReuseIdentifier { return _HEMsingle; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
++(NSString *)trendGraphReuseIdentifier { return _HEMtrendGraph; }
 +(NSString *)unitCellReuseIdentifier { return _HEMunitCell; }
 +(NSString *)warningReuseIdentifier { return _HEMwarning; }
 

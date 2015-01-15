@@ -129,6 +129,11 @@
 + (UIFont *)timelineEventTimestampBoldFont;
 
 /**
+ *  Font for time scopes in trends view
+ */
++ (UIFont *)trendOptionFont;
+
+/**
  *  Font to display the answers for questions
  */
 + (UIFont *)questionAnswerFont;

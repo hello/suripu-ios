@@ -193,7 +193,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 - (void)listenForUserChange {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
-               selector:@selector(clearCache)
+               selector:@selector(reset)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
     [center addObserver:self
@@ -202,13 +202,21 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
                  object:nil];
 }
 
+- (void)reset {
+    [self clearCache];
+    [self setMonitorDeviceStates:NO];
+    [self setCheckingStates:NO];
+    [self setDeviceState:SENServiceDeviceStateUnknown];
+    [SENSenseManager stopScan]; // if it was scannig
+}
+
 - (void)clearCache {
     [self setPillInfo:nil];
     [self setSenseInfo:nil];
     [self setSenseManager:nil];
     [self setInfoLoaded:NO];
     [self setLoadingInfo:NO];
-    [self setDeviceState:SENServiceDeviceStateUnknown];
+    
 }
 
 - (NSError*)errorWithType:(SENServiceDeviceError)type {
@@ -546,27 +554,34 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 }
 
 - (void)restoreFactorySettings:(SENServiceDeviceCompletionBlock)completion {
+    // per discussion, we should reverse the logic as the unlinking of devices
+    // currently appear to be less reliable and so we need to exit if anything
+    // fails before resetting the firmware
     __strong typeof(self) weakSelf = self;
+    __block SENSenseManager* manager = [self senseManager];
+    // should make sure sense is even nearby, though, before we begin
     [self whenPairedSenseIsReadyDo:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [[strongSelf senseManager] resetToFactoryState:^(id response) {
-            // required.  firmware will actually just reply it succeeded, but
-            // the actual resetting won't happen until it has been disconnected.
-            [[strongSelf senseManager] disconnectFromSense];
-            [strongSelf setSenseManager:nil];
+        
+        if (error != nil) {
+            if (completion) completion (error);
+            return;
+        }
+        
+        [strongSelf unlinkAllDevices:^(NSError *error) {
             
-            [strongSelf unlinkAllDevices:^(NSError *error) {
-                if (error != nil) {
-                    if (completion) completion (error);
-                    return;
-                }
-                
-                [strongSelf clearCache];
+            if (error != nil) {
+                if (completion) completion (error);
+                return;
+            }
+            
+            [manager resetToFactoryState:^(id response) {
+                [strongSelf reset];
                 [strongSelf notifyFactoryRestore];
-                
                 if (completion) completion (nil);
-            }];
-        } failure:completion];
+            } failure:completion];
+            
+        }];
     }];
 }
 

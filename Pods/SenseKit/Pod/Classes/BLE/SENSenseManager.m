@@ -30,6 +30,7 @@ static CGFloat const kSENSenseRescanTimeout = 8.0f;
 static CGFloat const kSENSenseSetWifiTimeout = 60.0f; // firmware suggestion
 static CGFloat const kSENSenseScanWifiTimeout = 45.0f; // firmware actually suggests 60, but 45 seems to work consistently
 static CGFloat const kSENSensePillPairTimeout = 30.0f; // firmware timesout at 20, we need this to be longer.
+static CGFloat const kSENSenseUnsubscribeTimeout = 3.0f;
 
 static NSString* const kSENSenseErrorDomain = @"is.hello.ble";
 static NSString* const kSENSenseServiceID = @"0000FEE1-1212-EFDE-1523-785FEABCD123";
@@ -65,6 +66,8 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     
     LGCentralManager* btManager = [LGCentralManager sharedInstance];
     if (![btManager isCentralReady]) return NO;
+    
+    [self stopScan]; // stop a scan if one is already started
     
     DDLogVerbose(@"scanning for Sense started");
     CBUUID* serviceId = [CBUUID UUIDWithString:kSENSenseServiceID];
@@ -417,10 +420,10 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
             __block NSNumber* totalPackets = nil;
             __block typeof(reader) blockReader = reader;
             
-            NSString* cbKey = [self cacheMessageCallbacks:update success:success failureBlock:^(NSError *error) {
-                if (failure) failure (error);
-                [blockReader setNotifyValue:NO completion:nil];
-            }];
+            NSString* cbKey = [self cacheMessageCallbacks:update
+                                                  success:success
+                                             failureBlock:failure
+                                               subscriber:blockReader];
             [strongSelf scheduleMessageTimeOut:timeout withKey:cbKey];
             
             [reader setNotifyValue:YES completion:^(NSError *error) {
@@ -434,7 +437,6 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                 success:nil
                                 failure:^(NSError *error) {
                                     DDLogVerbose(@"message failed to send unsuccessfully with error %@, unsubscribing", error);
-                                    [blockReader setNotifyValue:NO completion:nil];
                                     [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                                 }];
             } onUpdate:^(NSData *data, NSError *error) {
@@ -448,7 +450,6 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                              // if there's no update block or there is one and block tells us to finish
                                              if (!updateBlock || (updateBlock && updateBlock(response))) {
                                                  DDLogVerbose(@"message response received, unsubscribing");
-                                                 [blockReader setNotifyValue:NO completion:nil];
                                                  [strongSelf fireSuccessMsgCbWithCbKey:cbKey andResponse:response];
                                              } else {
                                                  DDLogVerbose(@"partial message response received, waiting for next set");
@@ -459,7 +460,6 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                              }
                                          } failure:^(NSError *error) {
                                              DDLogVerbose(@"handling message response encountered error %@, unsubscribing", error);
-                                             [blockReader setNotifyValue:NO completion:nil];
                                              [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                                          }];
             }];
@@ -472,27 +472,67 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     }];
 }
 
+- (void)unsubscribeWith:(LGCharacteristic*)subscriber andCall:(void(^)(id result))callback withResult:(id)result {
+    if ([self isConnected] && subscriber) {
+        // YES, this looks ugly, but if device is disconnected right during setNotifyValue:completion,
+        // the completion block is never called back and thus caller will just hang.  Therefore,
+        // if unsuscribing is taking longer than X seconds, just make the callback
+        __block BOOL called = NO;
+        void(^call)(id result) = ^(id result) {
+            if (!called) {
+                called = YES;
+                callback(result);
+            }
+        };
+        
+        [subscriber setNotifyValue:NO completion:^(__unused NSError *subscriptionError) {
+            DDLogVerbose(@"unsubscribed, making callback");
+            call(result);
+        }];
+        
+        NSTimeInterval delayInSeconds = kSENSenseUnsubscribeTimeout;
+        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(delay, dispatch_get_main_queue(), ^{
+            DDLogVerbose(@"unsubscribe took too long, making callback anyways");
+            call(result);
+        });
+    } else {
+        DDLogVerbose(@"making callback b/c Sense is not connected or subscriber is not defined");
+        callback (result);
+    }
+}
+
 - (NSString*)cacheMessageCallbacks:(SENSenseUpdateBlock)updateBlock
                            success:(SENSenseSuccessBlock)successBlock
-                      failureBlock:(SENSenseFailureBlock)failureBlock {
+                      failureBlock:(SENSenseFailureBlock)failureBlock
+                        subscriber:(LGCharacteristic*)subscriber {
+    
     NSString* key = [[NSUUID UUID] UUIDString];
     
     if (updateBlock) {
         [[self messageUpdateCallbacks] setValue:[updateBlock copy] forKey:key];
     }
     
+    __weak typeof(self) weakSelf = self;
     if (successBlock) {
-        [[self messageSuccessCallbacks] setValue:[successBlock copy] forKey:key];
+        __block SENSenseSuccessBlock sBlock = successBlock;
+        [[self messageSuccessCallbacks] setValue:[^(id response) {
+            [weakSelf unsubscribeWith:subscriber andCall:sBlock withResult:response];
+        } copy] forKey:key];
     }
     
     if (failureBlock) {
-        [[self messageFailureCallbacks] setValue:[failureBlock copy] forKey:key];
+        __block SENSenseFailureBlock fBlock = failureBlock;
+        [[self messageFailureCallbacks] setValue:[^(NSError* error) {
+            [weakSelf unsubscribeWith:subscriber andCall:fBlock withResult:error];
+        } copy] forKey:key];
     }
     
     return key;
 }
 
 - (void)clearAllMessageCallbacks {
+    DDLogVerbose(@"clearing all message call backs");
     for (NSTimer* timer in [[self messageTimeoutTimers] allValues]) {
         [timer invalidate];
     }
@@ -614,6 +654,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
             break;
         case ErrorTypeFailToObtainIp:
             code = SENSenseManagerErrorCodeFailToObtainIP;
+            break;
+        case ErrorTypeInternalDataError:
+            code = SENSenseManagerErrorCodeCorruptTransmission;
             break;
         default:
             code = SENSenseManagerErrorCodeUnexpectedResponse;
@@ -752,21 +795,25 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 - (void)cancelMessageTimeOutWithCbKey:(NSString*)cbKey {
     NSTimer* timer = [[self messageTimeoutTimers] objectForKey:cbKey];
+    DDLogVerbose(@"cancelling time out timer %@", timer);
     [timer invalidate];
     [[self messageTimeoutTimers] removeObjectForKey:cbKey];
 }
 
 - (void)timedOut:(NSTimer*)timer {
     NSString* cbKey = [timer userInfo];
+    DDLogVerbose(@"Sense operation timed out");
     if (cbKey != nil) {
-        DDLogVerbose(@"Sense operation timed out");
         [self cancelMessageTimeOutWithCbKey:cbKey];
         
         SENSenseFailureBlock failureCb = [[self messageFailureCallbacks] valueForKey:cbKey];
         if (failureCb) {
+            DDLogVerbose(@"firing timeout message");
             failureCb ([NSError errorWithDomain:kSENSenseErrorDomain
                                            code:SENSenseManagerErrorCodeTimeout
                                        userInfo:nil]);
+        } else {
+            DDLogVerbose(@"failure block not defined for time out");
         }
         
         [self clearMessageCallbacksForKey:cbKey];
@@ -799,22 +846,13 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                                    andCode:SENSenseManagerErrorCodeUnexpectedResponse];
                       }
                       
-                      NSString* cbKey = [strongSelf cacheMessageCallbacks:nil success:success failureBlock:^(NSError *error) {
-                          __strong typeof(reader) strongReader = reader;
-                          if (strongReader) {
-                              [strongReader setNotifyValue:NO completion:nil];
-                          }
-                          
-                          if (failure) failure (error);
-                      }];
+                      NSString* cbKey = [strongSelf cacheMessageCallbacks:nil
+                                                                  success:success
+                                                             failureBlock:failure
+                                                               subscriber:reader];
                       [strongSelf scheduleMessageTimeOut:kSENSenseDefaultTimeout withKey:cbKey];
                       
                       [reader setNotifyValue:YES completion:^(NSError *error) {
-                          __strong typeof(reader) strongReader = reader;
-                          if (!strongReader) return;
-                          
-                          [strongReader setNotifyValue:NO completion:nil];
-                          
                           if (error != nil) {
                               DDLogVerbose(@"failed to pair with Sense with error %@", error);
                               [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
@@ -872,7 +910,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 - (void)pairWithPill:(NSString*)accountAccessToken
              success:(SENSenseSuccessBlock)success
              failure:(SENSenseFailureBlock)failure {
-    DDLogVerbose(@"linking account %@... through Sense", accountAccessToken?[accountAccessToken substringToIndex:3]:@"");
+    DDLogVerbose(@"pairing with pill for account %@... through Sense", accountAccessToken?[accountAccessToken substringToIndex:3]:@"");
     SENSenseMessageType type = SENSenseMessageTypePairPill;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [builder setAccountId:accountAccessToken];
@@ -1042,7 +1080,6 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 - (void)setLED:(SENSenseLEDState)state
     completion:(SENSenseCompletionBlock)completion {
-    
     DDLogVerbose(@"setting LED to state %ld", (long)state);
     SENSenseMessageType type = [self commandForLEDState:state];
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];

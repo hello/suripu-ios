@@ -126,7 +126,7 @@ static CGFloat const HEMSensorCheckDigitDisplayDelay = 0.3f;
     [paragraphStyle setAlignment:NSTextAlignmentCenter];
 
     NSAttributedString* attributedIntro =
-        [[NSAttributedString alloc] initWithString:[self introMessage]
+        [[NSAttributedString alloc] initWithString:[self introMessage] ?: @""
                                         attributes:@{NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont],
                                                      NSForegroundColorAttributeName : [UIColor blackColor],
                                                      NSParagraphStyleAttributeName : paragraphStyle}];

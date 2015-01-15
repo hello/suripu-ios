@@ -121,13 +121,16 @@
     if (enable) {
         if ([self leftBarItem] != nil) {
             [[self navigationItem] setLeftBarButtonItem:[self leftBarItem]];
+            [[self navigationItem] setHidesBackButton:YES];
+        } else {
+            [[self navigationItem] setHidesBackButton:NO];
         }
     } else {
         [self setLeftBarItem:[[self navigationItem] leftBarButtonItem]];
         [[self navigationItem] setLeftBarButtonItem:nil];
+        [[self navigationItem] setHidesBackButton:YES];
     }
-    
-    [[self navigationItem] setHidesBackButton:!enable];
+
     [[[self navigationController] interactivePopGestureRecognizer] setEnabled:enable];
 }
 

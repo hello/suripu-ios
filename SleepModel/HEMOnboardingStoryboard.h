@@ -25,7 +25,6 @@
 +(NSString *)noBleToBirthdaySegueIdentifier;
 +(NSString *)pillSetupToColorsSegueIdentifier;
 +(NSString *)pushToSenseSetupSegueIdentifier;
-+(NSString *)secondPillCheckSegueIdentifier;
 +(NSString *)senseToPillSegueIdentifier;
 +(NSString *)signupToNoBleSegueIdentifier;
 +(NSString *)weightSegueIdentifier;

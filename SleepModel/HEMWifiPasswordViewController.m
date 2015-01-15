@@ -88,6 +88,11 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     [super adjustConstraintsForIPhone4];
 }
 
+- (void)adjustConstraintsForIphone5 {
+    [self updateConstraint:[self continueTopConstraint] withDiff:10.0];
+    [super adjustConstraintsForIphone5];
+}
+
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     

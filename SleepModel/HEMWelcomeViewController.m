@@ -44,6 +44,9 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *playCenterYConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgCenterXConstraint;
 
+@property (assign, nonatomic) CGFloat origGetStartedLeadingConstant;
+@property (assign, nonatomic) CGFloat origGetStartedTrailingConstant;
+
 @end
 
 @implementation HEMWelcomeViewController
@@ -58,7 +61,12 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     [self configureDefaultConstraints];
  
     [[self bgImageView] add3DEffectWithBorder:kHEMWelcomeMotionEffectBorder];
-    
+}
+
+- (void)viewWillLayoutSubviews {
+    [super viewWillLayoutSubviews];
+    DDLogVerbose(@"get started width %f", CGRectGetWidth([[self getStartedButton] bounds]));
+    DDLogVerbose(@"sign up width %f", CGRectGetWidth([[self signupButton] bounds]));
 }
 
 - (void)configureTitle {
@@ -71,6 +79,9 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     [[self loginCenterXConstraint] setConstant:-width];
     [[self signupCenterXConstraint] setConstant:-width];
     [[self cancelCenterXConstraint] setConstant:-width];
+    
+    [self setOrigGetStartedLeadingConstant:[[self getStartedLeadingConstraint] constant]];
+    [self setOrigGetStartedTrailingConstant:[[self getStartedTrailingConstraint] constant]];
 }
 
 - (void)configureButtonStyles {
@@ -199,8 +210,8 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 - (void)showInitialActions:(NSNumber*)showValue {
     BOOL show = [showValue boolValue];
     CGFloat width = CGRectGetWidth([[self view] bounds]);
-    CGFloat getStartedLeadConstant = -width;
-    CGFloat getStartedTrailConstant = width;
+    CGFloat getStartedLeadConstant = -width + [self origGetStartedLeadingConstant];
+    CGFloat getStartedTrailConstant = width + [self origGetStartedTrailingConstant];
     CGFloat noSenseConstant = width;
     CGFloat alpha = 0.0f;
     CGFloat bgXConstant = ((CGRectGetWidth([[self bgImageView] bounds]) - noSenseConstant)/2)
@@ -212,8 +223,8 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     if (show) {
         alpha = 1.0f;
         bgXConstant = -(bgXConstant);
-        getStartedLeadConstant = 4.0f;
-        getStartedTrailConstant = 4.0f;
+        getStartedLeadConstant = [self origGetStartedLeadingConstant];
+        getStartedTrailConstant = [self origGetStartedTrailingConstant];
         noSenseConstant = 0.0f;
         timingFunction = kCAMediaTimingFunctionEaseOut;
         alignment = NSTextAlignmentLeft;

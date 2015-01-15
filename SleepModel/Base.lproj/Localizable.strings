@@ -30,10 +30,6 @@
 "onboarding.title.before-sleep" = "Before you sleep";
 "onboarding.end-message.well-done" = "You're all set up";
 "onboarding.end-message.sleep" = "Now all you need to\ndo is sleep";
-"onboarding.alarm.title" = "Set a Smart Alarm";
-"onboarding.alarm.desc" = "The Sense Smart Alarm knows where you are in your sleep cycle and will wake you up at the right time for you.  Just wave your hand over Sense to turn it off.";
-"onboarding.location.description" = "Sense uses your location to know sunrise and sunset times, local weather and more.";
-
 "onboarding.room-check.title" = "Room check";
 "onboarding.room-check.description" = "Sense will now check the conditions in the room to assure functionality of the sensors.";
 "onboarding.room-check.checking-sensor.format" = "Checking %@";
@@ -67,11 +63,13 @@
 "pairing.activity.connecting-sense" = "Connecting to Sense";
 "pairing.activity.loading-paired-sense" = "Loading paired Sense";
 "pairing.activity.linking-account" = "Linking account to Sense";
+"pairing.activity.setting-timezone" = "Setting timezone";
 "pairing.failed.title" = "Pairing Failed";
 "pairing.error.sense-not-found" = "We could not detect a nearby Sense.  Make sure it's plugged in and try again.";
 "pairing.error.could-not-pair" = "We could not connect to your Sense to pair.  Please make sure your Sense is plugged in, nearby, and in Pairing Mode.";
 "pairing.error.unexpected-disconnect" = "Connection from Sense was broken. Please try again.";
 "pairing.error.link-account-failed" = "Could not attach Sense to your account.";
+"pairing.error.set-timezone-failed" = "Could not properly set the timezone required for the Sense system.";
 "pairing.error.timed-out" = "Sense did not respond in time.";
 "pairing.done" = "Paired";
 "pairing.pill.error.title" = "Pill Pairing Failed";

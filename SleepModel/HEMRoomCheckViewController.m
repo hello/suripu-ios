@@ -27,7 +27,6 @@ static CGFloat const HEMRoomCheckMinVerticalPadding = 28.0f;
 static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
 static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
-static NSInteger const HEMRoomCheckMaxSensorCount = 5;
 
 @interface HEMRoomCheckViewController()
 
@@ -132,26 +131,11 @@ static NSInteger const HEMRoomCheckMaxSensorCount = 5;
     CGFloat totalCollapsedHeight = HEMSensorCheckCollapsedHeight * 5;
     CGFloat nextY = (CGRectGetHeight([[self view] bounds]) - totalCollapsedHeight)/2;
     NSArray* sensors = [SENSensor sensors];
-    NSArray* units = [sensors valueForKeyPath:NSStringFromSelector(@selector(unit))];
     for (SENSensor* sensor in sensors) {
         if ([sensor unit] != SENSensorUnitUnknown) {
             [self setSensorsOk:[self sensorsOk] && [sensor condition] != SENSensorConditionUnknown];
             nextY += CGRectGetHeight([[self addSensorViewFor:sensor atY:nextY] bounds]);
         }
-    }
-
-    // placeholder for sound sensor
-    if (![units containsObject:@(SENSensorUnitDecibel)] && [sensors count] < HEMRoomCheckMaxSensorCount) {
-        NSString* message = NSLocalizedString(@"sensor.sound.placeholder-message", nil);
-        nextY += CGRectGetHeight([[self addSensorViewWithIcon:[HelloStyleKit sensorSound]
-                                              highlightedIcon:[HelloStyleKit sensorSoundBlue]
-                                                         name:NSLocalizedString(@"sensor.sound", nil)
-                                                      message:[self attributedMessage:message]
-                                                 introMessage:NSLocalizedString(@"onboarding.room-check.intro.sound", nil)
-                                                        value:30
-                                                andValueColor:[UIColor colorForSensorWithCondition:SENSensorConditionIdeal]
-                                                     withUnit:NSLocalizedString(@"measurement.db.unit", nil)
-                                                          atY:nextY] bounds]);
     }
     
     // show each sensor view in collapsed state
@@ -188,6 +172,17 @@ static NSInteger const HEMRoomCheckMaxSensorCount = 5;
             intro = NSLocalizedString(@"onboarding.room-check.intro.humidity", nil);
             highlightedIcon = [HelloStyleKit sensorHumidityBlue];
             break;
+        }
+        case SENSensorUnitLux: {
+            icon = [HelloStyleKit sensorLight];
+            intro = NSLocalizedString(@"onboarding.room-check.intro.light", nil);
+            highlightedIcon = [HelloStyleKit sensorLightBlue];
+            break;
+        }
+        case SENSensorUnitDecibel: {
+            icon = [HelloStyleKit sensorSound];
+            intro = NSLocalizedString(@"onboarding.room-check.intro.sound", nil);
+            highlightedIcon = [HelloStyleKit sensorSoundBlue];
         }
         default:
             break;

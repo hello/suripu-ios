@@ -35,12 +35,6 @@
 }
 
 - (void)dismissAlarmVC:(HEMAlarmViewController*)alarmVC {
-    UIImage* snapshot = [[[[UIApplication sharedApplication] delegate] window] snapshot];
-    UIImageView* snapView = [[UIImageView alloc] initWithImage:snapshot];
-    UIView* containingView = [[self navigationController] view];
-    [snapView setFrame:[containingView bounds]];
-    [containingView addSubview:snapView];
-
     [self dismissViewControllerAnimated:NO completion:^{
         [self next];
     }];

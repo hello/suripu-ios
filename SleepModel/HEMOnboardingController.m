@@ -16,6 +16,7 @@
 @interface HEMOnboardingController()
 
 @property (strong, nonatomic) UIBarButtonItem* leftBarItem;
+@property (assign, nonatomic) BOOL enableBack;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint* titleHeightConstraint;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint* descriptionTopConstraint;
 
@@ -25,8 +26,14 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self setEnableBack:YES]; // by default
     [self configureTitle];
     [self configureDescription];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self enableBackButton:[self enableBack]];
 }
 
 - (void)configureTitle {
@@ -109,6 +116,8 @@
 }
 
 - (void)enableBackButton:(BOOL)enable {
+    [self setEnableBack:enable];
+    
     if (enable) {
         if ([self leftBarItem] != nil) {
             [[self navigationItem] setLeftBarButtonItem:[self leftBarItem]];

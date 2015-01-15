@@ -7,6 +7,7 @@
 //
 #import <SenseKit/BLE.h>
 #import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENAPITimeZone.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -33,7 +34,8 @@ typedef NS_ENUM(NSUInteger, HEMSensePairState) {
     HEMSensePairStateWiFiNotDetected = 6,
     HEMSensePairStateWiFiDetected = 7,
     HEMSensePairStateAccountLinked = 8,
-    HEMSensePairStateForceDataUpload = 9
+    HEMSensePairStateTimezoneSet = 9,
+    HEMSensePairStateForceDataUpload = 10
 };
 
 // I've tested the scanning process multiple times starting with a timeout of
@@ -270,6 +272,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             break;
         }
         case HEMSensePairStateAccountLinked: {
+            [self setupTimeZone];
+            break;
+        }
+        case HEMSensePairStateTimezoneSet: {
             [self forceSensorDataUpload];
             break;
         }
@@ -405,16 +411,41 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     }];
 }
 
+#pragma mark - Set Timezone
+
+- (void)setupTimeZone {
+    NSString* activityMessage = NSLocalizedString(@"pairing.activity.setting-timezone", nil);
+    [[self activityView] updateText:activityMessage completion:nil];
+    DDLogVerbose(@"setting timezone");;
+    
+    __weak typeof(self) weakSelf = self;
+    [SENAPITimeZone setCurrentTimeZone:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error == nil) {
+            [strongSelf setCurrentState:HEMSensePairStateTimezoneSet];
+            [strongSelf executeNextStep];
+        } else {
+            DDLogVerbose(@"failed to set time zone");
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
+                    NSString* msg = NSLocalizedString(@"pairing.error.set-timezone-failed", nil);
+                    [strongSelf showErrorMessage:msg];
+                }];
+            }
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        }
+    }];
+}
+
 #pragma mark - Data Upload
 
 - (void)forceSensorDataUpload {
+    DDLogVerbose(@"forcing data upload from ui");
     __weak typeof(self) weakSelf = self;
     [[self manager] forceDataUpload:^(id response, NSError *error) {
+        DDLogVerbose(@"data upload response returned with error? %@", error);
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error != nil) {
-            DDLogVerbose(@"failed to upload data %@", error);
-        }
-        
         // whether there was an error or not, simply proceed b/c it's not
         // required that the data is uploaded
         [strongSelf setCurrentState:HEMSensePairStateForceDataUpload];

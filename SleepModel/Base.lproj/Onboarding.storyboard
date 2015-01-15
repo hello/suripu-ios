@@ -79,7 +79,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gMo-0B-UJM" userLabel="Email" customClass="HEMRoundedTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gMo-0B-UJM" userLabel="Email" customClass="HEMSimpleLineTextField">
                                 <rect key="frame" x="20" y="136" width="560" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="UL5-zT-OfA"/>
@@ -91,7 +91,7 @@
                                     <outlet property="delegate" destination="5ic-x1-0Fg" id="5ij-6d-cn5"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hPf-UR-a80" userLabel="Password" customClass="HEMRoundedTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hPf-UR-a80" userLabel="Password" customClass="HEMSimpleLineTextField">
                                 <rect key="frame" x="20" y="185" width="560" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="8wx-BM-MHi"/>
@@ -378,7 +378,7 @@
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Full Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EoV-KF-nla" userLabel="Full Name" customClass="HEMRoundedTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Full Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EoV-KF-nla" userLabel="Full Name" customClass="HEMSimpleLineTextField">
                                 <rect key="frame" x="28" y="84" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="bK4-v1-Uq6"/>
@@ -389,7 +389,7 @@
                                     <outlet property="delegate" destination="5JR-hM-9bB" id="N76-Kd-dlc"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4H9-4w-9eg" userLabel="Email" customClass="HEMRoundedTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4H9-4w-9eg" userLabel="Email" customClass="HEMSimpleLineTextField">
                                 <rect key="frame" x="28" y="132" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="hmR-rs-5DW"/>
@@ -400,7 +400,7 @@
                                     <outlet property="delegate" destination="5JR-hM-9bB" id="Ahx-Jb-Jvf"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rFe-bS-5Yc" userLabel="Password" customClass="HEMRoundedTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rFe-bS-5Yc" userLabel="Password" customClass="HEMSimpleLineTextField">
                                 <rect key="frame" x="28" y="180" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="MQV-ta-SKj"/>
@@ -719,7 +719,7 @@
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h8z-JJ-lrQ" customClass="HEMRoundedTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="SSID" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h8z-JJ-lrQ" customClass="HEMSimpleLineTextField">
                                 <rect key="frame" x="28" y="102" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="ryh-T1-LKQ"/>
@@ -730,7 +730,7 @@
                                     <outlet property="delegate" destination="qC8-fd-UCX" id="cFY-E8-0qh"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eHT-GQ-6UW" customClass="HEMRoundedTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="eHT-GQ-6UW" customClass="HEMSimpleLineTextField">
                                 <rect key="frame" x="28" y="157" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="cex-8S-BOe"/>
@@ -741,7 +741,7 @@
                                     <outlet property="delegate" destination="qC8-fd-UCX" id="uXb-zb-O0W"/>
                                 </connections>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Security" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wpX-J4-2Qc" customClass="HEMRoundedTextField">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Security" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="wpX-J4-2Qc" customClass="HEMSimpleLineTextField">
                                 <rect key="frame" x="28" y="212" width="544" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="Srw-KY-nFZ"/>
@@ -2652,7 +2652,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="DAu-sO-H4V"/>
-        <segue reference="d9a-nc-483"/>
+        <segue reference="ZOJ-Sh-Dzx"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

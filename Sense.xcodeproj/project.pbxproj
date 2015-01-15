@@ -40,7 +40,7 @@
 		8A1E723919D62C26007475D3 /* alarmSoundIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1E723119D62C26007475D3 /* alarmSoundIcon@2x.png */; };
 		8A28CAFF19CB95E40044A27D /* HEMNotificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A28CAFE19CB95E40044A27D /* HEMNotificationHandler.m */; };
 		8A391FCA1A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A391FC91A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m */; };
-		8A4B3D491992CB4500856BDE /* HEMRoundedTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D481992CB4500856BDE /* HEMRoundedTextField.m */; };
+		8A4B3D491992CB4500856BDE /* HEMSimpleLineTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D481992CB4500856BDE /* HEMSimpleLineTextField.m */; };
 		8A4B3D4E199308BB00856BDE /* bluetoothLogoImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4A199308BB00856BDE /* bluetoothLogoImage.png */; };
 		8A4B3D4F199308BB00856BDE /* bluetoothLogoImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4B199308BB00856BDE /* bluetoothLogoImage@2x.png */; };
 		8A4B3D50199308BB00856BDE /* wifiLogoImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4C199308BB00856BDE /* wifiLogoImage.png */; };
@@ -626,8 +626,8 @@
 		8A28CAFE19CB95E40044A27D /* HEMNotificationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNotificationHandler.m; sourceTree = "<group>"; };
 		8A391FC81A39352F0090992A /* HEMZoomAnimationTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMZoomAnimationTransitionDelegate.h; sourceTree = "<group>"; };
 		8A391FC91A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMZoomAnimationTransitionDelegate.m; sourceTree = "<group>"; };
-		8A4B3D471992CB4500856BDE /* HEMRoundedTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRoundedTextField.h; sourceTree = "<group>"; };
-		8A4B3D481992CB4500856BDE /* HEMRoundedTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRoundedTextField.m; sourceTree = "<group>"; };
+		8A4B3D471992CB4500856BDE /* HEMSimpleLineTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSimpleLineTextField.h; sourceTree = "<group>"; };
+		8A4B3D481992CB4500856BDE /* HEMSimpleLineTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSimpleLineTextField.m; sourceTree = "<group>"; };
 		8A4B3D4A199308BB00856BDE /* bluetoothLogoImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bluetoothLogoImage.png; path = images/bluetoothLogoImage.png; sourceTree = "<group>"; };
 		8A4B3D4B199308BB00856BDE /* bluetoothLogoImage@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "bluetoothLogoImage@2x.png"; path = "images/bluetoothLogoImage@2x.png"; sourceTree = "<group>"; };
 		8A4B3D4C199308BB00856BDE /* wifiLogoImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = wifiLogoImage.png; path = images/wifiLogoImage.png; sourceTree = "<group>"; };
@@ -1808,8 +1808,8 @@
 				BF14E3C719EF3C1C0006EFEA /* HEMActivityCoverView.m */,
 				8A033871197DDA9700BE8327 /* HEMActionButton.h */,
 				8A033872197DDA9700BE8327 /* HEMActionButton.m */,
-				8A4B3D471992CB4500856BDE /* HEMRoundedTextField.h */,
-				8A4B3D481992CB4500856BDE /* HEMRoundedTextField.m */,
+				8A4B3D471992CB4500856BDE /* HEMSimpleLineTextField.h */,
+				8A4B3D481992CB4500856BDE /* HEMSimpleLineTextField.m */,
 				BFB6D47419BE16D1004CA11B /* HEMBirthdatePickerView.h */,
 				BFB6D47519BE16D1004CA11B /* HEMBirthdatePickerView.m */,
 				BF045B731A1FBCEF0026D5B9 /* HEMScrollableView.h */,
@@ -3259,7 +3259,7 @@
 				8AB2683C19CCFDBF00017818 /* HEMAlarmListViewController.m in Sources */,
 				8A7D80491A421B7300B0BFD7 /* HEMAlarmListCell.m in Sources */,
 				BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */,
-				8A4B3D491992CB4500856BDE /* HEMRoundedTextField.m in Sources */,
+				8A4B3D491992CB4500856BDE /* HEMSimpleLineTextField.m in Sources */,
 				BFF03ECA1A536D8C00BD65D4 /* HEMSystemAlertController.m in Sources */,
 				8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */,
 				8A1743BB19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m in Sources */,

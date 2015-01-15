@@ -8,7 +8,7 @@
 #import <SenseKit/SENServiceAccount.h>
 
 #import "HEMUpdatePasswordViewController.h"
-#import "HEMRoundedTextField.h"
+#import "HEMSimpleLineTextField.h"
 #import "HEMBaseController+Protected.h"
 
 @interface HEMUpdatePasswordViewController () <UITextFieldDelegate>
@@ -17,8 +17,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (weak, nonatomic) IBOutlet HEMRoundedTextField *currentField;
-@property (weak, nonatomic) IBOutlet HEMRoundedTextField *passwordUpdateField;
+@property (weak, nonatomic) IBOutlet HEMSimpleLineTextField *currentField;
+@property (weak, nonatomic) IBOutlet HEMSimpleLineTextField *passwordUpdateField;
 @property (weak, nonatomic) IBOutlet UITextField *hiddenField; // used to keep keyboard up
 
 @end

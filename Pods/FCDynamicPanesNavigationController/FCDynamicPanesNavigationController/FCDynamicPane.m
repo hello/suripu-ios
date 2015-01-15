@@ -259,16 +259,16 @@
 
 - (void)activatePane
 {
-    if (CGRectGetMinY(self.view.layer.frame) > 50) {
-        CGFloat yForce = -22 * CGRectGetHeight(self.view.bounds);
-        self.pushBehavior.pushDirection = CGVectorMake(0, yForce);
-        self.pushBehavior.active = YES;
-    }
     [self updateAttachmentAnchorPoint];
     self.attachmentBehavior.damping = 0.4f;
     self.attachmentBehavior.frequency = 2.0f;
     self.gravityBehavior.gravityDirection = CGVectorMake(0, -1.5);
     [self.behavior addChildBehavior:self.attachmentBehavior];
+    if (CGRectGetMinY(self.view.layer.frame) > 50) {
+        CGFloat yForce = -22 * CGRectGetHeight(self.view.bounds);
+        self.pushBehavior.pushDirection = CGVectorMake(0, yForce);
+        self.pushBehavior.active = YES;
+    }
     if ([self.viewController respondsToSelector:@selector(viewDidPush)]) {
         [(UIViewController<FCDynamicPaneViewController>*)self.viewController viewDidPush];
     }

@@ -71,10 +71,15 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
      */
     SENSenseManagerErrorCodeFailToObtainIP = -15,
     /**
-     * Error code returned from an instance     of SENSenseManager if an unexpected
+     * Error code returned from an instance of SENSenseManager if an unexpected
      * disconnect occurred while connected to Sense.
      */
-    SENSenseManagerErrorCodeUnexpectedDisconnect = -16
+    SENSenseManagerErrorCodeUnexpectedDisconnect = -16,
+    /**
+     * Error code returned from an instance of SENSenseManager if an unexpected
+     * disconnect occurred while connected to Sense.
+     */
+    SENSenseManagerErrorCodeCorruptTransmission = -17
 };
 
 typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {

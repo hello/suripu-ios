@@ -2502,7 +2502,10 @@ Flip the switch to On.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="oY6-8b-LCZ">
-                                <rect key="frame" x="0.0" y="136" width="600" height="354"/>
+                                <rect key="frame" x="0.0" y="136" width="600" height="235"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="235" id="TpR-T0-aTD"/>
+                                </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="37N-ly-LlQ" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
@@ -2536,6 +2539,11 @@ Flip the switch to On.</string>
                             <constraint firstItem="6Cl-vP-IeW" firstAttribute="bottom" secondItem="2Xd-u7-RCe" secondAttribute="top" constant="-10" id="q52-sy-YNE"/>
                             <constraint firstItem="37N-ly-LlQ" firstAttribute="leading" secondItem="4iw-TV-P6s" secondAttribute="leadingMargin" constant="4" id="zUo-uU-Y4g"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="8r8-w1-ZhQ"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="YPm-JV-16B"/>
                     <connections>
@@ -2635,11 +2643,11 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="onboarding_bg_wide.png" width="470" height="588"/>
         <image name="pairOfPills.png" width="180" height="117"/>
         <image name="play.png" width="75" height="75"/>
-        <image name="sense.png" width="176" height="166"/>
+        <image name="sense.png" width="162" height="172"/>
         <image name="senseAppIcon.png" width="32" height="32"/>
         <image name="sensePlacement.png" width="320" height="235"/>
         <image name="settingsAppIcon.png" width="32" height="32"/>
-        <image name="shakePill.png" width="299" height="232"/>
+        <image name="shakePill.png" width="320" height="224"/>
         <image name="smartAlarm.png" width="203" height="203"/>
     </resources>
     <inferredMetricsTieBreakers>

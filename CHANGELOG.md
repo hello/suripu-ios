@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.0.57
+
+Fixes:
+
+* Fixed issue with saving alarm during onboarding
+* Fixed crasher within the alarms view
+* Fixed crasher in Room Check during onboarding
+* Setting timezone when pairing with Sense as a second user
+
 ## 1.0.0.56
 
 New:

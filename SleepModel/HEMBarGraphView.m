@@ -28,7 +28,7 @@
     NSArray* sortedValues = [[self.values valueForKey:NSStringFromSelector(@selector(yValue))]
                              sortedArrayUsingSelector:@selector(compare:)];
     CGFloat max = [[sortedValues lastObject] floatValue] * 1.25;
-    CGFloat min = [[sortedValues firstObject] floatValue] * 0.75;
+    CGFloat min = [[sortedValues firstObject] floatValue] * 0.5;
     CGFloat barWidth = CGRectGetWidth(self.bounds)/self.values.count;
     CGFloat fullHeight = CGRectGetHeight(self.bounds);
     for (int i = 0; i < self.values.count; i++) {

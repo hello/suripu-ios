@@ -361,8 +361,17 @@
 "sleep-history.depth.deep" = "Deep sleep";
 "sleep-history.no-data" = "There is no information available about the selected date.";
 
+// trends
 "trends.not-enough-data.message" = "Not enough data yet, check back later";
 "trends.not-enough-data.title" = "Sleep trends";
+
+"trends.days.monday.short" = "Mo";
+"trends.days.tuesday.short" = "Tu";
+"trends.days.wednesday.short" = "We";
+"trends.days.thursday.short" = "Th";
+"trends.days.friday.short" = "Fr";
+"trends.days.saturday.short" = "Sa";
+"trends.days.sunday.short" = "Su";
 
 // actions
 "actions.cancel" = "Cancel";

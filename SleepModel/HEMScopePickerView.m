@@ -31,7 +31,7 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
 
 - (CGSize)intrinsicContentSize
 {
-    CGFloat height = self.subviews.count > 0 ? HEMScopePickerHeight : 0;
+    CGFloat height = self.buttons.count > 0 ? HEMScopePickerHeight : 0;
     return CGSizeMake(CGRectGetWidth(self.bounds), height);
 }
 
@@ -67,8 +67,10 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
     [self.buttons makeObjectsPerformSelector:@selector(removeFromSuperview)];
     self.buttons = [NSMutableArray new];
     self.selectedIndex = selectedIndex != NSNotFound ? selectedIndex : 0;
-    if (titles.count == 0)
+    if (titles.count == 0) {
+        [self invalidateIntrinsicContentSize];
         return;
+    }
     for (int i = 0; i < titles.count; i++) {
         NSString* title = titles[i];
         UIButton* button = [UIButton new];

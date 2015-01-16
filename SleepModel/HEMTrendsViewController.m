@@ -202,6 +202,8 @@ static NSString* const HEMAllScopeType = @"ALL";
         cell.topLabelType = HEMTrendCellGraphLabelTypeNone;
         cell.bottomLabelType = weeks < 2 ? HEMTrendCellGraphLabelTypeDayOfWeek : HEMTrendCellGraphLabelTypeDate;
     } else {
+        cell.topLabelType = HEMTrendCellGraphLabelTypeNone;
+        cell.bottomLabelType = HEMTrendCellGraphLabelTypeNone;
         cell.showGraphLabels = useBarGraph;
     }
     [cell showGraphOfType:type withData:trend.dataPoints];

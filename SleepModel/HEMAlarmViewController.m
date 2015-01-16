@@ -178,12 +178,6 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 
 - (BOOL)isAlarmCacheValid
 {
-    if (!self.alarmCache.soundID) {
-        [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.save-error.title", nil)
-                                              message:NSLocalizedString(@"alarm.sounds.error.no-selection.message", nil)
-                                 presentingController:self];
-        return NO;
-    }
     if (self.alarmCache.repeatFlags == 0 && [self.alarmCache isSmart]) {
         SENAlarm* dummyAlarm = [SENAlarm new];
         dummyAlarm.minute = self.alarmCache.minute;

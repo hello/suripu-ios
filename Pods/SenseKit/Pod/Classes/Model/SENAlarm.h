@@ -97,6 +97,15 @@ struct SENAlarmTime {
  */
 - (BOOL)isSaved;
 
+/**
+ *  Compares alarm property values
+ *
+ *  @param alarm another alarm
+ *
+ *  @return YES if the alarms have the same properties
+ */
+- (BOOL)isIdenticalToAlarm:(SENAlarm*)alarm;
+
 @property (nonatomic, getter=isOn) BOOL on;
 @property (nonatomic, readonly, getter=isEditable) BOOL editable;
 @property (nonatomic, getter=isSmartAlarm) BOOL smartAlarm;

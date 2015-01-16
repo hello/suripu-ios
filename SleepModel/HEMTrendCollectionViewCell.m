@@ -113,14 +113,15 @@
             [self.barGraphView setValues:data];
         } else if (showLineGraph) {
             [self configureLineGraphView];
-            [self.lineGraphView reloadGraph];
         }
+        [self.lineGraphView reloadGraph];
     }];
 }
 
 - (NSArray*)sectionIndexValuesOfType:(HEMTrendCellGraphLabelType)type {
     NSMutableArray* labels = [[NSMutableArray alloc] initWithCapacity:self.labeledIndexes.count];
     NSArray* indexes = [self.labeledIndexes sortedArrayUsingSelector:@selector(compare:)];
+    int counter = 0;
     for (NSNumber* index in indexes) {
         SENTrendDataPoint* dataPoint = self.points[[index integerValue]];
         NSString* formattedValue = nil;
@@ -134,9 +135,12 @@
             case HEMTrendCellGraphLabelTypeDate:
                 formattedValue = [self.dateFormatter stringFromDate:dataPoint.date];
                 break;
-            case HEMTrendCellGraphLabelTypeDayOfWeek:
-                formattedValue = [self.dayOfWeekFormatter stringFromDate:dataPoint.date];
-                break;
+            case HEMTrendCellGraphLabelTypeDayOfWeek: {
+                if (dataPoint.date)
+                    formattedValue = [self.dayOfWeekFormatter stringFromDate:dataPoint.date];
+                else
+                    formattedValue = [self dayOfWeekForIndex:counter % 7];
+            } break;
             case HEMTrendCellGraphLabelTypeMonth:
                 formattedValue = [self.monthFormatter stringFromDate:dataPoint.date];
                 break;
@@ -146,8 +150,23 @@
         }
         if (formattedValue)
             [labels addObject:formattedValue];
+        counter++;
     }
     return labels;
+}
+
+- (NSString*)dayOfWeekForIndex:(int)index
+{
+    switch (index) {
+        case 0: return NSLocalizedString(@"trends.days.sunday.short", nil);
+        case 1: return NSLocalizedString(@"trends.days.monday.short", nil);
+        case 2: return NSLocalizedString(@"trends.days.tuesday.short", nil);
+        case 3: return NSLocalizedString(@"trends.days.wednesday.short", nil);
+        case 4: return NSLocalizedString(@"trends.days.thursday.short", nil);
+        case 5: return NSLocalizedString(@"trends.days.friday.short", nil);
+        case 6: return NSLocalizedString(@"trends.days.saturday.short", nil);
+        default: return nil;
+    }
 }
 
 #pragma mark HEMScopePickerViewDelegate
@@ -171,6 +190,11 @@
 }
 
 #pragma mark BEMSimpleLineGraphDelegate
+
+- (BOOL)noDataLabelEnableForLineGraph:(BEMSimpleLineGraphView *)graph
+{
+    return NO;
+}
 
 - (void)lineGraphDidBeginLoading:(BEMSimpleLineGraphView *)graph
 {

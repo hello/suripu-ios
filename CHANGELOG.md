@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.0.58
+
+New:
+
+* Trends!  Pull down the Timeline and tap on the Trends tab
+* Enable enhanced audio from onboarding
+* Simpler second pill setup flow in onboarding
+* Updated Before you sleep screen
+
+Fixes:
+
+* crasher when saving alarms on iOS 7
+* app freezing on iOS 7 and iPhone 5 running iOS 8
+* sporadic blank screen on the Last Night timeline
+
 ## 1.0.0.57
 
 Fixes:

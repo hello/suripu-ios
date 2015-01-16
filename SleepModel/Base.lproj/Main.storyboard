@@ -2568,11 +2568,11 @@
                                                     <rect key="frame" x="0.0" y="90" width="540" height="145"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mz2-Dc-hJA" userLabel="line graph view" customClass="BEMSimpleLineGraphView">
+                                                <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mz2-Dc-hJA" userLabel="line graph view" customClass="BEMSimpleLineGraphView">
                                                     <rect key="frame" x="0.0" y="104" width="540" height="131"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>
-                                                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bHF-JM-qCz" userLabel="overlay view" customClass="HEMGraphSectionOverlayView">
+                                                <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bHF-JM-qCz" userLabel="overlay view" customClass="HEMGraphSectionOverlayView">
                                                     <rect key="frame" x="0.0" y="90" width="540" height="145"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                 </view>

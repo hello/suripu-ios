@@ -62,8 +62,8 @@ static NSString* const HEMAllScopeType = @"ALL";
     self.loading = YES;
     [SENAPITrends defaultTrendsListWithCompletion:^(NSArray* data, NSError *error) {
         if (error) {
-            self.loading = NO;
             [self.collectionView reloadData];
+            self.loading = NO;
             return;
         }
         self.defaultTrends = [data mutableCopy];
@@ -81,6 +81,7 @@ static NSString* const HEMAllScopeType = @"ALL";
     NSIndexPath* indexPath = [self.collectionView indexPathForCell:cell];
     if (!indexPath)
         return;
+    cell.userInteractionEnabled = NO;
     SENTrend* trend = self.defaultTrends[indexPath.row];
     void (^completion)(NSArray*,NSError*) = ^(NSArray* data, NSError *error) {
         if (error) {
@@ -93,6 +94,7 @@ static NSString* const HEMAllScopeType = @"ALL";
             [self.defaultTrends replaceObjectAtIndex:indexPath.row withObject:trend];
             [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
         }
+        cell.userInteractionEnabled = YES;
         self.loading = NO;
     };
     self.loading = YES;
@@ -108,6 +110,11 @@ static NSString* const HEMAllScopeType = @"ALL";
 }
 
 #pragma mark UICollectionViewDelegate
+
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    return NO;
+}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {

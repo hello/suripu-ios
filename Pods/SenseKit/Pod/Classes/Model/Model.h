@@ -12,5 +12,6 @@
 #import "SENSleepResult.h"
 #import "SENSound.h"
 #import "SENTrend.h"
+#import "SENPreference.h"
 
 void SENClearModel();

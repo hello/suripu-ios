@@ -25,6 +25,7 @@
 @property (strong, nonatomic) NSDateFormatter* hour24Formatter;
 @property (strong, nonatomic) NSDateFormatter* hour12Formatter;
 @property (strong, nonatomic) NSDateFormatter* meridiemFormatter;
+@property (nonatomic, getter=isLoading) BOOL loading;
 @end
 
 @implementation HEMAlarmListViewController
@@ -59,8 +60,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if (self.alarms.count == 0)
-        [self refreshAlarmList];
+    [self refreshAlarmList];
     [self.collectionView reloadData];
 }
 
@@ -110,6 +110,9 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)refreshAlarmList
 {
+    if ([self isLoading])
+        return;
+    self.loading = YES;
     self.addButton.enabled = NO;
     [self.spinnerView startAnimating];
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^(NSError* error) {
@@ -121,11 +124,14 @@ static NSUInteger const HEMAlarmListLimit = 8;
             [self.collectionView reloadData];
         }
         self.addButton.enabled = YES;
+        self.loading = NO;
     }];
 }
 
 - (void)reloadData
 {
+    if (![self shouldReloadData])
+        return;
     self.alarms = [[SENAlarm savedAlarms] sortedArrayUsingComparator:^NSComparisonResult(SENAlarm* obj1, SENAlarm* obj2) {
         NSNumber* alarmValue1 = @(obj1.hour * 60 + obj1.minute);
         NSNumber* alarmValue2 = @(obj2.hour * 60 + obj2.minute);
@@ -133,6 +139,24 @@ static NSUInteger const HEMAlarmListLimit = 8;
     }];
     self.noAlarmLabel.hidden = self.alarms.count > 0;
     self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
+}
+
+- (BOOL)shouldReloadData
+{
+    NSArray* savedAlarms = [SENAlarm savedAlarms];
+    if (self.alarms.count == savedAlarms.count) {
+        NSPredicate* predicate = [NSPredicate predicateWithBlock:^BOOL(SENAlarm* alarm, NSDictionary *bindings) {
+            for (SENAlarm* loadedAlarm in self.alarms) {
+                if ([alarm isIdenticalToAlarm:loadedAlarm])
+                    return YES;
+            }
+            return NO;
+        }];
+        NSArray* matchedAlarms = [savedAlarms filteredArrayUsingPredicate:predicate];
+        if (matchedAlarms.count == savedAlarms.count)
+            return NO;
+    }
+    return YES;
 }
 
 #pragma mark - Actions
@@ -264,7 +288,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
     NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
     style.lineSpacing = 8.f;
     NSDictionary* detailAttributes = @{NSParagraphStyleAttributeName:style};
-    cell.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"alarms.no-alarm.message", nil)
+    NSString* messageKey = [self isLoading] ? @"activity.loading" : @"alarms.no-alarm.message";
+    cell.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(messageKey, nil)
                                                                       attributes:detailAttributes];
     NSDictionary* attributes = [HEMMarkdown attributesForInsightTitleViewText];
     NSString* title = [NSLocalizedString(@"alarms.no-alarm.title", nil) uppercaseString];

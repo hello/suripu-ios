@@ -71,7 +71,7 @@
     if ((repeatFlags & day) == day) {
         repeatFlags -= day;
     }
-    else if ([HEMAlarmUtils dayInUse:day excludingAlarm:self.alarm]) {
+    else if ([HEMAlarmUtils dayInUse:day excludingAlarm:self.alarm] && [self.alarmCache isSmart]) {
         [self showAlertForRepeatRestriction];
     }
     else {

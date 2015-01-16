@@ -149,19 +149,24 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
     [self.loadingQueue cancelAllOperations];
     NSURL* url = [NSURL URLWithString:sound.URLPath];
 
+    __weak typeof(self) weakSelf = self;
     [self.loadingQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         NSData* urlData = [NSData dataWithContentsOfURL:url];
-        if (!urlData)
+        if (!urlData) {
+            [strongSelf stopLoadingAnimation];
             return;
+        }
+
         [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
-            [self stopLoadingAnimation];
+            [strongSelf stopLoadingAnimation];
             NSError* error = nil;
-            self.player = [[AVAudioPlayer alloc] initWithData:urlData error:&error];
-            self.player.delegate = self;
+            strongSelf.player = [[AVAudioPlayer alloc] initWithData:urlData error:&error];
+            strongSelf.player.delegate = self;
             if (error)
-                [self stopAudio];
+                [strongSelf stopAudio];
             else
-                [self playAudio];
+                [strongSelf playAudio];
         }]];
     }]];
 }

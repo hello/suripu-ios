@@ -32,6 +32,7 @@
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     self.scopePickerView.delegate = self;
     self.overlayView.boldLastElement = NO;
     self.overlayView.showSeparatorLines = YES;

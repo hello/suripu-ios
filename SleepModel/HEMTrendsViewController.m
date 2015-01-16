@@ -46,7 +46,7 @@ static NSString* const HEMAllScopeType = @"ALL";
     [super viewDidLoad];
     [self.collectionView setAlwaysBounceVertical:YES];
     HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
-    [layout setItemHeight:184];
+    [layout setItemHeight:HEMTrendsViewCellHeight];
 }
 
 - (void)viewWillAppear:(BOOL)animated

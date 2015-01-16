@@ -1401,12 +1401,22 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EGP-k0-Pe2" userLabel="button selection view">
+                                <rect key="frame" x="-500" y="231" width="240" height="1"/>
+                                <color key="backgroundColor" red="0.1176470667" green="0.68235296010000002" blue="0.98823535439999999" alpha="1" colorSpace="deviceRGB"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="zTh-nZ-MCm"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="jXq-nN-8Qt" firstAttribute="leading" secondItem="Sdp-en-Umr" secondAttribute="leading" id="1lw-oz-FL7"/>
+                            <constraint firstItem="EGP-k0-Pe2" firstAttribute="leading" secondItem="Sdp-en-Umr" secondAttribute="leading" constant="-500" id="28H-9X-Pe6"/>
                             <constraint firstItem="Zkp-GN-ZQu" firstAttribute="top" secondItem="71w-49-Doa" secondAttribute="bottom" constant="6" id="5N1-ih-n5l"/>
                             <constraint firstItem="dQu-Hf-dor" firstAttribute="centerY" secondItem="71w-49-Doa" secondAttribute="centerY" constant="-16" id="8Uh-6s-SNy"/>
+                            <constraint firstItem="EGP-k0-Pe2" firstAttribute="width" secondItem="Sdp-en-Umr" secondAttribute="width" multiplier="0.4" id="8i1-ay-tnj"/>
                             <constraint firstItem="YMl-Xd-2cK" firstAttribute="leading" secondItem="Sdp-en-Umr" secondAttribute="leading" constant="20" id="B3r-xD-oyZ"/>
                             <constraint firstItem="dQu-Hf-dor" firstAttribute="leading" secondItem="71w-49-Doa" secondAttribute="trailing" id="CTo-ue-faT"/>
                             <constraint firstItem="d9H-QV-uE8" firstAttribute="leading" secondItem="jXq-nN-8Qt" secondAttribute="leading" constant="20" id="Duo-f9-6lg"/>
@@ -1420,6 +1430,7 @@
                             <constraint firstItem="d9H-QV-uE8" firstAttribute="centerY" secondItem="U6O-Dc-1qK" secondAttribute="centerY" id="fFW-dI-gz5"/>
                             <constraint firstAttribute="trailing" secondItem="U6O-Dc-1qK" secondAttribute="trailing" constant="20" id="hLy-1N-Xka"/>
                             <constraint firstItem="Zkp-GN-ZQu" firstAttribute="leading" secondItem="Sdp-en-Umr" secondAttribute="leading" constant="20" id="hXg-If-468"/>
+                            <constraint firstItem="jXq-nN-8Qt" firstAttribute="top" secondItem="EGP-k0-Pe2" secondAttribute="bottom" constant="-1" id="jYN-Xs-Wqh"/>
                             <constraint firstItem="d9H-QV-uE8" firstAttribute="bottom" secondItem="jXq-nN-8Qt" secondAttribute="top" constant="-6" id="obi-9C-Af2"/>
                             <constraint firstAttribute="trailing" secondItem="jXq-nN-8Qt" secondAttribute="trailing" id="tL3-6O-qzp"/>
                             <constraint firstAttribute="centerX" secondItem="BKl-LX-Oq8" secondAttribute="centerX" constant="3.5" id="tcw-NR-Ybj"/>
@@ -1437,6 +1448,8 @@
                         <outlet property="hourlyGraphButton" destination="d9H-QV-uE8" id="v7k-ws-X03"/>
                         <outlet property="idealLabel" destination="YMl-Xd-2cK" id="mx9-Vt-BsB"/>
                         <outlet property="overlayView" destination="oVZ-oK-eUb" id="A5O-Hw-Uph"/>
+                        <outlet property="selectionLeftConstraint" destination="28H-9X-Pe6" id="ZED-Vw-eIx"/>
+                        <outlet property="selectionView" destination="EGP-k0-Pe2" id="rsg-zi-v8i"/>
                         <outlet property="statusLabel" destination="DyW-hQ-mCU" id="Se1-Sv-uBy"/>
                         <outlet property="statusMessageLabel" destination="Zkp-GN-ZQu" id="PBp-P3-fAM"/>
                         <outlet property="unitLabel" destination="dQu-Hf-dor" id="fsT-no-aCx"/>

@@ -100,6 +100,7 @@ static NSString* const HEMAllScopeType = @"ALL";
     self.loading = YES;
     [cell showGraphOfType:HEMTrendCellGraphTypeNone withData:nil];
     cell.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
+    cell.statusLabel.hidden = NO;
     if ([trend.dataType isEqualToString:HEMScoreTrendType]) {
         [SENAPITrends sleepScoreTrendForTimePeriod:text completion:completion];
     } else if ([trend.dataType isEqualToString:HEMDurationTrendType]) {

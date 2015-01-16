@@ -19,7 +19,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingCache.h"
 #import "HEMWifiUtils.h"
-#import "HEMRoundedTextField.h"
+#import "HEMSimpleLineTextField.h"
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMActivityCoverView.h"
@@ -37,9 +37,9 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 @interface HEMWifiPasswordViewController() <UITextFieldDelegate, UIPickerViewDataSource, UIPickerViewDelegate>
 
-@property (weak, nonatomic) IBOutlet HEMRoundedTextField *ssidField;
-@property (weak, nonatomic) IBOutlet HEMRoundedTextField *passwordField;
-@property (weak, nonatomic) IBOutlet HEMRoundedTextField *securityField;
+@property (weak, nonatomic) IBOutlet HEMSimpleLineTextField *ssidField;
+@property (weak, nonatomic) IBOutlet HEMSimpleLineTextField *passwordField;
+@property (weak, nonatomic) IBOutlet HEMSimpleLineTextField *securityField;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *ssidTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *passTopConstraint;
@@ -86,6 +86,11 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     [self updateConstraint:[self securityTopConstraint] withDiff:paddingDiff];
     [self updateConstraint:[self continueTopConstraint] withDiff:paddingDiff];
     [super adjustConstraintsForIPhone4];
+}
+
+- (void)adjustConstraintsForIphone5 {
+    [self updateConstraint:[self continueTopConstraint] withDiff:10.0];
+    [super adjustConstraintsForIphone5];
 }
 
 - (void)viewWillLayoutSubviews {

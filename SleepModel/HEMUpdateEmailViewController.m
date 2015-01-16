@@ -8,14 +8,14 @@
 #import <SenseKit/SENServiceAccount.h>
 
 #import "HEMUpdateEmailViewController.h"
-#import "HEMRoundedTextField.h"
+#import "HEMSimpleLineTextField.h"
 #import "NSString+HEMUtils.h"
 #import "HEMDialogViewController.h"
 
 @interface HEMUpdateEmailViewController() <UITextFieldDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (weak, nonatomic) IBOutlet HEMRoundedTextField *emailField;
+@property (weak, nonatomic) IBOutlet HEMSimpleLineTextField *emailField;
 @property (weak, nonatomic) IBOutlet UITextField *hiddenField;
 @property (weak, nonatomic) IBOutlet UIActivityIndicatorView *activityIndicator;
 @property (weak, nonatomic) IBOutlet UIButton *cancelButton;

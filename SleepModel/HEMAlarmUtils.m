@@ -56,7 +56,7 @@
 + (SENAlarmRepeatDays)fireDayForNonRepeatingAlarm:(SENAlarm*)alarm
 {
     NSDate* fireDate = [alarm nextRingDate];
-    NSCalendar* calendar = [NSCalendar calendarWithIdentifier:NSGregorianCalendar];
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
     NSDateComponents* components = [calendar components:NSCalendarUnitWeekday fromDate:fireDate];
     switch (components.weekday) {
         case 1: return SENAlarmRepeatSunday;

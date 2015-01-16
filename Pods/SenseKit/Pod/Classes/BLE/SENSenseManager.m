@@ -93,9 +93,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 }
 
 + (void)stopScan {
-    DDLogVerbose(@"scan stopped");
     if ([[LGCentralManager sharedInstance] isScanning]) {
         [[LGCentralManager sharedInstance] stopScanForPeripherals];
+        DDLogVerbose(@"scan stopped");
     }
 }
 
@@ -478,22 +478,24 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         // the completion block is never called back and thus caller will just hang.  Therefore,
         // if unsuscribing is taking longer than X seconds, just make the callback
         __block BOOL called = NO;
+        __block void(^cb)(id result) = callback;
+        
         void(^call)(id result) = ^(id result) {
             if (!called) {
                 called = YES;
-                callback(result);
+                DDLogVerbose(@"making callback");
+                cb(result);
             }
         };
         
         [subscriber setNotifyValue:NO completion:^(__unused NSError *subscriptionError) {
-            DDLogVerbose(@"unsubscribed, making callback");
+            DDLogVerbose(@"unsubscribed");
             call(result);
         }];
         
         NSTimeInterval delayInSeconds = kSENSenseUnsubscribeTimeout;
         dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(delay, dispatch_get_main_queue(), ^{
-            DDLogVerbose(@"unsubscribe took too long, making callback anyways");
             call(result);
         });
     } else {
@@ -860,7 +862,6 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                               DDLogVerbose(@"Sense paired successfully");
                               [strongSelf fireSuccessMsgCbWithCbKey:cbKey andResponse:nil];
                           }
-
                       }];
                   }];
 }

@@ -19,7 +19,6 @@
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMActivityCoverView.h"
-#import "HEMSecondPillCheckViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMSupportUtil.h"
 #import "HEMWifiPickerViewController.h"
@@ -28,14 +27,13 @@ typedef NS_ENUM(NSUInteger, HEMSensePairState) {
     HEMSensePairStateNotStarted = 0,
     HEMSensePairStateSenseFound = 1,
     HEMSensePairStateSensePaired = 2,
-    HEMSensePairStatePairingError = 3,
-    HEMSensePairStateAddingSleepPill = 4,
-    HEMSensePairStateSettingUpNewSense = 5,
-    HEMSensePairStateWiFiNotDetected = 6,
-    HEMSensePairStateWiFiDetected = 7,
-    HEMSensePairStateAccountLinked = 8,
-    HEMSensePairStateTimezoneSet = 9,
-    HEMSensePairStateForceDataUpload = 10
+    HEMSensePairStateAddingSleepPill = 3,
+    HEMSensePairStateSettingUpNewSense = 4,
+    HEMSensePairStateWiFiNotDetected = 5,
+    HEMSensePairStateWiFiDetected = 6,
+    HEMSensePairStateAccountLinked = 7,
+    HEMSensePairStateTimezoneSet = 8,
+    HEMSensePairStateForceDataUpload = 9
 };
 
 // I've tested the scanning process multiple times starting with a timeout of
@@ -43,10 +41,11 @@ typedef NS_ENUM(NSUInteger, HEMSensePairState) {
 // seem to allow the response to return in time reliably.
 static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
-@interface HEMSensePairViewController() <HEMSecondPillCheckDelegate>
+@interface HEMSensePairViewController()
 
 @property (weak, nonatomic) IBOutlet UIImageView *senseImageView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *readyButton;
+@property (weak, nonatomic) IBOutlet UIButton *notGlowingButton;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTopConstraint;
@@ -59,7 +58,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (assign, nonatomic, getter=isTimedOut) BOOL timedOut;
 @property (assign, nonatomic, getter=isPairing) BOOL pairing;
-@property (assign, nonatomic, getter=hasAskedAboutSecondPill) BOOL askedAboutSecondPill;
 
 @end
 
@@ -67,14 +65,20 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    [self showHelpButton];
-    [self setupCancelButton];
+    [self configureButtons];
     [self setCurrentState:HEMSensePairStateNotStarted];
     
     if ([self delegate] == nil) {
         [SENAnalytics track:kHEMAnalyticsEventOnBPairSense];
     }
+}
+
+- (void)configureButtons {
+    [self showHelpButton];
+    [self setupCancelButton];
+    [[self notGlowingButton] setTitleColor:[HelloStyleKit senseBlueColor]
+                                  forState:UIControlStateNormal];
+    [[[self notGlowingButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
 }
 
 - (void)setupCancelButton {
@@ -119,12 +123,11 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
+                [strongSelf setManager:nil];
                 [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                     if ([strongSelf isPairing]) {
-                        [strongSelf setCurrentState:HEMSensePairStatePairingError];
-                        [strongSelf executeNextStep];
+                        [strongSelf showCouldNotPairErrorMessage];
                     } else {
-                        [strongSelf setManager:nil];
                         NSString* message = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
                         [strongSelf showErrorMessage:message];
                     }
@@ -217,8 +220,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                          properties:@{kHEMAnalyticsEventPropMessage : @"no sense found"}];
                 
                 [strongSelf stopActivityWithMessage:nil success:NO completion:^{
-                    [strongSelf setCurrentState:HEMSensePairStatePairingError];
-                    [strongSelf executeNextStep];
+                    [strongSelf showCouldNotPairErrorMessage];
                 }];
 
             }
@@ -252,15 +254,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         }
         case HEMSensePairStateSensePaired: {
             [self checkWiFi];
-            break;
-        }
-        case HEMSensePairStatePairingError: {
-            if ([self hasAskedAboutSecondPill]) {
-                NSString* msg = NSLocalizedString(@"pairing.error.could-not-pair", nil);
-                [self showErrorMessage:msg];
-            } else {
-                [self checkIfAddingSecondPill];
-            }
             break;
         }
         case HEMSensePairStateWiFiNotDetected: {
@@ -325,12 +318,16 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                 [strongSelf setManager:nil];
                 [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                     [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                    [strongSelf setCurrentState:HEMSensePairStatePairingError];
-                    [strongSelf executeNextStep];
+                    [strongSelf showCouldNotPairErrorMessage];
                 }];
             }
         }];
     }];
+}
+
+- (void)showCouldNotPairErrorMessage {
+    NSString* msg = NSLocalizedString(@"pairing.error.could-not-pair", nil);
+    [self showErrorMessage:msg];
 }
 
 #pragma mark - WiFi
@@ -368,17 +365,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             [strongSelf setCurrentState:HEMSensePairStateWiFiNotDetected];
             [strongSelf executeNextStep];
         }
-    }];
-}
-
-#pragma mark - Second Pill
-
-- (void)checkIfAddingSecondPill {
-    __weak typeof(self) weakSelf = self;
-    [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
-        DDLogVerbose(@"asking if user has a second pill to set up");
-        [weakSelf performSegueWithIdentifier:[HEMOnboardingStoryboard secondPillCheckSegueIdentifier]
-                                      sender:weakSelf];
     }];
 }
 
@@ -518,30 +504,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     UIViewController* destVC = segue.destinationViewController;
-    if ([[segue identifier] isEqualToString:[HEMOnboardingStoryboard secondPillCheckSegueIdentifier]]) {
-        UINavigationController* nav = (UINavigationController*)destVC;
-        [[nav navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];
-        HEMSecondPillCheckViewController* pairingCheckVC = (HEMSecondPillCheckViewController*)[nav topViewController];
-        [pairingCheckVC setDelegate:self];
-    } else if ([destVC isKindOfClass:[HEMWifiPickerViewController class]]) {
+    if ([destVC isKindOfClass:[HEMWifiPickerViewController class]]) {
         HEMWifiPickerViewController* pickerVC = (HEMWifiPickerViewController*)destVC;
         [pickerVC setSensePairDelegate:[self delegate]]; // if one is set, pass it along
     }
-}
-
-#pragma mark - HEMPairingCheckDelegate
-
-- (void)checkController:(HEMSecondPillCheckViewController *)controller
-    isSettingUpNewSense:(BOOL)settingUpNewSense {
-    
-    [self dismissViewControllerAnimated:YES completion:^{
-        [self setAskedAboutSecondPill:YES];
-        if (!settingUpNewSense) {
-            // restart the process
-            [self setCurrentState:HEMSensePairStateNotStarted];
-        }
-        [self executeNextStep];
-    }];
 }
 
 #pragma mark - Clean up

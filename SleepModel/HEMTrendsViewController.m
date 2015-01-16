@@ -166,9 +166,9 @@ static NSString* const HEMAllScopeType = @"ALL";
         cell.titleLabel.text = nil;
         cell.detailLabel.text = NSLocalizedString(@"activity.loading", nil);
     } else {
-        NSString* title = [NSLocalizedString(@"trends.not-enough.data.title", nil) uppercaseString];
+        NSString* title = [NSLocalizedString(@"trends.not-enough-data.title", nil) uppercaseString];
         cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:title attributes:attributes];
-        cell.detailLabel.text = NSLocalizedString(@"trends.not-enough.data.message", nil);
+        cell.detailLabel.text = NSLocalizedString(@"trends.not-enough-data.message", nil);
     }
     return cell;
 }

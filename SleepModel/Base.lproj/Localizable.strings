@@ -362,7 +362,7 @@
 "sleep-history.no-data" = "There is no information available about the selected date.";
 
 "trends.not-enough-data.message" = "Not enough data yet, check back later";
-"trends.not-enough.data.title" = "Sleep trends";
+"trends.not-enough-data.title" = "Sleep trends";
 
 // actions
 "actions.cancel" = "Cancel";

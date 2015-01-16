@@ -60,6 +60,7 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     [self reloadData];
     self.animationDelegate = [HEMZoomAnimationTransitionDelegate new];
     self.transitioningDelegate = self.animationDelegate;
+    [self registerForNotifications];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -74,19 +75,12 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 {
     [super viewDidAppear:animated];
     self.panePanGestureRecognizer.delegate = self;
-    [self registerForNotifications];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     self.panePanGestureRecognizer.delegate = nil;
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-    [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewDidPop

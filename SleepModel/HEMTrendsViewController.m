@@ -191,7 +191,9 @@ static NSString* const HEMAllScopeType = @"ALL";
     if ([period isEqualToString:HEMDayOfWeekScopeType]) {
         cell.showGraphLabels = YES;
         cell.topLabelType = HEMTrendCellGraphLabelTypeDayOfWeek;
-        cell.bottomLabelType = HEMTrendCellGraphLabelTypeValue;
+        cell.bottomLabelType = [trend.dataType isEqualToString:HEMDurationTrendType]
+            ? HEMTrendCellGraphLabelTypeHourValue
+            : HEMTrendCellGraphLabelTypeValue;
     } else if ([period hasSuffix:HEMMonthScopeType] && period.length == 2) {
         cell.showGraphLabels = YES;
         cell.topLabelType = HEMTrendCellGraphLabelTypeNone;

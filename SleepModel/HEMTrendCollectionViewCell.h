@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, HEMTrendCellGraphType) {
 typedef NS_ENUM(NSUInteger, HEMTrendCellGraphLabelType) {
     HEMTrendCellGraphLabelTypeNone,
     HEMTrendCellGraphLabelTypeValue,
+    HEMTrendCellGraphLabelTypeHourValue,
     HEMTrendCellGraphLabelTypeDate,
     HEMTrendCellGraphLabelTypeDayOfWeek,
     HEMTrendCellGraphLabelTypeMonth,

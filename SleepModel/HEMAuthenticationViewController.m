@@ -18,6 +18,8 @@
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
 @property (weak, nonatomic) IBOutlet UIButton *forgotPassButton;
 @property (weak, nonatomic) IBOutlet HEMActionButton *logInButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *loginButtonTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *emailTopConstraint;
 
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (assign, nonatomic) BOOL signingIn;
@@ -45,8 +47,12 @@
 - (void)viewWillLayoutSubviews {
     [super viewWillLayoutSubviews];
     [[self forgotPassButton] sizeToFit];
-    DDLogVerbose(@"%f %f", CGRectGetWidth([[self forgotPassButton] bounds]),
-                 CGRectGetHeight([[self forgotPassButton] bounds]));
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [super adjustConstraintsForIPhone4];
+    [self updateConstraint:[self emailTopConstraint] withDiff:-50.0f];
+    [self updateConstraint:[self loginButtonTopConstraint] withDiff:20.0f];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

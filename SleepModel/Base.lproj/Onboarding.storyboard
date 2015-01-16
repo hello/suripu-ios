@@ -44,6 +44,8 @@
             <string>Calibre-Light</string>
             <string>Calibre-Light</string>
             <string>Calibre-Light</string>
+            <string>Calibre-Light</string>
+            <string>Calibre-Light</string>
         </mutableArray>
         <mutableArray key="Calibre-Medium.otf">
             <string>Calibre-Medium</string>
@@ -159,8 +161,10 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="emailTopConstraint" destination="oOq-WY-HB2" id="f0u-WH-yVb"/>
                         <outlet property="forgotPassButton" destination="nBf-Bp-BiO" id="IBK-YF-gB3"/>
                         <outlet property="logInButton" destination="G9w-pu-D4W" id="ZLe-wE-pjm"/>
+                        <outlet property="loginButtonTopConstraint" destination="BjL-cT-v5l" id="iHJ-dJ-4bq"/>
                         <outlet property="passwordField" destination="hPf-UR-a80" id="KxG-rE-qsG"/>
                         <outlet property="usernameField" destination="gMo-0B-UJM" id="yfw-pd-kDq"/>
                     </connections>
@@ -2014,6 +2018,103 @@ Sense will glow purple when it is in Pairing Mode.</string>
             </objects>
             <point key="canvasLocation" x="6346" y="922"/>
         </scene>
+        <!--Sense Audio View Controller-->
+        <scene sceneID="FZQ-fc-285">
+            <objects>
+                <viewController storyboardIdentifier="senseAudio" id="ldR-fW-wOZ" customClass="HEMSenseAudioViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="qBG-S7-R3g"/>
+                        <viewControllerLayoutGuide type="bottom" id="hZq-Yk-VlR"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="kiV-0X-2Lu">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable enhanced audio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Cj-AM-Ri7">
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="iS7-kV-WDa"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="26"/>
+                                <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYf-D8-Nxr">
+                                <rect key="frame" x="20" y="68" width="560" height="102"/>
+                                <string key="text">With this enabled Sense can pick up snoring, sleep talking and noise disturbances.
+
+Without enhanced audio enabled, Sense only looks at background noise levels.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enableAudio.png" translatesAutoresizingMaskIntoConstraints="NO" id="dFU-8H-O86">
+                                <rect key="frame" x="0.0" y="180" width="600" height="195"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhf-f1-wVH" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="GZx-kq-8Ya"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="ENABLE ENHANCED AUDIO">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="enable:" destination="ldR-fW-wOZ" eventType="touchUpInside" id="akO-eB-RlP"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ZLg-Bc-ITS">
+                                <rect key="frame" x="240" y="475" width="119" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="119" id="EPf-5p-qVG"/>
+                                    <constraint firstAttribute="height" constant="28" id="m4u-bF-DGY"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="15"/>
+                                <state key="normal" title="Skip for now">
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="skip:" destination="ldR-fW-wOZ" eventType="touchUpInside" id="RdH-H1-InL"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="ZLg-Bc-ITS" secondAttribute="centerX" constant="0.5" id="0AA-TI-Idt"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="dFU-8H-O86" secondAttribute="trailing" constant="-16" id="7bg-MF-gBv"/>
+                            <constraint firstItem="uhf-f1-wVH" firstAttribute="leading" secondItem="kiV-0X-2Lu" secondAttribute="leadingMargin" constant="4" id="8rG-se-HO8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cYf-D8-Nxr" secondAttribute="trailing" constant="4" id="Kpp-d1-Ytf"/>
+                            <constraint firstItem="uhf-f1-wVH" firstAttribute="bottom" secondItem="ZLg-Bc-ITS" secondAttribute="bottom" constant="77" id="Nrd-V2-sWe"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4Cj-AM-Ri7" secondAttribute="trailing" constant="4" id="QVk-kx-PyE"/>
+                            <constraint firstItem="4Cj-AM-Ri7" firstAttribute="bottom" secondItem="cYf-D8-Nxr" secondAttribute="top" constant="-10" id="Vke-vD-JNe"/>
+                            <constraint firstItem="dFU-8H-O86" firstAttribute="leading" secondItem="kiV-0X-2Lu" secondAttribute="leadingMargin" constant="-16" id="YZx-xC-B9d"/>
+                            <constraint firstItem="cYf-D8-Nxr" firstAttribute="leading" secondItem="kiV-0X-2Lu" secondAttribute="leadingMargin" constant="4" id="dcl-2H-3z7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uhf-f1-wVH" secondAttribute="trailing" constant="4" id="hjE-5N-ZTn"/>
+                            <constraint firstItem="4Cj-AM-Ri7" firstAttribute="top" secondItem="qBG-S7-R3g" secondAttribute="bottom" constant="4" id="itn-IY-Ugn"/>
+                            <constraint firstItem="hZq-Yk-VlR" firstAttribute="top" secondItem="uhf-f1-wVH" secondAttribute="bottom" constant="20" id="mxR-bW-eSF"/>
+                            <constraint firstItem="4Cj-AM-Ri7" firstAttribute="top" secondItem="qBG-S7-R3g" secondAttribute="bottom" constant="4" id="niB-eX-Xqn"/>
+                            <constraint firstItem="4Cj-AM-Ri7" firstAttribute="leading" secondItem="kiV-0X-2Lu" secondAttribute="leadingMargin" constant="4" id="vzs-2n-Vg2"/>
+                            <constraint firstItem="cYf-D8-Nxr" firstAttribute="bottom" secondItem="dFU-8H-O86" secondAttribute="top" constant="-10" id="y1g-hY-DN4"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="uOU-sE-qZW"/>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="cYf-D8-Nxr" id="dYC-dZ-ifz"/>
+                        <outlet property="descriptionTopConstraint" destination="Vke-vD-JNe" id="6F6-l9-bwJ"/>
+                        <outlet property="enableButton" destination="uhf-f1-wVH" id="RHS-uZ-5Vf"/>
+                        <outlet property="skipButton" destination="ZLg-Bc-ITS" id="gHI-OT-UMw"/>
+                        <outlet property="titleHeightConstraint" destination="iS7-kV-WDa" id="V83-1e-DmG"/>
+                        <outlet property="titleLabel" destination="4Cj-AM-Ri7" id="wi5-SZ-5oz"/>
+                        <segue destination="Qk9-qi-Wt3" kind="push" identifier="audioToSetup" id="etc-Yw-7Q2"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="M6X-uC-NAt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7457" y="108"/>
+        </scene>
         <!--Enable Push View Controller-->
         <scene sceneID="FBt-NZ-uar">
             <objects>
@@ -2095,7 +2196,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="skipButton" destination="9ia-GF-Swk" id="aFd-NJ-3lO"/>
                         <outlet property="titleHeightConstraint" destination="eFQ-oR-ERS" id="cIT-vD-3Si"/>
                         <outlet property="titleLabel" destination="Go7-Z7-kmw" id="rG7-w3-c7Q"/>
-                        <segue destination="Qk9-qi-Wt3" kind="push" identifier="pushToSenseSetup" id="TuP-To-bZG"/>
+                        <segue destination="ldR-fW-wOZ" kind="push" identifier="pushToAudio" id="DHf-Bv-2QP"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QJV-po-vQN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2529,6 +2630,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="PillHands.png" width="320" height="214"/>
         <image name="bluetooth.png" width="32" height="32"/>
         <image name="doubleArrow.png" width="35" height="63"/>
+        <image name="enableAudio.png" width="320" height="195"/>
         <image name="female.png" width="50" height="83"/>
         <image name="male.png" width="75" height="72"/>
         <image name="map.png" width="320" height="229"/>
@@ -2544,8 +2646,8 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="smartAlarm.png" width="203" height="203"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="DAu-sO-H4V"/>
         <segue reference="ZOJ-Sh-Dzx"/>
+        <segue reference="DAu-sO-H4V"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

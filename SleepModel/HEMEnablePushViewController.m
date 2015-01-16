@@ -45,7 +45,7 @@
 
 - (void)next {
     [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard pushToSenseSetupSegueIdentifier]
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard pushToAudioSegueIdentifier]
                               sender:self];
 }
 

@@ -43,6 +43,7 @@ NSString* const kHEMAnalyticsEventOnBWeight = @"Onboarding Weight";
 NSString* const kHEMAnalyticsEventOnBLocation = @"Onboarding Location";
 NSString* const kHEMAnalyticsEventOnBNotification = @"Onboarding Notifications";
 NSString* const kHEMAnalyticsEventOnBNoBle = @"Onboarding No BLE";
+NSString* const kHEMAnalyticsEventOnBAudio = @"Onboarding Sense Audio";
 NSString* const kHEMAnalyticsEventOnBSenseSetup = @"Onboarding Sense Setup";
 NSString* const kHEMAnalyticsEventOnBPairSense = @"Onboarding Pair Sense";
 NSString* const kHEMAnalyticsEventOnBWiFi = @"Onboarding WiFi";

@@ -14,6 +14,7 @@
 
 /** Segue Identifiers */
 +(NSString *)alarmToAnotherPillSegueIdentifier;
++(NSString *)audioToSetupSegueIdentifier;
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier;
 +(NSString *)doneSegueIdentifier;
 +(NSString *)genderSegueIdentifier;
@@ -24,7 +25,7 @@
 +(NSString *)moreInfoSegueIdentifier;
 +(NSString *)noBleToBirthdaySegueIdentifier;
 +(NSString *)pillSetupToColorsSegueIdentifier;
-+(NSString *)pushToSenseSetupSegueIdentifier;
++(NSString *)pushToAudioSegueIdentifier;
 +(NSString *)senseToPillSegueIdentifier;
 +(NSString *)signupToNoBleSegueIdentifier;
 +(NSString *)weightSegueIdentifier;

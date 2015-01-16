@@ -19,6 +19,7 @@ static CGFloat const HEMSimpleLineHeight = 1.0f;
         self.backgroundColor = [UIColor clearColor];
         [self setBorderStyle:UITextBorderStyleNone];
         [self setTintColor:[HelloStyleKit senseBlueColor]];
+        [self setFocus:NO];
     }
     return self;
 }

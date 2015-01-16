@@ -63,6 +63,7 @@
     self.lineGraphView.enableBezierCurve = YES;
     self.lineGraphView.alwaysDisplayPopUpLabels = YES;
     self.lineGraphView.colorBackgroundPopUplabel = [UIColor clearColor];
+    self.lineGraphView.userInteractionEnabled = NO;
     self.lineGraphView.labelFont = [UIFont sensorGraphNumberFont];
     self.lineGraphView.colorPoint = [UIColor clearColor];
     self.lineGraphView.enableXAxisLabel = YES;

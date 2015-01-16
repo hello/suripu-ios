@@ -39,6 +39,7 @@
     self.topLabelType = HEMTrendCellGraphLabelTypeDate;
     self.bottomLabelType = HEMTrendCellGraphLabelTypeNone;
     self.numberOfGraphSections = 7;
+    self.lineGraphView.alpha = 0;
     [self configureDateFormatters];
     [self configureLineGraphView];
 }
@@ -67,13 +68,14 @@
     self.lineGraphView.labelFont = [UIFont sensorGraphNumberFont];
     self.lineGraphView.colorPoint = [UIColor clearColor];
     self.lineGraphView.enableXAxisLabel = YES;
+    self.lineGraphView.animationGraphEntranceTime = 0;
 }
 
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    self.lineGraphView.hidden = YES;
-    self.barGraphView.hidden = YES;
+    self.lineGraphView.alpha = 0;
+    self.barGraphView.alpha = 0;
     self.overlayView.hidden = YES;
     [self.scopePickerView setButtonsWithTitles:nil selectedIndex:0];
     [self.overlayView setSectionFooters:nil headers:nil];
@@ -100,21 +102,18 @@
     self.maxIndex = [values indexOfObject:max];
     BOOL showBarGraph = type == HEMTrendCellGraphTypeBar;
     BOOL showLineGraph = type == HEMTrendCellGraphTypeLine;
+    if (showBarGraph) {
+        [self.barGraphView layoutIfNeeded];
+        [self.barGraphView setValues:data];
+    } else if (showLineGraph) {
+        [self configureLineGraphView];
+    }
+    [self.lineGraphView reloadGraph];
     if (HEMTrendCellGraphTypeNone)
         self.overlayView.hidden = YES;
     [UIView animateWithDuration:0.2f animations:^{
         self.barGraphView.alpha = showBarGraph ? 1 : 0;
         self.lineGraphView.alpha = showLineGraph ? 1 : 0;
-    } completion:^(BOOL finished) {
-        self.barGraphView.hidden = !showBarGraph;
-        self.lineGraphView.hidden = !showLineGraph;
-        if (showBarGraph) {
-            [self.barGraphView layoutIfNeeded];
-            [self.barGraphView setValues:data];
-        } else if (showLineGraph) {
-            [self configureLineGraphView];
-        }
-        [self.lineGraphView reloadGraph];
     }];
 }
 

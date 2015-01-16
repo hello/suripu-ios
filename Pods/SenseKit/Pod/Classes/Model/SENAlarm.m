@@ -192,6 +192,18 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     return [self.identifier isEqualToString:alarm.identifier];
 }
 
+- (BOOL)isIdenticalToAlarm:(SENAlarm *)alarm
+{
+    return self.hour == alarm.hour
+        && self.minute == alarm.minute
+        && self.repeatFlags == alarm.repeatFlags
+        && [self.soundID isEqual:alarm.soundID]
+        && [self.soundName isEqual:alarm.soundName]
+        && [self isSmartAlarm] == [alarm isSmartAlarm]
+        && [self isEditable] == [alarm isEditable]
+        && [self isOn] == [alarm isOn];
+}
+
 - (NSDate*)nextRingDate
 {
     NSDate* date = [NSDate date];

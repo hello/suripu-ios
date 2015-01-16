@@ -198,6 +198,10 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
++ (UIFont *)trendOptionFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
+}
+
 #pragma mark - Onboarding
 
 + (UIFont *)onboardingActivityFontLarge {

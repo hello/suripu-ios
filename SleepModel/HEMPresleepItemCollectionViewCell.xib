@@ -14,19 +14,19 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="184"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Your bedroom was a bit noisy." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IXN-Z3-Ncu">
-                        <rect key="frame" x="32" y="145" width="256" height="20.5"/>
+                        <rect key="frame" x="32" y="147" width="256" height="21"/>
                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BEFORE SLEEP" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mmc-1z-29g">
-                        <rect key="frame" x="121" y="40" width="77.5" height="15.5"/>
+                        <rect key="frame" x="121" y="40" width="78" height="16"/>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="11"/>
                         <color key="textColor" white="0.57999999999999996" alpha="1" colorSpace="calibratedWhite"/>
                         <nil key="highlightedColor"/>
                     </label>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lGO-EQ-243" userLabel="button container view">
-                        <rect key="frame" x="0.0" y="75" width="320" height="40.5"/>
+                        <rect key="frame" x="0.0" y="76" width="320" height="41"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="40.5" id="Kn1-Qh-qBw"/>

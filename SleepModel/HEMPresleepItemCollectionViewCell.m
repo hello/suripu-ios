@@ -120,27 +120,19 @@ static int const HEMBorderDashLengthCount = 2;
     [self setNeedsDisplay];
 }
 
-- (void)prepareForReuse
-{
-    [super prepareForReuse];
-    [self unhighlightAllButtons];
-}
-
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     if (!self.gradientLayer) {
-        UIColor* borderColor = [HelloStyleKit timelineInsightTintColor];
         UIColor* topColor = [HelloStyleKit timelineGradientDarkColor];
         UIColor* bottomColor = [UIColor whiteColor];
         self.gradientLayer = [CAGradientLayer layer];
-        self.gradientLayer.colors = @[(id)borderColor.CGColor,(id)topColor.CGColor, (id)bottomColor.CGColor];
-        self.gradientLayer.locations = @[@0, @(1/CGRectGetHeight(self.bounds)), @1];
+        self.gradientLayer.colors = @[(id)topColor.CGColor, (id)bottomColor.CGColor];
+        self.gradientLayer.locations = @[@0, @1];
         [self.layer insertSublayer:self.gradientLayer atIndex:0];
     }
     CGRect gradientRect = self.bounds;
-    gradientRect.size.height -= HEMPresleepItemBorderWidth * 2;
-    gradientRect.origin.y += HEMPresleepItemBorderWidth;
+    gradientRect.size.height -= HEMPresleepItemBorderWidth;
     self.gradientLayer.frame = gradientRect;
 }
 
@@ -163,8 +155,13 @@ static int const HEMBorderDashLengthCount = 2;
         CGRect buttonFrame = CGRectMake(x, 0, HEMInsightButtonWidth, HEMInsightButtonWidth);
         UIButton* button = [[UIButton alloc] initWithFrame:buttonFrame];
         SENSleepResultSensorInsight* insight = self.sensorInsights[i];
+        UIColor* insightColor = [self tintColorForInsight:insight];
         [button setImage:[self imageForInsight:insight] forState:UIControlStateNormal];
-        button.tintColor = [self tintColorForInsight:insight];
+        NSString* message = self.messageLabel.text;
+        if (message.length > 0 && [message isEqual:insight.message])
+            button.tintColor = [message isEqual:insight.message] ? insightColor : [HelloStyleKit timelineInsightTintColor];
+        else
+            button.tintColor = insightColor;
         button.tag = i + HEMInsightButtonTagOffset;
         button.layer.cornerRadius = halfButton;
         [button addTarget:self action:@selector(didTapInsightButton:) forControlEvents:UIControlEventTouchUpInside];

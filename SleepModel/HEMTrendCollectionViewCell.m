@@ -24,8 +24,8 @@
 @property (nonatomic, strong) NSDateFormatter* dateFormatter;
 @property (nonatomic, strong) NSDateFormatter* dayOfWeekFormatter;
 @property (nonatomic, strong) NSDateFormatter* monthFormatter;
-@property (nonatomic, getter=isMaxValueVisible) BOOL maxVisible;
-@property (nonatomic, getter=isMinValueVisible) BOOL minVisible;
+@property (nonatomic, getter=isMaxValueVisible) NSUInteger maxIndex;
+@property (nonatomic, getter=isMinValueVisible) NSUInteger minIndex;
 @end
 
 @implementation HEMTrendCollectionViewCell
@@ -85,12 +85,13 @@
 
 - (void)showGraphOfType:(HEMTrendCellGraphType)type withData:(NSArray *)data
 {
-    self.maxVisible = NO;
-    self.minVisible = NO;
     self.points = data;
-    NSArray* values = [[data valueForKey:NSStringFromSelector(@selector(yValue))] sortedArrayUsingSelector:@selector(compare:)];
-    self.max = [[values lastObject] floatValue];
-    self.min = [[values firstObject] floatValue];
+    NSArray* values = [data valueForKey:NSStringFromSelector(@selector(yValue))];
+    NSArray* sortedValues = [values sortedArrayUsingSelector:@selector(compare:)];
+    NSNumber* max = [sortedValues lastObject];
+    NSNumber* min = [sortedValues firstObject];
+    self.maxIndex = [values indexOfObject:max];
+    self.minIndex = [values indexOfObject:min];
     BOOL showBarGraph = type == HEMTrendCellGraphTypeBar;
     BOOL showLineGraph = type == HEMTrendCellGraphTypeLine;
     if (HEMTrendCellGraphTypeNone)
@@ -105,6 +106,7 @@
             [self.barGraphView layoutIfNeeded];
             [self.barGraphView setValues:data];
         } else if (showLineGraph) {
+            [self configureLineGraphView];
             [self.lineGraphView reloadGraph];
         }
     }];
@@ -193,21 +195,7 @@
 
 - (BOOL)lineGraph:(BEMSimpleLineGraphView *)graph alwaysDisplayPopUpAtIndex:(CGFloat)index
 {
-    SENTrendDataPoint* point = self.points[(int)index];
-    if (point.yValue == 0) {
-        return NO;
-    } else if (point.yValue == self.max) {
-        if (![self isMaxValueVisible]) {
-            self.maxVisible = YES;
-            return YES;
-        }
-    } else if (point.yValue == self.min) {
-        if (![self isMinValueVisible]) {
-            self.minVisible = YES;
-            return YES;
-        }
-    }
-    return NO;
+    return index == self.maxIndex || index == self.minIndex;
 }
 
 @end

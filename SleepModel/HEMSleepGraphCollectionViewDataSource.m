@@ -56,6 +56,9 @@ static NSString* const sleepEventReuseIdentifier = @"sleepEventCell";
 static NSString* const sensorTypeTemperature = @"temperature";
 static NSString* const sensorTypeHumidity = @"humidity";
 static NSString* const sensorTypeParticulates = @"particulates";
+static NSString* const sleepEventNameFindCharacter = @"_";
+static NSString* const sleepEventNameReplaceCharacter = @" ";
+static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 + (NSDateFormatter*)sleepDateFormatter
 {
@@ -70,10 +73,11 @@ static NSString* const sensorTypeParticulates = @"particulates";
 
 + (NSString*)localizedNameForSleepEventType:(NSString*)eventType
 {
-    NSString* localizedFormat = [NSString stringWithFormat:@"sleep-event.type.%@.name", [eventType lowercaseString]];
+    NSString* localizedFormat = [NSString stringWithFormat:sleepEventNameFormat, [eventType lowercaseString]];
     NSString* eventName = NSLocalizedString(localizedFormat, nil);
     if ([eventName isEqualToString:localizedFormat]) {
-        return [eventType capitalizedString];
+        return [[eventType capitalizedString] stringByReplacingOccurrencesOfString:sleepEventNameFindCharacter
+                                                                        withString:sleepEventNameReplaceCharacter];
     }
     return eventName;
 }

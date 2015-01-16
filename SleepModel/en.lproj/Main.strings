@@ -89,8 +89,8 @@
 /* Class = "IBUILabel"; text = "º"; ObjectID = "dQu-Hf-dor"; */
 "dQu-Hf-dor.text" = "º";
 
-/* Class = "IBUILabel"; text = "You don't currently have a Sleep Pill paired with your Sense unit."; ObjectID = "dcF-RS-FbJ"; */
-"dcF-RS-FbJ.text" = "You don't currently have a Sleep Pill paired with your Sense unit.";
+/* Class = "IBUILabel"; text = "You don't currently have a Sleep Pill paired with your Sense."; ObjectID = "dcF-RS-FbJ"; */
+"dcF-RS-FbJ.text" = "You don't currently have a Sleep Pill paired with your Sense.";
 
 /* Class = "IBUIButton"; normalTitle = "SKIP THIS QUESTION"; ObjectID = "eSP-6P-aRg"; */
 "eSP-6P-aRg.normalTitle" = "SKIP THIS QUESTION";
@@ -111,7 +111,7 @@
 "kmi-iD-cGd.title" = "My Information";
 
 /* Class = "IBUILabel"; text = "A Pill is required to track your sleep"; ObjectID = "lvQ-Zb-w2d"; */
-"lvQ-Zb-w2d.text" = "A Pill is required to track your sleep";
+"lvQ-Zb-w2d.text" = "A Sleep Pill is required to track your sleep";
 
 /* Class = "IBUINavigationItem"; title = "Devices"; ObjectID = "oGK-em-S7y"; */
 "oGK-em-S7y.title" = "Devices";

@@ -38,9 +38,6 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    if (self.buttons.count > self.selectedIndex)
-        [self moveSelectionViewUnderView:self.buttons[self.selectedIndex]];
-
     CGFloat buttonWidth = CGRectGetWidth(self.bounds)/self.buttons.count;
     CGFloat buttonHeight = CGRectGetHeight(self.bounds);
     for (int i = 0; i < self.buttons.count; i++) {
@@ -48,6 +45,8 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
         button.frame = CGRectMake(i * buttonWidth, 0, buttonWidth, buttonHeight);
         button.selected = i == self.selectedIndex;
     }
+    if (self.buttons.count > self.selectedIndex)
+        [self moveSelectionViewUnderView:self.buttons[self.selectedIndex]];
 }
 
 - (IBAction)selectButton:(UIButton*)sender
@@ -63,10 +62,11 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
     [self.delegate didTapButtonWithText:[sender titleForState:UIControlStateNormal]];
 }
 
-- (void)setButtonsWithTitles:(NSArray *)titles
+- (void)setButtonsWithTitles:(NSArray *)titles selectedIndex:(NSUInteger)selectedIndex
 {
     [self.buttons makeObjectsPerformSelector:@selector(removeFromSuperview)];
     self.buttons = [NSMutableArray new];
+    self.selectedIndex = selectedIndex != NSNotFound ? selectedIndex : 0;
     if (titles.count == 0)
         return;
     for (int i = 0; i < titles.count; i++) {
@@ -82,8 +82,6 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
         [button addTarget:self action:@selector(selectButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.buttons addObject:button];
         [self addSubview:button];
-        if (i == self.selectedIndex)
-            [self moveSelectionViewUnderView:button];
     }
     [self invalidateIntrinsicContentSize];
     [self setNeedsLayout];
@@ -94,7 +92,13 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
     CGRect frame = view.frame;
     frame.size.height = HEMScopePickerSelectionViewHeight;
     frame.origin.y = CGRectGetHeight(view.bounds) - HEMScopePickerSelectionViewHeight;
-    self.selectionView.frame = frame;
+    void (^animations)() = ^{
+        self.selectionView.frame = frame;
+    };
+    if (CGSizeEqualToSize(self.selectionView.bounds.size, CGSizeZero))
+        animations();
+    else
+        [UIView animateWithDuration:0.2f animations:animations];
 }
 
 @end

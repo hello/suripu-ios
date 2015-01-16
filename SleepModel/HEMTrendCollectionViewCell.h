@@ -7,6 +7,20 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMCardCollectionViewCell.h"
+
+typedef NS_ENUM(NSUInteger, HEMTrendCellGraphType) {
+    HEMTrendCellGraphTypeLine,
+    HEMTrendCellGraphTypeBar,
+};
+
+typedef NS_ENUM(NSUInteger, HEMTrendCellGraphLabelType) {
+    HEMTrendCellGraphLabelTypeNone,
+    HEMTrendCellGraphLabelTypeValue,
+    HEMTrendCellGraphLabelTypeDate,
+    HEMTrendCellGraphLabelTypeDayOfWeek,
+    HEMTrendCellGraphLabelTypeMonth,
+};
 
 @class HEMGraphSectionOverlayView, HEMBarGraphView, BEMSimpleLineGraphView, HEMScopePickerView;
 
@@ -17,11 +31,10 @@
 - (void)didTapTimeScopeButtonWithText:(NSString*)text;
 @end
 
-@interface HEMTrendCollectionViewCell : UICollectionViewCell
+@interface HEMTrendCollectionViewCell : HEMCardCollectionViewCell
 
-- (void)setTimeScopesWithOptions:(NSArray*)options;
-- (void)showLineGraphWithData:(NSArray*)points max:(CGFloat)max min:(CGFloat)min;
-- (void)showBarGraphWithData:(NSArray*)points max:(CGFloat)max min:(CGFloat)min;
+- (void)setTimeScopesWithOptions:(NSArray*)options selectedOptionIndex:(NSUInteger)selectedIndex;
+- (void)showGraphOfType:(HEMTrendCellGraphType)type withData:(NSArray*)data;
 
 @property (nonatomic, weak) IBOutlet HEMBarGraphView* barGraphView;
 @property (nonatomic, weak) IBOutlet HEMGraphSectionOverlayView* overlayView;
@@ -29,4 +42,8 @@
 @property (nonatomic, weak) IBOutlet HEMScopePickerView* scopePickerView;
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
 @property (nonatomic, weak) id<HEMTrendCollectionViewCellDelegate> delegate;
+@property (nonatomic) HEMTrendCellGraphLabelType topLabelType;
+@property (nonatomic) HEMTrendCellGraphLabelType bottomLabelType;
+@property (nonatomic) NSUInteger numberOfGraphSections;
+@property (nonatomic, getter=shouldShowGraphLabels) BOOL showGraphLabels;
 @end

@@ -13,10 +13,12 @@
 #import "HEMMainStoryboard.h"
 #import "HEMCardFlowLayout.h"
 #import "HEMTrendCollectionViewCell.h"
+#import "HEMEmptyTrendCollectionViewCell.h"
+#import "HEMGraphSectionOverlayView.h"
 
-@interface HEMTrendsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource>
+@interface HEMTrendsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, HEMTrendCollectionViewCellDelegate>
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
-@property (nonatomic, strong) NSArray* trends;
+@property (nonatomic, strong) NSArray* defaultTrends;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @end
 
@@ -24,6 +26,14 @@
 
 static CGFloat const HEMTrendsViewCellHeight = 184.f;
 static CGFloat const HEMTrendsViewOptionsCellHeight = 235.f;
+
+static NSString* const HEMScoreTrendType = @"SLEEP_SCORE";
+static NSString* const HEMDurationTrendType = @"SLEEP_DURATION";
+static NSString* const HEMDayOfWeekScopeType = @"DOW";
+static NSString* const HEMMonthScopeType = @"M";
+static NSString* const HEMWeekScopeType = @"W";
+static NSString* const HEMSingleScopeType = @"1";
+static NSString* const HEMAllScopeType = @"ALL";
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -52,12 +62,22 @@ static CGFloat const HEMTrendsViewOptionsCellHeight = 235.f;
         return;
     self.loading = YES;
     [SENAPITrends defaultTrendsListWithCompletion:^(id data, NSError *error) {
-        if (error)
+        if (error) {
+            self.loading = NO;
             return;
-        self.trends = data;
+        }
+        self.defaultTrends = data;
+        HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
+        [layout clearCache];
         [self.collectionView reloadData];
         self.loading = NO;
     }];
+}
+
+#pragma mark HEMTrendCollectionViewCellDelegate
+
+- (void)didTapTimeScopeButtonWithText:(NSString *)text
+{
 }
 
 #pragma mark UICollectionViewDelegate
@@ -66,10 +86,10 @@ static CGFloat const HEMTrendsViewOptionsCellHeight = 235.f;
 {
     HEMCardFlowLayout* layout = (id)collectionViewLayout;
     CGFloat width = layout.itemSize.width;
-    if (self.trends.count == 0) {
+    if (self.defaultTrends.count == 0) {
         return CGSizeMake(width, layout.itemSize.height);
     }
-    SENTrend* trend = self.trends[indexPath.row];
+    SENTrend* trend = self.defaultTrends[indexPath.row];
     CGFloat height = trend.options.count > 0 ? HEMTrendsViewOptionsCellHeight : HEMTrendsViewCellHeight;
     return CGSizeMake(width, height);
 }
@@ -83,27 +103,79 @@ static CGFloat const HEMTrendsViewOptionsCellHeight = 235.f;
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.trends.count > 0 ? self.trends.count : 1;
+    return self.defaultTrends.count > 0 ? self.defaultTrends.count : 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (self.trends.count == 0) {
-        NSString* identifier = [HEMMainStoryboard overTimeReuseIdentifier];
-        return [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    NSDictionary* attributes = @{NSKernAttributeName: @(2.2)};
+    if (self.defaultTrends.count == 0) {
+        return [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
     }
-    SENTrend* trend = self.trends[indexPath.row];
+    SENTrend* trend = self.defaultTrends[indexPath.row];
+    NSAttributedString* title = [[NSAttributedString alloc] initWithString:trend.title attributes:attributes];;
+    if (trend.dataPoints.count <= 2) {
+        HEMEmptyTrendCollectionViewCell* cell = [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
+        cell.titleLabel.attributedText = title;
+        return cell;
+    }
     NSString* identifier = [HEMMainStoryboard trendGraphReuseIdentifier];
     HEMTrendCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
                                                                                  forIndexPath:indexPath];
-    cell.titleLabel.text = trend.title;
-    if (trend.graphType == SENTrendGraphTypeTimeSeriesLine) {
-        [cell showLineGraphWithData:trend.dataPoints max:0 min:100];
-    } else if (trend.graphType == SENTrendGraphTypeHistogram) {
-        [cell showBarGraphWithData:trend.dataPoints max:0 min:100];
-    }
-    [cell setTimeScopesWithOptions:trend.options];
+    cell.titleLabel.attributedText = title;
+    [self configureGraphForCell:cell withTrend:trend];
     return cell;
+}
+
+- (HEMEmptyTrendCollectionViewCell*)collectionView:(UICollectionView *)collectionView emptyCellForItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* identifier = [HEMMainStoryboard overTimeReuseIdentifier];
+    NSDictionary* attributes = @{NSKernAttributeName: @(2.2)};
+    HEMEmptyTrendCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
+                                                                                      forIndexPath:indexPath];
+    if ([self isLoading]) {
+        cell.titleLabel.text = nil;
+        cell.detailLabel.text = NSLocalizedString(@"activity.loading", nil);
+    } else {
+        NSString* title = [NSLocalizedString(@"trends.not-enough.data.title", nil) uppercaseString];
+        cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:title attributes:attributes];
+        cell.detailLabel.text = NSLocalizedString(@"trends.not-enough.data.message", nil);
+    }
+    return cell;
+}
+
+- (void)configureGraphForCell:(HEMTrendCollectionViewCell*)cell withTrend:(SENTrend*)trend
+{
+    NSString* period = trend.timePeriod;
+    HEMTrendCellGraphType type = trend.graphType == SENTrendGraphTypeTimeSeriesLine
+        ? HEMTrendCellGraphTypeLine : HEMTrendCellGraphTypeBar;
+    BOOL useBarGraph = (type == HEMTrendCellGraphTypeBar);
+    [cell setTimeScopesWithOptions:trend.options selectedOptionIndex:[trend.options indexOfObject:period]];
+    cell.numberOfGraphSections = type == HEMTrendCellGraphTypeBar ? trend.dataPoints.count : 7;
+    if ([period isEqualToString:HEMDayOfWeekScopeType]) {
+        cell.showGraphLabels = YES;
+        cell.topLabelType = HEMTrendCellGraphLabelTypeDayOfWeek;
+        cell.bottomLabelType = HEMTrendCellGraphLabelTypeValue;
+    } else if ([period hasSuffix:HEMMonthScopeType] && period.length == 2) {
+        cell.showGraphLabels = YES;
+        cell.topLabelType = HEMTrendCellGraphLabelTypeNone;
+        NSInteger months = [[period substringWithRange:NSMakeRange(0, 1)] integerValue];
+        if (months > 1) {
+            cell.bottomLabelType = HEMTrendCellGraphLabelTypeMonth;
+            if (!useBarGraph)
+                cell.numberOfGraphSections = months;
+        } else {
+            cell.bottomLabelType = HEMTrendCellGraphLabelTypeDate;
+        }
+    } else if ([period hasSuffix:HEMWeekScopeType] && period.length == 2) {
+        NSInteger weeks = [[period substringWithRange:NSMakeRange(0, 1)] integerValue];
+        cell.showGraphLabels = YES;
+        cell.topLabelType = HEMTrendCellGraphLabelTypeNone;
+        cell.bottomLabelType = weeks < 2 ? HEMTrendCellGraphLabelTypeDayOfWeek : HEMTrendCellGraphLabelTypeDate;
+    } else {
+        cell.showGraphLabels = useBarGraph;
+    }
+    [cell showGraphOfType:type withData:trend.dataPoints];
 }
 
 @end

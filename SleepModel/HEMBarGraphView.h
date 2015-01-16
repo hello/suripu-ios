@@ -10,5 +10,5 @@
 
 @interface HEMBarGraphView : UIView
 
-- (void)setValues:(NSArray*)values max:(CGFloat)max min:(CGFloat)min;
+@property (nonatomic, strong) NSArray* values;
 @end

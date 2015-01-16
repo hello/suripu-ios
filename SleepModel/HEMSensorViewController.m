@@ -352,7 +352,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 }
 
 - (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {
-    [self.overlayView setSectionValues:self.graphDataSource.valuesForSectionIndexes];
+    [self.overlayView setSectionFooters:self.graphDataSource.valuesForSectionIndexes headers:nil];
     [UIView animateWithDuration:0.5f animations:^{
         self.overlayView.alpha = 1;
     }];

@@ -10,7 +10,7 @@
 
 @interface HEMGraphSectionOverlayView : UIView
 
-- (void)setSectionValues:(NSArray *)sectionValues;
+- (void)setSectionFooters:(NSArray *)footers headers:(NSArray *)headers;
 
 @property (nonatomic, strong) UIColor* topLabelColor;
 @property (nonatomic, strong) UIFont* topLabelFont;
@@ -19,4 +19,5 @@
 @property (nonatomic, strong) UIFont* bottomLabelFont;
 @property (nonatomic, strong) UIFont* bottomLabelBoldFont;
 @property (nonatomic, getter=shouldBoldLastElement) BOOL boldLastElement;
+@property (nonatomic, getter=shouldShowSeparatorLines) BOOL showSeparatorLines;
 @end

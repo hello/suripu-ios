@@ -17,7 +17,7 @@
 
 @interface HEMScopePickerView : UIView
 
-- (void)setButtonsWithTitles:(NSArray*)titles;
+- (void)setButtonsWithTitles:(NSArray*)titles selectedIndex:(NSUInteger)selectedIndex;
 
 @property (nonatomic, weak) id<HEMScopePickerViewDelegate> delegate;
 @end

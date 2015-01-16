@@ -68,6 +68,14 @@ static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
                selector:@selector(didBecomeActive)
                    name:UIApplicationDidBecomeActiveNotification
                  object:nil];
+    [center addObserver:self
+               selector:@selector(didAuthorize)
+                   name:SENAuthorizationServiceDidAuthorizeNotification
+                 object:nil];
+}
+
+- (void)didAuthorize {
+    [self showSettingsDrawerTabAtIndex:HEMRootDrawerTabInsights animated:NO];
 }
 
 - (void)didBecomeActive {

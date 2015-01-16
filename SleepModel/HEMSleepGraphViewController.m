@@ -86,7 +86,6 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 - (void)viewDidPop
 {
     [UIView animateWithDuration:0.5f animations:^{
-        self.collectionView.contentOffset = CGPointMake(0, 0);
         [self updateTopBarActionsWithState:NO];
     }];
 }
@@ -99,11 +98,19 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     }];
 }
 
-- (void)registerForNotifications {
+- (void)registerForNotifications
+{
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData)
                                                  name:UIApplicationDidBecomeActiveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData)
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAuthorization)
                                                  name:SENAuthorizationServiceDidAuthorizeNotification object:nil];
+}
+
+- (void)handleAuthorization
+{
+    if (![self isViewLoaded])
+        [self view];
+    [self reloadData];
 }
 
 - (void)dealloc {
@@ -151,10 +158,17 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)updateTopBarActionsWithState:(BOOL)pushed
 {
+    HEMSleepSummaryCollectionViewCell* cell = self.dataSource.sleepSummaryCell;
+    [self updateTopBarActionsInCell:cell withState:pushed];
+}
+
+- (void)updateTopBarActionsInCell:(HEMSleepSummaryCollectionViewCell*)cell withState:(BOOL)pushed
+{
+    if (!pushed)
+        self.collectionView.contentOffset = CGPointMake(0, 0);
     self.collectionView.scrollEnabled = pushed;
     UIImage* drawerIcon = pushed ? [UIImage imageNamed:@"Menu"] : [UIImage imageNamed:@"caret up"];
     CGFloat constant = pushed ? HEMTopItemsConstraintConstant : HEMTopItemsMinimumConstraintConstant;
-    HEMSleepSummaryCollectionViewCell* cell = self.dataSource.sleepSummaryCell;
     [cell.shareButton setHidden:!pushed || self.dataSource.numberOfSleepSegments == 0];
     [cell.dateButton setAlpha:pushed ? 1.f : 0.5f];
     [cell.dateButton setEnabled:pushed];
@@ -315,9 +329,11 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.expandedIndexPath isEqual:indexPath]) {
+    if ([self.expandedIndexPath isEqual:indexPath] && [cell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
         HEMSleepEventCollectionViewCell* eventCell = (id)cell;
         [eventCell useExpandedLayout:YES animated:NO];
+    } else if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
+        [self updateTopBarActionsInCell:(id)cell withState:[self isViewPushed]];
     }
 }
 

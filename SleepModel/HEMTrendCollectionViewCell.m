@@ -90,9 +90,14 @@
     NSArray* values = [data valueForKey:NSStringFromSelector(@selector(yValue))];
     NSArray* sortedValues = [values sortedArrayUsingSelector:@selector(compare:)];
     NSNumber* max = [sortedValues lastObject];
-    NSNumber* min = [sortedValues firstObject];
+    for (int i = 0; i < sortedValues.count; i++) {
+        NSNumber* number = sortedValues[i];
+        if ([number floatValue] > 0) {
+            self.minIndex = [values indexOfObject:number];
+            break;
+        }
+    }
     self.maxIndex = [values indexOfObject:max];
-    self.minIndex = [values indexOfObject:min];
     BOOL showBarGraph = type == HEMTrendCellGraphTypeBar;
     BOOL showLineGraph = type == HEMTrendCellGraphTypeLine;
     if (HEMTrendCellGraphTypeNone)

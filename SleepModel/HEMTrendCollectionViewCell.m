@@ -91,14 +91,22 @@
     self.max = [[values lastObject] floatValue];
     self.min = [[values firstObject] floatValue];
     BOOL showBarGraph = type == HEMTrendCellGraphTypeBar;
-    self.barGraphView.hidden = !showBarGraph;
-    self.lineGraphView.hidden = showBarGraph;
-    if (showBarGraph) {
-        [self.barGraphView layoutIfNeeded];
-        [self.barGraphView setValues:data];
-    } else {
-        [self.lineGraphView reloadGraph];
-    }
+    BOOL showLineGraph = type == HEMTrendCellGraphTypeLine;
+    if (HEMTrendCellGraphTypeNone)
+        self.overlayView.hidden = YES;
+    [UIView animateWithDuration:0.2f animations:^{
+        self.barGraphView.alpha = showBarGraph ? 1 : 0;
+        self.lineGraphView.alpha = showLineGraph ? 1 : 0;
+    } completion:^(BOOL finished) {
+        self.barGraphView.hidden = !showBarGraph;
+        self.lineGraphView.hidden = !showLineGraph;
+        if (showBarGraph) {
+            [self.barGraphView layoutIfNeeded];
+            [self.barGraphView setValues:data];
+        } else if (showLineGraph) {
+            [self.lineGraphView reloadGraph];
+        }
+    }];
 }
 
 - (NSArray*)sectionIndexValuesOfType:(HEMTrendCellGraphLabelType)type {
@@ -137,7 +145,7 @@
 
 - (void)didTapButtonWithText:(NSString *)text
 {
-    [self.delegate didTapTimeScopeButtonWithText:text];
+    [self.delegate didTapTimeScopeInCell:self withText:text];
 }
 
 #pragma mark BEMSimpleLineGraphDataSource

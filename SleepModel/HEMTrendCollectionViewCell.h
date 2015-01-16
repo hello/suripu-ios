@@ -12,6 +12,7 @@
 typedef NS_ENUM(NSUInteger, HEMTrendCellGraphType) {
     HEMTrendCellGraphTypeLine,
     HEMTrendCellGraphTypeBar,
+    HEMTrendCellGraphTypeNone,
 };
 
 typedef NS_ENUM(NSUInteger, HEMTrendCellGraphLabelType) {
@@ -22,13 +23,14 @@ typedef NS_ENUM(NSUInteger, HEMTrendCellGraphLabelType) {
     HEMTrendCellGraphLabelTypeMonth,
 };
 
-@class HEMGraphSectionOverlayView, HEMBarGraphView, BEMSimpleLineGraphView, HEMScopePickerView;
+@class HEMGraphSectionOverlayView, HEMBarGraphView, BEMSimpleLineGraphView,
+HEMScopePickerView, HEMTrendCollectionViewCell;
 
 @protocol HEMTrendCollectionViewCellDelegate <NSObject>
 
 @required
 
-- (void)didTapTimeScopeButtonWithText:(NSString*)text;
+- (void)didTapTimeScopeInCell:(HEMTrendCollectionViewCell*)cell withText:(NSString*)text;
 @end
 
 @interface HEMTrendCollectionViewCell : HEMCardCollectionViewCell
@@ -41,6 +43,7 @@ typedef NS_ENUM(NSUInteger, HEMTrendCellGraphLabelType) {
 @property (nonatomic, weak) IBOutlet BEMSimpleLineGraphView* lineGraphView;
 @property (nonatomic, weak) IBOutlet HEMScopePickerView* scopePickerView;
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
+@property (nonatomic, weak) IBOutlet UILabel* statusLabel;
 @property (nonatomic, weak) id<HEMTrendCollectionViewCellDelegate> delegate;
 @property (nonatomic) HEMTrendCellGraphLabelType topLabelType;
 @property (nonatomic) HEMTrendCellGraphLabelType bottomLabelType;

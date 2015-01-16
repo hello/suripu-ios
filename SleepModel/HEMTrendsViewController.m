@@ -18,7 +18,7 @@
 
 @interface HEMTrendsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, HEMTrendCollectionViewCellDelegate>
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
-@property (nonatomic, strong) NSArray* defaultTrends;
+@property (nonatomic, strong) NSMutableArray* defaultTrends;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @end
 
@@ -32,7 +32,6 @@ static NSString* const HEMDurationTrendType = @"SLEEP_DURATION";
 static NSString* const HEMDayOfWeekScopeType = @"DOW";
 static NSString* const HEMMonthScopeType = @"M";
 static NSString* const HEMWeekScopeType = @"W";
-static NSString* const HEMSingleScopeType = @"1";
 static NSString* const HEMAllScopeType = @"ALL";
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -61,12 +60,13 @@ static NSString* const HEMAllScopeType = @"ALL";
     if ([self isLoading])
         return;
     self.loading = YES;
-    [SENAPITrends defaultTrendsListWithCompletion:^(id data, NSError *error) {
+    [SENAPITrends defaultTrendsListWithCompletion:^(NSArray* data, NSError *error) {
         if (error) {
             self.loading = NO;
+            [self.collectionView reloadData];
             return;
         }
-        self.defaultTrends = data;
+        self.defaultTrends = [data mutableCopy];
         HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
         [layout clearCache];
         [self.collectionView reloadData];
@@ -76,8 +76,35 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 #pragma mark HEMTrendCollectionViewCellDelegate
 
-- (void)didTapTimeScopeButtonWithText:(NSString *)text
+- (void)didTapTimeScopeInCell:(HEMTrendCollectionViewCell *)cell withText:(NSString *)text
 {
+    NSIndexPath* indexPath = [self.collectionView indexPathForCell:cell];
+    if (!indexPath)
+        return;
+    SENTrend* trend = self.defaultTrends[indexPath.row];
+    void (^completion)(NSArray*,NSError*) = ^(NSArray* data, NSError *error) {
+        if (error) {
+            [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+        } else if (![[data firstObject] isKindOfClass:[SENTrend class]]) {
+            cell.statusLabel.hidden = NO;
+            cell.statusLabel.text = NSLocalizedString(@"trends.not-enough-data.message", nil);
+        } else {
+            SENTrend* trend = [data firstObject];
+            [self.defaultTrends replaceObjectAtIndex:indexPath.row withObject:trend];
+            [self.collectionView reloadItemsAtIndexPaths:@[indexPath]];
+        }
+        self.loading = NO;
+    };
+    self.loading = YES;
+    [cell showGraphOfType:HEMTrendCellGraphTypeNone withData:nil];
+    cell.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
+    if ([trend.dataType isEqualToString:HEMScoreTrendType]) {
+        [SENAPITrends sleepScoreTrendForTimePeriod:text completion:completion];
+    } else if ([trend.dataType isEqualToString:HEMDurationTrendType]) {
+        [SENAPITrends sleepDurationTrendForTimePeriod:text completion:completion];
+    } else {
+        cell.statusLabel.text = NSLocalizedString(@"trends.not-enough-data.message", nil);
+    }
 }
 
 #pragma mark UICollectionViewDelegate
@@ -123,6 +150,8 @@ static NSString* const HEMAllScopeType = @"ALL";
     HEMTrendCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
                                                                                  forIndexPath:indexPath];
     cell.titleLabel.attributedText = title;
+    cell.statusLabel.hidden = YES;
+    cell.delegate = self;
     [self configureGraphForCell:cell withTrend:trend];
     return cell;
 }

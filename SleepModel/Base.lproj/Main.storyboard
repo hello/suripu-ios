@@ -2522,7 +2522,7 @@
                                                     <color key="highlightedColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Not enough data yet, check back later" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9qC-jO-Gfz">
-                                                    <rect key="frame" x="8" y="106" width="524" height="20"/>
+                                                    <rect key="frame" x="8" y="86" width="524" height="20"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2532,7 +2532,7 @@
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="9qC-jO-Gfz" firstAttribute="top" secondItem="LV7-gY-Z7H" secondAttribute="bottom" constant="60" id="012-73-GoV"/>
+                                            <constraint firstItem="9qC-jO-Gfz" firstAttribute="top" secondItem="LV7-gY-Z7H" secondAttribute="bottom" constant="40" id="012-73-GoV"/>
                                             <constraint firstItem="LV7-gY-Z7H" firstAttribute="top" secondItem="guW-fA-0W9" secondAttribute="topMargin" constant="22" id="Jm0-RR-LGc"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="9qC-jO-Gfz" secondAttribute="trailing" id="S8Q-7m-qRE"/>
                                             <constraint firstItem="LV7-gY-Z7H" firstAttribute="leading" secondItem="guW-fA-0W9" secondAttribute="leadingMargin" priority="750" constant="14" id="gHq-bm-vxd"/>
@@ -2588,6 +2588,12 @@
                                                         <constraint firstAttribute="trailing" secondItem="emg-VO-eRc" secondAttribute="trailing" id="viy-Ej-KMO"/>
                                                     </constraints>
                                                 </view>
+                                                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No data available" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RQ0-ZL-kDz">
+                                                    <rect key="frame" x="216" y="116" width="109" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -2599,8 +2605,10 @@
                                             <constraint firstItem="jl4-Bk-rKU" firstAttribute="leading" secondItem="AoB-W3-581" secondAttribute="leading" id="Eif-Af-W77"/>
                                             <constraint firstItem="jl4-Bk-rKU" firstAttribute="top" secondItem="uVd-Hi-XJW" secondAttribute="bottom" constant="14" id="FC0-id-RSF"/>
                                             <constraint firstAttribute="trailing" secondItem="GkP-h4-wTp" secondAttribute="trailing" id="FWQ-E0-FFr"/>
+                                            <constraint firstAttribute="centerX" secondItem="RQ0-ZL-kDz" secondAttribute="centerX" id="LVo-9W-9EX"/>
                                             <constraint firstItem="Mz2-Dc-hJA" firstAttribute="leading" secondItem="jl4-Bk-rKU" secondAttribute="leading" id="Laq-sd-gsx"/>
                                             <constraint firstItem="bHF-JM-qCz" firstAttribute="leading" secondItem="jl4-Bk-rKU" secondAttribute="leading" id="MZo-Qm-g2e"/>
+                                            <constraint firstItem="RQ0-ZL-kDz" firstAttribute="top" secondItem="uVd-Hi-XJW" secondAttribute="bottom" constant="40" id="RKD-RK-g7T"/>
                                             <constraint firstItem="Mz2-Dc-hJA" firstAttribute="trailing" secondItem="jl4-Bk-rKU" secondAttribute="trailing" id="U0m-0Y-ibW"/>
                                             <constraint firstItem="bHF-JM-qCz" firstAttribute="top" secondItem="jl4-Bk-rKU" secondAttribute="top" id="WgP-QS-36m"/>
                                             <constraint firstItem="Mz2-Dc-hJA" firstAttribute="bottom" secondItem="jl4-Bk-rKU" secondAttribute="bottom" id="YxF-bs-C0O"/>
@@ -2618,6 +2626,7 @@
                                             <outlet property="lineGraphView" destination="Mz2-Dc-hJA" id="RGM-ad-0c8"/>
                                             <outlet property="overlayView" destination="bHF-JM-qCz" id="01l-3r-F8F"/>
                                             <outlet property="scopePickerView" destination="GkP-h4-wTp" id="Dlw-jg-Nfa"/>
+                                            <outlet property="statusLabel" destination="RQ0-ZL-kDz" id="NpJ-tA-VbU"/>
                                             <outlet property="titleLabel" destination="uVd-Hi-XJW" id="kRl-Uf-9bH"/>
                                         </connections>
                                     </collectionViewCell>

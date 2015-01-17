@@ -128,6 +128,11 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [SENAPINotification registerForRemoteNotificationsWithTokenData:deviceToken completion:NULL];
 }
 
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
+{
+    [HEMNotificationHandler handleRemoteNotificationWithInfo:userInfo fetchCompletionHandler:completionHandler];
+}
+
 - (void)application:(UIApplication*)application handleActionWithIdentifier:(NSString*)identifier forRemoteNotification:(NSDictionary*)userInfo completionHandler:(void (^)())completionHandler
 {
     // FIXME (jimmy): does the server even support this?  I don't see anything

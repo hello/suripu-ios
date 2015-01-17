@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.0.58 (APP STORE SUBMISSION!)
+
+New:
+
+* See expert insight information by tapping on the summary card
+
+Fixes:
+
+* Current conditions text is no longer cut off
+* Error message titles are no longer cut off when too long
+* The Echo sound will now play when selecting it in alarms
+* While setting up wifi, unexpected disconnects are handled
+* editing wifi from settings will no longer leave sense LED on
+* fixed crasher when tapping on missing data trends graph
+
 ## 1.0.0.58
 
 New:

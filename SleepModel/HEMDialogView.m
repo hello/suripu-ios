@@ -147,7 +147,7 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 }
 
 - (CGFloat)addTitleLabelAtY:(CGFloat)y {
-    return [self addLabelWithText:[self title] withFont:[UIFont dialogTitleFont] numberOfLines:1 atY:y];
+    return [self addLabelWithText:[self title] withFont:[UIFont dialogTitleFont] numberOfLines:0 atY:y];
 }
 
 - (CGFloat)addMessageLabel:(CGFloat)y {

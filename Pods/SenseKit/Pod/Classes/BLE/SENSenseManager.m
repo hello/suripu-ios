@@ -415,7 +415,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         NSArray* packets = [strongSelf blePackets:message];
         
         if ([packets count] > 0) {
-            DDLogVerbose(@"# of packets being sent %ld", [packets count]);
+            DDLogVerbose(@"# of packets being sent %ld", (long)[packets count]);
             __block NSMutableArray* allPackets = nil;
             __block NSNumber* totalPackets = nil;
             __block typeof(reader) blockReader = reader;

@@ -1,6 +1,12 @@
 # Changelog
 
-## 1.0.0.58 (APP STORE SUBMISSION!)
+## 1.0.0.60
+
+fixes:
+
+* hide debug menu for non beta
+
+## 1.0.0.59 (APP STORE SUBMISSION!)
 
 New:
 

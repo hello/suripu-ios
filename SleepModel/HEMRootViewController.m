@@ -68,6 +68,14 @@ static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
                selector:@selector(didBecomeActive)
                    name:UIApplicationDidBecomeActiveNotification
                  object:nil];
+    [center addObserver:self
+               selector:@selector(didAuthorize)
+                   name:SENAuthorizationServiceDidAuthorizeNotification
+                 object:nil];
+}
+
+- (void)didAuthorize {
+    [self showSettingsDrawerTabAtIndex:HEMRootDrawerTabInsights animated:NO];
 }
 
 - (void)didBecomeActive {
@@ -80,6 +88,21 @@ static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
             && [self presentedViewController] == nil
             && (checkpoint == HEMOnboardingCheckpointStart
                 || checkpoint == HEMOnboardingCheckpointPillDone);
+}
+
+- (void)reloadTimelineSlideViewControllerWithDate:(NSDate *)date
+{
+    FCDynamicPane* firstController = [self.viewControllers firstObject];
+    FCDynamicPane* lastController = [self.viewControllers lastObject];
+
+    [lastController.viewController willMoveToParentViewController:nil];
+    [lastController.viewController removeFromParentViewController];
+    [lastController.view removeFromSuperview];
+    HEMSleepSummarySlideViewController* controller = [[HEMSleepSummarySlideViewController alloc] initWithDate:date];
+    [controller.view add3DEffectWithBorder:HEMRootTopPaneParallaxDepth
+                                 direction:HEMMotionEffectsDirectionVertical];
+    [self popViewControllerAnimated:NO];
+    [self pushViewController:controller retracted:NO];
 }
 
 #pragma mark - Drawer

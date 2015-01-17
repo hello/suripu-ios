@@ -10,6 +10,8 @@
 
 @interface HEMSleepSummarySlideViewController : UIPageViewController
 
+- (instancetype)initWithDate:(NSDate*)date;
+
 - (void)reloadData;
 
 - (void)reloadDataWithController:(UIViewController*)controller;

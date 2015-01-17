@@ -45,6 +45,8 @@ static NSString* const HEMSleepEventTypeSunset = @"SUNSET";
 static NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
 static NSString* const HEMSleepEventTypePartnerMotion = @"PARTNER_MOTION";
 static NSString* const HEMSleepEventTypeLightsOut = @"LIGHTS_OUT";
+static NSString* const HEMSleepEventTypeInBed = @"IN_BED";
+static NSString* const HEMSleepEventTypeOutOfBed = @"OUT_OF_BED";
 
 static NSString* const sleepSegmentReuseIdentifier = @"sleepSegmentCell";
 static NSString* const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
@@ -373,33 +375,29 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 - (UIImage*)imageForEventType:(NSString*)eventType
 {
-    if ([eventType isEqualToString:HEMSleepEventTypeWakeUp]) {
+    if ([eventType isEqualToString:HEMSleepEventTypeWakeUp])
         return [HelloStyleKit wakeupEventIcon];
-    }
-    else if ([eventType isEqualToString:HEMSleepEventTypeFallAsleep]) {
+    else if ([eventType isEqualToString:HEMSleepEventTypeFallAsleep])
         return [HelloStyleKit sleepEventIcon];
-    }
-    else if ([eventType isEqualToString:HEMSleepEventTypeLight]) {
+    else if ([eventType isEqualToString:HEMSleepEventTypeLight])
         return [HelloStyleKit lightEventIcon];
-    }
-    else if ([eventType isEqualToString:HEMSleepEventTypeNoise]) {
+    else if ([eventType isEqualToString:HEMSleepEventTypeNoise])
         return [HelloStyleKit noiseEventIcon];
-    }
-    else if ([eventType isEqualToString:HEMSleepEventTypeMotion]) {
+    else if ([eventType isEqualToString:HEMSleepEventTypeMotion])
         return [HelloStyleKit motionEventIcon];
-    }
-    else if ([eventType isEqualToString:HEMSleepEventTypeSunrise]) {
+    else if ([eventType isEqualToString:HEMSleepEventTypeSunrise])
         return [HelloStyleKit sunriseEventIcon];
-    }
-    else if ([eventType isEqualToString:HEMSleepEventTypeSunset]) {
+    else if ([eventType isEqualToString:HEMSleepEventTypeSunset])
         return [HelloStyleKit sunsetEventIcon];
-    }
-    else if ([eventType isEqualToString:HEMSleepEventTypeLightsOut]) {
+    else if ([eventType isEqualToString:HEMSleepEventTypeLightsOut])
         return [HelloStyleKit lightsOutEventIcon];
-    }
-    else if ([eventType isEqualToString:HEMSleepEventTypePartnerMotion]) {
+    else if ([eventType isEqualToString:HEMSleepEventTypePartnerMotion])
         return [HelloStyleKit partnerEventIcon];
-    }
+    else if ([eventType isEqualToString:HEMSleepEventTypeInBed])
+        return [HelloStyleKit inBedEventIcon];
+    else if ([eventType isEqualToString:HEMSleepEventTypeOutOfBed])
+        return [HelloStyleKit outOfBedEventIcon];
+
     return [HelloStyleKit unknownEventIcon];
 }
 

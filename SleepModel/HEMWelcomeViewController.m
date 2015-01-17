@@ -63,12 +63,6 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     [[self bgImageView] add3DEffectWithBorder:kHEMWelcomeMotionEffectBorder];
 }
 
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    DDLogVerbose(@"get started width %f", CGRectGetWidth([[self getStartedButton] bounds]));
-    DDLogVerbose(@"sign up width %f", CGRectGetWidth([[self signupButton] bounds]));
-}
-
 - (void)configureTitle {
     [[self titleLabel] setTextColor:[UIColor blackColor]];
     [[self titleLabel] setFont:[UIFont onboardingTitleLargeFont]];

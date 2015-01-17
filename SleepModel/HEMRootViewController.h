@@ -18,6 +18,7 @@ typedef NS_ENUM(NSUInteger, HEMRootDrawerTab) {
 
 @interface HEMRootViewController : FCDynamicPanesNavigationController
 
+- (void)reloadTimelineSlideViewControllerWithDate:(NSDate*)date;
 - (void)hideSettingsDrawerTopBar:(BOOL)hidden animated:(BOOL)animated;
 - (void)showPartialSettingsDrawerTopBarWithRatio:(CGFloat)ratio;
 - (void)showSettingsDrawerTabAtIndex:(HEMRootDrawerTab)tabIndex animated:(BOOL)animated;

@@ -3,6 +3,7 @@
 
 @interface HEMAppDelegate : UIResponder <UIApplicationDelegate>
 
-@property (strong, nonatomic) UIWindow* window;
+- (void)openDetailViewForSensorNamed:(NSString*)name;
 
+@property (strong, nonatomic) UIWindow* window;
 @end

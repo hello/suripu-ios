@@ -143,6 +143,9 @@
             case HEMTrendCellGraphLabelTypeMonth:
                 formattedValue = [self.monthFormatter stringFromDate:dataPoint.date];
                 break;
+            case HEMTrendCellGraphLabelTypeHourValue:
+                formattedValue = [NSString stringWithFormat:@"%.1fh", dataPoint.yValue/60];
+                break;
             case HEMTrendCellGraphLabelTypeNone:
             default:
                 break;

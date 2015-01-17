@@ -246,6 +246,16 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 
 #pragma mark UICollectionViewDelegate
 
+- (void)collectionView:(UICollectionView *)collectionView
+       willDisplayCell:(UICollectionViewCell *)cell
+    forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([cell isKindOfClass:[HEMSensorGraphCollectionViewCell class]]) {
+        HEMSensorGraphCollectionViewCell* graphCell = (id)cell;
+        [graphCell.sensorMessageLabel layoutIfNeeded];
+    }
+}
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     if (self.sensors.count > indexPath.row)

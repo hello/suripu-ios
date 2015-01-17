@@ -49,11 +49,10 @@ static CGFloat const HEMMiniSleepBandWidth = 1.f;
 - (void)drawSleepDepthInRect:(CGRect)rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGFloat startYOffset = CGRectGetMinY(rect);
     for (SENSleepResultSegment* segment in self.sleepDataSegments) {
-        NSTimeInterval sliceStartInterval = [self timeIntervalForSegment:segment];
-        NSTimeInterval sliceEndInterval = sliceStartInterval + [self durationForSegment:segment];
-        CGFloat startYOffset = floorf([self yOffsetForTimeInterval:sliceStartInterval]);
-        CGFloat endYOffset = floorf([self yOffsetForTimeInterval:sliceEndInterval]);
+        NSTimeInterval duration = [self durationForSegment:segment];
+        CGFloat endYOffset = startYOffset + (duration/self.secondsPerPoint);
         CGFloat endXOffset = [self xOffsetForSleepDepth:segment.sleepDepth];
         CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);
         CGRect fillRect = CGRectMake(CGRectGetMinX(rect) + (CGRectGetWidth(rect) - endXOffset)/2, startYOffset, endXOffset, endYOffset - startYOffset);
@@ -65,17 +64,8 @@ static CGFloat const HEMMiniSleepBandWidth = 1.f;
         CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
         CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);
         CGContextFillRect(ctx, bandRect);
+        startYOffset = endYOffset;
     }
-}
-
-- (CGFloat)yOffsetForTimeInterval:(NSTimeInterval)interval
-{
-    return (interval - self.startInterval) / self.secondsPerPoint;
-}
-
-- (CGPoint)locationForDataAtTimeInterval:(NSTimeInterval)interval
-{
-    return CGPointMake(0, [self yOffsetForTimeInterval:interval]);
 }
 
 - (CGFloat)xOffsetForSleepDepth:(NSInteger)sleepDepth

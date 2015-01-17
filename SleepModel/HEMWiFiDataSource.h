@@ -16,6 +16,8 @@ typedef NS_ENUM(NSInteger, HEMWiFiErrorCode) {
 
 @interface HEMWiFiDataSource : NSObject <UITableViewDataSource>
 
+@property (nonatomic, assign) BOOL keepSenseLEDOn;
+
 /**
  * @method endpointAtIndexPath:
  *

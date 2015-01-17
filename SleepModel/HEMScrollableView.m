@@ -158,9 +158,13 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
 }
 
 - (void)addDescription:(NSAttributedString*)attributedDes {
+    [self addDescription:attributedDes withYOffset:HEMScrollabelDefaultContentPadding];
+}
+
+- (void)addDescription:(NSAttributedString*)attributedDes withYOffset:(CGFloat)yOffset {
     CGRect labelFrame = {
         HEMScrollabelLabelHorzMargin,
-        CGRectGetMaxY([[self lastContentView] frame])+ HEMScrollabelDefaultContentPadding,
+        CGRectGetMaxY([[self lastContentView] frame]) + yOffset,
         CGRectGetWidth([[self scrollView] bounds])-(HEMScrollabelLabelHorzMargin*2),
         0.0f // will be updated on relayout
     };

@@ -87,6 +87,13 @@ static NSString* const kHEMWifiNetworkErrorDomain = @"is.hello.ble.wifi";
     [[self uniqueSSIDs] removeAllObjects];
 }
 
+- (void)keepLEDOnIfRequiredThen:(void(^)(void))next {
+    SENSenseLEDState led = [self keepSenseLEDOn] ? SENSenseLEDStatePair : SENSenseLEDStateOff;
+    [[self manager] setLED:led completion:^(id ledResponse, NSError *error) {
+        next();
+    }];
+}
+
 - (void)scan:(void(^)(NSError* error))completion {
     if (!completion) return;
     
@@ -100,20 +107,23 @@ static NSString* const kHEMWifiNetworkErrorDomain = @"is.hello.ble.wifi";
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [[strongSelf manager] scanForWifiNetworks:^(id response) {
                 __block id wifiResponse = response;
-                [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id ledResponse, NSError *error) {
+                
+                [strongSelf keepLEDOnIfRequiredThen:^{
                     [strongSelf setScanning:NO];
                     [strongSelf setScanned:YES];
                     [strongSelf addDetectedNetworksFromArray:wifiResponse];
                     completion (nil);
                 }];
+
                 
             } failure:^(NSError *error) {
                 
-                [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+                [strongSelf keepLEDOnIfRequiredThen:^{
                     [strongSelf setScanning:NO];
                     [strongSelf setScanned:YES];
                     completion (error);
                 }];
+
             }];
         }];
     } else {

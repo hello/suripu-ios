@@ -118,8 +118,9 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)observeUnexpectedDisconnects {
-    __weak typeof(self) weakSelf = self;
-    self.disconnectObserverId =
+    if ([self disconnectObserverId] == nil) {
+        __weak typeof(self) weakSelf = self;
+        self.disconnectObserverId =
         [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
@@ -134,6 +135,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                 }];
             }
         }];
+    }
 }
 
 #pragma mark - Actions
@@ -452,8 +454,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     
     if ([self manager] == nil) {
         show(nil, nil);
-    } else {
+    } else if ([self delegate] == nil) {
         [[self manager] setLED:SENSenseLEDStatePair completion:show];
+    } else {
+        show(nil, nil);
     }
 
 }
@@ -480,10 +484,16 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     }];
     
     [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
-        [[weakSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if ([strongSelf delegate] == nil) {
+            [[weakSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+                ledSet = YES;
+                done();
+            }];
+        } else {
             ledSet = YES;
             done();
-        }];
+        }
     }];
 }
 

@@ -66,6 +66,13 @@
 - (void)addDescription:(NSAttributedString*)attributedDesc;
 
 /**
+ * Append description to the content with a specified y offset
+ *
+ * @param attributedDesc: the description to append
+ */
+- (void)addDescription:(NSAttributedString*)attributedDes withYOffset:(CGFloat)yOffset;
+
+/**
  * @return YES if content is larger than size of scrollView, NO otherwise
  */
 - (BOOL)scrollRequired;

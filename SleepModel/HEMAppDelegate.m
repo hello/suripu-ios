@@ -39,8 +39,9 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [self registerForNotifications];
     [self createAndShowWindow];
 
-#pragma message ("TODO - create preprocessor macro to distinguish APP_STORE from Internal")
+#if DEBUG
     [application setApplicationSupportsShakeToEdit:YES];
+#endif
     
     return YES;
 }

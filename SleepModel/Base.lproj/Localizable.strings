@@ -96,6 +96,7 @@
 "wifi.error.time-zone-failed" = "There was a problem setting your timezone.";
 "wifi.error.scan-title" = "Could not scan for WiFi networks.";
 "wifi.error.scan-out-of-memory" = "Sense failed to complete the scan due to a memory issue.";
+"wifi.error.unexpected-disconnnect" = "The connection with Sense was broken. Please try again.";
 "wifi.error.scan-general" = "Sense failed to complete the scan due to an unknown issue.";
 "wifi.setup.complete" = "Connected";
 "wifi.security.wpa2" = "WPA2";
@@ -163,6 +164,7 @@
 "settings.device.color" = "Color";
 "settings.device.color.green" = "Green";
 "settings.device.battery.good" = "Good";
+"settings.device.battery.low" = "Low";
 "settings.device.network.disconnected" = "Unable to connect";
 "settings.device.no-sense" = "You don't currently have a Sense connected to your account.";
 "settings.device.no-pill" = "You don't currently have a Sleep Pill connected to your account.";
@@ -216,6 +218,8 @@
 "sleep.trends.title" = "Trends";
 "sleep.insight.title" = "INSIGHTS";
 "sleep.insight.summary.no-data-message"  = "As Sense learns from your sleep habits, we will let you know how to improve.";
+"sleep.insight.info.title.no-text" = "Insight failed to load";
+"sleep.insight.info.message.no-text" = "Unable to load expert insight information at the moment.  Please make sure your phone has internet connection and try again.";
 
 // authentication/sign in
 "authorization.title" = "Sign in";

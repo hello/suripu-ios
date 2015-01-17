@@ -33,8 +33,8 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-#if BETA
-    [application setApplicationSupportsShakeToEdit:YES];
+#if !BETA
+    [application setApplicationSupportsShakeToEdit:NO];
 #endif
     
     [HEMLogUtils enableLogger];

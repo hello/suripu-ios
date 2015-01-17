@@ -157,12 +157,14 @@ static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 }
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+#if BETA
     if (motion == UIEventSubtypeMotionShake) {
         if ([self debugController] == nil) {
             [self setDebugController:[[HEMDebugController alloc] initWithViewController:self]];
         }
         [[self debugController] showSupportOptions];
     }
+#endif
 }
 
 #pragma mark - Cleanup

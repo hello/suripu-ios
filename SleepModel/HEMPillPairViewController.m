@@ -199,9 +199,13 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
         [[strongSelf manager] pairWithPill:[SENAuthorizationService accessToken] success:^(id response) {
             [strongSelf flashPairedState];
         } failure:^(NSError *error) {
-            [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+            if ([strongSelf delegate] == nil) {
+                [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+                    [strongSelf showError:error customMessage:nil];
+                }];
+            } else {
                 [strongSelf showError:error customMessage:nil];
-            }];
+            }
         }];
     }];
 }
@@ -231,10 +235,16 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
         }];
         
         [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
-            [[weakSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if ([strongSelf delegate] == nil) {
+                [[weakSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+                    ledSet = YES;
+                    finish();
+                }];
+            } else {
                 ledSet = YES;
                 finish();
-            }];
+            }
         }];
     }];
 }

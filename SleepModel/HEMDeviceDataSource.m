@@ -251,7 +251,14 @@ static NSInteger const HEMDeviceRowPill = 1;
         icon = [HelloStyleKit pillIcon];
         name = NSLocalizedString(@"settings.device.pill", nil);
         property1Name = NSLocalizedString(@"settings.device.battery", nil);
-        property1Value = NSLocalizedString(@"empty-data", nil); // TODO (jimmy): need to load wifi
+        
+        if ([device state] == SENDeviceStateLowBattery) {
+            property1Value = NSLocalizedString(@"settings.device.battery.low", nil);
+            property1ValueColor = [UIColor redColor];
+        } else {
+            property1Value = NSLocalizedString(@"settings.device.battery.good", nil);
+        }
+        
         property2Name = NSLocalizedString(@"settings.device.color", nil);
         property2Value = NSLocalizedString(@"empty-data", nil);
     }

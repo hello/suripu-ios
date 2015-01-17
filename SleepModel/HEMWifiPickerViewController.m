@@ -40,6 +40,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 @property (strong, nonatomic) SENWifiEndpoint* selectedWifiEndpont;
 @property (strong, nonatomic) HEMWiFiDataSource* wifiDataSource;
+@property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic, getter=isVisible) BOOL visible;
 @property (assign, nonatomic, getter=hasScanned) BOOL scanned;
 
@@ -59,15 +60,20 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     
     [self setupCancelButton];
     
-    if ([self delegate] == nil && [self sensePairDelegate] == nil) {
+    if (![self haveDelegates]) {
         [self enableBackButton:NO];
         [SENAnalytics track:kHEMAnalyticsEventOnBWiFi];
     }
     
 }
 
+- (BOOL)haveDelegates {
+    return [self delegate] != nil || [self sensePairDelegate] != nil;
+}
+
 - (void)configurePicker {
     [self setWifiDataSource:[[HEMWiFiDataSource alloc] init]];
+    [[self wifiDataSource] setKeepSenseLEDOn:![self haveDelegates]];
     [[self wifiPickerTableView] setDataSource:[self wifiDataSource]];
     [[self wifiPickerTableView] setDelegate:self];
 }
@@ -79,7 +85,6 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
     // only auto start a scan if one has not yet been done before
     if (![self hasScanned]) {
         [self scanWithActivity];
@@ -100,7 +105,8 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:self
                                                                       action:@selector(cancel:)];
-        [[self navigationItem] setLeftBarButtonItem:cancelItem];
+        [self setCancelItem:cancelItem];
+        [[self navigationItem] setLeftBarButtonItem:[self cancelItem]];
     }
 }
 
@@ -186,6 +192,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     NSString* message = NSLocalizedString(@"wifi.activity.scanning", nil);
     [[self activityView] showWithText:message activity:YES completion:nil];
+    [[self cancelItem] setEnabled:NO];
     
     __weak typeof(self) weakSelf = self;
     [self scanUntilDoneWithCount:0 completion:^(NSError *error) {
@@ -197,6 +204,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
                 [[strongSelf wifiPickerTableView] reloadData];
                 [[strongSelf wifiPickerTableView] flashScrollIndicators];
+                [[strongSelf cancelItem] setEnabled:YES];
             }];
             
             if (error != nil && [strongSelf isVisible]) {

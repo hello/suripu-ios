@@ -49,6 +49,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (strong, nonatomic) UIPickerView* securityPickerView;
 @property (copy,   nonatomic) NSString* ssidConfigured;
+@property (copy,   nonatomic) NSString* disconnectObserverId;
 @property (assign, nonatomic) SENWifiEndpointSecurityType securityType;
 @property (assign, nonatomic) HEMWiFiSetupStep stepFinished;
 
@@ -77,6 +78,10 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     
     [self setupSecurityPickerView];
     [self updateSecurityTypeLabelForRow:[self rowForSecurityType:[self securityType]]];
+}
+
+- (BOOL)haveDelegates {
+    return [self delegate] != nil || [self sensePairDelegate] != nil;
 }
 
 - (void)adjustConstraintsForIPhone4 {
@@ -158,6 +163,21 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             && ([self securityType] == SENWifiEndpointSecurityTypeOpen
                 || ([self securityType] != SENWifiEndpointSecurityTypeOpen
                     && [pass length] > 0));
+}
+
+- (void)observeUnexpectedDisconnects {
+    if ([self disconnectObserverId] == nil) {
+        __weak typeof(self) weakSelf = self;
+        self.disconnectObserverId =
+        [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [strongSelf stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
+                NSString* title = NSLocalizedString(@"wifi.error.title", nil);
+                NSString* message = NSLocalizedString(@"wifi.error.unexpected-disconnnect", nil);
+                [strongSelf showMessageDialog:message title:title];
+            }];
+        }];
+    }
 }
 
 #pragma mark - Security Picker
@@ -328,7 +348,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                      completion:(void(^)(void))completion {
     [[self activityView] dismissWithResultText:message showSuccessMark:success remove:YES completion:^{
         [self enableControls:enable];
-        [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+        SENSenseLEDState led = ![self haveDelegates] ? SENSenseLEDStatePair : SENSenseLEDStateOff;
+        [[self manager] setLED:led completion:^(id response, NSError *error) {
             if (completion) completion ();
         }];
     }];
@@ -449,7 +470,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     
     [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+        
+        void(^complete)(void) = ^{
             NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
             
             [strongSelf stopActivityWithMessage:msg renableControls:NO success:YES completion:^{
@@ -465,7 +487,16 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 }
                 
             }];
-        }];
+        };
+        
+        if (![strongSelf haveDelegates]) {
+            [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+                complete();
+            }];
+        } else {
+            complete ();
+        }
+
     }];
 }
 
@@ -478,6 +509,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             NSString* ssid = [[self ssidField] text];
             NSString* pass = [[self passwordField] text];
             if ([self isValid:ssid pass:pass]) {
+                [self observeUnexpectedDisconnects];
                 NSString* message = NSLocalizedString(@"wifi.activity.setting-wifi", nil);
                 [self showActivityWithText:message completion:^{
                     [self setupWiFi:ssid password:pass securityType:[self securityType]];
@@ -571,6 +603,14 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     }
     
     [self showMessageDialog:message title:title];
+}
+
+#pragma mark - Cleanup
+
+- (void)dealloc {
+    if (_disconnectObserverId != nil) {
+        [[self manager] removeUnexpectedDisconnectObserver:_disconnectObserverId];
+    }
 }
 
 @end

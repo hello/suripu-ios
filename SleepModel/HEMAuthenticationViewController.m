@@ -42,6 +42,8 @@
     [[[self forgotPassButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
     [[self forgotPassButton] setTitle:NSLocalizedString(@"authorization.forgot-pass", nil)
                              forState:UIControlStateNormal];
+    // since we don't have forgot password route yet, we will hide it
+    [[self forgotPassButton] setHidden:YES];
 }
 
 - (void)viewWillLayoutSubviews {

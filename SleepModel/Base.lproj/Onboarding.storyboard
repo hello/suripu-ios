@@ -1359,7 +1359,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <constraint firstItem="I7g-Id-dOn" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="XKg-WU-cld"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Tj1-4o-SDr" secondAttribute="trailing" constant="4" id="bHE-xo-lbE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aeM-Gk-iCU" secondAttribute="trailing" constant="4" id="ePW-ng-T5n"/>
-                            <constraint firstItem="I7g-Id-dOn" firstAttribute="top" secondItem="aeM-Gk-iCU" secondAttribute="top" constant="101" id="gov-My-Jj6"/>
+                            <constraint firstItem="I7g-Id-dOn" firstAttribute="top" secondItem="aeM-Gk-iCU" secondAttribute="bottom" constant="40" id="gov-My-Jj6"/>
                             <constraint firstItem="aeM-Gk-iCU" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="4" id="jcv-t9-Q07"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MMQ-Qm-jOb" secondAttribute="trailing" constant="4" id="mQQ-5w-Ova"/>
                             <constraint firstItem="Tj1-4o-SDr" firstAttribute="top" secondItem="N0D-iB-qdk" secondAttribute="bottom" constant="4" id="qrA-cj-08U"/>

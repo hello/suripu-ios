@@ -29,6 +29,7 @@
 #import "HEMDeviceDataSource.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
+#import "HEMStyledNavigationViewController.h"
 
 static CGFloat const HEMSenseActionsCellHeight = 248.0f;
 
@@ -401,7 +402,7 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
         (HEMWifiPickerViewController*) [HEMOnboardingStoryboard instantiateWifiPickerViewController];
     [picker setDelegate:self];
     
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:picker];
+    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:picker];
     [self presentViewController:nav animated:YES completion:nil];
 
 }

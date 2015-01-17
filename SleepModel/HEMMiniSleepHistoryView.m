@@ -52,7 +52,7 @@ static CGFloat const HEMMiniSleepBandWidth = 1.f;
     CGFloat startYOffset = CGRectGetMinY(rect);
     for (SENSleepResultSegment* segment in self.sleepDataSegments) {
         NSTimeInterval duration = [self durationForSegment:segment];
-        CGFloat endYOffset = startYOffset + duration;
+        CGFloat endYOffset = startYOffset + (duration/self.secondsPerPoint);
         CGFloat endXOffset = [self xOffsetForSleepDepth:segment.sleepDepth];
         CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);
         CGRect fillRect = CGRectMake(CGRectGetMinX(rect) + (CGRectGetWidth(rect) - endXOffset)/2, startYOffset, endXOffset, endYOffset - startYOffset);

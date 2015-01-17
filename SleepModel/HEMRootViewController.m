@@ -92,7 +92,6 @@ static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 
 - (void)reloadTimelineSlideViewControllerWithDate:(NSDate *)date
 {
-    FCDynamicPane* firstController = [self.viewControllers firstObject];
     FCDynamicPane* lastController = [self.viewControllers lastObject];
 
     [lastController.viewController willMoveToParentViewController:nil];

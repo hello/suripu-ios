@@ -17,6 +17,8 @@
 #import "HEMTodayTableViewCell.h"
 #import "HelloStyleKit.h"
 
+static NSString* const kHEMTodayAPIProdPath = @"https://sense-api.hello.is/v1";
+static NSString* const kHEMTodayAPIDevPath  = @"https://dev-api.hello.is/v1";
 static NSString* const kHEMTodayErrorDomain = @"is.hello.sense.today";
 static NSString* const kHEMTodayEmptyData = @"--";
 static NSString* const kHEMTodaySleepScoreCellId = @"sleepScore";
@@ -51,6 +53,13 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSString* path = nil;
+#if DEBUG
+    path = kHEMTodayAPIDevPath;
+#else
+    path = kHEMTodayAPIProdPath;
+#endif
+    [SENAPIClient setBaseURLFromPath:path];
     [SENAuthorizationService authorizeRequestsFromKeychain];
     [self listenForSensorUpdates];
     self.tableView.rowHeight = kHEMTodayRowHeight;

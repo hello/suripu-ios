@@ -26,22 +26,25 @@
 
 @implementation HEMAppDelegate
 
+static NSString* const HEMAppAPIProdPath = @"https://sense-api.hello.is/v1";
+static NSString* const HEMAppAPIDevPath  = @"https://dev-api.hello.is/v1";
 static NSString* const HEMAppForceLogout = @"HEMAppForceLogout";
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
+#if BETA
+    [application setApplicationSupportsShakeToEdit:YES];
+#endif
+    
     [HEMLogUtils enableLogger];
+    [self configureAPI];
     [self deauthorizeIfNeeded];
     [self configureSettingsDefaults];
     [self configureAnalytics];
     [self configureAppearance];
     [self registerForNotifications];
     [self createAndShowWindow];
-
-#if DEBUG
-    [application setApplicationSupportsShakeToEdit:YES];
-#endif
     
     return YES;
 }
@@ -88,6 +91,17 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     if (![self deauthorizeIfNeeded]) {
         [self resume:NO];
     }
+}
+
+- (void)configureAPI {
+    NSString* path = nil;
+#if DEBUG
+    path = HEMAppAPIDevPath;
+    // API defaults to dev
+#else
+    path = HEMAppAPIProdPath;
+#endif
+    [SENAPIClient setBaseURLFromPath:path];
 }
 
 - (void)configureAnalytics {

@@ -3198,7 +3198,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "#./Crashlytics.framework/run f464ccd280d3e5730dcdaa9b64d1d108694ee9a9 c1c2f12a5d26d28ba58d88e8f4045241f854d6ce829415d932df453877112636";
+			shellScript = "./Crashlytics.framework/run f464ccd280d3e5730dcdaa9b64d1d108694ee9a9 c1c2f12a5d26d28ba58d88e8f4045241f854d6ce829415d932df453877112636";
 			showEnvVarsInLog = 0;
 		};
 		C2DAFDFE628B4AE1A8B7C294 /* Copy Pods Resources */ = {

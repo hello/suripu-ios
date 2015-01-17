@@ -491,13 +491,16 @@
 		BFC8215319E7441200E09D5D /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215019E7441200E09D5D /* play.png */; };
 		BFC8215419E7441200E09D5D /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215119E7441200E09D5D /* play@2x.png */; };
 		BFC8215519E7441200E09D5D /* play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215219E7441200E09D5D /* play@3x.png */; };
+		BFCCF53C1A69F37C00D842F9 /* lightIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF5391A69F37C00D842F9 /* lightIcon.png */; };
+		BFCCF53D1A69F37C00D842F9 /* lightIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF53A1A69F37C00D842F9 /* lightIcon@2x.png */; };
+		BFCCF53E1A69F37C00D842F9 /* lightIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF53B1A69F37C00D842F9 /* lightIcon@3x.png */; };
+		BFCCF5421A69F3D400D842F9 /* soundIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF53F1A69F3D400D842F9 /* soundIcon.png */; };
+		BFCCF5431A69F3D400D842F9 /* soundIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF5401A69F3D400D842F9 /* soundIcon@2x.png */; };
+		BFCCF5441A69F3D400D842F9 /* soundIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF5411A69F3D400D842F9 /* soundIcon@3x.png */; };
 		BFD5643D19A3F31B002E461E /* HEMSensePairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */; };
 		BFDCC7BA19D9C741007A922B /* sense.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B819D9C741007A922B /* sense.png */; };
 		BFDCC7BB19D9C741007A922B /* sense@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B919D9C741007A922B /* sense@2x.png */; };
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
-		BFE32FAD19E4997300651946 /* sleepScoreIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE32FAA19E4997300651946 /* sleepScoreIcon.png */; };
-		BFE32FAE19E4997300651946 /* sleepScoreIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE32FAB19E4997300651946 /* sleepScoreIcon@2x.png */; };
-		BFE32FAF19E4997300651946 /* sleepScoreIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE32FAC19E4997300651946 /* sleepScoreIcon@3x.png */; };
 		BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */; };
 		BFE872EE1A2FC65600494231 /* sensorHumidity.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D01A2FC65600494231 /* sensorHumidity.png */; };
 		BFE872EF1A2FC65600494231 /* sensorHumidity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D11A2FC65600494231 /* sensorHumidity@2x.png */; };
@@ -1223,15 +1226,18 @@
 		BFC8215019E7441200E09D5D /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = images/play.png; sourceTree = "<group>"; };
 		BFC8215119E7441200E09D5D /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@2x.png"; path = "images/play@2x.png"; sourceTree = "<group>"; };
 		BFC8215219E7441200E09D5D /* play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@3x.png"; path = "images/play@3x.png"; sourceTree = "<group>"; };
+		BFCCF5391A69F37C00D842F9 /* lightIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightIcon.png; sourceTree = "<group>"; };
+		BFCCF53A1A69F37C00D842F9 /* lightIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightIcon@2x.png"; sourceTree = "<group>"; };
+		BFCCF53B1A69F37C00D842F9 /* lightIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightIcon@3x.png"; sourceTree = "<group>"; };
+		BFCCF53F1A69F3D400D842F9 /* soundIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soundIcon.png; sourceTree = "<group>"; };
+		BFCCF5401A69F3D400D842F9 /* soundIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "soundIcon@2x.png"; sourceTree = "<group>"; };
+		BFCCF5411A69F3D400D842F9 /* soundIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "soundIcon@3x.png"; sourceTree = "<group>"; };
 		BFD5643B19A3F31B002E461E /* HEMSensePairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensePairViewController.h; sourceTree = "<group>"; };
 		BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairViewController.m; sourceTree = "<group>"; };
 		BFDCC7B819D9C741007A922B /* sense.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sense.png; path = images/sense.png; sourceTree = "<group>"; };
 		BFDCC7B919D9C741007A922B /* sense@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sense@2x.png"; path = "images/sense@2x.png"; sourceTree = "<group>"; };
 		BFDCC7BC19DA078F007A922B /* HEMAnimationUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAnimationUtils.h; sourceTree = "<group>"; };
 		BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAnimationUtils.m; sourceTree = "<group>"; };
-		BFE32FAA19E4997300651946 /* sleepScoreIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sleepScoreIcon.png; sourceTree = "<group>"; };
-		BFE32FAB19E4997300651946 /* sleepScoreIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sleepScoreIcon@2x.png"; sourceTree = "<group>"; };
-		BFE32FAC19E4997300651946 /* sleepScoreIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "sleepScoreIcon@3x.png"; sourceTree = "<group>"; };
 		BFE3B8FA19F5F1E50055B3B6 /* HEMAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMAnalytics.h; sourceTree = "<group>"; };
 		BFE872CC1A2F9ADC00494231 /* HEMRoomCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRoomCheckViewController.h; sourceTree = "<group>"; };
 		BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRoomCheckViewController.m; sourceTree = "<group>"; };
@@ -2474,9 +2480,12 @@
 		BF7F1BE119E3132B0028F799 /* images */ = {
 			isa = PBXGroup;
 			children = (
-				BFE32FAA19E4997300651946 /* sleepScoreIcon.png */,
-				BFE32FAB19E4997300651946 /* sleepScoreIcon@2x.png */,
-				BFE32FAC19E4997300651946 /* sleepScoreIcon@3x.png */,
+				BFCCF53F1A69F3D400D842F9 /* soundIcon.png */,
+				BFCCF5401A69F3D400D842F9 /* soundIcon@2x.png */,
+				BFCCF5411A69F3D400D842F9 /* soundIcon@3x.png */,
+				BFCCF5391A69F37C00D842F9 /* lightIcon.png */,
+				BFCCF53A1A69F37C00D842F9 /* lightIcon@2x.png */,
+				BFCCF53B1A69F37C00D842F9 /* lightIcon@3x.png */,
 				BF7F1BE219E313940028F799 /* humidityIcon.png */,
 				BF7F1BE319E313940028F799 /* humidityIcon@2x.png */,
 				BF7F1BE419E313940028F799 /* particleIcon.png */,
@@ -3130,15 +3139,18 @@
 			files = (
 				BF7F1BED19E313940028F799 /* temperatureIcon@2x.png in Resources */,
 				BF50BD4F19E8D21F00F3B687 /* Localizable.strings in Resources */,
-				BFE32FAD19E4997300651946 /* sleepScoreIcon.png in Resources */,
-				BFE32FAE19E4997300651946 /* sleepScoreIcon@2x.png in Resources */,
+				BFCCF53D1A69F37C00D842F9 /* lightIcon@2x.png in Resources */,
+				BFCCF5441A69F3D400D842F9 /* soundIcon@3x.png in Resources */,
 				BF7F1BEB19E313940028F799 /* particleIcon@2x.png in Resources */,
+				BFCCF53C1A69F37C00D842F9 /* lightIcon.png in Resources */,
 				BF7F1BEA19E313940028F799 /* particleIcon.png in Resources */,
+				BFCCF5431A69F3D400D842F9 /* soundIcon@2x.png in Resources */,
 				BF7F1BD219E304050028F799 /* Widget.storyboard in Resources */,
-				BFE32FAF19E4997300651946 /* sleepScoreIcon@3x.png in Resources */,
 				BF7F1BE819E313940028F799 /* humidityIcon.png in Resources */,
+				BFCCF53E1A69F37C00D842F9 /* lightIcon@3x.png in Resources */,
 				BF7F1BE919E313940028F799 /* humidityIcon@2x.png in Resources */,
 				BF7F1BEC19E313940028F799 /* temperatureIcon.png in Resources */,
+				BFCCF5421A69F3D400D842F9 /* soundIcon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3490,6 +3502,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
+					"BETA=1",
 				);
 				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -3678,6 +3691,108 @@
 			};
 			name = Release;
 		};
+		BFCCF5451A69F92200D842F9 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "BETA=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE = "5f30cfec-e3fa-4c25-8d7e-076b0a5e03a4";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Beta;
+		};
+		BFCCF5461A69F92200D842F9 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF79185A099B572C06592929 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SleepModel/Sense-Prefix.pch";
+				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = Sense;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Beta;
+		};
+		BFCCF5471A69F92200D842F9 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8AD11AD318ECD0AA0775D047 /* Pods-Tests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
+				INFOPLIST_FILE = "Tests/Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sense.app/Sense";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Beta;
+		};
+		BFCCF5481A69F92200D842F9 /* Beta */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF79185A099B572C06592929 /* Pods.release.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				INFOPLIST_FILE = SenseWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Sense;
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Beta;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3686,6 +3801,7 @@
 			buildConfigurations = (
 				6003F5BD195388D20070C39A /* Debug */,
 				6003F5BE195388D20070C39A /* Release */,
+				BFCCF5451A69F92200D842F9 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3695,6 +3811,7 @@
 			buildConfigurations = (
 				6003F5C0195388D20070C39A /* Debug */,
 				6003F5C1195388D20070C39A /* Release */,
+				BFCCF5461A69F92200D842F9 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3704,6 +3821,7 @@
 			buildConfigurations = (
 				6003F5C3195388D20070C39A /* Debug */,
 				6003F5C4195388D20070C39A /* Release */,
+				BFCCF5471A69F92200D842F9 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3713,6 +3831,7 @@
 			buildConfigurations = (
 				BF7F1BD919E304050028F799 /* Debug */,
 				BF7F1BDA19E304050028F799 /* Release */,
+				BFCCF5481A69F92200D842F9 /* Beta */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

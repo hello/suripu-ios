@@ -17,6 +17,8 @@
 #import "HEMTodayTableViewCell.h"
 #import "HelloStyleKit.h"
 
+static NSString* const kHEMTodayAPIProdPath = @"https://sense-api.hello.is/v1";
+static NSString* const kHEMTodayAPIDevPath  = @"https://dev-api.hello.is/v1";
 static NSString* const kHEMTodayErrorDomain = @"is.hello.sense.today";
 static NSString* const kHEMTodayEmptyData = @"--";
 static NSString* const kHEMTodaySleepScoreCellId = @"sleepScore";
@@ -27,7 +29,6 @@ static CGFloat const kHEMTodayLeftInset = 15.0f;
 static CGFloat const kHEMTodayRightInset = 15.0f;
 static CGFloat const kHEMTodayBottomInset = 15.0f;
 static CGFloat const kHEMTodayRowHeight = 44.0f;
-static CGFloat const kHEMTodayButtonCornerRadius = 5.0f;
 
 typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
@@ -37,8 +38,8 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     UITableViewDelegate
 >
 
-@property (nonatomic, weak)   IBOutlet UIButton *signInButton;
 @property (nonatomic, weak)   IBOutlet UITableView* tableView;
+@property (nonatomic, weak)   IBOutlet UILabel *noDataLabel;
 @property (nonatomic, strong) NSArray* sensors;
 @property (nonatomic, strong) NSDate* lastNight;
 @property (nonatomic, strong) SENSleepResult* sleepResult;
@@ -52,8 +53,14 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    NSString* path = nil;
+#if DEBUG
+    path = kHEMTodayAPIDevPath;
+#else
+    path = kHEMTodayAPIProdPath;
+#endif
+    [SENAPIClient setBaseURLFromPath:path];
     [SENAuthorizationService authorizeRequestsFromKeychain];
-    [[[self signInButton] layer] setCornerRadius:kHEMTodayButtonCornerRadius];
     [self listenForSensorUpdates];
     self.tableView.rowHeight = kHEMTodayRowHeight;
     
@@ -68,9 +75,9 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     [self reloadUI];
 }
 
-- (void)showSignIn:(BOOL)show {
+- (void)showNoDataLabel:(BOOL)show {
     [[self tableView] setHidden:show];
-    [[self signInButton] setHidden:!show];
+    [[self noDataLabel] setHidden:!show];
 }
 
 - (void)updateHeight {
@@ -79,7 +86,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
         NSInteger sensorCount = [[self sensors] count];
         height = (sensorCount * kHEMTodayRowHeight);
     } else {
-        CGRect buttonFrame = [[self signInButton] frame];
+        CGRect buttonFrame = [[self noDataLabel] frame];
         height = CGRectGetMaxY(buttonFrame) + CGRectGetMinY(buttonFrame);
     }
     [self setPreferredContentSize:CGSizeMake(CGRectGetWidth(self.view.bounds), height)];
@@ -87,7 +94,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (void)reloadUI {
     [self updateHeight];
-    [self showSignIn:[SENAuthorizationService accessToken] == nil];
+    [self showNoDataLabel:[SENAuthorizationService accessToken] == nil];
     [[self tableView] reloadData];
 }
 
@@ -116,7 +123,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
         [self setSensorsError:nil];
         [SENSensor refreshCachedSensors];
     } else {
-        [self showSignIn:YES];
+        [self showNoDataLabel:YES];
     }
 
 }
@@ -167,6 +174,10 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
             return [UIImage imageNamed:@"particleIcon"];
         case SENSensorUnitPercent:
             return [UIImage imageNamed:@"humidityIcon"];
+        case SENSensorUnitLux:
+            return [UIImage imageNamed:@"lightIcon"];
+        case SENSensorUnitDecibel:
+            return [UIImage imageNamed:@"soundIcon"];
         default:
             return nil;
     }

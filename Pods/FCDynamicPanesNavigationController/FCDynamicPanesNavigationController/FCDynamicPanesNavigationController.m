@@ -104,7 +104,7 @@
         [object didMoveToParentViewController:self];
         object.state = FCDynamicPaneStateRoot;
     } else {
-        FCDynamicPane* includingViewController = ((FCDynamicPane*)[array objectAtIndex:[array indexOfObject:object] - 1]);
+        FCDynamicPane* includingViewController = ((FCDynamicPane*)[array firstObject]);
         UIView* includingView = includingViewController.view;
         object.view.frame = object.view.bounds;
 

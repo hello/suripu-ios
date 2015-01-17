@@ -31,18 +31,32 @@
 - (id)init {
     NSTimeInterval startTime = -86400; // -(60 * 60 * 24)
     NSDate* startDate = [NSDate dateWithTimeInterval:startTime sinceDate:[NSDate date]];
-    HEMSleepGraphViewController* controller
-        = (HEMSleepGraphViewController*)[HEMMainStoryboard instantiateSleepGraphController];
-    [controller setDateForNightOfSleep:startDate];
-    
     if (self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                         navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil]) {
-        [self reloadDataWithController:controller];
-        [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
-        [self setDataSource:[self data]];
+        [self __initStackWithControllerForDate:startDate];
     }
     
     return self;
+}
+
+- (instancetype)initWithDate:(NSDate*)date
+{
+    if (self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
+                        navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil]) {
+        [self __initStackWithControllerForDate:date];
+    }
+
+    return self;
+}
+
+- (void)__initStackWithControllerForDate:(NSDate*)date
+{
+    HEMSleepGraphViewController* controller
+    = (HEMSleepGraphViewController*)[HEMMainStoryboard instantiateSleepGraphController];
+    [controller setDateForNightOfSleep:date];
+    [self reloadDataWithController:controller];
+    [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
+    [self setDataSource:[self data]];
 }
 
 - (void)viewDidLoad {

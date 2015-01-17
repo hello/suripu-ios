@@ -90,6 +90,21 @@ static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
                 || checkpoint == HEMOnboardingCheckpointPillDone);
 }
 
+- (void)reloadTimelineSlideViewControllerWithDate:(NSDate *)date
+{
+    FCDynamicPane* firstController = [self.viewControllers firstObject];
+    FCDynamicPane* lastController = [self.viewControllers lastObject];
+
+    [lastController.viewController willMoveToParentViewController:nil];
+    [lastController.viewController removeFromParentViewController];
+    [lastController.view removeFromSuperview];
+    HEMSleepSummarySlideViewController* controller = [[HEMSleepSummarySlideViewController alloc] initWithDate:date];
+    [controller.view add3DEffectWithBorder:HEMRootTopPaneParallaxDepth
+                                 direction:HEMMotionEffectsDirectionVertical];
+    [self popViewControllerAnimated:NO];
+    [self pushViewController:controller retracted:NO];
+}
+
 #pragma mark - Drawer
 
 - (void)showSettingsDrawerTabAtIndex:(HEMRootDrawerTab)tabIndex animated:(BOOL)animated {

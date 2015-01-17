@@ -205,9 +205,9 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 - (void)checkForDateChanges
 {
     if (self.historyViewController.selectedDate) {
-        [self loadDataSourceForDate:self.historyViewController.selectedDate];
-//        HEMSleepSummarySlideViewController* parent = (id)self.parentViewController;
-//        [parent reloadData];
+        HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
+        HEMRootViewController* root = (id)delegate.window.rootViewController;
+        [root reloadTimelineSlideViewControllerWithDate:self.historyViewController.selectedDate];
     }
 
     self.historyViewController = nil;

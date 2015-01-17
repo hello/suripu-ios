@@ -112,6 +112,7 @@ static int const HEMBorderDashLengthCount = 2;
 {
     self.messageLabel.text = nil;
     self.selectedIndex = NSNotFound;
+    [self unhighlightAllButtons];
 }
 
 - (void)setNeedsLayout

@@ -149,8 +149,8 @@
 /* Class = "IBUITextField"; placeholder = "Password"; ObjectID = "eHT-GQ-6UW"; */
 "eHT-GQ-6UW.placeholder" = "Password";
 
-/* Class = "IBUILabel"; text = "This information is used to provide personalized sleep insights"; ObjectID = "f5o-GP-Ma1"; */
-"f5o-GP-Ma1.text" = "This information is used to provide personalized sleep insights";
+/* Class = "IBUILabel"; text = "This is used to provide you with more personalized sleep insights."; ObjectID = "f5o-GP-Ma1"; */
+"f5o-GP-Ma1.text" = "This is used to provide you with more personalized sleep insights.";
 
 /* Class = "IBUIButton"; normalTitle = "Skip for now"; ObjectID = "f7Z-44-JvY"; */
 "f7Z-44-JvY.normalTitle" = "Skip for now";

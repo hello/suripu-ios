@@ -34,7 +34,6 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
     [[self titleLabel] setAccessibilityLabel:msg];
 
     [self loadAccount:nil]; // if does not yet exist, in case user returns to here
-    [[self descriptionLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     
     if ([self delegate] != nil) {

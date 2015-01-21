@@ -80,10 +80,10 @@
     NSString* weight = nil;
     
     if (HEMIsMetricSystem()) {
-        long gramValue = [grams longValue];
+        CGFloat gramValue = [grams floatValue];
         weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), gramValue];
     } else {
-        long pounds = HEMToPounds(grams);
+        CGFloat pounds = HEMToPounds(grams);
         weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), pounds];
     }
     

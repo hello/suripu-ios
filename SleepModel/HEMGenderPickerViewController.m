@@ -37,7 +37,6 @@
     [self setSelectedBorderColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.4f]];
     
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-    [[self descriptionLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
     [self configureGenderSelectors];
     
     if ([self delegate] != nil) {

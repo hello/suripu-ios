@@ -178,17 +178,6 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     return message;
 }
 
-+ (NSAttributedString*)demographicReason {
-    NSString* subtitleFormat = NSLocalizedString(@"account.gender.subtitle", nil);
-    
-    NSMutableAttributedString* attrSubtitle =
-        [[NSMutableAttributedString alloc] initWithString:subtitleFormat];
-    
-    [self applyCommonDescriptionAttributesTo:attrSubtitle];
-    
-    return attrSubtitle;
-}
-
 + (void)dismissOnboardingFlowFrom:(UIViewController*)controller {
     for (UIViewController* viewController in controller.navigationController.viewControllers) {
         if ([viewController isKindOfClass:[HEMSettingsTableViewController class]]) {

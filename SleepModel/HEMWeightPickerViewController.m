@@ -52,10 +52,12 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     
     [[self scrollView] addSubview:[self ruler]];
     [[self scrollView] setBackgroundColor:[UIColor clearColor]];
-    [[self scrollView] setShowsHorizontalScrollIndicator:NO];
-    [[self scrollView] setShowsVerticalScrollIndicator:NO];
     
     [[self currentWeightMarker] setBackgroundColor:[HelloStyleKit senseBlueColor]];
+    
+    if (![[self ruler] respondsToSelector:@selector(layoutMarginsDidChange)]) {
+        [[self scrollView] setContentInset:UIEdgeInsetsMake(0.0f, 8.0f, 0.0f, 8.0f)];
+    }
 }
 
 - (void)configureButtons {
@@ -89,34 +91,26 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     contentSize.width = CGRectGetWidth(rulerFrame) + (CGRectGetMinX(rulerFrame)*2);
     contentSize.height = CGRectGetHeight([[self scrollView] bounds]);
     [[self scrollView] setContentSize:contentSize];
-    
-    CGPoint point = [[self ruler] convertPoint:[[self ruler] frame].origin
-                                        toView:[self currentWeightMarker]];
-    CGFloat markerX = CGRectGetMinX([[self currentWeightMarker] frame]);
-    CGFloat diff = floorf(markerX - point.x);
-    
-    if (diff <= 0) {
-        [[self scrollView] setContentInset:UIEdgeInsetsMake(0.0f, diff, 0.0f, diff)];
-    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+    [self scrollToSetWeight];
+}
+
+- (void)scrollToSetWeight {
     SENAccountGender gender = [[[HEMOnboardingCache sharedCache] account] gender];
     CGFloat genderWeight = gender == SENAccountGenderFemale ? HEMWeightDefaultFemale : HEMWeightDefaultMale;
-    CGFloat initialWeight = [self defaultWeightLbs] >0 ? [self defaultWeightLbs] : genderWeight;
-    CGFloat leftInset = [[self scrollView] contentInset].left;
-    CGFloat initialOffset = (initialWeight*HEMRulerSegmentSpacing)-leftInset;
-    [[self scrollView] setContentOffset:CGPointMake(initialOffset, 0.0f)
-                               animated:YES];
+    CGFloat initialWeight = [self defaultWeightLbs] > 0 ? [self defaultWeightLbs] : genderWeight;
+    CGFloat initialOffset = (initialWeight*(HEMRulerSegmentSpacing+HEMRulerSegmentWidth))-[[self scrollView] contentInset].left;
+    [[self scrollView] setContentOffset:CGPointMake(initialOffset, 0.0f) animated:YES];
 }
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGFloat offX = [scrollView contentOffset].x;
-    CGFloat markX = ((offX + [scrollView contentInset].left) / HEMRulerSegmentSpacing);
+    CGFloat markX = ((offX + [scrollView contentInset].left) / (HEMRulerSegmentSpacing+HEMRulerSegmentWidth));
     CGFloat lbs = MAX(0.0f, markX);
     CGFloat kgs = HEMToKilograms(@(lbs));
 

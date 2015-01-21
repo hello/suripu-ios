@@ -10,10 +10,10 @@
 #import "HelloStyleKit.h"
 
 CGFloat const HEMRulerSegmentSpacing = 15.0f;
+CGFloat const HEMRulerSegmentWidth = 1.0f;
 
 static CGFloat const HEMRulerSegmentMaxLength = 48.0f;
 static CGFloat const HEMRulerSegmentShortLength = 32.0f;
-static CGFloat const HEMRulerSegmentWidth = 1.0f;
 static NSInteger const HEMRulerSegmentLongSegmentInterval = 5;
 
 @interface HEMRulerView()
@@ -26,7 +26,7 @@ static NSInteger const HEMRulerSegmentLongSegmentInterval = 5;
 @implementation HEMRulerView
 
 - (id)initWithSegments:(NSUInteger)segments direction:(HEMRulerDirection)direction {
-    CGFloat length = (HEMRulerSegmentSpacing-HEMRulerSegmentWidth) * segments;
+    CGFloat length = (HEMRulerSegmentSpacing + HEMRulerSegmentWidth) * segments;
     CGRect frame = CGRectZero;
     frame.size.height = direction == HEMRulerDirectionVertical ? length : HEMRulerSegmentMaxLength;
     frame.size.width = direction == HEMRulerDirectionHorizontal ? length : HEMRulerSegmentMaxLength;
@@ -63,7 +63,7 @@ static NSInteger const HEMRulerSegmentLongSegmentInterval = 5;
     
     CGFloat width = CGRectGetWidth([self bounds]);
     CGFloat height = CGRectGetHeight([self bounds]);
-    CGFloat nextDistance = index * HEMRulerSegmentSpacing;
+    CGFloat nextDistance = index * (HEMRulerSegmentSpacing + HEMRulerSegmentWidth);
     CGPoint start, end = CGPointZero;
     
     if ([self direction] == HEMRulerDirectionVertical) {

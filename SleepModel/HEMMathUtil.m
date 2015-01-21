@@ -22,11 +22,11 @@ long HEMToInches (NSNumber* centimeters) {
 }
 
 float HEMToPounds (NSNumber* grams) {
-    return [grams longValue] * HEMMathPoundsPerGram;
+    return [grams doubleValue] * HEMMathPoundsPerGram;
 }
 
 float HEMToKilograms (NSNumber* pounds) {
-    return [pounds integerValue] * HEMMathKilogramsPerPound;
+    return [pounds doubleValue] * HEMMathKilogramsPerPound;
 }
 
 float HEMDegreesToRadians(float degrees) {

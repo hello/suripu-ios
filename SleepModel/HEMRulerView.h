@@ -14,6 +14,7 @@ typedef NS_ENUM(NSUInteger, HEMRulerDirection) {
 };
 
 extern CGFloat const HEMRulerSegmentSpacing;
+extern CGFloat const HEMRulerSegmentWidth;
 
 @interface HEMRulerView : UIView
 

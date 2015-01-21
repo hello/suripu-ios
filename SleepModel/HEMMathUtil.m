@@ -17,16 +17,16 @@ BOOL HEMIsMetricSystem () {
     return [[locale objectForKey:NSLocaleUsesMetricSystem] boolValue];
 }
 
-long HEMToInches (NSNumber* centimeters) {
-    return [centimeters longValue] / HEMMathCentimetersPerInch;
+float HEMToInches (NSNumber* centimeters) {
+    return [centimeters floatValue] / HEMMathCentimetersPerInch;
 }
 
 float HEMToPounds (NSNumber* grams) {
-    return [grams doubleValue] * HEMMathPoundsPerGram;
+    return [grams floatValue] * HEMMathPoundsPerGram;
 }
 
 float HEMToKilograms (NSNumber* pounds) {
-    return [pounds doubleValue] * HEMMathKilogramsPerPound;
+    return [pounds floatValue] * HEMMathKilogramsPerPound;
 }
 
 float HEMDegreesToRadians(float degrees) {

@@ -29,7 +29,7 @@ static NSInteger const HEMHeightDefaultInch = 8;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
-@property (assign, nonatomic) int selectedHeightInCm;
+@property (assign, nonatomic) float selectedHeightInCm;
 @property (strong, nonatomic) HEMRulerView* ruler;
 
 @end
@@ -124,7 +124,7 @@ static NSInteger const HEMHeightDefaultInch = 8;
     [[self mainHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat]];
     [[self otherHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"measurement.or", nil), cmFormat]];
 
-    [self setSelectedHeightInCm:(int)cm];
+    [self setSelectedHeightInCm:cm];
     
     if ([self delegate] == nil) {
         [[[HEMOnboardingCache sharedCache] account] setHeight:@(cm)];

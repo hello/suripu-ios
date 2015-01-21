@@ -19,7 +19,7 @@ BOOL HEMIsMetricSystem (void);
  * @param centimeters: centimeters to convert to inches
  * @param inches
  */
-long HEMToInches (NSNumber* centimeters);
+float HEMToInches (NSNumber* centimeters);
 
 /**
  * Converts grams to pounds

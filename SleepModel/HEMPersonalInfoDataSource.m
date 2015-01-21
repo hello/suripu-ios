@@ -65,8 +65,8 @@
         height = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cmValue];
     } else {
         long inValue = HEMToInches(cm);
-        long feet = floorf(inValue / 12);
-        long inches = ceilf(inValue - (feet * 12));
+        long feet = inValue / 12;
+        long inches = inValue % 12;
         NSString* feetFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)feet];
         NSString* inchFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)inches];
         height = [NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat];

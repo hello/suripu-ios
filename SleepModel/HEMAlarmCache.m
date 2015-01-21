@@ -21,6 +21,12 @@
     self.smart = [alarm isSmartAlarm];
     self.repeatFlags = alarm.repeatFlags;
     self.soundID = alarm.soundID;
+    self.on = [alarm isOn];
+}
+
+- (BOOL)isRepeated
+{
+    return self.repeatFlags != 0;
 }
 
 @end

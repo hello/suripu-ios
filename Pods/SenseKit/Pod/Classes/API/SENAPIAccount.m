@@ -184,34 +184,33 @@ NSString* const SENAPIAccountErrorDomain = @"is.hello.account";
  * @return SENAccount representation of the response
  */
 + (SENAccount*)accountFromResponse:(id)responseObject {
-    SENAccount* account = nil;
-    if ([responseObject isKindOfClass:[NSDictionary class]]) {
-        // calling object:mustBe: for each object so that NSNull (or wrong type)
-        // will never be set inside the account object.  The reason is because
-        // setting the value in the object is fine, even if property is different
-        // then what is passed but when you try to operate on the value, expecting
-        // that's the correct class, it will crash at runtime.
-        NSString* accountId = [self object:responseObject[SENAPIAccountPropertyId] mustBe:[NSString class]];
-        NSNumber* lastModified = [self object:responseObject[SENAPIAccountPropertyLastModified] mustBe:[NSNumber class]];
-        NSString* name = [self object:responseObject[SENAPIAccountPropertyName] mustBe:[NSString class]];
-        NSString* gender = [self object:responseObject[SENAPIAccountPropertyGender] mustBe:[NSString class]];
-        NSNumber* weight = [self object:responseObject[SENAPIAccountPropertyWeight] mustBe:[NSNumber class]];
-        NSNumber* height = [self object:responseObject[SENAPIAccountPropertyHeight] mustBe:[NSNumber class]];
-        NSString* email = [self object:responseObject[SENAPIAccountPropertyEmailAddress] mustBe:[NSString class]];
-        NSString* birthdate = [self object:responseObject[SENAPIAccountPropertyBirthdate] mustBe:[NSString class]];
-        NSNumber* latitude = [self object:responseObject mustBe:[NSNumber class]];
-        NSNumber* longitude = [self object:responseObject mustBe:[NSNumber class]];
-        
-        account = [[SENAccount alloc] initWithAccountId:accountId lastModified:lastModified];
-        [account setName:name];
-        [account setGender:[self genderFromString:gender]];
-        [account setWeight:weight];
-        [account setHeight:height];
-        [account setEmail:email];
-        [account setLatitude:latitude];
-        [account setLongitude:longitude];
-        [account setBirthdate:birthdate];
-    }
+    if (![responseObject respondsToSelector:@selector(objectForKeyedSubscript:)])
+        return nil;
+    // calling object:mustBe: for each object so that NSNull (or wrong type)
+    // will never be set inside the account object.  The reason is because
+    // setting the value in the object is fine, even if property is different
+    // then what is passed but when you try to operate on the value, expecting
+    // that's the correct class, it will crash at runtime.
+    NSString* accountId = [self object:responseObject[SENAPIAccountPropertyId] mustBe:[NSString class]];
+    NSNumber* lastModified = [self object:responseObject[SENAPIAccountPropertyLastModified] mustBe:[NSNumber class]];
+    NSString* name = [self object:responseObject[SENAPIAccountPropertyName] mustBe:[NSString class]];
+    NSString* gender = [self object:responseObject[SENAPIAccountPropertyGender] mustBe:[NSString class]];
+    NSNumber* weight = [self object:responseObject[SENAPIAccountPropertyWeight] mustBe:[NSNumber class]];
+    NSNumber* height = [self object:responseObject[SENAPIAccountPropertyHeight] mustBe:[NSNumber class]];
+    NSString* email = [self object:responseObject[SENAPIAccountPropertyEmailAddress] mustBe:[NSString class]];
+    NSString* birthdate = [self object:responseObject[SENAPIAccountPropertyBirthdate] mustBe:[NSString class]];
+    NSNumber* latitude = [self object:responseObject[SENAPIAccountPropertyValueLatitude] mustBe:[NSNumber class]];
+    NSNumber* longitude = [self object:responseObject[SENAPIAccountPropertyValueLongitude] mustBe:[NSNumber class]];
+    
+    SENAccount* account = [[SENAccount alloc] initWithAccountId:accountId lastModified:lastModified];
+    [account setName:name];
+    [account setGender:[self genderFromString:gender]];
+    [account setWeight:weight];
+    [account setHeight:height];
+    [account setEmail:email];
+    [account setLatitude:latitude];
+    [account setLongitude:longitude];
+    [account setBirthdate:birthdate];
     return account;
 }
 

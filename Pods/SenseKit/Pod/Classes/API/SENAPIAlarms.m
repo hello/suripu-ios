@@ -20,11 +20,14 @@ static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"alarms/%.0f";
                    completion(nil, error);
                    return;
                }
+               [SENAlarm clearSavedAlarms];
                NSMutableArray* alarms = [[NSMutableArray alloc] initWithCapacity:data.count];
                for (NSDictionary* alarmData in data) {
                    SENAlarm* alarm = [[SENAlarm alloc] initWithDictionary:alarmData];
-                   if (alarm)
+                   if (alarm) {
                        [alarms addObject:alarm];
+                       [alarm save];
+                   }
                }
                completion(alarms, nil);
            }];

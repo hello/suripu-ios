@@ -87,4 +87,13 @@ static NSString* const SENKeyedArchiverStoreName = @"SENKeyedArchiverStore";
     }];
 }
 
++ (BOOL)hasObjectForKey:(NSString*)key inCollection:(NSString*)collectionName
+{
+    __block BOOL hasObject = NO;
+    [[self mainConnection] readWithBlock:^(YapDatabaseReadTransaction *transaction) {
+        hasObject = [transaction hasObjectForKey:key inCollection:collectionName];
+    }];
+    return hasObject;
+}
+
 @end

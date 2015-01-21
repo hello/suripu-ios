@@ -13,6 +13,7 @@
 #import "HEMAlarmAddButton.h"
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
+#import "HEMAlertController.h"
 #import "HEMMarkdown.h"
 
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate>
@@ -135,7 +136,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
     self.alarms = [[SENAlarm savedAlarms] sortedArrayUsingComparator:^NSComparisonResult(SENAlarm* obj1, SENAlarm* obj2) {
         NSNumber* alarmValue1 = @(obj1.hour * 60 + obj1.minute);
         NSNumber* alarmValue2 = @(obj2.hour * 60 + obj2.minute);
-        return [alarmValue1 compare:alarmValue2];
+        NSComparisonResult result = [alarmValue1 compare:alarmValue2];
+        if (result == NSOrderedSame)
+            result = [@(obj1.repeatFlags) compare:@(obj2.repeatFlags)];
+        return result;
     }];
     self.noAlarmLabel.hidden = self.alarms.count > 0;
     self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
@@ -147,7 +151,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     if (self.alarms.count == savedAlarms.count) {
         NSPredicate* predicate = [NSPredicate predicateWithBlock:^BOOL(SENAlarm* alarm, NSDictionary *bindings) {
             for (SENAlarm* loadedAlarm in self.alarms) {
-                if ([alarm isIdenticalToAlarm:loadedAlarm])
+                if ([alarm isIdenticalToAlarm:loadedAlarm] && [loadedAlarm isSaved])
                     return YES;
             }
             return NO;
@@ -206,6 +210,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
 {
     __block SENAlarm* alarm = [self.alarms objectAtIndex:sender.tag];
     BOOL on = [sender isOn];
+    if (on && ![self canEnableAlarm:alarm]) {
+        sender.on = NO;
+        return;
+    }
     alarm.on = on;
     [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
         if (!success) {
@@ -213,6 +221,14 @@ static NSUInteger const HEMAlarmListLimit = 8;
             sender.on = !on;
         }
     }];
+}
+
+- (BOOL)canEnableAlarm:(SENAlarm*)alarm
+{
+    if (![alarm isSmartAlarm])
+        return YES;
+    SENAlarmRepeatDays repeatDays = [HEMAlarmUtils repeatDaysForAlarm:alarm];
+    return [HEMAlarmUtils areRepeatDaysValid:repeatDays forSmartAlarm:alarm presentingControllerForErrors:self];
 }
 
 - (void)presentViewControllerForAlarm:(SENAlarm*)alarm

@@ -2,6 +2,7 @@
 #import "SENAlarm.h"
 #import "SENAPIAlarms.h"
 #import "SENSettings.h"
+#import "SENKeyedArchiver.h"
 
 @interface SENAlarm ()
 @property (nonatomic, strong) NSString* identifier;
@@ -27,35 +28,9 @@ static BOOL const SENAlarmDefaultOnState = YES;
 static BOOL const SENAlarmDefaultEditableState = YES;
 static BOOL const SENAlarmDefaultSmartAlarmState = YES;
 
-+ (NSCache*)alarmCache
-{
-    static NSCache* alarmCache = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        alarmCache = [NSCache new];
-    });
-    return alarmCache;
-}
-
-+ (NSMutableSet*)alarmKeys
-{
-    static NSMutableSet* keys = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        keys = [NSMutableSet new];
-    });
-    return keys;
-}
-
 + (NSArray*)savedAlarms
 {
-    NSMutableArray* alarms = [NSMutableArray new];
-    for (NSString* key in [self alarmKeys]) {
-        SENAlarm* alarm = [[self alarmCache] objectForKey:key];
-        if (alarm)
-            [alarms addObject:alarm];
-    }
-    return alarms;
+    return [SENKeyedArchiver allObjectsInCollection:NSStringFromClass([self class])];
 }
 
 + (SENAlarm*)createDefaultAlarm
@@ -73,8 +48,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
 
 + (void)clearSavedAlarms
 {
-    [[self alarmKeys] removeAllObjects];
-    [[self alarmCache] removeAllObjects];
+    [SENKeyedArchiver removeAllObjectsInCollection:NSStringFromClass([self class])];
 }
 
 + (NSString*)localizedValueForTime:(struct SENAlarmTime)time
@@ -148,6 +122,16 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     return repeatFlags;
 }
 
+- (BOOL)isRepeated
+{
+    return self.repeatFlags != 0;
+}
+
+- (BOOL)isRepeatedOn:(SENAlarmRepeatDays)days
+{
+    return (self.repeatFlags & days) != 0;
+}
+
 #pragma mark - NSCoding
 
 - (id)initWithCoder:(NSCoder*)aDecoder
@@ -219,75 +203,21 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     return [[NSCalendar currentCalendar] dateByAddingComponents:diff toDate:date options:0];
 }
 
-#pragma mark - updating time
-
-+ (struct SENAlarmTime)time:(struct SENAlarmTime)initialTime byAddingMinutes:(NSInteger)minutes
-{
-    if (minutes == 0) {
-        return initialTime;
-    }
-
-    NSInteger addedHours = minutes / 60;
-    NSInteger addedMinutes = minutes % 60;
-    NSInteger hour = initialTime.hour + addedHours;
-    NSInteger minute = initialTime.minute + addedMinutes;
-
-    if (minutes > 0) {
-        if (minute > 59) {
-            minute -= 60;
-            hour += 1;
-        }
-    } else {
-        if (minute < 0) {
-            minute += 60;
-            hour -= 1;
-        }
-    }
-    hour %= 24;
-
-    if (hour < 0) {
-        hour += 24;
-    }
-    struct SENAlarmTime alarmTime;
-    alarmTime.hour = hour;
-    alarmTime.minute = minute;
-    return alarmTime;
-}
-
-- (struct SENAlarmTime)timeByAddingMinutes:(NSInteger)minutes
-{
-    struct SENAlarmTime time = (struct SENAlarmTime) {
-        .hour = self.hour,
-        .minute = self.minute
-    };
-    return [[self class] time:time byAddingMinutes:minutes];
-}
-
-- (void)incrementAlarmTimeByMinutes:(NSInteger)minutes
-{
-    struct SENAlarmTime alarmTime = [self timeByAddingMinutes:minutes];
-    self.hour = alarmTime.hour;
-    self.minute = alarmTime.minute;
-    [self save];
-}
-
 #pragma mark - persistence
 
 - (void)save
 {
-    [[[self class] alarmKeys] addObject:self.identifier];
-    [[[self class] alarmCache] setObject:self forKey:self.identifier];
+    [SENKeyedArchiver setObject:self forKey:self.identifier inCollection:NSStringFromClass([self class])];
 }
 
 - (void)delete
 {
-    [[[self class] alarmKeys] removeObject:self.identifier];
-    [[[self class] alarmCache] removeObjectForKey:self.identifier];
+    [SENKeyedArchiver removeAllObjectsForKey:self.identifier inCollection:NSStringFromClass([self class])];
 }
 
 - (BOOL)isSaved
 {
-    return [[[self class] alarmKeys] containsObject:self.identifier];
+    return [SENKeyedArchiver hasObjectForKey:self.identifier inCollection:NSStringFromClass([self class])];
 }
 
 - (void)setSoundName:(NSString*)soundName

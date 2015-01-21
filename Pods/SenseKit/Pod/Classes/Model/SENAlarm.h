@@ -32,8 +32,6 @@ struct SENAlarmTime {
  */
 + (SENAlarm*)createDefaultAlarm;
 
-+ (struct SENAlarmTime)time:(struct SENAlarmTime)initialTime byAddingMinutes:(NSInteger)minutes;
-
 /**
  *  Remove all cached alarms
  */
@@ -63,15 +61,6 @@ struct SENAlarmTime {
  *  @return a date
  */
 - (NSDate*)nextRingDate;
-
-/**
- *  Calculates the time when a specified number of minutes are added.
- *
- *  @param minutes number of minutes to add
- *
- *  @return a structure representing an alarm time
- */
-- (struct SENAlarmTime)timeByAddingMinutes:(NSInteger)minutes;
 
 /**
  *  Persists the alarm
@@ -105,6 +94,20 @@ struct SENAlarmTime {
  *  @return YES if the alarms have the same properties
  */
 - (BOOL)isIdenticalToAlarm:(SENAlarm*)alarm;
+
+/**
+ * Check whether the alarm is being repeated on any day
+ *
+ * @return YES if this alarm will sound more than once
+ */
+- (BOOL)isRepeated;
+
+/**
+ * Check whether the alarm is being repeated on specific days
+ *
+ * @return YES if this alarm will sound on any of the selected days
+ */
+- (BOOL)isRepeatedOn:(SENAlarmRepeatDays)days;
 
 @property (nonatomic, getter=isOn) BOOL on;
 @property (nonatomic, readonly, getter=isEditable) BOOL editable;

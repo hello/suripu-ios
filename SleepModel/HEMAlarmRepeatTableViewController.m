@@ -70,22 +70,18 @@
     NSUInteger repeatFlags = self.alarmCache.repeatFlags;
     if ((repeatFlags & day) == day) {
         repeatFlags -= day;
-    }
-    else if ([HEMAlarmUtils dayInUse:day excludingAlarm:self.alarm] && [self.alarmCache isSmart]) {
-        [self showAlertForRepeatRestriction];
-    }
-    else {
+    } else if ([self isValidDayToAdd:day]) {
         repeatFlags |= day;
     }
     self.alarmCache.repeatFlags = repeatFlags;
     [tableView reloadRowsAtIndexPaths:@[ indexPath ] withRowAnimation:UITableViewRowAnimationFade];
 }
 
-- (void)showAlertForRepeatRestriction
+- (BOOL)isValidDayToAdd:(SENAlarmRepeatDays)day
 {
-    [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.repeat.day-reuse-error.title", nil)
-                                          message:NSLocalizedString(@"alarm.repeat.day-reuse-error.message", nil)
-                             presentingController:self];
+    return !([self.alarmCache isSmart] && ![HEMAlarmUtils areRepeatDaysValid:day
+                                                               forSmartAlarm:self.alarm
+                                               presentingControllerForErrors:self]);
 }
 
 @end

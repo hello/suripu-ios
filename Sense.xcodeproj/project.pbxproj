@@ -1648,10 +1648,10 @@
 		8A66012C199EBD48007E6167 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				8AB2684819CCFF9200017818 /* HEMAlarmRepeatTableViewController.h */,
-				8AB2684919CCFF9200017818 /* HEMAlarmRepeatTableViewController.m */,
 				8AB2683A19CCFDBF00017818 /* HEMAlarmListViewController.h */,
 				8AB2683B19CCFDBF00017818 /* HEMAlarmListViewController.m */,
+				8AB2684819CCFF9200017818 /* HEMAlarmRepeatTableViewController.h */,
+				8AB2684919CCFF9200017818 /* HEMAlarmRepeatTableViewController.m */,
 				8A90F99C196225A100AFD110 /* HEMAlarmSoundTableViewController.h */,
 				8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */,
 				6003F5A5195388D20070C39A /* HEMAlarmViewController.h */,

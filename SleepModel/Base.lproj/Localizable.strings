@@ -321,7 +321,6 @@
 // measurements
 "measurement.temperature.unit" = "°";
 "measurement.percentage.unit" = "%";
-"measurement.or" = "or";
 "measurement.particle.unit" = "";
 "measurement.light.unit" = "lx";
 "measurement.sound.unit" = "dB";

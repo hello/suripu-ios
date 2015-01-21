@@ -683,6 +683,7 @@
                         <outlet property="descriptionLabel" destination="ayt-S0-U9x" id="TvG-uM-jnI"/>
                         <outlet property="descriptionTopConstraint" destination="BTb-Pa-ZEc" id="Flm-5t-QTz"/>
                         <outlet property="doneButton" destination="M0L-MG-dGi" id="jyM-rg-IIl"/>
+                        <outlet property="heightLabelTrailingConstraint" destination="INB-Dr-cSQ" id="vFQ-XG-DB4"/>
                         <outlet property="mainHeightLabel" destination="lX5-4w-c9S" id="0An-W1-yHN"/>
                         <outlet property="otherHeightLabel" destination="dmU-Rd-BQF" id="d20-Jx-s5c"/>
                         <outlet property="scrollView" destination="mL9-pT-JXG" id="igb-LP-IrU"/>

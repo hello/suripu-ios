@@ -28,6 +28,7 @@ static NSInteger const HEMHeightDefaultInch = 8;
 @property (weak, nonatomic) IBOutlet UIView *currentMarkerView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightLabelTrailingConstraint;
 
 @property (assign, nonatomic) float selectedHeightInCm;
 @property (strong, nonatomic) HEMRulerView* ruler;
@@ -106,6 +107,16 @@ static NSInteger const HEMHeightDefaultInch = 8;
     [[self scrollView] setContentOffset:CGPointMake(0.0f, offset) animated:YES];
 }
 
+- (void)adjustConstraintsForIPhone4 {
+    [super adjustConstraintsForIPhone4];
+    [self updateConstraint:[self heightLabelTrailingConstraint] withDiff:-50.0f];
+}
+
+- (void)adjustConstraintsForIphone5 {
+    [super adjustConstraintsForIphone5];
+    [self updateConstraint:[self heightLabelTrailingConstraint] withDiff:-40.0f];
+}
+
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
@@ -122,7 +133,7 @@ static NSInteger const HEMHeightDefaultInch = 8;
     NSString* inchFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)inches];
     NSString* cmFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cm];
     [[self mainHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat]];
-    [[self otherHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"measurement.or", nil), cmFormat]];
+    [[self otherHeightLabel] setText:[NSString stringWithFormat:@"%@", cmFormat]];
 
     [self setSelectedHeightInCm:cm];
     

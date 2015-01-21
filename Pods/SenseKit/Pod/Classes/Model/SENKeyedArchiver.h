@@ -51,10 +51,21 @@
 + (void)setObject:(id)objects forKey:(NSString*)key inCollection:(NSString*)collectionName;
 
 /**
- *  Removes all objects from a collction stored under a particular key
+ *  Removes all objects from a collection stored under a particular key
  *
  *  @param key            identifier of the persisted collection
  *  @param collectionName storage bucket of the objects
  */
 + (void)removeAllObjectsForKey:(NSString*)key inCollection:(NSString*)collectionName;
+
+/**
+ *  Checks for the presence of an object in a collection with a particular key
+ *
+ *  @param key            identifier of the persisted object
+ *  @param collectionName storage bucket of the objects
+ *
+ *  @return YES if an object exists with that key in the specified collection
+ */
++ (BOOL)hasObjectForKey:(NSString*)key inCollection:(NSString*)collectionName;
+
 @end

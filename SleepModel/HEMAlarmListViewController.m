@@ -136,7 +136,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
     self.alarms = [[SENAlarm savedAlarms] sortedArrayUsingComparator:^NSComparisonResult(SENAlarm* obj1, SENAlarm* obj2) {
         NSNumber* alarmValue1 = @(obj1.hour * 60 + obj1.minute);
         NSNumber* alarmValue2 = @(obj2.hour * 60 + obj2.minute);
-        return [alarmValue1 compare:alarmValue2];
+        NSComparisonResult result = [alarmValue1 compare:alarmValue2];
+        if (result == NSOrderedSame)
+            result = [@(obj1.repeatFlags) compare:@(obj2.repeatFlags)];
+        return result;
     }];
     self.noAlarmLabel.hidden = self.alarms.count > 0;
     self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;

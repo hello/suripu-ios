@@ -13,6 +13,7 @@
 #import "HEMAlarmAddButton.h"
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
+#import "HEMAlertController.h"
 #import "HEMMarkdown.h"
 
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate>
@@ -147,7 +148,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     if (self.alarms.count == savedAlarms.count) {
         NSPredicate* predicate = [NSPredicate predicateWithBlock:^BOOL(SENAlarm* alarm, NSDictionary *bindings) {
             for (SENAlarm* loadedAlarm in self.alarms) {
-                if ([alarm isIdenticalToAlarm:loadedAlarm])
+                if ([alarm isIdenticalToAlarm:loadedAlarm] && [loadedAlarm isSaved])
                     return YES;
             }
             return NO;
@@ -206,6 +207,10 @@ static NSUInteger const HEMAlarmListLimit = 8;
 {
     __block SENAlarm* alarm = [self.alarms objectAtIndex:sender.tag];
     BOOL on = [sender isOn];
+    if (on && ![self canEnableAlarm:alarm]) {
+        sender.on = NO;
+        return;
+    }
     alarm.on = on;
     [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
         if (!success) {
@@ -213,6 +218,12 @@ static NSUInteger const HEMAlarmListLimit = 8;
             sender.on = !on;
         }
     }];
+}
+
+- (BOOL)canEnableAlarm:(SENAlarm*)alarm
+{
+    SENAlarmRepeatDays repeatDays = [HEMAlarmUtils repeatDaysForAlarm:alarm];
+    return [HEMAlarmUtils areRepeatDaysValid:repeatDays forSmartAlarm:alarm presentingControllerForErrors:self];
 }
 
 - (void)presentViewControllerForAlarm:(SENAlarm*)alarm

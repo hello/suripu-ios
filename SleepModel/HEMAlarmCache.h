@@ -16,6 +16,8 @@
 @property (nonatomic, strong) NSString* soundID;
 @property (nonatomic) NSUInteger repeatFlags;
 @property (nonatomic, getter=isSmart) BOOL smart;
+@property (nonatomic, getter=isOn) BOOL on;
 
 - (void)cacheValuesFromAlarm:(SENAlarm*)alarm;
+- (BOOL)isRepeated;
 @end

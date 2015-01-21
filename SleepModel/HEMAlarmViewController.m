@@ -163,6 +163,7 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 {
     if (![self isAlarmCacheValid])
         return;
+
     [self updateAlarmFromCache:self.alarmCache];
     __weak typeof(self) weakSelf = self;
     [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
@@ -174,23 +175,6 @@ static NSUInteger const HEMAlarm24HourCount = 24;
         else
             [strongSelf updateAlarmFromCache:strongSelf.originalAlarmCache];
     }];
-}
-
-- (BOOL)isAlarmCacheValid
-{
-    if (self.alarmCache.repeatFlags == 0 && [self.alarmCache isSmart]) {
-        SENAlarm* dummyAlarm = [SENAlarm new];
-        dummyAlarm.minute = self.alarmCache.minute;
-        dummyAlarm.hour = self.alarmCache.hour;
-        SENAlarmRepeatDays day = [HEMAlarmUtils fireDayForNonRepeatingAlarm:dummyAlarm];
-        if ([HEMAlarmUtils dayInUse:day excludingAlarm:self.alarm]) {
-            [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.repeat.day-reuse-error.title", nil)
-                                                  message:NSLocalizedString(@"alarm.repeat.day-reuse-error.message", nil)
-                                     presentingController:self];
-            return NO;
-        }
-    }
-    return YES;
 }
 
 - (IBAction)deleteAndDismissFromView:(id)sender
@@ -220,7 +204,19 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 
 - (IBAction)updateAlarmState:(UISwitch*)sender
 {
-    self.alarmCache.smart = [sender isOn];
+    BOOL on = [sender isOn];
+    self.alarmCache.smart = on;
+    if (on && ![self isAlarmCacheValid]) {
+        self.alarmCache.smart = NO;
+        sender.on = NO;
+    }
+}
+
+- (BOOL)isAlarmCacheValid
+{
+    return !([self.alarmCache isSmart] && ![HEMAlarmUtils areRepeatDaysValid:self.alarmCache.repeatFlags
+                                                               forSmartAlarm:self.alarm
+                                               presentingControllerForErrors:self]);
 }
 
 - (void)updateAlarmFromCache:(HEMAlarmCache*)cache
@@ -231,6 +227,7 @@ static NSUInteger const HEMAlarm24HourCount = 24;
     self.alarm.repeatFlags = cache.repeatFlags;
     self.alarm.soundName = cache.soundName;
     self.alarm.soundID = cache.soundID;
+    self.alarm.on = cache.on;
     [self.alarm save];
 }
 

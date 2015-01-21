@@ -225,6 +225,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (BOOL)canEnableAlarm:(SENAlarm*)alarm
 {
+    if (![alarm isSmartAlarm])
+        return YES;
     SENAlarmRepeatDays repeatDays = [HEMAlarmUtils repeatDaysForAlarm:alarm];
     return [HEMAlarmUtils areRepeatDaysValid:repeatDays forSmartAlarm:alarm presentingControllerForErrors:self];
 }

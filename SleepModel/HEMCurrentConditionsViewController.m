@@ -91,9 +91,7 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
         return;
     DDLogVerbose(@"Refreshing sensor data (rate: %f)", self.refreshRate);
     self.sensorGraphData = [[NSMutableDictionary alloc] init];
-    self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
-        return [obj2.localizedName compare:obj1.localizedName];
-    }];
+    self.sensors = [SENSensor sensors];
     NSMutableArray* values = [[self.sensors valueForKey:NSStringFromSelector(@selector(value))] mutableCopy];
     [values removeObject:[NSNull null]];
     if (values.count == 0)

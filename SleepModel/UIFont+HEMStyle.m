@@ -47,7 +47,7 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)settingsTableCellDetailFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
 }
 
 + (UIFont *)settingsTitleFont {

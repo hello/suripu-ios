@@ -12,7 +12,7 @@
 #import "HelloStyleKit.h"
 #import "HEMSupportUtil.h"
 
-static NSUInteger const HEMSettingsTableViewRows = 7;
+static NSUInteger const HEMSettingsTableViewRows = 4;
 static CGFloat const HEMSettingsTableViewMargin = 20.0f;
 
 @interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
@@ -22,13 +22,10 @@ static CGFloat const HEMSettingsTableViewMargin = 20.0f;
 
 @implementation HEMSettingsTableViewController
 
-static NSInteger const HEMSettingsMyInfoIndex = 0;
-static NSInteger const HEMSettingsAccountIndex = 1;
+static NSInteger const HEMSettingsAccountIndex = 0;
+static NSInteger const HEMSettingsDevicesIndex = 1;
 static NSInteger const HEMSettingsUnitsTimeIndex = 2;
-static NSInteger const HEMSettingsDevicesIndex = 3;
-static NSInteger const HEMSettingsTroubleshootingIndex = 4;
-static NSInteger const HEMSettingsSupportIndex = 5;
-static NSInteger const HEMSettingsSignOutIndex = 6;
+static NSInteger const HEMSettingsSignOutIndex = 3;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -81,9 +78,6 @@ static NSInteger const HEMSettingsSignOutIndex = 6;
 
     NSString* nextSegueId = nil;
     switch ([indexPath row]) {
-    case HEMSettingsMyInfoIndex:
-        nextSegueId = [HEMMainStoryboard infoSettingsSegueIdentifier];
-        break;
     case HEMSettingsAccountIndex:
         nextSegueId = [HEMMainStoryboard accountSettingsSegueIdentifier];
         break;
@@ -92,12 +86,6 @@ static NSInteger const HEMSettingsSignOutIndex = 6;
         break;
     case HEMSettingsDevicesIndex:
         nextSegueId = [HEMMainStoryboard devicesSettingsSegueIdentifier];
-        break;
-    case HEMSettingsTroubleshootingIndex:
-        [HEMSupportUtil openHelpFrom:self];
-        break;
-    case HEMSettingsSupportIndex:
-        [HEMSupportUtil contactSupportFrom:[self navigationController] mailDelegate:self];
         break;
     case HEMSettingsSignOutIndex:
         [SENAuthorizationService deauthorize];
@@ -114,18 +102,12 @@ static NSInteger const HEMSettingsSignOutIndex = 6;
 
 - (NSString*)titleForRowAtIndex:(NSInteger)index {
     switch (index) {
-        case HEMSettingsMyInfoIndex:
-            return NSLocalizedString(@"settings.info", nil);
         case HEMSettingsAccountIndex:
             return NSLocalizedString(@"settings.account", nil);
-        case HEMSettingsUnitsTimeIndex:
-            return NSLocalizedString(@"settings.units", nil);
         case HEMSettingsDevicesIndex:
             return NSLocalizedString(@"settings.devices", nil);
-        case HEMSettingsTroubleshootingIndex:
-            return NSLocalizedString(@"settings.troubleshooting", nil);
-        case HEMSettingsSupportIndex:
-            return NSLocalizedString(@"settings.contact-support", nil);
+        case HEMSettingsUnitsTimeIndex:
+            return NSLocalizedString(@"settings.units", nil);
         case HEMSettingsSignOutIndex:
             return NSLocalizedString(@"actions.sign-out", nil);
     }

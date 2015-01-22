@@ -10,7 +10,8 @@
 
 @interface HEMSettingsTableViewCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel* titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel* valueLabel;
 
 - (void)showTopCorners;
 - (void)showBottomCorners;

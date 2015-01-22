@@ -119,8 +119,7 @@
 
 // settings
 "settings.title" = "Settings";
-"settings.info" = "My info";
-"settings.account" = "Account";
+"settings.account" = "My account";
 "settings.units" = "Units and time";
 "settings.units.24-hour" = "24-hour";
 "settings.units.12-hour" = "12-hour";
@@ -134,7 +133,6 @@
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
 "settings.wifi.other" = "Other...";
-"settings.troubleshooting" = "Help and troubleshooting";
 "settings.account.email" = "Email";
 "settings.account.password" = "Password";
 
@@ -148,7 +146,6 @@
 "debug.led.option.off" = "Off";
 "debug.led.option.success" = "Success";
 "debug.led.option.activity" = "Activity";
-"settings.contact-support" = "Contact support";
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 

@@ -454,6 +454,7 @@
 		BFBA2B821A64A3F400C3AB80 /* pairOfPills@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFBA2B7F1A64A3F400C3AB80 /* pairOfPills@3x.png */; };
 		BFBECCE21A15706700335CC6 /* Onboarding.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BFBECCE41A15706700335CC6 /* Onboarding.storyboard */; };
 		BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3AA0F19C27A610055D308 /* HEMSleepQuestionsViewController.m */; };
+		BFC3BE7C1A7087430022C6C2 /* HEMSettingsAccountDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3BE7B1A7087430022C6C2 /* HEMSettingsAccountDataSource.m */; };
 		BFC8215319E7441200E09D5D /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215019E7441200E09D5D /* play.png */; };
 		BFC8215419E7441200E09D5D /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215119E7441200E09D5D /* play@2x.png */; };
 		BFC8215519E7441200E09D5D /* play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215219E7441200E09D5D /* play@3x.png */; };
@@ -1156,6 +1157,8 @@
 		BFBECCE81A15707800335CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BFC3AA0E19C27A610055D308 /* HEMSleepQuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepQuestionsViewController.h; sourceTree = "<group>"; };
 		BFC3AA0F19C27A610055D308 /* HEMSleepQuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepQuestionsViewController.m; sourceTree = "<group>"; };
+		BFC3BE7A1A7087430022C6C2 /* HEMSettingsAccountDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSettingsAccountDataSource.h; sourceTree = "<group>"; };
+		BFC3BE7B1A7087430022C6C2 /* HEMSettingsAccountDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSettingsAccountDataSource.m; sourceTree = "<group>"; };
 		BFC8215019E7441200E09D5D /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = images/play.png; sourceTree = "<group>"; };
 		BFC8215119E7441200E09D5D /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@2x.png"; path = "images/play@2x.png"; sourceTree = "<group>"; };
 		BFC8215219E7441200E09D5D /* play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@3x.png"; path = "images/play@3x.png"; sourceTree = "<group>"; };
@@ -2330,6 +2333,8 @@
 				BFB93C7519CB5F1D005067D0 /* HEMPersonalInfoDataSource.m */,
 				BFF3B44B1A5DC13B00B11643 /* HEMDeviceDataSource.h */,
 				BFF3B44C1A5DC13B00B11643 /* HEMDeviceDataSource.m */,
+				BFC3BE7A1A7087430022C6C2 /* HEMSettingsAccountDataSource.h */,
+				BFC3BE7B1A7087430022C6C2 /* HEMSettingsAccountDataSource.m */,
 			);
 			name = "Data Sources";
 			sourceTree = "<group>";
@@ -3185,6 +3190,7 @@
 				BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */,
 				8A4B3D491992CB4500856BDE /* HEMSimpleLineTextField.m in Sources */,
 				BFF03ECA1A536D8C00BD65D4 /* HEMSystemAlertController.m in Sources */,
+				BFC3BE7C1A7087430022C6C2 /* HEMSettingsAccountDataSource.m in Sources */,
 				8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */,
 				8A1743BB19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m in Sources */,
 				BF05C8F01A3A830D002A1307 /* HEMResponseCell.m in Sources */,

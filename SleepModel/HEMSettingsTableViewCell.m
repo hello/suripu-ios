@@ -28,10 +28,20 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
 @implementation HEMSettingsTableViewCell
 
 - (void)awakeFromNib {
+    [self setBackgroundColor:[UIColor clearColor]];
+    [[self contentView] setBackgroundColor:[UIColor clearColor]];
+    
     [self addContentLayer];
     [self addSeparator];
+    
     [[self titleLabel] setFont:[UIFont settingsTableCellFont]];
     [[self titleLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[self titleLabel] setBackgroundColor:[UIColor clearColor]];
+    
+    [[self valueLabel] setFont:[UIFont settingsTableCellDetailFont]];
+    [[self valueLabel] setTextColor:[HelloStyleKit settingsCellValueTextColor]];
+    [[self valueLabel] setBackgroundColor:[UIColor clearColor]];
+    [[self valueLabel] setTextAlignment:NSTextAlignmentRight];
 }
 
 - (CGRect)layerFrame {

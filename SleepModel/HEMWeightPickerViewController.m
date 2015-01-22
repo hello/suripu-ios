@@ -80,8 +80,8 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     [self updateConstraint:[self scrollBottomConstraint] withDiff:35.0f];
 }
 
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     
     CGRect rulerFrame = [[self ruler] frame];
     rulerFrame.origin.x = CGRectGetMidX([[self currentWeightMarker] frame]);

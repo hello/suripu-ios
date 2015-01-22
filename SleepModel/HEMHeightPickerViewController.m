@@ -37,6 +37,15 @@ static NSInteger const HEMHeightDefaultInch = 8;
 
 @implementation HEMHeightPickerViewController
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        _feet = -1;
+        _inches = -1;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
@@ -71,22 +80,25 @@ static NSInteger const HEMHeightDefaultInch = 8;
     
     [[self currentMarkerView] setBackgroundColor:[HelloStyleKit senseBlueColor]];
     
+    // pre iOS 8, there are mystery default insets so this needs to be adjusted
     if (![[self ruler] respondsToSelector:@selector(layoutMarginsDidChange)]) {
-        [[self scrollView] setContentInset:UIEdgeInsetsMake(0.0f, 8.0f, 0.0f, 8.0f)];
+        [[self scrollView] setContentInset:UIEdgeInsetsMake(8.0f, 0.0f, 8.0f, 0.0f)];
     }
 }
 
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
     
-    CGFloat scrollHeight = CGRectGetHeight([[self scrollView] bounds]);
+    CGFloat scrollMinY = CGRectGetMinY([[self scrollView] frame]);
     CGFloat scrollWidth = CGRectGetWidth([[self scrollView] bounds]);
+    CGFloat markerMinY = CGRectGetMinY([[self currentMarkerView] frame]);
+    UIEdgeInsets insets = [[self scrollView] contentInset];
     
     CGRect rulerFrame = [[self ruler] frame];
-    rulerFrame.origin.y = scrollHeight/2;
+    rulerFrame.origin.y = markerMinY - scrollMinY - insets.top;
     rulerFrame.origin.x = scrollWidth - CGRectGetWidth(rulerFrame);
     [[self ruler] setFrame:rulerFrame];
-    
+
     CGSize contentSize = CGSizeZero;
     contentSize.width = scrollWidth;
     contentSize.height = CGRectGetHeight(rulerFrame) + (CGRectGetMinY(rulerFrame)*2);
@@ -99,8 +111,8 @@ static NSInteger const HEMHeightDefaultInch = 8;
 }
 
 - (void)scrollToSetHeight {
-    NSInteger feet = [self feet] > 0 ? [self feet] : HEMHeightDefaultFeet;
-    NSInteger inch = [self inches] > 0 ? [self inches] : HEMHeightDefaultInch;
+    NSInteger feet = [self feet] >= 0 ? [self feet] : HEMHeightDefaultFeet;
+    NSInteger inch = [self inches] >= 0 ? [self inches] : HEMHeightDefaultInch;
     NSInteger totalInches = (feet * HEMInchesPerFeet) + inch;
     NSInteger maxInches = HEMMaxHeightInFeet * HEMInchesPerFeet;
     CGFloat offset = ((maxInches-totalInches) * (HEMRulerSegmentSpacing+HEMRulerSegmentWidth)) - [[self scrollView] contentInset].top;

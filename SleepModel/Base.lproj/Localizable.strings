@@ -350,10 +350,13 @@
 "sleep-event.type.motion.name" = "Tossing and turning";
 "sleep-event.type.partner_motion.name" = "Partner moved";
 "sleep-event.type.lights_out.name" = "Lights out";
+"sleep-event.type.in_bed.name" = "In bed";
+"sleep-event.type.out_of_bed.name" = "Out of bed";
 "sleep-event.verify.title" = "Is this incorrect?";
 "sleep-event.verify.message" = "Please select the time at which you awakened.";
 "sleep-event.verify-complete.title" = "Thank you!";
 "sleep-event.verify-complete.message" = "Your feedback helps us provide you with a better product.";
+"sleep-event.title.format" = "%@ – %@";
 
 // sleep history
 "sleep-history.last-night" = "Last night";

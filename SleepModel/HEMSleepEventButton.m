@@ -7,13 +7,13 @@
 - (void)awakeFromNib
 {
     [self showOutline];
+    self.layer.cornerRadius = CGRectGetWidth(self.bounds)/2;
 }
 
 - (void)showOutline
 {
     self.layer.shadowColor = [HelloStyleKit barButtonEnabledColor].CGColor;
-    self.layer.shadowOffset = CGSizeMake(1, 1);
-    self.layer.cornerRadius = CGRectGetWidth(self.bounds)/2;
+    self.layer.shadowOffset = CGSizeZero;
     self.layer.shadowRadius = 2.f;
     self.layer.shadowOpacity = 0.4f;
     self.layer.borderColor = [[HelloStyleKit barButtonEnabledColor] colorWithAlphaComponent:0.2f].CGColor;
@@ -22,7 +22,9 @@
 
 - (void)hideOutline
 {
-    self.layer.shadowOpacity = 0;
+    self.layer.shadowRadius = 2.f;
+    self.layer.shadowOpacity = 0.5f;
+    self.layer.shadowOffset = CGSizeMake(0, -2);
     self.layer.borderWidth = 0;
 }
 

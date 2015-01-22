@@ -23,6 +23,8 @@
 @implementation HEMSleepEventCollectionViewCell
 
 static CGFloat const HEMEventButtonSize = 40.f;
+static CGFloat const HEMEventButtonTouchInset = -6.f;
+static CGFloat const HEMEventBlurHeight = 60.f;
 static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
 - (void)awakeFromNib
@@ -61,8 +63,9 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
 - (void)configureGradientViews
 {
-    self.contentContainerView.layer.shadowOffset = CGSizeMake(1, 1);
-    self.contentContainerView.layer.shadowRadius = 3.f;
+    self.contentContainerView.layer.shadowOffset = CGSizeZero;
+    self.contentContainerView.layer.shadowRadius = 2.f;
+    self.contentContainerView.layer.shadowColor = [UIColor blackColor].CGColor;
     self.gradientContainerTopView = [UIView new];
     self.gradientContainerTopView.alpha = 0;
     self.gradientContainerBottomView = [UIView new];
@@ -93,8 +96,8 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.gradientContainerTopView.frame = CGRectMake(0, -80, CGRectGetWidth(self.bounds), 80);
-    self.gradientContainerBottomView.frame = CGRectMake(0, CGRectGetHeight(self.bounds) - 20, CGRectGetWidth(self.bounds), 80);
+    self.gradientContainerTopView.frame = CGRectMake(0, -HEMEventBlurHeight, CGRectGetWidth(self.bounds), HEMEventBlurHeight);
+    self.gradientContainerBottomView.frame = CGRectMake(0, CGRectGetHeight(self.bounds) - HEMEventButtonSize/2, CGRectGetWidth(self.bounds), HEMEventBlurHeight);
     self.gradientTopLayer.frame = self.gradientContainerTopView.bounds;
     [self.gradientTopLayer setNeedsLayout];
     self.gradientBottomLayer.frame = self.gradientContainerBottomView.bounds;
@@ -109,28 +112,45 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
 - (void)useExpandedLayout:(BOOL)isExpanded animated:(BOOL)animated
 {
-    void (^animations)() = ^{
-        [self layoutIfNeeded];
-        if (isExpanded) {
+
+    void (^endAnimations)() = NULL;
+    void (^startAnimations)() = NULL;
+    if (isExpanded) {
+        startAnimations = ^{
+            self.lineView.alpha = 0;
             self.contentContainerView.alpha = 1;
             self.eventTimeLabel.alpha = 0;
             self.gradientContainerTopView.alpha = 1;
             self.gradientContainerBottomView.alpha = 1;
-            self.contentContainerView.layer.shadowOpacity = 0.2f;
+            self.contentContainerView.layer.shadowOpacity = 0.1f;
             [self.eventTypeButton hideOutline];
-        } else {
-            self.contentContainerView.alpha = 0;
+        };
+        endAnimations = ^{
+            self.eventTitleLabel.alpha = 1;
+            self.eventMessageLabel.alpha = 1;
+        };
+    } else {
+        endAnimations = ^{
+            self.lineView.alpha = 1;
             self.eventTimeLabel.alpha = 1;
+            [self.eventTypeButton showOutline];
+        };
+        startAnimations = ^{
+            self.eventTitleLabel.alpha = 0;
+            self.eventMessageLabel.alpha = 0;
+            self.contentContainerView.alpha = 0;
             self.gradientContainerTopView.alpha = 0;
             self.gradientContainerBottomView.alpha = 0;
             self.contentContainerView.layer.shadowOpacity = 0;
-            [self.eventTypeButton showOutline];
-        }
-    };
+        };
+    }
     if (animated) {
-        [UIView animateWithDuration:0.2f animations:animations];
+        [UIView animateWithDuration:0.2f animations:startAnimations completion:^(BOOL finished) {
+             [UIView animateWithDuration:0.2f animations:endAnimations];
+         }];
     } else {
-        animations();
+        startAnimations();
+        endAnimations();
     }
 }
 
@@ -168,7 +188,7 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    CGRect buttonFrame = CGRectInset(self.eventTypeButton.frame, -6, -6);
+    CGRect buttonFrame = CGRectInset(self.eventTypeButton.frame, HEMEventButtonTouchInset, HEMEventButtonTouchInset);
     if (CGRectContainsPoint(buttonFrame, point))
         return self.eventTypeButton;
 
@@ -177,7 +197,7 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
 {
-    CGRect buttonFrame = CGRectInset(self.eventTypeButton.frame, -6, -6);
+    CGRect buttonFrame = CGRectInset(self.eventTypeButton.frame, HEMEventButtonTouchInset, HEMEventButtonTouchInset);
     if (CGRectContainsPoint(buttonFrame, point))
         return YES;
 

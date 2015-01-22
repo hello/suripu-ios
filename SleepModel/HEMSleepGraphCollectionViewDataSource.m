@@ -388,8 +388,11 @@ static CGFloat HEMEventZPosition = 30.f;
     }
 
     [cell.eventTypeButton setImage:[self imageForEventType:segment.eventType] forState:UIControlStateNormal];
-    cell.eventTimeLabel.text = [self textForTimeInterval:[segment.date timeIntervalSince1970]];
-    cell.eventTitleLabel.text = [[[self class] localizedNameForSleepEventType:segment.eventType] uppercaseString];
+    NSString* titleFormat = NSLocalizedString(@"sleep-event.title.format", nil);
+    NSString* titleText = [[self class] localizedNameForSleepEventType:segment.eventType];
+    NSString* timeText = [self textForTimeInterval:[segment.date timeIntervalSince1970]];
+    cell.eventTimeLabel.text = timeText;
+    cell.eventTitleLabel.text = [[NSString stringWithFormat:titleFormat, titleText, timeText] uppercaseString];
     cell.eventMessageLabel.attributedText = markdown_to_attr_string(segment.message, 0, [HEMMarkdown attributesForEventMessageText]);
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;

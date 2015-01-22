@@ -169,7 +169,11 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     [cell.dateButton setEnabled:pushed];
     [cell.drawerButton setImage:drawerIcon forState:UIControlStateNormal];
     cell.topItemsVerticalConstraint.constant = constant;
-    [cell updateConstraintsIfNeeded];
+    [cell setNeedsUpdateConstraints];
+
+    [UIView animateWithDuration:0.25f animations:^{
+        [cell layoutIfNeeded];
+    }];
 }
 
 - (void)drawerButtonTapped:(UIButton*)button

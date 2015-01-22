@@ -32,7 +32,10 @@ static CGFloat const HEMMaximumScoreInset = 40.f;
     if (self.heightConstraint.constant != width) {
         self.heightConstraint.constant = width;
         self.widthConstraint.constant = width;
-        [self.sleepScoreView layoutIfNeeded];
+        [self.sleepScoreView setNeedsUpdateConstraints];
+        [UIView animateWithDuration:0.25f animations:^{
+            [self.sleepScoreView layoutIfNeeded];
+        }];
         [self.sleepScoreView setNeedsDisplay];
     }
 }

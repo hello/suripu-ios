@@ -13,7 +13,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="210"/>
                 <subviews>
-                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fHd-pv-egS">
+                    <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fHd-pv-egS" userLabel="contentContainerView">
                         <rect key="frame" x="0.0" y="1" width="320" height="190"/>
                         <subviews>
                             <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MQC-tj-fHb">
@@ -127,7 +127,7 @@
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             </view>
             <constraints>
-                <constraint firstItem="fHd-pv-egS" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="1" id="1O9-6n-eyx"/>
+                <constraint firstAttribute="top" secondItem="fHd-pv-egS" secondAttribute="top" constant="-1" id="1O9-6n-eyx"/>
                 <constraint firstItem="IoS-vS-i2i" firstAttribute="centerY" secondItem="JFc-fa-7rh" secondAttribute="centerY" constant="10" id="1me-FG-78b"/>
                 <constraint firstItem="g93-3Z-FRL" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="1oX-PL-DAZ"/>
                 <constraint firstAttribute="centerX" secondItem="IoS-vS-i2i" secondAttribute="centerX" id="21k-z7-23w"/>
@@ -135,7 +135,7 @@
                 <constraint firstAttribute="trailing" secondItem="g93-3Z-FRL" secondAttribute="trailing" id="Gb5-Bt-abL"/>
                 <constraint firstAttribute="trailing" secondItem="fHd-pv-egS" secondAttribute="trailing" id="TZa-qP-SAL"/>
                 <constraint firstAttribute="trailing" secondItem="JFc-fa-7rh" secondAttribute="trailing" constant="10" id="c8h-7m-ZlV"/>
-                <constraint firstAttribute="bottom" secondItem="fHd-pv-egS" secondAttribute="bottom" constant="19" id="cJe-1t-hNg"/>
+                <constraint firstAttribute="bottom" secondItem="fHd-pv-egS" secondAttribute="bottom" priority="750" constant="19" id="cJe-1t-hNg"/>
                 <constraint firstItem="IoS-vS-i2i" firstAttribute="trailing" secondItem="g93-3Z-FRL" secondAttribute="leading" constant="-1" id="qXd-Fq-q9T"/>
                 <constraint firstItem="fHd-pv-egS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="y5u-Ny-B9E"/>
             </constraints>

@@ -25,4 +25,5 @@ extern CGFloat const HEMTimelineHeaderCellHeight;
  *  The date which is represented by this controller
  */
 @property (nonatomic, strong) NSDate* dateForNightOfSleep;
+@property (nonatomic, strong) IBOutlet UICollectionView* collectionView;
 @end

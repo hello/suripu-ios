@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "FCDynamicPanesNavigationController.h"
 
 typedef NS_ENUM(NSUInteger, HEMRootDrawerTab) {
     HEMRootDrawerTabConditions = 0,
@@ -16,7 +15,12 @@ typedef NS_ENUM(NSUInteger, HEMRootDrawerTab) {
     HEMRootDrawerTabSettings = 4
 };
 
-@interface HEMRootViewController : FCDynamicPanesNavigationController
+extern NSString* const HEMRootDrawerMayOpenNotification;
+extern NSString* const HEMRootDrawerMayCloseNotification;
+extern NSString* const HEMRootDrawerDidOpenNotification;
+extern NSString* const HEMRootDrawerDidCloseNotification;
+
+@interface HEMRootViewController : UIViewController
 
 - (void)reloadTimelineSlideViewControllerWithDate:(NSDate*)date;
 - (void)hideSettingsDrawerTopBar:(BOOL)hidden animated:(BOOL)animated;
@@ -26,5 +30,19 @@ typedef NS_ENUM(NSUInteger, HEMRootDrawerTab) {
 - (void)openSettingsDrawer;
 - (void)closeSettingsDrawer;
 - (void)toggleSettingsDrawer;
+
+/**
+ *  The "back" pane controller
+ *
+ *  @return a view controller or nil
+ */
+- (UIViewController*)backController;
+
+/**
+ *  The "front" pane controller
+ *
+ *  @return a view controller or nil
+ */
+- (UIViewController*)frontController;
 
 @end

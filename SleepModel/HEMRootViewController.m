@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <MessageUI/MessageUI.h>
-
+#import <MSDynamicsDrawerViewController/MSDynamicsDrawerViewController.h>
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENServiceDevice.h>
 
@@ -24,19 +24,28 @@
 #import "HEMActionView.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMSystemAlertController.h"
+#import "HEMSleepGraphViewController.h"
+#import "HEMDynamicsStatusStyler.h"
 
-@interface HEMRootViewController ()
+NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
+NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
+NSString* const HEMRootDrawerDidOpenNotification = @"HEMRootDrawerDidOpenNotification";
+NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotification";
+
+@interface HEMRootViewController ()<MSDynamicsDrawerViewControllerDelegate>
 
 @property (strong, nonatomic) HEMDebugController* debugController;
 @property (strong, nonatomic) HEMSystemAlertController* alertController;
+@property (strong, nonatomic) MSDynamicsDrawerViewController* drawerViewController;
 
 @end
 
 @implementation HEMRootViewController
 
 static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
+static CGFloat const HEMRootDrawerRevealHeight = 40.f;
 
-+ (NSArray*)instantiateInitialControllers {
++ (UIViewController*)instantiateDrawerViewController {
     HEMSnazzBarController* barController = [HEMSnazzBarController new];
     barController.viewControllers = @[
         [HEMMainStoryboard instantiateCurrentNavController],
@@ -45,21 +54,70 @@ static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
         [HEMMainStoryboard instantiateAlarmListNavViewController],
         [HEMMainStoryboard instantiateSettingsNavController]];
     barController.selectedIndex = 2;
-    HEMSleepSummarySlideViewController* slideController = [HEMSleepSummarySlideViewController new];
+    return barController;
+}
+
+/**
+ *  Creates a new pane controller
+ *
+ *  @param startDate the presented date of the controller. May be nil.
+ *
+ *  @return a new pane controller
+ */
++ (UIViewController*)instantiatePaneViewControllerWithDate:(NSDate*)startDate {
+    HEMSleepSummarySlideViewController* slideController;
+    if (startDate)
+        slideController = [[HEMSleepSummarySlideViewController alloc] initWithDate:startDate];
+    else
+        slideController = [HEMSleepSummarySlideViewController new];
     [slideController.view add3DEffectWithBorder:HEMRootTopPaneParallaxDepth
                                       direction:HEMMotionEffectsDirectionVertical];
-    return @[barController, slideController];
+    return slideController;
 }
 
 - (instancetype)init {
-
-    self = [super initWithViewControllers:[HEMRootViewController instantiateInitialControllers]
-                               hintOnLoad:YES];
-    if (self) {
+    if (self = [super init]) {
         [self setAlertController:[[HEMSystemAlertController alloc] initWithViewController:self]];
         [self listenForActiveState];
     }
     return self;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    [self createDrawerViewController];
+}
+
+- (UIViewController *)backController
+{
+    return [self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
+}
+
+- (UIViewController *)frontController
+{
+    return self.drawerViewController.paneViewController;
+}
+
+- (void)createDrawerViewController
+{
+    self.drawerViewController = [MSDynamicsDrawerViewController new];
+    self.drawerViewController.paneViewController = [HEMRootViewController instantiatePaneViewControllerWithDate:nil];
+    self.drawerViewController.delegate = self;
+    UIWindow* window = [UIApplication sharedApplication].keyWindow ?: [[[UIApplication sharedApplication] windows] firstObject];
+    window.windowLevel = UIWindowLevelStatusBar + 1;
+    [self.drawerViewController addStylersFromArray:@[[MSDynamicsDrawerFadeStyler styler], [HEMDynamicsStatusStyler styler]]
+                                      forDirection:MSDynamicsDrawerDirectionTop];
+    [self.drawerViewController setDrawerViewController:[HEMRootViewController instantiateDrawerViewController]
+                                          forDirection:MSDynamicsDrawerDirectionTop];
+    CGFloat revealHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]) - HEMRootDrawerRevealHeight;
+    [self.drawerViewController setRevealWidth:revealHeight forDirection:MSDynamicsDrawerDirectionTop];
+    [self.drawerViewController setShouldAlignStatusBarToPaneView:NO];
+
+    [self.drawerViewController willMoveToParentViewController:self];
+    [self.drawerViewController removeFromParentViewController];
+    [self.view addSubview:self.drawerViewController.view];
+    [self addChildViewController:self.drawerViewController];
 }
 
 - (void)listenForActiveState {
@@ -92,61 +150,100 @@ static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 
 - (void)reloadTimelineSlideViewControllerWithDate:(NSDate *)date
 {
-    FCDynamicPane* lastController = [self.viewControllers lastObject];
+    UIViewController* controller = [HEMRootViewController instantiatePaneViewControllerWithDate:date];
+    [self.drawerViewController setPaneViewController:controller
+                                            animated:NO
+                                          completion:NULL];
+}
 
-    [lastController.viewController willMoveToParentViewController:nil];
-    [lastController.viewController removeFromParentViewController];
-    [lastController.view removeFromSuperview];
-    HEMSleepSummarySlideViewController* controller = [[HEMSleepSummarySlideViewController alloc] initWithDate:date];
-    [controller.view add3DEffectWithBorder:HEMRootTopPaneParallaxDepth
-                                 direction:HEMMotionEffectsDirectionVertical];
-    [self popViewControllerAnimated:NO];
-    [self pushViewController:controller retracted:NO];
+#pragma mark - MSDynamicsDrawerViewControllerDelegate
+
+- (BOOL)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController shouldBeginPanePan:(UIPanGestureRecognizer *)panGestureRecognizer
+{
+    HEMSleepSummarySlideViewController* paneController = (id)self.drawerViewController.paneViewController;
+    for (HEMSleepGraphViewController* controller in paneController.viewControllers) {
+        if (controller.collectionView.contentOffset.y > 10)
+            return NO;
+    }
+    return YES;
+}
+
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
+{
+    switch (paneState) {
+        case MSDynamicsDrawerPaneStateClosed:
+            [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayCloseNotification
+                                                                object:nil];
+            break;
+        case MSDynamicsDrawerPaneStateOpen:
+            [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayOpenNotification
+                                                                object:nil];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
+{
+    switch (paneState) {
+        case MSDynamicsDrawerPaneStateClosed:
+            [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidCloseNotification
+                                                                object:nil];
+            break;
+        case MSDynamicsDrawerPaneStateOpen:
+            [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidOpenNotification
+                                                                object:nil];
+            break;
+        default:
+            break;
+    }
 }
 
 #pragma mark - Drawer
 
 - (void)showSettingsDrawerTabAtIndex:(HEMRootDrawerTab)tabIndex animated:(BOOL)animated {
     [self openSettingsDrawer];
-    FCDynamicPane* pane = [self.viewControllers firstObject];
-    HEMSnazzBarController* controller = (id)pane.viewController;
+    HEMSnazzBarController* controller = (id)[self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
     [controller setSelectedIndex:tabIndex animated:animated];
 }
 
 - (void)hideSettingsDrawerTopBar:(BOOL)hidden animated:(BOOL)animated {
-    FCDynamicPane* pane = [self.viewControllers firstObject];
-    HEMSnazzBarController* controller = (id)pane.viewController;
+    HEMSnazzBarController* controller = (id)[self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
     [controller hideBar:hidden animated:animated];
 }
 
 - (void)showPartialSettingsDrawerTopBarWithRatio:(CGFloat)ratio {
-    FCDynamicPane* pane = [self.viewControllers firstObject];
-    HEMSnazzBarController* controller = (id)pane.viewController;
+    HEMSnazzBarController* controller = (id)[self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
     [controller showPartialBarWithRatio:ratio];
 }
 
 - (void)openSettingsDrawer {
-    FCDynamicPane* foregroundPane = [[self viewControllers] lastObject];
-    if (foregroundPane != nil) {
-        [foregroundPane setState:FCDynamicPaneStateRetracted];
-    }
+    [self setPaneState:MSDynamicsDrawerPaneStateOpen];
 }
 
 - (void)closeSettingsDrawer {
-    FCDynamicPane* foregroundPane = [[self viewControllers] lastObject];
-    if (foregroundPane != nil) {
-        [foregroundPane setState:FCDynamicPaneStateActive];
-    }
+    [self setPaneState:MSDynamicsDrawerPaneStateClosed];
 }
 
 - (void)toggleSettingsDrawer {
-    FCDynamicPane* foregroundPane = [[self viewControllers] lastObject];
-    if (foregroundPane != nil) {
-        FCDynamicPaneState state = foregroundPane.state == FCDynamicPaneStateActive
-            ? FCDynamicPaneStateRetracted
-            : FCDynamicPaneStateActive;
-        [foregroundPane setState:state];
+    switch (self.drawerViewController.paneState) {
+        case MSDynamicsDrawerPaneStateClosed:
+            [self openSettingsDrawer];
+            break;
+        case MSDynamicsDrawerPaneStateOpen:
+        case MSDynamicsDrawerPaneStateOpenWide:
+        default:
+            [self closeSettingsDrawer];
+            break;
     }
+}
+
+- (void)setPaneState:(MSDynamicsDrawerPaneState)state {
+    [self.drawerViewController setPaneState:state
+                                   animated:YES
+                      allowUserInterruption:YES
+                                 completion:NULL];
 }
 
 

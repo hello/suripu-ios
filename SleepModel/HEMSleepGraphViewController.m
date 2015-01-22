@@ -1,5 +1,4 @@
 
-#import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <SenseKit/SENSettings.h>
 #import <SenseKit/SENAuthorizationService.h>
 #import <markdown_peg.h>
@@ -30,9 +29,8 @@
 CGFloat const HEMTimelineHeaderCellHeight = 50.f;
 CGFloat const HEMTimelineFooterCellHeight = 50.f;
 
-@interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, FCDynamicPaneViewController, UIGestureRecognizerDelegate>
+@interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
-@property (nonatomic, strong) IBOutlet UICollectionView* collectionView;
 @property (nonatomic, retain) HEMSleepGraphView* view;
 @property (nonatomic, strong) HEMSleepHistoryViewController* historyViewController;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource* dataSource;
@@ -66,32 +64,18 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor whiteColor];
-    self.panePanGestureRecognizer.delegate = self;
     [self checkForDateChanges];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-    self.panePanGestureRecognizer.delegate = self;
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-    [super viewWillDisappear:animated];
-    self.panePanGestureRecognizer.delegate = nil;
-}
-
-- (void)viewDidPop
+- (void)drawerDidOpen
 {
     [UIView animateWithDuration:0.5f animations:^{
         [self updateTopBarActionsWithState:NO];
     }];
 }
 
-- (void)viewDidPush
+- (void)drawerDidClose
 {
-    self.panePanGestureRecognizer.delegate = self;
     [UIView animateWithDuration:0.5f animations:^{
         [self updateTopBarActionsWithState:YES];
     }];
@@ -99,10 +83,22 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)registerForNotifications
 {
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData)
-                                                 name:UIApplicationDidBecomeActiveNotification object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleAuthorization)
-                                                 name:SENAuthorizationServiceDidAuthorizeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadData)
+                                                 name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(handleAuthorization)
+                                                 name:SENAuthorizationServiceDidAuthorizeNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidOpen)
+                                                 name:HEMRootDrawerMayOpenNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidClose)
+                                                 name:HEMRootDrawerMayCloseNotification
+                                               object:nil];
 }
 
 - (void)handleAuthorization

@@ -5,7 +5,6 @@
 //  Created by Jimmy Lu on 8/27/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 
 #import "UIImage+ImageEffects.h"
 #import "UIView+HEMSnapshot.h"
@@ -15,11 +14,10 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSlideViewController+Protected.h"
 #import "HEMSleepSummaryPagingDataSource.h"
+#import "HEMRootViewController.h"
 #import "HelloStyleKit.h"
 
-@interface HEMSleepSummarySlideViewController () <
-    FCDynamicPaneViewController
->
+@interface HEMSleepSummarySlideViewController ()
 
 @property (nonatomic, weak) CAGradientLayer* bgGradientLayer;
 @property (nonatomic, strong) HEMSleepSummaryPagingDataSource* data;
@@ -57,6 +55,14 @@
     [self reloadDataWithController:controller];
     [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
     [self setDataSource:[self data]];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidOpen)
+                                                 name:HEMRootDrawerDidOpenNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidClose)
+                                                 name:HEMRootDrawerDidCloseNotification
+                                               object:nil];
 }
 
 - (void)viewDidLoad {
@@ -93,28 +99,18 @@
     [layer setShadowPath:[shadowPath CGPath]];
 }
 
-#pragma mark - FCDynamicPaneViewController
+#pragma mark - Drawer Events
 
-- (void)viewDidPop {
-    [self setNeedsStatusBarAppearanceUpdate];
-    for (UIViewController* viewController in [self childViewControllers]) {
-        if ([viewController respondsToSelector:@selector(viewDidPop)]) {
-            [(UIViewController<FCDynamicPaneViewController>*)viewController viewDidPop];
-        }
-    }
-    // disable scrolling
-    [self setDataSource:nil];
+- (void)drawerDidOpen {
+    [self setScrollingEnabled:NO];
 }
 
-- (void)viewDidPush {
-    [self setNeedsStatusBarAppearanceUpdate];
-    for (UIViewController* viewController in [self childViewControllers]) {
-        if ([viewController respondsToSelector:@selector(viewDidPush)]) {
-            [(UIViewController<FCDynamicPaneViewController>*)viewController viewDidPush];
-        }
-    }
-    // enable scrolling
-    [self setDataSource:[self data]];
+- (void)drawerDidClose {
+    [self setScrollingEnabled:YES];
+}
+
+- (void)setScrollingEnabled:(BOOL)isEnabled {
+    [self setDataSource:isEnabled ? [self data] : nil];
 }
 
 #pragma mark - Cleanup
@@ -122,6 +118,7 @@
 - (void)dealloc {
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [self setDataSource:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 @end

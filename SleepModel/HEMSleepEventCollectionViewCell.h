@@ -2,11 +2,11 @@
 #import <UIKit/UIKit.h>
 #import "HEMSleepSegmentCollectionViewCell.h"
 
-@class FDWaveformView, RTSpinKitView;
+@class FDWaveformView, RTSpinKitView, HEMSleepEventButton;
 
 @interface HEMSleepEventCollectionViewCell : HEMSleepSegmentCollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UIButton* eventTypeButton;
+@property (weak, nonatomic) IBOutlet HEMSleepEventButton* eventTypeButton;
 @property (weak, nonatomic) IBOutlet UILabel* eventTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* eventMessageLabel;
 @property (weak, nonatomic) IBOutlet UILabel* eventTimeLabel;

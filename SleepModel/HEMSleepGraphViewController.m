@@ -14,7 +14,6 @@
 #import "HEMRootViewController.h"
 #import "HEMAudioCache.h"
 #import "HEMMainStoryboard.h"
-#import "HEMPaddedRoundedLabel.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphUtils.h"
@@ -25,6 +24,7 @@
 #import "HEMSleepSummarySlideViewController.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
+#import "HEMSleepEventButton.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 50.f;

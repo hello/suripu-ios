@@ -20,6 +20,7 @@
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
+#import "HEMSleepEventButton.h"
 #import "HEMMarkdown.h"
 
 NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";

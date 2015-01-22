@@ -168,11 +168,20 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
 - (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
 {
-    CGRect buttonFrame = CGRectInset(self.eventTypeButton.frame, -15, -15);
+    CGRect buttonFrame = CGRectInset(self.eventTypeButton.frame, -6, -6);
     if (CGRectContainsPoint(buttonFrame, point))
         return self.eventTypeButton;
 
     return [super hitTest:point withEvent:event];
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    CGRect buttonFrame = CGRectInset(self.eventTypeButton.frame, -6, -6);
+    if (CGRectContainsPoint(buttonFrame, point))
+        return YES;
+
+    return [super pointInside:point withEvent:event];
 }
 
 #pragma mark - Audio

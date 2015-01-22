@@ -30,9 +30,6 @@ PODS:
     - CocoaLumberjack/Core
   - CocoaLumberjack/Extensions (2.0.0-rc):
     - CocoaLumberjack/Default
-  - FCDynamicPanesNavigationController (1.0):
-    - FCMutableArray
-  - FCMutableArray (1.0)
   - FDWaveformView (0.2.2)
   - FXKeychain (1.5.2)
   - iCarousel (1.7.6)
@@ -41,6 +38,7 @@ PODS:
   - Mixpanel (2.6.2):
     - Mixpanel/MPCategoryHelpers
   - Mixpanel/MPCategoryHelpers (2.6.2)
+  - MSDynamicsDrawerViewController (1.5.1)
   - NSJSONSerialization-NSNullRemoval (1.0.1)
   - SenseKit (0.1.0):
     - SenseKit/Analytics
@@ -79,10 +77,10 @@ PODS:
 DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`, commit `6bf420df77117f519af32a6393520ead4e7848c6`)
   - BEMSimpleLineGraph (from `git@github.com:Boris-Em/BEMSimpleLineGraph.git`, commit `fde1eede34357745998e977503a3cba21f423532`)
-  - FCDynamicPanesNavigationController (from `git@github.com:hello/FCDynamicPanesNavigationController.git`)
   - FDWaveformView (from `git@github.com:hello/FDWaveformView.git`)
   - iCarousel (~> 1.7.6)
   - Kiwi
+  - MSDynamicsDrawerViewController (= 1.5.1)
   - SenseKit (from `git@github.com:hello/SenseKit.git`)
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
   - SORelativeDateTransformer (~> 1.1.10)
@@ -97,8 +95,6 @@ EXTERNAL SOURCES:
   BEMSimpleLineGraph:
     :commit: fde1eede34357745998e977503a3cba21f423532
     :git: git@github.com:Boris-Em/BEMSimpleLineGraph.git
-  FCDynamicPanesNavigationController:
-    :git: git@github.com:hello/FCDynamicPanesNavigationController.git
   FDWaveformView:
     :git: git@github.com:hello/FDWaveformView.git
   SenseKit:
@@ -113,14 +109,13 @@ SPEC CHECKSUMS:
   AttributedMarkdown: de3267724c9e2175e1fc398184d03ba6697766ef
   BEMSimpleLineGraph: a3c78bfd5d2919324d970e42c028ebffc6ad7bcd
   CocoaLumberjack: 6186e27827fc574b50b16c10102fcc591437f06c
-  FCDynamicPanesNavigationController: 55ee3c165a070d8d01e0b90a1029916cbcaa1b09
-  FCMutableArray: 1a8dbb05952c1e9dff31d86fd366f86edce9f159
   FDWaveformView: 6f3c2d4dfb25c90206da48ea08f5bf81d0afaa56
   FXKeychain: c97c352f1923809032339514ec4d6b0ed151bc3b
   iCarousel: c35a4e26b3c657847e523012b593e70ddbd84992
   Kiwi: 73e1400209055ee9c8ba78c6012b6b642d0fb9f7
   LGBluetooth: 00f37b8c29cccc1dd44d5f726b2ec4a6e91c74ec
   Mixpanel: c075cedebda3328ce1ee29a18429e265ce967cd8
+  MSDynamicsDrawerViewController: 0002059480a4b5ddde7eafbafb958a79a9b0ffaf
   NSJSONSerialization-NSNullRemoval: b3f02955f898d01205567e3f1292e4aae3ad547e
   SenseKit: a98e7d0a4684f8585741b5a038b5a281da92b078
   SHSProtoBuf: 62a02d425f5dbee00d057bae65d76f0f01737410

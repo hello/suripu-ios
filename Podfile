@@ -13,9 +13,9 @@ pod 'BEMSimpleLineGraph', :git => 'git@github.com:Boris-Em/BEMSimpleLineGraph.gi
                           :commit => 'fde1eede34357745998e977503a3cba21f423532'
 pod 'FDWaveformView', :git => 'git@github.com:hello/FDWaveformView.git'
 pod 'SVWebViewController', :git => 'https://github.com/TransitApp/SVWebViewController.git'
+pod 'MSDynamicsDrawerViewController', '1.5.1'
 
 # Private
-pod 'FCDynamicPanesNavigationController', :git => 'git@github.com:hello/FCDynamicPanesNavigationController.git'
 pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
 pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
 # pod 'SenseKit', :path => '../SenseKit'

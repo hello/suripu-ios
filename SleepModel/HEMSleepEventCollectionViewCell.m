@@ -64,7 +64,7 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 - (void)configureGradientViews
 {
     self.contentContainerView.layer.shadowOffset = CGSizeZero;
-    self.contentContainerView.layer.shadowRadius = 2.f;
+    self.contentContainerView.layer.shadowRadius = 1.5f;
     self.contentContainerView.layer.shadowColor = [UIColor blackColor].CGColor;
     self.gradientContainerTopView = [UIView new];
     self.gradientContainerTopView.alpha = 0;

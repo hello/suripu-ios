@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENAccount.h>
+#import <SenseKit/SENAPIAccount.h>
 
 #import "HEMSettingsAccountDataSource.h"
 #import "HEMMathUtil.h"
@@ -72,92 +73,86 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
 
 #pragma mark - Data
 
-- (void)reload {
+- (void)reload:(void(^)(NSError* error))completion {
     [self setRefreshing:YES];
 
     __weak typeof(self) weakSelf = self;
     [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
         if (error == nil) {
             [strongSelf setRefreshing:NO];
             [[strongSelf tableView] reloadData];
         }
+        
+        if (completion) completion (error);
     }];
 }
 
 - (NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath {
     NSString* title = nil;
-    NSInteger section = [indexPath section];
-    NSInteger row = [indexPath row];
-    if (section == HEMSettingsAcctSectionAccount) {
-        switch (row) {
-            default:
-            case HEMSettingsAcctRowEmail:
-                title = NSLocalizedString(@"settings.account.email", nil);
-                break;
-            case HEMSettingsAcctRowPassword:
-                title = NSLocalizedString(@"settings.account.password", nil);
-                break;
-        }
-    } else if (section == HEMSettingsAcctSectionDemographics) {
-        switch (row) {
-            case HEMSettingsAcctRowBirthdate:
-                title = NSLocalizedString(@"settings.personal.info.birthday", nil);
-                break;
-            case HEMSettingsAcctRowGender:
-                title = NSLocalizedString(@"settings.personal.info.gender", nil);
-                break;
-            case HEMSettingsAcctRowHeight:
-                title = NSLocalizedString(@"settings.personal.info.height", nil);
-                break;
-            case HEMSettingsAcctRowWeight:
-                title = NSLocalizedString(@"settings.personal.info.weight", nil);
-                break;
-            default:
-                break;
-        }
+    HEMSettingsAccountInfoType type = [self infoTypeAtIndexPath:indexPath];
+    switch (type) {
+        case HEMSettingsAccountInfoTypeEmail:
+            title = NSLocalizedString(@"settings.account.email", nil);
+            break;
+        case HEMSettingsAccountInfoTypePassword:
+            title = NSLocalizedString(@"settings.account.password", nil);
+            break;
+        case HEMSettingsAccountInfoTypeBirthday:
+            title = NSLocalizedString(@"settings.personal.info.birthday", nil);
+            break;
+        case HEMSettingsAccountInfoTypeGender:
+            title = NSLocalizedString(@"settings.personal.info.gender", nil);
+            break;
+        case HEMSettingsAccountInfoTypeHeight:
+            title = NSLocalizedString(@"settings.personal.info.height", nil);
+            break;
+        case HEMSettingsAccountInfoTypeWeight:
+            title = NSLocalizedString(@"settings.personal.info.weight", nil);
+            break;
+        default:
+            break;
     }
     return title;
 }
 
 - (NSString*)valueForCellAtIndexPath:(NSIndexPath*)indexPath {
+    if ([self isRefreshing]) return NSLocalizedString(@"empty-data", nil);
+    
     NSString* subtitle = nil;
-    NSInteger section = [indexPath section];
-    NSInteger row = [indexPath row];
-    if (section == HEMSettingsAcctSectionAccount) {
-        switch (row) {
-            case HEMSettingsAcctRowEmail:
-                subtitle = [[[SENServiceAccount sharedService] account] email];
-                break;
-            case HEMSettingsAcctRowPassword:
-                subtitle = HEMSettingsAcctPasswordPlaceholder;
-                break;
-            default:
-                break;
-        }
-    } else if (section == HEMSettingsAcctSectionDemographics) {
-        switch (row) {
-            case HEMSettingsAcctRowBirthdate:
-                subtitle = [[[SENServiceAccount sharedService] account] birthdate];
-                break;
-            case HEMSettingsAcctRowGender:
-                subtitle = [self gender];
-                break;
-            case HEMSettingsAcctRowHeight:
-                subtitle = [self height];
-                break;
-            case HEMSettingsAcctRowWeight:
-                subtitle = [self weight];
-                break;
-            default:
-                break;
-        }
+    HEMSettingsAccountInfoType type = [self infoTypeAtIndexPath:indexPath];
+    switch (type) {
+        case HEMSettingsAccountInfoTypeEmail:
+            subtitle = [[[SENServiceAccount sharedService] account] email];
+            break;
+        case HEMSettingsAccountInfoTypePassword:
+            subtitle = HEMSettingsAcctPasswordPlaceholder;
+            break;
+        case HEMSettingsAccountInfoTypeBirthday:
+            subtitle = [[[SENServiceAccount sharedService] account] birthdate];
+            break;
+        case HEMSettingsAccountInfoTypeGender:
+            subtitle = [self gender];
+            break;
+        case HEMSettingsAccountInfoTypeHeight:
+            subtitle = [self height];
+            break;
+        case HEMSettingsAccountInfoTypeWeight:
+            subtitle = [self weight];
+            break;
+        default:
+            break;
     }
     return subtitle;
 }
 
 - (NSDateComponents*)birthdateComponents {
     return [[[SENServiceAccount sharedService] account] birthdateComponents];
+}
+
+- (NSUInteger)genderEnumValue {
+    return [[[SENServiceAccount sharedService] account] gender];
 }
 
 - (NSString*)gender {
@@ -170,14 +165,22 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
             gender = NSLocalizedString(@"account.gender.male", nil);
             break;
         default:
-            gender = NSLocalizedString(@"account.gender.other", nil);
+            gender = NSLocalizedString(@"empty-data", nil);
             break;
     }
     return gender;
 }
 
+- (float)heightInInches {
+    return HEMToInches([[[SENServiceAccount sharedService] account] height]);
+}
+
 - (NSString*)height {
     NSNumber* cm = [[[SENServiceAccount sharedService] account] height];
+    if (cm == nil) {
+        return NSLocalizedString(@"empty-data", nil);
+    }
+    
     long cmValue = [cm longValue];
     NSString* height = nil;
     
@@ -195,8 +198,16 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
     return height;
 }
 
+- (float)weightInPounds {
+    return HEMToPounds([[[SENServiceAccount sharedService] account] weight]);
+}
+
 - (NSString*)weight {
     NSNumber* grams = [[[SENServiceAccount sharedService] account] weight];
+    if (grams == nil) {
+        return NSLocalizedString(@"empty-data", nil);
+    }
+    
     NSString* weight = nil;
     
     if (HEMIsMetricSystem()) {
@@ -222,6 +233,117 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
             break;
     }
     return last;
+}
+
+- (HEMSettingsAccountInfoType)infoTypeAtIndexPath:(NSIndexPath*)indexPath {
+    HEMSettingsAccountInfoType type = HEMSettingsAccountInfoTypeEmail;
+    NSInteger section = [indexPath section];
+    NSInteger row = [indexPath row];
+    
+    if (section == HEMSettingsAcctSectionAccount) {
+        switch (row) {
+            case HEMSettingsAcctRowEmail:
+                type = HEMSettingsAccountInfoTypeEmail;
+                break;
+            case HEMSettingsAcctRowPassword:
+                type = HEMSettingsAccountInfoTypePassword;
+                break;
+            default:
+                break;
+        }
+    } else if (section == HEMSettingsAcctSectionDemographics) {
+        switch (row) {
+            case HEMSettingsAcctRowBirthdate:
+                type = HEMSettingsAccountInfoTypeBirthday;
+                break;
+            case HEMSettingsAcctRowGender:
+                type = HEMSettingsAccountInfoTypeGender;
+                break;
+            case HEMSettingsAcctRowHeight:
+                type = HEMSettingsAccountInfoTypeHeight;
+                break;
+            case HEMSettingsAcctRowWeight:
+                type = HEMSettingsAccountInfoTypeWeight;
+                break;
+            default:
+                break;
+        }
+    }
+    return type;
+}
+
+#pragma mark - Updates
+
+- (void)updateAccount:(void(^)(NSError* error))completion {
+    [[self tableView] reloadData]; // reload first to reflect temp change
+    
+    __weak typeof(self) weakSelf = self;
+    [SENAPIAccount updateAccount:[[SENServiceAccount sharedService] account] completionBlock:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error == nil) {
+            [strongSelf reload:completion];
+            return;
+        }
+    }];
+}
+
+- (void)updateBirthMonth:(NSInteger)month
+                     day:(NSInteger)day
+                    year:(NSInteger)year
+              completion:(void(^)(NSError* error))completion {
+    __block SENAccount* account = [[SENServiceAccount sharedService] account];
+    
+    NSString* oldBirthdate = [account birthdate];
+    [account setBirthMonth:month day:day andYear:year];
+
+    [self updateAccount:^(NSError *error) {
+        if (error != nil) {
+            [account setBirthdate:oldBirthdate];
+        }
+        if (completion) completion (error);
+    }];
+}
+
+- (void)updateHeight:(int)heightInCentimeters completion:(void(^)(NSError* error))completion {
+    __block SENAccount* account = [[SENServiceAccount sharedService] account];
+    
+    NSNumber* oldHeight = [account height];
+    [account setHeight:@(heightInCentimeters)];
+
+    [self updateAccount:^(NSError *error) {
+        if (error != nil) {
+            [account setHeight:oldHeight];
+        }
+        if (completion) completion (error);
+    }];
+}
+
+- (void)updateWeight:(float)weightInKgs completion:(void(^)(NSError* error))completion {
+    __block SENAccount* account = [[SENServiceAccount sharedService] account];
+    
+    NSNumber* oldWeight = [account weight];
+    [account setWeight:@(round(weightInKgs * 1000))];
+
+    [self updateAccount:^(NSError *error) {
+        if (error != nil) {
+            [account setWeight:oldWeight];
+        }
+        if (completion) completion (error);
+    }];
+}
+
+- (void)updateGender:(SENAccountGender)gender completion:(void(^)(NSError* error))completion {
+    __block SENAccount* account = [[SENServiceAccount sharedService] account];
+    
+    SENAccountGender oldGender = [account gender];
+    [account setGender:gender];
+
+    [self updateAccount:^(NSError *error) {
+        if (error != nil) {
+            [account setGender:oldGender];
+        }
+        if (completion) completion (error);
+    }];
 }
 
 @end

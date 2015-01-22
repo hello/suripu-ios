@@ -22,6 +22,7 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
 
 @property (nonatomic, weak) CAShapeLayer* contentLayer;
 @property (nonatomic, weak) UIView* separator;
+@property (nonatomic, strong) UIActivityIndicatorView* activityView;
 
 @end
 
@@ -30,6 +31,7 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
 - (void)awakeFromNib {
     [self setBackgroundColor:[UIColor clearColor]];
     [[self contentView] setBackgroundColor:[UIColor clearColor]];
+    [self setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     [self addContentLayer];
     [self addSeparator];

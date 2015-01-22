@@ -403,7 +403,6 @@
 "account.gender.subtitle" = "This is used to provide you with more personalized sleep insights.";
 "account.gender.female" = "Female";
 "account.gender.male" = "Male";
-"account.gender.other" = "Other";
 "account.update.failed.title" = "Update failed";
 "account.update.error.generic" = "Unable to update your information";
 "account.update.error.password" = "Unable to update your password";

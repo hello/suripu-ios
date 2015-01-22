@@ -134,4 +134,23 @@
     [[[self navigationController] interactivePopGestureRecognizer] setEnabled:enable];
 }
 
+#pragma mark - Convenience Methods
+
+- (void)stylePrimaryButton:(UIButton*)button
+           secondaryButton:(UIButton*)secondaryButton
+              withDelegate:(BOOL)hasDelegate {
+    
+    [[secondaryButton titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [secondaryButton setTitleColor:[HelloStyleKit senseBlueColor]
+                          forState:UIControlStateNormal];
+
+    if (hasDelegate) {
+        NSString* done = NSLocalizedString(@"status.success", nil);
+        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
+        [button setTitle:done forState:UIControlStateNormal];
+        [secondaryButton setTitle:cancel forState:UIControlStateNormal];
+    }
+    
+}
+
 @end

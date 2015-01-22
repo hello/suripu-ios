@@ -15,5 +15,8 @@
 
 - (void)enableBackButton:(BOOL)enable;
 - (void)showHelpButton;
+- (void)stylePrimaryButton:(UIButton*)button
+           secondaryButton:(UIButton*)secondaryButton
+              withDelegate:(BOOL)hasDelegate;
 
 @end

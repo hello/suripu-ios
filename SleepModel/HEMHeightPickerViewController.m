@@ -59,16 +59,11 @@ static NSInteger const HEMHeightDefaultInch = 8;
 }
 
 - (void)configureButtons {
-    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [self stylePrimaryButton:[self doneButton]
+             secondaryButton:[self skipButton]
+                withDelegate:[self delegate] != nil];
     
-    if ([self delegate] != nil) {
-        NSString* done = NSLocalizedString(@"status.success", nil);
-        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
-        [[self doneButton] setTitle:done forState:UIControlStateNormal];
-        [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
-    } else {
-        [self enableBackButton:NO];
-    }
+    [self enableBackButton:NO];
 }
 
 - (void)configureRuler {

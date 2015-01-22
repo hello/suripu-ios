@@ -161,6 +161,7 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 
 - (IBAction)saveAndDismissFromView:(id)sender
 {
+    self.alarmCache.on = YES;
     if (![self isAlarmCacheValid])
         return;
 

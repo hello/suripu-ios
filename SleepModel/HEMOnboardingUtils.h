@@ -97,13 +97,6 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
                          from:(UIViewController*)controller;
 
 /**
- * Return a description of why we collect demographic info that is meant to
- * be displayed on every screen throughout onboarding that collects such info
- * @param an attributed desciption
- */
-+ (NSAttributedString*)demographicReason;
-
-/**
  * Finish onboarding flow from the specified last controller in the flow and display
  * a message before it completes
  */

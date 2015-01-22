@@ -65,7 +65,7 @@ static CGFloat const kHemUnitPrefSegControlWidth = 157;
 - (void)styleControl:(UISegmentedControl*)control {
     [control setTintColor:[HelloStyleKit backViewTextColor]];
     [control setTitleTextAttributes:@{
-                                NSFontAttributeName : [UIFont fontWithName:@"Agile-Light" size:18],
+                                NSFontAttributeName : [UIFont preferenceControlFont],
                                 NSForegroundColorAttributeName : [HelloStyleKit backViewTextColor]
                            }
                            forState:UIControlStateNormal];

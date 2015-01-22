@@ -129,20 +129,6 @@
 		8A98AC031A2D5B8D00A1296E /* verifyAlertIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A98AC001A2D5B8D00A1296E /* verifyAlertIcon@2x.png */; };
 		8A98AC041A2D5B8D00A1296E /* verifyAlertIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A98AC011A2D5B8D00A1296E /* verifyAlertIcon@3x.png */; };
 		8A98AC071A2E776E00A1296E /* HEMSleepGraphUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A98AC061A2E776E00A1296E /* HEMSleepGraphUtils.m */; };
-		8A9BD8B619DDD02100B1E57E /* Calibre-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8A819DDD02100B1E57E /* Calibre-Black.otf */; };
-		8A9BD8B719DDD02100B1E57E /* Calibre-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8A919DDD02100B1E57E /* Calibre-BlackItalic.otf */; };
-		8A9BD8B819DDD02100B1E57E /* Calibre-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8AA19DDD02100B1E57E /* Calibre-Bold.otf */; };
-		8A9BD8B919DDD02100B1E57E /* Calibre-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8AB19DDD02100B1E57E /* Calibre-BoldItalic.otf */; };
-		8A9BD8BA19DDD02100B1E57E /* Calibre-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8AC19DDD02100B1E57E /* Calibre-Light.otf */; };
-		8A9BD8BB19DDD02100B1E57E /* Calibre-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8AD19DDD02100B1E57E /* Calibre-LightItalic.otf */; };
-		8A9BD8BC19DDD02100B1E57E /* Calibre-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8AE19DDD02100B1E57E /* Calibre-Medium.otf */; };
-		8A9BD8BD19DDD02100B1E57E /* Calibre-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8AF19DDD02100B1E57E /* Calibre-MediumItalic.otf */; };
-		8A9BD8BE19DDD02100B1E57E /* Calibre-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B019DDD02100B1E57E /* Calibre-Regular.otf */; };
-		8A9BD8BF19DDD02100B1E57E /* Calibre-RegularItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B119DDD02100B1E57E /* Calibre-RegularItalic.otf */; };
-		8A9BD8C019DDD02100B1E57E /* Calibre-Semibold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B219DDD02100B1E57E /* Calibre-Semibold.otf */; };
-		8A9BD8C119DDD02100B1E57E /* Calibre-SemiboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B319DDD02100B1E57E /* Calibre-SemiboldItalic.otf */; };
-		8A9BD8C219DDD02100B1E57E /* Calibre-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B419DDD02100B1E57E /* Calibre-Thin.otf */; };
-		8A9BD8C319DDD02100B1E57E /* Calibre-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8A9BD8B519DDD02100B1E57E /* Calibre-ThinItalic.otf */; };
 		8A9BD8D019DF28F400B1E57E /* HEMPaddedRoundedLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9BD8CF19DF28F400B1E57E /* HEMPaddedRoundedLabel.m */; };
 		8A9D380B1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9D380A1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m */; };
 		8A9F574519F873110009E50A /* HEMLogUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A9F574419F873110009E50A /* HEMLogUtils.m */; };
@@ -197,26 +183,6 @@
 		8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D93919AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m */; };
 		8AA8D94019AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D93F19AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m */; };
 		8AAEECBC19A431E1006517C4 /* HEMSleepEventButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AAEECBB19A431E1006517C4 /* HEMSleepEventButton.m */; };
-		8AAEECFB19A5225F006517C4 /* Agile-Black.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECE719A5225F006517C4 /* Agile-Black.otf */; };
-		8AAEECFC19A5225F006517C4 /* Agile-BlackItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECE819A5225F006517C4 /* Agile-BlackItalic.otf */; };
-		8AAEECFD19A5225F006517C4 /* Agile-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECE919A5225F006517C4 /* Agile-Bold.otf */; };
-		8AAEECFE19A5225F006517C4 /* Agile-BoldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECEA19A5225F006517C4 /* Agile-BoldItalic.otf */; };
-		8AAEECFF19A5225F006517C4 /* Agile-Book.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECEB19A5225F006517C4 /* Agile-Book.otf */; };
-		8AAEED0019A5225F006517C4 /* Agile-BookItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECEC19A5225F006517C4 /* Agile-BookItalic.otf */; };
-		8AAEED0119A5225F006517C4 /* Agile-Extrabold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECED19A5225F006517C4 /* Agile-Extrabold.otf */; };
-		8AAEED0219A5225F006517C4 /* Agile-ExtraboldItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECEE19A5225F006517C4 /* Agile-ExtraboldItalic.otf */; };
-		8AAEED0319A5225F006517C4 /* Agile-Extralight.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECEF19A5225F006517C4 /* Agile-Extralight.otf */; };
-		8AAEED0419A5225F006517C4 /* Agile-ExtralightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECF019A5225F006517C4 /* Agile-ExtralightItalic.otf */; };
-		8AAEED0519A5225F006517C4 /* Agile-Fat.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECF119A5225F006517C4 /* Agile-Fat.otf */; };
-		8AAEED0619A5225F006517C4 /* Agile-FatItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECF219A5225F006517C4 /* Agile-FatItalic.otf */; };
-		8AAEED0719A5225F006517C4 /* Agile-Hairline.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECF319A5225F006517C4 /* Agile-Hairline.otf */; };
-		8AAEED0819A5225F006517C4 /* Agile-HairlineItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECF419A5225F006517C4 /* Agile-HairlineItalic.otf */; };
-		8AAEED0919A5225F006517C4 /* Agile-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECF519A5225F006517C4 /* Agile-Light.otf */; };
-		8AAEED0A19A5225F006517C4 /* Agile-LightItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECF619A5225F006517C4 /* Agile-LightItalic.otf */; };
-		8AAEED0B19A5225F006517C4 /* Agile-Medium.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECF719A5225F006517C4 /* Agile-Medium.otf */; };
-		8AAEED0C19A5225F006517C4 /* Agile-MediumItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECF819A5225F006517C4 /* Agile-MediumItalic.otf */; };
-		8AAEED0D19A5225F006517C4 /* Agile-Thin.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECF919A5225F006517C4 /* Agile-Thin.otf */; };
-		8AAEED0E19A5225F006517C4 /* Agile-ThinItalic.otf in Resources */ = {isa = PBXBuildFile; fileRef = 8AAEECFA19A5225F006517C4 /* Agile-ThinItalic.otf */; };
 		8AB006311A48C382000CF62F /* HEMMarkdown.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB006301A48C382000CF62F /* HEMMarkdown.m */; };
 		8AB2683919CCFDB400017818 /* HEMAlarmAddButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2683819CCFDB400017818 /* HEMAlarmAddButton.m */; };
 		8AB2683C19CCFDBF00017818 /* HEMAlarmListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AB2683B19CCFDBF00017818 /* HEMAlarmListViewController.m */; };
@@ -497,6 +463,7 @@
 		BFCCF5421A69F3D400D842F9 /* soundIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF53F1A69F3D400D842F9 /* soundIcon.png */; };
 		BFCCF5431A69F3D400D842F9 /* soundIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF5401A69F3D400D842F9 /* soundIcon@2x.png */; };
 		BFCCF5441A69F3D400D842F9 /* soundIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF5411A69F3D400D842F9 /* soundIcon@3x.png */; };
+		BFCCF54B1A6F1F6C00D842F9 /* HEMRulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCCF54A1A6F1F6C00D842F9 /* HEMRulerView.m */; };
 		BFD5643D19A3F31B002E461E /* HEMSensePairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */; };
 		BFDCC7BA19D9C741007A922B /* sense.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B819D9C741007A922B /* sense.png */; };
 		BFDCC7BB19D9C741007A922B /* sense@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B919D9C741007A922B /* sense@2x.png */; };
@@ -768,20 +735,6 @@
 		8A98AC011A2D5B8D00A1296E /* verifyAlertIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "verifyAlertIcon@3x.png"; path = "images/verifyAlertIcon@3x.png"; sourceTree = "<group>"; };
 		8A98AC051A2E776E00A1296E /* HEMSleepGraphUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepGraphUtils.h; sourceTree = "<group>"; };
 		8A98AC061A2E776E00A1296E /* HEMSleepGraphUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepGraphUtils.m; sourceTree = "<group>"; };
-		8A9BD8A819DDD02100B1E57E /* Calibre-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Black.otf"; path = "fonts/Calibre-Black.otf"; sourceTree = "<group>"; };
-		8A9BD8A919DDD02100B1E57E /* Calibre-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-BlackItalic.otf"; path = "fonts/Calibre-BlackItalic.otf"; sourceTree = "<group>"; };
-		8A9BD8AA19DDD02100B1E57E /* Calibre-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Bold.otf"; path = "fonts/Calibre-Bold.otf"; sourceTree = "<group>"; };
-		8A9BD8AB19DDD02100B1E57E /* Calibre-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-BoldItalic.otf"; path = "fonts/Calibre-BoldItalic.otf"; sourceTree = "<group>"; };
-		8A9BD8AC19DDD02100B1E57E /* Calibre-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Light.otf"; path = "fonts/Calibre-Light.otf"; sourceTree = "<group>"; };
-		8A9BD8AD19DDD02100B1E57E /* Calibre-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-LightItalic.otf"; path = "fonts/Calibre-LightItalic.otf"; sourceTree = "<group>"; };
-		8A9BD8AE19DDD02100B1E57E /* Calibre-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Medium.otf"; path = "fonts/Calibre-Medium.otf"; sourceTree = "<group>"; };
-		8A9BD8AF19DDD02100B1E57E /* Calibre-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-MediumItalic.otf"; path = "fonts/Calibre-MediumItalic.otf"; sourceTree = "<group>"; };
-		8A9BD8B019DDD02100B1E57E /* Calibre-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Regular.otf"; path = "fonts/Calibre-Regular.otf"; sourceTree = "<group>"; };
-		8A9BD8B119DDD02100B1E57E /* Calibre-RegularItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-RegularItalic.otf"; path = "fonts/Calibre-RegularItalic.otf"; sourceTree = "<group>"; };
-		8A9BD8B219DDD02100B1E57E /* Calibre-Semibold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Semibold.otf"; path = "fonts/Calibre-Semibold.otf"; sourceTree = "<group>"; };
-		8A9BD8B319DDD02100B1E57E /* Calibre-SemiboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-SemiboldItalic.otf"; path = "fonts/Calibre-SemiboldItalic.otf"; sourceTree = "<group>"; };
-		8A9BD8B419DDD02100B1E57E /* Calibre-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-Thin.otf"; path = "fonts/Calibre-Thin.otf"; sourceTree = "<group>"; };
-		8A9BD8B519DDD02100B1E57E /* Calibre-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Calibre-ThinItalic.otf"; path = "fonts/Calibre-ThinItalic.otf"; sourceTree = "<group>"; };
 		8A9BD8CE19DF28F400B1E57E /* HEMPaddedRoundedLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPaddedRoundedLabel.h; sourceTree = "<group>"; };
 		8A9BD8CF19DF28F400B1E57E /* HEMPaddedRoundedLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPaddedRoundedLabel.m; sourceTree = "<group>"; };
 		8A9D38091A0B0B0900150FAB /* HEMGraphSectionOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMGraphSectionOverlayView.h; sourceTree = "<group>"; };
@@ -845,26 +798,6 @@
 		8AA8D93F19AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMiniGraphCollectionViewCell.m; sourceTree = "<group>"; };
 		8AAEECBA19A431E1006517C4 /* HEMSleepEventButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepEventButton.h; sourceTree = "<group>"; };
 		8AAEECBB19A431E1006517C4 /* HEMSleepEventButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepEventButton.m; sourceTree = "<group>"; };
-		8AAEECE719A5225F006517C4 /* Agile-Black.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-Black.otf"; path = "fonts/Agile-Black.otf"; sourceTree = "<group>"; };
-		8AAEECE819A5225F006517C4 /* Agile-BlackItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-BlackItalic.otf"; path = "fonts/Agile-BlackItalic.otf"; sourceTree = "<group>"; };
-		8AAEECE919A5225F006517C4 /* Agile-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-Bold.otf"; path = "fonts/Agile-Bold.otf"; sourceTree = "<group>"; };
-		8AAEECEA19A5225F006517C4 /* Agile-BoldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-BoldItalic.otf"; path = "fonts/Agile-BoldItalic.otf"; sourceTree = "<group>"; };
-		8AAEECEB19A5225F006517C4 /* Agile-Book.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-Book.otf"; path = "fonts/Agile-Book.otf"; sourceTree = "<group>"; };
-		8AAEECEC19A5225F006517C4 /* Agile-BookItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-BookItalic.otf"; path = "fonts/Agile-BookItalic.otf"; sourceTree = "<group>"; };
-		8AAEECED19A5225F006517C4 /* Agile-Extrabold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-Extrabold.otf"; path = "fonts/Agile-Extrabold.otf"; sourceTree = "<group>"; };
-		8AAEECEE19A5225F006517C4 /* Agile-ExtraboldItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-ExtraboldItalic.otf"; path = "fonts/Agile-ExtraboldItalic.otf"; sourceTree = "<group>"; };
-		8AAEECEF19A5225F006517C4 /* Agile-Extralight.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-Extralight.otf"; path = "fonts/Agile-Extralight.otf"; sourceTree = "<group>"; };
-		8AAEECF019A5225F006517C4 /* Agile-ExtralightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-ExtralightItalic.otf"; path = "fonts/Agile-ExtralightItalic.otf"; sourceTree = "<group>"; };
-		8AAEECF119A5225F006517C4 /* Agile-Fat.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-Fat.otf"; path = "fonts/Agile-Fat.otf"; sourceTree = "<group>"; };
-		8AAEECF219A5225F006517C4 /* Agile-FatItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-FatItalic.otf"; path = "fonts/Agile-FatItalic.otf"; sourceTree = "<group>"; };
-		8AAEECF319A5225F006517C4 /* Agile-Hairline.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-Hairline.otf"; path = "fonts/Agile-Hairline.otf"; sourceTree = "<group>"; };
-		8AAEECF419A5225F006517C4 /* Agile-HairlineItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-HairlineItalic.otf"; path = "fonts/Agile-HairlineItalic.otf"; sourceTree = "<group>"; };
-		8AAEECF519A5225F006517C4 /* Agile-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-Light.otf"; path = "fonts/Agile-Light.otf"; sourceTree = "<group>"; };
-		8AAEECF619A5225F006517C4 /* Agile-LightItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-LightItalic.otf"; path = "fonts/Agile-LightItalic.otf"; sourceTree = "<group>"; };
-		8AAEECF719A5225F006517C4 /* Agile-Medium.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-Medium.otf"; path = "fonts/Agile-Medium.otf"; sourceTree = "<group>"; };
-		8AAEECF819A5225F006517C4 /* Agile-MediumItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-MediumItalic.otf"; path = "fonts/Agile-MediumItalic.otf"; sourceTree = "<group>"; };
-		8AAEECF919A5225F006517C4 /* Agile-Thin.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-Thin.otf"; path = "fonts/Agile-Thin.otf"; sourceTree = "<group>"; };
-		8AAEECFA19A5225F006517C4 /* Agile-ThinItalic.otf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Agile-ThinItalic.otf"; path = "fonts/Agile-ThinItalic.otf"; sourceTree = "<group>"; };
 		8AB0062F1A48C382000CF62F /* HEMMarkdown.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMarkdown.h; sourceTree = "<group>"; };
 		8AB006301A48C382000CF62F /* HEMMarkdown.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMMarkdown.m; sourceTree = "<group>"; };
 		8AB2683719CCFDB400017818 /* HEMAlarmAddButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmAddButton.h; sourceTree = "<group>"; };
@@ -1232,6 +1165,8 @@
 		BFCCF53F1A69F3D400D842F9 /* soundIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = soundIcon.png; sourceTree = "<group>"; };
 		BFCCF5401A69F3D400D842F9 /* soundIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "soundIcon@2x.png"; sourceTree = "<group>"; };
 		BFCCF5411A69F3D400D842F9 /* soundIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "soundIcon@3x.png"; sourceTree = "<group>"; };
+		BFCCF5491A6F1F6C00D842F9 /* HEMRulerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRulerView.h; sourceTree = "<group>"; };
+		BFCCF54A1A6F1F6C00D842F9 /* HEMRulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRulerView.m; sourceTree = "<group>"; };
 		BFD5643B19A3F31B002E461E /* HEMSensePairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensePairViewController.h; sourceTree = "<group>"; };
 		BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairViewController.m; sourceTree = "<group>"; };
 		BFDCC7B819D9C741007A922B /* sense.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sense.png; path = images/sense.png; sourceTree = "<group>"; };
@@ -1870,6 +1805,8 @@
 				BF045B741A1FBCEF0026D5B9 /* HEMScrollableView.m */,
 				BFE8730C1A2FC8A000494231 /* HEMSensorCheckView.h */,
 				BFE8730D1A2FC8A000494231 /* HEMSensorCheckView.m */,
+				BFCCF5491A6F1F6C00D842F9 /* HEMRulerView.h */,
+				BFCCF54A1A6F1F6C00D842F9 /* HEMRulerView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -1998,27 +1935,6 @@
 			name = "View Controllers";
 			sourceTree = "<group>";
 		};
-		8A9BD8A719DDD01200B1E57E /* Calibre */ = {
-			isa = PBXGroup;
-			children = (
-				8A9BD8A819DDD02100B1E57E /* Calibre-Black.otf */,
-				8A9BD8A919DDD02100B1E57E /* Calibre-BlackItalic.otf */,
-				8A9BD8AA19DDD02100B1E57E /* Calibre-Bold.otf */,
-				8A9BD8AB19DDD02100B1E57E /* Calibre-BoldItalic.otf */,
-				8A9BD8AC19DDD02100B1E57E /* Calibre-Light.otf */,
-				8A9BD8AD19DDD02100B1E57E /* Calibre-LightItalic.otf */,
-				8A9BD8AE19DDD02100B1E57E /* Calibre-Medium.otf */,
-				8A9BD8AF19DDD02100B1E57E /* Calibre-MediumItalic.otf */,
-				8A9BD8B019DDD02100B1E57E /* Calibre-Regular.otf */,
-				8A9BD8B119DDD02100B1E57E /* Calibre-RegularItalic.otf */,
-				8A9BD8B219DDD02100B1E57E /* Calibre-Semibold.otf */,
-				8A9BD8B319DDD02100B1E57E /* Calibre-SemiboldItalic.otf */,
-				8A9BD8B419DDD02100B1E57E /* Calibre-Thin.otf */,
-				8A9BD8B519DDD02100B1E57E /* Calibre-ThinItalic.otf */,
-			);
-			name = Calibre;
-			sourceTree = "<group>";
-		};
 		8AA157B61A5EFD2F00BF1D4A /* sleep events */ = {
 			isa = PBXGroup;
 			children = (
@@ -2118,42 +2034,6 @@
 				8AC49F921981DC8C00C2BD63 /* HEMZoomingFlowLayout.m */,
 			);
 			name = Layouts;
-			sourceTree = "<group>";
-		};
-		8AAEECBD19A521CD006517C4 /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				8A9BD8A719DDD01200B1E57E /* Calibre */,
-				8AAEECBE19A521D7006517C4 /* Agile */,
-			);
-			name = Assets;
-			sourceTree = "<group>";
-		};
-		8AAEECBE19A521D7006517C4 /* Agile */ = {
-			isa = PBXGroup;
-			children = (
-				8AAEECE719A5225F006517C4 /* Agile-Black.otf */,
-				8AAEECE819A5225F006517C4 /* Agile-BlackItalic.otf */,
-				8AAEECE919A5225F006517C4 /* Agile-Bold.otf */,
-				8AAEECEA19A5225F006517C4 /* Agile-BoldItalic.otf */,
-				8AAEECEB19A5225F006517C4 /* Agile-Book.otf */,
-				8AAEECEC19A5225F006517C4 /* Agile-BookItalic.otf */,
-				8AAEECED19A5225F006517C4 /* Agile-Extrabold.otf */,
-				8AAEECEE19A5225F006517C4 /* Agile-ExtraboldItalic.otf */,
-				8AAEECEF19A5225F006517C4 /* Agile-Extralight.otf */,
-				8AAEECF019A5225F006517C4 /* Agile-ExtralightItalic.otf */,
-				8AAEECF119A5225F006517C4 /* Agile-Fat.otf */,
-				8AAEECF219A5225F006517C4 /* Agile-FatItalic.otf */,
-				8AAEECF319A5225F006517C4 /* Agile-Hairline.otf */,
-				8AAEECF419A5225F006517C4 /* Agile-HairlineItalic.otf */,
-				8AAEECF519A5225F006517C4 /* Agile-Light.otf */,
-				8AAEECF619A5225F006517C4 /* Agile-LightItalic.otf */,
-				8AAEECF719A5225F006517C4 /* Agile-Medium.otf */,
-				8AAEECF819A5225F006517C4 /* Agile-MediumItalic.otf */,
-				8AAEECF919A5225F006517C4 /* Agile-Thin.otf */,
-				8AAEECFA19A5225F006517C4 /* Agile-ThinItalic.otf */,
-			);
-			name = Agile;
 			sourceTree = "<group>";
 		};
 		8AB2683619CCFD9600017818 /* Views */ = {
@@ -2516,7 +2396,6 @@
 		BFABE74E19A2E6C900AB2F0F /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				8AAEECBD19A521CD006517C4 /* Assets */,
 				BFABE74F19A2E6D900AB2F0F /* Utilities */,
 				BF80F6DD19BF99E800A4D779 /* Views */,
 				BFACC71019A4083400FC77EE /* View Controllers */,
@@ -2784,17 +2663,13 @@
 				8AA157F91A5EFD6B00BF1D4A /* noiseEventIcon.png in Resources */,
 				8AFE77EF19E8C2170000F881 /* humidity-medium@2x.png in Resources */,
 				8AFE782B19E8C2170000F881 /* temperature-medium@2x.png in Resources */,
-				8A9BD8C319DDD02100B1E57E /* Calibre-ThinItalic.otf in Resources */,
 				8AA158051A5EFD6B00BF1D4A /* sunsetEventIcon.png in Resources */,
 				8AF4FA6D1A12F46F00451245 /* stopSound@2x.png in Resources */,
 				8AA157EC1A5EFD6B00BF1D4A /* grayParticulatesIcon@3x.png in Resources */,
 				BFE873041A2FC65600494231 /* sensorSoundBlue@2x.png in Resources */,
 				8AFE77EC19E8C2170000F881 /* humidity-good@2x.png in Resources */,
 				BF14E3BE19EF3BD10006EFEA /* onboarding_bg_wide@2x.png in Resources */,
-				8AAEED0019A5225F006517C4 /* Agile-BookItalic.otf in Resources */,
 				8AFE781119E8C2170000F881 /* phone-good@3x.png in Resources */,
-				8A9BD8C119DDD02100B1E57E /* Calibre-SemiboldItalic.otf in Resources */,
-				8AAEECFC19A5225F006517C4 /* Agile-BlackItalic.otf in Resources */,
 				BFE872F51A2FC65600494231 /* sensorLight@2x.png in Resources */,
 				8AFE77EE19E8C2170000F881 /* humidity-medium.png in Resources */,
 				BFDCC7BA19D9C741007A922B /* sense.png in Resources */,
@@ -2806,7 +2681,6 @@
 				8AA157F31A5EFD6B00BF1D4A /* lightEventIcon.png in Resources */,
 				8AFE780519E8C2170000F881 /* particulates-bad@3x.png in Resources */,
 				BF770F1E1A1550E0008611E9 /* bluetooth.png in Resources */,
-				8AAEED0319A5225F006517C4 /* Agile-Extralight.otf in Resources */,
 				BF05C8EA1A3A6AD6002A1307 /* questions_check@3x.png in Resources */,
 				BF05C8ED1A3A6AD6002A1307 /* questions_circle@3x.png in Resources */,
 				8AFE781419E8C2170000F881 /* phone-medium@3x.png in Resources */,
@@ -2820,9 +2694,6 @@
 				8AFE782819E8C2170000F881 /* temperature-good@2x.png in Resources */,
 				8AA157EF1A5EFD6B00BF1D4A /* graySoundIcon@3x.png in Resources */,
 				BFE8730B1A2FC65600494231 /* sensorTemperatureBlue@3x.png in Resources */,
-				8AAEED0419A5225F006517C4 /* Agile-ExtralightItalic.otf in Resources */,
-				8AAEED0E19A5225F006517C4 /* Agile-ThinItalic.otf in Resources */,
-				8AAEECFF19A5225F006517C4 /* Agile-Book.otf in Resources */,
 				8AFE77FE19E8C2170000F881 /* movement-good@2x.png in Resources */,
 				8AC4A0381989C36200C2BD63 /* humidityIcon@2x.png in Resources */,
 				8A1E723619D62C26007475D3 /* alarmSmartIcon.png in Resources */,
@@ -2838,7 +2709,6 @@
 				BFC8215519E7441200E09D5D /* play@3x.png in Resources */,
 				8AFE780B19E8C2170000F881 /* particulates-medium@3x.png in Resources */,
 				8AFE77E519E8C2170000F881 /* asleep.png in Resources */,
-				8AAEED0919A5225F006517C4 /* Agile-Light.otf in Resources */,
 				8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */,
 				8ACAF40D1A69B7980054885A /* outOfBedEventIcon.png in Resources */,
 				8A63D55B1A5F47A300F5307D /* unknownEventIcon.png in Resources */,
@@ -2860,7 +2730,6 @@
 				8AA157F71A5EFD6B00BF1D4A /* motionEventIcon@2x.png in Resources */,
 				BFB0FBFA19D4C3BD0056FFEC /* sleepInsightsIcon.png in Resources */,
 				8AA157F41A5EFD6B00BF1D4A /* lightEventIcon@2x.png in Resources */,
-				8AAEECFD19A5225F006517C4 /* Agile-Bold.otf in Resources */,
 				8AA157EE1A5EFD6B00BF1D4A /* graySoundIcon@2x.png in Resources */,
 				8AA158011A5EFD6B00BF1D4A /* sleepEventIcon@3x.png in Resources */,
 				BF4473571A63535F00389ECE /* female.png in Resources */,
@@ -2880,7 +2749,6 @@
 				8A7D80431A41094300B0BFD7 /* settingsBarIcon@3x.png in Resources */,
 				8AA158081A5EFD6B00BF1D4A /* wakeupEventIcon.png in Resources */,
 				BF770F281A15559E008611E9 /* sense@3x.png in Resources */,
-				8A9BD8B819DDD02100B1E57E /* Calibre-Bold.otf in Resources */,
 				8AA157FF1A5EFD6B00BF1D4A /* sleepEventIcon.png in Resources */,
 				BFE872F31A2FC65600494231 /* sensorHumidityBlue@3x.png in Resources */,
 				BFE872FA1A2FC65600494231 /* sensorParticulates.png in Resources */,
@@ -2901,7 +2769,6 @@
 				8A93AFC21A09BED100F70A8B /* Share.png in Resources */,
 				BFBA2B811A64A3F400C3AB80 /* pairOfPills@2x.png in Resources */,
 				BF14E3BA19EF3BD10006EFEA /* map.png in Resources */,
-				8A9BD8BA19DDD02100B1E57E /* Calibre-Light.otf in Resources */,
 				8AA157E51A5EFD6B00BF1D4A /* grayHumidityIcon@2x.png in Resources */,
 				BF4473591A63535F00389ECE /* female@3x.png in Resources */,
 				BF0F63651A250A050084E6B4 /* smartAlarm@2x.png in Resources */,
@@ -2910,10 +2777,8 @@
 				BFE873091A2FC65600494231 /* sensorTemperatureBlue.png in Resources */,
 				BF0E53A51A38C4C1002FB083 /* moon.png in Resources */,
 				8A63D5631A6058DA00F5307D /* lightsOutEventIcon@3x.png in Resources */,
-				8AAEED0B19A5225F006517C4 /* Agile-Medium.otf in Resources */,
 				BF5D53271A266C6B0090DD6A /* check@2x.png in Resources */,
 				BFE873031A2FC65600494231 /* sensorSoundBlue.png in Resources */,
-				8AAEED0C19A5225F006517C4 /* Agile-MediumItalic.otf in Resources */,
 				8AA157EA1A5EFD6B00BF1D4A /* grayParticulatesIcon.png in Resources */,
 				8A93AFBE1A09BED100F70A8B /* caret up@3x.png in Resources */,
 				8AFE780219E8C2170000F881 /* movement-medium@3x.png in Resources */,
@@ -2934,8 +2799,6 @@
 				BFF3B4421A5CBF6800B11643 /* accessory.png in Resources */,
 				8AFE781519E8C2170000F881 /* sound-bad.png in Resources */,
 				BFE872FC1A2FC65600494231 /* sensorParticulates@3x.png in Resources */,
-				8AAEED0219A5225F006517C4 /* Agile-ExtraboldItalic.otf in Resources */,
-				8A9BD8B719DDD02100B1E57E /* Calibre-BlackItalic.otf in Resources */,
 				BF1E2E821A04514200DDD0D0 /* temperatureIcon@3x.png in Resources */,
 				BF5E445019AD494500278A2F /* phoneWithEmoticons@2x.png in Resources */,
 				BFE872FE1A2FC65600494231 /* sensorParticulatesBlue@2x.png in Resources */,
@@ -2948,14 +2811,11 @@
 				8AC4A04A1989D47000C2BD63 /* chevronIconLeft@2x.png in Resources */,
 				8AA1580A1A5EFD6B00BF1D4A /* wakeupEventIcon@3x.png in Resources */,
 				BF005C7A19FED57E00E68E87 /* lockIcon.png in Resources */,
-				8A9BD8BD19DDD02100B1E57E /* Calibre-MediumItalic.otf in Resources */,
 				8AFE781D19E8C2170000F881 /* sound-medium@3x.png in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				BF770F141A143E63008611E9 /* shakePill@3x.png in Resources */,
 				BFE872EE1A2FC65600494231 /* sensorHumidity.png in Resources */,
-				8AAEED0A19A5225F006517C4 /* Agile-LightItalic.otf in Resources */,
 				8A93AFD21A09BF0300F70A8B /* sleepInsightsIcon@3x.png in Resources */,
-				8A9BD8B619DDD02100B1E57E /* Calibre-Black.otf in Resources */,
 				BFDCC7BB19D9C741007A922B /* sense@2x.png in Resources */,
 				8AFE781619E8C2170000F881 /* sound-bad@2x.png in Resources */,
 				8AFE782A19E8C2170000F881 /* temperature-medium.png in Resources */,
@@ -2964,16 +2824,13 @@
 				8AC4A03F1989C5A100C2BD63 /* settingsIcon.png in Resources */,
 				BFF3B4571A5F008A00B11643 /* warning.png in Resources */,
 				BFB0FBDD19D253400056FFEC /* pillIcon@2x.png in Resources */,
-				8A9BD8BE19DDD02100B1E57E /* Calibre-Regular.otf in Resources */,
 				8A7D80411A41094300B0BFD7 /* settingsBarIcon.png in Resources */,
 				BF0E53A61A38C4C1002FB083 /* moon@2x.png in Resources */,
-				8AAEECFE19A5225F006517C4 /* Agile-BoldItalic.otf in Resources */,
 				8AA157F11A5EFD6B00BF1D4A /* grayTemperatureIcon@2x.png in Resources */,
 				8A63D55D1A5F47A300F5307D /* unknownEventIcon@3x.png in Resources */,
 				8A7214411A1E7797008B59C4 /* backIcon@3x.png in Resources */,
 				8AA157FA1A5EFD6B00BF1D4A /* noiseEventIcon@2x.png in Resources */,
 				BF005C7B19FED57E00E68E87 /* lockIcon@2x.png in Resources */,
-				8A9BD8BC19DDD02100B1E57E /* Calibre-Medium.otf in Resources */,
 				8AFE77F019E8C2170000F881 /* humidity-medium@3x.png in Resources */,
 				8AA157FE1A5EFD6B00BF1D4A /* partnerEventIcon@3x.png in Resources */,
 				BF770F241A155455008611E9 /* sensePlacement.png in Resources */,
@@ -2997,11 +2854,9 @@
 				8AFE781219E8C2170000F881 /* phone-medium.png in Resources */,
 				8AFE780419E8C2170000F881 /* particulates-bad@2x.png in Resources */,
 				8AFE781719E8C2170000F881 /* sound-bad@3x.png in Resources */,
-				8AAEED0119A5225F006517C4 /* Agile-Extrabold.otf in Resources */,
 				8A4B3D4E199308BB00856BDE /* bluetoothLogoImage.png in Resources */,
 				8AF4FA6C1A12F46F00451245 /* stopSound.png in Resources */,
 				BF005C7F19FED57E00E68E87 /* wifiIcon@3x.png in Resources */,
-				8A9BD8BB19DDD02100B1E57E /* Calibre-LightItalic.otf in Resources */,
 				8AC4A04B1989D47000C2BD63 /* chevronIconRight.png in Resources */,
 				BF770F1F1A1550E0008611E9 /* bluetooth@2x.png in Resources */,
 				8AA157FB1A5EFD6B00BF1D4A /* noiseEventIcon@3x.png in Resources */,
@@ -3018,10 +2873,8 @@
 				8A7D803D1A41094300B0BFD7 /* senseBarIcon@3x.png in Resources */,
 				8AFE77ED19E8C2170000F881 /* humidity-good@3x.png in Resources */,
 				8AA158101A5EFD9500BF1D4A /* alarmSoundIcon@3x.png in Resources */,
-				8AAEED0719A5225F006517C4 /* Agile-Hairline.otf in Resources */,
 				BFE872FF1A2FC65600494231 /* sensorParticulatesBlue@3x.png in Resources */,
 				8A63D5571A5F38FE00F5307D /* HEMTimelineFooterCollectionReusableView.xib in Resources */,
-				8AAEED0819A5225F006517C4 /* Agile-HairlineItalic.otf in Resources */,
 				8A1E723919D62C26007475D3 /* alarmSoundIcon@2x.png in Resources */,
 				BFE873021A2FC65600494231 /* sensorSound@3x.png in Resources */,
 				8A93AFBF1A09BED100F70A8B /* Menu.png in Resources */,
@@ -3032,7 +2885,6 @@
 				8AC4A03A1989C36200C2BD63 /* particleIcon@2x.png in Resources */,
 				8A63D5621A6058DA00F5307D /* lightsOutEventIcon@2x.png in Resources */,
 				BFE872FB1A2FC65600494231 /* sensorParticulates@2x.png in Resources */,
-				8A9BD8C219DDD02100B1E57E /* Calibre-Thin.otf in Resources */,
 				BF71AFCB1A43C22600D1208B /* PillHands@3x.png in Resources */,
 				8ACAF40E1A69B7980054885A /* outOfBedEventIcon@2x.png in Resources */,
 				8AF4FA6E1A12F46F00451245 /* stopSound@3x.png in Resources */,
@@ -3048,7 +2900,6 @@
 				8AA157EB1A5EFD6B00BF1D4A /* grayParticulatesIcon@2x.png in Resources */,
 				8AFE77F919E8C2170000F881 /* light-medium@3x.png in Resources */,
 				8AFE77FF19E8C2170000F881 /* movement-good@3x.png in Resources */,
-				8AAEED0D19A5225F006517C4 /* Agile-Thin.otf in Resources */,
 				BF8E1A871A687E1D009E421F /* senseColors@2x.png in Resources */,
 				8AA158001A5EFD6B00BF1D4A /* sleepEventIcon@2x.png in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
@@ -3080,24 +2931,20 @@
 				8A93AFC01A09BED100F70A8B /* Menu@2x.png in Resources */,
 				8AFE77E819E8C2170000F881 /* humidity-bad.png in Resources */,
 				8AF4FA271A12B01E00451245 /* playSound@3x.png in Resources */,
-				8A9BD8B919DDD02100B1E57E /* Calibre-BoldItalic.otf in Resources */,
 				8AD88C3B1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib in Resources */,
 				8AFE781819E8C2170000F881 /* sound-good.png in Resources */,
 				8AFE781919E8C2170000F881 /* sound-good@2x.png in Resources */,
-				8A9BD8C019DDD02100B1E57E /* Calibre-Semibold.otf in Resources */,
 				BFC8215319E7441200E09D5D /* play.png in Resources */,
 				BF8E1A861A687E1D009E421F /* senseColors.png in Resources */,
 				8A93AFCF1A09BF0300F70A8B /* pillIcon@3x.png in Resources */,
 				8A4B669519EC7EF800445883 /* HEMPresleepItemCollectionViewCell.xib in Resources */,
 				BFE872F91A2FC65600494231 /* sensorLightBlue@3x.png in Resources */,
 				8AFD8A191A649F3900124CCE /* checkmark.png in Resources */,
-				8AAEECFB19A5225F006517C4 /* Agile-Black.otf in Resources */,
 				8AA157E91A5EFD6B00BF1D4A /* grayLightIcon@3x.png in Resources */,
 				8AA158021A5EFD6B00BF1D4A /* sunriseEventIcon.png in Resources */,
 				8AFE77F619E8C2170000F881 /* light-good@3x.png in Resources */,
 				8AFE780119E8C2170000F881 /* movement-medium@2x.png in Resources */,
 				8AFE77FB19E8C2170000F881 /* movement-bad@2x.png in Resources */,
-				8A9BD8BF19DDD02100B1E57E /* Calibre-RegularItalic.otf in Resources */,
 				8AA158071A5EFD6B00BF1D4A /* sunsetEventIcon@3x.png in Resources */,
 				8AA157F81A5EFD6B00BF1D4A /* motionEventIcon@3x.png in Resources */,
 				8AA157E21A5EFD6B00BF1D4A /* alarmEventIcon@2x.png in Resources */,
@@ -3108,10 +2955,8 @@
 				8AA157E61A5EFD6B00BF1D4A /* grayHumidityIcon@3x.png in Resources */,
 				BF770F131A143E63008611E9 /* shakePill@2x.png in Resources */,
 				8A7D803A1A41094300B0BFD7 /* alarmBarIcon@3x.png in Resources */,
-				8AAEED0519A5225F006517C4 /* Agile-Fat.otf in Resources */,
 				BFBA2B7C1A6482DA00C3AB80 /* senseAppIcon@3x.png in Resources */,
 				8A7D80421A41094300B0BFD7 /* settingsBarIcon@2x.png in Resources */,
-				8AAEED0619A5225F006517C4 /* Agile-FatItalic.otf in Resources */,
 				BF770F201A1550E0008611E9 /* bluetooth@3x.png in Resources */,
 				BF05C8EB1A3A6AD6002A1307 /* questions_circle.png in Resources */,
 				8A93AFD01A09BF0300F70A8B /* senseIcon@3x.png in Resources */,
@@ -3311,6 +3156,7 @@
 				BF84C2001A0C111E009471D5 /* HEMSupportUtil.m in Sources */,
 				BF28856C1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m in Sources */,
 				BFB0FBF319D482E90056FFEC /* HEMSettingsNavigationController.m in Sources */,
+				BFCCF54B1A6F1F6C00D842F9 /* HEMRulerView.m in Sources */,
 				8A4D490F1A67480300DD6ECE /* HEMBarGraphView.m in Sources */,
 				8AF4FA731A14129C00451245 /* HEMAudioCache.m in Sources */,
 				BFE8730E1A2FC8A000494231 /* HEMSensorCheckView.m in Sources */,

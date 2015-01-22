@@ -39,43 +39,6 @@
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Your location is needed for Sense to better understand your sleep environment.</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Agile-Black.otf</string>
-		<string>Agile-BlackItalic.otf</string>
-		<string>Agile-Bold.otf</string>
-		<string>Agile-BoldItalic.otf</string>
-		<string>Agile-Book.otf</string>
-		<string>Agile-BookItalic.otf</string>
-		<string>Agile-Extrabold.otf</string>
-		<string>Agile-ExtraboldItalic.otf</string>
-		<string>Agile-Extralight.otf</string>
-		<string>Agile-ExtralightItalic.otf</string>
-		<string>Agile-Fat.otf</string>
-		<string>Agile-FatItalic.otf</string>
-		<string>Agile-Hairline.otf</string>
-		<string>Agile-HairlineItalic.otf</string>
-		<string>Agile-Light.otf</string>
-		<string>Agile-LightItalic.otf</string>
-		<string>Agile-Medium.otf</string>
-		<string>Agile-MediumItalic.otf</string>
-		<string>Agile-ThinItalic.otf</string>
-		<string>Agile-Thin.otf</string>
-		<string>Calibre-Black.otf</string>
-		<string>Calibre-BlackItalic.otf</string>
-		<string>Calibre-Bold.otf</string>
-		<string>Calibre-BoldItalic.otf</string>
-		<string>Calibre-Light.otf</string>
-		<string>Calibre-LightItalic.otf</string>
-		<string>Calibre-Medium.otf</string>
-		<string>Calibre-MediumItalic.otf</string>
-		<string>Calibre-Regular.otf</string>
-		<string>Calibre-RegularItalic.otf</string>
-		<string>Calibre-Semibold.otf</string>
-		<string>Calibre-SemiboldItalic.otf</string>
-		<string>Calibre-Thin.otf</string>
-		<string>Calibre-ThinItalic.otf</string>
-	</array>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

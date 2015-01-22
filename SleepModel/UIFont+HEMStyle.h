@@ -56,6 +56,11 @@
  */
 + (UIFont*)settingsTitleFont;
 
+/**
+ * Font used for the toggle switches found in preference settings
+ */
++ (UIFont *)preferenceControlFont;
+
 + (UIFont *)sensorListValueFont;
 
 + (UIFont *)backViewTextFont;

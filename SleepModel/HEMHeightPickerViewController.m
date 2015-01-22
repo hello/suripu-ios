@@ -5,41 +5,61 @@
 
 #import "HEMHeightPickerViewController.h"
 #import "HEMOnboardingCache.h"
-#import "HEMValueSliderView.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMRulerView.h"
+#import "HelloStyleKit.h"
+#import "HEMMathUtil.h"
 
 CGFloat const HEMHeightPickerCentimetersPerInch = 2.54f;
-static NSInteger HEMMaxHeightInFeet = 9;
 
-@interface HEMHeightPickerViewController () <HEMValueSliderDelegate>
+static NSInteger const HEMMaxHeightInFeet = 9;
+static NSInteger const HEMInchesPerFeet = 12;
+static NSInteger const HEMHeightDefaultFeet = 5;
+static NSInteger const HEMHeightDefaultInch = 8;
 
-@property (nonatomic, getter=isUsingImperial) BOOL usingImperial;
-@property (weak, nonatomic) IBOutlet HEMValueSliderView *heightSliderView;
-@property (assign, nonatomic) NSInteger numberOfRows;
-@property (assign, nonatomic) int selectedHeightInCm;
+@interface HEMHeightPickerViewController () <UIScrollViewDelegate>
+
 @property (weak, nonatomic) IBOutlet UILabel *mainHeightLabel;
 @property (weak, nonatomic) IBOutlet UILabel *otherHeightLabel;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
+@property (weak, nonatomic) IBOutlet UIView *currentMarkerView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightLabelTrailingConstraint;
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *heightSliderHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *arrowHeightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *arrowBottomAlignmentConstraint;
+@property (assign, nonatomic) float selectedHeightInCm;
+@property (strong, nonatomic) HEMRulerView* ruler;
 
 @end
 
 @implementation HEMHeightPickerViewController
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        _feet = -1;
+        _inches = -1;
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self setNumberOfRows:HEMMaxHeightInFeet+1]; // include 0
+    [self configureButtons];
+    [self configureRuler];
+    
+    if ([self delegate] == nil) {
+        [SENAnalytics track:kHEMAnalyticsEventOnBHeight];
+    }
+
+}
+
+- (void)configureButtons {
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-    [[self descriptionLabel] setAttributedText:[HEMOnboardingUtils demographicReason]];
-    [self configureSlider];
     
     if ([self delegate] != nil) {
         NSString* done = NSLocalizedString(@"status.success", nil);
@@ -48,58 +68,94 @@ static NSInteger HEMMaxHeightInFeet = 9;
         [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
     } else {
         [self enableBackButton:NO];
-        [SENAnalytics track:kHEMAnalyticsEventOnBHeight];
     }
-
 }
 
-- (void)configureSlider {
-    [[self heightSliderView] reload];
+- (void)configureRuler {
+    [self setRuler:[[HEMRulerView alloc] initWithSegments:HEMMaxHeightInFeet*HEMInchesPerFeet
+                                                direction:HEMRulerDirectionVertical]];
     
-    NSInteger feet = [self feet] > 0 ? [self feet] : 5;
-    NSInteger inch = [self inches] > 0 ? [self inches] : 8;
-    [[self heightSliderView] setToValue:(feet + (inch/12.0f))];
+    [[self scrollView] addSubview:[self ruler]];
+    [[self scrollView] setBackgroundColor:[UIColor clearColor]];
+    
+    [[self currentMarkerView] setBackgroundColor:[HelloStyleKit senseBlueColor]];
+    
+    // pre iOS 8, there are mystery default insets so this needs to be adjusted
+    if (![[self ruler] respondsToSelector:@selector(layoutMarginsDidChange)]) {
+        [[self scrollView] setContentInset:UIEdgeInsetsMake(8.0f, 0.0f, 8.0f, 0.0f)];
+    }
+}
+
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    CGFloat scrollMinY = CGRectGetMinY([[self scrollView] frame]);
+    CGFloat scrollWidth = CGRectGetWidth([[self scrollView] bounds]);
+    CGFloat markerMinY = CGRectGetMinY([[self currentMarkerView] frame]);
+    UIEdgeInsets insets = [[self scrollView] contentInset];
+    
+    CGRect rulerFrame = [[self ruler] frame];
+    rulerFrame.origin.y = markerMinY - scrollMinY - insets.top;
+    rulerFrame.origin.x = scrollWidth - CGRectGetWidth(rulerFrame);
+    [[self ruler] setFrame:rulerFrame];
+
+    CGSize contentSize = CGSizeZero;
+    contentSize.width = scrollWidth;
+    contentSize.height = CGRectGetHeight(rulerFrame) + (CGRectGetMinY(rulerFrame)*2);
+    [[self scrollView] setContentSize:contentSize];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self scrollToSetHeight];
+}
+
+- (void)scrollToSetHeight {
+    NSInteger feet = [self feet] >= 0 ? [self feet] : HEMHeightDefaultFeet;
+    NSInteger inch = [self inches] >= 0 ? [self inches] : HEMHeightDefaultInch;
+    NSInteger totalInches = (feet * HEMInchesPerFeet) + inch;
+    NSInteger maxInches = HEMMaxHeightInFeet * HEMInchesPerFeet;
+    CGFloat offset = ((maxInches-totalInches) * (HEMRulerSegmentSpacing+HEMRulerSegmentWidth)) - [[self scrollView] contentInset].top;
+    [[self scrollView] setContentOffset:CGPointMake(0.0f, offset) animated:YES];
 }
 
 - (void)adjustConstraintsForIPhone4 {
-    [self updateConstraint:[self heightSliderHeightConstraint] withDiff:-80.0f];
-    [self updateConstraint:[self arrowHeightConstraint] withDiff:-20.0f];
-    [self updateConstraint:[self arrowBottomAlignmentConstraint] withDiff:40.0f];
+    [super adjustConstraintsForIPhone4];
+    [self updateConstraint:[self heightLabelTrailingConstraint] withDiff:-50.0f];
 }
 
-#pragma mark - HEMValueSliderDelegate
-
-- (NSInteger)numberOfRowsInSliderView:(HEMValueSliderView *)sliderView {
-    return [self numberOfRows];
+- (void)adjustConstraintsForIphone5 {
+    [super adjustConstraintsForIphone5];
+    [self updateConstraint:[self heightLabelTrailingConstraint] withDiff:-40.0f];
 }
 
-- (NSNumber*)sliderView:(HEMValueSliderView *)sliderView numberForRow:(NSInteger)row {
-    return @(row);
-}
+#pragma mark - UIScrollViewDelegate
 
-- (float)incrementalValuePerRowInSliderView:(HEMValueSliderView *)sliderView {
-    return 1;
-}
-
-- (void)sliderView:(HEMValueSliderView *)sliderView didScrollToValue:(float)value {
-    NSInteger inches = (int)(roundf((value - (long)floorf(value))*12));
-    NSInteger feet = (int)floorf(value);
-    NSInteger cm = ceilf(((feet * 12) + inches) * HEMHeightPickerCentimetersPerInch);
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat offY = [scrollView contentOffset].y;
+    CGFloat totalInches = MAX(0.0f, (offY + [scrollView contentInset].top) / (HEMRulerSegmentSpacing+HEMRulerSegmentWidth));
+    CGFloat maxInches = HEMMaxHeightInFeet * HEMInchesPerFeet;
+    CGFloat actualInches = maxInches - totalInches; // values are reversed
     
-    if (inches == 12) {
-        inches = 0;
-        feet += 1;
-    }
+    NSInteger inches = (int)actualInches % HEMInchesPerFeet;
+    NSInteger feet = actualInches / HEMInchesPerFeet;
+    CGFloat cm = actualInches * HEMHeightPickerCentimetersPerInch;
     
     NSString* feetFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)feet];
     NSString* inchFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)inches];
     NSString* cmFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cm];
     [[self mainHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat]];
-    [[self otherHeightLabel] setText:[NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"measurement.or", nil), cmFormat]];
+    [[self otherHeightLabel] setText:[NSString stringWithFormat:@"%@", cmFormat]];
+
+    [self setSelectedHeightInCm:cm];
     
-    [self setSelectedHeightInCm:(int)cm];
-    [[[HEMOnboardingCache sharedCache] account] setHeight:@(cm)];
+    if ([self delegate] == nil) {
+        [[[HEMOnboardingCache sharedCache] account] setHeight:@(cm)];
+    }
+    
 }
+
+#pragma mark - Actions
 
 - (IBAction)done:(id)sender {
     if ([self delegate] != nil) {

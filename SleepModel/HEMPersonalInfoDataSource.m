@@ -65,8 +65,8 @@
         height = [NSString stringWithFormat:NSLocalizedString(@"measurement.cm.format", nil), (long)cmValue];
     } else {
         long inValue = HEMToInches(cm);
-        long feet = floorf(inValue / 12);
-        long inches = ceilf(inValue - (feet * 12));
+        long feet = inValue / 12;
+        long inches = inValue % 12;
         NSString* feetFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.ft.format", nil), (long)feet];
         NSString* inchFormat = [NSString stringWithFormat:NSLocalizedString(@"measurement.in.format", nil), (long)inches];
         height = [NSString stringWithFormat:@"%@ %@", feetFormat, inchFormat];
@@ -80,10 +80,10 @@
     NSString* weight = nil;
     
     if (HEMIsMetricSystem()) {
-        long gramValue = [grams longValue];
+        CGFloat gramValue = [grams floatValue];
         weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), gramValue];
     } else {
-        long pounds = HEMToPounds(grams);
+        CGFloat pounds = HEMToPounds(grams);
         weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), pounds];
     }
     

@@ -33,6 +33,7 @@ NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
 @property (nonatomic, strong, readwrite) SENSleepResult* sleepResult;
 @property (nonatomic, strong) NSArray* aggregateDataSources;
 @property (nonatomic, getter=shouldBeLoading) BOOL beLoading;
+@property (nonatomic, strong) NSCalendar* calendar;
 @end
 
 @implementation HEMSleepGraphCollectionViewDataSource
@@ -61,6 +62,8 @@ static NSString* const sensorTypeParticulates = @"particulates";
 static NSString* const sleepEventNameFindCharacter = @"_";
 static NSString* const sleepEventNameReplaceCharacter = @" ";
 static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
+
+static CGFloat HEMEventZPosition = 30.f;
 
 + (NSDateFormatter*)sleepDateFormatter
 {
@@ -94,6 +97,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         _timeDateFormatter.dateFormat = ([SENSettings timeFormat] == SENTimeFormat12Hour) ? @"h:mm a" : @"H:mm";
         _rangeDateFormatter = [NSDateFormatter new];
         _rangeDateFormatter.dateFormat = @"MMM dd";
+        _calendar = [NSCalendar currentCalendar];
         [self configureCollectionView];
         [self reloadData];
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:SENAuthorizationServiceDidAuthorizeNotification object:nil];
@@ -247,24 +251,33 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
+    UICollectionViewCell* cell = nil;
+
     switch (indexPath.section) {
-    case HEMSleepGraphCollectionViewSummarySection: {
-        return [self collectionView:collectionView sleepSummaryCellForItemAtIndexPath:indexPath];
-    }
+    case HEMSleepGraphCollectionViewSummarySection:
+        cell = [self collectionView:collectionView sleepSummaryCellForItemAtIndexPath:indexPath];
+        break;
     case HEMSleepGraphCollectionViewSegmentSection: {
         if ([self segmentForSleepExistsAtIndexPath:indexPath]) {
-            return [self collectionView:collectionView sleepSegmentCellForItemAtIndexPath:indexPath];
+            cell = [self collectionView:collectionView sleepSegmentCellForItemAtIndexPath:indexPath];
         }
         else {
-            return [self collectionView:collectionView sleepEventCellForItemAtIndexPath:indexPath];
+            cell = [self collectionView:collectionView sleepEventCellForItemAtIndexPath:indexPath];
         }
+        break;
     }
-    case HEMSleepGraphCollectionViewPresleepSection: {
-        return [self collectionView:collectionView presleepCellForItemAtIndexPath:indexPath];
+    case HEMSleepGraphCollectionViewPresleepSection:
+        cell = [self collectionView:collectionView presleepCellForItemAtIndexPath:indexPath];
+        break;
     }
-    default:
-        return nil;
+    CGFloat zPosition = indexPath.row;
+    if ([self segmentForEventExistsAtIndexPath:indexPath]) {
+        zPosition += HEMEventZPosition;
     }
+    if (cell.layer.zPosition != zPosition) {
+        [cell.layer setZPosition:zPosition];
+    }
+    return cell;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
@@ -319,7 +332,37 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMNoSleepEventCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
     [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[UIColor colorForSleepDepth:sleepDepth]];
+    [self configureTimeLabelsForCell:cell withSegment:segment];
     return cell;
+}
+
+- (void)configureTimeLabelsForCell:(HEMSleepSegmentCollectionViewCell*)cell
+                       withSegment:(SENSleepResultSegment*)segment
+{
+    [cell removeAllTimeLabels];
+    NSCalendarUnit units = (NSCalendarUnitMinute|NSCalendarUnitHour|NSCalendarUnitDay);
+    NSDateComponents* components = [self.calendar components:units fromDate:segment.date];
+    if (components.minute == 0) {
+        [cell addTimeLabelWithText:[self.timeDateFormatter stringFromDate:segment.date] atHeightRatio:0];
+    }
+    NSTimeInterval segmentInterval = [segment.date timeIntervalSince1970];
+    NSDate* endDate = [NSDate dateWithTimeIntervalSince1970:segmentInterval + [segment.duration doubleValue]];
+    NSTimeInterval endInterval = [endDate timeIntervalSince1970];
+    int i = 1;
+    NSTimeInterval hourInterval = 0;
+    while (hourInterval < endInterval) {
+        NSDateComponents* hourComponents = [NSDateComponents new];
+        hourComponents.hour = i;
+        hourComponents.minute = -components.minute;
+        NSDate* hourDate = [self.calendar dateByAddingComponents:hourComponents toDate:segment.date options:0];
+        hourInterval = [hourDate timeIntervalSince1970];
+        if (hourInterval < endInterval) {
+            CGFloat ratio = ([hourDate timeIntervalSince1970] - segmentInterval)/(endInterval - segmentInterval);
+            NSString* timeText = [[self.timeDateFormatter stringFromDate:hourDate] lowercaseString];
+            [cell addTimeLabelWithText:timeText atHeightRatio:ratio];
+        }
+        i++;
+    }
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
@@ -345,14 +388,12 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
     [cell.eventTypeButton setImage:[self imageForEventType:segment.eventType] forState:UIControlStateNormal];
     cell.eventTimeLabel.text = [self textForTimeInterval:[segment.date timeIntervalSince1970]];
-    BOOL isImportantEvent = [segment.eventType isEqualToString:HEMSleepEventTypeWakeUp]
-        || [segment.eventType isEqualToString:HEMSleepEventTypeFallAsleep];
-    cell.eventTimeLabel.font = isImportantEvent ? [UIFont timelineEventTimestampBoldFont] : [UIFont timelineEventTimestampFont];
     cell.eventTitleLabel.text = [[[self class] localizedNameForSleepEventType:segment.eventType] uppercaseString];
     cell.eventMessageLabel.attributedText = markdown_to_attr_string(segment.message, 0, [HEMMarkdown attributesForEventMessageText]);
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
     [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[UIColor colorForSleepDepth:sleepDepth]];
+    [self configureTimeLabelsForCell:cell withSegment:segment];
     return cell;
 }
 

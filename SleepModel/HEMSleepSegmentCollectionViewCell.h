@@ -17,6 +17,12 @@ extern CGFloat const HEMSleepLineWidth;
  */
 - (void)setSegmentRatio:(CGFloat)ratio withColor:(UIColor*)color;
 
+- (void)addTimeLabelWithText:(NSString*)text atHeightRatio:(CGFloat)heightRatio;
+
+- (void)removeAllTimeLabels;
+
+- (UIImage*)dottedLineBorderImageWithColor:(UIColor*)color;
+
 @property (nonatomic, getter=isFirstSegment) BOOL firstSegment;
 @property (nonatomic, getter=isLastSegment) BOOL lastSegment;
 @property (nonatomic, readonly) CGFloat fillRatio;

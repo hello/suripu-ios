@@ -11,25 +11,26 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sleepEventButtonHeightConstraint;
 @property (nonatomic, strong) AVAudioPlayer* player;
 @property (nonatomic, strong) NSTimer* playerUpdateTimer;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* timeLabelTopConstraint;
+@property (nonatomic, weak) IBOutlet UIImageView* lineView;
 @end
 
 @implementation HEMSleepEventCollectionViewCell
 
 static CGFloat const HEMEventButtonSize = 40.f;
 static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
-static CGFloat const HEMEventTimeLabelRetractedConstant = 7.f;
-static CGFloat const HEMEventTimeLabelExpandedConstant = 53.f;
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     self.backgroundColor = [UIColor whiteColor];
     self.verifyDataButton.hidden = YES;
+    self.lineView.image = [self dottedLineBorderImageWithColor:[HelloStyleKit barButtonEnabledColor]];
     [self configureAudioPlayer];
 }
 
 - (void)prepareForReuse
 {
+    [super prepareForReuse];
     self.waveformView.hidden = YES;
     self.verifyDataButton.hidden = YES;
     self.playSoundButton.hidden = YES;
@@ -58,14 +59,6 @@ static CGFloat const HEMEventTimeLabelExpandedConstant = 53.f;
 
 - (void)useExpandedLayout:(BOOL)isExpanded animated:(BOOL)animated
 {
-    void (^animations)() = ^{
-        self.timeLabelTopConstraint.constant = isExpanded
-        ? HEMEventTimeLabelExpandedConstant : HEMEventTimeLabelRetractedConstant;
-    };
-    if (animated)
-        [UIView animateWithDuration:0.2f animations:animations];
-    else
-        animations();
 }
 
 - (void)drawRect:(CGRect)rect
@@ -98,6 +91,22 @@ static CGFloat const HEMEventTimeLabelExpandedConstant = 53.f;
     else
         [self.spinnerView stopAnimating];
     self.playSoundButton.enabled = !isLoading;
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    CGFloat offset = CGRectGetHeight(self.eventTypeButton.bounds);
+    CGRect frame = self.bounds;
+    frame.origin.y -= ceilf(offset/2);
+    frame.size.height += offset;
+
+    if (CGRectContainsPoint(frame, point)) {
+        if (CGRectContainsPoint(self.eventTypeButton.frame, point))
+            return self.eventTypeButton;
+        return self;
+    }
+
+    return [super hitTest:point withEvent:event];
 }
 
 #pragma mark - Audio

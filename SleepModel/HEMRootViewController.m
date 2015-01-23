@@ -159,17 +159,9 @@ static CGFloat const HEMRootDrawerRevealHeight = 46.f;
 
 #pragma mark - MSDynamicsDrawerViewControllerDelegate
 
-- (BOOL)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController shouldBeginPanePan:(UIPanGestureRecognizer *)panGestureRecognizer
-{
-    HEMSleepSummarySlideViewController* paneController = (id)self.drawerViewController.paneViewController;
-    for (HEMSleepGraphViewController* controller in paneController.viewControllers) {
-        if (controller.collectionView.contentOffset.y > 10)
-            return NO;
-    }
-    return YES;
-}
-
-- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
+                mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState
+                        forDirection:(MSDynamicsDrawerDirection)direction
 {
     switch (paneState) {
         case MSDynamicsDrawerPaneStateClosed:
@@ -185,7 +177,9 @@ static CGFloat const HEMRootDrawerRevealHeight = 46.f;
     }
 }
 
-- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState forDirection:(MSDynamicsDrawerDirection)direction
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
+                didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState
+                        forDirection:(MSDynamicsDrawerDirection)direction
 {
     switch (paneState) {
         case MSDynamicsDrawerPaneStateClosed:
@@ -203,19 +197,24 @@ static CGFloat const HEMRootDrawerRevealHeight = 46.f;
 
 #pragma mark - Drawer
 
+- (HEMSnazzBarController*)barController
+{
+    return (id)[self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
+}
+
 - (void)showSettingsDrawerTabAtIndex:(HEMRootDrawerTab)tabIndex animated:(BOOL)animated {
     [self openSettingsDrawer];
-    HEMSnazzBarController* controller = (id)[self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
+    HEMSnazzBarController* controller = [self barController];
     [controller setSelectedIndex:tabIndex animated:animated];
 }
 
 - (void)hideSettingsDrawerTopBar:(BOOL)hidden animated:(BOOL)animated {
-    HEMSnazzBarController* controller = (id)[self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
+    HEMSnazzBarController* controller = [self barController];
     [controller hideBar:hidden animated:animated];
 }
 
 - (void)showPartialSettingsDrawerTopBarWithRatio:(CGFloat)ratio {
-    HEMSnazzBarController* controller = (id)[self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
+    HEMSnazzBarController* controller = [self barController];
     [controller showPartialBarWithRatio:ratio];
 }
 

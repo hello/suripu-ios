@@ -37,6 +37,7 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate* animationDelegate;
 @property (nonatomic, strong) NSIndexPath* expandedIndexPath;
 @property (nonatomic, getter=presleepSectionIsExpanded) BOOL presleepExpanded;
+@property (nonatomic, strong) UIPanGestureRecognizer* panGestureRecognizer;
 @end
 
 @implementation HEMSleepGraphViewController
@@ -58,6 +59,10 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     [self reloadData];
     self.animationDelegate = [HEMZoomAnimationTransitionDelegate new];
     self.transitioningDelegate = self.animationDelegate;
+    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan)];
+    self.panGestureRecognizer.delegate = self;
+    [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:self.panGestureRecognizer];
+    [self.view addGestureRecognizer:self.panGestureRecognizer];
     [self registerForNotifications];
 }
 
@@ -277,27 +282,43 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 #pragma mark UIGestureRecognizerDelegate
 
+- (void)didPan
+{
+}
+
 - (BOOL)isViewPushed
 {
     CGPoint location = [self.view.superview convertPoint:self.view.frame.origin fromView:nil];
     return location.y > -10.f;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch
+- (BOOL)shouldAllowRecognizerToReceiveTouch:(UIPanGestureRecognizer*)recognizer
 {
-    return self.collectionView.contentOffset.y < 20.f;
+    CGPoint velocity = [recognizer velocityInView:self.view];
+    BOOL movingMostlyVertically = fabsf(velocity.x) <= fabsf(velocity.y);
+    BOOL movingUpwards = velocity.y > 0;
+    return [self isScrolledToTop] && movingUpwards && movingMostlyVertically;
+}
+
+- (BOOL)isScrolledToTop
+{
+    return self.collectionView.contentOffset.y < 10;
+}
+
+- (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch
+{
+    return [self isScrolledToTop];
 }
 
 - (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer
     shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer*)otherGestureRecognizer
 {
-    return [self.collectionView contentSize].height > CGRectGetHeight([self.collectionView bounds]);
+    return ![otherGestureRecognizer isEqual:self.collectionView.panGestureRecognizer];
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer*)gestureRecognizer
 {
-    CGPoint translation = [gestureRecognizer translationInView:[self view]];
-    return fabsf(translation.y) > fabsf(translation.x);
+    return [self shouldAllowRecognizerToReceiveTouch:gestureRecognizer];
 }
 
 #pragma mark UICollectionViewDelegate

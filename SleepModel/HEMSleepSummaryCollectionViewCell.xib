@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -23,13 +23,6 @@
                         <rect key="frame" x="82" y="75" width="155" height="155"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" adjustsImageWhenDisabled="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gnG-Vh-16q">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="306"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                        <state key="normal">
-                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                        </state>
-                    </button>
                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T3i-WO-VZQ" customClass="HEMSleepScoreGraphView">
                         <rect key="frame" x="82" y="75" width="155" height="155"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -88,20 +81,16 @@
                 <constraint firstItem="gDL-0C-m7y" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="AOW-Gn-8co"/>
                 <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="buK-Of-ZfH" secondAttribute="bottom" id="FOD-tr-5xk"/>
                 <constraint firstItem="T3i-WO-VZQ" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="75" id="L63-Mc-EBU"/>
-                <constraint firstItem="gnG-Vh-16q" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="MoH-iG-pwI"/>
                 <constraint firstItem="XU1-BP-3Md" firstAttribute="bottom" secondItem="T3i-WO-VZQ" secondAttribute="bottom" id="RSv-Fh-hRT"/>
                 <constraint firstItem="RAe-yJ-lzB" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="Vj7-5X-3Z2"/>
-                <constraint firstItem="gnG-Vh-16q" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="Zx9-MS-rf3"/>
                 <constraint firstAttribute="trailing" secondItem="DtZ-v4-794" secondAttribute="trailing" id="dYs-Iy-gfn"/>
                 <constraint firstAttribute="centerX" secondItem="FJY-IC-bU5" secondAttribute="centerX" id="diE-Gp-Wcl"/>
                 <constraint firstItem="XU1-BP-3Md" firstAttribute="top" secondItem="T3i-WO-VZQ" secondAttribute="top" id="haR-p5-trk"/>
                 <constraint firstItem="DtZ-v4-794" firstAttribute="top" secondItem="RAe-yJ-lzB" secondAttribute="top" constant="2" id="mhY-FO-gcM"/>
                 <constraint firstAttribute="centerX" secondItem="T3i-WO-VZQ" secondAttribute="centerX" constant="0.5" id="p9I-c4-GqY"/>
                 <constraint firstAttribute="trailing" secondItem="buK-Of-ZfH" secondAttribute="trailing" constant="21" id="qyQ-fV-uRR"/>
-                <constraint firstAttribute="trailing" secondItem="gnG-Vh-16q" secondAttribute="trailing" id="sIW-69-Sal"/>
                 <constraint firstAttribute="bottom" secondItem="gDL-0C-m7y" secondAttribute="bottom" id="tU1-jm-dZL"/>
                 <constraint firstItem="XU1-BP-3Md" firstAttribute="leading" secondItem="T3i-WO-VZQ" secondAttribute="leading" id="twm-Mw-HTt"/>
-                <constraint firstItem="gnG-Vh-16q" firstAttribute="bottom" secondItem="buK-Of-ZfH" secondAttribute="bottom" id="vfC-tO-tva"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="21" id="wPf-Zd-mGf"/>
                 <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="XU1-BP-3Md" secondAttribute="bottom" constant="35" id="z9p-aR-dML"/>
             </constraints>

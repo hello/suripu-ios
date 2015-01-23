@@ -7,15 +7,19 @@
 //
 #import "SENServiceAccount.h"
 #import "SENAPIAccount.h"
+#import "SENAPIPreferences.h"
 #import "SENAuthorizationService.h"
 #import "SENAccount.h"
 #import "SENService+Protected.h"
+#import "SENPreference.h"
+#import "SENSettings.h"
 
 static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account";
 
 @interface SENServiceAccount()
 
 @property (nonatomic, strong) SENAccount* account;
+@property (nonatomic, strong) NSDictionary* preferences;
 
 @end
 
@@ -38,6 +42,7 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     self = [super init];
     if (self) {
         [self listenForAuthChanges];
+        [self listenForSettingChanges];
     }
     return self;
 }
@@ -56,6 +61,7 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
 - (void)serviceReceivedMemoryWarning {
     [super serviceReceivedMemoryWarning];
     [self setAccount:nil];
+    [self setPreferences:nil];
 }
 
 #pragma mark - Authentication Changes
@@ -71,20 +77,62 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     [self setAccount:nil];
 }
 
+#pragma mark - Setting Changes
+
+- (void)listenForSettingChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(updatePreferenceForSetting:)
+                   name:SENSettingsDidUpdateNotification
+                 object:nil];
+}
+
+- (void)updatePreferenceForSetting:(NSNotification*)notification {
+    NSString* settingName = [notification object];
+    if ([settingName length] > 0) {
+        SENPreference* preference = nil;
+        if ([settingName isEqualToString:SENSettingsUpdateTypeTemp]) {
+            preference = [[SENPreference alloc] initWithType:SENPreferenceTypeTempCelcius
+                                                      enable:[SENSettings useCentigrade]];
+        } else if ([settingName isEqualToString:SENSettingsUpdateTypeTime]) {
+            BOOL enable = [SENSettings timeFormat] == SENTimeFormat24Hour;
+            preference = [[SENPreference alloc] initWithType:SENPreferenceTypeTime24
+                                                      enable:enable];
+        }
+        
+        if (preference) {
+            [self updatePreference:preference completion:nil]; // optimistically update
+        }
+    }
+}
+
 #pragma mark - Account Management
 
 - (void)refreshAccount:(SENAccountResponseBlock)completion {
+    __block BOOL accountUpdated = NO;
+    __block BOOL preferencesUpdated = NO;
+    __block SENAccountResponseBlock callback = completion;
+    
+    SENAccountResponseBlock finishBlock = ^(NSError* error) {
+        if (callback && accountUpdated && preferencesUpdated) {
+            callback(error);
+        }
+    };
     __weak typeof(self) weakSelf = self;
     [SENAPIAccount getAccount:^(SENAccount* response, NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            if (error != nil) {
-                if (completion) completion (error);
-                return;
-            }
-            [strongSelf setAccount:response];
-            if (completion) completion (nil);
+        if (error == nil) {
+            [weakSelf setAccount:response];
         }
+        accountUpdated = YES;
+        finishBlock(error);
+    }];
+    
+    [SENAPIPreferences getPreferences:^(NSDictionary* data, NSError *error) {
+        if (error == nil) {
+            [weakSelf setPreferences:data];
+        }
+        preferencesUpdated = YES;
+        finishBlock(error);
     }];
 }
 
@@ -133,6 +181,55 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
                                     if (completion) completion (error);
                                 }];
         }
+    }];
+}
+
+- (void)updateAccount:(SENAccountResponseBlock)completion {
+    
+    __weak typeof(self) weakSelf = self;
+    __block SENAccountResponseBlock callback = completion ?: ^(NSError* error){};
+    
+    void(^update)(NSError* error) = ^(NSError* error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error != nil) {
+            callback(error);
+        }
+        [SENAPIAccount updateAccount:[strongSelf account] completionBlock:^(SENAccount* account, NSError *updateError) {
+            if (error == nil && account != nil) {
+                [strongSelf setAccount:account];
+            }
+            callback(error);
+        }];
+    };
+    
+    if ([self account] == nil) {
+        [self refreshAccount:^(NSError *error) {
+            update(error);
+        }];
+    } else {
+        update(nil);
+    }
+
+}
+
+- (void)updatePreference:(SENPreference*)preference completion:(SENAccountResponseBlock)completion {
+    if (preference == nil) {
+        if (completion) completion ([NSError errorWithDomain:SENServiceAccountErrorDomain
+                                                        code:SENServiceAccountErrorInvalidArg
+                                                    userInfo:nil]);
+        return;
+    }
+
+    __weak typeof(self) weakSelf = self;
+    [SENAPIPreferences updatePreference:preference completion:^(id data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error == nil) {
+            NSMutableDictionary* updatedPref = [[strongSelf preferences] mutableCopy];
+            if (updatedPref == nil) updatedPref = [NSMutableDictionary dictionary];
+            [updatedPref setObject:preference forKey:@([preference type])];
+            [strongSelf setPreferences:updatedPref];
+        }
+        if (completion) completion (error);
     }];
 }
 

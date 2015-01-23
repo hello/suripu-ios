@@ -5,7 +5,13 @@ NSString* const SENSettingsAppGroup = @"group.is.hello.sense.settings";
 NSString* const SENSettingsTimeFormat = @"SENSettingsTimeFormat";
 NSString* const SENSettingsTemperatureFormat = @"SENSettingsTemperatureFormat";
 NSString* const SENSettingsDidUpdateNotification = @"SENSettingsDidUpdateNotification";
+NSString* const SENSettingsUpdateTypeTime = @"time";
+NSString* const SENSettingsUpdateTypeTemp = @"temp";
 
+/**
+ * TODO (jimmy): we should see if we can somehow merge this with account preferences
+ * @see SENServiceAccount
+ */
 @implementation SENSettings
 
 + (NSUserDefaults*)userDefaults {
@@ -53,13 +59,15 @@ NSString* const SENSettingsDidUpdateNotification = @"SENSettingsDidUpdateNotific
 + (void)setTemperatureFormat:(SENTemperatureFormat)temperatureFormat
 {
     [[self userDefaults] setInteger:temperatureFormat forKey:SENSettingsTemperatureFormat];
-    [[NSNotificationCenter defaultCenter] postNotificationName:SENSettingsDidUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SENSettingsDidUpdateNotification
+                                                        object:SENSettingsUpdateTypeTemp];
 }
 
 + (void)setTimeFormat:(SENTimeFormat)timeFormat
 {
     [[self userDefaults] setInteger:timeFormat forKey:SENSettingsTimeFormat];
-    [[NSNotificationCenter defaultCenter] postNotificationName:SENSettingsDidUpdateNotification object:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SENSettingsDidUpdateNotification
+                                                        object:SENSettingsUpdateTypeTime];
 }
 
 + (NSDictionary*)defaults {

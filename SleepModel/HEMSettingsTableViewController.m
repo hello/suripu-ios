@@ -3,6 +3,7 @@
 #import <SenseKit/SENSettings.h>
 
 #import "UIFont+HEMStyle.h"
+#import "NSMutableAttributedString+HEMFormat.h"
 
 #import "HEMSettingsTableViewController.h"
 #import "HEMSettingsTableViewCell.h"
@@ -14,7 +15,12 @@
 
 static NSUInteger const HEMSettingsTableViewRows = 4;
 
-@interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
+@interface HEMSettingsTableViewController () <
+    UITableViewDataSource,
+    UITableViewDelegate,
+    MFMailComposeViewControllerDelegate,
+    UITextViewDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UITableView* settingsTableView;
 @end
@@ -40,10 +46,98 @@ static NSInteger const HEMSettingsSignOutIndex = 3;
     frame.size.height = HEMSettingsCellTableMargin;
     frame.size.width = CGRectGetWidth([[self settingsTableView] bounds]);
     [[self settingsTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
-    [[self settingsTableView] setTableFooterView:[[UIView alloc] initWithFrame:frame]];
+    [[self settingsTableView] setTableFooterView:[self settingsFooterView]];
 }
 
-#pragma mark UITableViewDelegate
+- (UIView*)settingsFooterView {
+    CGRect textFrame = {
+        HEMSettingsCellTableMargin,
+        HEMSettingsCellTableMargin,
+        CGRectGetWidth([[self settingsTableView] bounds])-(HEMSettingsCellTableMargin*2),
+        0.0f
+    };
+    CGSize constraint = textFrame.size;
+    constraint.height = MAXFLOAT;
+    
+    UITextView* textView = [[UITextView alloc] init];
+    [textView setAttributedText:[self attributedHelpText]];
+    [textView setEditable:NO];
+    [textView setDelegate:self];
+    [textView setBackgroundColor:[UIColor clearColor]];
+    [textView setDataDetectorTypes:UIDataDetectorTypeLink|UIDataDetectorTypeAddress];
+    [textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+    CGSize textSize = [textView sizeThatFits:constraint];
+    textFrame.size.height = textSize.height;
+    [textView setFrame:textFrame];
+    
+    CGRect footerFrame = CGRectZero;
+    footerFrame.size.width = CGRectGetWidth([[self settingsTableView] bounds]);
+    footerFrame.size.height = CGRectGetHeight(textFrame) + HEMSettingsCellTableMargin;
+    
+    UIView* container = [[UIView alloc] initWithFrame:footerFrame];
+    [container setBackgroundColor:[UIColor clearColor]];
+    [container addSubview:textView];
+    [container setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+    
+    return container;
+}
+
+- (NSAttributedString*)attributedHelpText {
+    NSString* helpFormat = NSLocalizedString(@"settings.help.format", nil);
+    NSArray* args = @[[self supportLink],[self helpEmail]];
+    UIColor* color = [HelloStyleKit backViewTextColor];
+    UIFont* font = [UIFont settingsHelpFont];
+    
+    NSMutableAttributedString* attrHelp
+        = [[NSMutableAttributedString alloc] initWithFormat:helpFormat
+                                                       args:args
+                                                  baseColor:color
+                                                   baseFont:font];
+    NSMutableParagraphStyle* paraStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    [paraStyle setAlignment:NSTextAlignmentCenter];
+    [attrHelp addAttribute:NSParagraphStyleAttributeName
+                     value:paraStyle
+                     range:NSMakeRange(0, [attrHelp length])];
+    
+    return attrHelp;
+}
+
+- (NSAttributedString*)supportLink {
+    NSString* hyperLinkText = NSLocalizedString(@"settings.help.support", nil);
+    NSString* url = NSLocalizedString(@"help.url.support", nil);
+    NSMutableAttributedString* link = [[NSMutableAttributedString alloc] initWithString:hyperLinkText];
+    [link addAttributes:@{NSLinkAttributeName : url,
+                          NSFontAttributeName : [UIFont settingsHelpFont],
+                          NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor]}
+                  range:NSMakeRange(0, [hyperLinkText length])];
+    return link;
+}
+
+- (NSAttributedString*)helpEmail {
+    NSString* text = NSLocalizedString(@"help.email.address", nil);
+    NSMutableAttributedString* helpEmail = [[NSMutableAttributedString alloc] initWithString:text];
+    [helpEmail addAttributes:@{NSFontAttributeName : [UIFont settingsHelpFont],
+                          NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor]}
+                       range:NSMakeRange(0, [text length])];
+    return helpEmail;
+}
+
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    NSString* lowerScheme = [URL scheme];
+    if ([lowerScheme hasPrefix:@"mailto"]) {
+        [HEMSupportUtil sendEmailTo:[URL resourceSpecifier]
+                        withSubject:NSLocalizedString(@"help.email.subject", nil)
+                               from:self
+                       mailDelegate:self];
+    } else if ([lowerScheme hasPrefix:@"http"]){
+        [HEMSupportUtil openURL:[URL absoluteString] from:self];
+    }
+    return NO;
+}
+
+#pragma mark - UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {

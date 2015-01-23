@@ -11,6 +11,16 @@
 @interface HEMSupportUtil : NSObject
 
 /**
+ * Launch a mail composer, if email accounts are configured, with email and
+ * subject prefilled as specified, attaching any logs that may exist for
+ * troubleshooting purposes
+ */
++ (void)sendEmailTo:(NSString*)email
+        withSubject:(NSString*)subject
+               from:(UIViewController*)controller
+       mailDelegate:(id<MFMailComposeViewControllerDelegate>)delegate;
+
+/**
  * Launch a mail composer, if email accounts are configured, that attaches sys
  * logs to the email which is addressed to an customer support address.  If an
  * account is not configured

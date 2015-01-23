@@ -1636,6 +1636,33 @@
                                             <outlet property="titleLabel" destination="GlN-SR-oNV" id="yxV-9z-eRx"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="alarmListStatusCell" id="EAK-HN-7Nz" customClass="HEMAlarmListCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="569" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarms are currently unavailable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-2N-W4J">
+                                                    <rect key="frame" x="16" y="28" width="553" height="24"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="17"/>
+                                                    <color key="textColor" red="0.69725722074508667" green="0.69723641872406006" blue="0.69724822044372559" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="QuX-2N-W4J" firstAttribute="trailing" secondItem="EAK-HN-7Nz" secondAttribute="trailingMargin" constant="8" id="cwi-pu-SzQ"/>
+                                            <constraint firstItem="QuX-2N-W4J" firstAttribute="leading" secondItem="EAK-HN-7Nz" secondAttribute="leadingMargin" constant="8" id="cyY-iD-dT5"/>
+                                            <constraint firstAttribute="centerY" secondItem="QuX-2N-W4J" secondAttribute="centerY" id="wT5-qJ-z27"/>
+                                        </constraints>
+                                        <size key="customSize" width="568.5" height="80"/>
+                                        <connections>
+                                            <outlet property="detailLabel" destination="QuX-2N-W4J" id="2sO-oP-cGY"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="Mem-QL-GCW" id="Y1K-l1-RVd"/>

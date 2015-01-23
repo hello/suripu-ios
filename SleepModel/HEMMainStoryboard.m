@@ -15,6 +15,7 @@ static NSString *const _HEMalarmDeleteCell = @"alarmDeleteCell";
 static NSString *const _HEMalarmListCell = @"alarmListCell";
 static NSString *const _HEMalarmListEmptyCell = @"alarmListEmptyCell";
 static NSString *const _HEMalarmListNavViewController = @"alarmListNavViewController";
+static NSString *const _HEMalarmListStatusCell = @"alarmListStatusCell";
 static NSString *const _HEMalarmListViewController = @"alarmListViewController";
 static NSString *const _HEMalarmNavController = @"alarmNavController";
 static NSString *const _HEMalarmRepeat = @"alarmRepeat";
@@ -69,6 +70,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmDeleteCellReuseIdentifier { return _HEMalarmDeleteCell; }
 +(NSString *)alarmListCellReuseIdentifier { return _HEMalarmListCell; }
 +(NSString *)alarmListEmptyCellReuseIdentifier { return _HEMalarmListEmptyCell; }
++(NSString *)alarmListStatusCellReuseIdentifier { return _HEMalarmListStatusCell; }
 +(NSString *)alarmRepeatCellReuseIdentifier { return _HEMalarmRepeatCell; }
 +(NSString *)alarmSoundCellReuseIdentifier { return _HEMalarmSoundCell; }
 +(NSString *)alarmSwitchCellReuseIdentifier { return _HEMalarmSwitchCell; }

@@ -115,16 +115,6 @@
     __weak typeof(controller) weakController = controller;
     [SENAPIAlarms alarmsWithCompletion:^(NSArray* alarms, NSError* error) {
         __strong typeof(weakController) strongController = weakController;
-        if (error) {
-            [self showError:error
-                  withTitle:NSLocalizedString(@"alarm.load-error.title", nil)
-               onController:strongController];
-        } else {
-            [SENAlarm clearSavedAlarms];
-            for (SENAlarm* alarm in alarms) {
-                [alarm save];
-            }
-        }
         [indicatorView stopAnimating];
         strongController.navigationItem.rightBarButtonItem = rightButton;
         if (completion)

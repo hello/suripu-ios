@@ -250,6 +250,7 @@
 "alarms.no-alarm.title" = "Smart alarms";
 "alarms.no-alarm.message" = "Sense's Smart Alarm will wake you up at just the right moment in your sleep cycle, so you wake feeling rested. Once set, your alarms will appear here.";
 "alarms.no-alarm.instructions" = "Set your first smart alarm";
+"alarms.no-data" = "Alarms are currently unavailable.";
 
 // alarm settings
 "alarm.time-range.format" = "Wake up between *%@* and *%@*";

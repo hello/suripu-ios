@@ -12,6 +12,8 @@
 #import "HEMMathUtil.h"
 #import "HelloStyleKit.h"
 
+CGFloat const HEMSettingsCellTableMargin = 20.0f;
+
 static CGFloat const HEMSettingsCellCornerRadius = 3.0f;
 static CGFloat const HEMSettingsCellSeparatorSize = 0.5f;
 static CGFloat const HEMSettingsCellMargins = 16.0f;

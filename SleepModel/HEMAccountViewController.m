@@ -26,7 +26,6 @@
 #import "HEMWeightPickerViewController.h"
 #import "HEMGenderPickerViewController.h"
 
-static CGFloat const HEMAccountTableViewMargin = 20.0f;
 static CGFloat const HEMAccountTableSectionHeaderHeight = 20.0f;
 
 @interface HEMAccountViewController() <
@@ -60,7 +59,7 @@ static CGFloat const HEMAccountTableSectionHeaderHeight = 20.0f;
     [self setDataSource:[[HEMSettingsAccountDataSource alloc] initWithTableView:[self infoTableView]]];
     
     CGRect frame = CGRectZero;
-    frame.size.height = HEMAccountTableViewMargin;
+    frame.size.height = HEMSettingsCellTableMargin;
     frame.size.width = CGRectGetWidth([[self infoTableView] bounds]);
     
     [[self infoTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];

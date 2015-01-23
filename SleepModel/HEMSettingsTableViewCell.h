@@ -8,10 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+extern CGFloat const HEMSettingsCellTableMargin;
+
 @interface HEMSettingsTableViewCell : UITableViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* valueLabel;
+@property (weak, nonatomic) IBOutlet UIView*  accessory;
 
 - (void)showTopCorners;
 - (void)showBottomCorners;

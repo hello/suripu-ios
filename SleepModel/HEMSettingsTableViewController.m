@@ -13,7 +13,6 @@
 #import "HEMSupportUtil.h"
 
 static NSUInteger const HEMSettingsTableViewRows = 4;
-static CGFloat const HEMSettingsTableViewMargin = 20.0f;
 
 @interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate, MFMailComposeViewControllerDelegate>
 
@@ -38,7 +37,7 @@ static NSInteger const HEMSettingsSignOutIndex = 3;
 {
     [super viewDidLoad];
     CGRect frame = CGRectZero;
-    frame.size.height = HEMSettingsTableViewMargin;
+    frame.size.height = HEMSettingsCellTableMargin;
     frame.size.width = CGRectGetWidth([[self settingsTableView] bounds]);
     [[self settingsTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
     [[self settingsTableView] setTableFooterView:[[UIView alloc] initWithFrame:frame]];

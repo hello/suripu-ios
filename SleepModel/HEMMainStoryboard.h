@@ -23,6 +23,7 @@
 +(NSString *)deviceReuseIdentifier;
 +(NSString *)warningReuseIdentifier;
 +(NSString *)actionsReuseIdentifier;
++(NSString *)choiceCellReuseIdentifier;
 +(NSString *)alarmListCellReuseIdentifier;
 +(NSString *)alarmListEmptyCellReuseIdentifier;
 +(NSString *)alarmChoiceCellReuseIdentifier;
@@ -36,6 +37,7 @@
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier;
 +(NSString *)alarmRepeatSegueIdentifier;
++(NSString *)choiceSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
 +(NSString *)pickSoundSegueIdentifier;
 +(NSString *)pillSegueIdentifier;

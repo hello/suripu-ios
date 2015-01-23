@@ -24,6 +24,8 @@ static NSString *const _HEMalarmSoundCell = @"alarmSoundCell";
 static NSString *const _HEMalarmSoundTableViewController = @"alarmSoundTableViewController";
 static NSString *const _HEMalarmSwitchCell = @"alarmSwitchCell";
 static NSString *const _HEMalarmViewController = @"alarmViewController";
+static NSString *const _HEMchoice = @"choice";
+static NSString *const _HEMchoiceCell = @"choiceCell";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdevice = @"device";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
@@ -70,6 +72,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmRepeatCellReuseIdentifier { return _HEMalarmRepeatCell; }
 +(NSString *)alarmSoundCellReuseIdentifier { return _HEMalarmSoundCell; }
 +(NSString *)alarmSwitchCellReuseIdentifier { return _HEMalarmSwitchCell; }
++(NSString *)choiceCellReuseIdentifier { return _HEMchoiceCell; }
 +(NSString *)deviceReuseIdentifier { return _HEMdevice; }
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)insightReuseIdentifier { return _HEMinsight; }
@@ -88,6 +91,7 @@ static NSString *const _HEMwarning = @"warning";
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier { return _HEMaccountSettings; }
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
++(NSString *)choiceSegueIdentifier { return _HEMchoice; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
 +(NSString *)pickSoundSegueIdentifier { return _HEMpickSound; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }

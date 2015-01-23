@@ -43,7 +43,7 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 @implementation HEMRootViewController
 
 static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
-static CGFloat const HEMRootDrawerRevealHeight = 40.f;
+static CGFloat const HEMRootDrawerRevealHeight = 46.f;
 
 + (UIViewController*)instantiateDrawerViewController {
     HEMSnazzBarController* barController = [HEMSnazzBarController new];

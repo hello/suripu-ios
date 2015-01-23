@@ -405,6 +405,8 @@
 "actions.answer" = "Answer";
 "actions.later" = "Later";
 "actions.fix-now" = "Fix now";
+"actions.next" = "Next";
+"actions.done" = "Done";
 "actions.troubleshoot" = "troubleshoot";
 "actions.edit.wifi" = "edit wifi";
 "status.success" = "Done";

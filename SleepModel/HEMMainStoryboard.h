@@ -17,6 +17,7 @@
 +(NSString *)singleReuseIdentifier;
 +(NSString *)multipleReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
++(NSString *)preferenceReuseIdentifier;
 +(NSString *)unitCellReuseIdentifier;
 +(NSString *)settingsCellReuseIdentifier;
 +(NSString *)pairReuseIdentifier;

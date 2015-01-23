@@ -14,7 +14,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountInfoType) {
     HEMSettingsAccountInfoTypeBirthday,
     HEMSettingsAccountInfoTypeGender,
     HEMSettingsAccountInfoTypeHeight,
-    HEMSettingsAccountInfoTypeWeight
+    HEMSettingsAccountInfoTypeWeight,
+    HEMSettingsAccountInfoTypeEnhancedAudio
 };
 
 @interface HEMSettingsAccountDataSource : NSObject <UITableViewDataSource>
@@ -26,6 +27,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountInfoType) {
 - (HEMSettingsAccountInfoType)infoTypeAtIndexPath:(NSIndexPath*)indexPath;
 - (NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (NSString*)valueForCellAtIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)isEnabledAtIndexPath:(NSIndexPath*)indexPath;
 - (BOOL)isLastRow:(NSIndexPath*)indexPath;
 - (NSDateComponents*)birthdateComponents;
 - (NSUInteger)genderEnumValue;
@@ -47,5 +49,9 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountInfoType) {
 
 - (void)updateGender:(SENAccountGender)gender
           completion:(void(^)(NSError* error))completion;
+
+- (void)enablePreference:(BOOL)enable
+                 forType:(HEMSettingsAccountInfoType)type
+              completion:(void(^)(NSError* error))completion;
 
 @end

@@ -6,18 +6,21 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENServiceAccount.h>
-#import <SenseKit/SENAccount.h>
 #import <SenseKit/SENAPIAccount.h>
+#import <SenseKit/Model.h>
 
 #import "HEMSettingsAccountDataSource.h"
 #import "HEMMathUtil.h"
 #import "HEMMainStoryboard.h"
 
+// \u0222 is a round dot
 static NSString* const HEMSettingsAcctPasswordPlaceholder = @"\u2022\u2022\u2022\u2022\u2022\u2022";
+static NSString* const HEMSettingsAcctDataSourceErrorDomain = @"is.hello.app.settings.account";
 
 static NSInteger const HEMSettingsAcctSectionAccount = 0;
 static NSInteger const HEMSettingsAcctSectionDemographics = 1;
-static NSInteger const HEMSettingsAcctTotalSections = 2; // bump this if you add sections above
+static NSInteger const HEMSettingsAcctSectionPreferences = 2;
+static NSInteger const HEMSettingsAcctTotalSections = 3; // bump this if you add sections above
 
 static NSInteger const HEMSettingsAcctRowEmail = 0;
 static NSInteger const HEMSettingsAcctRowPassword = 1;
@@ -28,6 +31,9 @@ static NSInteger const HEMSettingsAcctRowGender = 1;
 static NSInteger const HEMSettingsAcctRowHeight = 2;
 static NSInteger const HEMSettingsAcctRowWeight = 3;
 static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
+
+static NSInteger const HEMSettingsAcctRowEnhancedAudio = 0;
+static NSInteger const HEMSettingsAcctPreferenceTotRows = 1;
 
 @interface HEMSettingsAccountDataSource()
 
@@ -60,6 +66,10 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
             break;
         case HEMSettingsAcctSectionDemographics:
             rows = HEMSettingsAcctDemographicsTotRows;
+            break;
+        case HEMSettingsAcctSectionPreferences:
+            rows = HEMSettingsAcctPreferenceTotRows;
+            break;
         default:
             break;
     }
@@ -68,7 +78,14 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
 
 - (UITableViewCell*)tableView:(UITableView *)tableView
         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard infoReuseIdentifier]];
+    NSInteger section = [indexPath section];
+    NSString* reuseId = nil;
+    if (section == HEMSettingsAcctSectionPreferences) {
+        reuseId = [HEMMainStoryboard preferenceReuseIdentifier];
+    } else {
+        reuseId = [HEMMainStoryboard infoReuseIdentifier];
+    }
+    return [tableView dequeueReusableCellWithIdentifier:reuseId];
 }
 
 #pragma mark - Data
@@ -111,6 +128,9 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
         case HEMSettingsAccountInfoTypeWeight:
             title = NSLocalizedString(@"settings.personal.info.weight", nil);
             break;
+        case HEMSettingsAccountInfoTypeEnhancedAudio:
+            title = NSLocalizedString(@"settings.account.enhanced-audio", nil);
+            break;
         default:
             break;
     }
@@ -140,11 +160,28 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
         case HEMSettingsAccountInfoTypeWeight:
             subtitle = [self weight];
             break;
+        case HEMSettingsAccountInfoTypeEnhancedAudio: // no value string to display
         default:
             break;
     }
     
     return subtitle ?: NSLocalizedString(@"empty-data", nil);
+}
+
+- (BOOL)isEnabledAtIndexPath:(NSIndexPath*)indexPath {
+    BOOL enabled = NO;
+    HEMSettingsAccountInfoType type = [self infoTypeAtIndexPath:indexPath];
+    switch (type) {
+        case HEMSettingsAccountInfoTypeEnhancedAudio: {
+            NSDictionary* prefs = [[SENServiceAccount sharedService] preferences];
+            SENPreference* pref = [prefs objectForKey:@(SENPreferenceTypeEnhancedAudio)];
+            enabled = [pref enabled];
+            break;
+        }
+        default:
+            break;
+    }
+    return enabled;
 }
 
 - (NSDateComponents*)birthdateComponents {
@@ -224,6 +261,10 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
             break;
         case HEMSettingsAcctSectionDemographics:
             last = [indexPath row] == HEMSettingsAcctDemographicsTotRows - 1;
+            break;
+        case HEMSettingsAcctSectionPreferences:
+            last = [indexPath row] == HEMSettingsAcctPreferenceTotRows - 1;
+            break;
         default:
             break;
     }
@@ -263,6 +304,14 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
             default:
                 break;
         }
+    } else if (section == HEMSettingsAcctSectionPreferences) {
+        switch (row) {
+            case HEMSettingsAcctRowEnhancedAudio:
+                type = HEMSettingsAccountInfoTypeEnhancedAudio;
+                break;
+            default:
+                break;
+        }
     }
     return type;
 }
@@ -273,12 +322,8 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
     [[self tableView] reloadData]; // reload first to reflect temp change
     
     __weak typeof(self) weakSelf = self;
-    [SENAPIAccount updateAccount:[[SENServiceAccount sharedService] account] completionBlock:^(id data, NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error == nil) {
-            [strongSelf reload:completion];
-            return;
-        }
+    [[SENServiceAccount sharedService] updateAccount:^(NSError *error) {
+        [[weakSelf tableView] reloadData];
     }];
 }
 
@@ -339,6 +384,41 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
         }
         if (completion) completion (error);
     }];
+}
+
+#pragma mark Preferences
+
+- (void)updatePreference:(SENPreference*)preference completion:(void(^)(NSError* error))completion {
+    __weak typeof(self) weakSelf = self;
+    [[SENServiceAccount sharedService] updatePreference:preference completion:^(NSError *error) {
+        [[weakSelf tableView] reloadData];
+    }];
+}
+
+- (void)enablePreference:(BOOL)enable
+                 forType:(HEMSettingsAccountInfoType)type
+              completion:(void(^)(NSError* error))completion {
+    
+    SENPreference* preference = nil;
+    SENServiceAccount* service = [SENServiceAccount sharedService];
+    
+    switch (type) {
+        case HEMSettingsAccountInfoTypeEnhancedAudio: {
+            preference = [[service preferences] objectForKey:@(SENPreferenceTypeEnhancedAudio)];
+            break;
+        }
+        default:
+            break;
+    }
+    
+    if (preference) {
+        [preference setEnabled:enable];
+        [self updatePreference:preference completion:completion];
+    } else {
+        if (completion) completion ([NSError errorWithDomain:HEMSettingsAcctDataSourceErrorDomain
+                                                        code:-1
+                                                    userInfo:nil]);
+    }
 }
 
 @end

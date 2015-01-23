@@ -19,5 +19,6 @@ extern CGFloat const HEMSettingsCellTableMargin;
 - (void)showTopCorners;
 - (void)showBottomCorners;
 - (void)showNoCorners;
+- (void)showTopAndBottomCorners;
 
 @end

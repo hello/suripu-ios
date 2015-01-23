@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENSettings.h>
+#import <SenseKit/SENServiceAccount.h>
 
 #import "UIFont+HEMStyle.h"
 

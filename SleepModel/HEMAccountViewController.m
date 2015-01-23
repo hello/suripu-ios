@@ -27,6 +27,7 @@
 #import "HEMGenderPickerViewController.h"
 
 static CGFloat const HEMAccountTableSectionHeaderHeight = 20.0f;
+static CGFloat const HEMAccountTableFooterMargins = 22.0f;
 
 @interface HEMAccountViewController() <
     UITableViewDelegate,
@@ -63,9 +64,44 @@ static CGFloat const HEMAccountTableSectionHeaderHeight = 20.0f;
     frame.size.width = CGRectGetWidth([[self infoTableView] bounds]);
     
     [[self infoTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
-    [[self infoTableView] setTableFooterView:[[UIView alloc] initWithFrame:frame]];
+    [[self infoTableView] setTableFooterView:[self tableFooter]];
     [[self infoTableView] setDataSource:[self dataSource]];
     [[self infoTableView] setDelegate:self];
+}
+
+- (UIView*)tableFooter {
+    UIView* footerView = [[UIView alloc] init];
+    [footerView setBackgroundColor:[[self infoTableView] backgroundColor]];
+    [footerView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+    
+    
+    UILabel* label = [[UILabel alloc] init];
+    [label setFont:[UIFont settingsHelpFont]];
+    [label setTextColor:[HelloStyleKit backViewTextColor]];
+    [label setText:NSLocalizedString(@"settings.enhanced-audio.desc", nil)];
+    [label setNumberOfLines:0];
+    [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    
+    UIScreen* mainScreen = [UIScreen mainScreen];
+    CGFloat screenWidth = CGRectGetWidth([mainScreen bounds]);
+    CGFloat labelWidth = screenWidth-(HEMAccountTableFooterMargins*2);
+    CGSize constraint = CGSizeMake(labelWidth, MAXFLOAT);
+    CGRect labelFrame = {
+        HEMAccountTableFooterMargins,
+        HEMAccountTableFooterMargins,
+        labelWidth,
+        [label sizeThatFits:constraint].height
+    };
+    [label setFrame:labelFrame];
+    
+    CGRect footerFrame = [footerView frame];
+    footerFrame.size.width = screenWidth;
+    footerFrame.size.height = CGRectGetMaxY(labelFrame) + HEMAccountTableFooterMargins;
+    [footerView setFrame:footerFrame];
+
+    [footerView addSubview:label];
+    
+    return footerView;
 }
 
 #pragma mark - UITableViewDelegate
@@ -88,12 +124,27 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* title = [[self dataSource] titleForCellAtIndexPath:indexPath];
     NSString* value = [[self dataSource] valueForCellAtIndexPath:indexPath];
     
+    if ([[settingsCell accessory] isKindOfClass:[UISwitch class]]) {
+        UISwitch* settingsSwitch = (UISwitch*)[settingsCell accessory];
+        BOOL enabled = [[self dataSource] isEnabledAtIndexPath:indexPath];
+        [settingsSwitch setOn:enabled];
+        [settingsSwitch setTag:[[self dataSource] infoTypeAtIndexPath:indexPath]];
+        [settingsSwitch addTarget:self
+                           action:@selector(togglePreferenceSwitch:)
+                 forControlEvents:UIControlEventTouchUpInside];
+    }
+    
     [[settingsCell titleLabel] setText:title];
     [[settingsCell valueLabel] setText:value];
     
-    if ([indexPath row] == 0) {
+    BOOL firstRow = [indexPath row] == 0;
+    BOOL lastRow = [[self dataSource] isLastRow:indexPath];
+    
+    if (firstRow && lastRow) {
+        [settingsCell showTopAndBottomCorners];
+    } else if (firstRow) {
         [settingsCell showTopCorners];
-    } else if ([[self dataSource] isLastRow:indexPath]) {
+    } else if (lastRow) {
         [settingsCell showBottomCorners];
     } else {
         [settingsCell showNoCorners];
@@ -136,6 +187,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             [[HEMStyledNavigationViewController alloc] initWithRootViewController:editController];
         [self presentViewController:nav animated:YES completion:nil];
     }
+}
+
+#pragma mark - Actions
+
+- (void)togglePreferenceSwitch:(UISwitch*)preferenceSwitch {
+    HEMSettingsAccountInfoType type = [preferenceSwitch tag];
+    
+    __weak typeof(self) weakSelf = self;
+    [[self dataSource] enablePreference:[preferenceSwitch isOn] forType:type completion:^(NSError *error) {
+        [weakSelf showErrorIfAny:error];
+    }];
 }
 
 #pragma mark - Segues / Next Controller Prep

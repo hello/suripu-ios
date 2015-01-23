@@ -37,6 +37,7 @@ static NSString *const _HEMoverTime = @"overTime";
 static NSString *const _HEMpair = @"pair";
 static NSString *const _HEMpickSound = @"pickSound";
 static NSString *const _HEMpill = @"pill";
+static NSString *const _HEMpreference = @"preference";
 static NSString *const _HEMquestion = @"question";
 static NSString *const _HEMsense = @"sense";
 static NSString *const _HEMsensorGraphCell = @"sensorGraphCell";
@@ -79,6 +80,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
 +(NSString *)overTimeReuseIdentifier { return _HEMoverTime; }
 +(NSString *)pairReuseIdentifier { return _HEMpair; }
++(NSString *)preferenceReuseIdentifier { return _HEMpreference; }
 +(NSString *)questionReuseIdentifier { return _HEMquestion; }
 +(NSString *)sensorGraphCellReuseIdentifier { return _HEMsensorGraphCell; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }

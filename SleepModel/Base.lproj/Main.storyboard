@@ -635,6 +635,44 @@
                                             <outlet property="valueLabel" destination="8gY-uK-2c1" id="GDP-Nc-ow7"/>
                                         </connections>
                                     </tableViewCell>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="preference" id="9mo-qv-uob" customClass="HEMSettingsTableViewCell">
+                                        <rect key="frame" x="10" y="10" width="600" height="64"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="9mo-qv-uob" id="AFJ-7D-6vK">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xOd-qg-dIm">
+                                                    <rect key="frame" x="26" y="0.0" width="477" height="64"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="fmk-b1-ZDT">
+                                                    <rect key="frame" x="523" y="15" width="51" height="31"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="31" id="g75-TS-2vn"/>
+                                                        <constraint firstAttribute="width" constant="49" id="z3l-p5-leE"/>
+                                                    </constraints>
+                                                    <color key="onTintColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                </switch>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="xOd-qg-dIm" secondAttribute="bottom" constant="-8" id="15A-P4-ooh"/>
+                                                <constraint firstItem="xOd-qg-dIm" firstAttribute="trailing" secondItem="fmk-b1-ZDT" secondAttribute="leading" priority="750" constant="-20" id="9cJ-JJ-1JC"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="fmk-b1-ZDT" secondAttribute="trailing" constant="20" id="VTu-Cs-M6J"/>
+                                                <constraint firstItem="xOd-qg-dIm" firstAttribute="top" secondItem="AFJ-7D-6vK" secondAttribute="topMargin" constant="-8" id="cu8-NM-cDl"/>
+                                                <constraint firstAttribute="centerY" secondItem="fmk-b1-ZDT" secondAttribute="centerY" constant="1.5" id="uDm-xn-3pp"/>
+                                                <constraint firstItem="xOd-qg-dIm" firstAttribute="leading" secondItem="AFJ-7D-6vK" secondAttribute="leadingMargin" constant="18" id="ymJ-4Q-8FO"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="accessory" destination="fmk-b1-ZDT" id="VYN-53-bTh"/>
+                                            <outlet property="titleLabel" destination="xOd-qg-dIm" id="Esx-bi-LYi"/>
+                                        </connections>
+                                    </tableViewCell>
                                 </prototypes>
                             </tableView>
                         </subviews>
@@ -1648,7 +1686,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="568.5" height="96"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="569" height="96"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RM9-XI-qde">
@@ -1701,7 +1739,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="568.5" height="178"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="569" height="178"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SMART ALARMS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GlN-SR-oNV">

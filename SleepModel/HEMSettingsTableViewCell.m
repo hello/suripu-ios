@@ -112,4 +112,9 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
     [[self separator] setHidden:NO];
 }
 
+- (void)showTopAndBottomCorners {
+    [self roundContentLayerCorners:UIRectCornerAllCorners];
+    [[self separator] setHidden:YES];
+}
+
 @end

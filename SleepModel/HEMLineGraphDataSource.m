@@ -28,12 +28,16 @@
     NSArray* indexes = [[self.labeledIndexes allObjects] sortedArrayUsingSelector:@selector(compare:)];
     for (NSNumber* index in indexes) {
         SENSensorDataPoint* dataPoint = [self dataPointAtIndex:[index integerValue]];
-        NSString* formattedValue = self.unit == SENSensorUnitLux ? @"0" : NSLocalizedString(@"empty-data", nil);
+        NSString* formattedValue = [self canHaveZeroValue] ? @"0" : NSLocalizedString(@"empty-data", nil);
         if ([dataPoint.value floatValue] != 0)
             formattedValue = [SENSensor formatValue:dataPoint.value withUnit:self.unit];
         [labels addObject:formattedValue];
     }
     return labels;
+}
+
+- (BOOL)canHaveZeroValue {
+    return self.unit == SENSensorUnitLux || self.unit == SENSensorUnitDecibel;
 }
 
 #pragma mark - BEMSimpleLineGraphDataSource

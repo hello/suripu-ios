@@ -349,7 +349,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     CGFloat value = [[SENSensor value:dataPoint.value inPreferredUnit:self.sensor.unit] floatValue];
     if ([dataPoint.value floatValue] > 0)
         self.valueLabel.text = [NSString stringWithFormat:@"%.0f", value];
-    else if (self.sensor.unit == SENSensorUnitLux)
+    else if ([self.graphDataSource canHaveZeroValue])
         self.valueLabel.text = @"0";
     else
         self.valueLabel.text = NSLocalizedString(@"empty-data", nil);

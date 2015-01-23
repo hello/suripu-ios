@@ -141,7 +141,7 @@
 "settings.account.password" = "Password";
 "settings.help.format" = "If you're having trouble, visit %@ or contact us at %@";
 "settings.help.support" = "Support";
-"settings.enhanced-audio.desc" = "Enhanced audio allows Sense to pick up snoring, sleep talking and other noice disturbances.";
+"settings.enhanced-audio.desc" = "Enhanced audio allows Sense to pick up snoring, sleep talking and other noise disturbances.";
 
 // support
 "debug.options.title" = "Debug options";

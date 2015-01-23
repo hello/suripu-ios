@@ -68,15 +68,18 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 {
     [super viewDidAppear:animated];
     [self fadeInGraphView];
-    [UIView animateWithDuration:0.25 animations:^{
-        [self.hourlyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
-    }];
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:HEMSensorRefreshInterval
                                                          target:self
                                                        selector:@selector(refreshData)
                                                        userInfo:nil
                                                         repeats:YES];
-    [self positionSelectionViewUnderView:self.hourlyGraphButton];
+    BOOL firstLoad = self.selectionLeftConstraint.constant == 0;
+    if (firstLoad) {
+        [UIView animateWithDuration:0.25 animations:^{
+            [self.hourlyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
+        }];
+        [self positionSelectionViewUnderView:self.hourlyGraphButton];
+    }
     [self registerForNotifications];
 }
 

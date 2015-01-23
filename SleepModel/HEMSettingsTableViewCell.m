@@ -41,7 +41,7 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
     [[self titleLabel] setBackgroundColor:[UIColor clearColor]];
     
     [[self valueLabel] setFont:[UIFont settingsTableCellDetailFont]];
-    [[self valueLabel] setTextColor:[HelloStyleKit settingsCellValueTextColor]];
+    [[self valueLabel] setTextColor:[HelloStyleKit settingsValueTextColor]];
     [[self valueLabel] setBackgroundColor:[UIColor clearColor]];
     [[self valueLabel] setTextAlignment:NSTextAlignmentRight];
 }

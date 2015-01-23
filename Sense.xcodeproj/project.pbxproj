@@ -457,6 +457,7 @@
 		BFC3BE981A7202700022C6C2 /* settingsCheck@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC3BE951A7202700022C6C2 /* settingsCheck@2x.png */; };
 		BFC3BE991A7202700022C6C2 /* settingsCheck@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC3BE961A7202700022C6C2 /* settingsCheck@3x.png */; };
 		BFC3BE9C1A7202DA0022C6C2 /* HEMChoiceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3BE9B1A7202DA0022C6C2 /* HEMChoiceViewController.m */; };
+		BFC3BE9F1A722BEB0022C6C2 /* HEMHelpFooterView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3BE9E1A722BEB0022C6C2 /* HEMHelpFooterView.m */; };
 		BFC8215319E7441200E09D5D /* play.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215019E7441200E09D5D /* play.png */; };
 		BFC8215419E7441200E09D5D /* play@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215119E7441200E09D5D /* play@2x.png */; };
 		BFC8215519E7441200E09D5D /* play@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC8215219E7441200E09D5D /* play@3x.png */; };
@@ -1161,6 +1162,8 @@
 		BFC3BE961A7202700022C6C2 /* settingsCheck@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "settingsCheck@3x.png"; path = "images/settingsCheck@3x.png"; sourceTree = "<group>"; };
 		BFC3BE9A1A7202DA0022C6C2 /* HEMChoiceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMChoiceViewController.h; sourceTree = "<group>"; };
 		BFC3BE9B1A7202DA0022C6C2 /* HEMChoiceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMChoiceViewController.m; sourceTree = "<group>"; };
+		BFC3BE9D1A722BEB0022C6C2 /* HEMHelpFooterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHelpFooterView.h; sourceTree = "<group>"; };
+		BFC3BE9E1A722BEB0022C6C2 /* HEMHelpFooterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHelpFooterView.m; sourceTree = "<group>"; };
 		BFC8215019E7441200E09D5D /* play.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = play.png; path = images/play.png; sourceTree = "<group>"; };
 		BFC8215119E7441200E09D5D /* play@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@2x.png"; path = "images/play@2x.png"; sourceTree = "<group>"; };
 		BFC8215219E7441200E09D5D /* play@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "play@3x.png"; path = "images/play@3x.png"; sourceTree = "<group>"; };
@@ -1865,6 +1868,8 @@
 				BFF3B44F1A5E208B00B11643 /* HEMDeviceActionCollectionViewCell.m */,
 				BFF3B45A1A5F03AD00B11643 /* HEMWarningCollectionViewCell.h */,
 				BFF3B45B1A5F03AD00B11643 /* HEMWarningCollectionViewCell.m */,
+				BFC3BE9D1A722BEB0022C6C2 /* HEMHelpFooterView.h */,
+				BFC3BE9E1A722BEB0022C6C2 /* HEMHelpFooterView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3127,6 +3132,7 @@
 				BF14E3E619EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m in Sources */,
 				BFF3B4501A5E208B00B11643 /* HEMDeviceActionCollectionViewCell.m in Sources */,
 				8AB2684719CCFF8800017818 /* HEMAlarmUtils.m in Sources */,
+				BFC3BE9F1A722BEB0022C6C2 /* HEMHelpFooterView.m in Sources */,
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,
 				BF05C8FD1A3FC6E3002A1307 /* HEMQuestionCell.m in Sources */,
 				8A5C1ECC1A30F1F900CBF393 /* HEMSleepGraphView.m in Sources */,

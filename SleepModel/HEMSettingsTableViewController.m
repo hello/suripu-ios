@@ -12,17 +12,18 @@
 #import "HEMLogUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMSupportUtil.h"
+#import "HEMHelpFooterView.h"
 
 static NSUInteger const HEMSettingsTableViewRows = 4;
 
 @interface HEMSettingsTableViewController () <
     UITableViewDataSource,
-    UITableViewDelegate,
-    MFMailComposeViewControllerDelegate,
-    UITextViewDelegate
+    UITableViewDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UITableView* settingsTableView;
+@property (weak, nonatomic) UILabel* versionLabel;
+
 @end
 
 @implementation HEMSettingsTableViewController
@@ -42,99 +43,85 @@ static NSInteger const HEMSettingsSignOutIndex = 3;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [self configureTableView];
+}
+
+- (void)configureTableView {
+    CGFloat width = CGRectGetWidth([[self settingsTableView] bounds]);
+    
+    // header
     CGRect frame = CGRectZero;
     frame.size.height = HEMSettingsCellTableMargin;
-    frame.size.width = CGRectGetWidth([[self settingsTableView] bounds]);
+    frame.size.width = width;
     [[self settingsTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
-    [[self settingsTableView] setTableFooterView:[self settingsFooterView]];
+    
+    // footer
+    HEMHelpFooterView* footer = [[HEMHelpFooterView alloc] initWithWidth:width
+                                                 andContainingController:self];
+    [self addVersionLabelToFooter:footer];
+    [[self settingsTableView] setTableFooterView:footer];
+    
+    DDLogVerbose(@"content height %f, footer height %f, table height %f",
+                 [[self settingsTableView] contentSize].height,
+                 CGRectGetHeight([footer bounds]),
+                 CGRectGetHeight([[self settingsTableView] bounds]));
 }
 
-- (UIView*)settingsFooterView {
-    CGRect textFrame = {
-        HEMSettingsCellTableMargin,
-        HEMSettingsCellTableMargin,
-        CGRectGetWidth([[self settingsTableView] bounds])-(HEMSettingsCellTableMargin*2),
-        0.0f
-    };
-    CGSize constraint = textFrame.size;
-    constraint.height = MAXFLOAT;
+- (void)addVersionLabelToFooter:(UIView*)footer {
+    NSBundle* bundle = [NSBundle mainBundle];
+    NSString* name = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    NSString* vers = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString* versionText = [NSString stringWithFormat:@"%@ %@", name, vers];
     
-    UITextView* textView = [[UITextView alloc] init];
-    [textView setAttributedText:[self attributedHelpText]];
-    [textView setEditable:NO];
-    [textView setDelegate:self];
-    [textView setBackgroundColor:[UIColor clearColor]];
-    [textView setDataDetectorTypes:UIDataDetectorTypeLink|UIDataDetectorTypeAddress];
-    [textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    CGSize textSize = [textView sizeThatFits:constraint];
-    textFrame.size.height = textSize.height;
-    [textView setFrame:textFrame];
+    UILabel* versionLabel = [[UILabel alloc] init];
+    [versionLabel setText:versionText];
+    [versionLabel setFont:[UIFont settingsHelpFont]];
+    [versionLabel setTextColor:[HelloStyleKit backViewTextColor]];
+    [versionLabel setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin
+                                      |UIViewAutoresizingFlexibleRightMargin];
+    [versionLabel sizeToFit];
     
-    CGRect footerFrame = CGRectZero;
-    footerFrame.size.width = CGRectGetWidth([[self settingsTableView] bounds]);
-    footerFrame.size.height = CGRectGetHeight(textFrame) + HEMSettingsCellTableMargin;
+    CGRect versionFrame = [versionLabel frame];
+    versionFrame.origin.x = (CGRectGetWidth([footer bounds])-CGRectGetWidth(versionFrame))/2;
+    versionFrame.origin.y = CGRectGetHeight([footer bounds]) + HEMSettingsCellTableMargin;
+    [versionLabel setFrame:versionFrame];
     
-    UIView* container = [[UIView alloc] initWithFrame:footerFrame];
-    [container setBackgroundColor:[UIColor clearColor]];
-    [container addSubview:textView];
-    [container setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [footer addSubview:versionLabel];
     
-    return container;
+    // adjust the footer
+    CGRect footerFrame = [footer frame];
+    footerFrame.size.height = CGRectGetMaxY([versionLabel frame]);
+    [footer setFrame:footerFrame];
+    
+    [self setVersionLabel:versionLabel];
 }
 
-- (NSAttributedString*)attributedHelpText {
-    NSString* helpFormat = NSLocalizedString(@"settings.help.format", nil);
-    NSArray* args = @[[self supportLink],[self helpEmail]];
-    UIColor* color = [HelloStyleKit backViewTextColor];
-    UIFont* font = [UIFont settingsHelpFont];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+
+    CGFloat tableHeight = CGRectGetHeight([[self settingsTableView] bounds]);
+    CGFloat contentHeight = [[self settingsTableView] contentSize].height;
+    CGFloat versionHeight = CGRectGetHeight([[self versionLabel] bounds]);
+    CGFloat bottomAnchorY = tableHeight - versionHeight - HEMSettingsCellTableMargin;
     
-    NSMutableAttributedString* attrHelp
-        = [[NSMutableAttributedString alloc] initWithFormat:helpFormat
-                                                       args:args
-                                                  baseColor:color
-                                                   baseFont:font];
-    NSMutableParagraphStyle* paraStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-    [paraStyle setAlignment:NSTextAlignmentCenter];
-    [attrHelp addAttribute:NSParagraphStyleAttributeName
-                     value:paraStyle
-                     range:NSMakeRange(0, [attrHelp length])];
-    
-    return attrHelp;
-}
+    if (contentHeight < bottomAnchorY) {
+        // move the version label to the bottom of the table view
+        UIView* tableFooter = [[self settingsTableView] tableFooterView];
+        CGRect footerFrame = [tableFooter frame];
+        CGRect relativeFrame = [tableFooter convertRect:[tableFooter bounds] toView:[self view]];
+        CGFloat footerHeight = CGRectGetHeight(footerFrame);
+        CGFloat adjustedFooterHeight = tableHeight - CGRectGetMaxY(relativeFrame) + footerHeight;
+        
+        CGRect versionFrame = [[self versionLabel] frame];
+        versionFrame.origin.y =
+            adjustedFooterHeight
+            - HEMSettingsCellTableMargin
+            - versionHeight;
+        [[self versionLabel] setFrame:versionFrame];
 
-- (NSAttributedString*)supportLink {
-    NSString* hyperLinkText = NSLocalizedString(@"settings.help.support", nil);
-    NSString* url = NSLocalizedString(@"help.url.support", nil);
-    NSMutableAttributedString* link = [[NSMutableAttributedString alloc] initWithString:hyperLinkText];
-    [link addAttributes:@{NSLinkAttributeName : url,
-                          NSFontAttributeName : [UIFont settingsHelpFont],
-                          NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor]}
-                  range:NSMakeRange(0, [hyperLinkText length])];
-    return link;
-}
-
-- (NSAttributedString*)helpEmail {
-    NSString* text = NSLocalizedString(@"help.email.address", nil);
-    NSMutableAttributedString* helpEmail = [[NSMutableAttributedString alloc] initWithString:text];
-    [helpEmail addAttributes:@{NSFontAttributeName : [UIFont settingsHelpFont],
-                          NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor]}
-                       range:NSMakeRange(0, [text length])];
-    return helpEmail;
-}
-
-#pragma mark - UITextViewDelegate
-
-- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
-    NSString* lowerScheme = [URL scheme];
-    if ([lowerScheme hasPrefix:@"mailto"]) {
-        [HEMSupportUtil sendEmailTo:[URL resourceSpecifier]
-                        withSubject:NSLocalizedString(@"help.email.subject", nil)
-                               from:self
-                       mailDelegate:self];
-    } else if ([lowerScheme hasPrefix:@"http"]){
-        [HEMSupportUtil openURL:[URL absoluteString] from:self];
+        footerFrame.size.height = adjustedFooterHeight;
+        [tableFooter setFrame:footerFrame];
     }
-    return NO;
 }
 
 #pragma mark - UITableViewDelegate
@@ -205,13 +192,6 @@ static NSInteger const HEMSettingsSignOutIndex = 3;
             return NSLocalizedString(@"actions.sign-out", nil);
     }
     return nil;
-}
-
-#pragma mark - Contact Support Mail Delegate
-
-- (void)mailComposeController:(MFMailComposeViewController*)controller didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error
-{
-    [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
 }
 
 @end

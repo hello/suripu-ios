@@ -53,7 +53,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [self configureDateFormatters];
     self.hourlyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
     self.dailyGraphButton.titleLabel.font = [UIFont sensorRangeSelectionFont];
-    self.selectionView.alpha = 0;
     [self initializeGraphDataSource];
     [self configureGraphView];
     [self configureSensorValueViews];
@@ -77,6 +76,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
                                                        selector:@selector(refreshData)
                                                        userInfo:nil
                                                         repeats:YES];
+    [self positionSelectionViewUnderView:self.hourlyGraphButton];
     [self registerForNotifications];
 }
 
@@ -248,7 +248,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     void (^animations)() = ^{
         self.graphView.alpha = 0;
         self.overlayView.alpha = 0;
-        self.selectionView.alpha = 0;
     };
     void (^completion)(BOOL) = ^(BOOL finished) {
         if ([self isShowingHourlyData]) {
@@ -258,7 +257,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
         }
         [UIView animateWithDuration:0.25 animations:^{
             self.graphView.alpha = 1.f;
-            self.selectionView.alpha = 1.f;
         }];
     };
     if (animated) {
@@ -287,6 +285,10 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [view layoutIfNeeded];
     CGFloat buttonWidthDiff = (CGRectGetWidth(self.selectionView.bounds) - CGRectGetWidth(view.bounds))/2;
     self.selectionLeftConstraint.constant = CGRectGetMinX(view.frame) - buttonWidthDiff;
+    [self.selectionView setNeedsUpdateConstraints];
+    [UIView animateWithDuration:0.25f animations:^{
+        [self.selectionView layoutIfNeeded];
+    }];
 }
 
 - (void)updateGraphWithData:(NSArray*)dataSeries

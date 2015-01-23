@@ -84,18 +84,6 @@
 #define COCOAPODS_VERSION_MINOR_CocoaLumberjack_Extensions 0
 #define COCOAPODS_VERSION_PATCH_CocoaLumberjack_Extensions 0
 
-// FCDynamicPanesNavigationController
-#define COCOAPODS_POD_AVAILABLE_FCDynamicPanesNavigationController
-#define COCOAPODS_VERSION_MAJOR_FCDynamicPanesNavigationController 1
-#define COCOAPODS_VERSION_MINOR_FCDynamicPanesNavigationController 0
-#define COCOAPODS_VERSION_PATCH_FCDynamicPanesNavigationController 0
-
-// FCMutableArray
-#define COCOAPODS_POD_AVAILABLE_FCMutableArray
-#define COCOAPODS_VERSION_MAJOR_FCMutableArray 1
-#define COCOAPODS_VERSION_MINOR_FCMutableArray 0
-#define COCOAPODS_VERSION_PATCH_FCMutableArray 0
-
 // FDWaveformView
 #define COCOAPODS_POD_AVAILABLE_FDWaveformView
 #define COCOAPODS_VERSION_MAJOR_FDWaveformView 0
@@ -113,6 +101,12 @@
 #define COCOAPODS_VERSION_MAJOR_LGBluetooth 1
 #define COCOAPODS_VERSION_MINOR_LGBluetooth 1
 #define COCOAPODS_VERSION_PATCH_LGBluetooth 4
+
+// MSDynamicsDrawerViewController
+#define COCOAPODS_POD_AVAILABLE_MSDynamicsDrawerViewController
+#define COCOAPODS_VERSION_MAJOR_MSDynamicsDrawerViewController 1
+#define COCOAPODS_VERSION_MINOR_MSDynamicsDrawerViewController 5
+#define COCOAPODS_VERSION_PATCH_MSDynamicsDrawerViewController 1
 
 // Mixpanel
 #define COCOAPODS_POD_AVAILABLE_Mixpanel

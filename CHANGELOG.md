@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.0.61
+
+New:
+
+* Updated height selector design
+* Updated weight selector design
+
+Fixes:
+
+* Better error handling for creating and updating Smart Alarm
+
 ## 1.0.0.60
 
 fixes:

@@ -79,9 +79,11 @@
 
 - (BOOL)isValidDayToAdd:(SENAlarmRepeatDays)day
 {
-    return !([self.alarmCache isSmart] && ![HEMAlarmUtils areRepeatDaysValid:day
-                                                               forSmartAlarm:self.alarm
-                                               presentingControllerForErrors:self]);
+    if (![self.alarmCache isSmart])
+        return YES;
+    return [HEMAlarmUtils areRepeatDaysValid:day
+                               forSmartAlarm:self.alarm
+               presentingControllerForErrors:self];
 }
 
 @end

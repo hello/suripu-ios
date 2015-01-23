@@ -16,14 +16,15 @@ static NSString* const HEMFontFamilyNameLight = @"Avenir-Light";
 static NSString* const HEMFontFamilyNameLightOblique = @"Avenir-LightOblique";
 static NSString* const HEMFontFamilyNameHeavyOblique = @"Avenir-HeavyOblique";
 static NSString* const HEMFontFamilyNameMedium = @"Avenir-Medium";
-static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
+static NSString* const HEMNumberFontFamilyNameUltraLight = @"AvenirNext-UltraLight";
+static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont *)alarmMeridiemFont {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
 }
 
 + (UIFont *)alarmNumberFont {
-    return [UIFont fontWithName:HEMLargeFontFamilyName size:50.f];
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:50.f];
 }
 
 + (UIFont *)insightTitleFont {
@@ -39,7 +40,7 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)largeNumberFont {
-    return [UIFont fontWithName:HEMLargeFontFamilyName size:72.f];
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:72.f];
 }
 
 + (UIFont *)settingsTableCellFont {
@@ -79,7 +80,7 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)sensorListValueFont {
-    return [UIFont fontWithName:HEMLargeFontFamilyName size:36.f];
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:36.f];
 }
 
 + (UIFont *)backViewTextFont {
@@ -99,7 +100,7 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)timelineEventTimestampFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:13.f];
+    return [UIFont fontWithName:HEMNumberFontFamilyNameMedium size:11.f];
 }
 
 + (UIFont *)timelineEventTimestampBoldFont {
@@ -229,11 +230,11 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont *)onboardingTitleFont {
-    return [UIFont fontWithName:HEMLargeFontFamilyName size:24.0f];
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:24.0f];
 }
 
 + (UIFont *)onboardingTitleLargeFont {
-    return [UIFont fontWithName:HEMLargeFontFamilyName size:32.0f];
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:32.0f];
 }
 
 + (UIFont *)onboardingDescriptionFont {
@@ -253,7 +254,7 @@ static NSString* const HEMLargeFontFamilyName = @"AvenirNext-UltraLight";
 }
 
 + (UIFont*)onboardingRoomCheckSensorValueFont {
-    return [UIFont fontWithName:HEMLargeFontFamilyName size:80.0f];
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:80.0f];
 }
 
 + (UIFont*)onboardingRoomCheckSensorUnitFont {

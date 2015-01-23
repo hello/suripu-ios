@@ -18,8 +18,10 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSupportUtil.h"
 #import "HEMPillPairViewController.h"
+#import "HEMSensePairViewController.h"
+#import "HEMStyledNavigationViewController.h"
 
-@interface HEMSystemAlertController()<HEMWiFiConfigurationDelegate, HEMPillPairDelegate>
+@interface HEMSystemAlertController()<HEMPillPairDelegate, HEMSensePairingDelegate>
 
 @property (nonatomic, strong) HEMActionView* alertView;
 @property (nonatomic, weak)   UIViewController* viewController;
@@ -77,15 +79,10 @@
 
 - (void)deviceWarningTitle:(NSString**)warningTitle message:(NSString**)warningMessage {
     switch ([self warningState]) {
-        case SENServiceDeviceStateNotConnectedToWiFi:
-            *warningTitle = NSLocalizedString(@"alerts.device.sense-wifi.title", nil);
-            *warningMessage = NSLocalizedString(@"alerts.device.no-wifi", nil);
+        case SENServiceDeviceStateSenseNotPaired:
+            *warningTitle = NSLocalizedString(@"alerts.device.no-sense.title", nil);
+            *warningMessage = NSLocalizedString(@"alerts.device.no-sense.message", nil);
             break;
-// don't support this for now since the app currently will never be in this state
-//        case SENServiceDeviceStateSenseNotPaired:
-//            *warningTitle = NSLocalizedString(@"alerts.device.no-sense.title", nil);
-//            *warningMessage = NSLocalizedString(@"alerts.device.no-sense.message", nil);
-//            break;
         case SENServiceDeviceStatePillNotPaired:
             *warningTitle = NSLocalizedString(@"alerts.device.no-pill.title", nil);
             *warningMessage = NSLocalizedString(@"alerts.device.no-pill.message", nil);
@@ -123,7 +120,7 @@
 
 - (void)fixDeviceProblemLater:(id)sender {
     [self dismissAlert:^{
-        // TODO (jimmy): what is later?
+        [self setWarningState:SENServiceDeviceStateUnknown];
     }];
 }
 
@@ -136,8 +133,8 @@
 - (void)launchHandlerForDeviceState {
     // supported warnings are handled below
     switch ([self warningState]) {
-        case SENServiceDeviceStateNotConnectedToWiFi:
-            [self configureWiFi];
+        case SENServiceDeviceStateSenseNotPaired:
+            [self showSensePairController];
             break;
         case SENServiceDeviceStatePillNotPaired:
             [self showPillPairController];
@@ -145,34 +142,34 @@
         default:
             break;
     }
+    // reset it
+    [self setWarningState:SENServiceDeviceStateUnknown];
 }
 
 - (void)dismissAlert:(void(^)(void))completion {
     [[self alertView] dismiss:YES completion:^{
         [self setAlertView:nil];
-        [self setWarningState:SENServiceDeviceStateUnknown];
         if (completion) completion ();
     }];
 }
 
-#pragma mark - WiFi Problems
+#pragma mark  - Sense Problems
 
-- (void)configureWiFi {
-    HEMWifiPickerViewController* picker =
-        (HEMWifiPickerViewController*) [HEMOnboardingStoryboard instantiateWifiPickerViewController];
-    [picker setDelegate:self];
-    
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:picker];
+- (void)showSensePairController {
+    HEMSensePairViewController* pairVC =
+        (HEMSensePairViewController*) [HEMOnboardingStoryboard instantiateSensePairViewController];
+    [pairVC setDelegate:self];
+    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
     [[self viewController] presentViewController:nav animated:YES completion:nil];
 }
 
-#pragma mark HEMWifiConfigurationDelegate
+#pragma mark HEMSensePairDelegate
 
-- (void)didCancelWiFiConfigurationFrom:(id)controller {
+- (void)didPairSense:(BOOL)pair from:(UIViewController*)controller {
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didConfigureWiFiTo:(NSString *)ssid from:(id)controller {
+- (void)didSetupWiFiForPairedSense:(BOOL)setup from:(UIViewController*)controller {
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -180,9 +177,9 @@
 
 - (void)showPillPairController {
     HEMPillPairViewController* pairVC =
-    (HEMPillPairViewController*) [HEMOnboardingStoryboard instantiatePillPairViewController];
+        (HEMPillPairViewController*) [HEMOnboardingStoryboard instantiatePillPairViewController];
     [pairVC setDelegate:self];
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:pairVC];
+    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
     [[self viewController] presentViewController:nav animated:YES completion:nil];
 }
 

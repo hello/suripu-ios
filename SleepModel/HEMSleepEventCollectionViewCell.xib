@@ -92,6 +92,7 @@
                         <constraints>
                             <constraint firstItem="MQC-tj-fHb" firstAttribute="leading" secondItem="fHd-pv-egS" secondAttribute="leading" id="0XQ-QE-vSW"/>
                             <constraint firstAttribute="bottom" secondItem="MQC-tj-fHb" secondAttribute="bottom" id="RCq-du-1FW"/>
+                            <constraint firstAttribute="height" constant="190" id="X8N-cc-mX5"/>
                             <constraint firstAttribute="trailing" secondItem="MQC-tj-fHb" secondAttribute="trailing" id="ZvA-7i-6uF"/>
                             <constraint firstItem="MQC-tj-fHb" firstAttribute="top" secondItem="fHd-pv-egS" secondAttribute="top" id="sgc-AI-3Hm"/>
                         </constraints>
@@ -135,13 +136,13 @@
                 <constraint firstAttribute="trailing" secondItem="g93-3Z-FRL" secondAttribute="trailing" id="Gb5-Bt-abL"/>
                 <constraint firstAttribute="trailing" secondItem="fHd-pv-egS" secondAttribute="trailing" id="TZa-qP-SAL"/>
                 <constraint firstAttribute="trailing" secondItem="JFc-fa-7rh" secondAttribute="trailing" constant="10" id="c8h-7m-ZlV"/>
-                <constraint firstAttribute="bottom" secondItem="fHd-pv-egS" secondAttribute="bottom" priority="750" constant="19" id="cJe-1t-hNg"/>
                 <constraint firstItem="IoS-vS-i2i" firstAttribute="trailing" secondItem="g93-3Z-FRL" secondAttribute="leading" constant="-1" id="qXd-Fq-q9T"/>
                 <constraint firstItem="fHd-pv-egS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="y5u-Ny-B9E"/>
             </constraints>
             <size key="customSize" width="293" height="209"/>
             <connections>
                 <outlet property="contentContainerView" destination="fHd-pv-egS" id="cr1-ad-yQ3"/>
+                <outlet property="contentViewHeightConstraint" destination="X8N-cc-mX5" id="Gxg-dO-oYh"/>
                 <outlet property="eventMessageLabel" destination="7kh-Q1-akT" id="jcu-S5-esD"/>
                 <outlet property="eventTimeLabel" destination="JFc-fa-7rh" id="T6n-yv-ZhQ"/>
                 <outlet property="eventTitleLabel" destination="5DK-SE-Ybo" id="4yA-50-O4F"/>

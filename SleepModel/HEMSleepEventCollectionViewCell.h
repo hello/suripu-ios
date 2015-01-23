@@ -15,7 +15,7 @@
 @property (weak, nonatomic) IBOutlet RTSpinKitView* spinnerView;
 @property (weak, nonatomic) IBOutlet UIButton *verifyDataButton;
 
-- (void)useExpandedLayout:(BOOL)isExpanded animated:(BOOL)animated;
+- (void)useExpandedLayout:(BOOL)isExpanded targetSize:(CGSize)size animated:(BOOL)animated;
 - (void)showAudioPlayer:(BOOL)isVisible;
 - (void)setAudioURL:(NSURL*)audioURL;
 - (IBAction)toggleAudio;

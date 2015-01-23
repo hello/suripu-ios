@@ -18,6 +18,7 @@
 @property (nonatomic, strong) UIView* gradientContainerBottomView;
 @property (nonatomic, strong) CAGradientLayer* gradientTopLayer;
 @property (nonatomic, strong) CAGradientLayer* gradientBottomLayer;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* contentViewHeightConstraint;
 @end
 
 @implementation HEMSleepEventCollectionViewCell
@@ -31,6 +32,7 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 {
     [super awakeFromNib];
     self.backgroundColor = [UIColor whiteColor];
+    self.contentViewHeightConstraint.constant = 0;
     self.verifyDataButton.hidden = YES;
     self.lineView.image = [self dottedLineBorderImageWithColor:[HelloStyleKit barButtonEnabledColor]];
     [self configureAudioPlayer];
@@ -43,7 +45,7 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
     self.waveformView.hidden = YES;
     self.verifyDataButton.hidden = YES;
     self.playSoundButton.hidden = YES;
-    [self useExpandedLayout:NO animated:NO];
+    [self useExpandedLayout:NO targetSize:CGSizeZero animated:NO];
 }
 
 - (void)configureAudioPlayer
@@ -110,12 +112,13 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
     [super setNeedsLayout];
 }
 
-- (void)useExpandedLayout:(BOOL)isExpanded animated:(BOOL)animated
+- (void)useExpandedLayout:(BOOL)isExpanded targetSize:(CGSize)size animated:(BOOL)animated
 {
 
     void (^endAnimations)() = NULL;
     void (^startAnimations)() = NULL;
     if (isExpanded) {
+        self.contentViewHeightConstraint.constant = MAX(size.height - HEMEventButtonSize/2, 0);
         startAnimations = ^{
             self.lineView.alpha = 0;
             self.contentContainerView.alpha = 1;
@@ -126,16 +129,19 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
             [self.eventTypeButton hideOutline];
         };
         endAnimations = ^{
+            [self.contentContainerView layoutIfNeeded];
             self.eventTitleLabel.alpha = 1;
             self.eventMessageLabel.alpha = 1;
         };
     } else {
+        self.contentViewHeightConstraint.constant = 0;
         endAnimations = ^{
             self.lineView.alpha = 1;
             self.eventTimeLabel.alpha = 1;
             [self.eventTypeButton showOutline];
         };
         startAnimations = ^{
+            [self.contentContainerView layoutIfNeeded];
             self.eventTitleLabel.alpha = 0;
             self.eventMessageLabel.alpha = 0;
             self.contentContainerView.alpha = 0;
@@ -145,6 +151,7 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
         };
     }
     if (animated) {
+        [self.contentContainerView setNeedsUpdateConstraints];
         [UIView animateWithDuration:0.2f animations:startAnimations completion:^(BOOL finished) {
              [UIView animateWithDuration:0.2f animations:endAnimations];
          }];

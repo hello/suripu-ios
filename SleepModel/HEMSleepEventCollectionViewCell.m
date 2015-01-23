@@ -1,5 +1,6 @@
 
 #import "HEMSleepEventCollectionViewCell.h"
+#import "HEMSleepEventButton.h"
 #import <FDWaveformView/FDWaveformView.h>
 #import <SpinKit/RTSpinKitView.h>
 #import "HelloStyleKit.h"
@@ -11,28 +12,40 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sleepEventButtonHeightConstraint;
 @property (nonatomic, strong) AVAudioPlayer* player;
 @property (nonatomic, strong) NSTimer* playerUpdateTimer;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* timeLabelTopConstraint;
+@property (nonatomic, weak) IBOutlet UIImageView* lineView;
+@property (nonatomic, weak) IBOutlet UIView* contentContainerView;
+@property (nonatomic, strong) UIView* gradientContainerTopView;
+@property (nonatomic, strong) UIView* gradientContainerBottomView;
+@property (nonatomic, strong) CAGradientLayer* gradientTopLayer;
+@property (nonatomic, strong) CAGradientLayer* gradientBottomLayer;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* contentViewHeightConstraint;
 @end
 
 @implementation HEMSleepEventCollectionViewCell
 
 static CGFloat const HEMEventButtonSize = 40.f;
+static CGFloat const HEMEventButtonTouchInset = -6.f;
+static CGFloat const HEMEventBlurHeight = 60.f;
 static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
-static CGFloat const HEMEventTimeLabelRetractedConstant = 7.f;
-static CGFloat const HEMEventTimeLabelExpandedConstant = 53.f;
 
 - (void)awakeFromNib
 {
+    [super awakeFromNib];
     self.backgroundColor = [UIColor whiteColor];
+    self.contentViewHeightConstraint.constant = 0;
     self.verifyDataButton.hidden = YES;
+    self.lineView.image = [self dottedLineBorderImageWithColor:[HelloStyleKit barButtonEnabledColor]];
     [self configureAudioPlayer];
+    [self configureGradientViews];
 }
 
 - (void)prepareForReuse
 {
+    [super prepareForReuse];
     self.waveformView.hidden = YES;
     self.verifyDataButton.hidden = YES;
     self.playSoundButton.hidden = YES;
+    [self useExpandedLayout:NO targetSize:CGSizeZero animated:NO];
 }
 
 - (void)configureAudioPlayer
@@ -50,22 +63,102 @@ static CGFloat const HEMEventTimeLabelExpandedConstant = 53.f;
     self.playSoundButton.hidden = YES;
 }
 
+- (void)configureGradientViews
+{
+    self.contentContainerView.layer.shadowOffset = CGSizeZero;
+    self.contentContainerView.layer.shadowRadius = 1.5f;
+    self.contentContainerView.layer.shadowColor = [UIColor blackColor].CGColor;
+    self.gradientContainerTopView = [UIView new];
+    self.gradientContainerTopView.alpha = 0;
+    self.gradientContainerBottomView = [UIView new];
+    self.gradientContainerBottomView.alpha = 0;
+    [self insertSubview:self.gradientContainerTopView atIndex:0];
+    [self insertSubview:self.gradientContainerBottomView atIndex:0];
+    NSArray* topColors = @[(id)[[HelloStyleKit barButtonEnabledColor] colorWithAlphaComponent:0].CGColor,
+                           (id)[[HelloStyleKit barButtonEnabledColor] colorWithAlphaComponent:0.1f].CGColor];
+
+    CAGradientLayer* topLayer = [CAGradientLayer layer];
+    topLayer.colors = topColors;
+    topLayer.frame = self.gradientContainerTopView.bounds;
+    topLayer.locations = @[ @0, @1 ];
+    topLayer.startPoint = CGPointZero;
+    topLayer.endPoint = CGPointMake(0, 1);
+    self.gradientTopLayer = topLayer;
+    [self.gradientContainerTopView.layer insertSublayer:topLayer atIndex:0];
+    CAGradientLayer* bottomLayer = [CAGradientLayer layer];
+    bottomLayer.colors = [[topColors reverseObjectEnumerator] allObjects];
+    bottomLayer.frame = self.gradientContainerTopView.bounds;
+    bottomLayer.locations = @[ @0, @1 ];
+    bottomLayer.startPoint = CGPointZero;
+    bottomLayer.endPoint = CGPointMake(0, 1);
+    self.gradientBottomLayer = bottomLayer;
+    [self.gradientContainerBottomView.layer insertSublayer:bottomLayer atIndex:0];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    self.gradientContainerTopView.frame = CGRectMake(0, -HEMEventBlurHeight, CGRectGetWidth(self.bounds), HEMEventBlurHeight);
+    self.gradientContainerBottomView.frame = CGRectMake(0, CGRectGetHeight(self.bounds) - HEMEventButtonSize/2, CGRectGetWidth(self.bounds), HEMEventBlurHeight);
+    self.gradientTopLayer.frame = self.gradientContainerTopView.bounds;
+    [self.gradientTopLayer setNeedsLayout];
+    self.gradientBottomLayer.frame = self.gradientContainerBottomView.bounds;
+    [self.gradientBottomLayer setNeedsLayout];
+}
+
 - (void)setNeedsLayout
 {
     [self setNeedsDisplay];
     [super setNeedsLayout];
 }
 
-- (void)useExpandedLayout:(BOOL)isExpanded animated:(BOOL)animated
+- (void)useExpandedLayout:(BOOL)isExpanded targetSize:(CGSize)size animated:(BOOL)animated
 {
-    void (^animations)() = ^{
-        self.timeLabelTopConstraint.constant = isExpanded
-        ? HEMEventTimeLabelExpandedConstant : HEMEventTimeLabelRetractedConstant;
-    };
-    if (animated)
-        [UIView animateWithDuration:0.2f animations:animations];
-    else
-        animations();
+
+    void (^endAnimations)() = NULL;
+    void (^startAnimations)() = NULL;
+    if (isExpanded) {
+        self.contentViewHeightConstraint.constant = MAX(size.height - HEMEventButtonSize/2, 0);
+        startAnimations = ^{
+            self.lineView.alpha = 0;
+            self.contentContainerView.alpha = 1;
+            self.eventTimeLabel.alpha = 0;
+            self.gradientContainerTopView.alpha = 1;
+            self.gradientContainerBottomView.alpha = 1;
+            self.contentContainerView.layer.shadowOpacity = 0.1f;
+            [self.eventTypeButton hideOutline];
+        };
+        endAnimations = ^{
+            [self.contentContainerView layoutIfNeeded];
+            self.eventTitleLabel.alpha = 1;
+            self.eventMessageLabel.alpha = 1;
+        };
+    } else {
+        self.contentViewHeightConstraint.constant = 0;
+        endAnimations = ^{
+            self.lineView.alpha = 1;
+            self.eventTimeLabel.alpha = 1;
+            [self.eventTypeButton showOutline];
+        };
+        startAnimations = ^{
+            [self.contentContainerView layoutIfNeeded];
+            self.eventTitleLabel.alpha = 0;
+            self.eventMessageLabel.alpha = 0;
+            self.contentContainerView.alpha = 0;
+            self.gradientContainerTopView.alpha = 0;
+            self.gradientContainerBottomView.alpha = 0;
+            self.contentContainerView.layer.shadowOpacity = 0;
+        };
+    }
+    if (animated) {
+        [self.contentContainerView setNeedsUpdateConstraints];
+        [UIView animateWithDuration:0.2f animations:startAnimations completion:^(BOOL finished) {
+             [UIView animateWithDuration:0.2f animations:endAnimations];
+         }];
+    } else {
+        startAnimations();
+        endAnimations();
+    }
 }
 
 - (void)drawRect:(CGRect)rect
@@ -98,6 +191,24 @@ static CGFloat const HEMEventTimeLabelExpandedConstant = 53.f;
     else
         [self.spinnerView stopAnimating];
     self.playSoundButton.enabled = !isLoading;
+}
+
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    CGRect buttonFrame = CGRectInset(self.eventTypeButton.frame, HEMEventButtonTouchInset, HEMEventButtonTouchInset);
+    if (CGRectContainsPoint(buttonFrame, point))
+        return self.eventTypeButton;
+
+    return [super hitTest:point withEvent:event];
+}
+
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
+{
+    CGRect buttonFrame = CGRectInset(self.eventTypeButton.frame, HEMEventButtonTouchInset, HEMEventButtonTouchInset);
+    if (CGRectContainsPoint(buttonFrame, point))
+        return YES;
+
+    return [super pointInside:point withEvent:event];
 }
 
 #pragma mark - Audio

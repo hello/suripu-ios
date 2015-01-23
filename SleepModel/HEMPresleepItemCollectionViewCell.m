@@ -19,13 +19,11 @@
 
 @implementation HEMPresleepItemCollectionViewCell
 
-static CGFloat const HEMPresleepItemBorderWidth = 1.f;
-static CGFloat const HEMBorderDashLength[] = {4,4};
+static CGFloat const HEMPresleepItemBorderWidth = 0.5f;
 static CGFloat const HEMInsightButtonWidth = 40.f;
 static CGFloat const HEMInsightButtonMaximumSpacing = 90.f;
 static CGFloat const HEMInsightAnimationDuration = 0.2f;
 static int const HEMInsightButtonTagOffset = 90032;
-static int const HEMBorderDashLengthCount = 2;
 
 - (void)addButtonsForInsights:(NSArray *)insights
 {
@@ -223,7 +221,6 @@ static int const HEMBorderDashLengthCount = 2;
     CGColorRef color = [HelloStyleKit timelineSectionBorderColor].CGColor;
     CGContextSetStrokeColorWithColor(ctx, color);
     CGContextSetLineWidth(ctx, HEMPresleepItemBorderWidth);
-    CGContextSetLineDash(ctx, 0, HEMBorderDashLength, HEMBorderDashLengthCount);
     CGFloat y = CGRectGetHeight(rect) - HEMPresleepItemBorderWidth;
     CGContextMoveToPoint(ctx, CGRectGetMinX(rect), y);
     CGContextAddLineToPoint(ctx, CGRectGetMaxX(rect), y);

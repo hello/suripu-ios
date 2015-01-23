@@ -3,4 +3,7 @@
 
 @interface HEMSleepEventButton : UIButton
 
+- (void)showOutline;
+- (void)hideOutline;
+
 @end

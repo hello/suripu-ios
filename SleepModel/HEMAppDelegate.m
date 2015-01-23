@@ -6,8 +6,6 @@
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAnalytics.h>
 #import <SenseKit/SENServiceDevice.h>
-
-#import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <Crashlytics/Crashlytics.h>
 
 #import "HEMAppDelegate.h"
@@ -70,8 +68,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
     HEMRootViewController* root = (id)self.window.rootViewController;
     [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:NO];
-    FCDynamicPane* pane = [root.viewControllers firstObject];
-    HEMSnazzBarController* controller = (id)[pane viewController];
+    HEMSnazzBarController* controller = (id)root.backController;
     UINavigationController* nav = (id)[controller selectedViewController];
 
     void (^presentController)() = ^{
@@ -257,7 +254,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)resume:(BOOL)animated
 {
-    FCDynamicPanesNavigationController* dynamicPanesController = (FCDynamicPanesNavigationController*)self.window.rootViewController;
+    UIViewController* dynamicPanesController = (UIViewController*)self.window.rootViewController;
     if ([dynamicPanesController presentedViewController] != nil) return;
     
     BOOL authorized = [SENAuthorizationService isAuthorized];

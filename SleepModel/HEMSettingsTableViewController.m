@@ -65,7 +65,7 @@ static NSInteger const HEMSettingsSignOutIndex = 3;
     [textView setDelegate:self];
     [textView setBackgroundColor:[UIColor clearColor]];
     [textView setDataDetectorTypes:UIDataDetectorTypeLink|UIDataDetectorTypeAddress];
-    [textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+    [textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     CGSize textSize = [textView sizeThatFits:constraint];
     textFrame.size.height = textSize.height;
     [textView setFrame:textFrame];
@@ -77,7 +77,7 @@ static NSInteger const HEMSettingsSignOutIndex = 3;
     UIView* container = [[UIView alloc] initWithFrame:footerFrame];
     [container setBackgroundColor:[UIColor clearColor]];
     [container addSubview:textView];
-    [container setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+    [container setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     
     return container;
 }

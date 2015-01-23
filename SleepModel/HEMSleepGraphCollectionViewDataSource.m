@@ -304,6 +304,8 @@ static CGFloat HEMEventZPosition = 30.f;
     [cell.dateButton setTitle:dateText forState:UIControlStateNormal];
     if ([self shouldBeLoading])
         [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:0.5];
+    else
+        [cell.spinnerView stopAnimating];
 
     if ([self.collectionView.delegate respondsToSelector:@selector(drawerButtonTapped:)])
         [cell.drawerButton addTarget:self.collectionView.delegate

@@ -64,8 +64,6 @@ static NSString* const sleepEventNameFindCharacter = @"_";
 static NSString* const sleepEventNameReplaceCharacter = @" ";
 static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
-static CGFloat HEMEventZPosition = 30.f;
-
 + (NSDateFormatter*)sleepDateFormatter
 {
     static NSDateFormatter* formatter = nil;
@@ -272,9 +270,6 @@ static CGFloat HEMEventZPosition = 30.f;
         break;
     }
     CGFloat zPosition = indexPath.row;
-    if ([self segmentForEventExistsAtIndexPath:indexPath]) {
-        zPosition += HEMEventZPosition;
-    }
     if (cell.layer.zPosition != zPosition) {
         [cell.layer setZPosition:zPosition];
     }

@@ -234,14 +234,17 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)didTapEventButton:(UIButton*)sender
 {
+    static CGFloat HEMEventOverlayZPosition = 30.f;
     NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
     HEMSleepEventCollectionViewCell* cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
     BOOL shouldExpand = ![self.expandedIndexPath isEqual:indexPath];
     if (shouldExpand) {
         if (self.expandedIndexPath) {
             HEMSleepEventCollectionViewCell* oldCell = (id)[self.collectionView cellForItemAtIndexPath:self.expandedIndexPath];
-            if ([oldCell isKindOfClass:[HEMSleepEventCollectionViewCell class]])
+            if ([oldCell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
+                oldCell.layer.zPosition = indexPath.row;
                 [oldCell useExpandedLayout:NO targetSize:CGSizeZero animated:YES];
+            }
         }
         self.expandedIndexPath = indexPath;
     } else {
@@ -250,8 +253,11 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     CGSize size = [self collectionView:self.collectionView
                                 layout:self.collectionView.collectionViewLayout
                 sizeForItemAtIndexPath:indexPath];
-    if ([cell isKindOfClass:[HEMSleepEventCollectionViewCell class]])
+
+    if ([cell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
+        cell.layer.zPosition = indexPath.row + HEMEventOverlayZPosition;
         [cell useExpandedLayout:shouldExpand targetSize:size animated:YES];
+    }
     [self animateAllCellHeightChanges];
     CGRect cellRect = [self.collectionView convertRect:cell.frame toView:self.collectionView.superview];
     if (shouldExpand && !CGRectContainsRect(self.collectionView.frame, cellRect))

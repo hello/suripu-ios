@@ -38,6 +38,7 @@
 +(id)instantiateHeightPickerViewController;
 +(id)instantiatePillPairViewController;
 +(id)instantiateRoomCheckViewController;
++(id)instantiateSenseAudioViewController;
 +(id)instantiateSensePairViewController;
 +(id)instantiateSenseSetupViewController;
 +(id)instantiateSignUpViewController;

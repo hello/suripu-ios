@@ -28,13 +28,11 @@ static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdevice = @"device";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMinfo = @"info";
-static NSString *const _HEMinfoSettings = @"infoSettings";
 static NSString *const _HEMinsight = @"insight";
 static NSString *const _HEMinsightFeed = @"insightFeed";
 static NSString *const _HEMmultiple = @"multiple";
 static NSString *const _HEMoverTime = @"overTime";
 static NSString *const _HEMpair = @"pair";
-static NSString *const _HEMpersonalInfo = @"personalInfo";
 static NSString *const _HEMpickSound = @"pickSound";
 static NSString *const _HEMpill = @"pill";
 static NSString *const _HEMquestion = @"question";
@@ -91,7 +89,6 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)accountSettingsSegueIdentifier { return _HEMaccountSettings; }
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
-+(NSString *)infoSettingsSegueIdentifier { return _HEMinfoSettings; }
 +(NSString *)pickSoundSegueIdentifier { return _HEMpickSound; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
 +(NSString *)senseSegueIdentifier { return _HEMsense; }
@@ -108,7 +105,6 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateAlarmViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmViewController]; }
 +(id)instantiateCurrentNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMcurrentNavController]; }
 +(id)instantiateInsightFeedViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMinsightFeed]; }
-+(id)instantiatePersonalInfoViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMpersonalInfo]; }
 +(id)instantiateSensorViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsensorViewController]; }
 +(id)instantiateSettingsController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsController]; }
 +(id)instantiateSettingsNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsettingsNavController]; }

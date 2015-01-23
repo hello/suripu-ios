@@ -6,6 +6,7 @@
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAnalytics.h>
 #import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENServiceAccount.h>
 
 #import <FCDynamicPanesNavigationController/FCDynamicPanesNavigationController.h>
 #import <Crashlytics/Crashlytics.h>
@@ -44,6 +45,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [self configureAnalytics];
     [self configureAppearance];
     [self registerForNotifications];
+    [self preFetchData];
     [self createAndShowWindow];
     
     return YES;
@@ -90,6 +92,12 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 {
     if (![self deauthorizeIfNeeded]) {
         [self resume:NO];
+    }
+}
+
+- (void)preFetchData {
+    if ([SENAuthorizationService isAuthorized]) {
+        [[SENServiceAccount sharedService] refreshAccount:nil];
     }
 }
 
@@ -173,6 +181,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [defaults setObject:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
     [defaults synchronize];
     [HEMOnboardingUtils resetOnboardingCheckpoint];
+    [HEMOnboardingUtils removeLastConfiguredSSID];
     [self resume:YES];
 }
 

@@ -244,4 +244,10 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     return [defaults stringForKey:HEMOnboardingSettingSSID];
 }
 
++ (void)removeLastConfiguredSSID {
+    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:SENSettingsAppGroup];
+    [defaults removeObjectForKey:HEMOnboardingSettingSSID];
+    [defaults synchronize];
+}
+
 @end

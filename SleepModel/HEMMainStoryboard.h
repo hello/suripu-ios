@@ -37,7 +37,6 @@
 +(NSString *)accountSettingsSegueIdentifier;
 +(NSString *)alarmRepeatSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
-+(NSString *)infoSettingsSegueIdentifier;
 +(NSString *)pickSoundSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
 +(NSString *)senseSegueIdentifier;
@@ -54,7 +53,6 @@
 +(id)instantiateAlarmViewController;
 +(id)instantiateCurrentNavController;
 +(id)instantiateInsightFeedViewController;
-+(id)instantiatePersonalInfoViewController;
 +(id)instantiateSensorViewController;
 +(id)instantiateSettingsController;
 +(id)instantiateSettingsNavController;

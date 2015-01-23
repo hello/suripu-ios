@@ -717,7 +717,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xTo-cF-RjG" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1984" y="1508"/>
+            <point key="canvasLocation" x="1984" y="1490"/>
         </scene>
         <!--Settings Table View Controller-->
         <scene sceneID="YcB-ep-OD2">
@@ -2172,10 +2172,10 @@
             </objects>
             <point key="canvasLocation" x="2750" y="-10"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Settings Navigation Controller-->
         <scene sceneID="sZm-8J-nu4">
             <objects>
-                <navigationController id="VtO-0e-m99" sceneMemberID="viewController">
+                <navigationController id="VtO-0e-m99" customClass="HEMSettingsNavigationController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="44L-po-3wn"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="WN8-64-RKp">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
@@ -2189,10 +2189,10 @@
             </objects>
             <point key="canvasLocation" x="3516" y="1073"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Settings Navigation Controller-->
         <scene sceneID="ur6-ic-hvS">
             <objects>
-                <navigationController id="MSg-Ph-9h5" sceneMemberID="viewController">
+                <navigationController id="MSg-Ph-9h5" customClass="HEMSettingsNavigationController" sceneMemberID="viewController">
                     <navigationItem key="navigationItem" id="YWa-hd-Qv5"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="d6B-QJ-hTd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

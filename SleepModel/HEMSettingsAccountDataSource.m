@@ -11,8 +11,8 @@
 
 #import "HEMSettingsAccountDataSource.h"
 #import "HEMMathUtil.h"
+#import "HEMMainStoryboard.h"
 
-static NSString* const HEMSettingsAcctCellReuseId = @"info";
 static NSString* const HEMSettingsAcctPasswordPlaceholder = @"\u2022\u2022\u2022\u2022\u2022\u2022";
 
 static NSInteger const HEMSettingsAcctSectionAccount = 0;
@@ -68,7 +68,7 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
 
 - (UITableViewCell*)tableView:(UITableView *)tableView
         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    return [tableView dequeueReusableCellWithIdentifier:HEMSettingsAcctCellReuseId];
+    return [tableView dequeueReusableCellWithIdentifier:[HEMMainStoryboard infoReuseIdentifier]];
 }
 
 #pragma mark - Data
@@ -118,8 +118,6 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
 }
 
 - (NSString*)valueForCellAtIndexPath:(NSIndexPath*)indexPath {
-    if ([self isRefreshing]) return NSLocalizedString(@"empty-data", nil);
-    
     NSString* subtitle = nil;
     HEMSettingsAccountInfoType type = [self infoTypeAtIndexPath:indexPath];
     switch (type) {
@@ -129,9 +127,10 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
         case HEMSettingsAccountInfoTypePassword:
             subtitle = HEMSettingsAcctPasswordPlaceholder;
             break;
-        case HEMSettingsAccountInfoTypeBirthday:
+        case HEMSettingsAccountInfoTypeBirthday: {
             subtitle = [[[SENServiceAccount sharedService] account] birthdate];
             break;
+        }
         case HEMSettingsAccountInfoTypeGender:
             subtitle = [self gender];
             break;
@@ -144,7 +143,8 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
         default:
             break;
     }
-    return subtitle;
+    
+    return subtitle ?: NSLocalizedString(@"empty-data", nil);
 }
 
 - (NSDateComponents*)birthdateComponents {
@@ -165,7 +165,6 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
             gender = NSLocalizedString(@"account.gender.male", nil);
             break;
         default:
-            gender = NSLocalizedString(@"empty-data", nil);
             break;
     }
     return gender;
@@ -177,9 +176,7 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
 
 - (NSString*)height {
     NSNumber* cm = [[[SENServiceAccount sharedService] account] height];
-    if (cm == nil) {
-        return NSLocalizedString(@"empty-data", nil);
-    }
+    if (cm == nil) return nil;
     
     long cmValue = [cm longValue];
     NSString* height = nil;
@@ -204,9 +201,7 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
 
 - (NSString*)weight {
     NSNumber* grams = [[[SENServiceAccount sharedService] account] weight];
-    if (grams == nil) {
-        return NSLocalizedString(@"empty-data", nil);
-    }
+    if (grams == nil) return nil;
     
     NSString* weight = nil;
     

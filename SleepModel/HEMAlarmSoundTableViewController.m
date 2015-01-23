@@ -54,11 +54,16 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
     }
     if ([self isLoading])
         return;
-    self.navigationItem.rightBarButtonItem = nil;
+    UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
+    [indicatorView startAnimating];
     self.loading = YES;
     __weak typeof(self) weakSelf = self;
+    __weak UIActivityIndicatorView* weakIndicator = indicatorView;
     [SENAPIAlarms availableSoundsWithCompletion:^(NSArray* sounds, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [weakIndicator stopAnimating];
+        strongSelf.navigationItem.rightBarButtonItem = nil;
         if (!error) {
             alarmSounds = sounds;
             [strongSelf updateTableWithSounds:sounds];

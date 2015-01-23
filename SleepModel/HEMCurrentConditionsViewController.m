@@ -81,17 +81,21 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 
 #pragma mark - Data Loading
 
-- (void)refreshCachedSensors {
+- (void)refreshCachedSensors
+{
     [self setLoading:YES];
     [SENSensor refreshCachedSensors];
 }
 
-- (void)refreshSensors {
+- (void)refreshSensors
+{
     if (![SENAuthorizationService isAuthorized])
         return;
     DDLogVerbose(@"Refreshing sensor data (rate: %f)", self.refreshRate);
     self.sensorGraphData = [[NSMutableDictionary alloc] init];
-    self.sensors = [SENSensor sensors];
+    self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
+        return [@([self indexForSensor:obj1]) compare:@([self indexForSensor:obj2])];
+    }];
     NSMutableArray* values = [[self.sensors valueForKey:NSStringFromSelector(@selector(value))] mutableCopy];
     [values removeObject:[NSNull null]];
     if (values.count == 0)
@@ -103,7 +107,22 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
     [self.collectionView reloadData];
 }
 
-- (void)fetchGraphData {
+- (NSUInteger)indexForSensor:(SENSensor*)sensor
+{
+    switch (sensor.unit) {
+        case SENSensorUnitDegreeCentigrade: return 0;
+        case SENSensorUnitPercent: return 1;
+        case SENSensorUnitAQI: return 2;
+        case SENSensorUnitLux: return 3;
+        case SENSensorUnitDecibel: return 4;
+        case SENSensorUnitUnknown:
+        default:
+            return 5;
+    }
+}
+
+- (void)fetchGraphData
+{
     NSArray* sensors = [self.sensors copy];
     __weak typeof(self) weakSelf = self;
     SENAPIDataBlock (^completion)(SENSensor *, int) = ^SENAPIDataBlock(SENSensor *sensor, int index) {
@@ -119,7 +138,8 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
     }
 }
 
-- (void)failedToRefreshSensors {
+- (void)failedToRefreshSensors
+{
     [self setLoading:NO];
     [self.collectionView reloadData];
 }

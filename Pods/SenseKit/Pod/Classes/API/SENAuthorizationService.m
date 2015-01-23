@@ -12,6 +12,7 @@ NSString* const SENAuthorizationServiceKeychainService = @"is.hello.Sense";
 NSString* const SENAuthorizationServiceKeychainGroup = @"MSG86J7GNF.is.hello.Sense";
 NSString* const SENAuthorizationServiceDidAuthorizeNotification = @"SENAuthorizationServiceDidAuthorize";
 NSString* const SENAuthorizationServiceDidDeauthorizeNotification = @"SENAuthorizationServiceDidDeauthorize";
+NSString* const SENAuthorizationServiceDidReauthorizeNotification = @"SENAuthorizationServiceDidReauthorize";
 
 @implementation SENAuthorizationService
 
@@ -36,27 +37,26 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 
 + (void)authorizeWithUsername:(NSString*)username password:(NSString*)password callback:(void (^)(NSError*))block
 {
-    NSDictionary* params = @{ @"grant_type" : @"password",
-                              @"client_id" : SENAuthorizationServiceClientID,
-                              @"username" : username ?: @"",
-                              @"password" : password ?: @"" };
-
-    NSURL* url = [[SENAPIClient baseURL] URLByAppendingPathComponent:SENAuthorizationServiceTokenPath];
-    NSMutableURLRequest* request = [[self requestSerializer] requestWithMethod:@"POST" URLString:[url absoluteString] parameters:params error:nil];
-
-    AFHTTPRequestOperation* operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
-    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation* operation, id responseObject) {
-        NSDictionary* response = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
-        [self authorizeRequestsWithResponse:response];
-        [self setEmailAddressOfAuthorizedUser:username];
-        [self setAccountIdOfAuthorizedUser:response[SENAuthorizationServiceAccountIdKey]];
-        if (block)
-            block(operation.error);
-    } failure:^(AFHTTPRequestOperation* operation, NSError* error) {
-        if (block)
-            block(error);
+    [self authorize:username password:password onCompletion:^(NSDictionary *response, NSError *error) {
+        if (error == nil) {
+            [self authorizeRequestsWithResponse:response notify:SENAuthorizationServiceDidAuthorizeNotification];
+            [self setEmailAddressOfAuthorizedUser:username];
+            [self setAccountIdOfAuthorizedUser:response[SENAuthorizationServiceAccountIdKey]];
+        }
+        if (block) block(error);
     }];
-    [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
+}
+
++ (void)reauthorizeUserWithPassword:(NSString*)password callback:(void(^)(NSError* error))block {
+    NSString* existingUsername = [self emailAddressOfAuthorizedUser];
+    [self authorize:existingUsername password:password onCompletion:^(NSDictionary *response, NSError *error) {
+        if (error == nil) {
+            [self authorizeRequestsWithResponse:response notify:SENAuthorizationServiceDidReauthorizeNotification];
+            // account id might change from the server
+            [self setAccountIdOfAuthorizedUser:response[SENAuthorizationServiceAccountIdKey]];
+        }
+        if (block) block(error);
+    }];
 }
 
 + (AFHTTPRequestSerializer*)requestSerializer
@@ -77,6 +77,7 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
     [self authorizeRequestsWithToken:nil];
     [self setEmailAddressOfAuthorizedUser:nil];
     [self setAccountIdOfAuthorizedUser:nil];
+    [self notify:SENAuthorizationServiceDidDeauthorizeNotification];
 }
 
 + (BOOL)isAuthorized
@@ -128,6 +129,27 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 
 #pragma mark Private
 
++ (void)authorize:(NSString*)username password:(NSString*)password onCompletion:(void(^)(NSDictionary* response, NSError* error))block {
+    NSDictionary* params = @{ @"grant_type" : @"password",
+                              @"client_id" : SENAuthorizationServiceClientID,
+                              @"username" : username ?: @"",
+                              @"password" : password ?: @"" };
+    
+    NSURL* url = [[SENAPIClient baseURL] URLByAppendingPathComponent:SENAuthorizationServiceTokenPath];
+    NSMutableURLRequest* request = [[self requestSerializer] requestWithMethod:@"POST" URLString:[url absoluteString] parameters:params error:nil];
+    
+    AFHTTPRequestOperation* operation = [[AFHTTPRequestOperation alloc] initWithRequest:request];
+    [operation setCompletionBlockWithSuccess:^(AFHTTPRequestOperation* operation, id responseObject) {
+        NSDictionary* response = [NSJSONSerialization JSONObjectWithData:responseObject options:0 error:nil];
+        if (block)
+            block(response, operation.error);
+    } failure:^(AFHTTPRequestOperation* operation, NSError* error) {
+        if (block)
+            block(nil, error);
+    }];
+    [[AFHTTPRequestOperationManager manager].operationQueue addOperation:operation];
+}
+
 + (id)authorizationHeaderValue
 {
     return [SENAPIClient defaultHTTPHeaderValues][SENAuthorizationServiceAuthorizationHeaderKey];
@@ -136,25 +158,29 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 + (void)authorizeRequestsFromKeychain
 {
     id token = [self accessToken];
-    if (token)
+    if (token) {
         [self authorizeRequestsWithToken:token];
+        [self notify:SENAuthorizationServiceDidAuthorizeNotification];
+    }
 }
 
-+ (void)authorizeRequestsWithResponse:(id)responseObject
++ (void)authorizeRequestsWithResponse:(id)responseObject notify:(NSString*)notificationName
 {
     NSDictionary* responseData = (NSDictionary*)responseObject;
     [[self keychain] setObject:responseObject forKey:SENAuthorizationServiceCredentialsKey];
     [self authorizeRequestsWithToken:responseData[SENAuthorizationServiceAccessTokenKey]];
+    [self notify:notificationName];
 }
 
 + (void)authorizeRequestsWithToken:(NSString*)token
 {
     NSString* headerValue = token ? [NSString stringWithFormat:@"Bearer %@", token] : nil;
     [SENAPIClient setValue:headerValue forHTTPHeaderField:SENAuthorizationServiceAuthorizationHeaderKey];
-    if (token) {
-        [[NSNotificationCenter defaultCenter] postNotificationName:SENAuthorizationServiceDidAuthorizeNotification object:self userInfo:nil];
-    } else {
-        [[NSNotificationCenter defaultCenter] postNotificationName:SENAuthorizationServiceDidDeauthorizeNotification object:self userInfo:nil];
+}
+
++ (void)notify:(NSString*)name {
+    if (name) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:name object:self userInfo:nil];
     }
 }
 

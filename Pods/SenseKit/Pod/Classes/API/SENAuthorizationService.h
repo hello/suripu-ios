@@ -11,6 +11,11 @@ extern NSString* const SENAuthorizationServiceDidAuthorizeNotification;
  */
 extern NSString* const SENAuthorizationServiceDidDeauthorizeNotification;
 
+/**
+ * Notification sent when a user is reauthorized
+ */
+extern NSString* const SENAuthorizationServiceDidReauthorizeNotification;
+
 @interface SENAuthorizationService : NSObject
 
 /**
@@ -22,6 +27,16 @@ extern NSString* const SENAuthorizationServiceDidDeauthorizeNotification;
  *  @param block    a block invoked after the authentication attempt is completed
  */
 + (void)authorizeWithUsername:(NSString*)username password:(NSString*)password callback:(void (^)(NSError* error))block;
+
+/**
+ * Reauthorizes the currently signed in user using the new password so that the
+ * authorization token reflects the change.  Future requests will use the updated
+ * token.
+ *
+ *  @param password the password for the given username
+ *  @param block    a block invoked after the authentication attempt is completed
+ */
++ (void)reauthorizeUserWithPassword:(NSString*)password callback:(void(^)(NSError* error))block;
 
 /**
  *  Load any cached credentials for use in API requests

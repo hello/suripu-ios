@@ -9,6 +9,7 @@
 #import "SENAPIAccount.h"
 #import "SENAuthorizationService.h"
 #import "SENAccount.h"
+#import "SENService+Protected.h"
 
 static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account";
 
@@ -45,6 +46,16 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     return [NSError errorWithDomain:SENServiceAccountErrorDomain
                                code:code
                            userInfo:nil];
+}
+
+- (void)serviceBecameActive {
+    [super serviceBecameActive];
+    [self refreshAccount:nil];
+}
+
+- (void)serviceReceivedMemoryWarning {
+    [super serviceReceivedMemoryWarning];
+    [self setAccount:nil];
 }
 
 #pragma mark - Authentication Changes
@@ -86,40 +97,20 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
         return;
     }
     
-    void(^changePassword)(NSString* email) = ^(NSString* email) {
-        [SENAPIAccount changePassword:currentPassword
-                        toNewPassword:password
-                      completionBlock:^(id data, NSError *error) {
-                          if (error) {
-                              if (completion) {
-                                  completion (error);
-                              }
-                              return;
+    [SENAPIAccount changePassword:currentPassword
+                    toNewPassword:password
+                  completionBlock:^(id data, NSError *error) {
+                      if (error) {
+                          if (completion) {
+                              completion (error);
                           }
-                          
-                          [SENAuthorizationService authorizeWithUsername:email
-                                                                password:password
-                                                                callback:completion];
-                          
-                      }];
-    };
-    
-    NSString* email = [[self account] email];
-    
-    if (email == nil) {
-        __weak typeof(self) weakSelf = self;
-        [self refreshAccount:^(NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (error != nil) {
-                if (completion) completion (error);
-            } else if (strongSelf) {
-                changePassword ([[strongSelf account] email]);
-            }
-            
-        }];
-    } else {
-        changePassword (email);
-    }
+                          return;
+                      }
+                      
+                      [SENAuthorizationService reauthorizeUserWithPassword:password
+                                                                  callback:completion];
+                      
+                  }];
 }
 
 - (void)changeEmail:(NSString*)email completion:(SENAccountResponseBlock)completion {

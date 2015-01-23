@@ -170,14 +170,14 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     self.collectionView.scrollEnabled = pushed;
     UIImage* drawerIcon = pushed ? [UIImage imageNamed:@"Menu"] : [UIImage imageNamed:@"caret up"];
     CGFloat constant = pushed ? HEMTopItemsConstraintConstant : HEMTopItemsMinimumConstraintConstant;
-    [cell.shareButton setHidden:!pushed || self.dataSource.numberOfSleepSegments == 0];
-    [cell.dateButton setAlpha:pushed ? 1.f : 0.5f];
     [cell.dateButton setEnabled:pushed];
     [cell.drawerButton setImage:drawerIcon forState:UIControlStateNormal];
     cell.topItemsVerticalConstraint.constant = constant;
     [cell setNeedsUpdateConstraints];
-
+    BOOL shouldHideShareButton = !pushed || self.dataSource.numberOfSleepSegments == 0;
     [UIView animateWithDuration:0.25f animations:^{
+        [cell.shareButton setAlpha:shouldHideShareButton ? 0 : 1.f];
+        [cell.dateButton setAlpha:pushed ? 1.f : 0.5f];
         [cell layoutIfNeeded];
     }];
 }
@@ -192,7 +192,8 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     long score = [self.dataSource.sleepResult.score longValue];
     if (score > 0) {
         NSString* message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.format", nil), score];
-        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message] applicationActivities:nil];
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
+                                                                                         applicationActivities:nil];
         [self presentViewController:activityController animated:YES completion:nil];
     }
 }
@@ -355,8 +356,6 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
                                     layout:collectionView.collectionViewLayout
                     sizeForItemAtIndexPath:indexPath];
         [eventCell useExpandedLayout:YES targetSize:size animated:NO];
-    } else if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
-        [self updateTopBarActionsInCell:(id)cell withState:[self isViewPushed]];
     }
 }
 

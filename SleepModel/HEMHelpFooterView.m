@@ -15,6 +15,7 @@
 #import "HEMSupportUtil.h"
 
 static CGFloat const HEMHelpFooterMargin = 20.0f;
+static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
 
 @interface HEMHelpFooterView()<UITextViewDelegate, MFMailComposeViewControllerDelegate>
 
@@ -38,7 +39,7 @@ static CGFloat const HEMHelpFooterMargin = 20.0f;
 - (void)setupWithWidth:(CGFloat)width {
     CGRect textFrame = {
         HEMHelpFooterMargin,
-        HEMHelpFooterMargin,
+        0.0f,
         width-(HEMHelpFooterMargin*2),
         0.0f
     };
@@ -49,11 +50,13 @@ static CGFloat const HEMHelpFooterMargin = 20.0f;
     [textView setAttributedText:[self attributedHelpText]];
     [textView setEditable:NO];
     [textView setDelegate:self];
+    [textView setScrollEnabled:NO];
     [textView setBackgroundColor:[UIColor clearColor]];
     [textView setDataDetectorTypes:UIDataDetectorTypeLink|UIDataDetectorTypeAddress];
     [textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+
     CGSize textSize = [textView sizeThatFits:constraint];
-    textFrame.size.height = textSize.height;
+    textFrame.size.height = textSize.height + ([[UIFont settingsHelpFont] lineHeight] * HEMHelpLineHeightMultiple);
     [textView setFrame:textFrame];
     
     CGRect frame = CGRectZero;
@@ -73,12 +76,13 @@ static CGFloat const HEMHelpFooterMargin = 20.0f;
     UIFont* font = [UIFont settingsHelpFont];
     
     NSMutableAttributedString* attrHelp
-    = [[NSMutableAttributedString alloc] initWithFormat:helpFormat
-                                                   args:args
-                                              baseColor:color
-                                               baseFont:font];
+        = [[NSMutableAttributedString alloc] initWithFormat:helpFormat
+                                                       args:args
+                                                  baseColor:color
+                                                   baseFont:font];
     NSMutableParagraphStyle* paraStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     [paraStyle setAlignment:NSTextAlignmentCenter];
+    [paraStyle setLineHeightMultiple:HEMHelpLineHeightMultiple];
     [attrHelp addAttribute:NSParagraphStyleAttributeName
                      value:paraStyle
                      range:NSMakeRange(0, [attrHelp length])];

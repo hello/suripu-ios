@@ -114,10 +114,11 @@ static CGFloat const HEMRootDrawerRevealHeight = 40.f;
     [self.drawerViewController setRevealWidth:revealHeight forDirection:MSDynamicsDrawerDirectionTop];
     [self.drawerViewController setShouldAlignStatusBarToPaneView:NO];
 
-    [self.drawerViewController willMoveToParentViewController:self];
+    [self.drawerViewController willMoveToParentViewController:nil];
     [self.drawerViewController removeFromParentViewController];
     [self.view addSubview:self.drawerViewController.view];
     [self addChildViewController:self.drawerViewController];
+    [self.drawerViewController didMoveToParentViewController:self];
 }
 
 - (void)listenForActiveState {

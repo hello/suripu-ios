@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSDateFormatter* hour12Formatter;
 @property (strong, nonatomic) NSDateFormatter* meridiemFormatter;
 @property (nonatomic, getter=isLoading) BOOL loading;
+@property (nonatomic, getter=hasLoadingFailed) BOOL loadingFailed;
 @end
 
 @implementation HEMAlarmListViewController
@@ -118,7 +119,15 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self.spinnerView startAnimating];
     [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^(NSError* error) {
         [self.spinnerView stopAnimating];
-        if (!error) {
+        if (error) {
+            self.loadingFailed = YES;
+            if (self.alarms.count == 0) {
+                [self.collectionView reloadData];
+                self.loading = NO;
+                return;
+            }
+        } else {
+            self.loadingFailed = NO;
             HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
             [layout clearCache];
             [self reloadData];
@@ -277,6 +286,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
 {
     if (self.alarms.count > 0) {
         return [self collectionView:collectionView alarmCellAtIndexPath:indexPath];
+    } else if ([self isLoading] || [self hasLoadingFailed]) {
+        return [self collectionView:collectionView statusCellAtIndexPath:indexPath];
     } else {
         return [self collectionView:collectionView emptyCellAtIndexPath:indexPath];
     }
@@ -310,6 +321,16 @@ static NSUInteger const HEMAlarmListLimit = 8;
     NSDictionary* attributes = [HEMMarkdown attributesForInsightTitleViewText];
     NSString* title = [NSLocalizedString(@"alarms.no-alarm.title", nil) uppercaseString];
     cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:title attributes:attributes];
+    return cell;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                   statusCellAtIndexPath:(NSIndexPath *)indexPath
+{
+    NSString* identifier = [HEMMainStoryboard alarmListStatusCellReuseIdentifier];
+    HEMAlarmListCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    NSString* messageKey = [self isLoading] ? @"activity.loading" : @"alarms.no-data";
+    cell.detailLabel.text = NSLocalizedString(messageKey, nil);
     return cell;
 }
 
@@ -375,10 +396,15 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self presentViewControllerForAlarm:alarm];
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout *)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     UICollectionViewFlowLayout* layout = (id)collectionViewLayout;
-    return CGSizeMake(layout.itemSize.width, self.alarms.count > 0 ? HEMAlarmListCellHeight : HEMAlarmListEmptyCellHeight);
+    BOOL statusMessageShouldShow = [self isLoading] || [self hasLoadingFailed];
+    CGFloat height = (self.alarms.count > 0 || statusMessageShouldShow)
+        ? HEMAlarmListCellHeight : HEMAlarmListEmptyCellHeight;
+    return CGSizeMake(layout.itemSize.width, height);
 }
 
 @end

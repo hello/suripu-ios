@@ -19,7 +19,7 @@
          didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction
                         forDirection:(MSDynamicsDrawerDirection)direction
 {
-    if (paneClosedFraction > 0.9) {
+    if (paneClosedFraction > 0.95) {
         dynamicsDrawerViewController.view.window.windowLevel = UIWindowLevelStatusBar + 1;
     } else {
         dynamicsDrawerViewController.view.window.windowLevel = UIWindowLevelNormal;

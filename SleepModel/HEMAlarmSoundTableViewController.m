@@ -47,14 +47,25 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
 
 - (void)loadAlarmSoundsWithRetryCount:(NSInteger)count
 {
+    static NSArray* alarmSounds = nil;
+    if (alarmSounds.count > 0) {
+        [self updateTableWithSounds:alarmSounds];
+        return;
+    }
     if ([self isLoading])
         return;
-    self.navigationItem.rightBarButtonItem = nil;
+    UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
+    [indicatorView startAnimating];
     self.loading = YES;
     __weak typeof(self) weakSelf = self;
+    __weak UIActivityIndicatorView* weakIndicator = indicatorView;
     [SENAPIAlarms availableSoundsWithCompletion:^(NSArray* sounds, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [weakIndicator stopAnimating];
+        strongSelf.navigationItem.rightBarButtonItem = nil;
         if (!error) {
+            alarmSounds = sounds;
             [strongSelf updateTableWithSounds:sounds];
             strongSelf.loading = NO;
             return;
@@ -111,42 +122,46 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
 
 #pragma mark - Table view delegate
 
+- (NSInteger)selectedSoundIndex
+{
+    for (int index = 0; index < self.possibleSleepSounds.count; index++) {
+        SENSound* sound = self.possibleSleepSounds[index];
+        if ([sound.displayName isEqualToString:self.alarmCache.soundName]) {
+            return index;
+        }
+    }
+    return NSNotFound;
+}
+
+- (void)selectSoundAtIndex:(NSInteger)index
+{
+    if (index >= self.possibleSleepSounds.count)
+        return;
+    SENSound* sound = [self.possibleSleepSounds objectAtIndex:index];
+    self.alarmCache.soundName = sound.displayName;
+    self.alarmCache.soundID = sound.identifier;
+}
+
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSUInteger previousSelectionIndex = NSNotFound;
-    for (int i = 0; i < self.possibleSleepSounds.count; i++) {
-        SENSound* sound = self.possibleSleepSounds[i];
-        if ([sound.displayName isEqualToString:self.alarmCache.soundName]) {
-            previousSelectionIndex = i;
-            if (indexPath.row == previousSelectionIndex)
-                return;
-            break;
-        }
-    }
+    NSUInteger previousSelectionIndex = [self selectedSoundIndex];
+    if (indexPath.row == previousSelectionIndex)
+        return;
 
-    SENSound* sound = [self.possibleSleepSounds objectAtIndex:indexPath.row];
-    self.alarmCache.soundName = sound.displayName;
-    self.alarmCache.soundID = sound.identifier;
+    [self selectSoundAtIndex:indexPath.row];
     self.loadingIndexPath = indexPath;
-    if (previousSelectionIndex != NSNotFound) {
-        NSArray* indexPaths = @[
-            [NSIndexPath indexPathForRow:previousSelectionIndex inSection:0],
-            indexPath
-        ];
-        [tableView reloadRowsAtIndexPaths:indexPaths withRowAnimation:UITableViewRowAnimationFade];
-    } else {
-        [tableView reloadData];
-    }
-    [self playAudioForSound:sound atIndexPath:indexPath];
+    [tableView reloadData];
+    [self playAudioForSelectedSound];
 }
 
 #pragma mark - Audio
 
-- (void)playAudioForSound:(SENSound*)sound atIndexPath:(NSIndexPath*)indexPath
+- (void)playAudioForSelectedSound
 {
     [self stopAudio];
     [self.loadingQueue cancelAllOperations];
+    SENSound* sound = self.possibleSleepSounds[[self selectedSoundIndex]];
     NSURL* url = [NSURL URLWithString:sound.URLPath];
 
     __weak typeof(self) weakSelf = self;
@@ -184,11 +199,8 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
 
 - (void)stopLoadingAnimation
 {
-    if (self.loadingIndexPath) {
-        NSIndexPath* indexPath = self.loadingIndexPath;
-        self.loadingIndexPath = nil;
-        [self.tableView reloadRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationNone];
-    }
+    self.loadingIndexPath = nil;
+    [self.tableView reloadData];
 }
 
 #pragma mark AVAudioPlayerDelegate

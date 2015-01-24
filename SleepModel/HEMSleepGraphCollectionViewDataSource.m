@@ -64,8 +64,6 @@ static NSString* const sleepEventNameFindCharacter = @"_";
 static NSString* const sleepEventNameReplaceCharacter = @" ";
 static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
-static CGFloat HEMEventZPosition = 30.f;
-
 + (NSDateFormatter*)sleepDateFormatter
 {
     static NSDateFormatter* formatter = nil;
@@ -272,9 +270,6 @@ static CGFloat HEMEventZPosition = 30.f;
         break;
     }
     CGFloat zPosition = indexPath.row;
-    if ([self segmentForEventExistsAtIndexPath:indexPath]) {
-        zPosition += HEMEventZPosition;
-    }
     if (cell.layer.zPosition != zPosition) {
         [cell.layer setZPosition:zPosition];
     }
@@ -304,14 +299,16 @@ static CGFloat HEMEventZPosition = 30.f;
     [cell.dateButton setTitle:dateText forState:UIControlStateNormal];
     if ([self shouldBeLoading])
         [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:0.5];
+    else
+        [cell.spinnerView stopAnimating];
 
     if ([self.collectionView.delegate respondsToSelector:@selector(drawerButtonTapped:)])
         [cell.drawerButton addTarget:self.collectionView.delegate
                               action:@selector(drawerButtonTapped:)
                     forControlEvents:UIControlEventTouchUpInside];
     if ([self.collectionView.delegate respondsToSelector:@selector(shouldHideShareButton)])
-        cell.shareButton.hidden = [(id<HEMSleepGraphActionDelegate>)self.collectionView.delegate
-                                   shouldHideShareButton];
+        cell.shareButton.alpha = [(id<HEMSleepGraphActionDelegate>)self.collectionView.delegate
+                                  shouldHideShareButton] ? 0 : 1.f;
     if ([self.collectionView.delegate respondsToSelector:@selector(shouldEnableZoomButton)])
         cell.dateButton.enabled = [(id<HEMSleepGraphActionDelegate>)self.collectionView.delegate
                                    shouldEnableZoomButton];

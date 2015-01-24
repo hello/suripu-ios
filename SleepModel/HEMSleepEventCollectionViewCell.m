@@ -24,7 +24,6 @@
 @implementation HEMSleepEventCollectionViewCell
 
 static CGFloat const HEMEventButtonSize = 40.f;
-static CGFloat const HEMEventButtonTouchInset = -6.f;
 static CGFloat const HEMEventBlurHeight = 60.f;
 static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
@@ -98,8 +97,10 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    self.gradientContainerTopView.frame = CGRectMake(0, -HEMEventBlurHeight, CGRectGetWidth(self.bounds), HEMEventBlurHeight);
-    self.gradientContainerBottomView.frame = CGRectMake(0, CGRectGetHeight(self.bounds) - HEMEventButtonSize/2, CGRectGetWidth(self.bounds), HEMEventBlurHeight);
+    CGFloat inset = HEMEventButtonSize/2;
+    CGFloat width = CGRectGetWidth(self.bounds);
+    self.gradientContainerTopView.frame = CGRectMake(0, -HEMEventBlurHeight + inset, width, HEMEventBlurHeight);
+    self.gradientContainerBottomView.frame = CGRectMake(0, CGRectGetHeight(self.bounds) - inset, width, HEMEventBlurHeight);
     self.gradientTopLayer.frame = self.gradientContainerTopView.bounds;
     [self.gradientTopLayer setNeedsLayout];
     self.gradientBottomLayer.frame = self.gradientContainerBottomView.bounds;
@@ -191,24 +192,6 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
     else
         [self.spinnerView stopAnimating];
     self.playSoundButton.enabled = !isLoading;
-}
-
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
-{
-    CGRect buttonFrame = CGRectInset(self.eventTypeButton.frame, HEMEventButtonTouchInset, HEMEventButtonTouchInset);
-    if (CGRectContainsPoint(buttonFrame, point))
-        return self.eventTypeButton;
-
-    return [super hitTest:point withEvent:event];
-}
-
-- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event
-{
-    CGRect buttonFrame = CGRectInset(self.eventTypeButton.frame, HEMEventButtonTouchInset, HEMEventButtonTouchInset);
-    if (CGRectContainsPoint(buttonFrame, point))
-        return YES;
-
-    return [super pointInside:point withEvent:event];
 }
 
 #pragma mark - Audio

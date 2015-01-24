@@ -37,6 +37,7 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate* animationDelegate;
 @property (nonatomic, strong) NSIndexPath* expandedIndexPath;
 @property (nonatomic, getter=presleepSectionIsExpanded) BOOL presleepExpanded;
+@property (nonatomic, strong) UIPanGestureRecognizer* panGestureRecognizer;
 @end
 
 @implementation HEMSleepGraphViewController
@@ -58,6 +59,10 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     [self reloadData];
     self.animationDelegate = [HEMZoomAnimationTransitionDelegate new];
     self.transitioningDelegate = self.animationDelegate;
+    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan)];
+    self.panGestureRecognizer.delegate = self;
+    [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:self.panGestureRecognizer];
+    [self.view addGestureRecognizer:self.panGestureRecognizer];
     [self registerForNotifications];
 }
 
@@ -165,14 +170,14 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     self.collectionView.scrollEnabled = pushed;
     UIImage* drawerIcon = pushed ? [UIImage imageNamed:@"Menu"] : [UIImage imageNamed:@"caret up"];
     CGFloat constant = pushed ? HEMTopItemsConstraintConstant : HEMTopItemsMinimumConstraintConstant;
-    [cell.shareButton setHidden:!pushed || self.dataSource.numberOfSleepSegments == 0];
-    [cell.dateButton setAlpha:pushed ? 1.f : 0.5f];
     [cell.dateButton setEnabled:pushed];
     [cell.drawerButton setImage:drawerIcon forState:UIControlStateNormal];
     cell.topItemsVerticalConstraint.constant = constant;
     [cell setNeedsUpdateConstraints];
-
+    BOOL shouldHideShareButton = !pushed || self.dataSource.numberOfSleepSegments == 0;
     [UIView animateWithDuration:0.25f animations:^{
+        [cell.shareButton setAlpha:shouldHideShareButton ? 0 : 1.f];
+        [cell.dateButton setAlpha:pushed ? 1.f : 0.5f];
         [cell layoutIfNeeded];
     }];
 }
@@ -187,7 +192,8 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     long score = [self.dataSource.sleepResult.score longValue];
     if (score > 0) {
         NSString* message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.format", nil), score];
-        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message] applicationActivities:nil];
+        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
+                                                                                         applicationActivities:nil];
         [self presentViewController:activityController animated:YES completion:nil];
     }
 }
@@ -228,13 +234,17 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)didTapEventButton:(UIButton*)sender
 {
+    static CGFloat HEMEventOverlayZPosition = 30.f;
     NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
     HEMSleepEventCollectionViewCell* cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
     BOOL shouldExpand = ![self.expandedIndexPath isEqual:indexPath];
     if (shouldExpand) {
         if (self.expandedIndexPath) {
             HEMSleepEventCollectionViewCell* oldCell = (id)[self.collectionView cellForItemAtIndexPath:self.expandedIndexPath];
-            [oldCell useExpandedLayout:NO targetSize:CGSizeZero animated:YES];
+            if ([oldCell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
+                oldCell.layer.zPosition = indexPath.row;
+                [oldCell useExpandedLayout:NO targetSize:CGSizeZero animated:YES];
+            }
         }
         self.expandedIndexPath = indexPath;
     } else {
@@ -243,7 +253,11 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     CGSize size = [self collectionView:self.collectionView
                                 layout:self.collectionView.collectionViewLayout
                 sizeForItemAtIndexPath:indexPath];
-    [cell useExpandedLayout:shouldExpand targetSize:size animated:YES];
+
+    if ([cell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
+        cell.layer.zPosition = indexPath.row + HEMEventOverlayZPosition;
+        [cell useExpandedLayout:shouldExpand targetSize:size animated:YES];
+    }
     [self animateAllCellHeightChanges];
     CGRect cellRect = [self.collectionView convertRect:cell.frame toView:self.collectionView.superview];
     if (shouldExpand && !CGRectContainsRect(self.collectionView.frame, cellRect))
@@ -275,27 +289,43 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 #pragma mark UIGestureRecognizerDelegate
 
+- (void)didPan
+{
+}
+
 - (BOOL)isViewPushed
 {
     CGPoint location = [self.view.superview convertPoint:self.view.frame.origin fromView:nil];
     return location.y > -10.f;
 }
 
-- (BOOL)gestureRecognizer:(UIGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch
+- (BOOL)shouldAllowRecognizerToReceiveTouch:(UIPanGestureRecognizer*)recognizer
 {
-    return self.collectionView.contentOffset.y < 20.f;
+    CGPoint velocity = [recognizer velocityInView:self.view];
+    BOOL movingMostlyVertically = fabsf(velocity.x) <= fabsf(velocity.y);
+    BOOL movingUpwards = velocity.y > 0;
+    return [self isScrolledToTop] && movingUpwards && movingMostlyVertically;
+}
+
+- (BOOL)isScrolledToTop
+{
+    return self.collectionView.contentOffset.y < 10;
+}
+
+- (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch
+{
+    return [self isScrolledToTop];
 }
 
 - (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer
     shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer*)otherGestureRecognizer
 {
-    return [self.collectionView contentSize].height > CGRectGetHeight([self.collectionView bounds]);
+    return ![otherGestureRecognizer isEqual:self.collectionView.panGestureRecognizer];
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer*)gestureRecognizer
 {
-    CGPoint translation = [gestureRecognizer translationInView:[self view]];
-    return fabsf(translation.y) > fabsf(translation.x);
+    return [self shouldAllowRecognizerToReceiveTouch:gestureRecognizer];
 }
 
 #pragma mark UICollectionViewDelegate
@@ -332,8 +362,6 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
                                     layout:collectionView.collectionViewLayout
                     sizeForItemAtIndexPath:indexPath];
         [eventCell useExpandedLayout:YES targetSize:size animated:NO];
-    } else if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
-        [self updateTopBarActionsInCell:(id)cell withState:[self isViewPushed]];
     }
 }
 

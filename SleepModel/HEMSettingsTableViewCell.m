@@ -12,6 +12,8 @@
 #import "HEMMathUtil.h"
 #import "HelloStyleKit.h"
 
+CGFloat const HEMSettingsCellTableMargin = 20.0f;
+
 static CGFloat const HEMSettingsCellCornerRadius = 3.0f;
 static CGFloat const HEMSettingsCellSeparatorSize = 0.5f;
 static CGFloat const HEMSettingsCellMargins = 16.0f;
@@ -22,16 +24,28 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
 
 @property (nonatomic, weak) CAShapeLayer* contentLayer;
 @property (nonatomic, weak) UIView* separator;
+@property (nonatomic, strong) UIActivityIndicatorView* activityView;
 
 @end
 
 @implementation HEMSettingsTableViewCell
 
 - (void)awakeFromNib {
+    [self setBackgroundColor:[UIColor clearColor]];
+    [[self contentView] setBackgroundColor:[UIColor clearColor]];
+    [self setSelectionStyle:UITableViewCellSelectionStyleNone];
+    
     [self addContentLayer];
     [self addSeparator];
+    
     [[self titleLabel] setFont:[UIFont settingsTableCellFont]];
     [[self titleLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[self titleLabel] setBackgroundColor:[UIColor clearColor]];
+    
+    [[self valueLabel] setFont:[UIFont settingsTableCellDetailFont]];
+    [[self valueLabel] setTextColor:[HelloStyleKit settingsValueTextColor]];
+    [[self valueLabel] setBackgroundColor:[UIColor clearColor]];
+    [[self valueLabel] setTextAlignment:NSTextAlignmentRight];
 }
 
 - (CGRect)layerFrame {
@@ -96,6 +110,11 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
 - (void)showNoCorners {
     [[self contentLayer] setPath:[[UIBezierPath bezierPathWithRect:[self layerFrame]] CGPath]];
     [[self separator] setHidden:NO];
+}
+
+- (void)showTopAndBottomCorners {
+    [self roundContentLayerCorners:UIRectCornerAllCorners];
+    [[self separator] setHidden:YES];
 }
 
 @end

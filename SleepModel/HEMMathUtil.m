@@ -10,7 +10,7 @@
 
 double const HEMMathCentimetersPerInch = 2.54f;
 double const HEMMathKilogramsPerPound = 0.453592f;
-double const HEMMathPoundsPerGram = 0.00220462f;
+double const HEMMathPoundsPerGram = 0.0022046f;
 
 BOOL HEMIsMetricSystem () {
     NSLocale *locale = [NSLocale currentLocale];
@@ -18,15 +18,15 @@ BOOL HEMIsMetricSystem () {
 }
 
 float HEMToInches (NSNumber* centimeters) {
-    return [centimeters floatValue] / HEMMathCentimetersPerInch;
+    return round([centimeters floatValue] / HEMMathCentimetersPerInch);
 }
 
 float HEMToPounds (NSNumber* grams) {
-    return [grams floatValue] * HEMMathPoundsPerGram;
+    return round([grams floatValue] * HEMMathPoundsPerGram);
 }
 
 float HEMToKilograms (NSNumber* pounds) {
-    return [pounds floatValue] * HEMMathKilogramsPerPound;
+    return round([pounds floatValue] * HEMMathKilogramsPerPound);
 }
 
 float HEMDegreesToRadians(float degrees) {

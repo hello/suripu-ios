@@ -121,44 +121,10 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
             default:
                 break;
         }
-        
-        if (deviceState == SENServiceDeviceStateNormal) {
-            [self checkSenseWiFiState:completion];
-        } else {
-            completion (deviceState);
-        }
+        completion (deviceState);
     } else {
         completion (deviceState);
     }
-}
-
-- (void)checkSenseWiFiState:(void(^)(SENServiceDeviceState state))completion {
-    __weak typeof(self) weakSelf = self;
-    [SENSenseManager whenBleStateAvailable:^(BOOL on) {
-        __block typeof(weakSelf) strongSelf = weakSelf;
-        // if no ble, assume everything is normal since we can't warn of a problem
-        // that is not for sure
-        __block SENServiceDeviceState wifiState = SENServiceDeviceStateNormal;
-        
-        if (on) {
-            [strongSelf getConfiguredWiFi:^(NSString *ssid, SENWiFiConnectionState state, NSError *error) {
-                if (error != nil) {
-                    switch (state) {
-                        case SENWifiConnectionStateDisconnected:
-                        case SENWiFiConnectionStateNoInternet:
-                            wifiState = SENServiceDeviceStateNotConnectedToWiFi;
-                            break;
-                        default:
-                            break;
-                    }
-                }
-                completion (wifiState);
-            }];
-        } else {
-            completion (wifiState);
-        }
-    }];
-
 }
 
 - (void)checkPillPairingState:(void(^)(SENServiceDeviceState state))completion {

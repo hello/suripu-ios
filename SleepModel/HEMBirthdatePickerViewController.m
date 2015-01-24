@@ -34,15 +34,9 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
     [[self titleLabel] setAccessibilityLabel:msg];
 
     [self loadAccount:nil]; // if does not yet exist, in case user returns to here
-    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-    
-    if ([self delegate] != nil) {
-        NSString* done = NSLocalizedString(@"status.success", nil);
-        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
-        [[self doneButton] setTitle:done forState:UIControlStateNormal];
-        [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
-    } else {
-        [self enableBackButton:NO];
+    [self configureButtons];
+
+    if ([self delegate] == nil) {
         // start looking for a sense right away here.  We want this step here b/c
         // this is one of the checkpoints and if user lands back here, this optimizatin
         // will also apply.  If there is a delegate, we do not want to pre scan
@@ -50,7 +44,14 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
         [[HEMOnboardingCache sharedCache] preScanForSenses];
         [SENAnalytics track:kHEMAnalyticsEventOnBBirthday];
     }
+}
+
+- (void)configureButtons {
+    [self stylePrimaryButton:[self doneButton]
+             secondaryButton:[self skipButton]
+                withDelegate:[self delegate] != nil];
     
+    [self enableBackButton:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {

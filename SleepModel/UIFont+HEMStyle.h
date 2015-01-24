@@ -57,6 +57,11 @@
 + (UIFont*)settingsTitleFont;
 
 /**
+ * Font used for the help text in settings
+ */
++ (UIFont *)settingsHelpFont;
+
+/**
  * Font used for the toggle switches found in preference settings
  */
 + (UIFont *)preferenceControlFont;

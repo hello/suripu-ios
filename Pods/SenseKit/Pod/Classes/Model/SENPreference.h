@@ -10,7 +10,9 @@
 
 typedef NS_ENUM(NSUInteger, SENPreferenceType) {
     SENPreferenceTypeUnknown = 0,
-    SENPreferenceTypeEnhancedAudio = 1
+    SENPreferenceTypeEnhancedAudio = 1,
+    SENPreferenceTypeTime24 = 2,
+    SENPreferenceTypeTempCelcius = 3
 };
 
 @interface SENPreference : NSObject
@@ -26,6 +28,15 @@ typedef NS_ENUM(NSUInteger, SENPreferenceType) {
  * @return initialized instance with the given type and enable flag
  */
 - (instancetype)initWithType:(SENPreferenceType)type enable:(BOOL)enable;
+
+/**
+ * @method initWithName:value
+ *
+ * @param name: the server dictated name of the preference
+ * @param value: a number object that determines the enable state of the pref
+ * @return initialized instance, if name is specified and recognized
+ */
+- (instancetype)initWithName:(NSString*)name value:(NSNumber*)value;
 
 /**
  * @method initWithDictionary:

@@ -10,6 +10,8 @@
 
 static NSString* const SENPreferenceName = @"pref";
 static NSString* const SENPreferenceNameEnhancedAudio = @"ENHANCED_AUDIO";
+static NSString* const SENPreferenceNameTemp = @"TEMP_CELCIUS";
+static NSString* const SENPreferenceNameTime = @"TIME_TWENTY_FOUR_HOUR";
 static NSString* const SENPreferenceEnable = @"enabled";
 
 @interface SENPreference()
@@ -28,6 +30,10 @@ static NSString* const SENPreferenceEnable = @"enabled";
         : nil;
     if ([uppercaseName isEqualToString:SENPreferenceNameEnhancedAudio]) {
         type = SENPreferenceTypeEnhancedAudio;
+    } else if ([uppercaseName isEqualToString:SENPreferenceNameTemp]) {
+        type = SENPreferenceTypeTempCelcius;
+    } else if ([uppercaseName isEqualToString:SENPreferenceNameTime]) {
+        type = SENPreferenceTypeTime24;
     }
     return type;
 }
@@ -37,6 +43,12 @@ static NSString* const SENPreferenceEnable = @"enabled";
     switch (type) {
         case SENPreferenceTypeEnhancedAudio:
             name = SENPreferenceNameEnhancedAudio;
+            break;
+        case SENPreferenceTypeTempCelcius:
+            name = SENPreferenceNameTemp;
+            break;
+        case SENPreferenceTypeTime24:
+            name = SENPreferenceNameTime;
             break;
         default:
             break;
@@ -51,6 +63,12 @@ static NSString* const SENPreferenceEnable = @"enabled";
         _enabled = enable;
     }
     return self;
+}
+
+- (instancetype)initWithName:(NSString*)name value:(NSNumber*)value {
+    SENPreferenceType type = [SENPreference typeFromName:name];
+    if (type == SENPreferenceTypeUnknown) return nil;
+    return [self initWithType:type enable:[value boolValue]];
 }
 
 - (instancetype)initWithDictionary:(NSDictionary*)dictionary {

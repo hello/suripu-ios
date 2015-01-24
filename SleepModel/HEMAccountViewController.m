@@ -11,25 +11,36 @@
 
 #import "UIFont+HEMStyle.h"
 
-#import "HEMAccountViewController.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMAccountViewController.h"
+#import "HEMSettingsTableViewCell.h"
+#import "HEMSettingsAccountDataSource.h"
 #import "HEMMainStoryboard.h"
+#import "HEMOnboardingStoryboard.h"
 #import "HelloStyleKit.h"
+#import "HEMStyledNavigationViewController.h"
 #import "HEMUpdatePasswordViewController.h"
 #import "HEMUpdateEmailViewController.h"
+#import "HEMBirthdatePickerViewController.h"
+#import "HEMHeightPickerViewController.h"
+#import "HEMWeightPickerViewController.h"
+#import "HEMGenderPickerViewController.h"
 
-static NSInteger const HEMAccountRowEmail = 0;
-static NSInteger const HEMAccountRowPassword = 1;
-
-static CGFloat const HEMAccountMaxDetailWidth = 100.0f;
-static CGFloat const HEMAccountDetailMargin = 35.0f;
+static CGFloat const HEMAccountTableSectionHeaderHeight = 20.0f;
+static CGFloat const HEMAccountTableFooterMargins = 22.0f;
 
 @interface HEMAccountViewController() <
-    UITableViewDelegate, UITableViewDataSource, HEMUpdatePasswordDelegate, HEMUpdateEmailDelegate
+    UITableViewDelegate,
+    HEMUpdatePasswordDelegate,
+    HEMUpdateEmailDelegate,
+    HEMBirthdatePickerDelegate,
+    HEMGenderPickerDelegate,
+    HEMWeightPickerDelegate,
+    HEMHeightPickerDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UITableView *infoTableView;
-@property (assign, nonatomic, getter=isLoading) BOOL loading;
+@property (strong, nonatomic) HEMSettingsAccountDataSource* dataSource;
 
 @end
 
@@ -42,116 +53,154 @@ static CGFloat const HEMAccountDetailMargin = 35.0f;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self refreshAccount];
+    [[self dataSource] reload:nil];
 }
 
 - (void)configureTable {
-    [[self infoTableView] setTableFooterView:[[UIView alloc] init]];
-    [[self infoTableView] setDataSource:self];
+    [self setDataSource:[[HEMSettingsAccountDataSource alloc] initWithTableView:[self infoTableView]]];
+    
+    CGRect frame = CGRectZero;
+    frame.size.height = HEMSettingsCellTableMargin;
+    frame.size.width = CGRectGetWidth([[self infoTableView] bounds]);
+    
+    [[self infoTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
+    [[self infoTableView] setTableFooterView:[self tableFooter]];
+    [[self infoTableView] setDataSource:[self dataSource]];
     [[self infoTableView] setDelegate:self];
 }
 
-- (void)refreshAccount {
-    [self setLoading:YES];
+- (UIView*)tableFooter {
+    UIView* footerView = [[UIView alloc] init];
+    [footerView setBackgroundColor:[[self infoTableView] backgroundColor]];
+    [footerView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     
-    __weak typeof(self) weakSelf = self;
-    [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf && error == nil) {
-            [strongSelf setLoading:NO];
-            [[strongSelf infoTableView] reloadData];
-        }
-    }];
+    
+    UILabel* label = [[UILabel alloc] init];
+    [label setFont:[UIFont settingsHelpFont]];
+    [label setTextColor:[HelloStyleKit backViewTextColor]];
+    [label setText:NSLocalizedString(@"settings.enhanced-audio.desc", nil)];
+    [label setNumberOfLines:0];
+    [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    
+    UIScreen* mainScreen = [UIScreen mainScreen];
+    CGFloat screenWidth = CGRectGetWidth([mainScreen bounds]);
+    CGFloat labelWidth = screenWidth-(HEMAccountTableFooterMargins*2);
+    CGSize constraint = CGSizeMake(labelWidth, MAXFLOAT);
+    CGRect labelFrame = {
+        HEMAccountTableFooterMargins,
+        HEMAccountTableFooterMargins,
+        labelWidth,
+        [label sizeThatFits:constraint].height
+    };
+    [label setFrame:labelFrame];
+    
+    CGRect footerFrame = [footerView frame];
+    footerFrame.size.width = screenWidth;
+    footerFrame.size.height = CGRectGetMaxY(labelFrame) + HEMAccountTableFooterMargins;
+    [footerView setFrame:footerFrame];
+
+    [footerView addSubview:label];
+    
+    return footerView;
 }
 
-#pragma mark - UITableViewDelegate / DataSource
+#pragma mark - UITableViewDelegate
 
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 2;
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    return section == 0 ? 0.0f : HEMAccountTableSectionHeaderHeight;
 }
 
-- (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    static NSString* cellId = @"info";
-    return [tableView dequeueReusableCellWithIdentifier:cellId];
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView* headerView = [[UIView alloc] init];
+    [headerView setBackgroundColor:[UIColor clearColor]];
+    return headerView;
 }
 
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    NSString* text = nil;
-    NSString* detail = nil;
-    UIActivityIndicatorView* activityView = nil;
-    UITableViewCellAccessoryType type = UITableViewCellAccessoryDisclosureIndicator;
+    HEMSettingsTableViewCell* settingsCell = (HEMSettingsTableViewCell*)cell;
     
-    switch ([indexPath row]) {
-        case HEMAccountRowEmail: {
-            text = NSLocalizedString(@"settings.account.email", nil);
-            
-            SENAccount* account = [[SENServiceAccount sharedService] account];
-            if (account != nil && [[account email] length] > 0 && ![self isLoading]) {
-                detail = [account email];
-            } else {
-                activityView =
-                    [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-                [activityView hidesWhenStopped];
-                [activityView startAnimating];
-                type = UITableViewCellAccessoryNone;
-            }
-            
-            break;
-        }
-        case HEMAccountRowPassword: {
-            text = NSLocalizedString(@"settings.account.password", nil);
-            break;
-        }
-        default:
-            break;
+    NSString* title = [[self dataSource] titleForCellAtIndexPath:indexPath];
+    NSString* value = [[self dataSource] valueForCellAtIndexPath:indexPath];
+    
+    if ([[settingsCell accessory] isKindOfClass:[UISwitch class]]) {
+        UISwitch* settingsSwitch = (UISwitch*)[settingsCell accessory];
+        BOOL enabled = [[self dataSource] isEnabledAtIndexPath:indexPath];
+        [settingsSwitch setOn:enabled];
+        [settingsSwitch setTag:[[self dataSource] infoTypeAtIndexPath:indexPath]];
+        [settingsSwitch addTarget:self
+                           action:@selector(togglePreferenceSwitch:)
+                 forControlEvents:UIControlEventTouchUpInside];
     }
     
-    [cell setAccessoryType:type];
-    [cell setAccessoryView:activityView];
+    [[settingsCell titleLabel] setText:title];
+    [[settingsCell valueLabel] setText:value];
     
-    [[cell textLabel] setText:text];
-    [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
-    [[cell textLabel] setFont:[UIFont settingsTitleFont]];
+    BOOL firstRow = [indexPath row] == 0;
+    BOOL lastRow = [[self dataSource] isLastRow:indexPath];
     
-    [[cell detailTextLabel] setText:detail];
-    [[cell detailTextLabel] setTextColor:[HelloStyleKit backViewDetailTextColor]];
-    [[cell detailTextLabel] setFont:[UIFont settingsTableCellDetailFont]];
-    [[cell detailTextLabel] setTextAlignment:NSTextAlignmentRight];
-    [[cell detailTextLabel] setLineBreakMode:NSLineBreakByTruncatingTail];
-    [[cell detailTextLabel] sizeToFit];
-    
-    CGSize constraint = CGSizeMake(HEMAccountMaxDetailWidth, CGRectGetHeight([cell bounds]));
-    CGSize textSize = [[cell detailTextLabel] sizeThatFits:constraint];
-    CGRect detailFrame = CGRectZero;
-    detailFrame.origin.x = CGRectGetWidth([cell bounds]) - textSize.width - HEMAccountDetailMargin;
-    detailFrame.origin.y = ceilf((CGRectGetHeight([cell bounds]) - textSize.height)/2);
-    detailFrame.size.height = textSize.height;
-    detailFrame.size.width = textSize.width;
-    [[cell detailTextLabel] setFrame:detailFrame];
+    if (firstRow && lastRow) {
+        [settingsCell showTopAndBottomCorners];
+    } else if (firstRow) {
+        [settingsCell showTopCorners];
+    } else if (lastRow) {
+        [settingsCell showBottomCorners];
+    } else {
+        [settingsCell showNoCorners];
+    }
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+    HEMSettingsAccountInfoType type = [[self dataSource] infoTypeAtIndexPath:indexPath];
     NSString* segueId = nil;
-    switch ([indexPath row]) {
-        case HEMAccountRowPassword:
+    UIViewController* editController = nil;
+    
+    switch (type) {
+        case HEMSettingsAccountInfoTypeEmail:
+            segueId = [HEMMainStoryboard updateEmailSegueIdentifier];
+            break;
+        case HEMSettingsAccountInfoTypePassword:
             segueId = [HEMMainStoryboard updatePasswordSegueIdentifier];
             break;
-        case HEMAccountRowEmail:
-            segueId = [HEMMainStoryboard updateEmailSegueIdentifier];
+        case HEMSettingsAccountInfoTypeBirthday:
+            editController = [self birthdateController];
+            break;
+        case HEMSettingsAccountInfoTypeGender:
+            editController = [self genderController];
+            break;
+        case HEMSettingsAccountInfoTypeHeight:
+            editController = [self heightController];
+            break;
+        case HEMSettingsAccountInfoTypeWeight:
+            editController = [self weightController];
         default:
             break;
     }
-    
+
+    // a controller is needed b/c editing demographic data reuses controllers
+    // that are within the Onboarding storyboard, which we can't use segues for.
     if (segueId != nil) {
         [self performSegueWithIdentifier:segueId sender:nil];
+    } else if (editController != nil) {
+        UINavigationController* nav =
+            [[HEMStyledNavigationViewController alloc] initWithRootViewController:editController];
+        [self presentViewController:nav animated:YES completion:nil];
     }
 }
 
-#pragma mark - Segues
+#pragma mark - Actions
+
+- (void)togglePreferenceSwitch:(UISwitch*)preferenceSwitch {
+    HEMSettingsAccountInfoType type = [preferenceSwitch tag];
+    
+    __weak typeof(self) weakSelf = self;
+    [[self dataSource] enablePreference:[preferenceSwitch isOn] forType:type completion:^(NSError *error) {
+        [weakSelf showErrorIfAny:error];
+    }];
+}
+
+#pragma mark - Segues / Next Controller Prep
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     if ([[segue destinationViewController] isKindOfClass:[UINavigationController class]]) {
@@ -173,16 +222,141 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     }
 }
 
-#pragma mark - Password Update Delegate
+- (HEMBirthdatePickerViewController*)birthdateController {
+    HEMBirthdatePickerViewController* dobViewController =
+    (HEMBirthdatePickerViewController*) [HEMOnboardingStoryboard instantiateDobViewController];
+    [dobViewController setDelegate:self];
+    
+    NSDateComponents* components = [[self dataSource] birthdateComponents];
+    if (components != nil) {
+        NSCalendar* calendar = [NSCalendar currentCalendar];
+        NSInteger year = [[calendar components:NSCalendarUnitYear fromDate:[NSDate date]] year];
+        [dobViewController setInitialMonth:[components month]];
+        [dobViewController setInitialDay:[components day]];
+        [dobViewController setInitialYear:year - [components year]];
+    }
+    
+    return dobViewController;
+}
+
+- (HEMHeightPickerViewController*)heightController {
+    HEMHeightPickerViewController* heightPicker =
+    (HEMHeightPickerViewController*) [HEMOnboardingStoryboard instantiateHeightPickerViewController];
+    NSInteger totalInches = [[self dataSource] heightInInches];
+    NSInteger feet = totalInches / 12;
+    [heightPicker setFeet:feet];
+    [heightPicker setInches:totalInches % 12];
+    [heightPicker setDelegate:self];
+    return heightPicker;
+}
+
+- (HEMWeightPickerViewController*)weightController {
+    HEMWeightPickerViewController* weightPicker =
+    (HEMWeightPickerViewController*) [HEMOnboardingStoryboard instantiateWeightPickerViewController];
+    [weightPicker setDefaultWeightLbs:[[self dataSource] weightInPounds]];
+    [weightPicker setDelegate:self];
+    return weightPicker;
+}
+
+- (HEMGenderPickerViewController*)genderController {
+    HEMGenderPickerViewController* genderPicker =
+    (HEMGenderPickerViewController*) [HEMOnboardingStoryboard instantiateGenderPickerViewController];
+    [genderPicker setDefaultGender:[[self dataSource] genderEnumValue]];
+    [genderPicker setDelegate:self];
+    return genderPicker;
+}
+
+#pragma mark - Delegates
+
+- (void)showErrorIfAny:(NSError*)error {
+    if (error == nil) return;
+    [self showMessageDialog:NSLocalizedString(@"account.update.error.generic", nil)
+                      title:NSLocalizedString(@"account.update.failed.title", nil)];
+}
+
+#pragma mark Password Update Delegate
 
 - (void)didUpdatePassword:(BOOL)updated from:(HEMUpdatePasswordViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Email Update Delegate
+#pragma mark Email Update Delegate
 
 - (void)didUpdateEmail:(BOOL)updated from:(HEMUpdateEmailViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
+
+#pragma mark BirthDate Delegate
+
+- (void)didSelectMonth:(NSInteger)month
+                   day:(NSInteger)day
+                  year:(NSInteger)year
+                  from:(HEMBirthdatePickerViewController *)controller {
+
+    __weak typeof(self) weakSelf = self;
+    [[self dataSource] updateBirthMonth:month day:day year:year completion:^(NSError* error) {
+        [weakSelf showErrorIfAny:error];
+    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didCancelBirthdatePicker:(HEMBirthdatePickerViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark Height Delegate
+
+- (void)didSelectHeightInCentimeters:(int)centimeters
+                                from:(HEMHeightPickerViewController *)controller {
+    
+    __weak typeof(self) weakSelf = self;
+    [[self dataSource] updateHeight:centimeters completion:^(NSError* error) {
+        [weakSelf showErrorIfAny:error];
+    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+- (void)didCancelHeightFrom:(HEMHeightPickerViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark Weight Delegate
+
+- (void)didSelectWeightInKgs:(CGFloat)weightKgs
+                        from:(HEMWeightPickerViewController *)controller {
+    
+    __weak typeof(self) weakSelf = self;
+    [[self dataSource] updateWeight:weightKgs completion:^(NSError* error) {
+        [weakSelf showErrorIfAny:error];
+    }];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didCancelWeightFrom:(HEMWeightPickerViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark Gender Delegate
+
+- (void)didSelectGender:(SENAccountGender)gender
+                   from:(HEMGenderPickerViewController *)controller {
+    
+    __weak typeof(self) weakSelf = self;
+    [[self dataSource] updateGender:gender completion:^(NSError* error) {
+        [weakSelf showErrorIfAny:error];
+        if (error == nil) {
+            [HEMAnalytics updateGender:gender];
+        }
+    }];
+    
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
+}
+
+- (void)didCancelGenderFrom:(HEMGenderPickerViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 
 @end

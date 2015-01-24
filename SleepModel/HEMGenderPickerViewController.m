@@ -35,19 +35,20 @@
 
     [self setSelectedColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.05f]];
     [self setSelectedBorderColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.4f]];
-    
-    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    [self configureButtons];
     [self configureGenderSelectors];
     
-    if ([self delegate] != nil) {
-        NSString* title = NSLocalizedString(@"status.success", nil);
-        NSString* cancel = NSLocalizedString(@"actions.cancel", nil);
-        [[self doneButton] setTitle:title forState:UIControlStateNormal];
-        [[self skipButton] setTitle:cancel forState:UIControlStateNormal];
-    } else {
-        [self enableBackButton:NO];
+    if ([self delegate] == nil) {
         [SENAnalytics track:kHEMAnalyticsEventOnBGender];
     }
+}
+
+- (void)configureButtons {
+    [self stylePrimaryButton:[self doneButton]
+             secondaryButton:[self skipButton]
+                withDelegate:[self delegate] != nil];
+    
+    [self enableBackButton:NO];
 }
 
 - (void)adjustConstraintsForIPhone4 {

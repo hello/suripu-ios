@@ -21,9 +21,8 @@ typedef NS_ENUM(NSUInteger, SENServiceDeviceState) {
     SENServiceDeviceStateNormal = 1,
     SENServiceDeviceStateSenseNotPaired = 2,
     SENServiceDeviceStateSenseNoData = 3,
-    SENServiceDeviceStateNotConnectedToWiFi = 4,
-    SENServiceDeviceStatePillNotPaired = 5,
-    SENServiceDeviceStatePillLowBattery = 6
+    SENServiceDeviceStatePillNotPaired = 4,
+    SENServiceDeviceStatePillLowBattery = 5
 };
 
 typedef NS_ENUM(NSInteger, SENServiceDeviceError) {

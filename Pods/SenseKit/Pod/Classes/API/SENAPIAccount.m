@@ -67,7 +67,13 @@ NSString* const SENAPIAccountErrorDomain = @"is.hello.account";
     NSMutableDictionary* accountDict = [self dictionaryValue:account];
     accountDict[SENAPIAccountPropertyTimezone] = [self currentTimezoneInMillis];
     
-    [SENAPIClient PUT:SENAPIAccountEndpoint parameters:accountDict completion:completion];
+    [SENAPIClient PUT:SENAPIAccountEndpoint parameters:accountDict completion:^(id data, NSError *error) {
+        SENAccount* account = nil;
+        if (error == nil && [data isKindOfClass:[NSDictionary class]]) {
+            account = [self accountFromResponse:data];
+        }
+        if (completion) completion (account, error);
+    }];
 }
 
 + (void)getAccount:(SENAPIDataBlock)completion {

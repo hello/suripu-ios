@@ -6,21 +6,27 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENSettings.h>
+#import <SenseKit/SENServiceAccount.h>
 
 #import "UIFont+HEMStyle.h"
 
 #import "HEMUnitPreferenceViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
+#import "HEMSettingsTableViewCell.h"
+#import "HEMChoiceViewController.h"
 
-static CGFloat const kHemUnitPrefSegControlWidth = 157;
+static NSUInteger const HEMUnitPreferenceTime = 0;
+static NSUInteger const HEMUnitPreferenceTemp = 1;
 
-@interface HEMUnitPreferenceViewController () <UITableViewDataSource, UITableViewDelegate>
+@interface HEMUnitPreferenceViewController () <
+    UITableViewDataSource,
+    UITableViewDelegate,
+    HEMChoiceDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UITableView *unitTableView;
-
-@property (strong, nonatomic) IBOutlet UISegmentedControl* clockStyleSegmentControl;
-@property (strong, nonatomic) IBOutlet UISegmentedControl* temperatureSegmentControl;
+@property (copy, nonatomic) NSIndexPath* selectedPath;
 
 @end
 
@@ -29,68 +35,18 @@ static CGFloat const kHemUnitPrefSegControlWidth = 157;
 - (void)viewDidLoad {
     self.title = NSLocalizedString(@"settings.units", nil);
     [super viewDidLoad];
-    [[self unitTableView] setTableFooterView:[[UIView alloc] init]];
-    [self setupClockControl];
-    [self setupTemperatureControl];
+    [self configureTable];
 }
 
-- (void)setupClockControl {
-    NSString* h24 = NSLocalizedString(@"settings.units.24-hour", nil);
-    NSString* h12 = NSLocalizedString(@"settings.units.12-hour", nil);
-    UISegmentedControl* clockControl = [[UISegmentedControl alloc] initWithItems:@[h24, h12]];
-    [clockControl setSelectedSegmentIndex:[SENSettings timeFormat] == SENTimeFormat24Hour?0:1];
-    [clockControl addTarget:self
-                     action:@selector(clockFormatChanged:)
-           forControlEvents:UIControlEventValueChanged];
+- (void)configureTable {
+    CGRect frame = CGRectZero;
+    frame.size.height = HEMSettingsCellTableMargin;
+    frame.size.width = CGRectGetWidth([[self unitTableView] bounds]);
     
-    [self styleControl:clockControl];
-    [self setClockStyleSegmentControl:clockControl];
-}
-
-- (void)setupTemperatureControl {
-    NSString* celcius = NSLocalizedString(@"settings.units.celcius", nil);
-    NSString* fahrenheit = NSLocalizedString(@"settings.units.fahrenheit", nil);
-    NSInteger selectedIndex = [SENSettings temperatureFormat] == SENTemperatureFormatCentigrade?0:1;
-    
-    UISegmentedControl* tempControl = [[UISegmentedControl alloc] initWithItems:@[celcius, fahrenheit]];
-    [tempControl setSelectedSegmentIndex:selectedIndex];
-    [tempControl addTarget:self
-                     action:@selector(temperatureFormatChanged:)
-           forControlEvents:UIControlEventValueChanged];
-    
-    [self styleControl:tempControl];
-    [self setTemperatureSegmentControl:tempControl];
-}
-
-- (void)styleControl:(UISegmentedControl*)control {
-    [control setTintColor:[HelloStyleKit backViewTextColor]];
-    [control setTitleTextAttributes:@{
-                                NSFontAttributeName : [UIFont preferenceControlFont],
-                                NSForegroundColorAttributeName : [HelloStyleKit backViewTextColor]
-                           }
-                           forState:UIControlStateNormal];
-    
-    CGRect controlFrame = [control frame];
-    controlFrame.size.width = kHemUnitPrefSegControlWidth;
-    [control setFrame:controlFrame];
-}
-
-#pragma mark - Actions
-
-- (void)clockFormatChanged:(UISegmentedControl*)control {
-    if ([control selectedSegmentIndex] == 0) {
-        [SENSettings setTimeFormat:SENTimeFormat24Hour];
-    } else {
-        [SENSettings setTimeFormat:SENTimeFormat12Hour];
-    }
-}
-
-- (void)temperatureFormatChanged:(UISegmentedControl*)control {
-    if ([control selectedSegmentIndex] == 0) {
-        [SENSettings setTemperatureFormat:SENTemperatureFormatCentigrade];
-    } else {
-        [SENSettings setTemperatureFormat:SENTemperatureFormatFahrenheit];
-    }
+    [[self unitTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
+    [[self unitTableView] setTableFooterView:[[UIView alloc] initWithFrame:frame]];
+    [[self unitTableView] setDataSource:self];
+    [[self unitTableView] setDelegate:self];
 }
 
 #pragma mark - UITableViewDelegate / DataSource
@@ -109,26 +65,97 @@ static CGFloat const kHemUnitPrefSegControlWidth = 157;
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    if ([[cell reuseIdentifier] isEqualToString:[HEMMainStoryboard unitCellReuseIdentifier]]) {
-        UISegmentedControl* control = nil;
-        NSString* title = nil;
-        if ([indexPath row] == 0) {
-            title = NSLocalizedString(@"settings.units.clock", nil);
-            control = [self clockStyleSegmentControl];
-        } else if ([indexPath row] == 1) {
-            title = NSLocalizedString(@"settings.units.temp", nil);
-            control = [self temperatureSegmentControl];
+    HEMSettingsTableViewCell* settingsCell = (HEMSettingsTableViewCell*)cell;
+    NSString* title = nil;
+    NSString* value = nil;
+    NSInteger row = [indexPath row];
+    BOOL showTopCorners = NO;
+    BOOL showBotCorners = NO;
+    
+    if (row == HEMUnitPreferenceTime) {
+        showTopCorners = YES;
+        title = NSLocalizedString(@"settings.units.clock", nil);
+        
+        if ([SENSettings timeFormat] == SENTimeFormat24Hour) {
+            value = NSLocalizedString(@"settings.units.24-hour", nil);
+        } else {
+            value = NSLocalizedString(@"settings.units.12-hour", nil);
         }
+    } else if (row == HEMUnitPreferenceTemp) {
+        showBotCorners = YES;
+        title = NSLocalizedString(@"settings.units.temp", nil);
         
-        [[cell textLabel] setText:title];
-        [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
-        [[cell textLabel] setFont:[UIFont settingsTitleFont]];
-        [control setTitleTextAttributes:@{NSFontAttributeName:[UIFont settingsTableCellDetailFont]}
-                               forState:UIControlStateNormal];
-        
-        [cell setAccessoryView:control];
+        if ([SENSettings temperatureFormat] == SENTemperatureFormatCentigrade) {
+            value = NSLocalizedString(@"settings.units.celcius", nil);
+        } else {
+            value = NSLocalizedString(@"settings.units.fahrenheit", nil);
+        }
     }
     
+    [[settingsCell titleLabel] setText:title];
+    [[settingsCell valueLabel] setText:value];
+    
+    if (showTopCorners) {
+        [settingsCell showTopCorners];
+    } else if (showBotCorners) {
+        [settingsCell showBottomCorners];
+    } else {
+        [settingsCell showNoCorners];
+    }
+    
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    [self setSelectedPath:indexPath];
+    [self performSegueWithIdentifier:[HEMMainStoryboard choiceSegueIdentifier]
+                              sender:self];
+}
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue destinationViewController] isKindOfClass:[HEMChoiceViewController class]]) {
+        HEMChoiceViewController* choiceVC = [segue destinationViewController];
+        NSInteger row = [[self selectedPath] row];
+        NSArray* choices = nil;
+        NSInteger selectedIndex = 0;
+        NSString* title = nil;
+        
+        if (row == HEMUnitPreferenceTime) {
+            title = NSLocalizedString(@"settings.units.clock", nil);
+            choices = @[NSLocalizedString(@"settings.units.12-hour", nil),
+                        NSLocalizedString(@"settings.units.24-hour", nil)];
+            selectedIndex = [SENSettings timeFormat] == SENTimeFormat12Hour ? 0 : 1;
+        } else if (row == HEMUnitPreferenceTemp) {
+            title = NSLocalizedString(@"settings.units.temp", nil);
+            choices = @[NSLocalizedString(@"settings.units.celcius", nil),
+                        NSLocalizedString(@"settings.units.fahrenheit", nil)];
+            selectedIndex = [SENSettings temperatureFormat] == SENTemperatureFormatCentigrade ? 0 : 1;
+        }
+        
+        [choiceVC setDelegate:self];
+        [choiceVC setChoices:choices];
+        [choiceVC setSelectedIndex:selectedIndex];
+        [choiceVC setTitle:title];
+    }
+}
+
+#pragma mark - HEMChoiceDelegate
+
+- (void)didSelectChoiceAtIndex:(NSUInteger)index from:(HEMChoiceViewController *)controller {
+    NSInteger row = [[self selectedPath] row];
+    if (row == HEMUnitPreferenceTime) {
+        SENTimeFormat format
+            = index == 0
+            ? SENTimeFormat12Hour
+            : SENTimeFormat24Hour;
+        [SENSettings setTimeFormat:format];
+    } else if (row == HEMUnitPreferenceTemp) {
+        SENTemperatureFormat format
+            = index == 0
+            ? SENTemperatureFormatCentigrade
+            : SENTemperatureFormatFahrenheit;
+        [SENSettings setTemperatureFormat:format];
+    }
+    [[self unitTableView] reloadData];
 }
 
 @end

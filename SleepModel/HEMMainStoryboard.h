@@ -17,12 +17,14 @@
 +(NSString *)singleReuseIdentifier;
 +(NSString *)multipleReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
++(NSString *)preferenceReuseIdentifier;
 +(NSString *)unitCellReuseIdentifier;
 +(NSString *)settingsCellReuseIdentifier;
 +(NSString *)pairReuseIdentifier;
 +(NSString *)deviceReuseIdentifier;
 +(NSString *)warningReuseIdentifier;
 +(NSString *)actionsReuseIdentifier;
++(NSString *)choiceCellReuseIdentifier;
 +(NSString *)alarmListCellReuseIdentifier;
 +(NSString *)alarmListEmptyCellReuseIdentifier;
 +(NSString *)alarmChoiceCellReuseIdentifier;
@@ -36,8 +38,8 @@
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier;
 +(NSString *)alarmRepeatSegueIdentifier;
++(NSString *)choiceSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
-+(NSString *)infoSettingsSegueIdentifier;
 +(NSString *)pickSoundSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
 +(NSString *)senseSegueIdentifier;
@@ -54,7 +56,6 @@
 +(id)instantiateAlarmViewController;
 +(id)instantiateCurrentNavController;
 +(id)instantiateInsightFeedViewController;
-+(id)instantiatePersonalInfoViewController;
 +(id)instantiateSensorViewController;
 +(id)instantiateSettingsController;
 +(id)instantiateSettingsNavController;

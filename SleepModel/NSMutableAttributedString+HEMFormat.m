@@ -12,10 +12,21 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
 
 @implementation NSMutableAttributedString (HEMFormat)
 
-- (id)initWithFormat:(NSString*)format args:(NSArray*)args {
+- (instancetype)initWithFormat:(NSString*)format args:(NSArray*)args {
     self = [self init];
     if (self) {
         [self process:format args:args];
+    }
+    return self;
+}
+
+- (instancetype)initWithFormat:(NSString *)format
+                          args:(NSArray *)args
+                     baseColor:(UIColor*)color
+                      baseFont:(UIFont*)font {
+    self = [self initWithFormat:format args:args];
+    if (self) {
+        [self applyColor:color andFont:font];
     }
     return self;
 }
@@ -48,7 +59,24 @@ static NSString* const kHEMStringFormatSymbol = @"%@";
     }
     
 }
-                                   
 
+- (void)applyColor:(UIColor*)color andFont:(UIFont*)font {
+    [self enumerateAttributesInRange:NSMakeRange(0, [self length])
+                             options:NSAttributedStringEnumerationLongestEffectiveRangeNotRequired
+                          usingBlock:^(NSDictionary *attrs, NSRange range, BOOL *stop) {
+                              if ([attrs valueForKey:NSFontAttributeName] == nil) {
+                                  [self addAttribute:NSFontAttributeName
+                                               value:font
+                                               range:range];
+                              }
+                                  
+                              if ([attrs valueForKey:NSForegroundColorAttributeName] == nil) {
+                                  [self addAttribute:NSForegroundColorAttributeName
+                                               value:color
+                                               range:range];
+                              }
+                                  
+                          }];
+}
 
 @end

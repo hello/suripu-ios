@@ -45,6 +45,9 @@
 // help links
 "help.url.troubleshooting" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8";
 "help.url.order-form" = "https://order.hello.is/";
+"help.url.support" = "https://support.hello.is";
+"help.email.address" = "help@sayhello.com";
+"help.email.subject" = "Sense Help Request";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
@@ -119,24 +122,26 @@
 
 // settings
 "settings.title" = "Settings";
-"settings.info" = "My info";
-"settings.account" = "Account";
+"settings.account" = "My account";
 "settings.units" = "Units and time";
-"settings.units.24-hour" = "24-hour";
-"settings.units.12-hour" = "12-hour";
-"settings.units.celcius" = "°C";
-"settings.units.fahrenheit" = "°F";
-"settings.units.clock" = "Clock";
-"settings.units.temp" = "Temperature";
+"settings.units.24-hour" = "24 hour";
+"settings.units.12-hour" = "12 hour";
+"settings.units.celcius" = "Celcius";
+"settings.units.fahrenheit" = "Fahrenheit";
+"settings.units.clock" = "Time";
+"settings.units.temp" = "Temperature units";
 "settings.devices" = "Sense and Sleep Pill";
 "settings.personal.info.birthday" = "Birthday";
 "settings.personal.info.gender" = "Gender";
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
+"settings.account.enhanced-audio" = "Enhanced audio";
 "settings.wifi.other" = "Other...";
-"settings.troubleshooting" = "Help and troubleshooting";
 "settings.account.email" = "Email";
 "settings.account.password" = "Password";
+"settings.help.format" = "If you're having trouble, visit %@ or contact us at %@";
+"settings.help.support" = "Support";
+"settings.enhanced-audio.desc" = "Enhanced audio allows Sense to pick up snoring, sleep talking and other noise disturbances.";
 
 // support
 "debug.options.title" = "Debug options";
@@ -148,7 +153,6 @@
 "debug.led.option.off" = "Off";
 "debug.led.option.success" = "Success";
 "debug.led.option.activity" = "Activity";
-"settings.contact-support" = "Contact support";
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 
@@ -409,7 +413,6 @@
 "account.gender.subtitle" = "This is used to provide you with more personalized sleep insights.";
 "account.gender.female" = "Female";
 "account.gender.male" = "Male";
-"account.gender.other" = "Other";
 "account.update.failed.title" = "Update failed";
 "account.update.error.generic" = "Unable to update your information";
 "account.update.error.password" = "Unable to update your password";

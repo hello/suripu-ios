@@ -15,10 +15,12 @@ typedef NS_ENUM(NSUInteger, SENServiceAccountError) {
 };
 
 @class SENAccount;
+@class SENPreference;
 
 @interface SENServiceAccount : SENService
 
 @property (nonatomic, strong, readonly) SENAccount* account;
+@property (nonatomic, strong, readonly) NSDictionary* preferences;
 
 /**
  * @return a shared instance of the account service
@@ -58,5 +60,21 @@ typedef NS_ENUM(NSUInteger, SENServiceAccountError) {
  * @param completion: the block to invoke when all is done
  */
 - (void)changeEmail:(NSString*)email completion:(SENAccountResponseBlock)completion;
+
+/**
+ * @method updateAccount:
+ * 
+ * @discussion
+ * Update the current account cached and replace with the updated one, if successful
+ */
+- (void)updateAccount:(SENAccountResponseBlock)completion;
+
+/**
+ * @method updatePreference:completion
+ *
+ * @discussion
+ * Update the specified preference on the API
+ */
+- (void)updatePreference:(SENPreference*)preference completion:(SENAccountResponseBlock)completion;
 
 @end

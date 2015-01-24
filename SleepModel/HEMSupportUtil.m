@@ -23,21 +23,36 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
 
 @implementation HEMSupportUtil
 
-+ (void)contactSupportFrom:(UIViewController*)controller mailDelegate:(id<MFMailComposeViewControllerDelegate>)delegate {
++ (void)sendEmailTo:(NSString*)email
+        withSubject:(NSString*)subject
+               from:(UIViewController*)controller
+       mailDelegate:(id<MFMailComposeViewControllerDelegate>)delegate {
+    
     if (![MFMailComposeViewController canSendMail]) {
         [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"settings.support.fail.title", nil)
                                               message:NSLocalizedString(@"settings.support.fail.message", nil)
                                  presentingController:controller];
         return;
     }
+    
     MFMailComposeViewController* composer = [[MFMailComposeViewController alloc] init];
-    [composer setToRecipients:@[ HEMSupportContactEmail ]];
-    [composer setSubject:HEMSupportContactSubject];
+    [composer setToRecipients:@[ email ]];
+    [composer setSubject:subject];
     [composer addAttachmentData:[HEMLogUtils latestLogFileData]
                        mimeType:HEMSupportLogFileType
                        fileName:HEMSupportLogFileName];
     composer.mailComposeDelegate = delegate;
     [controller presentViewController:composer animated:YES completion:NULL];
+    
+}
+
++ (void)contactSupportFrom:(UIViewController*)controller
+              mailDelegate:(id<MFMailComposeViewControllerDelegate>)delegate {
+    
+    [self sendEmailTo:HEMSupportContactEmail
+          withSubject:HEMSupportContactSubject
+                 from:controller
+         mailDelegate:delegate];
 }
 
 + (void)openOrderFormFrom:(UIViewController*)controller {

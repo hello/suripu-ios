@@ -1,6 +1,6 @@
 
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENSensor.h>
+#import <SenseKit/Model.h>
 #import <SenseKit/SENAPIRoom.h>
 #import <BEMSimpleLineGraph/BEMSimpleLineGraphView.h>
 
@@ -20,6 +20,7 @@
 @property (nonatomic, strong) NSMutableDictionary* sensorGraphData;
 @property (nonatomic) CGFloat refreshRate;
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
+@property (nonatomic) BOOL shouldReload;
 @end
 
 @implementation HEMCurrentConditionsViewController
@@ -48,15 +49,22 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
     [super viewDidAppear:animated];
     [self registerForNotifications];
     [self configureRefreshTimer];
-    if (self.sensors.count == 0)
+    if ([self shouldReload]) {
+        [self reloadData];
+        self.shouldReload = NO;
+    } else if (self.sensors.count == 0) {
         [self refreshCachedSensors];
+    }
 }
 
 - (void)viewDidDisappear:(BOOL)animated
 {
     [self invalidateTimers];
     [super viewDidDisappear:animated];
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SENSensorsUpdatedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SENSensorUpdateFailedNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SENAuthorizationServiceDidAuthorizeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SENAuthorizationServiceDidDeauthorizeNotification object:nil];
 }
 
 - (void)registerForNotifications
@@ -77,6 +85,24 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
                selector:@selector(invalidateTimers)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
+    [center addObserver:self
+               selector:@selector(tempFormatDidChange)
+                   name:SENSettingsDidUpdateNotification
+                 object:SENSettingsUpdateTypeTemp];
+}
+
+- (void)tempFormatDidChange
+{
+    if ([self isViewLoaded] && self.view.window) {
+        [self reloadData];
+    } else {
+        self.shouldReload = YES;
+    }
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Data Loading
@@ -141,6 +167,11 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 - (void)failedToRefreshSensors
 {
     [self setLoading:NO];
+    [self.collectionView reloadData];
+}
+
+- (void)reloadData
+{
     [self.collectionView reloadData];
 }
 

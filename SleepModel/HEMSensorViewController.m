@@ -62,6 +62,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor whiteColor];
+    [self reloadData];
 }
 
 - (void)viewDidAppear:(BOOL)animated
@@ -101,6 +102,9 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [center addObserver:self
                selector:@selector(refreshCurrentSensorValue:)
                    name:SENSensorUpdatedNotification object:nil];
+    [center addObserver:self
+               selector:@selector(reloadData)
+                   name:SENSettingsDidUpdateNotification object:SENSettingsUpdateTypeTemp];
 }
 
 #pragma mark - Configuration
@@ -187,6 +191,12 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [CATransaction setValue:@1 forKey:kCATransactionAnimationDuration];
     ((CAGradientLayer*)self.graphView.layer.mask).locations = @[ @0, @1, @2, @2 ];
     [CATransaction commit];
+}
+
+- (void)reloadData
+{
+    [self configureSensorValueViews];
+    [self.graphView reloadGraph];
 }
 
 - (void)refreshData

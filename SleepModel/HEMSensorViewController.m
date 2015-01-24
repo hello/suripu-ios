@@ -62,6 +62,8 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor whiteColor];
+    if ([self isShowingHourlyData])
+        [self positionSelectionViewUnderView:self.hourlyGraphButton animated:NO];
     [self reloadData];
 }
 
@@ -74,13 +76,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
                                                        selector:@selector(refreshData)
                                                        userInfo:nil
                                                         repeats:YES];
-    BOOL firstLoad = self.selectionLeftConstraint.constant == 0;
-    if (firstLoad) {
-        [UIView animateWithDuration:0.25 animations:^{
-            [self.hourlyGraphButton setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
-        }];
-        [self positionSelectionViewUnderView:self.hourlyGraphButton];
-    }
     [self registerForNotifications];
 }
 
@@ -295,13 +290,22 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 }
 
 - (void)positionSelectionViewUnderView:(UIView*)view {
+    [self positionSelectionViewUnderView:view animated:YES];
+}
+
+- (void)positionSelectionViewUnderView:(UIView*)view animated:(BOOL)animated {
     [view layoutIfNeeded];
     CGFloat buttonWidthDiff = (CGRectGetWidth(self.selectionView.bounds) - CGRectGetWidth(view.bounds))/2;
     self.selectionLeftConstraint.constant = CGRectGetMinX(view.frame) - buttonWidthDiff;
     [self.selectionView setNeedsUpdateConstraints];
-    [UIView animateWithDuration:0.25f animations:^{
+    void(^animations)() = ^{
         [self.selectionView layoutIfNeeded];
-    }];
+    };
+    if (animated) {
+        [UIView animateWithDuration:0.25f animations:animations];
+    } else {
+        animations();
+    }
 }
 
 - (void)updateGraphWithData:(NSArray*)dataSeries
@@ -317,6 +321,20 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
         self.statusLabel.alpha = 1;
     } else {
         self.statusLabel.alpha = 0;
+    }
+    [self ensureSelectionViewVisible];
+}
+
+- (void)ensureSelectionViewVisible
+{
+    if (self.selectionView.alpha < 1) {
+        __weak typeof(self) weakSelf = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.45 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            [UIView animateWithDuration:0.15f animations:^{
+                strongSelf.selectionView.alpha = 1;
+            }];
+        });
     }
 }
 

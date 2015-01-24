@@ -105,6 +105,14 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
                                              selector:@selector(drawerDidClose)
                                                  name:HEMRootDrawerMayCloseNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidOpen)
+                                                 name:HEMRootDrawerDidOpenNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidClose)
+                                                 name:HEMRootDrawerDidCloseNotification
+                                               object:nil];
 }
 
 - (void)handleAuthorization

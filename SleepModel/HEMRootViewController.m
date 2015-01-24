@@ -104,6 +104,7 @@ static CGFloat const HEMRootDrawerRevealHeight = 46.f;
     self.drawerViewController = [MSDynamicsDrawerViewController new];
     self.drawerViewController.paneViewController = [HEMRootViewController instantiatePaneViewControllerWithDate:nil];
     self.drawerViewController.delegate = self;
+    self.drawerViewController.gravityMagnitude = 2.5;
     UIWindow* window = [UIApplication sharedApplication].keyWindow ?: [[[UIApplication sharedApplication] windows] firstObject];
     window.windowLevel = UIWindowLevelStatusBar + 1;
     [self.drawerViewController addStylersFromArray:@[[MSDynamicsDrawerFadeStyler styler], [HEMDynamicsStatusStyler styler]]

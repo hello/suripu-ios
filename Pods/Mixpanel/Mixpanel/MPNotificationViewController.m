@@ -2,15 +2,16 @@
 #error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag on this file.
 #endif
 
-#import <QuartzCore/QuartzCore.h>
-#import <UIKit/UIKit.h>
-#import "MPCategoryHelpers.h"
-#import "MPLogger.h"
-#import "MPNotification.h"
 #import "MPNotificationViewController.h"
+
+#import "MPNotification.h"
 #import "UIColor+MPColor.h"
 #import "UIImage+MPAverageColor.h"
 #import "UIImage+MPImageEffects.h"
+#import "UIView+MPSnapshotImage.h"
+
+#import <QuartzCore/QuartzCore.h>
+#import <UIKit/UIKit.h>
 
 #define MPNotifHeight 65.0f
 
@@ -88,40 +89,40 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.backgroundImageView.image = self.backgroundImage;
+    _backgroundImageView.image = _backgroundImage;
 
     if (self.notification) {
         if (self.notification.image) {
             UIImage *image = [UIImage imageWithData:self.notification.image scale:2.0f];
             if (image) {
-                self.imageWidth.constant = image.size.width;
-                self.imageHeight.constant = image.size.height;
-                self.imageView.image = image;
+                _imageWidth.constant = image.size.width;
+                _imageHeight.constant = image.size.height;
+                _imageView.image = image;
             } else {
-                MixpanelError(@"image failed to load from data: %@", self.notification.image);
+                NSLog(@"image failed to load from data: %@", self.notification.image);
             }
         }
 
-        self.titleView.text = self.notification.title;
-        self.bodyView.text = self.notification.body;
+        _titleView.text = self.notification.title;
+        _bodyView.text = self.notification.body;
 
         if (self.notification.callToAction && [self.notification.callToAction length] > 0) {
-            [self.okayButton setTitle:self.notification.callToAction forState:UIControlStateNormal];
-            [self.okayButton sizeToFit];
+            [_okayButton setTitle:self.notification.callToAction forState:UIControlStateNormal];
+            [_okayButton sizeToFit];
         }
     }
 
-    self.imageView.contentMode = UIViewContentModeScaleAspectFill;
-    self.imageView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
-    self.imageView.layer.shadowOpacity = 1.0f;
-    self.imageView.layer.shadowRadius = 5.0f;
-    self.imageView.layer.shadowColor = [UIColor blackColor].CGColor;
+    _imageView.contentMode = UIViewContentModeScaleAspectFill;
+    _imageView.layer.shadowOffset = CGSizeMake(0.0f, 0.0f);
+    _imageView.layer.shadowOpacity = 1.0f;
+    _imageView.layer.shadowRadius = 5.0f;
+    _imageView.layer.shadowColor = [UIColor blackColor].CGColor;
 
-    [self.okayButton addTarget:self action:@selector(pressedOkay) forControlEvents:UIControlEventTouchUpInside];
-    [self.closeButton addTarget:self action:@selector(pressedClose) forControlEvents:UIControlEventTouchUpInside];
+    [_okayButton addTarget:self action:@selector(pressedOkay) forControlEvents:UIControlEventTouchUpInside];
+    [_closeButton addTarget:self action:@selector(pressedClose) forControlEvents:UIControlEventTouchUpInside];
 
     UIPanGestureRecognizer *gesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan:)];
-    [self.imageDragView addGestureRecognizer:gesture];
+    [_imageDragView addGestureRecognizer:gesture];
 }
 
 - (void)hideWithAnimation:(BOOL)animated completion:(void (^)(void))completion
@@ -131,8 +132,8 @@
 
 - (void)viewDidLayoutSubviews
 {
-    [self.okayButton sizeToFit];
-    [self.imageAlphaMaskView sizeToFit];
+    [_okayButton sizeToFit];
+    [_imageAlphaMaskView sizeToFit];
 }
 
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
@@ -157,12 +158,12 @@
     [super beginAppearanceTransition:isAppearing animated:animated];
 
     if (isAppearing) {
-        self.bgMask.alpha = 0.0f;
-        self.imageView.alpha = 0.0f;
-        self.titleView.alpha = 0.0f;
-        self.bodyView.alpha = 0.0f;
-        self.okayButton.alpha = 0.0f;
-        self.closeButton.alpha = 0.0f;
+        _bgMask.alpha = 0.0f;
+        _imageView.alpha = 0.0f;
+        _titleView.alpha = 0.0f;
+        _bodyView.alpha = 0.0f;
+        _okayButton.alpha = 0.0f;
+        _closeButton.alpha = 0.0f;
     }
 }
 
@@ -174,26 +175,26 @@
 
     CGAffineTransform transform = CGAffineTransformMakeTranslation(0.0f, 10.0f);
     transform = CGAffineTransformScale(transform, 0.9f, 0.9f);
-    self.imageView.transform = transform;
-    self.titleView.transform = transform;
-    self.bodyView.transform = transform;
-    self.okayButton.transform = transform;
+    _imageView.transform = transform;
+    _titleView.transform = transform;
+    _bodyView.transform = transform;
+    _okayButton.transform = transform;
 
     [UIView animateWithDuration:duration delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.titleView.transform = CGAffineTransformIdentity;
-        self.titleView.alpha = 1.0f;
-        self.bodyView.transform = CGAffineTransformIdentity;
-        self.bodyView.alpha = 1.0f;
-        self.okayButton.transform = CGAffineTransformIdentity;
-        self.okayButton.alpha = 1.0f;
-        self.imageView.transform = CGAffineTransformIdentity;
-        self.imageView.alpha = 1.0f;
-        self.bgMask.alpha = 1.0f;
+        _titleView.transform = CGAffineTransformIdentity;
+        _titleView.alpha = 1.0f;
+        _bodyView.transform = CGAffineTransformIdentity;
+        _bodyView.alpha = 1.0f;
+        _okayButton.transform = CGAffineTransformIdentity;
+        _okayButton.alpha = 1.0f;
+        _imageView.transform = CGAffineTransformIdentity;
+        _imageView.alpha = 1.0f;
+        _bgMask.alpha = 1.0f;
     } completion:nil];
 
     [UIView animateWithDuration:duration delay:0.15f options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.closeButton.transform = CGAffineTransformIdentity;
-        self.closeButton.alpha = 1.0f;
+        _closeButton.transform = CGAffineTransformIdentity;
+        _closeButton.alpha = 1.0f;
     } completion:nil];
 }
 
@@ -217,21 +218,21 @@
 {
     if (gesture.numberOfTouches == 1) {
         if (gesture.state == UIGestureRecognizerStateBegan) {
-            _viewStart = self.imageView.layer.position;
+            _viewStart = _imageView.layer.position;
             _touching = YES;
         } else if (gesture.state == UIGestureRecognizerStateChanged) {
             CGPoint translation = [gesture translationInView:self.view];
-            self.imageView.layer.position = CGPointMake(0.3f * (translation.x) + _viewStart.x, 0.3f * (translation.y) + _viewStart.y);
+            _imageView.layer.position = CGPointMake(0.3f * (translation.x) + _viewStart.x, 0.3f * (translation.y) + _viewStart.y);
         }
     }
 
     if (_touching && (gesture.state == UIGestureRecognizerStateEnded || gesture.state == UIGestureRecognizerStateCancelled)) {
         _touching = NO;
-        CGPoint viewEnd = self.imageView.layer.position;
+        CGPoint viewEnd = _imageView.layer.position;
         CGPoint viewDistance = CGPointMake(viewEnd.x - _viewStart.x, viewEnd.y - _viewStart.y);
         CGFloat distance = (CGFloat)sqrt(viewDistance.x * viewDistance.x + viewDistance.y * viewDistance.y);
         [UIView animateWithDuration:(distance / 500.0f) delay:0.0f options:UIViewAnimationOptionCurveEaseOut animations:^{
-            self.imageView.layer.position = self->_viewStart;
+            _imageView.layer.position = _viewStart;
         } completion:nil];
     }
 }
@@ -262,14 +263,14 @@
     self.view.clipsToBounds = YES;
 
     self.imageView = [[UIImageView alloc] initWithFrame:CGRectZero];
-    self.imageView.layer.masksToBounds = YES;
+    _imageView.layer.masksToBounds = YES;
 
     self.bodyLabel = [[UILabel alloc] initWithFrame:CGRectZero];
-    self.bodyLabel.textColor = [UIColor whiteColor];
-    self.bodyLabel.backgroundColor = [UIColor clearColor];
-    self.bodyLabel.font = [UIFont systemFontOfSize:14.0f];
-    self.bodyLabel.lineBreakMode = NSLineBreakByWordWrapping;
-    self.bodyLabel.numberOfLines = 0;
+    _bodyLabel.textColor = [UIColor whiteColor];
+    _bodyLabel.backgroundColor = [UIColor clearColor];
+    _bodyLabel.font = [UIFont systemFontOfSize:14.0f];
+    _bodyLabel.lineBreakMode = NSLineBreakByWordWrapping;
+    _bodyLabel.numberOfLines = 0;
 
     UIColor *backgroundColor = [UIColor mp_applicationPrimaryColor];
     if (!backgroundColor) {
@@ -280,27 +281,27 @@
 
     if (self.notification != nil) {
         if (self.notification.image != nil) {
-            self.imageView.image = [UIImage imageWithData:self.notification.image scale:2.0f];
-            self.imageView.hidden = NO;
+            _imageView.image = [UIImage imageWithData:self.notification.image scale:2.0f];
+            _imageView.hidden = NO;
         } else {
-            self.imageView.hidden = YES;
+            _imageView.hidden = YES;
         }
 
         if (self.notification.body != nil) {
-            self.bodyLabel.text = self.notification.body;
-            self.bodyLabel.hidden = NO;
+            _bodyLabel.text = self.notification.body;
+            _bodyLabel.hidden = NO;
         } else {
-            self.bodyLabel.hidden = YES;
+            _bodyLabel.hidden = YES;
         }
     }
 
     self.circleLayer = [CircleLayer layer];
-    self.circleLayer.contentsScale = [UIScreen mainScreen].scale;
-    [self.circleLayer setNeedsDisplay];
+    _circleLayer.contentsScale = [UIScreen mainScreen].scale;
+    [_circleLayer setNeedsDisplay];
 
-    [self.view addSubview:self.imageView];
-    [self.view addSubview:self.bodyLabel];
-    [self.view.layer addSublayer:self.circleLayer];
+    [self.view addSubview:_imageView];
+    [self.view addSubview:_bodyLabel];
+    [self.view.layer addSublayer:_circleLayer];
 
     self.view.frame = CGRectMake(0.0f, 0.0f, 0.0f, 30.0f);
 
@@ -315,29 +316,18 @@
 - (void)viewWillLayoutSubviews
 {
     UIView *parentView = self.view.superview;
-    CGRect parentFrame;
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 80000
-    parentFrame = parentView.frame;
-#elif __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-    if ([self respondsToSelector:@selector(viewWillTransitionToSize:withTransitionCoordinator:)]) {
-        parentFrame = parentView.frame;
-    } else {
-        double angle = [self angleForInterfaceOrientation:[self interfaceOrientation]];
-        parentFrame = CGRectApplyAffineTransform(parentView.frame, CGAffineTransformMakeRotation((float)angle));
-    }
-#else
+
     double angle = [self angleForInterfaceOrientation:[self interfaceOrientation]];
-    parentFrame = CGRectApplyAffineTransform(parentView.frame, CGAffineTransformMakeRotation((float)angle));
-#endif
+    CGRect parentFrame = CGRectApplyAffineTransform(parentView.frame, CGAffineTransformMakeRotation((float)angle));
 
     self.view.frame = CGRectMake(0.0f, parentFrame.size.height - MPNotifHeight, parentFrame.size.width, MPNotifHeight * 3.0f);
 
     // Position images
-    self.imageView.layer.position = CGPointMake(MPNotifHeight / 2.0f, MPNotifHeight / 2.0f);
+    _imageView.layer.position = CGPointMake(MPNotifHeight / 2.0f, MPNotifHeight / 2.0f);
 
     // Position circle around image
-    self.circleLayer.position = self.imageView.layer.position;
-    [self.circleLayer setNeedsDisplay];
+    _circleLayer.position = self.imageView.layer.position;
+    [_circleLayer setNeedsDisplay];
 
     // Position body label
     CGSize constraintSize = CGSizeMake(self.view.frame.size.width - MPNotifHeight - 12.5f, CGFLOAT_MAX);
@@ -345,27 +335,27 @@
     // Use boundingRectWithSize for iOS 7 and above, sizeWithFont otherwise.
 #if __IPHONE_OS_VERSION_MAX_ALLOWED >= 70000
     if ([[[UIDevice currentDevice] systemVersion] compare:@"7.0" options:NSNumericSearch] != NSOrderedAscending) {
-        sizeToFit = [self.bodyLabel.text boundingRectWithSize:constraintSize
+        sizeToFit = [_bodyLabel.text boundingRectWithSize:constraintSize
                                                   options:NSStringDrawingUsesLineFragmentOrigin
-                                               attributes:@{NSFontAttributeName: self.bodyLabel.font}
+                                               attributes:@{NSFontAttributeName: _bodyLabel.font}
                                                   context:nil].size;
     } else {
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wdeprecated"
 
-        sizeToFit = [self.bodyLabel.text sizeWithFont:self.bodyLabel.font
+        sizeToFit = [_bodyLabel.text sizeWithFont:_bodyLabel.font
                                 constrainedToSize:constraintSize
-                                    lineBreakMode:self.bodyLabel.lineBreakMode];
+                                    lineBreakMode:_bodyLabel.lineBreakMode];
 
 #pragma clang diagnostic pop
     }
 #else
-        sizeToFit = [self.bodyLabel.text sizeWithFont:self.bodyLabel.font
+        sizeToFit = [_bodyLabel.text sizeWithFont:_bodyLabel.font
                                 constrainedToSize:constraintSize
-                                    lineBreakMode:self.bodyLabel.lineBreakMode];
+                                    lineBreakMode:_bodyLabel.lineBreakMode];
 #endif
 
-    self.bodyLabel.frame = CGRectMake(MPNotifHeight, (CGFloat)ceil((MPNotifHeight - sizeToFit.height) / 2.0f) - 2.0f, (CGFloat)ceil(sizeToFit.width), (CGFloat)ceil(sizeToFit.height));
+    _bodyLabel.frame = CGRectMake(MPNotifHeight, (CGFloat)ceil((MPNotifHeight - sizeToFit.height) / 2.0f) - 2.0f, (CGFloat)ceil(sizeToFit.width), (CGFloat)ceil(sizeToFit.height));
 }
 
 - (UIView *)getTopView
@@ -404,21 +394,8 @@
     UIView *topView = [self getTopView];
     if (topView) {
 
-        CGRect topFrame;
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 80000
-        topFrame = topView.frame;
-#elif __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-        if ([self respondsToSelector:@selector(viewWillTransitionToSize:withTransitionCoordinator:)]) {
-            topFrame = topView.frame;
-        } else {
-            double angle = [self angleForInterfaceOrientation:[self interfaceOrientation]];
-            topFrame = CGRectApplyAffineTransform(topView.frame, CGAffineTransformMakeRotation((float)angle));
-        }
-#else
         double angle = [self angleForInterfaceOrientation:[self interfaceOrientation]];
-        topFrame = CGRectApplyAffineTransform(topView.frame, CGAffineTransformMakeRotation((float)angle));
-#endif
+        CGRect topFrame = CGRectApplyAffineTransform(topView.frame, CGAffineTransformMakeRotation((float)angle));
 
         [topView addSubview:self.view];
 
@@ -430,9 +407,9 @@
         [UIView animateWithDuration:0.1f animations:^{
             self.view.frame = CGRectMake(0.0f, topFrame.size.height - MPNotifHeight, topFrame.size.width, MPNotifHeight * 3.0f);
         } completion:^(BOOL finished) {
-            self->_position = self.view.layer.position;
+            _position = self.view.layer.position;
             [self performSelector:@selector(animateImage) withObject:nil afterDelay:0.1];
-            self->_canPan = YES;
+            _canPan = YES;
         }];
     }
 }
@@ -473,22 +450,8 @@
             duration = 0.0f;
         }
 
-        UIView *parentView = self.view.superview;
-        CGRect parentFrame;
-
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 80000
-        parentFrame = parentView.frame;
-#elif __IPHONE_OS_VERSION_MAX_ALLOWED >= 80000
-        if ([self respondsToSelector:@selector(viewWillTransitionToSize:withTransitionCoordinator:)]) {
-            parentFrame = parentView.frame;
-        } else {
-            double angle = [self angleForInterfaceOrientation:[self interfaceOrientation]];
-            parentFrame = CGRectApplyAffineTransform(parentView.frame, CGAffineTransformMakeRotation((float)angle));
-        }
-#else
         double angle = [self angleForInterfaceOrientation:[self interfaceOrientation]];
-        parentFrame = CGRectApplyAffineTransform(parentView.frame, CGAffineTransformMakeRotation((float)angle));
-#endif
+        CGRect parentFrame = CGRectApplyAffineTransform(self.view.superview.frame, CGAffineTransformMakeRotation((float)angle));
 
         [UIView animateWithDuration:duration animations:^{
             self.view.frame = CGRectMake(0.0f, parentFrame.size.height, parentFrame.size.width, MPNotifHeight * 3.0f);
@@ -531,7 +494,7 @@
                 [strongDelegate notificationController:self wasDismissedWithStatus:NO];
             } else {
                 [UIView animateWithDuration:0.2f animations:^{
-                    self.view.layer.position = self->_position;
+                    self.view.layer.position = _position;
                 }];
             }
         }
@@ -680,7 +643,7 @@
     char *rgba = (char *)malloc(bits);
     srand(124);
 
-    for (NSUInteger i = 0; i < bits; ++i) {
+    for(NSUInteger i = 0; i < bits; ++i) {
         rgba[i] = (rand() % 8);
     }
 
@@ -703,7 +666,8 @@
 
 - (id)initWithStartValue:(CGRect)start endValue:(CGRect)end andDuration:(double)duration
 {
-    if ((self = [super init])) {
+    if ((self = [super init]))
+    {
         self.duration = duration;
         self.values = [self generateValuesFrom:start to:end];
     }

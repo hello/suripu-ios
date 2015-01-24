@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   
   s.subspec "Analytics" do |ss|
     ss.source_files = 'Pod/Classes/Analytics/*'
-    ss.dependency 'Mixpanel'
+    ss.dependency 'Mixpanel', '2.4.2'
     ss.dependency 'CocoaLumberjack'
   end
 

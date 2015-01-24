@@ -97,11 +97,12 @@
 #error This file must be compiled with ARC. Either turn on ARC for the project or use -fobjc-arc flag on this file.
 #endif
 
+#import "UIImage+MPImageEffects.h"
+#import "UIColor+MPColor.h"
+
 #import <Accelerate/Accelerate.h>
 #import <float.h>
-#import "MPLogger.h"
-#import "UIColor+MPColor.h"
-#import "UIImage+MPImageEffects.h"
+
 
 @implementation UIImage (MPImageEffects)
 
@@ -151,15 +152,15 @@
 {
     // Check pre-conditions.
     if (self.size.width < 1 || self.size.height < 1) {
-        MixpanelError(@"*** error: invalid size: (%.2f x %.2f). Both dimensions must be >= 1: %@", self.size.width, self.size.height, self);
+        NSLog (@"*** error: invalid size: (%.2f x %.2f). Both dimensions must be >= 1: %@", self.size.width, self.size.height, self);
         return nil;
     }
     if (!self.CGImage) {
-        MixpanelError(@"*** error: image must be backed by a CGImage: %@", self);
+        NSLog (@"*** error: image must be backed by a CGImage: %@", self);
         return nil;
     }
     if (maskImage && !maskImage.CGImage) {
-        MixpanelError(@"*** error: maskImage must be backed by a CGImage: %@", maskImage);
+        NSLog (@"*** error: maskImage must be backed by a CGImage: %@", maskImage);
         return nil;
     }
 

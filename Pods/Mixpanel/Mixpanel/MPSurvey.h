@@ -9,6 +9,4 @@
 
 + (MPSurvey *)surveyWithJSONObject:(NSDictionary *)object;
 
-- (instancetype)init __unavailable;
-
 @end

@@ -35,9 +35,7 @@ PODS:
   - iCarousel (1.7.6)
   - Kiwi (2.3.1)
   - LGBluetooth (1.1.4)
-  - Mixpanel (2.6.2):
-    - Mixpanel/MPCategoryHelpers
-  - Mixpanel/MPCategoryHelpers (2.6.2)
+  - Mixpanel (2.4.2)
   - MSDynamicsDrawerViewController (1.5.1)
   - NSJSONSerialization-NSNullRemoval (1.0.1)
   - SenseKit (0.1.0):
@@ -48,7 +46,7 @@ PODS:
     - SenseKit/Service
   - SenseKit/Analytics (0.1.0):
     - CocoaLumberjack
-    - Mixpanel
+    - Mixpanel (= 2.4.2)
   - SenseKit/API (0.1.0):
     - AFNetworking (~> 2.4.1)
     - FXKeychain (~> 1.5.1)
@@ -114,10 +112,10 @@ SPEC CHECKSUMS:
   iCarousel: c35a4e26b3c657847e523012b593e70ddbd84992
   Kiwi: 73e1400209055ee9c8ba78c6012b6b642d0fb9f7
   LGBluetooth: 00f37b8c29cccc1dd44d5f726b2ec4a6e91c74ec
-  Mixpanel: c075cedebda3328ce1ee29a18429e265ce967cd8
+  Mixpanel: cd01a5952773eaff12880da334a9776180c5f0a7
   MSDynamicsDrawerViewController: 0002059480a4b5ddde7eafbafb958a79a9b0ffaf
   NSJSONSerialization-NSNullRemoval: b3f02955f898d01205567e3f1292e4aae3ad547e
-  SenseKit: a98e7d0a4684f8585741b5a038b5a281da92b078
+  SenseKit: c653d2bd17bab4c85cfafab09aef166058475507
   SHSProtoBuf: 62a02d425f5dbee00d057bae65d76f0f01737410
   SORelativeDateTransformer: de7936811c9988af8e129a097af48c828f933f5f
   SpinKit: 11fa465172473ce3d59a80bf0449020b850e5229

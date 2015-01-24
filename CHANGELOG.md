@@ -1,5 +1,24 @@
 # Changelog
 
+## 1.0.0.62
+
+New:
+
+* Settings design overhaul
+* Enable enhanced audio through settings
+* Changing time and temperature preferences in settings will be stored in the cloud
+* Speed up account information loading in settings
+* Reload sensor views instantly when temperature preferences change
+* Speed up alarm sound loading
+* New images and styling for sleep timeline
+* More informative errors during alarm changing/saving
+* Added Sense not yet paired alert
+
+Fixes:
+
+* Fixed issue where menu bar would be shown over account settings after updating password
+* Remove unecessary background scanning for Sense
+
 ## 1.0.0.61
 
 New:

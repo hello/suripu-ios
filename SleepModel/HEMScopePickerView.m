@@ -25,7 +25,7 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
 - (void)awakeFromNib
 {
     self.selectionView = [UIView new];
-    self.selectionView.backgroundColor = [HelloStyleKit barButtonEnabledColor];
+    self.selectionView.backgroundColor = [HelloStyleKit tintColor];
     [self addSubview:self.selectionView];
 }
 
@@ -78,7 +78,7 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
         [button setTitle:title forState:UIControlStateNormal];
         [button setTitleColor:[HelloStyleKit barButtonDisabledColor]
                      forState:UIControlStateNormal];
-        [button setTitleColor:[HelloStyleKit barButtonEnabledColor]
+        [button setTitleColor:[HelloStyleKit tintColor]
                      forState:UIControlStateSelected];
         button.titleLabel.font = [UIFont trendOptionFont];
         [button addTarget:self action:@selector(selectButton:) forControlEvents:UIControlEventTouchUpInside];

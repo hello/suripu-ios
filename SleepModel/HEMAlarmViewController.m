@@ -339,7 +339,7 @@ static NSUInteger const HEMAlarm24HourCount = 24;
         if (!CGAffineTransformEqualToTransform(transform, label.transform))
             label.transform = transform;
     }
-    label.textColor = isSelected ? [HelloStyleKit barButtonEnabledColor] : [UIColor grayColor];
+    label.textColor = isSelected ? [HelloStyleKit tintColor] : [UIColor grayColor];
 }
 
 - (void)updateAlarmCacheHourWithSelectedRow:(NSUInteger)row

@@ -12,11 +12,11 @@
 
 - (void)showOutline
 {
-    self.layer.shadowColor = [HelloStyleKit barButtonEnabledColor].CGColor;
+    self.layer.shadowColor = [HelloStyleKit tintColor].CGColor;
     self.layer.shadowOffset = CGSizeZero;
     self.layer.shadowRadius = 2.f;
     self.layer.shadowOpacity = 0.4f;
-    self.layer.borderColor = [[HelloStyleKit barButtonEnabledColor] colorWithAlphaComponent:0.2f].CGColor;
+    self.layer.borderColor = [[HelloStyleKit tintColor] colorWithAlphaComponent:0.2f].CGColor;
     self.layer.borderWidth = 0.5f;
 }
 

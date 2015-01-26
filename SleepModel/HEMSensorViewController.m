@@ -277,14 +277,14 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 
 - (void)updateGraphWithHourlyData:(NSArray*)dataSeries {
     [self.dailyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
-    [self.hourlyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
+    [self.hourlyGraphButton setTitleColor:[HelloStyleKit tintColor] forState:UIControlStateNormal];
     [self positionSelectionViewUnderView:self.hourlyGraphButton];
     [self updateGraphWithData:dataSeries];
 }
 
 - (void)updateGraphWithDailyData:(NSArray*)dataSeries {
     [self.hourlyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
-    [self.dailyGraphButton setTitleColor:[HelloStyleKit barButtonEnabledColor] forState:UIControlStateNormal];
+    [self.dailyGraphButton setTitleColor:[HelloStyleKit tintColor] forState:UIControlStateNormal];
     [self positionSelectionViewUnderView:self.dailyGraphButton];
     [self updateGraphWithData:dataSeries];
 }

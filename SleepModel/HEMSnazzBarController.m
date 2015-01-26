@@ -50,7 +50,7 @@ CGFloat const HEMSnazzBarHeight = 72.f;
     self.buttonsBar.delegate = self;
     [self.view addSubview:self.buttonsBar];
     self.buttonsBar.backgroundColor = [UIColor whiteColor];
-    self.buttonsBar.selectionColor = [HelloStyleKit barButtonEnabledColor];
+    self.buttonsBar.selectionColor = [HelloStyleKit tintColor];
     self.contentView.backgroundColor = [HelloStyleKit backViewBackgroundColor];
 }
 

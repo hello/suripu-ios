@@ -34,7 +34,7 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
     self.backgroundColor = [UIColor clearColor];
     self.contentViewHeightConstraint.constant = 0;
     self.verifyDataButton.hidden = YES;
-    self.lineView.image = [self dottedLineBorderImageWithColor:[HelloStyleKit barButtonEnabledColor]];
+    self.lineView.image = [self dottedLineBorderImageWithColor:[HelloStyleKit tintColor]];
     [self configureAudioPlayer];
     [self configureGradientViews];
 }
@@ -74,8 +74,8 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
     self.gradientContainerBottomView.alpha = 0;
     [self insertSubview:self.gradientContainerTopView atIndex:0];
     [self insertSubview:self.gradientContainerBottomView atIndex:0];
-    NSArray* topColors = @[(id)[[HelloStyleKit barButtonEnabledColor] colorWithAlphaComponent:0].CGColor,
-                           (id)[[HelloStyleKit barButtonEnabledColor] colorWithAlphaComponent:0.1f].CGColor];
+    NSArray* topColors = @[(id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0].CGColor,
+                           (id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0.1f].CGColor];
 
     CAGradientLayer* topLayer = [CAGradientLayer layer];
     topLayer.colors = topColors;

@@ -123,6 +123,7 @@
 		8A8288B11A76CF1E0043B1D1 /* presleepInsightTemperature.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8288A21A76CF1E0043B1D1 /* presleepInsightTemperature.png */; };
 		8A8288B21A76CF1E0043B1D1 /* presleepInsightTemperature@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8288A31A76CF1E0043B1D1 /* presleepInsightTemperature@2x.png */; };
 		8A8288B31A76CF1E0043B1D1 /* presleepInsightTemperature@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A8288A41A76CF1E0043B1D1 /* presleepInsightTemperature@3x.png */; };
+		8A8288B61A76DDE60043B1D1 /* HEMSleepSummaryPointerGradientView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A8288B51A76DDE60043B1D1 /* HEMSleepSummaryPointerGradientView.m */; };
 		8A90F99F196225A100AFD110 /* HEMAlarmSoundTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */; };
 		8A90F9A619630C3800AFD110 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
 		8A90F9AC196350D200AFD110 /* HelloStyleKit.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A90F9AB196350D200AFD110 /* HelloStyleKit.m */; };
@@ -659,6 +660,8 @@
 		8A8288A21A76CF1E0043B1D1 /* presleepInsightTemperature.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = presleepInsightTemperature.png; path = images/presleepInsightTemperature.png; sourceTree = "<group>"; };
 		8A8288A31A76CF1E0043B1D1 /* presleepInsightTemperature@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "presleepInsightTemperature@2x.png"; path = "images/presleepInsightTemperature@2x.png"; sourceTree = "<group>"; };
 		8A8288A41A76CF1E0043B1D1 /* presleepInsightTemperature@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "presleepInsightTemperature@3x.png"; path = "images/presleepInsightTemperature@3x.png"; sourceTree = "<group>"; };
+		8A8288B41A76DDE60043B1D1 /* HEMSleepSummaryPointerGradientView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryPointerGradientView.h; sourceTree = "<group>"; };
+		8A8288B51A76DDE60043B1D1 /* HEMSleepSummaryPointerGradientView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryPointerGradientView.m; sourceTree = "<group>"; };
 		8A90F99C196225A100AFD110 /* HEMAlarmSoundTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAlarmSoundTableViewController.h; sourceTree = "<group>"; };
 		8A90F99D196225A100AFD110 /* HEMAlarmSoundTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAlarmSoundTableViewController.m; sourceTree = "<group>"; };
 		8A90F9A719630C3800AFD110 /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1633,6 +1636,8 @@
 				8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */,
 				8A7214391A1E6CEC008B59C4 /* HEMTimelineTopButton.h */,
 				8A72143A1A1E6CEC008B59C4 /* HEMTimelineTopButton.m */,
+				8A8288B41A76DDE60043B1D1 /* HEMSleepSummaryPointerGradientView.h */,
+				8A8288B51A76DDE60043B1D1 /* HEMSleepSummaryPointerGradientView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2896,6 +2901,7 @@
 				BF5D532B1A26749F0090DD6A /* HEMActivityIndicatorView.m in Sources */,
 				8AC276AD1A3CE73E00B082D9 /* HEMInsightFeedViewController.m in Sources */,
 				8A9D380B1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m in Sources */,
+				8A8288B61A76DDE60043B1D1 /* HEMSleepSummaryPointerGradientView.m in Sources */,
 				8AD88C3A1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m in Sources */,
 				BF005C7319FED17800E68E87 /* HEMWiFiDataSource.m in Sources */,
 				BF1E2E721A02BFC400DDD0D0 /* HEMPagingFlowLayout.m in Sources */,

@@ -2,6 +2,7 @@
 #import <SpinKit/RTSpinKitView.h>
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
+#import "HEMSleepSummaryPointerGradientView.h"
 #import "HelloStyleKit.h"
 
 @interface HEMSleepSummaryCollectionViewCell ()
@@ -10,6 +11,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *sleepSummaryButton;
 @property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
 @property (weak, nonatomic) IBOutlet UIView *presleepContainerView;
+@property (weak, nonatomic) IBOutlet HEMSleepSummaryPointerGradientView *pointerView;
 @property (nonatomic, strong) NSAttributedString* sleepScoreLabelText;
 @end
 
@@ -74,6 +76,7 @@ static CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 {
     UIColor* tintColor = [HelloStyleKit tintColor];
     UIColor* inactiveColor = [HelloStyleKit barButtonDisabledColor];
+    self.pointerView.pointerXOffset = CGRectGetMidX(self.sleepSummaryButton.frame);
     [self setTintColor:tintColor onButton:self.sleepSummaryButton];
     [self setTintColor:inactiveColor onButton:self.presleepButton];
     [self setSummaryViewsVisible:YES];
@@ -83,6 +86,7 @@ static CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 {
     UIColor* tintColor = [HelloStyleKit tintColor];
     UIColor* inactiveColor = [HelloStyleKit barButtonDisabledColor];
+    self.pointerView.pointerXOffset = CGRectGetMidX(self.presleepButton.frame);
     [self setTintColor:tintColor onButton:self.presleepButton];
     [self setTintColor:inactiveColor onButton:self.sleepSummaryButton];
     [self setSummaryViewsVisible:NO];

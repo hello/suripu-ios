@@ -16,6 +16,7 @@
 #import "HEMTimelineHeaderCollectionReusableView.h"
 #import "HEMTimelineFooterCollectionReusableView.h"
 #import "HEMSleepScoreGraphView.h"
+#import "NSAttributedString+HEMUtils.h"
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
@@ -323,35 +324,35 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSDictionary* attributes = [HEMMarkdown attributesForTimelineMessageText];
     if (self.sleepResult.sensorInsights.count > 4) {
         SENSleepResultSensorInsight* insight = self.sleepResult.sensorInsights[4];
-        cell.presleepInsightLabel5.attributedText = markdown_to_attr_string(insight.message, 0, attributes);
+        cell.presleepInsightLabel5.attributedText = [markdown_to_attr_string(insight.message, 0, attributes) trim];
         cell.presleepImageView5.image = [self imageForPresleepInsight:insight];
         cell.presleepImageView5.tintColor = [UIColor colorForSensorWithCondition:insight.condition];
     }
 
     if (self.sleepResult.sensorInsights.count > 3) {
         SENSleepResultSensorInsight* insight = self.sleepResult.sensorInsights[3];
-        cell.presleepInsightLabel4.attributedText = markdown_to_attr_string(insight.message, 0, attributes);
+        cell.presleepInsightLabel4.attributedText = [markdown_to_attr_string(insight.message, 0, attributes) trim];
         cell.presleepImageView4.image = [self imageForPresleepInsight:insight];
         cell.presleepImageView4.tintColor = [UIColor colorForSensorWithCondition:insight.condition];
     }
 
     if (self.sleepResult.sensorInsights.count > 2) {
         SENSleepResultSensorInsight* insight = self.sleepResult.sensorInsights[2];
-        cell.presleepInsightLabel3.attributedText = markdown_to_attr_string(insight.message, 0, attributes);
+        cell.presleepInsightLabel3.attributedText = [markdown_to_attr_string(insight.message, 0, attributes) trim];
         cell.presleepImageView3.image = [self imageForPresleepInsight:insight];
         cell.presleepImageView3.tintColor = [UIColor colorForSensorWithCondition:insight.condition];
     }
 
     if (self.sleepResult.sensorInsights.count > 1) {
         SENSleepResultSensorInsight* insight = self.sleepResult.sensorInsights[1];
-        cell.presleepInsightLabel2.attributedText = markdown_to_attr_string(insight.message, 0, attributes);
+        cell.presleepInsightLabel2.attributedText = [markdown_to_attr_string(insight.message, 0, attributes) trim];
         cell.presleepImageView2.image = [self imageForPresleepInsight:insight];
         cell.presleepImageView2.tintColor = [UIColor colorForSensorWithCondition:insight.condition];
     }
 
     if (self.sleepResult.sensorInsights.count > 0) {
         SENSleepResultSensorInsight* insight = self.sleepResult.sensorInsights[0];
-        cell.presleepInsightLabel1.attributedText = markdown_to_attr_string(insight.message, 0, attributes);
+        cell.presleepInsightLabel1.attributedText = [markdown_to_attr_string(insight.message, 0, attributes) trim];
         cell.presleepImageView1.image = [self imageForPresleepInsight:insight];
         cell.presleepImageView1.tintColor = [UIColor colorForSensorWithCondition:insight.condition];
     }

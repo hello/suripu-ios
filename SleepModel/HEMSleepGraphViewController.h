@@ -1,11 +1,9 @@
 
 #import <UIKit/UIKit.h>
-#import "HEMPresleepItemCollectionViewCell.h"
 
 typedef NS_ENUM(NSUInteger, HEMSleepGraphCollectionViewSection) {
     HEMSleepGraphCollectionViewSummarySection = 0,
-    HEMSleepGraphCollectionViewSegmentSection = 2,
-    HEMSleepGraphCollectionViewPresleepSection = 1,
+    HEMSleepGraphCollectionViewSegmentSection = 1,
 };
 
 extern CGFloat const HEMTimelineHeaderCellHeight;
@@ -19,7 +17,7 @@ extern CGFloat const HEMTimelineHeaderCellHeight;
 
 @end
 
-@interface HEMSleepGraphViewController : UIViewController <HEMSleepEventActionDelegate, HEMPresleepActionDelegate>
+@interface HEMSleepGraphViewController : UIViewController <HEMSleepEventActionDelegate>
 
 /**
  *  The date which is represented by this controller

@@ -17,7 +17,7 @@
 
 static CGFloat const HEMSummaryPointerWidth = 7.5f;
 static CGFloat const HEMSummaryPointerHeight = 8.f;
-static CGFloat const HEMSummaryPointerColors[] = { 1.f, 1.f, 0.98f, 1.f, 0.96f, 1.f };
+static CGFloat const HEMSummaryPointerColors[] = { 1.f, 1.f, 0.97f, 1.f };
 
 - (void)layoutSubviews
 {
@@ -68,16 +68,30 @@ static CGFloat const HEMSummaryPointerColors[] = { 1.f, 1.f, 0.98f, 1.f, 0.96f, 
     CGContextClip(ctx);
 
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
-    CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace, HEMSummaryPointerColors, NULL, 3);
+    CGGradientRef gradient = CGGradientCreateWithColorComponents(colorSpace, HEMSummaryPointerColors, NULL, 2);
     CGColorSpaceRelease(colorSpace);
 
     CGFloat startXOffset = CGRectGetMinX(rect);
-    CGPoint gradientStart = CGPointMake(startXOffset, CGRectGetMinY(rect));
+    CGFloat endXOffset = CGRectGetMaxX(rect);
+    CGFloat startYOffset = CGRectGetMinY(rect);
+    CGFloat endYOffset = CGRectGetMaxY(rect) - HEMSummaryPointerHeight;
+    CGPoint gradientStart = CGPointMake(startXOffset, startYOffset);
     CGPoint gradientEnd   = CGPointMake(startXOffset,  CGRectGetMaxY(rect));
+    CGFloat pointerXOffset = MAX(0, self.pointerXOffset - HEMSummaryPointerWidth);
 
     CGContextDrawLinearGradient(ctx, gradient, gradientStart, gradientEnd, 0);
     CGGradientRelease(gradient);
     CGContextRestoreGState(ctx);
+
+    CGContextBeginPath(ctx);
+    CGContextMoveToPoint(ctx, startXOffset, endYOffset);
+    CGContextSetLineWidth(ctx, 0.5f);
+    CGContextAddLineToPoint(ctx, pointerXOffset, endYOffset);
+    CGContextAddLineToPoint(ctx, pointerXOffset + HEMSummaryPointerWidth, endYOffset + HEMSummaryPointerHeight);
+    CGContextAddLineToPoint(ctx, pointerXOffset + HEMSummaryPointerWidth*2, endYOffset);
+    CGContextAddLineToPoint(ctx, endXOffset, endYOffset);
+    CGContextSetStrokeColorWithColor(ctx, [[UIColor blackColor] colorWithAlphaComponent:0.05].CGColor);
+    CGContextStrokePath(ctx);
 }
 
 - (CGPathRef)pathForRect:(CGRect)rect

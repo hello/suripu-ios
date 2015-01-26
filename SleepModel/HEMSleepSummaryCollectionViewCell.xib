@@ -273,6 +273,7 @@
                 <outlet property="presleepInsightLabel3" destination="boO-yr-Eki" id="Ln8-qT-hrE"/>
                 <outlet property="presleepInsightLabel4" destination="MbZ-X8-wky" id="H5O-RZ-fue"/>
                 <outlet property="presleepInsightLabel5" destination="swN-5T-KTi" id="Q8q-tU-ySD"/>
+                <outlet property="separatorView" destination="0VJ-gB-iyi" id="aRc-8g-Io1"/>
                 <outlet property="shareButton" destination="DtZ-v4-794" id="kvQ-v5-ADb"/>
                 <outlet property="sleepScoreGraphView" destination="T3i-WO-VZQ" id="nPx-1C-bLv"/>
                 <outlet property="sleepScoreTextLabel" destination="FN0-1v-Tup" id="Q0G-ar-mOf"/>

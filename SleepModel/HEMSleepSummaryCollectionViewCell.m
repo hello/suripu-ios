@@ -12,6 +12,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
 @property (weak, nonatomic) IBOutlet UIView *presleepContainerView;
 @property (weak, nonatomic) IBOutlet HEMSleepSummaryPointerGradientView *pointerView;
+@property (weak, nonatomic) IBOutlet UIView* separatorView;
 @property (nonatomic, strong) NSAttributedString* sleepScoreLabelText;
 @end
 
@@ -67,6 +68,8 @@ static CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
     self.sleepScoreTextLabel.hidden = scoreIsEmpty;
     self.presleepButton.hidden = scoreIsEmpty;
     self.sleepSummaryButton.hidden = scoreIsEmpty;
+    self.pointerView.hidden = scoreIsEmpty;
+    self.separatorView.hidden = scoreIsEmpty;
     if (!scoreIsEmpty)
         [self.spinnerView stopAnimating];
     [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];

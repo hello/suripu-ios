@@ -23,6 +23,10 @@
 "sign-up.error.email-invalid" = "Please enter a valid email address.";
 "sign-up.error.conflict" = "The email address you entered is already in use.";
 "sign-up.error.generic" = "Something went wrong. Please try again.";
+"sign-up.error.password-too-short" = "Your password is too short.";
+"sign-up.error.password-insecure" = "Your password is not secure enough";
+"sign-up.error.name-too-short" = "Your name is too short.";
+"sign-up.error.name-too-long" = "Your name is too long.";
 
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "There was a problem setting your birthday.";

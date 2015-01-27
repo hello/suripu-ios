@@ -10,6 +10,8 @@
 
 @implementation HEMDynamicsStatusStyler
 
+static CGFloat const HEMStatusStylerFadeMaxRatio = 0.7f;
+
 + (instancetype)styler
 {
     return [self new];
@@ -19,10 +21,27 @@
          didUpdatePaneClosedFraction:(CGFloat)paneClosedFraction
                         forDirection:(MSDynamicsDrawerDirection)direction
 {
-    if (paneClosedFraction > 0.95) {
-        dynamicsDrawerViewController.view.window.windowLevel = UIWindowLevelStatusBar + 1;
+    CGRect windowFrame = [[UIScreen mainScreen] bounds];
+    CGRect frame = [[UIApplication sharedApplication] statusBarFrame];
+    CGFloat windowHeight = CGRectGetHeight(windowFrame);
+    CGFloat statusBarHeight = MIN(CGRectGetWidth(frame), CGRectGetHeight(frame));
+    CGFloat paneVisibleHeight = windowHeight * paneClosedFraction;
+    BOOL statusAreaVisible = windowHeight - paneVisibleHeight >= statusBarHeight;
+    UIWindowLevel level = statusAreaVisible ? UIWindowLevelNormal : UIWindowLevelStatusBar + 1;
+    if (dynamicsDrawerViewController.view.window.windowLevel != level)
+        dynamicsDrawerViewController.view.window.windowLevel = level;
+
+    if (direction & MSDynamicsDrawerDirectionAll) {
+        dynamicsDrawerViewController.drawerView.alpha = 1.0  - paneClosedFraction * HEMStatusStylerFadeMaxRatio;
     } else {
-        dynamicsDrawerViewController.view.window.windowLevel = UIWindowLevelNormal;
+        dynamicsDrawerViewController.drawerView.alpha = 1.0;
     }
 }
+
+- (void)stylerWasRemovedFromDynamicsDrawerViewController:(MSDynamicsDrawerViewController *)dynamicsDrawerViewController
+                                            forDirection:(MSDynamicsDrawerDirection)direction
+{
+    dynamicsDrawerViewController.drawerView.alpha = 1.0;
+}
+
 @end

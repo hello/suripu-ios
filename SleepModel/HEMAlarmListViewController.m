@@ -44,6 +44,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     if (self = [super initWithCoder:aDecoder]) {
         self.tabBarItem.title = NSLocalizedString(@"alarms.title", nil);
         self.tabBarItem.image = [HelloStyleKit alarmBarIcon];
+        self.tabBarItem.selectedImage = [UIImage imageNamed:@"alarmBarIconActive"];
     }
     return self;
 }

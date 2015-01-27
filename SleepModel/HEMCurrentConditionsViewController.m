@@ -33,6 +33,7 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
     if (self = [super initWithCoder:aDecoder]) {
         self.tabBarItem.title = NSLocalizedString(@"current-conditions.title", nil);
         self.tabBarItem.image = [HelloStyleKit sensorsBarIcon];
+        self.tabBarItem.selectedImage = [UIImage imageNamed:@"sensorsBarIconActive"];
     }
     return self;
 }

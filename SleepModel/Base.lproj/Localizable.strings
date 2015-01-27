@@ -163,6 +163,7 @@
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 
 // device management
+"settings.title" = "Settings";
 "settings.device.sense" = "Sense";
 "settings.device.pill" = "Sleep Pill";
 "settings.device.status.low-battery" = "Battery low";
@@ -225,8 +226,7 @@
 "settings.factory-restore.error.unlink-sense" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";
 
 // insights
-"sleep.trends.title" = "Trends";
-"sleep.insight.title" = "INSIGHTS";
+"insights.title" = "Insights";
 "sleep.insight.summary.no-data-message"  = "As Sense learns from your sleep habits, we will let you know how to improve.";
 "sleep.insight.info.title.no-text" = "Insight failed to load";
 "sleep.insight.info.message.no-text" = "Unable to load expert insight information at the moment.  Please make sure your phone has internet connection and try again.";
@@ -379,6 +379,7 @@
 "sleep-history.no-data" = "There is no information available about the selected date.";
 
 // trends
+"trends.title" = "Trends";
 "trends.not-enough-data.message" = "Not enough data yet, check back later";
 "trends.not-enough-data.title" = "Sleep trends";
 

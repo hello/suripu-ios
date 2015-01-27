@@ -35,7 +35,9 @@
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
+        self.tabBarItem.title = NSLocalizedString(@"insights.title", nil);
         self.tabBarItem.image = [HelloStyleKit senseBarIcon];
+        self.tabBarItem.selectedImage = [UIImage imageNamed:@"senseBarIconActive"];
     }
     return self;
 }

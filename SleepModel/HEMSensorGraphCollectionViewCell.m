@@ -29,19 +29,13 @@
 {
     [super awakeFromNib];
     [self configureGraphView];
-}
-
-- (void)prepareForReuse
-{
-    [super prepareForReuse];
-    self.graphView.dataSource = nil;
-    self.graphDataSource = nil;
+    self.layer.needsDisplayOnBoundsChange = NO;
 }
 
 - (void)configureGraphView
 {
     self.graphView.userInteractionEnabled = NO;
-    self.graphView.enableBezierCurve = NO;
+    self.graphView.enableBezierCurve = YES;
     self.graphView.enableReferenceXAxisLines = NO;
     self.graphView.enableReferenceYAxisLines = NO;
     self.graphView.enableXAxisLabel = NO;
@@ -62,6 +56,8 @@
 
 - (void)setGraphData:(NSArray *)graphData sensor:(SENSensor *)sensor
 {
+    if ([graphData isEqual:self.graphDataSource.dataSeries] && self.graphView.alpha == 1)
+        return;
     [self setGraphValueBoundsWithData:graphData forSensor:sensor];
     [UIView animateWithDuration:0.15 animations:^{
         self.graphView.alpha = 0;
@@ -132,8 +128,12 @@
 
 - (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph
 {
+    if (graph.alpha == 1)
+        return;
     [UIView animateWithDuration:0.25 animations:^{
         graph.alpha = 1;
+    } completion:^(BOOL finished) {
+        self.graphView.dataSource = nil;
     }];
 }
 

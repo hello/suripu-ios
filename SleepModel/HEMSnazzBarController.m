@@ -231,6 +231,8 @@ CGFloat const HEMSnazzBarHeight = 72.f;
 
 - (void)didPan:(UIScreenEdgePanGestureRecognizer*)recognizer
 {
+    if (recognizer.state != UIGestureRecognizerStateBegan)
+        return;
     if ([recognizer isEqual:self.edgePanToNextGestureRecognizer]) {
         [self animateToNext];
     } else if ([recognizer isEqual:self.edgePanToPreviousGestureRecognizer]) {

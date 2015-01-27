@@ -264,7 +264,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="90P-Oy-xOr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3554" y="-10"/>
+            <point key="canvasLocation" x="3469" y="-10"/>
         </scene>
         <!--Sleep Questions View Controller-->
         <scene sceneID="KIp-Ra-hCy">
@@ -809,7 +809,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="X4b-Va-8rq">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
+                                <rect key="frame" x="0.0" y="4" width="600" height="488"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="settingsCell" id="dAf-ei-RdP" customClass="HEMSettingsTableViewCell">
@@ -858,7 +858,7 @@
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="X4b-Va-8rq" secondAttribute="trailing" constant="-16" id="7Pb-xp-twX"/>
                             <constraint firstItem="X4b-Va-8rq" firstAttribute="leading" secondItem="taC-qD-DrH" secondAttribute="leadingMargin" constant="-16" id="JjI-pn-Qbn"/>
-                            <constraint firstItem="X4b-Va-8rq" firstAttribute="top" secondItem="jix-Ub-MhY" secondAttribute="bottom" id="W3R-0G-rZo"/>
+                            <constraint firstItem="X4b-Va-8rq" firstAttribute="top" secondItem="jix-Ub-MhY" secondAttribute="bottom" constant="4" id="W3R-0G-rZo"/>
                             <constraint firstItem="Fgn-Cc-FTR" firstAttribute="top" secondItem="X4b-Va-8rq" secondAttribute="bottom" constant="44" id="vec-qT-xZJ"/>
                         </constraints>
                     </view>
@@ -1560,7 +1560,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HiS-qP-eYf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2750" y="745"/>
+            <point key="canvasLocation" x="2002" y="-10"/>
         </scene>
         <!--Choice View Controller-->
         <scene sceneID="Z3f-Fd-oqm">
@@ -2389,7 +2389,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="znO-qZ-e9H" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3516" y="1073"/>
+            <point key="canvasLocation" x="2756" y="745"/>
         </scene>
         <!--Settings Navigation Controller-->
         <scene sceneID="ur6-ic-hvS">
@@ -2541,7 +2541,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b8l-um-jFk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4273" y="1073"/>
+            <point key="canvasLocation" x="3469" y="745"/>
         </scene>
         <!--Update Email-->
         <scene sceneID="RO1-ME-jqh">

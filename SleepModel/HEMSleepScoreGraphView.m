@@ -6,23 +6,14 @@
 
 @property (nonatomic) NSInteger sleepScore;
 @property (nonatomic) NSInteger targetSleepScore;
-@property (nonatomic, strong) NSString* sleepScoreLabelText;
 @property (nonatomic, strong) NSString* sleepScoreDateText;
 @end
 
 @implementation HEMSleepScoreGraphView
 
-- (id)initWithCoder:(NSCoder*)aDecoder
-{
-    if (self = [super initWithCoder:aDecoder]) {
-        _sleepScoreLabelText = NSLocalizedString(@"sleep-history.score", nil);
-    }
-    return self;
-}
-
 - (void)drawRect:(CGRect)rect
 {
-    [HelloStyleKit drawSleepScoreGraphWithSleepScoreLabelText:self.sleepScoreLabelText sleepScore:self.sleepScore];
+    [HelloStyleKit drawSleepScoreGraphWithSleepScore:self.sleepScore];
 }
 
 - (void)animateScoreTo:(CGFloat)value
@@ -57,15 +48,6 @@
 
     self.targetSleepScore = sleepScore;
     _sleepScore = sleepScore;
-    [self setNeedsDisplay];
-}
-
-- (void)setSleepScoreLabelText:(NSString*)sleepScoreLabelText
-{
-    if ([sleepScoreLabelText isEqualToString:_sleepScoreLabelText])
-        return;
-
-    _sleepScoreLabelText = sleepScoreLabelText;
     [self setNeedsDisplay];
 }
 

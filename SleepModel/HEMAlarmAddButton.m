@@ -24,7 +24,7 @@ static CGFloat const HEMAlarmAddParallaxDepth = 3.f;
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    [[HelloStyleKit barButtonEnabledColor] setFill];
+    [[HelloStyleKit tintColor] setFill];
     CGContextFillEllipseInRect(ctx, rect);
     UIColor* color = [self colorForState];
     UIFont* font = [UIFont systemFontOfSize:24.f];

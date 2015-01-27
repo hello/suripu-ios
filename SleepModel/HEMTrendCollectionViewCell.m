@@ -59,8 +59,8 @@
     self.lineGraphView.dataSource = self;
     self.lineGraphView.delegate = self;
     self.lineGraphView.colorTop = [UIColor clearColor];
-    self.lineGraphView.colorLine = [[HelloStyleKit barButtonEnabledColor] colorWithAlphaComponent:0.4f];
-    self.lineGraphView.colorBottom = [[HelloStyleKit barButtonEnabledColor] colorWithAlphaComponent:0.07f];
+    self.lineGraphView.colorLine = [[HelloStyleKit tintColor] colorWithAlphaComponent:0.4f];
+    self.lineGraphView.colorBottom = [[HelloStyleKit tintColor] colorWithAlphaComponent:0.07f];
     self.lineGraphView.enableBezierCurve = YES;
     self.lineGraphView.alwaysDisplayPopUpLabels = YES;
     self.lineGraphView.colorBackgroundPopUplabel = [UIColor clearColor];

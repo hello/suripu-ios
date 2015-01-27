@@ -28,7 +28,7 @@ static CGFloat const HEMDateButtonTextOffset = 3.f;
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGFloat edgeDiameter = CGRectGetHeight(rect);
-    CGContextSetFillColorWithColor(ctx, [HelloStyleKit barButtonEnabledColor].CGColor);
+    CGContextSetFillColorWithColor(ctx, [HelloStyleKit tintColor].CGColor);
     CGContextFillEllipseInRect(ctx, CGRectMake(0, 0, edgeDiameter, edgeDiameter));
     CGContextFillEllipseInRect(ctx, CGRectMake(CGRectGetWidth(rect) - edgeDiameter, 0, edgeDiameter, edgeDiameter));
     CGContextFillRect(ctx, CGRectMake(CGRectGetMinX(rect) + (edgeDiameter/2), 0, CGRectGetWidth(rect) - edgeDiameter, CGRectGetHeight(rect)));

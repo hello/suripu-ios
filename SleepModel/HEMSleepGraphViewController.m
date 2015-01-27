@@ -42,9 +42,7 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 
 @implementation HEMSleepGraphViewController
 
-static CGFloat const HEMSleepSummaryCellHeight = 350.f;
-static CGFloat const HEMPresleepItemExpandedCellHeight = 196.f;
-static CGFloat const HEMPresleepItemDefaultCellHeight = 134.f;
+static CGFloat const HEMSleepSummaryCellHeight = 390.f;
 static CGFloat const HEMSleepGraphCollectionViewEventTitleOnlyHeight = 106.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 44.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMaximumHeight = 204.f;
@@ -389,10 +387,6 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     case HEMSleepGraphCollectionViewSummarySection:
         return CGSizeMake(width, hasSegments ? HEMSleepSummaryCellHeight : CGRectGetHeight(self.view.bounds));
 
-    case HEMSleepGraphCollectionViewPresleepSection: {
-        return CGSizeMake(width, [self presleepSectionIsExpanded]
-                          ? HEMPresleepItemExpandedCellHeight : HEMPresleepItemDefaultCellHeight);
-    }
     case HEMSleepGraphCollectionViewSegmentSection: {
         SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
         CGFloat durationHeight = [self heightForCellWithSegment:segment];

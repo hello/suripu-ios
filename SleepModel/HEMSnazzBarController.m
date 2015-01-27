@@ -18,11 +18,11 @@ CGFloat const HEMSnazzBarHeight = 72.f;
 @property (nonatomic, strong) UIView* contentView;
 @property (nonatomic, strong) UISwipeGestureRecognizer* swipeToNextGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer* swipeToPreviousGestureRecognizer;
+@property (nonatomic, strong) UIScreenEdgePanGestureRecognizer* edgePanToNextGestureRecognizer;
+@property (nonatomic, strong) UIScreenEdgePanGestureRecognizer* edgePanToPreviousGestureRecognizer;
 @end
 
 @implementation HEMSnazzBarController
-
-static CGFloat const HEMSnazzContentGestureMargin = 34.f;
 
 - (void)dealloc
 {
@@ -50,7 +50,7 @@ static CGFloat const HEMSnazzContentGestureMargin = 34.f;
     self.buttonsBar.delegate = self;
     [self.view addSubview:self.buttonsBar];
     self.buttonsBar.backgroundColor = [UIColor whiteColor];
-    self.buttonsBar.selectionColor = [HelloStyleKit barButtonEnabledColor];
+    self.buttonsBar.selectionColor = [HelloStyleKit tintColor];
     self.contentView.backgroundColor = [HelloStyleKit backViewBackgroundColor];
 }
 
@@ -64,6 +64,14 @@ static CGFloat const HEMSnazzContentGestureMargin = 34.f;
                                                                                       action:@selector(didSwipe:)];
     self.swipeToPreviousGestureRecognizer.delegate = self;
     self.swipeToPreviousGestureRecognizer.direction = UISwipeGestureRecognizerDirectionLeft;
+    self.edgePanToNextGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self
+                                                                                            action:@selector(didPan:)];
+    self.edgePanToNextGestureRecognizer.delegate = self;
+    self.edgePanToNextGestureRecognizer.edges = UIRectEdgeLeft;
+    self.edgePanToPreviousGestureRecognizer = [[UIScreenEdgePanGestureRecognizer alloc] initWithTarget:self
+                                                                                                action:@selector(didPan:)];
+    self.edgePanToPreviousGestureRecognizer.delegate = self;
+    self.edgePanToPreviousGestureRecognizer.edges = UIRectEdgeRight;
 }
 
 - (void)reloadButtonsBar
@@ -146,8 +154,7 @@ static CGFloat const HEMSnazzContentGestureMargin = 34.f;
     [self hideBar:NO animated:animated];
     if (animated && fromController) {
         self.contentView.userInteractionEnabled = NO;
-        [fromController.view removeGestureRecognizer:self.swipeToPreviousGestureRecognizer];
-        [fromController.view removeGestureRecognizer:self.swipeToNextGestureRecognizer];
+        [self removeGestureRecognizersFromView:fromController.view];
         CGRect toStartFrame = self.contentView.bounds;
         CGRect fromFinalFrame = self.contentView.bounds;
         CGFloat frameWidth = CGRectGetWidth(self.contentView.bounds);
@@ -159,8 +166,7 @@ static CGFloat const HEMSnazzContentGestureMargin = 34.f;
         void (^completion)(BOOL) = ^(BOOL finished) {
             [fromController.view removeFromSuperview];
             self.contentView.userInteractionEnabled = YES;
-            [toController.view addGestureRecognizer:self.swipeToNextGestureRecognizer];
-            [toController.view addGestureRecognizer:self.swipeToPreviousGestureRecognizer];
+            [self addGestureRecognizersToView:toController.view];
         };
         void (^animations)() = ^{
             toController.view.frame = self.contentView.bounds;
@@ -171,15 +177,29 @@ static CGFloat const HEMSnazzContentGestureMargin = 34.f;
                          animations:animations completion:completion];
     } else {
         [fromController.view removeFromSuperview];
-        [fromController.view removeGestureRecognizer:self.swipeToPreviousGestureRecognizer];
-        [fromController.view removeGestureRecognizer:self.swipeToNextGestureRecognizer];
+        [self removeGestureRecognizersFromView:fromController.view];
         toController.view.frame = self.contentView.bounds;
-        [toController.view addGestureRecognizer:self.swipeToNextGestureRecognizer];
-        [toController.view addGestureRecognizer:self.swipeToPreviousGestureRecognizer];
+        [self addGestureRecognizersToView:toController.view];
         [self.contentView addSubview:toController.view];
     }
 
     [self.buttonsBar selectButtonAtIndex:index animated:animated];
+}
+
+- (void)addGestureRecognizersToView:(UIView*)view
+{
+    [view addGestureRecognizer:self.swipeToNextGestureRecognizer];
+    [view addGestureRecognizer:self.swipeToPreviousGestureRecognizer];
+    [view addGestureRecognizer:self.edgePanToNextGestureRecognizer];
+    [view addGestureRecognizer:self.edgePanToPreviousGestureRecognizer];
+}
+
+- (void)removeGestureRecognizersFromView:(UIView*)view
+{
+    [view removeGestureRecognizer:self.swipeToPreviousGestureRecognizer];
+    [view removeGestureRecognizer:self.swipeToNextGestureRecognizer];
+    [view removeGestureRecognizer:self.edgePanToPreviousGestureRecognizer];
+    [view removeGestureRecognizer:self.edgePanToNextGestureRecognizer];
 }
 
 - (void)setViewControllers:(NSArray *)viewControllers
@@ -209,15 +229,36 @@ static CGFloat const HEMSnazzContentGestureMargin = 34.f;
 
 #pragma mark - UIGestureRecognizerDelegate
 
+- (void)didPan:(UIScreenEdgePanGestureRecognizer*)recognizer
+{
+    if (recognizer.state != UIGestureRecognizerStateBegan)
+        return;
+    if ([recognizer isEqual:self.edgePanToNextGestureRecognizer]) {
+        [self animateToNext];
+    } else if ([recognizer isEqual:self.edgePanToPreviousGestureRecognizer]) {
+        [self animateToPrevious];
+    }
+}
+
 - (void)didSwipe:(UISwipeGestureRecognizer*)recognizer
 {
     if (recognizer.direction == UISwipeGestureRecognizerDirectionRight) {
-        if (self.selectedIndex > 0)
-            [self setSelectedIndex:self.selectedIndex - 1 animated:YES];
+        [self animateToNext];
     } else if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft) {
-        if (self.selectedIndex < self.viewControllers.count - 1)
-            [self setSelectedIndex:self.selectedIndex + 1 animated:YES];
+        [self animateToPrevious];
     }
+}
+
+- (void)animateToNext
+{
+    if (self.selectedIndex > 0)
+        [self setSelectedIndex:self.selectedIndex - 1 animated:YES];
+}
+
+- (void)animateToPrevious
+{
+    if (self.selectedIndex < self.viewControllers.count - 1)
+        [self setSelectedIndex:self.selectedIndex + 1 animated:YES];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch
@@ -228,9 +269,7 @@ static CGFloat const HEMSnazzContentGestureMargin = 34.f;
         if (![nav.topViewController isEqual:[nav.viewControllers firstObject]])
             return NO;
     }
-    CGPoint location = [touch locationInView:self.contentView];
-    return location.x > HEMSnazzContentGestureMargin
-        && location.x < CGRectGetWidth(self.contentView.bounds) - HEMSnazzContentGestureMargin;
+    return YES;
 }
 
 @end

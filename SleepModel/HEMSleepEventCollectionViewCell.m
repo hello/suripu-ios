@@ -19,6 +19,7 @@
 @property (nonatomic, strong) CAGradientLayer* gradientTopLayer;
 @property (nonatomic, strong) CAGradientLayer* gradientBottomLayer;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* contentViewHeightConstraint;
+@property (nonatomic, getter=isExpanded) BOOL expanded;
 @end
 
 @implementation HEMSleepEventCollectionViewCell
@@ -30,10 +31,10 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 - (void)awakeFromNib
 {
     [super awakeFromNib];
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor clearColor];
     self.contentViewHeightConstraint.constant = 0;
     self.verifyDataButton.hidden = YES;
-    self.lineView.image = [self dottedLineBorderImageWithColor:[HelloStyleKit barButtonEnabledColor]];
+    self.lineView.image = [self dottedLineBorderImageWithColor:[HelloStyleKit tintColor]];
     [self configureAudioPlayer];
     [self configureGradientViews];
 }
@@ -73,8 +74,8 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
     self.gradientContainerBottomView.alpha = 0;
     [self insertSubview:self.gradientContainerTopView atIndex:0];
     [self insertSubview:self.gradientContainerBottomView atIndex:0];
-    NSArray* topColors = @[(id)[[HelloStyleKit barButtonEnabledColor] colorWithAlphaComponent:0].CGColor,
-                           (id)[[HelloStyleKit barButtonEnabledColor] colorWithAlphaComponent:0.1f].CGColor];
+    NSArray* topColors = @[(id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0].CGColor,
+                           (id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0.1f].CGColor];
 
     CAGradientLayer* topLayer = [CAGradientLayer layer];
     topLayer.colors = topColors;
@@ -115,7 +116,8 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
 - (void)useExpandedLayout:(BOOL)isExpanded targetSize:(CGSize)size animated:(BOOL)animated
 {
-
+    self.expanded = isExpanded;
+    [self setNeedsDisplay];
     void (^endAnimations)() = NULL;
     void (^startAnimations)() = NULL;
     if (isExpanded) {
@@ -164,6 +166,8 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
 - (void)drawRect:(CGRect)rect
 {
+    if ([self isExpanded])
+        return;
     [super drawRect:rect];
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGFloat width = HEMSleepLineWidth;

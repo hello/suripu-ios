@@ -23,7 +23,7 @@
 }
 
 - (void)updateTintColor {
-    [self setTintColor:[self isEnabled] ? [HelloStyleKit barButtonEnabledColor] : [HelloStyleKit barButtonDisabledColor]];
+    [self setTintColor:[self isEnabled] ? [HelloStyleKit tintColor] : [HelloStyleKit barButtonDisabledColor]];
 }
 
 @end

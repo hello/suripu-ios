@@ -263,7 +263,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         break;
     }
     }
-    CGFloat zPosition = indexPath.row;
+    CGFloat zPosition = indexPath.row + 1;
     if (cell.layer.zPosition != zPosition) {
         [cell.layer setZPosition:zPosition];
     }

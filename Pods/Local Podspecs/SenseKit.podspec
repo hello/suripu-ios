@@ -21,7 +21,7 @@ Pod::Spec.new do |s|
   s.subspec "API" do |ss|
     ss.source_files = 'Pod/Classes/API/*'
     ss.dependency 'FXKeychain', '~> 1.5.1'
-    ss.dependency 'AFNetworking', '~> 2.4.1'
+    ss.dependency 'AFNetworking', '~> 2.5.0'
     ss.dependency 'NSJSONSerialization-NSNullRemoval', '~> 1.0.0'
   end
 

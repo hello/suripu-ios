@@ -1,23 +1,23 @@
 PODS:
-  - AFNetworking (2.4.1):
+  - AFNetworking (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
     - AFNetworking/UIKit
-  - AFNetworking/NSURLConnection (2.4.1):
+  - AFNetworking/NSURLConnection (2.5.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.4.1):
+  - AFNetworking/NSURLSession (2.5.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.4.1)
-  - AFNetworking/Security (2.4.1)
-  - AFNetworking/Serialization (2.4.1)
-  - AFNetworking/UIKit (2.4.1):
+  - AFNetworking/Reachability (2.5.0)
+  - AFNetworking/Security (2.5.0)
+  - AFNetworking/Serialization (2.5.0)
+  - AFNetworking/UIKit (2.5.0):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - AttributedMarkdown (0.9.2)
@@ -48,7 +48,7 @@ PODS:
     - CocoaLumberjack
     - Mixpanel (= 2.4.2)
   - SenseKit/API (0.1.0):
-    - AFNetworking (~> 2.4.1)
+    - AFNetworking (~> 2.5.0)
     - FXKeychain (~> 1.5.1)
     - NSJSONSerialization-NSNullRemoval (~> 1.0.0)
   - SenseKit/BLE (0.1.0):
@@ -104,7 +104,7 @@ EXTERNAL SOURCES:
     :git: https://github.com/TransitApp/SVWebViewController.git
 
 SPEC CHECKSUMS:
-  AFNetworking: 0aabc6fae66d6e5d039eeb21c315843c7aae51ab
+  AFNetworking: 0f54cb5d16ce38c1b76948faffb8d5fb705021c7
   AttributedMarkdown: de3267724c9e2175e1fc398184d03ba6697766ef
   BEMSimpleLineGraph: a3c78bfd5d2919324d970e42c028ebffc6ad7bcd
   CocoaLumberjack: 6186e27827fc574b50b16c10102fcc591437f06c
@@ -116,7 +116,7 @@ SPEC CHECKSUMS:
   Mixpanel: cd01a5952773eaff12880da334a9776180c5f0a7
   MSDynamicsDrawerViewController: 0002059480a4b5ddde7eafbafb958a79a9b0ffaf
   NSJSONSerialization-NSNullRemoval: b3f02955f898d01205567e3f1292e4aae3ad547e
-  SenseKit: 96bb776e999c7cd700258b9536e500848702f916
+  SenseKit: f8e6951e86dccf42cf0d4099e204b5e8a02ffd59
   SHSProtoBuf: 62a02d425f5dbee00d057bae65d76f0f01737410
   SORelativeDateTransformer: de7936811c9988af8e129a097af48c828f933f5f
   SpinKit: 11fa465172473ce3d59a80bf0449020b850e5229

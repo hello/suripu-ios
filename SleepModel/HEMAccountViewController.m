@@ -193,10 +193,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)togglePreferenceSwitch:(UISwitch*)preferenceSwitch {
     HEMSettingsAccountInfoType type = [preferenceSwitch tag];
-    
+
     __weak typeof(self) weakSelf = self;
     [[self dataSource] enablePreference:[preferenceSwitch isOn] forType:type completion:^(NSError *error) {
-        [weakSelf showErrorIfAny:error];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [preferenceSwitch setOn:[[strongSelf dataSource] isTypeEnabled:type] animated:YES];
+        [strongSelf showErrorIfAny:error];
     }];
 }
 
@@ -270,8 +272,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)showErrorIfAny:(NSError*)error {
     if (error == nil) return;
-    [self showMessageDialog:NSLocalizedString(@"account.update.error.generic", nil)
-                      title:NSLocalizedString(@"account.update.failed.title", nil)];
+    
+    NSString* message = nil;
+    switch ([error code]) {
+        case HEMSettingsAccountErrorNotSupported:
+            message = NSLocalizedString(@"account.update.error.not-supported", nil);
+            break;
+        default:
+            message = NSLocalizedString(@"account.update.error.generic", nil);
+            break;
+    }
+    [self showMessageDialog:message title:NSLocalizedString(@"account.update.failed.title", nil)];
 }
 
 #pragma mark Password Update Delegate

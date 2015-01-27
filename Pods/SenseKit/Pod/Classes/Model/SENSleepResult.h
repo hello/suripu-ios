@@ -52,6 +52,9 @@ typedef NS_ENUM(NSInteger, SENSleepResultSegmentDepth) {
 
 @interface SENSleepResultSegment : NSObject <NSCoding, SENSleepResultSerializable>
 
+extern NSString* const SENSleepResultSegmentEventTypeWakeUp;
+extern NSString* const SENSleepResultSegmentEventTypeSleep;
+
 @property (strong) id serverID;
 @property (strong) NSDate* date;
 @property (strong) NSNumber* duration;

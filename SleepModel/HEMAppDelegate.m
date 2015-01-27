@@ -6,8 +6,9 @@
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENAnalytics.h>
 #import <SenseKit/SENServiceDevice.h>
-
 #import <SenseKit/SENServiceAccount.h>
+#import <SenseKit/SENServiceHealthKit.h>
+
 #import <Crashlytics/Crashlytics.h>
 
 #import "HEMAppDelegate.h"
@@ -23,6 +24,7 @@
 #import "HEMAudioCache.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMStyledNavigationViewController.h"
+#import "HEMSettingsUtil.h"
 
 @implementation HEMAppDelegate
 
@@ -44,7 +46,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [self configureAnalytics];
     [self configureAppearance];
     [self registerForNotifications];
-    [self preFetchData];
+    [self syncData];
     [self createAndShowWindow];
     
     return YES;
@@ -93,9 +95,10 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     }
 }
 
-- (void)preFetchData {
+- (void)syncData {
     if ([SENAuthorizationService isAuthorized]) {
         [[SENServiceAccount sharedService] refreshAccount:nil];
+        [[SENServiceHealthKit sharedService] setEnableWrite:[HEMSettingsUtil isHealthKitEnabled]];
     }
 }
 

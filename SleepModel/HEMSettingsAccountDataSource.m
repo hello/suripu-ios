@@ -7,11 +7,13 @@
 //
 #import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENAPIAccount.h>
+#import <SenseKit/SENServiceHealthKit.h>
 #import <SenseKit/Model.h>
 
 #import "HEMSettingsAccountDataSource.h"
 #import "HEMMathUtil.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSettingsUtil.h"
 
 // \u0222 is a round dot
 static NSString* const HEMSettingsAcctPasswordPlaceholder = @"\u2022\u2022\u2022\u2022\u2022\u2022";
@@ -32,8 +34,9 @@ static NSInteger const HEMSettingsAcctRowHeight = 2;
 static NSInteger const HEMSettingsAcctRowWeight = 3;
 static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
 
-static NSInteger const HEMSettingsAcctRowEnhancedAudio = 0;
-static NSInteger const HEMSettingsAcctPreferenceTotRows = 1;
+static NSInteger const HEMSettingsAcctRowHealthKit = 0;
+static NSInteger const HEMSettingsAcctRowEnhancedAudio = 1;
+static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
 
 @interface HEMSettingsAccountDataSource()
 
@@ -80,6 +83,7 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 1;
         cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = [indexPath section];
     NSString* reuseId = nil;
+    
     if (section == HEMSettingsAcctSectionPreferences) {
         reuseId = [HEMMainStoryboard preferenceReuseIdentifier];
     } else {
@@ -128,9 +132,11 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 1;
         case HEMSettingsAccountInfoTypeWeight:
             title = NSLocalizedString(@"settings.personal.info.weight", nil);
             break;
+        case HEMSettingsAccountInfoTypeHealthKit:
+            title = NSLocalizedString(@"settings.account.healthkit", nil);
+            break;
         case HEMSettingsAccountInfoTypeEnhancedAudio:
             title = NSLocalizedString(@"settings.account.enhanced-audio", nil);
-            break;
         default:
             break;
     }
@@ -160,7 +166,8 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 1;
         case HEMSettingsAccountInfoTypeWeight:
             subtitle = [self weight];
             break;
-        case HEMSettingsAccountInfoTypeEnhancedAudio: // no value string to display
+        case HEMSettingsAccountInfoTypeHealthKit:
+        case HEMSettingsAccountInfoTypeEnhancedAudio:
         default:
             break;
     }
@@ -169,14 +176,22 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 1;
 }
 
 - (BOOL)isEnabledAtIndexPath:(NSIndexPath*)indexPath {
-    BOOL enabled = NO;
     HEMSettingsAccountInfoType type = [self infoTypeAtIndexPath:indexPath];
+    return [self isTypeEnabled:type];
+}
+
+- (BOOL)isTypeEnabled:(HEMSettingsAccountInfoType)type {
+    BOOL enabled = NO;
     switch (type) {
         case HEMSettingsAccountInfoTypeEnhancedAudio: {
             NSDictionary* prefs = [[SENServiceAccount sharedService] preferences];
             SENPreference* pref = [prefs objectForKey:@(SENPreferenceTypeEnhancedAudio)];
             enabled = [pref enabled];
             break;
+        }
+        case HEMSettingsAccountInfoTypeHealthKit: {
+            enabled = [[SENServiceHealthKit sharedService] canWriteSleepAnalysis]
+                        && [HEMSettingsUtil isHealthKitEnabled];
         }
         default:
             break;
@@ -309,6 +324,8 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 1;
             case HEMSettingsAcctRowEnhancedAudio:
                 type = HEMSettingsAccountInfoTypeEnhancedAudio;
                 break;
+            case HEMSettingsAcctRowHealthKit:
+                type = HEMSettingsAccountInfoTypeHealthKit;
             default:
                 break;
         }
@@ -398,26 +415,54 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 1;
 - (void)enablePreference:(BOOL)enable
                  forType:(HEMSettingsAccountInfoType)type
               completion:(void(^)(NSError* error))completion {
-    
-    SENPreference* preference = nil;
-    SENServiceAccount* service = [SENServiceAccount sharedService];
-    
+
     switch (type) {
         case HEMSettingsAccountInfoTypeEnhancedAudio: {
-            preference = [[service preferences] objectForKey:@(SENPreferenceTypeEnhancedAudio)];
+            SENServiceAccount* service = [SENServiceAccount sharedService];
+            SENPreference* preference = [[service preferences] objectForKey:@(SENPreferenceTypeEnhancedAudio)];
+            [preference setEnabled:enable];
+            [self updatePreference:preference completion:^(NSError *error) {
+                if (error != nil) {
+                    [preference setEnabled:!enable];
+                }
+                if (completion) completion (error);
+            }];
             break;
         }
-        default:
+        case HEMSettingsAccountInfoTypeHealthKit: {
+            [self enableHealthKit:enable completion:completion];
             break;
+        }
+        default: {
+            if (completion) completion ([NSError errorWithDomain:HEMSettingsAcctDataSourceErrorDomain
+                                                            code:-1
+                                                        userInfo:nil]);
+            break;
+        }
     }
-    
-    if (preference) {
-        [preference setEnabled:enable];
-        [self updatePreference:preference completion:completion];
+}
+
+- (void)enableHealthKit:(BOOL)enable completion:(void(^)(NSError* error))completion {
+    if (enable) {
+        SENServiceHealthKit* service = [SENServiceHealthKit sharedService];
+        if (![service isSupported]) {
+            if (completion) {
+                completion ([NSError errorWithDomain:HEMSettingsAcctDataSourceErrorDomain
+                                                code:HEMSettingsAccountErrorNotSupported
+                                            userInfo:nil]);
+            }
+        } else {
+            [service requestAuthorization:^(NSError *error) {
+                if (error == nil) {
+                    [HEMSettingsUtil enableHealthKit:enable];
+                    [service setEnableWrite:enable];
+                }
+                if (completion) completion (error);
+            }];
+        }
     } else {
-        if (completion) completion ([NSError errorWithDomain:HEMSettingsAcctDataSourceErrorDomain
-                                                        code:-1
-                                                    userInfo:nil]);
+        [HEMSettingsUtil enableHealthKit:enable];
+        [[SENServiceHealthKit sharedService] setEnableWrite:enable];
     }
 }
 

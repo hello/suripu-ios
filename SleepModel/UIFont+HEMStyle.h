@@ -250,6 +250,11 @@
  */
 + (UIFont *)textfieldPlaceholderFont;
 
+/**
+ * Font used for the text within an UITextField
+ */
++ (UIFont *)textfieldTextFont;
+
 #pragma mark - Onboarding
 
 /**

@@ -13,6 +13,7 @@
 #import "HEMSettingsAccountDataSource.h"
 #import "HEMMathUtil.h"
 #import "HEMMainStoryboard.h"
+#import "HEMSettingsUtil.h"
 
 // \u0222 is a round dot
 static NSString* const HEMSettingsAcctPasswordPlaceholder = @"\u2022\u2022\u2022\u2022\u2022\u2022";
@@ -189,7 +190,8 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
             break;
         }
         case HEMSettingsAccountInfoTypeHealthKit: {
-            enabled = [[SENServiceHealthKit sharedService] canWriteSleepAnalysis];
+            enabled = [[SENServiceHealthKit sharedService] canWriteSleepAnalysis]
+                        && [HEMSettingsUtil isHealthKitEnabled];
         }
         default:
             break;
@@ -437,8 +439,17 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
                                                     userInfo:nil]);
                     }
                 } else {
-                    [service requestAuthorization:completion];
+                    [service requestAuthorization:^(NSError *error) {
+                        if (error == nil) {
+                            [HEMSettingsUtil enableHealthKit:enable];
+                            [service setEnableWrite:enable];
+                        }
+                        if (completion) completion (error);
+                    }];
                 }
+            } else {
+                [HEMSettingsUtil enableHealthKit:enable];
+                [[SENServiceHealthKit sharedService] setEnableWrite:enable];
             }
             break;
         }

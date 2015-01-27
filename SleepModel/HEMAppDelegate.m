@@ -24,6 +24,7 @@
 #import "HEMAudioCache.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMStyledNavigationViewController.h"
+#import "HEMSettingsUtil.h"
 
 @implementation HEMAppDelegate
 
@@ -97,7 +98,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 - (void)syncData {
     if ([SENAuthorizationService isAuthorized]) {
         [[SENServiceAccount sharedService] refreshAccount:nil];
-        [[SENServiceHealthKit sharedService] setEnableWrite:YES];
+        [[SENServiceHealthKit sharedService] setEnableWrite:[HEMSettingsUtil isHealthKitEnabled]];
     }
 }
 

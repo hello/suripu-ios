@@ -50,18 +50,6 @@ static CGFloat const HEMSleepSummaryDayInterval = 60 * 60 * 24;
     return controller;
 }
 
-#pragma mark - HEMSlideViewControllerDataSource
-
-- (UIViewController*)slideViewController:(HEMSlideViewController *)slideController
-                         controllerAfter:(UIViewController *)controller {
-    return [self controllerAfter:controller];
-}
-
-- (UIViewController*)slideViewController:(HEMSlideViewController *)slideController
-                        controllerBefore:(UIViewController *)controller {
-    return [self controllerBefore:controller];
-}
-
 @end
 
 @implementation NSDate (HEMEqualityChecker)

@@ -90,14 +90,6 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     UIViewController* onboardingController = nil;
     switch (checkpoint) {
         case HEMOnboardingCheckpointStart: {
-            // hmm, this is a bit hairy.  To ensure that user is logged in even
-            // after the app is deleted, or even for existing users who have already
-            // signed up, we need to check that they are not authenticated before
-            // actually starting from beginning.  However, this gives user a way
-            // to by pass onboarding by creating the app and
-            
-            // TODO (jimmy:) create API to check validity of the user's account
-            // and if it's not properly setup, sign out the user
             if (!authorized) {
                 UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
                                                                                bundle:[NSBundle mainBundle]];

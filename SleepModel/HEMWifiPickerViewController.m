@@ -105,6 +105,10 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
                                                                        style:UIBarButtonItemStyleBordered
                                                                       target:self
                                                                       action:@selector(cancel:)];
+        // per design, we will hide the cancel button for now until we have more
+        // time to add another activity view on top of this controller's view
+        [cancelItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithWhite:1.0f alpha:0.0f]}
+                                  forState:UIControlStateDisabled];
         [self setCancelItem:cancelItem];
         [[self navigationItem] setLeftBarButtonItem:[self cancelItem]];
     }

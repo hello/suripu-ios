@@ -352,6 +352,7 @@
 		BF257EE71A1D1C2600DAF923 /* HEMDialogViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE61A1D1C2600DAF923 /* HEMDialogViewController.m */; };
 		BF257EEA1A1D269300DAF923 /* HEMDialogView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF257EE91A1D269300DAF923 /* HEMDialogView.m */; };
 		BF28856C1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF28856B1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m */; };
+		BF414CE11A770A6D006204DE /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF414CE01A770A6D006204DE /* HealthKit.framework */; };
 		BF4473501A6341F600389ECE /* HEMOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF44734F1A6341F600389ECE /* HEMOnboardingController.m */; };
 		BF4473571A63535F00389ECE /* female.png in Resources */ = {isa = PBXBuildFile; fileRef = BF4473511A63535F00389ECE /* female.png */; };
 		BF4473581A63535F00389ECE /* female@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF4473521A63535F00389ECE /* female@2x.png */; };
@@ -1016,6 +1017,7 @@
 		BF27816C1A0964FF00A8868D /* HEMWiFiConfigurationDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMWiFiConfigurationDelegate.h; sourceTree = "<group>"; };
 		BF28856A1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightsFeedDataSource.h; sourceTree = "<group>"; };
 		BF28856B1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightsFeedDataSource.m; sourceTree = "<group>"; };
+		BF414CE01A770A6D006204DE /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		BF44734E1A6341F600389ECE /* HEMOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingController.h; sourceTree = "<group>"; };
 		BF44734F1A6341F600389ECE /* HEMOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingController.m; sourceTree = "<group>"; };
 		BF4473511A63535F00389ECE /* female.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = female.png; path = images/female.png; sourceTree = "<group>"; };
@@ -1258,6 +1260,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF414CE11A770A6D006204DE /* HealthKit.framework in Frameworks */,
 				8A4B669B19F6C9E900445883 /* MessageUI.framework in Frameworks */,
 				BFEAA0BD19A57A89002FBD44 /* CoreLocation.framework in Frameworks */,
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
@@ -1318,6 +1321,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF414CE01A770A6D006204DE /* HealthKit.framework */,
 				8A4B669A19F6C9E900445883 /* MessageUI.framework */,
 				BF7F1BDF19E30DCC0028F799 /* libPods.a */,
 				BF7F1BDD19E30D9A0028F799 /* libPods.a */,
@@ -2612,6 +2616,9 @@
 						SystemCapabilities = {
 							com.apple.ApplicationGroups.iOS = {
 								enabled = 1;
+							};
+							com.apple.HealthKit = {
+								enabled = 0;
 							};
 						};
 					};

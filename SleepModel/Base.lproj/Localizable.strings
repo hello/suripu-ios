@@ -136,6 +136,8 @@
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
 "settings.account.enhanced-audio" = "Enhanced audio";
+"settings.account.healthkit" = "Health Kit";
+"setings.account.healthKit.not-supported" = "not supported";
 "settings.wifi.other" = "Other...";
 "settings.account.email" = "Email";
 "settings.account.password" = "Password";
@@ -418,6 +420,7 @@
 "account.update.error.generic" = "Unable to update your information";
 "account.update.error.password" = "Unable to update your password";
 "account.update.error.email" = "Unable to update your email.";
+"account.update.error.not-supported" = "This is not supported on your device or iOS version";
 
 // notifications
 "notifications.actions.ok" = "Okay";

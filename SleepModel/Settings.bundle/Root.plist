@@ -28,52 +28,6 @@
 			<key>File</key>
 			<string>Acknowledgements</string>
 		</dict>
-		<dict>
-			<key>Title</key>
-			<string>group.title.units-time</string>
-			<key>Type</key>
-			<string>PSGroupSpecifier</string>
-		</dict>
-		<dict>
-			<key>Titles</key>
-			<array>
-				<string>24-hour</string>
-				<string>12-hour</string>
-			</array>
-			<key>Values</key>
-			<array>
-				<integer>1</integer>
-				<integer>2</integer>
-			</array>
-			<key>DefaultValue</key>
-			<integer>0</integer>
-			<key>Type</key>
-			<string>PSMultiValueSpecifier</string>
-			<key>Title</key>
-			<string>item.title.clock</string>
-			<key>Key</key>
-			<string>SENSettingsTimeFormat</string>
-		</dict>
-		<dict>
-			<key>Titles</key>
-			<array>
-				<string>°C</string>
-				<string>°F</string>
-			</array>
-			<key>Values</key>
-			<array>
-				<integer>1</integer>
-				<integer>2</integer>
-			</array>
-			<key>DefaultValue</key>
-			<integer>0</integer>
-			<key>Type</key>
-			<string>PSMultiValueSpecifier</string>
-			<key>Title</key>
-			<string>item.title.temp</string>
-			<key>Key</key>
-			<string>SENSettingsTemperatureFormat</string>
-		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

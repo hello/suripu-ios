@@ -430,27 +430,7 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
             break;
         }
         case HEMSettingsAccountInfoTypeHealthKit: {
-            if (enable) {
-                SENServiceHealthKit* service = [SENServiceHealthKit sharedService];
-                if (![service isSupported]) {
-                    if (completion) {
-                        completion ([NSError errorWithDomain:HEMSettingsAcctDataSourceErrorDomain
-                                                        code:HEMSettingsAccountErrorNotSupported
-                                                    userInfo:nil]);
-                    }
-                } else {
-                    [service requestAuthorization:^(NSError *error) {
-                        if (error == nil) {
-                            [HEMSettingsUtil enableHealthKit:enable];
-                            [service setEnableWrite:enable];
-                        }
-                        if (completion) completion (error);
-                    }];
-                }
-            } else {
-                [HEMSettingsUtil enableHealthKit:enable];
-                [[SENServiceHealthKit sharedService] setEnableWrite:enable];
-            }
+            [self enableHealthKit:enable completion:completion];
             break;
         }
         default: {
@@ -459,6 +439,30 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
                                                         userInfo:nil]);
             break;
         }
+    }
+}
+
+- (void)enableHealthKit:(BOOL)enable completion:(void(^)(NSError* error))completion {
+    if (enable) {
+        SENServiceHealthKit* service = [SENServiceHealthKit sharedService];
+        if (![service isSupported]) {
+            if (completion) {
+                completion ([NSError errorWithDomain:HEMSettingsAcctDataSourceErrorDomain
+                                                code:HEMSettingsAccountErrorNotSupported
+                                            userInfo:nil]);
+            }
+        } else {
+            [service requestAuthorization:^(NSError *error) {
+                if (error == nil) {
+                    [HEMSettingsUtil enableHealthKit:enable];
+                    [service setEnableWrite:enable];
+                }
+                if (completion) completion (error);
+            }];
+        }
+    } else {
+        [HEMSettingsUtil enableHealthKit:enable];
+        [[SENServiceHealthKit sharedService] setEnableWrite:enable];
     }
 }
 

@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.0.63
+
+New:
+
+
+* Timeline sleep summary / before sleep tabs
+* Added support for edge pan gesture for back view drawer tabs
+* HealthKit integration.  Turn it on in Account settings.
+
+Fixes:
+
+* layout issues in sensor detail views
+* various visual fixes in Timeline
+
 ## 1.0.0.62
 
 New:

@@ -27,10 +27,10 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 @interface HEMPillPairViewController()
 
-@property (weak, nonatomic)   IBOutlet HEMActionButton *retryButton;
-@property (weak, nonatomic)   IBOutlet UIButton *helpButton;
-@property (weak, nonatomic)   IBOutlet NSLayoutConstraint *retryButtonWidthConstraint;
-@property (weak, nonatomic)   IBOutlet UIView *buttonContainer;
+@property (weak, nonatomic) IBOutlet HEMActionButton *retryButton;
+@property (weak, nonatomic) IBOutlet UILabel *activityLabel;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *retryButtonWidthConstraint;
+@property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (weak,   nonatomic) UIBarButtonItem* cancelItem;
@@ -46,31 +46,31 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self configureButton];
-    [self showHelpButton];
-    [self setupCancelButton];
-    [self enableBackButton:NO];
+    [self configureButtons];
+    [self configureActivityLabel];
     
-    [self updateActivityText:NSLocalizedString(@"pairing.activity.connecting-sense", nil)];
-    [self showActivity];
-    
-    [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
+    if ([self delegate] == nil) {
+        [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
+    }
 }
 
-- (void)configureButton {
+- (void)configureActivityLabel {
+    [[self activityLabel] setTextColor:[HelloStyleKit senseBlueColor]];
+    [[self activityLabel] setText:NSLocalizedString(@"pairing.activity.connecting-sense", nil)];
+}
+
+- (void)configureButtons {
     [[self retryButton] setBackgroundColor:[UIColor clearColor]];
-    [[self retryButton] setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
-}
-
-- (void)setupCancelButton {
+    [[self retryButton] setTitleColor:[HelloStyleKit senseBlueColor]
+                             forState:UIControlStateNormal];
+    [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
+    
+    [self showHelpButton];
+    
     if ([self delegate] != nil) {
-        NSString* title = NSLocalizedString(@"actions.cancel", nil);
-        UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:title
-                                                                       style:UIBarButtonItemStyleBordered
-                                                                      target:self
-                                                                      action:@selector(cancel:)];
-        [[self navigationItem] setLeftBarButtonItem:cancelItem];
-        [self setCancelItem:cancelItem];
+        [self showCancelButtonWithSelector:@selector(cancel:)];
+    } else {
+        [self enableBackButton:NO];
     }
 }
 
@@ -78,6 +78,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     [super viewDidAppear:animated];
     
     if (![self isLoaded]) {
+        [self showActivity]; // show activity first, before proceeding on first try
         [self performSelector:@selector(pairPill:)
                    withObject:self
                    afterDelay:kHEMPillPairStartDelay];
@@ -85,31 +86,13 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     }
 }
 
-- (void)updateActivityText:(NSString*)text {
-    [[self helpButton] setTitle:text forState:UIControlStateDisabled];
-}
-
 - (void)showActivity {
-    [[self helpButton] setEnabled:NO];
-    
-    if ([self cancelItem] == nil) {
-        [[self navigationItem] setHidesBackButton:YES animated:YES];
-    } else {
-        [[self cancelItem] setEnabled:NO];
-    }
-
+    [[self cancelItem] setEnabled:NO];
     [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
 }
 
 - (void)hideActivity {
-    [[self helpButton] setEnabled:YES];
-
-    if ([self cancelItem] == nil) {
-        [[self navigationItem] setHidesBackButton:NO animated:YES];
-    } else {
-        [[self cancelItem] setEnabled:YES];
-    }
-    
+    [[self cancelItem] setEnabled:YES];
     [[self retryButton] stopActivity];
 }
 
@@ -142,7 +125,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     } else {
         __weak typeof(self) weakSelf = self;
         DDLogVerbose(@"sense not found, loading account info to scan existing paired sense");
-        [self updateActivityText:NSLocalizedString(@"pairing.activity.loading-paired-sense", nil)];
+        [[self activityLabel] setText:NSLocalizedString(@"pairing.activity.loading-paired-sense", nil)];
         
         [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
             __block typeof(weakSelf) strongSelf = weakSelf;
@@ -158,7 +141,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
             }
             
             DDLogVerbose(@"looking for sense to trigger pill pairing");
-            [strongSelf updateActivityText:NSLocalizedString(@"pairing.activity.scanning-sense", nil)];
+            [[strongSelf activityLabel] setText:NSLocalizedString(@"pairing.activity.scanning-sense", nil)];
             
             [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
                 if (error != nil) {
@@ -190,7 +173,7 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 - (void)pairNowWith:(SENSenseManager*)manager {
     [self listenForDisconnects];
     
-    [self updateActivityText:NSLocalizedString(@"pairing.activity.looking-for-pill", nil)];
+    [[self activityLabel] setText:NSLocalizedString(@"pairing.activity.looking-for-pill", nil)];
     
     __weak typeof(self) weakSelf = self;
     [manager setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
@@ -199,13 +182,10 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
         [[strongSelf manager] pairWithPill:[SENAuthorizationService accessToken] success:^(id response) {
             [strongSelf flashPairedState];
         } failure:^(NSError *error) {
-            if ([strongSelf delegate] == nil) {
-                [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
-                    [strongSelf showError:error customMessage:nil];
-                }];
-            } else {
+            SENSenseLEDState ledState = [strongSelf delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
+            [[strongSelf manager] setLED:ledState completion:^(id response, NSError *error) {
                 [strongSelf showError:error customMessage:nil];
-            }
+            }];
         }];
     }];
 }

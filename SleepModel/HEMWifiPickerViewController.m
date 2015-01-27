@@ -51,17 +51,11 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self showHelpButton];
     [self configurePicker];
-    
+    [self configureButtons];
     [[[self activityView] activityLabel] setFont:[UIFont onboardingActivityFontMedium]];
     
-    [[[self scanButton] layer] setBorderWidth:0.0f];
-    
-    [self setupCancelButton];
-    
     if (![self haveDelegates]) {
-        [self enableBackButton:NO];
         [SENAnalytics track:kHEMAnalyticsEventOnBWiFi];
     }
     
@@ -69,6 +63,17 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 - (BOOL)haveDelegates {
     return [self delegate] != nil || [self sensePairDelegate] != nil;
+}
+
+- (void)configureButtons {
+    [self showHelpButton];
+    [[[self scanButton] layer] setBorderWidth:0.0f];
+    
+    if ([self haveDelegates]) {
+        [self showCancelButtonWithSelector:@selector(cancel:)];
+    } else {
+        [self enableBackButton:NO];
+    }
 }
 
 - (void)configurePicker {
@@ -96,22 +101,6 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 - (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self setVisible:NO];
-}
-
-- (void)setupCancelButton {
-    if ([self delegate] != nil || [self sensePairDelegate] != nil) {
-        NSString* title = NSLocalizedString(@"actions.cancel", nil);
-        UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:title
-                                                                       style:UIBarButtonItemStyleBordered
-                                                                      target:self
-                                                                      action:@selector(cancel:)];
-        // per design, we will hide the cancel button for now until we have more
-        // time to add another activity view on top of this controller's view
-        [cancelItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithWhite:1.0f alpha:0.0f]}
-                                  forState:UIControlStateDisabled];
-        [self setCancelItem:cancelItem];
-        [[self navigationItem] setLeftBarButtonItem:[self cancelItem]];
-    }
 }
 
 - (void)viewDidLayoutSubviews {

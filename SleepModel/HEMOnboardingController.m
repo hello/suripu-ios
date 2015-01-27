@@ -16,6 +16,7 @@
 @interface HEMOnboardingController()
 
 @property (strong, nonatomic) UIBarButtonItem* leftBarItem;
+@property (strong, nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL enableBack;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint* titleHeightConstraint;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint* descriptionTopConstraint;
@@ -132,6 +133,19 @@
     }
 
     [[[self navigationController] interactivePopGestureRecognizer] setEnabled:enable];
+}
+
+- (void)showCancelButtonWithSelector:(SEL)selector {
+    NSString* title = NSLocalizedString(@"actions.cancel", nil);
+    UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:title
+                                                                   style:UIBarButtonItemStyleBordered
+                                                                  target:self
+                                                                  action:selector];
+    [cancelItem setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor colorWithWhite:1.0f alpha:0.0f]}
+                              forState:UIControlStateDisabled];
+    [self setCancelItem:cancelItem];
+    [self setLeftBarItem:cancelItem];
+    [[self navigationItem] setLeftBarButtonItem:[self cancelItem]];
 }
 
 #pragma mark - Convenience Methods

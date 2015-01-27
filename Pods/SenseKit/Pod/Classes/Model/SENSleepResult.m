@@ -183,6 +183,9 @@ static NSString* const SENSleepResultSoundDuration = @"duration_millis";
 
 @implementation SENSleepResultSegment
 
+NSString* const SENSleepResultSegmentEventTypeWakeUp = @"WAKE_UP";
+NSString* const SENSleepResultSegmentEventTypeSleep = @"SLEEP";
+
 static NSString* const SENSleepResultSegmentServerID = @"id";
 static NSString* const SENSleepResultSegmentTimestamp = @"timestamp";
 static NSString* const SENSleepResultSegmentDuration = @"duration";

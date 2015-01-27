@@ -57,7 +57,8 @@ PODS:
     - SHSProtoBuf
   - SenseKit/Model (0.1.0):
     - YapDatabase (~> 2.4.3)
-  - SenseKit/Service (0.1.0)
+  - SenseKit/Service (0.1.0):
+    - CocoaLumberjack
   - SHSProtoBuf (0.9):
     - SHSProtoBuf/non-arc
   - SHSProtoBuf/non-arc (0.9)
@@ -115,7 +116,7 @@ SPEC CHECKSUMS:
   Mixpanel: cd01a5952773eaff12880da334a9776180c5f0a7
   MSDynamicsDrawerViewController: 0002059480a4b5ddde7eafbafb958a79a9b0ffaf
   NSJSONSerialization-NSNullRemoval: b3f02955f898d01205567e3f1292e4aae3ad547e
-  SenseKit: c653d2bd17bab4c85cfafab09aef166058475507
+  SenseKit: 96bb776e999c7cd700258b9536e500848702f916
   SHSProtoBuf: 62a02d425f5dbee00d057bae65d76f0f01737410
   SORelativeDateTransformer: de7936811c9988af8e129a097af48c828f933f5f
   SpinKit: 11fa465172473ce3d59a80bf0449020b850e5229

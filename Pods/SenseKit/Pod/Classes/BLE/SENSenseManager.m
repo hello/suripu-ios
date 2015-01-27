@@ -769,7 +769,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         response = [SENSenseMessage parseFromData:actualPayload];
         if ([response hasError]) {
             errCode = [self errorCodeFrom:[response error]];
-            DDLogVerbose(@"ble response has an error with device code %ld", errCode);
+            DDLogVerbose(@"ble response has an error with device code %ld", (long)errCode);
         }
     } @catch (NSException *exception) {
         DDLogWarn(@"parsing ble protobuf message encountered exception %@", exception);
@@ -1007,7 +1007,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                       state = [strongSelf wiFiStateFromMessgage:response];
                   }
 
-                  DDLogVerbose(@"wifi %@ is in state %ld", [response wifiSsid], state);
+                  DDLogVerbose(@"wifi %@ is in state %ld", [response wifiSsid], (long)state);
                   success ([response wifiSsid], state);
                   
               }

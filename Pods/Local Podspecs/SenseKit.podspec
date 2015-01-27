@@ -39,6 +39,7 @@ Pod::Spec.new do |s|
   
   s.subspec "Service" do |ss|
     ss.source_files = 'Pod/Classes/Service/*'
+    ss.dependency 'CocoaLumberjack'
   end
 
   # s.public_header_files = 'Pod/Classes/**/*.h'

@@ -168,6 +168,7 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
             message = NSLocalizedString(@"sign-up.error.email-invalid", nil);
             break;
         default:
+            message = NSLocalizedString(@"sign-up.error.generic", nil);
             break;
     }
     return message;

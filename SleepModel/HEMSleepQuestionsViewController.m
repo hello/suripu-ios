@@ -47,6 +47,8 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
     
     [self setupBackgroundImage];
     [self configure];
+    
+    [SENAnalytics track:kHEMAnalyticsEventQuestion];
 }
 
 - (void)configure {

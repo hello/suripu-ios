@@ -49,6 +49,8 @@ static CGFloat const HEMAccountTableFooterMargins = 22.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureTable];
+    
+    [SENAnalytics track:kHEMAnalyticsEventAccount];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

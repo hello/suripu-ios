@@ -35,6 +35,7 @@ NSString* const kHEManaltyicsEventStatusDisabled = @"disabled";
 NSString* const kHEManaltyicsEventStatusDenied = @"denied";
 
 // onboarding
+NSString* const kHEMAnalyticsEventOnBNoSense = @"I don't have a Sense";
 NSString* const kHEMAnalyticsEventOnBStart = @"Onboarding Start";
 NSString* const kHEMAnalyticsEventOnBBirthday = @"Onboarding Birthday";
 NSString* const kHEMAnalyticsEventOnBGender = @"Onboarding Gender";
@@ -60,8 +61,24 @@ NSString* const kHEMAnalyticsEventOnBRoomCheck = @"Onboarding Room Check";
 NSString* const kHEMAnalyticsEventOnBEnd = @"Onboarding End";
 
 // main app
-NSString* const kHEMAnalyticsEventAlarm = @"Alarm";
+NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";
+NSString* const kHEMAnalyticsEventAppClosed = @"App Closed";
+NSString* const kHEMAnalyticsEventAlarms = @"Alarms";
 NSString* const kHEMAnalyticsEventTimeline = @"Timeline";
+NSString* const kHEMAnalyticsEventEmailSupport = @"Contact Support";
+NSString* const kHEMAnalyticsEventSettings = @"Settings";
+NSString* const kHEMAnalyticsEventTrends = @"Trends";
+NSString* const kHEMAnalyticsEventCurrentConditions = @"Current Conditions";
+NSString* const kHEMAnalyticsEventFeed = @"Insights";
+NSString* const kHEMAnalyticsEventQuestion = @"Question";
+NSString* const kHEMAnalyticsEventAccount = @"Account";
+NSString* const kHEMAnalyticsEventInsight = @"Insight Detail";
+NSString* const kHEMAnalyticsEventDevices = @"Devices";
+NSString* const kHEMAnalyticsEventUnitsNTime = @"Units/Time";
+NSString* const kHEMAnalyticsEventSensor = @"Sensor History";
+NSString* const kHEMAnalyticsEventPropSensorName = @"sensor_name";
+NSString* const kHEMAnalyticsEventSense = @"Sense Detail";
+NSString* const kHEMAnalyticsEventPill = @"Pill Detail";
 
 // authentication
 NSString* const kHEMAnalyticsEventSignInStart = @"Sign In Start";

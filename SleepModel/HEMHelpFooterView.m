@@ -121,8 +121,10 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
                         withSubject:NSLocalizedString(@"help.email.subject", nil)
                                from:[self controller]
                        mailDelegate:self];
+        [SENAnalytics track:kHEMAnalyticsEventEmailSupport];
     } else if ([lowerScheme hasPrefix:@"http"]){
         [HEMSupportUtil openURL:[URL absoluteString] from:[self controller]];
+        [SENAnalytics track:kHEMAnalyticsEventHelp];
     }
     return NO;
 }

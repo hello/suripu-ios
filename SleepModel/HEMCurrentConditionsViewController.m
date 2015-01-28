@@ -56,6 +56,7 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
     } else if (self.sensors.count == 0) {
         [self refreshCachedSensors];
     }
+    [SENAnalytics track:kHEMAnalyticsEventCurrentConditions];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

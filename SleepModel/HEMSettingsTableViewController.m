@@ -126,6 +126,11 @@ static NSInteger const HEMSettingsSignOutIndex = 3;
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [SENAnalytics track:kHEMAnalyticsEventSettings];
+}
+
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section

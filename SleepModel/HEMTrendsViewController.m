@@ -57,6 +57,11 @@ static NSString* const HEMAllScopeType = @"ALL";
     [self refreshData];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [SENAnalytics track:kHEMAnalyticsEventTrends];
+}
+
 - (void)refreshData
 {
     if ([self isLoading])

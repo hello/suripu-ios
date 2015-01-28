@@ -29,9 +29,16 @@ CGFloat const kHEMIPhone5Height = 568.0f;
                selector:@selector(viewDidBecomeActive)
                    name:UIApplicationDidBecomeActiveNotification
                  object:nil];
+    [center addObserver:self
+               selector:@selector(viewDidEnterBackground)
+                   name:UIApplicationDidEnterBackgroundNotification
+                 object:nil];
 }
 
-- (void)viewDidBecomeActive {}
+- (void)viewDidBecomeActive { /* do nothing here, meant for subclasses */ }
+- (void)viewDidEnterBackground { /* do nothing here, meant for subclasses */ }
+
+#pragma mark - Constraints / Layouts for Devices
 
 - (BOOL)isIPhone4Family {
     CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);

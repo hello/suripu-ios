@@ -66,6 +66,8 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self reload];
+    
+    [SENAnalytics track:kHEMAnalyticsEventFeed]; // since it's cached, need to do will appear
 }
 
 - (void)reload {

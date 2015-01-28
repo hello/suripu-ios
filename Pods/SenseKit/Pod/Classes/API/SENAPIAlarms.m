@@ -1,4 +1,5 @@
 
+#import <AFNetworking/AFURLResponseSerialization.h>
 #import "SENAPIAlarms.h"
 #import "SENAlarm.h"
 #import "SENSound.h"
@@ -9,28 +10,25 @@ static NSString* const SENAPIAlarmsEndpoint = @"alarms";
 static NSString* const SENAPIAlarmSoundsEndpoint = @"alarms/sounds";
 static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"alarms/%.0f";
 
+static SENAPIDataBlock SENAPIAlarmDataBlock(SENAPIDataBlock completion) {
+    return ^(NSArray* data, NSError* error) {
+        NSArray* alarms = nil;
+        if (data && [data isKindOfClass:[NSArray class]]) {
+            alarms = [SENAlarm updateSavedAlarmsWithData:data];
+        }
+
+        if (completion)
+            completion(alarms, error);
+    };
+}
+
 + (void)alarmsWithCompletion:(SENAPIDataBlock)completion
 {
     if (!completion)
         return;
     [SENAPIClient GET:SENAPIAlarmsEndpoint
            parameters:nil
-           completion:^(NSArray* data, NSError* error) {
-               if (error || ![data isKindOfClass:[NSArray class]]) {
-                   completion(nil, error);
-                   return;
-               }
-               [SENAlarm clearSavedAlarms];
-               NSMutableArray* alarms = [[NSMutableArray alloc] initWithCapacity:data.count];
-               for (NSDictionary* alarmData in data) {
-                   SENAlarm* alarm = [[SENAlarm alloc] initWithDictionary:alarmData];
-                   if (alarm) {
-                       [alarms addObject:alarm];
-                       [alarm save];
-                   }
-               }
-               completion(alarms, nil);
-           }];
+           completion:SENAPIAlarmDataBlock(completion)];
 }
 
 + (void)updateAlarms:(NSArray*)alarms completion:(SENAPIDataBlock)completion
@@ -39,7 +37,7 @@ static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"alarms/%.0f";
     NSArray* alarmData = [self parameterArrayForAlarms:alarms];
     [SENAPIClient POST:[NSString stringWithFormat:SENAPIAlarmsUpdateEndpointFormat, clientTimeUTC]
             parameters:alarmData
-            completion:completion];
+            completion:SENAPIAlarmDataBlock(completion)];
 }
 
 + (void)availableSoundsWithCompletion:(SENAPIDataBlock)completion

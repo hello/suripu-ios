@@ -51,6 +51,20 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     [SENKeyedArchiver removeAllObjectsInCollection:NSStringFromClass([self class])];
 }
 
++ (NSArray*)updateSavedAlarmsWithData:(NSArray*)data
+{
+    [self clearSavedAlarms];
+    NSMutableArray* alarms = [[NSMutableArray alloc] initWithCapacity:data.count];
+    for (NSDictionary* alarmData in data) {
+        SENAlarm* alarm = [[SENAlarm alloc] initWithDictionary:alarmData];
+        if (alarm) {
+            [alarm save];
+            [alarms addObject:alarm];
+        }
+    }
+    return alarms;
+}
+
 + (NSString*)localizedValueForTime:(struct SENAlarmTime)time
 {
     long adjustedHour = time.hour;

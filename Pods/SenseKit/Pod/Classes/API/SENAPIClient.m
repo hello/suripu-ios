@@ -7,34 +7,66 @@
 
 static NSString* const SENDefaultBaseURLPath = @"https://dev-api.hello.is/v1";
 static NSString* const SENAPIClientBaseURLPathKey = @"SENAPIClientBaseURLPathKey";
+static NSString* const SENAPIErrorLocalizedMessageKey = @"message";
 static AFHTTPSessionManager* sessionManager = nil;
 
 @implementation SENAPIClient
 
 typedef void (^SENAFFailureBlock)(NSURLSessionDataTask *, NSError *);
 typedef void (^SENAFSuccessBlock)(NSURLSessionDataTask *, id responseObject);
+
+static NSError* SENParseErrorForData(NSError* error) {
+    NSData *data = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+    if (data) {
+        id errorData = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if ([errorData isKindOfClass:[NSDictionary class]]) {
+            NSString* message = errorData[SENAPIErrorLocalizedMessageKey];
+            if ([message isKindOfClass:[NSString class]] && message.length > 0) {
+                NSMutableDictionary* userInfo = [error.userInfo mutableCopy];
+                userInfo[NSLocalizedDescriptionKey] = message;
+                userInfo[NSUnderlyingErrorKey] = error;
+                return [NSError errorWithDomain:error.domain code:error.code userInfo:userInfo];
+            }
+        }
+    }
+    return error;
+}
+
 SENAFFailureBlock (^SENAPIClientRequestFailureBlock)(SENAPIDataBlock) = ^SENAFFailureBlock(SENAPIDataBlock completion) {
     return ^(NSURLSessionDataTask *task, NSError *error) {
         if ([SENAuthorizationService isAuthorizationError:error]
             && [SENAuthorizationService isAuthorizedRequest:task.originalRequest]) {
             [SENAuthorizationService deauthorize];
         }
-        if (completion)
-            completion(nil, error);
+
+        if (!completion)
+            return;
+
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            NSError* parsedError = SENParseErrorForData(error);
+             dispatch_async(dispatch_get_main_queue(), ^{
+                completion(nil, parsedError);
+             });
+        });
     };
 };
 
 SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSuccessBlock(SENAPIDataBlock completion) {
     return ^(NSURLSessionDataTask *task, id responseObject) {
+        if (!completion) return;
         if (responseObject) {
-            NSData* data = [NSJSONSerialization dataWithJSONObject:responseObject options:0 error:nil];
-            id strippedJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil removingNulls:YES ignoreArrays:NO];
-            if (completion)
-                completion(strippedJSON, nil);
+            // parsing JSON can be an expensive operation so moving this work in the bg thread
+            // frees up some main thread a bit for other things.
+            dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                NSData* data = [NSJSONSerialization dataWithJSONObject:responseObject options:0 error:nil];
+                id strippedJSON = [NSJSONSerialization JSONObjectWithData:data options:NSJSONReadingMutableContainers error:nil removingNulls:YES ignoreArrays:NO];
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    completion(strippedJSON, nil);
+                });
+            });
             return;
         }
-        if (completion)
-            completion(nil, nil);
+        completion(nil, nil);
     };
 };
 

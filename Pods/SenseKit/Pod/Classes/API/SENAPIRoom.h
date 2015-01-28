@@ -37,4 +37,22 @@
 + (void)dailyHistoricalDataForSensor:(SENSensor*)sensor
                           completion:(SENAPIDataBlock)completion;
 
+/**
+ *  GET /room/all_sensors/24hours?from=:date
+ *
+ *  Fetch historical values for all sensors
+ *
+ *  @param completion block invoked when the network call is completed asynchronously
+ */
++ (void)historicalConditionsForLast24HoursWithCompletion:(SENAPIDataBlock)completion;
+
+/**
+ *  GET /room/all_sensors/week?from=:date
+ *
+ *  Fetch historical values for all sensors
+ *
+ *  @param completion block invoked when the network call is completed asynchronously
+ */
++ (void)historicalConditionsForPastWeekWithCompletion:(SENAPIDataBlock)completion;
+
 @end

@@ -68,7 +68,7 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
     
     if (![HEMBluetoothUtils isBluetoothOn]) {
         if ([self checkAttempts] < HEMNoBLEMaxCheckAttempts) {
-            DDLogVerbose(@"ble no on, check again in a few ms");
+            DDLogVerbose(@"ble not on, check again in a few ms");
             [self performSelector:@selector(checkBluetooth)
                        withObject:nil
                        afterDelay:0.1f];

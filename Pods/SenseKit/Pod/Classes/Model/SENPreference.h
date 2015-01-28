@@ -21,6 +21,12 @@ typedef NS_ENUM(NSUInteger, SENPreferenceType) {
 @property (nonatomic, assign, readwrite) BOOL enabled;
 
 /**
+ * @param type: the type of the preference
+ * @return name: the name of the preference used by the api
+ */
++ (NSString*)nameFromType:(SENPreferenceType)type;
+
+/**
  * @method initWithType:enable
  *
  * @param type: the type of the prefence

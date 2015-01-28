@@ -18,8 +18,9 @@
              @"provider token is required");
 #endif
     
-    [Mixpanel sharedInstanceWithToken:dictionary[kSENAnalyticsProviderToken]];
-
+    Mixpanel* mixpanel = [Mixpanel sharedInstanceWithToken:dictionary[kSENAnalyticsProviderToken]];
+    mixpanel.checkForNotificationsOnActive = NO;
+    mixpanel.checkForSurveysOnActive = NO;
 }
 
 - (void)userWithId:(NSString *)userId didSignupWithProperties:(NSDictionary *)properties {

@@ -140,7 +140,7 @@
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
 "settings.account.enhanced-audio" = "Enhanced audio";
-"settings.account.healthkit" = "Health Kit";
+"settings.account.healthkit" = "HealthKit";
 "setings.account.healthKit.not-supported" = "not supported";
 "settings.wifi.other" = "Other...";
 "settings.account.email" = "Email";

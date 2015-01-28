@@ -225,10 +225,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
 {
     __block SENAlarm* alarm = [self.alarms objectAtIndex:sender.tag];
     BOOL on = [sender isOn];
-    if (on && ![self canEnableAlarm:alarm]) {
-        sender.on = NO;
-        return;
-    }
     alarm.on = on;
     [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
         if (!success) {
@@ -236,14 +232,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
             sender.on = !on;
         }
     }];
-}
-
-- (BOOL)canEnableAlarm:(SENAlarm*)alarm
-{
-    if (![alarm isSmartAlarm])
-        return YES;
-    SENAlarmRepeatDays repeatDays = [HEMAlarmUtils repeatDaysForAlarm:alarm];
-    return [HEMAlarmUtils areRepeatDaysValid:repeatDays forSmartAlarm:alarm presentingControllerForErrors:self];
 }
 
 - (void)presentViewControllerForAlarm:(SENAlarm*)alarm

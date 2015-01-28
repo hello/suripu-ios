@@ -51,6 +51,14 @@
     return YES;
 }
 
+/**
+ *  Checks whether repeating days are in use by an enabled smart alarm
+ *
+ *  @param days          days of week
+ *  @param excludedAlarm an alarm to allow to use a particular day
+ *
+ *  @return YES if the day is in use by an alarm other than excludedAlarm
+ */
 + (BOOL)daysInUse:(SENAlarmRepeatDays)day excludingAlarm:(SENAlarm*)excludedAlarm
 {
     SENAlarmRepeatDays daysInUse = 0;

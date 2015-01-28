@@ -162,8 +162,6 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 - (IBAction)saveAndDismissFromView:(id)sender
 {
     self.alarmCache.on = YES;
-    if (![self isAlarmCacheValid])
-        return;
 
     [self updateAlarmFromCache:self.alarmCache];
     __weak typeof(self) weakSelf = self;
@@ -205,24 +203,7 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 
 - (IBAction)updateAlarmState:(UISwitch*)sender
 {
-    BOOL on = [sender isOn];
-    self.alarmCache.smart = on;
-    if (on && ![self isAlarmCacheValid]) {
-        self.alarmCache.smart = NO;
-        sender.on = NO;
-    }
-}
-
-- (BOOL)isAlarmCacheValid
-{
-    if ([self.alarmCache isSmart]) {
-        SENAlarmRepeatDays days = [HEMAlarmUtils repeatDaysForAlarmCache:self.alarmCache];
-        return [HEMAlarmUtils areRepeatDaysValid:days
-                                   forSmartAlarm:self.alarm
-                   presentingControllerForErrors:self];
-    }
-
-    return YES;
+    self.alarmCache.smart = [sender isOn];
 }
 
 - (void)updateAlarmFromCache:(HEMAlarmCache*)cache

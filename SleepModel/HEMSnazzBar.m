@@ -75,13 +75,6 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
 - (void)setSelectionColor:(UIColor *)selectionColor
 {
     self.indicatorView.backgroundColor = selectionColor;
-    for (int i = 0; i < self.buttons.count; i++) {
-        UIButton* button = self.buttons[i];
-        if (i == self.selectionIndex)
-            button.tintColor = self.selectionColor;
-        else
-            button.tintColor = [HelloStyleKit tabBarUnselectedColor];
-    }
     _selectionColor = selectionColor;
 }
 
@@ -104,20 +97,21 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
         [self.delegate bar:self didReceiveTouchUpInsideAtIndex:index];
 }
 
-- (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image
+- (void)addButtonWithTitle:(NSString *)title image:(UIImage *)image selectedImage:(UIImage *)selectedImage
 {
-    [self addButtonAtIndex:self.buttons.count withTitle:title image:image];
+    [self addButtonAtIndex:self.buttons.count withTitle:title image:image selectedImage:selectedImage];
 }
 
-- (void)addButtonAtIndex:(NSUInteger)index withTitle:(NSString *)title image:(UIImage *)image
+- (void)addButtonAtIndex:(NSUInteger)index
+               withTitle:(NSString *)title
+                   image:(UIImage *)image
+           selectedImage:(UIImage*)selectedImage
 {
     HEMSnazzBarButton* button = [HEMSnazzBarButton buttonWithType:UIButtonTypeCustom];
     button.accessibilityLabel = title;
-    UIImage* template = [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    [button setImage:template forState:UIControlStateNormal];
-    [button addTarget:self action:@selector(buttonPressed:)
-     forControlEvents:UIControlEventTouchUpInside];
-    [button setTintColor:[HelloStyleKit tabBarUnselectedColor]];
+    [button setImage:image forState:UIControlStateNormal];
+    [button setImage:selectedImage forState:UIControlStateSelected];
+    [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:button];
     [self setNeedsLayout];
 }
@@ -134,7 +128,7 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
         if ((button.selected = (i == index))) {
             void (^animations)() = ^{
                 [self indicateButtonSelected:button];
-                button.tintColor = self.selectionColor;
+                button.selected = YES;
             };
             if (animated)
                 [UIView animateWithDuration:HEMSnazzBarAnimationDuration
@@ -147,7 +141,7 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
             else
                 animations();
         } else {
-            button.tintColor = [HelloStyleKit tabBarUnselectedColor];
+            button.selected = NO;
         }
     }
 }

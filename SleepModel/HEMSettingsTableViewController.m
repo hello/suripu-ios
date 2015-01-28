@@ -35,7 +35,9 @@ static NSInteger const HEMSettingsSignOutIndex = 3;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
+        self.tabBarItem.title = NSLocalizedString(@"settings.title", nil);
         self.tabBarItem.image = [HelloStyleKit settingsBarIcon];
+        self.tabBarItem.selectedImage = [UIImage imageNamed:@"settingsBarIconActive"];
     }
     return self;
 }

@@ -79,7 +79,8 @@ CGFloat const HEMSnazzBarHeight = 72.f;
     [self.buttonsBar removeAllButtons];
     for (UIViewController* viewController in self.viewControllers) {
         [self.buttonsBar addButtonWithTitle:viewController.tabBarItem.title
-                                      image:viewController.tabBarItem.image];
+                                      image:viewController.tabBarItem.image
+                              selectedImage:viewController.tabBarItem.selectedImage];
     }
     [self.buttonsBar selectButtonAtIndex:self.selectedIndex animated:NO];
 }

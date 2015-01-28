@@ -33,6 +33,7 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
     if (self = [super initWithCoder:aDecoder]) {
         self.tabBarItem.title = NSLocalizedString(@"current-conditions.title", nil);
         self.tabBarItem.image = [HelloStyleKit sensorsBarIcon];
+        self.tabBarItem.selectedImage = [UIImage imageNamed:@"sensorsBarIconActive"];
     }
     return self;
 }
@@ -149,12 +150,23 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 
 - (void)fetchGraphData
 {
+    static NSUInteger const HEMConditionGraphPointLimit = 30;
     NSArray* sensors = [self.sensors copy];
     __weak typeof(self) weakSelf = self;
     SENAPIDataBlock (^completion)(SENSensor *, int) = ^SENAPIDataBlock(SENSensor *sensor, int index) {
-        return ^(id data, NSError *error) {
+        return ^(NSArray* data, NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            [[strongSelf sensorGraphData] setValue:error?nil:data forKey:sensor.name];
+            if (data.count > HEMConditionGraphPointLimit) {
+                NSRange range = NSMakeRange(data.count - HEMConditionGraphPointLimit, HEMConditionGraphPointLimit);
+                NSArray* filteredData = [data subarrayWithRange:range];
+                SENSensorDataPoint* point = [data lastObject];
+                if ([point.value floatValue] == 0) {
+                    range.length -= 1;
+                    filteredData = [data subarrayWithRange:range];
+                }
+                data = filteredData;
+            }
+            [[strongSelf sensorGraphData] setValue:(error ? nil : data) forKey:sensor.name];
             [strongSelf updateCellAtIndex:index];
         };
     };

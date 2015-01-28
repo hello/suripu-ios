@@ -53,6 +53,7 @@ static UIColor* _rulerSegmentDarkColor = nil;
 static UIColor* _rulerSegmentLightColor = nil;
 static UIColor* _settingsValueTextColor = nil;
 static UIColor* _textfieldTextColor = nil;
+static UIColor* _unknownSensorColor = nil;
 
 static NSShadow* _onboardingButtonContainerShadow = nil;
 static NSShadow* _actionViewShadow = nil;
@@ -152,6 +153,7 @@ static UIImage* _presleepInsightUnknown = nil;
     _rulerSegmentLightColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.1];
     _settingsValueTextColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.2];
     _textfieldTextColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.7];
+    _unknownSensorColor = [UIColor colorWithRed: 0.787 green: 0.787 blue: 0.787 alpha: 1];
 
     // Shadows Initialization
     _onboardingButtonContainerShadow = [NSShadow shadowWithColor: [UIColor.blackColor colorWithAlphaComponent: 0.1] offset: CGSizeMake(0.1, -2.1) blurRadius: 5];
@@ -199,6 +201,7 @@ static UIImage* _presleepInsightUnknown = nil;
 + (UIColor*)rulerSegmentLightColor { return _rulerSegmentLightColor; }
 + (UIColor*)settingsValueTextColor { return _settingsValueTextColor; }
 + (UIColor*)textfieldTextColor { return _textfieldTextColor; }
++ (UIColor*)unknownSensorColor { return _unknownSensorColor; }
 
 #pragma mark Shadows
 

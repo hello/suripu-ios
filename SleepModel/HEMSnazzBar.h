@@ -22,7 +22,7 @@ extern CGFloat const HEMSnazzBarAnimationDuration;
 @interface HEMSnazzBar : UIView
 
 - (void)removeAllButtons;
-- (void)addButtonWithTitle:(NSString*)title image:(UIImage*)image;
+- (void)addButtonWithTitle:(NSString*)title image:(UIImage*)image selectedImage:(UIImage*)selectedImage;
 - (void)selectButtonAtIndex:(NSUInteger)index animated:(BOOL)animated;
 - (void)removeButtonAtIndex:(NSUInteger)index;
 

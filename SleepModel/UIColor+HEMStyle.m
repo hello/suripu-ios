@@ -33,7 +33,7 @@
         case SENSensorConditionIdeal:
             return [HelloStyleKit idealSensorColor];
         default:
-            return [HelloStyleKit backViewTextColor];
+            return [HelloStyleKit unknownSensorColor];
     }
 }
 

@@ -54,6 +54,7 @@
 + (UIColor*)rulerSegmentLightColor;
 + (UIColor*)settingsValueTextColor;
 + (UIColor*)textfieldTextColor;
++ (UIColor*)unknownSensorColor;
 
 // Shadows
 + (NSShadow*)onboardingButtonContainerShadow;

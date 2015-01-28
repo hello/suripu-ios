@@ -36,7 +36,9 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
+        self.tabBarItem.title = NSLocalizedString(@"trends.title", nil);
         self.tabBarItem.image = [HelloStyleKit trendsBarIcon];
+        self.tabBarItem.selectedImage = [UIImage imageNamed:@"trendsBarIconActive"];
     }
     return self;
 }

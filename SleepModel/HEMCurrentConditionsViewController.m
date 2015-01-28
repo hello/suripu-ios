@@ -54,7 +54,8 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     if ([self shouldReload]) {
         [self reloadData];
         self.shouldReload = NO;
-    } else if (self.sensors.count == 0) {
+    }
+    if (self.sensors.count == 0) {
         [self refreshCachedSensors];
     }
     [SENAnalytics track:kHEMAnalyticsEventCurrentConditions];
@@ -68,6 +69,15 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SENSensorUpdateFailedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SENAuthorizationServiceDidAuthorizeNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SENAuthorizationServiceDidDeauthorizeNotification object:nil];
+}
+
+- (void)didReceiveMemoryWarning
+{
+    if (![self isViewLoaded] || !self.view.window) {
+        self.shouldReload = YES;
+        self.sensors = nil;
+    }
+    [super didReceiveMemoryWarning];
 }
 
 - (void)registerForNotifications
@@ -293,6 +303,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
         cell.sensorMessageLabel.hidden = YES;
         cell.separatorView.hidden = YES;
     }
+    cell.graphView.hidden = NO;
     [cell setGraphData:self.sensorGraphData[sensor.name] sensor:sensor];
     cell.statusLabel.hidden = YES;
 }
@@ -306,6 +317,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     cell.sensorValueLabel.hidden = YES;
     cell.sensorMessageLabel.hidden = YES;
     cell.separatorView.hidden = YES;
+    cell.graphView.hidden = YES;
 }
 
 #pragma mark UICollectionViewDelegate

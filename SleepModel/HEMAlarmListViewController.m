@@ -78,6 +78,14 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self touchUpOutsideAddAlarmButton:nil];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    if (![self isViewLoaded] || !self.view.window) {
+        self.alarms = nil;
+    }
+    [super didReceiveMemoryWarning];
+}
+
 - (void)configureAddButton
 {
     [self.addButton addTarget:self action:@selector(touchDownAddAlarmButton:)
@@ -92,7 +100,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
     NSString* instructions = NSLocalizedString(@"alarms.no-alarm.instructions", nil);
     self.noAlarmLabel.attributedText = [[NSAttributedString alloc] initWithString:[instructions uppercaseString]
                                                                        attributes:attributes];
-
 }
 
 - (void)configureSpinnerView

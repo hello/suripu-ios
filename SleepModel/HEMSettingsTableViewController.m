@@ -14,7 +14,7 @@
 #import "HEMSupportUtil.h"
 #import "HEMHelpFooterView.h"
 
-static NSUInteger const HEMSettingsTableViewRows = 4;
+static NSUInteger const HEMSettingsTableViewRows = 3;
 
 @interface HEMSettingsTableViewController () <
     UITableViewDataSource,
@@ -31,7 +31,6 @@ static NSUInteger const HEMSettingsTableViewRows = 4;
 static NSInteger const HEMSettingsAccountIndex = 0;
 static NSInteger const HEMSettingsDevicesIndex = 1;
 static NSInteger const HEMSettingsUnitsTimeIndex = 2;
-static NSInteger const HEMSettingsSignOutIndex = 3;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -126,6 +125,11 @@ static NSInteger const HEMSettingsSignOutIndex = 3;
     }
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [SENAnalytics track:kHEMAnalyticsEventSettings];
+}
+
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
@@ -169,10 +173,6 @@ static NSInteger const HEMSettingsSignOutIndex = 3;
     case HEMSettingsDevicesIndex:
         nextSegueId = [HEMMainStoryboard devicesSettingsSegueIdentifier];
         break;
-    case HEMSettingsSignOutIndex:
-        [SENAuthorizationService deauthorize];
-        [SENAnalytics track:kHEMAnalyticsEventSignOut];
-        break;
     default:
         break;
     }
@@ -190,8 +190,6 @@ static NSInteger const HEMSettingsSignOutIndex = 3;
             return NSLocalizedString(@"settings.devices", nil);
         case HEMSettingsUnitsTimeIndex:
             return NSLocalizedString(@"settings.units", nil);
-        case HEMSettingsSignOutIndex:
-            return NSLocalizedString(@"actions.sign-out", nil);
     }
     return nil;
 }

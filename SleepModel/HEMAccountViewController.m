@@ -25,9 +25,11 @@
 #import "HEMHeightPickerViewController.h"
 #import "HEMWeightPickerViewController.h"
 #import "HEMGenderPickerViewController.h"
+#import "HEMDialogViewController.h"
 
 static CGFloat const HEMAccountTableSectionHeaderHeight = 20.0f;
-static CGFloat const HEMAccountTableFooterMargins = 22.0f;
+static CGFloat const HEMAccountTableBaseRowHeight = 56.0f;
+static CGFloat const HEMAccountTableAudioExplanationRowHeight = 44.0f;
 
 @interface HEMAccountViewController() <
     UITableViewDelegate,
@@ -49,6 +51,8 @@ static CGFloat const HEMAccountTableFooterMargins = 22.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureTable];
+    
+    [SENAnalytics track:kHEMAnalyticsEventAccount];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -64,47 +68,19 @@ static CGFloat const HEMAccountTableFooterMargins = 22.0f;
     frame.size.width = CGRectGetWidth([[self infoTableView] bounds]);
     
     [[self infoTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
-    [[self infoTableView] setTableFooterView:[self tableFooter]];
+    [[self infoTableView] setTableFooterView:[[UIView alloc] initWithFrame:frame]];
     [[self infoTableView] setDataSource:[self dataSource]];
     [[self infoTableView] setDelegate:self];
 }
 
-- (UIView*)tableFooter {
-    UIView* footerView = [[UIView alloc] init];
-    [footerView setBackgroundColor:[[self infoTableView] backgroundColor]];
-    [footerView setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
-    
-    
-    UILabel* label = [[UILabel alloc] init];
-    [label setFont:[UIFont settingsHelpFont]];
-    [label setTextColor:[HelloStyleKit backViewTextColor]];
-    [label setText:NSLocalizedString(@"settings.enhanced-audio.desc", nil)];
-    [label setNumberOfLines:0];
-    [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
-    
-    UIScreen* mainScreen = [UIScreen mainScreen];
-    CGFloat screenWidth = CGRectGetWidth([mainScreen bounds]);
-    CGFloat labelWidth = screenWidth-(HEMAccountTableFooterMargins*2);
-    CGSize constraint = CGSizeMake(labelWidth, MAXFLOAT);
-    CGRect labelFrame = {
-        HEMAccountTableFooterMargins,
-        HEMAccountTableFooterMargins,
-        labelWidth,
-        [label sizeThatFits:constraint].height
-    };
-    [label setFrame:labelFrame];
-    
-    CGRect footerFrame = [footerView frame];
-    footerFrame.size.width = screenWidth;
-    footerFrame.size.height = CGRectGetMaxY(labelFrame) + HEMAccountTableFooterMargins;
-    [footerView setFrame:footerFrame];
-
-    [footerView addSubview:label];
-    
-    return footerView;
-}
-
 #pragma mark - UITableViewDelegate
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    HEMSettingsAccountInfoType type = [[self dataSource] infoTypeAtIndexPath:indexPath];
+    return type == HEMSettingsAccountInfoTypeAudioExplanation
+                ? HEMAccountTableAudioExplanationRowHeight
+                : HEMAccountTableBaseRowHeight;
+}
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     return section == 0 ? 0.0f : HEMAccountTableSectionHeaderHeight;
@@ -119,35 +95,47 @@ static CGFloat const HEMAccountTableFooterMargins = 22.0f;
 - (void)tableView:(UITableView *)tableView
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    HEMSettingsTableViewCell* settingsCell = (HEMSettingsTableViewCell*)cell;
-    
     NSString* title = [[self dataSource] titleForCellAtIndexPath:indexPath];
-    NSString* value = [[self dataSource] valueForCellAtIndexPath:indexPath];
     
-    if ([[settingsCell accessory] isKindOfClass:[UISwitch class]]) {
-        UISwitch* settingsSwitch = (UISwitch*)[settingsCell accessory];
-        BOOL enabled = [[self dataSource] isEnabledAtIndexPath:indexPath];
-        [settingsSwitch setOn:enabled];
-        [settingsSwitch setTag:[[self dataSource] infoTypeAtIndexPath:indexPath]];
-        [settingsSwitch addTarget:self
-                           action:@selector(togglePreferenceSwitch:)
-                 forControlEvents:UIControlEventTouchUpInside];
-    }
-    
-    [[settingsCell titleLabel] setText:title];
-    [[settingsCell valueLabel] setText:value];
-    
-    BOOL firstRow = [indexPath row] == 0;
-    BOOL lastRow = [[self dataSource] isLastRow:indexPath];
-    
-    if (firstRow && lastRow) {
-        [settingsCell showTopAndBottomCorners];
-    } else if (firstRow) {
-        [settingsCell showTopCorners];
-    } else if (lastRow) {
-        [settingsCell showBottomCorners];
+    if ([cell isKindOfClass:[HEMSettingsTableViewCell class]]) {
+        HEMSettingsTableViewCell* settingsCell = (HEMSettingsTableViewCell*)cell;
+        HEMSettingsAccountInfoType type = [[self dataSource] infoTypeAtIndexPath:indexPath];
+        NSString* value = [[self dataSource] valueForCellAtIndexPath:indexPath];
+        
+        if ([[settingsCell accessory] isKindOfClass:[UISwitch class]]) {
+            UISwitch* settingsSwitch = (UISwitch*)[settingsCell accessory];
+            BOOL enabled = [[self dataSource] isEnabledAtIndexPath:indexPath];
+            [settingsSwitch setOn:enabled];
+            [settingsSwitch setTag:type];
+            [settingsSwitch addTarget:self
+                               action:@selector(togglePreferenceSwitch:)
+                     forControlEvents:UIControlEventTouchUpInside];
+        }
+        
+        [[settingsCell titleLabel] setText:title];
+        [[settingsCell valueLabel] setText:value];
+        
+        BOOL firstRow = [indexPath row] == 0;
+        BOOL lastRow = [[self dataSource] isLastRow:indexPath];
+        
+        if (firstRow && lastRow) {
+            [settingsCell showTopAndBottomCorners];
+        } else if (firstRow) {
+            [settingsCell showTopCorners];
+        } else if (lastRow) {
+            [settingsCell showBottomCorners];
+        } else {
+            [settingsCell showNoCorners];
+        }
+        
+        if (type == HEMSettingsAccountInfoTypeSignOut) {
+            [[settingsCell titleLabel] setTextColor:[UIColor redColor]];
+        }
+        
     } else {
-        [settingsCell showNoCorners];
+        [[cell textLabel] setFont:[UIFont settingsHelpFont]];
+        [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+        [[cell textLabel] setText:title];
     }
 }
 
@@ -174,6 +162,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             break;
         case HEMSettingsAccountInfoTypeWeight:
             editController = [self weightController];
+            break;
+        case HEMSettingsAccountInfoTypeSignOut:
+            [self showSignOutConfirmation];
+            break;
         default:
             break;
     }
@@ -190,6 +182,29 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 #pragma mark - Actions
+
+- (void)showSignOutConfirmation {
+    id<UIApplicationDelegate> delegate = (id)[UIApplication sharedApplication].delegate;
+    UIViewController* controller = (id)delegate.window.rootViewController;
+    UIView* viewtoShowThrough = [controller view];
+    
+    HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
+    [dialogVC setTitle:NSLocalizedString(@"actions.sign-out", nil)];
+    [dialogVC setMessage:NSLocalizedString(@"settings.sign-out.confirmation", nil)];
+    [dialogVC setOkButtonTitle:NSLocalizedString(@"actions.yes", nil)];
+    [dialogVC setViewToShowThrough:viewtoShowThrough];
+    
+    [dialogVC addAction:NSLocalizedString(@"actions.no", nil) primary:NO actionBlock:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
+    }];
+    
+    [dialogVC showFrom:self onDone:^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [SENAuthorizationService deauthorize];
+            [SENAnalytics track:kHEMAnalyticsEventSignOut];
+        }];
+    }];
+}
 
 - (void)togglePreferenceSwitch:(UISwitch*)preferenceSwitch {
     HEMSettingsAccountInfoType type = [preferenceSwitch tag];

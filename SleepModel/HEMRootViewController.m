@@ -26,6 +26,7 @@
 #import "HEMSystemAlertController.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMDynamicsStatusStyler.h"
+#import "HEMBaseController+Protected.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -90,6 +91,19 @@ static CGFloat const HEMRootDrawerRevealHeightStatusOffset = 20.f;
     [self createDrawerViewController];
 }
 
+- (void)viewDidBecomeActive
+{
+    [super viewDidBecomeActive];
+    [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
+    [SENAnalytics track:kHEMAnalyticsEventAppLaunched];
+}
+
+- (void)viewDidEnterBackground
+{
+    [super viewDidEnterBackground];
+    [SENAnalytics track:kHEMAnalyticsEventAppClosed];
+}
+
 - (UIViewController *)backController
 {
     return [self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
@@ -139,10 +153,6 @@ static CGFloat const HEMRootDrawerRevealHeightStatusOffset = 20.f;
 - (void)registerForNotifications {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
-               selector:@selector(didBecomeActive)
-                   name:UIApplicationDidBecomeActiveNotification
-                 object:nil];
-    [center addObserver:self
                selector:@selector(didAuthorize)
                    name:SENAuthorizationServiceDidAuthorizeNotification
                  object:nil];
@@ -154,10 +164,6 @@ static CGFloat const HEMRootDrawerRevealHeightStatusOffset = 20.f;
 
 - (void)didAuthorize {
     [self showSettingsDrawerTabAtIndex:HEMRootDrawerTabInsights animated:NO];
-}
-
-- (void)didBecomeActive {
-    [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
 }
 
 - (BOOL)shouldMonitorDevices {

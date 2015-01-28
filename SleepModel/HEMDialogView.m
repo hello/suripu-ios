@@ -190,14 +190,12 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
                           action:(HEMDialogActionBlock)block {
     
     CGRect okFrame = [[self okButton] frame];
-    CGRect buttonFrame = CGRectZero;
+    CGRect buttonFrame = [self buttonFrameAtY:CGRectGetMinY(okFrame)];
     UIButton* button = nil;
     
     if (primary) {
-        buttonFrame = [self buttonFrameAtY:CGRectGetMinY(okFrame)];
         button = [[HEMActionButton alloc] initWithFrame:buttonFrame];
     } else {
-        buttonFrame = [self buttonFrameAtY:CGRectGetMaxY(okFrame) + kHEMDialogButtonSpacing];
         button = [UIButton buttonWithType:UIButtonTypeCustom];
         [[button titleLabel] setFont:[UIFont secondaryButtonFont]];
     }
@@ -212,15 +210,10 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     [[self actionsCallbacks] setValue:[block copy] forKey:title];
 
     CGFloat increasedHeight = CGRectGetHeight(buttonFrame) + kHEMDialogButtonSpacing;
+    [self insertSubview:button belowSubview:[self okButton]];
     
-    if (primary) {
-        [self insertSubview:button belowSubview:[self okButton]];
-        
-        okFrame.origin.y += increasedHeight;
-        [[self okButton] setFrame:okFrame];
-    } else {
-        [self insertSubview:button aboveSubview:[self okButton]];
-    }
+    okFrame.origin.y += increasedHeight;
+    [[self okButton] setFrame:okFrame];
  
     CGRect myFrame = [self frame];
     myFrame.size.height += increasedHeight;

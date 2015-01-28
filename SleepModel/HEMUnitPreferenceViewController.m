@@ -36,6 +36,7 @@ static NSUInteger const HEMUnitPreferenceTemp = 1;
     self.title = NSLocalizedString(@"settings.units", nil);
     [super viewDidLoad];
     [self configureTable];
+    [SENAnalytics track:kHEMAnalyticsEventUnitsNTime];
 }
 
 - (void)configureTable {

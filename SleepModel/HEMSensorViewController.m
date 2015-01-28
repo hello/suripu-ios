@@ -56,6 +56,10 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [self initializeGraphDataSource];
     [self configureGraphView];
     [self configureSensorValueViews];
+    
+    NSString* sensorName = [[self sensor] localizedName] ?: @"";
+    [SENAnalytics track:kHEMAnalyticsEventSensor
+             properties:@{kHEMAnalyticsEventPropSensorName : sensorName}];
 }
 
 - (void)viewWillAppear:(BOOL)animated

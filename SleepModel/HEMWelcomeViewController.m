@@ -299,6 +299,7 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 
 - (IBAction)getSense:(id)sender {
     [HEMSupportUtil openOrderFormFrom:self];
+    [SENAnalytics track:kHEMAnalyticsEventOnBNoSense];
 }
 
 - (IBAction)cancelGettingStarted:(id)sender {
@@ -310,6 +311,7 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     MPMoviePlayerViewController* videoPlayer
         = [[MPMoviePlayerViewController alloc] initWithContentURL:introductoryVideoURL];
     [self presentMoviePlayerViewControllerAnimated:videoPlayer];
+    [SENAnalytics track:kHEMAnalyticsEventVideo];
 }
 
 #pragma mark - Cleanup

@@ -48,6 +48,7 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureCollectionView];
+    [SENAnalytics track:kHEMAnalyticsEventSense];
 }
 
 - (void)configureCollectionView {

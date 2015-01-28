@@ -18,6 +18,8 @@
 +(NSString *)multipleReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
 +(NSString *)preferenceReuseIdentifier;
++(NSString *)explanationReuseIdentifier;
++(NSString *)signoutReuseIdentifier;
 +(NSString *)unitCellReuseIdentifier;
 +(NSString *)settingsCellReuseIdentifier;
 +(NSString *)pairReuseIdentifier;

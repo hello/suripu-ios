@@ -30,6 +30,7 @@ extern NSString* const kHEManaltyicsEventStatusDenied;
 extern NSString* const kHEManaltyicsEventStatusDisabled;
 
 // onboarding
+extern NSString* const kHEMAnalyticsEventOnBNoSense;
 extern NSString* const kHEMAnalyticsEventOnBStart;
 extern NSString* const kHEMAnalyticsEventOnBBirthday;
 extern NSString* const kHEMAnalyticsEventOnBGender;
@@ -55,8 +56,24 @@ extern NSString* const kHEMAnalyticsEventOnBRoomCheck;
 extern NSString* const kHEMAnalyticsEventOnBEnd;
 
 // main
-extern NSString* const kHEMAnalyticsEventAlarm;
+extern NSString* const kHEMAnalyticsEventAppLaunched;
+extern NSString* const kHEMAnalyticsEventAppClosed;
+extern NSString* const kHEMAnalyticsEventAlarms;
 extern NSString* const kHEMAnalyticsEventTimeline;
+extern NSString* const kHEMAnalyticsEventEmailSupport;
+extern NSString* const kHEMAnalyticsEventSettings;
+extern NSString* const kHEMAnalyticsEventTrends;
+extern NSString* const kHEMAnalyticsEventCurrentConditions;
+extern NSString* const kHEMAnalyticsEventFeed;
+extern NSString* const kHEMAnalyticsEventQuestion;
+extern NSString* const kHEMAnalyticsEventAccount;
+extern NSString* const kHEMAnalyticsEventInsight;
+extern NSString* const kHEMAnalyticsEventDevices;
+extern NSString* const kHEMAnalyticsEventUnitsNTime;
+extern NSString* const kHEMAnalyticsEventSensor;
+extern NSString* const kHEMAnalyticsEventPropSensorName;
+extern NSString* const kHEMAnalyticsEventSense;
+extern NSString* const kHEMAnalyticsEventPill;
 
 // authentication
 extern NSString* const kHEMAnalyticsEventSignInStart;

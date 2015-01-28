@@ -43,6 +43,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureCollectionView];
+    [SENAnalytics track:kHEMAnalyticsEventDevices];
 }
 
 - (void)configureCollectionView {

@@ -37,6 +37,7 @@ static CGFloat const HEMInsightMessageYOffset = 24.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self loadInfo];
+    [SENAnalytics track:kHEMAnalyticsEventInsight];
 }
 
 - (void)loadInfo {

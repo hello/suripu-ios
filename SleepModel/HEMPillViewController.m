@@ -37,6 +37,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureCollectionView];
+    [SENAnalytics track:kHEMAnalyticsEventPill];
 }
 
 - (void)configureCollectionView {

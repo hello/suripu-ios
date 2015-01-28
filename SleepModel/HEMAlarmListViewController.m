@@ -67,6 +67,11 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self.collectionView reloadData];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [SENAnalytics track:kHEMAnalyticsEventAlarms];
+}
+
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];

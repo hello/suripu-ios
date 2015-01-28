@@ -44,6 +44,7 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 
 static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 static CGFloat const HEMRootDrawerRevealHeight = 46.f;
+static CGFloat const HEMRootDrawerRevealHeightStatusOffset = 20.f;
 
 + (UIViewController*)instantiateDrawerViewController {
     HEMSnazzBarController* barController = [HEMSnazzBarController new];
@@ -78,7 +79,7 @@ static CGFloat const HEMRootDrawerRevealHeight = 46.f;
 - (instancetype)init {
     if (self = [super init]) {
         [self setAlertController:[[HEMSystemAlertController alloc] initWithViewController:self]];
-        [self listenForActiveState];
+        [self registerForNotifications];
     }
     return self;
 }
@@ -111,8 +112,7 @@ static CGFloat const HEMRootDrawerRevealHeight = 46.f;
                                       forDirection:MSDynamicsDrawerDirectionTop];
     [self.drawerViewController setDrawerViewController:[HEMRootViewController instantiateDrawerViewController]
                                           forDirection:MSDynamicsDrawerDirectionTop];
-    CGFloat revealHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]) - HEMRootDrawerRevealHeight;
-    [self.drawerViewController setRevealWidth:revealHeight forDirection:MSDynamicsDrawerDirectionTop];
+    [self adjustRevealHeight];
     [self.drawerViewController setShouldAlignStatusBarToPaneView:NO];
 
     [self.drawerViewController willMoveToParentViewController:nil];
@@ -122,7 +122,21 @@ static CGFloat const HEMRootDrawerRevealHeight = 46.f;
     [self.drawerViewController didMoveToParentViewController:self];
 }
 
-- (void)listenForActiveState {
+- (void)adjustRevealHeight
+{
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    CGRect screenFrame = [[UIScreen mainScreen] bounds];
+    CGFloat statusBarHeight = MIN(CGRectGetHeight(statusBarFrame), CGRectGetWidth(statusBarFrame));
+    CGFloat screenHeight = MAX(CGRectGetHeight(screenFrame), CGRectGetWidth(screenFrame));
+    CGFloat revealHeight = screenHeight
+        - (HEMRootDrawerRevealHeight + statusBarHeight - HEMRootDrawerRevealHeightStatusOffset);
+    MSDynamicsDrawerPaneState state = self.drawerViewController.paneState;
+    self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
+    [self.drawerViewController setRevealWidth:revealHeight forDirection:MSDynamicsDrawerDirectionTop];
+    self.drawerViewController.paneState = state;
+}
+
+- (void)registerForNotifications {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
                selector:@selector(didBecomeActive)
@@ -131,6 +145,10 @@ static CGFloat const HEMRootDrawerRevealHeight = 46.f;
     [center addObserver:self
                selector:@selector(didAuthorize)
                    name:SENAuthorizationServiceDidAuthorizeNotification
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(adjustRevealHeight)
+                   name:UIApplicationDidChangeStatusBarFrameNotification
                  object:nil];
 }
 
@@ -268,7 +286,6 @@ static CGFloat const HEMRootDrawerRevealHeight = 46.f;
 #pragma mark - Cleanup
 
 - (void)dealloc {
-    // really shouldn't have to since this is root
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

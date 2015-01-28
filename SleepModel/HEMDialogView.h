@@ -12,6 +12,8 @@ typedef void(^HEMDialogActionBlock)(void);
 
 @interface HEMDialogView : UIView
 
+@property (nonatomic, weak, readonly) UIButton* okButton;
+
 /**
  * Initiallize the dialog with an image that sits
  * above the title, the title of the message, and

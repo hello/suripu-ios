@@ -22,7 +22,9 @@ static NSString* const HEMSettingsAcctDataSourceErrorDomain = @"is.hello.app.set
 static NSInteger const HEMSettingsAcctSectionAccount = 0;
 static NSInteger const HEMSettingsAcctSectionDemographics = 1;
 static NSInteger const HEMSettingsAcctSectionPreferences = 2;
-static NSInteger const HEMSettingsAcctTotalSections = 3; // bump this if you add sections above
+static NSInteger const HEMSettingsAcctSectionExplanations = 3;
+static NSInteger const HEMSettingsAcctSectionSignOut = 4;
+static NSInteger const HEMSettingsAcctTotalSections = 5; // bump this if you add sections above
 
 static NSInteger const HEMSettingsAcctRowEmail = 0;
 static NSInteger const HEMSettingsAcctRowPassword = 1;
@@ -37,6 +39,9 @@ static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
 static NSInteger const HEMSettingsAcctRowHealthKit = 0;
 static NSInteger const HEMSettingsAcctRowEnhancedAudio = 1;
 static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
+
+static NSInteger const HEMSettingsAcctExplanationsTotRows = 1;
+static NSInteger const HEMSettingsAcctSignOutTotRows = 1;
 
 @interface HEMSettingsAccountDataSource()
 
@@ -73,6 +78,12 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
         case HEMSettingsAcctSectionPreferences:
             rows = HEMSettingsAcctPreferenceTotRows;
             break;
+        case HEMSettingsAcctSectionExplanations:
+            rows = HEMSettingsAcctExplanationsTotRows;
+            break;
+        case HEMSettingsAcctSectionSignOut:
+            rows = HEMSettingsAcctSignOutTotRows;
+            break;
         default:
             break;
     }
@@ -86,9 +97,14 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
     
     if (section == HEMSettingsAcctSectionPreferences) {
         reuseId = [HEMMainStoryboard preferenceReuseIdentifier];
-    } else {
+    } else if (section == HEMSettingsAcctSectionExplanations) {
+        reuseId = [HEMMainStoryboard explanationReuseIdentifier];
+    } else if (section == HEMSettingsAcctSectionSignOut) {
+        reuseId = [HEMMainStoryboard signoutReuseIdentifier];
+    }  else {
         reuseId = [HEMMainStoryboard infoReuseIdentifier];
     }
+    
     return [tableView dequeueReusableCellWithIdentifier:reuseId];
 }
 
@@ -137,6 +153,13 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
             break;
         case HEMSettingsAccountInfoTypeEnhancedAudio:
             title = NSLocalizedString(@"settings.account.enhanced-audio", nil);
+            break;
+        case HEMSettingsAccountInfoTypeAudioExplanation:
+            title = NSLocalizedString(@"settings.enhanced-audio.desc", nil);
+            break;
+        case HEMSettingsAccountInfoTypeSignOut:
+            title = [NSLocalizedString(@"actions.sign-out", nil) uppercaseString];
+            break;
         default:
             break;
     }
@@ -168,6 +191,8 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
             break;
         case HEMSettingsAccountInfoTypeHealthKit:
         case HEMSettingsAccountInfoTypeEnhancedAudio:
+        case HEMSettingsAccountInfoTypeAudioExplanation:
+        case HEMSettingsAccountInfoTypeSignOut:
         default:
             break;
     }
@@ -280,10 +305,64 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
         case HEMSettingsAcctSectionPreferences:
             last = [indexPath row] == HEMSettingsAcctPreferenceTotRows - 1;
             break;
+        case HEMSettingsAcctSectionExplanations:
+            last = [indexPath row] == HEMSettingsAcctExplanationsTotRows - 1;
+            break;
+        case HEMSettingsAcctSectionSignOut:
+            last = [indexPath row] == HEMSettingsAcctSignOutTotRows - 1;
+            break;
         default:
             break;
     }
     return last;
+}
+
+- (HEMSettingsAccountInfoType)accountInfoTypeForRow:(NSInteger)row {
+    HEMSettingsAccountInfoType type = HEMSettingsAccountInfoTypeEmail;
+    switch (row) {
+        default:
+        case HEMSettingsAcctRowEmail:
+            type = HEMSettingsAccountInfoTypeEmail;
+            break;
+        case HEMSettingsAcctRowPassword:
+            type = HEMSettingsAccountInfoTypePassword;
+            break;
+    }
+    return type;
+}
+
+- (HEMSettingsAccountInfoType)demographicInfoTypeForRow:(NSInteger)row {
+    HEMSettingsAccountInfoType type = HEMSettingsAccountInfoTypeBirthday;
+    switch (row) {
+        default:
+        case HEMSettingsAcctRowBirthdate:
+            type = HEMSettingsAccountInfoTypeBirthday;
+            break;
+        case HEMSettingsAcctRowGender:
+            type = HEMSettingsAccountInfoTypeGender;
+            break;
+        case HEMSettingsAcctRowHeight:
+            type = HEMSettingsAccountInfoTypeHeight;
+            break;
+        case HEMSettingsAcctRowWeight:
+            type = HEMSettingsAccountInfoTypeWeight;
+            break;
+    }
+    return type;
+}
+
+- (HEMSettingsAccountInfoType)preferenceInfoTypeForRow:(NSInteger)row {
+    HEMSettingsAccountInfoType type = HEMSettingsAccountInfoTypeEnhancedAudio;
+    switch (row) {
+        default:
+        case HEMSettingsAcctRowEnhancedAudio:
+            type = HEMSettingsAccountInfoTypeEnhancedAudio;
+            break;
+        case HEMSettingsAcctRowHealthKit:
+            type = HEMSettingsAccountInfoTypeHealthKit;
+            break;
+    }
+    return type;
 }
 
 - (HEMSettingsAccountInfoType)infoTypeAtIndexPath:(NSIndexPath*)indexPath {
@@ -292,43 +371,15 @@ static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
     NSInteger row = [indexPath row];
     
     if (section == HEMSettingsAcctSectionAccount) {
-        switch (row) {
-            case HEMSettingsAcctRowEmail:
-                type = HEMSettingsAccountInfoTypeEmail;
-                break;
-            case HEMSettingsAcctRowPassword:
-                type = HEMSettingsAccountInfoTypePassword;
-                break;
-            default:
-                break;
-        }
+        type = [self accountInfoTypeForRow:row];
     } else if (section == HEMSettingsAcctSectionDemographics) {
-        switch (row) {
-            case HEMSettingsAcctRowBirthdate:
-                type = HEMSettingsAccountInfoTypeBirthday;
-                break;
-            case HEMSettingsAcctRowGender:
-                type = HEMSettingsAccountInfoTypeGender;
-                break;
-            case HEMSettingsAcctRowHeight:
-                type = HEMSettingsAccountInfoTypeHeight;
-                break;
-            case HEMSettingsAcctRowWeight:
-                type = HEMSettingsAccountInfoTypeWeight;
-                break;
-            default:
-                break;
-        }
+        type = [self demographicInfoTypeForRow:row];
     } else if (section == HEMSettingsAcctSectionPreferences) {
-        switch (row) {
-            case HEMSettingsAcctRowEnhancedAudio:
-                type = HEMSettingsAccountInfoTypeEnhancedAudio;
-                break;
-            case HEMSettingsAcctRowHealthKit:
-                type = HEMSettingsAccountInfoTypeHealthKit;
-            default:
-                break;
-        }
+        type = [self preferenceInfoTypeForRow:row];
+    } else if (section == HEMSettingsAcctSectionExplanations) {
+        type = HEMSettingsAccountInfoTypeAudioExplanation; // only row
+    } else if (section == HEMSettingsAcctSectionSignOut) {
+        type = HEMSettingsAccountInfoTypeSignOut; // only row
     }
     return type;
 }

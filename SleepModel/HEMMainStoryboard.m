@@ -30,6 +30,7 @@ static NSString *const _HEMchoiceCell = @"choiceCell";
 static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdevice = @"device";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
+static NSString *const _HEMexplanation = @"explanation";
 static NSString *const _HEMinfo = @"info";
 static NSString *const _HEMinsight = @"insight";
 static NSString *const _HEMinsightFeed = @"insightFeed";
@@ -46,6 +47,7 @@ static NSString *const _HEMsensorViewController = @"sensorViewController";
 static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMsettingsController = @"settingsController";
 static NSString *const _HEMsettingsNavController = @"settingsNavController";
+static NSString *const _HEMsignout = @"signout";
 static NSString *const _HEMsingle = @"single";
 static NSString *const _HEMsleepGraphController = @"sleepGraphController";
 static NSString *const _HEMsleepGraphNavController = @"sleepGraphNavController";
@@ -77,6 +79,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmSwitchCellReuseIdentifier { return _HEMalarmSwitchCell; }
 +(NSString *)choiceCellReuseIdentifier { return _HEMchoiceCell; }
 +(NSString *)deviceReuseIdentifier { return _HEMdevice; }
++(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)insightReuseIdentifier { return _HEMinsight; }
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
@@ -86,6 +89,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)questionReuseIdentifier { return _HEMquestion; }
 +(NSString *)sensorGraphCellReuseIdentifier { return _HEMsensorGraphCell; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
++(NSString *)signoutReuseIdentifier { return _HEMsignout; }
 +(NSString *)singleReuseIdentifier { return _HEMsingle; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
 +(NSString *)trendGraphReuseIdentifier { return _HEMtrendGraph; }

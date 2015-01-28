@@ -16,6 +16,7 @@
 @property (nonatomic, strong) UIImage* dialogImage;
 @property (nonatomic, copy)   NSString* title;
 @property (nonatomic, copy)   NSString* message;
+@property (nonatomic, copy)   NSString* okButtonTitle;
 @property (nonatomic, assign) BOOL showHelp;
 
 /**

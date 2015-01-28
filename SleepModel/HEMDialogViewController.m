@@ -54,6 +54,10 @@
                                                        title:[self title]
                                                      message:[self message]]];
     
+    if ([[self okButtonTitle] length] > 0) {
+        [[[self dialogView] okButton] setTitle:[self okButtonTitle] forState:UIControlStateNormal];
+    }
+    
     if ([self showHelp]) {
         __weak typeof(self) weakSelf = self;
         [self addAction:NSLocalizedString(@"dialog.help.title", nil)

@@ -471,3 +471,10 @@
 "alerts.device.no-sense.message" = "Your account does not have a Sense paired.  Sense is required to track your sleep behavior.";
 "alerts.device.no-pill.title" = "Sleep Pill Not Paired";
 "alerts.device.no-pill.message" = "Your account does not have a Sleep Pill paired.  A Sleep Pill is required to track your sleep behavior.";
+
+// tutorial
+"tutorial.timeline.title1" = "UNDERSTANDING YOUR SLEEP";
+"tutorial.timeline.message1" = "Your Sense collects an immense amount of data about your sleep, your behavior, and the environment in your bedroom.\n\nWe take all this data and present it in a detailed but simple way — this quick walkthrough will show you how to read your first night of sleep data.";
+"tutorial.timeline.message2" = "Your Sleep Score takes all the data Sense collects about your sleep, and expresses it as one simple, rich measure of your sleep quality — out of 100.";
+"tutorial.timeline.message3" = "The “Before Sleep” tab will summarize the conditions of your bedroom before you went to sleep. Too hot? Noisy? You’ll see it here.";
+"tutorial.timeline.message4" = "Your Sleep Timeline shows you a minute-by-minute record of your night, broken into three categories:\n\nLight, Medium and Deep Sleep.";

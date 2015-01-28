@@ -28,6 +28,7 @@
 static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
 static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
+static NSUInteger const HEMConditionGraphPointLimit = 30;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -151,30 +152,31 @@ static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 
 - (void)fetchGraphData
 {
-    static NSUInteger const HEMConditionGraphPointLimit = 30;
-    NSArray* sensors = [self.sensors copy];
     __weak typeof(self) weakSelf = self;
-    SENAPIDataBlock (^completion)(SENSensor *, int) = ^SENAPIDataBlock(SENSensor *sensor, int index) {
-        return ^(NSArray* data, NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (data.count > HEMConditionGraphPointLimit) {
-                NSRange range = NSMakeRange(data.count - HEMConditionGraphPointLimit, HEMConditionGraphPointLimit);
-                NSArray* filteredData = [data subarrayWithRange:range];
-                SENSensorDataPoint* point = [data lastObject];
-                if ([point.value floatValue] == 0) {
-                    range.length -= 1;
-                    filteredData = [data subarrayWithRange:range];
-                }
-                data = filteredData;
-            }
-            [[strongSelf sensorGraphData] setValue:(error ? nil : data) forKey:sensor.name];
-            [strongSelf updateCellAtIndex:index];
-        };
-    };
-    for (int i = 0; i < sensors.count; i++) {
-        SENSensor* sensor = sensors[i];
-        [SENAPIRoom hourlyHistoricalDataForSensor:sensor completion:completion(sensor, i)];
+    [SENAPIRoom historicalConditionsForLast24HoursWithCompletion:^(NSDictionary* data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error)
+            return;
+        [data enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSArray* points, BOOL *stop) {
+            [[strongSelf sensorGraphData] setValue:[self filteredPointsFromData:points] forKey:key];
+        }];
+        [strongSelf reloadData];
+    }];
+}
+
+- (NSArray*)filteredPointsFromData:(NSArray*)data
+{
+    if (data.count > HEMConditionGraphPointLimit) {
+        NSRange range = NSMakeRange(data.count - HEMConditionGraphPointLimit, HEMConditionGraphPointLimit);
+        NSArray* filteredData = [data subarrayWithRange:range];
+        SENSensorDataPoint* point = [data lastObject];
+        if ([point.value floatValue] == 0) {
+            range.length -= 1;
+            filteredData = [data subarrayWithRange:range];
+        }
+        return filteredData;
     }
+    return data;
 }
 
 - (void)failedToRefreshSensors

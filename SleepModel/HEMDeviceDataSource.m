@@ -92,6 +92,9 @@ static NSInteger const HEMDeviceRowPill = 1;
         [strongSelf setWifiState:state];
         [strongSelf setObtainingData:NO];
         [strongSelf setAttemptedDataLoad:YES];
+        
+        [HEMOnboardingUtils saveConfiguredSSID:wifiSSID];
+        
         if (completion) completion (error);
     }];
 }

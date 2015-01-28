@@ -3,10 +3,17 @@
 #import "SENAPIClient.h"
 
 typedef NS_ENUM(NSUInteger, SENAPIAccountError) {
-    SENAPIAccountErrorInvalidArgument = 1
+    SENAPIAccountErrorUnknown = 0,
+    SENAPIAccountErrorInvalidArgument = 1,
+    SENAPIAccountErrorNameTooShort = 2,
+    SENAPIAccountErrorNameTooLong = 3,
+    SENAPIAccountErrorEmailInvalid = 4,
+    SENAPIAccountErrorPasswordInsecure = 5,
+    SENAPIAccountErrorPasswordTooShort = 6,
 };
 
 extern NSString* const kSENAccountNotificationAccountCreated;
+extern NSString* const SENAPIAccountErrorMessagePasswordTooShort;
 
 @class SENAccount;
 
@@ -66,5 +73,15 @@ extern NSString* const kSENAccountNotificationAccountCreated;
  *               various validation.
  */
 + (void)changeEmailInAccount:(SENAccount*)account completionBlock:(SENAPIDataBlock)completion;
+
+/**
+ * Convenience method to translate the api response error in to one of the API
+ * error enums.  If the error does not contain any associated response data,
+ * SENAPIAccountErrorUnknown is returned
+ *
+ * @param error: error object from the account api calls
+ * @return SENAPIAccountError
+ */
++ (SENAPIAccountError)errorForAPIResponseError:(NSError*)error;
 
 @end

@@ -207,8 +207,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
                                          context:nil];
         calculatedHeight = ceilf(CGRectGetHeight(rect)) + HEMQuestionCellBaseHeight;
     } else if ([dataObj isKindOfClass:[SENInsight class]]) {
-        CGSize textSize = [HEMInsightCollectionViewCell textSizeForMessage:body inWidth:width];
-        calculatedHeight = MIN(textSize.height, HEMInsightCellMaxMessageHeight) + HEMInsightCellBaseHeight;
+        calculatedHeight = [HEMInsightCollectionViewCell contentHeightWithMessage:body inWidth:width];
     }
 
     [[self heightCache] setObject:@(calculatedHeight) forKey:body];

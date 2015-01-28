@@ -18,6 +18,8 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMSupportUtil.h"
 
+static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
+
 @interface HEMNoBLEViewController ()
 
 @property (weak, nonatomic) IBOutlet UILabel *instructionView;
@@ -27,6 +29,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *step2DescLabel;
 @property (weak, nonatomic) IBOutlet UILabel *step3Label;
 @property (weak, nonatomic) IBOutlet UILabel *step3DescLabel;
+
+@property (assign, nonatomic) NSUInteger checkAttempts;
 
 @end
 
@@ -53,6 +57,7 @@
 
 - (void)viewDidBecomeActive {
     [super viewDidBecomeActive];
+    [self setCheckAttempts:0];
     [self checkBluetooth];
 }
 
@@ -61,14 +66,16 @@
     // bluetooth is on, it will push the next controller on to the stack again
     if ([[self navigationController] topViewController] != self) return;
     
-    if (![HEMBluetoothUtils stateAvailable]) {
-        [self performSelector:@selector(checkBluetooth)
-                   withObject:nil
-                   afterDelay:0.1f];
+    if (![HEMBluetoothUtils isBluetoothOn]) {
+        if ([self checkAttempts] < HEMNoBLEMaxCheckAttempts) {
+            DDLogVerbose(@"ble not on, check again in a few ms");
+            [self performSelector:@selector(checkBluetooth)
+                       withObject:nil
+                       afterDelay:0.1f];
+            [self setCheckAttempts:[self checkAttempts] + 1];
+        }
         return;
-    }
-    
-    if ([HEMBluetoothUtils isBluetoothOn]) {
+    } else {
         [self next];
     }
 }

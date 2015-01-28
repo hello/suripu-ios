@@ -75,21 +75,12 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)configureButtons {
     [self showHelpButton];
-    [self setupCancelButton];
     [[self notGlowingButton] setTitleColor:[HelloStyleKit senseBlueColor]
                                   forState:UIControlStateNormal];
     [[[self notGlowingButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-}
-
-- (void)setupCancelButton {
+    
     if ([self delegate] != nil) {
-        NSString* title = NSLocalizedString(@"actions.cancel", nil);
-        UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:title
-                                                                       style:UIBarButtonItemStyleBordered
-                                                                      target:self
-                                                                      action:@selector(cancel:)];
-        [[self navigationItem] setLeftBarButtonItem:cancelItem];
-        [self setCancelItem:cancelItem];
+        [self showCancelButtonWithSelector:@selector(cancel:)];
     }
 }
 

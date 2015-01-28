@@ -13,6 +13,8 @@
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* descriptionLabel;
 
+- (UIBarButtonItem*)cancelItem;
+- (void)showCancelButtonWithSelector:(SEL)selector;
 - (void)enableBackButton:(BOOL)enable;
 - (void)showHelpButton;
 - (void)stylePrimaryButton:(UIButton*)button

@@ -12,7 +12,6 @@
 #import "HEMSleepSummarySlideViewController.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMSlideViewController+Protected.h"
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HEMRootViewController.h"
 #import "HelloStyleKit.h"

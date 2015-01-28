@@ -29,7 +29,8 @@ static CBCentralManager* manager = nil;
 }
 
 + (BOOL)stateAvailable {
-    return [manager state] != CBCentralManagerStateUnknown;
+    return [manager state] != CBCentralManagerStateUnknown
+        && [manager state] != CBCentralManagerStateResetting;
 }
 
 @end

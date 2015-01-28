@@ -25,6 +25,12 @@ NSString* const SENAPIAccountPropertyCurrentPassword = @"current_password";
 NSString* const SENAPIAccountPropertyNewPassword = @"new_password";
 NSString* const SENAPIAccountEndpoint = @"account";
 NSString* const SENAPIAccountErrorDomain = @"is.hello.account";
+NSString* const SENAPIAccountErrorResponseMessageKey= @"message";
+NSString* const SENAPIAccountErrorMessagePasswordTooShort = @"PASSWORD_TOO_SHORT";
+NSString* const SENAPIAccountErrorMessagePasswordInsecure= @"PASSWORD_INSECURE";
+NSString* const SENAPIAccountErrorMessageNameTooLong = @"NAME_TOO_LONG";
+NSString* const SENAPIAccountErrorMessageNameTooShort = @"NAME_TOO_SHORT";
+NSString* const SENAPIAccountErrorMessageEmailInvalid = @"EMAIL_INVALID";
 
 @implementation SENAPIAccount
 
@@ -118,6 +124,31 @@ NSString* const SENAPIAccountErrorDomain = @"is.hello.account";
     NSDictionary* body = [self dictionaryValue:account];
     NSString* path = [SENAPIAccountEndpoint stringByAppendingPathComponent:@"email"];
     [SENAPIClient POST:path parameters:body completion:completion];
+}
+
++ (SENAPIAccountError)errorForAPIResponseError:(NSError*)error {
+    NSData* errorData = error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey];
+    SENAPIAccountError errorType = SENAPIAccountErrorUnknown;
+
+    if (errorData != nil) {
+        id errorResponse = [NSJSONSerialization JSONObjectWithData:errorData options:NSJSONReadingMutableContainers error:nil];
+        if ([errorResponse isKindOfClass:[NSDictionary class]]) {
+            NSString* responseMessage = errorResponse[SENAPIAccountErrorResponseMessageKey];
+            if ([responseMessage isEqualToString:SENAPIAccountErrorMessagePasswordTooShort]) {
+                errorType = SENAPIAccountErrorPasswordTooShort;
+            } else if ([responseMessage isEqualToString:SENAPIAccountErrorMessagePasswordInsecure]) {
+                errorType = SENAPIAccountErrorPasswordInsecure;
+            } else if ([responseMessage isEqualToString:SENAPIAccountErrorMessageNameTooLong]) {
+                errorType = SENAPIAccountErrorNameTooLong;
+            } else if ([responseMessage isEqualToString:SENAPIAccountErrorMessageNameTooShort]) {
+                errorType = SENAPIAccountErrorNameTooShort;
+            } else if ([responseMessage isEqualToString:SENAPIAccountErrorMessageEmailInvalid]) {
+                errorType = SENAPIAccountErrorEmailInvalid;
+            }
+        }
+    }
+    
+    return errorType;
 }
 
 #pragma mark - Helpers

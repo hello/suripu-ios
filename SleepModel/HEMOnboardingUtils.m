@@ -8,6 +8,7 @@
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENSettings.h>
+#import <SenseKit/SENAPIAccount.h>
 
 #import <AFNetworking/AFURLResponseSerialization.h>
 
@@ -25,6 +26,8 @@ CGFloat const HEMOnboardingShadowOpacity = 0.8f;
 
 static NSString* const HEMOnboardingSettingCheckpoint = @"sense.checkpoint";
 static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
+
+static NSString* const HEMOnboardingErrorResponseMessage = @"message";
 
 @implementation HEMOnboardingUtils
 
@@ -90,14 +93,6 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
     UIViewController* onboardingController = nil;
     switch (checkpoint) {
         case HEMOnboardingCheckpointStart: {
-            // hmm, this is a bit hairy.  To ensure that user is logged in even
-            // after the app is deleted, or even for existing users who have already
-            // signed up, we need to check that they are not authenticated before
-            // actually starting from beginning.  However, this gives user a way
-            // to by pass onboarding by creating the app and
-            
-            // TODO (jimmy:) create API to check validity of the user's account
-            // and if it's not properly setup, sign out the user
             if (!authorized) {
                 UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
                                                                                bundle:[NSBundle mainBundle]];
@@ -131,12 +126,20 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
                     withTitle:(NSString*)errorTitle
                          from:(UIViewController*)controller {
     
-    NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
-    NSString* message = [self httpErrorMessageForStatusCode:[response statusCode]];
+    NSString* alertMessage = nil;
+    SENAPIAccountError errorType = [SENAPIAccount errorForAPIResponseError:error];
+    
+    if (errorType == SENAPIAccountErrorUnknown) {
+        NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        alertMessage = [self httpErrorMessageForStatusCode:[response statusCode]];
+    } else {
+        alertMessage = [self accountErrorMessageForType:errorType];
+    }
+    
     UIView* seeThroughView = [controller parentViewController] ? [[controller parentViewController] view] : [controller view];
     HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
     [dialogVC setTitle:errorTitle];
-    [dialogVC setMessage:message];
+    [dialogVC setMessage:alertMessage];
     [dialogVC setViewToShowThrough:seeThroughView];
     
     [dialogVC showFrom:controller onDone:^{
@@ -144,6 +147,31 @@ static NSString* const HEMOnboardingSettingSSID = @"sense.ssid";
         // been dismissed
         [controller dismissViewControllerAnimated:YES completion:nil];
     }];
+}
+
++ (NSString*)accountErrorMessageForType:(SENAPIAccountError)errorType {
+    NSString* message = nil;
+    switch (errorType) {
+        case SENAPIAccountErrorPasswordTooShort:
+            message = NSLocalizedString(@"sign-up.error.password-too-short", nil);
+            break;
+        case SENAPIAccountErrorPasswordInsecure:
+            message = NSLocalizedString(@"sign-up.error.password-insecure", nil);
+            break;
+        case SENAPIAccountErrorNameTooShort:
+            message = NSLocalizedString(@"sign-up.error.name-too-short", nil);
+            break;
+        case SENAPIAccountErrorNameTooLong:
+            message = NSLocalizedString(@"sign-up.error.password-too-long", nil);
+            break;
+        case SENAPIAccountErrorEmailInvalid:
+            message = NSLocalizedString(@"sign-up.error.email-invalid", nil);
+            break;
+        default:
+            message = NSLocalizedString(@"sign-up.error.generic", nil);
+            break;
+    }
+    return message;
 }
 
 + (NSString*)httpErrorMessageForStatusCode:(NSInteger)statusCode {

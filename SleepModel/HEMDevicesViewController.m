@@ -24,6 +24,7 @@
 #import "HEMDeviceDataSource.h"
 #import "HEMSensePairViewController.h"
 #import "HEMSensePairDelegate.h"
+#import "HEMStyledNavigationViewController.h"
 
 static CGFloat const HEMDeviceInfoHeight = 190.0f;
 static CGFloat const HEMNoDeviceHeight = 205.0f;
@@ -145,7 +146,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     HEMPillPairViewController* pairVC =
         (HEMPillPairViewController*) [HEMOnboardingStoryboard instantiatePillPairViewController];
     [pairVC setDelegate:self];
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:pairVC];
+    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
     [self presentViewController:nav animated:YES completion:nil];
 }
 
@@ -155,7 +156,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     HEMSensePairViewController* pairVC =
         (HEMSensePairViewController*) [HEMOnboardingStoryboard instantiateSensePairViewController];
     [pairVC setDelegate:self];
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:pairVC];
+    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
     [self presentViewController:nav animated:YES completion:nil];
 }
 

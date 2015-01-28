@@ -71,10 +71,17 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     [center addObserver:self selector:@selector(didSignOut)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
+    [center addObserver:self selector:@selector(didSignIn)
+                   name:SENAuthorizationServiceDidAuthorizeNotification
+                 object:nil];
 }
 
 - (void)didSignOut {
     [self setAccount:nil];
+}
+
+- (void)didSignIn {
+    [self refreshAccount:nil];
 }
 
 #pragma mark - Setting Changes
@@ -85,6 +92,11 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
                selector:@selector(updatePreferenceForSetting:)
                    name:SENSettingsDidUpdateNotification
                  object:nil];
+}
+
+- (void)stopListeningForSettingChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:SENSettingsDidUpdateNotification object:nil];
 }
 
 - (void)updatePreferenceForSetting:(NSNotification*)notification {
@@ -128,12 +140,40 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     }];
     
     [SENAPIPreferences getPreferences:^(NSDictionary* data, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error == nil) {
-            [weakSelf setPreferences:data];
+            [strongSelf setPreferences:data];
+            [strongSelf updateLocalSettingsWithPreferences];
         }
         preferencesUpdated = YES;
         finishBlock(error);
     }];
+}
+
+- (void)updateLocalSettingsWithPreferences {
+    if ([[self preferences] count] == 0) return;
+    
+    [self stopListeningForSettingChanges];
+    
+    SENPreference* celciusPreference = [[self preferences] objectForKey:@(SENPreferenceTypeTempCelcius)];
+    if (celciusPreference != nil) {
+        SENTemperatureFormat format
+            = [celciusPreference enabled]
+            ? SENTemperatureFormatCentigrade
+            : SENTemperatureFormatFahrenheit;
+        [SENSettings setTemperatureFormat:format];
+    }
+    
+    SENPreference* militaryHourPreference = [[self preferences] objectForKey:@(SENPreferenceTypeTime24)];
+    if (militaryHourPreference != nil) {
+        SENTimeFormat format
+            = [militaryHourPreference enabled]
+            ? SENTimeFormat24Hour
+            : SENTimeFormat12Hour;
+        [SENSettings setTimeFormat:format];
+    }
+    
+    [self listenForSettingChanges];
 }
 
 - (void)changePassword:(NSString*)currentPassword

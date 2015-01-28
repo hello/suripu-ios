@@ -10,8 +10,6 @@
 #import "HEMCardCollectionViewCell.h"
 
 extern CGFloat const HEMInsightCellMessagePadding;
-extern CGFloat const HEMInsightCellBaseHeight;
-extern CGFloat const HEMInsightCellMaxMessageHeight;
 
 @interface HEMInsightCollectionViewCell : HEMCardCollectionViewCell
 
@@ -20,7 +18,7 @@ extern CGFloat const HEMInsightCellMaxMessageHeight;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 
 + (NSAttributedString*)attributedTextForMessage:(NSString*)message;
-+ (CGSize)textSizeForMessage:(NSString*)message inWidth:(CGFloat)contentWidth;
++ (CGFloat)contentHeightWithMessage:(NSString*)message inWidth:(CGFloat)contentWidth;
 - (void)setMessage:(NSString*)message;
 
 @end

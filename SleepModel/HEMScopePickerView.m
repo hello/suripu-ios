@@ -31,7 +31,7 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
 
 - (CGSize)intrinsicContentSize
 {
-    CGFloat height = self.buttons.count > 0 ? HEMScopePickerHeight : 0;
+    CGFloat height = self.buttons.count > 1 ? HEMScopePickerHeight : 0;
     return CGSizeMake(CGRectGetWidth(self.bounds), height);
 }
 

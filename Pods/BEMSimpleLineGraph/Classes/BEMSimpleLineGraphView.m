@@ -132,9 +132,10 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     _colorTop = [UIColor colorWithRed:0 green:122.0/255.0 blue:255/255 alpha:1];
     _colorLine = [UIColor colorWithRed:255.0/255.0 green:255.0/255.0 blue:255.0/255.0 alpha:1];
     _colorBottom = [UIColor colorWithRed:0 green:122.0/255.0 blue:255/255 alpha:1];
-    _colorPoint = [UIColor whiteColor];
+    _colorPoint = [UIColor colorWithWhite:1.0 alpha:0.7];
     _colorTouchInputLine = [UIColor grayColor];
-    _colorBackgroundPopUplabel = [UIColor whiteColor];
+    _colorBackgroundPopUplabel = [UIColor colorWithWhite:1.0 alpha:0.7];
+    _colorForegroundPopUpLabel = [UIColor blackColor];
     _alphaTouchInputLine = 0.2;
     _widthTouchInputLine = 1.0;
     _colorBackgroundXaxis = nil;
@@ -297,6 +298,7 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
             self.popUpLabel.numberOfLines = 1;
             self.popUpLabel.font = self.labelFont;
             self.popUpLabel.backgroundColor = [UIColor clearColor];
+            self.popUpLabel.textColor = self.colorForegroundPopUpLabel;
             [self.popUpLabel sizeToFit];
             self.popUpLabel.alpha = 0;
             
@@ -352,7 +354,7 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     
     // Remove all dots that were previously on the graph
     for (UIView *subview in [self subviews]) {
-        if ([subview isKindOfClass:[BEMCircle class]])
+        if ([subview isKindOfClass:[BEMCircle class]] || [subview isKindOfClass:[BEMPermanentPopupView class]])
             [subview removeFromSuperview];
     }
     
@@ -398,28 +400,33 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
             circleDot.tag = i+ DotFirstTag100;
             circleDot.alpha = 0;
             circleDot.absoluteValue = dotValue;
-            circleDot.Pointcolor = self.colorPoint;
+            UIColor* pointColor = self.colorPoint;
+            if ([self.delegate respondsToSelector:@selector(lineGraph:colorForDotAtIndex:)])
+                pointColor = [self.delegate lineGraph:self colorForDotAtIndex:i] ?: pointColor;
+            circleDot.Pointcolor = pointColor;
             
             [self addSubview:circleDot];
             
             if (self.alwaysDisplayPopUpLabels == YES) {
                 if ([self.delegate respondsToSelector:@selector(lineGraph:alwaysDisplayPopUpAtIndex:)]) {
                     if ([self.delegate lineGraph:self alwaysDisplayPopUpAtIndex:i] == YES) {
-                        [self displayPermanentLabelForPoint:circleDot];
+                        [self displayPermanentLabelForPoint:circleDot atIndex:i];
                     }
-                } else [self displayPermanentLabelForPoint:circleDot];
+                } else [self displayPermanentLabelForPoint:circleDot atIndex:i];
             }
             
             // Dot entrance animation
+            BOOL shouldDisplayDot = self.alwaysDisplayDots;
+            if (shouldDisplayDot && [self.delegate respondsToSelector:@selector(lineGraph:alwaysDisplayDotAtIndex:)])
+                shouldDisplayDot = [self.delegate lineGraph:self alwaysDisplayDotAtIndex:i];
+
             if (self.animationGraphEntranceTime == 0) {
-                if (self.alwaysDisplayDots == NO) {
-                    circleDot.alpha = 0;  // never reach here
-                } else circleDot.alpha = 0.7;
+                circleDot.alpha = shouldDisplayDot ? 1.0 : 0;
             } else {
                 [UIView animateWithDuration:(float)self.animationGraphEntranceTime/numberOfPoints delay:(float)i*((float)self.animationGraphEntranceTime/numberOfPoints) options:UIViewAnimationOptionCurveLinear animations:^{
-                    circleDot.alpha = 0.7;
+                    circleDot.alpha = 1.0;
                 } completion:^(BOOL finished) {
-                    if (self.alwaysDisplayDots == NO) {
+                    if (!shouldDisplayDot) {
                         [UIView animateWithDuration:0.3 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
                             circleDot.alpha = 0;
                         } completion:nil];
@@ -764,21 +771,24 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     return offset;
 }
 
-- (void)displayPermanentLabelForPoint:(BEMCircle *)circleDot {
+- (void)displayPermanentLabelForPoint:(BEMCircle *)circleDot atIndex:(NSInteger)index {
     self.enablePopUpReport = NO;
     self.xCenterLabel = circleDot.center.x;
+    UIColor* textColor = self.colorForegroundPopUpLabel;
+    if ([self.delegate respondsToSelector:@selector(lineGraph:colorForPopUpAtIndex:)])
+        textColor = [self.delegate lineGraph:self colorForPopUpAtIndex:index] ?: textColor;
     UILabel *permanentPopUpLabel = [[UILabel alloc] init];
     permanentPopUpLabel.textAlignment = NSTextAlignmentCenter;
     permanentPopUpLabel.numberOfLines = 0;
     permanentPopUpLabel.text = [NSString stringWithFormat:@"%@", @((NSInteger) circleDot.absoluteValue)];
+    permanentPopUpLabel.textColor = textColor;
     permanentPopUpLabel.font = self.labelFont;
     permanentPopUpLabel.backgroundColor = [UIColor clearColor];
     [permanentPopUpLabel sizeToFit];
     permanentPopUpLabel.center = CGPointMake(self.xCenterLabel, circleDot.center.y - circleDot.frame.size.height/2 - 15);
     permanentPopUpLabel.alpha = 0;
-    
-    UIView *permanentPopUpView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, permanentPopUpLabel.frame.size.width + 7, permanentPopUpLabel.frame.size.height + 2)];
-    permanentPopUpView.backgroundColor = [UIColor whiteColor];
+    BEMPermanentPopupView *permanentPopUpView = [[BEMPermanentPopupView alloc] initWithFrame:CGRectMake(0, 0, permanentPopUpLabel.frame.size.width + 7, permanentPopUpLabel.frame.size.height + 2)];
+    permanentPopUpView.backgroundColor = self.colorBackgroundPopUplabel;
     permanentPopUpView.alpha = 0;
     permanentPopUpView.layer.cornerRadius = 3;
     permanentPopUpView.tag = PermanentPopUpViewTag3100;
@@ -810,11 +820,11 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     
     if (self.animationGraphEntranceTime == 0) {
         permanentPopUpLabel.alpha = 1;
-        permanentPopUpView.alpha = 0.7;
+        permanentPopUpView.alpha = 1;
     } else {
         [UIView animateWithDuration:0.5 delay:self.animationGraphEntranceTime options:UIViewAnimationOptionCurveLinear animations:^{
             permanentPopUpLabel.alpha = 1;
-            permanentPopUpView.alpha = 0.7;
+            permanentPopUpView.alpha = 1;
         } completion:nil];
     }
 }
@@ -1004,7 +1014,7 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
 
 - (void)setUpPopUpLabelAbovePoint:(BEMCircle *)closestPoint {
     [UIView animateWithDuration:0.2 delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
-        self.popUpView.alpha = 0.7;
+        self.popUpView.alpha = 1;
         self.popUpLabel.alpha = 1;
     } completion:nil];
     
@@ -1012,11 +1022,16 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
     self.yCenterLabel = closestDot.center.y - closestDot.frame.size.height/2 - 15;
     self.popUpView.center = CGPointMake(self.xCenterLabel, self.yCenterLabel);
     self.popUpLabel.center = self.popUpView.center;
-    
+
+    NSInteger index = (NSInteger) closestDot.tag - DotFirstTag100;
+    UIColor* textColor = self.colorForegroundPopUpLabel;
+    if ([self.delegate respondsToSelector:@selector(lineGraph:colorForPopUpAtIndex:)])
+        textColor = [self.delegate lineGraph:self colorForPopUpAtIndex:index] ?: textColor;
+    self.popUpLabel.textColor = textColor;
     if ([self.delegate respondsToSelector:@selector(popUpSuffixForlineGraph:)])
-        self.popUpLabel.text = [NSString stringWithFormat:@"%li%@", (long)[dataPoints[(NSInteger) closestDot.tag - DotFirstTag100] integerValue], [self.delegate popUpSuffixForlineGraph:self]];
+        self.popUpLabel.text = [NSString stringWithFormat:@"%li%@", (long)[dataPoints[index] integerValue], [self.delegate popUpSuffixForlineGraph:self]];
     else
-        self.popUpLabel.text = [NSString stringWithFormat:@"%li", (long)[dataPoints[(NSInteger) closestDot.tag - DotFirstTag100] integerValue]];
+        self.popUpLabel.text = [NSString stringWithFormat:@"%li", (long)[dataPoints[index] integerValue]];
     if (self.enableYAxisLabel == YES && self.popUpView.frame.origin.x <= self.YAxisLabelXOffset) {
         self.xCenterLabel = self.popUpView.frame.size.width/2;
         self.popUpView.center = CGPointMake(self.xCenterLabel + self.YAxisLabelXOffset + 1, self.yCenterLabel);
@@ -1156,7 +1171,7 @@ typedef NS_ENUM(NSInteger, BEMInternalTags)
 #pragma mark - Customization Methods
 
 - (void)setColorTouchInputLine:(UIColor *)colorTouchInputLine {
-    self.touchInputLine.backgroundColor = colorTouchInputLine;
+    _colorTouchInputLine = colorTouchInputLine;
 }
 
 #pragma mark - Other Methods

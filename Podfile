@@ -9,8 +9,8 @@ pod 'SORelativeDateTransformer', '~> 1.1.10'
 pod 'iCarousel', '~> 1.7.6'
 pod 'UIImageEffects', '~> 0.0.1'
 pod 'SpinKit', '~> 1.2.0'
-pod 'BEMSimpleLineGraph', :git => 'git@github.com:Boris-Em/BEMSimpleLineGraph.git',
-                          :commit => 'fde1eede34357745998e977503a3cba21f423532'
+pod 'BEMSimpleLineGraph', :git => 'git@github.com:hello/BEMSimpleLineGraph.git',
+                          :commit => '0571b7c5e4701b71d3955a6564679875f793fdc4'
 pod 'FDWaveformView', :git => 'git@github.com:hello/FDWaveformView.git'
 pod 'SVWebViewController', :git => 'https://github.com/TransitApp/SVWebViewController.git'
 pod 'MSDynamicsDrawerViewController', '1.5.1'

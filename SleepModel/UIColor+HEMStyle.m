@@ -37,4 +37,16 @@
     }
 }
 
++ (UIColor *)colorForSleepScore:(NSInteger)sleepScore
+{
+    if (sleepScore == 0)
+        return [HelloStyleKit unknownSensorColor];
+    else if (sleepScore < 45)
+        return [HelloStyleKit alertSensorColor];
+    else if (sleepScore < 80)
+        return [HelloStyleKit warningSensorColor];
+    else
+        return [HelloStyleKit idealSensorColor];
+}
+
 @end

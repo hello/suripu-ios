@@ -62,6 +62,14 @@ static NSString* const HEMAllScopeType = @"ALL";
     [SENAnalytics track:kHEMAnalyticsEventTrends];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    if (![self isViewLoaded] || !self.view.window) {
+        self.defaultTrends = nil;
+    }
+    [super didReceiveMemoryWarning];
+}
+
 - (void)refreshData
 {
     if ([self isLoading])

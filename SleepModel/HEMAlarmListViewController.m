@@ -78,6 +78,14 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self touchUpOutsideAddAlarmButton:nil];
 }
 
+- (void)didReceiveMemoryWarning
+{
+    if (![self isViewLoaded] || !self.view.window) {
+        self.alarms = nil;
+    }
+    [super didReceiveMemoryWarning];
+}
+
 - (void)configureAddButton
 {
     [self.addButton addTarget:self action:@selector(touchDownAddAlarmButton:)
@@ -92,7 +100,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
     NSString* instructions = NSLocalizedString(@"alarms.no-alarm.instructions", nil);
     self.noAlarmLabel.attributedText = [[NSAttributedString alloc] initWithString:[instructions uppercaseString]
                                                                        attributes:attributes];
-
 }
 
 - (void)configureSpinnerView
@@ -225,10 +232,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
 {
     __block SENAlarm* alarm = [self.alarms objectAtIndex:sender.tag];
     BOOL on = [sender isOn];
-    if (on && ![self canEnableAlarm:alarm]) {
-        sender.on = NO;
-        return;
-    }
     alarm.on = on;
     [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
         if (!success) {
@@ -236,14 +239,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
             sender.on = !on;
         }
     }];
-}
-
-- (BOOL)canEnableAlarm:(SENAlarm*)alarm
-{
-    if (![alarm isSmartAlarm])
-        return YES;
-    SENAlarmRepeatDays repeatDays = [HEMAlarmUtils repeatDaysForAlarm:alarm];
-    return [HEMAlarmUtils areRepeatDaysValid:repeatDays forSmartAlarm:alarm presentingControllerForErrors:self];
 }
 
 - (void)presentViewControllerForAlarm:(SENAlarm*)alarm

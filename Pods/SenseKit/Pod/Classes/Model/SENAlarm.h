@@ -38,6 +38,14 @@ struct SENAlarmTime {
 + (void)clearSavedAlarms;
 
 /**
+ *  Replace existing saved alarms with new ones created from
+ *  NSDictionary data
+ *
+ *  @param data an array of NSDictionary objects representing alarms
+ */
++ (NSArray*)updateSavedAlarmsWithData:(NSArray*)data;
+
+/**
  *  Presents a time in a locale-specific representation
  *
  *  @param time the time to format

@@ -150,6 +150,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.graphView.colorTop = [UIColor clearColor];
     self.graphView.colorPoint = [UIColor clearColor];
     self.graphView.widthLine = 1.f;
+    self.graphView.userInteractionEnabled = NO;
     self.graphView.labelFont = [UIFont sensorGraphNumberFont];
 }
 
@@ -314,6 +315,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 
 - (void)updateGraphWithData:(NSArray*)dataSeries
 {
+    self.graphView.userInteractionEnabled = NO;
     self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:dataSeries
                                                                          unit:self.sensor.unit];
     self.graphView.dataSource = self.graphDataSource;
@@ -403,6 +405,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 
 - (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph {
     [self.overlayView setSectionFooters:self.graphDataSource.valuesForSectionIndexes headers:nil];
+    [self.graphView setUserInteractionEnabled:self.graphDataSource.dataSeries.count > 0];
     [UIView animateWithDuration:0.5f animations:^{
         self.overlayView.alpha = 1;
     }];

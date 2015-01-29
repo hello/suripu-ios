@@ -68,7 +68,6 @@
 "pairing.activity.scanning-sense" = "Looking for Sense";
 "pairing.activity.looking-for-pill" = "Looking for your Sleep Pill";
 "pairing.activity.connecting-sense" = "Connecting to Sense";
-"pairing.activity.loading-paired-sense" = "Loading paired Sense";
 "pairing.activity.linking-account" = "Linking account to Sense";
 "pairing.activity.setting-timezone" = "Setting timezone";
 "pairing.failed.title" = "Pairing Failed";

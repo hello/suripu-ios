@@ -155,37 +155,43 @@ static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
     if (manager != nil) {
         completion (manager);
     } else {
-        __weak typeof(self) weakSelf = self;
         DDLogVerbose(@"sense not found, loading account info to scan existing paired sense");
-        [[self activityLabel] setText:NSLocalizedString(@"pairing.activity.loading-paired-sense", nil)];
-        
-        [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
-            __block typeof(weakSelf) strongSelf = weakSelf;
-            if (!strongSelf) return;
+        NSString* message = NSLocalizedString(@"pairing.activity.scanning-sense", nil);
+        [self setActivityView:[[HEMActivityCoverView alloc] init]];
+        [[self activityView] showInView:[[self navigationController] view] withText:message activity:YES completion:^{
             
-            if (error != nil) {
-
-                NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
-                [strongSelf showError:error customMessage:msg];
-                
-                completion (nil);
-                return;
-            }
-            
-            DDLogVerbose(@"looking for sense to trigger pill pairing");
-            [[strongSelf activityLabel] setText:NSLocalizedString(@"pairing.activity.scanning-sense", nil)];
-            
-            [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
+            __weak typeof(self) weakSelf = self;
+            [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
+                __block typeof(weakSelf) strongSelf = weakSelf;
                 if (error != nil) {
                     
-                    NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
-                    [strongSelf showError:error customMessage:msg];
+                    [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                        [strongSelf setActivityView:nil];
+                        
+                        NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
+                        [strongSelf showError:error customMessage:msg];
+                        
+                        completion (nil);
+                    }];
                     
-                    completion (nil);
                     return;
                 }
                 
-                completion ([[SENServiceDevice sharedService] senseManager]);
+                DDLogVerbose(@"looking for sense to trigger pill pairing");
+                [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
+                    [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                        [strongSelf setActivityView:nil];
+                        
+                        if (error != nil) {
+                            NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
+                            [strongSelf showError:error customMessage:msg];
+                            completion (nil);
+                            return;
+                        }
+                        
+                        completion ([[SENServiceDevice sharedService] senseManager]);
+                    }];
+                }];
             }];
         }];
     }
@@ -193,7 +199,6 @@ static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
 
 - (IBAction)pairPill:(id)sender {
     [self showActivity];
-    
     [self setPairAttempts:[self pairAttempts] + 1];
     
     __weak typeof(self) weakSelf = self;
@@ -225,9 +230,11 @@ static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
 }
 
 - (void)flashPairedState {
-    if ([self activityView] == nil) {
-        [self setActivityView:[[HEMActivityCoverView alloc] init]];
+    if ([self activityView] != nil) {
+        [[self activityView] removeFromSuperview]; // just kill what is showing, if it's there
     }
+    
+    [self setActivityView:[[HEMActivityCoverView alloc] init]];
     
     NSString* paired = NSLocalizedString(@"pairing.done", nil);
     [[self activityView] showInView:[[self navigationController] view] withText:paired activity:NO completion:^{

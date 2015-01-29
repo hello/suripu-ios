@@ -1,6 +1,25 @@
 # Changelog
 
-## 1.0.0.63
+## 1.0.1.1
+
+New:
+
+* Moved sign out option in to Account settings
+
+Fixes:
+
+* errors encountered when saving alarms are now more descriptive
+* fixed issue where saving an alarm can sometimes cause it to fail on iphone 5 and 4s.
+* fixed issue where you cannot cancel out of Pill pairing from settings
+* fixed issue where insight summary was being truncated
+* fixed issue during onboarding where the no BLE screen does not properly detect fast state changes 
+* errors when creating an account are more descriptive
+* fixed issue where SSID shown initially in devices may not reflect what Sense is currently configured to at the moment.
+* when you sign in, your time and temperature preferences are now pulled down
+* general speed improvements
+* general visual improvements
+
+## 1.0.1.0
 
 New:
 

@@ -25,6 +25,7 @@
 #import "UIView+HEMSnapshot.h"
 #import "HEMSleepEventButton.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
+#import "HEMTutorial.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 50.f;
 CGFloat const HEMTimelineFooterCellHeight = 50.f;
@@ -64,11 +65,28 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     [self registerForNotifications];
 }
 
+- (void)showTutorial
+{
+    HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
+    HEMRootViewController* root = (id)delegate.window.rootViewController;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if ([root drawerIsVisible] || self.dataSource.numberOfSleepSegments == 0)
+            return;
+        [HEMTutorial showTutorialForTimelineIfNeeded];
+    });
+}
+
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor whiteColor];
     [self checkForDateChanges];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [self showTutorial];
 }
 
 - (void)drawerDidOpen
@@ -80,6 +98,7 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)drawerDidClose
 {
+    [self showTutorial];
     [UIView animateWithDuration:0.5f animations:^{
         [self updateTopBarActionsWithState:YES];
     }];

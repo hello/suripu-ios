@@ -14,4 +14,6 @@
  *  Present the timeline tutorial if not previously viewed
  */
 + (void)showTutorialForTimelineIfNeeded;
+
++ (void)showTutorialForTimeline;
 @end

@@ -23,4 +23,6 @@
 
 + (UIColor*)colorForSensorWithCondition:(SENSensorCondition)condition;
 
++ (UIColor*)colorForSleepScore:(NSInteger)sleepScore;
+
 @end

@@ -161,6 +161,12 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     }
 }
 
+- (void)didLoadSummaryCell:(HEMSleepSummaryCollectionViewCell*)summaryCell
+{
+    if (![self isViewPushed])
+        [self updateTopBarActionsInCell:summaryCell withState:NO];
+}
+
 #pragma mark Top cell actions
 
 - (void)updateTopBarActionsWithState:(BOOL)pushed

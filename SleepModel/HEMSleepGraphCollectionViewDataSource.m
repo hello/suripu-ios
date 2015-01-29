@@ -294,6 +294,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:0.5];
     else
         [cell.spinnerView stopAnimating];
+    if ([collectionView.delegate respondsToSelector:@selector(didLoadSummaryCell:)])
+        [(id<HEMSleepGraphActionDelegate>)collectionView.delegate didLoadSummaryCell:cell];
     return cell;
 }
 

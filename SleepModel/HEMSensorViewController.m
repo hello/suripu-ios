@@ -345,17 +345,25 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 }
 
 - (void)setGraphValueBoundsWithData:(NSArray*)dataSeries {
-    NSArray* values = [[dataSeries valueForKey:NSStringFromSelector(@selector(value))]
-                       sortedArrayUsingSelector:@selector(compare:)];
+    NSMutableArray* values = [[dataSeries valueForKey:NSStringFromSelector(@selector(value))] mutableCopy];
+    [values sortUsingComparator:^NSComparisonResult(NSNumber* obj1, NSNumber* obj2) {
+        if ([obj1 isKindOfClass:[NSNumber class]] && [obj2 isKindOfClass:[NSNumber class]])
+            return [obj1 compare:obj2];
+        else if ([obj1 isKindOfClass:[NSNull class]] && [obj2 isKindOfClass:[NSNull class]])
+            return NSOrderedSame;
+        else if ([obj1 isKindOfClass:[NSNull class]])
+            return NSOrderedAscending;
+        else
+            return NSOrderedDescending;
+    }];
     NSNumber* maxValue = [values lastObject];
     NSNumber* minValue = @1;
-    if ([maxValue floatValue] == 0)
+    if ([maxValue isEqual:[NSNull null]])
         self.maxGraphValue = 0;
     else
         self.maxGraphValue = [[SENSensor value:maxValue inPreferredUnit:self.sensor.unit] floatValue];
     for (NSNumber* value in values) {
-        CGFloat number = [value floatValue];
-        if (number  > 0) {
+        if (![value isEqual:[NSNull null]]) {
             minValue = value;
             break;
         }
@@ -383,13 +391,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.statusMessageLabel.textAlignment = NSTextAlignmentCenter;
     NSDateFormatter* formatter = [self isShowingHourlyData] ? self.hourlyFormatter : self.dailyFormatter;
     self.statusMessageLabel.text = [formatter stringFromDate:dataPoint.date];
-    CGFloat value = [[SENSensor value:dataPoint.value inPreferredUnit:self.sensor.unit] floatValue];
-    if ([dataPoint.value floatValue] > 0)
-        self.valueLabel.text = [NSString stringWithFormat:@"%.0f", value];
-    else if ([self.graphDataSource canHaveZeroValue])
-        self.valueLabel.text = @"0";
-    else
-        self.valueLabel.text = NSLocalizedString(@"empty-data", nil);
+    [self updateValueLabelWithValue:dataPoint.value];
     [UIView animateWithDuration:0.2f animations:^{
         self.overlayView.alpha = 0;
     }];

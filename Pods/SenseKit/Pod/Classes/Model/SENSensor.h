@@ -16,6 +16,11 @@ extern NSString* const SENSensorsUpdatedNotification;
  */
 extern NSString* const SENSensorUpdateFailedNotification;
 
+/**
+ *  Sensor value indicating invalid data
+ */
+extern NSInteger const SENSensorSentinelValue;
+
 typedef NS_ENUM(NSUInteger, SENSensorCondition) {
     SENSensorConditionUnknown,
     SENSensorConditionAlert,

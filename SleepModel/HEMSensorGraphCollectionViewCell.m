@@ -77,17 +77,25 @@
 }
 
 - (void)setGraphValueBoundsWithData:(NSArray*)dataSeries forSensor:(SENSensor*)sensor {
-    NSArray* values = [[dataSeries valueForKey:NSStringFromSelector(@selector(value))]
-                       sortedArrayUsingSelector:@selector(compare:)];
+    NSMutableArray* values = [[dataSeries valueForKey:NSStringFromSelector(@selector(value))] mutableCopy];
+    [values sortUsingComparator:^NSComparisonResult(NSNumber* obj1, NSNumber* obj2) {
+        if ([obj1 isKindOfClass:[NSNumber class]] && [obj2 isKindOfClass:[NSNumber class]])
+            return [obj1 compare:obj2];
+        else if ([obj1 isKindOfClass:[NSNull class]] && [obj2 isKindOfClass:[NSNull class]])
+            return NSOrderedSame;
+        else if ([obj1 isKindOfClass:[NSNull class]])
+            return NSOrderedAscending;
+        else
+            return NSOrderedDescending;
+    }];
     NSNumber* maxValue = [values lastObject];
     NSNumber* minValue = @1;
-    if ([maxValue floatValue] == 0)
+    if ([maxValue isEqual:[NSNull null]])
         self.maxGraphValue = 0;
     else
         self.maxGraphValue = [[SENSensor value:maxValue inPreferredUnit:sensor.unit] floatValue];
     for (NSNumber* value in values) {
-        CGFloat number = [value floatValue];
-        if (number  > 0) {
+        if (![value isEqual:[NSNull null]]) {
             minValue = value;
             break;
         }

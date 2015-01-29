@@ -20,7 +20,6 @@
 static NSString* const kHEMTodayAPIProdPath = @"https://sense-api.hello.is/v1";
 static NSString* const kHEMTodayAPIDevPath  = @"https://dev-api.hello.is/v1";
 static NSString* const kHEMTodayErrorDomain = @"is.hello.sense.today";
-static NSString* const kHEMTodayEmptyData = @"--";
 static NSString* const kHEMTodaySleepScoreCellId = @"sleepScore";
 static NSString* const kHEMTodayConditionsCellId = @"info";
 static NSString* const kHEMTodaySenseScheme = @"sense://";
@@ -221,7 +220,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (void)configureConditionsCell:(HEMTodayTableViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
     SENSensor* sensor = [self sensorAtIndexPath:indexPath];
-    NSString* detail = sensor.localizedValue ?: kHEMTodayEmptyData;
+    NSString* detail = sensor.localizedValue ?: NSLocalizedString(@"empty-data", nil);
     cell.sensorIconView.image = [self imageForSensor:sensor];
     cell.sensorNameLabel.text = [sensor localizedName];
     cell.sensorValueLabel.text = detail;

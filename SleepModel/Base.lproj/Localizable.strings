@@ -457,7 +457,7 @@
 "dialog.help.title" = "I'm having trouble";
 
 // SORelativeDateTransformer
-"date.elapsed.today" = "Today";
+"date.elapsed.today" = "TODAY";
 "date.elapsed.days.format" = "%ldd";
 "date.elapsed.weeks.format" = "%ldw";
 "date.elapsed.years.format" = "%ldy";

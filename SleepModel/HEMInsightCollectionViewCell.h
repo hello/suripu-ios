@@ -20,5 +20,5 @@ extern CGFloat const HEMInsightCellMessagePadding;
 + (NSAttributedString*)attributedTextForMessage:(NSString*)message;
 + (CGFloat)contentHeightWithMessage:(NSString*)message inWidth:(CGFloat)contentWidth;
 - (void)setMessage:(NSString*)message;
-
+- (void)setTitle:(NSString*)title;
 @end

@@ -87,12 +87,16 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:36.f];
 }
 
++ (UIFont *)backViewTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:11.f];
+}
+
 + (UIFont *)backViewTextFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:13.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
 }
 
 + (UIFont *)backViewBoldFont {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
 }
 
 + (UIFont *)timelineEventMessageFont {

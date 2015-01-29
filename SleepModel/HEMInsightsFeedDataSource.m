@@ -266,7 +266,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     } else if ([cell isKindOfClass:[HEMInsightCollectionViewCell class]]) {
         HEMInsightCollectionViewCell* iCell = (HEMInsightCollectionViewCell*)cell;
         [iCell setMessage:body];
-        [[iCell titleLabel] setText:[self insightTitleForCellAtIndexPath:indexPath]];
+        [iCell setTitle:[self insightTitleForCellAtIndexPath:indexPath]];
         [[iCell dateLabel] setText:[self dateForCellAtIndexPath:indexPath]];
     }
 }

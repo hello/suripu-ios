@@ -7,6 +7,7 @@
 NSString* const SENSensorUpdatedNotification = @"SENSensorUpdatedNotification";
 NSString* const SENSensorsUpdatedNotification = @"SENSensorsUpdatedNotification";
 NSString* const SENSensorUpdateFailedNotification = @"SENSensorUpdateFailedNotification";
+NSInteger const SENSensorSentinelValue = -1;
 
 @implementation SENSensorDataPoint
 
@@ -17,7 +18,8 @@ static NSString* const SENSensorDataPointDateOffsetKey = @"offset_millis";
 - (instancetype)initWithDictionary:(NSDictionary *)dict
 {
     if (self = [super init]) {
-        _value = dict[SENSensorDataPointValueKey];
+        NSNumber* value = dict[SENSensorDataPointValueKey];
+        _value = [value floatValue] == SENSensorSentinelValue ? nil : value;
         _dateOffset = dict[SENSensorDataPointDateOffsetKey];
         _date = [NSDate dateWithTimeIntervalSince1970:([dict[SENSensorDataPointDateKey] doubleValue])/1000];
     }
@@ -143,12 +145,13 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
 {
     if (self = [super init]) {
         _name = dict[SENSensorNameKey];
-        _value = dict[SENSensorValueKey];
+        NSNumber* value = dict[SENSensorValueKey];
+        _value = [value floatValue] == SENSensorSentinelValue ? nil : value;
         _message = dict[SENSensorMessageKey];
         _idealConditionsMessage = dict[SENSensorIdealMessageKey];
         _condition = [SENSensor conditionFromValue:dict[SENSensorConditionKey]];
         _unit = [SENSensor unitFromValue:dict[SENSensorUnitKey]];
-        _lastUpdated = [NSDate dateWithTimeIntervalSince1970:[dict[SENSensorLastUpdatedKey] floatValue] / 1000];
+        _lastUpdated = [NSDate dateWithTimeIntervalSince1970:[dict[SENSensorLastUpdatedKey] doubleValue] / 1000];
     }
     return self;
 }

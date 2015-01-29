@@ -24,18 +24,21 @@
 #import "HelloStyleKit.h"
 
 static CGFloat const kHEMPillPairStartDelay = 2.0f;
+static CGFloat const kHEMPillPairAnimDuration = 0.5f;
+static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
 
 @interface HEMPillPairViewController()
 
 @property (weak, nonatomic) IBOutlet HEMActionButton *retryButton;
 @property (weak, nonatomic) IBOutlet UILabel *activityLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *retryButtonWidthConstraint;
-@property (weak, nonatomic) IBOutlet UIView *buttonContainer;
+@property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL pairTimedOut;
 @property (assign, nonatomic, getter=isLoaded) BOOL loaded;
+@property (assign, nonatomic) NSUInteger pairAttempts;
 
 @property (strong, nonatomic) id disconnectObserverId;
 
@@ -60,10 +63,11 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 }
 
 - (void)configureButtons {
-    [[self retryButton] setBackgroundColor:[UIColor clearColor]];
-    [[self retryButton] setTitleColor:[HelloStyleKit senseBlueColor]
-                             forState:UIControlStateNormal];
-    [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
+    [[self skipButton] setTitleColor:[HelloStyleKit senseBlueColor]
+                            forState:UIControlStateNormal];
+    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    
+    [self showRetryButtonAsRetrying:YES];
     
     [self showHelpButton];
     
@@ -72,6 +76,21 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     } else {
         [self enableBackButton:NO];
     }
+}
+
+- (void)showRetryButtonAsRetrying:(BOOL)retrying {
+    if (retrying) {
+        [[self retryButton] setBackgroundColor:[UIColor clearColor]];
+        [[self retryButton] setTitleColor:[HelloStyleKit senseBlueColor]
+                                 forState:UIControlStateNormal];
+        [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
+    } else {
+        [[self retryButton] setBackgroundColor:[HelloStyleKit senseBlueColor]];
+        [[self retryButton] setTitleColor:[HelloStyleKit actionButtonTextColor]
+                                 forState:UIControlStateNormal];
+        [[self retryButton] stopActivity];
+    }
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -88,12 +107,23 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 - (void)showActivity {
     [[self cancelItem] setEnabled:NO];
-    [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
+    [self showRetryButtonAsRetrying:YES];
+    [UIView animateWithDuration:kHEMPillPairAnimDuration animations:^{
+        [[self activityLabel] setAlpha:1.0f];
+        [[self skipButton] setAlpha:0.0f];
+    }];
 }
 
 - (void)hideActivity {
     [[self cancelItem] setEnabled:YES];
-    [[self retryButton] stopActivity];
+    [self showRetryButtonAsRetrying:NO];
+    [[self skipButton] setHidden:[self pairAttempts] < kHEMPillPairAttemptsBeforeSkip
+                                 || [self delegate] != nil];
+    
+    [UIView animateWithDuration:kHEMPillPairAnimDuration animations:^{
+        [[self activityLabel] setAlpha:0.0f];
+        [[self skipButton] setAlpha:1.0f];
+    }];
 }
 
 - (SENSenseManager*)manager {
@@ -115,6 +145,8 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
             }];
     }
 }
+
+#pragma mark - Pairing
 
 - (void)ensureSenseIsReady:(void(^)(SENSenseManager* manager))completion {
     if (!completion) return;
@@ -162,10 +194,12 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 - (IBAction)pairPill:(id)sender {
     [self showActivity];
     
+    [self setPairAttempts:[self pairAttempts] + 1];
+    
     __weak typeof(self) weakSelf = self;
     [self ensureSenseIsReady:^(SENSenseManager *manager) {
         __block typeof(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf || manager == nil) return;
+        if (manager == nil) return;
         [strongSelf pairNowWith:manager];
     }];
 }
@@ -229,14 +263,20 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     }];
 }
 
-- (IBAction)help:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventHelp];
-    [HEMSupportUtil openHelpFrom:self];
+#pragma mark - Skipping
+
+- (IBAction)skip:(id)sender {
+    [SENAnalytics track:kHEMAnalyticsEventOnBSkip properties:@{
+        kHEMAnalyticsEventPropOnBScreen : kHEMAnalyticsEventPropScreenPillPairing
+    }];
+    [self proceed];
 }
 
-- (IBAction)cancel:(id)sender {
+- (void)cancel:(id)sender {
     [[self delegate] didCancelPairing:self];
 }
+
+#pragma mark - Next
 
 - (void)proceed {
     if ([self delegate] == nil) {

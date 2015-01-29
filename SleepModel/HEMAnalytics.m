@@ -59,6 +59,9 @@ NSString* const kHEMAnalyticsEventOnBSenseColors = @"Onboarding Sense Colors";
 NSString* const kHEMAnalyticsEventOnBFirstAlarm = @"Onboarding First Alarm";
 NSString* const kHEMAnalyticsEventOnBRoomCheck = @"Onboarding Room Check";
 NSString* const kHEMAnalyticsEventOnBEnd = @"Onboarding End";
+NSString* const kHEMAnalyticsEventOnBSkip = @"Onboarding Skip";
+NSString* const kHEMAnalyticsEventPropOnBScreen = @"Screen";
+NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 
 // main app
 NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";

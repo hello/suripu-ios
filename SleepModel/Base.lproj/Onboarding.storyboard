@@ -803,7 +803,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkd-iJ-jh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10059" y="753"/>
+            <point key="canvasLocation" x="10872" y="746"/>
         </scene>
         <!--Wifi Picker View Controller-->
         <scene sceneID="22e-KB-YCx">
@@ -910,7 +910,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uGV-Fr-TJ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9309" y="753"/>
+            <point key="canvasLocation" x="10122" y="746"/>
         </scene>
         <!--Sense Pairing Mode View Controller-->
         <scene sceneID="GUG-m6-qYs">
@@ -990,7 +990,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gqv-eX-b5T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8576" y="1817"/>
+            <point key="canvasLocation" x="9389" y="1672"/>
         </scene>
         <!--Pill Setup View Controller-->
         <scene sceneID="Eoe-Ki-OxF">
@@ -1070,7 +1070,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z94-uI-D3y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11620" y="922"/>
+            <point key="canvasLocation" x="12433" y="915"/>
         </scene>
         <!--Setup Another Pill View Controller-->
         <scene sceneID="HZY-VN-bUX">
@@ -1183,7 +1183,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ybc-rT-E02" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="15005" y="922"/>
+            <point key="canvasLocation" x="15818" y="915"/>
         </scene>
         <!--Pill Pair View Controller-->
         <scene sceneID="zKq-xs-xPt">
@@ -1206,85 +1206,89 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Shake your Sleep Pill for three seconds to pair it with your Sense.  You may need to shake it quickly for it to register." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFD-e4-hma" userLabel="descLabel">
-                                <rect key="frame" x="20" y="68" width="560" height="36"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shake your Sleep Pill for three seconds to pair it with your Sense.  You may need to shake it quickly for it to register." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFD-e4-hma" userLabel="descLabel">
+                                <rect key="frame" x="20" y="68" width="560" height="42"/>
                                 <fontDescription key="fontDescription" name="Calibre-Thin" family="Calibre" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shakePill.png" translatesAutoresizingMaskIntoConstraints="NO" id="UCq-3E-Q6s">
-                                <rect key="frame" x="0.0" y="164" width="600" height="281"/>
+                                <rect key="frame" x="0.0" y="164" width="600" height="224"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hSC-wJ-3sT">
-                                <rect key="frame" x="0.0" y="495" width="600" height="105"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGd-9N-cHV" customClass="HEMActionButton">
-                                        <rect key="frame" x="20" y="0.0" width="560" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="220" id="eTO-Et-PGf"/>
-                                            <constraint firstAttribute="height" constant="50" id="xEI-cW-YPv"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
-                                        <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Retry">
-                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="eTO-Et-PGf"/>
-                                            </mask>
-                                        </variation>
-                                        <connections>
-                                            <action selector="pairPill:" destination="Aoy-k8-hYr" eventType="touchUpInside" id="NnP-xb-lYr"/>
-                                        </connections>
-                                    </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Myj-pb-yY5">
-                                        <rect key="frame" x="20" y="56" width="560" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="30" id="oom-en-dMJ"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
-                                        <color key="textColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOR-FD-XcA">
+                                <rect key="frame" x="20" y="485" width="560" height="30"/>
                                 <constraints>
-                                    <constraint firstItem="lGd-9N-cHV" firstAttribute="bottom" secondItem="Myj-pb-yY5" secondAttribute="top" constant="-6" id="Csw-is-5gU"/>
-                                    <constraint firstItem="lGd-9N-cHV" firstAttribute="leading" secondItem="hSC-wJ-3sT" secondAttribute="leading" constant="20" id="Gbr-00-FS8"/>
-                                    <constraint firstItem="Myj-pb-yY5" firstAttribute="leading" secondItem="hSC-wJ-3sT" secondAttribute="leading" constant="20" id="Kcd-TM-Csc"/>
-                                    <constraint firstAttribute="trailing" secondItem="lGd-9N-cHV" secondAttribute="trailing" constant="20" id="L3m-Pr-FPg"/>
-                                    <constraint firstAttribute="height" constant="105" id="VmC-Z1-lU3"/>
-                                    <constraint firstAttribute="bottom" secondItem="Myj-pb-yY5" secondAttribute="bottom" constant="19" id="e03-29-jeA"/>
-                                    <constraint firstAttribute="trailing" secondItem="Myj-pb-yY5" secondAttribute="trailing" constant="20" id="w0Z-mY-BWK"/>
+                                    <constraint firstAttribute="height" constant="30" id="lxc-GY-pzH"/>
                                 </constraints>
-                            </view>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
+                                <state key="normal" title="Skip">
+                                    <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="skip:" destination="Aoy-k8-hYr" eventType="touchUpInside" id="9f9-e4-frb"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Myj-pb-yY5">
+                                <rect key="frame" x="20" y="485" width="560" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="30" id="oom-en-dMJ"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
+                                <color key="textColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lGd-9N-cHV" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="220" id="eTO-Et-PGf"/>
+                                    <constraint firstAttribute="height" constant="50" id="xEI-cW-YPv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="Calibre-Medium" family="Calibre" pointSize="16"/>
+                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Retry">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="eTO-Et-PGf"/>
+                                    </mask>
+                                </variation>
+                                <connections>
+                                    <action selector="pairPill:" destination="Aoy-k8-hYr" eventType="touchUpInside" id="NnP-xb-lYr"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="beC-YD-29R" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="0ki-Ra-wWl"/>
                             <constraint firstAttribute="trailingMargin" secondItem="beC-YD-29R" secondAttribute="trailing" constant="4" id="9M9-wm-En8"/>
                             <constraint firstItem="beC-YD-29R" firstAttribute="bottom" secondItem="kFD-e4-hma" secondAttribute="top" constant="-10" id="Dso-Ut-wpa"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Myj-pb-yY5" secondAttribute="trailing" constant="4" id="FzP-yU-3Pc"/>
                             <constraint firstItem="UCq-3E-Q6s" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="-16" id="H7t-bc-SJC"/>
+                            <constraint firstItem="YOR-FD-XcA" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="Igs-Hk-yba"/>
+                            <constraint firstItem="lGd-9N-cHV" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="PB1-8b-HGa"/>
+                            <constraint firstItem="Myj-pb-yY5" firstAttribute="bottom" secondItem="lGd-9N-cHV" secondAttribute="top" constant="-15" id="UZX-G0-k1Y"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kFD-e4-hma" secondAttribute="trailing" constant="4" id="aQM-KZ-S3n"/>
-                            <constraint firstItem="LXo-A8-xjK" firstAttribute="top" secondItem="hSC-wJ-3sT" secondAttribute="bottom" id="aYp-oH-0yH"/>
+                            <constraint firstItem="YOR-FD-XcA" firstAttribute="bottom" secondItem="lGd-9N-cHV" secondAttribute="top" constant="-15" id="azZ-ld-TlC"/>
+                            <constraint firstItem="Myj-pb-yY5" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="bbb-je-XMs"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lGd-9N-cHV" secondAttribute="trailing" constant="4" id="cBM-V2-ce4"/>
                             <constraint firstItem="UCq-3E-Q6s" firstAttribute="top" secondItem="kFD-e4-hma" secondAttribute="top" constant="96" id="fFt-QS-0lS"/>
-                            <constraint firstItem="hSC-wJ-3sT" firstAttribute="top" secondItem="UCq-3E-Q6s" secondAttribute="bottom" priority="750" constant="50" id="k5K-b6-tqn"/>
+                            <constraint firstItem="LXo-A8-xjK" firstAttribute="top" secondItem="lGd-9N-cHV" secondAttribute="bottom" constant="20" id="kV7-jL-vUR"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YOR-FD-XcA" secondAttribute="trailing" constant="4" id="ozv-5f-t24"/>
                             <constraint firstItem="beC-YD-29R" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="4" id="pgv-a2-fy7"/>
                             <constraint firstItem="kFD-e4-hma" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="pl3-kM-4pU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="UCq-3E-Q6s" secondAttribute="trailing" constant="-16" id="sKi-dZ-4sL"/>
-                            <constraint firstItem="hSC-wJ-3sT" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="-16" id="wvT-x7-LLs"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="hSC-wJ-3sT" secondAttribute="trailing" constant="-16" id="yMi-LK-x8w"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="AaY-kA-63k"/>
                     <connections>
                         <outlet property="activityLabel" destination="Myj-pb-yY5" id="R4H-DY-yAp"/>
-                        <outlet property="buttonContainer" destination="hSC-wJ-3sT" id="vZC-hz-r5h"/>
                         <outlet property="descriptionLabel" destination="kFD-e4-hma" id="lSP-ut-FA4"/>
                         <outlet property="descriptionTopConstraint" destination="Dso-Ut-wpa" id="cJz-C7-kxU"/>
                         <outlet property="retryButton" destination="lGd-9N-cHV" id="q88-hx-YrG"/>
                         <outlet property="retryButtonWidthConstraint" destination="eTO-Et-PGf" id="CnM-8K-AtF"/>
+                        <outlet property="skipButton" destination="YOR-FD-XcA" id="eFQ-tb-zyk"/>
                         <outlet property="titleHeightConstraint" destination="jPj-6g-PN4" id="0kL-tC-IyC"/>
                         <outlet property="titleLabel" destination="beC-YD-29R" id="YuT-R4-1d3"/>
                         <segue destination="4s2-Gt-ovZ" kind="push" identifier="done" id="QBf-6a-MaN"/>
@@ -1292,7 +1296,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rQM-de-S9i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10862" y="922"/>
+            <point key="canvasLocation" x="11675" y="915"/>
         </scene>
         <!--Before Sleep View Controller-->
         <scene sceneID="Fg5-Nv-Y74">
@@ -1370,7 +1374,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g3P-F6-Zsf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12480" y="922"/>
+            <point key="canvasLocation" x="13293" y="915"/>
         </scene>
         <!--Onboard Alarm View Controller-->
         <scene sceneID="rm2-FM-ynv">
@@ -1470,7 +1474,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxo-YG-lyE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14173" y="922"/>
+            <point key="canvasLocation" x="14986" y="915"/>
         </scene>
         <!--Room Check View Controller-->
         <scene sceneID="XHB-1W-ISz">
@@ -1623,7 +1627,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sWL-6c-EWF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13322" y="922"/>
+            <point key="canvasLocation" x="14135" y="915"/>
         </scene>
         <!--Gender View Controller-->
         <scene sceneID="s4K-5F-Rau">
@@ -2103,7 +2107,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M6X-uC-NAt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7457" y="108"/>
+            <point key="canvasLocation" x="7861" y="915"/>
         </scene>
         <!--Enable Push View Controller-->
         <scene sceneID="FBt-NZ-uar">
@@ -2191,7 +2195,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QJV-po-vQN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7084" y="922"/>
+            <point key="canvasLocation" x="7101" y="915"/>
         </scene>
         <!--Sense Pair View Controller-->
         <scene sceneID="cKk-Qb-F4O">
@@ -2298,7 +2302,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsS-E7-Lfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8576" y="922"/>
+            <point key="canvasLocation" x="9389" y="915"/>
         </scene>
         <!--NoBLE View Controller-->
         <scene sceneID="HBA-jc-u2O">
@@ -2539,7 +2543,7 @@ Flip the switch to On.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tgu-An-3r9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7829" y="922"/>
+            <point key="canvasLocation" x="8642" y="915"/>
         </scene>
         <!--Get App View Controller-->
         <scene sceneID="vUb-Wh-tE1">
@@ -2613,7 +2617,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4BU-cG-ggd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="15005" y="1727"/>
+            <point key="canvasLocation" x="15818" y="1720"/>
         </scene>
     </scenes>
     <resources>

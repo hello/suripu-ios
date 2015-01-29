@@ -22,10 +22,12 @@
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
 #import "HelloStyleKit.h"
+#import "HEMBluetoothUtils.h"
 
 static CGFloat const kHEMPillPairStartDelay = 2.0f;
 static CGFloat const kHEMPillPairAnimDuration = 0.5f;
 static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
+static NSInteger const kHEMPillPairMaxBleChecks = 10;
 
 @interface HEMPillPairViewController()
 
@@ -39,6 +41,7 @@ static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
 @property (assign, nonatomic) BOOL pairTimedOut;
 @property (assign, nonatomic, getter=isLoaded) BOOL loaded;
 @property (assign, nonatomic) NSUInteger pairAttempts;
+@property (assign, nonatomic) NSUInteger bleCheckAttempts;
 
 @property (strong, nonatomic) id disconnectObserverId;
 
@@ -154,47 +157,58 @@ static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
     SENSenseManager* manager = [self manager];
     if (manager != nil) {
         completion (manager);
+    } else if (![HEMBluetoothUtils isBluetoothOn]) {
+        if ([self bleCheckAttempts] < kHEMPillPairMaxBleChecks) {
+            [self setBleCheckAttempts:[self bleCheckAttempts] + 1];
+            [self performSelector:@selector(ensureSenseIsReady:) withObject:completion afterDelay:0.1f];
+        } else {
+            [self setBleCheckAttempts:0]; // reset it
+            [self showError:nil customMessage:NSLocalizedString(@"pairing.activity.bluetooth-not-on", nil)];
+        }
     } else {
-        DDLogVerbose(@"sense not found, loading account info to scan existing paired sense");
-        NSString* message = NSLocalizedString(@"pairing.activity.scanning-sense", nil);
-        [self setActivityView:[[HEMActivityCoverView alloc] init]];
-        [[self activityView] showInView:[[self navigationController] view] withText:message activity:YES completion:^{
-            
-            __weak typeof(self) weakSelf = self;
-            [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
-                __block typeof(weakSelf) strongSelf = weakSelf;
-                if (error != nil) {
-                    
-                    [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                        [strongSelf setActivityView:nil];
-                        
-                        NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
-                        [strongSelf showError:error customMessage:msg];
-                        
-                        completion (nil);
-                    }];
-                    
-                    return;
-                }
+        [self scanForPairedSense:completion];
+    }
+}
+
+- (void)scanForPairedSense:(void(^)(SENSenseManager* manager))completion {
+    NSString* message = NSLocalizedString(@"pairing.activity.connecting-sense-ble", nil);
+    [self setActivityView:[[HEMActivityCoverView alloc] init]];
+    [[self activityView] showInView:[[self navigationController] view] withText:message activity:YES completion:^{
+        
+        __weak typeof(self) weakSelf = self;
+        [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
+            __block typeof(weakSelf) strongSelf = weakSelf;
+            if (error != nil) {
                 
-                DDLogVerbose(@"looking for sense to trigger pill pairing");
-                [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
-                    [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                        [strongSelf setActivityView:nil];
-                        
-                        if (error != nil) {
-                            NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
-                            [strongSelf showError:error customMessage:msg];
-                            completion (nil);
-                            return;
-                        }
-                        
-                        completion ([[SENServiceDevice sharedService] senseManager]);
-                    }];
+                [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                    [strongSelf setActivityView:nil];
+                    
+                    NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
+                    [strongSelf showError:error customMessage:msg];
+                    
+                    completion (nil);
+                }];
+                
+                return;
+            }
+            
+            DDLogVerbose(@"looking for sense to trigger pill pairing");
+            [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
+                [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                    [strongSelf setActivityView:nil];
+                    
+                    if (error != nil) {
+                        NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
+                        [strongSelf showError:error customMessage:msg];
+                        completion (nil);
+                        return;
+                    }
+                    
+                    completion ([[SENServiceDevice sharedService] senseManager]);
                 }];
             }];
         }];
-    }
+    }];
 }
 
 - (IBAction)pairPill:(id)sender {
@@ -299,8 +313,6 @@ static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
 #pragma mark - Errors
 
 - (void)showError:(NSError*)error customMessage:(NSString*)customMessage {
-    [self hideActivity];
-    
     NSString* message = customMessage;
     
     if (message == nil) {
@@ -320,6 +332,8 @@ static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
                       title:NSLocalizedString(@"pairing.pill.error.title", nil)
                       image:nil
                    withHelp:YES];
+    
+    [self hideActivity];
     
     if (error) {
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];

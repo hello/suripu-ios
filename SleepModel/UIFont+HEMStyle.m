@@ -52,7 +52,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 }
 
 + (UIFont *)settingsTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
 }
 
 + (UIFont *)settingsHelpFont {
@@ -168,7 +168,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 }
 
 + (UIFont *)navButtonTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
 + (UIFont *)confidentialityWarningFont {

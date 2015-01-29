@@ -114,6 +114,11 @@ static CGFloat const HEMRootDrawerRevealHeightStatusOffset = 20.f;
     return self.drawerViewController.paneViewController;
 }
 
+- (BOOL)drawerIsVisible
+{
+    return self.drawerViewController.paneState != MSDynamicsDrawerPaneStateClosed;
+}
+
 - (void)createDrawerViewController
 {
     self.drawerViewController = [MSDynamicsDrawerViewController new];

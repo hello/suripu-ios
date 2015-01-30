@@ -12,7 +12,6 @@
 
 static NSString* const HEMActivityIndicatorRotateKey = @"rotate";
 static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
-static CGFloat const HEMActivityIndicatorThickness = 2.0f;
 
 @interface HEMActivityIndicatorView()
 

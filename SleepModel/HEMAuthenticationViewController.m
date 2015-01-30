@@ -11,6 +11,7 @@
 #import "HelloStyleKit.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActivityCoverView.h"
+#import "HEMNotificationHandler.h"
 
 @interface HEMAuthenticationViewController ()
 
@@ -135,6 +136,7 @@
 - (void)letUserIntoApp {
     [HEMAnalytics trackUserSession]; // update user session, since it maybe a different user now
     [SENAnalytics track:kHEMAnalyticsEventSignIn];
+    [HEMNotificationHandler registerForRemoteNotifications];
     [[self view] endEditing:NO];
     [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
 }

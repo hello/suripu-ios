@@ -75,7 +75,7 @@ PODS:
 
 DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`, commit `6bf420df77117f519af32a6393520ead4e7848c6`)
-  - BEMSimpleLineGraph (from `git@github.com:Boris-Em/BEMSimpleLineGraph.git`, commit `fde1eede34357745998e977503a3cba21f423532`)
+  - BEMSimpleLineGraph (from `git@github.com:hello/BEMSimpleLineGraph.git`, commit `0571b7c5e4701b71d3955a6564679875f793fdc4`)
   - FDWaveformView (from `git@github.com:hello/FDWaveformView.git`)
   - iCarousel (~> 1.7.6)
   - Kiwi
@@ -92,8 +92,8 @@ EXTERNAL SOURCES:
     :commit: 6bf420df77117f519af32a6393520ead4e7848c6
     :git: https://github.com/dreamwieber/AttributedMarkdown.git
   BEMSimpleLineGraph:
-    :commit: fde1eede34357745998e977503a3cba21f423532
-    :git: git@github.com:Boris-Em/BEMSimpleLineGraph.git
+    :commit: 0571b7c5e4701b71d3955a6564679875f793fdc4
+    :git: git@github.com:hello/BEMSimpleLineGraph.git
   FDWaveformView:
     :git: git@github.com:hello/FDWaveformView.git
   SenseKit:

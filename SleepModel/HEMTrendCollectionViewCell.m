@@ -14,6 +14,7 @@
 #import "HEMGraphSectionOverlayView.h"
 #import "HEMBarGraphView.h"
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 @interface HEMTrendCollectionViewCell ()<HEMScopePickerViewDelegate, BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate>
 
@@ -58,11 +59,13 @@
 {
     self.lineGraphView.dataSource = self;
     self.lineGraphView.delegate = self;
+    self.lineGraphView.sizePoint = 5.f;
     self.lineGraphView.colorTop = [UIColor clearColor];
     self.lineGraphView.colorLine = [[HelloStyleKit tintColor] colorWithAlphaComponent:0.4f];
     self.lineGraphView.colorBottom = [[HelloStyleKit tintColor] colorWithAlphaComponent:0.07f];
     self.lineGraphView.enableBezierCurve = YES;
     self.lineGraphView.alwaysDisplayPopUpLabels = YES;
+    self.lineGraphView.alwaysDisplayDots = YES;
     self.lineGraphView.colorBackgroundPopUplabel = [UIColor clearColor];
     self.lineGraphView.userInteractionEnabled = NO;
     self.lineGraphView.labelFont = [UIFont sensorGraphNumberFont];
@@ -228,6 +231,25 @@
 - (BOOL)lineGraph:(BEMSimpleLineGraphView *)graph alwaysDisplayPopUpAtIndex:(CGFloat)index
 {
     return index == self.maxIndex || index == self.minIndex;
+}
+
+- (UIColor *)lineGraph:(BEMSimpleLineGraphView *)graph colorForDotAtIndex:(NSInteger)index
+{
+    if (index == self.maxIndex || index == self.minIndex) {
+        CGFloat value = [self lineGraph:graph valueForPointAtIndex:index];
+        return [UIColor colorForSleepScore:(NSInteger)value];
+    }
+    return nil;
+}
+
+- (BOOL)lineGraph:(BEMSimpleLineGraphView *)graph alwaysDisplayDotAtIndex:(NSInteger)index
+{
+    return index == self.maxIndex || index == self.minIndex;
+}
+
+- (UIColor *)lineGraph:(BEMSimpleLineGraphView *)graph colorForPopUpAtIndex:(NSInteger)index
+{
+    return [self lineGraph:graph colorForDotAtIndex:index];
 }
 
 @end

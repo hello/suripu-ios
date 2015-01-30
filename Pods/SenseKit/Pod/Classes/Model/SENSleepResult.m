@@ -36,13 +36,25 @@ static NSString* const SENSleepResultMessage = @"message";
 static NSString* const SENSleepResultSegments = @"segments";
 static NSString* const SENSleepResultSensorInsights = @"insights";
 static NSString* const SENSleepResultRetrievalKeyFormat = @"SleepResult-%ld-%ld-%ld";
+static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
+
++ (NSDateFormatter*)dateFormatter
+{
+    static NSDateFormatter* formatter = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        formatter = [NSDateFormatter new];
+        formatter.dateFormat = SENSleepResultDateFormat;
+    });
+    return formatter;
+}
 
 + (NSString*)retrievalKeyForDate:(NSDate*)date
 {
     if (!date)
         return nil;
 
-    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSGregorianCalendar];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
     NSDateComponents* components = [calendar components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit)
                                                fromDate:date];
     return [NSString stringWithFormat:SENSleepResultRetrievalKeyFormat, (long)components.day, (long)components.month, (long)components.year];
@@ -97,6 +109,8 @@ static NSString* const SENSleepResultRetrievalKeyFormat = @"SleepResult-%ld-%ld-
 
 - (void)updateWithDictionary:(NSDictionary*)data
 {
+    if (data[SENSleepResultDate])
+        self.date = [[[self class] dateFormatter] dateFromString:data[SENSleepResultDate]];
     if (data[SENSleepResultMessage])
         self.message = data[SENSleepResultMessage];
     if (data[SENSleepResultScore])
@@ -192,6 +206,7 @@ static NSString* const SENSleepResultSegmentDuration = @"duration";
 static NSString* const SENSleepResultSegmentEventType = @"event_type";
 static NSString* const SENSleepResultSegmentMessage = @"message";
 static NSString* const SENSleepResultSegmentSleepDepth = @"sleep_depth";
+static NSString* const SENSleepResultSegmentTimezoneOffset = @"offset_millis";
 static NSString* const SENSleepResultSegmentSound = @"sound";
 
 - (instancetype)initWithDictionary:(NSDictionary*)segmentData
@@ -204,6 +219,7 @@ static NSString* const SENSleepResultSegmentSound = @"sound";
         _eventType = segmentData[SENSleepResultSegmentEventType];
         _sleepDepth = [segmentData[SENSleepResultSegmentSleepDepth] integerValue];
         _sound = [[SENSleepResultSound alloc] initWithDictionary:segmentData[SENSleepResultSegmentSound]];
+        _timezone = [NSTimeZone timeZoneForSecondsFromGMT:[segmentData[SENSleepResultSegmentTimezoneOffset] doubleValue] / 1000];
     }
     return self;
 }
@@ -218,6 +234,7 @@ static NSString* const SENSleepResultSegmentSound = @"sound";
         _eventType = [aDecoder decodeObjectForKey:SENSleepResultSegmentEventType];
         _sleepDepth = [[aDecoder decodeObjectForKey:SENSleepResultSegmentSleepDepth] integerValue];
         _sound = [aDecoder decodeObjectForKey:SENSleepResultSegmentSound];
+        _timezone = [aDecoder decodeObjectForKey:SENSleepResultSegmentTimezoneOffset];
     }
     return self;
 }
@@ -231,6 +248,7 @@ static NSString* const SENSleepResultSegmentSound = @"sound";
     [aCoder encodeObject:self.eventType forKey:SENSleepResultSegmentEventType];
     [aCoder encodeObject:@(self.sleepDepth) forKey:SENSleepResultSegmentSleepDepth];
     [aCoder encodeObject:self.sound forKey:SENSleepResultSegmentSound];
+    [aCoder encodeObject:self.timezone forKey:SENSleepResultSegmentTimezoneOffset];
 }
 
 - (void)updateWithDictionary:(NSDictionary*)data
@@ -247,6 +265,8 @@ static NSString* const SENSleepResultSegmentSound = @"sound";
         self.eventType = data[SENSleepResultSegmentEventType];
     if (data[SENSleepResultSegmentSleepDepth])
         self.sleepDepth = [data[SENSleepResultSegmentSleepDepth] integerValue];
+    if (data[SENSleepResultSegmentTimezoneOffset])
+        self.timezone = [NSTimeZone timeZoneForSecondsFromGMT:[data[SENSleepResultSegmentTimezoneOffset] doubleValue] / 1000];
     if (data[SENSleepResultSegmentSound]) {
         if (self.sound)
             [self.sound updateWithDictionary:data[SENSleepResultSegmentSound]];

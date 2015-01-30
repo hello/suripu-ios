@@ -57,6 +57,7 @@ extern NSString* const SENSleepResultSegmentEventTypeSleep;
 
 @property (strong) id serverID;
 @property (strong) NSDate* date;
+@property (strong) NSTimeZone* timezone;
 @property (strong) NSNumber* duration;
 @property (strong) NSString* message;
 @property (strong) NSString* eventType;

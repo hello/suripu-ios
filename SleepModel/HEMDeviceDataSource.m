@@ -115,7 +115,7 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
 #pragma mark - Warnings
 
 - (BOOL)hasBeenAwhile:(SENDevice*)device {
-    NSDate* badThresholdDate = [NSDate dateWithTimeIntervalSinceNow:-86400];
+    NSDate* badThresholdDate = [[NSDate date] previousDay];
     return [[device lastSeen] compare:badThresholdDate] == NSOrderedAscending;
 }
 

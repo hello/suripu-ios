@@ -8,6 +8,7 @@
 
 #import "UIImage+ImageEffects.h"
 #import "UIView+HEMSnapshot.h"
+#import "NSDate+HEMRelative.h"
 
 #import "HEMSleepSummarySlideViewController.h"
 #import "HEMSleepGraphViewController.h"
@@ -26,8 +27,7 @@
 @implementation HEMSleepSummarySlideViewController
 
 - (id)init {
-    NSTimeInterval startTime = -86400; // -(60 * 60 * 24)
-    NSDate* startDate = [NSDate dateWithTimeInterval:startTime sinceDate:[NSDate date]];
+    NSDate* startDate = [[NSDate date] previousDay];
     if (self = [super initWithTransitionStyle:UIPageViewControllerTransitionStyleScroll
                         navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil]) {
         [self __initStackWithControllerForDate:startDate];

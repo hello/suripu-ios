@@ -22,6 +22,7 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMSleepEventButton.h"
 #import "HEMMarkdown.h"
+#import "NSDate+HEMRelative.h"
 
 NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
 
@@ -280,7 +281,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSDictionary* attributes = [HEMMarkdown attributesForTimelineMessageText];
     cell.messageLabel.attributedText = [markdown_to_attr_string(self.sleepResult.message, 0, attributes) trim];
     NSString* dateText = [[[self class] sleepDateFormatter] stringFromDate:self.dateForNightOfSleep];
-    NSString* lastNightDateText = [[[self class] sleepDateFormatter] stringFromDate:[NSDate dateWithTimeInterval:-60 * 60 * 24 sinceDate:[NSDate date]]];
+    NSString* lastNightDateText = [[[self class] sleepDateFormatter] stringFromDate:[[NSDate date] previousDay]];
     if ([dateText isEqualToString:lastNightDateText])
         dateText = NSLocalizedString(@"sleep-history.last-night", nil);
     [self configurePresleepSummaryForCell:cell];
@@ -393,6 +394,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     [cell removeAllTimeLabels];
     NSCalendarUnit units = (NSCalendarUnitMinute|NSCalendarUnitHour|NSCalendarUnitDay);
     NSDateComponents* components = [self.calendar components:units fromDate:segment.date];
+    self.timeDateFormatter.timeZone = segment.timezone;
     if (components.minute == 0) {
         [cell addTimeLabelWithText:[self.timeDateFormatter stringFromDate:segment.date] atHeightRatio:0];
     }
@@ -440,7 +442,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     [cell.eventTypeButton setImage:[self imageForEventType:segment.eventType] forState:UIControlStateNormal];
     NSString* titleFormat = NSLocalizedString(@"sleep-event.title.format", nil);
     NSString* titleText = [[self class] localizedNameForSleepEventType:segment.eventType];
-    NSString* timeText = [self textForTimeInterval:[segment.date timeIntervalSince1970]];
+    NSString* timeText = [self timeTextForSegment:segment];
     cell.eventTimeLabel.text = timeText;
     cell.eventTitleLabel.text = [[NSString stringWithFormat:titleFormat, titleText, timeText] uppercaseString];
     cell.eventMessageLabel.attributedText = [markdown_to_attr_string(segment.message, 0, [HEMMarkdown attributesForEventMessageText]) trim];
@@ -486,9 +488,10 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     return [HelloStyleKit unknownEventIcon];
 }
 
-- (NSString*)textForTimeInterval:(NSTimeInterval)timeInterval
+- (NSString*)timeTextForSegment:(SENSleepResultSegment*)segment
 {
-    return [[self.timeDateFormatter stringFromDate:[NSDate dateWithTimeIntervalSince1970:timeInterval]] lowercaseString];
+    self.timeDateFormatter.timeZone = segment.timezone;
+    return [[self.timeDateFormatter stringFromDate:segment.date] lowercaseString];
 }
 
 - (BOOL)segmentForSleepExistsAtIndexPath:(NSIndexPath*)indexPath

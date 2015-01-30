@@ -19,6 +19,7 @@
 @property (nonatomic, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSOperationQueue* loadingQueue;
 @property (nonatomic, strong) NSIndexPath* loadingIndexPath;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* lineViewHeightConstraint;
 @end
 
 @implementation HEMAlarmSoundTableViewController
@@ -30,6 +31,7 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
     [super viewDidLoad];
     self.loadingQueue = [NSOperationQueue new];
     self.loadingQueue.maxConcurrentOperationCount = 1;
+    self.lineViewHeightConstraint.constant = 0.5;
     [self loadAlarmSounds];
     [[self tableView] setTableFooterView:[[UIView alloc] init]];
 }

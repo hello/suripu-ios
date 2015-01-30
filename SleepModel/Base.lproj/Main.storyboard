@@ -184,7 +184,7 @@
                                         <connections>
                                             <outlet property="detailLabel" destination="wIf-FK-vch" id="ynF-75-ejU"/>
                                             <outlet property="titleLabel" destination="VeZ-HT-TUJ" id="7bu-mb-oWk"/>
-                                            <segue destination="Kmr-A6-uHb" kind="push" identifier="alarmRepeat" id="DuX-h8-uez"/>
+                                            <segue destination="8jA-eI-sZN" kind="push" identifier="alarmRepeat" id="Kk3-sm-r3e"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationWidth="0.0" shouldIndentWhileEditing="NO" reuseIdentifier="alarmDeleteCell" id="uiU-Di-5k5" customClass="HEMAlarmTableViewCell">
@@ -1940,7 +1940,7 @@
                                 <rect key="frame" x="0.0" y="-1" width="600" height="537"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="0.90000000000000002" green="0.90000000000000002" blue="0.90000000000000002" alpha="1" colorSpace="deviceRGB"/>
-                                <inset key="separatorInset" minX="55" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <inset key="separatorInset" minX="53" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="alarmChoiceCell" id="4jb-iP-Mcc" customClass="HEMAlarmPropertyTableViewCell">
                                         <rect key="frame" x="0.0" y="55" width="320" height="44"/>
@@ -2407,58 +2407,89 @@
             </objects>
             <point key="canvasLocation" x="498.75" y="-727.81690140845069"/>
         </scene>
-        <!--Alarm Repeat-->
-        <scene sceneID="0YO-X8-97P">
+        <!--Repeat-->
+        <scene sceneID="Jr9-eZ-JPM">
             <objects>
-                <tableViewController storyboardIdentifier="alarmRepeatTableViewController" id="Kmr-A6-uHb" userLabel="Alarm Repeat" customClass="HEMAlarmRepeatTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" id="JhD-9G-jaz">
+                <viewController storyboardIdentifier="alarmRepeatTableViewController" title="Repeat" id="8jA-eI-sZN" customClass="HEMAlarmRepeatTableViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TBo-4n-ncn"/>
+                        <viewControllerLayoutGuide type="bottom" id="VY0-ba-AHA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ko0-dE-IRe">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                        <inset key="separatorInset" minX="36" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="alarmChoiceCell" id="SWn-5a-iCF" customClass="HEMAlarmPropertyTableViewCell">
-                                <rect key="frame" x="0.0" y="55" width="320" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="SWn-5a-iCF" id="cuA-CJ-Bdt">
-                                    <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Highlights" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ME6-NM-kRR">
-                                            <rect key="frame" x="36" y="21" width="73" height="22"/>
-                                            <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
-                                            <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.png" translatesAutoresizingMaskIntoConstraints="NO" id="7x6-2b-92G">
-                                            <rect key="frame" x="556" y="24" width="20" height="15"/>
-                                        </imageView>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstItem="ME6-NM-kRR" firstAttribute="leading" secondItem="cuA-CJ-Bdt" secondAttribute="leading" constant="36" id="0E0-Xn-HpS"/>
-                                        <constraint firstAttribute="centerY" secondItem="7x6-2b-92G" secondAttribute="centerY" id="8Pa-5T-3AT"/>
-                                        <constraint firstAttribute="trailing" secondItem="7x6-2b-92G" secondAttribute="trailing" constant="24" id="Xa9-XA-ajD"/>
-                                        <constraint firstAttribute="centerY" secondItem="ME6-NM-kRR" secondAttribute="centerY" constant="-0.5" id="lk9-hc-kCQ"/>
-                                    </constraints>
-                                </tableViewCellContentView>
+                        <subviews>
+                            <tableView opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" bounces="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="loU-4I-Xby">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="separatorColor" red="0.90000000000000002" green="0.90000000000000002" blue="0.90000000000000002" alpha="1" colorSpace="deviceRGB"/>
+                                <inset key="separatorInset" minX="36" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <prototypes>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="alarmChoiceCell" id="V3Y-xC-iI6" customClass="HEMAlarmPropertyTableViewCell">
+                                        <rect key="frame" x="0.0" y="55" width="320" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="V3Y-xC-iI6" id="SWu-Qg-qkM">
+                                            <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Highlights" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mwy-Tn-sKT">
+                                                    <rect key="frame" x="20" y="21" width="73" height="22"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
+                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkmark.png" translatesAutoresizingMaskIntoConstraints="NO" id="6Ib-P3-wd3">
+                                                    <rect key="frame" x="560" y="24" width="20" height="15"/>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="centerY" secondItem="6Ib-P3-wd3" secondAttribute="centerY" id="0zz-Y6-6r2"/>
+                                                <constraint firstAttribute="trailing" secondItem="6Ib-P3-wd3" secondAttribute="trailing" constant="20" id="dIF-8Y-QNJ"/>
+                                                <constraint firstItem="Mwy-Tn-sKT" firstAttribute="leading" secondItem="SWu-Qg-qkM" secondAttribute="leading" constant="20" id="l7R-xF-khK"/>
+                                                <constraint firstAttribute="centerY" secondItem="Mwy-Tn-sKT" secondAttribute="centerY" constant="-0.5" id="skm-nC-Jqb"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <inset key="separatorInset" minX="20" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                        <connections>
+                                            <outlet property="disclosureImageView" destination="6Ib-P3-wd3" id="x1P-Is-8bf"/>
+                                            <outlet property="titleLabel" destination="Mwy-Tn-sKT" id="FEX-ct-AoD"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
                                 <connections>
-                                    <outlet property="disclosureImageView" destination="7x6-2b-92G" id="mTK-4e-qw6"/>
-                                    <outlet property="titleLabel" destination="ME6-NM-kRR" id="95A-eU-hPr"/>
+                                    <outlet property="dataSource" destination="8jA-eI-sZN" id="EFz-Pe-vD5"/>
+                                    <outlet property="delegate" destination="8jA-eI-sZN" id="kwT-IR-F14"/>
                                 </connections>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Kmr-A6-uHb" id="xmu-gf-JJa"/>
-                            <outlet property="delegate" destination="Kmr-A6-uHb" id="feu-dl-Kp9"/>
-                        </connections>
-                    </tableView>
-                    <navigationItem key="navigationItem" id="RCJ-VT-5MX"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Ucd-KC-NVA" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                            </tableView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0G5-E1-bt9">
+                                <rect key="frame" x="20" y="0.0" width="560" height="1"/>
+                                <color key="backgroundColor" red="0.90000000000000002" green="0.90000000000000002" blue="0.90000000000000002" alpha="1" colorSpace="deviceRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="BRK-UM-x2R"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="loU-4I-Xby" firstAttribute="leading" secondItem="Ko0-dE-IRe" secondAttribute="leading" id="7Jb-hO-aID"/>
+                            <constraint firstAttribute="trailing" secondItem="0G5-E1-bt9" secondAttribute="trailing" constant="20" id="ERm-18-6bq"/>
+                            <constraint firstItem="0G5-E1-bt9" firstAttribute="top" secondItem="TBo-4n-ncn" secondAttribute="bottom" id="YPn-IE-iqe"/>
+                            <constraint firstItem="0G5-E1-bt9" firstAttribute="leading" secondItem="Ko0-dE-IRe" secondAttribute="leading" constant="20" id="ckV-Vt-rXJ"/>
+                            <constraint firstItem="loU-4I-Xby" firstAttribute="top" secondItem="TBo-4n-ncn" secondAttribute="bottom" id="j6O-3W-155"/>
+                            <constraint firstItem="VY0-ba-AHA" firstAttribute="top" secondItem="loU-4I-Xby" secondAttribute="bottom" id="qjc-r6-NcI"/>
+                            <constraint firstAttribute="trailing" secondItem="loU-4I-Xby" secondAttribute="trailing" id="tq9-iq-u8u"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Repeat" id="YXH-5w-vkJ"/>
+                    <connections>
+                        <outlet property="lineViewHeightConstraint" destination="BRK-UM-x2R" id="LxY-cn-3li"/>
+                        <outlet property="tableView" destination="loU-4I-Xby" id="GSk-Sf-P8L"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MtU-KT-Hgn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4434" y="362"/>
+            <point key="canvasLocation" x="4434" y="378"/>
         </scene>
         <!--Alarm Navigation Controller-->
         <scene sceneID="DWr-yB-iBh">

@@ -90,10 +90,10 @@ static NSString* const SENTrendDataPointQualityRawOk = @"OK";
 {
     if ([value isKindOfClass:[NSNumber class]]) {
         NSNumber* timestamp = value;
-        if ([timestamp floatValue] <= 0)
+        if ([timestamp doubleValue] <= 0)
             return nil;
         else
-            return [NSDate dateWithTimeIntervalSince1970:[timestamp floatValue] / 1000];
+            return [NSDate dateWithTimeIntervalSince1970:[timestamp doubleValue] / 1000];
     }
     return nil;
 }
@@ -113,10 +113,10 @@ static NSString* const SENTrendDataPointQualityRawOk = @"OK";
 {
     if (self = [super init]) {
         _date = [SENTrendDataPoint dateForValue:dict[SENTrendDataPointDateKey]];
-        _millisecondsOffset = [dict[SENTrendDataPointOffsetMillisKey] floatValue];
+        _millisecondsOffset = [dict[SENTrendDataPointOffsetMillisKey] doubleValue];
         _quality = [SENTrendDataPoint qualityForValue:dict[SENTrendDataPointQualityKey]];
-        _xValue = [dict[SENTrendDataPointXValueKey] floatValue];
-        _yValue = [dict[SENTrendDataPointYValueKey] floatValue];
+        _xValue = [dict[SENTrendDataPointXValueKey] doubleValue];
+        _yValue = [dict[SENTrendDataPointYValueKey] doubleValue];
     }
     return self;
 }

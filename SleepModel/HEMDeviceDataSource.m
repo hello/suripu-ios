@@ -22,6 +22,7 @@
 
 static NSInteger const HEMDeviceRowSense = 0;
 static NSInteger const HEMDeviceRowPill = 1;
+static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
 
 @interface HEMDeviceDataSource()
 
@@ -78,24 +79,36 @@ static NSInteger const HEMDeviceRowPill = 1;
 
 - (void)refreshSenseData:(void(^)(NSError* error))completion {
     __weak typeof(self) weakSelf = self;
-    [[SENServiceDevice sharedService] getConfiguredWiFi:^(NSString *ssid, SENWiFiConnectionState state, NSError *error) {
+    
+    [SENSenseManager whenBleStateAvailable:^(BOOL on) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if ([[error domain] isEqualToString:SENServiceDeviceErrorDomain]
-            && [error code] == SENServiceDeviceErrorInProgress) {
-            [strongSelf performSelector:@selector(refreshSenseData:)
-                             withObject:completion
-                             afterDelay:0.2f];
+        if (!on) {
+            [strongSelf setObtainingData:NO];
+            [strongSelf setAttemptedDataLoad:YES];
+            if (completion) completion ([NSError errorWithDomain:HEMDeviceErrorDomain
+                                                            code:HEMDeviceErrorNoBle
+                                                        userInfo:nil]);
             return;
         }
-        NSString* wifiSSID = [ssid length] == 0 ? nil : ssid;
-        [strongSelf setConfiguredSSID:wifiSSID];
-        [strongSelf setWifiState:state];
-        [strongSelf setObtainingData:NO];
-        [strongSelf setAttemptedDataLoad:YES];
         
-        [HEMOnboardingUtils saveConfiguredSSID:wifiSSID];
-        
-        if (completion) completion (error);
+        [[SENServiceDevice sharedService] getConfiguredWiFi:^(NSString *ssid, SENWiFiConnectionState state, NSError *error) {
+            if ([[error domain] isEqualToString:SENServiceDeviceErrorDomain]
+                && [error code] == SENServiceDeviceErrorInProgress) {
+                [strongSelf performSelector:@selector(refreshSenseData:)
+                                 withObject:completion
+                                 afterDelay:0.2f];
+                return;
+            }
+            NSString* wifiSSID = [ssid length] == 0 ? nil : ssid;
+            [strongSelf setConfiguredSSID:wifiSSID];
+            [strongSelf setWifiState:state];
+            [strongSelf setObtainingData:NO];
+            [strongSelf setAttemptedDataLoad:YES];
+            
+            [HEMOnboardingUtils saveConfiguredSSID:wifiSSID];
+            
+            if (completion) completion (error);
+        }];
     }];
 }
 

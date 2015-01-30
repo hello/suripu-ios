@@ -151,7 +151,7 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
         _idealConditionsMessage = dict[SENSensorIdealMessageKey];
         _condition = [SENSensor conditionFromValue:dict[SENSensorConditionKey]];
         _unit = [SENSensor unitFromValue:dict[SENSensorUnitKey]];
-        _lastUpdated = [NSDate dateWithTimeIntervalSince1970:[dict[SENSensorLastUpdatedKey] floatValue] / 1000];
+        _lastUpdated = [NSDate dateWithTimeIntervalSince1970:[dict[SENSensorLastUpdatedKey] doubleValue] / 1000];
     }
     return self;
 }

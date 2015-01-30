@@ -54,6 +54,9 @@ extern NSString* const kHEMAnalyticsEventOnBSenseColors;
 extern NSString* const kHEMAnalyticsEventOnBFirstAlarm;
 extern NSString* const kHEMAnalyticsEventOnBRoomCheck;
 extern NSString* const kHEMAnalyticsEventOnBEnd;
+extern NSString* const kHEMAnalyticsEventOnBSkip;
+extern NSString* const kHEMAnalyticsEventPropOnBScreen;
+extern NSString* const kHEMAnalyticsEventPropScreenPillPairing;
 
 // main
 extern NSString* const kHEMAnalyticsEventAppLaunched;

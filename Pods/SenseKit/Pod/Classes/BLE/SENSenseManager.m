@@ -39,6 +39,8 @@ static NSString* const kSENSenseCharacteristicResponseId = @"B00B";
 static NSInteger const kSENSensePacketSize = 20;
 static NSInteger const kSENSenseMessageVersion = 0;
 
+static NSInteger const kSENSenseMaxBleRetries = 10;
+
 typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 @interface SENSenseManager()
@@ -108,13 +110,21 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 }
 
 + (void)whenBleStateAvailable:(void(^)(BOOL on))block {
+    [self recheckBleStateWithAttempt:0 onCompletion:block];
+}
+
++ (void)recheckBleStateWithAttempt:(NSUInteger)attempt onCompletion:(void(^)(BOOL on))block {
     CBCentralManagerState state = [[[LGCentralManager sharedInstance] manager] state];
-    if (state == CBCentralManagerStateUnknown) {
-        NSTimeInterval delayInSeconds = 0.2f;
-        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
-            [self whenBleStateAvailable:block];
-        });
+    if (state == CBCentralManagerStateUnknown || state == CBCentralManagerStateResetting) {
+        if (attempt < kSENSenseMaxBleRetries) {
+            NSTimeInterval delayInSeconds = 0.2f;
+            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
+                [self recheckBleStateWithAttempt:attempt+1 onCompletion:block];
+            });
+        } else {
+            block (NO);
+        }
     } else {
         block (state == CBCentralManagerStatePoweredOn);
     }

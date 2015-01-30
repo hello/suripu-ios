@@ -22,20 +22,26 @@
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
 #import "HelloStyleKit.h"
+#import "HEMBluetoothUtils.h"
 
 static CGFloat const kHEMPillPairStartDelay = 2.0f;
+static CGFloat const kHEMPillPairAnimDuration = 0.5f;
+static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
+static NSInteger const kHEMPillPairMaxBleChecks = 10;
 
 @interface HEMPillPairViewController()
 
 @property (weak, nonatomic) IBOutlet HEMActionButton *retryButton;
 @property (weak, nonatomic) IBOutlet UILabel *activityLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *retryButtonWidthConstraint;
-@property (weak, nonatomic) IBOutlet UIView *buttonContainer;
+@property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL pairTimedOut;
 @property (assign, nonatomic, getter=isLoaded) BOOL loaded;
+@property (assign, nonatomic) NSUInteger pairAttempts;
+@property (assign, nonatomic) NSUInteger bleCheckAttempts;
 
 @property (strong, nonatomic) id disconnectObserverId;
 
@@ -60,10 +66,11 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 }
 
 - (void)configureButtons {
-    [[self retryButton] setBackgroundColor:[UIColor clearColor]];
-    [[self retryButton] setTitleColor:[HelloStyleKit senseBlueColor]
-                             forState:UIControlStateNormal];
-    [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
+    [[self skipButton] setTitleColor:[HelloStyleKit senseBlueColor]
+                            forState:UIControlStateNormal];
+    [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
+    
+    [self showRetryButtonAsRetrying:YES];
     
     [self showHelpButton];
     
@@ -72,6 +79,21 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     } else {
         [self enableBackButton:NO];
     }
+}
+
+- (void)showRetryButtonAsRetrying:(BOOL)retrying {
+    if (retrying) {
+        [[self retryButton] setBackgroundColor:[UIColor clearColor]];
+        [[self retryButton] setTitleColor:[HelloStyleKit senseBlueColor]
+                                 forState:UIControlStateNormal];
+        [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
+    } else {
+        [[self retryButton] setBackgroundColor:[HelloStyleKit senseBlueColor]];
+        [[self retryButton] setTitleColor:[HelloStyleKit actionButtonTextColor]
+                                 forState:UIControlStateNormal];
+        [[self retryButton] stopActivity];
+    }
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -88,12 +110,23 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 
 - (void)showActivity {
     [[self cancelItem] setEnabled:NO];
-    [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
+    [self showRetryButtonAsRetrying:YES];
+    [UIView animateWithDuration:kHEMPillPairAnimDuration animations:^{
+        [[self activityLabel] setAlpha:1.0f];
+        [[self skipButton] setAlpha:0.0f];
+    }];
 }
 
 - (void)hideActivity {
     [[self cancelItem] setEnabled:YES];
-    [[self retryButton] stopActivity];
+    [self showRetryButtonAsRetrying:NO];
+    [[self skipButton] setHidden:[self pairAttempts] < kHEMPillPairAttemptsBeforeSkip
+                                 || [self delegate] != nil];
+    
+    [UIView animateWithDuration:kHEMPillPairAnimDuration animations:^{
+        [[self activityLabel] setAlpha:0.0f];
+        [[self skipButton] setAlpha:1.0f];
+    }];
 }
 
 - (SENSenseManager*)manager {
@@ -116,56 +149,76 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     }
 }
 
+#pragma mark - Pairing
+
 - (void)ensureSenseIsReady:(void(^)(SENSenseManager* manager))completion {
     if (!completion) return;
     
     SENSenseManager* manager = [self manager];
     if (manager != nil) {
         completion (manager);
+    } else if (![HEMBluetoothUtils isBluetoothOn]) {
+        if ([self bleCheckAttempts] < kHEMPillPairMaxBleChecks) {
+            [self setBleCheckAttempts:[self bleCheckAttempts] + 1];
+            [self performSelector:@selector(ensureSenseIsReady:) withObject:completion afterDelay:0.1f];
+        } else {
+            [self setBleCheckAttempts:0]; // reset it
+            [self showError:nil customMessage:NSLocalizedString(@"pairing.activity.bluetooth-not-on", nil)];
+        }
     } else {
-        __weak typeof(self) weakSelf = self;
-        DDLogVerbose(@"sense not found, loading account info to scan existing paired sense");
-        [[self activityLabel] setText:NSLocalizedString(@"pairing.activity.loading-paired-sense", nil)];
+        [self scanForPairedSense:completion];
+    }
+}
+
+- (void)scanForPairedSense:(void(^)(SENSenseManager* manager))completion {
+    NSString* message = NSLocalizedString(@"pairing.activity.connecting-sense-ble", nil);
+    [self setActivityView:[[HEMActivityCoverView alloc] init]];
+    [[self activityView] showInView:[[self navigationController] view] withText:message activity:YES completion:^{
         
+        __weak typeof(self) weakSelf = self;
         [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
             __block typeof(weakSelf) strongSelf = weakSelf;
-            if (!strongSelf) return;
-            
             if (error != nil) {
-
-                NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
-                [strongSelf showError:error customMessage:msg];
                 
-                completion (nil);
+                [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                    [strongSelf setActivityView:nil];
+                    
+                    NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
+                    [strongSelf showError:error customMessage:msg];
+                    
+                    completion (nil);
+                }];
+                
                 return;
             }
             
             DDLogVerbose(@"looking for sense to trigger pill pairing");
-            [[strongSelf activityLabel] setText:NSLocalizedString(@"pairing.activity.scanning-sense", nil)];
-            
             [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
-                if (error != nil) {
+                [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                    [strongSelf setActivityView:nil];
                     
-                    NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
-                    [strongSelf showError:error customMessage:msg];
+                    if (error != nil) {
+                        NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
+                        [strongSelf showError:error customMessage:msg];
+                        completion (nil);
+                        return;
+                    }
                     
-                    completion (nil);
-                    return;
-                }
-                
-                completion ([[SENServiceDevice sharedService] senseManager]);
+                    completion ([[SENServiceDevice sharedService] senseManager]);
+                }];
             }];
         }];
-    }
+    }];
 }
 
 - (IBAction)pairPill:(id)sender {
     [self showActivity];
+    [self setPairAttempts:[self pairAttempts] + 1];
     
     __weak typeof(self) weakSelf = self;
     [self ensureSenseIsReady:^(SENSenseManager *manager) {
         __block typeof(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf || manager == nil) return;
+        if (manager == nil) return;
         [strongSelf pairNowWith:manager];
     }];
 }
@@ -191,9 +244,11 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 }
 
 - (void)flashPairedState {
-    if ([self activityView] == nil) {
-        [self setActivityView:[[HEMActivityCoverView alloc] init]];
+    if ([self activityView] != nil) {
+        [[self activityView] removeFromSuperview]; // just kill what is showing, if it's there
     }
+    
+    [self setActivityView:[[HEMActivityCoverView alloc] init]];
     
     NSString* paired = NSLocalizedString(@"pairing.done", nil);
     [[self activityView] showInView:[[self navigationController] view] withText:paired activity:NO completion:^{
@@ -229,14 +284,20 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
     }];
 }
 
-- (IBAction)help:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventHelp];
-    [HEMSupportUtil openHelpFrom:self];
+#pragma mark - Skipping
+
+- (IBAction)skip:(id)sender {
+    [SENAnalytics track:kHEMAnalyticsEventOnBSkip properties:@{
+        kHEMAnalyticsEventPropOnBScreen : kHEMAnalyticsEventPropScreenPillPairing
+    }];
+    [self proceed];
 }
 
-- (IBAction)cancel:(id)sender {
+- (void)cancel:(id)sender {
     [[self delegate] didCancelPairing:self];
 }
+
+#pragma mark - Next
 
 - (void)proceed {
     if ([self delegate] == nil) {
@@ -252,8 +313,6 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
 #pragma mark - Errors
 
 - (void)showError:(NSError*)error customMessage:(NSString*)customMessage {
-    [self hideActivity];
-    
     NSString* message = customMessage;
     
     if (message == nil) {
@@ -273,6 +332,8 @@ static CGFloat const kHEMPillPairStartDelay = 2.0f;
                       title:NSLocalizedString(@"pairing.pill.error.title", nil)
                       image:nil
                    withHelp:YES];
+    
+    [self hideActivity];
     
     if (error) {
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];

@@ -14,6 +14,11 @@ typedef NS_ENUM(NSUInteger, HEMDeviceWarning) {
     HEMSenseWarningNotConnectedToSense = 3
 };
 
+typedef NS_ENUM(NSInteger, HEMDeviceError) {
+    HEMDeviceErrorNoBle = -1
+    
+};
+
 @class SENDevice;
 
 @interface HEMDeviceDataSource : NSObject <UICollectionViewDataSource>

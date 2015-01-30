@@ -110,6 +110,7 @@ static UIImage* _presleepInsightLight = nil;
 static UIImage* _presleepInsightHumidity = nil;
 static UIImage* _presleepInsightTemperature = nil;
 static UIImage* _presleepInsightUnknown = nil;
+static UIImage* _loading = nil;
 
 #pragma mark Initialization
 
@@ -264,6 +265,7 @@ static UIImage* _presleepInsightUnknown = nil;
 + (UIImage*)presleepInsightHumidity { return _presleepInsightHumidity ?: (_presleepInsightHumidity = [UIImage imageNamed: @"presleepInsightHumidity"]); }
 + (UIImage*)presleepInsightTemperature { return _presleepInsightTemperature ?: (_presleepInsightTemperature = [UIImage imageNamed: @"presleepInsightTemperature"]); }
 + (UIImage*)presleepInsightUnknown { return _presleepInsightUnknown ?: (_presleepInsightUnknown = [UIImage imageNamed: @"presleepInsightUnknown"]); }
++ (UIImage*)loading { return _loading ?: (_loading = [UIImage imageNamed: @"loading"]); }
 
 #pragma mark Drawing Methods
 

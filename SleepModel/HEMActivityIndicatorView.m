@@ -16,7 +16,7 @@ static CGFloat const HEMActivityIndicatorThickness = 2.0f;
 
 @interface HEMActivityIndicatorView()
 
-@property (nonatomic, strong) CAShapeLayer* indicatorLayer;
+@property (nonatomic, strong) CALayer* indicatorLayer;
 
 @end
 
@@ -32,30 +32,13 @@ static CGFloat const HEMActivityIndicatorThickness = 2.0f;
 
 - (void)setup {
     [self setBackgroundColor:[UIColor clearColor]];
-    // circular indicator shape
-    CGRect bounds = {
-        HEMActivityIndicatorThickness,
-        HEMActivityIndicatorThickness,
-        CGRectGetWidth([self bounds])-(2*HEMActivityIndicatorThickness),
-        CGRectGetHeight([self bounds])-(2*HEMActivityIndicatorThickness)
-    };
-    CGFloat radius = CGRectGetMidX(bounds);
-    CGPoint center = CGPointMake(radius, CGRectGetMidY(bounds));
-    UIBezierPath* path = [UIBezierPath bezierPathWithArcCenter:center
-                                                        radius:radius
-                                                    startAngle:HEMDegreesToRadians(0.0f)
-                                                      endAngle:HEMDegreesToRadians(300.0f)
-                                                     clockwise:YES];
     
-    CAShapeLayer* layer = [CAShapeLayer layer];
-    [layer setPath:[path CGPath]];
-    [layer setBounds:bounds];
-    [layer setPosition:center];
-    [layer setLineWidth:HEMActivityIndicatorThickness];
-    [layer setFillColor:[[UIColor clearColor] CGColor]];
-    [layer setStrokeColor:[[HelloStyleKit senseBlueColor] CGColor]];
-    [layer setLineCap:kCALineCapRound];
-    
+    UIImageView* indicator = [[UIImageView alloc] initWithImage:[HelloStyleKit loading]];
+    [indicator setContentMode:UIViewContentModeScaleAspectFill];
+    [indicator setBackgroundColor:[UIColor clearColor]];
+    [indicator setFrame:[self bounds]];
+
+    CALayer* layer = [indicator layer];
     [self setIndicatorLayer:layer];
     [[self layer] addSublayer:layer];
 }

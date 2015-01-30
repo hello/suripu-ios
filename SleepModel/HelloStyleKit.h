@@ -113,6 +113,7 @@
 + (UIImage*)presleepInsightHumidity;
 + (UIImage*)presleepInsightTemperature;
 + (UIImage*)presleepInsightUnknown;
++ (UIImage*)loading;
 
 // Drawing Methods
 + (void)drawSleepScoreGraphWithSleepScore: (CGFloat)sleepScore;

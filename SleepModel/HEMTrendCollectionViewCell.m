@@ -106,7 +106,7 @@
     BOOL showBarGraph = type == HEMTrendCellGraphTypeBar;
     BOOL showLineGraph = type == HEMTrendCellGraphTypeLine;
     if (showBarGraph) {
-        [self.barGraphView layoutIfNeeded];
+        [self layoutIfNeeded];
         [self.barGraphView setValues:data];
     } else if (showLineGraph) {
         [self configureLineGraphView];

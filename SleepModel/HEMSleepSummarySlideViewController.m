@@ -74,7 +74,8 @@
 }
 
 - (void)reloadData {
-    [self reloadDataWithController:[[self viewControllers] firstObject]];
+    if ([self isViewLoaded] && self.view.window)
+        [self reloadDataWithController:[[self viewControllers] firstObject]];
 }
 
 - (void)reloadDataWithController:(UIViewController*)controller {

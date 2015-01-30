@@ -39,6 +39,8 @@
 #pragma mark - BEMSimpleLineGraphDataSource
 
 - (SENSensorDataPoint*)dataPointAtIndex:(NSInteger)index {
+    if (index >= self.dataSeries.count)
+        return nil;
     return self.dataSeries[index];
 }
 

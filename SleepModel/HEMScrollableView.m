@@ -12,8 +12,8 @@
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 
-static CGFloat const HEMScrollabelLabelHorzMargin = 20.0f;
-static CGFloat const HEMScrollabelDefaultContentPadding = 10.0f;
+static CGFloat const HEMScrollabelLabelHorzMargin = 46.0f;
+static CGFloat const HEMScrollableSeparatorMargin = 16.0f;
 static CGFloat const HEMScrollableTitleHeight = 34.0f;
 static CGFloat const HEMScrollableBotPadding = 28.0f;
 
@@ -107,7 +107,6 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
 }
 
 - (void)addAttributedTitle:(NSAttributedString*)title withYOffset:(CGFloat)y {
-    
     CGRect labelFrame = {
         HEMScrollabelLabelHorzMargin,
         CGRectGetMaxY([[self lastContentView] frame])+ y,
@@ -119,10 +118,16 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
     [label setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [label setBackgroundColor:[[self scrollView] backgroundColor]];
     [label setAttributedText:title];
-    [label setNumberOfLines:2]; // max two lines
+    [label setNumberOfLines:0];
+    [label sizeToFit];
+    CGFloat yOffset = CGRectGetMaxY(label.frame) + HEMScrollableSeparatorMargin;
+    UIView* separatorView = [[UIView alloc] initWithFrame:CGRectMake(HEMScrollabelLabelHorzMargin, yOffset, 45.f, 0.5f)];
+    separatorView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.f];
     [[self scrollView] addSubview:label];
+    [[self scrollView] addSubview:separatorView];
     [[self yOffsets] addObject:@(y)];
-    [self setLastContentView:label];
+    [[self yOffsets] addObject:@(yOffset)];
+    [self setLastContentView:separatorView];
     
 }
 
@@ -158,7 +163,7 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
 }
 
 - (void)addDescription:(NSAttributedString*)attributedDes {
-    [self addDescription:attributedDes withYOffset:HEMScrollabelDefaultContentPadding];
+    [self addDescription:attributedDes withYOffset:HEMScrollableSeparatorMargin];
 }
 
 - (void)addDescription:(NSAttributedString*)attributedDes withYOffset:(CGFloat)yOffset {
@@ -176,7 +181,7 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
     [label setNumberOfLines:0];
     
     [[self scrollView] addSubview:label];
-    [[self yOffsets] addObject:@(HEMScrollabelDefaultContentPadding)];
+    [[self yOffsets] addObject:@(HEMScrollableSeparatorMargin)];
     [self setLastContentView:label];
 }
 

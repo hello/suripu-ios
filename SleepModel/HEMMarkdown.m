@@ -54,7 +54,7 @@
 {
     return @{
         @(PARA) : @{
-             NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.4f],
+             NSForegroundColorAttributeName : [UIColor blackColor],
              NSFontAttributeName : [UIFont insightTitleFont]
         }
     };

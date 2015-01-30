@@ -17,6 +17,7 @@ static NSString* const HEMFontFamilyNameLightOblique = @"Avenir-LightOblique";
 static NSString* const HEMFontFamilyNameHeavyOblique = @"Avenir-HeavyOblique";
 static NSString* const HEMFontFamilyNameMedium = @"Avenir-Medium";
 static NSString* const HEMNumberFontFamilyNameUltraLight = @"AvenirNext-UltraLight";
+static NSString* const HEMTitleFontFamilyNameDemiBold = @"AvenirNext-DemiBold";
 static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont *)alarmMeridiemFont {
@@ -28,7 +29,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 }
 
 + (UIFont *)insightTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:10.f];
+    return [UIFont fontWithName:HEMTitleFontFamilyNameDemiBold size:24.f];
 }
 
 + (UIFont *)insightFullMessageFont {

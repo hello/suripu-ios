@@ -18,7 +18,7 @@
 #import "HEMMarkdown.h"
 #import "HEMActivityCoverView.h"
 
-static CGFloat const HEMInsightTitleWithoutImageYOffset = 70.0f;
+static CGFloat const HEMInsightTitleWithoutImageYOffset = 20.0f;
 static CGFloat const HEMInsightMessageYOffset = 24.0f;
 
 @interface HEMInsightViewController()
@@ -91,7 +91,7 @@ static CGFloat const HEMInsightMessageYOffset = 24.0f;
     NSDictionary* messageAttrs = [HEMMarkdown attributesForInsightViewText];
     NSDictionary* titleAttrs = [HEMMarkdown attributesForInsightTitleViewText][@(PARA)];
     NSAttributedString* attrTitle =
-        [[NSAttributedString alloc] initWithString:[[self titleToShow] uppercaseString] attributes:titleAttrs];
+        [[NSAttributedString alloc] initWithString:[self titleToShow] attributes:titleAttrs];
     [[self contentView] addAttributedTitle:attrTitle withYOffset:HEMInsightTitleWithoutImageYOffset];
     [[self contentView] addDescription:markdown_to_attr_string([self messageToShow], 0, messageAttrs)
                            withYOffset:HEMInsightMessageYOffset];

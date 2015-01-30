@@ -9,6 +9,7 @@
 #import "UIFont+HEMStyle.h"
 #import "HEMMarkdown.h"
 #import "HEMInsightCollectionViewCell.h"
+#import "NSAttributedString+HEMUtils.h"
 
 CGFloat const HEMInsightCellMessagePadding = 16.0f;
 
@@ -22,27 +23,8 @@ static CGFloat const HEMInsightCellBaseHeight = 106.0f;
 
 @implementation HEMInsightCollectionViewCell
 
-+ (NSDictionary*)messageTextAttributes {
-    static NSDictionary* attributes = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        NSMutableParagraphStyle* style =
-            [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-        [style setAlignment:NSTextAlignmentLeft];
-        
-        UIColor* color = [UIColor colorWithWhite:0.0f alpha:0.7f];
-        attributes = @{
-            NSParagraphStyleAttributeName : style,
-            NSForegroundColorAttributeName : color
-        };
-    });
-    return attributes;
-}
-
 + (NSAttributedString*)attributedTextForMessage:(NSString*)message {
-    NSMutableDictionary* markdownAttributes = [[HEMMarkdown attributesForBackViewText] mutableCopy];
-    markdownAttributes[@(PARA)] = [[self class] messageTextAttributes];
-    return markdown_to_attr_string(message, 0, markdownAttributes);
+    return [markdown_to_attr_string(message, 0, [HEMMarkdown attributesForBackViewText]) trim];
 }
 
 + (CGFloat)contentHeightWithMessage:(NSString*)message inWidth:(CGFloat)contentWidth {
@@ -59,6 +41,16 @@ static CGFloat const HEMInsightCellBaseHeight = 106.0f;
 - (void)prepareForReuse {
     [super prepareForReuse];
     [[self messageLabel] setAttributedText:nil];
+}
+
+- (void)setTitle:(NSString*)title {
+    if (title.length == 0) {
+        self.titleLabel.text = nil;
+        return;
+    }
+    NSDictionary* attributes = [HEMMarkdown attributesForBackViewTitle];
+    NSAttributedString* text = [markdown_to_attr_string(title, 0, attributes) trim];
+    self.titleLabel.attributedText = text;
 }
 
 - (void)setMessage:(NSString*)message {

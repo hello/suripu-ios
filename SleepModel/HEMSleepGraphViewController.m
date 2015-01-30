@@ -42,12 +42,12 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 
 @implementation HEMSleepGraphViewController
 
-static CGFloat const HEMSleepSummaryCellHeight = 390.f;
+static CGFloat const HEMSleepSummaryCellHeight = 384.f;
 static CGFloat const HEMSleepGraphCollectionViewEventTitleOnlyHeight = 106.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 44.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMaximumHeight = 204.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
-static CGFloat const HEMTopItemsConstraintConstant = 10.f;
+static CGFloat const HEMTopItemsConstraintConstant = 4.f;
 static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)viewDidLoad
@@ -159,6 +159,12 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
         self.presleepExpanded = NO;
         [self animateAllCellHeightChanges];
     }
+}
+
+- (void)didLoadSummaryCell:(HEMSleepSummaryCollectionViewCell*)summaryCell
+{
+    if (![self isViewPushed])
+        [self updateTopBarActionsInCell:summaryCell withState:NO];
 }
 
 #pragma mark Top cell actions

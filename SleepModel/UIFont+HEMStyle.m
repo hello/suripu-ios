@@ -17,7 +17,15 @@ static NSString* const HEMFontFamilyNameLightOblique = @"Avenir-LightOblique";
 static NSString* const HEMFontFamilyNameHeavyOblique = @"Avenir-HeavyOblique";
 static NSString* const HEMFontFamilyNameMedium = @"Avenir-Medium";
 static NSString* const HEMNumberFontFamilyNameUltraLight = @"AvenirNext-UltraLight";
+static NSString* const HEMTitleFontFamilyNameDemiBold = @"AvenirNext-DemiBold";
 static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
+
++ (UIFont *)scaledFontWithName:(NSString*)name baseSize:(CGFloat)baseSize {
+    static CGFloat HEMFontBaseScreenWidth = 320.f;
+    CGFloat factor = CGRectGetWidth([[UIScreen mainScreen] bounds]) / HEMFontBaseScreenWidth;
+    NSInteger fontSize = ceilf(baseSize * factor);
+    return [UIFont fontWithName:name size:fontSize];
+}
 
 + (UIFont *)alarmMeridiemFont {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
@@ -28,7 +36,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 }
 
 + (UIFont *)insightTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:10.f];
+    return [UIFont fontWithName:HEMTitleFontFamilyNameDemiBold size:24.f];
 }
 
 + (UIFont *)insightFullMessageFont {
@@ -52,7 +60,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 }
 
 + (UIFont *)settingsTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
 }
 
 + (UIFont *)settingsHelpFont {
@@ -87,12 +95,16 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:36.f];
 }
 
++ (UIFont *)backViewTitleFont {
+    return [UIFont scaledFontWithName:HEMFontFamilyNameHeavy baseSize:11.f];
+}
+
 + (UIFont *)backViewTextFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:13.f];
+    return [UIFont scaledFontWithName:HEMFontFamilyNameLight baseSize:14.f];
 }
 
 + (UIFont *)backViewBoldFont {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
 }
 
 + (UIFont *)timelineEventMessageFont {
@@ -164,7 +176,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 }
 
 + (UIFont *)navButtonTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
 + (UIFont *)confidentialityWarningFont {

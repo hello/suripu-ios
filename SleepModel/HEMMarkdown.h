@@ -11,6 +11,7 @@
 @interface HEMMarkdown : NSObject
 
 + (NSDictionary*)attributesForBackViewText;
++ (NSDictionary*)attributesForBackViewTitle;
 + (NSDictionary*)attributesForInsightViewText;
 + (NSDictionary*)attributesForInsightTitleViewText;
 + (NSDictionary*)attributesForEventMessageText;

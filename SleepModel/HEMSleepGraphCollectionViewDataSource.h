@@ -15,6 +15,7 @@ extern NSString* const HEMSleepEventTypeWakeUp;
 - (void)zoomButtonTapped:(UIButton*)sender;
 - (BOOL)shouldHideShareButton;
 - (BOOL)shouldEnableZoomButton;
+- (void)didLoadSummaryCell:(HEMSleepSummaryCollectionViewCell*)summaryCell;
 
 @end
 

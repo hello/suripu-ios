@@ -276,13 +276,9 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     HEMSleepSummaryCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSummaryReuseIdentifier forIndexPath:indexPath];
     NSInteger score = [self.sleepResult.score integerValue];
     [cell setSleepScore:score animated:YES];
-    if (score == 0) {
-        cell.messageLabel.textAlignment = NSTextAlignmentCenter;
-    } else {
-        cell.messageLabel.textAlignment = NSTextAlignmentLeft;
-    }
+    cell.messageLabel.textAlignment = NSTextAlignmentCenter;
     NSDictionary* attributes = [HEMMarkdown attributesForTimelineMessageText];
-    cell.messageLabel.attributedText = markdown_to_attr_string(self.sleepResult.message, 0, attributes);
+    cell.messageLabel.attributedText = [markdown_to_attr_string(self.sleepResult.message, 0, attributes) trim];
     NSString* dateText = [[[self class] sleepDateFormatter] stringFromDate:self.dateForNightOfSleep];
     NSString* lastNightDateText = [[[self class] sleepDateFormatter] stringFromDate:[NSDate dateWithTimeInterval:-60 * 60 * 24 sinceDate:[NSDate date]]];
     if ([dateText isEqualToString:lastNightDateText])
@@ -294,6 +290,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:0.5];
     else
         [cell.spinnerView stopAnimating];
+    if ([collectionView.delegate respondsToSelector:@selector(didLoadSummaryCell:)])
+        [(id<HEMSleepGraphActionDelegate>)collectionView.delegate didLoadSummaryCell:cell];
     return cell;
 }
 

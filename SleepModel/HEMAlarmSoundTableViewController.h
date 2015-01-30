@@ -3,7 +3,8 @@
 
 @class HEMAlarmCache;
 
-@interface HEMAlarmSoundTableViewController : UITableViewController
+@interface HEMAlarmSoundTableViewController : UIViewController
 
 @property (nonatomic, strong) HEMAlarmCache* alarmCache;
+@property (nonatomic, weak) IBOutlet UITableView* tableView;
 @end

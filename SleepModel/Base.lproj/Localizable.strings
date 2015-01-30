@@ -276,10 +276,10 @@
 "alarm.repeat.days.none" = "Not repeating";
 "alarm.repeat.days.all" = "Everyday";
 "alarm.smart.title" = "Smart Alarm";
-"alarm.delete.title" = "Delete Alarm";
+"alarm.delete.title" = "Delete alarm";
 "alarm.save-error.title" = "Alarm could not be saved";
 "alarm.load-error.title" = "Alarms could not be loaded";
-"alarm.delete.confirm.title" = "Delete Alarm";
+"alarm.delete.confirm.title" = "Delete alarm";
 "alarm.delete.confirm.message" = "Are you sure you want to delete this alarm?";
 "alarm.time-explanation.title" = "Why is alarm time flexible?";
 "alarm.time-explanation.message" = "Sense monitors your sleep depth and determines the best time to start the alarm in the minutes before you need to awaken.";
@@ -457,7 +457,7 @@
 "dialog.help.title" = "I'm having trouble";
 
 // SORelativeDateTransformer
-"date.elapsed.today" = "Today";
+"date.elapsed.today" = "TODAY";
 "date.elapsed.days.format" = "%ldd";
 "date.elapsed.weeks.format" = "%ldw";
 "date.elapsed.years.format" = "%ldy";

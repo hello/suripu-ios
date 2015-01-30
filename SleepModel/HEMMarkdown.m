@@ -14,10 +14,27 @@
 
 + (NSDictionary*)attributesForBackViewText
 {
+    NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
+    style.lineSpacing = 2.f;
+    style.alignment = NSTextAlignmentLeft;
+    UIColor* textColor = [UIColor colorWithWhite:0.3f alpha:1.f];
     return @{
-        @(EMPH) : @{ NSFontAttributeName : [UIFont backViewBoldFont] },
-        @(STRONG) : @{ NSFontAttributeName : [UIFont backViewBoldFont] },
-        @(PLAIN) : @{ NSFontAttributeName : [UIFont backViewTextFont] }
+        @(EMPH) : @{ NSFontAttributeName : [UIFont backViewBoldFont],
+                     NSParagraphStyleAttributeName: style,
+                     NSForegroundColorAttributeName: textColor },
+        @(STRONG) : @{ NSFontAttributeName : [UIFont backViewBoldFont],
+                       NSParagraphStyleAttributeName: style,
+                       NSForegroundColorAttributeName: textColor },
+        @(PARA) : @{ NSFontAttributeName : [UIFont backViewTextFont],
+                     NSParagraphStyleAttributeName: style,
+                     NSForegroundColorAttributeName: textColor }
+    };
+}
+
++ (NSDictionary*)attributesForBackViewTitle
+{
+    return @{
+        @(PARA) : @{ NSKernAttributeName : @(0.6), NSFontAttributeName : [UIFont backViewTitleFont] }
     };
 }
 
@@ -37,7 +54,7 @@
 {
     return @{
         @(PARA) : @{
-             NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.4f],
+             NSForegroundColorAttributeName : [UIColor blackColor],
              NSFontAttributeName : [UIFont insightTitleFont]
         }
     };

@@ -132,14 +132,14 @@
 
 + (void)updateAlarmsFromPresentingController:(UIViewController*)controller completion:(void (^)(BOOL))completion
 {
-    UIBarButtonItem* rightButton = controller.navigationItem.rightBarButtonItem;
+    NSArray* rightButtons = controller.navigationItem.rightBarButtonItems;
     UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     UIBarButtonItem* loadItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
-    controller.navigationItem.rightBarButtonItem = loadItem;
+    controller.navigationItem.rightBarButtonItems = @[loadItem];
     [indicatorView startAnimating];
     [SENAPIAlarms updateAlarms:[SENAlarm savedAlarms] completion:^(id data, NSError* error) {
         [indicatorView stopAnimating];
-        controller.navigationItem.rightBarButtonItem = rightButton;
+        controller.navigationItem.rightBarButtonItems = rightButtons;
         if (error) {
             [self showError:error
                   withTitle:NSLocalizedString(@"alarm.save-error.title", nil)

@@ -55,6 +55,7 @@ static UIColor* _settingsValueTextColor = nil;
 static UIColor* _textfieldTextColor = nil;
 static UIColor* _unknownSensorColor = nil;
 static UIColor* _actionButtonTextColor = nil;
+static UIColor* _alarmSelectionRowColor = nil;
 
 static NSShadow* _onboardingButtonContainerShadow = nil;
 static NSShadow* _actionViewShadow = nil;
@@ -111,6 +112,8 @@ static UIImage* _presleepInsightHumidity = nil;
 static UIImage* _presleepInsightTemperature = nil;
 static UIImage* _presleepInsightUnknown = nil;
 static UIImage* _loading = nil;
+static UIImage* _miniStopButton = nil;
+static UIImage* _miniPlayButton = nil;
 
 #pragma mark Initialization
 
@@ -157,6 +160,7 @@ static UIImage* _loading = nil;
     _textfieldTextColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.7];
     _unknownSensorColor = [UIColor colorWithRed: 0.787 green: 0.787 blue: 0.787 alpha: 1];
     _actionButtonTextColor = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
+    _alarmSelectionRowColor = [UIColor colorWithRed: 0.75 green: 0.75 blue: 0.75 alpha: 1];
 
     // Shadows Initialization
     _onboardingButtonContainerShadow = [NSShadow shadowWithColor: [UIColor.blackColor colorWithAlphaComponent: 0.1] offset: CGSizeMake(0.1, -2.1) blurRadius: 5];
@@ -206,6 +210,7 @@ static UIImage* _loading = nil;
 + (UIColor*)textfieldTextColor { return _textfieldTextColor; }
 + (UIColor*)unknownSensorColor { return _unknownSensorColor; }
 + (UIColor*)actionButtonTextColor { return _actionButtonTextColor; }
++ (UIColor*)alarmSelectionRowColor { return _alarmSelectionRowColor; }
 
 #pragma mark Shadows
 
@@ -266,6 +271,8 @@ static UIImage* _loading = nil;
 + (UIImage*)presleepInsightTemperature { return _presleepInsightTemperature ?: (_presleepInsightTemperature = [UIImage imageNamed: @"presleepInsightTemperature"]); }
 + (UIImage*)presleepInsightUnknown { return _presleepInsightUnknown ?: (_presleepInsightUnknown = [UIImage imageNamed: @"presleepInsightUnknown"]); }
 + (UIImage*)loading { return _loading ?: (_loading = [UIImage imageNamed: @"loading"]); }
++ (UIImage*)miniStopButton { return _miniStopButton ?: (_miniStopButton = [UIImage imageNamed: @"miniStopButton"]); }
++ (UIImage*)miniPlayButton { return _miniPlayButton ?: (_miniPlayButton = [UIImage imageNamed: @"miniPlayButton"]); }
 
 #pragma mark Drawing Methods
 

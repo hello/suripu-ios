@@ -56,6 +56,7 @@
 + (UIColor*)textfieldTextColor;
 + (UIColor*)unknownSensorColor;
 + (UIColor*)actionButtonTextColor;
++ (UIColor*)alarmSelectionRowColor;
 
 // Shadows
 + (NSShadow*)onboardingButtonContainerShadow;
@@ -114,6 +115,8 @@
 + (UIImage*)presleepInsightTemperature;
 + (UIImage*)presleepInsightUnknown;
 + (UIImage*)loading;
++ (UIImage*)miniStopButton;
++ (UIImage*)miniPlayButton;
 
 // Drawing Methods
 + (void)drawSleepScoreGraphWithSleepScore: (CGFloat)sleepScore;

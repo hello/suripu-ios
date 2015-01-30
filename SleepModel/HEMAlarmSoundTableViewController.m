@@ -111,12 +111,25 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
                                                                           forIndexPath:indexPath];
 
     SENSound* sound = [self.possibleSleepSounds objectAtIndex:indexPath.row];
+    BOOL isSelected = [sound.displayName isEqualToString:self.alarmCache.soundName];
+    BOOL isLoading = [self.loadingIndexPath isEqual:indexPath];
     cell.titleLabel.text = sound.displayName;
-    cell.disclosureImageView.hidden = ![sound.displayName isEqualToString:self.alarmCache.soundName];
-    if ([self.loadingIndexPath isEqual:indexPath])
+    cell.disclosureImageView.hidden = !isSelected;
+    cell.titleLabel.textColor = isSelected
+        ? [HelloStyleKit alarmSelectionRowColor] : [HelloStyleKit backViewNavTitleColor];
+    if (isLoading) {
         [cell.loadingIndicatorView startAnimating];
-    else
+    } else {
         [cell.loadingIndicatorView stopAnimating];
+    }
+    if (isSelected && !isLoading) {
+        UIImage* image = [self.player isPlaying]
+            ? [HelloStyleKit miniStopButton] : [HelloStyleKit miniPlayButton];
+        [cell.playStopButton setImage:image forState:UIControlStateNormal];
+        cell.playStopButton.hidden = NO;
+    } else {
+        cell.playStopButton.hidden = YES;
+    }
     return cell;
 }
 
@@ -157,6 +170,15 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
 
 #pragma mark - Audio
 
+- (IBAction)toggleAudio:(UIButton*)sender
+{
+    if ([self.player isPlaying]) {
+        [self stopAudio];
+    } else {
+        [self playAudio];
+    }
+}
+
 - (void)playAudioForSelectedSound
 {
     [self stopAudio];
@@ -169,7 +191,9 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
         __strong typeof(weakSelf) strongSelf = weakSelf;
         NSData* urlData = [NSData dataWithContentsOfURL:url];
         if (!urlData) {
-            [strongSelf stopLoadingAnimation];
+            [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
+                [strongSelf stopLoadingAnimation];
+            }]];
             return;
         }
 
@@ -180,21 +204,40 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
             strongSelf.player.delegate = self;
             if (error)
                 [strongSelf stopAudio];
-            else
+            else {
                 [strongSelf playAudio];
+            }
         }]];
     }]];
 }
 
 - (void)playAudio
 {
-    [self.player play];
+    if (self.player) {
+        [self.player play];
+        [self updatePlayButtonWithImage:[HelloStyleKit miniStopButton]];
+    } else {
+        self.loadingIndexPath = [NSIndexPath indexPathForRow:[self selectedSoundIndex] inSection:0];
+        [self.tableView reloadData];
+        [self playAudioForSelectedSound];
+    }
 }
 
 - (void)stopAudio
 {
     [self.player stop];
-    self.player = nil;
+    self.player.currentTime = 0;
+    [self updatePlayButtonWithImage:[HelloStyleKit miniPlayButton]];
+}
+
+- (void)updatePlayButtonWithImage:(UIImage*)image
+{
+    NSInteger selectedIndex = [self selectedSoundIndex];
+    if (selectedIndex == NSNotFound || selectedIndex >= [self.tableView numberOfRowsInSection:0])
+        return;
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:selectedIndex inSection:0];
+    HEMAlarmPropertyTableViewCell* cell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
+    [cell.playStopButton setImage:image forState:UIControlStateNormal];
 }
 
 - (void)stopLoadingAnimation

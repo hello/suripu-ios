@@ -28,6 +28,7 @@
 +(NSString *)pushToAudioSegueIdentifier;
 +(NSString *)senseToPillSegueIdentifier;
 +(NSString *)signupToNoBleSegueIdentifier;
++(NSString *)skipPillPairSegue;
 +(NSString *)weightSegueIdentifier;
 +(NSString *)wifiSegueIdentifier;
 +(NSString *)wifiPasswordSegueIdentifier;

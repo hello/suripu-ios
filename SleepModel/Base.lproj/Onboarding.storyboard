@@ -1070,7 +1070,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z94-uI-D3y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12433" y="915"/>
+            <point key="canvasLocation" x="12477" y="545"/>
         </scene>
         <!--Setup Another Pill View Controller-->
         <scene sceneID="HZY-VN-bUX">
@@ -1292,6 +1292,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="titleHeightConstraint" destination="jPj-6g-PN4" id="0kL-tC-IyC"/>
                         <outlet property="titleLabel" destination="beC-YD-29R" id="YuT-R4-1d3"/>
                         <segue destination="4s2-Gt-ovZ" kind="push" identifier="done" id="QBf-6a-MaN"/>
+                        <segue destination="DIj-70-bYO" kind="push" identifier="skipPillPairSegue" id="7LA-fg-2Jb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rQM-de-S9i" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2641,6 +2642,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     <inferredMetricsTieBreakers>
         <segue reference="ZOJ-Sh-Dzx"/>
         <segue reference="azr-Tk-rB7"/>
+        <segue reference="7LA-fg-2Jb"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

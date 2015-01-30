@@ -290,7 +290,11 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [SENAnalytics track:kHEMAnalyticsEventOnBSkip properties:@{
         kHEMAnalyticsEventPropOnBScreen : kHEMAnalyticsEventPropScreenPillPairing
     }];
-    [self proceed];
+    
+    [[self manager] setLED:SENSenseLEDStateOff completion:nil]; // fire and forget is ok here
+    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+    NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
+    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 - (void)cancel:(id)sender {

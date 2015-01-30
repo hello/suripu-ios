@@ -113,8 +113,8 @@
 /* Class = "IBUILabel"; text = "A Pill is required to track your sleep"; ObjectID = "lvQ-Zb-w2d"; */
 "lvQ-Zb-w2d.text" = "A Sleep Pill is required to track your sleep";
 
-/* Class = "IBUINavigationItem"; title = "Devices"; ObjectID = "oGK-em-S7y"; */
-"oGK-em-S7y.title" = "Devices";
+/* Class = "IBUINavigationItem"; title = "Sense and Sleep Pill"; ObjectID = "oGK-em-S7y"; */
+"oGK-em-S7y.title" = "Sense and Sleep Pill";
 
 /* Class = "IBUILabel"; text = "No Sleep Pill Paired"; ObjectID = "osF-5a-Bv8"; */
 "osF-5a-Bv8.text" = "No Sleep Pill Paired";

@@ -5,6 +5,7 @@
 #import "HEMMiniGraphCollectionViewCell.h"
 #import "HEMMiniSleepHistoryView.h"
 #import "HEMMiniSleepScoreGraphView.h"
+#import "NSDate+HEMRelative.h"
 
 @interface HEMSleepHistoryViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 
@@ -65,7 +66,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (void)configureDateFormatters
 {
-    self.calendar = [NSCalendar currentCalendar];
+    self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     self.dayFormatter = [NSDateFormatter new];
     self.dayFormatter.dateFormat = @"d";
     self.dayOfWeekFormatter = [NSDateFormatter new];
@@ -87,8 +88,13 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 {
     static NSInteger const sleepDataCapacity = 120;
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:sleepDataCapacity];
+    NSDateComponents* components = [NSDateComponents new];
+    NSDate* today = [[NSDate date] dateAtMidnight];
     for (int i = sleepDataCapacity; i > 0; i--) {
-        NSDate* date = [NSDate dateWithTimeIntervalSinceNow:i * -(60 * 60 * 24)];
+        components.day = -i;
+        NSDate* date = [self.calendar dateByAddingComponents:components
+                                                      toDate:today
+                                                     options:0];
         [self.sleepDataSummaries addObject:[SENSleepResult sleepResultForDate:date]];
     }
 }

@@ -68,7 +68,7 @@ static CGFloat const HEMGraphLabelInset = 5.f;
     CGFloat sectionWidth = CGRectGetWidth(self.bounds)/count;
     CGFloat sectionHeight = CGRectGetHeight(self.bounds);
     CGFloat bottomLabelOffset = CGRectGetHeight(self.bounds) * 0.8;
-    NSArray* locations = @[@(0.2), @1];
+    NSArray* locations = @[@(0.2), @(0.75)];
     NSArray* colors = @[(id)[[[UIColor blackColor] colorWithAlphaComponent:0.05] CGColor],
                         (id)[[UIColor clearColor] CGColor]];
     for (int i = 0 ; i < count; i++) {

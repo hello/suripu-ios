@@ -8,6 +8,7 @@
 
 #import <SenseKit/SENAPITrends.h>
 #import <SenseKit/SENTrend.h>
+#import <AttributedMarkdown/markdown_peg.h>
 #import "HEMTrendsViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
@@ -15,6 +16,7 @@
 #import "HEMTrendCollectionViewCell.h"
 #import "HEMEmptyTrendCollectionViewCell.h"
 #import "HEMGraphSectionOverlayView.h"
+#import "HEMMarkdown.h"
 
 @interface HEMTrendsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, HEMTrendCollectionViewCellDelegate>
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
@@ -158,12 +160,12 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSDictionary* attributes = @{NSKernAttributeName: @(2.2)};
+    NSDictionary* attributes = [HEMMarkdown attributesForBackViewTitle][@(PARA)];
     if (self.defaultTrends.count == 0) {
         return [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
     }
     SENTrend* trend = self.defaultTrends[indexPath.row];
-    NSAttributedString* title = [[NSAttributedString alloc] initWithString:trend.title attributes:attributes];;
+    NSAttributedString* title = [[NSAttributedString alloc] initWithString:trend.title attributes:attributes];
     if (trend.dataPoints.count <= 2) {
         HEMEmptyTrendCollectionViewCell* cell = [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
         cell.titleLabel.attributedText = title;

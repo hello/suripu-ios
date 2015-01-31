@@ -22,6 +22,7 @@
 
 @property (weak, nonatomic) IBOutlet UITableView* tableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* tableViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* lineViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIPickerView* pickerView;
 @property (weak, nonatomic) IBOutlet UIView* pickerContainerView;
 @property (weak, nonatomic) IBOutlet UIView* gradientView;
@@ -60,9 +61,11 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 {
     [super viewDidLoad];
     self.use12Hour = [SENSettings timeFormat] == SENTimeFormat12Hour;
+    self.lineViewHeightConstraint.constant = 0.5;
     [self configurePickerContainerView];
     [self configureAlarmCache];
     [self loadDefaultAlarmSound];
+    [self configureBarButtonItems];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -99,6 +102,23 @@ static NSUInteger const HEMAlarm24HourCount = 24;
     }];
 }
 
+- (void)configureBarButtonItems
+{
+    static CGFloat const HEMAlarmBarButtonSpace = 12.f;
+    UIBarButtonItem *leftFixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                                                                    target:nil
+                                                                                    action:nil];
+    leftFixedSpace.width = HEMAlarmBarButtonSpace;
+    UIBarButtonItem *rightFixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                                                                     target:nil
+                                                                                     action:nil];
+    rightFixedSpace.width = HEMAlarmBarButtonSpace;
+    UIBarButtonItem* leftItem = self.navigationItem.leftBarButtonItem;
+    self.navigationItem.leftBarButtonItems = @[leftFixedSpace, leftItem];
+    UIBarButtonItem* rightItem = self.navigationItem.rightBarButtonItem;
+    self.navigationItem.rightBarButtonItems = @[rightFixedSpace, rightItem];
+}
+
 - (void)configurePickerContainerView
 {
     self.pickerContainerView.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:1.f].CGColor;
@@ -113,7 +133,7 @@ static NSUInteger const HEMAlarm24HourCount = 24;
     CAGradientLayer* layer = [CAGradientLayer layer];
     layer.colors = colors;
     layer.frame = self.gradientView.bounds;
-    layer.locations = @[ @0, @(0.4), @(0.6), @1 ];
+    layer.locations = @[ @0, @(0.15), @(0.85), @1 ];
     layer.startPoint = CGPointZero;
     layer.endPoint = CGPointMake(0, 1);
     [self.gradientView.layer insertSublayer:layer atIndex:0];

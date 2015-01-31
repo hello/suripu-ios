@@ -15,6 +15,7 @@
 
 @property (nonatomic, strong) NSArray* repeatOptions;
 @property (nonatomic, strong) NSMutableArray* selectedRepeatOptions;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* lineViewHeightConstraint;
 @end
 
 @implementation HEMAlarmRepeatTableViewController
@@ -23,6 +24,7 @@
 {
     [super viewDidLoad];
     self.title = NSLocalizedString(@"alarm.repeat.title", nil);
+    self.lineViewHeightConstraint.constant = 0.5;
     self.tableView.tableFooterView = [UIView new];
     self.repeatOptions = @[
         NSLocalizedString(@"alarm.repeat.days.sunday", nil),

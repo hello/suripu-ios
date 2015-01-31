@@ -15,4 +15,5 @@
 @property (nonatomic, weak) IBOutlet UIImageView* disclosureImageView;
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
 @property (nonatomic, weak) IBOutlet RTSpinKitView* loadingIndicatorView;
+@property (nonatomic, weak) IBOutlet UIButton* playStopButton;
 @end

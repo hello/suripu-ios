@@ -16,11 +16,12 @@
 {
     self.disclosureImageView.hidden = YES;
     self.loadingIndicatorView.hidesWhenStopped = YES;
-    self.loadingIndicatorView.color = [HelloStyleKit tabBarUnselectedColor];
+    self.loadingIndicatorView.color = [HelloStyleKit tintColor];
     self.loadingIndicatorView.spinnerSize = CGRectGetHeight(self.loadingIndicatorView.bounds);
-    self.loadingIndicatorView.style = RTSpinKitViewStyleThreeBounce;
+    self.loadingIndicatorView.style = RTSpinKitViewStyleArc;
     self.loadingIndicatorView.hidesWhenStopped = YES;
     self.loadingIndicatorView.backgroundColor = [UIColor clearColor];
+    self.playStopButton.hidden = YES;
     [self.loadingIndicatorView stopAnimating];
 }
 

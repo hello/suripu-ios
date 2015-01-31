@@ -24,7 +24,7 @@
 "sign-up.error.conflict" = "The email address you entered is already in use.";
 "sign-up.error.generic" = "Something went wrong. Please try again.";
 "sign-up.error.password-too-short" = "Your password is too short.";
-"sign-up.error.password-insecure" = "Your password is not secure enough";
+"sign-up.error.password-insecure" = "Your password is not secure enough.";
 "sign-up.error.name-too-short" = "Your name is too short.";
 "sign-up.error.name-too-long" = "Your name is too long.";
 
@@ -66,20 +66,20 @@
 "pairing.activity.pairing-sense" = "Pairing with Sense";
 "pairing.activity.scanning-sense" = "Looking for Sense";
 "pairing.activity.connecting-sense-ble" = "Connecting to Sense over Bluetooth";
-"pairing.activity.bluetooth-not-on" = "Bluetooth is required to pair with your Sleep Pill.  Make sure it's on and try again.";
-"pairing.activity.looking-for-pill" = "Looking for your Sleep Pill";
+"pairing.activity.bluetooth-not-on" = "Bluetooth is required to pair your Sleep Pill.  Make sure it's on and try again.";
+"pairing.activity.looking-for-pill" = "Looking for Sleep Pill";
 "pairing.activity.connecting-sense" = "Connecting to Sense";
 "pairing.activity.linking-account" = "Linking account to Sense";
 "pairing.activity.setting-timezone" = "Setting timezone";
 "pairing.failed.title" = "Pairing Failed";
-"pairing.error.sense-not-found" = "Could not detect a Sense nearby.  Make sure Sense is plugged in, nearby, and in pairing mode.";
-"pairing.error.could-not-pair" = "Could not connect to your Sense to pair.  Please make sure your Sense is plugged in, nearby, and in Pairing Mode.";
+"pairing.error.sense-not-found" = "Could not detect a Sense nearby.  Make sure Sense is plugged in, nearby, and in pairing mode. Ensure no other devices are connected with Sense over Bluetooth.";
+"pairing.error.could-not-pair" = "Could not connect to your Sense to pair.  Please make sure your Sense is plugged in, nearby, and in Pairing Mode. Ensure no other devices are connected with Sense over Bluetooth.";
 "pairing.error.unexpected-disconnect" = "The connection with Sense was broken. Please try again.";
 "pairing.error.link-account-failed" = "Your account could not be linked with Sense.";
 "pairing.error.set-timezone-failed" = "There was a problem setting your timezone.";
 "pairing.error.timed-out" = "Sense did not respond in time.";
 "pairing.done" = "Paired";
-"pairing.pill.error.title" = "Pill Pairing Failed";
+"pairing.pill.error.title" = "Sleep Pill Pairing Failed";
 "pairing.error.pill-already-paired" = "This Sleep Pill is already paired with another account.";
 "pairing.error.fail-to-load-paired-info" = "Could not load paired Sense information.";
 "pairing.error.sense-not-found" = "Could not connect to your Sense to pair your Sleep Pill.";
@@ -119,7 +119,7 @@
 "location.error.weak-signal" = "We were unable to obtain your location.  Try moving to a different location and try again.";
 
 // setting up second pill
-"setup.second-pill.subtitle" = "If you're using Sense with a partner, they can set up their Sleep Pill at this time. They can always do this later.";
+"setup.second-pill.subtitle" = "If you're using Sense with a partner, they can create an account and set up their own Sleep Pill at this time. If your partner is not nearby, they can always do this later.";
 "setup.second-pill.error.title" = "Failed to enable Pairing Mode";
 "setup.second-pill.error.failed-to-enable-pairing-mode" = "Could not enable Pairing Mode on Sense.";
 "setup.second-pill.error.sense-full" = "Sense cannot pair with any more devices.";
@@ -223,7 +223,7 @@
 "settings.sense.enabling-pairing-mode" = "Enabling pairing mode";
 "settings.device.restoring-factory-settings" = "Restoring to Factory Settings";
 "settings.device.dialog.factory-restore-title" = "Restore Sense to Factory Settings?";
-"settings.device.dialog.factory-restore-message" = "Are you sure you want to restore Sense to factory settings? You will need to have a Sense paired to continue using the application.\n\nOnce complete, you will need to take one more step by going to the Settings App > Bluetooth, and 'forget' Sense from the list of devices.";
+"settings.device.dialog.factory-restore-message" = "Are you sure you want to restore Sense to factory settings? This will disconnect your account from Sense, as well as any Sleep Pills you've paired. You will need to have a Sense paired to continue using the application.";
 "settings.factory-restore.error.title" = "Factory restore failed";
 "settings.factory-restore.error.unlink-pill" = "Unable to remove your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
 "settings.factory-restore.error.unlink-sense" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";
@@ -277,10 +277,10 @@
 "alarm.repeat.days.none" = "Not repeating";
 "alarm.repeat.days.all" = "Everyday";
 "alarm.smart.title" = "Smart Alarm";
-"alarm.delete.title" = "Delete Alarm";
+"alarm.delete.title" = "Delete alarm";
 "alarm.save-error.title" = "Alarm could not be saved";
 "alarm.load-error.title" = "Alarms could not be loaded";
-"alarm.delete.confirm.title" = "Delete Alarm";
+"alarm.delete.confirm.title" = "Delete alarm";
 "alarm.delete.confirm.message" = "Are you sure you want to delete this alarm?";
 "alarm.time-explanation.title" = "Why is alarm time flexible?";
 "alarm.time-explanation.message" = "Sense monitors your sleep depth and determines the best time to start the alarm in the minutes before you need to awaken.";
@@ -459,7 +459,7 @@
 "dialog.help.title" = "I'm having trouble";
 
 // SORelativeDateTransformer
-"date.elapsed.today" = "Today";
+"date.elapsed.today" = "TODAY";
 "date.elapsed.days.format" = "%ldd";
 "date.elapsed.weeks.format" = "%ldw";
 "date.elapsed.years.format" = "%ldy";

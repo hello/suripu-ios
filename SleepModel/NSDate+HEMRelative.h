@@ -32,4 +32,12 @@
  */
 - (NSString*)timeAgo;
 
+- (NSDate*)dateAtMidnight;
+
+- (NSDate*)nextDay;
+
+- (NSDate*)previousDay;
+
+- (BOOL)isOnSameDay:(NSDate *)otherDate;
+
 @end

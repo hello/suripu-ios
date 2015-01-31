@@ -12,7 +12,11 @@
 
 - (NSString*)elapsed {
     NSDate *now = [NSDate date];
-    long days = (long)fabs(ceilf([self timeIntervalSinceDate:now] / 86400.0f)) ;
+    NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSDateComponents* components = [calendar components:NSDayCalendarUnit
+                                               fromDate:self
+                                                 toDate:now options:NSCalendarMatchStrictly];
+    long days = components.day;
     NSString* elapsed = nil;
     
     if (days < 1) {
@@ -38,6 +42,40 @@
     // wrapping SORelativeDateTransformer in case we no longer use it in the future
     NSValueTransformer* xform = [SORelativeDateTransformer registeredTransformer];
     return [xform transformedValue:self];
+}
+
+- (NSDate*)dateAtMidnight
+{
+    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSUInteger preservedComponents = (NSYearCalendarUnit | NSMonthCalendarUnit | NSDayCalendarUnit);
+    return [calendar dateFromComponents:[calendar components:preservedComponents fromDate:self]];
+}
+
+- (NSDate*)nextDay {
+    return [self daysFromNow:1];
+}
+
+- (NSDate*)previousDay {
+    return [self daysFromNow:-1];
+}
+
+- (NSDate*)daysFromNow:(NSInteger)days {
+    NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSDateComponents* components = [NSDateComponents new];
+    components.day = days;
+    return [calendar dateByAddingComponents:components
+                                     toDate:self
+                                    options:NSCalendarWrapComponents];
+}
+
+- (BOOL)isOnSameDay:(NSDate*)otherDate
+{
+    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSCalendarUnit flags = (NSMonthCalendarUnit| NSYearCalendarUnit | NSDayCalendarUnit);
+    NSDateComponents *components = [calendar components:flags fromDate:self];
+    NSDateComponents *otherComponents = [calendar components:flags fromDate:otherDate];
+
+    return ([components day] == [otherComponents day] && [components month] == [otherComponents month] && [components year] == [otherComponents year]);
 }
 
 @end

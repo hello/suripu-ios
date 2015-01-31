@@ -1,7 +1,7 @@
 
-#import <SenseKit/SENAlarm.h>
-#import <SenseKit/SENSettings.h>
+#import <SenseKit/Model.h>
 #import <SpinKit/RTSpinKitView.h>
+#import <AttributedMarkdown/markdown_peg.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -315,13 +315,13 @@ static NSUInteger const HEMAlarmListLimit = 8;
     HEMAlarmListCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
     NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
     style.lineSpacing = 8.f;
-    NSDictionary* detailAttributes = @{NSParagraphStyleAttributeName:style};
+    NSMutableDictionary* detailAttributes = [[HEMMarkdown attributesForBackViewText][@(PARA)] mutableCopy];
+    [detailAttributes removeObjectForKey:NSForegroundColorAttributeName];
     NSString* messageKey = [self isLoading] ? @"activity.loading" : @"alarms.no-alarm.message";
     cell.detailLabel.attributedText = [[NSAttributedString alloc] initWithString:NSLocalizedString(messageKey, nil)
                                                                       attributes:detailAttributes];
-    NSDictionary* attributes = [HEMMarkdown attributesForInsightTitleViewText];
     NSString* title = [NSLocalizedString(@"alarms.no-alarm.title", nil) uppercaseString];
-    cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:title attributes:attributes];
+    cell.titleLabel.text = title;
     return cell;
 }
 
@@ -358,11 +358,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
     NSString* repeatText = [HEMAlarmUtils repeatTextForUnitFlags:alarm.repeatFlags];
     NSString* detailText = [[NSString stringWithFormat:detailFormat, repeatText] uppercaseString];
-    NSDictionary* attributes = @{
-        NSFontAttributeName : cell.titleLabel.font,
-        NSForegroundColorAttributeName : cell.titleLabel.textColor,
-        NSKernAttributeName : @(1.3f)
-    };
+    NSDictionary* attributes = [HEMMarkdown attributesForBackViewTitle][@(PARA)];
 
     cell.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:detailText attributes:attributes];
 }

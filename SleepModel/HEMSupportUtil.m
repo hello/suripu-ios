@@ -61,7 +61,7 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
 }
 
 + (void)openHelpFrom:(UIViewController*)controller {
-    NSString* helpURLString = NSLocalizedString(@"help.url.troubleshooting", nil);
+    NSString* helpURLString = NSLocalizedString(@"help.url.support", nil);
     [self openURL:helpURLString from:controller];
 }
 

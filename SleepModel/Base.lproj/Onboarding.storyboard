@@ -223,6 +223,7 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
+                                    <segue destination="4s2-Gt-ovZ" kind="push" id="qiQ-wo-fCO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -1099,21 +1100,9 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bxA-UX-1gL">
-                                <rect key="frame" x="20" y="143" width="560" height="293"/>
-                                <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pairOfPills.png" translatesAutoresizingMaskIntoConstraints="NO" id="woJ-aC-K2e">
-                                        <rect key="frame" x="70" y="70" width="420" height="117"/>
-                                    </imageView>
-                                </subviews>
-                                <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="bottom" secondItem="woJ-aC-K2e" secondAttribute="bottom" constant="70" id="Gac-75-ZcL"/>
-                                    <constraint firstItem="woJ-aC-K2e" firstAttribute="leading" secondItem="bxA-UX-1gL" secondAttribute="leading" constant="70" id="Lpf-YQ-JkS"/>
-                                    <constraint firstAttribute="trailing" secondItem="woJ-aC-K2e" secondAttribute="trailing" constant="70" id="V4r-tx-z2d"/>
-                                    <constraint firstItem="woJ-aC-K2e" firstAttribute="top" secondItem="bxA-UX-1gL" secondAttribute="top" constant="70" id="zbF-St-jcn"/>
-                                </constraints>
-                            </view>
+                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pairOfPills.png" translatesAutoresizingMaskIntoConstraints="NO" id="woJ-aC-K2e">
+                                <rect key="frame" x="210" y="252" width="180" height="117"/>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4OB-Af-zlr">
                                 <rect key="frame" x="20" y="475" width="560" height="50"/>
                                 <constraints>
@@ -1155,19 +1144,18 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <constraints>
                             <constraint firstItem="iMZ-p6-gA8" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="0vv-vX-Ygi"/>
                             <constraint firstItem="Kgp-n3-6dl" firstAttribute="bottom" secondItem="4OB-Af-zlr" secondAttribute="bottom" constant="55" id="31H-a3-rki"/>
-                            <constraint firstItem="bxA-UX-1gL" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="3R3-xC-sNU"/>
+                            <constraint firstAttribute="centerX" secondItem="woJ-aC-K2e" secondAttribute="centerX" id="49O-wI-vGw"/>
                             <constraint firstItem="eDs-8j-Vd9" firstAttribute="bottom" secondItem="iMZ-p6-gA8" secondAttribute="top" constant="-10" id="5uD-Lr-dgP"/>
                             <constraint firstItem="Kgp-n3-6dl" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="WiM-De-dUF"/>
                             <constraint firstItem="4OB-Af-zlr" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="Y2G-Fy-KwT"/>
                             <constraint firstItem="eDs-8j-Vd9" firstAttribute="top" secondItem="mVd-qk-DaN" secondAttribute="bottom" constant="4" id="Zqc-Sd-kGI"/>
                             <constraint firstItem="eDs-8j-Vd9" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="cKG-3r-Ovw"/>
                             <constraint firstItem="RB7-rd-PIm" firstAttribute="top" secondItem="Kgp-n3-6dl" secondAttribute="bottom" constant="20" id="lBO-vO-6sx"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="bxA-UX-1gL" secondAttribute="trailing" constant="4" id="ohl-Tx-Nyb"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iMZ-p6-gA8" secondAttribute="trailing" constant="4" id="peW-PL-F0w"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Kgp-n3-6dl" secondAttribute="trailing" constant="4" id="q3M-4F-1ZN"/>
+                            <constraint firstAttribute="centerY" secondItem="woJ-aC-K2e" secondAttribute="centerY" constant="-10" id="qDH-Ps-8Fq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eDs-8j-Vd9" secondAttribute="trailing" constant="4" id="tfB-Dc-aN6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4OB-Af-zlr" secondAttribute="trailing" constant="4" id="tqI-cW-YSV"/>
-                            <constraint firstItem="bxA-UX-1gL" firstAttribute="top" secondItem="iMZ-p6-gA8" secondAttribute="top" constant="65" id="wiJ-pz-CA6"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="k5R-E8-szC"/>
@@ -2640,6 +2628,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="smartAlarm.png" width="203" height="203"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="qiQ-wo-fCO"/>
         <segue reference="ZOJ-Sh-Dzx"/>
         <segue reference="azr-Tk-rB7"/>
         <segue reference="7LA-fg-2Jb"/>

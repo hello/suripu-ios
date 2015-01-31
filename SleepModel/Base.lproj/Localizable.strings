@@ -47,7 +47,6 @@
 "onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulties falling asleep.";
 
 // help links
-"help.url.troubleshooting" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8";
 "help.url.order-form" = "https://order.hello.is/";
 "help.url.support" = "https://support.hello.is";
 "help.email.address" = "help@sayhello.com";

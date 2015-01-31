@@ -33,29 +33,14 @@
 
     [self enableBackButton:NO];
     [self showHelpButton];
-    [self turnOnLEDBriefly];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBPillPlacement];
-}
-
-- (void)turnOnLEDBriefly {
-    [self setWaitingForLED:YES];
-    __weak typeof(self) weakSelf = self;
-    [[self manager] setLED:SENSenseLEDStatePair completion:^(__unused id response, __unused  NSError *error) {
-        __strong typeof (weakSelf) strongSelf = weakSelf;
-        if ([[strongSelf navigationController] topViewController] != strongSelf) {
-            [[strongSelf manager] setLED:SENSenseLEDStateOff completion:nil];
-        }
-        [strongSelf setWaitingForLED:NO];
-    }];
 }
 
 #pragma mark - Actions
 
 - (IBAction)next:(id)sender {
-    if (![self isWaitingForLED]) {
-        [[self manager] setLED:SENSenseLEDStateOff completion:nil];
-    }
+    [[self manager] setLED:SENSenseLEDStateOff completion:nil];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard pillSetupToColorsSegueIdentifier]
                               sender:self];
 }

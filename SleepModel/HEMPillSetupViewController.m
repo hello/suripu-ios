@@ -22,8 +22,7 @@
 @interface HEMPillSetupViewController ()
 
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraint;
-
+@property (assign, nonatomic, getter=isWaitingForLED) BOOL waitingForLED;
 
 @end
 
@@ -34,19 +33,29 @@
 
     [self enableBackButton:NO];
     [self showHelpButton];
+    [self turnOnLEDBriefly];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBPillPlacement];
 }
 
-- (SENSenseManager*)manager {
-    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
-    return manager ? manager : [[HEMOnboardingCache sharedCache] senseManager];
+- (void)turnOnLEDBriefly {
+    [self setWaitingForLED:YES];
+    __weak typeof(self) weakSelf = self;
+    [[self manager] setLED:SENSenseLEDStatePair completion:^(__unused id response, __unused  NSError *error) {
+        __strong typeof (weakSelf) strongSelf = weakSelf;
+        if ([[strongSelf navigationController] topViewController] != strongSelf) {
+            [[strongSelf manager] setLED:SENSenseLEDStateOff completion:nil];
+        }
+        [strongSelf setWaitingForLED:NO];
+    }];
 }
 
 #pragma mark - Actions
 
 - (IBAction)next:(id)sender {
-    [[self manager] setLED:SENSenseLEDStateOff completion:nil];
+    if (![self isWaitingForLED]) {
+        [[self manager] setLED:SENSenseLEDStateOff completion:nil];
+    }
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard pillSetupToColorsSegueIdentifier]
                               sender:self];
 }

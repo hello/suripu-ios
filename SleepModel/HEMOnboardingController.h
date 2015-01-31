@@ -8,17 +8,27 @@
 
 #import "HEMBaseController.h"
 
+@class SENSenseManager;
+
 @interface HEMOnboardingController : HEMBaseController
 
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* descriptionLabel;
 
 - (UIBarButtonItem*)cancelItem;
+- (SENSenseManager*)manager;
 - (void)showCancelButtonWithSelector:(SEL)selector;
 - (void)enableBackButton:(BOOL)enable;
 - (void)showHelpButton;
 - (void)stylePrimaryButton:(UIButton*)button
            secondaryButton:(UIButton*)secondaryButton
               withDelegate:(BOOL)hasDelegate;
+- (void)showActivityWithMessage:(NSString*)message
+                     completion:(void(^)(void))completion;
+- (void)stopActivityWithMessage:(NSString*)message
+                        success:(BOOL)sucess
+                     completion:(void(^)(void))completion;
+- (void)updateActivityText:(NSString*)updateMessage
+                completion:(void(^)(BOOL finished))completion;
 
 @end

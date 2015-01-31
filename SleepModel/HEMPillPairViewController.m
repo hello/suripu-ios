@@ -19,10 +19,10 @@
 #import "HEMOnboardingCache.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingUtils.h"
-#import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
 #import "HelloStyleKit.h"
 #import "HEMBluetoothUtils.h"
+#import "HEMDialogViewController.h"
 
 static CGFloat const kHEMPillPairStartDelay = 2.0f;
 static CGFloat const kHEMPillPairAnimDuration = 0.5f;
@@ -36,7 +36,6 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *retryButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
 
-@property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL pairTimedOut;
 @property (assign, nonatomic, getter=isLoaded) BOOL loaded;
@@ -129,11 +128,6 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     }];
 }
 
-- (SENSenseManager*)manager {
-    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
-    return manager ? manager : [[HEMOnboardingCache sharedCache] senseManager];
-}
-
 - (void)listenForDisconnects {
     SENSenseManager* manager = [self manager];
     if ([self disconnectObserverId] == nil && manager != nil) {
@@ -172,20 +166,15 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 
 - (void)scanForPairedSense:(void(^)(SENSenseManager* manager))completion {
     NSString* message = NSLocalizedString(@"pairing.activity.connecting-sense-ble", nil);
-    [self setActivityView:[[HEMActivityCoverView alloc] init]];
-    [[self activityView] showInView:[[self navigationController] view] withText:message activity:YES completion:^{
-        
+    [self showActivityWithMessage:message completion:^{
         __weak typeof(self) weakSelf = self;
         [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
             __block typeof(weakSelf) strongSelf = weakSelf;
             if (error != nil) {
                 
-                [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                    [strongSelf setActivityView:nil];
-                    
+                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                     NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
                     [strongSelf showError:error customMessage:msg];
-                    
                     completion (nil);
                 }];
                 
@@ -194,16 +183,13 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
             
             DDLogVerbose(@"looking for sense to trigger pill pairing");
             [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
-                [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                    [strongSelf setActivityView:nil];
-                    
+                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                     if (error != nil) {
                         NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
                         [strongSelf showError:error customMessage:msg];
                         completion (nil);
                         return;
                     }
-                    
                     completion ([[SENServiceDevice sharedService] senseManager]);
                 }];
             }];
@@ -244,57 +230,52 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)flashPairedState {
-    if ([self activityView] != nil) {
-        [[self activityView] removeFromSuperview]; // just kill what is showing, if it's there
-    }
-    
-    [self setActivityView:[[HEMActivityCoverView alloc] init]];
-    
     NSString* paired = NSLocalizedString(@"pairing.done", nil);
-    [[self activityView] showInView:[[self navigationController] view] withText:paired activity:NO completion:^{
+    [self showActivityWithMessage:paired completion:^{
         [[self cancelItem] setEnabled:YES];
         
-        __block BOOL ledSet = NO;
-        __block BOOL activityDimissed = NO;
-        __weak typeof(self) weakSelf = self;
+        [self stopActivityWithMessage:nil success:YES completion:nil];
         
-        void(^finish)(void) = ^{
-            if (ledSet && activityDimissed) {
+        if ([self delegate] == nil) {
+            __weak typeof(self) weakSelf = self;
+            [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
                 [weakSelf proceed];
-            }
-        };
-        
-        [[self activityView] dismissWithResultText:nil showSuccessMark:YES remove:YES completion:^{
-            activityDimissed = YES;
-            finish();
-        }];
-        
-        [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if ([strongSelf delegate] == nil) {
-                [[weakSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
-                    ledSet = YES;
-                    finish();
-                }];
-            } else {
-                ledSet = YES;
-                finish();
-            }
-        }];
+            }];
+        } else {
+            [self proceed];
+        }
     }];
 }
 
 #pragma mark - Skipping
 
 - (IBAction)skip:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventOnBSkip properties:@{
-        kHEMAnalyticsEventPropOnBScreen : kHEMAnalyticsEventPropScreenPillPairing
+    [self showSkipConfirmation];
+}
+
+- (void)showSkipConfirmation {
+    HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
+    [dialogVC setTitle:NSLocalizedString(@"pairing.pill.skip-confirmation-title", nil)];
+    [dialogVC setMessage:NSLocalizedString(@"pairing.pill.skip-confirmation-message", nil)];
+    [dialogVC setOkButtonTitle:[NSLocalizedString(@"actions.skip-for-now", nil) uppercaseString]];
+    [dialogVC setViewToShowThrough:[[self navigationController] view]];
+    
+    [dialogVC addAction:[NSLocalizedString(@"actions.cancel", nil) uppercaseString] primary:NO actionBlock:^{
+        [self dismissViewControllerAnimated:YES completion:nil];
     }];
     
-    [[self manager] setLED:SENSenseLEDStateOff completion:nil]; // fire and forget is ok here
-    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
-    NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
-    [self performSegueWithIdentifier:segueId sender:self];
+    [dialogVC showFrom:self onDone:^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [SENAnalytics track:kHEMAnalyticsEventOnBSkip properties:@{
+                kHEMAnalyticsEventPropOnBScreen : kHEMAnalyticsEventPropScreenPillPairing
+            }];
+            
+            [[self manager] setLED:SENSenseLEDStateOff completion:nil]; // fire and forget is ok here
+            [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
+            NSString* segueId = [HEMOnboardingStoryboard skipPillPairSegue];
+            [self performSegueWithIdentifier:segueId sender:self];
+        }];
+    }];
 }
 
 - (void)cancel:(id)sender {

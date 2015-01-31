@@ -7,14 +7,19 @@
 //
 
 #import "UIFont+HEMStyle.h"
+#import <SenseKit/SENSenseManager.h>
+#import <SenseKit/SENServiceDevice.h>
 
 #import "HEMOnboardingController.h"
 #import "HelloStyleKit.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMSupportUtil.h"
+#import "HEMActivityCoverView.h"
+#import "HEMOnboardingCache.h"
 
 @interface HEMOnboardingController()
 
+@property (strong, nonatomic) HEMActivityCoverView* activityCoverView;
 @property (strong, nonatomic) UIBarButtonItem* leftBarItem;
 @property (strong, nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL enableBack;
@@ -146,6 +151,47 @@
     [self setCancelItem:cancelItem];
     [self setLeftBarItem:cancelItem];
     [[self navigationItem] setLeftBarButtonItem:[self cancelItem]];
+}
+
+- (SENSenseManager*)manager {
+    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
+    return manager ? manager : [[HEMOnboardingCache sharedCache] senseManager];
+}
+
+#pragma mark - Activity
+
+- (void)showActivityWithMessage:(NSString*)message completion:(void(^)(void))completion {
+    if ([self activityCoverView] != nil) {
+        [[self activityCoverView] removeFromSuperview];
+    }
+    
+    [self setActivityCoverView:[[HEMActivityCoverView alloc] init]];
+    [[self activityCoverView] showInView:[[self navigationController] view] withText:message activity:YES completion:completion];
+}
+
+- (void)stopActivityWithMessage:(NSString*)message success:(BOOL)sucess completion:(void(^)(void))completion {
+    if ([self activityCoverView] == nil) {
+        if (completion) completion ();
+    } else {
+        [[self activityCoverView] dismissWithResultText:message showSuccessMark:sucess remove:YES completion:^{
+            [self setActivityCoverView:nil];
+            if (completion) completion ();
+        }];
+    }
+}
+
+- (void)updateActivityText:(NSString*)updateMessage completion:(void(^)(BOOL finished))completion {
+    if ([self activityCoverView] == nil) {
+        if ([updateMessage length] > 0) {
+            [self showActivityWithMessage:updateMessage completion:^{
+                if (completion) completion (YES);
+            }];
+        } else if (completion) {
+            completion (YES);
+        }
+    } else {
+        [[self activityCoverView] updateText:updateMessage completion:completion];
+    }
 }
 
 #pragma mark - Convenience Methods

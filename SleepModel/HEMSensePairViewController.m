@@ -18,7 +18,6 @@
 #import "HEMOnboardingCache.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingUtils.h"
-#import "HEMActivityCoverView.h"
 #import "HelloStyleKit.h"
 #import "HEMSupportUtil.h"
 #import "HEMWifiPickerViewController.h"
@@ -51,11 +50,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTopConstraint;
 
 @property (strong, nonatomic) UIBarButtonItem* cancelItem;
-@property (strong, nonatomic) SENSenseManager* manager;
+@property (strong, nonatomic) SENSenseManager* senseManager;
 @property (assign, nonatomic) HEMSensePairState currentState;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
 @property (copy,   nonatomic) NSString* detectedSSID;
-@property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (assign, nonatomic, getter=isTimedOut) BOOL timedOut;
 @property (assign, nonatomic, getter=isPairing) BOOL pairing;
 
@@ -89,22 +87,18 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [self updateConstraint:[self descriptionTopConstraint] withDiff:10];
 }
 
-- (void)stopActivityWithMessage:(NSString*)message success:(BOOL)sucess completion:(void(^)(void))completion {
-    [[self activityView] dismissWithResultText:message showSuccessMark:sucess remove:YES completion:completion];
-}
-
 - (void)cacheManager {
-    [[HEMOnboardingCache sharedCache] setSenseManager:[self manager]];
+    [[HEMOnboardingCache sharedCache] setSenseManager:[self senseManager]];
 }
 
 - (void)disconnectSense {
-    if ([self manager] != nil) {
+    if ([self senseManager] != nil) {
         if ([self disconnectObserverId] != nil) {
-            [[self manager] removeUnexpectedDisconnectObserver:[self disconnectObserverId]];
+            [[self senseManager] removeUnexpectedDisconnectObserver:[self disconnectObserverId]];
             [self setDisconnectObserverId:nil];
         }
-        [[self manager] disconnectFromSense];
-        [self setManager:nil];
+        [[self senseManager] disconnectFromSense];
+        [self setSenseManager:nil];
     }
 }
 
@@ -112,10 +106,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     if ([self disconnectObserverId] == nil) {
         __weak typeof(self) weakSelf = self;
         self.disconnectObserverId =
-        [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
+        [[self senseManager] observeUnexpectedDisconnect:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
-                [strongSelf setManager:nil];
+                [strongSelf setSenseManager:nil];
                 [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                     if ([strongSelf isPairing]) {
                         [strongSelf showCouldNotPairErrorMessage];
@@ -152,7 +146,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     DDLogVerbose(@"scanning for Sense timed out, oh no!");
     [self setTimedOut:YES];
     [SENSenseManager stopScan];
-    [self setManager:nil];
+    [self setSenseManager:nil];
     [self stopActivityWithMessage:nil success:NO completion:^{
         NSString* msg = NSLocalizedString(@"pairing.error.timed-out", nil);
         [self showErrorMessage:msg];
@@ -162,9 +156,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)scanWithActivity {
-    if ([self activityView] == nil) {
-        [self setActivityView:[[HEMActivityCoverView alloc] init]];
-    }
     
     [self setTimedOut:NO];
     
@@ -175,8 +166,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         ? NSLocalizedString(@"pairing.activity.connecting-sense", nil)
         : NSLocalizedString(@"pairing.activity.scanning-sense", nil);
     
-    UIView* viewToAttach = [[self navigationController] view];
-    [[self activityView] showInView:viewToAttach withText:activityMessage activity:YES completion:^{
+    [self showActivityWithMessage:activityMessage completion:^{
         if (preScanned) {
             [self useSense:[[[HEMOnboardingCache sharedCache] nearbySensesFound] firstObject]];
             [[HEMOnboardingCache sharedCache] clearPreScannedSenses];
@@ -227,8 +217,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)useSense:(SENSense*)sense {
-    DDLogVerbose(@"using sense %@", [[self manager] sense]);
-    [self setManager:[[SENSenseManager alloc] initWithSense:sense]];
+    DDLogVerbose(@"using sense %@", [[self senseManager] sense]);
+    [self setSenseManager:[[SENSenseManager alloc] initWithSense:sense]];
     [self setCurrentState:HEMSensePairStateSenseFound];
     [self executeNextStep];
 }
@@ -289,13 +279,13 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     
     __weak typeof(self) weakSelf = self;
     // led will be turned off when everything is finished, failed or not
-    [[self manager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
+    [[self senseManager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         NSString* activityMessage = NSLocalizedString(@"pairing.activity.pairing-sense", nil);
-        [[strongSelf activityView] updateText:activityMessage completion:nil];
-        DDLogVerbose(@"pairing with sense %@", [[[strongSelf manager] sense] name]);
+        [strongSelf updateActivityText:activityMessage completion:nil];
+        DDLogVerbose(@"pairing with sense %@", [[[strongSelf senseManager] sense] name]);
         
-        [[strongSelf manager] pair:^(id response) {
+        [[strongSelf senseManager] pair:^(id response) {
             DDLogVerbose(@"paired!");
             if (strongSelf && ![strongSelf isTimedOut]) {
                 [strongSelf setPairing:NO];
@@ -308,7 +298,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
                 [strongSelf setPairing:NO];
-                [strongSelf setManager:nil];
+                [strongSelf setSenseManager:nil];
                 [strongSelf stopActivityWithMessage:nil success:NO completion:^{
                     [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
                     [strongSelf showCouldNotPairErrorMessage];
@@ -327,11 +317,11 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)checkWiFi {
     NSString* activityMessage = NSLocalizedString(@"pairing.activity.checking-wifi", nil);
-    [[self activityView] updateText:activityMessage completion:nil];
+    [self updateActivityText:activityMessage completion:nil];
     DDLogVerbose(@"checking if Sense has already been configured with wifi");
     
     __weak typeof(self) weakSelf = self;
-    [[self manager] getConfiguredWiFi:^(NSString *ssid, SENWiFiConnectionState state) {
+    [[self senseManager] getConfiguredWiFi:^(NSString *ssid, SENWiFiConnectionState state) {
         __block typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             HEMSensePairState pairState = HEMSensePairStateWiFiNotDetected;
@@ -365,11 +355,11 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)linkAccount {
     NSString* activityMessage = NSLocalizedString(@"pairing.activity.linking-account", nil);
-    [[self activityView] updateText:activityMessage completion:nil];
+    [self updateActivityText:activityMessage completion:nil];
     DDLogVerbose(@"linking account");
     
     NSString* accessToken = [SENAuthorizationService accessToken];
-    SENSenseManager* manager = [self manager];
+    SENSenseManager* manager = [self senseManager];
     
     __weak typeof(self) weakSelf = self;
     [manager linkAccount:accessToken success:^(id response) {
@@ -394,7 +384,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)setupTimeZone {
     NSString* activityMessage = NSLocalizedString(@"pairing.activity.setting-timezone", nil);
-    [[self activityView] updateText:activityMessage completion:nil];
+    [self updateActivityText:activityMessage completion:nil];
     DDLogVerbose(@"setting timezone");;
     
     __weak typeof(self) weakSelf = self;
@@ -422,7 +412,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)forceSensorDataUpload {
     DDLogVerbose(@"forcing data upload from ui");
     __weak typeof(self) weakSelf = self;
-    [[self manager] forceDataUpload:^(id response, NSError *error) {
+    [[self senseManager] forceDataUpload:^(id response, NSError *error) {
         DDLogVerbose(@"data upload response returned with error? %@", error);
         __strong typeof(weakSelf) strongSelf = weakSelf;
         // whether there was an error or not, simply proceed b/c it's not
@@ -443,10 +433,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
                            withHelp:YES];
     };
     
-    if ([self manager] == nil) {
+    if ([self senseManager] == nil) {
         show(nil, nil);
     } else if ([self delegate] == nil) {
-        [[self manager] setLED:SENSenseLEDStatePair completion:show];
+        [[self senseManager] setLED:SENSenseLEDStatePair completion:show];
     } else {
         show(nil, nil);
     }
@@ -456,36 +446,20 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 #pragma mark - Finishing
 
 - (void)finish {
-    NSString* msg = NSLocalizedString(@"pairing.done", nil);
-    __block BOOL ledSet = NO;
-    __block BOOL activityStopped = NO;
-    __weak typeof(self) weakSelf = self;
-    
     // need to do this to stop the activity and set the LED simultaneously or
     // else the LED does not properly sync up with the success mark
-    void(^done)(void) = ^{
-        if (activityStopped && ledSet) {
-            [weakSelf next];
-        }
-    };
+    if ([self delegate] == nil) {
+        __weak typeof(self) weakSelf = self;
+        [[self senseManager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+            DDLogVerbose(@"just set led to success state from sense pairing");
+            [weakSelf next]; // once ble operation is done, proceed.  activity should hide after
+        }];
+    } else {
+        [self next];
+    }
     
-    [self stopActivityWithMessage:msg success:YES completion:^{
-        activityStopped = YES;
-        done();
-    }];
-    
-    [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if ([strongSelf delegate] == nil) {
-            [[weakSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
-                ledSet = YES;
-                done();
-            }];
-        } else {
-            ledSet = YES;
-            done();
-        }
-    }];
+    NSString* msg = NSLocalizedString(@"pairing.done", nil);
+    [self stopActivityWithMessage:msg success:YES completion:nil];
 }
 
 - (void)next {

@@ -22,7 +22,6 @@
 #import "HEMSimpleLineTextField.h"
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
-#import "HEMActivityCoverView.h"
 
 typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     HEMWiFiSetupStepNone = 0,
@@ -46,7 +45,6 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *securityTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *continueTopConstraint;
 
-@property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (strong, nonatomic) UIPickerView* securityPickerView;
 @property (copy,   nonatomic) NSString* ssidConfigured;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
@@ -151,11 +149,6 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
         }
     }];
-}
-
-- (SENSenseManager*)manager {
-    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
-    return manager ? manager : [[HEMOnboardingCache sharedCache] senseManager];
 }
 
 - (BOOL)isValid:(NSString*)ssid pass:(NSString*)pass {
@@ -329,13 +322,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)showActivityWithText:(NSString*)text completion:(void(^)(void))completion {
     [self enableControls:NO];
-    
-    if ([self activityView] == nil) {
-        [self setActivityView:[[HEMActivityCoverView alloc] init]];
-    }
-    
-    UIView* viewToAttach = [[self navigationController] view];
-    [[self activityView] showInView:viewToAttach withText:text activity:YES completion:^{
+
+    [self showActivityWithMessage:text completion:^{
         [[self manager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
             if (completion) completion();
         }];
@@ -346,21 +334,22 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 renableControls:(BOOL)enable
                         success:(BOOL)success
                      completion:(void(^)(void))completion {
-    [[self activityView] dismissWithResultText:message showSuccessMark:success remove:YES completion:^{
+    [self stopActivityWithMessage:message success:success completion:^{
         [self enableControls:enable];
-        SENSenseLEDState led = ![self haveDelegates] ? SENSenseLEDStatePair : SENSenseLEDStateOff;
-        [[self manager] setLED:led completion:^(id response, NSError *error) {
-            if (completion) completion ();
-        }];
-    }];
-}
 
-- (void)updateActivity:(NSString*)message {
-    if ([[self activityView] isShowing]) {
-        [[self activityView] updateText:message completion:nil];
-    } else {
-        [self showActivityWithText:message completion:nil];
-    }
+        if (!success) {
+            SENSenseLEDState led = SENSenseLEDStateOff;
+            if (![self haveDelegates]) {
+                led = SENSenseLEDStatePair;
+            }
+            [[self manager] setLED:led completion:^(id response, NSError *error) {
+                if (completion) completion ();
+            }];
+        } else if (completion) { // success && has completion block
+            completion ();
+        }
+
+    }];
 }
 
 #pragma mark - Steps To Set Up
@@ -395,7 +384,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     }
     
     NSString* message = NSLocalizedString(@"pairing.activity.linking-account", nil);
-    [self updateActivity:message];
+    [self updateActivityText:message completion:nil];
     
     NSString* accessToken = [SENAuthorizationService accessToken];
     SENSenseManager* manager = [self manager];
@@ -423,7 +412,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)setupTimezone {
     NSString* message = NSLocalizedString(@"wifi.activity.setting-timezone", nil);
-    [self updateActivity:message];
+    [self updateActivityText:message completion:nil];
     
     __weak typeof(self) weakSelf = self;
     [SENAPITimeZone setCurrentTimeZone:^(id data, NSError *error) {
@@ -462,42 +451,36 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     // need to start querying for sensor data so that 1, user will see
     // it as soon as onboarding is done and 2, later step will check
     // sensor data
-    if ([self delegate] == nil && [self sensePairDelegate] == nil) {
+    if (![self haveDelegates]) {
         [[HEMOnboardingCache sharedCache] startPollingSensorData];
     }
     
     __weak typeof(self) weakSelf = self;
-    
-    [[self manager] setLED:SENSenseLEDStateSuccess completion:^(id response, NSError *error) {
+    void(^proceed)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        
-        void(^complete)(void) = ^{
-            NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
-            
-            [strongSelf stopActivityWithMessage:msg renableControls:NO success:YES completion:^{
-                
-                if ([strongSelf delegate] != nil) {
-                    [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
-                } else if ([strongSelf sensePairDelegate] != nil) {
-                    [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:YES from:self];
-                } else {
-                    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
-                    [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard senseToPillSegueIdentifier]
-                                                    sender:nil];
-                }
-                
-            }];
-        };
-        
-        if (![strongSelf haveDelegates]) {
-            [[strongSelf manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
-                complete();
-            }];
+        if ([strongSelf delegate] != nil) {
+            [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
+        } else if ([strongSelf sensePairDelegate] != nil) {
+            [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:YES from:self];
         } else {
-            complete ();
+            [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
+            [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard senseToPillSegueIdentifier]
+                                            sender:nil];
         }
-
-    }];
+    };
+    
+    NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
+    if (![self haveDelegates]) {
+        // simultaneously show connected message and flash led
+        [self stopActivityWithMessage:msg renableControls:NO success:YES completion:nil];
+        [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
+            proceed();
+        }];
+    } else {
+        [self stopActivityWithMessage:msg success:YES completion:^{
+            proceed();
+        }];
+    }
 }
 
 - (void)executeNextStep {

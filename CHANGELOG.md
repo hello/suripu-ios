@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.1.2
+
+New:
+
+* Prompt user to turn on BLE when navigating to devices settings, if BLE is off (once per session)
+* Allow skipping Pill pairing after two failed attempts
+* Improve handling of error states during Pill pairing
+* Visual update to trends, alarms, and insights
+* Show wifi password in plain text during onboarding
+
+Fixes:
+
+* Show all message text for timeline events
+* Show sleep times in timeline in correct timezone
+* Fix drawer display after onboarding
+* Fix trends display on 4S
+* Fix failing to re-register for remote notifications after signing out and in again
+
 ## 1.0.1.1
 
 New:

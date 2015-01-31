@@ -223,7 +223,6 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
-                                    <segue destination="4s2-Gt-ovZ" kind="push" id="qiQ-wo-fCO"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -2628,7 +2627,6 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="smartAlarm.png" width="203" height="203"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qiQ-wo-fCO"/>
         <segue reference="ZOJ-Sh-Dzx"/>
         <segue reference="azr-Tk-rB7"/>
         <segue reference="7LA-fg-2Jb"/>

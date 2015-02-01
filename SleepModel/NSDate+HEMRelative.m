@@ -65,7 +65,7 @@
     components.day = days;
     return [calendar dateByAddingComponents:components
                                      toDate:self
-                                    options:NSCalendarWrapComponents];
+                                    options:0];
 }
 
 - (BOOL)isOnSameDay:(NSDate*)otherDate

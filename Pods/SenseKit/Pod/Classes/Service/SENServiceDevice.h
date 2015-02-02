@@ -33,7 +33,8 @@ typedef NS_ENUM(NSInteger, SENServiceDeviceError) {
     SENServiceDeviceErrorPillNotPaired = -5,
     SENServiceDeviceErrorUnpairPillFromSense = -6,
     SENServiceDeviceErrorUnlinkPillFromAccount = -7,
-    SENServiceDeviceErrorUnlinkSenseFromAccount = -8
+    SENServiceDeviceErrorUnlinkSenseFromAccount = -8,
+    SENServiceDeviceErrorSenseNotMatching = -9
 };
 
 typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
@@ -249,5 +250,17 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
  * @param completion: the block to invoke when done
  */
 - (void)setLEDState:(SENSenseLEDState)state completion:(SENServiceDeviceCompletionBlock)completion;
+
+/**
+ * Replace the current senseManager with the specified manager, if and only if
+ * the manager's sense matches what the account is linked to
+ *
+ * This is useful if caller is re-pairing Sense to an existing account
+ *
+ * @param senseManager: the manager initialized with Sense
+ * @param completion:   the block to invoke when an Error is encountered, or when it's done replacing
+ */
+- (void)replaceWithNewlyPairedSenseManager:(SENSenseManager*)senseManager
+                                completion:(void(^)(NSError* error))completion;
 
 @end

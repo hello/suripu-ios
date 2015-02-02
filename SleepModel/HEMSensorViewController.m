@@ -206,10 +206,11 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
         return;
     self.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
     [SENAPIRoom hourlyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
-        if (!data) {
+        if (error) {
             self.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
             self.statusLabel.alpha = 1;
             self.overlayView.alpha = 0;
+            self.graphView.alpha = 0;
             return;
         }
         self.hourlyDataSeries = data;
@@ -217,10 +218,11 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
             [self updateGraphWithHourlyData:data];
     }];
     [SENAPIRoom dailyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
-        if (!data) {
+        if (error) {
             self.statusLabel.text = NSLocalizedString(@"graph-data.unavailable", nil);
             self.statusLabel.alpha = 1;
             self.overlayView.alpha = 0;
+            self.graphView.alpha = 0;
             return;
         }
         self.dailyDataSeries = data;
@@ -423,6 +425,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [self.overlayView setSectionFooters:self.graphDataSource.valuesForSectionIndexes headers:nil];
     [self.graphView setUserInteractionEnabled:self.graphDataSource.dataSeries.count > 0];
     [UIView animateWithDuration:0.5f animations:^{
+        self.graphView.alpha = 1;
         self.overlayView.alpha = 1;
     }];
 }

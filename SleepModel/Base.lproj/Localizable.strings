@@ -47,7 +47,6 @@
 "onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulties falling asleep.";
 
 // help links
-"help.url.troubleshooting" = "https://docs.google.com/document/d/1OEIDKSq6iBgH47-cctQ4TDom-iSlmkxFJfQ5rvegbO8";
 "help.url.order-form" = "https://order.hello.is/";
 "help.url.support" = "https://support.hello.is";
 "help.email.address" = "help@sayhello.com";
@@ -86,6 +85,8 @@
 "pairing.error.sense-not-found" = "Could not connect to your Sense to pair your Sleep Pill.";
 "pairing.error.pill-pairing-failed" = "Sense could not pair your Sleep Pill. Please try again.";
 "pairing.check.add-second-pill-subtitle" = "Are you adding a second Sleep Pill to a Sense that has been set up previously, or are you setting up Sense for the first time?";
+"pairing.pill.skip-confirmation-title" = "Are you sure?";
+"pairing.pill.skip-confirmation-message" = "Sense is not designed to work without a Sleep Pill. You will not be able to track your sleep, or set Smart Alarms. If you're having trouble, you can skip for now, and pair a Sleep Pill later.";
 
 // wifi setup
 "wifi.error.title" = "WiFi Setup Failed";
@@ -402,6 +403,7 @@
 "actions.yes" = "Yes";
 "actions.close" = "Close";
 "actions.skip" = "Skip";
+"actions.skip-for-now" = "Skip for now";
 "actions.answer" = "Answer";
 "actions.later" = "Later";
 "actions.fix-now" = "Fix now";

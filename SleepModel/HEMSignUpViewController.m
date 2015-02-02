@@ -16,7 +16,6 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMBluetoothUtils.h"
-#import "HEMActivityCoverView.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
@@ -26,7 +25,6 @@
 @property (weak, nonatomic) IBOutlet UITextField* nameField;
 @property (weak, nonatomic) IBOutlet HEMActionButton *nextButton;
 
-@property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (nonatomic, getter=isSigningUp) BOOL signingUp;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameTopConstraint;
@@ -69,24 +67,16 @@
     self.signingUp = YES;
     [self enableControls:NO];
     NSString* message = NSLocalizedString(@"sign-up.activity.message", nil);
-    HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
-    [activityView showInView:[[self navigationController] view] withText:message activity:YES completion:completion];
-    [self setActivityView:activityView];
+    [self showActivityWithMessage:message completion:completion];
 }
 
 - (void)stopActivity:(void(^)(void))completion enableControls:(BOOL)enable {
     self.signingUp = NO;
     
-    if ([self activityView] == nil) {
+    [self stopActivityWithMessage:nil success:NO completion:^{
         [self enableControls:enable];
         if (completion) completion ();
-    } else {
-        [[self activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-            [self setActivityView:nil];
-            [self enableControls:enable];
-            if (completion) completion ();
-        }];
-    }
+    }];
 }
 
 #pragma mark - Sign Up
@@ -154,7 +144,6 @@
         } else {
             [HEMAnalytics trackSignUpWithName:userName];
             [strongSelf next];
-            [strongSelf stopActivity:nil enableControls:NO];
         }
 
 
@@ -221,6 +210,14 @@
         : [HEMOnboardingStoryboard moreInfoSegueIdentifier];
 
     [self performSegueWithIdentifier:segueId sender:self];
+    
+    // remove the activity slightly after the next view has been pushed
+    __weak typeof(self) weakSelf = self;
+    NSTimeInterval delayInSeconds = 0.5f;
+    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
+        [weakSelf stopActivity:nil enableControls:NO];
+    });
 }
 
 @end

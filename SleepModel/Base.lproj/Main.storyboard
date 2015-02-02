@@ -939,7 +939,7 @@
             </objects>
             <point key="canvasLocation" x="1219" y="745"/>
         </scene>
-        <!--Devices-->
+        <!--Sense and Sleep Pill-->
         <scene sceneID="y2M-3z-OdD">
             <objects>
                 <viewController extendedLayoutIncludesOpaqueBars="YES" id="mDw-uo-PDk" customClass="HEMDevicesViewController" sceneMemberID="viewController">
@@ -1168,7 +1168,7 @@
                             <constraint firstItem="p6A-zV-ehg" firstAttribute="leading" secondItem="mJD-g5-7aT" secondAttribute="leadingMargin" constant="-16" id="vpl-zl-Ilo"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Devices" id="oGK-em-S7y"/>
+                    <navigationItem key="navigationItem" title="Sense and Sleep Pill" id="oGK-em-S7y"/>
                     <connections>
                         <outlet property="collectionView" destination="p6A-zV-ehg" id="ovQ-xy-TfL"/>
                         <outlet property="view" destination="mJD-g5-7aT" id="Hzq-KT-VyS"/>

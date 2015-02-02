@@ -22,8 +22,7 @@
 @interface HEMPillSetupViewController ()
 
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageHeightConstraint;
-
+@property (assign, nonatomic, getter=isWaitingForLED) BOOL waitingForLED;
 
 @end
 
@@ -36,11 +35,6 @@
     [self showHelpButton];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBPillPlacement];
-}
-
-- (SENSenseManager*)manager {
-    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
-    return manager ? manager : [[HEMOnboardingCache sharedCache] senseManager];
 }
 
 #pragma mark - Actions

@@ -118,4 +118,9 @@ typedef NS_ENUM(NSUInteger, SENAccountGender) {
  */
 - (NSDateComponents*)birthdateComponents;
 
+/**
+ * @return localized birthdate as NSString given the preferred date style
+ */
+- (NSString*)localizedBirthdateWithStyle:(NSDateFormatterStyle)style;
+
 @end

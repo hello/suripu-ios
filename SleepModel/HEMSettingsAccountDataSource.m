@@ -18,6 +18,7 @@
 // \u0222 is a round dot
 static NSString* const HEMSettingsAcctPasswordPlaceholder = @"\u2022\u2022\u2022\u2022\u2022\u2022";
 static NSString* const HEMSettingsAcctDataSourceErrorDomain = @"is.hello.app.settings.account";
+static NSString* const HEMSettingsAcctBirthdateFormat = @"MM dd, yyyy";
 
 static NSInteger const HEMSettingsAcctSectionAccount = 0;
 static NSInteger const HEMSettingsAcctSectionDemographics = 1;
@@ -177,7 +178,8 @@ static NSInteger const HEMSettingsAcctSignOutTotRows = 1;
             subtitle = HEMSettingsAcctPasswordPlaceholder;
             break;
         case HEMSettingsAccountInfoTypeBirthday: {
-            subtitle = [[[SENServiceAccount sharedService] account] birthdate];
+            SENAccount* account = [[SENServiceAccount sharedService] account];
+            subtitle = [account localizedBirthdateWithStyle:NSDateFormatterLongStyle];
             break;
         }
         case HEMSettingsAccountInfoTypeGender:

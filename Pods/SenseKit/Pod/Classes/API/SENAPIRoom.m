@@ -17,7 +17,7 @@ static NSString* const SENAPIRoomAllSensorsPathFormat = @"room/all_sensors/%@";
 static NSString* const SENAPIRoomCurrentPath = @"room/current";
 static NSString* const SENAPIRoomSensorParamTimestamp = @"from";
 static NSString* const SENAPIRoomAllSensorsParamTimestamp = @"from_utc";
-static NSString* const SENAPIRoomParamUnit = @"temperature_unit";
+static NSString* const SENAPIRoomParamUnit = @"temp_unit";
 
 + (void)currentWithCompletion:(SENAPIDataBlock)completion
 {

@@ -50,6 +50,7 @@ static NSString* const HEMSleepEventTypePartnerMotion = @"PARTNER_MOTION";
 static NSString* const HEMSleepEventTypeLightsOut = @"LIGHTS_OUT";
 static NSString* const HEMSleepEventTypeInBed = @"IN_BED";
 static NSString* const HEMSleepEventTypeOutOfBed = @"OUT_OF_BED";
+static NSString* const HEMSleepEventTypeAlarm = @"ALARM";
 
 static NSString* const sleepSegmentReuseIdentifier = @"sleepSegmentCell";
 static NSString* const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
@@ -484,6 +485,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         return [HelloStyleKit inBedEventIcon];
     else if ([eventType isEqualToString:HEMSleepEventTypeOutOfBed])
         return [HelloStyleKit outOfBedEventIcon];
+    else if ([eventType isEqualToString:HEMSleepEventTypeAlarm])
+        return [HelloStyleKit alarmEventIcon];
 
     return [HelloStyleKit unknownEventIcon];
 }

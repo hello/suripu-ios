@@ -8,6 +8,7 @@
 
 #import <AttributedMarkdown/markdown_peg.h>
 #import "HEMMarkdown.h"
+#import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 
 @implementation HEMMarkdown
@@ -88,9 +89,18 @@
 + (NSDictionary*)attributesForSensorMessageWithConditionColor:(UIColor*)color
 {
     return @{
-        @(STRONG) : @{ NSForegroundColorAttributeName : color, NSFontAttributeName : [UIFont backViewBoldFont] },
-        @(EMPH)   : @{ NSForegroundColorAttributeName : color, NSFontAttributeName : [UIFont backViewBoldFont] },
-        @(PLAIN)  : @{ NSFontAttributeName : [UIFont backViewTextFont] }
+        @(STRONG) : @{ NSForegroundColorAttributeName : color },
+        @(EMPH)   : @{ NSForegroundColorAttributeName : color },
+        @(PARA)   : @{ NSFontAttributeName : [UIFont sensorMessageFont] }
+    };
+}
+
++ (NSDictionary*)attributesForSensorGraphButtonWithSelectedState:(BOOL)isOn
+{
+    UIColor* color = isOn ? [HelloStyleKit tintColor] : [UIColor colorWithWhite:0.6 alpha:1.f];
+    return @{ @(PARA) : @{ NSFontAttributeName : [UIFont sensorRangeSelectionFont],
+                           NSKernAttributeName : @(1.2),
+                           NSForegroundColorAttributeName : color }
     };
 }
 

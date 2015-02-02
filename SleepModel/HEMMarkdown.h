@@ -18,4 +18,5 @@
 + (NSDictionary*)attributesForTimelineMessageText;
 + (NSDictionary*)attributesForRoomCheckWithConditionColor:(UIColor*)color;
 + (NSDictionary*)attributesForSensorMessageWithConditionColor:(UIColor*)color;
++ (NSDictionary*)attributesForSensorGraphButtonWithSelectedState:(BOOL)isOn;
 @end

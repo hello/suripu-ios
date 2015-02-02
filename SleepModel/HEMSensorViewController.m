@@ -158,7 +158,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 {
     UIColor* color = [UIColor colorForSensorWithCondition:self.sensor.condition];
     NSDictionary* statusAttributes = [HEMMarkdown attributesForSensorMessageWithConditionColor:color];
-    NSDictionary* idealAttributes = [HEMMarkdown attributesForRoomCheckWithConditionColor:[HelloStyleKit idealSensorColor]];
+    NSDictionary* idealAttributes = [HEMMarkdown attributesForSensorMessageWithConditionColor:[HelloStyleKit idealSensorColor]];
 
     self.valueLabel.textColor = color;
     self.unitLabel.textColor = color;
@@ -167,6 +167,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.unitLabel.text = [self.sensor localizedUnit];
     self.statusMessageLabel.textAlignment = NSTextAlignmentLeft;
     self.statusMessageLabel.attributedText = [markdown_to_attr_string(self.sensor.message, 0, statusAttributes) trim];
+    self.idealLabel.hidden = NO;
     self.idealLabel.attributedText = [markdown_to_attr_string(self.sensor.idealConditionsMessage, 0, idealAttributes) trim];
     self.graphView.colorLine = color;
     self.graphView.alphaLine = 0.7;
@@ -281,17 +282,29 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 }
 
 - (void)updateGraphWithHourlyData:(NSArray*)dataSeries {
-    [self.dailyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
-    [self.hourlyGraphButton setTitleColor:[HelloStyleKit tintColor] forState:UIControlStateNormal];
+    [self setGraphButtonSelected:self.hourlyGraphButton];
     [self positionSelectionViewUnderView:self.hourlyGraphButton];
     [self updateGraphWithData:dataSeries];
 }
 
 - (void)updateGraphWithDailyData:(NSArray*)dataSeries {
-    [self.hourlyGraphButton setTitleColor:[HelloStyleKit backViewTextColor] forState:UIControlStateNormal];
-    [self.dailyGraphButton setTitleColor:[HelloStyleKit tintColor] forState:UIControlStateNormal];
+    [self setGraphButtonSelected:self.dailyGraphButton];
     [self positionSelectionViewUnderView:self.dailyGraphButton];
     [self updateGraphWithData:dataSeries];
+}
+
+- (void)setGraphButtonSelected:(UIButton*)button {
+    BOOL hourlyIsOn = [button isEqual:self.hourlyGraphButton];
+    NSString* dailyText = [NSLocalizedString(@"sensor.graph-button.past-week.title", nil) uppercaseString];
+    NSDictionary* dailyAttributes = [HEMMarkdown attributesForSensorGraphButtonWithSelectedState:!hourlyIsOn][@(PARA)];
+    NSAttributedString* dailyButtonText = [[NSAttributedString alloc] initWithString:dailyText
+                                                                          attributes:dailyAttributes];
+    NSString* hourlyText = [NSLocalizedString(@"sensor.graph-button.last-day.title", nil) uppercaseString];
+    NSDictionary* hourlyAttributes = [HEMMarkdown attributesForSensorGraphButtonWithSelectedState:hourlyIsOn][@(PARA)];
+    NSAttributedString* hourlyButtonText = [[NSAttributedString alloc] initWithString:hourlyText
+                                                                          attributes:hourlyAttributes];
+    [self.dailyGraphButton setAttributedTitle:dailyButtonText forState:UIControlStateNormal];
+    [self.hourlyGraphButton setAttributedTitle:hourlyButtonText forState:UIControlStateNormal];
 }
 
 - (void)positionSelectionViewUnderView:(UIView*)view {
@@ -391,6 +404,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.statusMessageLabel.textAlignment = NSTextAlignmentCenter;
     NSDateFormatter* formatter = [self isShowingHourlyData] ? self.hourlyFormatter : self.dailyFormatter;
     self.statusMessageLabel.text = [formatter stringFromDate:dataPoint.date];
+    self.idealLabel.hidden = YES;
     [self updateValueLabelWithValue:dataPoint.value];
     [UIView animateWithDuration:0.2f animations:^{
         self.overlayView.alpha = 0;

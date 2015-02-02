@@ -327,8 +327,8 @@
 "sensor.value.none" = "No data";
 "sensor.sound" = "Sound";
 "sensor.light" = "Light";
-"sensor.light.placeholder-message" = "It's really bright in your room right now, but that's ok.  It's only Lorem Ipsum!";
-"sensor.sound.placeholder-message" = "Contrary to popular belief, Lorem Ipsum is not simply random text.";
+"sensor.graph-button.last-day.title" = "Last day";
+"sensor.graph-button.past-week.title" = "Past week";
 "graph-data.unavailable.short" = "No data";
 "graph-data.unavailable" = "No data available";
 

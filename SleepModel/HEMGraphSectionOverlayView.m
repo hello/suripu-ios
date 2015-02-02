@@ -21,6 +21,7 @@
 static NSInteger const HEMGraphSectionLineWidth = 1.f;
 static CGFloat const HEMGraphSectionLabelHeight = 15.f;
 static CGFloat const HEMGraphLabelInset = 5.f;
+static CGFloat const HEMGraphLabelBottomOffset = 9.f;
 
 - (instancetype)init {
     if (self = [super init]) {
@@ -67,7 +68,7 @@ static CGFloat const HEMGraphLabelInset = 5.f;
         return;
     CGFloat sectionWidth = CGRectGetWidth(self.bounds)/count;
     CGFloat sectionHeight = CGRectGetHeight(self.bounds);
-    CGFloat bottomLabelOffset = CGRectGetHeight(self.bounds) * 0.8;
+    CGFloat bottomLabelOffset = CGRectGetHeight(self.bounds) - HEMGraphLabelBottomOffset - HEMGraphSectionLabelHeight;
     NSArray* locations = @[@(0.2), @(0.75)];
     NSArray* colors = @[(id)[[[UIColor blackColor] colorWithAlphaComponent:0.05] CGColor],
                         (id)[[UIColor clearColor] CGColor]];

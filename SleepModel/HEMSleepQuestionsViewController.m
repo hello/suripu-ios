@@ -30,8 +30,6 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 @property (weak, nonatomic) IBOutlet UILabel* questionLabel;
 @property (weak, nonatomic) IBOutlet UIButton* skipButton;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
-@property (weak, nonatomic) IBOutlet UILabel* thankLabel;
-@property (weak, nonatomic) IBOutlet UILabel* youLabel;
 
 @property (strong, nonatomic) SENQuestion* currentQuestion;
 @property (strong, nonatomic) CALayer* activityLayer;
@@ -53,8 +51,6 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
 
 - (void)configure {
     [[self questionLabel] setFont:[UIFont questionFont]];
-    [[self thankLabel] setFont:[UIFont thankyouFont]];
-    [[self youLabel] setFont:[UIFont thankyouFont]];
     [[[self skipButton] titleLabel] setFont:[UIFont questionAnswerFont]];
     
     if ([self dataSource] == nil) {
@@ -116,29 +112,9 @@ static CGFloat const kHEMSleepWordDisplayDelay = 0.2f;
                          [[self answerTableView] setAlpha:0.0f];
                      }
                      completion:^(BOOL finished) {
-                         [self aniamteThankyou];
+                         [self dismiss];
                      }];
 }
-
-- (void)aniamteThankyou {
-    [[self thankLabel] setHidden:NO];
-    [[self youLabel] setHidden:NO];
-    [UIView animateWithDuration:kHEMSleepViewAnimDuration
-                     animations:^{
-                         [[self thankLabel] setAlpha:1.0f];
-                     }];
-    [UIView animateWithDuration:kHEMSleepViewAnimDuration
-                          delay:kHEMSleepWordDisplayDelay
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                     animations:^{
-                         [[self youLabel] setAlpha:1.0f];
-                         [self performSelector:@selector(dismiss)
-                                    withObject:nil
-                                    afterDelay:1.0f];
-                     }
-                     completion:nil];
-}
-
 
 #pragma mark - UITableViewDelegate
 

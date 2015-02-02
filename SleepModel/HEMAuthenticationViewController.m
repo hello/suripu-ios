@@ -24,6 +24,7 @@
 
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (assign, nonatomic) BOOL signingIn;
+@property (assign, nonatomic, getter=isLoaded) BOOL loaded;
 
 @end
 
@@ -47,11 +48,6 @@
     [[self forgotPassButton] setHidden:YES];
 }
 
-- (void)viewWillLayoutSubviews {
-    [super viewWillLayoutSubviews];
-    [[self forgotPassButton] sizeToFit];
-}
-
 - (void)adjustConstraintsForIPhone4 {
     [super adjustConstraintsForIPhone4];
     [self updateConstraint:[self emailTopConstraint] withDiff:-50.0f];
@@ -60,7 +56,10 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[self usernameField] becomeFirstResponder];
+    if (![self isLoaded]) {
+        [[self usernameField] becomeFirstResponder];
+        [self setLoaded:YES];
+    }
 }
 
 - (BOOL)validateInputValues

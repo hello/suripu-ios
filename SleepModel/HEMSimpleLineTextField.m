@@ -8,7 +8,6 @@ static CGFloat const HEMSimpleLineHeight = 1.0f;
 
 @interface HEMSimpleLineTextField ()
 
-@property (nonatomic, strong) UIView* lineView;
 @end
 
 @implementation HEMSimpleLineTextField

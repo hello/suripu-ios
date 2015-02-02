@@ -165,13 +165,22 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 - (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-    [collectionView scrollToItemAtIndexPath:indexPath
-                           atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
-                                   animated:YES];
     SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
     self.selectedDate = sleepResult.date;
-    
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    CGPoint centerPoint = CGPointMake(collectionView.center.x + collectionView.contentOffset.x,
+                                      collectionView.center.y + collectionView.contentOffset.y);
+    NSIndexPath* centeredIndexPath = [collectionView indexPathForItemAtPoint:centerPoint];
+    if ([indexPath isEqual:centeredIndexPath]) {
+        [self dismissViewControllerAnimated:YES completion:nil];
+    } else {
+        [collectionView scrollToItemAtIndexPath:indexPath
+                               atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
+                                       animated:YES];
+
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.25 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [self dismissViewControllerAnimated:YES completion:nil];
+        });
+    }
 }
 
 #pragma mark - UIScrollViewDelegate

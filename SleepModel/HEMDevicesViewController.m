@@ -70,7 +70,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     // if it has happened.
     if ([self loaded] && ![[self dataSource] isMissingADevice]) {
         [self reloadData];
-    } else {
+    } else if (![self loaded]) {
         __weak typeof(self) weakSelf = self;
         [[self dataSource] loadDeviceInfo:^(NSError *error) {
             [weakSelf reloadData];
@@ -198,9 +198,12 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 
 #pragma mark HEMSensePairDelegate
 
-- (void)didPairSense:(BOOL)pair from:(UIViewController *)controller {
-    if (pair) {
-        [self refreshDataSource];
+- (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController *)controller {
+    if (senseManager != nil) {
+        __weak typeof(self) weakSelf = self;
+        [[self dataSource] updateSenseManager:senseManager completion:^(NSError *error) {
+            [weakSelf reloadData];
+        }];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }

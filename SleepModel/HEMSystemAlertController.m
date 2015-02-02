@@ -165,7 +165,11 @@
 
 #pragma mark HEMSensePairDelegate
 
-- (void)didPairSense:(BOOL)pair from:(UIViewController*)controller {
+- (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController*)controller {
+    if (senseManager != nil) {
+        SENServiceDevice* service = [SENServiceDevice sharedService];
+        [service replaceWithNewlyPairedSenseManager:senseManager completion:nil];
+    }
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
 

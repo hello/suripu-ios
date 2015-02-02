@@ -151,6 +151,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 
 - (NSString*)dateForCellAtIndexPath:(NSIndexPath*)indexPath {
     NSString* date = nil;
+    
     id dataObj = [self objectAtIndexPath:indexPath];
 
     if ([dataObj isKindOfClass:[SENInsight class]]) {

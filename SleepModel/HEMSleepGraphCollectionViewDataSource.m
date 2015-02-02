@@ -393,6 +393,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
                        withSegment:(SENSleepResultSegment*)segment
 {
     [cell removeAllTimeLabels];
+    if (!segment)
+        return;
     NSCalendarUnit units = (NSCalendarUnitMinute|NSCalendarUnitHour|NSCalendarUnitDay);
     NSDateComponents* components = [self.calendar components:units fromDate:segment.date];
     self.timeDateFormatter.timeZone = segment.timezone;
@@ -422,9 +424,12 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
        sleepEventCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
+    HEMSleepEventCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepEventReuseIdentifier
+                                                                                      forIndexPath:indexPath];
     SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
+    if (!segment)
+        return cell;
     NSUInteger sleepDepth = segment.sleepDepth;
-    HEMSleepEventCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepEventReuseIdentifier forIndexPath:indexPath];
     if ([collectionView.delegate respondsToSelector:@selector(didTapEventButton:)]) {
         [cell.eventTypeButton addTarget:collectionView.delegate
                                  action:@selector(didTapEventButton:) forControlEvents:UIControlEventTouchUpInside];
@@ -458,7 +463,10 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 - (SENSleepResultSegment*)sleepSegmentForIndexPath:(NSIndexPath*)indexPath
 {
-    return indexPath.section == HEMSleepGraphCollectionViewSegmentSection ? self.sleepResult.segments[indexPath.row] : nil;
+    NSArray* segments = self.sleepResult.segments;
+    if (indexPath.row >= segments.count || indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
+        return nil;
+    return segments[indexPath.row];
 }
 
 - (UIImage*)imageForEventType:(NSString*)eventType

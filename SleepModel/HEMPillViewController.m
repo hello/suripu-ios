@@ -220,6 +220,10 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
         [self setActivityView:[[HEMActivityCoverView alloc] init]];
     }
     
+    if ([[self delegate] respondsToSelector:@selector(willUnpairPillFrom:)]) {
+        [[self delegate] willUnpairPillFrom:self];
+    }
+    
     id<UIApplicationDelegate> delegate = (id)[UIApplication sharedApplication].delegate;
     UIViewController* root = (id)delegate.window.rootViewController;
     
@@ -228,16 +232,16 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
         __weak typeof(self) weakSelf = self;
         [[SENServiceDevice sharedService] unpairSleepPill:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                if (error != nil) {
-                    [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
-                        [strongSelf showUnpairMessageForError:error];
-                    }];
-                } else {
-                    [[strongSelf navigationController] popViewControllerAnimated:YES];
-                    NSString* success = NSLocalizedString(@"settings.pill.unpaired-message", nil);
-                    [[strongSelf activityView] dismissWithResultText:success showSuccessMark:YES remove:YES completion:nil];
+            if (error != nil) {
+                [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                    [strongSelf showUnpairMessageForError:error];
+                }];
+            } else {
+                if ([[strongSelf delegate] respondsToSelector:@selector(didUnpairPillFrom:)]) {
+                    [[strongSelf delegate] didUnpairPillFrom:strongSelf];
                 }
+                NSString* success = NSLocalizedString(@"settings.pill.unpaired-message", nil);
+                [[strongSelf activityView] dismissWithResultText:success showSuccessMark:YES remove:YES completion:nil];
             }
         }];
     }];

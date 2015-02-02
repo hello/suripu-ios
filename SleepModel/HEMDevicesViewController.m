@@ -29,7 +29,13 @@
 static CGFloat const HEMDeviceInfoHeight = 190.0f;
 static CGFloat const HEMNoDeviceHeight = 205.0f;
 
-@interface HEMDevicesViewController() <UICollectionViewDelegate, HEMPillPairDelegate, HEMSenseControllerDelegate, HEMSensePairingDelegate>
+@interface HEMDevicesViewController() <
+    UICollectionViewDelegate,
+    HEMPillPairDelegate,
+    HEMSenseControllerDelegate,
+    HEMSensePairingDelegate,
+    HEMPillControllerDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) HEMDeviceDataSource* dataSource;
@@ -141,21 +147,11 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     }
 }
 
-#pragma mark - Pair Pill
+#pragma mark - Pill
 
 - (void)showPillPairingController {
     HEMPillPairViewController* pairVC =
         (HEMPillPairViewController*) [HEMOnboardingStoryboard instantiatePillPairViewController];
-    [pairVC setDelegate:self];
-    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
-    [self presentViewController:nav animated:YES completion:nil];
-}
-
-#pragma mark - Pair Sense
-
-- (void)showSensePairingController {
-    HEMSensePairViewController* pairVC =
-        (HEMSensePairViewController*) [HEMOnboardingStoryboard instantiateSensePairViewController];
     [pairVC setDelegate:self];
     UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
     [self presentViewController:nav animated:YES completion:nil];
@@ -172,14 +168,35 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - HEMSenseControllerDelegate
+#pragma mark HEMPillControllerDelegate
+
+- (void)didUnpairPillFrom:(HEMPillViewController *)viewController {
+    [self refreshDataSource];
+    [[self navigationController] popViewControllerAnimated:NO];
+}
+
+#pragma mark - Sense
+
+- (void)showSensePairingController {
+    HEMSensePairViewController* pairVC =
+        (HEMSensePairViewController*) [HEMOnboardingStoryboard instantiateSensePairViewController];
+    [pairVC setDelegate:self];
+    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark HEMSenseControllerDelegate
 
 - (void)didUpdateWiFiFrom:(HEMSenseViewController *)viewController {
-    
     [self refreshDataSource];
 }
 
-#pragma mark - HEMSensePairDelegate
+- (void)didUnpairSenseFrom:(HEMSenseViewController *)viewController {
+    [self refreshDataSource];
+    [[self navigationController] popViewControllerAnimated:NO];
+}
+
+#pragma mark HEMSensePairDelegate
 
 - (void)didPairSense:(BOOL)pair from:(UIViewController *)controller {
     if (pair) {

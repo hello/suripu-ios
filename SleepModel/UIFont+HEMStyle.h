@@ -20,6 +20,9 @@
  */
 + (UIFont *)alarmMeridiemFont;
 
+
++ (UIFont *)tutorialDialogFont;
+
 /**
  *  Font for section and insight headings
  */

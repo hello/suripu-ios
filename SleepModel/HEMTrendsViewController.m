@@ -17,6 +17,7 @@
 #import "HEMEmptyTrendCollectionViewCell.h"
 #import "HEMGraphSectionOverlayView.h"
 #import "HEMMarkdown.h"
+#import "HEMTutorial.h"
 
 @interface HEMTrendsViewController ()<UICollectionViewDelegate, UICollectionViewDataSource, HEMTrendCollectionViewCellDelegate>
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
@@ -88,6 +89,7 @@ static NSString* const HEMAllScopeType = @"ALL";
         [layout clearCache];
         [self.collectionView reloadData];
         self.loading = NO;
+        [HEMTutorial showTutorialForTrendsIfNeeded];
     }];
 }
 

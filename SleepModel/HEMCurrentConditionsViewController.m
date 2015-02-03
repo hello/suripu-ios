@@ -12,6 +12,7 @@
 #import "HEMCardFlowLayout.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
+#import "HEMTutorial.h"
 
 @interface HEMCurrentConditionsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) NSArray* sensors;
@@ -150,6 +151,8 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     [self fetchGraphData];
     [self setLoading:NO];
     [self.collectionView reloadData];
+    if ([self isViewLoaded] && self.view.window)
+        [HEMTutorial showTutorialForSensorsIfNeeded];
 }
 
 - (NSUInteger)indexForSensor:(SENSensor*)sensor

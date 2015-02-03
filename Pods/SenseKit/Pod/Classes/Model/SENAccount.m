@@ -15,6 +15,7 @@ static NSString* kSENAccountDateTimeZone = @"GMT";
 
 @property (nonatomic, copy, readwrite) NSString* accountId;
 @property (nonatomic, copy, readwrite) NSNumber* lastModified;
+@property (nonatomic, strong) NSDate* dobDate;
 
 @end
 
@@ -28,6 +29,11 @@ static NSString* kSENAccountDateTimeZone = @"GMT";
         [self setLastModified:isoLastModDate];
     }
     return self;
+}
+
+- (void)setBirthdate:(NSString *)birthdate {
+    _birthdate = birthdate;
+    [self setDobDate:nil];
 }
 
 - (void)setBirthMonth:(NSInteger)month day:(NSInteger)day andYear:(NSInteger)year {
@@ -46,6 +52,7 @@ static NSString* kSENAccountDateTimeZone = @"GMT";
 
     NSDate* date = [NSDate dateWithTimeIntervalSince1970:[birthdateInMillis longLongValue]/1000];
     NSDateFormatter* formatter = [self isoDateFormatter];
+    [formatter setTimeZone:[NSTimeZone timeZoneWithName:kSENAccountDateTimeZone]];
     [self setBirthdate:[formatter stringFromDate:date]];
 }
 
@@ -55,15 +62,16 @@ static NSString* kSENAccountDateTimeZone = @"GMT";
     dispatch_once(&once, ^{
         formatter = [[NSDateFormatter alloc] init];
         [formatter setDateFormat:kSENAccountDoBFormat];
-        [formatter setTimeZone:[NSTimeZone timeZoneWithName:kSENAccountDateTimeZone]];
     });
     return formatter;
 }
 
 - (NSString*)localizedBirthdateWithStyle:(NSDateFormatterStyle)style {
-    NSDateFormatter* fromFormatter = [self isoDateFormatter];
-    NSDate* date = [fromFormatter dateFromString:[self birthdate]];
-    return [NSDateFormatter localizedStringFromDate:date
+    if ([self dobDate] == nil) {
+        NSDateFormatter* fromFormatter = [self isoDateFormatter];
+        [self setDobDate:[fromFormatter dateFromString:[self birthdate]]];
+    }
+    return [NSDateFormatter localizedStringFromDate:[self dobDate]
                                           dateStyle:style
                                           timeStyle:NSDateFormatterNoStyle];
 }

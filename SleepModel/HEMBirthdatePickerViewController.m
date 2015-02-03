@@ -61,7 +61,7 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
         // set the picker so it's showing values somewhere in the middle and
         // the year at 18 years from this year
         NSInteger defaultMonth = [self initialMonth] > 0 ? [self initialMonth] : kHEMBirthdatePickerDefaultMonth;
-        NSInteger defaultDay = [self initialDay] > 0 ? [self initialDay]+1 : kHEMBirthdatePickerDefaultDay;
+        NSInteger defaultDay = [self initialDay] > 0 ? [self initialDay] : kHEMBirthdatePickerDefaultDay;
         NSInteger defaultYear = [self initialYear] > 0 ? [self initialYear]+1 : kHEMBirthdatePickerDefaultYear;
         [[self dobPicker] setMonth:defaultMonth day:defaultDay yearsPast:defaultYear];
         [self setAppeared:YES];

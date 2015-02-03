@@ -14,13 +14,64 @@
 
 static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
 static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
-static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensor";
+static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensors";
+static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
+static NSString* const HEMTutorialTrendsKey = @"HEMTutorialTrends";
+static CGFloat const HEMTutorialDelay = 0.5f;
 
 + (void)showTutorialForTimelineIfNeeded
 {
     if ([self shouldShowTutorialForKey:HEMTutorialTimelineKey]) {
         [self showTutorialForTimeline];
         [self markTutorialViewed:HEMTutorialTimelineKey];
+    }
+}
+
++ (void)showTutorialForSensorsIfNeeded
+{
+    if ([self shouldShowTutorialForKey:HEMTutorialSensorsKey]) {
+        [self delayBlock:^{
+            [self showTutorialForSensors];
+            [self markTutorialViewed:HEMTutorialSensorsKey];
+        }];
+    }
+}
+
++ (void)delayBlock:(void(^)())block
+{
+    int64_t delta = (int64_t)(HEMTutorialDelay * NSEC_PER_SEC);
+    dispatch_time_t after = dispatch_time(DISPATCH_TIME_NOW, delta);
+    dispatch_after(after, dispatch_get_main_queue(), block);
+}
+
++ (void)showTutorialIfNeededForSensorNamed:(NSString *)sensorName
+{
+    NSString* key = [NSString stringWithFormat:HEMTutorialSensorKeyFormat, sensorName];
+    if ([self shouldShowTutorialForKey:key]) {
+        [self delayBlock:^{
+            [self showTutorialForSensorNamed:sensorName];
+            [self markTutorialViewed:key];
+        }];
+    }
+}
+
++ (void)showTutorialForAlarmsIfNeeded
+{
+    if ([self shouldShowTutorialForKey:HEMTutorialAlarmsKey]) {
+        [self delayBlock:^{
+            [self showTutorialForAlarms];
+            [self markTutorialViewed:HEMTutorialAlarmsKey];
+        }];
+    }
+}
+
++ (void)showTutorialForTrendsIfNeeded
+{
+    if ([self shouldShowTutorialForKey:HEMTutorialTrendsKey]) {
+        [self delayBlock:^{
+            [self showTutorialForTrends];
+            [self markTutorialViewed:HEMTutorialTrendsKey];
+        }];
     }
 }
 
@@ -42,14 +93,6 @@ static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensor";
     [HEMFullscreenDialogView showDialogsWithContent:@[content1, content2, content3, content4]];
 }
 
-+ (void)showTutorialForSensorsIfNeeded
-{
-    if ([self shouldShowTutorialForKey:HEMTutorialSensorsKey]) {
-        [self showTutorialForSensors];
-        [self markTutorialViewed:HEMTutorialSensorsKey];
-    }
-}
-
 + (void)showTutorialForSensors
 {
     HEMDialogContent* content = [HEMDialogContent new];
@@ -57,15 +100,6 @@ static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensor";
     content.content = NSLocalizedString(@"tutorial.sensors.message", nil);
     content.image = [UIImage imageNamed:@"welcome_dialog_sensors"];
     [HEMFullscreenDialogView showDialogsWithContent:@[content]];
-}
-
-+ (void)showTutorialIfNeededForSensorNamed:(NSString *)sensorName
-{
-    NSString* key = [NSString stringWithFormat:HEMTutorialSensorKeyFormat, sensorName];
-    if ([self shouldShowTutorialForKey:key]) {
-        [self showTutorialForSensorNamed:sensorName];
-        [self markTutorialViewed:key];
-    }
 }
 
 + (void)showTutorialForSensorNamed:(NSString*)sensorName
@@ -83,6 +117,24 @@ static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensor";
     content.title = NSLocalizedString(localizedTitleKey, nil);
     content.content = NSLocalizedString(localizedMessageKey, nil);
     content.image = image;
+    [HEMFullscreenDialogView showDialogsWithContent:@[content]];
+}
+
++ (void)showTutorialForAlarms
+{
+    HEMDialogContent* content = [HEMDialogContent new];
+    content.title = NSLocalizedString(@"tutorial.alarms.title", nil);
+    content.content = NSLocalizedString(@"tutorial.alarms.message", nil);
+    content.image = [UIImage imageNamed:@"welcome_dialog_alarm"];
+    [HEMFullscreenDialogView showDialogsWithContent:@[content]];
+}
+
++ (void)showTutorialForTrends
+{
+    HEMDialogContent* content = [HEMDialogContent new];
+    content.title = NSLocalizedString(@"tutorial.trends.title", nil);
+    content.content = NSLocalizedString(@"tutorial.trends.message", nil);
+    content.image = [UIImage imageNamed:@"welcome_dialog_trends"];
     [HEMFullscreenDialogView showDialogsWithContent:@[content]];
 }
 

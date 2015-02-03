@@ -479,6 +479,12 @@
 "tutorial.timeline.message3" = "The “Before Sleep” tab will summarize the conditions of your bedroom before you went to sleep. Too hot? Noisy? You’ll see it here.";
 "tutorial.timeline.message4" = "Your Sleep Timeline shows you a minute-by-minute record of your night, broken into three categories:\n\nLight, Medium and Deep Sleep.";
 
+"tutorial.alarms.title" = "Your first alarm";
+"tutorial.alarms.message" = "When your alarm rings in the morning, Sense will glow and softly play your selected tone. Just wave your hand over Sense to dismiss.";
+
+"tutorial.trends.title" = "Trends";
+"tutorial.trends.message" = "To see how your sleep changes over time, sometimes it's helpful to take a step back. This view will show historical data on your sleep patterns.";
+
 "tutorial.sensors.title" = "Current conditions";
 "tutorial.sensors.message" = "Here you'll see the current conditions of your bedroom. There is a value and a graph of the past few hours for temperature, light, humidity, sound, and air quality. Tap a card for more details.";
 

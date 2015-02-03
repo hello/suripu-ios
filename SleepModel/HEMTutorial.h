@@ -33,5 +33,18 @@
 
 + (void)showTutorialForSensorNamed:(NSString*)sensorName;
 
+/**
+ *  Present the tutorial for trends if not previously viewed
+ */
++ (void)showTutorialForTrendsIfNeeded;
+
++ (void)showTutorialForTrends;
+
+/**
+ *  Present the tutorial for alarms if not previously viewed
+ */
++ (void)showTutorialForAlarmsIfNeeded;
+
++ (void)showTutorialForAlarms;
 
 @end

@@ -26,17 +26,19 @@
 +(NSString *)noBleToBirthdaySegueIdentifier;
 +(NSString *)pillSetupToColorsSegueIdentifier;
 +(NSString *)pushToAudioSegueIdentifier;
-+(NSString *)senseToPillSegueIdentifier;
++(NSString *)sensePairToPillSegueIdentifier;
 +(NSString *)signupToNoBleSegueIdentifier;
 +(NSString *)skipPillPairSegue;
 +(NSString *)weightSegueIdentifier;
 +(NSString *)wifiSegueIdentifier;
 +(NSString *)wifiPasswordSegueIdentifier;
++(NSString *)wifiToPillSegueIdentifier;
 
 /** View Controllers */
 +(id)instantiateDobViewController;
 +(id)instantiateGenderPickerViewController;
 +(id)instantiateHeightPickerViewController;
++(id)instantiatePillDescriptionViewController;
 +(id)instantiatePillPairViewController;
 +(id)instantiateRoomCheckViewController;
 +(id)instantiateSenseAudioViewController;

@@ -50,6 +50,7 @@ NSString* const kHEMAnalyticsEventOnBPairSense = @"Onboarding Pair Sense";
 NSString* const kHEMAnalyticsEventOnBWiFi = @"Onboarding WiFi";
 NSString* const kHEMAnalyticsEventOnBWiFiScan = @"Onboarding WiFi Scan";
 NSString* const kHEMAnalyticsEventOnBWiFiPass = @"Onboarding WiFi Password";
+NSString* const kHEMAnalyticsEventOnBSleepPill = @"Onboarding Sleep Pill";
 NSString* const kHEMAnalyticsEventOnBPairPill = @"Onboarding Pair Pill";
 NSString* const kHEMAnalyticsEventOnBPillPlacement = @"Onboarding Pill Placement";
 NSString* const kHEMAnalyticsEventOnBAnotherPill = @"Onboarding Another Pill";

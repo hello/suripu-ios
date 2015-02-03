@@ -469,7 +469,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         NSString* segueId = nil;
         if ([self detectedSSID] != nil) {
             DDLogVerbose(@"detected SSID %@, skipping wifi set up", [self detectedSSID]);
-            segueId = [HEMOnboardingStoryboard senseToPillSegueIdentifier];
+            segueId = [HEMOnboardingStoryboard sensePairToPillSegueIdentifier];
         } else {
             segueId = [HEMOnboardingStoryboard wifiSegueIdentifier];
         }

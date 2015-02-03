@@ -264,6 +264,10 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
 }
 
 - (void)unlinkSense {
+    if ([[self delegate] respondsToSelector:@selector(willUnpairSenseFrom:)]) {
+        [[self delegate] willUnpairSenseFrom:self];
+    }
+    
     NSString* message = NSLocalizedString(@"settings.sense.unpairing-message", nil);
     [self showActivityText:message completion:^{
         __weak typeof(self) weakSelf = self;
@@ -275,6 +279,9 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
                     [strongSelf showUnpairError];
                 }];
             } else {
+                if ([[strongSelf delegate] respondsToSelector:@selector(didUnpairSenseFrom:)]) {
+                    [[strongSelf delegate] didUnpairSenseFrom:strongSelf];
+                }
                 [strongSelf dismissActivityWithSuccess:nil];
             }
         }];

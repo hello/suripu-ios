@@ -236,14 +236,11 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         
         [self stopActivityWithMessage:nil success:YES completion:nil];
         
-        if ([self delegate] == nil) {
-            __weak typeof(self) weakSelf = self;
-            [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
-                [weakSelf proceed];
-            }];
-        } else {
-            [self proceed];
-        }
+        SENSenseLEDState ledState = [self delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
+        __weak typeof(self) weakSelf = self;
+        [[self manager] setLED:ledState completion:^(id response, NSError *error) {
+            [weakSelf proceed];
+        }];
     }];
 }
 

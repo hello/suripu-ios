@@ -26,6 +26,7 @@
 @property (weak, nonatomic) IBOutlet HEMActionButton *nextButton;
 
 @property (nonatomic, getter=isSigningUp) BOOL signingUp;
+@property (nonatomic, getter=isLoaded) BOOL loaded;
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *nameTopConstraint;
 @end
@@ -39,7 +40,11 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [[self nameField] becomeFirstResponder];
+    
+    if (![self isLoaded]) {
+        [[self nameField] becomeFirstResponder];
+        [self setLoaded:YES];
+    }
 }
 
 - (void)adjustConstraintsForIPhone4 {

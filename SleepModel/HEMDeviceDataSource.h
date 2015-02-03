@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger, HEMDeviceError) {
 - (NSOrderedSet*)deviceWarningsFor:(SENDevice*)device;
 - (BOOL)isObtainingData;
 - (BOOL)isMissingADevice;
+- (void)updateSenseManager:(SENSenseManager*)senseManager completion:(void(^)(NSError* error))completion;
 - (SENDevice*)deviceAtIndexPath:(NSIndexPath*)indexPath;
 - (SENDeviceType)deviceTypeAtIndexPath:(NSIndexPath*)indexPath;
 - (void)loadDeviceInfo:(void(^)(NSError* error))completion;

@@ -8,8 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMPillViewController;
+
+@protocol HEMPillControllerDelegate <NSObject>
+
+@optional
+- (void)willUnpairPillFrom:(HEMPillViewController*)viewController;
+- (void)didUnpairPillFrom:(HEMPillViewController*)viewController;
+
+@end
+
 @interface HEMPillViewController : UIViewController
 
 @property (nonatomic, copy) NSOrderedSet* warnings;
+@property (nonatomic, weak) id<HEMPillControllerDelegate> delegate;
 
 @end

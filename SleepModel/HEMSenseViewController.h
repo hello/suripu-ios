@@ -14,6 +14,8 @@
 @protocol HEMSenseControllerDelegate <NSObject>
 
 @optional
+- (void)willUnpairSenseFrom:(HEMSenseViewController*)viewController;
+- (void)didUnpairSenseFrom:(HEMSenseViewController*)viewController;
 - (void)didUpdateWiFiFrom:(HEMSenseViewController*)viewController;
 - (void)didFactoryRestoreFrom:(HEMSenseViewController*)viewController;
 

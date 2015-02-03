@@ -12,7 +12,6 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMRoomCheckViewController.h"
-#import "HEMScrollableView.h"
 #import "HelloStyleKit.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMActionButton.h"
@@ -30,9 +29,10 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
 
 @interface HEMRoomCheckViewController()
 
-@property (weak, nonatomic) IBOutlet HEMScrollableView *contentView;
+@property (weak, nonatomic) IBOutlet UIView *contentView;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 @property (weak, nonatomic) IBOutlet HEMActionButton *startButton;
+@property (weak, nonatomic) IBOutlet UIImageView *illustrationView;
 
 @property (strong, nonatomic) NSMutableArray* sensorViews;
 @property (assign, nonatomic) CGFloat currentTopY;
@@ -52,23 +52,14 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [[self navigationItem] setHidesBackButton:YES];
-    [self setSensorsOk:YES];
-    [self setCurrentTopY:HEMRoomCheckMinVerticalPadding];
-    [self setupContent];
+    [self setupDefaults];
     [self enableBackButton:NO];
     [SENAnalytics track:kHEMAnalyticsEventOnBRoomCheck];
 }
 
-- (void)setupContent {
-    NSString* desc = NSLocalizedString(@"onboarding.room-check.description", nil);
-    NSMutableAttributedString* attrText =
-        [[NSMutableAttributedString alloc] initWithString:desc];
-    [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrText];
-    
-    [[self contentView] addTitle:NSLocalizedString(@"onboarding.room-check.title", nil)];
-    [[self contentView] addDescription:attrText];
-    [[self contentView] addImage:[HelloStyleKit sensePlacement] withYOffset:HEMRoomCheckImageYOffset];
+- (void)setupDefaults {
+    [self setSensorsOk:YES];
+    [self setCurrentTopY:HEMRoomCheckMinVerticalPadding];
     
     CGRect resultSeparatorFrame = [[self resultSeparator] frame];
     resultSeparatorFrame.size.height = 0.5f;

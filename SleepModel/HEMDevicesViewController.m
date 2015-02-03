@@ -29,7 +29,13 @@
 static CGFloat const HEMDeviceInfoHeight = 190.0f;
 static CGFloat const HEMNoDeviceHeight = 205.0f;
 
-@interface HEMDevicesViewController() <UICollectionViewDelegate, HEMPillPairDelegate, HEMSenseControllerDelegate, HEMSensePairingDelegate>
+@interface HEMDevicesViewController() <
+    UICollectionViewDelegate,
+    HEMPillPairDelegate,
+    HEMSenseControllerDelegate,
+    HEMSensePairingDelegate,
+    HEMPillControllerDelegate
+>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) HEMDeviceDataSource* dataSource;
@@ -64,7 +70,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     // if it has happened.
     if ([self loaded] && ![[self dataSource] isMissingADevice]) {
         [self reloadData];
-    } else {
+    } else if (![self loaded]) {
         __weak typeof(self) weakSelf = self;
         [[self dataSource] loadDeviceInfo:^(NSError *error) {
             [weakSelf reloadData];
@@ -141,7 +147,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     }
 }
 
-#pragma mark - Pair Pill
+#pragma mark - Pill
 
 - (void)showPillPairingController {
     HEMPillPairViewController* pairVC =
@@ -151,7 +157,25 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-#pragma mark - Pair Sense
+#pragma mark HEMPillPairDelegate
+
+- (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
+    [self refreshDataSource];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didCancelPairing:(HEMPillPairViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark HEMPillControllerDelegate
+
+- (void)didUnpairPillFrom:(HEMPillViewController *)viewController {
+    [self refreshDataSource];
+    [[self navigationController] popViewControllerAnimated:NO];
+}
+
+#pragma mark - Sense
 
 - (void)showSensePairingController {
     HEMSensePairViewController* pairVC =
@@ -161,29 +185,25 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     [self presentViewController:nav animated:YES completion:nil];
 }
 
-#pragma mark HEMPillPairDelegate
-
-- (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
-    [self reloadData];
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-- (void)didCancelPairing:(HEMPillPairViewController *)controller {
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
-
-#pragma mark - HEMSenseControllerDelegate
+#pragma mark HEMSenseControllerDelegate
 
 - (void)didUpdateWiFiFrom:(HEMSenseViewController *)viewController {
-    
     [self refreshDataSource];
 }
 
-#pragma mark - HEMSensePairDelegate
+- (void)didUnpairSenseFrom:(HEMSenseViewController *)viewController {
+    [self refreshDataSource];
+    [[self navigationController] popViewControllerAnimated:NO];
+}
 
-- (void)didPairSense:(BOOL)pair from:(UIViewController *)controller {
-    if (pair) {
-        [self refreshDataSource];
+#pragma mark HEMSensePairDelegate
+
+- (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController *)controller {
+    if (senseManager != nil) {
+        __weak typeof(self) weakSelf = self;
+        [[self dataSource] updateSenseManager:senseManager completion:^(NSError *error) {
+            [weakSelf reloadData];
+        }];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
 }
@@ -202,6 +222,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
         [senseVC setDelegate:self];
     } else if ([[segue destinationViewController] isKindOfClass:[HEMPillViewController class]]) {
         HEMPillViewController* pillVC = [segue destinationViewController];
+        [pillVC setDelegate:self];
         [pillVC setWarnings:[[self dataSource] deviceWarningsFor:[self selectedDevice]]];
     }
 }

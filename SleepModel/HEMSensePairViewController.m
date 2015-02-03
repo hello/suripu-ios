@@ -88,7 +88,11 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)cacheManager {
-    [[HEMOnboardingCache sharedCache] setSenseManager:[self senseManager]];
+    if ([self delegate] == nil) {
+        [[HEMOnboardingCache sharedCache] setSenseManager:[self senseManager]];
+    } else {
+        
+    }
 }
 
 - (void)disconnectSense {
@@ -126,7 +130,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 #pragma mark - Actions
 
 - (void)cancel:(id)sender {
-    [[self delegate] didPairSense:NO from:self];
+    [[self delegate] didPairSenseUsing:nil from:self];
 }
 
 - (IBAction)enablePairing:(id)sender {
@@ -448,15 +452,15 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)finish {
     // need to do this to stop the activity and set the LED simultaneously or
     // else the LED does not properly sync up with the success mark
-    if ([self delegate] == nil) {
-        __weak typeof(self) weakSelf = self;
-        [[self senseManager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
-            DDLogVerbose(@"just set led to success state from sense pairing");
-            [weakSelf next]; // once ble operation is done, proceed.  activity should hide after
-        }];
-    } else {
-        [self next];
-    }
+    //
+    // FIXME: once firmware fixes the Success LED state, we should set it to success
+    // when delegate exists, but since it doesn't work, it will leave the led to
+    // an activity state
+    SENSenseLEDState led = [self delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
+    __weak typeof(self) weakSelf = self;
+    [[self senseManager] setLED:led completion:^(id response, NSError *error) {
+        [weakSelf next]; // once ble operation is done, proceed.  activity should hide after
+    }];
     
     NSString* msg = NSLocalizedString(@"pairing.done", nil);
     [self stopActivityWithMessage:msg success:YES completion:nil];
@@ -473,7 +477,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         }
         [self performSegueWithIdentifier:segueId sender:self];
     } else {
-        [[self delegate] didPairSense:YES from:nil];
+        [[self delegate] didPairSenseUsing:[self senseManager] from:self];
     }
 }
 

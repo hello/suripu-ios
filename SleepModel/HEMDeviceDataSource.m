@@ -77,6 +77,11 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
     [self refreshSenseData:completion];
 }
 
+- (void)updateSenseManager:(SENSenseManager*)senseManager completion:(void(^)(NSError* error))completion {
+    SENServiceDevice* service = [SENServiceDevice sharedService];
+    [service replaceWithNewlyPairedSenseManager:senseManager completion:completion];
+}
+
 - (void)refreshSenseData:(void(^)(NSError* error))completion {
     __weak typeof(self) weakSelf = self;
     

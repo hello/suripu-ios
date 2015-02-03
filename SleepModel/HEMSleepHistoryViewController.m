@@ -28,9 +28,11 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.historyCollectionView.delegate = nil;
     [self configureDateFormatters];
     [self configureCollectionView];
     [self loadData];
+    self.historyCollectionView.delegate = self;
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -109,8 +111,8 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     NSInteger index = components.hour / 24;
     if (components.hour % 24 > 0)
         index++;
-    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:MIN(index, [self.historyCollectionView numberOfItemsInSection:0] - 1)
-                                                 inSection:0];
+    NSInteger item = MIN(index, [self collectionView:self.historyCollectionView numberOfItemsInSection:0] - 1);
+    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:item inSection:0];
     [self.historyCollectionView scrollToItemAtIndexPath:indexPath
                                        atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally
                                                animated:animated];
@@ -167,9 +169,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
     SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
     self.selectedDate = sleepResult.date;
-    CGPoint centerPoint = CGPointMake(collectionView.center.x + collectionView.contentOffset.x,
-                                      collectionView.center.y + collectionView.contentOffset.y);
-    NSIndexPath* centeredIndexPath = [collectionView indexPathForItemAtPoint:centerPoint];
+    NSIndexPath* centeredIndexPath = [self indexPathAtCenter];
     if ([indexPath isEqual:centeredIndexPath]) {
         [self dismissViewControllerAnimated:YES completion:nil];
     } else {
@@ -185,18 +185,21 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 #pragma mark - UIScrollViewDelegate
 
+- (NSIndexPath*)indexPathAtCenter
+{
+    UICollectionView* collectionView = self.historyCollectionView;
+    CGPoint centerPoint = CGPointMake(collectionView.center.x + collectionView.contentOffset.x,
+                                      collectionView.center.y + collectionView.contentOffset.y);
+    return [collectionView indexPathForItemAtPoint:centerPoint];
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
-    CGFloat midX = CGRectGetMidX(self.view.frame);
-    NSArray* cells = [self.historyCollectionView.visibleCells sortedArrayUsingComparator:^NSComparisonResult(UICollectionViewCell* cell1, UICollectionViewCell* cell2) {
-        NSNumber* diff1 = @(ABS(CGRectGetMidX(cell1.frame) - midX));
-        NSNumber* diff2 = @(ABS(CGRectGetMidX(cell2.frame) - midX));
-        return [diff2 compare:diff1];
-    }];
-    UICollectionViewCell* cell = cells.count > 1 ? cells[1] : [cells firstObject];
-    NSIndexPath* indexPath = [self.historyCollectionView indexPathForCell:cell];
-    SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
-    self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:sleepResult.date];
+    NSIndexPath* indexPath = [self indexPathAtCenter];
+    if (indexPath) {
+        SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
+        self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:sleepResult.date];
+    }
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity

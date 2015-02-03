@@ -21,6 +21,8 @@
  */
 + (UIColor*)colorForSleepDepth:(NSUInteger)sleepDepth;
 
++ (UIColor*)colorForGenericMotionDepth:(NSUInteger)depth;
+
 + (UIColor*)colorForSensorWithCondition:(SENSensorCondition)condition;
 
 + (UIColor*)colorForSleepScore:(NSInteger)sleepScore;

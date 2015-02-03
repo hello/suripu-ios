@@ -15,6 +15,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAlertController.h"
 #import "HEMMarkdown.h"
+#import "HEMTutorial.h"
 
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate>
 
@@ -70,6 +71,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [SENAnalytics track:kHEMAnalyticsEventAlarms];
+    [HEMTutorial showTutorialForAlarmsIfNeeded];
 }
 
 - (void)viewWillDisappear:(BOOL)animated

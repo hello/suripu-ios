@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -7,13 +7,6 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <mutableArray key="Calibre-Light.otf">
-            <string>Calibre-Light</string>
-            <string>Calibre-Light</string>
-            <string>Calibre-Light</string>
-        </mutableArray>
-    </customFonts>
     <scenes>
         <!--Alarm-->
         <scene sceneID="Ncz-U5-pT4">
@@ -1437,7 +1430,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" text="22" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="71w-49-Doa">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" verticalCompressionResistancePriority="749" text="22" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="36" translatesAutoresizingMaskIntoConstraints="NO" id="71w-49-Doa">
                                 <rect key="frame" x="256" y="44" width="81" height="99"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="72"/>
                                 <color key="textColor" red="0.50196078430000002" green="0.50196078430000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -1521,13 +1514,10 @@
                                     <action selector="selectedDailyGraph:" destination="hxI-u7-Ith" eventType="touchUpInside" id="AWr-nP-Cej"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="749" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.70000000000000018" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zkp-GN-ZQu" userLabel="message">
-                                <rect key="frame" x="20" y="151" width="560" height="38"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="249" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.70000000000000018" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Zkp-GN-ZQu" userLabel="message">
+                                <rect key="frame" x="20" y="151" width="560" height="22"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="38" id="rbo-bo-d3p"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
+                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1547,24 +1537,17 @@
                                     <constraint firstAttribute="height" constant="1" id="zTh-nZ-MCm"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="TopLeft" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="none" minimumScaleFactor="0.9500000000000004" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="YMl-Xd-2cK" userLabel="ideal message">
-                                <rect key="frame" x="20" y="198" width="560" height="18"/>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="YMl-Xd-2cK" firstAttribute="top" secondItem="Zkp-GN-ZQu" secondAttribute="bottom" constant="9" id="1Bz-9p-Fl1"/>
                             <constraint firstItem="jXq-nN-8Qt" firstAttribute="leading" secondItem="Sdp-en-Umr" secondAttribute="leading" id="1lw-oz-FL7"/>
                             <constraint firstItem="EGP-k0-Pe2" firstAttribute="leading" secondItem="Sdp-en-Umr" secondAttribute="leading" constant="20" id="28H-9X-Pe6"/>
                             <constraint firstItem="Zkp-GN-ZQu" firstAttribute="top" secondItem="71w-49-Doa" secondAttribute="bottom" constant="8" id="5N1-ih-n5l"/>
                             <constraint firstItem="dQu-Hf-dor" firstAttribute="centerY" secondItem="71w-49-Doa" secondAttribute="centerY" constant="-16" id="8Uh-6s-SNy"/>
                             <constraint firstItem="EGP-k0-Pe2" firstAttribute="width" secondItem="Sdp-en-Umr" secondAttribute="width" multiplier="0.35" id="8i1-ay-tnj"/>
-                            <constraint firstItem="YMl-Xd-2cK" firstAttribute="leading" secondItem="Sdp-en-Umr" secondAttribute="leading" constant="20" id="B3r-xD-oyZ"/>
                             <constraint firstItem="dQu-Hf-dor" firstAttribute="leading" secondItem="71w-49-Doa" secondAttribute="trailing" id="CTo-ue-faT"/>
                             <constraint firstItem="d9H-QV-uE8" firstAttribute="leading" secondItem="jXq-nN-8Qt" secondAttribute="leading" constant="20" id="Duo-f9-6lg"/>
+                            <constraint firstItem="d9H-QV-uE8" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Zkp-GN-ZQu" secondAttribute="bottom" constant="8" id="GNI-F9-j9v"/>
                             <constraint firstItem="U6O-Dc-1qK" firstAttribute="leading" secondItem="d9H-QV-uE8" secondAttribute="trailing" constant="30" id="GVN-0w-08N"/>
                             <constraint firstItem="qO8-Y0-m2N" firstAttribute="top" secondItem="jXq-nN-8Qt" secondAttribute="bottom" constant="45" id="J3R-Ge-13j"/>
                             <constraint firstItem="71w-49-Doa" firstAttribute="top" secondItem="JyQ-Kh-wms" secondAttribute="bottom" constant="24" id="JCz-iO-Yyb"/>
@@ -1578,10 +1561,8 @@
                             <constraint firstItem="d9H-QV-uE8" firstAttribute="bottom" secondItem="jXq-nN-8Qt" secondAttribute="top" constant="-6" id="obi-9C-Af2"/>
                             <constraint firstAttribute="trailing" secondItem="jXq-nN-8Qt" secondAttribute="trailing" id="tL3-6O-qzp"/>
                             <constraint firstAttribute="centerX" secondItem="BKl-LX-Oq8" secondAttribute="centerX" constant="3.5" id="tcw-NR-Ybj"/>
-                            <constraint firstAttribute="trailing" secondItem="YMl-Xd-2cK" secondAttribute="trailing" constant="20" id="u3W-zd-bJR"/>
                             <constraint firstItem="d9H-QV-uE8" firstAttribute="width" secondItem="U6O-Dc-1qK" secondAttribute="width" id="xWE-Ig-9yf"/>
                             <constraint firstAttribute="trailing" secondItem="Zkp-GN-ZQu" secondAttribute="trailing" constant="20" id="ycS-FX-Ecy"/>
-                            <constraint firstItem="d9H-QV-uE8" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YMl-Xd-2cK" secondAttribute="bottom" constant="24" id="zBu-b4-OfV"/>
                             <constraint firstItem="d9H-QV-uE8" firstAttribute="centerY" secondItem="BKl-LX-Oq8" secondAttribute="centerY" id="zrb-dA-nUL"/>
                         </constraints>
                     </view>
@@ -1591,7 +1572,6 @@
                         <outlet property="graphContainerView" destination="jXq-nN-8Qt" id="1Dd-eu-q83"/>
                         <outlet property="graphView" destination="eKU-VY-IW0" id="7TD-qB-cd7"/>
                         <outlet property="hourlyGraphButton" destination="d9H-QV-uE8" id="v7k-ws-X03"/>
-                        <outlet property="idealLabel" destination="YMl-Xd-2cK" id="mx9-Vt-BsB"/>
                         <outlet property="overlayView" destination="oVZ-oK-eUb" id="A5O-Hw-Uph"/>
                         <outlet property="selectionLeftConstraint" destination="28H-9X-Pe6" id="ZED-Vw-eIx"/>
                         <outlet property="selectionView" destination="EGP-k0-Pe2" id="rsg-zi-v8i"/>
@@ -2553,7 +2533,7 @@
                                     <constraint firstAttribute="height" constant="35" id="iCN-AR-HbV"/>
                                 </constraints>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="8Vt-Zc-Wk5" id="wMN-XJ-qYT"/>
@@ -2564,7 +2544,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="d4O-2Z-8Q0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="8Vt-Zc-Wk5" id="GUb-4y-3O6"/>
@@ -2691,7 +2671,7 @@
                                     <constraint firstAttribute="height" constant="35" id="zIG-Y1-CpH"/>
                                 </constraints>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="done"/>
                                 <connections>
                                     <outlet property="delegate" destination="PGj-TD-ixH" id="xG5-Ml-zRw"/>

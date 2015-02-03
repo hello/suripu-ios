@@ -12,6 +12,7 @@
 #import "HEMCardFlowLayout.h"
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
+#import "HEMTutorial.h"
 
 @interface HEMCurrentConditionsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) NSArray* sensors;
@@ -68,7 +69,6 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SENSensorsUpdatedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SENSensorUpdateFailedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SENAuthorizationServiceDidAuthorizeNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:SENAuthorizationServiceDidDeauthorizeNotification object:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -95,7 +95,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
                    name:SENAuthorizationServiceDidAuthorizeNotification
                  object:nil];
     [center addObserver:self
-               selector:@selector(invalidateTimers)
+               selector:@selector(handleSignOut)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
     [center addObserver:self
@@ -111,6 +111,13 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     } else {
         self.shouldReload = YES;
     }
+}
+
+- (void)handleSignOut
+{
+    [self invalidateTimers];
+    self.sensors = nil;
+    self.shouldReload = YES;
 }
 
 - (void)dealloc
@@ -144,6 +151,8 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     [self fetchGraphData];
     [self setLoading:NO];
     [self.collectionView reloadData];
+    if ([self isViewLoaded] && self.view.window)
+        [HEMTutorial showTutorialForSensorsIfNeeded];
 }
 
 - (NSUInteger)indexForSensor:(SENSensor*)sensor

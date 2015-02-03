@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.0.1.3
+
+New:
+
+* Sensor detail highlights current condition and insight
+
+Fixes:
+
+* fixed issue where Timeline dates are off and Last Night was not referring to yesterday
+* skipping pill pairing will ask you to confirm, skipping the pill placement instruction screen as well
+* updated support link
+* proceed to next onboarding screen while activity is still showing to remove unintended confusion that something went wrong
+* fixed issue with Insight summary date being truncated for today
+* update devices list faster, after removing Sense or Sleep Pill from account
+* removed Thank You message after answering Questions
+* fixed issue where textfields in sign in / sign up screens might cause content to temporarily hide
+* fixed an issue where re-pairing a Sleep Pill may leave Sense LED on
+* fixed an issue where re-pairing a Sense may leave Sense LED on
+* updated title of devices screen to reflect what is shown in settings
+* updated various onboarding screen vx
+* updated birthdate format in account settings
+* fixed issue where birthdate might be off by 1
+* fixed issue with Room Check title being missing
+
 ## 1.0.1.2
 
 New:

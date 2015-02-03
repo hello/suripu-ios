@@ -175,7 +175,7 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
     CGFloat x = CGRectGetMidX(rect)  - width;
     CGFloat y = CGRectGetMinY(rect);
     CGFloat halfButton = ceilf(HEMEventButtonSize/2);
-    CGContextSetFillColorWithColor(ctx, [HelloStyleKit timelineLineColor].CGColor);
+    CGContextSetFillColorWithColor(ctx, self.lineColor.CGColor);
     if ([self isLastSegment] && ![self isFirstSegment]) {
         height = halfButton;
     } else if ([self isFirstSegment] && ![self isLastSegment]) {

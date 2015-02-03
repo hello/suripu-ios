@@ -63,6 +63,7 @@ static NSUInteger const HEMAlarm24HourCount = 24;
     self.use12Hour = [SENSettings timeFormat] == SENTimeFormat12Hour;
     self.lineViewHeightConstraint.constant = 0.5;
     [self configurePickerContainerView];
+    [self configurePickerView];
     [self configureAlarmCache];
     [self loadDefaultAlarmSound];
     [self configureBarButtonItems];
@@ -137,6 +138,16 @@ static NSUInteger const HEMAlarm24HourCount = 24;
     layer.startPoint = CGPointZero;
     layer.endPoint = CGPointMake(0, 1);
     [self.gradientView.layer insertSublayer:layer atIndex:0];
+}
+
+- (void)configurePickerView
+{
+    NSInteger hourRowCount = [self realNumberOfRowsInComponent:HEMAlarmHourIndex];
+    [self.pickerView selectRow:(INT16_MAX/(2*hourRowCount))*hourRowCount
+                   inComponent:HEMAlarmHourIndex animated:NO];
+    NSInteger minuteRowCount = [self realNumberOfRowsInComponent:HEMAlarmMinuteIndex];
+    [self.pickerView selectRow:(INT16_MAX/(2*minuteRowCount))*minuteRowCount
+                   inComponent:HEMAlarmMinuteIndex animated:NO];
 }
 
 - (void)configureAlarmCache
@@ -302,7 +313,14 @@ static NSUInteger const HEMAlarm24HourCount = 24;
             hourRow -= HEMAlarm12HourCount;
         hourRow--;
     }
-    [self.pickerView selectRow:hourRow inComponent:HEMAlarmHourIndex animated:NO];
+    NSInteger hourRowCount = [self realNumberOfRowsInComponent:HEMAlarmHourIndex];
+    NSInteger hourOffset = (INT16_MAX/(2*hourRowCount))*hourRowCount;
+    hourRow += hourOffset;
+    NSInteger minuteRowCount = [self realNumberOfRowsInComponent:HEMAlarmMinuteIndex];
+    NSInteger minuteOffset = (INT16_MAX/(2*minuteRowCount))*minuteRowCount;
+    minuteRow += minuteOffset;
+    [self.pickerView selectRow:hourRow
+                   inComponent:HEMAlarmHourIndex animated:NO];
     [self.pickerView selectRow:minuteRow
                    inComponent:HEMAlarmMinuteIndex animated:NO];
 
@@ -363,10 +381,12 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 
 #pragma mark UIPickerViewDelegate
 
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)loopedRow inComponent:(NSInteger)component
 {
+    NSInteger rowCount = [self realNumberOfRowsInComponent:component];
+    NSInteger row = loopedRow % rowCount;
     UILabel* oldSelectedLabel;
-    UILabel* selectedLabel = (id)[pickerView viewForRow:row forComponent:component];
+    UILabel* selectedLabel = (id)[pickerView viewForRow:loopedRow forComponent:component];
     switch (component) {
         case HEMAlarmHourIndex: {
             oldSelectedLabel = self.selectedHourLabel;
@@ -381,13 +401,14 @@ static NSUInteger const HEMAlarm24HourCount = 24;
         case HEMAlarmMeridiemIndex: {
             oldSelectedLabel = self.selectedMeridiemLabel;
             self.selectedMeridiemLabel = selectedLabel;
-            NSUInteger selectedHourRow = [pickerView selectedRowInComponent:HEMAlarmHourIndex];
+            NSUInteger selectedHourRow = [pickerView selectedRowInComponent:HEMAlarmHourIndex]
+                                            % [self realNumberOfRowsInComponent:HEMAlarmHourIndex];
             [self updateAlarmCacheHourWithSelectedRow:selectedHourRow];
         } break;
         default:
             break;
     }
-    if (![selectedLabel isEqual:oldSelectedLabel]) {
+    if (![selectedLabel.text isEqual:oldSelectedLabel.text]) {
         [UIView animateWithDuration:0.25f animations:^{
             [self configureLabel:selectedLabel selected:YES component:component];
             if (oldSelectedLabel)
@@ -423,7 +444,7 @@ static NSUInteger const HEMAlarm24HourCount = 24;
     return [self shouldUse12Hour] ? 4 : 3;
 }
 
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+- (NSInteger)realNumberOfRowsInComponent:(NSInteger)component
 {
     switch (component) {
         case HEMAlarmHourIndex: return [self shouldUse12Hour] ? HEMAlarm12HourCount : HEMAlarm24HourCount;
@@ -431,6 +452,17 @@ static NSUInteger const HEMAlarm24HourCount = 24;
         case HEMAlarmMinuteIndex: return HEMAlarmMinuteCount / HEMAlarmMinuteIncrement;
         case HEMAlarmMeridiemIndex: return 2;
         default: return 0;
+    }
+}
+
+- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
+{
+    switch (component) {
+        case HEMAlarmHourIndex:
+        case HEMAlarmMinuteIndex:
+            return INT16_MAX;
+        default:
+            return [self realNumberOfRowsInComponent:component];
     }
 }
 
@@ -449,8 +481,9 @@ static NSUInteger const HEMAlarm24HourCount = 24;
     return label;
 }
 
-- (NSString *)textForRow:(NSInteger)row forComponent:(NSInteger)component
+- (NSString *)textForRow:(NSInteger)loopedRow forComponent:(NSInteger)component
 {
+    NSInteger row = loopedRow % [self realNumberOfRowsInComponent:component];
     switch (component) {
         case HEMAlarmHourIndex: {
             NSInteger hour = [self shouldUse12Hour] ? row + 1 : row;

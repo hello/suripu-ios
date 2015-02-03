@@ -5,13 +5,13 @@
 
 CGFloat const HEMLinedCollectionViewCellLineOffset = 65.f;
 CGFloat const HEMLinedCollectionViewCellLineWidth = 2.f;
-CGFloat const HEMSleepSegmentMinimumFillWidth = 28.f;
 CGFloat const HEMSleepLineWidth = 1.f;
 
 @interface HEMSleepSegmentCollectionViewCell ()
 
 @property (nonatomic, readwrite) CGFloat fillRatio;
 @property (nonatomic, strong, readwrite) UIColor* fillColor;
+@property (nonatomic, strong, readwrite) UIColor* lineColor;
 @property (nonatomic, strong) NSMutableArray* timeViews;
 @end
 
@@ -109,10 +109,11 @@ static int const HEMNoSleepBorderDashLengthCount = 2;
 
 }
 
-- (void)setSegmentRatio:(CGFloat)ratio withColor:(UIColor*)color
+- (void)setSegmentRatio:(CGFloat)ratio withFillColor:(UIColor *)color lineColor:(UIColor *)lineColor
 {
     self.fillRatio = MIN(ratio, 1.0);
     self.fillColor = color;
+    self.lineColor = lineColor;
     [self setNeedsDisplay];
 }
 
@@ -123,7 +124,7 @@ static int const HEMNoSleepBorderDashLengthCount = 2;
         CGContextRef ctx = UIGraphicsGetCurrentContext();
         CGFloat inset = HEMLinedCollectionViewCellLineOffset + HEMLinedCollectionViewCellLineWidth;
         CGFloat maximumFillWidth = (CGRectGetWidth(rect) - (inset*2));
-        CGFloat width = MAX(maximumFillWidth * self.fillRatio, HEMSleepSegmentMinimumFillWidth);
+        CGFloat width = maximumFillWidth * self.fillRatio;
         CGFloat x = (CGRectGetWidth(rect) - width)/2;
         CGRect fillRect = CGRectMake(x, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
         CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);

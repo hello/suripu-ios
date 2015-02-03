@@ -145,8 +145,12 @@ static HEMFullscreenDialogView* fullscreenDialogView = nil;
         message = [[NSAttributedString alloc] initWithString:content.content
                                                   attributes:attributes];
     }
-
-    NSString* buttonTitle = NSLocalizedString(isLastDialog ? @"actions.done" : @"actions.next", nil);
+    NSString* buttonKey = nil;
+    if (self.contents.count == 1)
+        buttonKey = @"actions.ok";
+    else
+        buttonKey = isLastDialog ? @"actions.done" : @"actions.next";
+    NSString* buttonTitle = NSLocalizedString(buttonKey, nil);
     [self.actionButton setTitle:[buttonTitle uppercaseString] forState:UIControlStateNormal];
     [self updateDialogWithTitle:title message:message image:content.image];
     [self setNeedsUpdateConstraints];

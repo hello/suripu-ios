@@ -130,31 +130,45 @@ static HEMFullscreenDialogView* fullscreenDialogView = nil;
     self.selectedIndex = index;
     HEMDialogContent* content = self.contents[index];
     BOOL isLastDialog = index == self.contents.count - 1;
-    if (content.image) {
-        UIImage* image = content.image;
-        self.imageView.image = image;
-        self.imageViewHeightConstraint.constant = (image.size.height/image.size.width) * CGRectGetWidth(self.imageView.bounds);
-    } else {
-        self.imageViewHeightConstraint.constant = 0;
-    }
+    NSAttributedString* title = nil;
+    NSAttributedString* message = nil;
+
     self.pageControl.currentPage = index;
     if (content.title.length > 0)
-        self.titleLabel.attributedText = [[NSAttributedString alloc] initWithString:[content.title uppercaseString]
-                                                                         attributes:@{NSKernAttributeName:@(0.5)}];
-    else
-        self.titleLabel.text = nil;
+        title = [[NSAttributedString alloc] initWithString:[content.title uppercaseString]
+                                                attributes:@{NSKernAttributeName:@(0.5)}];
     if (content.content.length > 0) {
         NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
         style.lineSpacing = HEMFullscreenDialogLineSpacing;
         NSDictionary* attributes = @{NSParagraphStyleAttributeName:style, NSFontAttributeName: [UIFont tutorialDialogFont]};
-        self.textView.attributedText = [[NSAttributedString alloc] initWithString:content.content
-                                                                       attributes:attributes];
-    } else {
-        self.textView.text = nil;
+        message = [[NSAttributedString alloc] initWithString:content.content
+                                                  attributes:attributes];
     }
+
     NSString* buttonTitle = NSLocalizedString(isLastDialog ? @"actions.done" : @"actions.next", nil);
     [self.actionButton setTitle:[buttonTitle uppercaseString] forState:UIControlStateNormal];
+    [self updateDialogWithTitle:title message:message image:content.image];
     [self setNeedsUpdateConstraints];
+}
+
+- (void)updateDialogWithTitle:(NSAttributedString*)title message:(NSAttributedString*)message image:(UIImage*)image
+{
+    [UIView animateWithDuration:0.15f animations:^{
+        self.imageView.alpha = 0;
+        self.titleLabel.alpha = 0;
+        self.textView.alpha = 0;
+    } completion:^(BOOL finished) {
+        CGFloat constant = image ? (image.size.height/image.size.width) * CGRectGetWidth(self.imageView.bounds) : 0;
+        self.imageView.image = image;
+        self.imageViewHeightConstraint.constant = constant;
+        self.titleLabel.attributedText = title;
+        self.textView.attributedText = message;
+        [UIView animateWithDuration:0.15f animations:^{
+            self.imageView.alpha = 1;
+            self.titleLabel.alpha = 1;
+            self.textView.alpha = 1;
+        }];
+    }];
 }
 
 - (void)start

@@ -141,7 +141,8 @@
 "settings.personal.info.weight" = "Weight";
 "settings.account.enhanced-audio" = "Enhanced audio";
 "settings.account.healthkit" = "HealthKit";
-"setings.account.healthKit.not-supported" = "not supported";
+"settings.account.push-conditions" = "Poor conditions notification";
+"settings.account.push-score" = "Sleep score notification";
 "settings.wifi.other" = "Other...";
 "settings.account.email" = "Email";
 "settings.account.password" = "Password";

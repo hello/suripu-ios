@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENAlarm.h>
+#import <SenseKit/SENSenseManager.h>
 
 #import "UIView+HEMSnapshot.h"
 #import "UIFont+HEMStyle.h"
@@ -18,6 +19,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmViewController.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMOnboardingCache.h"
 
 @interface HEMOnboardAlarmViewController() <HEMAlarmControllerDelegate>
 
@@ -41,8 +43,15 @@
 }
 
 - (void)next {
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard alarmToAnotherPillSegueIdentifier]
-                              sender:self];
+    // if there are less than 2 accounts paired to Sense, ask if user wants to
+    // set up another Pill (another account), otherwise just finish onboarding
+    if ([[[HEMOnboardingCache sharedCache] pairedAccountsToSense] integerValue] < 2) {
+        [self performSegueWithIdentifier:[HEMOnboardingStoryboard alarmToAnotherPillSegueIdentifier]
+                                  sender:self];
+    } else {
+        [[[HEMOnboardingCache sharedCache] senseManager] disconnectFromSense];
+        [HEMOnboardingUtils finisOnboardinghWithMessageFrom:self];
+    }
 }
 
 #pragma mark - Actions

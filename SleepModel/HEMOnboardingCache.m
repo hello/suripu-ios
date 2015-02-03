@@ -2,6 +2,8 @@
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENSenseManager.h>
+#import <SenseKit/SENAPIDevice.h>
+#import <SenseKit/SENSense.h>
 
 #import "HEMOnboardingCache.h"
 #import "HEMBluetoothUtils.h"
@@ -16,6 +18,7 @@ static HEMOnboardingCache* sharedUserDataCache = nil;
 @property (nonatomic, assign) NSInteger sensorPollingAttempts;
 @property (nonatomic, assign) NSInteger senseScanAttempts;
 @property (nonatomic, copy)   NSArray* nearbySensesFound;
+@property (nonatomic, copy)   NSNumber* pairedAccountsToSense;
 @property (nonatomic, assign) BOOL pollingSensor;
 
 @end
@@ -126,6 +129,17 @@ static HEMOnboardingCache* sharedUserDataCache = nil;
 
 - (void)clearPreScannedSenses {
     [self setNearbySensesFound:nil];
+}
+
+- (void)checkNumberOfPairedAccounts {
+    // ask the server if how many accounts exist for this Sense and cache result
+    NSString* deviceId = [[[self senseManager] sense] deviceId];
+    if ([deviceId length] > 0) {
+        __weak typeof(self) weakSelf = self;
+//        [SENAPIDevice getNumberOfAccountsForPairedSense:deviceId completion:^(NSNumber* pairedAccounts, NSError *error) {
+//            [weakSelf setPairedAccountsToSense:pairedAccounts];
+//        }];
+    }
 }
 
 @end

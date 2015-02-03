@@ -204,7 +204,6 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
             NSError* error = nil;
             strongSelf.player = [[AVAudioPlayer alloc] initWithData:urlData error:&error];
             strongSelf.player.delegate = self;
-            strongSelf.player.volume = 1.0f;
             if (error)
                 [strongSelf stopAudio];
             else {

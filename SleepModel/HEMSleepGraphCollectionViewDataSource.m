@@ -51,6 +51,7 @@ static NSString* const HEMSleepEventTypeLightsOut = @"LIGHTS_OUT";
 static NSString* const HEMSleepEventTypeInBed = @"IN_BED";
 static NSString* const HEMSleepEventTypeOutOfBed = @"OUT_OF_BED";
 static NSString* const HEMSleepEventTypeAlarm = @"ALARM";
+static NSString* const HEMSleepEventTypeSleeping = @"SLEEPING";
 
 static NSString* const sleepSegmentReuseIdentifier = @"sleepSegmentCell";
 static NSString* const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
@@ -384,7 +385,16 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMNoSleepEventCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
-    [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[UIColor colorForSleepDepth:sleepDepth]];
+    UIColor* color = nil, * lineColor = nil;
+    CGFloat fillRatio = sleepDepth / (float)SENSleepResultSegmentDepthDeep;
+    if ([segment.eventType isEqualToString:HEMSleepEventTypeSleeping]) {
+        color = [UIColor colorForSleepDepth:sleepDepth];
+        lineColor = [HelloStyleKit timelineLineColor];
+    } else {
+        color = [UIColor colorForGenericMotionDepth:sleepDepth];
+        lineColor = [UIColor clearColor];
+    }
+    [cell setSegmentRatio:fillRatio withFillColor:color lineColor:lineColor];
     [self configureTimeLabelsForCell:cell withSegment:segment];
     return cell;
 }
@@ -454,7 +464,9 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     cell.eventMessageLabel.attributedText = [markdown_to_attr_string(segment.message, 0, [HEMMarkdown attributesForEventMessageText]) trim];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
-    [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep withColor:[UIColor colorForSleepDepth:sleepDepth]];
+    [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep
+            withFillColor:[UIColor colorForSleepDepth:sleepDepth]
+                lineColor:[HelloStyleKit timelineLineColor]];
     [self configureTimeLabelsForCell:cell withSegment:segment];
     return cell;
 }
@@ -513,7 +525,9 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath*)indexPath
 {
     SENSleepResultSegment* segment = [self sleepSegmentForIndexPath:indexPath];
-    return ![segment.eventType isEqual:[NSNull null]] && segment.eventType.length > 0;
+    return ![segment.eventType isEqual:[NSNull null]]
+        && segment.eventType.length > 0
+        && ![segment.eventType isEqualToString:HEMSleepEventTypeSleeping];
 }
 
 @end

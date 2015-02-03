@@ -7,13 +7,6 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <mutableArray key="Calibre-Light.otf">
-            <string>Calibre-Light</string>
-            <string>Calibre-Light</string>
-            <string>Calibre-Light</string>
-        </mutableArray>
-    </customFonts>
     <scenes>
         <!--Alarm-->
         <scene sceneID="Ncz-U5-pT4">
@@ -2540,7 +2533,7 @@
                                     <constraint firstAttribute="height" constant="35" id="iCN-AR-HbV"/>
                                 </constraints>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="next" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="8Vt-Zc-Wk5" id="wMN-XJ-qYT"/>
@@ -2551,7 +2544,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="d4O-2Z-8Q0"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" returnKeyType="done" secureTextEntry="YES"/>
                                 <connections>
                                     <outlet property="delegate" destination="8Vt-Zc-Wk5" id="GUb-4y-3O6"/>
@@ -2678,7 +2671,7 @@
                                     <constraint firstAttribute="height" constant="35" id="zIG-Y1-CpH"/>
                                 </constraints>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" name="Calibre-Light" family="Calibre" pointSize="20"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" returnKeyType="done"/>
                                 <connections>
                                     <outlet property="delegate" destination="PGj-TD-ixH" id="xG5-Ml-zRw"/>

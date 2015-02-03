@@ -36,12 +36,6 @@
     [SENAnalytics track:kHEMAnalyticsEventOnBFirstAlarm];
 }
 
-- (void)dismissAlarmVC:(HEMAlarmViewController*)alarmVC {
-    [self dismissViewControllerAnimated:NO completion:^{
-        [self next];
-    }];
-}
-
 - (void)next {
     // if there are less than 2 accounts paired to Sense, ask if user wants to
     // set up another Pill (another account), otherwise just finish onboarding
@@ -80,7 +74,9 @@
 }
 
 - (void)didSaveAlarm:(__unused SENAlarm *)alarm from:(HEMAlarmViewController *)alarmVC {
-    [self dismissAlarmVC:alarmVC];
+    [self dismissViewControllerAnimated:NO completion:^{
+        [self next];
+    }];
 }
 
 @end

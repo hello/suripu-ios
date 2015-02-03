@@ -90,8 +90,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)cacheManager {
     if ([self delegate] == nil) {
         [[HEMOnboardingCache sharedCache] setSenseManager:[self senseManager]];
-    } else {
-        
     }
 }
 

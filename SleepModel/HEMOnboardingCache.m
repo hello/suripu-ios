@@ -136,9 +136,10 @@ static HEMOnboardingCache* sharedUserDataCache = nil;
     NSString* deviceId = [[[self senseManager] sense] deviceId];
     if ([deviceId length] > 0) {
         __weak typeof(self) weakSelf = self;
-//        [SENAPIDevice getNumberOfAccountsForPairedSense:deviceId completion:^(NSNumber* pairedAccounts, NSError *error) {
-//            [weakSelf setPairedAccountsToSense:pairedAccounts];
-//        }];
+        [SENAPIDevice getNumberOfAccountsForPairedSense:deviceId completion:^(NSNumber* pairedAccounts, NSError *error) {
+            DDLogVerbose(@"sense %@ has %ld account paired to it", deviceId, [pairedAccounts longValue]);
+            [weakSelf setPairedAccountsToSense:pairedAccounts];
+        }];
     }
 }
 

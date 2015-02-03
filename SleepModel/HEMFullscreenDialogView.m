@@ -9,6 +9,7 @@
 #import <UIImageEffects/UIImage+ImageEffects.h>
 #import "HEMFullscreenDialogView.h"
 #import "UIFont+HEMStyle.h"
+#import "UIView+HEMSnapshot.h"
 
 @interface HEMFullscreenDialogView ()<UIGestureRecognizerDelegate>
 
@@ -66,15 +67,7 @@ static HEMFullscreenDialogView* fullscreenDialogView = nil;
 
 + (UIImage*)imageForModalBackgroundInView:(UIView*)view
 {
-    UIGraphicsBeginImageContextWithOptions(view.bounds.size, YES, 0);
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    [view.layer renderInContext:context];
-    UIImage *backgroundImage = UIGraphicsGetImageFromCurrentImageContext();
-    UIGraphicsEndImageContext();
-    return [backgroundImage applyBlurWithRadius:3
-                                      tintColor:[UIColor colorWithWhite:0.f alpha:0.4f]
-                          saturationDeltaFactor:1.2f
-                                      maskImage:nil];
+    return [view blurredSnapshotWithTint:[UIColor colorWithWhite:0.f alpha:0.4f]];
 }
 
 - (void)awakeFromNib

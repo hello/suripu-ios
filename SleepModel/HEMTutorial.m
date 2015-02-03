@@ -13,11 +13,11 @@
 @implementation HEMTutorial
 
 static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
+static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
+static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensor";
 
 + (void)showTutorialForTimelineIfNeeded
 {
-    if (![SENAuthorizationService isAuthorized])
-        return;
     if ([self shouldShowTutorialForKey:HEMTutorialTimelineKey]) {
         [self showTutorialForTimeline];
         [self markTutorialViewed:HEMTutorialTimelineKey];
@@ -42,8 +42,54 @@ static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
     [HEMFullscreenDialogView showDialogsWithContent:@[content1, content2, content3, content4]];
 }
 
++ (void)showTutorialForSensorsIfNeeded
+{
+    if ([self shouldShowTutorialForKey:HEMTutorialSensorsKey]) {
+        [self showTutorialForSensors];
+        [self markTutorialViewed:HEMTutorialSensorsKey];
+    }
+}
+
++ (void)showTutorialForSensors
+{
+    HEMDialogContent* content = [HEMDialogContent new];
+    content.title = NSLocalizedString(@"tutorial.sensors.title", nil);
+    content.content = NSLocalizedString(@"tutorial.sensors.message", nil);
+    content.image = [UIImage imageNamed:@"welcome_dialog_sensors"];
+    [HEMFullscreenDialogView showDialogsWithContent:@[content]];
+}
+
++ (void)showTutorialIfNeededForSensorNamed:(NSString *)sensorName
+{
+    NSString* key = [NSString stringWithFormat:HEMTutorialSensorKeyFormat, sensorName];
+    if ([self shouldShowTutorialForKey:key]) {
+        [self showTutorialForSensorNamed:sensorName];
+        [self markTutorialViewed:key];
+    }
+}
+
++ (void)showTutorialForSensorNamed:(NSString*)sensorName
+{
+    static NSString* const nameFormat = @"welcome_dialog_%@";
+    static NSString* const titleFormat = @"tutorial.sensor.%@.title";
+    static NSString* const messageFormat = @"tutorial.sensor.%@.message";
+    UIImage* image = [UIImage imageNamed:[NSString stringWithFormat:nameFormat, sensorName]];
+    if (!image)
+        return;
+
+    NSString* localizedTitleKey = [NSString stringWithFormat:titleFormat, sensorName];
+    NSString* localizedMessageKey = [NSString stringWithFormat:messageFormat, sensorName];
+    HEMDialogContent* content = [HEMDialogContent new];
+    content.title = NSLocalizedString(localizedTitleKey, nil);
+    content.content = NSLocalizedString(localizedMessageKey, nil);
+    content.image = image;
+    [HEMFullscreenDialogView showDialogsWithContent:@[content]];
+}
+
 + (BOOL)shouldShowTutorialForKey:(NSString*)key
 {
+    if (![SENAuthorizationService isAuthorized])
+        return NO;
     BOOL hasBeenViewed = [[NSUserDefaults standardUserDefaults] boolForKey:key];
     return !hasBeenViewed;
 }

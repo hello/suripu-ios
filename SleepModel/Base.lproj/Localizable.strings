@@ -478,3 +478,6 @@
 "tutorial.timeline.message2" = "Your Sleep Score takes all the data Sense collects about your sleep, and expresses it as one simple, rich measure of your sleep quality — out of 100.";
 "tutorial.timeline.message3" = "The “Before Sleep” tab will summarize the conditions of your bedroom before you went to sleep. Too hot? Noisy? You’ll see it here.";
 "tutorial.timeline.message4" = "Your Sleep Timeline shows you a minute-by-minute record of your night, broken into three categories:\n\nLight, Medium and Deep Sleep.";
+
+"tutorial.sensors.title" = "Current conditions";
+"tutorial.sensors.message" = "Here you'll see the current conditions of your bedroom. There is a value and a graph of the past few hours for temperature, light, humidity, sound, and air quality. Tap a card for more details.";

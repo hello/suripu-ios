@@ -16,4 +16,22 @@
 + (void)showTutorialForTimelineIfNeeded;
 
 + (void)showTutorialForTimeline;
+
+/**
+ *  Present the tutorial for the sensor overview screen if not previously viewed
+ */
++ (void)showTutorialForSensorsIfNeeded;
+
++ (void)showTutorialForSensors;
+
+/**
+ *  Present the tutorial for a particular sensor if not previously viewed
+ *
+ *  @param sensorName name of the sensor
+ */
++ (void)showTutorialIfNeededForSensorNamed:(NSString*)sensorName;
+
++ (void)showTutorialForSensorNamed:(NSString*)sensorName;
+
+
 @end

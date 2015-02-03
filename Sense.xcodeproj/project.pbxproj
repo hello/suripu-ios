@@ -67,6 +67,7 @@
 		8A457E821A805B7E009A7863 /* infoButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A457E7F1A805B7E009A7863 /* infoButtonIcon.png */; };
 		8A457E831A805B7E009A7863 /* infoButtonIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A457E801A805B7E009A7863 /* infoButtonIcon@2x.png */; };
 		8A457E841A805B7E009A7863 /* infoButtonIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A457E811A805B7E009A7863 /* infoButtonIcon@3x.png */; };
+		8A45E66C1A81683F0038AA7A /* HEMBreakdownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A45E66B1A81683F0038AA7A /* HEMBreakdownButton.m */; };
 		8A4B3D491992CB4500856BDE /* HEMSimpleLineTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D481992CB4500856BDE /* HEMSimpleLineTextField.m */; };
 		8A4B3D4E199308BB00856BDE /* bluetoothLogoImage.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4A199308BB00856BDE /* bluetoothLogoImage.png */; };
 		8A4B3D4F199308BB00856BDE /* bluetoothLogoImage@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A4B3D4B199308BB00856BDE /* bluetoothLogoImage@2x.png */; };
@@ -654,6 +655,8 @@
 		8A457E7F1A805B7E009A7863 /* infoButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = infoButtonIcon.png; path = images/infoButtonIcon.png; sourceTree = "<group>"; };
 		8A457E801A805B7E009A7863 /* infoButtonIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "infoButtonIcon@2x.png"; path = "images/infoButtonIcon@2x.png"; sourceTree = "<group>"; };
 		8A457E811A805B7E009A7863 /* infoButtonIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "infoButtonIcon@3x.png"; path = "images/infoButtonIcon@3x.png"; sourceTree = "<group>"; };
+		8A45E66A1A81683F0038AA7A /* HEMBreakdownButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBreakdownButton.h; sourceTree = "<group>"; };
+		8A45E66B1A81683F0038AA7A /* HEMBreakdownButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBreakdownButton.m; sourceTree = "<group>"; };
 		8A4B3D471992CB4500856BDE /* HEMSimpleLineTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSimpleLineTextField.h; sourceTree = "<group>"; };
 		8A4B3D481992CB4500856BDE /* HEMSimpleLineTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSimpleLineTextField.m; sourceTree = "<group>"; };
 		8A4B3D4A199308BB00856BDE /* bluetoothLogoImage.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = bluetoothLogoImage.png; path = images/bluetoothLogoImage.png; sourceTree = "<group>"; };
@@ -1879,6 +1882,8 @@
 		8A660135199EBEB8007E6167 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				8A45E66A1A81683F0038AA7A /* HEMBreakdownButton.h */,
+				8A45E66B1A81683F0038AA7A /* HEMBreakdownButton.m */,
 				8A7214461A1FE8C3008B59C4 /* HEMDateButton.h */,
 				8A7214471A1FE8C3008B59C4 /* HEMDateButton.m */,
 				8A66FC83199C035500922ED5 /* HEMMiniSleepHistoryView.h */,
@@ -1891,10 +1896,10 @@
 				8A5C1ECB1A30F1F900CBF393 /* HEMSleepGraphView.m */,
 				8AC49F85197F365C00C2BD63 /* HEMSleepScoreGraphView.h */,
 				8AC49F86197F365C00C2BD63 /* HEMSleepScoreGraphView.m */,
-				8A7214391A1E6CEC008B59C4 /* HEMTimelineTopButton.h */,
-				8A72143A1A1E6CEC008B59C4 /* HEMTimelineTopButton.m */,
 				8A8288B41A76DDE60043B1D1 /* HEMSleepSummaryPointerGradientView.h */,
 				8A8288B51A76DDE60043B1D1 /* HEMSleepSummaryPointerGradientView.m */,
+				8A7214391A1E6CEC008B59C4 /* HEMTimelineTopButton.h */,
+				8A72143A1A1E6CEC008B59C4 /* HEMTimelineTopButton.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3385,6 +3390,7 @@
 				BF05C8F01A3A830D002A1307 /* HEMResponseCell.m in Sources */,
 				BF4473501A6341F600389ECE /* HEMOnboardingController.m in Sources */,
 				8AC3C2E21A3C8CC90074A87F /* HEMSnazzBarButton.m in Sources */,
+				8A45E66C1A81683F0038AA7A /* HEMBreakdownButton.m in Sources */,
 				BF0E53A11A37A968002FB083 /* HEMEnablePushViewController.m in Sources */,
 				BF257EE71A1D1C2600DAF923 /* HEMDialogViewController.m in Sources */,
 				8A4B669E19F6CE4400445883 /* HEMAlertController.m in Sources */,

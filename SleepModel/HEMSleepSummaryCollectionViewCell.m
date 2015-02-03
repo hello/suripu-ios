@@ -3,6 +3,7 @@
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HEMSleepSummaryPointerGradientView.h"
+#import "HEMBreakdownButton.h"
 #import "HelloStyleKit.h"
 
 @interface HEMSleepSummaryCollectionViewCell ()
@@ -13,13 +14,25 @@
 @property (weak, nonatomic) IBOutlet UIView *presleepContainerView;
 @property (weak, nonatomic) IBOutlet HEMSleepSummaryPointerGradientView *pointerView;
 @property (weak, nonatomic) IBOutlet UIView* separatorView;
+@property (weak, nonatomic) IBOutlet HEMBreakdownButton* breakdownButton;
+@property (weak, nonatomic) IBOutlet UIView* breakdownContainerView;
+@property (weak, nonatomic) IBOutlet UIView* summaryContainerView;
+@property (weak, nonatomic) IBOutlet UIView* breakdownSeparatorView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* breakdownLeftConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* breakdownRightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* breakdownSeparatorHeightConstraint;
 @property (nonatomic, strong) NSAttributedString* sleepScoreLabelText;
+@property (strong, nonatomic) CAGradientLayer* breakdownSeparatorGradient;
 @end
 
 @implementation HEMSleepSummaryCollectionViewCell
 
 static CGFloat const HEMSleepSummaryButtonEdgeInset = 8.f;
 static CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
+static CGFloat const HEMSleepSummaryBreakdownMiniDiameter = 60.f;
+static CGFloat const HEMSleepSummaryBreakdownExpandedDistance = 28.f;
+static CGFloat const HEMSleepSummaryBreakdownSeparatorHeight = 148.f;
+static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
 
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
@@ -36,6 +49,22 @@ static CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
     [self configureSpinner];
     [self configureButtons];
     [self showSleepSummary:nil];
+}
+
+- (void)layoutSubviews
+{
+    [super layoutSubviews];
+    if (!self.breakdownSeparatorGradient) {
+        self.breakdownSeparatorGradient = [CAGradientLayer new];
+        self.breakdownSeparatorGradient.colors = @[
+            (id)[UIColor colorWithWhite:0.97f alpha:1.f].CGColor,
+            (id)[UIColor colorWithWhite:1.f alpha:0].CGColor];
+        self.breakdownSeparatorGradient.startPoint = CGPointZero;
+        self.breakdownSeparatorGradient.endPoint = CGPointMake(0, 1);
+        self.breakdownSeparatorView.backgroundColor = [UIColor clearColor];
+        [self.breakdownSeparatorView.layer addSublayer:self.breakdownSeparatorGradient];
+    }
+    self.breakdownSeparatorGradient.frame = self.breakdownSeparatorView.bounds;
 }
 
 - (void)configureButtons
@@ -70,6 +99,7 @@ static CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
     self.sleepSummaryButton.hidden = scoreIsEmpty;
     self.pointerView.hidden = scoreIsEmpty;
     self.separatorView.hidden = scoreIsEmpty;
+    self.breakdownButton.sleepScore = sleepScore;
     if (!scoreIsEmpty)
         [self.spinnerView stopAnimating];
     [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];
@@ -100,11 +130,63 @@ static CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
     CGFloat summaryAlpha = visible ? 1.f : 0;
     CGFloat presleepAlpha = visible ? 0 : 1.f;
     [UIView animateWithDuration:0.25 animations:^{
-        self.messageLabel.alpha = summaryAlpha;
-        self.spinnerView.alpha = summaryAlpha;
-        self.sleepScoreGraphView.alpha = summaryAlpha;
-        self.sleepScoreTextLabel.alpha = summaryAlpha;
+        self.summaryContainerView.alpha = summaryAlpha;
         self.presleepContainerView.alpha = presleepAlpha;
+    }];
+}
+
+- (IBAction)toggleBreakdown:(id)sender
+{
+    if ([self.breakdownButton isVisible]) {
+        [self hideBreakdownAnimated:YES];
+    } else {
+        [self showBreakdown];
+    }
+}
+
+- (void)hideBreakdownAnimated:(BOOL)animated
+{
+    [self.breakdownButton animateDiameterTo:CGRectGetWidth(self.sleepScoreGraphView.bounds)];
+    self.breakdownLeftConstraint.constant = HEMSleepSummaryBreakdownContractedDistance;
+    self.breakdownRightConstraint.constant = HEMSleepSummaryBreakdownContractedDistance;
+    self.breakdownSeparatorHeightConstraint.constant = 0;
+    [self.breakdownContainerView setNeedsUpdateConstraints];
+    [UIView animateWithDuration:0.2f animations:^{
+        [self.breakdownContainerView layoutIfNeeded];
+        self.breakdownContainerView.alpha = 0;
+    }];
+    [UIView animateWithDuration:0.2f delay:0.25f options:0 animations:^{
+        self.breakdownButton.alpha = 0;
+        self.sleepScoreGraphView.alpha = 1;
+        self.sleepScoreTextLabel.alpha = 1;
+        self.messageLabel.alpha = 1;
+    } completion:^(BOOL finished) {
+        self.breakdownButton.visible = NO;
+        self.breakdownButton.alpha = 1;
+    }];
+}
+
+- (void)showBreakdown
+{
+    self.breakdownButton.alpha = 0;
+    self.breakdownButton.visible = YES;
+    [UIView animateWithDuration:0.2f animations:^{
+        self.sleepScoreGraphView.alpha = 0;
+        self.sleepScoreTextLabel.alpha = 0;
+        self.messageLabel.alpha = 0;
+        self.breakdownButton.alpha = 1;
+    } completion:^(BOOL finished) {
+        [self.breakdownButton animateDiameterTo:HEMSleepSummaryBreakdownMiniDiameter];
+        self.breakdownLeftConstraint.constant = HEMSleepSummaryBreakdownExpandedDistance;
+        self.breakdownRightConstraint.constant = HEMSleepSummaryBreakdownExpandedDistance;
+        self.breakdownSeparatorHeightConstraint.constant = HEMSleepSummaryBreakdownSeparatorHeight;
+        [self.breakdownContainerView setNeedsUpdateConstraints];
+        [UIView animateWithDuration:0.2f delay:0.15f options:0 animations:^{
+            [self.breakdownContainerView layoutIfNeeded];
+            self.breakdownContainerView.alpha = 1;
+        } completion:^(BOOL finished) {
+
+        }];
     }];
 }
 

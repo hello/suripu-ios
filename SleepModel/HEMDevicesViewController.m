@@ -160,7 +160,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 #pragma mark HEMPillPairDelegate
 
 - (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
-    [self reloadData];
+    [self refreshDataSource];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

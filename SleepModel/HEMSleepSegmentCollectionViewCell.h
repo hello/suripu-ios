@@ -12,10 +12,11 @@ extern CGFloat const HEMSleepLineWidth;
  *  Set the the amount of the bar that is filled with color, based on
  *  a value between 0 and 1
  *
- *  @param ratio the fill ratio
- *  @param color the color to fill
+ *  @param ratio     the fill ratio
+ *  @param color     the color to fill
+ *  @param lineColor the color to draw down the center
  */
-- (void)setSegmentRatio:(CGFloat)ratio withColor:(UIColor*)color;
+- (void)setSegmentRatio:(CGFloat)ratio withFillColor:(UIColor*)color lineColor:(UIColor*)lineColor;
 
 - (void)addTimeLabelWithText:(NSString*)text atHeightRatio:(CGFloat)heightRatio;
 
@@ -27,4 +28,5 @@ extern CGFloat const HEMSleepLineWidth;
 @property (nonatomic, getter=isLastSegment) BOOL lastSegment;
 @property (nonatomic, readonly) CGFloat fillRatio;
 @property (nonatomic, strong, readonly) UIColor* fillColor;
+@property (nonatomic, strong, readonly) UIColor* lineColor;
 @end

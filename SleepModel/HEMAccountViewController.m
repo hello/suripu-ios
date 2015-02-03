@@ -200,6 +200,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     [dialogVC showFrom:self onDone:^{
         [self dismissViewControllerAnimated:YES completion:^{
+            [self.navigationController popToRootViewControllerAnimated:YES];
             [SENAuthorizationService deauthorize];
             [SENAnalytics track:kHEMAnalyticsEventSignOut];
         }];

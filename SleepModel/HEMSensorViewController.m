@@ -14,6 +14,7 @@
 #import "UIFont+HEMStyle.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "HEMMarkdown.h"
+#import "HEMTutorial.h"
 
 @interface HEMSensorViewController ()<BEMSimpleLineGraphDelegate>
 
@@ -55,7 +56,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [self initializeGraphDataSource];
     [self configureGraphView];
     [self configureSensorValueViews];
-    
+    [self configureBarButtonItems];
     NSString* sensorName = [[self sensor] localizedName] ?: @"";
     [SENAnalytics track:kHEMAnalyticsEventSensor
              properties:@{kHEMAnalyticsEventPropSensorName : sensorName}];
@@ -105,6 +106,12 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
                    name:SENSettingsDidUpdateNotification object:SENSettingsUpdateTypeTemp];
 }
 
+- (void)showTutorial
+{
+    if ([self isViewLoaded] && self.view.window)
+        [HEMTutorial showTutorialForSensorNamed:self.sensor.name];
+}
+
 #pragma mark - Configuration
 
 - (void)initializeGraphDataSource
@@ -124,6 +131,16 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     mask.locations = @[ @(-1), @(-1), @0, @1 ];
     self.graphView.layer.mask = mask;
     [self refreshData];
+}
+
+- (void)configureBarButtonItems
+{
+    UIImage* image = [HelloStyleKit infoButtonIcon];
+    UIButton* buttonView = [UIButton buttonWithType:UIButtonTypeCustom];
+    buttonView.bounds = CGRectMake(0, 0, image.size.width, image.size.height);
+    [buttonView setImage:image forState:UIControlStateNormal];
+    [buttonView addTarget:self action:@selector(showTutorial) forControlEvents:UIControlEventTouchUpInside];
+    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonView];
 }
 
 - (void)configureDateFormatters

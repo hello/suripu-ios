@@ -481,3 +481,14 @@
 
 "tutorial.sensors.title" = "Current conditions";
 "tutorial.sensors.message" = "Here you'll see the current conditions of your bedroom. There is a value and a graph of the past few hours for temperature, light, humidity, sound, and air quality. Tap a card for more details.";
+
+"tutorial.sensor.temperature.title" = "Temperature";
+"tutorial.sensor.temperature.message" = "A proper temperature in your bedroom is key to a good night's sleep. Here you'll see detailed historical data on the temperature levels of your bedroom.";
+"tutorial.sensor.humidity.title" = "Humidity";
+"tutorial.sensor.humidity.message" = "A proper humidity level in your bedroom is key to a good night's sleep. Here you'll see detailed historical data on the humidity levels of your bedroom.";
+"tutorial.sensor.light.title" = "Light";
+"tutorial.sensor.light.message" = "Low light levels in your bedroom are key to a good night's sleep. Here you'll see detailed historical data on the light levels of your bedroom.";
+"tutorial.sensor.sound.title" = "Sound";
+"tutorial.sensor.sound.message" = "Low sound levels in your bedroom are key to a good night's sleep. Here you'll see detailed historical data on the sound levels of your bedroom.";
+"tutorial.sensor.particulates.title" = "Air quality index";
+"tutorial.sensor.particulates.message" = "Good air quality in your bedroom is key to a good night's sleep. Here you'll see detailed historical data on the dust levels in your bedroom.";

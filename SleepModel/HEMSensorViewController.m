@@ -23,7 +23,6 @@
 @property (weak, nonatomic) IBOutlet BEMSimpleLineGraphView* graphView;
 @property (weak, nonatomic) IBOutlet UILabel* statusMessageLabel;
 @property (weak, nonatomic) IBOutlet UILabel* statusLabel;
-@property (weak, nonatomic) IBOutlet UILabel* idealLabel;
 @property (weak, nonatomic) IBOutlet UIView *graphContainerView;
 @property (weak, nonatomic) IBOutlet UILabel* unitLabel;
 @property (weak, nonatomic) IBOutlet UIView* chartContainerView;
@@ -158,7 +157,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
 {
     UIColor* color = [UIColor colorForSensorWithCondition:self.sensor.condition];
     NSDictionary* statusAttributes = [HEMMarkdown attributesForSensorMessageWithConditionColor:color];
-    NSDictionary* idealAttributes = [HEMMarkdown attributesForSensorMessageWithConditionColor:[HelloStyleKit idealSensorColor]];
 
     self.valueLabel.textColor = color;
     self.unitLabel.textColor = color;
@@ -166,9 +164,17 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     [self updateValueLabelWithValue:self.sensor.value];
     self.unitLabel.text = [self.sensor localizedUnit];
     self.statusMessageLabel.textAlignment = NSTextAlignmentLeft;
-    self.statusMessageLabel.attributedText = [markdown_to_attr_string(self.sensor.message, 0, statusAttributes) trim];
-    self.idealLabel.hidden = NO;
-    self.idealLabel.attributedText = [markdown_to_attr_string(self.sensor.idealConditionsMessage, 0, idealAttributes) trim];
+    NSMutableAttributedString* statusMessage = [[markdown_to_attr_string(self.sensor.message, 0, statusAttributes) trim] mutableCopy];
+    if (self.sensor.idealConditionsMessage.length > 0) {
+        static NSString* const HEMSensorContentDivider = @"\n\n";
+        NSDictionary* idealAttributes = [HEMMarkdown attributesForSensorMessageWithConditionColor:[HelloStyleKit idealSensorColor]];
+        NSAttributedString* divider = [[NSAttributedString alloc] initWithString:HEMSensorContentDivider attributes:statusAttributes];
+        NSAttributedString* idealMessage = [markdown_to_attr_string(self.sensor.idealConditionsMessage, 0, idealAttributes) trim];
+        [statusMessage appendAttributedString:divider];
+        [statusMessage appendAttributedString:idealMessage];
+    }
+    self.statusMessageLabel.attributedText = statusMessage;
+
     self.graphView.colorLine = color;
     self.graphView.alphaLine = 0.7;
     self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];
@@ -406,7 +412,6 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     self.statusMessageLabel.textAlignment = NSTextAlignmentCenter;
     NSDateFormatter* formatter = [self isShowingHourlyData] ? self.hourlyFormatter : self.dailyFormatter;
     self.statusMessageLabel.text = [formatter stringFromDate:dataPoint.date];
-    self.idealLabel.hidden = YES;
     [self updateValueLabelWithValue:dataPoint.value];
     [UIView animateWithDuration:0.2f animations:^{
         self.overlayView.alpha = 0;

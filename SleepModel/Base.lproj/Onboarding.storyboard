@@ -2155,6 +2155,12 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sampleNotification.png" translatesAutoresizingMaskIntoConstraints="NO" id="1ye-yc-yHg">
+                                <rect key="frame" x="0.0" y="149" width="600" height="185"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="185" id="lxv-bP-sUT"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ia-GF-Swk">
                                 <rect key="frame" x="240" y="475" width="119" height="28"/>
                                 <constraints>
@@ -2187,16 +2193,19 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="1ye-yc-yHg" firstAttribute="leading" secondItem="Znx-od-CyB" secondAttribute="leadingMargin" constant="-16" id="4bM-uM-nnE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Go7-Z7-kmw" secondAttribute="trailing" constant="4" id="5iy-Om-dqh"/>
                             <constraint firstItem="Go7-Z7-kmw" firstAttribute="leading" secondItem="Znx-od-CyB" secondAttribute="leadingMargin" constant="4" id="7Po-tv-ajw"/>
                             <constraint firstItem="je6-JT-9YZ" firstAttribute="bottom" secondItem="9ia-GF-Swk" secondAttribute="bottom" constant="77" id="C21-vD-J1d"/>
                             <constraint firstAttribute="centerX" secondItem="9ia-GF-Swk" secondAttribute="centerX" constant="0.5" id="GCD-ax-FCl"/>
                             <constraint firstAttribute="trailingMargin" secondItem="je6-JT-9YZ" secondAttribute="trailing" constant="4" id="Gst-YJ-a8H"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cxR-ry-GIM" secondAttribute="trailing" constant="4" id="HKo-ef-yJM"/>
+                            <constraint firstItem="1ye-yc-yHg" firstAttribute="top" secondItem="cxR-ry-GIM" secondAttribute="bottom" constant="40" id="SPQ-7p-RgP"/>
                             <constraint firstItem="PKh-qW-k4b" firstAttribute="top" secondItem="je6-JT-9YZ" secondAttribute="bottom" constant="20" id="XmD-RR-Jr6"/>
                             <constraint firstItem="je6-JT-9YZ" firstAttribute="leading" secondItem="Znx-od-CyB" secondAttribute="leadingMargin" constant="4" id="ejN-WE-E3m"/>
                             <constraint firstItem="Go7-Z7-kmw" firstAttribute="bottom" secondItem="cxR-ry-GIM" secondAttribute="top" constant="-10" id="nPu-Ti-TQt"/>
                             <constraint firstItem="cxR-ry-GIM" firstAttribute="leading" secondItem="Znx-od-CyB" secondAttribute="leadingMargin" constant="4" id="wGH-uH-0oI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="1ye-yc-yHg" secondAttribute="trailing" constant="-16" id="weZ-Dj-8RJ"/>
                             <constraint firstItem="Go7-Z7-kmw" firstAttribute="top" secondItem="Ugf-82-uRd" secondAttribute="bottom" constant="4" id="ybY-rO-ulf"/>
                         </constraints>
                     </view>
@@ -2648,13 +2657,14 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="onboarding_bg_wide.png" width="470" height="588"/>
         <image name="pairOfPills.png" width="180" height="117"/>
         <image name="play.png" width="75" height="75"/>
+        <image name="sampleNotification.png" width="320" height="185"/>
         <image name="sense.png" width="162" height="172"/>
         <image name="senseAppIcon.png" width="32" height="32"/>
         <image name="senseColors.png" width="320" height="237"/>
         <image name="sensePlacement.png" width="320" height="235"/>
         <image name="settingsAppIcon.png" width="32" height="32"/>
         <image name="shakePill.png" width="320" height="224"/>
-        <image name="smartAlarm.png" width="203" height="203"/>
+        <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ZOJ-Sh-Dzx"/>

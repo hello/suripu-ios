@@ -213,7 +213,7 @@ static NSInteger const HEMSettingsAcctSignOutTotRows = 1;
         case HEMSettingsAccountInfoTypeEnhancedAudio: {
             NSDictionary* prefs = [[SENServiceAccount sharedService] preferences];
             SENPreference* pref = [prefs objectForKey:@(SENPreferenceTypeEnhancedAudio)];
-            enabled = [pref isEnabled];
+            enabled = [pref enabled];
             break;
         }
         case HEMSettingsAccountInfoTypeHealthKit: {

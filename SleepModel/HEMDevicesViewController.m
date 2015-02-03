@@ -222,6 +222,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
         [senseVC setDelegate:self];
     } else if ([[segue destinationViewController] isKindOfClass:[HEMPillViewController class]]) {
         HEMPillViewController* pillVC = [segue destinationViewController];
+        [pillVC setDelegate:self];
         [pillVC setWarnings:[[self dataSource] deviceWarningsFor:[self selectedDevice]]];
     }
 }

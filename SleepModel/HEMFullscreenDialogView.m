@@ -20,6 +20,7 @@
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
 @property (strong, nonatomic) NSArray* contents;
 @property (nonatomic) NSUInteger selectedIndex;
 @property (strong, nonatomic) UISwipeGestureRecognizer* previousGestureRecognizer;
@@ -163,6 +164,7 @@ static HEMFullscreenDialogView* fullscreenDialogView = nil;
         self.imageViewHeightConstraint.constant = constant;
         self.titleLabel.attributedText = title;
         self.textView.attributedText = message;
+        self.scrollView.contentOffset = CGPointZero;
         [UIView animateWithDuration:0.15f animations:^{
             self.imageView.alpha = 1;
             self.titleLabel.alpha = 1;

@@ -67,6 +67,8 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)showTutorial
 {
+    if (![HEMTutorial shouldShowTutorialForTimeline])
+        return;
     HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
     HEMRootViewController* root = (id)delegate.window.rootViewController;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{

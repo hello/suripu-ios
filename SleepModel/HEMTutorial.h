@@ -15,6 +15,8 @@
  */
 + (void)showTutorialForTimelineIfNeeded;
 
++ (BOOL)shouldShowTutorialForTimeline;
+
 + (void)showTutorialForTimeline;
 
 /**

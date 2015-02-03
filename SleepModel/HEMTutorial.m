@@ -21,10 +21,15 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 
 + (void)showTutorialForTimelineIfNeeded
 {
-    if ([self shouldShowTutorialForKey:HEMTutorialTimelineKey]) {
+    if ([self shouldShowTutorialForTimeline]) {
         [self showTutorialForTimeline];
         [self markTutorialViewed:HEMTutorialTimelineKey];
     }
+}
+
++ (BOOL)shouldShowTutorialForTimeline
+{
+    return [self shouldShowTutorialForKey:HEMTutorialTimelineKey];
 }
 
 + (void)showTutorialForSensorsIfNeeded

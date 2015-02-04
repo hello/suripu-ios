@@ -104,10 +104,10 @@
 
 - (void)showHelpButtonAndTrackWithStepName:(NSString*)stepName {
     UIBarButtonItem* item =
-    [[UIBarButtonItem alloc] initWithTitle:@"?"
-                                     style:UIBarButtonItemStyleBordered
-                                    target:self
-                                    action:@selector(help:)];
+        [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"question-mark", nil)
+                                         style:UIBarButtonItemStyleBordered
+                                        target:self
+                                        action:@selector(help:)];
     [item setTitlePositionAdjustment:UIOffsetMake(-10.0f, 0.0f)
                        forBarMetrics:UIBarMetricsDefault];
     [item setTitleTextAttributes:@{

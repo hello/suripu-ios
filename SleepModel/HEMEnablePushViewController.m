@@ -5,7 +5,8 @@
 //  Created by Jimmy Lu on 12/9/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-
+#import <SenseKit/SENAPIPreferences.h>
+#import <SenseKit/SENPreference.h>
 #import "HEMEnablePushViewController.h"
 #import "HEMActionButton.h"
 #import "UIFont+HEMStyle.h"
@@ -33,12 +34,21 @@
 
 - (IBAction)enableNotifications:(id)sender {
     [HEMNotificationHandler registerForRemoteNotifications];
-    // don't wait before user to answer the dialog, just go
+    [self enableNotificationsInPreferences];
     [self next];
 }
 
 - (IBAction)skip:(id)sender {
     [self next];
+}
+
+- (void)enableNotificationsInPreferences {
+    SENPreference* conditionsPref = [[SENPreference alloc] initWithName:SENPreferenceNamePushConditions
+                                                                  value:@(YES)];
+    SENPreference* scorePref = [[SENPreference alloc] initWithName:SENPreferenceNamePushScore
+                                                             value:@(YES)];
+    [SENAPIPreferences updatePreference:conditionsPref completion:NULL];
+    [SENAPIPreferences updatePreference:scorePref completion:NULL];
 }
 
 #pragma mark -

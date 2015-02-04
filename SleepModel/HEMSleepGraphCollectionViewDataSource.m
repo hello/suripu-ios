@@ -288,6 +288,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         dateText = NSLocalizedString(@"sleep-history.last-night", nil);
     [self configurePresleepSummaryForCell:cell];
     [self configureActionsForSleepSummaryCell:cell];
+    [self configureSummaryStatisticsForCell:cell];
     [cell.dateButton setTitle:dateText forState:UIControlStateNormal];
     if ([self shouldBeLoading])
         [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:0.5];
@@ -318,6 +319,59 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         [cell.dateButton addTarget:self.collectionView.delegate
                             action:@selector(zoomButtonTapped:)
                   forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (void)configureSummaryStatisticsForCell:(HEMSleepSummaryCollectionViewCell*)cell
+{
+    static NSString* const HEMSummaryStatTitleFormat = @"sleep-stat.%@";
+    UIColor* color = [UIColor colorForSleepScore:[self.sleepResult.score integerValue]];
+    NSDictionary* titleAttributes = [HEMMarkdown attributesForTimelineBreakdownTitle][@(PARA)];
+    NSDictionary* valueAttributes = [HEMMarkdown attributesForTimelineBreakdownValueWithColor:color][@(PARA)];
+    for (SENSleepResultStatistic* stat in self.sleepResult.statistics) {
+        NSString* titleFormat = [NSString stringWithFormat:HEMSummaryStatTitleFormat, stat.name];
+        NSString* title = [NSLocalizedString(titleFormat, nil) uppercaseString];
+        NSString* value = nil;
+        UILabel* titleLabel = nil, * valueLabel = nil;
+        switch (stat.type) {
+            case SENSleepResultStatisticTypeTotalDuration:
+                titleLabel = cell.metricTitleLabel1;
+                valueLabel = cell.metricValueLabel1;
+                value = [self shortValueForMinuteValue:stat.value];
+                break;
+            case SENSleepResultStatisticTypeSoundDuration:
+                titleLabel = cell.metricTitleLabel2;
+                valueLabel = cell.metricValueLabel2;
+                value = [self shortValueForMinuteValue:stat.value];
+                break;
+            case SENSleepResultStatisticTypeTimeToSleep:
+                titleLabel = cell.metricTitleLabel4;
+                valueLabel = cell.metricValueLabel4;
+                value = [self shortValueForMinuteValue:stat.value];
+                break;
+            case SENSleepResultStatisticTypeTimesAwake:
+                titleLabel = cell.metricTitleLabel3;
+                valueLabel = cell.metricValueLabel3;
+                value = [NSString stringWithFormat:@"%.0f", [stat.value floatValue]];
+                break;
+            default:
+                break;
+        }
+        titleLabel.attributedText = [[NSAttributedString alloc] initWithString:title
+                                                                    attributes:titleAttributes];
+        valueLabel.attributedText = [[NSAttributedString alloc] initWithString:value
+                                                                    attributes:valueAttributes];
+    }
+}
+
+- (NSString*)shortValueForMinuteValue:(NSNumber*)minuteValue
+{
+    CGFloat minutes = [minuteValue floatValue];
+    NSString* format;
+    if (minutes < 60)
+        format = NSLocalizedString(@"sleep-stat.minute.format", nil);
+    else
+        format = NSLocalizedString(@"sleep-stat.hour.format", nil);
+    return [NSString stringWithFormat:format, minutes/60];
 }
 
 - (void)configurePresleepSummaryForCell:(HEMSleepSummaryCollectionViewCell*)cell

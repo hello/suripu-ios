@@ -212,8 +212,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)registerForNotifications
 {
-    if ([SENAuthorizationService isAuthorized])
-        [HEMNotificationHandler registerForRemoteNotifications];
+    [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     
     [center addObserver:self

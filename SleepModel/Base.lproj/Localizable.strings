@@ -141,7 +141,8 @@
 "settings.personal.info.weight" = "Weight";
 "settings.account.enhanced-audio" = "Enhanced audio";
 "settings.account.healthkit" = "HealthKit";
-"setings.account.healthKit.not-supported" = "not supported";
+"settings.account.push-conditions" = "Poor conditions notification";
+"settings.account.push-score" = "Sleep score notification";
 "settings.wifi.other" = "Other...";
 "settings.account.email" = "Email";
 "settings.account.password" = "Password";
@@ -369,6 +370,13 @@
 "sleep-event.verify-complete.title" = "Thank you!";
 "sleep-event.verify-complete.message" = "Your feedback helps us provide you with a better product.";
 "sleep-event.title.format" = "%@ – %@";
+
+"sleep-stat.time_to_sleep" = "Time to sleep";
+"sleep-stat.times_awake" = "Times awake";
+"sleep-stat.total_sleep" = "Total sleep";
+"sleep-stat.sound_sleep" = "Sound sleep";
+"sleep-stat.minute.format" = "%.0fm";
+"sleep-stat.hour.format" = "%.1fh";
 
 // sleep history
 "sleep-history.last-night" = "Last night";

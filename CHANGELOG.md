@@ -1,5 +1,26 @@
 # Changelog
 
+## 1.0.1.4
+
+New:
+
+* Timeline sleep score breakdown
+* Push notification preferences
+* Sleep Pill description screen in onboarding
+* Will not ask to Add Another Sleep Pill if Sense has been paired to more than 1 account already.
+* Welcome / explanation dialogs
+* Timeline shows generic motion
+* Font scaling based on device
+
+Fixes:
+
+* height picker animation direction hints direction to increase or decrease
+* clear current conditions upon signing out of account
+* alarm picker time now cycles
+* upon sign out, reset to default menu
+* timeline zoomed out view no longer show previous month if swiping back and forth
+* various onboarding screen design updates
+
 ## 1.0.1.3
 
 New:

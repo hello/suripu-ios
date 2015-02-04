@@ -24,6 +24,14 @@
 @property (weak, nonatomic) IBOutlet UILabel *presleepInsightLabel5;
 @property (weak, nonatomic) IBOutlet UIImageView *presleepImageView5;
 
+@property (weak, nonatomic) IBOutlet UILabel *metricTitleLabel1;
+@property (weak, nonatomic) IBOutlet UILabel *metricValueLabel1;
+@property (weak, nonatomic) IBOutlet UILabel *metricTitleLabel2;
+@property (weak, nonatomic) IBOutlet UILabel *metricValueLabel2;
+@property (weak, nonatomic) IBOutlet UILabel *metricTitleLabel3;
+@property (weak, nonatomic) IBOutlet UILabel *metricValueLabel3;
+@property (weak, nonatomic) IBOutlet UILabel *metricTitleLabel4;
+@property (weak, nonatomic) IBOutlet UILabel *metricValueLabel4;
 
 - (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated;
 @end

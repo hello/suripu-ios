@@ -14,35 +14,36 @@
 #import "HEMMathUtil.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSettingsUtil.h"
+#import "HEMNotificationHandler.h"
 
 // \u0222 is a round dot
 static NSString* const HEMSettingsAcctPasswordPlaceholder = @"\u2022\u2022\u2022\u2022\u2022\u2022";
 static NSString* const HEMSettingsAcctDataSourceErrorDomain = @"is.hello.app.settings.account";
 static NSString* const HEMSettingsAcctBirthdateFormat = @"MM dd, yyyy";
 
-static NSInteger const HEMSettingsAcctSectionAccount = 0;
-static NSInteger const HEMSettingsAcctSectionDemographics = 1;
-static NSInteger const HEMSettingsAcctSectionPreferences = 2;
-static NSInteger const HEMSettingsAcctSectionExplanations = 3;
-static NSInteger const HEMSettingsAcctSectionSignOut = 4;
-static NSInteger const HEMSettingsAcctTotalSections = 5; // bump this if you add sections above
+typedef NS_ENUM(NSUInteger, HEMSettingsAcctSection) {
+    HEMSettingsAcctSectionAccount = 0,      HEMSettingsAcctAccountTotRows = 2,
+    HEMSettingsAcctSectionDemographics = 1, HEMSettingsAcctDemographicsTotRows = 4,
+    HEMSettingsAcctSectionPreferences = 2,  HEMSettingsAcctPreferenceTotRows = 4,
+    HEMSettingsAcctSectionExplanations = 3, HEMSettingsAcctExplanationsTotRows = 1,
+    HEMSettingsAcctSectionSignOut = 4,      HEMSettingsAcctSignOutTotRows = 1,
+    HEMSettingsAcctTotalSections = 5 // increment when sections added
+};
 
-static NSInteger const HEMSettingsAcctRowEmail = 0;
-static NSInteger const HEMSettingsAcctRowPassword = 1;
-static NSInteger const HEMSettingsAcctAccountTotRows = 2;
+typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
+    HEMSettingsAcctRowEmail = 0,
+    HEMSettingsAcctRowPassword = 1,
 
-static NSInteger const HEMSettingsAcctRowBirthdate = 0;
-static NSInteger const HEMSettingsAcctRowGender = 1;
-static NSInteger const HEMSettingsAcctRowHeight = 2;
-static NSInteger const HEMSettingsAcctRowWeight = 3;
-static NSInteger const HEMSettingsAcctDemographicsTotRows = 4;
+    HEMSettingsAcctRowBirthdate = 0,
+    HEMSettingsAcctRowGender = 1,
+    HEMSettingsAcctRowHeight = 2,
+    HEMSettingsAcctRowWeight = 3,
 
-static NSInteger const HEMSettingsAcctRowHealthKit = 0;
-static NSInteger const HEMSettingsAcctRowEnhancedAudio = 1;
-static NSInteger const HEMSettingsAcctPreferenceTotRows = 2;
-
-static NSInteger const HEMSettingsAcctExplanationsTotRows = 1;
-static NSInteger const HEMSettingsAcctSignOutTotRows = 1;
+    HEMSettingsAcctRowHealthKit = 0,
+    HEMSettingsAcctRowEnhancedAudio = 1,
+    HEMSettingsAcctRowPushConditions = 2,
+    HEMSettingsAcctRowPushScore = 3,
+};
 
 @interface HEMSettingsAccountDataSource()
 
@@ -152,6 +153,12 @@ static NSInteger const HEMSettingsAcctSignOutTotRows = 1;
         case HEMSettingsAccountInfoTypeHealthKit:
             title = NSLocalizedString(@"settings.account.healthkit", nil);
             break;
+        case HEMSettingsAccountInfoTypePushScore:
+            title = NSLocalizedString(@"settings.account.push-score", nil);
+            break;
+        case HEMSettingsAccountInfoTypePushConditions:
+            title = NSLocalizedString(@"settings.account.push-conditions", nil);
+            break;
         case HEMSettingsAccountInfoTypeEnhancedAudio:
             title = NSLocalizedString(@"settings.account.enhanced-audio", nil);
             break;
@@ -208,11 +215,21 @@ static NSInteger const HEMSettingsAcctSignOutTotRows = 1;
 }
 
 - (BOOL)isTypeEnabled:(HEMSettingsAccountInfoType)type {
+    NSDictionary* prefs = [[SENServiceAccount sharedService] preferences];
     BOOL enabled = NO;
     switch (type) {
         case HEMSettingsAccountInfoTypeEnhancedAudio: {
-            NSDictionary* prefs = [[SENServiceAccount sharedService] preferences];
             SENPreference* pref = [prefs objectForKey:@(SENPreferenceTypeEnhancedAudio)];
+            enabled = [pref isEnabled];
+            break;
+        }
+        case HEMSettingsAccountInfoTypePushScore: {
+            SENPreference* pref = [prefs objectForKey:@(SENPreferenceTypePushScore)];
+            enabled = [pref isEnabled];
+            break;
+        }
+        case HEMSettingsAccountInfoTypePushConditions: {
+            SENPreference* pref = [prefs objectForKey:@(SENPreferenceTypePushConditions)];
             enabled = [pref isEnabled];
             break;
         }
@@ -363,6 +380,12 @@ static NSInteger const HEMSettingsAcctSignOutTotRows = 1;
         case HEMSettingsAcctRowHealthKit:
             type = HEMSettingsAccountInfoTypeHealthKit;
             break;
+        case HEMSettingsAcctRowPushConditions:
+            type = HEMSettingsAccountInfoTypePushConditions;
+            break;
+        case HEMSettingsAcctRowPushScore:
+            type = HEMSettingsAccountInfoTypePushScore;
+            break;
     }
     return type;
 }
@@ -470,16 +493,26 @@ static NSInteger const HEMSettingsAcctSignOutTotRows = 1;
               completion:(void(^)(NSError* error))completion {
 
     switch (type) {
+        case HEMSettingsAccountInfoTypePushScore: {
+            [self enableAccountPreference:enable
+                                  forType:SENPreferenceTypePushScore
+                               completion:completion];
+            if (enable)
+                [HEMNotificationHandler registerForRemoteNotifications];
+            break;
+        }
+        case HEMSettingsAccountInfoTypePushConditions: {
+            [self enableAccountPreference:enable
+                                  forType:SENPreferenceTypePushConditions
+                               completion:completion];
+            if (enable)
+                [HEMNotificationHandler registerForRemoteNotifications];
+            break;
+        }
         case HEMSettingsAccountInfoTypeEnhancedAudio: {
-            SENServiceAccount* service = [SENServiceAccount sharedService];
-            SENPreference* preference = [[service preferences] objectForKey:@(SENPreferenceTypeEnhancedAudio)];
-            [preference setEnabled:enable];
-            [self updatePreference:preference completion:^(NSError *error) {
-                if (error != nil) {
-                    [preference setEnabled:!enable];
-                }
-                if (completion) completion (error);
-            }];
+            [self enableAccountPreference:enable
+                                  forType:SENPreferenceTypeEnhancedAudio
+                               completion:completion];
             break;
         }
         case HEMSettingsAccountInfoTypeHealthKit: {
@@ -493,6 +526,20 @@ static NSInteger const HEMSettingsAcctSignOutTotRows = 1;
             break;
         }
     }
+}
+
+- (void)enableAccountPreference:(BOOL)enable
+                        forType:(SENPreferenceType)type
+                     completion:(void(^)(NSError* error))completion {
+    SENServiceAccount* service = [SENServiceAccount sharedService];
+    SENPreference* preference = [[service preferences] objectForKey:@(type)];
+    [preference setEnabled:enable];
+    [self updatePreference:preference completion:^(NSError *error) {
+        if (error != nil) {
+            [preference setEnabled:!enable];
+        }
+        if (completion) completion (error);
+    }];
 }
 
 - (void)enableHealthKit:(BOOL)enable completion:(void(^)(NSError* error))completion {

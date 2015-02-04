@@ -116,6 +116,11 @@
 + (UIFont *)timelineEventMessageBoldFont;
 
 /**
+ *  Font for timeline statistics values
+ */
++ (UIFont *)timelineBreakdownValueFont;
+
+/**
  *  Font for tips at the bottom of event expansion
  */
 + (UIFont *)timelineEventTipFont;

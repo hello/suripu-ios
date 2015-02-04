@@ -50,6 +50,7 @@ static CGFloat const HEMSleepGraphCollectionViewEventMaximumHeight = 204.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMTopItemsConstraintConstant = 4.f;
 static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
+static CGFloat const HEMEventOverlayZPosition = 30.f;
 
 - (void)viewDidLoad
 {
@@ -182,10 +183,22 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
     }
 }
 
-- (void)didLoadSummaryCell:(HEMSleepSummaryCollectionViewCell*)summaryCell
+- (void)didLoadCell:(UICollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath
 {
-    if (![self isViewPushed])
-        [self updateTopBarActionsInCell:summaryCell withState:NO];
+    if ([cell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
+        if (![self.expandedIndexPath isEqual:indexPath])
+            return;
+        HEMSleepEventCollectionViewCell* eventCell = (id)cell;
+        CGSize size = [self collectionView:self.collectionView
+                                    layout:self.collectionView.collectionViewLayout
+                    sizeForItemAtIndexPath:indexPath];
+        [eventCell useExpandedLayout:YES targetSize:size animated:NO];
+        eventCell.layer.zPosition = indexPath.row + HEMEventOverlayZPosition;
+    } else if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
+        HEMSleepSummaryCollectionViewCell* summaryCell = (id)cell;
+        if (![self isViewPushed])
+            [self updateTopBarActionsInCell:summaryCell withState:NO];
+    }
 }
 
 #pragma mark Top cell actions
@@ -267,15 +280,14 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 
 - (void)didTapEventButton:(UIButton*)sender
 {
-    static CGFloat HEMEventOverlayZPosition = 30.f;
     NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
     HEMSleepEventCollectionViewCell* cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
     BOOL shouldExpand = ![self.expandedIndexPath isEqual:indexPath];
     if (shouldExpand) {
         if (self.expandedIndexPath) {
             HEMSleepEventCollectionViewCell* oldCell = (id)[self.collectionView cellForItemAtIndexPath:self.expandedIndexPath];
+            oldCell.layer.zPosition = indexPath.row;
             if ([oldCell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
-                oldCell.layer.zPosition = indexPath.row;
                 [oldCell useExpandedLayout:NO targetSize:CGSizeZero animated:YES];
             }
         }
@@ -385,17 +397,6 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 - (BOOL)collectionView:(UICollectionView*)collectionView shouldSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
     return NO;
-}
-
-- (void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    if ([self.expandedIndexPath isEqual:indexPath] && [cell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
-        HEMSleepEventCollectionViewCell* eventCell = (id)cell;
-        CGSize size = [self collectionView:collectionView
-                                    layout:collectionView.collectionViewLayout
-                    sizeForItemAtIndexPath:indexPath];
-        [eventCell useExpandedLayout:YES targetSize:size animated:NO];
-    }
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout

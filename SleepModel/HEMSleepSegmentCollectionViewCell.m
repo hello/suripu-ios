@@ -36,8 +36,14 @@ static int const HEMNoSleepBorderDashLengthCount = 2;
     [self.timeViews removeAllObjects];
 }
 
+- (NSUInteger)numberOfTimeLabels
+{
+    return self.timeViews.count;
+}
+
 - (void)addTimeLabelWithText:(NSString*)text atHeightRatio:(CGFloat)heightRatio
 {
+    self.clipsToBounds = NO;
     CGFloat lineYOffset = CGRectGetHeight(self.bounds) * heightRatio;
     CGFloat labelYOffset = lineYOffset - HEMSegmentTimeLabelHeight - HEMSegmentTimeLabelVerticalSpacing;
     CGFloat width = CGRectGetWidth(self.bounds)/2;

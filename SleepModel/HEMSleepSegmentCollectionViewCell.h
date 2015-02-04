@@ -20,6 +20,8 @@ extern CGFloat const HEMSleepLineWidth;
 
 - (void)addTimeLabelWithText:(NSString*)text atHeightRatio:(CGFloat)heightRatio;
 
+- (NSUInteger)numberOfTimeLabels;
+
 - (void)removeAllTimeLabels;
 
 - (UIImage*)dottedLineBorderImageWithColor:(UIColor*)color;

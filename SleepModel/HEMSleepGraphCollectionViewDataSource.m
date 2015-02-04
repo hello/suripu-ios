@@ -267,9 +267,11 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     }
     }
     CGFloat zPosition = indexPath.row + 1;
-    if (cell.layer.zPosition != zPosition) {
+    if (cell.layer.zPosition != zPosition)
         [cell.layer setZPosition:zPosition];
-    }
+
+    if ([collectionView.delegate respondsToSelector:@selector(didLoadCell:atIndexPath:)])
+        [(id<HEMSleepGraphActionDelegate>)collectionView.delegate didLoadCell:cell atIndexPath:indexPath];
     return cell;
 }
 
@@ -294,8 +296,6 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:0.5];
     else
         [cell.spinnerView stopAnimating];
-    if ([collectionView.delegate respondsToSelector:@selector(didLoadSummaryCell:)])
-        [(id<HEMSleepGraphActionDelegate>)collectionView.delegate didLoadSummaryCell:cell];
     return cell;
 }
 
@@ -503,8 +503,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         cell.waveformView.hidden = NO;
         cell.playSoundButton.hidden = NO;
         [cell setAudioURL:[NSURL URLWithString:segment.sound.URLPath]];
-    } else if ([collectionView.delegate respondsToSelector:@selector(didTapDataVerifyButton:)]
-               && [segment.eventType isEqualToString:HEMSleepEventTypeWakeUp]) {
+    } else if ([segment.eventType isEqualToString:HEMSleepEventTypeWakeUp] &&
+               [collectionView.delegate respondsToSelector:@selector(didTapDataVerifyButton:)]) {
         cell.verifyDataButton.hidden = NO;
         [cell.verifyDataButton addTarget:collectionView.delegate
                                   action:@selector(didTapDataVerifyButton:) forControlEvents:UIControlEventTouchUpInside];

@@ -117,6 +117,7 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 - (void)useExpandedLayout:(BOOL)isExpanded targetSize:(CGSize)size animated:(BOOL)animated
 {
     self.expanded = isExpanded;
+    self.clipsToBounds = isExpanded ? NO : [self numberOfTimeLabels] == 0;
     [self setNeedsDisplay];
     void (^endAnimations)() = NULL;
     void (^startAnimations)() = NULL;

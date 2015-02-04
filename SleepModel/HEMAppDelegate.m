@@ -186,12 +186,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [self resume:YES];
 }
 
-- (void)showOnboardingAtSenseSetup
-{
-    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
-    [self resume:YES];
-}
-
 - (void)configureAppearance
 {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
@@ -225,11 +219,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [center addObserver:self
                selector:@selector(resetAndShowOnboarding)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
-                 object:nil];
-    
-    [center addObserver:self
-               selector:@selector(showOnboardingAtSenseSetup)
-                   name:SENServiceDeviceNotificationFactorySettingsRestored
                  object:nil];
 }
 

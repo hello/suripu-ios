@@ -196,6 +196,11 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     [[self navigationController] popViewControllerAnimated:NO];
 }
 
+- (void)didFactoryRestoreFrom:(HEMSenseViewController *)viewController {
+    [self refreshDataSource];
+    [[self navigationController] popViewControllerAnimated:NO];
+}
+
 #pragma mark HEMSensePairDelegate
 
 - (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController *)controller {

@@ -330,7 +330,7 @@
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Introduce yourself." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cY3-74-70H">
-                                <rect key="frame" x="28" y="24" width="544" height="32"/>
+                                <rect key="frame" x="20" y="24" width="560" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="nkx-wh-4nQ"/>
                                 </constraints>
@@ -339,7 +339,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Full Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EoV-KF-nla" userLabel="Full Name" customClass="HEMSimpleLineTextField">
-                                <rect key="frame" x="28" y="84" width="544" height="35"/>
+                                <rect key="frame" x="20" y="84" width="560" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="bK4-v1-Uq6"/>
                                 </constraints>
@@ -350,7 +350,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="4H9-4w-9eg" userLabel="Email" customClass="HEMSimpleLineTextField">
-                                <rect key="frame" x="28" y="132" width="544" height="35"/>
+                                <rect key="frame" x="20" y="132" width="560" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="hmR-rs-5DW"/>
                                 </constraints>
@@ -361,7 +361,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="rFe-bS-5Yc" userLabel="Password" customClass="HEMSimpleLineTextField">
-                                <rect key="frame" x="28" y="180" width="544" height="35"/>
+                                <rect key="frame" x="20" y="180" width="560" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="MQV-ta-SKj"/>
                                 </constraints>
@@ -386,18 +386,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="4H9-4w-9eg" secondAttribute="trailing" constant="12" id="60a-r4-B7d"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="cY3-74-70H" secondAttribute="trailing" constant="12" id="8Nd-SH-b0j"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="4H9-4w-9eg" secondAttribute="trailing" constant="4" id="60a-r4-B7d"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="cY3-74-70H" secondAttribute="trailing" constant="4" id="8Nd-SH-b0j"/>
                             <constraint firstItem="rFe-bS-5Yc" firstAttribute="bottom" secondItem="4H9-4w-9eg" secondAttribute="bottom" constant="48" id="BJX-2U-Ftf"/>
-                            <constraint firstItem="4H9-4w-9eg" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leadingMargin" constant="12" id="KRE-Ud-lIX"/>
+                            <constraint firstItem="4H9-4w-9eg" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leadingMargin" constant="4" id="KRE-Ud-lIX"/>
                             <constraint firstItem="cY3-74-70H" firstAttribute="top" secondItem="OXF-zq-Udo" secondAttribute="bottom" constant="4" id="M6i-ca-xG0"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="rFe-bS-5Yc" secondAttribute="trailing" constant="12" id="Srx-0h-Jel"/>
-                            <constraint firstItem="rFe-bS-5Yc" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leadingMargin" constant="12" id="YQY-gM-yi0"/>
-                            <constraint firstItem="cY3-74-70H" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leadingMargin" constant="12" id="agX-5X-7yp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="rFe-bS-5Yc" secondAttribute="trailing" constant="4" id="Srx-0h-Jel"/>
+                            <constraint firstItem="rFe-bS-5Yc" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leadingMargin" constant="4" id="YQY-gM-yi0"/>
+                            <constraint firstItem="cY3-74-70H" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leadingMargin" constant="4" id="agX-5X-7yp"/>
                             <constraint firstItem="cY3-74-70H" firstAttribute="bottom" secondItem="EoV-KF-nla" secondAttribute="top" constant="-28" id="f2R-Qy-8eq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6gv-tX-fiV" secondAttribute="trailing" constant="4" id="fr7-aF-twT"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="EoV-KF-nla" secondAttribute="trailing" constant="12" id="gi2-Jf-87R"/>
-                            <constraint firstItem="EoV-KF-nla" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leadingMargin" constant="12" id="jgP-Tf-RlJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="EoV-KF-nla" secondAttribute="trailing" constant="4" id="gi2-Jf-87R"/>
+                            <constraint firstItem="EoV-KF-nla" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leadingMargin" constant="4" id="jgP-Tf-RlJ"/>
                             <constraint firstItem="rFe-bS-5Yc" firstAttribute="top" secondItem="6gv-tX-fiV" secondAttribute="top" constant="-60" id="t15-gr-apQ"/>
                             <constraint firstItem="4H9-4w-9eg" firstAttribute="bottom" secondItem="EoV-KF-nla" secondAttribute="bottom" constant="48" id="z9S-QR-GLa"/>
                             <constraint firstItem="6gv-tX-fiV" firstAttribute="leading" secondItem="NOa-KQ-y5R" secondAttribute="leadingMargin" constant="4" id="zLY-wT-zMq"/>
@@ -1071,7 +1071,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Set up another Sleep Pill">
+                                <state key="normal" title="Add another Sleep Pill now">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1087,7 +1087,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="NO THANKS">
+                                <state key="normal" title="Not right now">
                                     <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>

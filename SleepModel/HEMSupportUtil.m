@@ -68,14 +68,14 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
 + (void)openURL:(NSString*)urlString from:(UIViewController*)controller {
     SVModalWebViewController *webViewController =
         [[SVModalWebViewController alloc] initWithAddress:urlString];
+
+    UINavigationBar* navBar = [webViewController navigationBar];
+    [navBar setBarTintColor:[HelloStyleKit backViewTintColor]];
+    [navBar setTranslucent:NO];
     
-    UIColor* barColor = [UIColor whiteColor];
-    [[webViewController navigationBar] setBackgroundColor:barColor];
-    [[webViewController toolbar] setBackgroundColor:barColor];
-    [[webViewController navigationBar] setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor],
-        NSFontAttributeName : [UIFont inAppBrowserTitleFont]
-    }];
+    UIToolbar* toolBar = [webViewController toolbar];
+    [toolBar setTintColor:[HelloStyleKit senseBlueColor]];
+    [toolBar setTranslucent:NO];
     
     [controller presentViewController:webViewController animated:YES completion:nil];
 }

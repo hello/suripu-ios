@@ -55,8 +55,6 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [self configureActivityLabel];
     
     if ([self delegate] == nil) {
-        // check for paired accounts to be used at one of the later steps
-        [[HEMOnboardingCache sharedCache] checkNumberOfPairedAccounts];
         [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
     }
 }

@@ -256,7 +256,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (IBAction)cancel:(id)sender {
     [[self delegate] didCancelWiFiConfigurationFrom:self];
-    [[self sensePairDelegate] didSetupWiFiForPairedSense:NO from:self];
+    [[self sensePairDelegate] didSetupWiFiForPairedSense:nil from:self];
 }
 
 #pragma mark - Navigation

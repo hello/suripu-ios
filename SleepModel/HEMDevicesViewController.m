@@ -203,18 +203,22 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 
 #pragma mark HEMSensePairDelegate
 
-- (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController *)controller {
+- (void)updateDataWithSenseManager:(SENSenseManager*)senseManager {
     if (senseManager != nil) {
         __weak typeof(self) weakSelf = self;
         [[self dataSource] updateSenseManager:senseManager completion:^(NSError *error) {
             [weakSelf reloadData];
         }];
     }
+}
+
+- (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController *)controller {
+    [self updateDataWithSenseManager:senseManager];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didSetupWiFiForPairedSense:(BOOL)setup from:(UIViewController *)controller {
-    [self refreshDataSource];
+- (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController *)controller {
+    [self updateDataWithSenseManager:senseManager];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

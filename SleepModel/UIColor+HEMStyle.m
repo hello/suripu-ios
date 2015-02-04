@@ -13,7 +13,6 @@
 
 static CGFloat const HEMColorAwakeThreshold = 0;
 static CGFloat const HEMColorDeepThreshold = 100.f;
-static CGFloat const HEMColorLightThreshold = 1.f;
 static CGFloat const HEMColorMediumThreshold = 60.f;
 
 + (UIColor*)colorForGenericMotionDepth:(NSUInteger)depth

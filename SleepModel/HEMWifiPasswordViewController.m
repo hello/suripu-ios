@@ -459,9 +459,10 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     void(^proceed)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if ([strongSelf delegate] != nil) {
+            [HEMOnboardingCache clearCache];
             [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
         } else if ([strongSelf sensePairDelegate] != nil) {
-            [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:YES from:self];
+            [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:[strongSelf manager] from:self];
         } else {
             [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard wifiToPillSegueIdentifier]

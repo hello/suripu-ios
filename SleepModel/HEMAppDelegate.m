@@ -97,7 +97,9 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)syncData {
     if ([SENAuthorizationService isAuthorized]) {
-        [[SENServiceAccount sharedService] refreshAccount:nil];
+        [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
+            [HEMAnalytics trackUserSession]; // update user session data
+        }];
         [[SENServiceHealthKit sharedService] setEnableWrite:[HEMSettingsUtil isHealthKitEnabled]];
     }
 }

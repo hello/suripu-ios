@@ -66,7 +66,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 }
 
 - (void)configureButtons {
-    [self showHelpButtonForStep:kHEMAnalyticsEventPropWiFiScan];
+    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropWiFiScan];
     [[[self scanButton] layer] setBorderWidth:0.0f];
     
     if ([self haveDelegates]) {

@@ -40,7 +40,7 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self enableBackButton:NO];
-    [self showHelpButtonForStep:kHEMAnalyticsEventPropBluetooth];
+    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropBluetooth];
     [self configureSteps];
     [SENAnalytics track:kHEMAnalyticsEventOnBNoBle];
 }

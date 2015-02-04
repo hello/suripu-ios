@@ -102,7 +102,7 @@
 
 #pragma mark - Nav
 
-- (void)showHelpButtonForStep:(NSString*)stepName {
+- (void)showHelpButtonAndTrackWithStepName:(NSString*)stepName {
     UIBarButtonItem* item =
     [[UIBarButtonItem alloc] initWithTitle:@"?"
                                      style:UIBarButtonItemStyleBordered

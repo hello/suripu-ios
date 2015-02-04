@@ -28,7 +28,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self showHelpButtonForStep:kHEMAnalyticsEventPropSenseSetup];
+    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropSenseSetup];
     [self enableBackButton:NO];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBSenseSetup];

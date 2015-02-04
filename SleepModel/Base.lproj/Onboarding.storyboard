@@ -150,8 +150,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="onboarding_bg_wide.png" translatesAutoresizingMaskIntoConstraints="NO" id="smu-a3-ZXe">
-                                <rect key="frame" x="-10" y="-10" width="760" height="620"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="onboarding_bg_wide.png" translatesAutoresizingMaskIntoConstraints="NO" id="smu-a3-ZXe">
+                                <rect key="frame" x="0.0" y="-30" width="760" height="620"/>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="infinite" text="Meet Sense." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LK8-dI-wjg">
                                 <rect key="frame" x="20" y="10" width="560" height="32"/>
@@ -2710,7 +2710,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="female.png" width="50" height="83"/>
         <image name="male.png" width="75" height="72"/>
         <image name="map.png" width="320" height="229"/>
-        <image name="onboarding_bg_wide.png" width="470" height="588"/>
+        <image name="onboarding_bg_wide.png" width="461" height="588"/>
         <image name="pairOfPills.png" width="180" height="117"/>
         <image name="play.png" width="75" height="75"/>
         <image name="sampleNotification.png" width="320" height="185"/>

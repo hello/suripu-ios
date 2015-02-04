@@ -1924,11 +1924,7 @@
                                                     </constraints>
                                                 </view>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YXY-YU-m4N">
-                                                    <rect key="frame" x="556" y="19" width="25" height="25"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="25" id="BKh-Xx-JNW"/>
-                                                        <constraint firstAttribute="width" constant="25" id="sCg-Eu-cjg"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="537" y="0.0" width="63" height="63"/>
                                                     <state key="normal" image="miniPlayButton.png">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -1941,13 +1937,16 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="YXY-YU-m4N" firstAttribute="top" secondItem="9D4-JS-iZj" secondAttribute="top" id="4Bj-AH-i1W"/>
                                                 <constraint firstItem="IKf-yd-O0T" firstAttribute="centerY" secondItem="YXY-YU-m4N" secondAttribute="centerY" id="BRF-fZ-biZ"/>
                                                 <constraint firstAttribute="centerY" secondItem="7KZ-YY-pJd" secondAttribute="centerY" id="OYS-9l-RzT"/>
                                                 <constraint firstAttribute="trailing" secondItem="IKf-yd-O0T" secondAttribute="trailing" constant="20" id="Yqf-NC-66j"/>
                                                 <constraint firstAttribute="centerY" secondItem="IKf-yd-O0T" secondAttribute="centerY" id="cFN-zk-nx3"/>
+                                                <constraint firstAttribute="bottom" secondItem="YXY-YU-m4N" secondAttribute="bottom" id="hqa-RO-ay8"/>
                                                 <constraint firstItem="vGn-BS-HC5" firstAttribute="leading" secondItem="7KZ-YY-pJd" secondAttribute="trailing" constant="13" id="mMm-N6-a0H"/>
                                                 <constraint firstAttribute="centerY" secondItem="vGn-BS-HC5" secondAttribute="centerY" constant="0.5" id="pp5-3b-PsC"/>
                                                 <constraint firstItem="IKf-yd-O0T" firstAttribute="centerX" secondItem="YXY-YU-m4N" secondAttribute="centerX" id="smF-8U-jhb"/>
+                                                <constraint firstAttribute="trailing" secondItem="YXY-YU-m4N" secondAttribute="trailing" id="uMN-An-Yrq"/>
                                                 <constraint firstItem="7KZ-YY-pJd" firstAttribute="leading" secondItem="9D4-JS-iZj" secondAttribute="leading" constant="20" id="xvv-BT-KCp"/>
                                             </constraints>
                                         </tableViewCellContentView>

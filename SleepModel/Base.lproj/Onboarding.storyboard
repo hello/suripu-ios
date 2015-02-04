@@ -189,6 +189,7 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
+                                    <segue destination="cpr-oG-Go7" kind="push" id="cr7-f3-lew"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -1626,14 +1627,13 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XpJ-Hr-RJB" customClass="HEMActionButton">
-                                        <rect key="frame" x="190" y="186" width="220" height="40"/>
+                                        <rect key="frame" x="20" y="186" width="560" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="JS1-gt-UdP"/>
-                                            <constraint firstAttribute="width" constant="220" id="tDf-A0-mdG"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="Continue">
+                                        <state key="normal" title="CONTINUE">
                                             <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -1644,6 +1644,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="XpJ-Hr-RJB" firstAttribute="leading" secondItem="7x8-Kt-tEQ" secondAttribute="leading" constant="20" id="0Jp-fQ-S1w"/>
                                     <constraint firstItem="PFC-on-mrs" firstAttribute="bottom" secondItem="XpJ-Hr-RJB" secondAttribute="top" constant="-32" id="1r5-Jz-Lz8"/>
                                     <constraint firstAttribute="height" constant="254" id="3Xn-Ve-OEb"/>
                                     <constraint firstItem="Xz9-46-8eZ" firstAttribute="top" secondItem="7x8-Kt-tEQ" secondAttribute="top" id="Hk4-rc-Mv8"/>
@@ -1653,10 +1654,16 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     <constraint firstAttribute="trailing" secondItem="PFC-on-mrs" secondAttribute="trailing" constant="28" id="aJc-pl-aeZ"/>
                                     <constraint firstAttribute="trailing" secondItem="eyG-C0-uLF" secondAttribute="trailing" constant="38" id="geX-nU-WM8"/>
                                     <constraint firstItem="eyG-C0-uLF" firstAttribute="top" secondItem="7x8-Kt-tEQ" secondAttribute="top" constant="45" id="kHm-3J-ECb"/>
+                                    <constraint firstAttribute="trailing" secondItem="XpJ-Hr-RJB" secondAttribute="trailing" constant="20" id="kdk-db-VCa"/>
                                     <constraint firstAttribute="centerX" secondItem="XpJ-Hr-RJB" secondAttribute="centerX" id="mgG-eB-gjW"/>
                                     <constraint firstAttribute="trailing" secondItem="Xz9-46-8eZ" secondAttribute="trailing" id="wEa-Vj-Hr0"/>
                                     <constraint firstItem="PFC-on-mrs" firstAttribute="topMargin" secondItem="eyG-C0-uLF" secondAttribute="bottom" constant="23" id="xz9-u7-5GR"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="mgG-eB-gjW"/>
+                                    </mask>
+                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -2719,6 +2726,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ZOJ-Sh-Dzx"/>
+        <segue reference="cr7-f3-lew"/>
         <segue reference="u9Q-g4-qbd"/>
         <segue reference="gUR-KW-V2G"/>
     </inferredMetricsTieBreakers>

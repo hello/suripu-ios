@@ -501,7 +501,7 @@
 "tutorial.sensor.humidity.title" = "Humidity";
 "tutorial.sensor.humidity.message" = "A bedroom that's too humid or too dry can make sleep uncomfortable. Here you’ll see detailed information on the humidity levels in your bedroom.";
 "tutorial.sensor.light.title" = "Light";
-"tutorial.sensor.light.message" = "Falling asleep is easier when your bedroom is as dark as possible. Here you’ll see detailed information on the sound levels in your bedroom.";
+"tutorial.sensor.light.message" = "Falling asleep is easier when your bedroom is as dark as possible. Here you’ll see detailed information on the light levels in your bedroom.";
 "tutorial.sensor.sound.title" = "Sound";
 "tutorial.sensor.sound.message" = "Background noise or sound disturbances can disrupt your sleep. Here you’ll see detailed information on the sound levels in your bedroom.";
 "tutorial.sensor.particulates.title" = "Air quality index";

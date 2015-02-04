@@ -21,8 +21,12 @@ static NSString* const HEMTitleFontFamilyNameDemiBold = @"AvenirNext-DemiBold";
 static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont *)scaledFontWithName:(NSString*)name baseSize:(CGFloat)baseSize {
-    static CGFloat HEMFontBaseScreenWidth = 320.f;
-    CGFloat factor = CGRectGetWidth([[UIScreen mainScreen] bounds]) / HEMFontBaseScreenWidth;
+    static CGFloat const HEMFontBaseScreenWidth = 320.f;
+    static CGFloat const HEMFontEnlargedRatio = 1.07f;
+    CGFloat factor = 1.f;
+    if (CGRectGetWidth([[UIScreen mainScreen] bounds]) > HEMFontBaseScreenWidth)
+        factor = HEMFontEnlargedRatio;
+
     NSInteger fontSize = ceilf(baseSize * factor);
     return [UIFont fontWithName:name size:fontSize];
 }

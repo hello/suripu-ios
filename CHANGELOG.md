@@ -19,6 +19,7 @@ Fixes:
 * alarm picker time now cycles
 * upon sign out, reset to default menu
 * timeline zoomed out view no longer show previous month if swiping back and forth
+* various onboarding screen design updates
 
 ## 1.0.1.3
 

@@ -137,6 +137,8 @@ static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
 
 - (IBAction)toggleBreakdown:(id)sender
 {
+    if (self.breakdownButton.sleepScore == 0)
+        return;
     if ([self.breakdownButton isVisible]) {
         [self hideBreakdownAnimated:YES];
     } else {

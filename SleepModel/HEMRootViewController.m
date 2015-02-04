@@ -104,6 +104,23 @@ static CGFloat const HEMRootDrawerRevealHeightStatusOffset = 20.f;
     [SENAnalytics track:kHEMAnalyticsEventAppClosed];
 }
 
+- (UIWindow*)keyWindow
+{
+    return [UIApplication sharedApplication].keyWindow ?: [[[UIApplication sharedApplication] windows] firstObject];
+}
+
+- (void)hideStatusBar
+{
+    UIWindow* window = [self keyWindow];
+    window.windowLevel = UIWindowLevelStatusBar + 1;
+}
+
+- (void)showStatusBar
+{
+    UIWindow* window = [self keyWindow];
+    window.windowLevel = UIWindowLevelNormal;
+}
+
 - (UIViewController *)backController
 {
     return [self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
@@ -125,8 +142,7 @@ static CGFloat const HEMRootDrawerRevealHeightStatusOffset = 20.f;
     self.drawerViewController.paneViewController = [HEMRootViewController instantiatePaneViewControllerWithDate:nil];
     self.drawerViewController.delegate = self;
     self.drawerViewController.gravityMagnitude = 2.5;
-    UIWindow* window = [UIApplication sharedApplication].keyWindow ?: [[[UIApplication sharedApplication] windows] firstObject];
-    window.windowLevel = UIWindowLevelStatusBar + 1;
+    [self hideStatusBar];
     [self.drawerViewController addStylersFromArray:@[[HEMDynamicsStatusStyler styler]]
                                       forDirection:MSDynamicsDrawerDirectionTop];
     [self.drawerViewController setDrawerViewController:[HEMRootViewController instantiateDrawerViewController]

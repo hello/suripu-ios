@@ -33,6 +33,9 @@ extern NSString* const HEMRootDrawerDidCloseNotification;
 
 - (BOOL)drawerIsVisible;
 
+- (void)showStatusBar;
+- (void)hideStatusBar;
+
 /**
  *  The "back" pane controller
  *

@@ -23,6 +23,7 @@
 @property (strong, nonatomic) UIBarButtonItem* leftBarItem;
 @property (strong, nonatomic) UIBarButtonItem* cancelItem;
 @property (assign, nonatomic) BOOL enableBack;
+@property (copy,   nonatomic) NSString* analyticsHelpStep;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint* titleHeightConstraint;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint* descriptionTopConstraint;
 
@@ -101,7 +102,7 @@
 
 #pragma mark - Nav
 
-- (void)showHelpButton {
+- (void)showHelpButtonForStep:(NSString*)stepName {
     UIBarButtonItem* item =
     [[UIBarButtonItem alloc] initWithTitle:@"?"
                                      style:UIBarButtonItemStyleBordered
@@ -114,10 +115,13 @@
         NSFontAttributeName : [UIFont helpButtonTitleFont]
     } forState:UIControlStateNormal];
     [[self navigationItem] setRightBarButtonItem:item];
+    [self setAnalyticsHelpStep:stepName];
 }
 
 - (void)help:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventHelp];
+    NSString* step = [self analyticsHelpStep] ?: @"undefined";
+    NSDictionary* properties = @{kHEMAnalyticsEventPropStep : step};
+    [SENAnalytics track:kHEMAnalyticsEventOnBHelp properties:properties];
     [HEMSupportUtil openHelpFrom:self];
 }
 

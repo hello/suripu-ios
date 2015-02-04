@@ -32,7 +32,7 @@
     [super viewDidLoad];
 
     [self enableBackButton:NO];
-    [self showHelpButton];
+    [self showHelpButtonForStep:kHEMAnalyticsEventPropPillPlacement];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBPillPlacement];
 }

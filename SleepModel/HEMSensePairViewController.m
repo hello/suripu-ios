@@ -72,7 +72,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)configureButtons {
-    [self showHelpButton];
+    [self showHelpButtonForStep:kHEMAnalyticsEventPropSensePairing];
     [[self notGlowingButton] setTitleColor:[HelloStyleKit senseBlueColor]
                                   forState:UIControlStateNormal];
     [[[self notGlowingButton] titleLabel] setFont:[UIFont secondaryButtonFont]];

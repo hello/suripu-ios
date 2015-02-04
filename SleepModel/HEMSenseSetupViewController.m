@@ -28,17 +28,10 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self showHelpButton];
+    [self showHelpButtonForStep:kHEMAnalyticsEventPropSenseSetup];
     [self enableBackButton:NO];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBSenseSetup];
-}
-
-#pragma mark - Actions
-
-- (IBAction)help:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventHelp];
-    [HEMSupportUtil openHelpFrom:self];
 }
 
 @end

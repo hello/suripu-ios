@@ -36,6 +36,17 @@ NSString* const kHEManaltyicsEventStatusDenied = @"denied";
 
 // onboarding
 NSString* const kHEMAnalyticsEventOnBNoSense = @"I don't have a Sense";
+NSString* const kHEMAnalyticsEventOnBHelp = @"Onboarding Help";
+NSString* const kHEMAnalyticsEventPropStep = @"onboarding_step";
+NSString* const kHEMAnalyticsEventPropBluetooth = @"bluetooth";
+NSString* const kHEMAnalyticsEventPropAudio = @"enhanced_audio";
+NSString* const kHEMAnalyticsEventPropSensePairingMode = @"sense_pairing_mode";
+NSString* const kHEMAnalyticsEventPropSensePairing = @"sense_pairing";
+NSString* const kHEMAnalyticsEventPropSenseSetup = @"setup_sense";
+NSString* const kHEMAnalyticsEventPropWiFiScan = @"wifi_scan";
+NSString* const kHEMAnalyticsEventPropWiFiPass = @"sign_into_wifi";
+NSString* const kHEMAnalyticsEventPropPillPairing = @"pill_pairing";
+NSString* const kHEMAnalyticsEventPropPillPlacement = @"pill_placement";
 NSString* const kHEMAnalyticsEventOnBStart = @"Onboarding Start";
 NSString* const kHEMAnalyticsEventOnBBirthday = @"Onboarding Birthday";
 NSString* const kHEMAnalyticsEventOnBGender = @"Onboarding Gender";

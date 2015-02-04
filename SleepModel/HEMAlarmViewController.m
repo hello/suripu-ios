@@ -17,6 +17,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAlertController.h"
 #import "HEMAlarmTableViewCell.h"
+#import "HEMTutorial.h"
 
 @interface HEMAlarmViewController()<UITableViewDelegate, UITableViewDataSource, UIPickerViewDelegate, UIPickerViewDataSource>
 
@@ -74,6 +75,12 @@ static NSUInteger const HEMAlarm24HourCount = 24;
     [super viewWillAppear:animated];
     [self updatePicker];
     [self.tableView reloadData];
+}
+
+- (void)viewDidAppear:(BOOL)animated
+{
+    [super viewDidAppear:animated];
+    [HEMTutorial showTutorialForAlarmsIfNeeded];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue*)segue sender:(id)sender

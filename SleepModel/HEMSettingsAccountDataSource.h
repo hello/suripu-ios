@@ -17,6 +17,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountInfoType) {
     HEMSettingsAccountInfoTypeWeight,
     HEMSettingsAccountInfoTypeEnhancedAudio,
     HEMSettingsAccountInfoTypeHealthKit,
+    HEMSettingsAccountInfoTypePushConditions,
+    HEMSettingsAccountInfoTypePushScore,
     HEMSettingsAccountInfoTypeAudioExplanation,
     HEMSettingsAccountInfoTypeSignOut
 };

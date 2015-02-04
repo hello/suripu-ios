@@ -35,6 +35,7 @@ static NSString* const SENSleepResultScore = @"score";
 static NSString* const SENSleepResultMessage = @"message";
 static NSString* const SENSleepResultSegments = @"segments";
 static NSString* const SENSleepResultSensorInsights = @"insights";
+static NSString* const SENSleepResultStatistics = @"statistics";
 static NSString* const SENSleepResultRetrievalKeyFormat = @"SleepResult-%ld-%ld-%ld";
 static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
 
@@ -82,6 +83,7 @@ static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
         _message = sleepData[SENSleepResultMessage];
         _segments = [self parseSegmentsFromArray:sleepData[SENSleepResultSegments]];
         _sensorInsights = [self parseSensorInsightsFromArray:sleepData[SENSleepResultSensorInsights]];
+        _statistics = [self parseStatisticsFromDictionary:sleepData[SENSleepResultStatistics]];
     }
     return self;
 }
@@ -94,6 +96,7 @@ static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
         _message = [aDecoder decodeObjectForKey:SENSleepResultMessage];
         _segments = [aDecoder decodeObjectForKey:SENSleepResultSegments];
         _sensorInsights = [aDecoder decodeObjectForKey:SENSleepResultSensorInsights];
+        _statistics = [aDecoder decodeObjectForKey:SENSleepResultStatistics];
     }
     return self;
 }
@@ -105,6 +108,7 @@ static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
     [aCoder encodeObject:_message forKey:SENSleepResultMessage];
     [aCoder encodeObject:_segments forKey:SENSleepResultSegments];
     [aCoder encodeObject:_sensorInsights forKey:SENSleepResultSensorInsights];
+    [aCoder encodeObject:_statistics forKey:SENSleepResultStatistics];
 }
 
 - (void)updateWithDictionary:(NSDictionary*)data
@@ -119,11 +123,28 @@ static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
         self.segments = [self parseSegmentsFromArray:data[SENSleepResultSegments]];
     if (data[SENSleepResultSensorInsights])
         self.sensorInsights = [self parseSensorInsightsFromArray:data[SENSleepResultSensorInsights]];
+    if (data[SENSleepResultStatistics])
+        self.statistics = [self parseStatisticsFromDictionary:data[SENSleepResultStatistics]];
 }
 
 - (NSString*)retrievalKey
 {
     return [[self class] retrievalKeyForDate:self.date];
+}
+
+- (NSArray*)parseStatisticsFromDictionary:(NSDictionary*)statisticData
+{
+    if (![statisticData isKindOfClass:[NSDictionary class]])
+        return nil;
+    __block NSMutableArray* stats = [[NSMutableArray alloc] initWithCapacity:statisticData.count];
+    [statisticData enumerateKeysAndObjectsUsingBlock:^(NSString* name, NSNumber* value, BOOL *stop) {
+        if ([name isKindOfClass:[NSString class]] && [value isKindOfClass:[NSNumber class]]) {
+            SENSleepResultStatistic* stat = [[SENSleepResultStatistic alloc] initWithName:name value:value];
+            if (stat)
+                [stats addObject:stat];
+        }
+    }];
+    return stats;
 }
 
 - (NSArray*)parseSegmentsFromArray:(NSArray*)segmentsData
@@ -273,6 +294,64 @@ static NSString* const SENSleepResultSegmentSound = @"sound";
         else
             self.sound = [[SENSleepResultSound alloc] initWithDictionary:data[SENSleepResultSegmentSound]];
     }
+}
+
+@end
+
+@implementation SENSleepResultStatistic
+
+static NSString* const SENSleepResultStatisticNameKey = @"name";
+static NSString* const SENSleepResultStatisticValueKey = @"value";
+static NSString* const SENSleepResultStatisticTypeKey = @"type";
+
+static NSString* const SENSleepResultStatisticNameSoundSleep = @"sound_sleep";
+static NSString* const SENSleepResultStatisticNameTotalSleep = @"total_sleep";
+static NSString* const SENSleepResultStatisticNameTimesAwake = @"times_awake";
+static NSString* const SENSleepResultStatisticNameTimeToSleep = @"time_to_sleep";
+
++ (SENSleepResultStatisticType)typeFromName:(NSString*)name
+{
+    if ([name isKindOfClass:[NSString class]]) {
+        if ([name isEqualToString:SENSleepResultStatisticNameSoundSleep])
+            return SENSleepResultStatisticTypeSoundDuration;
+        if ([name isEqualToString:SENSleepResultStatisticNameTotalSleep])
+            return SENSleepResultStatisticTypeTotalDuration;
+        if ([name isEqualToString:SENSleepResultStatisticNameTimesAwake])
+            return SENSleepResultStatisticTypeTimesAwake;
+        if ([name isEqualToString:SENSleepResultStatisticNameTimeToSleep])
+            return SENSleepResultStatisticTypeTimeToSleep;
+    }
+
+    return SENSleepResultStatisticTypeUnknown;
+}
+
+- (instancetype)initWithName:(NSString *)name value:(NSNumber*)value
+{
+    if (self = [super init]) {
+        if ([name isKindOfClass:[NSString class]])
+            _name = name;
+        if ([value isKindOfClass:[NSNumber class]])
+            _value = value;
+        _type = [SENSleepResultStatistic typeFromName:name];
+    }
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    if (self = [super init]) {
+        _name = [aDecoder decodeObjectForKey:SENSleepResultStatisticNameKey];
+        _value = [aDecoder decodeObjectForKey:SENSleepResultStatisticValueKey];
+        _type = [aDecoder decodeIntegerForKey:SENSleepResultStatisticTypeKey];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:self.name forKey:SENSleepResultStatisticNameKey];
+    [aCoder encodeObject:self.value forKey:SENSleepResultStatisticValueKey];
+    [aCoder encodeInteger:self.type forKey:SENSleepResultStatisticTypeKey];
 }
 
 @end

@@ -40,9 +40,9 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     HEMSettingsAcctRowWeight = 3,
 
     HEMSettingsAcctRowHealthKit = 0,
-    HEMSettingsAcctRowEnhancedAudio = 1,
-    HEMSettingsAcctRowPushConditions = 2,
-    HEMSettingsAcctRowPushScore = 3,
+    HEMSettingsAcctRowPushConditions = 1,
+    HEMSettingsAcctRowPushScore = 2,
+    HEMSettingsAcctRowEnhancedAudio = 3,
 };
 
 @interface HEMSettingsAccountDataSource()

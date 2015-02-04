@@ -463,7 +463,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSDateComponents* components = [self.calendar components:units fromDate:segment.date];
     self.timeDateFormatter.timeZone = segment.timezone;
     if (components.minute == 0) {
-        [cell addTimeLabelWithText:[self.timeDateFormatter stringFromDate:segment.date] atHeightRatio:0];
+        [cell addTimeLabelWithText:[[self.timeDateFormatter stringFromDate:segment.date] lowercaseString]
+                     atHeightRatio:0];
     }
     NSTimeInterval segmentInterval = [segment.date timeIntervalSince1970];
     NSDate* endDate = [NSDate dateWithTimeIntervalSince1970:segmentInterval + [segment.duration doubleValue]];

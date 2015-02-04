@@ -30,6 +30,7 @@
 static CGFloat const HEMSleepSummaryButtonEdgeInset = 8.f;
 static CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 static CGFloat const HEMSleepSummaryBreakdownMiniDiameter = 60.f;
+static CGFloat const HEMSleepSummaryBreakdownExpandedDiameter = 144.f;
 static CGFloat const HEMSleepSummaryBreakdownExpandedDistance = 28.f;
 static CGFloat const HEMSleepSummaryBreakdownSeparatorHeight = 148.f;
 static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
@@ -57,10 +58,11 @@ static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
     if (!self.breakdownSeparatorGradient) {
         self.breakdownSeparatorGradient = [CAGradientLayer new];
         self.breakdownSeparatorGradient.colors = @[
-            (id)[UIColor colorWithWhite:0.97f alpha:1.f].CGColor,
+            (id)[UIColor colorWithWhite:0.95f alpha:1.f].CGColor,
             (id)[UIColor colorWithWhite:1.f alpha:0].CGColor];
         self.breakdownSeparatorGradient.startPoint = CGPointZero;
         self.breakdownSeparatorGradient.endPoint = CGPointMake(0, 1);
+        self.breakdownSeparatorGradient.locations = @[@(0.5), @1];
         self.breakdownSeparatorView.backgroundColor = [UIColor clearColor];
         [self.breakdownSeparatorView.layer addSublayer:self.breakdownSeparatorGradient];
     }
@@ -140,22 +142,24 @@ static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
     if (self.breakdownButton.sleepScore == 0)
         return;
     if ([self.breakdownButton isVisible]) {
-        [self hideBreakdownAnimated:YES];
+        [self hideBreakdown];
     } else {
         [self showBreakdown];
     }
 }
 
-- (void)hideBreakdownAnimated:(BOOL)animated
+- (void)hideBreakdown
 {
-    [self.breakdownButton animateDiameterTo:CGRectGetWidth(self.sleepScoreGraphView.bounds)];
+    [self.breakdownButton animateDiameterTo:HEMSleepSummaryBreakdownExpandedDiameter];
     self.breakdownLeftConstraint.constant = HEMSleepSummaryBreakdownContractedDistance;
     self.breakdownRightConstraint.constant = HEMSleepSummaryBreakdownContractedDistance;
     self.breakdownSeparatorHeightConstraint.constant = 0;
     [self.breakdownContainerView setNeedsUpdateConstraints];
     [UIView animateWithDuration:0.2f animations:^{
         [self.breakdownContainerView layoutIfNeeded];
+        [self.breakdownSeparatorView layoutIfNeeded];
         self.breakdownContainerView.alpha = 0;
+        self.breakdownSeparatorGradient.frame = CGRectZero;
     }];
     [UIView animateWithDuration:0.2f delay:0.25f options:0 animations:^{
         self.breakdownButton.alpha = 0;
@@ -181,14 +185,17 @@ static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
         [self.breakdownButton animateDiameterTo:HEMSleepSummaryBreakdownMiniDiameter];
         self.breakdownLeftConstraint.constant = HEMSleepSummaryBreakdownExpandedDistance;
         self.breakdownRightConstraint.constant = HEMSleepSummaryBreakdownExpandedDistance;
-        self.breakdownSeparatorHeightConstraint.constant = HEMSleepSummaryBreakdownSeparatorHeight;
         [self.breakdownContainerView setNeedsUpdateConstraints];
         [UIView animateWithDuration:0.2f delay:0.15f options:0 animations:^{
             [self.breakdownContainerView layoutIfNeeded];
             self.breakdownContainerView.alpha = 1;
-        } completion:^(BOOL finished) {
-
-        }];
+        } completion:NULL];
+        self.breakdownSeparatorHeightConstraint.constant = HEMSleepSummaryBreakdownSeparatorHeight;
+        [self.breakdownSeparatorView setNeedsUpdateConstraints];
+        [UIView animateWithDuration:0.15f delay:0.18f options:0 animations:^{
+            [self.breakdownSeparatorView layoutIfNeeded];
+            self.breakdownSeparatorGradient.frame = self.breakdownSeparatorView.bounds;
+        } completion:NULL];
     }];
 }
 

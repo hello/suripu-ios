@@ -15,9 +15,12 @@
 
 @implementation HEMBreakdownButton
 
+static CGFloat const HEMBreakdownButtonDefaultInset = 2.f;
+static CGFloat const HEMBreakdownAnimationFrameDuration = 0.0015;
+
 - (void)awakeFromNib
 {
-    self.targetGraphHeight = CGRectGetHeight(self.bounds);
+    self.targetGraphHeight = CGRectGetHeight(self.bounds) - HEMBreakdownButtonDefaultInset;
 }
 
 - (void)animateDiameterTo:(CGFloat)targetHeight
@@ -41,7 +44,8 @@
 
 - (void)animateTargetGraphHeightTo:(CGFloat)targetHeight timeOffset:(CGFloat)offset
 {
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(offset * 0.0035 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+    int64_t after = (int64_t)(offset * HEMBreakdownAnimationFrameDuration * NSEC_PER_SEC);
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, after), dispatch_get_main_queue(), ^{
         _targetGraphHeight = targetHeight;
         [self setNeedsDisplay];
     });

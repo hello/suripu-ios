@@ -56,9 +56,18 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    
+    // FIXME (jimmy): this may be an iOS bug (very likely), but if the username
+    // field is given focus again, say after an alert is dismissed, the textfield
+    // causes the textfield text to hide and show temporarily on every key stroke.
+    // maybe it's related to the fact that the keyboard type for this field is
+    // for an email?  This doesn't happen in sign up controller b/c the field
+    // that is given focus to after appearance does not have the same keyboard type
     if (![self isLoaded]) {
         [[self usernameField] becomeFirstResponder];
         [self setLoaded:YES];
+    } else {
+        [[self passwordField] becomeFirstResponder];
     }
 }
 
@@ -68,18 +77,9 @@
 }
 
 - (void)enableControls:(BOOL)enable {
-    
-    if (!enable) {
-        [[self view] endEditing:NO];
-    }
-
     [[self forgotPassButton] setEnabled:enable];
     [[self usernameField] setEnabled:enable];
     [[self passwordField] setEnabled:enable];
-    
-    if (enable) {
-        [[self usernameField] becomeFirstResponder];
-    }
 }
 
 - (void)showActivity:(void(^)(void))completion {

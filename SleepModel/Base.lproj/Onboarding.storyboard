@@ -189,7 +189,6 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
-                                    <segue destination="cpr-oG-Go7" kind="push" id="cr7-f3-lew"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -2726,7 +2725,6 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="ZOJ-Sh-Dzx"/>
-        <segue reference="cr7-f3-lew"/>
         <segue reference="u9Q-g4-qbd"/>
         <segue reference="gUR-KW-V2G"/>
     </inferredMetricsTieBreakers>

@@ -482,27 +482,27 @@
 
 // tutorial
 "tutorial.timeline.title1" = "UNDERSTANDING YOUR SLEEP";
-"tutorial.timeline.message1" = "Your Sense collects an immense amount of data about your sleep, your behavior, and the environment in your bedroom.\n\nWe take all this data and present it in a detailed but simple way — this quick walkthrough will show you how to read your first night of sleep data.";
+"tutorial.timeline.message1" = "Sense collects an immense amount of data about your sleep, your behavior, and the environment in your bedroom.\n\nWe take all this data and present it in a detailed but simple way — this quick walkthrough will show you how to read your first night of sleep data.";
 "tutorial.timeline.message2" = "Your Sleep Score takes all the data Sense collects about your sleep, and expresses it as one simple, rich measure of your sleep quality — out of 100.";
 "tutorial.timeline.message3" = "The “Before Sleep” tab will summarize the conditions of your bedroom before you went to sleep. Too hot? Noisy? You’ll see it here.";
-"tutorial.timeline.message4" = "Your Sleep Timeline shows you a minute-by-minute record of your night, broken into three categories:\n\nLight, Medium and Deep Sleep.";
+"tutorial.timeline.message4" = "Your Sleep Timeline shows you a minute-by-minute record of your night. The blue bars break your sleep out into three categories:\n\nLight, Medium and Deep Sleep.";
 
-"tutorial.alarms.title" = "Your first alarm";
-"tutorial.alarms.message" = "When your alarm rings in the morning, Sense will glow and softly play your selected tone. Just wave your hand over Sense to dismiss.";
+"tutorial.alarms.title" = "Smart Alarm";
+"tutorial.alarms.message" = "Sense's Smart Alarm will wake you up at a natural point in your sleep cycle - in a 30 minute window before the time you set. When it's time to wake up, Sense will glow and softly play your selected tone. Just wave your hand over Sense to dismiss.";
 
 "tutorial.trends.title" = "Trends";
-"tutorial.trends.message" = "To see how your sleep changes over time, sometimes it's helpful to take a step back. This view will show historical data on your sleep patterns.";
+"tutorial.trends.message" = "To see how your sleep is changing over time, sometimes it’s helpful to take a step back. After a week using Sense, this view will show you historical data on your sleep patterns. If you don't see any data yet, check back later.";
 
 "tutorial.sensors.title" = "Current conditions";
-"tutorial.sensors.message" = "Here you'll see the current conditions of your bedroom. There is a value and a graph of the past few hours for temperature, light, humidity, sound, and air quality. Tap a card for more details.";
+"tutorial.sensors.message" = "Here you’ll see the current conditions in your bedroom: Temperature, Humidity, Particulates, Light, and Sound. Tap a card for more details.";
 
 "tutorial.sensor.temperature.title" = "Temperature";
-"tutorial.sensor.temperature.message" = "A proper temperature in your bedroom is key to a good night's sleep. Here you'll see detailed historical data on the temperature levels of your bedroom.";
+"tutorial.sensor.temperature.message" = "A proper temperature in your bedroom is key to a good night’s sleep. Here you’ll see detailed information on the temperature levels in your bedroom.";
 "tutorial.sensor.humidity.title" = "Humidity";
-"tutorial.sensor.humidity.message" = "A proper humidity level in your bedroom is key to a good night's sleep. Here you'll see detailed historical data on the humidity levels of your bedroom.";
+"tutorial.sensor.humidity.message" = "A bedroom that's too humid or too dry can make sleep uncomfortable. Here you’ll see detailed information on the humidity levels in your bedroom.";
 "tutorial.sensor.light.title" = "Light";
-"tutorial.sensor.light.message" = "Low light levels in your bedroom are key to a good night's sleep. Here you'll see detailed historical data on the light levels of your bedroom.";
+"tutorial.sensor.light.message" = "Falling asleep is easier when your bedroom is as dark as possible. Here you’ll see detailed information on the light levels in your bedroom.";
 "tutorial.sensor.sound.title" = "Sound";
-"tutorial.sensor.sound.message" = "Low sound levels in your bedroom are key to a good night's sleep. Here you'll see detailed historical data on the sound levels of your bedroom.";
+"tutorial.sensor.sound.message" = "Background noise or sound disturbances can disrupt your sleep. Here you’ll see detailed information on the sound levels in your bedroom.";
 "tutorial.sensor.particulates.title" = "Air quality index";
-"tutorial.sensor.particulates.message" = "Good air quality in your bedroom is key to a good night's sleep. Here you'll see detailed historical data on the dust levels in your bedroom.";
+"tutorial.sensor.particulates.message" = "AQI stands for Air Quality Index, and is measured on a scale from 0-500. The lower the value, the better the air quality. Here you’ll see detailed information on the AQI in your bedroom.";

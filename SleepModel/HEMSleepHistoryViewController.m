@@ -104,13 +104,11 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 - (void)scrollToSelectedDateAnimated:(BOOL)animated
 {
     NSDate* initialDate = [(SENSleepResult*)[self.sleepDataSummaries firstObject] date];
-    NSDateComponents *components = [self.calendar components:NSHourCalendarUnit
+    NSDateComponents *components = [self.calendar components:NSDayCalendarUnit
                                                     fromDate:initialDate
                                                       toDate:self.selectedDate
                                                      options:0];
-    NSInteger index = components.hour / 24;
-    if (components.hour % 24 > 0)
-        index++;
+    NSInteger index = components.day;
     NSInteger item = MIN(index, [self collectionView:self.historyCollectionView numberOfItemsInSection:0] - 1);
     NSIndexPath* indexPath = [NSIndexPath indexPathForItem:item inSection:0];
     [self.historyCollectionView scrollToItemAtIndexPath:indexPath

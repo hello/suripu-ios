@@ -14,6 +14,7 @@ NSString* const SENAPIDeviceErrorDomain = @"is.hello.api.device";
 NSString* const SENAPIDeviceEndpoint = @"devices";
 NSString* const SENAPIDevicePathPill = @"pill";
 NSString* const SENAPIDevicePathSense = @"sense";
+NSString* const SENAPIDevicePathMetaData = @"info";
 
 NSString* const SENAPIDevicePropertyDeviceId = @"device_id";
 NSString* const SENAPIDevicePropertyType = @"type";
@@ -103,6 +104,44 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
         if (completion) completion ([self devicesFromRawResponse:data], error);
     }];
     
+}
+
++ (void)getSenseMetaData:(SENAPIDataBlock)completion {
+    if (!completion) return;
+    NSString* path = [SENAPIDeviceEndpoint stringByAppendingPathComponent:SENAPIDevicePathMetaData];
+    [SENAPIClient GET:path parameters:nil completion:^(id data, NSError *error) {
+        SENDeviceMetadata* senseMetadata = nil;
+        
+        if (error == nil && [data isKindOfClass:[NSDictionary  class]]) {
+            senseMetadata = [[SENDeviceMetadata alloc] initWithDictionary:data
+                                                                 withType:SENDeviceTypeSense];
+        }
+        
+        completion (senseMetadata, error);
+    }];
+}
+
++ (void)getNumberOfAccountsForPairedSense:(NSString*)deviceId completion:(SENAPIDataBlock)completion {
+    if (!completion) return;
+    if ([deviceId length] == 0) {
+        completion (nil, [NSError errorWithDomain:SENAPIDeviceErrorDomain
+                                             code:SENAPIDeviceErrorInvalidParam
+                                         userInfo:nil]);
+        return;
+    }
+    
+    [self getSenseMetaData:^(SENDeviceMetadata* data, NSError *error) {
+        NSError* metadataError = error;
+        if (error == nil && ![[data deviceId] isEqualToString:deviceId]) {
+            metadataError = [NSError errorWithDomain:SENAPIDeviceErrorDomain
+                                                code:SENAPIDeviceErrorUnexpectedResponse
+                                            userInfo:nil];
+            completion (nil, metadataError);
+        } else {
+            completion ([data pairedAccounts], metadataError);
+        }
+        
+    }];
 }
 
 #pragma mark - Unregistering Devices

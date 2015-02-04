@@ -58,10 +58,41 @@ typedef NS_ENUM(NSUInteger, SENDeviceState) {
  * @param version:  @see @property version
  * @param lastSeen: @see @property lastSeen
  */
-- (id)initWithDeviceId:(NSString*)deviceId
-                  type:(SENDeviceType)type
-                 state:(SENDeviceState)state
-       firmwareVersion:(NSString*)version
-              lastSeen:(NSDate*)lastSeen;
+- (instancetype)initWithDeviceId:(NSString*)deviceId
+                            type:(SENDeviceType)type
+                           state:(SENDeviceState)state
+                 firmwareVersion:(NSString*)version
+                        lastSeen:(NSDate*)lastSeen;
+
+@end
+
+/**
+ * Metadata for a device from the server.  This is data that is typically not
+ * needed in most cases and thus not part of the regular SENDevice object
+ */
+@interface SENDeviceMetadata : NSObject
+
+/**
+ * @property deviceId
+ * @discussion the device id of device
+ */
+@property (nonatomic, copy, readonly) NSString* deviceId;
+
+/**
+ * @property pairedAccounts
+ * @discussion the number of accounts paired to the device
+ */
+@property (nonatomic, copy, readonly) NSNumber* pairedAccounts;
+
+/**
+ * @method initWithDictionary:withType
+ *
+ * @discussion
+ * Initialize the instance with the dictionary with supported values.
+ *
+ * @param dictionary: dictionary containing the supported values.
+ * @param type: the type of the device, used to determine how to process the dictionary
+ */
+- (instancetype)initWithDictionary:(NSDictionary*)dictionary withType:(SENDeviceType)type;
 
 @end

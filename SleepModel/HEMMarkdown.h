@@ -16,6 +16,8 @@
 + (NSDictionary*)attributesForInsightTitleViewText;
 + (NSDictionary*)attributesForEventMessageText;
 + (NSDictionary*)attributesForTimelineMessageText;
++ (NSDictionary*)attributesForTimelineBreakdownTitle;
++ (NSDictionary*)attributesForTimelineBreakdownValueWithColor:(UIColor*)color;
 + (NSDictionary*)attributesForRoomCheckWithConditionColor:(UIColor*)color;
 + (NSDictionary*)attributesForSensorMessageWithConditionColor:(UIColor*)color;
 + (NSDictionary*)attributesForSensorGraphButtonWithSelectedState:(BOOL)isOn;

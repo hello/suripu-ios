@@ -9,6 +9,14 @@ typedef NS_ENUM(NSInteger, SENSleepResultSegmentDepth) {
     SENSleepResultSegmentDepthDeep = 100,
 };
 
+typedef NS_ENUM(NSUInteger, SENSleepResultStatisticType) {
+    SENSleepResultStatisticTypeTotalDuration,
+    SENSleepResultStatisticTypeSoundDuration,
+    SENSleepResultStatisticTypeTimesAwake,
+    SENSleepResultStatisticTypeTimeToSleep,
+    SENSleepResultStatisticTypeUnknown
+};
+
 @protocol SENSleepResultSerializable <NSObject>
 
 /**
@@ -37,6 +45,7 @@ typedef NS_ENUM(NSInteger, SENSleepResultSegmentDepth) {
 @property (strong) NSString* message;
 @property (strong) NSArray* segments;
 @property (strong) NSArray* sensorInsights;
+@property (strong) NSArray* statistics;
 
 /**
  *  Persist changes
@@ -63,6 +72,15 @@ extern NSString* const SENSleepResultSegmentEventTypeSleep;
 @property (strong) NSString* eventType;
 @property (strong) SENSleepResultSound* sound;
 @property NSInteger sleepDepth;
+@end
+
+@interface SENSleepResultStatistic : NSObject <NSCoding>
+
+- (instancetype)initWithName:(NSString*)name value:(NSNumber*)value;
+
+@property (strong) NSString* name;
+@property SENSleepResultStatisticType type;
+@property NSNumber* value;
 @end
 
 @interface SENSleepResultSensorInsight : NSObject <NSCoding, SENSleepResultSerializable>

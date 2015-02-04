@@ -32,6 +32,18 @@
     };
 }
 
++ (NSDictionary *)attributesForTimelineBreakdownTitle
+{
+    return @{ @(PARA) : @{ NSFontAttributeName : [UIFont backViewTitleFont],
+                           NSKernAttributeName: @1 }};
+}
+
++ (NSDictionary *)attributesForTimelineBreakdownValueWithColor:(UIColor*)color
+{
+    return @{ @(PARA) : @{ NSFontAttributeName : [UIFont timelineBreakdownValueFont],
+                           NSForegroundColorAttributeName : color }};
+}
+
 + (NSDictionary*)attributesForBackViewTitle
 {
     return @{

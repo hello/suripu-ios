@@ -1166,9 +1166,9 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sleepPill.png" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-sp-rMW">
-                                <rect key="frame" x="0.0" y="194" width="600" height="207"/>
+                                <rect key="frame" x="0.0" y="194" width="600" height="130"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="207" id="fol-lJ-5R8"/>
+                                    <constraint firstAttribute="height" constant="130" id="fol-lJ-5R8"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfJ-2L-zpu" customClass="HEMActionButton">
@@ -2720,7 +2720,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="sensePlacement.png" width="320" height="235"/>
         <image name="settingsAppIcon.png" width="32" height="32"/>
         <image name="shakePill.png" width="320" height="224"/>
-        <image name="sleepPill.png" width="236" height="207"/>
+        <image name="sleepPill.png" width="320" height="130"/>
         <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>

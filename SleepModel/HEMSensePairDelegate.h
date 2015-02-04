@@ -9,6 +9,9 @@
 @protocol HEMSensePairingDelegate <NSObject>
 
 - (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController*)controller;
-- (void)didSetupWiFiForPairedSense:(BOOL)setup from:(UIViewController*)controller;
+- (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController*)controller;
+
+@optional
+- (void)willSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController*)controller;
 
 @end

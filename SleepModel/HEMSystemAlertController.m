@@ -165,15 +165,20 @@
 
 #pragma mark HEMSensePairDelegate
 
-- (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController*)controller {
+- (void)cacheSenseManager:(SENSenseManager*)senseManager {
     if (senseManager != nil) {
         SENServiceDevice* service = [SENServiceDevice sharedService];
         [service replaceWithNewlyPairedSenseManager:senseManager completion:nil];
     }
+}
+
+- (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController*)controller {
+    [self cacheSenseManager:senseManager];
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
-- (void)didSetupWiFiForPairedSense:(BOOL)setup from:(UIViewController*)controller {
+- (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController*)controller {
+    [self cacheSenseManager:senseManager];
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
 

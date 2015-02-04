@@ -3,6 +3,7 @@
 "confidentiality-warning.format" = "Confidential - Hello Inc. (%@)";
 
 "empty-data" = "--";
+"question-mark" = "?";
 
 // welcome
 "welcome.title.meet-sense" = "Meet Sense";

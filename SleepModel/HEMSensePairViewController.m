@@ -72,7 +72,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)configureButtons {
-    [self showHelpButton];
+    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropSensePairing];
     [[self notGlowingButton] setTitleColor:[HelloStyleKit senseBlueColor]
                                   forState:UIControlStateNormal];
     [[[self notGlowingButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
@@ -85,12 +85,6 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)adjustConstraintsForIPhone4 {
     [self updateConstraint:[self imageHeightConstraint] withDiff:-66];
     [self updateConstraint:[self descriptionTopConstraint] withDiff:10];
-}
-
-- (void)cacheManager {
-    if ([self delegate] == nil) {
-        [[HEMOnboardingCache sharedCache] setSenseManager:[self senseManager]];
-    }
 }
 
 - (void)disconnectSense {
@@ -290,8 +284,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         [[strongSelf senseManager] pair:^(id response) {
             DDLogVerbose(@"paired!");
             if (strongSelf && ![strongSelf isTimedOut]) {
+                [[HEMOnboardingCache sharedCache] setSenseManager:[strongSelf senseManager]];
                 [strongSelf setPairing:NO];
-                [strongSelf cacheManager];
                 [strongSelf setCurrentState:HEMSensePairStateSensePaired];
                 [strongSelf executeNextStep];
             }
@@ -475,7 +469,14 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         }
         [self performSegueWithIdentifier:segueId sender:self];
     } else {
-        [[self delegate] didPairSenseUsing:[self senseManager] from:self];
+        if ([self detectedSSID] != nil) {
+            [HEMOnboardingCache clearCache];
+            [[self delegate] didPairSenseUsing:[self senseManager] from:self];
+        } else {
+            [self performSegueWithIdentifier:[HEMOnboardingStoryboard wifiSegueIdentifier]
+                                      sender:self];
+        }
+        
     }
 }
 

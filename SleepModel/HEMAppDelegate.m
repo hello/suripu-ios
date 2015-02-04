@@ -97,7 +97,9 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)syncData {
     if ([SENAuthorizationService isAuthorized]) {
-        [[SENServiceAccount sharedService] refreshAccount:nil];
+        [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
+            [HEMAnalytics trackUserSession]; // update user session data
+        }];
         [[SENServiceHealthKit sharedService] setEnableWrite:[HEMSettingsUtil isHealthKitEnabled]];
     }
 }
@@ -186,12 +188,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [self resume:YES];
 }
 
-- (void)showOnboardingAtSenseSetup
-{
-    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
-    [self resume:YES];
-}
-
 - (void)configureAppearance
 {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
@@ -224,11 +220,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [center addObserver:self
                selector:@selector(resetAndShowOnboarding)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
-                 object:nil];
-    
-    [center addObserver:self
-               selector:@selector(showOnboardingAtSenseSetup)
-                   name:SENServiceDeviceNotificationFactorySettingsRestored
                  object:nil];
 }
 

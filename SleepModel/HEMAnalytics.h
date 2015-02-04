@@ -31,6 +31,17 @@ extern NSString* const kHEManaltyicsEventStatusDisabled;
 
 // onboarding
 extern NSString* const kHEMAnalyticsEventOnBNoSense;
+extern NSString* const kHEMAnalyticsEventOnBHelp;
+extern NSString* const kHEMAnalyticsEventPropStep;
+extern NSString* const kHEMAnalyticsEventPropBluetooth;
+extern NSString* const kHEMAnalyticsEventPropAudio;
+extern NSString* const kHEMAnalyticsEventPropSensePairingMode;
+extern NSString* const kHEMAnalyticsEventPropSensePairing;
+extern NSString* const kHEMAnalyticsEventPropSenseSetup;
+extern NSString* const kHEMAnalyticsEventPropWiFiScan;
+extern NSString* const kHEMAnalyticsEventPropWiFiPass;
+extern NSString* const kHEMAnalyticsEventPropPillPairing;
+extern NSString* const kHEMAnalyticsEventPropPillPlacement;
 extern NSString* const kHEMAnalyticsEventOnBStart;
 extern NSString* const kHEMAnalyticsEventOnBBirthday;
 extern NSString* const kHEMAnalyticsEventOnBGender;

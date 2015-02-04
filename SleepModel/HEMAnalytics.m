@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAccount.h>
+#import <SenseKit/SENServiceAccount.h>
 
 #import "HEMAnalytics.h"
 
@@ -36,6 +37,17 @@ NSString* const kHEManaltyicsEventStatusDenied = @"denied";
 
 // onboarding
 NSString* const kHEMAnalyticsEventOnBNoSense = @"I don't have a Sense";
+NSString* const kHEMAnalyticsEventOnBHelp = @"Onboarding Help";
+NSString* const kHEMAnalyticsEventPropStep = @"onboarding_step";
+NSString* const kHEMAnalyticsEventPropBluetooth = @"bluetooth";
+NSString* const kHEMAnalyticsEventPropAudio = @"enhanced_audio";
+NSString* const kHEMAnalyticsEventPropSensePairingMode = @"sense_pairing_mode";
+NSString* const kHEMAnalyticsEventPropSensePairing = @"sense_pairing";
+NSString* const kHEMAnalyticsEventPropSenseSetup = @"setup_sense";
+NSString* const kHEMAnalyticsEventPropWiFiScan = @"wifi_scan";
+NSString* const kHEMAnalyticsEventPropWiFiPass = @"sign_into_wifi";
+NSString* const kHEMAnalyticsEventPropPillPairing = @"pill_pairing";
+NSString* const kHEMAnalyticsEventPropPillPlacement = @"pill_placement";
 NSString* const kHEMAnalyticsEventOnBStart = @"Onboarding Start";
 NSString* const kHEMAnalyticsEventOnBBirthday = @"Onboarding Birthday";
 NSString* const kHEMAnalyticsEventOnBGender = @"Onboarding Gender";
@@ -117,13 +129,30 @@ NSString* const kHEMAnalyticsEventDevicePairingMode = @"enable pairing mode";
 }
 
 + (void)trackUserSession {
-    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
+    SENAccount* account = [[SENServiceAccount sharedService] account];
+    NSMutableDictionary* uProperties = [NSMutableDictionary dictionary]; // updates profile properties
+    NSMutableDictionary* gProperties = [NSMutableDictionary dictionary]; // props sent for every event
+    NSString* accountId = nil;
+    
+    if (account != nil) {
+        NSString* name = [account name] ?: @"";
+        accountId = [account accountId] ?: @"";
+        uProperties[kHEMAnalyticsEventMpPropName] = name;
+        uProperties[kHEMAnalyticsEventPropAccount] = accountId;
+        
+        gProperties[kHEMAnalyticsEventPropName] = name;
+    } else {
+        accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
+    }
+    
+    uProperties[kHEMAnalyticsEventPropPlatform] = kHEMAnalyticsEventPlatform;
+    gProperties[kHEMAnalyticsEventPropPlatform] = kHEMAnalyticsEventPlatform;
     // need to additionally set the account id as a separate property so that it
     // is shown in as a user property when viewing People in Mixpanel.  If not using
     // mixpanel, we can probably just remove it
-    [SENAnalytics setUserId:accountId
-                 properties:@{kHEMAnalyticsEventPropPlatform : kHEMAnalyticsEventPlatform,
-                              kHEMAnalyticsEventPropAccount : accountId ?: @""}];
+    [SENAnalytics setUserId:accountId properties:uProperties];
+    [SENAnalytics setGlobalEventProperties:gProperties];
+    
 }
 
 + (void)updateGender:(SENAccountGender)gender {

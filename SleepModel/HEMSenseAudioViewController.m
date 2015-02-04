@@ -32,7 +32,7 @@
 
 - (void)configureButtons {
     [self enableBackButton:NO];
-    [self showHelpButton];
+    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropAudio];
     [[self skipButton] setTitleColor:[HelloStyleKit senseBlueColor]
                             forState:UIControlStateNormal];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];

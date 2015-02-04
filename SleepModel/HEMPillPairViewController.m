@@ -71,7 +71,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     
     [self showRetryButtonAsRetrying:YES];
     
-    [self showHelpButton];
+    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropPillPairing];
     
     if ([self delegate] != nil) {
         [self showCancelButtonWithSelector:@selector(cancel:)];

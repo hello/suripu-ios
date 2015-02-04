@@ -66,7 +66,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 }
 
 - (void)configureButtons {
-    [self showHelpButton];
+    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropWiFiScan];
     [[[self scanButton] layer] setBorderWidth:0.0f];
     
     if ([self haveDelegates]) {
@@ -256,7 +256,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (IBAction)cancel:(id)sender {
     [[self delegate] didCancelWiFiConfigurationFrom:self];
-    [[self sensePairDelegate] didSetupWiFiForPairedSense:NO from:self];
+    [[self sensePairDelegate] didSetupWiFiForPairedSense:nil from:self];
 }
 
 #pragma mark - Navigation

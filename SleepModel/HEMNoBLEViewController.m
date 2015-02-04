@@ -40,7 +40,7 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self enableBackButton:NO];
-    [self showHelpButton];
+    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropBluetooth];
     [self configureSteps];
     [SENAnalytics track:kHEMAnalyticsEventOnBNoBle];
 }
@@ -78,21 +78,6 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
     } else {
         [self next];
     }
-}
-
-#pragma mark - Actions
-
-- (IBAction)help:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventHelp];
-    
-#if TARGET_IPHONE_SIMULATOR
-    // If using the simulator, the help button will just simply let you proceed
-    // because it doesn't have BLE anyways.
-    [self next];
-#else
-    [HEMSupportUtil openHelpFrom:self];
-#endif
-    
 }
 
 - (void)next {

@@ -19,7 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self showHelpButton];
+    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropSensePairingMode];
     [SENAnalytics track:kHEMAnalyticsEventOnBPairingMode];
 }
 

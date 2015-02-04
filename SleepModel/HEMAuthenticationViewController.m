@@ -135,7 +135,7 @@
 - (void)letUserIntoApp {
     [HEMAnalytics trackUserSession]; // update user session, since it maybe a different user now
     [SENAnalytics track:kHEMAnalyticsEventSignIn];
-    [HEMNotificationHandler registerForRemoteNotifications];
+    [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
     [[self view] endEditing:NO];
     [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
 }

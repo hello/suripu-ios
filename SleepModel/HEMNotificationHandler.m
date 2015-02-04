@@ -1,4 +1,7 @@
 
+#import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENServiceAccount.h>
+#import <SenseKit/SENPreference.h>
 #import "HEMNotificationHandler.h"
 #import "HEMAppDelegate.h"
 #import "HEMRootViewController.h"
@@ -24,6 +27,22 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
     } else {
         [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
     }
+}
+
++ (void)registerForRemoteNotificationsIfEnabled
+{
+    if (![SENAuthorizationService isAuthorized])
+        return;
+    [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
+        if (error)
+            return;
+        NSDictionary* preferences = [[SENServiceAccount sharedService] preferences];
+        SENPreference* pushConditions = preferences[@(SENPreferenceTypePushConditions)];
+        SENPreference* pushScore = preferences[@(SENPreferenceTypePushScore)];
+        if ([pushConditions isEnabled] || [pushScore isEnabled]) {
+            [self registerForRemoteNotifications];
+        }
+    }];
 }
 
 + (void)registerInteractiveNotificationTypes

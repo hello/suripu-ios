@@ -166,6 +166,7 @@ static HEMFullscreenDialogView* fullscreenDialogView = nil;
             self.imageView.alpha = 1;
             self.titleLabel.alpha = 1;
             self.textView.alpha = 1;
+            [self.scrollView flashScrollIndicators];
         }];
     }];
 }

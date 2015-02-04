@@ -43,7 +43,7 @@
 "onboarding.room-check.intro.humidity" = "Proper humidity levels are important for a good night's sleep.";
 "onboarding.room-check.intro.air" = "A low Air Quality Index value represents good air quality.";
 "onboarding.room-check.intro.sound" = "Loud noises will make deep sleep difficult.";
-"onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulties falling asleep.";
+"onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulty falling asleep.";
 
 // help links
 "help.url.order-form" = "https://order.hello.is/";

@@ -42,5 +42,5 @@ Pod::Spec.new do |s|
     ss.dependency 'CocoaLumberjack'
   end
 
-  # s.public_header_files = 'Pod/Classes/**/*.h'
+  s.source_files = 'Pod/Classes/SenseKit.h'
 end

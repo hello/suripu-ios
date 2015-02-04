@@ -32,6 +32,7 @@ static NSInteger const HEMHeightDefaultInch = 8;
 
 @property (assign, nonatomic) float selectedHeightInCm;
 @property (strong, nonatomic) HEMRulerView* ruler;
+@property (assign, nonatomic, getter=isOffsetInitialized) BOOL offsetInitialized;
 
 @end
 
@@ -98,6 +99,13 @@ static NSInteger const HEMHeightDefaultInch = 8;
     contentSize.width = scrollWidth;
     contentSize.height = CGRectGetHeight(rulerFrame) + (CGRectGetMinY(rulerFrame)*2);
     [[self scrollView] setContentSize:contentSize];
+    
+    if (![self isOffsetInitialized]) {
+        CGPoint offset = [[self scrollView] contentOffset];
+        offset.y = contentSize.height - CGRectGetHeight([[self scrollView] bounds]);
+        [[self scrollView] setContentOffset:offset];
+        [self setOffsetInitialized:YES];
+    }
 }
 
 - (void)viewDidAppear:(BOOL)animated {

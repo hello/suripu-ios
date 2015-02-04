@@ -34,9 +34,17 @@
  */
 - (void)clearPreScannedSenses;
 
+/**
+ * Check the number of paired accounts currently attached to the Sense that
+ * has been set from senseManager.  Upon completion, the pairedAccountsToSense
+ * property will be set.
+ */
+- (void)checkNumberOfPairedAccounts;
+
 @property (nonatomic, strong) SENAccount* account;
 @property (nonatomic, strong) SENSenseManager* senseManager;
 @property (nonatomic, assign, readonly) BOOL pollingSensor;
-@property (nonatomic, copy,   readonly)   NSArray* nearbySensesFound;
+@property (nonatomic, copy,   readonly) NSArray* nearbySensesFound;
+@property (nonatomic, copy,   readonly) NSNumber* pairedAccountsToSense;
 
 @end

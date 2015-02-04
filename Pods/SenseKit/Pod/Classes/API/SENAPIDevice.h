@@ -11,7 +11,8 @@
 #import "SENAPIClient.h"
 
 typedef NS_ENUM(NSInteger, SENAPIDeviceError) {
-    SENAPIDeviceErrorInvalidParam = -1
+    SENAPIDeviceErrorInvalidParam = -1,
+    SENAPIDeviceErrorUnexpectedResponse = -2
 };
 
 @class SENDevice;
@@ -41,5 +42,23 @@ typedef NS_ENUM(NSInteger, SENAPIDeviceError) {
  * @param completion: the completion block to invoke when done
  */
 + (void)unregisterSense:(SENDevice*)device completion:(SENAPIDataBlock)completion;
+
+/**
+ * Get metadata for the currently paired Sense for the signed in user
+ *
+ * @param completion: the block to invoke upon completion
+ */
++ (void)getSenseMetaData:(SENAPIDataBlock)completion;
+
+/**
+ * Get the number of paired accounts for the specified senseId.  The response will
+ * contain a NSNumber with an integer value indicating the number of paired accounts
+ * for that Sense.  If an error is encountered at any point, that value is nil
+ *
+ * @param deviceId: the id of Sense
+ * @param completion: the block to invoke upon completion.
+ * @see getSenseMetadata
+ */
++ (void)getNumberOfAccountsForPairedSense:(NSString*)deviceId completion:(SENAPIDataBlock)completion;
 
 @end

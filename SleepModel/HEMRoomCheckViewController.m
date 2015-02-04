@@ -19,7 +19,6 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMMarkdown.h"
 
-static CGFloat const HEMRoomCheckImageYOffset = 50.0f;
 static CGFloat const HEMRoomCheckShowSensorDelay = 1.0f;
 static CGFloat const HEMRoomCheckDataDisplayTime = 2.0f;
 static CGFloat const HEMRoomCheckMinVerticalPadding = 28.0f;

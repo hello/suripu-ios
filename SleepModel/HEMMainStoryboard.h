@@ -55,7 +55,6 @@
 +(id)instantiateAlarmListViewController;
 +(id)instantiateAlarmNavController;
 +(id)instantiateAlarmRepeatTableViewController;
-+(id)instantiateAlarmSoundTableViewController;
 +(id)instantiateAlarmViewController;
 +(id)instantiateCurrentNavController;
 +(id)instantiateInsightFeedViewController;

@@ -368,6 +368,13 @@
 		BF4E88E71A12FB3700831380 /* UIView+HEMSnapshot.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E88E61A12FB3700831380 /* UIView+HEMSnapshot.m */; };
 		BF4E88EA1A1301D700831380 /* HEMInsightViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF4E88E91A1301D700831380 /* HEMInsightViewController.m */; };
 		BF50BD4F19E8D21F00F3B687 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 8A90F9A819630C3800AFD110 /* Localizable.strings */; };
+		BF5703D41A817D2A00B613F0 /* sampleNotification.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5703D11A817D2A00B613F0 /* sampleNotification.png */; };
+		BF5703D51A817D2A00B613F0 /* sampleNotification@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5703D21A817D2A00B613F0 /* sampleNotification@2x.png */; };
+		BF5703D61A817D2A00B613F0 /* sampleNotification@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5703D31A817D2A00B613F0 /* sampleNotification@3x.png */; };
+		BF5703DA1A8185F200B613F0 /* sleepPill.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5703D71A8185F200B613F0 /* sleepPill.png */; };
+		BF5703DB1A8185F200B613F0 /* sleepPill@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5703D81A8185F200B613F0 /* sleepPill@2x.png */; };
+		BF5703DC1A8185F200B613F0 /* sleepPill@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5703D91A8185F200B613F0 /* sleepPill@3x.png */; };
+		BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */; };
 		BF5D53261A266C6B0090DD6A /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5D53231A266C6B0090DD6A /* check.png */; };
 		BF5D53271A266C6B0090DD6A /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5D53241A266C6B0090DD6A /* check@2x.png */; };
 		BF5D53281A266C6B0090DD6A /* check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5D53251A266C6B0090DD6A /* check@3x.png */; };
@@ -1045,6 +1052,14 @@
 		BF4E88E61A12FB3700831380 /* UIView+HEMSnapshot.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HEMSnapshot.m"; sourceTree = "<group>"; };
 		BF4E88E81A1301D700831380 /* HEMInsightViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightViewController.h; sourceTree = "<group>"; };
 		BF4E88E91A1301D700831380 /* HEMInsightViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightViewController.m; sourceTree = "<group>"; };
+		BF5703D11A817D2A00B613F0 /* sampleNotification.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sampleNotification.png; path = images/sampleNotification.png; sourceTree = "<group>"; };
+		BF5703D21A817D2A00B613F0 /* sampleNotification@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sampleNotification@2x.png"; path = "images/sampleNotification@2x.png"; sourceTree = "<group>"; };
+		BF5703D31A817D2A00B613F0 /* sampleNotification@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sampleNotification@3x.png"; path = "images/sampleNotification@3x.png"; sourceTree = "<group>"; };
+		BF5703D71A8185F200B613F0 /* sleepPill.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sleepPill.png; path = images/sleepPill.png; sourceTree = "<group>"; };
+		BF5703D81A8185F200B613F0 /* sleepPill@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sleepPill@2x.png"; path = "images/sleepPill@2x.png"; sourceTree = "<group>"; };
+		BF5703D91A8185F200B613F0 /* sleepPill@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sleepPill@3x.png"; path = "images/sleepPill@3x.png"; sourceTree = "<group>"; };
+		BF5703DD1A81889800B613F0 /* HEMPillDescriptionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillDescriptionViewController.h; sourceTree = "<group>"; };
+		BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillDescriptionViewController.m; sourceTree = "<group>"; };
 		BF5D53231A266C6B0090DD6A /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = check.png; path = images/check.png; sourceTree = "<group>"; };
 		BF5D53241A266C6B0090DD6A /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check@2x.png"; path = "images/check@2x.png"; sourceTree = "<group>"; };
 		BF5D53251A266C6B0090DD6A /* check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check@3x.png"; path = "images/check@3x.png"; sourceTree = "<group>"; };
@@ -1565,6 +1580,12 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BF5703D71A8185F200B613F0 /* sleepPill.png */,
+				BF5703D81A8185F200B613F0 /* sleepPill@2x.png */,
+				BF5703D91A8185F200B613F0 /* sleepPill@3x.png */,
+				BF5703D11A817D2A00B613F0 /* sampleNotification.png */,
+				BF5703D21A817D2A00B613F0 /* sampleNotification@2x.png */,
+				BF5703D31A817D2A00B613F0 /* sampleNotification@3x.png */,
 				BF8E1A991A689D34009E421F /* enableAudio.png */,
 				BF8E1A9A1A689D34009E421F /* enableAudio@2x.png */,
 				BF8E1A9B1A689D34009E421F /* enableAudio@3x.png */,
@@ -2384,6 +2405,8 @@
 				BFB1F3D81A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m */,
 				BF14E3CD19EF3C3D0006EFEA /* HEMPillSetupViewController.h */,
 				BF14E3CE19EF3C3D0006EFEA /* HEMPillSetupViewController.m */,
+				BF5703DD1A81889800B613F0 /* HEMPillDescriptionViewController.h */,
+				BF5703DE1A81889800B613F0 /* HEMPillDescriptionViewController.m */,
 			);
 			name = Pill;
 			sourceTree = "<group>";
@@ -2796,6 +2819,7 @@
 			files = (
 				8A8288AE1A76CF1E0043B1D1 /* presleepInsightSound.png in Resources */,
 				8A8288CE1A7800820043B1D1 /* presleepInsightUnknown@3x.png in Resources */,
+				BF5703DA1A8185F200B613F0 /* sleepPill.png in Resources */,
 				BFBA2B821A64A3F400C3AB80 /* pairOfPills@3x.png in Resources */,
 				8A7D80441A41094300B0BFD7 /* trendsBarIcon.png in Resources */,
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
@@ -2831,6 +2855,7 @@
 				8AF4FA6D1A12F46F00451245 /* stopSound@2x.png in Resources */,
 				BFE873041A2FC65600494231 /* sensorSoundBlue@2x.png in Resources */,
 				BF14E3BE19EF3BD10006EFEA /* onboarding_bg_wide@2x.png in Resources */,
+				BF5703D61A817D2A00B613F0 /* sampleNotification@3x.png in Resources */,
 				8A45798E1A805603009A7863 /* welcome_dialog_temperature.png in Resources */,
 				8A45798C1A805603009A7863 /* welcome_dialog_sound@2x.png in Resources */,
 				8A8288AF1A76CF1E0043B1D1 /* presleepInsightSound@2x.png in Resources */,
@@ -2867,6 +2892,7 @@
 				BF05C8EC1A3A6AD6002A1307 /* questions_circle@2x.png in Resources */,
 				BFF3B4581A5F008A00B11643 /* warning@2x.png in Resources */,
 				8A8288D31A7800820043B1D1 /* sensorsBarIconActive@2x.png in Resources */,
+				BF5703DB1A8185F200B613F0 /* sleepPill@2x.png in Resources */,
 				8A8288AD1A76CF1E0043B1D1 /* presleepInsightParticulates@3x.png in Resources */,
 				8A4B3D50199308BB00856BDE /* wifiLogoImage.png in Resources */,
 				8A45798B1A805603009A7863 /* welcome_dialog_sound.png in Resources */,
@@ -2886,6 +2912,7 @@
 				BFBA2B741A647E7C00C3AB80 /* settingsAppIcon.png in Resources */,
 				8AA158031A5EFD6B00BF1D4A /* sunriseEventIcon@2x.png in Resources */,
 				BF0F63661A250A050084E6B4 /* smartAlarm@3x.png in Resources */,
+				BF5703DC1A8185F200B613F0 /* sleepPill@3x.png in Resources */,
 				8A8288871A76BD8D0043B1D1 /* before_sleep@2x.png in Resources */,
 				8A8288A91A76CF1E0043B1D1 /* presleepInsightLight@2x.png in Resources */,
 				BF770F251A155455008611E9 /* sensePlacement@2x.png in Resources */,
@@ -2932,6 +2959,7 @@
 				8AC4A0391989C36200C2BD63 /* particleIcon.png in Resources */,
 				8A8288A71A76CF1E0043B1D1 /* presleepInsightHumidity@3x.png in Resources */,
 				8A93AFC21A09BED100F70A8B /* Share.png in Resources */,
+				BF5703D41A817D2A00B613F0 /* sampleNotification.png in Resources */,
 				BFBA2B811A64A3F400C3AB80 /* pairOfPills@2x.png in Resources */,
 				8AC800991A7B029300895ED3 /* miniStopButton.png in Resources */,
 				BF14E3BA19EF3BD10006EFEA /* map.png in Resources */,
@@ -3064,6 +3092,7 @@
 				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,
 				8A7214401A1E7797008B59C4 /* backIcon@2x.png in Resources */,
 				BF8E1A871A687E1D009E421F /* senseColors@2x.png in Resources */,
+				BF5703D51A817D2A00B613F0 /* sampleNotification@2x.png in Resources */,
 				8AA158001A5EFD6B00BF1D4A /* sleepEventIcon@2x.png in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				BFBA2B801A64A3F400C3AB80 /* pairOfPills.png in Resources */,
@@ -3312,6 +3341,7 @@
 				8A90F9B319635CAE00AFD110 /* HEMCurrentConditionsViewController.m in Sources */,
 				8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */,
 				BF14E3D819EF3C3D0006EFEA /* HEMNoBLEViewController.m in Sources */,
+				BF5703DF1A81889800B613F0 /* HEMPillDescriptionViewController.m in Sources */,
 				8AC49F87197F365C00C2BD63 /* HEMSleepScoreGraphView.m in Sources */,
 				BF98E4431A422D0B00E3CDEB /* NSDate+HEMRelative.m in Sources */,
 				8A7D800B1A3F7E4A00B0BFD7 /* HEMSensorGraphCollectionViewCell.m in Sources */,

@@ -158,7 +158,7 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     SENPreference* celciusPreference = [[self preferences] objectForKey:@(SENPreferenceTypeTempCelcius)];
     if (celciusPreference != nil) {
         SENTemperatureFormat format
-            = [celciusPreference enabled]
+            = [celciusPreference isEnabled]
             ? SENTemperatureFormatCentigrade
             : SENTemperatureFormatFahrenheit;
         [SENSettings setTemperatureFormat:format];
@@ -167,7 +167,7 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     SENPreference* militaryHourPreference = [[self preferences] objectForKey:@(SENPreferenceTypeTime24)];
     if (militaryHourPreference != nil) {
         SENTimeFormat format
-            = [militaryHourPreference enabled]
+            = [militaryHourPreference isEnabled]
             ? SENTimeFormat24Hour
             : SENTimeFormat12Hour;
         [SENSettings setTimeFormat:format];

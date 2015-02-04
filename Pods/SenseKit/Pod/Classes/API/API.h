@@ -6,6 +6,7 @@
 #import "SENAPIFeedback.h"
 #import "SENAPIInsight.h"
 #import "SENAPINotification.h"
+#import "SENAPIPreferences.h"
 #import "SENAPIQuestions.h"
 #import "SENAPIRoom.h"
 #import "SENAPITimeline.h"

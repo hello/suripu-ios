@@ -464,7 +464,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:YES from:self];
         } else {
             [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
-            [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard senseToPillSegueIdentifier]
+            [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard wifiToPillSegueIdentifier]
                                             sender:nil];
         }
     };

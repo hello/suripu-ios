@@ -8,11 +8,11 @@
 
 #import "SENPreference.h"
 
-static NSString* const SENPreferenceName = @"pref";
-static NSString* const SENPreferenceNameEnhancedAudio = @"ENHANCED_AUDIO";
-static NSString* const SENPreferenceNameTemp = @"TEMP_CELCIUS";
-static NSString* const SENPreferenceNameTime = @"TIME_TWENTY_FOUR_HOUR";
-static NSString* const SENPreferenceEnable = @"enabled";
+NSString* const SENPreferenceNameEnhancedAudio = @"ENHANCED_AUDIO";
+NSString* const SENPreferenceNameTemp = @"TEMP_CELCIUS";
+NSString* const SENPreferenceNameTime = @"TIME_TWENTY_FOUR_HOUR";
+NSString* const SENPreferenceNamePushScore = @"PUSH_SCORE";
+NSString* const SENPreferenceNamePushConditions = @"PUSH_ALERT_CONDITIONS";
 
 @interface SENPreference()
 
@@ -21,6 +21,9 @@ static NSString* const SENPreferenceEnable = @"enabled";
 @end
 
 @implementation SENPreference
+
+static NSString* const SENPreferenceName = @"pref";
+static NSString* const SENPreferenceEnable = @"enabled";
 
 + (SENPreferenceType)typeFromName:(id)nameObject {
     SENPreferenceType type = SENPreferenceTypeUnknown;
@@ -34,6 +37,10 @@ static NSString* const SENPreferenceEnable = @"enabled";
         type = SENPreferenceTypeTempCelcius;
     } else if ([uppercaseName isEqualToString:SENPreferenceNameTime]) {
         type = SENPreferenceTypeTime24;
+    } else if ([uppercaseName isEqualToString:SENPreferenceNamePushConditions]) {
+        type = SENPreferenceTypePushConditions;
+    } else if ([uppercaseName isEqualToString:SENPreferenceNamePushScore]) {
+        type = SENPreferenceTypePushScore;
     }
     return type;
 }
@@ -50,6 +57,10 @@ static NSString* const SENPreferenceEnable = @"enabled";
         case SENPreferenceTypeTime24:
             name = SENPreferenceNameTime;
             break;
+        case SENPreferenceTypePushScore:
+            name = SENPreferenceNamePushScore;
+        case SENPreferenceTypePushConditions:
+            name = SENPreferenceNamePushConditions;
         default:
             break;
     }
@@ -84,7 +95,7 @@ static NSString* const SENPreferenceEnable = @"enabled";
 
 - (NSDictionary*)dictionaryValue {
     return @{SENPreferenceName : [[self class] nameFromType:[self type]],
-             SENPreferenceEnable : @([self enabled])};
+             SENPreferenceEnable : @([self isEnabled])};
 }
 
 @end

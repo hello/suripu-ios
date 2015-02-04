@@ -109,7 +109,7 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
             break;
         }
         case HEMOnboardingCheckpointSenseDone: {
-            onboardingController = [HEMOnboardingStoryboard instantiatePillPairViewController];
+            onboardingController = [HEMOnboardingStoryboard instantiatePillDescriptionViewController];
             break;
         }
         case HEMOnboardingCheckpointPillDone:

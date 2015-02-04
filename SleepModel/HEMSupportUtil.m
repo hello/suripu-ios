@@ -72,6 +72,9 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
     UINavigationBar* navBar = [webViewController navigationBar];
     [navBar setBarTintColor:[HelloStyleKit backViewTintColor]];
     [navBar setTranslucent:NO];
+    // show default shadow / divider
+    [navBar setClipsToBounds:NO];
+    [navBar setShadowImage:nil];
     
     UIToolbar* toolBar = [webViewController toolbar];
     [toolBar setTintColor:[HelloStyleKit senseBlueColor]];

@@ -166,7 +166,9 @@ static HEMFullscreenDialogView* fullscreenDialogView = nil;
             self.imageView.alpha = 1;
             self.titleLabel.alpha = 1;
             self.textView.alpha = 1;
-            [self.scrollView flashScrollIndicators];
+        } completion:^(BOOL finished) {
+            if (self.scrollView.contentSize.height > CGRectGetHeight(self.scrollView.bounds))
+                [self.scrollView flashScrollIndicators];
         }];
     }];
 }

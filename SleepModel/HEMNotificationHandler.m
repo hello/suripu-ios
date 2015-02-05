@@ -25,7 +25,8 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
         [self registerInteractiveNotificationTypes];
         [[UIApplication sharedApplication] registerForRemoteNotifications];
     } else {
-        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound)];
+        UIRemoteNotificationType types = (UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeBadge);
+        [[UIApplication sharedApplication] registerForRemoteNotificationTypes:types];
     }
 }
 
@@ -59,7 +60,8 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
                                                [self yesNoNotificationCategory],
                                                [self frequencyNotificationCategory],
                                             ]];
-    UIUserNotificationSettings* settings = [UIUserNotificationSettings settingsForTypes:(UIUserNotificationTypeAlert | UIUserNotificationTypeSound)categories:categories];
+    UIUserNotificationType types = (UIUserNotificationTypeAlert | UIUserNotificationTypeSound | UIUserNotificationTypeBadge);
+    UIUserNotificationSettings* settings = [UIUserNotificationSettings settingsForTypes:types categories:categories];
     [[UIApplication sharedApplication] registerUserNotificationSettings:settings];
 }
 

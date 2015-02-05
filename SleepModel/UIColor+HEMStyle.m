@@ -20,9 +20,9 @@ static CGFloat const HEMColorMediumThreshold = 60.f;
     if (depth == HEMColorAwakeThreshold)
         return [UIColor whiteColor];
     else if (depth == HEMColorDeepThreshold)
-        return [UIColor colorWithWhite:0.99 alpha:1.f];
-    else if (depth < HEMColorMediumThreshold)
         return [UIColor colorWithWhite:0.94 alpha:1.f];
+    else if (depth < HEMColorMediumThreshold)
+        return [UIColor colorWithWhite:0.99 alpha:1.f];
     else
         return [UIColor colorWithWhite:0.97 alpha:1.f];
 }

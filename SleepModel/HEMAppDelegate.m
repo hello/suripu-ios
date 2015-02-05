@@ -90,6 +90,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)applicationDidBecomeActive:(UIApplication*)application
 {
+    [[HEMNotificationHandler clearNotifications];
     if (![self deauthorizeIfNeeded]) {
         [self resume:NO];
     }

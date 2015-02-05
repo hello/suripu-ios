@@ -29,6 +29,13 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
     }
 }
 
++ (void)clearNotifications
+{
+    UIApplication* app = [UIApplication sharedApplication];
+    app.applicationIconBadgeNumber = 1;
+    app.applicationIconBadgeNumber = 0;
+}
+
 + (void)registerForRemoteNotificationsIfEnabled
 {
     if (![SENAuthorizationService isAuthorized])
@@ -65,7 +72,8 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
     NSString* target = payload[HEMNotificationTarget];
 
     if (![target isKindOfClass:[NSString class]]) {
-        completionHandler(UIBackgroundFetchResultNoData);
+        if (completionHandler)
+            completionHandler(UIBackgroundFetchResultNoData);
         return;
     }
     NSString* detail = payload[HEMNotificationDetail];
@@ -94,7 +102,8 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
     } else if ([target isEqualToString:HEMNotificationTargetSettings]) {
         [controller showSettingsDrawerTabAtIndex:HEMRootDrawerTabSettings animated:NO];
     }
-    completionHandler(UIBackgroundFetchResultNewData);
+    if (completionHandler)
+        completionHandler(UIBackgroundFetchResultNewData);
 }
 
 + (UIUserNotificationCategory*)qualityNotificationCategory

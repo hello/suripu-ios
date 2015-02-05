@@ -4,10 +4,6 @@
 #import "SENSettings.h"
 #import "SENKeyedArchiver.h"
 
-@interface SENAlarm ()
-@property (nonatomic, strong) NSString* identifier;
-@end
-
 @implementation SENAlarm
 
 static NSString* const SENAlarmSoundKey = @"sound";
@@ -19,7 +15,7 @@ static NSString* const SENAlarmEditableKey = @"editable";
 static NSString* const SENAlarmHourKey = @"hour";
 static NSString* const SENAlarmMinuteKey = @"minute";
 static NSString* const SENAlarmRepeatKey = @"day_of_week";
-static NSString* const SENAlarmIdentifierKey = @"identifier";
+static NSString* const SENAlarmIdentifierKey = @"id";
 
 static NSString* const SENAlarmDefaultSoundName = @"None";
 static NSUInteger const SENAlarmDefaultHour = 7;
@@ -96,7 +92,8 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     if (self = [super init]) {
         _editable = [dict[SENAlarmEditableKey] boolValue];
         _hour = [dict[SENAlarmHourKey] unsignedIntegerValue];
-        _identifier = dict[SENAlarmIdentifierKey] ?: [[[NSUUID alloc] init] UUIDString];
+        NSString* identifier = dict[SENAlarmIdentifierKey];
+        _identifier = identifier.length > 0 ? identifier : [[[NSUUID alloc] init] UUIDString];
         _minute = [dict[SENAlarmMinuteKey] unsignedIntegerValue];
         _on = [dict[SENAlarmOnKey] boolValue];
         _repeatFlags = [self repeatFlagsFromDays:dict[SENAlarmRepeatKey]];
@@ -151,9 +148,10 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
     if (self = [super init]) {
+        NSString* identifier = [aDecoder decodeObjectForKey:SENAlarmIdentifierKey];
         _editable = [[aDecoder decodeObjectForKey:SENAlarmEditableKey] boolValue];
         _hour = [[aDecoder decodeObjectForKey:SENAlarmHourKey] unsignedIntegerValue];
-        _identifier = [aDecoder decodeObjectForKey:SENAlarmIdentifierKey] ?: [[[NSUUID alloc] init] UUIDString];
+        _identifier = identifier.length > 0 ? identifier : [[[NSUUID alloc] init] UUIDString];
         _minute = [[aDecoder decodeObjectForKey:SENAlarmMinuteKey] unsignedIntegerValue];
         _on = [[aDecoder decodeObjectForKey:SENAlarmOnKey] boolValue];
         _repeatFlags = [[aDecoder decodeObjectForKey:SENAlarmRepeatKey] unsignedIntegerValue];

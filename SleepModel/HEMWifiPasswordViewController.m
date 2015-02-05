@@ -377,6 +377,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         return;
     }
     
+    [self enableControls:NO];
     NSString* message = NSLocalizedString(@"pairing.activity.linking-account", nil);
     [self updateActivityText:message completion:nil];
     
@@ -405,6 +406,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (void)setupTimezone {
+    [self enableControls:NO];
     NSString* message = NSLocalizedString(@"wifi.activity.setting-timezone", nil);
     [self updateActivityText:message completion:nil];
     
@@ -464,18 +466,13 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         }
     };
     
+    SENSenseLEDState led = ![self haveDelegates] ? SENSenseLEDStatePair : SENSenseLEDStateOff;
     NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
-    if (![self haveDelegates]) {
-        // simultaneously show connected message and flash led
-        [self stopActivityWithMessage:msg renableControls:NO success:YES completion:nil];
-        [[self manager] setLED:SENSenseLEDStatePair completion:^(id response, NSError *error) {
-            proceed();
-        }];
-    } else {
-        [self stopActivityWithMessage:msg success:YES completion:^{
-            proceed();
-        }];
-    }
+    // simultaneously show connected message and flash led
+    [self stopActivityWithMessage:msg renableControls:NO success:YES completion:nil];
+    [[self manager] setLED:led completion:^(id response, NSError *error) {
+        proceed();
+    }];
 }
 
 - (void)executeNextStep {

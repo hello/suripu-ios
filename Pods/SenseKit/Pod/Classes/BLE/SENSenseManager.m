@@ -31,6 +31,7 @@ static CGFloat const kSENSenseSetWifiTimeout = 60.0f; // firmware suggestion
 static CGFloat const kSENSenseScanWifiTimeout = 45.0f; // firmware actually suggests 60, but 45 seems to work consistently
 static CGFloat const kSENSensePillPairTimeout = 30.0f; // firmware timesout at 20, we need this to be longer.
 static CGFloat const kSENSenseUnsubscribeTimeout = 3.0f;
+static CGFloat const kSENSenseLedTimeout = 30.0f;
 
 static NSString* const kSENSenseErrorDomain = @"is.hello.ble";
 static NSString* const kSENSenseServiceID = @"0000FEE1-1212-EFDE-1523-785FEABCD123";
@@ -276,37 +277,102 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         }
         
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf) return;
         
         LGPeripheral* peripheral = [[strongSelf sense] peripheral];
-        CBUUID* serviceId = [CBUUID UUIDWithString:serviceUUID];
-        [peripheral discoverServices:@[serviceId] completion:^(NSArray *services, NSError *error) {
-            if (error != nil || [services count] != 1) {
-                completion (nil, error?error:[NSError errorWithDomain:kSENSenseErrorDomain
-                                                                 code:SENSenseManagerErrorCodeUnexpectedResponse
-                                                             userInfo:nil]);
+        NSDictionary* characteristics = [strongSelf cachedCharacteristicsWithIds:characteristicIds
+                                                                  fromPeripheral:peripheral
+                                                                    forServiceId:serviceUUID];
+        if ([characteristics count] > 0) {
+            completion (characteristics, nil);
+        } else {
+            [strongSelf usePeripheral:peripheral
+                           toDiscover:characteristicIds
+                     forServiceWithId:serviceUUID
+                           completion:completion];
+        }
+        
+    }];
+}
+
+/**
+ * @discussion
+ * If peripheral contains cached service and characteristics, then use it rather
+ * than discovering them through BLE.  If cache does exist and you still try and
+ * discover them, CoreBluetooth will not make a callback.
+ *
+ * @param characteristicIds: a set of characteristicIds that the service broadcasts
+ * @param peripheral:        Sense
+ * @param serviceUUID:       the service UUID to discover
+ *
+ * @return dictionary of characteristics by ids, if any
+ */
+- (NSDictionary*)cachedCharacteristicsWithIds:(NSSet*)characteristicIds
+                               fromPeripheral:(LGPeripheral*)peripheral
+                                 forServiceId:(NSString*)serviceUUID {
+    
+    NSDictionary* matching = nil;
+    for (LGService* service in [peripheral services]) {
+        if ([[[service UUIDString] uppercaseString] isEqualToString:serviceUUID]) {
+            matching = [self extracCharacteristicsWithIds:characteristicIds
+                                                     from:[service characteristics]];
+            DDLogVerbose(@"using cached Sense service and characteristics");
+            break;
+        }
+    }
+    return matching;
+}
+
+/**
+ * @discussion
+ * (Re)discover service by id and it's characteristics for the peripheral (Sense)
+ *
+ * @param peripheral:        Sense
+ * @param characteristicIds: a set of characteristicIds that the service broadcasts
+ * @param serviceUUID:       the service UUID to discover
+ * @param completion:        the block to invoke when done
+ */
+- (void)usePeripheral:(LGPeripheral*)peripheral
+           toDiscover:(NSSet*)characteristicIds
+     forServiceWithId:(NSString*)serviceUUID
+           completion:(SENSenseCompletionBlock)completion {
+    DDLogVerbose(@"discovering Sense service");
+    __weak typeof(self) weakSelf = self;
+    CBUUID* serviceId = [CBUUID UUIDWithString:serviceUUID];
+    [peripheral discoverServices:@[serviceId] completion:^(NSArray *services, NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        if (error != nil || [services count] != 1) {
+            completion (nil, error?error:[NSError errorWithDomain:kSENSenseErrorDomain
+                                                             code:SENSenseManagerErrorCodeUnexpectedResponse
+                                                         userInfo:nil]);
+            return;
+        }
+        
+        DDLogVerbose(@"discovering characteristics for service");
+        LGService* lgService = [services firstObject];
+        [lgService discoverCharacteristicsWithCompletion:^(NSArray *characteristics, NSError *error) {
+            if (error != nil) {
+                completion (nil, error);
                 return;
             }
-            
-            LGService* lgService = [services firstObject];
-            [lgService discoverCharacteristicsWithCompletion:^(NSArray *characteristics, NSError *error) {
-                if (error != nil) {
-                    
-                    completion (nil, error);
-                    return;
-                }
-                NSMutableDictionary* abilities = [NSMutableDictionary dictionaryWithCapacity:2];
-                NSString* uuid = nil;
-                for (LGCharacteristic* characteristic in characteristics) {
-                    uuid = [[characteristic UUIDString] uppercaseString];
-                    if ([characteristicIds containsObject:uuid]) {
-                        [abilities setValue:characteristic forKey:uuid];
-                    }
-                }
-                completion (abilities, nil);
-            }];
+            completion ([strongSelf extracCharacteristicsWithIds:characteristicIds
+                                                            from:characteristics], nil);
         }];
     }];
+}
+
+- (NSDictionary*)extracCharacteristicsWithIds:(NSSet*)characteristicIds
+                                         from:(NSArray*)allCharacteristics {
+    
+    NSMutableDictionary* characteristics = [NSMutableDictionary dictionary];
+    NSString* uuid = nil;
+    for (LGCharacteristic* characteristic in allCharacteristics) {
+        uuid = [[characteristic UUIDString] uppercaseString];
+        if ([characteristicIds containsObject:uuid]) {
+            [characteristics setValue:characteristic forKey:uuid];
+        }
+    }
+    return characteristics;
 }
 
 - (void)characteristics:(SENSenseCompletionBlock)completion {
@@ -413,7 +479,6 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         }
         
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (!strongSelf) return;
 
         LGCharacteristic* writer = [response valueForKey:kSENSenseCharacteristicInputId];
         LGCharacteristic* reader = [response valueForKey:kSENSenseCharacteristicResponseId];
@@ -473,12 +538,11 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                              [strongSelf fireFailureMsgCbWithCbKey:cbKey andError:error];
                                          }];
             }];
-
         } else {
             DDLogWarn(@"# of packets from message is 0");
             [strongSelf failWithBlock:failure andCode:SENSenseManagerErrorCodeInvalidCommand];
         }
-
+        
     }];
 }
 
@@ -628,7 +692,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                 success:success
                                 failure:failure];
             }
-
+            
         }];
     } else {
         if (success) success (nil);
@@ -709,7 +773,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
  * @param error:        any error that may have come from the response
  * @param type:         the type of the message this response is meant for
  * @param allPackets:   the address to the storage holding all data responses
- * @param totalPackets: the address to an object that holds the value of the 
+ * @param totalPackets: the address to an object that holds the value of the
  *                      total packets determined from the first update/packet
  * @param success:      the block to invoke when all updates completed successfully
  * @param failure:      the block to invoke when any update reported an error or
@@ -882,10 +946,10 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     DDLogVerbose(@"%@ pairing mode on Sense", enable?@"enabling":@"disabling");
     
     SENSenseMessageType type
-        = enable
-        ? SENSenseMessageTypeSwitchToPairingMode
-        : SENSenseMessageTypeSwitchToNormalMode;
-
+    = enable
+    ? SENSenseMessageTypeSwitchToPairingMode
+    : SENSenseMessageTypeSwitchToNormalMode;
+    
     [self sendMessage:[[self messageBuilderWithType:type] build]
               timeout:kSENSenseDefaultTimeout
                update:nil
@@ -1016,7 +1080,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                   if (strongSelf) {
                       state = [strongSelf wiFiStateFromMessgage:response];
                   }
-
+                  
                   DDLogVerbose(@"wifi %@ is in state %ld", [response wifiSsid], (long)state);
                   success ([response wifiSsid], state);
                   
@@ -1096,7 +1160,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     
     [self sendMessage:[builder build]
-              timeout:kSENSenseDefaultTimeout
+              timeout:kSENSenseLedTimeout
                update:nil
               success:^(id response) {
                   if (completion) completion (response, nil);
@@ -1147,33 +1211,32 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     
     __weak typeof(self) weakSelf = self;
     self.disconnectNotifyObserver =
-        [center addObserverForName:kLGPeripheralDidDisconnect
-                            object:nil
-                             queue:[NSOperationQueue mainQueue]
-                        usingBlock:^(NSNotification *note) {
-                            __strong typeof(weakSelf) strongSelf = weakSelf;
-                            if (!strongSelf) return;
-                            
-                            DDLogVerbose(@"Sense disconnected unexpectedly");
-                            // if peripheral is disconnected, it is removed from
-                            // scannedPeripherals in LGCentralManager, which causes
-                            // the reference to SENSense's peripheral to not be
-                            // recognized.  This is actually not a logic problem
-                            // from the library, but also the behavior in CoreBluetooth
-                            [strongSelf setValid:NO];
-                            [strongSelf clearAllMessageCallbacks];
-                            
-                            id errorObject = [[note userInfo] valueForKey:@"error"];
-                            if ([errorObject isKindOfClass:[NSError class]]) {
-                                DDLogVerbose(@"error from disconnect: %@", errorObject);
-                            }
-                            for (NSString* observerId in [strongSelf disconnectObservers]) {
-                                SENSenseFailureBlock block = [[strongSelf disconnectObservers] valueForKey:observerId];
-                                block ([NSError errorWithDomain:kSENSenseErrorDomain
-                                                           code:SENSenseManagerErrorCodeUnexpectedDisconnect
-                                                       userInfo:nil]);
-                            }
-                        }];
+    [center addObserverForName:kLGPeripheralDidDisconnect
+                        object:nil
+                         queue:[NSOperationQueue mainQueue]
+                    usingBlock:^(NSNotification *note) {
+                        __strong typeof(weakSelf) strongSelf = weakSelf;
+                        
+                        DDLogVerbose(@"Sense disconnected unexpectedly");
+                        // if peripheral is disconnected, it is removed from
+                        // scannedPeripherals in LGCentralManager, which causes
+                        // the reference to SENSense's peripheral to not be
+                        // recognized.  This is actually not a logic problem
+                        // from the library, but also the behavior in CoreBluetooth
+                        [strongSelf setValid:NO];
+                        [strongSelf clearAllMessageCallbacks];
+                        
+                        id errorObject = [[note userInfo] valueForKey:@"error"];
+                        if ([errorObject isKindOfClass:[NSError class]]) {
+                            DDLogVerbose(@"error from disconnect: %@", errorObject);
+                        }
+                        for (NSString* observerId in [strongSelf disconnectObservers]) {
+                            SENSenseFailureBlock block = [[strongSelf disconnectObservers] valueForKey:observerId];
+                            block ([NSError errorWithDomain:kSENSenseErrorDomain
+                                                       code:SENSenseManagerErrorCodeUnexpectedDisconnect
+                                                   userInfo:nil]);
+                        }
+                    }];
 }
 
 - (NSString*)observeUnexpectedDisconnect:(SENSenseFailureBlock)block {

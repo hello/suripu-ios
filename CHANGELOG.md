@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.1.5
+
+Fixes:
+
+* fix sleep score breakdown animation
+* change order of preferences in account settings
+* clearing old push notifications after opening app
+* fix textfield jumpiness in sign in screen
+* fix alarm duplication issue when saving alarms
+* factory reset now shows a successful state
+* factory reset no longer kicks you out of app
+* turning up volume when playing sounds in alarm sound preview
+
 ## 1.0.1.4
 
 New:

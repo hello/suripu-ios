@@ -190,19 +190,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     __weak typeof(self) weakSelf = self;
     [self scanUntilDoneWithCount:0 completion:^(NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            DDLogVerbose(@"wifi scan completed");
-            [SENAnalytics endEvent:kHEMAnalyticsEventOnBWiFiScan];
-            
-            [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
-                [[strongSelf wifiPickerTableView] reloadData];
-                [[strongSelf wifiPickerTableView] flashScrollIndicators];
-                [[strongSelf cancelItem] setEnabled:YES];
-            }];
-            
-            if (error != nil && [strongSelf isVisible]) {
-                [strongSelf showError:error];
-            }
+        DDLogVerbose(@"wifi scan completed");
+        [SENAnalytics endEvent:kHEMAnalyticsEventOnBWiFiScan];
+        
+        [[strongSelf wifiPickerTableView] reloadData];
+        [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
+            [[strongSelf wifiPickerTableView] flashScrollIndicators];
+            [[strongSelf cancelItem] setEnabled:YES];
+        }];
+        
+        if (error != nil && [strongSelf isVisible]) {
+            [strongSelf showError:error];
         }
     }];
 }

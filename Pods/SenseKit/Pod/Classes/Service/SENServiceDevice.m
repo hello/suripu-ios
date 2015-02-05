@@ -415,7 +415,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
                 error = [strongSelf errorWithType:SENServiceDeviceErrorSenseNotMatching];
             }
         }
-        completion (error);
+        if (completion) completion (error);
     }];
 }
 

@@ -181,14 +181,12 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
     CGFloat width = HEMSleepLineWidth;
     CGFloat height = 0;
     CGFloat x = CGRectGetMidX(rect)  - width;
-    CGFloat y = CGRectGetMinY(rect);
     CGFloat halfButton = ceilf(HEMEventButtonSize/2);
     CGContextSetFillColorWithColor(ctx, self.lineColor.CGColor);
     if ([self isLastSegment] && ![self isFirstSegment]) {
         height = halfButton;
     } else if ([self isFirstSegment] && ![self isLastSegment]) {
         height = CGRectGetHeight(rect) - halfButton;
-        y = halfButton;
     } else {
         height = CGRectGetHeight(rect);
     }

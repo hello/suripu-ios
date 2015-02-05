@@ -72,7 +72,9 @@
     self.graphView.dataSource = self.graphDataSource;
     UIColor* conditionColor = [UIColor colorForSensorWithCondition:sensor.condition];
     self.graphView.colorLine = conditionColor;
-    self.graphView.gradientBottom = [self gradientForColor:conditionColor];
+    CGGradientRef gradient = [self newGradientForColor:conditionColor];
+    self.graphView.gradientBottom = gradient;
+    CGGradientRelease(gradient);
     [self.graphView reloadGraph];
 }
 
@@ -103,7 +105,7 @@
     self.minGraphValue = [[SENSensor value:minValue inPreferredUnit:sensor.unit] floatValue];
 }
 
-- (CGGradientRef)gradientForColor:(UIColor*)color
+- (CGGradientRef)newGradientForColor:(UIColor*)color
 {
     CGFloat red, green, blue, alpha;
     [color getRed:&red green:&green blue:&blue alpha:&alpha];
@@ -114,7 +116,9 @@
         red, green, blue, 0.35,
         red, green, blue, 0.15
     };
-    return CGGradientCreateWithColorComponents(colorspace, components, locations, num_locations);
+    CGGradientRef gradient = CGGradientCreateWithColorComponents(colorspace, components, locations, num_locations);
+    CGColorSpaceRelease(colorspace);
+    return gradient;
 }
 
 #pragma mark - BEMSimpleLineGraphDelegate

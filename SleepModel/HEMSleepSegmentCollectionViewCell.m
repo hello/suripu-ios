@@ -73,6 +73,7 @@ static int const HEMNoSleepBorderDashLengthCount = 2;
     CGColorSpaceRelease(space);
     CGContextDrawLinearGradient(ctx, gradient, CGPointZero, CGPointMake(size.width, 0), 0);
     UIImage *mask = UIGraphicsGetImageFromCurrentImageContext();
+    CGGradientRelease(gradient);
     UIGraphicsEndImageContext();
     return mask;
 }
@@ -108,11 +109,10 @@ static int const HEMNoSleepBorderDashLengthCount = 2;
                                                  YES);
         CGImageRef maskedImage = CGImageCreateWithMask(image.CGImage, imageMask);
         CGImageRelease(imageMask);
-        return [UIImage imageWithCGImage:maskedImage];
-    } else {
-        return image;
+        image = [UIImage imageWithCGImage:maskedImage];
+        CGImageRelease(maskedImage);
     }
-
+    return image;
 }
 
 - (void)setSegmentRatio:(CGFloat)ratio withFillColor:(UIColor *)color lineColor:(UIColor *)lineColor

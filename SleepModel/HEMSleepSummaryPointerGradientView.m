@@ -61,10 +61,11 @@ static CGFloat const HEMSummaryPointerColors[] = { 1.f, 1.f, 0.97f, 1.f };
 - (void)drawGradientInRect:(CGRect)rect
 {
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGPathRef path = [self pathForRect:rect];
+    CGPathRef path = [self newPathForRect:rect];
 
     CGContextSaveGState(ctx);
     CGContextAddPath(ctx, path);
+    CGPathRelease(path);
     CGContextClip(ctx);
 
     CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceGray();
@@ -94,7 +95,7 @@ static CGFloat const HEMSummaryPointerColors[] = { 1.f, 1.f, 0.97f, 1.f };
     CGContextStrokePath(ctx);
 }
 
-- (CGPathRef)pathForRect:(CGRect)rect
+- (CGPathRef)newPathForRect:(CGRect)rect
 {
     CGMutablePathRef path = CGPathCreateMutable();
     CGFloat startXOffset = CGRectGetMinX(rect);

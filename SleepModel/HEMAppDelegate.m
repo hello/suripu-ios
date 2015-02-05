@@ -268,6 +268,9 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     UIViewController* onboardingController = [HEMOnboardingUtils onboardingControllerForCheckpoint:checkpoint authorized:authorized];
     
     if (onboardingController != nil) {
+        HEMRootViewController* root = (id)self.window.rootViewController;
+        [root showStatusBar];
+        
         UINavigationController* onboardingNav
             = [[HEMStyledNavigationViewController alloc] initWithRootViewController:onboardingController];
         [[onboardingNav navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];

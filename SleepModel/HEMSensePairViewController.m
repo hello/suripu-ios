@@ -142,6 +142,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     DDLogVerbose(@"scanning for Sense timed out, oh no!");
     [self setTimedOut:YES];
     [SENSenseManager stopScan];
+    [[self senseManager] disconnectFromSense];
     [self setSenseManager:nil];
     [self stopActivityWithMessage:nil success:NO completion:^{
         NSString* msg = NSLocalizedString(@"pairing.error.timed-out", nil);

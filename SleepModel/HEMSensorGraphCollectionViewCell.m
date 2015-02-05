@@ -72,9 +72,7 @@
     self.graphView.dataSource = self.graphDataSource;
     UIColor* conditionColor = [UIColor colorForSensorWithCondition:sensor.condition];
     self.graphView.colorLine = conditionColor;
-    CGGradientRef gradient = [self newGradientForColor:conditionColor];
-    self.graphView.gradientBottom = gradient;
-    CGGradientRelease(gradient);
+    self.graphView.gradientBottom = [self newGradientForColor:conditionColor];
     [self.graphView reloadGraph];
 }
 

@@ -115,13 +115,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)enableControls:(BOOL)enable {
     if (!enable) {
-        if ([[self ssidField] isFirstResponder]) {
-            [[self ssidField] resignFirstResponder];
-        } else if ([[self passwordField] isFirstResponder]) {
-            [[self passwordField] resignFirstResponder];
-        } else if ([[self securityField] isFirstResponder]) {
-            [[self securityField] resignFirstResponder];
-        }
+        [[self view] endEditing:NO];
     }
     
     [[self ssidField] setEnabled:enable];

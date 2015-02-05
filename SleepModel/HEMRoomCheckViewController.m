@@ -102,6 +102,7 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
 #pragma mark - Content Display
 
 - (void)hideContent:(void(^)(BOOL finished))completion {
+    [self setTitle:nil]; // make sure title is also not shown, if showing in navbar
     [UIView animateWithDuration:HEMRoomCheckAnimationDuration
                      animations:^{
                          [[self contentView] setAlpha:0.0f];

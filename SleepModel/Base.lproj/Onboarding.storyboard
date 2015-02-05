@@ -895,23 +895,22 @@
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0se-fT-N6l" userLabel="descLabel">
-                                <rect key="frame" x="20" y="68" width="560" height="90"/>
-                                <attributedString key="attributedText">
-                                    <fragment>
-                                        <string key="content">Before you connect your phone, Sense needs to be put into Pairing Mode.
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0se-fT-N6l" userLabel="descLabel">
+                                <rect key="frame" x="20" y="68" width="560" height="151"/>
+                                <string key="text">Before you connect your phone, Sense needs to be put into Pairing Mode.
 
 Place your hand directly on top of Sense for seven seconds, and then remove it.
 
 Sense will glow purple when it is in Pairing Mode.</string>
-                                        <attributes>
-                                            <font key="NSFont" metaFont="system" size="18"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
-                                        </attributes>
-                                    </fragment>
-                                </attributedString>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pairingMode.png" translatesAutoresizingMaskIntoConstraints="NO" id="ryD-Go-K8h">
+                                <rect key="frame" x="0.0" y="259" width="600" height="93"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="93" id="tQT-rX-OHU"/>
+                                </constraints>
+                            </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uDw-jj-ZIo" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
@@ -929,23 +928,24 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="uDw-jj-ZIo" firstAttribute="leading" secondItem="7Bn-rz-9ya" secondAttribute="leadingMargin" constant="4" id="07b-pq-pOb"/>
-                            <constraint firstItem="phz-De-JCe" firstAttribute="bottom" secondItem="0se-fT-N6l" secondAttribute="top" constant="-10" id="K61-sm-ZJL"/>
-                            <constraint firstItem="Eh9-8p-NMx" firstAttribute="top" secondItem="uDw-jj-ZIo" secondAttribute="bottom" constant="20" id="Nsz-9G-Gmd"/>
-                            <constraint firstItem="phz-De-JCe" firstAttribute="top" secondItem="0se-fT-N6l" secondAttribute="top" constant="-44" id="O97-H2-8Q0"/>
-                            <constraint firstItem="phz-De-JCe" firstAttribute="leading" secondItem="7Bn-rz-9ya" secondAttribute="leadingMargin" constant="4" id="QYl-a8-lh4"/>
-                            <constraint firstItem="0se-fT-N6l" firstAttribute="leading" secondItem="7Bn-rz-9ya" secondAttribute="leadingMargin" constant="4" id="RY5-gD-FFM"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="0se-fT-N6l" secondAttribute="trailing" constant="4" id="Sqb-vw-2Tc"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="phz-De-JCe" secondAttribute="trailing" constant="4" id="UAC-vQ-1OO"/>
-                            <constraint firstItem="phz-De-JCe" firstAttribute="top" secondItem="KbS-hu-7hz" secondAttribute="bottom" constant="4" id="hOK-Ja-oGr"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="uDw-jj-ZIo" secondAttribute="trailing" constant="4" id="oyn-s3-bfR"/>
+                            <constraint firstItem="uDw-jj-ZIo" firstAttribute="leading" secondItem="7Bn-rz-9ya" secondAttribute="leadingMargin" constant="4" id="0TS-gb-4Sp"/>
+                            <constraint firstItem="phz-De-JCe" firstAttribute="leading" secondItem="7Bn-rz-9ya" secondAttribute="leadingMargin" constant="4" id="CuU-2b-kTn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="phz-De-JCe" secondAttribute="trailing" constant="4" id="ExU-oI-d77"/>
+                            <constraint firstItem="0se-fT-N6l" firstAttribute="leading" secondItem="7Bn-rz-9ya" secondAttribute="leadingMargin" constant="4" id="IAu-nK-DaG"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ryD-Go-K8h" secondAttribute="trailing" constant="-16" id="W5P-Wd-ftr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uDw-jj-ZIo" secondAttribute="trailing" constant="4" id="X1N-Cu-bCr"/>
+                            <constraint firstItem="ryD-Go-K8h" firstAttribute="top" secondItem="0se-fT-N6l" secondAttribute="bottom" constant="40" id="XBZ-4U-ren"/>
+                            <constraint firstItem="0se-fT-N6l" firstAttribute="top" secondItem="phz-De-JCe" secondAttribute="bottom" constant="10" id="bkw-Qq-JXe"/>
+                            <constraint firstItem="ryD-Go-K8h" firstAttribute="leading" secondItem="7Bn-rz-9ya" secondAttribute="leadingMargin" constant="-16" id="g1n-dN-Of6"/>
+                            <constraint firstItem="phz-De-JCe" firstAttribute="top" secondItem="KbS-hu-7hz" secondAttribute="bottom" constant="4" id="nbf-Xn-cgu"/>
+                            <constraint firstItem="Eh9-8p-NMx" firstAttribute="top" secondItem="uDw-jj-ZIo" secondAttribute="bottom" constant="20" id="pc2-rX-L6q"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="0se-fT-N6l" secondAttribute="trailing" constant="4" id="xUa-Nb-cuD"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qdC-m8-2eA"/>
                     <connections>
                         <outlet property="continueButton" destination="uDw-jj-ZIo" id="2Gq-lZ-hh1"/>
                         <outlet property="descriptionLabel" destination="0se-fT-N6l" id="nx1-bH-fRs"/>
-                        <outlet property="descriptionTopConstraint" destination="K61-sm-ZJL" id="gGB-Vl-Hdh"/>
                         <outlet property="titleHeightConstraint" destination="EgG-I3-2LF" id="OEE-xh-EpN"/>
                         <outlet property="titleLabel" destination="phz-De-JCe" id="KZ3-uU-nQ3"/>
                     </connections>
@@ -2266,6 +2266,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                         <outlet property="descriptionLabel" destination="cxR-ry-GIM" id="RqM-km-ZXU"/>
                         <outlet property="descriptionTopConstraint" destination="nPu-Ti-TQt" id="X19-ux-Qmb"/>
                         <outlet property="enableButton" destination="je6-JT-9YZ" id="lwA-lc-eEF"/>
+                        <outlet property="imageTopConstraint" destination="SPQ-7p-RgP" id="ljT-QP-p7E"/>
                         <outlet property="skipButton" destination="9ia-GF-Swk" id="aFd-NJ-3lO"/>
                         <outlet property="titleHeightConstraint" destination="eFQ-oR-ERS" id="cIT-vD-3Si"/>
                         <outlet property="titleLabel" destination="Go7-Z7-kmw" id="rG7-w3-c7Q"/>
@@ -2708,6 +2709,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="map.png" width="320" height="229"/>
         <image name="onboarding_bg_wide.png" width="461" height="588"/>
         <image name="pairOfPills.png" width="180" height="117"/>
+        <image name="pairingMode.png" width="260" height="93"/>
         <image name="play.png" width="67" height="67"/>
         <image name="sampleNotification.png" width="320" height="185"/>
         <image name="sense.png" width="162" height="172"/>
@@ -2720,9 +2722,9 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZOJ-Sh-Dzx"/>
-        <segue reference="JsS-bV-f7k"/>
         <segue reference="gUR-KW-V2G"/>
+        <segue reference="JsS-bV-f7k"/>
+        <segue reference="ZOJ-Sh-Dzx"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

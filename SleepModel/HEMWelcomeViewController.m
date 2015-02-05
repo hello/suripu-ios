@@ -115,11 +115,6 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     [[self subtitleLabel] setAttributedText:attrText];
 }
 
-- (void)adjustConstraintsForIPhone4 {
-    CGFloat diff = -30.0f;
-    [self updateConstraint:[self playCenterYConstraint] withDiff:diff];
-}
-
 #pragma mark - Animations
 
 - (void)showGettingStartedActions:(NSNumber*)showValue {

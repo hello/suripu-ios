@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -762,7 +762,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7xb-GF-Ds3">
-                                                    <rect key="frame" x="192" y="0.0" width="341" height="64"/>
+                                                    <rect key="frame" x="192" y="0.0" width="351" height="64"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -777,7 +777,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="xXU-KB-EDc" firstAttribute="leading" secondItem="VXC-Qa-E5S" secondAttribute="leadingMargin" constant="24" id="99H-HL-OUa"/>
-                                                <constraint firstItem="7xb-GF-Ds3" firstAttribute="trailing" secondItem="wIR-bu-uQj" secondAttribute="leading" constant="-20" id="NaH-Hh-eRL"/>
+                                                <constraint firstItem="7xb-GF-Ds3" firstAttribute="trailing" secondItem="wIR-bu-uQj" secondAttribute="leading" constant="-10" id="NaH-Hh-eRL"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="wIR-bu-uQj" secondAttribute="trailing" constant="24" id="OiR-ov-j47"/>
                                                 <constraint firstItem="wIR-bu-uQj" firstAttribute="top" secondItem="VXC-Qa-E5S" secondAttribute="topMargin" constant="-8" id="UU0-bN-IeJ"/>
                                                 <constraint firstItem="7xb-GF-Ds3" firstAttribute="leading" secondItem="xXU-KB-EDc" secondAttribute="trailing" constant="20" id="Vu5-56-W9R"/>

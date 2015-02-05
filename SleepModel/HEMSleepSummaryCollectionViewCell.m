@@ -48,7 +48,7 @@ static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
 - (void)awakeFromNib
 {
     [self configureSpinner];
-    [self configureButtons];
+    self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
     [self showSleepSummary:nil];
 }
 
@@ -67,21 +67,6 @@ static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
         [self.breakdownSeparatorView.layer addSublayer:self.breakdownSeparatorGradient];
     }
     self.breakdownSeparatorGradient.frame = self.breakdownSeparatorView.bounds;
-}
-
-- (void)configureButtons
-{
-    UIImage* presleepImage = [self.presleepButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    UIImage* summaryImage = [self.sleepSummaryButton.imageView.image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
-    UIEdgeInsets imageEdgeInsets = UIEdgeInsetsMake(0, 0, 0, HEMSleepSummaryButtonEdgeInset);
-    UIEdgeInsets titleEdgeInsets = UIEdgeInsetsMake(0, HEMSleepSummaryButtonEdgeInset, 0, 0);
-    self.presleepButton.imageEdgeInsets = imageEdgeInsets;
-    self.presleepButton.titleEdgeInsets = titleEdgeInsets;
-    [self.presleepButton setImage:presleepImage forState:UIControlStateNormal];
-    self.sleepSummaryButton.imageEdgeInsets = imageEdgeInsets;
-    self.sleepSummaryButton.titleEdgeInsets = titleEdgeInsets;
-    [self.sleepSummaryButton setImage:summaryImage forState:UIControlStateNormal];
-    self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
 }
 
 - (void)configureSpinner

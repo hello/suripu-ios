@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.1.6
+
+New:
+
+* Dim screen in-app at night
+
+Fixes:
+
+* added pairing mode image to onboarding
+* make sure keyboard is dismissed when activity is showing during wifi setup
+* various UI adjustments to accommodate for iphone 4s size
+* Fix missing data not being obvious for Light and Sound sensors
+
 ## 1.0.1.5
 
 Fixes:

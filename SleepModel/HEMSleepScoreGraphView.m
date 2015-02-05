@@ -11,6 +11,15 @@
 
 @implementation HEMSleepScoreGraphView
 
+static CGFloat const HEMSleepScoreFrameRatio = 0.014f;
+static CGFloat const HEMSleepScoreAnimationDuration = 0.3f;
+static CGFloat const HEMSleepScoreAnimationDelay = 0.35f;
+
+- (void)awakeFromNib
+{
+    self.layer.contentsScale = 1.f;
+}
+
 - (void)drawRect:(CGRect)rect
 {
     [HelloStyleKit drawSleepScoreGraphWithSleepScore:self.sleepScore];
@@ -18,12 +27,22 @@
 
 - (void)animateScoreTo:(CGFloat)value
 {
-    for (int i = 0; i < value; i++) {
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(i * 0.0075 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            _sleepScore = i + 1;
-            [self setNeedsDisplay];
-        });
-    }
+    CGFloat frameDuration = HEMSleepScoreAnimationDuration/(value/2);
+    int64_t delay = HEMSleepScoreAnimationDelay * NSEC_PER_SEC;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+        for (int i = 0; i < value; i += 2) {
+            [self addAnimationFrameToValue:MIN(i + 2, value) frameDuration:frameDuration];
+        }
+    });
+}
+
+- (void)addAnimationFrameToValue:(CGFloat)value frameDuration:(CGFloat)seconds
+{
+    int64_t after = value * HEMSleepScoreFrameRatio * NSEC_PER_SEC;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, after), dispatch_get_main_queue(), ^{
+        _sleepScore = value;
+        [self setNeedsDisplay];
+    });
 }
 
 - (void)setSleepScore:(NSInteger)sleepScore animated:(BOOL)animated

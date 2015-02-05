@@ -12,7 +12,7 @@
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 
-static CGFloat const HEMScrollabelLabelHorzMargin = 46.0f;
+static CGFloat const HEMScrollabelLabelHorzMargin = 24.0f;
 static CGFloat const HEMScrollableSeparatorMargin = 16.0f;
 static CGFloat const HEMScrollableTitleHeight = 34.0f;
 static CGFloat const HEMScrollableBotPadding = 28.0f;

@@ -224,7 +224,8 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     static CGFloat const HEMLowestBrightnessLevel = 0.2f;
     static CGFloat const HEMLowBrightnessLevel = 0.4f;
     UIScreen* screen = [UIScreen mainScreen];
-    NSInteger hour = [[NSCalendar currentCalendar] component:NSHourCalendarUnit fromDate:[NSDate date]];
+    NSDateComponents* components = [[NSCalendar currentCalendar] components:NSHourCalendarUnit fromDate:[NSDate date]];
+    NSInteger hour = components.hour;
     CGFloat brightness = screen.brightness;
     BOOL inLowestBrightnessRange = hour >= HEMLowestBrightnessEveningBound || hour < HEMLowestBrightnessMorningBound;
     if (inLowestBrightnessRange && brightness > HEMLowestBrightnessLevel) {

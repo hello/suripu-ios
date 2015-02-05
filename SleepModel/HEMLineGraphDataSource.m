@@ -13,6 +13,8 @@
 
 @implementation HEMLineGraphDataSource
 
+static CGFloat const HEMLineGraphMissingPoint = -200.f;
+
 - (instancetype)initWithDataSeries:(NSArray*)dataSeries unit:(SENSensorUnit)unit
 {
     if (self = [super init]) {
@@ -55,9 +57,8 @@
 
 - (CGFloat)lineGraph:(BEMSimpleLineGraphView *)graph valueForPointAtIndex:(NSInteger)index {
     SENSensorDataPoint* dataPoint = [self dataPointAtIndex:index];
-    CGFloat rawValue = [dataPoint.value floatValue];
-    if (rawValue == 0)
-        return rawValue;
+    if (!dataPoint.value)
+        return HEMLineGraphMissingPoint;
     return [[SENSensor value:dataPoint.value inPreferredUnit:self.unit] floatValue];
 }
 

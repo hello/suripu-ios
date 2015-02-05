@@ -21,7 +21,7 @@ static CGFloat const HEMSegmentTimeLabelHeight = 16.f;
 static CGFloat const HEMSegmentTimeLabelVerticalSpacing = 2.f;
 static CGFloat const HEMSegmentTimeLabelHorizontalSpacing = 10.f;
 static CGFloat const HEMSegmentBorderWidth = 1.f;
-static CGFloat const HEMSegmentBorderDashLength[] = {4,4};
+static CGFloat const HEMSegmentBorderDashLength[] = {3,2};
 static int const HEMNoSleepBorderDashLengthCount = 2;
 
 - (void)awakeFromNib

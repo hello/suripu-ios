@@ -46,25 +46,20 @@ static NSString* const SENPreferenceEnable = @"enabled";
 }
 
 + (NSString*)nameFromType:(SENPreferenceType)type {
-    NSString* name = @""; // should not return nil
     switch (type) {
         case SENPreferenceTypeEnhancedAudio:
-            name = SENPreferenceNameEnhancedAudio;
-            break;
+            return SENPreferenceNameEnhancedAudio;
         case SENPreferenceTypeTempCelcius:
-            name = SENPreferenceNameTemp;
-            break;
+            return SENPreferenceNameTemp;
         case SENPreferenceTypeTime24:
-            name = SENPreferenceNameTime;
-            break;
+            return SENPreferenceNameTime;
         case SENPreferenceTypePushScore:
-            name = SENPreferenceNamePushScore;
+            return SENPreferenceNamePushScore;
         case SENPreferenceTypePushConditions:
-            name = SENPreferenceNamePushConditions;
+            return SENPreferenceNamePushConditions;
         default:
-            break;
+            return @"";
     }
-    return name;
 }
 
 - (instancetype)initWithType:(SENPreferenceType)type enable:(BOOL)enable {

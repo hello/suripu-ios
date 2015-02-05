@@ -201,7 +201,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 - (void)configureAppearance
 {
     [self setScreenBrightness];
-    [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
     [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init]
                                       forBarPosition:UIBarPositionAny
                                           barMetrics:UIBarMetricsDefault];

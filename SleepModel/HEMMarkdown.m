@@ -53,12 +53,15 @@
 
 + (NSDictionary*)attributesForInsightViewText
 {
+    NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
+    style.lineSpacing = 4.f;
     return @{
         @(EMPH) : @{ NSFontAttributeName : [UIFont insightFullMessageBoldFont] },
         @(STRONG) : @{ NSFontAttributeName : [UIFont insightFullMessageBoldFont] },
         @(PARA) : @{
             NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.7f],
-            NSFontAttributeName : [UIFont insightFullMessageFont]
+            NSFontAttributeName : [UIFont insightFullMessageFont],
+            NSParagraphStyleAttributeName: style
         }
     };
 }

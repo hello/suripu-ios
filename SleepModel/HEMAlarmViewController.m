@@ -391,7 +391,7 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)loopedRow inComponent:(NSInteger)component
 {
     NSInteger rowCount = [self realNumberOfRowsInComponent:component];
-    NSInteger row = loopedRow % rowCount;
+    NSInteger row = rowCount > 0 ? loopedRow % rowCount : 0;
     UILabel* oldSelectedLabel;
     UILabel* selectedLabel = (id)[pickerView viewForRow:loopedRow forComponent:component];
     switch (component) {
@@ -490,7 +490,8 @@ static NSUInteger const HEMAlarm24HourCount = 24;
 
 - (NSString *)textForRow:(NSInteger)loopedRow forComponent:(NSInteger)component
 {
-    NSInteger row = loopedRow % [self realNumberOfRowsInComponent:component];
+    NSInteger realCount = [self realNumberOfRowsInComponent:component];
+    NSInteger row = realCount > 0 ? loopedRow % realCount : 0;
     switch (component) {
         case HEMAlarmHourIndex: {
             NSInteger hour = [self shouldUse12Hour] ? row + 1 : row;

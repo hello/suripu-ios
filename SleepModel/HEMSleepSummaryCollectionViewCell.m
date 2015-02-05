@@ -27,7 +27,6 @@
 
 @implementation HEMSleepSummaryCollectionViewCell
 
-static CGFloat const HEMSleepSummaryButtonEdgeInset = 8.f;
 static CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 static CGFloat const HEMSleepSummaryBreakdownMiniDiameter = 60.f;
 static CGFloat const HEMSleepSummaryBreakdownExpandedDiameter = 144.f;

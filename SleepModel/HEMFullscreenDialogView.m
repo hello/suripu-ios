@@ -11,7 +11,7 @@
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 
-@interface HEMFullscreenDialogView ()<UIGestureRecognizerDelegate>
+@interface HEMFullscreenDialogView ()<UIGestureRecognizerDelegate, UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIView *contentContainerView;
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIScrollView* scrollView;
+@property (weak, nonatomic) IBOutlet UIView* shadowView;
 @property (strong, nonatomic) NSArray* contents;
 @property (nonatomic) NSUInteger selectedIndex;
 @property (strong, nonatomic) UISwipeGestureRecognizer* previousGestureRecognizer;
@@ -162,12 +163,18 @@ static HEMFullscreenDialogView* fullscreenDialogView = nil;
         self.titleLabel.attributedText = title;
         self.textView.attributedText = message;
         self.scrollView.contentOffset = CGPointZero;
+        BOOL hasScrollableContent = self.scrollView.contentSize.height > CGRectGetHeight(self.scrollView.bounds);
         [UIView animateWithDuration:0.15f animations:^{
             self.imageView.alpha = 1;
             self.titleLabel.alpha = 1;
             self.textView.alpha = 1;
+            if (hasScrollableContent) {
+                [self showShadow];
+            } else {
+                [self hideShadow];
+            }
         } completion:^(BOOL finished) {
-            if (self.scrollView.contentSize.height > CGRectGetHeight(self.scrollView.bounds))
+            if (hasScrollableContent)
                 [self.scrollView flashScrollIndicators];
         }];
     }];
@@ -193,6 +200,27 @@ static HEMFullscreenDialogView* fullscreenDialogView = nil;
     } else if (recognizer.direction == UISwipeGestureRecognizerDirectionRight && self.selectedIndex > 0) {
         [self configureDialogWithContentAtIndex:self.selectedIndex - 1];
     }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    if (scrollView.contentOffset.y + CGRectGetHeight(scrollView.bounds) == scrollView.contentSize.height) {
+        [self hideShadow];
+    } else {
+        [self showShadow];
+    }
+}
+
+- (void)showShadow
+{
+    self.shadowView.layer.shadowOffset = CGSizeMake(0, -1);
+    self.shadowView.layer.shadowRadius = 1.f;
+    self.shadowView.layer.shadowOpacity = 0.1f;
+}
+
+- (void)hideShadow
+{
+    self.shadowView.layer.shadowOpacity = 0.0f;
 }
 
 @end

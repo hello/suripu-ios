@@ -187,7 +187,9 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     if (![SENSenseManager scanForSense:^(NSArray *senses) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf && ![strongSelf isTimedOut]) {
-            [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf selector:@selector(scanTimeout) object:nil];
+            [NSObject cancelPreviousPerformRequestsWithTarget:strongSelf
+                                                     selector:@selector(scanTimeout)
+                                                       object:nil];
             
             if ([senses count] > 0) {
                 // per team consensus, it is expected that the app pairs with the
@@ -277,13 +279,20 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     // led will be turned off when everything is finished, failed or not
     [[self senseManager] setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error != nil) {
+            DDLogVerbose(@"showing led activity failed, stopping");
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [strongSelf failPairing];
+            return;
+        }
+        
         NSString* activityMessage = NSLocalizedString(@"pairing.activity.pairing-sense", nil);
         [strongSelf updateActivityText:activityMessage completion:nil];
         DDLogVerbose(@"pairing with sense %@", [[[strongSelf senseManager] sense] name]);
         
         [[strongSelf senseManager] pair:^(id response) {
             DDLogVerbose(@"paired!");
-            if (strongSelf && ![strongSelf isTimedOut]) {
+            if (![strongSelf isTimedOut]) {
                 [[HEMOnboardingCache sharedCache] setSenseManager:[strongSelf senseManager]];
                 [strongSelf setPairing:NO];
                 [strongSelf setCurrentState:HEMSensePairStateSensePaired];
@@ -291,16 +300,18 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             }
         } failure:^(NSError *error) {
             DDLogVerbose(@"failed to pair %@", error);
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                [strongSelf setPairing:NO];
-                [strongSelf setSenseManager:nil];
-                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
-                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                    [strongSelf showCouldNotPairErrorMessage];
-                }];
-            }
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            [strongSelf failPairing];
         }];
+    }];
+}
+
+- (void)failPairing {
+    [self stopActivityWithMessage:nil success:NO completion:^{
+        [self showCouldNotPairErrorMessage];
+        [self setPairing:NO];
+        [self setCurrentState:HEMSensePairStateNotStarted]; // reset
+        [self disconnectSense];
     }];
 }
 

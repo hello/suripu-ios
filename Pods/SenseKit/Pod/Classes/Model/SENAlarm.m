@@ -9,6 +9,7 @@
 static NSString* const SENAlarmSoundKey = @"sound";
 static NSString* const SENAlarmSoundNameKey = @"name";
 static NSString* const SENAlarmSoundIDKey = @"id";
+static NSString* const SENAlarmSoundIDEncodingKey = @"sound_id";
 static NSString* const SENAlarmOnKey = @"enabled";
 static NSString* const SENAlarmSmartKey = @"smart";
 static NSString* const SENAlarmEditableKey = @"editable";
@@ -157,7 +158,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
         _repeatFlags = [[aDecoder decodeObjectForKey:SENAlarmRepeatKey] unsignedIntegerValue];
         _smartAlarm = [[aDecoder decodeObjectForKey:SENAlarmSmartKey] boolValue];
         _soundName = [aDecoder decodeObjectForKey:SENAlarmSoundNameKey];
-        _soundID = [aDecoder decodeObjectForKey:SENAlarmSoundIDKey];
+        _soundID = [aDecoder decodeObjectForKey:SENAlarmSoundIDEncodingKey];
     }
     return self;
 }
@@ -168,7 +169,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     [aCoder encodeObject:@([self hour]) forKey:SENAlarmHourKey];
     [aCoder encodeObject:@([self minute]) forKey:SENAlarmMinuteKey];
     [aCoder encodeObject:[self soundName] forKey:SENAlarmSoundNameKey];
-    [aCoder encodeObject:[self soundID] forKey:SENAlarmSoundIDKey];
+    [aCoder encodeObject:[self soundID] forKey:SENAlarmSoundIDEncodingKey];
     [aCoder encodeObject:[self identifier] forKey:SENAlarmIdentifierKey];
     [aCoder encodeObject:@([self isEditable]) forKey:SENAlarmEditableKey];
     [aCoder encodeObject:@([self repeatFlags]) forKey:SENAlarmRepeatKey];

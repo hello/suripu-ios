@@ -173,7 +173,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     if (self.alarms.count == savedAlarms.count) {
         NSPredicate* predicate = [NSPredicate predicateWithBlock:^BOOL(SENAlarm* alarm, NSDictionary *bindings) {
             for (SENAlarm* loadedAlarm in self.alarms) {
-                if ([alarm isIdenticalToAlarm:loadedAlarm] && [loadedAlarm isSaved])
+                if ([alarm isEqual:loadedAlarm] && [loadedAlarm isSaved])
                     return YES;
             }
             return NO;

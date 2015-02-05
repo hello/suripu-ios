@@ -85,6 +85,9 @@ static SENAPIDataBlock SENAPIAlarmDataBlock(SENAPIDataBlock completion) {
         @"name" : alarm.soundName ?: @"",
         @"id" : alarm.soundID ?: @""
     };
+    if (alarm.identifier.length > 0)
+        properties[@"id"] = alarm.identifier;
+
     properties[@"hour"] = @(alarmDateComponents.hour);
     properties[@"minute"] = @(alarmDateComponents.minute);
     properties[@"repeated"] = @(repeated);

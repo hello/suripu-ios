@@ -28,6 +28,13 @@ static CGFloat const HEMEventButtonSize = 40.f;
 static CGFloat const HEMEventBlurHeight = 60.f;
 static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
+- (void)addTimeLabelWithText:(NSString*)text atHeightRatio:(CGFloat)heightRatio
+{
+    static CGFloat const HEMEventTimeLabelOffsetRatio = 0.5;
+    CGFloat ratio = (heightRatio * HEMEventTimeLabelOffsetRatio) + HEMEventTimeLabelOffsetRatio;
+    [super addTimeLabelWithText:text atHeightRatio:ratio];
+}
+
 - (void)awakeFromNib
 {
     [super awakeFromNib];

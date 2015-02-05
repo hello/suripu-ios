@@ -14,11 +14,13 @@
 #import "HEMBluetoothUtils.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMNotificationHandler.h"
+#import "HEMBaseController+Protected.h"
 
 @interface HEMEnablePushViewController()
 
 @property (weak, nonatomic) IBOutlet HEMActionButton *enableButton;
 @property (weak, nonatomic) IBOutlet UIButton *skipButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageTopConstraint;
 
 @end
 
@@ -28,6 +30,11 @@
     [super viewDidLoad];
     [self enableBackButton:NO];
     [SENAnalytics track:kHEMAnalyticsEventOnBNotification];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [super adjustConstraintsForIPhone4];
+    [self updateConstraint:[self imageTopConstraint] withDiff:-20];
 }
 
 #pragma mark - Actions

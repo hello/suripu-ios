@@ -189,6 +189,7 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
+                                    <segue destination="ihV-hq-yEO" kind="push" id="gf9-uR-w7v"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -2266,6 +2267,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                         <outlet property="descriptionLabel" destination="cxR-ry-GIM" id="RqM-km-ZXU"/>
                         <outlet property="descriptionTopConstraint" destination="nPu-Ti-TQt" id="X19-ux-Qmb"/>
                         <outlet property="enableButton" destination="je6-JT-9YZ" id="lwA-lc-eEF"/>
+                        <outlet property="imageTopConstraint" destination="SPQ-7p-RgP" id="ljT-QP-p7E"/>
                         <outlet property="skipButton" destination="9ia-GF-Swk" id="aFd-NJ-3lO"/>
                         <outlet property="titleHeightConstraint" destination="eFQ-oR-ERS" id="cIT-vD-3Si"/>
                         <outlet property="titleLabel" destination="Go7-Z7-kmw" id="rG7-w3-c7Q"/>
@@ -2723,6 +2725,7 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
     <inferredMetricsTieBreakers>
         <segue reference="gUR-KW-V2G"/>
         <segue reference="JsS-bV-f7k"/>
+        <segue reference="gf9-uR-w7v"/>
         <segue reference="ZOJ-Sh-Dzx"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

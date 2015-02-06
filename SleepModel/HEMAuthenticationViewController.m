@@ -12,6 +12,7 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMActivityCoverView.h"
 #import "HEMNotificationHandler.h"
+#import "HEMSupportUtil.h"
 
 @interface HEMAuthenticationViewController ()
 
@@ -44,13 +45,11 @@
     [[[self forgotPassButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
     [[self forgotPassButton] setTitle:NSLocalizedString(@"authorization.forgot-pass", nil)
                              forState:UIControlStateNormal];
-    // TODO (jimmy): remove forgot pass button now since we don't support it.
-    // we can't simply hide it as the title on the 4s well get affected
-    [[self navigationItem] setRightBarButtonItem:nil];
 }
 
 - (void)adjustConstraintsForIPhone4 {
     [super adjustConstraintsForIPhone4];
+    [self setTitle:nil]; // removing title per design for iphone 4s
     [self updateConstraint:[self emailTopConstraint] withDiff:-40.0f];
 }
 
@@ -149,7 +148,7 @@
 }
 
 - (IBAction)didTapForgotPasswordButton:(UIButton*)sender {
-    DDLogVerbose(@"WARNING: this has not been implemented!");
+    [HEMSupportUtil openURL:NSLocalizedString(@"help.forgot-password", nil) from:self];
 }
 
 #pragma mark - UITextFieldDelegate

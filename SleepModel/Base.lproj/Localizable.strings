@@ -47,9 +47,10 @@
 
 // help links
 "help.url.order-form" = "https://order.hello.is/";
-"help.url.support" = "https://support.hello.is";
+"help.url.support" = "https://guide.hello.is";
 "help.email.address" = "support@sayhello.com";
 "help.email.subject" = "Sense Help Request";
+"help.forgot-password" = "https://account.hello.is";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages

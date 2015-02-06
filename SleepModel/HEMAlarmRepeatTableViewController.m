@@ -7,7 +7,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
 #import "HEMAlarmUtils.h"
-#import "HEMAlertController.h"
 #import "HEMAlarmPropertyTableViewCell.h"
 #import "HelloStyleKit.h"
 

@@ -8,7 +8,6 @@
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
 #import "HelloStyleKit.h"
-#import "HEMAlertController.h"
 #import "HEMAppDelegate.h"
 #import "HEMRootViewController.h"
 #import "HEMAudioCache.h"

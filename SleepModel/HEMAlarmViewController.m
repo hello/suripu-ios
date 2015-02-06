@@ -15,7 +15,6 @@
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMMainStoryboard.h"
-#import "HEMAlertController.h"
 #import "HEMAlarmTableViewCell.h"
 #import "HEMTutorial.h"
 

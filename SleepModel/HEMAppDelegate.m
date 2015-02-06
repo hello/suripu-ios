@@ -28,7 +28,7 @@
 
 @implementation HEMAppDelegate
 
-static NSString* const HEMAppAPIProdPath = @"https://sense-api.hello.is/v1";
+static NSString* const HEMAppAPIProdPath = @"https://api.hello.is/v1";
 static NSString* const HEMAppAPIDevPath  = @"https://dev-api.hello.is/v1";
 static NSString* const HEMAppForceLogout = @"HEMAppForceLogout";
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";

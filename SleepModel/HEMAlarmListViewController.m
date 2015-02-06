@@ -91,14 +91,16 @@ static NSUInteger const HEMAlarmListLimit = 8;
              forControlEvents:UIControlEventTouchDown];
     [self.addButton addTarget:self action:@selector(touchUpOutsideAddAlarmButton:)
              forControlEvents:UIControlEventTouchUpOutside];
+    self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
 }
 
 - (void)configureNoAlarmInstructions
 {
-    NSDictionary* attributes = @{ NSKernAttributeName: @(1.2), NSFontAttributeName: [UIFont insightTitleFont] };
+    NSDictionary* attributes = @{ NSKernAttributeName: @(1.2), NSFontAttributeName: [UIFont backViewTitleFont] };
     NSString* instructions = NSLocalizedString(@"alarms.no-alarm.instructions", nil);
     self.noAlarmLabel.attributedText = [[NSAttributedString alloc] initWithString:[instructions uppercaseString]
                                                                        attributes:attributes];
+    self.noAlarmLabel.hidden = self.alarms.count > 0;
 }
 
 - (void)configureSpinnerView

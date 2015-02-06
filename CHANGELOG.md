@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.1.7
+
+Fixes:
+
+* Show sensor view tutorials automatically at first viewing
+* Added shadow to insights screen when content requires scrolling
+* Fixed issue where communication with Sense may not properly time out
+* Fixed issue to make sure keyboard is not shown above activity when setting up wifi
+* Ensure LED is turned off when done
+* smooth out sleep score loading / counting animation
+* Added shadow to to welcome dialogs for content that requires scrolling
+* remove icons in timeline tabs
+* added title to sign in screen
+* images in onboarding screens are vertically centered within whitespace
+* various copy and link updates
+
 ## 1.0.1.6
 
 New:

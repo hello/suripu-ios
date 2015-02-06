@@ -94,9 +94,11 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
     [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.sounds.error.title", nil)
                                           message:NSLocalizedString(@"alarm.sounds.error.message", nil)
                              presentingController:self];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
-                                                                                           target:self
-                                                                                           action:@selector(loadAlarmSounds)];
+    UIBarButtonItem* refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+                                                                                 target:self
+                                                                                 action:@selector(loadAlarmSounds)];
+    refreshItem.tintColor = [HelloStyleKit tintColor];
+    self.navigationItem.rightBarButtonItem = refreshItem;
 }
 
 #pragma mark - Table view data source

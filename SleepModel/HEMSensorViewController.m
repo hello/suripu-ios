@@ -45,7 +45,7 @@
 
 @implementation HEMSensorViewController
 
-static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
+static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 
 - (void)viewDidLoad
 {

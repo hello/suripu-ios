@@ -26,7 +26,7 @@
 
 @implementation HEMCurrentConditionsViewController
 
-static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
+static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 10.f;
 static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 static NSUInteger const HEMConditionGraphPointLimit = 30;

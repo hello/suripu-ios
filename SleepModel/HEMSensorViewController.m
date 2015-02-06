@@ -81,6 +81,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
                                                        userInfo:nil
                                                         repeats:YES];
     [self registerForNotifications];
+    [HEMTutorial showTutorialIfNeededForSensorNamed:self.sensor.name];
 }
 
 - (void)viewDidDisappear:(BOOL)animated

@@ -87,4 +87,11 @@ extern NSString* const SENAuthorizationServiceDidReauthorizeNotification;
  */
 + (NSString*)accessToken;
 
+/**
+ *  Update the client app ID
+ *
+ *  @param clientID the new client ID
+ */
++ (void)setClientAppID:(NSString*)clientID;
+
 @end

@@ -16,8 +16,8 @@ NSString* const SENAuthorizationServiceDidReauthorizeNotification = @"SENAuthori
 
 @implementation SENAuthorizationService
 
+static NSString* SENAuthorizationServiceClientID = nil;
 static NSString* const SENAuthorizationServiceTokenPath = @"oauth2/token";
-static NSString* const SENAuthorizationServiceClientID = @"iphone_pill";
 static NSString* const SENAuthorizationServiceCredentialsKey = @"credentials";
 static NSString* const SENAuthorizationServiceCredentialsEmailKey = @"email";
 static NSString* const SENAuthorizationServiceAccountIdKey = @"account_id";
@@ -33,6 +33,11 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
                                            accessGroup:SENAuthorizationServiceKeychainGroup];
     });
     return keychain;
+}
+
++ (void)setClientAppID:(NSString *)clientID
+{
+    SENAuthorizationServiceClientID = clientID;
 }
 
 + (void)authorizeWithUsername:(NSString*)username password:(NSString*)password callback:(void (^)(NSError*))block
@@ -130,6 +135,11 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 #pragma mark Private
 
 + (void)authorize:(NSString*)username password:(NSString*)password onCompletion:(void(^)(NSDictionary* response, NSError* error))block {
+    if (SENAuthorizationServiceClientID.length == 0) {
+        if (block)
+            block(nil, [NSError errorWithDomain:@"is.hello" code:-1 userInfo:@{NSLocalizedDescriptionKey:@"No client ID set"}]);
+        return;
+    }
     NSDictionary* params = @{ @"grant_type" : @"password",
                               @"client_id" : SENAuthorizationServiceClientID,
                               @"username" : username ?: @"",

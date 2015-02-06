@@ -1,14 +1,4 @@
-#import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/Model.h>
-#import <SenseKit/SENAPINotification.h>
-#import <SenseKit/SENAPIQuestions.h>
-#import <SenseKit/SENServiceQuestions.h>
-#import <SenseKit/SENAPIAccount.h>
-#import <SenseKit/SENAnalytics.h>
-#import <SenseKit/SENServiceDevice.h>
-#import <SenseKit/SENServiceAccount.h>
-#import <SenseKit/SENServiceHealthKit.h>
-
+#import <SenseKit/SenseKit.h>
 #import <Crashlytics/Crashlytics.h>
 
 #import "HEMAppDelegate.h"
@@ -29,7 +19,9 @@
 @implementation HEMAppDelegate
 
 static NSString* const HEMAppAPIProdPath = @"https://api.hello.is/v1";
+static NSString* const HEMAppAPIProdClientID = @"cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
 static NSString* const HEMAppAPIDevPath  = @"https://dev-api.hello.is/v1";
+static NSString* const HEMAppAPIDevClientID = @"iphone_pill";
 static NSString* const HEMAppForceLogout = @"HEMAppForceLogout";
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
@@ -116,13 +108,16 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)configureAPI {
     NSString* path = nil;
+    NSString* clientID = nil;
 #if DEBUG
     path = HEMAppAPIDevPath;
-    // API defaults to dev
+    clientID = HEMAppAPIDevClientID;
 #else
     path = HEMAppAPIProdPath;
+    clientID = HEMAppAPIProdClientID;
 #endif
     [SENAPIClient setBaseURLFromPath:path];
+    [SENAuthorizationService setClientAppID:clientID];
 }
 
 - (void)configureAnalytics {

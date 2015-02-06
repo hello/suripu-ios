@@ -16,12 +16,14 @@ static CGFloat const HEMScrollabelLabelHorzMargin = 24.0f;
 static CGFloat const HEMScrollableSeparatorMargin = 16.0f;
 static CGFloat const HEMScrollableTitleHeight = 34.0f;
 static CGFloat const HEMScrollableBotPadding = 28.0f;
+static CGFloat const HEMScrollableShadowHeight = 4.0f;
 
 @interface HEMScrollableView()
 
 @property (nonatomic, weak) UIScrollView* scrollView;
 @property (nonatomic, weak) UIView* lastContentView; // not the same as lastObject of scrollView subviews
 @property (nonatomic, strong) NSMutableArray* yOffsets;
+@property (nonatomic, strong) CAGradientLayer* gradientLayer;
 
 @end
 
@@ -187,14 +189,22 @@ static CGFloat const HEMScrollableBotPadding = 28.0f;
 
 - (void)addShadowIfScrollRequired {
     CALayer* layer = [self layer];
-    if ([[self scrollView] contentSize].height > CGRectGetHeight([[self scrollView] bounds])) {
-        NSShadow* shadow = [HelloStyleKit onboardingButtonContainerShadow];
-        [layer setShadowRadius:[shadow shadowBlurRadius]];
-        [layer setShadowOffset:[shadow shadowOffset]];
-        [layer setShadowColor:[[shadow shadowColor] CGColor]];
-        [layer setShadowOpacity:1.0f];
-    } else {
-        [layer setShadowOpacity:0.0f];
+    CGFloat bottomMargin = [[self scrollView] contentSize].height - HEMScrollableBotPadding;
+    
+    if (bottomMargin > CGRectGetHeight([[self scrollView] bounds])) {
+        CAGradientLayer* gradientLayer = [CAGradientLayer layer];
+        CGFloat y = CGRectGetHeight([[self scrollView] bounds])-HEMScrollableShadowHeight;
+        
+        [gradientLayer setFrame:CGRectMake(0.0f, y,
+                                           CGRectGetWidth([layer bounds]),
+                                           HEMScrollableShadowHeight)];
+        [gradientLayer setColors:@[(id)[[UIColor clearColor] CGColor],
+                                   (id)[[UIColor colorWithWhite:0.0f alpha:0.1f] CGColor]]];
+        
+        [layer addSublayer:gradientLayer];
+        [self setGradientLayer:gradientLayer];
+    } else if ([self gradientLayer] != nil) { // if it was resized and was added
+        [[self gradientLayer] setHidden:YES];
     }
 }
 

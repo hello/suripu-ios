@@ -1,7 +1,7 @@
 
 #import <UIKit/UIKit.h>
-#import "HEMBaseController.h"
+#import "HEMOnboardingController.h"
 
-@interface HEMAuthenticationViewController : HEMBaseController <UITextFieldDelegate>
+@interface HEMAuthenticationViewController : HEMOnboardingController <UITextFieldDelegate>
 
 @end

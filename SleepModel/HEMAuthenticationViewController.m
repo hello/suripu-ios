@@ -44,14 +44,14 @@
     [[[self forgotPassButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
     [[self forgotPassButton] setTitle:NSLocalizedString(@"authorization.forgot-pass", nil)
                              forState:UIControlStateNormal];
-    // since we don't have forgot password route yet, we will hide it
-    [[self forgotPassButton] setHidden:YES];
+    // TODO (jimmy): remove forgot pass button now since we don't support it.
+    // we can't simply hide it as the title on the 4s well get affected
+    [[self navigationItem] setRightBarButtonItem:nil];
 }
 
 - (void)adjustConstraintsForIPhone4 {
     [super adjustConstraintsForIPhone4];
-    [self updateConstraint:[self emailTopConstraint] withDiff:-50.0f];
-    [self updateConstraint:[self loginButtonTopConstraint] withDiff:20.0f];
+    [self updateConstraint:[self emailTopConstraint] withDiff:-40.0f];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

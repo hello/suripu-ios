@@ -41,8 +41,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome back." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcc-O3-dxY">
+                                <rect key="frame" x="20" y="88" width="560" height="32"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="32" id="pck-iL-yob"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gMo-0B-UJM" userLabel="Email" customClass="HEMSimpleLineTextField">
-                                <rect key="frame" x="20" y="136" width="560" height="35"/>
+                                <rect key="frame" x="20" y="148" width="560" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="UL5-zT-OfA"/>
                                 </constraints>
@@ -54,7 +63,7 @@
                                 </connections>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hPf-UR-a80" userLabel="Password" customClass="HEMSimpleLineTextField">
-                                <rect key="frame" x="20" y="185" width="560" height="35"/>
+                                <rect key="frame" x="20" y="196" width="560" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="8wx-BM-MHi"/>
                                 </constraints>
@@ -65,7 +74,7 @@
                                 </connections>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="G9w-pu-D4W" customClass="HEMActionButton">
-                                <rect key="frame" x="20" y="280" width="560" height="50"/>
+                                <rect key="frame" x="20" y="256" width="560" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="4Kl-IU-802"/>
                                 </constraints>
@@ -79,15 +88,18 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="hPf-UR-a80" secondAttribute="trailing" constant="4" id="9X4-Na-NLv"/>
-                            <constraint firstItem="hPf-UR-a80" firstAttribute="bottom" secondItem="G9w-pu-D4W" secondAttribute="top" constant="-60" id="BjL-cT-v5l"/>
-                            <constraint firstItem="gMo-0B-UJM" firstAttribute="leading" secondItem="1eB-lz-NfX" secondAttribute="leadingMargin" constant="4" id="Im4-y8-mLP"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="gMo-0B-UJM" secondAttribute="trailing" constant="4" id="SdG-MD-Mk0"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="G9w-pu-D4W" secondAttribute="trailing" constant="4" id="aAg-N5-WoI"/>
-                            <constraint firstItem="hPf-UR-a80" firstAttribute="top" secondItem="gMo-0B-UJM" secondAttribute="bottom" constant="14" id="byO-0L-vi3"/>
-                            <constraint firstItem="hPf-UR-a80" firstAttribute="leading" secondItem="1eB-lz-NfX" secondAttribute="leadingMargin" constant="4" id="eZl-M6-xek"/>
-                            <constraint firstItem="gMo-0B-UJM" firstAttribute="top" secondItem="Hyi-t4-E2t" secondAttribute="bottom" constant="72" id="oOq-WY-HB2"/>
-                            <constraint firstItem="G9w-pu-D4W" firstAttribute="leading" secondItem="1eB-lz-NfX" secondAttribute="leadingMargin" constant="4" id="rbe-mj-vh9"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gMo-0B-UJM" secondAttribute="trailing" constant="4" id="266-zh-QgV"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="G9w-pu-D4W" secondAttribute="trailing" constant="4" id="EBJ-1b-gHe"/>
+                            <constraint firstItem="G9w-pu-D4W" firstAttribute="leading" secondItem="1eB-lz-NfX" secondAttribute="leadingMargin" constant="4" id="EK8-Vx-IRp"/>
+                            <constraint firstItem="gMo-0B-UJM" firstAttribute="bottom" secondItem="hPf-UR-a80" secondAttribute="top" constant="-13" id="QNA-jh-hhX"/>
+                            <constraint firstItem="hPf-UR-a80" firstAttribute="leading" secondItem="1eB-lz-NfX" secondAttribute="leadingMargin" constant="4" id="SJv-zd-iN3"/>
+                            <constraint firstItem="hPf-UR-a80" firstAttribute="bottom" secondItem="G9w-pu-D4W" secondAttribute="top" constant="-25" id="fls-B1-Zv8"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="hPf-UR-a80" secondAttribute="trailing" constant="4" id="jIe-v2-qpP"/>
+                            <constraint firstItem="gMo-0B-UJM" firstAttribute="top" secondItem="lcc-O3-dxY" secondAttribute="bottom" constant="28" id="qfI-bq-cMa"/>
+                            <constraint firstItem="gMo-0B-UJM" firstAttribute="leading" secondItem="1eB-lz-NfX" secondAttribute="leadingMargin" constant="4" id="viH-J9-czT"/>
+                            <constraint firstItem="lcc-O3-dxY" firstAttribute="leading" secondItem="1eB-lz-NfX" secondAttribute="leadingMargin" constant="4" id="xbh-h7-cRW"/>
+                            <constraint firstItem="lcc-O3-dxY" firstAttribute="top" secondItem="Hyi-t4-E2t" secondAttribute="bottom" constant="24" id="xdE-mv-xIb"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="lcc-O3-dxY" secondAttribute="trailing" constant="4" id="zX2-T1-Dly"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -126,11 +138,13 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <nil key="simulatedBottomBarMetrics"/>
                     <connections>
-                        <outlet property="emailTopConstraint" destination="oOq-WY-HB2" id="f0u-WH-yVb"/>
+                        <outlet property="emailTopConstraint" destination="qfI-bq-cMa" id="R78-e2-49D"/>
                         <outlet property="forgotPassButton" destination="nBf-Bp-BiO" id="IBK-YF-gB3"/>
                         <outlet property="logInButton" destination="G9w-pu-D4W" id="ZLe-wE-pjm"/>
-                        <outlet property="loginButtonTopConstraint" destination="BjL-cT-v5l" id="iHJ-dJ-4bq"/>
+                        <outlet property="loginButtonTopConstraint" destination="fls-B1-Zv8" id="oW8-wF-4fw"/>
                         <outlet property="passwordField" destination="hPf-UR-a80" id="KxG-rE-qsG"/>
+                        <outlet property="titleHeightConstraint" destination="pck-iL-yob" id="Zi4-7F-DFN"/>
+                        <outlet property="titleLabel" destination="lcc-O3-dxY" id="SHR-qs-653"/>
                         <outlet property="usernameField" destination="gMo-0B-UJM" id="yfw-pd-kDq"/>
                     </connections>
                 </viewController>
@@ -896,7 +910,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0se-fT-N6l" userLabel="descLabel">
-                                <rect key="frame" x="20" y="68" width="560" height="151"/>
+                                <rect key="frame" x="20" y="68" width="560" height="150.5"/>
                                 <string key="text">Before you connect your phone, Sense needs to be put into Pairing Mode.
 
 Place your hand directly on top of Sense for seven seconds, and then remove it.
@@ -905,11 +919,16 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pairingMode.png" translatesAutoresizingMaskIntoConstraints="NO" id="ryD-Go-K8h">
-                                <rect key="frame" x="0.0" y="259" width="600" height="93"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="pairingMode.png" translatesAutoresizingMaskIntoConstraints="NO" id="ryD-Go-K8h">
+                                <rect key="frame" x="0.0" y="218.5" width="600" height="311.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="93" id="tQT-rX-OHU"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="tQT-rX-OHU"/>
+                                    </mask>
+                                </variation>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uDw-jj-ZIo" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
@@ -932,14 +951,15 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <constraint firstItem="phz-De-JCe" firstAttribute="leading" secondItem="7Bn-rz-9ya" secondAttribute="leadingMargin" constant="4" id="CuU-2b-kTn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="phz-De-JCe" secondAttribute="trailing" constant="4" id="ExU-oI-d77"/>
                             <constraint firstItem="0se-fT-N6l" firstAttribute="leading" secondItem="7Bn-rz-9ya" secondAttribute="leadingMargin" constant="4" id="IAu-nK-DaG"/>
+                            <constraint firstItem="ryD-Go-K8h" firstAttribute="bottom" secondItem="uDw-jj-ZIo" secondAttribute="top" id="Oee-Sz-YPI"/>
                             <constraint firstAttribute="trailingMargin" secondItem="ryD-Go-K8h" secondAttribute="trailing" constant="-16" id="W5P-Wd-ftr"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uDw-jj-ZIo" secondAttribute="trailing" constant="4" id="X1N-Cu-bCr"/>
-                            <constraint firstItem="ryD-Go-K8h" firstAttribute="top" secondItem="0se-fT-N6l" secondAttribute="bottom" constant="40" id="XBZ-4U-ren"/>
                             <constraint firstItem="0se-fT-N6l" firstAttribute="top" secondItem="phz-De-JCe" secondAttribute="bottom" constant="10" id="bkw-Qq-JXe"/>
                             <constraint firstItem="ryD-Go-K8h" firstAttribute="leading" secondItem="7Bn-rz-9ya" secondAttribute="leadingMargin" constant="-16" id="g1n-dN-Of6"/>
                             <constraint firstItem="phz-De-JCe" firstAttribute="top" secondItem="KbS-hu-7hz" secondAttribute="bottom" constant="4" id="nbf-Xn-cgu"/>
                             <constraint firstItem="Eh9-8p-NMx" firstAttribute="top" secondItem="uDw-jj-ZIo" secondAttribute="bottom" constant="20" id="pc2-rX-L6q"/>
                             <constraint firstAttribute="trailingMargin" secondItem="0se-fT-N6l" secondAttribute="trailing" constant="4" id="xUa-Nb-cuD"/>
+                            <constraint firstItem="ryD-Go-K8h" firstAttribute="top" secondItem="0se-fT-N6l" secondAttribute="bottom" id="yCB-89-t47"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="qdC-m8-2eA"/>
@@ -972,8 +992,8 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" misplaced="YES" image="PillHands.png" translatesAutoresizingMaskIntoConstraints="NO" id="e7k-8I-UvG">
-                                <rect key="frame" x="0.0" y="169" width="600" height="321"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="PillHands.png" translatesAutoresizingMaskIntoConstraints="NO" id="e7k-8I-UvG">
+                                <rect key="frame" x="0.0" y="124" width="600" height="406"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdG-tg-U0e" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
@@ -996,8 +1016,8 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     <action selector="next:" destination="4s2-Gt-ovZ" eventType="touchUpInside" id="VjE-Z2-HDO"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" misplaced="YES" text="Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="xuG-gW-rF9">
-                                <rect key="frame" x="20" y="68" width="560" height="62"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="xuG-gW-rF9">
+                                <rect key="frame" x="20" y="62.5" width="560" height="61.5"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                 <color key="textColor" red="0.22352941179999999" green="0.22352941179999999" blue="0.22352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1013,9 +1033,9 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <constraint firstItem="ccb-Ef-kXd" firstAttribute="top" secondItem="qdG-tg-U0e" secondAttribute="bottom" constant="20" id="DCJ-le-Oqh"/>
                             <constraint firstItem="xuG-gW-rF9" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="4" id="LNX-7y-kvZ"/>
                             <constraint firstItem="e7k-8I-UvG" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="-16" id="Zzl-nN-aV7"/>
-                            <constraint firstItem="e7k-8I-UvG" firstAttribute="bottom" secondItem="qdG-tg-U0e" secondAttribute="top" constant="-40" id="gCS-TS-QMS"/>
+                            <constraint firstItem="e7k-8I-UvG" firstAttribute="bottom" secondItem="qdG-tg-U0e" secondAttribute="top" id="ifd-PA-6HM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="e7k-8I-UvG" secondAttribute="trailing" constant="-16" id="jTb-4p-dXn"/>
-                            <constraint firstItem="e7k-8I-UvG" firstAttribute="top" secondItem="xuG-gW-rF9" secondAttribute="bottom" priority="750" constant="40" id="qhj-Kl-YIy"/>
+                            <constraint firstItem="e7k-8I-UvG" firstAttribute="top" secondItem="xuG-gW-rF9" secondAttribute="bottom" id="pu9-sV-imG"/>
                             <constraint firstItem="ded-Ea-3CR" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="4" id="rCu-3L-GJ4"/>
                             <constraint firstItem="ded-Ea-3CR" firstAttribute="top" secondItem="SS5-15-dp3" secondAttribute="bottom" constant="4" id="yXX-qo-gHo"/>
                         </constraints>
@@ -1061,8 +1081,8 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pairOfPills.png" translatesAutoresizingMaskIntoConstraints="NO" id="woJ-aC-K2e">
-                                <rect key="frame" x="210" y="252" width="180" height="117"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" image="pairOfPills.png" translatesAutoresizingMaskIntoConstraints="NO" id="woJ-aC-K2e">
+                                <rect key="frame" x="0.0" y="103" width="600" height="372"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4OB-Af-zlr">
                                 <rect key="frame" x="20" y="475" width="560" height="50"/>
@@ -1105,16 +1125,18 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <constraints>
                             <constraint firstItem="iMZ-p6-gA8" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="0vv-vX-Ygi"/>
                             <constraint firstItem="Kgp-n3-6dl" firstAttribute="bottom" secondItem="4OB-Af-zlr" secondAttribute="bottom" constant="55" id="31H-a3-rki"/>
-                            <constraint firstAttribute="centerX" secondItem="woJ-aC-K2e" secondAttribute="centerX" id="49O-wI-vGw"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="woJ-aC-K2e" secondAttribute="trailing" constant="-16" id="3lO-i6-WXm"/>
                             <constraint firstItem="eDs-8j-Vd9" firstAttribute="bottom" secondItem="iMZ-p6-gA8" secondAttribute="top" constant="-10" id="5uD-Lr-dgP"/>
+                            <constraint firstItem="4OB-Af-zlr" firstAttribute="top" secondItem="woJ-aC-K2e" secondAttribute="bottom" id="E9N-A2-PGt"/>
                             <constraint firstItem="Kgp-n3-6dl" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="WiM-De-dUF"/>
                             <constraint firstItem="4OB-Af-zlr" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="Y2G-Fy-KwT"/>
+                            <constraint firstItem="woJ-aC-K2e" firstAttribute="top" secondItem="iMZ-p6-gA8" secondAttribute="bottom" id="ZO5-CG-Mqg"/>
                             <constraint firstItem="eDs-8j-Vd9" firstAttribute="top" secondItem="mVd-qk-DaN" secondAttribute="bottom" constant="4" id="Zqc-Sd-kGI"/>
                             <constraint firstItem="eDs-8j-Vd9" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="4" id="cKG-3r-Ovw"/>
                             <constraint firstItem="RB7-rd-PIm" firstAttribute="top" secondItem="Kgp-n3-6dl" secondAttribute="bottom" constant="20" id="lBO-vO-6sx"/>
+                            <constraint firstItem="woJ-aC-K2e" firstAttribute="leading" secondItem="JjN-cZ-h4j" secondAttribute="leadingMargin" constant="-16" id="nuH-5k-A91"/>
                             <constraint firstAttribute="trailingMargin" secondItem="iMZ-p6-gA8" secondAttribute="trailing" constant="4" id="peW-PL-F0w"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Kgp-n3-6dl" secondAttribute="trailing" constant="4" id="q3M-4F-1ZN"/>
-                            <constraint firstAttribute="centerY" secondItem="woJ-aC-K2e" secondAttribute="centerY" constant="-10" id="qDH-Ps-8Fq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="eDs-8j-Vd9" secondAttribute="trailing" constant="4" id="tfB-Dc-aN6"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4OB-Af-zlr" secondAttribute="trailing" constant="4" id="tqI-cW-YSV"/>
                         </constraints>
@@ -1161,11 +1183,16 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sleepPill.png" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-sp-rMW">
-                                <rect key="frame" x="0.0" y="194" width="600" height="130"/>
+                            <imageView userInteractionEnabled="NO" contentMode="center" image="sleepPill.png" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-sp-rMW">
+                                <rect key="frame" x="0.0" y="154" width="600" height="376"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="fol-lJ-5R8"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="fol-lJ-5R8"/>
+                                    </mask>
+                                </variation>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YfJ-2L-zpu" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
@@ -1194,6 +1221,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <constraint firstItem="1o0-dY-ESb" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leadingMargin" constant="4" id="1vz-Mt-TcE"/>
                             <constraint firstItem="l6o-sp-rMW" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leadingMargin" constant="-16" id="3Dh-PT-jUn"/>
                             <constraint firstItem="1o0-dY-ESb" firstAttribute="bottom" secondItem="FLk-KX-k9s" secondAttribute="top" constant="-10" id="60d-m8-ntB"/>
+                            <constraint firstItem="FLk-KX-k9s" firstAttribute="bottom" secondItem="l6o-sp-rMW" secondAttribute="top" id="DVR-I6-O8y"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YfJ-2L-zpu" secondAttribute="trailing" constant="4" id="EBk-zf-uEy"/>
                             <constraint firstItem="1o0-dY-ESb" firstAttribute="top" secondItem="bnn-jv-ggS" secondAttribute="bottom" constant="4" id="OLl-eX-i8h"/>
                             <constraint firstItem="FLk-KX-k9s" firstAttribute="leading" secondItem="KmZ-30-AzV" secondAttribute="leadingMargin" constant="4" id="OPK-Sd-7xX"/>
@@ -1202,8 +1230,8 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <constraint firstAttribute="trailingMargin" secondItem="l6o-sp-rMW" secondAttribute="trailing" constant="-16" id="Wqp-5y-Yui"/>
                             <constraint firstAttribute="trailingMargin" secondItem="FLk-KX-k9s" secondAttribute="trailing" constant="4" id="aW5-NY-OGa"/>
                             <constraint firstItem="FLk-KX-k9s" firstAttribute="top" secondItem="1o0-dY-ESb" secondAttribute="bottom" constant="10" id="edr-Ut-Ev7"/>
+                            <constraint firstItem="YfJ-2L-zpu" firstAttribute="top" secondItem="l6o-sp-rMW" secondAttribute="bottom" id="fje-RL-BFc"/>
                             <constraint firstItem="0XB-1j-3Lb" firstAttribute="top" secondItem="YfJ-2L-zpu" secondAttribute="bottom" constant="20" id="j3O-Pk-A5A"/>
-                            <constraint firstItem="l6o-sp-rMW" firstAttribute="top" secondItem="FLk-KX-k9s" secondAttribute="bottom" constant="40" id="mK3-Uu-QLW"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="MgK-i0-Acr"/>
@@ -1239,13 +1267,13 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Shake your Sleep Pill for three seconds to pair it with your Sense.  You may need to shake it quickly for it to register." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFD-e4-hma" userLabel="descLabel">
-                                <rect key="frame" x="20" y="68" width="560" height="42"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Shake your Sleep Pill for three seconds to pair it with your Sense.  You may need to shake it quickly for it to register." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kFD-e4-hma" userLabel="descLabel">
+                                <rect key="frame" x="20" y="68" width="560" height="43"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="shakePill.png" translatesAutoresizingMaskIntoConstraints="NO" id="UCq-3E-Q6s">
-                                <rect key="frame" x="0.0" y="164" width="600" height="224"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="shakePill.png" translatesAutoresizingMaskIntoConstraints="NO" id="UCq-3E-Q6s">
+                                <rect key="frame" x="0.0" y="111" width="600" height="374"/>
                             </imageView>
                             <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YOR-FD-XcA">
                                 <rect key="frame" x="20" y="485" width="560" height="30"/>
@@ -1306,7 +1334,8 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <constraint firstItem="YOR-FD-XcA" firstAttribute="bottom" secondItem="lGd-9N-cHV" secondAttribute="top" constant="-15" id="azZ-ld-TlC"/>
                             <constraint firstItem="Myj-pb-yY5" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="bbb-je-XMs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lGd-9N-cHV" secondAttribute="trailing" constant="4" id="cBM-V2-ce4"/>
-                            <constraint firstItem="UCq-3E-Q6s" firstAttribute="top" secondItem="kFD-e4-hma" secondAttribute="top" constant="96" id="fFt-QS-0lS"/>
+                            <constraint firstItem="UCq-3E-Q6s" firstAttribute="top" secondItem="kFD-e4-hma" secondAttribute="bottom" id="ggj-XA-6ka"/>
+                            <constraint firstItem="YOR-FD-XcA" firstAttribute="top" secondItem="UCq-3E-Q6s" secondAttribute="bottom" id="i8S-aB-YmX"/>
                             <constraint firstItem="LXo-A8-xjK" firstAttribute="top" secondItem="lGd-9N-cHV" secondAttribute="bottom" constant="20" id="kV7-jL-vUR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YOR-FD-XcA" secondAttribute="trailing" constant="4" id="ozv-5f-t24"/>
                             <constraint firstItem="beC-YD-29R" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="4" id="pgv-a2-fy7"/>
@@ -1360,8 +1389,8 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseColors.png" translatesAutoresizingMaskIntoConstraints="NO" id="I7g-Id-dOn">
-                                <rect key="frame" x="0.0" y="169" width="600" height="237"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="senseColors.png" translatesAutoresizingMaskIntoConstraints="NO" id="I7g-Id-dOn">
+                                <rect key="frame" x="0.0" y="129" width="600" height="401"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MMQ-Qm-jOb" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
@@ -1382,12 +1411,13 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="aeM-Gk-iCU" firstAttribute="top" secondItem="Tj1-4o-SDr" secondAttribute="bottom" constant="10" id="EU6-PQ-Fnh"/>
+                            <constraint firstItem="I7g-Id-dOn" firstAttribute="top" secondItem="aeM-Gk-iCU" secondAttribute="bottom" id="GM2-Jx-Exg"/>
                             <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="MMQ-Qm-jOb" secondAttribute="bottom" constant="20" id="NbT-o3-LFI"/>
                             <constraint firstItem="Tj1-4o-SDr" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="4" id="TrJ-E4-KCu"/>
                             <constraint firstItem="I7g-Id-dOn" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="XKg-WU-cld"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Tj1-4o-SDr" secondAttribute="trailing" constant="4" id="bHE-xo-lbE"/>
+                            <constraint firstItem="I7g-Id-dOn" firstAttribute="bottom" secondItem="MMQ-Qm-jOb" secondAttribute="top" id="cUj-Su-UTc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="aeM-Gk-iCU" secondAttribute="trailing" constant="4" id="ePW-ng-T5n"/>
-                            <constraint firstItem="I7g-Id-dOn" firstAttribute="top" secondItem="aeM-Gk-iCU" secondAttribute="bottom" constant="40" id="gov-My-Jj6"/>
                             <constraint firstItem="aeM-Gk-iCU" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="4" id="jcv-t9-Q07"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MMQ-Qm-jOb" secondAttribute="trailing" constant="4" id="mQQ-5w-Ova"/>
                             <constraint firstItem="Tj1-4o-SDr" firstAttribute="top" secondItem="N0D-iB-qdk" secondAttribute="bottom" constant="4" id="qrA-cj-08U"/>
@@ -1439,7 +1469,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" image="smartAlarm.png" translatesAutoresizingMaskIntoConstraints="NO" id="LmL-w7-BTd">
-                                <rect key="frame" x="0.0" y="169" width="600" height="296"/>
+                                <rect key="frame" x="0.0" y="129" width="600" height="346"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6FP-vw-B5B">
                                 <rect key="frame" x="190" y="475" width="220" height="40"/>
@@ -1481,13 +1511,13 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <constraint firstItem="H5s-t3-orP" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="CCG-P5-zIt"/>
                             <constraint firstItem="JeP-LV-puG" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="G0n-60-GNn"/>
                             <constraint firstAttribute="trailingMargin" secondItem="H5s-t3-orP" secondAttribute="trailing" constant="4" id="JE2-W7-Rq3"/>
-                            <constraint firstItem="LmL-w7-BTd" firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="top" constant="-10" id="Mds-dA-liw"/>
                             <constraint firstAttribute="trailingMargin" secondItem="JeP-LV-puG" secondAttribute="trailing" constant="4" id="Q97-10-NmW"/>
-                            <constraint firstItem="LmL-w7-BTd" firstAttribute="top" secondItem="Hw2-eQ-BhX" secondAttribute="bottom" priority="750" constant="40" id="VqZ-kQ-CEV"/>
                             <constraint firstAttribute="centerX" secondItem="6FP-vw-B5B" secondAttribute="centerX" id="e4n-j8-07l"/>
+                            <constraint firstItem="LmL-w7-BTd" firstAttribute="top" secondItem="Hw2-eQ-BhX" secondAttribute="bottom" id="eDu-go-Y9o"/>
                             <constraint firstItem="Hw2-eQ-BhX" firstAttribute="top" secondItem="JeP-LV-puG" secondAttribute="bottom" constant="10" id="fQT-XM-WlO"/>
                             <constraint firstItem="Hw2-eQ-BhX" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="4" id="gZg-dm-NTE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="LmL-w7-BTd" secondAttribute="trailing" constant="-16" id="gs0-Mg-fnh"/>
+                            <constraint firstItem="LmL-w7-BTd" firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="top" id="j1P-Uz-it0"/>
                             <constraint firstItem="H5s-t3-orP" firstAttribute="bottom" secondItem="6FP-vw-B5B" secondAttribute="bottom" constant="65" id="jeY-fW-hoO"/>
                             <constraint firstItem="LmL-w7-BTd" firstAttribute="leading" secondItem="dhI-dC-nnE" secondAttribute="leadingMargin" constant="-16" id="pue-S3-u8M"/>
                             <constraint firstItem="JeP-LV-puG" firstAttribute="top" secondItem="3cs-y7-KCY" secondAttribute="bottom" constant="4" id="qeJ-5T-zXA"/>
@@ -1535,24 +1565,30 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense will now check the conditions in your bedroom." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGc-8P-g1M">
-                                        <rect key="frame" x="20" y="40" width="560" height="21"/>
+                                        <rect key="frame" x="20" y="40" width="560" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="EwG-fT-RLQ">
-                                        <rect key="frame" x="0.0" y="101" width="600" height="235"/>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="EwG-fT-RLQ">
+                                        <rect key="frame" x="0.0" y="60.5" width="600" height="420.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="235" id="Eq2-1g-uLB"/>
                                         </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="Eq2-1g-uLB"/>
+                                            </mask>
+                                        </variation>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="EwG-fT-RLQ" firstAttribute="top" secondItem="iGc-8P-g1M" secondAttribute="bottom" id="HCm-dg-8uw"/>
                                     <constraint firstAttribute="trailing" secondItem="EwG-fT-RLQ" secondAttribute="trailing" id="ONU-aI-0Iq"/>
                                     <constraint firstItem="iGc-8P-g1M" firstAttribute="top" secondItem="PMR-Df-HyE" secondAttribute="top" constant="40" id="XEC-kL-BVD"/>
+                                    <constraint firstAttribute="bottom" secondItem="EwG-fT-RLQ" secondAttribute="bottom" id="gcA-aY-IUC"/>
                                     <constraint firstItem="iGc-8P-g1M" firstAttribute="leading" secondItem="AIh-GX-j1H" secondAttribute="leading" constant="20" id="iuZ-hc-8YN"/>
-                                    <constraint firstItem="iGc-8P-g1M" firstAttribute="bottom" secondItem="EwG-fT-RLQ" secondAttribute="top" constant="-40" id="kWy-hc-XpW"/>
                                     <constraint firstAttribute="trailing" secondItem="iGc-8P-g1M" secondAttribute="trailing" constant="20" id="ogv-h4-leG"/>
                                     <constraint firstAttribute="trailing" secondItem="PMR-Df-HyE" secondAttribute="trailing" constant="20" id="qe7-ua-K4H"/>
                                     <constraint firstItem="PMR-Df-HyE" firstAttribute="top" secondItem="AIh-GX-j1H" secondAttribute="top" id="tCo-yZ-QOj"/>
@@ -2005,22 +2041,18 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Sense uses your location to know sunrise and sunset times, local weather and more." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Sy-ck-jAh">
-                                <rect key="frame" x="20" y="68" width="560" height="42"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense uses your location to know sunrise and sunset times, local weather and more." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Sy-ck-jAh">
+                                <rect key="frame" x="20" y="68" width="560" height="41"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map.png" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-9r-AQZ">
-                                <rect key="frame" x="0.0" y="193" width="600" height="234"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="234" id="ntv-dy-8Kv"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="map.png" translatesAutoresizingMaskIntoConstraints="NO" id="sEE-9r-AQZ">
+                                <rect key="frame" x="0.0" y="109" width="600" height="366"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SVC-vN-68T">
-                                <rect key="frame" x="240" y="475" width="119" height="28"/>
+                                <rect key="frame" x="20" y="475" width="560" height="28"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="119" id="TS9-xI-iia"/>
                                     <constraint firstAttribute="height" constant="28" id="f95-cU-0tP"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
@@ -2049,28 +2081,29 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="8Sy-ck-jAh" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="4" id="00V-xM-j3p"/>
-                            <constraint firstItem="8Sy-ck-jAh" firstAttribute="top" secondItem="zaK-X5-Jnp" secondAttribute="bottom" constant="10" id="ETI-dq-dXC"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Sdf-8C-14E" secondAttribute="trailing" constant="4" id="FZQ-yt-nPj"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="zaK-X5-Jnp" secondAttribute="trailing" constant="4" id="Ict-Xr-TMe"/>
-                            <constraint firstItem="zaK-X5-Jnp" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="4" id="Iu9-yj-i5B"/>
-                            <constraint firstAttribute="centerX" secondItem="SVC-vN-68T" secondAttribute="centerX" constant="0.5" id="K8O-N1-hEG"/>
-                            <constraint firstItem="Sdf-8C-14E" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="4" id="OZv-gn-vHd"/>
-                            <constraint firstItem="shs-Q7-7yt" firstAttribute="top" secondItem="Sdf-8C-14E" secondAttribute="bottom" constant="20" id="ZFN-d2-UZg"/>
-                            <constraint firstItem="SVC-vN-68T" firstAttribute="bottom" secondItem="Sdf-8C-14E" secondAttribute="bottom" constant="-77" id="aIH-vg-C2C"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="8Sy-ck-jAh" secondAttribute="trailing" constant="4" id="atT-gS-cCY"/>
-                            <constraint firstItem="sEE-9r-AQZ" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="-16" id="gib-Dn-2n3"/>
-                            <constraint firstItem="zaK-X5-Jnp" firstAttribute="top" secondItem="86E-a5-OJw" secondAttribute="bottom" constant="4" id="nqM-Fv-2kJ"/>
-                            <constraint firstAttribute="centerY" secondItem="sEE-9r-AQZ" secondAttribute="centerY" constant="-10" id="rp2-Ps-Nbx"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="sEE-9r-AQZ" secondAttribute="trailing" constant="-16" id="yAx-Ik-Mmu"/>
+                            <constraint firstItem="sEE-9r-AQZ" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="-16" id="3Ei-Kh-vjI"/>
+                            <constraint firstItem="shs-Q7-7yt" firstAttribute="top" secondItem="Sdf-8C-14E" secondAttribute="bottom" constant="20" id="6PV-KD-sNS"/>
+                            <constraint firstItem="SVC-vN-68T" firstAttribute="top" secondItem="sEE-9r-AQZ" secondAttribute="bottom" id="6gm-bq-IYx"/>
+                            <constraint firstItem="8Sy-ck-jAh" firstAttribute="bottom" secondItem="sEE-9r-AQZ" secondAttribute="top" id="Fj6-bh-L0M"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="zaK-X5-Jnp" secondAttribute="trailing" constant="4" id="KC4-j6-LyO"/>
+                            <constraint firstItem="zaK-X5-Jnp" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="4" id="LzL-PH-2YH"/>
+                            <constraint firstItem="SVC-vN-68T" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="4" id="OMP-vZ-SrT"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SVC-vN-68T" secondAttribute="trailing" constant="4" id="OUp-pS-qaU"/>
+                            <constraint firstItem="zaK-X5-Jnp" firstAttribute="top" secondItem="86E-a5-OJw" secondAttribute="bottom" constant="4" id="Vyz-hE-xZO"/>
+                            <constraint firstItem="8Sy-ck-jAh" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="4" id="mdA-zw-LyT"/>
+                            <constraint firstItem="8Sy-ck-jAh" firstAttribute="top" secondItem="zaK-X5-Jnp" secondAttribute="bottom" constant="10" id="oR6-Za-ZOp"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="8Sy-ck-jAh" secondAttribute="trailing" constant="4" id="qkb-ur-apd"/>
+                            <constraint firstItem="Sdf-8C-14E" firstAttribute="bottom" secondItem="SVC-vN-68T" secondAttribute="bottom" constant="77" id="qv3-5M-Q5y"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Sdf-8C-14E" secondAttribute="trailing" constant="4" id="yIE-5O-OBH"/>
+                            <constraint firstItem="Sdf-8C-14E" firstAttribute="leading" secondItem="2bB-Ol-xhr" secondAttribute="leadingMargin" constant="4" id="yWV-HI-ABv"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="sEE-9r-AQZ" secondAttribute="trailing" constant="-16" id="z5t-g3-84c"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="j8Z-os-nU5"/>
                     <connections>
                         <outlet property="descriptionLabel" destination="8Sy-ck-jAh" id="r5L-yI-zd4"/>
-                        <outlet property="descriptionTopConstraint" destination="ETI-dq-dXC" id="j01-u9-qkO"/>
+                        <outlet property="descriptionTopConstraint" destination="oR6-Za-ZOp" id="uQ6-6d-XDs"/>
                         <outlet property="locationButton" destination="Sdf-8C-14E" id="amY-FG-Snl"/>
-                        <outlet property="mapHeightConstraint" destination="ntv-dy-8Kv" id="ONd-Pi-JbY"/>
                         <outlet property="mapImageView" destination="sEE-9r-AQZ" id="Zx1-DL-KaU"/>
                         <outlet property="skipButton" destination="SVC-vN-68T" id="uU0-2Z-vGM"/>
                         <outlet property="titleHeightConstraint" destination="VhK-Dg-f7D" id="deh-SZ-hQb"/>
@@ -2104,7 +2137,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYf-D8-Nxr">
-                                <rect key="frame" x="20" y="68" width="560" height="102"/>
+                                <rect key="frame" x="20" y="68" width="560" height="101.5"/>
                                 <string key="text">With this enabled Sense can pick up snoring, sleep talking and noise disturbances.
 
 Without enhanced audio enabled, Sense only looks at background noise levels.</string>
@@ -2112,8 +2145,8 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="enableAudio.png" translatesAutoresizingMaskIntoConstraints="NO" id="dFU-8H-O86">
-                                <rect key="frame" x="0.0" y="180" width="600" height="195"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="enableAudio.png" translatesAutoresizingMaskIntoConstraints="NO" id="dFU-8H-O86">
+                                <rect key="frame" x="0.0" y="169.5" width="600" height="305.5"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhf-f1-wVH" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
@@ -2156,13 +2189,20 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                             <constraint firstItem="4Cj-AM-Ri7" firstAttribute="bottom" secondItem="cYf-D8-Nxr" secondAttribute="top" constant="-10" id="Vke-vD-JNe"/>
                             <constraint firstItem="dFU-8H-O86" firstAttribute="leading" secondItem="kiV-0X-2Lu" secondAttribute="leadingMargin" constant="-16" id="YZx-xC-B9d"/>
                             <constraint firstItem="cYf-D8-Nxr" firstAttribute="leading" secondItem="kiV-0X-2Lu" secondAttribute="leadingMargin" constant="4" id="dcl-2H-3z7"/>
+                            <constraint firstItem="ZLg-Bc-ITS" firstAttribute="top" secondItem="dFU-8H-O86" secondAttribute="bottom" id="hLN-d0-gte"/>
                             <constraint firstAttribute="trailingMargin" secondItem="uhf-f1-wVH" secondAttribute="trailing" constant="4" id="hjE-5N-ZTn"/>
                             <constraint firstItem="4Cj-AM-Ri7" firstAttribute="top" secondItem="qBG-S7-R3g" secondAttribute="bottom" constant="4" id="itn-IY-Ugn"/>
                             <constraint firstItem="hZq-Yk-VlR" firstAttribute="top" secondItem="uhf-f1-wVH" secondAttribute="bottom" constant="20" id="mxR-bW-eSF"/>
                             <constraint firstItem="4Cj-AM-Ri7" firstAttribute="top" secondItem="qBG-S7-R3g" secondAttribute="bottom" constant="4" id="niB-eX-Xqn"/>
+                            <constraint firstAttribute="centerY" secondItem="dFU-8H-O86" secondAttribute="centerY" constant="-0.5" id="p4G-C5-lEx"/>
+                            <constraint firstItem="cYf-D8-Nxr" firstAttribute="bottom" secondItem="dFU-8H-O86" secondAttribute="top" id="soy-0u-NYT"/>
                             <constraint firstItem="4Cj-AM-Ri7" firstAttribute="leading" secondItem="kiV-0X-2Lu" secondAttribute="leadingMargin" constant="4" id="vzs-2n-Vg2"/>
-                            <constraint firstItem="cYf-D8-Nxr" firstAttribute="bottom" secondItem="dFU-8H-O86" secondAttribute="top" constant="-10" id="y1g-hY-DN4"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="p4G-C5-lEx"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="uOU-sE-qZW"/>
                     <connections>
@@ -2207,11 +2247,8 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sampleNotification.png" translatesAutoresizingMaskIntoConstraints="NO" id="1ye-yc-yHg">
-                                <rect key="frame" x="0.0" y="149" width="600" height="185"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="185" id="lxv-bP-sUT"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sampleNotification.png" translatesAutoresizingMaskIntoConstraints="NO" id="1ye-yc-yHg">
+                                <rect key="frame" x="0.0" y="109" width="600" height="366"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9ia-GF-Swk">
                                 <rect key="frame" x="240" y="475" width="119" height="28"/>
@@ -2245,6 +2282,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="cxR-ry-GIM" firstAttribute="bottom" secondItem="1ye-yc-yHg" secondAttribute="top" id="0Qe-c4-xFl"/>
                             <constraint firstItem="1ye-yc-yHg" firstAttribute="leading" secondItem="Znx-od-CyB" secondAttribute="leadingMargin" constant="-16" id="4bM-uM-nnE"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Go7-Z7-kmw" secondAttribute="trailing" constant="4" id="5iy-Om-dqh"/>
                             <constraint firstItem="Go7-Z7-kmw" firstAttribute="leading" secondItem="Znx-od-CyB" secondAttribute="leadingMargin" constant="4" id="7Po-tv-ajw"/>
@@ -2252,7 +2290,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                             <constraint firstAttribute="centerX" secondItem="9ia-GF-Swk" secondAttribute="centerX" constant="0.5" id="GCD-ax-FCl"/>
                             <constraint firstAttribute="trailingMargin" secondItem="je6-JT-9YZ" secondAttribute="trailing" constant="4" id="Gst-YJ-a8H"/>
                             <constraint firstAttribute="trailingMargin" secondItem="cxR-ry-GIM" secondAttribute="trailing" constant="4" id="HKo-ef-yJM"/>
-                            <constraint firstItem="1ye-yc-yHg" firstAttribute="top" secondItem="cxR-ry-GIM" secondAttribute="bottom" constant="40" id="SPQ-7p-RgP"/>
+                            <constraint firstItem="9ia-GF-Swk" firstAttribute="bottom" secondItem="1ye-yc-yHg" secondAttribute="bottom" constant="28" id="McE-K7-gWT"/>
                             <constraint firstItem="PKh-qW-k4b" firstAttribute="top" secondItem="je6-JT-9YZ" secondAttribute="bottom" constant="20" id="XmD-RR-Jr6"/>
                             <constraint firstItem="je6-JT-9YZ" firstAttribute="leading" secondItem="Znx-od-CyB" secondAttribute="leadingMargin" constant="4" id="ejN-WE-E3m"/>
                             <constraint firstItem="Go7-Z7-kmw" firstAttribute="bottom" secondItem="cxR-ry-GIM" secondAttribute="top" constant="-10" id="nPu-Ti-TQt"/>
@@ -2266,7 +2304,6 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                         <outlet property="descriptionLabel" destination="cxR-ry-GIM" id="RqM-km-ZXU"/>
                         <outlet property="descriptionTopConstraint" destination="nPu-Ti-TQt" id="X19-ux-Qmb"/>
                         <outlet property="enableButton" destination="je6-JT-9YZ" id="lwA-lc-eEF"/>
-                        <outlet property="imageTopConstraint" destination="SPQ-7p-RgP" id="ljT-QP-p7E"/>
                         <outlet property="skipButton" destination="9ia-GF-Swk" id="aFd-NJ-3lO"/>
                         <outlet property="titleHeightConstraint" destination="eFQ-oR-ERS" id="cIT-vD-3Si"/>
                         <outlet property="titleLabel" destination="Go7-Z7-kmw" id="rG7-w3-c7Q"/>
@@ -2298,8 +2335,8 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
-                                <rect key="frame" x="20" y="68" width="560" height="36"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
+                                <rect key="frame" x="20" y="68" width="560" height="33.5"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Now we'll pair your phone with Sense.  Make sure Sense is plugged in, nearby, and glowing purple.  Tap Continue when ready.">
                                         <attributes>
@@ -2310,12 +2347,8 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
-                                <rect key="frame" x="213" y="257" width="176" height="166"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="176" id="QS5-mQ-I2e"/>
-                                    <constraint firstAttribute="height" constant="166" id="e2c-Wq-J9g"/>
-                                </constraints>
+                            <imageView userInteractionEnabled="NO" contentMode="center" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
+                                <rect key="frame" x="0.0" y="101.5" width="600" height="373.5"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-3Z-6yh">
                                 <rect key="frame" x="20" y="475" width="560" height="28"/>
@@ -2350,16 +2383,18 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                         <constraints>
                             <constraint firstItem="2TQ-o7-Rs6" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="0fo-8k-s7Q"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="top" secondItem="I6r-jE-jN1" secondAttribute="bottom" constant="4" id="D61-4A-EJJ"/>
-                            <constraint firstAttribute="centerX" secondItem="Awm-Mz-tO7" secondAttribute="centerX" constant="-0.5" id="Jnt-Q8-ole"/>
                             <constraint firstAttribute="trailingMargin" secondItem="mFI-cr-rhB" secondAttribute="trailing" constant="4" id="KNC-U4-JbD"/>
                             <constraint firstItem="2TQ-o7-Rs6" firstAttribute="bottom" secondItem="bX7-3Z-6yh" secondAttribute="bottom" constant="77" id="KzW-NL-AkV"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="M3V-dV-0vf"/>
+                            <constraint firstItem="Awm-Mz-tO7" firstAttribute="top" secondItem="mFI-cr-rhB" secondAttribute="bottom" id="N9e-PJ-aHY"/>
+                            <constraint firstItem="Awm-Mz-tO7" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="-16" id="Sds-Og-OLc"/>
                             <constraint firstItem="rNF-MR-Ds2" firstAttribute="top" secondItem="2TQ-o7-Rs6" secondAttribute="bottom" constant="20" id="VKI-gd-baI"/>
                             <constraint firstItem="mFI-cr-rhB" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="YpL-lA-O3e"/>
                             <constraint firstItem="xHT-0z-rBN" firstAttribute="bottom" secondItem="mFI-cr-rhB" secondAttribute="top" constant="-10" id="cUY-fa-DEC"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Awm-Mz-tO7" secondAttribute="trailing" constant="-16" id="daL-Nx-fkm"/>
+                            <constraint firstItem="Awm-Mz-tO7" firstAttribute="bottom" secondItem="bX7-3Z-6yh" secondAttribute="top" id="daa-Jq-hkd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xHT-0z-rBN" secondAttribute="trailing" constant="4" id="jFT-SI-kIS"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2TQ-o7-Rs6" secondAttribute="trailing" constant="4" id="kx2-M4-RDe"/>
-                            <constraint firstAttribute="centerY" secondItem="Awm-Mz-tO7" secondAttribute="centerY" constant="-40" id="pZ8-Wt-QVg"/>
                             <constraint firstItem="bX7-3Z-6yh" firstAttribute="leading" secondItem="f6K-qr-p0h" secondAttribute="leadingMargin" constant="4" id="q6q-ws-CKy"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bX7-3Z-6yh" secondAttribute="trailing" constant="4" id="w0J-7J-bbG"/>
                         </constraints>
@@ -2369,7 +2404,6 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                     <connections>
                         <outlet property="descriptionLabel" destination="mFI-cr-rhB" id="06H-pA-6mf"/>
                         <outlet property="descriptionTopConstraint" destination="cUY-fa-DEC" id="6wz-Dm-eoT"/>
-                        <outlet property="imageHeightConstraint" destination="e2c-Wq-J9g" id="bbw-x8-iyz"/>
                         <outlet property="notGlowingButton" destination="bX7-3Z-6yh" id="Dcn-nY-xAS"/>
                         <outlet property="readyButton" destination="2TQ-o7-Rs6" id="ENr-AI-Zzv"/>
                         <outlet property="senseImageView" destination="Awm-Mz-tO7" id="cqK-F9-ETs"/>
@@ -2562,17 +2596,22 @@ Flip the switch to On.</string>
                                 <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Make sure Sense is plugged into a wall outlet next to your bed." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xd-u7-RCe">
-                                <rect key="frame" x="20" y="68" width="560" height="28"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make sure Sense is plugged into a wall outlet next to your bed." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xd-u7-RCe">
+                                <rect key="frame" x="20" y="68" width="560" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="oY6-8b-LCZ">
-                                <rect key="frame" x="0.0" y="136" width="600" height="235"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="oY6-8b-LCZ">
+                                <rect key="frame" x="0.0" y="88.5" width="600" height="441.5"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="235" id="TpR-T0-aTD"/>
                                 </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="TpR-T0-aTD"/>
+                                    </mask>
+                                </variation>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="37N-ly-LlQ" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
@@ -2594,23 +2633,18 @@ Flip the switch to On.</string>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="37N-ly-LlQ" secondAttribute="trailing" constant="4" id="6Xn-fK-h99"/>
                             <constraint firstItem="bQj-04-dk3" firstAttribute="top" secondItem="37N-ly-LlQ" secondAttribute="bottom" constant="20" id="8Dr-Wx-vvo"/>
-                            <constraint firstItem="oY6-8b-LCZ" firstAttribute="bottom" secondItem="37N-ly-LlQ" secondAttribute="bottom" constant="-90" id="8r8-w1-ZhQ"/>
+                            <constraint firstItem="oY6-8b-LCZ" firstAttribute="top" secondItem="2Xd-u7-RCe" secondAttribute="bottom" id="9Va-zf-0TV"/>
                             <constraint firstItem="2Xd-u7-RCe" firstAttribute="leading" secondItem="4iw-TV-P6s" secondAttribute="leadingMargin" constant="4" id="ALy-Us-FEj"/>
                             <constraint firstItem="oY6-8b-LCZ" firstAttribute="leading" secondItem="4iw-TV-P6s" secondAttribute="leadingMargin" constant="-16" id="BkP-6d-bXy"/>
                             <constraint firstItem="6Cl-vP-IeW" firstAttribute="leading" secondItem="4iw-TV-P6s" secondAttribute="leadingMargin" constant="4" id="I4L-vb-4zp"/>
                             <constraint firstItem="6Cl-vP-IeW" firstAttribute="top" secondItem="Q0Q-vL-SWN" secondAttribute="bottom" constant="4" id="OX5-nB-ku7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="2Xd-u7-RCe" secondAttribute="trailing" constant="4" id="PD0-Ng-ZmY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="6Cl-vP-IeW" secondAttribute="trailing" constant="4" id="Qcz-fc-Mya"/>
-                            <constraint firstItem="2Xd-u7-RCe" firstAttribute="top" secondItem="oY6-8b-LCZ" secondAttribute="top" constant="-68" id="Qr1-h1-VJB"/>
                             <constraint firstAttribute="trailingMargin" secondItem="oY6-8b-LCZ" secondAttribute="trailing" constant="-16" id="byh-6B-Ky0"/>
+                            <constraint firstItem="oY6-8b-LCZ" firstAttribute="bottom" secondItem="37N-ly-LlQ" secondAttribute="top" id="hiK-lQ-uCO"/>
                             <constraint firstItem="6Cl-vP-IeW" firstAttribute="bottom" secondItem="2Xd-u7-RCe" secondAttribute="top" constant="-10" id="q52-sy-YNE"/>
                             <constraint firstItem="37N-ly-LlQ" firstAttribute="leading" secondItem="4iw-TV-P6s" secondAttribute="leadingMargin" constant="4" id="zUo-uU-Y4g"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="8r8-w1-ZhQ"/>
-                            </mask>
-                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="YPm-JV-16B"/>
                     <connections>
@@ -2722,9 +2756,9 @@ Have your partner visit hello.is/app to download the Sense app and create a new 
         <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="gUR-KW-V2G"/>
-        <segue reference="JsS-bV-f7k"/>
         <segue reference="ZOJ-Sh-Dzx"/>
+        <segue reference="JsS-bV-f7k"/>
+        <segue reference="7LA-fg-2Jb"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

@@ -27,6 +27,8 @@ static CGFloat const HEMSleepScoreAnimationDelay = 0.35f;
 
 - (void)animateScoreTo:(CGFloat)value
 {
+    if (value == 0)
+        return;
     CGFloat frameDuration = HEMSleepScoreAnimationDuration/(value/2);
     int64_t delay = HEMSleepScoreAnimationDelay * NSEC_PER_SEC;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{

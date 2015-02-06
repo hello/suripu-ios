@@ -8,7 +8,6 @@
 #import "HEMSettingsTableViewController.h"
 #import "HEMSettingsTableViewCell.h"
 #import "HEMMainStoryboard.h"
-#import "HEMAlertController.h"
 #import "HEMLogUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMSupportUtil.h"

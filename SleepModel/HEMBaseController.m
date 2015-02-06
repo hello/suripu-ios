@@ -7,7 +7,6 @@
 //
 
 #import "HEMBaseController.h"
-#import "HEMAlertController.h"
 #import "HEMDialogViewController.h"
 #import "HEMSupportUtil.h"
 

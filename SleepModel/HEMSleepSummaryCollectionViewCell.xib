@@ -158,7 +158,7 @@
                             <constraint firstAttribute="height" constant="62" id="Uhi-2L-7e1"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="12"/>
-                        <state key="normal" title="SLEEP SUMMARY" image="sleep_summary.png">
+                        <state key="normal" title="SLEEP SUMMARY">
                             <color key="titleColor" red="0.0" green="0.50588235290000005" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -173,7 +173,7 @@
                         </constraints>
                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="12"/>
                         <inset key="titleEdgeInsets" minX="2" minY="0.0" maxX="0.0" maxY="0.0"/>
-                        <state key="normal" title="BEFORE SLEEP" image="before_sleep.png">
+                        <state key="normal" title="BEFORE SLEEP">
                             <color key="titleColor" red="0.58423030379999996" green="0.58421277999999999" blue="0.58422267439999997" alpha="1" colorSpace="calibratedRGB"/>
                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                         </state>
@@ -408,7 +408,5 @@
     <resources>
         <image name="Menu.png" width="18" height="12"/>
         <image name="Share.png" width="17" height="23"/>
-        <image name="before_sleep.png" width="21" height="21"/>
-        <image name="sleep_summary.png" width="22" height="22"/>
     </resources>
 </document>

@@ -13,7 +13,6 @@
 #import "HEMAlarmAddButton.h"
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
-#import "HEMAlertController.h"
 #import "HEMMarkdown.h"
 
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate>

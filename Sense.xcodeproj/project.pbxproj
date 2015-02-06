@@ -1398,11 +1398,11 @@
 				8AC49F981982DE5E00C2BD63 /* Sensors */,
 				8AC49F991982DE7000C2BD63 /* Settings */,
 				BFC3AA0319C2650F0055D308 /* Sleep Questions */,
+				8AC49F8F1981B92100C2BD63 /* Timeline */,
 				8AC276A91A3CE54C00B082D9 /* Trends */,
 				8A576F0F1A79B11000287398 /* Tutorial */,
 				6003F594195388D20070C39A /* Supporting Files */,
 				BFF03EC71A536D0C00BD65D4 /* System Alerts */,
-				8AC49F8F1981B92100C2BD63 /* Timeline */,
 			);
 			name = Sense;
 			path = SleepModel;

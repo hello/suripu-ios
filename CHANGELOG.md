@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.1.8
+
+New:
+
+* Added link to forgot password to sign in screen
+
 ## 1.0.1.7
 
 Fixes:

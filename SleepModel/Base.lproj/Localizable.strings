@@ -123,7 +123,7 @@
 "setup.second-pill.error.title" = "Failed to enable Pairing Mode";
 "setup.second-pill.error.failed-to-enable-pairing-mode" = "Could not enable Pairing Mode on Sense.";
 "setup.second-pill.error.sense-full" = "Sense cannot pair with any more devices.";
-"setup.get-app.subtitle.format" = "Sense is now in Pairing Mode.\n\nHave your partner visit %@ to download the Sense app and create a new account.\n\nThey will be given instructions to set up their Sleep Pill.";
+"setup.get-app.subtitle.format" = "Sense is now in Pairing Mode.\n\nHave your partner visit %@ to download the Sense app and create a new account.  They will be given instructions to set up their Sleep Pill.";
 "setup.get-app.url" = "senseapp.com";
 
 // settings

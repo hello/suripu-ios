@@ -15,8 +15,6 @@
 
 @interface HEMGetAppViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *subtitleLabel;
-
 @end
 
 @implementation HEMGetAppViewController
@@ -24,13 +22,13 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self setupSubtitle];
+    [self setupDescription];
     
     [self enableBackButton:NO];
     [SENAnalytics track:kHEMAnalyticsEventOnBGetApp];
 }
 
-- (void)setupSubtitle {
+- (void)setupDescription {
     NSString* format = NSLocalizedString(@"setup.get-app.subtitle.format", nil);
     NSString* url = NSLocalizedString(@"setup.get-app.url", nil);
     
@@ -43,7 +41,7 @@
     
     [HEMOnboardingUtils applyCommonDescriptionAttributesTo:attrSubtitle];
     
-    [[self subtitleLabel] setAttributedText:attrSubtitle];
+    [[self descriptionLabel] setAttributedText:attrSubtitle];
 }
 
 - (IBAction)finish:(id)sender {

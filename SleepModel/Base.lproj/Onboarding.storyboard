@@ -910,7 +910,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0se-fT-N6l" userLabel="descLabel">
-                                <rect key="frame" x="20" y="68" width="560" height="150.5"/>
+                                <rect key="frame" x="20" y="68" width="560" height="151"/>
                                 <string key="text">Before you connect your phone, Sense needs to be put into Pairing Mode.
 
 Place your hand directly on top of Sense for seven seconds, and then remove it.
@@ -920,7 +920,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="pairingMode.png" translatesAutoresizingMaskIntoConstraints="NO" id="ryD-Go-K8h">
-                                <rect key="frame" x="0.0" y="218.5" width="600" height="311.5"/>
+                                <rect key="frame" x="0.0" y="219" width="600" height="312"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="93" id="tQT-rX-OHU"/>
                                 </constraints>
@@ -1017,7 +1017,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 </connections>
                             </button>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="xuG-gW-rF9">
-                                <rect key="frame" x="20" y="62.5" width="560" height="61.5"/>
+                                <rect key="frame" x="20" y="63" width="560" height="62"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                 <color key="textColor" red="0.22352941179999999" green="0.22352941179999999" blue="0.22352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1565,13 +1565,13 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense will now check the conditions in your bedroom." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGc-8P-g1M">
-                                        <rect key="frame" x="20" y="40" width="560" height="20.5"/>
+                                        <rect key="frame" x="20" y="40" width="560" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="EwG-fT-RLQ">
-                                        <rect key="frame" x="0.0" y="60.5" width="600" height="420.5"/>
+                                        <rect key="frame" x="0.0" y="61" width="600" height="421"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="235" id="Eq2-1g-uLB"/>
                                         </constraints>
@@ -2137,7 +2137,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYf-D8-Nxr">
-                                <rect key="frame" x="20" y="68" width="560" height="101.5"/>
+                                <rect key="frame" x="20" y="68" width="560" height="102"/>
                                 <string key="text">With this enabled Sense can pick up snoring, sleep talking and noise disturbances.
 
 Without enhanced audio enabled, Sense only looks at background noise levels.</string>
@@ -2146,7 +2146,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="enableAudio.png" translatesAutoresizingMaskIntoConstraints="NO" id="dFU-8H-O86">
-                                <rect key="frame" x="0.0" y="169.5" width="600" height="305.5"/>
+                                <rect key="frame" x="0.0" y="170" width="600" height="306"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhf-f1-wVH" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
@@ -2336,7 +2336,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
-                                <rect key="frame" x="20" y="68" width="560" height="33.5"/>
+                                <rect key="frame" x="20" y="68" width="560" height="34"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Now we'll pair your phone with Sense.  Make sure Sense is plugged in, nearby, and glowing purple.  Tap Continue when ready.">
                                         <attributes>
@@ -2348,7 +2348,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="center" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
-                                <rect key="frame" x="0.0" y="101.5" width="600" height="373.5"/>
+                                <rect key="frame" x="0.0" y="102" width="600" height="374"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-3Z-6yh">
                                 <rect key="frame" x="20" y="475" width="560" height="28"/>
@@ -2597,13 +2597,13 @@ Flip the switch to On.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Make sure Sense is plugged into a wall outlet next to your bed." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Xd-u7-RCe">
-                                <rect key="frame" x="20" y="68" width="560" height="20.5"/>
+                                <rect key="frame" x="20" y="68" width="560" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="oY6-8b-LCZ">
-                                <rect key="frame" x="0.0" y="88.5" width="600" height="441.5"/>
+                                <rect key="frame" x="0.0" y="89" width="600" height="442"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="235" id="TpR-T0-aTD"/>
                                 </constraints>
@@ -2677,13 +2677,13 @@ Flip the switch to On.</string>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJO-3H-8zJ">
-                                <rect key="frame" x="20" y="63" width="560" height="72"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="sJO-3H-8zJ">
+                                <rect key="frame" x="20" y="63" width="560" height="67"/>
                                 <attributedString key="attributedText">
                                     <fragment>
                                         <string key="content">Your Sense is now in Pairing Mode.
 
-Have your partner visit hello.is/app to download the Sense app and create a new account.  They will be given instructions to set up their Sleep Pill.</string>
+Have your partner visit senseapp.com to download the Sense app and create a new account.  They will be given instructions to set up their Sleep Pill.</string>
                                         <attributes>
                                             <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <font key="NSFont" metaFont="system" size="18"/>

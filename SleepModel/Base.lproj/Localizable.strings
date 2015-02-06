@@ -48,7 +48,7 @@
 // help links
 "help.url.order-form" = "https://order.hello.is/";
 "help.url.support" = "https://support.hello.is";
-"help.email.address" = "help@sayhello.com";
+"help.email.address" = "support@sayhello.com";
 "help.email.subject" = "Sense Help Request";
 
 // video

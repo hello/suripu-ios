@@ -84,10 +84,13 @@ static NSString* const HEMAllScopeType = @"ALL";
             self.loading = NO;
             return;
         }
-        self.defaultTrends = [data mutableCopy];
-        HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
-        [layout clearCache];
-        [self.collectionView reloadData];
+        NSMutableArray* trends = [data mutableCopy];
+        if (![trends isEqualToArray:self.defaultTrends]) {
+            self.defaultTrends = trends;
+            HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
+            [layout clearCache];
+            [self.collectionView reloadData];
+        }
         self.loading = NO;
         [HEMTutorial showTutorialForTrendsIfNeeded];
     }];

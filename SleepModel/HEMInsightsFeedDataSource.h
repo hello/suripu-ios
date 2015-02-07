@@ -18,7 +18,7 @@
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withWidth:(CGFloat)width;
 - (CGFloat)bodyTextPaddingForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (BOOL)isLoading;
-- (void)refresh:(void(^)(void))completion;
+- (void)refresh:(void(^)(BOOL didUpdate))completion;
 - (SENQuestion*)questionAtIndexPath:(NSIndexPath*)indexPath;
 - (SENInsight*)insightAtIndexPath:(NSIndexPath*)indexPath;
 - (void)removeQuestionAtIndexPath:(NSIndexPath*)indexPath;

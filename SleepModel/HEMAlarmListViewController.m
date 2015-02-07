@@ -145,7 +145,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
             HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
             [layout clearCache];
             [self reloadData];
-            [self.collectionView reloadData];
         }
         self.addButton.enabled = YES;
         self.loading = NO;
@@ -154,9 +153,19 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)reloadData
 {
-    if (![self shouldReloadData])
+    NSArray* cachedAlarms = [self sortedCachedAlarms];
+    if ([self.alarms isEqualToArray:cachedAlarms])
         return;
-    self.alarms = [[SENAlarm savedAlarms] sortedArrayUsingComparator:^NSComparisonResult(SENAlarm* obj1, SENAlarm* obj2) {
+
+    self.alarms = cachedAlarms;
+    self.noAlarmLabel.hidden = self.alarms.count > 0;
+    self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
+    [self.collectionView reloadData];
+}
+
+- (NSArray*)sortedCachedAlarms
+{
+    return [[SENAlarm savedAlarms] sortedArrayUsingComparator:^NSComparisonResult(SENAlarm* obj1, SENAlarm* obj2) {
         NSNumber* alarmValue1 = @(obj1.hour * 60 + obj1.minute);
         NSNumber* alarmValue2 = @(obj2.hour * 60 + obj2.minute);
         NSComparisonResult result = [alarmValue1 compare:alarmValue2];
@@ -164,26 +173,6 @@ static NSUInteger const HEMAlarmListLimit = 8;
             result = [@(obj1.repeatFlags) compare:@(obj2.repeatFlags)];
         return result;
     }];
-    self.noAlarmLabel.hidden = self.alarms.count > 0;
-    self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;
-}
-
-- (BOOL)shouldReloadData
-{
-    NSArray* savedAlarms = [SENAlarm savedAlarms];
-    if (self.alarms.count == savedAlarms.count) {
-        NSPredicate* predicate = [NSPredicate predicateWithBlock:^BOOL(SENAlarm* alarm, NSDictionary *bindings) {
-            for (SENAlarm* loadedAlarm in self.alarms) {
-                if ([alarm isEqual:loadedAlarm] && [loadedAlarm isSaved])
-                    return YES;
-            }
-            return NO;
-        }];
-        NSArray* matchedAlarms = [savedAlarms filteredArrayUsingPredicate:predicate];
-        if (matchedAlarms.count == savedAlarms.count)
-            return NO;
-    }
-    return YES;
 }
 
 #pragma mark - Actions

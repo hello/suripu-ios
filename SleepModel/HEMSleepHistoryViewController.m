@@ -233,10 +233,12 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
         if (segments.count == 0)
             return;
 
-        NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-        [sleepResult updateWithDictionary:[timelines firstObject]];
-        [sleepResult save];
-        [strongSelf.historyCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+        BOOL didUpdate = [sleepResult updateWithDictionary:[timelines firstObject]];
+        if (didUpdate) {
+            [sleepResult save];
+            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+            [strongSelf.historyCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+        }
     }];
 }
 

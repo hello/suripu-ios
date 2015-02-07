@@ -31,8 +31,10 @@ typedef NS_ENUM(NSUInteger, SENSleepResultStatisticType) {
  *  ignoring missing values
  *
  *  @param data data representing object properties
+ *
+ *  @return YES if any properties were changed
  */
-- (void)updateWithDictionary:(NSDictionary*)data;
+- (BOOL)updateWithDictionary:(NSDictionary*)data;
 
 @end
 

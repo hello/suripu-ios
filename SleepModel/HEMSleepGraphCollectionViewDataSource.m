@@ -104,7 +104,10 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         _calendar = [NSCalendar currentCalendar];
         [self configureCollectionView];
         [self reloadData];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:SENAuthorizationServiceDidAuthorizeNotification object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(reloadData)
+                                                     name:SENAuthorizationServiceDidAuthorizeNotification
+                                                   object:nil];
     }
     return self;
 }
@@ -133,16 +136,11 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 - (void)refreshWithTimelines:(NSArray*)timelines
 {
-    NSString* message = self.sleepResult.message;
-    NSNumber* score = self.sleepResult.score;
     NSDictionary* timeline = [timelines firstObject];
-    [self.sleepResult updateWithDictionary:timeline];
-    [self.sleepResult save];
+    BOOL didChange = [self.sleepResult updateWithDictionary:timeline];
     [self hideLoadingViewAnimated:YES];
-    if ([self.sleepResult.message isEqualToString:message] && [self.sleepResult.score isEqual:score]) {
-        NSMutableIndexSet* set = [NSMutableIndexSet indexSetWithIndex:HEMSleepGraphCollectionViewSegmentSection];
-        [self.collectionView reloadSections:set];
-    } else {
+    if (didChange) {
+        [self.sleepResult save];
         [self.collectionView reloadData];
     }
 }

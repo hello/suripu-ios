@@ -111,20 +111,46 @@ static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
     [aCoder encodeObject:_statistics forKey:SENSleepResultStatistics];
 }
 
-- (void)updateWithDictionary:(NSDictionary*)data
+- (BOOL)updateWithDictionary:(NSDictionary*)data
 {
-    if (data[SENSleepResultDate])
-        self.date = [[[self class] dateFormatter] dateFromString:data[SENSleepResultDate]];
-    if (data[SENSleepResultMessage])
+    BOOL changed = NO;
+    if (data[SENSleepResultDate]) {
+        NSDate* date = [[[self class] dateFormatter] dateFromString:data[SENSleepResultDate]];
+        if (![date isEqual:self.date]) {
+            self.date = date;
+            changed = YES;
+        }
+    }
+    if (data[SENSleepResultMessage] && ![self.message isEqual:data[SENSleepResultMessage]]) {
         self.message = data[SENSleepResultMessage];
-    if (data[SENSleepResultScore])
+        changed = YES;
+    }
+    if (data[SENSleepResultScore] && ![self.score isEqual:data[SENSleepResultScore]]) {
         self.score = data[SENSleepResultScore];
-    if (data[SENSleepResultSegments])
-        self.segments = [self parseSegmentsFromArray:data[SENSleepResultSegments]];
-    if (data[SENSleepResultSensorInsights])
-        self.sensorInsights = [self parseSensorInsightsFromArray:data[SENSleepResultSensorInsights]];
-    if (data[SENSleepResultStatistics])
-        self.statistics = [self parseStatisticsFromDictionary:data[SENSleepResultStatistics]];
+        changed = YES;
+    }
+    if (data[SENSleepResultSegments]) {
+        NSArray* segments = [self parseSegmentsFromArray:data[SENSleepResultSegments]];
+        if (![self.segments isEqual:segments]) {
+            self.segments = segments;
+            changed = YES;
+        }
+    }
+    if (data[SENSleepResultSensorInsights]) {
+        NSArray* insights = [self parseSensorInsightsFromArray:data[SENSleepResultSensorInsights]];
+        if (![self.sensorInsights isEqual:insights]) {
+            self.sensorInsights = insights;
+            changed = YES;
+        }
+    }
+    if (data[SENSleepResultStatistics]) {
+        NSArray* stats = [self parseStatisticsFromDictionary:data[SENSleepResultStatistics]];
+        if (![self.statistics isEqual:stats]) {
+            self.statistics = stats;
+            changed = YES;
+        }
+    }
+    return changed;
 }
 
 - (NSString*)retrievalKey
@@ -174,6 +200,24 @@ static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
     [SENKeyedArchiver setObject:self forKey:[self retrievalKey] inCollection:NSStringFromClass([SENSleepResult class])];
 }
 
+- (BOOL)isEqual:(SENSleepResult*)object
+{
+    if (![object isKindOfClass:[SENSleepResult class]])
+        return NO;
+
+    return ((self.date && [self.date isEqual:object.date]) || (!self.date && !object.date))
+        && ((self.sensorInsights && [self.sensorInsights isEqualToArray:object.sensorInsights]) || (!self.sensorInsights && !object.sensorInsights))
+        && ((self.segments && [self.segments isEqualToArray:object.segments]) || (!self.segments && !object.segments))
+        && ((self.statistics && [self.statistics isEqualToArray:object.statistics]) || (!self.statistics && !object.statistics))
+        && ((self.score && [self.score isEqual:object.score]) || (!self.score && !object.score))
+        && ((self.message && [self.message isEqual:object.message]) || (!self.message && !object.message));
+}
+
+- (NSUInteger)hash
+{
+    return [self.retrievalKey hash];
+}
+
 @end
 
 @implementation SENSleepResultSound
@@ -200,18 +244,41 @@ static NSString* const SENSleepResultSoundDuration = @"duration_millis";
     return self;
 }
 
+- (BOOL)isEqual:(SENSleepResultSound*)object
+{
+    if (![object isKindOfClass:[SENSleepResultSound class]])
+        return NO;
+    return ((self.URLPath && [self.URLPath isEqual:object.URLPath]) || (!self.URLPath && !object.URLPath))
+        && self.durationMillis == object.durationMillis;
+}
+
+- (NSUInteger)hash
+{
+    return [self.URLPath hash] + self.durationMillis;
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:self.URLPath forKey:SENSleepResultSoundURL];
     [aCoder encodeObject:@(self.durationMillis) forKey:SENSleepResultSoundDuration];
 }
 
-- (void)updateWithDictionary:(NSDictionary *)data
+- (BOOL)updateWithDictionary:(NSDictionary *)data
 {
-    if (data[SENSleepResultSoundURL])
+    BOOL changed = NO;
+    if (data[SENSleepResultSoundURL] && ![self.URLPath isEqual:data[SENSleepResultSoundURL]]) {
+        changed = YES;
         self.URLPath = data[SENSleepResultSoundURL];
-    if (data[SENSleepResultSoundDuration])
-        self.durationMillis = [data[SENSleepResultSoundDuration] longValue];
+    }
+
+    if (data[SENSleepResultSoundDuration]) {
+        double duration = [data[SENSleepResultSoundDuration] longValue];
+        if (self.durationMillis != duration) {
+            self.durationMillis = duration;
+            changed = YES;
+        }
+    }
+    return changed;
 }
 
 @end
@@ -272,28 +339,74 @@ static NSString* const SENSleepResultSegmentSound = @"sound";
     [aCoder encodeObject:self.timezone forKey:SENSleepResultSegmentTimezoneOffset];
 }
 
-- (void)updateWithDictionary:(NSDictionary*)data
+- (BOOL)isEqual:(SENSleepResultSegment*)object
 {
-    if (data[SENSleepResultSegmentServerID])
+    if (![object isKindOfClass:[SENSleepResultSegment class]])
+        return NO;
+    return ((self.serverID && [self.serverID isEqual:object.serverID]) || (!self.serverID && !object.serverID))
+        && ((self.date && [self.date isEqual:object.date]) || (!self.date && !object.date))
+        && ((self.duration && [self.duration isEqual:object.duration]) || (!self.duration && !object.duration))
+        && ((self.message && [self.message isEqual:object.message]) || (!self.message && !object.message))
+        && ((self.eventType && [self.eventType isEqual:object.eventType]) || (!self.eventType && !object.eventType))
+        && ((self.sound && [self.sound isEqual:object.sound]) || (!self.sound && !object.sound))
+        && ((self.timezone && [self.timezone isEqual:object.timezone]) || (!self.timezone && !object.timezone))
+        && self.sleepDepth == object.sleepDepth;
+}
+
+- (NSUInteger)hash
+{
+    return [self.serverID hash];
+}
+
+- (BOOL)updateWithDictionary:(NSDictionary*)data
+{
+    BOOL changed = NO;
+    if (data[SENSleepResultSegmentServerID] && ![self.serverID isEqual:data[SENSleepResultSegmentServerID]]) {
         self.serverID = data[SENSleepResultSegmentServerID];
-    if (data[SENSleepResultSegmentTimestamp])
-        self.date = SENSleepResultDateFromTimestamp(data[SENSleepResultSegmentTimestamp]);
-    if (data[SENSleepResultSegmentDuration])
-        self.duration = data[SENSleepResultSegmentDuration];
-    if (data[SENSleepResultSegmentMessage])
-        self.message = data[SENSleepResultSegmentMessage];
-    if (data[SENSleepResultSegmentEventType])
-        self.eventType = data[SENSleepResultSegmentEventType];
-    if (data[SENSleepResultSegmentSleepDepth])
-        self.sleepDepth = [data[SENSleepResultSegmentSleepDepth] integerValue];
-    if (data[SENSleepResultSegmentTimezoneOffset])
-        self.timezone = [NSTimeZone timeZoneForSecondsFromGMT:[data[SENSleepResultSegmentTimezoneOffset] doubleValue] / 1000];
-    if (data[SENSleepResultSegmentSound]) {
-        if (self.sound)
-            [self.sound updateWithDictionary:data[SENSleepResultSegmentSound]];
-        else
-            self.sound = [[SENSleepResultSound alloc] initWithDictionary:data[SENSleepResultSegmentSound]];
+        changed = YES;
     }
+    if (data[SENSleepResultSegmentTimestamp]) {
+        NSDate* date = SENSleepResultDateFromTimestamp(data[SENSleepResultSegmentTimestamp]);
+        if (![self.date isEqual:date]) {
+            self.date = date;
+            changed = YES;
+        }
+    }
+    if (data[SENSleepResultSegmentDuration] && ![self.duration isEqual:data[SENSleepResultSegmentDuration]]) {
+        self.duration = data[SENSleepResultSegmentDuration];
+        changed = YES;
+    }
+    if (data[SENSleepResultSegmentMessage] && ![self.message isEqual:data[SENSleepResultSegmentMessage]]) {
+        self.message = data[SENSleepResultSegmentMessage];
+        changed = YES;
+    }
+    if (data[SENSleepResultSegmentEventType] && ![self.eventType isEqual:data[SENSleepResultSegmentEventType]]) {
+        self.eventType = data[SENSleepResultSegmentEventType];
+        changed = YES;
+    }
+    if (data[SENSleepResultSegmentSleepDepth]) {
+        NSInteger sleepDepth = [data[SENSleepResultSegmentSleepDepth] integerValue];
+        if (self.sleepDepth != sleepDepth) {
+            self.sleepDepth = sleepDepth;
+            changed = YES;
+        }
+    }
+    if (data[SENSleepResultSegmentTimezoneOffset]) {
+        NSTimeInterval secondsFromGMT = [data[SENSleepResultSegmentTimezoneOffset] doubleValue] / 1000;
+        NSTimeZone* zone = [NSTimeZone timeZoneForSecondsFromGMT:secondsFromGMT];
+        if (![self.timezone isEqual:zone]) {
+            self.timezone = zone;
+            changed = YES;
+        }
+    }
+    if (data[SENSleepResultSegmentSound]) {
+        SENSleepResultSound* sound = [[SENSleepResultSound alloc] initWithDictionary:data[SENSleepResultSegmentSound]];
+        if (![self.sound isEqual:sound]) {
+            self.sound = sound;
+            changed = YES;
+        }
+    }
+    return changed;
 }
 
 @end
@@ -354,6 +467,20 @@ static NSString* const SENSleepResultStatisticNameTimeToSleep = @"time_to_sleep"
     [aCoder encodeInteger:self.type forKey:SENSleepResultStatisticTypeKey];
 }
 
+- (BOOL)isEqual:(SENSleepResultStatistic*)object
+{
+    if (![object isKindOfClass:[SENSleepResultStatistic class]])
+        return NO;
+    return ((self.name && [self.name isEqual:object.name]) || (!self.name && !object.name))
+        && ((self.value && [self.value isEqual:object.value]) || (!self.value && !object.value))
+        && self.type == object.type;
+}
+
+- (NSUInteger)hash
+{
+    return [self.name hash] + [self.value hash] + self.type;
+}
+
 @end
 
 @implementation SENSleepResultSensorInsight
@@ -382,6 +509,20 @@ static NSString* const SENSleepResultSensorInsightCondition = @"condition";
     return self;
 }
 
+- (BOOL)isEqual:(SENSleepResultSensorInsight*)object
+{
+    if (![object isKindOfClass:[SENSleepResultSensorInsight class]])
+        return NO;
+    return ((self.name && [self.name isEqual:object.name]) || (!self.name && !object.name))
+        && ((self.message && [self.message isEqual:object.message]) || (!self.message && !object.message))
+        && self.condition == object.condition;
+}
+
+- (NSUInteger)hash
+{
+    return [self.name hash] + [self.message hash];
+}
+
 - (void)encodeWithCoder:(NSCoder*)aCoder
 {
     [aCoder encodeObject:self.name forKey:SENSleepResultSensorInsightName];
@@ -389,14 +530,25 @@ static NSString* const SENSleepResultSensorInsightCondition = @"condition";
     [aCoder encodeObject:@(self.condition) forKey:SENSleepResultSensorInsightCondition];
 }
 
-- (void)updateWithDictionary:(NSDictionary*)data
+- (BOOL)updateWithDictionary:(NSDictionary*)data
 {
-    if (data[SENSleepResultSensorInsightName])
+    BOOL changed = NO;
+    if (data[SENSleepResultSensorInsightName] && ![self.name isEqual:data[SENSleepResultSensorInsightName]]) {
         self.name = data[SENSleepResultSensorInsightName];
-    if (data[SENSleepResultSensorInsightMessage])
+        changed = YES;
+    }
+    if (data[SENSleepResultSensorInsightMessage] && ![self.message isEqual:data[SENSleepResultSensorInsightMessage]]) {
         self.message = data[SENSleepResultSensorInsightMessage];
-    if (data[SENSleepResultSensorInsightCondition])
-        self.condition = [SENSensor conditionFromValue:data[SENSleepResultSensorInsightCondition]];
+        changed = YES;
+    }
+    if (data[SENSleepResultSensorInsightCondition]) {
+        SENSensorCondition condition = [SENSensor conditionFromValue:data[SENSleepResultSensorInsightCondition]];
+        if (self.condition != condition) {
+            self.condition = condition;
+            changed = YES;
+        }
+    }
+    return changed;
 }
 
 @end

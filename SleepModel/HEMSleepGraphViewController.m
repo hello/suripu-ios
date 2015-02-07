@@ -272,7 +272,6 @@ static CGFloat const HEMEventOverlayZPosition = 30.f;
     self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
                                                                                   sleepDate:date];
     self.collectionView.dataSource = self.dataSource;
-    [self.collectionView reloadData];
 }
 
 #pragma mark Event Info

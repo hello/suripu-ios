@@ -13,7 +13,6 @@
 
 #import "HEMOnboardAlarmViewController.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMScrollableView.h"
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"

@@ -247,16 +247,6 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
 
 }
 
-+ (void)applyShadowToButtonContainer:(UIView*)buttonContainer {
-    NSShadow* shadow = [HelloStyleKit onboardingButtonContainerShadow];
-    CALayer* layer = [buttonContainer layer];
-    [layer setShadowRadius:[shadow shadowBlurRadius]];
-    [layer setShadowOffset:[shadow shadowOffset]];
-    [layer setShadowColor:[[shadow shadowColor] CGColor]];
-    [layer setShadowOpacity:1.0f];
-    
-}
-
 #pragma mark - SSID
 
 + (void)saveConfiguredSSID:(NSString*)ssid {

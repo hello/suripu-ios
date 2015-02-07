@@ -103,13 +103,6 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 + (void)finisOnboardinghWithMessageFrom:(UIViewController*)controller;
 
 /**
- * Apply a shadow to the buton container on various onboarding screens to signal
- * to user that content exists behind it
- * @param buttonContainer: view that holds the buttons
- */
-+ (void)applyShadowToButtonContainer:(UIView*)buttonContainer;
-
-/**
  * @method saveConfiguredSSID:
  *
  * @discussion

@@ -30,6 +30,7 @@ static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdevice = @"device";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMexplanation = @"explanation";
+static NSString *const _HEMimage = @"image";
 static NSString *const _HEMinfo = @"info";
 static NSString *const _HEMinsight = @"insight";
 static NSString *const _HEMinsightFeed = @"insightFeed";
@@ -53,6 +54,7 @@ static NSString *const _HEMsleepGraphNavController = @"sleepGraphNavController";
 static NSString *const _HEMsleepHistoryController = @"sleepHistoryController";
 static NSString *const _HEMsleepInsight = @"sleepInsight";
 static NSString *const _HEMsleepQuestions = @"sleepQuestions";
+static NSString *const _HEMtext = @"text";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 static NSString *const _HEMtrendGraph = @"trendGraph";
 static NSString *const _HEMtrends = @"trends";
@@ -79,6 +81,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)choiceCellReuseIdentifier { return _HEMchoiceCell; }
 +(NSString *)deviceReuseIdentifier { return _HEMdevice; }
 +(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
++(NSString *)imageReuseIdentifier { return _HEMimage; }
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)insightReuseIdentifier { return _HEMinsight; }
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
@@ -90,6 +93,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
 +(NSString *)signoutReuseIdentifier { return _HEMsignout; }
 +(NSString *)singleReuseIdentifier { return _HEMsingle; }
++(NSString *)textReuseIdentifier { return _HEMtext; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
 +(NSString *)trendGraphReuseIdentifier { return _HEMtrendGraph; }
 +(NSString *)unitCellReuseIdentifier { return _HEMunitCell; }

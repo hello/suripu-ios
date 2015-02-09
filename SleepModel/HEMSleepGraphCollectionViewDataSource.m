@@ -31,6 +31,7 @@ NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
 @property (nonatomic, weak) UICollectionView* collectionView;
 @property (nonatomic, strong) NSDateFormatter* timeDateFormatter;
 @property (nonatomic, strong) NSDateFormatter* rangeDateFormatter;
+@property (nonatomic, strong) NSDateFormatter* weekdayDateFormatter;
 @property (nonatomic, strong) NSDate* dateForNightOfSleep;
 @property (nonatomic, strong, readwrite) SENSleepResult* sleepResult;
 @property (nonatomic, strong) NSArray* aggregateDataSources;
@@ -69,17 +70,6 @@ static NSString* const sleepEventNameFindCharacter = @"_";
 static NSString* const sleepEventNameReplaceCharacter = @" ";
 static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
-+ (NSDateFormatter*)sleepDateFormatter
-{
-    static NSDateFormatter* formatter = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        formatter = [[NSDateFormatter alloc] init];
-        formatter.dateFormat = @"MMMM d";
-    });
-    return formatter;
-}
-
 + (NSString*)localizedNameForSleepEventType:(NSString*)eventType
 {
     NSString* localizedFormat = [NSString stringWithFormat:sleepEventNameFormat, [eventType lowercaseString]];
@@ -100,7 +90,9 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         _timeDateFormatter = [NSDateFormatter new];
         _timeDateFormatter.dateFormat = ([SENSettings timeFormat] == SENTimeFormat12Hour) ? @"h:mm a" : @"H:mm";
         _rangeDateFormatter = [NSDateFormatter new];
-        _rangeDateFormatter.dateFormat = @"MMM dd";
+        _rangeDateFormatter.dateFormat = @"MMMM d";
+        _weekdayDateFormatter = [NSDateFormatter new];
+        _weekdayDateFormatter.dateFormat = @"EEEE";
         _calendar = [NSCalendar currentCalendar];
         [self configureCollectionView];
         [self reloadData];
@@ -282,10 +274,16 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     cell.messageLabel.textAlignment = NSTextAlignmentCenter;
     NSDictionary* attributes = [HEMMarkdown attributesForTimelineMessageText];
     cell.messageLabel.attributedText = [markdown_to_attr_string(self.sleepResult.message, 0, attributes) trim];
-    NSString* dateText = [[[self class] sleepDateFormatter] stringFromDate:self.dateForNightOfSleep];
-    NSString* lastNightDateText = [[[self class] sleepDateFormatter] stringFromDate:[[NSDate date] previousDay]];
-    if ([dateText isEqualToString:lastNightDateText])
+    NSDateComponents* diff = [self.calendar components:NSDayCalendarUnit
+                                              fromDate:self.dateForNightOfSleep
+                                                toDate:[[NSDate date] previousDay] options:0];
+    NSString* dateText;
+    if (diff.day == 0)
         dateText = NSLocalizedString(@"sleep-history.last-night", nil);
+    else if (diff.day < 7)
+        dateText = [self.weekdayDateFormatter stringFromDate:self.dateForNightOfSleep];
+    else
+        dateText = [self.rangeDateFormatter stringFromDate:self.dateForNightOfSleep];;
     [self configurePresleepSummaryForCell:cell];
     [self configureActionsForSleepSummaryCell:cell];
     [self configureSummaryStatisticsForCell:cell];

@@ -495,6 +495,8 @@
 
 "tutorial.alarms.title" = "Smart Alarm";
 "tutorial.alarms.message" = "Sense's Smart Alarm will wake you up at a natural point in your sleep cycle - in a 30 minute window before the time you set. When it's time to wake up, Sense will glow and softly play your selected tone. Just wave your hand over Sense to dismiss.";
+"tutorial.alarm-smart.title" = "Smart Alarm";
+"tutorial.alarm-smart.message" = "Waking up at the wrong point in your sleep cycle can leave you feeling groggy. Sense's Smart Alarm monitors your sleeping patterns and selects the ideal point to wake you — in a 30 minute window before the time you set.";
 
 "tutorial.trends.title" = "Trends";
 "tutorial.trends.message" = "To see how your sleep is changing over time, sometimes it’s helpful to take a step back. After a week using Sense, this view will show you historical data on your sleep patterns. If you don't see any data yet, check back later.";

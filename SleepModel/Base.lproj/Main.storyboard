@@ -44,10 +44,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Smart Alarm" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vsw-j2-h0Y">
-                                                    <rect key="frame" x="61" y="17" width="187" height="22"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="187" id="V7r-O9-mxW"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="61" y="17" width="88" height="22"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                                     <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -65,11 +62,22 @@
                                                         <action selector="updateAlarmState:" destination="62Z-aY-sbu" eventType="valueChanged" id="Uqi-Tk-X78"/>
                                                     </connections>
                                                 </switch>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zpc-Vv-o4F">
+                                                    <rect key="frame" x="162" y="18" width="22" height="22"/>
+                                                    <state key="normal" image="infoButtonIconSmall.png">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="showHelpfulDialogAboutSmartness:" destination="62Z-aY-sbu" eventType="touchUpInside" id="U5s-j0-C6m"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="zpc-Vv-o4F" firstAttribute="leading" secondItem="vsw-j2-h0Y" secondAttribute="trailing" constant="13" id="72u-XH-MA5"/>
                                                 <constraint firstAttribute="centerY" secondItem="JfE-LJ-HjM" secondAttribute="centerY" constant="-0.5" id="Mh4-3P-43h"/>
                                                 <constraint firstAttribute="centerY" secondItem="Liy-h5-gd5" secondAttribute="centerY" constant="-0.25" id="W2n-3E-c5H"/>
                                                 <constraint firstItem="JfE-LJ-HjM" firstAttribute="leading" secondItem="UWc-4t-qIy" secondAttribute="leading" constant="16" id="jks-Vy-Sjg"/>
+                                                <constraint firstAttribute="centerY" secondItem="zpc-Vv-o4F" secondAttribute="centerY" constant="-0.5" id="o11-z9-8Rt"/>
                                                 <constraint firstAttribute="trailing" secondItem="Liy-h5-gd5" secondAttribute="trailing" constant="22" id="sOx-kx-9S1"/>
                                                 <constraint firstAttribute="centerY" secondItem="vsw-j2-h0Y" secondAttribute="centerY" constant="0.5" id="v98-gX-VQA"/>
                                                 <constraint firstItem="vsw-j2-h0Y" firstAttribute="leading" secondItem="JfE-LJ-HjM" secondAttribute="trailing" constant="13" id="x0c-76-efn"/>
@@ -3338,6 +3346,7 @@
         <image name="alarmSmartIcon.png" width="25" height="25"/>
         <image name="alarmSoundIcon.png" width="25" height="25"/>
         <image name="checkmark.png" width="20" height="15"/>
+        <image name="infoButtonIconSmall.png" width="22" height="22"/>
         <image name="miniPlayButton.png" width="25" height="25"/>
         <image name="questions_check.png" width="20" height="15"/>
         <image name="questions_circle.png" width="21" height="21"/>

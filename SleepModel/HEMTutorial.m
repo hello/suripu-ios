@@ -137,6 +137,15 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [HEMFullscreenDialogView showDialogsWithContent:@[content]];
 }
 
++ (void)showTutorialForAlarmSmartness
+{
+    HEMDialogContent* content = [HEMDialogContent new];
+    content.title = NSLocalizedString(@"tutorial.alarm-smart.title", nil);
+    content.content = NSLocalizedString(@"tutorial.alarm-smart.message", nil);
+    content.image = [UIImage imageNamed:@"smart_alarm_dialog"];
+    [HEMFullscreenDialogView showDialogsWithContent:@[content]];
+}
+
 + (void)showTutorialForTrends
 {
     HEMDialogContent* content = [HEMDialogContent new];

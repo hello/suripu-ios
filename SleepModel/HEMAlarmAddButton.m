@@ -13,9 +13,9 @@ static CGFloat const HEMAlarmAddParallaxDepth = 3.f;
 {
     [self setTitle:nil forState:UIControlStateNormal];
     self.backgroundColor = [UIColor clearColor];
-    self.layer.shadowRadius = 5.f;
-    self.layer.shadowOffset = CGSizeMake(0, -1.f);
-    self.layer.shadowOpacity = 0.5f;
+    self.layer.shadowRadius = 2.f;
+    self.layer.shadowOffset = CGSizeMake(0, 1.f);
+    self.layer.shadowOpacity = 0.85f;
     self.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.2f].CGColor;
     self.layer.masksToBounds = NO;
     [self add3DEffectWithBorder:HEMAlarmAddParallaxDepth];

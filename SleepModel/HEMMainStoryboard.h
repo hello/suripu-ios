@@ -16,10 +16,10 @@
 +(NSString *)alarmDeleteCellReuseIdentifier;
 +(NSString *)singleReuseIdentifier;
 +(NSString *)multipleReuseIdentifier;
++(NSString *)preferenceReuseIdentifier;
 +(NSString *)imageReuseIdentifier;
 +(NSString *)textReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
-+(NSString *)preferenceReuseIdentifier;
 +(NSString *)explanationReuseIdentifier;
 +(NSString *)signoutReuseIdentifier;
 +(NSString *)unitCellReuseIdentifier;
@@ -45,6 +45,7 @@
 +(NSString *)alarmRepeatSegueIdentifier;
 +(NSString *)choiceSegueIdentifier;
 +(NSString *)devicesSettingsSegueIdentifier;
++(NSString *)notificationSettingsSegueIdentifier;
 +(NSString *)pickSoundSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
 +(NSString *)senseSegueIdentifier;

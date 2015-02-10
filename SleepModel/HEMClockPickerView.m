@@ -38,7 +38,6 @@ static CGFloat const HEMClockPickerDividerWidth = 12.f;
 static CGFloat const HEMClockPickerMeridiemWidth = 60.f;
 static CGFloat const HEMClockPickerDefaultWidth = 90.f;
 static CGFloat const HEMClockPickerExpandedWidth = 120.f;
-static NSUInteger const HEMClockMinuteIncrement = 5;
 static NSUInteger const HEMClockMinuteCount = 60;
 static NSUInteger const HEMClock12HourCount = 12;
 static NSUInteger const HEMClock24HourCount = 24;
@@ -63,6 +62,7 @@ static NSUInteger const HEMClock24HourCount = 24;
 
 - (void)initializeComponents
 {
+    _minuteIncrement = 1;
     _use12Hour = [SENSettings timeFormat] == SENTimeFormat12Hour;
     _pickerView = [UIPickerView new];
     _pickerView.dataSource = self;
@@ -124,7 +124,7 @@ static NSUInteger const HEMClock24HourCount = 24;
 {
     self.minute = minute;
     self.hour = hour;
-    NSInteger minuteRow = minute / HEMClockMinuteIncrement;
+    NSInteger minuteRow = minute / self.minuteIncrement;
     NSInteger hourRow = hour;
     NSInteger meridiemRow = hour <= (HEMClock12HourCount - 1) ? 0 : 1;
     if ([self shouldUse12Hour]) {
@@ -212,7 +212,7 @@ static NSUInteger const HEMClock24HourCount = 24;
     switch (component) {
         case HEMClockIndexHour: return [self shouldUse12Hour] ? HEMClock12HourCount : HEMClock24HourCount;
         case HEMClockIndexDivider: return 1;
-        case HEMClockIndexMinute: return HEMClockMinuteCount / HEMClockMinuteIncrement;
+        case HEMClockIndexMinute: return HEMClockMinuteCount / self.minuteIncrement;
         case HEMClockIndexMeridiem: return 2;
         default: return 0;
     }
@@ -254,7 +254,7 @@ static NSUInteger const HEMClock24HourCount = 24;
             return [NSString stringWithFormat:@"%ld", hour];
         }
         case HEMClockIndexMinute: {
-            NSInteger minute = row * HEMClockMinuteIncrement;
+            NSInteger minute = row * self.minuteIncrement;
             NSString* format = minute < 10 ? @"0%ld" : @"%ld";
             return [NSString stringWithFormat:format, minute];
         }
@@ -300,7 +300,7 @@ static NSUInteger const HEMClock24HourCount = 24;
         case HEMClockIndexMinute: {
             oldSelectedLabel = self.selectedMinuteLabel;
             self.selectedMinuteLabel = selectedLabel;
-            self.minute = row * HEMClockMinuteIncrement;
+            self.minute = row * self.minuteIncrement;
         } break;
         case HEMClockIndexMeridiem: {
             oldSelectedLabel = self.selectedMeridiemLabel;

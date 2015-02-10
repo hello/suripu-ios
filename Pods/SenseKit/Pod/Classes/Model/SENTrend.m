@@ -73,6 +73,27 @@ static NSString* const SENTrendGraphTypeTimeSeriesLineKey = @"TIME_SERIES_LINE";
     return self;
 }
 
+- (BOOL)isEqual:(SENTrend*)other
+{
+    if (other == self) {
+        return YES;
+    } else if (![other isKindOfClass:[SENTrend class]]) {
+        return NO;
+    } else {
+        return ((self.dataPoints && [self.dataPoints isEqualToArray:other.dataPoints]) || (!self.dataPoints && !other.dataPoints))
+            && ((self.dataType && [self.dataType isEqualToString:other.dataType]) || (!self.dataType && !other.dataType))
+            && ((self.options && [self.options isEqualToArray:other.options]) || (!self.options && !other.options))
+            && ((self.timePeriod && [self.timePeriod isEqualToString:other.timePeriod]) || (!self.timePeriod && !other.timePeriod))
+            && ((self.title && [self.title isEqualToString:other.title]) || (!self.title && !other.title))
+            && self.graphType == other.graphType;
+    }
+}
+
+- (NSUInteger)hash
+{
+    return [self.title hash] + [self.timePeriod hash] + self.graphType;
+}
+
 @end
 
 @implementation SENTrendDataPoint
@@ -119,6 +140,26 @@ static NSString* const SENTrendDataPointQualityRawOk = @"OK";
         _yValue = [dict[SENTrendDataPointYValueKey] doubleValue];
     }
     return self;
+}
+
+- (BOOL)isEqual:(SENTrendDataPoint*)other
+{
+    if (other == self) {
+        return YES;
+    } else if (![other isKindOfClass:[SENTrendDataPoint class]]) {
+        return NO;
+    } else {
+        return ((self.date && [self.date isEqualToDate:other.date]) || (!self.date && !other.date))
+            && self.xValue == other.xValue
+            && self.yValue == other.yValue
+            && self.quality == other.quality
+            && self.millisecondsOffset == other.millisecondsOffset;
+    }
+}
+
+- (NSUInteger)hash
+{
+    return [self.date hash] + self.quality + self.millisecondsOffset;
 }
 
 @end

@@ -186,7 +186,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     if (![alarm isKindOfClass:[SENAlarm class]])
         return NO;
 
-    return [self.identifier isEqualToString:alarm.identifier];
+    return [self.identifier isEqualToString:alarm.identifier] && [self isIdenticalToAlarm:alarm];
 }
 
 - (BOOL)isIdenticalToAlarm:(SENAlarm *)alarm
@@ -194,8 +194,8 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     return self.hour == alarm.hour
         && self.minute == alarm.minute
         && self.repeatFlags == alarm.repeatFlags
-        && [self.soundID isEqual:alarm.soundID]
-        && [self.soundName isEqual:alarm.soundName]
+        && ((self.soundID && [self.soundID isEqual:alarm.soundID]) || (!self.soundID && !alarm.soundID))
+        && ((self.soundName && [self.soundName isEqual:alarm.soundName]) || (!self.soundName && !alarm.soundName))
         && [self isSmartAlarm] == [alarm isSmartAlarm]
         && [self isEditable] == [alarm isEditable]
         && [self isOn] == [alarm isOn];

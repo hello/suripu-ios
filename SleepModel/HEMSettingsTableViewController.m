@@ -13,7 +13,13 @@
 #import "HEMSupportUtil.h"
 #import "HEMHelpFooterView.h"
 
-static NSUInteger const HEMSettingsTableViewRows = 3;
+typedef NS_ENUM(NSUInteger, HEMSettingsTableViewRow) {
+    HEMSettingsAccountRowIndex = 0,
+    HEMSettingsDevicesRowIndex = 1,
+    HEMSettingsNotificationRowIndex = 2,
+    HEMSettingsUnitsTimeRowIndex = 3,
+    HEMSettingsTableViewRows = 4,
+};
 
 @interface HEMSettingsTableViewController () <
     UITableViewDataSource,
@@ -26,10 +32,6 @@ static NSUInteger const HEMSettingsTableViewRows = 3;
 @end
 
 @implementation HEMSettingsTableViewController
-
-static NSInteger const HEMSettingsAccountIndex = 0;
-static NSInteger const HEMSettingsDevicesIndex = 1;
-static NSInteger const HEMSettingsUnitsTimeIndex = 2;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -160,34 +162,39 @@ static NSInteger const HEMSettingsUnitsTimeIndex = 2;
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-
-    NSString* nextSegueId = nil;
-    switch ([indexPath row]) {
-    case HEMSettingsAccountIndex:
-        nextSegueId = [HEMMainStoryboard accountSettingsSegueIdentifier];
-        break;
-    case HEMSettingsUnitsTimeIndex:
-        nextSegueId = [HEMMainStoryboard unitsSettingsSegueIdentifier];
-        break;
-    case HEMSettingsDevicesIndex:
-        nextSegueId = [HEMMainStoryboard devicesSettingsSegueIdentifier];
-        break;
-    default:
-        break;
-    }
+    NSString* nextSegueId = [self segueIdentifierForRow:indexPath.row];
 
     if (nextSegueId != nil) {
         [self performSegueWithIdentifier:nextSegueId sender:self];
     }
 }
 
+- (NSString*)segueIdentifierForRow:(NSUInteger)row
+{
+    switch (row) {
+        case HEMSettingsAccountRowIndex:
+            return [HEMMainStoryboard accountSettingsSegueIdentifier];
+        case HEMSettingsDevicesRowIndex:
+            return [HEMMainStoryboard devicesSettingsSegueIdentifier];
+        case HEMSettingsUnitsTimeRowIndex:
+            return [HEMMainStoryboard unitsSettingsSegueIdentifier];
+        case HEMSettingsNotificationRowIndex:
+            return [HEMMainStoryboard notificationSettingsSegueIdentifier];
+
+        default:
+            return nil;
+    }
+}
+
 - (NSString*)titleForRowAtIndex:(NSInteger)index {
     switch (index) {
-        case HEMSettingsAccountIndex:
+        case HEMSettingsAccountRowIndex:
             return NSLocalizedString(@"settings.account", nil);
-        case HEMSettingsDevicesIndex:
+        case HEMSettingsDevicesRowIndex:
             return NSLocalizedString(@"settings.devices", nil);
-        case HEMSettingsUnitsTimeIndex:
+        case HEMSettingsNotificationRowIndex:
+            return NSLocalizedString(@"settings.notifications", nil);
+        case HEMSettingsUnitsTimeRowIndex:
             return NSLocalizedString(@"settings.units", nil);
     }
     return nil;

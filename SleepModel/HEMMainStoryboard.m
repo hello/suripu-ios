@@ -35,6 +35,7 @@ static NSString *const _HEMinfo = @"info";
 static NSString *const _HEMinsight = @"insight";
 static NSString *const _HEMinsightFeed = @"insightFeed";
 static NSString *const _HEMmultiple = @"multiple";
+static NSString *const _HEMnotificationSettings = @"notificationSettings";
 static NSString *const _HEMoverTime = @"overTime";
 static NSString *const _HEMpair = @"pair";
 static NSString *const _HEMpickSound = @"pickSound";
@@ -104,6 +105,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)alarmRepeatSegueIdentifier { return _HEMalarmRepeat; }
 +(NSString *)choiceSegueIdentifier { return _HEMchoice; }
 +(NSString *)devicesSettingsSegueIdentifier { return _HEMdevicesSettings; }
++(NSString *)notificationSettingsSegueIdentifier { return _HEMnotificationSettings; }
 +(NSString *)pickSoundSegueIdentifier { return _HEMpickSound; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
 +(NSString *)senseSegueIdentifier { return _HEMsense; }

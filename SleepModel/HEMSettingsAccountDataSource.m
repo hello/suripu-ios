@@ -24,7 +24,7 @@ static NSString* const HEMSettingsAcctBirthdateFormat = @"MM dd, yyyy";
 typedef NS_ENUM(NSUInteger, HEMSettingsAcctSection) {
     HEMSettingsAcctSectionAccount = 0,      HEMSettingsAcctAccountTotRows = 2,
     HEMSettingsAcctSectionDemographics = 1, HEMSettingsAcctDemographicsTotRows = 4,
-    HEMSettingsAcctSectionPreferences = 2,  HEMSettingsAcctPreferenceTotRows = 4,
+    HEMSettingsAcctSectionPreferences = 2,  HEMSettingsAcctPreferenceTotRows = 2,
     HEMSettingsAcctSectionExplanations = 3, HEMSettingsAcctExplanationsTotRows = 1,
     HEMSettingsAcctSectionSignOut = 4,      HEMSettingsAcctSignOutTotRows = 1,
     HEMSettingsAcctTotalSections = 5 // increment when sections added
@@ -40,9 +40,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     HEMSettingsAcctRowWeight = 3,
 
     HEMSettingsAcctRowHealthKit = 0,
-    HEMSettingsAcctRowPushConditions = 1,
-    HEMSettingsAcctRowPushScore = 2,
-    HEMSettingsAcctRowEnhancedAudio = 3,
+    HEMSettingsAcctRowEnhancedAudio = 1,
 };
 
 @interface HEMSettingsAccountDataSource()
@@ -153,12 +151,6 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
         case HEMSettingsAccountInfoTypeHealthKit:
             title = NSLocalizedString(@"settings.account.healthkit", nil);
             break;
-        case HEMSettingsAccountInfoTypePushScore:
-            title = NSLocalizedString(@"settings.account.push-score", nil);
-            break;
-        case HEMSettingsAccountInfoTypePushConditions:
-            title = NSLocalizedString(@"settings.account.push-conditions", nil);
-            break;
         case HEMSettingsAccountInfoTypeEnhancedAudio:
             title = NSLocalizedString(@"settings.account.enhanced-audio", nil);
             break;
@@ -220,16 +212,6 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     switch (type) {
         case HEMSettingsAccountInfoTypeEnhancedAudio: {
             SENPreference* pref = [prefs objectForKey:@(SENPreferenceTypeEnhancedAudio)];
-            enabled = [pref isEnabled];
-            break;
-        }
-        case HEMSettingsAccountInfoTypePushScore: {
-            SENPreference* pref = [prefs objectForKey:@(SENPreferenceTypePushScore)];
-            enabled = [pref isEnabled];
-            break;
-        }
-        case HEMSettingsAccountInfoTypePushConditions: {
-            SENPreference* pref = [prefs objectForKey:@(SENPreferenceTypePushConditions)];
             enabled = [pref isEnabled];
             break;
         }
@@ -380,12 +362,6 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
         case HEMSettingsAcctRowHealthKit:
             type = HEMSettingsAccountInfoTypeHealthKit;
             break;
-        case HEMSettingsAcctRowPushConditions:
-            type = HEMSettingsAccountInfoTypePushConditions;
-            break;
-        case HEMSettingsAcctRowPushScore:
-            type = HEMSettingsAccountInfoTypePushScore;
-            break;
     }
     return type;
 }
@@ -493,22 +469,6 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
               completion:(void(^)(NSError* error))completion {
 
     switch (type) {
-        case HEMSettingsAccountInfoTypePushScore: {
-            [self enableAccountPreference:enable
-                                  forType:SENPreferenceTypePushScore
-                               completion:completion];
-            if (enable)
-                [HEMNotificationHandler registerForRemoteNotifications];
-            break;
-        }
-        case HEMSettingsAccountInfoTypePushConditions: {
-            [self enableAccountPreference:enable
-                                  forType:SENPreferenceTypePushConditions
-                               completion:completion];
-            if (enable)
-                [HEMNotificationHandler registerForRemoteNotifications];
-            break;
-        }
         case HEMSettingsAccountInfoTypeEnhancedAudio: {
             [self enableAccountPreference:enable
                                   forType:SENPreferenceTypeEnhancedAudio

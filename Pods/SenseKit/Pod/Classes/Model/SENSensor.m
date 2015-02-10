@@ -26,6 +26,26 @@ static NSString* const SENSensorDataPointDateOffsetKey = @"offset_millis";
     return self;
 }
 
+- (NSUInteger)hash
+{
+    return [self.value hash] + [self.date hash] + [self.dateOffset hash];
+}
+
+- (BOOL)isEqual:(SENSensorDataPoint*)object
+{
+    if (![object isKindOfClass:[SENSensorDataPoint class]])
+        return NO;
+    return ((self.value && [self.value isEqual:object.value]) || (!self.value && !object.value))
+        && ((self.date && [self.date isEqualToDate:object.date]) || (!self.date && !object.date))
+        && ((self.dateOffset && [self.dateOffset isEqualToNumber:object.dateOffset]) || (!self.dateOffset && !object.dateOffset));
+}
+
+- (NSString *)description
+{
+    static NSString* const SENSensorDataPointDescriptionFormat =  @"<SENSensorDataPoint @date=%@ @value=%@>";
+    return [NSString stringWithFormat:SENSensorDataPointDescriptionFormat, self.date, self.value];
+}
+
 @end
 
 @implementation SENSensor
@@ -170,6 +190,12 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
     return self;
 }
 
+- (NSString *)description
+{
+    static NSString* const SENSensorDescriptionFormat =  @"<SENSensor @name=%@ @value=%@ @lastUpdated=%@>";
+    return [NSString stringWithFormat:SENSensorDescriptionFormat, self.name, self.value, self.lastUpdated];
+}
+
 - (void)encodeWithCoder:(NSCoder*)aCoder
 {
     [aCoder encodeObject:_name forKey:SENSensorNameKey];
@@ -188,7 +214,7 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
 
 - (NSUInteger)hash
 {
-    return self.name.hash;
+    return self.name.hash + self.value.hash;
 }
 
 - (BOOL)isEqual:(SENSensor*)sensor
@@ -196,7 +222,13 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
     if (![sensor isKindOfClass:[SENSensor class]])
         return NO;
 
-    return [sensor.name isEqualToString:self.name];
+    return ((self.name && [self.name isEqualToString:sensor.name]) || (!self.name && !sensor.name))
+        && ((self.value && [self.value isEqual:sensor.value]) || (!self.value && !sensor.value))
+        && ((self.message && [self.message isEqual:sensor.message]) || (!self.message && !sensor.message))
+        && ((self.idealConditionsMessage && [self.idealConditionsMessage isEqualToString:sensor.idealConditionsMessage])
+            || (!self.idealConditionsMessage && !sensor.idealConditionsMessage))
+        && self.condition == sensor.condition
+        && self.unit == sensor.unit;
 }
 
 - (NSString*)localizedName

@@ -41,4 +41,18 @@ static NSString* const SENSoundIdentifier = @"id";
     [aCoder encodeObject:self.identifier forKey:SENSoundIdentifier];
 }
 
+- (BOOL)isEqual:(SENSound*)object
+{
+    if (![object isKindOfClass:[SENSound class]])
+        return NO;
+    return ((self.displayName && [self.displayName isEqual:object.displayName]) || (!self.displayName && !object.displayName))
+        && ((self.URLPath && [self.URLPath isEqual:object.URLPath]) || (!self.URLPath && !object.URLPath))
+        && ((self.identifier && [self.identifier isEqual:object.identifier]) || (!self.identifier && !object.identifier));
+}
+
+- (NSUInteger)hash
+{
+    return [self.identifier hash];
+}
+
 @end

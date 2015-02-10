@@ -67,21 +67,20 @@
     [super viewDidAppear:animated];
     [self reload];
     
-    [SENAnalytics track:kHEMAnalyticsEventFeed]; // since it's cached, need to do will appear
+    [SENAnalytics track:kHEMAnalyticsEventFeed];
 }
 
 - (void)reload {
     if ([[self dataSource] isLoading]) return;
     
     __weak typeof(self) weakSelf = self;
-    [[self dataSource] refresh:^{
+    [[self dataSource] refresh:^(BOOL didUpdate){
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            HEMCardFlowLayout* layout
-                = (HEMCardFlowLayout*)[[strongSelf collectionView] collectionViewLayout];
-            [layout clearCache];
-            [[strongSelf collectionView] reloadData];
-        }
+        if (!didUpdate)
+            return;
+        HEMCardFlowLayout* layout = (id)[[strongSelf collectionView] collectionViewLayout];
+        [layout clearCache];
+        [[strongSelf collectionView] reloadData];
     }];
 }
 

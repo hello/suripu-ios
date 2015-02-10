@@ -45,7 +45,7 @@
 
 @implementation HEMSensorViewController
 
-static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
+static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 
 - (void)viewDidLoad
 {
@@ -237,9 +237,11 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
             self.graphView.alpha = 0;
             return;
         }
-        self.hourlyDataSeries = data;
-        if ([self isShowingHourlyData])
-            [self updateGraphWithHourlyData:data];
+        if (![self.hourlyDataSeries isEqualToArray:data]) {
+            self.hourlyDataSeries = data;
+            if ([self isShowingHourlyData])
+                [self updateGraphWithHourlyData:data];
+        }
     }];
     [SENAPIRoom dailyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {
         if (error) {
@@ -249,9 +251,11 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
             self.graphView.alpha = 0;
             return;
         }
-        self.dailyDataSeries = data;
-        if (![self isShowingHourlyData])
-            [self updateGraphWithDailyData:data];
+        if (![self.dailyDataSeries isEqualToArray:data]) {
+            self.dailyDataSeries = data;
+            if (![self isShowingHourlyData])
+                [self updateGraphWithDailyData:data];
+        }
     }];
     [SENSensor refreshCachedSensors];
 }
@@ -262,9 +266,10 @@ static NSTimeInterval const HEMSensorRefreshInterval = 30.f;
     if (![sensor.name isEqualToString:self.sensor.name])
         return;
 
-    self.sensor = sensor;
-    [self configureSensorValueViews];
-
+    if (![self.sensor isEqual:sensor]) {
+        self.sensor = sensor;
+        [self configureSensorValueViews];
+    }
 }
 
 - (IBAction)selectedHourlyGraph:(id)sender

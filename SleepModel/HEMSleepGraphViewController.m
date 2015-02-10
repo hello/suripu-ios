@@ -71,8 +71,8 @@ static CGFloat const HEMEventOverlayZPosition = 30.f;
         return;
     HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
     HEMRootViewController* root = (id)delegate.window.rootViewController;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if ([root drawerIsVisible] || self.dataSource.numberOfSleepSegments == 0)
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if ([root drawerIsVisible] || self.dataSource.numberOfSleepSegments == 0 || ![self isViewPushed])
             return;
         [HEMTutorial showTutorialForTimelineIfNeeded];
     });
@@ -272,7 +272,6 @@ static CGFloat const HEMEventOverlayZPosition = 30.f;
     self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
                                                                                   sleepDate:date];
     self.collectionView.dataSource = self.dataSource;
-    [self.collectionView reloadData];
 }
 
 #pragma mark Event Info

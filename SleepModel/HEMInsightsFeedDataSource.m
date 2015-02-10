@@ -51,7 +51,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     return [self isLoadingInsights] || [[SENServiceQuestions sharedService] isUpdating];
 }
 
-- (void)refresh:(void(^)(void))completion {
+- (void)refresh:(void(^)(BOOL))completion {
     __block NSMutableArray* tmpData = [NSMutableArray array];
     __block BOOL insightsRefreshed = NO;
     __block BOOL questionsRefreshed = NO;
@@ -60,8 +60,13 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     void(^refreshCompletion)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (insightsRefreshed && questionsRefreshed) {
-            if (strongSelf) [strongSelf setData:tmpData];
-            if (completion) completion ();
+            BOOL didUpdate = NO;
+            if (![strongSelf.data isEqualToArray:tmpData]) {
+                [strongSelf setData:tmpData];
+                didUpdate = YES;
+            }
+            if (completion)
+                completion(didUpdate);
         }
     };
     

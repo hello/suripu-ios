@@ -22,11 +22,12 @@
 @property (nonatomic) CGFloat refreshRate;
 @property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
 @property (nonatomic) BOOL shouldReload;
+@property (nonatomic, strong) NSDate* lastRefreshDate;
 @end
 
 @implementation HEMCurrentConditionsViewController
 
-static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 30.f;
+static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 10.f;
 static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 static NSUInteger const HEMConditionGraphPointLimit = 30;
@@ -56,9 +57,10 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
         [self reloadData];
         self.shouldReload = NO;
     }
-    if (self.sensors.count == 0) {
+
+    if (self.sensors.count == 0 || [[NSDate date] timeIntervalSinceDate:self.lastRefreshDate] >= self.refreshRate)
         [self refreshCachedSensors];
-    }
+
     [SENAnalytics track:kHEMAnalyticsEventCurrentConditions];
 }
 
@@ -138,21 +140,34 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     if (![SENAuthorizationService isAuthorized])
         return;
     DDLogVerbose(@"Refreshing sensor data (rate: %f)", self.refreshRate);
-    self.sensorGraphData = [[NSMutableDictionary alloc] init];
-    self.sensors = [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
-        return [@([self indexForSensor:obj1]) compare:@([self indexForSensor:obj2])];
-    }];
+    NSArray* cachedSensors = [self sortedCachedSensors];
+    if (![self.sensors isEqualToArray:cachedSensors]) {
+        self.sensors = cachedSensors;
+        [self.collectionView reloadData];
+        if ([self isViewLoaded] && self.view.window)
+            [HEMTutorial showTutorialForSensorsIfNeeded];
+    }
+    self.lastRefreshDate = [NSDate date];
+    [self updateSensorRefreshInterval];
+    [self fetchGraphData];
+    [self setLoading:NO];
+}
+
+- (void)updateSensorRefreshInterval
+{
     NSMutableArray* values = [[self.sensors valueForKey:NSStringFromSelector(@selector(value))] mutableCopy];
     [values removeObject:[NSNull null]];
     if (values.count == 0)
         [self configureFailureRefreshTimer];
     else
         [self configureRefreshTimer];
-    [self fetchGraphData];
-    [self setLoading:NO];
-    [self.collectionView reloadData];
-    if ([self isViewLoaded] && self.view.window)
-        [HEMTutorial showTutorialForSensorsIfNeeded];
+}
+
+- (NSArray*)sortedCachedSensors
+{
+    return [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
+        return [@([self indexForSensor:obj1]) compare:@([self indexForSensor:obj2])];
+    }];
 }
 
 - (NSUInteger)indexForSensor:(SENSensor*)sensor
@@ -174,12 +189,19 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     __weak typeof(self) weakSelf = self;
     [SENAPIRoom historicalConditionsForLast24HoursWithCompletion:^(NSDictionary* data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error)
-            return;
-        [data enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSArray* points, BOOL *stop) {
-            [[strongSelf sensorGraphData] setValue:[self filteredPointsFromData:points] forKey:key];
-        }];
-        [strongSelf reloadData];
+        if (error) {
+            strongSelf.sensorGraphData = [[NSMutableDictionary alloc] init];
+            [strongSelf reloadData];
+        } else {
+            __block NSMutableDictionary* graphData = [[NSMutableDictionary alloc] initWithCapacity:data.count];
+            [data enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSArray* points, BOOL *stop) {
+                [graphData setValue:[self filteredPointsFromData:points] forKey:key];
+            }];
+            if (![graphData isEqual:strongSelf.sensorGraphData]) {
+                strongSelf.sensorGraphData = graphData;
+                [strongSelf reloadData];
+            }
+        }
     }];
 }
 

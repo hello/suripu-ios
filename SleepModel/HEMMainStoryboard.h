@@ -69,6 +69,7 @@
 +(id)instantiateSleepHistoryController;
 +(id)instantiateSleepInsightViewController;
 +(id)instantiateSleepQuestionsViewController;
++(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;
 
 @end

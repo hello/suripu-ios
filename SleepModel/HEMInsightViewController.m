@@ -26,7 +26,6 @@
 static CGFloat const HEMInsightImageHeight = 186.0f;
 static CGFloat const HEMInsightTextHorzPadding = 24.0f;
 static CGFloat const HEMInsightTextVertPadding = 20.0f;
-static CGFloat const HEMInsightSectionTopInsetWithNoImage = 20.0f;
 
 @interface HEMInsightViewController() <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -134,13 +133,6 @@ static CGFloat const HEMInsightSectionTopInsetWithNoImage = 20.0f;
     [self setTitleRow:[[self titleToShow] length] > 0 ? ++row : row];
     [self setMessageRow:[[self messageToShow] length] > 0 ? ++row : row];
     [self setNumberOfRows:row + 1];
-    
-    if ([self imageRow] == -1) {
-        UICollectionViewFlowLayout* layout
-            = (UICollectionViewFlowLayout*)[[self contentView] collectionViewLayout];
-        [layout setSectionInset:UIEdgeInsetsMake(HEMInsightSectionTopInsetWithNoImage,
-                                                 0.0f, 0.0f, 0.0f)];
-    }
     
     [[self contentView] reloadData];
 }

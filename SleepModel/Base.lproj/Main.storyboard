@@ -227,29 +227,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WMx-Tl-eWw">
                                 <rect key="frame" x="-1" y="233" width="602" height="304"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hlH-fv-dyh">
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hlH-fv-dyh" customClass="HEMClockPickerView">
                                         <rect key="frame" x="0.0" y="0.0" width="602" height="222"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="222" id="pKI-7N-cLK"/>
+                                        </constraints>
                                     </view>
-                                    <pickerView contentMode="scaleToFill" showsSelectionIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QTO-hY-P6z">
-                                        <rect key="frame" x="0.0" y="0.0" width="602" height="162"/>
-                                        <color key="tintColor" red="0.063956059515476227" green="0.53325003385543823" blue="0.99848216772079468" alpha="1" colorSpace="calibratedRGB"/>
-                                        <connections>
-                                            <outlet property="dataSource" destination="62Z-aY-sbu" id="gH0-yI-3St"/>
-                                            <outlet property="delegate" destination="62Z-aY-sbu" id="sHq-g8-xki"/>
-                                        </connections>
-                                    </pickerView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.97875798357664234" alpha="1" colorSpace="calibratedWhite"/>
                                 <gestureRecognizers/>
                                 <constraints>
-                                    <constraint firstItem="QTO-hY-P6z" firstAttribute="leading" secondItem="hlH-fv-dyh" secondAttribute="leading" id="Hyy-Ls-pfP"/>
-                                    <constraint firstItem="QTO-hY-P6z" firstAttribute="leading" secondItem="WMx-Tl-eWw" secondAttribute="leading" id="Iik-YE-yag"/>
-                                    <constraint firstItem="QTO-hY-P6z" firstAttribute="bottom" secondItem="hlH-fv-dyh" secondAttribute="bottom" constant="-60" id="SQR-b7-BjL"/>
-                                    <constraint firstItem="QTO-hY-P6z" firstAttribute="top" secondItem="WMx-Tl-eWw" secondAttribute="top" id="i67-kr-NaQ"/>
-                                    <constraint firstAttribute="trailing" secondItem="QTO-hY-P6z" secondAttribute="trailing" id="lLe-q9-Qxb"/>
-                                    <constraint firstItem="QTO-hY-P6z" firstAttribute="trailing" secondItem="hlH-fv-dyh" secondAttribute="trailing" id="oJ1-6g-yqt"/>
-                                    <constraint firstItem="QTO-hY-P6z" firstAttribute="top" secondItem="hlH-fv-dyh" secondAttribute="top" id="tj2-Dm-Qhc"/>
+                                    <constraint firstItem="hlH-fv-dyh" firstAttribute="leading" secondItem="WMx-Tl-eWw" secondAttribute="leading" id="dOu-sD-UUh"/>
+                                    <constraint firstItem="hlH-fv-dyh" firstAttribute="top" secondItem="WMx-Tl-eWw" secondAttribute="top" id="gzH-1g-CXh"/>
+                                    <constraint firstAttribute="trailing" secondItem="hlH-fv-dyh" secondAttribute="trailing" id="yMh-Lm-2xo"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -281,10 +272,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="gradientView" destination="hlH-fv-dyh" id="efS-bY-U49"/>
+                        <outlet property="clockView" destination="hlH-fv-dyh" id="71s-Al-ngo"/>
                         <outlet property="lineViewHeightConstraint" destination="ETd-gn-bpx" id="apc-gx-rHM"/>
-                        <outlet property="pickerContainerView" destination="WMx-Tl-eWw" id="71p-ye-WOh"/>
-                        <outlet property="pickerView" destination="QTO-hY-P6z" id="c8Q-dl-aVO"/>
                         <outlet property="tableView" destination="mu9-Oc-BmZ" id="4Lk-BG-tJu"/>
                         <outlet property="tableViewHeightConstraint" destination="gqe-eZ-2zQ" id="SsP-Wz-hRQ"/>
                     </connections>

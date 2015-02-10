@@ -20,6 +20,7 @@ typedef NS_ENUM(NSUInteger, HEMClockIndex) {
 @interface HEMClockPickerView () <UIPickerViewDelegate, UIPickerViewDataSource>
 @property (nonatomic, strong) UIPickerView* pickerView;
 @property (nonatomic, strong) UIView* gradientView;
+@property (nonatomic, strong) UIView* overlayView;
 @property (nonatomic, strong) UILabel* selectedHourLabel;
 @property (nonatomic, strong) UILabel* selectedMinuteLabel;
 @property (nonatomic, strong) UILabel* selectedMeridiemLabel;
@@ -33,7 +34,7 @@ typedef NS_ENUM(NSUInteger, HEMClockIndex) {
 
 static CGFloat const HEMClockPickerHeightOffset = 60.f;
 static CGFloat const HEMClockPickerTopOffset = 30.f;
-static CGFloat const HEMClockPickerRowHeight = 80.f;
+static CGFloat const HEMClockPickerRowHeight = 70.f;
 static CGFloat const HEMClockPickerDividerWidth = 12.f;
 static CGFloat const HEMClockPickerMeridiemWidth = 60.f;
 static CGFloat const HEMClockPickerDefaultWidth = 90.f;
@@ -68,8 +69,11 @@ static NSUInteger const HEMClock24HourCount = 24;
     _pickerView.dataSource = self;
     _pickerView.delegate = self;
     _gradientView = [UIView new];
+    _overlayView = [UIView new];
+    _overlayView.userInteractionEnabled = NO;
     [self addSubview:self.gradientView];
     [self addSubview:self.pickerView];
+    [self addSubview:self.overlayView];
     [self layoutPickerViews];
 }
 
@@ -80,19 +84,30 @@ static NSUInteger const HEMClock24HourCount = 24;
 
 - (void)applyStyling
 {
-    NSArray* colors = @[
+    CGRect gradientFrame = self.gradientView.bounds;
+    gradientFrame.size.width = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    CAGradientLayer* vLayer = [CAGradientLayer layer];
+    vLayer.colors = @[
         (id)[UIColor colorWithWhite:0.98f alpha:0.7f].CGColor,
         (id)[UIColor whiteColor].CGColor,
         (id)[UIColor whiteColor].CGColor,
-        (id)[UIColor colorWithWhite:0.98f alpha:0.7f].CGColor,];
-
-    CAGradientLayer* layer = [CAGradientLayer layer];
-    layer.colors = colors;
-    layer.frame = self.gradientView.bounds;
-    layer.locations = @[ @0, @(0.15), @(0.85), @1 ];
-    layer.startPoint = CGPointZero;
-    layer.endPoint = CGPointMake(0, 1);
-    [self.gradientView.layer insertSublayer:layer atIndex:0];
+        (id)[UIColor colorWithWhite:0.98f alpha:0.7f].CGColor];
+    vLayer.frame = gradientFrame;
+    vLayer.locations = @[ @0, @(0.15), @(0.85), @1 ];
+    vLayer.startPoint = CGPointZero;
+    vLayer.endPoint = CGPointMake(0, 1);
+    [self.gradientView.layer insertSublayer:vLayer atIndex:0];
+    CAGradientLayer* hLayer = [CAGradientLayer layer];
+    hLayer.colors = @[
+        (id)[UIColor colorWithWhite:0.98f alpha:1.f].CGColor,
+        (id)[UIColor colorWithWhite:1.f alpha:0].CGColor,
+        (id)[UIColor colorWithWhite:1.f alpha:0].CGColor,
+        (id)[UIColor colorWithWhite:0.98f alpha:1.f].CGColor];
+    hLayer.frame = gradientFrame;
+    hLayer.locations = @[ @0, @(0.25), @(0.75), @1 ];
+    hLayer.startPoint = CGPointMake(0, 0.5);
+    hLayer.endPoint = CGPointMake(1, 0.5);
+    [self.overlayView.layer insertSublayer:hLayer atIndex:0];
 }
 
 - (void)layoutSubviews
@@ -103,8 +118,10 @@ static NSUInteger const HEMClock24HourCount = 24;
 
 - (void)layoutPickerViews
 {
-    self.gradientView.frame = self.bounds;
-    CGRect pickerFrame = self.bounds;
+    CGRect bounds = self.bounds;
+    self.gradientView.frame = bounds;
+    self.overlayView.frame = bounds;
+    CGRect pickerFrame = bounds;
     pickerFrame.size.height -= HEMClockPickerHeightOffset;
     pickerFrame.origin.y = HEMClockPickerTopOffset;
     self.pickerView.frame = pickerFrame;

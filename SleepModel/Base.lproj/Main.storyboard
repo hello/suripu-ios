@@ -2159,10 +2159,10 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4cs-CN-ZpX">
-                                <rect key="frame" x="-1" y="64" width="602" height="109"/>
+                                <rect key="frame" x="-1" y="64" width="602" height="117"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="F4x-yo-M7w">
-                                        <rect key="frame" x="0.0" y="108" width="602" height="1"/>
+                                        <rect key="frame" x="0.0" y="116" width="602" height="1"/>
                                         <color key="backgroundColor" red="0.75436371564865112" green="0.75434118509292603" blue="0.75435400009155273" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="aQE-fT-w5d"/>
@@ -2177,16 +2177,16 @@
                                 </constraints>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What time did you wake up?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tiW-aD-YcS">
-                                <rect key="frame" x="14" y="98" width="572" height="41"/>
+                                <rect key="frame" x="14" y="106" width="572" height="41"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="30"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tlU-7S-PhF">
-                                <rect key="frame" x="0.0" y="173" width="600" height="427"/>
+                                <rect key="frame" x="0.0" y="181" width="600" height="419"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-IF-Dcc" customClass="HEMClockPickerView">
-                                        <rect key="frame" x="0.0" y="103" width="600" height="222"/>
+                                        <rect key="frame" x="0.0" y="99" width="600" height="222"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="222" id="w5R-Cm-bxz"/>
@@ -2201,7 +2201,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJY-Hw-kZu">
-                                <rect key="frame" x="20" y="64" width="560" height="1"/>
+                                <rect key="frame" x="20" y="72" width="560" height="1"/>
                                 <color key="backgroundColor" red="0.75436371560000004" green="0.75434118510000003" blue="0.75435400009999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="rp7-Xc-pYB"/>
@@ -2213,13 +2213,13 @@
                             <constraint firstItem="4cs-CN-ZpX" firstAttribute="top" secondItem="VaA-g6-Dco" secondAttribute="bottom" id="67t-8P-8TZ"/>
                             <constraint firstItem="tlU-7S-PhF" firstAttribute="top" secondItem="4cs-CN-ZpX" secondAttribute="bottom" id="7C3-DS-Tmg"/>
                             <constraint firstItem="tlU-7S-PhF" firstAttribute="leading" secondItem="IOD-qM-VrA" secondAttribute="leading" id="Fr4-Xk-4Py"/>
-                            <constraint firstItem="YJY-Hw-kZu" firstAttribute="top" secondItem="VaA-g6-Dco" secondAttribute="bottom" id="MQQ-2K-dPE"/>
+                            <constraint firstItem="YJY-Hw-kZu" firstAttribute="top" secondItem="VaA-g6-Dco" secondAttribute="bottom" constant="8" id="MQQ-2K-dPE"/>
                             <constraint firstItem="tiW-aD-YcS" firstAttribute="bottom" secondItem="4cs-CN-ZpX" secondAttribute="bottom" constant="-34" id="MgW-Sn-1F9"/>
                             <constraint firstItem="tiW-aD-YcS" firstAttribute="leading" secondItem="IOD-qM-VrA" secondAttribute="leading" constant="14" id="N3R-du-fhS"/>
                             <constraint firstItem="qYL-P4-nsr" firstAttribute="top" secondItem="tlU-7S-PhF" secondAttribute="bottom" id="PVy-UF-eLC"/>
                             <constraint firstAttribute="trailing" secondItem="YJY-Hw-kZu" secondAttribute="trailing" constant="20" id="ZYy-uG-qEB"/>
                             <constraint firstAttribute="trailing" secondItem="tlU-7S-PhF" secondAttribute="trailing" id="Zh3-4o-3Yh"/>
-                            <constraint firstItem="tiW-aD-YcS" firstAttribute="top" secondItem="VaA-g6-Dco" secondAttribute="bottom" constant="34" id="nO4-4v-2UY"/>
+                            <constraint firstItem="tiW-aD-YcS" firstAttribute="top" secondItem="VaA-g6-Dco" secondAttribute="bottom" constant="42" id="nO4-4v-2UY"/>
                             <constraint firstAttribute="trailing" secondItem="tiW-aD-YcS" secondAttribute="trailing" constant="14" id="saw-BR-dBc"/>
                             <constraint firstItem="4cs-CN-ZpX" firstAttribute="leading" secondItem="IOD-qM-VrA" secondAttribute="leading" constant="-1" id="teZ-Tw-eEi"/>
                             <constraint firstAttribute="trailing" secondItem="4cs-CN-ZpX" secondAttribute="trailing" constant="-1" id="wIm-rs-BtE"/>

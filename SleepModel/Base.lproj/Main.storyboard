@@ -63,7 +63,10 @@
                                                     </connections>
                                                 </switch>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zpc-Vv-o4F">
-                                                    <rect key="frame" x="162" y="18" width="22" height="22"/>
+                                                    <rect key="frame" x="157" y="0.0" width="40" height="57"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="40" id="o1C-Ws-IOX"/>
+                                                    </constraints>
                                                     <state key="normal" image="infoButtonIconSmall.png">
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -73,9 +76,11 @@
                                                 </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="zpc-Vv-o4F" firstAttribute="leading" secondItem="vsw-j2-h0Y" secondAttribute="trailing" constant="13" id="72u-XH-MA5"/>
+                                                <constraint firstItem="zpc-Vv-o4F" firstAttribute="leading" secondItem="vsw-j2-h0Y" secondAttribute="trailing" constant="8" id="72u-XH-MA5"/>
                                                 <constraint firstAttribute="centerY" secondItem="JfE-LJ-HjM" secondAttribute="centerY" constant="-0.5" id="Mh4-3P-43h"/>
                                                 <constraint firstAttribute="centerY" secondItem="Liy-h5-gd5" secondAttribute="centerY" constant="-0.25" id="W2n-3E-c5H"/>
+                                                <constraint firstItem="zpc-Vv-o4F" firstAttribute="top" secondItem="UWc-4t-qIy" secondAttribute="top" id="Wbu-D0-Nkx"/>
+                                                <constraint firstAttribute="bottom" secondItem="zpc-Vv-o4F" secondAttribute="bottom" id="ita-UA-E0G"/>
                                                 <constraint firstItem="JfE-LJ-HjM" firstAttribute="leading" secondItem="UWc-4t-qIy" secondAttribute="leading" constant="16" id="jks-Vy-Sjg"/>
                                                 <constraint firstAttribute="centerY" secondItem="zpc-Vv-o4F" secondAttribute="centerY" constant="-0.5" id="o11-z9-8Rt"/>
                                                 <constraint firstAttribute="trailing" secondItem="Liy-h5-gd5" secondAttribute="trailing" constant="22" id="sOx-kx-9S1"/>
@@ -2186,9 +2191,20 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3YU-EY-ydB">
+                                <rect key="frame" x="535" y="535" width="55" height="55"/>
+                                <state key="normal" image="alarmShortcut.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="didTapAlarmShortcut:" destination="eDW-dk-QbK" eventType="touchUpInside" id="Mao-d9-hl6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="8aV-gM-TJw" firstAttribute="top" secondItem="3YU-EY-ydB" secondAttribute="bottom" constant="10" id="1xm-Wh-iIc"/>
+                            <constraint firstAttribute="trailing" secondItem="3YU-EY-ydB" secondAttribute="trailing" constant="10" id="8mv-cH-3HV"/>
                             <constraint firstAttribute="trailing" secondItem="F5X-iN-TNU" secondAttribute="trailing" id="UIu-hX-yxk"/>
                             <constraint firstItem="F5X-iN-TNU" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" id="bjl-nO-FCi"/>
                             <constraint firstItem="F5X-iN-TNU" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="top" id="fVE-S9-svM"/>
@@ -2197,6 +2213,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="F5X-iN-TNU" id="GKv-qY-j6y"/>
+                        <outlet property="shortcutButtonTrailing" destination="8mv-cH-3HV" id="i0W-6i-YjT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xwK-bi-1s7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -3343,6 +3360,7 @@
         <image name="Share.png" width="17" height="23"/>
         <image name="accessory.png" width="8" height="15"/>
         <image name="alarmRepeatIcon.png" width="25" height="25"/>
+        <image name="alarmShortcut.png" width="55" height="55"/>
         <image name="alarmSmartIcon.png" width="25" height="25"/>
         <image name="alarmSoundIcon.png" width="25" height="25"/>
         <image name="checkmark.png" width="20" height="15"/>

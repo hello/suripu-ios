@@ -14,6 +14,8 @@
 @property (nonatomic, weak) IBOutlet HEMClockPickerView* clockView;
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* tinyLineHeight;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* tinySeparatorHeight;
+@property (nonatomic, weak) IBOutlet UIView* titleContainerView;
 @property (nonatomic, strong) NSCalendar* calendar;
 @end
 
@@ -49,6 +51,7 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
     NSString* key = [NSString stringWithFormat:HEMTimelineFeedbackTitleFormat, [self.segment.eventType lowercaseString]];
     self.titleLabel.text = NSLocalizedString(key, nil);
     self.tinyLineHeight.constant = 0.5f;
+    self.tinySeparatorHeight.constant = 0.5f;
 }
 
 - (void)configureBarButtonItems

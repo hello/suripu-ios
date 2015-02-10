@@ -135,9 +135,9 @@ static NSUInteger const HEMAlarmListLimit = 8;
         [self.spinnerView stopAnimating];
         if (error) {
             self.loadingFailed = YES;
+            self.loading = NO;
             if (self.alarms.count == 0) {
                 [self.collectionView reloadData];
-                self.loading = NO;
                 return;
             }
         } else {
@@ -147,16 +147,21 @@ static NSUInteger const HEMAlarmListLimit = 8;
             [self reloadData];
         }
         self.addButton.enabled = YES;
-        self.loading = NO;
     }];
 }
 
 - (void)reloadData
 {
     NSArray* cachedAlarms = [self sortedCachedAlarms];
-    if ([self.alarms isEqualToArray:cachedAlarms])
+    if ([self.alarms isEqualToArray:cachedAlarms]) {
+        if ([self isLoading]) {
+            self.loading = NO;
+            [self.collectionView reloadData];
+        }
         return;
+    }
 
+    self.loading = NO;
     self.alarms = cachedAlarms;
     self.noAlarmLabel.hidden = self.alarms.count > 0;
     self.addButton.enabled = self.alarms.count < HEMAlarmListLimit;

@@ -47,8 +47,8 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
     [super awakeFromNib];
     self.backgroundColor = [UIColor clearColor];
     self.contentViewHeightConstraint.constant = 0;
-    self.verifyDataButton.hidden = YES;
     self.lineView.image = [self dottedLineBorderImageWithColor:[HelloStyleKit tintColor]];
+    [self configureVerifyButton];
     [self configureAudioPlayer];
     [self configureGradientViews];
 }
@@ -60,6 +60,17 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
     self.verifyDataButton.hidden = YES;
     self.playSoundButton.hidden = YES;
     [self useExpandedLayout:NO targetSize:CGSizeZero animated:NO];
+}
+
+- (void)configureVerifyButton
+{
+    self.verifyDataButton.hidden = YES;
+    NSDictionary* attributes = @{NSUnderlineStyleAttributeName:@(NSUnderlinePatternSolid|NSUnderlineStyleSingle),
+                                 NSForegroundColorAttributeName:[HelloStyleKit tintColor]};
+    NSString* localizedTitle = NSLocalizedString(@"sleep-event.verify.title", nil);
+    NSAttributedString* title = [[NSAttributedString alloc] initWithString:localizedTitle
+                                                                attributes:attributes];
+    [self.verifyDataButton setAttributedTitle:title forState:UIControlStateNormal];
 }
 
 - (void)configureAudioPlayer

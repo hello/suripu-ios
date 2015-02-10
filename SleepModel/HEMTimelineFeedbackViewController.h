@@ -12,5 +12,8 @@
 
 @interface HEMTimelineFeedbackViewController : UIViewController
 
++ (BOOL)canAdjustTimeForSegment:(SENSleepResultSegment*)segment;
+
 @property (nonatomic, strong) SENSleepResultSegment* segment;
+@property (nonatomic, strong) NSDate* dateForNightOfSleep;
 @end

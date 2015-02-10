@@ -37,9 +37,8 @@
                                             <constraint firstAttribute="height" constant="40" id="JaI-eL-zcK"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Roman" family="Avenir" pointSize="11"/>
-                                        <state key="normal" title="  Is this incorrect?" image="verifyAlertIcon.png">
+                                        <state key="normal" title="Adjust Time">
                                             <color key="titleColor" red="0.1176470667" green="0.68235296010000002" blue="0.98823535439999999" alpha="1" colorSpace="deviceRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ry2-xq-WWj" customClass="RTSpinKitView">
@@ -159,6 +158,5 @@
     </objects>
     <resources>
         <image name="playSound.png" width="43" height="43"/>
-        <image name="verifyAlertIcon.png" width="22" height="22"/>
     </resources>
 </document>

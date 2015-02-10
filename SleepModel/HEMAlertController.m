@@ -39,39 +39,6 @@ static NSMutableArray* alertControllers = nil;
     [alertController show];
 }
 
-+ (void)presentDatePickerAlertWithTitle:(NSString *)title
-                                message:(NSString *)message
-                   presentingController:(UIViewController *)controller
-                         datePickerMode:(UIDatePickerMode)pickerMode
-                            initialDate:(NSDate *)date
-                             completion:(void (^)(NSDate *))completionHandler
-{
-    HEMAlertController* alertController = [[self alloc] initWithTitle:title
-                                                              message:message
-                                                                style:HEMAlertControllerStyleAlert
-                                                 presentingController:controller];
-    UIDatePicker* picker = [UIDatePicker new];
-    picker.datePickerMode = UIDatePickerModeTime;
-    picker.date = date;
-    NSDateFormatter* formatter = [NSDateFormatter new];
-    formatter.dateFormat = @"hh:mm a";
-    [alertController addActionWithText:NSLocalizedString(@"actions.save", nil) block:^{
-        if (completionHandler)
-            completionHandler(picker.date);
-    }];
-    [alertController addActionWithText:NSLocalizedString(@"actions.cancel", nil) block:^{
-        if (completionHandler)
-            completionHandler(nil);
-    }];
-    [alertController showTextFieldWithInputView:picker withChangeHandler:^(UITextField *textField) {
-        textField.font = [UIFont timelineEventMessageBoldFont];
-        textField.textAlignment = NSTextAlignmentCenter;
-        textField.tintColor = [UIColor clearColor];
-        textField.text = [[formatter stringFromDate:picker.date] lowercaseString];
-    }];
-    [alertController show];
-}
-
 - (instancetype)initWithTitle:(NSString*)title
                       message:(NSString*)message
                         style:(HEMAlertControllerStyle)style
@@ -97,23 +64,7 @@ static NSMutableArray* alertControllers = nil;
     [self.actions addObject:action];
 }
 
-- (void)showTextFieldWithInputView:(UIControl*)inputView withChangeHandler:(void(^)(UITextField*))handler
-{
-    self.inputView = inputView;
-    [self.inputView addTarget:self
-                       action:@selector(inputViewContentsChanged:)
-             forControlEvents:UIControlEventValueChanged];
-    self.inputChangeHandler = handler;
-}
-
 #pragma mark - Respond to Events
-
-- (void)inputViewContentsChanged:(UIControl*)control
-{
-    if (self.inputChangeHandler && self.textField) {
-        self.inputChangeHandler(self.textField);
-    }
-}
 
 - (void)activateActionAtIndex:(NSInteger)index
 {

@@ -32,6 +32,7 @@ typedef NS_ENUM(NSUInteger, HEMClockIndex) {
 @implementation HEMClockPickerView
 
 static CGFloat const HEMClockPickerHeightOffset = 60.f;
+static CGFloat const HEMClockPickerTopOffset = 30.f;
 static CGFloat const HEMClockPickerRowHeight = 80.f;
 static CGFloat const HEMClockPickerDividerWidth = 12.f;
 static CGFloat const HEMClockPickerMeridiemWidth = 60.f;
@@ -79,13 +80,11 @@ static NSUInteger const HEMClock24HourCount = 24;
 
 - (void)applyStyling
 {
-    self.layer.borderColor = [UIColor colorWithWhite:0.8 alpha:1.f].CGColor;
-    self.layer.borderWidth = 0.5f;
     NSArray* colors = @[
-        (id)[UIColor colorWithWhite:0.98f alpha:1.f].CGColor,
+        (id)[UIColor colorWithWhite:0.98f alpha:0.7f].CGColor,
         (id)[UIColor whiteColor].CGColor,
         (id)[UIColor whiteColor].CGColor,
-        (id)[UIColor colorWithWhite:0.98f alpha:1.f].CGColor,];
+        (id)[UIColor colorWithWhite:0.98f alpha:0.7f].CGColor,];
 
     CAGradientLayer* layer = [CAGradientLayer layer];
     layer.colors = colors;
@@ -107,6 +106,7 @@ static NSUInteger const HEMClock24HourCount = 24;
     self.gradientView.frame = self.bounds;
     CGRect pickerFrame = self.bounds;
     pickerFrame.size.height -= HEMClockPickerHeightOffset;
+    pickerFrame.origin.y = HEMClockPickerTopOffset;
     self.pickerView.frame = pickerFrame;
 }
 

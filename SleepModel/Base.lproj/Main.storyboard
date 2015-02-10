@@ -2035,7 +2035,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ita-56-GRs" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3469" y="-1450"/>
+            <point key="canvasLocation" x="4281" y="-1450"/>
         </scene>
         <!--Sound-->
         <scene sceneID="hWq-0a-3U5">
@@ -2146,10 +2146,10 @@
             </objects>
             <point key="canvasLocation" x="4434" y="-446"/>
         </scene>
-        <!--Timeline Feedback View Controller-->
+        <!--Adjust Time-->
         <scene sceneID="FoW-qG-gJO">
             <objects>
-                <viewController storyboardIdentifier="timelineFeedback" id="dmd-i6-J7b" customClass="HEMTimelineFeedbackViewController" sceneMemberID="viewController">
+                <viewController id="dmd-i6-J7b" customClass="HEMTimelineFeedbackViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VaA-g6-Dco"/>
                         <viewControllerLayoutGuide type="bottom" id="qYL-P4-nsr"/>
@@ -2159,31 +2159,38 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4cs-CN-ZpX">
-                                <rect key="frame" x="0.0" y="20" width="600" height="95"/>
+                                <rect key="frame" x="0.0" y="64" width="600" height="95"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What time did you wake up?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tiW-aD-YcS">
-                                <rect key="frame" x="14" y="54" width="572" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What time did you wake up?" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="tiW-aD-YcS">
+                                <rect key="frame" x="14" y="98" width="572" height="41"/>
                                 <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="30"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tlU-7S-PhF">
-                                <rect key="frame" x="0.0" y="115" width="600" height="485"/>
+                                <rect key="frame" x="0.0" y="159" width="600" height="441"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-IF-Dcc" customClass="HEMClockPickerView">
-                                        <rect key="frame" x="0.0" y="132" width="600" height="222"/>
+                                        <rect key="frame" x="0.0" y="110" width="600" height="222"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="222" id="w5R-Cm-bxz"/>
                                         </constraints>
                                     </view>
                                 </subviews>
-                                <color key="backgroundColor" red="0.94516962766647339" green="0.94514137506484985" blue="0.94515740871429443" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.9748079776763916" green="0.97477877140045166" blue="0.97479534149169922" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="centerY" secondItem="e6V-IF-Dcc" secondAttribute="centerY" id="6GE-AJ-HCW"/>
                                     <constraint firstItem="e6V-IF-Dcc" firstAttribute="leading" secondItem="tlU-7S-PhF" secondAttribute="leading" id="aK0-jh-3uQ"/>
                                     <constraint firstAttribute="trailing" secondItem="e6V-IF-Dcc" secondAttribute="trailing" id="axf-Hp-gwj"/>
+                                </constraints>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YJY-Hw-kZu">
+                                <rect key="frame" x="20" y="64" width="560" height="1"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="rp7-Xc-pYB"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -2192,24 +2199,40 @@
                             <constraint firstItem="4cs-CN-ZpX" firstAttribute="top" secondItem="VaA-g6-Dco" secondAttribute="bottom" id="67t-8P-8TZ"/>
                             <constraint firstItem="tlU-7S-PhF" firstAttribute="top" secondItem="4cs-CN-ZpX" secondAttribute="bottom" id="7C3-DS-Tmg"/>
                             <constraint firstItem="tlU-7S-PhF" firstAttribute="leading" secondItem="IOD-qM-VrA" secondAttribute="leading" id="Fr4-Xk-4Py"/>
+                            <constraint firstItem="YJY-Hw-kZu" firstAttribute="top" secondItem="VaA-g6-Dco" secondAttribute="bottom" id="MQQ-2K-dPE"/>
                             <constraint firstItem="tiW-aD-YcS" firstAttribute="bottom" secondItem="4cs-CN-ZpX" secondAttribute="bottom" constant="-20" id="MgW-Sn-1F9"/>
                             <constraint firstItem="tiW-aD-YcS" firstAttribute="leading" secondItem="IOD-qM-VrA" secondAttribute="leading" constant="14" id="N3R-du-fhS"/>
                             <constraint firstItem="qYL-P4-nsr" firstAttribute="top" secondItem="tlU-7S-PhF" secondAttribute="bottom" id="PVy-UF-eLC"/>
+                            <constraint firstAttribute="trailing" secondItem="YJY-Hw-kZu" secondAttribute="trailing" constant="20" id="ZYy-uG-qEB"/>
                             <constraint firstAttribute="trailing" secondItem="tlU-7S-PhF" secondAttribute="trailing" id="Zh3-4o-3Yh"/>
                             <constraint firstItem="tiW-aD-YcS" firstAttribute="top" secondItem="VaA-g6-Dco" secondAttribute="bottom" constant="34" id="nO4-4v-2UY"/>
                             <constraint firstAttribute="trailing" secondItem="tiW-aD-YcS" secondAttribute="trailing" constant="14" id="saw-BR-dBc"/>
                             <constraint firstItem="4cs-CN-ZpX" firstAttribute="leading" secondItem="IOD-qM-VrA" secondAttribute="leading" id="teZ-Tw-eEi"/>
                             <constraint firstAttribute="trailing" secondItem="4cs-CN-ZpX" secondAttribute="trailing" id="wIm-rs-BtE"/>
+                            <constraint firstItem="YJY-Hw-kZu" firstAttribute="leading" secondItem="IOD-qM-VrA" secondAttribute="leading" constant="20" id="ylt-CB-Uva"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Adjust Time" id="Oc7-78-rKN">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="XN9-Kg-0vY">
+                            <connections>
+                                <action selector="cancelAndDismiss:" destination="dmd-i6-J7b" id="nAC-SV-eZo"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="fQA-dA-mMr">
+                            <connections>
+                                <action selector="sendUpdatedTime:" destination="dmd-i6-J7b" id="crl-70-Cph"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="clockView" destination="e6V-IF-Dcc" id="ezu-jx-3md"/>
+                        <outlet property="tinyLineHeight" destination="rp7-Xc-pYB" id="Tvk-ra-lRA"/>
                         <outlet property="titleLabel" destination="tiW-aD-YcS" id="aOX-Lk-Fg2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pzZ-ty-JaU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1220" y="-1438"/>
+            <point key="canvasLocation" x="2032" y="-1438"/>
         </scene>
         <!--Sleep Graph View Controller-->
         <scene sceneID="vtT-8Q-HGb">
@@ -3369,7 +3392,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HKQ-Uv-2DX" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2750" y="-1450"/>
+            <point key="canvasLocation" x="3562" y="-1450"/>
         </scene>
         <!--Settings Navigation Controller-->
         <scene sceneID="qAs-VQ-rXD">
@@ -3407,6 +3430,24 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8wA-iz-R4F" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2746" y="-2224"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="exE-yb-g4r">
+            <objects>
+                <navigationController storyboardIdentifier="timelineFeedback" automaticallyAdjustsScrollViewInsets="NO" id="cey-sO-3LK" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xPB-5c-CzK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="dmd-i6-J7b" kind="relationship" relationship="rootViewController" id="dTc-Tv-SgQ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bJO-t5-5ud" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1220" y="-1438"/>
         </scene>
     </scenes>
     <resources>

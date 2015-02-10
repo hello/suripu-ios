@@ -15,7 +15,6 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMSupportUtil.h"
-#import "HEMScrollableView.h"
 #import "HelloStyleKit.h"
 #import "HEMActivityCoverView.h"
 #import "HEMOnboardingStoryboard.h"

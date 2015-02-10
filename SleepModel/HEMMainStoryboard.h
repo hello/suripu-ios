@@ -16,6 +16,8 @@
 +(NSString *)alarmDeleteCellReuseIdentifier;
 +(NSString *)singleReuseIdentifier;
 +(NSString *)multipleReuseIdentifier;
++(NSString *)imageReuseIdentifier;
++(NSString *)textReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
 +(NSString *)preferenceReuseIdentifier;
 +(NSString *)explanationReuseIdentifier;

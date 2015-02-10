@@ -50,7 +50,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmSmartIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="JfE-LJ-HjM">
-                                                    <rect key="frame" x="16" y="17" width="32" height="25"/>
+                                                    <rect key="frame" x="16" y="16" width="32" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="Yil-Ys-fIp"/>
                                                     </constraints>
@@ -77,14 +77,13 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="zpc-Vv-o4F" firstAttribute="leading" secondItem="vsw-j2-h0Y" secondAttribute="trailing" constant="8" id="72u-XH-MA5"/>
-                                                <constraint firstAttribute="centerY" secondItem="JfE-LJ-HjM" secondAttribute="centerY" constant="-0.5" id="Mh4-3P-43h"/>
-                                                <constraint firstAttribute="centerY" secondItem="Liy-h5-gd5" secondAttribute="centerY" constant="-0.25" id="W2n-3E-c5H"/>
+                                                <constraint firstAttribute="centerY" secondItem="JfE-LJ-HjM" secondAttribute="centerY" id="Mh4-3P-43h"/>
+                                                <constraint firstAttribute="centerY" secondItem="Liy-h5-gd5" secondAttribute="centerY" id="W2n-3E-c5H"/>
                                                 <constraint firstItem="zpc-Vv-o4F" firstAttribute="top" secondItem="UWc-4t-qIy" secondAttribute="top" id="Wbu-D0-Nkx"/>
                                                 <constraint firstAttribute="bottom" secondItem="zpc-Vv-o4F" secondAttribute="bottom" id="ita-UA-E0G"/>
                                                 <constraint firstItem="JfE-LJ-HjM" firstAttribute="leading" secondItem="UWc-4t-qIy" secondAttribute="leading" constant="16" id="jks-Vy-Sjg"/>
-                                                <constraint firstAttribute="centerY" secondItem="zpc-Vv-o4F" secondAttribute="centerY" constant="-0.5" id="o11-z9-8Rt"/>
                                                 <constraint firstAttribute="trailing" secondItem="Liy-h5-gd5" secondAttribute="trailing" constant="22" id="sOx-kx-9S1"/>
-                                                <constraint firstAttribute="centerY" secondItem="vsw-j2-h0Y" secondAttribute="centerY" constant="0.5" id="v98-gX-VQA"/>
+                                                <constraint firstAttribute="centerY" secondItem="vsw-j2-h0Y" secondAttribute="centerY" id="v98-gX-VQA"/>
                                                 <constraint firstItem="vsw-j2-h0Y" firstAttribute="leading" secondItem="JfE-LJ-HjM" secondAttribute="trailing" constant="13" id="x0c-76-efn"/>
                                             </constraints>
                                         </tableViewCellContentView>
@@ -122,7 +121,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="gFg-NX-sGf">
-                                                    <rect key="frame" x="572" y="22" width="8" height="15"/>
+                                                    <rect key="frame" x="572" y="21" width="8" height="15"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
@@ -172,7 +171,7 @@
                                                     </constraints>
                                                 </imageView>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="sVq-mc-4Ub">
-                                                    <rect key="frame" x="572" y="22" width="8" height="15"/>
+                                                    <rect key="frame" x="572" y="21" width="8" height="15"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>

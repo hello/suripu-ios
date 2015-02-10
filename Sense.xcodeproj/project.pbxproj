@@ -231,6 +231,15 @@
 		8AA1580F1A5EFD9500BF1D4A /* alarmSmartIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1580C1A5EFD9500BF1D4A /* alarmSmartIcon@3x.png */; };
 		8AA158101A5EFD9500BF1D4A /* alarmSoundIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1580D1A5EFD9500BF1D4A /* alarmSoundIcon@3x.png */; };
 		8AA1E6171A895EF200590EB6 /* HEMNotificationSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA1E6161A895EF200590EB6 /* HEMNotificationSettingsViewController.m */; };
+		8AA1E61E1A89785000590EB6 /* infoButtonIconSmall.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1E6181A89785000590EB6 /* infoButtonIconSmall.png */; };
+		8AA1E61F1A89785000590EB6 /* infoButtonIconSmall@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1E6191A89785000590EB6 /* infoButtonIconSmall@2x.png */; };
+		8AA1E6201A89785000590EB6 /* infoButtonIconSmall@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1E61A1A89785000590EB6 /* infoButtonIconSmall@3x.png */; };
+		8AA1E6211A89785000590EB6 /* smart_alarm_dialog.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1E61B1A89785000590EB6 /* smart_alarm_dialog.png */; };
+		8AA1E6221A89785000590EB6 /* smart_alarm_dialog@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1E61C1A89785000590EB6 /* smart_alarm_dialog@2x.png */; };
+		8AA1E6231A89785000590EB6 /* smart_alarm_dialog@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1E61D1A89785000590EB6 /* smart_alarm_dialog@3x.png */; };
+		8AA1E6271A897FA000590EB6 /* alarmShortcut.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1E6241A897FA000590EB6 /* alarmShortcut.png */; };
+		8AA1E6281A897FA000590EB6 /* alarmShortcut@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1E6251A897FA000590EB6 /* alarmShortcut@2x.png */; };
+		8AA1E6291A897FA000590EB6 /* alarmShortcut@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AA1E6261A897FA000590EB6 /* alarmShortcut@3x.png */; };
 		8AA8D92A19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D92819ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m */; };
 		8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AA8D92919ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib */; };
 		8AA8D93A19AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AA8D93919AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m */; };
@@ -870,6 +879,15 @@
 		8AA1580D1A5EFD9500BF1D4A /* alarmSoundIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "alarmSoundIcon@3x.png"; path = "images/alarmSoundIcon@3x.png"; sourceTree = "<group>"; };
 		8AA1E6151A895EF200590EB6 /* HEMNotificationSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNotificationSettingsViewController.h; sourceTree = "<group>"; };
 		8AA1E6161A895EF200590EB6 /* HEMNotificationSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNotificationSettingsViewController.m; sourceTree = "<group>"; };
+		8AA1E6181A89785000590EB6 /* infoButtonIconSmall.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = infoButtonIconSmall.png; path = images/infoButtonIconSmall.png; sourceTree = "<group>"; };
+		8AA1E6191A89785000590EB6 /* infoButtonIconSmall@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "infoButtonIconSmall@2x.png"; path = "images/infoButtonIconSmall@2x.png"; sourceTree = "<group>"; };
+		8AA1E61A1A89785000590EB6 /* infoButtonIconSmall@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "infoButtonIconSmall@3x.png"; path = "images/infoButtonIconSmall@3x.png"; sourceTree = "<group>"; };
+		8AA1E61B1A89785000590EB6 /* smart_alarm_dialog.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = smart_alarm_dialog.png; path = images/smart_alarm_dialog.png; sourceTree = "<group>"; };
+		8AA1E61C1A89785000590EB6 /* smart_alarm_dialog@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "smart_alarm_dialog@2x.png"; path = "images/smart_alarm_dialog@2x.png"; sourceTree = "<group>"; };
+		8AA1E61D1A89785000590EB6 /* smart_alarm_dialog@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "smart_alarm_dialog@3x.png"; path = "images/smart_alarm_dialog@3x.png"; sourceTree = "<group>"; };
+		8AA1E6241A897FA000590EB6 /* alarmShortcut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = alarmShortcut.png; path = images/alarmShortcut.png; sourceTree = "<group>"; };
+		8AA1E6251A897FA000590EB6 /* alarmShortcut@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "alarmShortcut@2x.png"; path = "images/alarmShortcut@2x.png"; sourceTree = "<group>"; };
+		8AA1E6261A897FA000590EB6 /* alarmShortcut@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "alarmShortcut@3x.png"; path = "images/alarmShortcut@3x.png"; sourceTree = "<group>"; };
 		8AA8D92719ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryCollectionViewCell.h; sourceTree = "<group>"; };
 		8AA8D92819ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryCollectionViewCell.m; sourceTree = "<group>"; };
 		8AA8D92919ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMSleepSummaryCollectionViewCell.xib; sourceTree = "<group>"; };
@@ -1754,6 +1772,9 @@
 				8AFD8A161A649F3900124CCE /* checkmark.png */,
 				8AFD8A171A649F3900124CCE /* checkmark@2x.png */,
 				8AFD8A181A649F3900124CCE /* checkmark@3x.png */,
+				8AA1E6181A89785000590EB6 /* infoButtonIconSmall.png */,
+				8AA1E6191A89785000590EB6 /* infoButtonIconSmall@2x.png */,
+				8AA1E61A1A89785000590EB6 /* infoButtonIconSmall@3x.png */,
 				8AC8008E1A7B029300895ED3 /* miniPlayButton.png */,
 				8AC8008F1A7B029300895ED3 /* miniPlayButton@2x.png */,
 				8AC800901A7B029300895ED3 /* miniPlayButton@3x.png */,
@@ -1762,6 +1783,9 @@
 				8AC800931A7B029300895ED3 /* miniStopButton@3x.png */,
 				8AC800941A7B029300895ED3 /* senseBarIconActive@2x@2x.png */,
 				8AC800951A7B029300895ED3 /* senseBarIconActive@3x@2x.png */,
+				8AA1E61B1A89785000590EB6 /* smart_alarm_dialog.png */,
+				8AA1E61C1A89785000590EB6 /* smart_alarm_dialog@2x.png */,
+				8AA1E61D1A89785000590EB6 /* smart_alarm_dialog@3x.png */,
 			);
 			name = Assets;
 			sourceTree = "<group>";
@@ -1822,6 +1846,9 @@
 		8A660131199EBDFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				8AA1E6241A897FA000590EB6 /* alarmShortcut.png */,
+				8AA1E6251A897FA000590EB6 /* alarmShortcut@2x.png */,
+				8AA1E6261A897FA000590EB6 /* alarmShortcut@3x.png */,
 				8A8288951A76C9590043B1D1 /* summary buttons */,
 				8AA157B61A5EFD2F00BF1D4A /* sleep events */,
 				8A82887B1A76BBA90043B1D1 /* top actions */,
@@ -2872,6 +2899,7 @@
 				8A12077E1A80A58E00758DC2 /* welcome_dialog_trends@3x.png in Resources */,
 				8AA157F61A5EFD6B00BF1D4A /* motionEventIcon.png in Resources */,
 				BF44735B1A63535F00389ECE /* male@2x.png in Resources */,
+				8AA1E6281A897FA000590EB6 /* alarmShortcut@2x.png in Resources */,
 				BF7417B31A7B005200399C0E /* loading@2x.png in Resources */,
 				8AD142651A78679800A83AD8 /* timeline_explain_before@3x.png in Resources */,
 				8A457E841A805B7E009A7863 /* infoButtonIcon@3x.png in Resources */,
@@ -2879,6 +2907,7 @@
 				8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */,
 				8A4579831A805603009A7863 /* welcome_dialog_light@2x.png in Resources */,
 				8AA157F91A5EFD6B00BF1D4A /* noiseEventIcon.png in Resources */,
+				8AA1E6221A89785000590EB6 /* smart_alarm_dialog@2x.png in Resources */,
 				8AA158051A5EFD6B00BF1D4A /* sunsetEventIcon.png in Resources */,
 				8A8288D41A7800820043B1D1 /* sensorsBarIconActive@3x.png in Resources */,
 				8A8288861A76BD8D0043B1D1 /* before_sleep.png in Resources */,
@@ -2901,6 +2930,7 @@
 				BF770F1E1A1550E0008611E9 /* bluetooth.png in Resources */,
 				BF05C8EA1A3A6AD6002A1307 /* questions_check@3x.png in Resources */,
 				BF05C8ED1A3A6AD6002A1307 /* questions_circle@3x.png in Resources */,
+				8AA1E61F1A89785000590EB6 /* infoButtonIconSmall@2x.png in Resources */,
 				8A8288881A76BD8D0043B1D1 /* before_sleep@3x.png in Resources */,
 				BFF3B4441A5CBF6800B11643 /* accessory@3x.png in Resources */,
 				BF8E1A9D1A689D34009E421F /* enableAudio@2x.png in Resources */,
@@ -2931,6 +2961,7 @@
 				8A8288DA1A7800820043B1D1 /* trendsBarIconActive@3x.png in Resources */,
 				8A8288A51A76CF1E0043B1D1 /* presleepInsightHumidity.png in Resources */,
 				8ACAF40D1A69B7980054885A /* outOfBedEventIcon.png in Resources */,
+				8AA1E6291A897FA000590EB6 /* alarmShortcut@3x.png in Resources */,
 				8A63D55B1A5F47A300F5307D /* unknownEventIcon.png in Resources */,
 				8AFD8A1A1A649F3900124CCE /* checkmark@2x.png in Resources */,
 				8A8288C91A7800820043B1D1 /* alarmBarIconActive.png in Resources */,
@@ -2999,6 +3030,7 @@
 				8A93AFCC1A09BF0300F70A8B /* alarmsIcon@3x.png in Resources */,
 				BFE873091A2FC65600494231 /* sensorTemperatureBlue.png in Resources */,
 				BF0E53A51A38C4C1002FB083 /* moon.png in Resources */,
+				8AA1E6231A89785000590EB6 /* smart_alarm_dialog@3x.png in Resources */,
 				8AD142631A78679800A83AD8 /* timeline_explain_before.png in Resources */,
 				8A63D5631A6058DA00F5307D /* lightsOutEventIcon@3x.png in Resources */,
 				BF5D53271A266C6B0090DD6A /* check@2x.png in Resources */,
@@ -3036,6 +3068,7 @@
 				8AA1580A1A5EFD6B00BF1D4A /* wakeupEventIcon@3x.png in Resources */,
 				BF005C7A19FED57E00E68E87 /* lockIcon.png in Resources */,
 				8AD1426C1A78679800A83AD8 /* timeline_explain_sleep.png in Resources */,
+				8AA1E6211A89785000590EB6 /* smart_alarm_dialog.png in Resources */,
 				8A8288D81A7800820043B1D1 /* trendsBarIconActive.png in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				8A8288921A76BDA00043B1D1 /* sleep_summary.png in Resources */,
@@ -3064,6 +3097,7 @@
 				8A7214411A1E7797008B59C4 /* backIcon@3x.png in Resources */,
 				8AA157FA1A5EFD6B00BF1D4A /* noiseEventIcon@2x.png in Resources */,
 				BF005C7B19FED57E00E68E87 /* lockIcon@2x.png in Resources */,
+				8AA1E6201A89785000590EB6 /* infoButtonIconSmall@3x.png in Resources */,
 				8AA157FE1A5EFD6B00BF1D4A /* partnerEventIcon@3x.png in Resources */,
 				BF770F241A155455008611E9 /* sensePlacement.png in Resources */,
 				8AD1426E1A78679800A83AD8 /* timeline_explain_sleep@3x.png in Resources */,
@@ -3085,6 +3119,7 @@
 				8AF4FA6C1A12F46F00451245 /* stopSound.png in Resources */,
 				8A4579901A805603009A7863 /* welcome_dialog_temperature@3x.png in Resources */,
 				BF005C7F19FED57E00E68E87 /* wifiIcon@3x.png in Resources */,
+				8AA1E6271A897FA000590EB6 /* alarmShortcut.png in Resources */,
 				8AC4A04B1989D47000C2BD63 /* chevronIconRight.png in Resources */,
 				BF770F1F1A1550E0008611E9 /* bluetooth@2x.png in Resources */,
 				8AA157FB1A5EFD6B00BF1D4A /* noiseEventIcon@3x.png in Resources */,
@@ -3159,6 +3194,7 @@
 				8AC800971A7B029300895ED3 /* miniPlayButton@2x.png in Resources */,
 				BFC8215319E7441200E09D5D /* play.png in Resources */,
 				BF8E1A861A687E1D009E421F /* senseColors.png in Resources */,
+				8AA1E61E1A89785000590EB6 /* infoButtonIconSmall.png in Resources */,
 				8A93AFCF1A09BF0300F70A8B /* pillIcon@3x.png in Resources */,
 				BFE872F91A2FC65600494231 /* sensorLightBlue@3x.png in Resources */,
 				8AFD8A191A649F3900124CCE /* checkmark.png in Resources */,

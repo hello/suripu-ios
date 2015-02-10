@@ -243,6 +243,11 @@ static NSUInteger const HEMAlarm24HourCount = 24;
     self.alarmCache.smart = [sender isOn];
 }
 
+- (IBAction)showHelpfulDialogAboutSmartness:(id)sender
+{
+    [HEMTutorial showTutorialForAlarmSmartness];
+}
+
 - (void)updateAlarmFromCache:(HEMAlarmCache*)cache
 {
     self.alarm.smartAlarm = [cache isSmart];

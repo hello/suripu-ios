@@ -10,7 +10,6 @@
 
 #import "HEMSettingsNavigationController.h"
 #import "HEMRootViewController.h"
-#import "HEMAppDelegate.h"
 #import "HEMSnazzBarController.h"
 #import "HelloStyleKit.h"
 
@@ -98,8 +97,7 @@ static CGFloat HEMSettingNavBarBorderHeight = 1.f;
 #pragma mark - Top Bar Handling
 
 - (void)updateBarVisibilityWithRatio:(CGFloat)ratio {
-    HEMAppDelegate* delegate = [UIApplication sharedApplication].delegate;
-    HEMRootViewController* root = (id)delegate.window.rootViewController;
+    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
     [root showPartialSettingsDrawerTopBarWithRatio:ratio];
 }
 
@@ -111,14 +109,12 @@ static CGFloat HEMSettingNavBarBorderHeight = 1.f;
 }
 
 - (void)hideTopBarAnimated:(BOOL)animated {
-    HEMAppDelegate* delegate = [UIApplication sharedApplication].delegate;
-    HEMRootViewController* root = (id)delegate.window.rootViewController;
+    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
     [root hideSettingsDrawerTopBar:YES animated:animated];
 }
 
 - (void)showTopBarAnimated:(BOOL)animated {
-    HEMAppDelegate* delegate = [UIApplication sharedApplication].delegate;
-    HEMRootViewController* root = (id)delegate.window.rootViewController;
+    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
     [root hideSettingsDrawerTopBar:NO animated:animated];
 }
 

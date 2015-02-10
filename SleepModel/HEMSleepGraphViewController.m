@@ -8,7 +8,6 @@
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
 #import "HelloStyleKit.h"
-#import "HEMAppDelegate.h"
 #import "HEMRootViewController.h"
 #import "HEMAudioCache.h"
 #import "HEMMainStoryboard.h"
@@ -38,6 +37,8 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 @property (nonatomic, strong) NSIndexPath* expandedIndexPath;
 @property (nonatomic, getter=presleepSectionIsExpanded) BOOL presleepExpanded;
 @property (nonatomic, strong) UIPanGestureRecognizer* panGestureRecognizer;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* shortcutButtonTrailing;
+@property (nonatomic, weak) IBOutlet UIButton* shortcutButton;
 @end
 
 @implementation HEMSleepGraphViewController
@@ -50,6 +51,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMTopItemsConstraintConstant = 4.f;
 static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 static CGFloat const HEMEventOverlayZPosition = 30.f;
+static CGFloat const HEMAlarmShortcutDefaultTrailing = 8.f;
+static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 
 - (void)viewDidLoad
 {
@@ -69,8 +72,7 @@ static CGFloat const HEMEventOverlayZPosition = 30.f;
 {
     if (![HEMTutorial shouldShowTutorialForTimeline])
         return;
-    HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
-    HEMRootViewController* root = (id)delegate.window.rootViewController;
+    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if ([root drawerIsVisible] || self.dataSource.numberOfSleepSegments == 0 || ![self isViewPushed])
             return;
@@ -151,8 +153,7 @@ static CGFloat const HEMEventOverlayZPosition = 30.f;
 
 - (void)toggleDrawer
 {
-    HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
-    HEMRootViewController* root = (id)delegate.window.rootViewController;
+    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
     [root toggleSettingsDrawer];
 }
 
@@ -256,8 +257,7 @@ static CGFloat const HEMEventOverlayZPosition = 30.f;
 - (void)checkForDateChanges
 {
     if (self.historyViewController.selectedDate) {
-        HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
-        HEMRootViewController* root = (id)delegate.window.rootViewController;
+        HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
         [root reloadTimelineSlideViewControllerWithDate:self.historyViewController.selectedDate];
     }
 
@@ -318,6 +318,12 @@ static CGFloat const HEMEventOverlayZPosition = 30.f;
                                   fromController:self];
 }
 
+- (IBAction)didTapAlarmShortcut:(id)sender
+{
+    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
+    [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
+}
+
 - (NSIndexPath*)indexPathForEventCellWithSubview:(UIView*)view
 {
     UIView* superview = view.superview;
@@ -369,6 +375,21 @@ static CGFloat const HEMEventOverlayZPosition = 30.f;
 - (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer*)gestureRecognizer
 {
     return [self shouldAllowRecognizerToReceiveTouch:gestureRecognizer];
+}
+
+#pragma mark UIScrollViewDelegate
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+{
+    CGPoint offset = scrollView.contentOffset;
+    CGFloat constant = offset.y > 0 ? HEMAlarmShortcutHiddenTrailing : HEMAlarmShortcutDefaultTrailing;
+    if (self.shortcutButtonTrailing.constant != constant) {
+        self.shortcutButtonTrailing.constant = constant;
+        [self.view setNeedsUpdateConstraints];
+        [UIView animateWithDuration:0.2f animations:^{
+            [self.view layoutIfNeeded];
+        }];
+    }
 }
 
 #pragma mark UICollectionViewDelegate

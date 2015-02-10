@@ -22,6 +22,8 @@ extern NSString* const HEMRootDrawerDidCloseNotification;
 
 @interface HEMRootViewController : HEMBaseController
 
++ (instancetype)rootViewControllerForKeyWindow;
+
 - (void)reloadTimelineSlideViewControllerWithDate:(NSDate*)date;
 - (void)hideSettingsDrawerTopBar:(BOOL)hidden animated:(BOOL)animated;
 - (void)showPartialSettingsDrawerTopBarWithRatio:(CGFloat)ratio;

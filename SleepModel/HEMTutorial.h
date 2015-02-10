@@ -49,4 +49,9 @@
 
 + (void)showTutorialForAlarms;
 
+/**
+ *  Show a dialog about making alarms smart
+ */
++ (void)showTutorialForAlarmSmartness;
+
 @end

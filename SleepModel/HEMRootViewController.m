@@ -27,6 +27,7 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMDynamicsStatusStyler.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMAppDelegate.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -46,6 +47,12 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 static CGFloat const HEMRootDrawerRevealHeight = 46.f;
 static CGFloat const HEMRootDrawerRevealHeightStatusOffset = 20.f;
+
++ (instancetype)rootViewControllerForKeyWindow
+{
+    HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
+    return (id)delegate.window.rootViewController;
+}
 
 + (UIViewController*)instantiateDrawerViewController {
     HEMSnazzBarController* barController = [HEMSnazzBarController new];

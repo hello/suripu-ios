@@ -80,7 +80,7 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
     }
     NSString* detail = payload[HEMNotificationDetail];
     HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
-    HEMRootViewController* controller = (id)delegate.window.rootViewController;
+    HEMRootViewController* controller = [HEMRootViewController rootViewControllerForKeyWindow];
     NSDateFormatter* formatter = [NSDateFormatter new];
     formatter.dateFormat = HEMNotificationTargetTimelineDateFormat;
     if ([target isEqualToString:HEMNotificationTargetSensor]) {

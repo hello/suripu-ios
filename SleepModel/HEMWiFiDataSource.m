@@ -105,6 +105,13 @@ static NSString* const kHEMWifiNetworkErrorDomain = @"is.hello.ble.wifi";
 
         [manager setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error != nil) {
+                [strongSelf setScanning:NO];
+                [strongSelf setScanned:YES];
+                completion (error);
+                return;
+            }
+            
             [[strongSelf manager] scanForWifiNetworks:^(id response) {
                 __block id wifiResponse = response;
                 

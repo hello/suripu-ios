@@ -19,14 +19,17 @@
 
 static NSInteger const HEMBeforeSleepNumberOfScreens = 5;
 static CGFloat const HEMBeforeSleepTextPadding = 20.0f;
+static CGFloat const HEMBeforeSleepDescriptionMargin = 10.0f;
+static NSString* const HEMBeforeSleepImageNameFormat = @"senseColors%ld.png";
 
 @interface HEMBeforeSleepViewController() <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 @property (weak, nonatomic) IBOutlet UIScrollView *contentScrollView;
-@property (weak, nonatomic) IBOutlet UIImageView *imageView;
 @property (weak, nonatomic) IBOutlet UIPageControl *dots;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *continueButtonBottomConstraint;
+@property (weak, nonatomic) IBOutlet UIImageView *currentImageView;
+@property (weak, nonatomic) IBOutlet UIImageView *nextImageView;
 
 @property (assign, nonatomic) CGFloat origContinueButtonBottomConstant;
 
@@ -38,6 +41,7 @@ static CGFloat const HEMBeforeSleepTextPadding = 20.0f;
     [super viewDidLoad];
     [self configureButtons];
     [self configureScrollView];
+    [self configureInitialScreen];
     [SENAnalytics track:kHEMAnalyticsEventOnBSenseColors];
 }
 
@@ -51,52 +55,169 @@ static CGFloat const HEMBeforeSleepTextPadding = 20.0f;
 }
 
 - (void)configureScrollView {
-    CGFloat x = HEMBeforeSleepTextPadding;
+    CGFloat x = HEMBeforeSleepTextPadding + 8.0f;
     CGFloat contentWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    
+    CGFloat maxLabelWidth = contentWidth - (2 * x);
     NSString* titleKeyFormat = @"onboarding.before-sleep.%ld.title";
+    NSString* descriptionKeyFormat = @"onboarding.before-sleep.%ld.description";
     NSString* titleKey = nil;
+    NSString* descriptionKey = nil;
+    CGFloat subtitleY = 0.0f;
     
     for (int i = 0; i < HEMBeforeSleepNumberOfScreens; i++) {
-        titleKey = [NSString stringWithFormat:titleKeyFormat, i+1];
-        [self addTitleLabelWithText:NSLocalizedString(titleKey, nil)
-                                 to:[self contentScrollView]
-                                atX:x];
+        NSInteger screenNumber = i+1;
+        titleKey = [NSString stringWithFormat:titleKeyFormat, screenNumber];
+        subtitleY = [self addTitleLabelWithText:NSLocalizedString(titleKey, nil)
+                                             to:[self contentScrollView]
+                                            atX:x
+                                   withMaxWidth:maxLabelWidth];
+        
+        descriptionKey = [NSString stringWithFormat:descriptionKeyFormat, screenNumber];
+        [self addDescriptionLabelWithText:[self attributedDescriptionWithKey:descriptionKey]
+                                       to:[self contentScrollView]
+                                 atOrigin:CGPointMake(x, subtitleY + HEMBeforeSleepDescriptionMargin)
+                             withMaxWidth:maxLabelWidth];
+        
         x += contentWidth;
     }
     
     CGSize contentSize = [[self contentScrollView] contentSize];
-    contentSize.width = x;
+    contentSize.width = HEMBeforeSleepNumberOfScreens * contentWidth;
     [[self contentScrollView] setContentSize:contentSize];
+    
+    [[self contentScrollView] setClipsToBounds:YES];
+}
+
+- (NSAttributedString*)attributedDescriptionWithKey:(NSString*)localizedKey {
+    NSString* description = NSLocalizedString(localizedKey, nil);
+    return [[NSAttributedString alloc] initWithString:description
+                                           attributes:@{NSFontAttributeName : [UIFont onboardingDescriptionFont],
+                                                        NSForegroundColorAttributeName : [HelloStyleKit onboardingDescriptionColor]}];
+}
+
+
+- (UIImage*)imageNameForScreen:(NSUInteger)screen {
+    NSString* imageName = [NSString stringWithFormat:HEMBeforeSleepImageNameFormat, screen];
+    return [UIImage imageNamed:imageName];
+}
+
+- (void)configureInitialScreen {
+    [[self currentImageView] setImage:[self imageNameForScreen:1]];
+    [[self nextImageView] setImage:[self imageNameForScreen:2]];
+    [[self nextImageView] setAlpha:0.0f];
     [[self dots] setNumberOfPages:HEMBeforeSleepNumberOfScreens];
     [[self dots] setCurrentPageIndicatorTintColor:[HelloStyleKit senseBlueColor]];
+    [[self dots] setPageIndicatorTintColor:[HelloStyleKit pageControlTintColor]];
     [[self dots] setCurrentPage:0];
 }
 
-- (void)addTitleLabelWithText:(NSString*)text to:(UIScrollView*)scrollView atX:(CGFloat)x {
-    CGRect labelFrame = CGRectZero;
-    labelFrame.origin.x = x;
+- (CGFloat)addTitleLabelWithText:(NSString*)text
+                              to:(UIScrollView*)scrollView
+                             atX:(CGFloat)x
+                    withMaxWidth:(CGFloat)maxWidth {
     
-    UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
+    UILabel* label = [[UILabel alloc] init];
     [label setBackgroundColor:[scrollView backgroundColor]];
     [label setText:text];
     [label setFont:[UIFont onboardingTitleFont]];
     [label setTextColor:[HelloStyleKit onboardingTitleColor]];
-    [label sizeToFit];
+    [label setNumberOfLines:0];
+    
+    CGRect labelFrame = [self frameForLabel:label withMaxWidth:maxWidth];
+    labelFrame.origin.x = x;
+    [label setFrame:labelFrame];
+    
+    [scrollView addSubview:label];
+    
+    return CGRectGetMaxY([label frame]);
+}
+
+- (void)addDescriptionLabelWithText:(NSAttributedString*)text
+                                 to:(UIScrollView*)scrollView
+                                atOrigin:(CGPoint)origin
+                       withMaxWidth:(CGFloat)maxWidth {
+    
+    UILabel* label = [[UILabel alloc] init];
+    [label setBackgroundColor:[scrollView backgroundColor]];
+    [label setAttributedText:text];
+    [label setNumberOfLines:0];
+    
+    CGRect labelFrame = [self frameForLabel:label withMaxWidth:maxWidth];
+    labelFrame.origin = origin;
+    [label setFrame:labelFrame];
     
     [scrollView addSubview:label];
 }
 
-- (void)addSubtitleLabelWithText:(NSAttributedString*)text
-                              to:(UIScrollView*)scrollView
-                             atX:(CGFloat)x {
+- (CGRect)frameForLabel:(UILabel*)label withMaxWidth:(CGFloat)maxWidth {
+    CGSize constraint = CGSizeMake(maxWidth, MAXFLOAT);
+    CGSize textSize = [label sizeThatFits:constraint];
     
+    CGRect labelFrame = CGRectZero;
+    labelFrame.size.width = maxWidth;
+    labelFrame.size.height = textSize.height;
+    
+    return labelFrame;
 }
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
-    NSInteger screenNumber = [scrollView contentOffset].x / CGRectGetWidth([scrollView bounds]);
-    [[self dots] setCurrentPage:screenNumber];
+    CGFloat fullWidth = CGRectGetWidth([scrollView bounds]);
+    NSInteger remainder = (NSInteger)[scrollView contentOffset].x % (NSInteger)fullWidth;
+    CGFloat percentage = MAX(0.0f, remainder / fullWidth);
+    CGFloat nextPage = [scrollView contentOffset].x / fullWidth; // nextPage is an index
+    CGFloat prevContentOffset = [[self dots] currentPage] * fullWidth;
+
+    if ([scrollView contentOffset].x >= prevContentOffset + fullWidth
+        || [scrollView contentOffset].x <= prevContentOffset - fullWidth) {
+        [self setCurrentPage:nextPage];
+    } else if ([scrollView contentOffset].x > prevContentOffset) {
+        [self swapToNextImageForPage:nextPage withPercentage:percentage];
+    } else {
+        [self swapToPreviousImageForPage:nextPage withPercentage:percentage];
+    }
+    
+    if (nextPage >= HEMBeforeSleepNumberOfScreens - 2 && nextPage < HEMBeforeSleepNumberOfScreens - 1) {
+        [self moveContinueButtonWithPercentage:percentage];
+    }
+    
+}
+
+#pragma mark -
+
+- (void)setCurrentPage:(NSInteger)currentPage {
+    UIImageView* tempView = [self nextImageView];
+    [self setNextImageView:[self currentImageView]];
+    [self setCurrentImageView:tempView];
+    [[self dots] setCurrentPage:currentPage];
+}
+
+- (void)swapToNextImageForPage:(CGFloat)nextPage withPercentage:(CGFloat)percentage {
+    UIImage* nextImage = [self imageNameForScreen:MIN(HEMBeforeSleepNumberOfScreens, ceilf(nextPage) + 1)];
+    if (![[[self nextImageView] image] isEqual:nextImage]) {
+        [[self nextImageView] setImage:nextImage];
+    }
+    [[self currentImageView] setAlpha:percentage == 0.0f ?: 1-percentage];
+    [[self nextImageView] setAlpha:percentage];
+}
+
+- (void)swapToPreviousImageForPage:(CGFloat)previousPage withPercentage:(CGFloat)percentage {
+    UIImage* nextImage = [self imageNameForScreen:MAX(1, floorf(previousPage) + 1)];
+    if (![[[self nextImageView] image] isEqual:nextImage]) {
+        [[self nextImageView] setImage:nextImage];
+    }
+    [[self currentImageView] setAlpha:percentage];
+    [[self nextImageView] setAlpha:percentage == 0.0f ?: 1-percentage];
+}
+
+- (void)moveContinueButtonWithPercentage:(CGFloat)percentage {
+    CGFloat height = CGRectGetHeight([[self continueButton] bounds]);
+    CGFloat totalDiff = fabsf([self origContinueButtonBottomConstant]) + height;
+    CGFloat movement = totalDiff * percentage;
+    [[self continueButtonBottomConstraint] setConstant:-height + movement];
+    [[self view] layoutIfNeeded];
 }
 
 #pragma mark - Navigation

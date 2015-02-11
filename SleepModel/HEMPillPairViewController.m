@@ -24,7 +24,6 @@
 #import "HEMBluetoothUtils.h"
 #import "HEMDialogViewController.h"
 
-static CGFloat const kHEMPillPairStartDelay = 2.0f;
 static CGFloat const kHEMPillPairAnimDuration = 0.5f;
 static NSInteger const kHEMPillPairAttemptsBeforeSkip = 2;
 static NSInteger const kHEMPillPairMaxBleChecks = 10;
@@ -61,7 +60,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 
 - (void)configureActivityLabel {
     [[self activityLabel] setTextColor:[HelloStyleKit senseBlueColor]];
-    [[self activityLabel] setText:NSLocalizedString(@"pairing.activity.connecting-sense", nil)];
+    [[self activityLabel] setText:nil];
 }
 
 - (void)configureButtons {
@@ -99,32 +98,26 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [super viewDidAppear:animated];
     
     if (![self isLoaded]) {
-        [self showActivity]; // show activity first, before proceeding on first try
-        [self performSelector:@selector(pairPill:)
-                   withObject:self
-                   afterDelay:kHEMPillPairStartDelay];
+        [self showActivityWithMessage:NSLocalizedString(@"pairing.activity.waiting-for-sense", nil) completion:^{
+            [self enableControls:NO];
+            [self pairPill:self];
+        }];
         [self setLoaded:YES];
     }
 }
 
-- (void)showActivity {
-    [[self cancelItem] setEnabled:NO];
-    [self showRetryButtonAsRetrying:YES];
-    [UIView animateWithDuration:kHEMPillPairAnimDuration animations:^{
-        [[self activityLabel] setAlpha:1.0f];
-        [[self skipButton] setAlpha:0.0f];
-    }];
-}
+- (void)enableControls:(BOOL)enable {
+    [[self cancelItem] setEnabled:enable];
+    [self showRetryButtonAsRetrying:!enable];
+    [[self skipButton] setHidden:!enable
+                                 && ([self pairAttempts] < kHEMPillPairAttemptsBeforeSkip
+                                    || [self delegate] != nil)];
 
-- (void)hideActivity {
-    [[self cancelItem] setEnabled:YES];
-    [self showRetryButtonAsRetrying:NO];
-    [[self skipButton] setHidden:[self pairAttempts] < kHEMPillPairAttemptsBeforeSkip
-                                 || [self delegate] != nil];
-    
+    CGFloat activityLabelAlpha = enable ? 0.0f : 1.0f;
+    CGFloat skipButtonAlpha = enable ? 1.0f : 0.0f;
     [UIView animateWithDuration:kHEMPillPairAnimDuration animations:^{
-        [[self activityLabel] setAlpha:0.0f];
-        [[self skipButton] setAlpha:1.0f];
+        [[self activityLabel] setAlpha:activityLabelAlpha];
+        [[self skipButton] setAlpha:skipButtonAlpha];
     }];
 }
 
@@ -165,47 +158,50 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)scanForPairedSense:(void(^)(SENSenseManager* manager))completion {
-    NSString* message = NSLocalizedString(@"pairing.activity.connecting-sense-ble", nil);
-    [self showActivityWithMessage:message completion:^{
-        __weak typeof(self) weakSelf = self;
-        [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
-            __block typeof(weakSelf) strongSelf = weakSelf;
-            if (error != nil) {
-                
-                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
-                    NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
+    
+    __weak typeof(self) weakSelf = self;
+    [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
+        __block typeof(weakSelf) strongSelf = weakSelf;
+        if (error != nil) {
+            
+            [strongSelf stopActivityWithMessage:nil success:NO completion:^{
+                NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
+                [strongSelf showError:error customMessage:msg];
+                completion (nil);
+            }];
+            
+            return;
+        }
+        
+        DDLogVerbose(@"looking for sense to trigger pill pairing");
+        [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
+            [strongSelf stopActivityWithMessage:nil success:NO completion:^{
+                if (error != nil) {
+                    NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
                     [strongSelf showError:error customMessage:msg];
                     completion (nil);
-                }];
-                
-                return;
-            }
-            
-            DDLogVerbose(@"looking for sense to trigger pill pairing");
-            [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
-                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
-                    if (error != nil) {
-                        NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
-                        [strongSelf showError:error customMessage:msg];
-                        completion (nil);
-                        return;
-                    }
-                    completion ([[SENServiceDevice sharedService] senseManager]);
-                }];
+                    return;
+                }
+                completion ([[SENServiceDevice sharedService] senseManager]);
             }];
         }];
     }];
 }
 
 - (IBAction)pairPill:(id)sender {
-    [self showActivity];
+    [self enableControls:NO];
     [self setPairAttempts:[self pairAttempts] + 1];
     
     __weak typeof(self) weakSelf = self;
     [self ensureSenseIsReady:^(SENSenseManager *manager) {
-        __block typeof(weakSelf) strongSelf = weakSelf;
-        if (manager == nil) return;
-        [strongSelf pairNowWith:manager];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (manager == nil) {
+            [strongSelf stopActivityWithMessage:nil success:NO completion:^{
+                [strongSelf showError:nil customMessage:NSLocalizedString(@"pairing.error.sense-not-found", nil)];
+            }];
+        } else {
+            [strongSelf pairNowWith:manager];
+        }
     }];
 }
 
@@ -218,12 +214,14 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [manager setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
         DDLogVerbose(@"attempting to pair pill through %@", [[[strongSelf manager] sense] name]);
-        [[strongSelf manager] pairWithPill:[SENAuthorizationService accessToken] success:^(id response) {
-            [strongSelf flashPairedState];
-        } failure:^(NSError *error) {
-            SENSenseLEDState ledState = [strongSelf delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
-            [[strongSelf manager] setLED:ledState completion:^(id response, NSError *error) {
-                [strongSelf showError:error customMessage:nil];
+        [strongSelf stopActivityWithMessage:nil success:NO completion:^{ // if activity is not shown, it will simply call blocck
+            [[strongSelf manager] pairWithPill:[SENAuthorizationService accessToken] success:^(id response) {
+                [strongSelf flashPairedState];
+            } failure:^(NSError *error) {
+                SENSenseLEDState ledState = [strongSelf delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
+                [[strongSelf manager] setLED:ledState completion:^(id response, NSError *error) {
+                    [strongSelf showError:error customMessage:nil];
+                }];
             }];
         }];
     }];
@@ -315,7 +313,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
                       image:nil
                    withHelp:YES];
     
-    [self hideActivity];
+    [self enableControls:YES];
     
     if (error) {
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];

@@ -11,16 +11,6 @@
 
 @implementation SENAPIFeedback
 
-+ (NSDateFormatter*)timeFormatter {
-    static NSDateFormatter* formatter = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        formatter = [NSDateFormatter new];
-        formatter.dateFormat = @"HH:mm";
-    });
-    return formatter;
-}
-
 + (NSDateFormatter*)dateFormatter {
     static NSDateFormatter* formatter = nil;
     static dispatch_once_t onceToken;
@@ -31,27 +21,40 @@
     return formatter;
 }
 
-+ (void)sendAccurateWakeupTime:(NSDate *)wakeupTime
-            detectedWakeupTime:(NSDate *)detectedTime
-               forNightOfSleep:(NSDate *)sleepDate
-                    completion:(SENAPIErrorBlock)block {
-    NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithCapacity:3];
-    NSString* formattedWakeupTime = [[self timeFormatter] stringFromDate:wakeupTime];
-    NSString* formattedDetectedTime = [[self timeFormatter] stringFromDate:detectedTime];
++ (void)updateEvent:(NSString *)eventType
+           withHour:(NSUInteger)hour
+             minute:(NSUInteger)minute
+    forNightOfSleep:(NSDate *)sleepDate
+         completion:(SENAPIErrorBlock)completion
+{
+    NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithCapacity:4];
     NSString* formattedDate = [[self dateFormatter] stringFromDate:sleepDate];
-    if (formattedWakeupTime && ![formattedWakeupTime isEqualToString:formattedDetectedTime]) {
-        params[@"hour"] = formattedWakeupTime;
-        params[@"good"] = @(NO);
-    } else {
-        params[@"good"] = @(YES);
-    }
     if (formattedDate)
         params[@"day"] = formattedDate;
-
-    [SENAPIClient POST:@"feedback" parameters:params completion:^(id data, NSError *error) {
-        if (block)
-            block(error);
+    if (eventType)
+        params[@"event_type"] = eventType;
+    params[@"good"] = @(NO);
+    params[@"hour"] = [self parameterStringForHour:hour minute:minute];
+    [SENAPIClient POST:@"feedback/sleep" parameters:params completion:^(id data, NSError *error) {
+        if (completion)
+            completion(error);
     }];
+}
+
++ (NSString*)parameterStringForHour:(NSUInteger)hour minute:(NSUInteger)minute
+{
+    static NSString* const HEMClockParamFormat = @"%@:%@";
+    NSString* hourText = [self stringForNumber:hour];
+    NSString* minuteText = [self stringForNumber:minute];
+    return [NSString stringWithFormat:HEMClockParamFormat, hourText, minuteText];
+}
+
++ (NSString*)stringForNumber:(NSUInteger)number
+{
+    static NSString* const HEMNumberParamFormat = @"%ld";
+    static NSString* const HEMSmallNumberParamFormat = @"0%ld";
+    NSString* format = number <= 9 ? HEMSmallNumberParamFormat : HEMNumberParamFormat;
+    return [NSString stringWithFormat:format, (long)number];
 }
 
 @end

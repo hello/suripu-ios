@@ -5,6 +5,18 @@
 @class HEMSleepSummaryCollectionViewCell;
 
 extern NSString* const HEMSleepEventTypeWakeUp;
+extern NSString* const HEMSleepEventTypeLight;
+extern NSString* const HEMSleepEventTypeMotion;
+extern NSString* const HEMSleepEventTypeNoise;
+extern NSString* const HEMSleepEventTypeSunrise;
+extern NSString* const HEMSleepEventTypeSunset;
+extern NSString* const HEMSleepEventTypeFallAsleep;
+extern NSString* const HEMSleepEventTypePartnerMotion;
+extern NSString* const HEMSleepEventTypeLightsOut;
+extern NSString* const HEMSleepEventTypeInBed;
+extern NSString* const HEMSleepEventTypeOutOfBed;
+extern NSString* const HEMSleepEventTypeAlarm;
+extern NSString* const HEMSleepEventTypeSleeping;
 
 @protocol HEMSleepGraphActionDelegate <NSObject>
 

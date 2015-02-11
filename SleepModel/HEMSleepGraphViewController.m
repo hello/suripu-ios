@@ -13,7 +13,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
-#import "HEMSleepGraphUtils.h"
 #import "HEMSleepGraphView.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepHistoryViewController.h"
@@ -23,6 +22,7 @@
 #import "UIView+HEMSnapshot.h"
 #import "HEMSleepEventButton.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
+#import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 50.f;
@@ -310,11 +310,12 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 
 - (void)didTapDataVerifyButton:(UIButton*)sender
 {
-
     NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
-    [HEMSleepGraphUtils presentTimePickerForDate:self.dateForNightOfSleep
-                                         segment:[self.dataSource sleepSegmentForIndexPath:indexPath]
-                                  fromController:self];
+    UINavigationController* navController = [HEMMainStoryboard instantiateTimelineFeedbackViewController];
+    HEMTimelineFeedbackViewController* feedbackController = (id)navController.topViewController;
+    feedbackController.dateForNightOfSleep = self.dateForNightOfSleep;
+    feedbackController.segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    [self presentViewController:navController animated:YES completion:NULL];
 }
 
 - (IBAction)didTapAlarmShortcut:(id)sender
@@ -448,7 +449,7 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
                                                       options:options
                                                       context:nil];
             height += ceilf(CGRectGetHeight(textBounds));
-            if (segment.sound || [segment.eventType isEqualToString:HEMSleepEventTypeWakeUp])
+            if (segment.sound || [HEMTimelineFeedbackViewController canAdjustTimeForSegment:segment])
                 height += HEMEventSoundPlayerHeight + (HEMEventItemSpacing*2) + HEMEventBottomPadding;
             else if (message.length > 0)
                 height += HEMEventBottomPadding + HEMEventItemSpacing;

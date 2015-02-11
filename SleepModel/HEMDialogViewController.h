@@ -20,6 +20,15 @@
 @property (nonatomic, assign) BOOL showHelp;
 
 /**
+ *  Present a non-interactive dialog
+ *
+ *  @param title      title of the dialog
+ *  @param message    dialog message content
+ *  @param controller presenting controller
+ */
++ (void)showInfoDialogWithTitle:(NSString*)title message:(NSString*)message controller:(UIViewController*)controller;
+
+/**
  * Add additional action buttons to the dialog
  * @param title:   title of the action button
  * @param primary: YES if primary action, NO otherwise

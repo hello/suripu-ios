@@ -27,22 +27,6 @@ typedef NS_ENUM(NSUInteger, HEMAlertControllerStyle) {
              presentingController:(UIViewController*)controller;
 
 /**
- *  Present an alert with a date picker
- *
- *  @param title      Title of the alert
- *  @param message    Alert message text
- *  @param controller controller from which to present the alert
- *  @param pickerMode date picker mode
- *  @param completion block to execute when a button is pressed
- */
-+ (void)presentDatePickerAlertWithTitle:(NSString*)title
-                                message:(NSString*)message
-                   presentingController:(UIViewController*)controller
-                         datePickerMode:(UIDatePickerMode)pickerMode
-                            initialDate:(NSDate*)date
-                             completion:(void(^)(NSDate*))completionHandler;
-
-/**
  *  Create a new alert controller
  *
  *  @param title      Title of the alert

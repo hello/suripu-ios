@@ -7,7 +7,7 @@
 //
 
 #import "UIView+HEMSnapshot.h"
-
+#import "HEMRootViewController.h"
 #import "HEMDialogViewController.h"
 #import "HEMDialogView.h"
 #import "HEMSupportUtil.h"
@@ -20,6 +20,20 @@
 @end
 
 @implementation HEMDialogViewController
+
++ (void)showInfoDialogWithTitle:(NSString *)title
+                        message:(NSString *)message
+                     controller:(UIViewController *)controller {
+    UIView* view = [HEMRootViewController rootViewControllerForKeyWindow].view;
+    HEMDialogViewController* dialogVC = [HEMDialogViewController new];
+    dialogVC.title = title;
+    dialogVC.message = message;
+    dialogVC.okButtonTitle = NSLocalizedString(@"actions.ok", nil);
+    dialogVC.viewToShowThrough = view;
+    [dialogVC showFrom:controller onDone:^{
+        [dialogVC dismissViewControllerAnimated:YES completion:nil];
+    }];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

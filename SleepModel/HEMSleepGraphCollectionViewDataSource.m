@@ -21,10 +21,24 @@
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 #import "HEMSleepEventButton.h"
+#import "HEMTimelineFeedbackViewController.h"
 #import "HEMMarkdown.h"
 #import "NSDate+HEMRelative.h"
 
 NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
+NSString* const HEMSleepEventTypeLight = @"LIGHT";
+NSString* const HEMSleepEventTypeMotion = @"MOTION";
+NSString* const HEMSleepEventTypeNoise = @"NOISE";
+NSString* const HEMSleepEventTypeSunrise = @"SUNRISE";
+NSString* const HEMSleepEventTypeSunset = @"SUNSET";
+NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
+NSString* const HEMSleepEventTypePartnerMotion = @"PARTNER_MOTION";
+NSString* const HEMSleepEventTypeLightsOut = @"LIGHTS_OUT";
+NSString* const HEMSleepEventTypeInBed = @"IN_BED";
+NSString* const HEMSleepEventTypeOutOfBed = @"OUT_OF_BED";
+NSString* const HEMSleepEventTypeAlarm = @"ALARM";
+NSString* const HEMSleepEventTypeSmartAlarm = @"SMART_ALARM";
+NSString* const HEMSleepEventTypeSleeping = @"SLEEPING";
 
 @interface HEMSleepGraphCollectionViewDataSource ()
 
@@ -40,19 +54,6 @@ NSString* const HEMSleepEventTypeWakeUp = @"WAKE_UP";
 @end
 
 @implementation HEMSleepGraphCollectionViewDataSource
-
-static NSString* const HEMSleepEventTypeLight = @"LIGHT";
-static NSString* const HEMSleepEventTypeMotion = @"MOTION";
-static NSString* const HEMSleepEventTypeNoise = @"NOISE";
-static NSString* const HEMSleepEventTypeSunrise = @"SUNRISE";
-static NSString* const HEMSleepEventTypeSunset = @"SUNSET";
-static NSString* const HEMSleepEventTypeFallAsleep = @"SLEEP";
-static NSString* const HEMSleepEventTypePartnerMotion = @"PARTNER_MOTION";
-static NSString* const HEMSleepEventTypeLightsOut = @"LIGHTS_OUT";
-static NSString* const HEMSleepEventTypeInBed = @"IN_BED";
-static NSString* const HEMSleepEventTypeOutOfBed = @"OUT_OF_BED";
-static NSString* const HEMSleepEventTypeAlarm = @"ALARM";
-static NSString* const HEMSleepEventTypeSleeping = @"SLEEPING";
 
 static NSString* const sleepSegmentReuseIdentifier = @"sleepSegmentCell";
 static NSString* const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
@@ -499,7 +500,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         cell.waveformView.hidden = NO;
         cell.playSoundButton.hidden = NO;
         [cell setAudioURL:[NSURL URLWithString:segment.sound.URLPath]];
-    } else if ([segment.eventType isEqualToString:HEMSleepEventTypeWakeUp] &&
+    } else if ([HEMTimelineFeedbackViewController canAdjustTimeForSegment:segment] &&
                [collectionView.delegate respondsToSelector:@selector(didTapDataVerifyButton:)]) {
         cell.verifyDataButton.hidden = NO;
         [cell.verifyDataButton addTarget:collectionView.delegate
@@ -556,7 +557,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         return [HelloStyleKit inBedEventIcon];
     else if ([eventType isEqualToString:HEMSleepEventTypeOutOfBed])
         return [HelloStyleKit outOfBedEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypeAlarm])
+    else if ([eventType isEqualToString:HEMSleepEventTypeAlarm]
+             || [eventType isEqualToString:HEMSleepEventTypeSmartAlarm])
         return [HelloStyleKit alarmEventIcon];
 
     return [HelloStyleKit unknownEventIcon];

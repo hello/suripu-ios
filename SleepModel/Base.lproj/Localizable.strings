@@ -358,6 +358,15 @@
 "measurement.db.format" = "%lddb";
 "measurement.lx.format" = "%ldlx";
 
+// feedback
+"sleep-event.feedback.title.in_bed" = "What time did you get into bed?";
+"sleep-event.feedback.title.out_of_bed" = "What time did you get out of bed?";
+"sleep-event.feedback.title.wake_up" = "What time did you wake up?";
+"sleep-event.feedback.title.sleep" = "What time did you fall asleep?";
+"sleep-event.verify.title" = "Adjust Time";
+"sleep-event.feedback.failed.title" = "Unable to send feedback";
+"sleep-event.feedback.failed.message" = "Please try again later";
+
 // sleep events
 "sleep-event.type.wake_up.name" = "Woke up";
 "sleep-event.type.sleep.name" = "Fell asleep";
@@ -368,10 +377,8 @@
 "sleep-event.type.lights_out.name" = "Lights out";
 "sleep-event.type.in_bed.name" = "In bed";
 "sleep-event.type.out_of_bed.name" = "Out of bed";
-"sleep-event.verify.title" = "Is this incorrect?";
-"sleep-event.verify.message" = "Please select the time at which you awakened.";
-"sleep-event.verify-complete.title" = "Thank you!";
-"sleep-event.verify-complete.message" = "Your feedback helps us provide you with a better product.";
+"sleep-event.type.alarm.name" = "Alarm";
+"sleep-event.type.smart_alarm.name" = "Smart Alarm";
 "sleep-event.title.format" = "%@ – %@";
 
 "sleep-stat.time_to_sleep" = "Time to sleep";

@@ -41,6 +41,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 @property (strong, nonatomic) SENWifiEndpoint* selectedWifiEndpont;
 @property (strong, nonatomic) HEMWiFiDataSource* wifiDataSource;
 @property (weak,   nonatomic) UIBarButtonItem* cancelItem;
+@property (copy,   nonatomic) NSString* disconnectObserverId;
 @property (assign, nonatomic, getter=isVisible) BOOL visible;
 @property (assign, nonatomic, getter=hasScanned) BOOL scanned;
 
@@ -106,6 +107,26 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     [[self activityView] setNeedsLayout];
+}
+
+#pragma mark - Disconnects
+
+- (void)observeUnexpectedDisconnects {
+    if ([self disconnectObserverId] == nil) {
+        __weak typeof(self) weakSelf = self;
+        self.disconnectObserverId =
+        [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (strongSelf) {
+                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
+                    [[strongSelf cancelItem] setEnabled:YES];
+                    if ([strongSelf isVisible]) {
+                        [strongSelf showError:error];
+                    }
+                }];
+            }
+        }];
+    }
 }
 
 #pragma mark - UITableViewDelegate
@@ -183,9 +204,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [SENAnalytics startEvent:kHEMAnalyticsEventOnBWiFiScan];
     DDLogVerbose(@"wifi scan started");
     
+    [self observeUnexpectedDisconnects];
+    [[self cancelItem] setEnabled:NO];
+    
     NSString* message = NSLocalizedString(@"wifi.activity.scanning", nil);
     [[self activityView] showWithText:message activity:YES completion:nil];
-    [[self cancelItem] setEnabled:NO];
     
     __weak typeof(self) weakSelf = self;
     [self scanUntilDoneWithCount:0 completion:^(NSError *error) {
@@ -271,6 +294,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [wifiVC setEndpoint:[self selectedWifiEndpont]];
         [wifiVC setDelegate:[self delegate]];
         [wifiVC setSensePairDelegate:[self sensePairDelegate]];
+    }
+}
+
+#pragma mark - Clean Up
+
+- (void)dealloc {
+    if (_disconnectObserverId != nil) {
+        [[self manager] removeUnexpectedDisconnectObserver:_disconnectObserverId];
     }
 }
 

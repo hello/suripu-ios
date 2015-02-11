@@ -1,5 +1,30 @@
 # Changelog
 
+## 1.0.2.0
+
+New:
+
+* added a floating shortcut button to setting alarms
+* showing day of week in place of a date for days within the week
+* added support for insight images when available
+* added smart alarm info card to describe how it works
+* notification settings are now at the top level of Settings
+
+Fixes:
+
+* fixed issue with a temporary flash of the same data after being retrieved
+* fixed issue with the type size of the empty alarm state
+* fixed issue with timeline information card appearing in wrong place after signing in
+* updated icons for sleep movement events
+* current conditions update more frequently
+* updated read more copy on insight summary cards
+
+## 1.0.1.9
+
+Fixes:
+
+* rebuild with App Store scheme
+
 ## 1.0.1.8
 
 New:

@@ -71,6 +71,8 @@
 
 + (UIFont *)sensorListValueFont;
 
++ (UIFont *)sensorListUnitFont;
+
 + (UIFont *)backViewTextFont;
 
 + (UIFont *)backViewBoldFont;

@@ -323,8 +323,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 - (void)configureSensorCell:(HEMSensorGraphCollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
     SENSensor* sensor = self.sensors[indexPath.row];
-    NSString* valueText = sensor.localizedValue ?: NSLocalizedString(@"empty-data", nil);
-    cell.sensorValueLabel.text = valueText;
+    cell.sensorValueLabel.attributedText = [self valueTextForSensor:sensor];
     cell.sensorValueLabel.textColor = [UIColor colorForSensorWithCondition:sensor.condition];
     cell.sensorValueLabel.hidden = NO;
     if (sensor.message.length > 0) {
@@ -338,6 +337,26 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     cell.graphView.hidden = NO;
     [cell setGraphData:self.sensorGraphData[sensor.name] sensor:sensor];
     cell.statusLabel.hidden = YES;
+}
+
+- (NSAttributedString*)valueTextForSensor:(SENSensor*)sensor
+{
+    static NSInteger HEMSensorUnitVerticalOffset = 14;
+    NSDictionary* baseAttributes = @{NSFontAttributeName:[UIFont sensorListValueFont]};
+    if (!sensor.value) {
+        return [[NSAttributedString alloc] initWithString:NSLocalizedString(@"empty-data", nil)
+                                               attributes:baseAttributes];
+    }
+    NSNumber* value = sensor.valueInPreferredUnit;
+    NSString* valueText = [NSString stringWithFormat:@"%ld", [value longValue]];
+    NSMutableAttributedString* composite = [[NSMutableAttributedString alloc] initWithString:valueText
+                                                                                  attributes:baseAttributes];
+    NSDictionary* unitAttributes = @{NSFontAttributeName:[UIFont sensorListUnitFont],
+                                     NSBaselineOffsetAttributeName : @(HEMSensorUnitVerticalOffset)};
+    NSAttributedString* unit = [[NSAttributedString alloc] initWithString:sensor.localizedUnit
+                                                               attributes:unitAttributes];
+    [composite appendAttributedString:unit];
+    return composite;
 }
 
 - (void)configureNoSensorsCell:(HEMSensorGraphCollectionViewCell *)cell

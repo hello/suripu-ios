@@ -123,7 +123,9 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
             }];
         }];
     }
-}#pragma mark - UITableViewDelegate
+}
+
+#pragma mark - UITableViewDelegate
 
 - (UIView*)wifiAccessoryView {
     UIImage* lockIcon = [HelloStyleKit lockIcon];

@@ -69,6 +69,13 @@
 - (void)showWithText:(NSString*)text activity:(BOOL)activity completion:(void(^)(void))completion;
 
 /**
+ * @discussion
+ * Start activity indicator.  Use this only if you've explicitly added this view
+ * in your view hierarchy
+ */
+- (void)showActivity;
+
+/**
  * @method updateText:completion:
  *
  * @discussion

@@ -211,7 +211,7 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
 - (void)showWithText:(NSString*)text
             activity:(BOOL)activity
           completion:(void(^)(void))completion {
-    
+
     [self setAlpha:0.0f];
     [self setHidden:NO];
     [[self indicator] stop];
@@ -234,6 +234,13 @@ static CGFloat kHEMActivityResultDisplayTime = 2.0f;
                          [self setShowing:YES];
                          if (completion) completion ();
                      }];
+}
+
+- (void)showActivity {
+    [self setHidden:NO];
+    [[self indicator] setAlpha:1.0f];
+    [[self indicator] start];
+    [self setShowing:YES];
 }
 
 #pragma mark - Dismiss

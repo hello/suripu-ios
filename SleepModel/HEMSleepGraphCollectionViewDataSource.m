@@ -512,7 +512,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSString* timeText = [self timeTextForSegment:segment];
     cell.eventTimeLabel.text = timeText;
     cell.eventTitleLabel.text = [[NSString stringWithFormat:titleFormat, titleText, timeText] uppercaseString];
-    cell.eventMessageLabel.attributedText = [markdown_to_attr_string(segment.message, 0, [HEMMarkdown attributesForEventMessageText]) trim];
+    cell.eventMessageLabel.attributedText = [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
     [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep

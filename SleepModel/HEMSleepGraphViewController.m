@@ -44,9 +44,8 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 @implementation HEMSleepGraphViewController
 
 static CGFloat const HEMSleepSummaryCellHeight = 384.f;
-static CGFloat const HEMSleepGraphCollectionViewEventTitleOnlyHeight = 106.f;
+static CGFloat const HEMSleepGraphCollectionViewEventTitleOnlyHeight = 86.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 44.f;
-static CGFloat const HEMSleepGraphCollectionViewEventMaximumHeight = 204.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMTopItemsConstraintConstant = 4.f;
 static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
@@ -428,6 +427,10 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
+    static CGFloat const HEMEventSoundPlayerHeight = 48.f;
+    static CGFloat const HEMEventMessageInset = 64.f;
+    static CGFloat const HEMEventBottomPadding = 54.f;
+    static CGFloat const HEMEventItemSpacing = 10.f;
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     switch (indexPath.section) {
@@ -438,12 +441,18 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
         SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
         CGFloat durationHeight = [self heightForCellWithSegment:segment];
         if ([self.expandedIndexPath isEqual:indexPath]) {
-            if (segment.message.length == 0
-                && ![segment.eventType isEqualToString:HEMSleepEventTypeWakeUp]
-                && !segment.sound) {
-                return CGSizeMake(width, HEMSleepGraphCollectionViewEventTitleOnlyHeight);
-            }
-            return CGSizeMake(width, HEMSleepGraphCollectionViewEventMaximumHeight);
+            CGFloat height = HEMSleepGraphCollectionViewEventTitleOnlyHeight;
+            NSAttributedString* message = [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
+            NSStringDrawingOptions options = (NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading);
+            CGRect textBounds = [message boundingRectWithSize:CGSizeMake(width - HEMEventMessageInset, CGFLOAT_MAX)
+                                                      options:options
+                                                      context:nil];
+            height += ceilf(CGRectGetHeight(textBounds));
+            if (segment.sound || [segment.eventType isEqualToString:HEMSleepEventTypeWakeUp])
+                height += HEMEventSoundPlayerHeight + (HEMEventItemSpacing*2) + HEMEventBottomPadding;
+            else if (message.length > 0)
+                height += HEMEventBottomPadding + HEMEventItemSpacing;
+            return CGSizeMake(width, height);
         } else if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
             return CGSizeMake(width, MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight));
         } else {

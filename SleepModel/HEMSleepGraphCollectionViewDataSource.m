@@ -37,6 +37,7 @@ NSString* const HEMSleepEventTypeLightsOut = @"LIGHTS_OUT";
 NSString* const HEMSleepEventTypeInBed = @"IN_BED";
 NSString* const HEMSleepEventTypeOutOfBed = @"OUT_OF_BED";
 NSString* const HEMSleepEventTypeAlarm = @"ALARM";
+NSString* const HEMSleepEventTypeSmartAlarm = @"SMART_ALARM";
 NSString* const HEMSleepEventTypeSleeping = @"SLEEPING";
 
 @interface HEMSleepGraphCollectionViewDataSource ()
@@ -556,7 +557,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         return [HelloStyleKit inBedEventIcon];
     else if ([eventType isEqualToString:HEMSleepEventTypeOutOfBed])
         return [HelloStyleKit outOfBedEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypeAlarm])
+    else if ([eventType isEqualToString:HEMSleepEventTypeAlarm]
+             || [eventType isEqualToString:HEMSleepEventTypeSmartAlarm])
         return [HelloStyleKit alarmEventIcon];
 
     return [HelloStyleKit unknownEventIcon];

@@ -377,6 +377,8 @@
 "sleep-event.type.lights_out.name" = "Lights out";
 "sleep-event.type.in_bed.name" = "In bed";
 "sleep-event.type.out_of_bed.name" = "Out of bed";
+"sleep-event.type.alarm.name" = "Alarm";
+"sleep-event.type.smart_alarm.name" = "Smart Alarm";
 "sleep-event.title.format" = "%@ – %@";
 
 "sleep-stat.time_to_sleep" = "Time to sleep";

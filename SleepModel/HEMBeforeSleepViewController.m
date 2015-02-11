@@ -21,6 +21,8 @@ static NSInteger const HEMBeforeSleepNumberOfScreens = 5;
 static CGFloat const HEMBeforeSleepTextPadding = 20.0f;
 static CGFloat const HEMBeforeSleepDescriptionMargin = 10.0f;
 static NSString* const HEMBeforeSleepImageNameFormat = @"senseColors%ld.png";
+static NSString* const HEMBeforeSleepTitleKeyFormat = @"onboarding.before-sleep.%ld.title";
+static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%ld.description";
 
 @interface HEMBeforeSleepViewController() <UIScrollViewDelegate>
 
@@ -59,21 +61,19 @@ static NSString* const HEMBeforeSleepImageNameFormat = @"senseColors%ld.png";
     CGFloat contentWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
     
     CGFloat maxLabelWidth = contentWidth - (2 * x);
-    NSString* titleKeyFormat = @"onboarding.before-sleep.%ld.title";
-    NSString* descriptionKeyFormat = @"onboarding.before-sleep.%ld.description";
     NSString* titleKey = nil;
     NSString* descriptionKey = nil;
     CGFloat subtitleY = 0.0f;
     
     for (int i = 0; i < HEMBeforeSleepNumberOfScreens; i++) {
         NSInteger screenNumber = i+1;
-        titleKey = [NSString stringWithFormat:titleKeyFormat, screenNumber];
+        titleKey = [NSString stringWithFormat:HEMBeforeSleepTitleKeyFormat, screenNumber];
         subtitleY = [self addTitleLabelWithText:NSLocalizedString(titleKey, nil)
                                              to:[self contentScrollView]
                                             atX:x
                                    withMaxWidth:maxLabelWidth];
         
-        descriptionKey = [NSString stringWithFormat:descriptionKeyFormat, screenNumber];
+        descriptionKey = [NSString stringWithFormat:HEMBeforeSleepDescKeyFormat, screenNumber];
         [self addDescriptionLabelWithText:[self attributedDescriptionWithKey:descriptionKey]
                                        to:[self contentScrollView]
                                  atOrigin:CGPointMake(x, subtitleY + HEMBeforeSleepDescriptionMargin)

@@ -364,6 +364,8 @@
 "sleep-event.feedback.title.wake_up" = "What time did you wake up?";
 "sleep-event.feedback.title.sleep" = "What time did you fall asleep?";
 "sleep-event.verify.title" = "Adjust Time";
+"sleep-event.feedback.failed.title" = "Unable to send feedback";
+"sleep-event.feedback.failed.message" = "Please try again later";
 
 // sleep events
 "sleep-event.type.wake_up.name" = "Woke up";

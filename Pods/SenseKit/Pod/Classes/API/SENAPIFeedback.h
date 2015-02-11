@@ -12,16 +12,17 @@
 @interface SENAPIFeedback : NSObject
 
 /**
- *  Reports an inaccurate wake-up time with a correction
+ *  Updates the recorded time for selected events to a reported hour and minute
  *
- *  @param wakeupTime   reported wake-up time or nil detected time is correct
- *  @param detectedTime detected wake-up time, if available
- *  @param sleepDate    date for night of sleep
- *  @param block        completion block invoked when call completes
+ *  @param eventType  type of event to be updated, such as IN_BED, WOKE_UP
+ *  @param hour       hour the event actually occurred
+ *  @param minute     minute the event actually occurred
+ *  @param sleepDate  date for night of sleep
+ *  @param completion block invoked when asynchronous call completes
  */
-+ (void)sendAccurateWakeupTime:(NSDate *)wakeupTime
-            detectedWakeupTime:(NSDate *)detectedTime
-               forNightOfSleep:(NSDate *)sleepDate
-                    completion:(SENAPIErrorBlock)block;
-
++ (void)updateEvent:(NSString*)eventType
+           withHour:(NSUInteger)hour
+             minute:(NSUInteger)minute
+    forNightOfSleep:(NSDate*)sleepDate
+         completion:(SENAPIErrorBlock)completion;
 @end

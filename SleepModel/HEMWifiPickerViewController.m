@@ -117,14 +117,10 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
         self.disconnectObserverId =
         [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
-                    [[strongSelf cancelItem] setEnabled:YES];
-                    if ([strongSelf isVisible]) {
-                        [strongSelf showError:error];
-                    }
-                }];
-            }
+            [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
+                [[strongSelf cancelItem] setEnabled:YES];
+                [strongSelf showError:error];
+            }];
         }];
     }
 }
@@ -222,7 +218,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             [[strongSelf cancelItem] setEnabled:YES];
         }];
         
-        if (error != nil && [strongSelf isVisible]) {
+        if (error != nil) {
             [strongSelf showError:error];
         }
     }];

@@ -81,7 +81,6 @@
             if ([self isIPhone4Family]) {
                 [[self descriptionLabel] setTextAlignment:NSTextAlignmentCenter];
             }
-            
         }
 
     }
@@ -98,6 +97,14 @@
     }
     
     [super adjustConstraintsForIPhone4];
+}
+
+- (void)showMessageDialog:(NSString*)message title:(NSString*)title {
+    // only show error if user is still on the same screen.  BLE commands, especially
+    // can come a long time later than when it should
+    if ([[self navigationController] topViewController] == self) {
+        [super showMessageDialog:message title:title];
+    }
 }
 
 #pragma mark - Nav

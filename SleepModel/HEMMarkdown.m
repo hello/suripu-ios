@@ -86,7 +86,10 @@
                        NSForegroundColorAttributeName: [UIColor blackColor]},
         @(PARA) : @{ NSFontAttributeName : [UIFont timelineEventMessageFont],
                      NSParagraphStyleAttributeName: style,
-                     NSForegroundColorAttributeName: [UIColor blackColor]}
+                     NSForegroundColorAttributeName: [UIColor blackColor]},
+        @(EMPH) : @{ NSFontAttributeName : [UIFont timelineEventMessageItalicFont],
+                     NSParagraphStyleAttributeName: style,
+                     NSForegroundColorAttributeName: [UIColor lightGrayColor]},
     };
 }
 

@@ -111,6 +111,11 @@
 + (UIFont *)timelineEventMessageFont;
 
 /**
+ *  Font for event message _italic_ text in the timeline
+ */
++ (UIFont *)timelineEventMessageItalicFont;
+
+/**
  *  Bold font for event message text in the timeline
  */
 + (UIFont *)timelineEventMessageBoldFont;

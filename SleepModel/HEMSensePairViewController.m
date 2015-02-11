@@ -504,6 +504,9 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 - (void)dealloc {
     [SENSenseManager stopScan];
+    if (_disconnectObserverId != nil) {
+        [_senseManager removeUnexpectedDisconnectObserver:_disconnectObserverId];
+    }
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
 }
 

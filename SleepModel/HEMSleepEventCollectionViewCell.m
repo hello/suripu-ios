@@ -1,8 +1,10 @@
 
-#import "HEMSleepEventCollectionViewCell.h"
-#import "HEMSleepEventButton.h"
 #import <FDWaveformView/FDWaveformView.h>
 #import <SpinKit/RTSpinKitView.h>
+#import <AttributedMarkdown/markdown_peg.h>
+#import "HEMSleepEventCollectionViewCell.h"
+#import "HEMSleepEventButton.h"
+#import "NSAttributedString+HEMUtils.h"
 #import "HelloStyleKit.h"
 #import "HEMMarkdown.h"
 
@@ -27,6 +29,11 @@
 static CGFloat const HEMEventButtonSize = 40.f;
 static CGFloat const HEMEventBlurHeight = 60.f;
 static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
+
++ (NSAttributedString*)attributedMessageFromText:(NSString*)text
+{
+    return [markdown_to_attr_string(text, 0, [HEMMarkdown attributesForEventMessageText]) trim];
+}
 
 - (void)addTimeLabelWithText:(NSString*)text atHeightRatio:(CGFloat)heightRatio
 {

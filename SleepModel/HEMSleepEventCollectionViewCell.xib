@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -26,13 +26,13 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kh-Q1-akT">
-                                        <rect key="frame" x="32" y="84" width="256" height="22"/>
+                                        <rect key="frame" x="32" y="80" width="256" height="22"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mmt-xt-XiU">
-                                        <rect key="frame" x="106" y="116" width="108" height="40"/>
+                                        <rect key="frame" x="106" y="112" width="108" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="JaI-eL-zcK"/>
                                         </constraints>
@@ -43,11 +43,11 @@
                                         </state>
                                     </button>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ry2-xq-WWj" customClass="RTSpinKitView">
-                                        <rect key="frame" x="29" y="114" width="43" height="43"/>
+                                        <rect key="frame" x="29" y="110" width="43" height="43"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     </view>
                                     <button hidden="YES" opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6K-A1-70h" userLabel="play button">
-                                        <rect key="frame" x="29" y="114" width="43" height="43"/>
+                                        <rect key="frame" x="29" y="110" width="43" height="43"/>
                                         <state key="normal" image="playSound.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -56,7 +56,7 @@
                                         </connections>
                                     </button>
                                     <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1QB-6m-XRf" customClass="FDWaveformView">
-                                        <rect key="frame" x="84" y="124" width="213" height="23"/>
+                                        <rect key="frame" x="84" y="120" width="213" height="23"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
@@ -74,7 +74,7 @@
                                     <constraint firstAttribute="trailing" secondItem="5DK-SE-Ybo" secondAttribute="trailing" constant="10" id="O8X-Bl-7sW"/>
                                     <constraint firstItem="k6K-A1-70h" firstAttribute="leading" secondItem="MQC-tj-fHb" secondAttribute="leading" constant="29" id="S0c-hI-q7w"/>
                                     <constraint firstItem="5DK-SE-Ybo" firstAttribute="leading" secondItem="MQC-tj-fHb" secondAttribute="leading" constant="10" id="SdH-Ge-GXy"/>
-                                    <constraint firstItem="7kh-Q1-akT" firstAttribute="top" secondItem="5DK-SE-Ybo" secondAttribute="bottom" constant="28" id="TGC-pm-Cpa"/>
+                                    <constraint firstItem="7kh-Q1-akT" firstAttribute="top" secondItem="5DK-SE-Ybo" secondAttribute="bottom" constant="24" id="TGC-pm-Cpa"/>
                                     <constraint firstItem="k6K-A1-70h" firstAttribute="bottom" secondItem="ry2-xq-WWj" secondAttribute="bottom" id="aKp-ls-zDP"/>
                                     <constraint firstItem="k6K-A1-70h" firstAttribute="leading" secondItem="ry2-xq-WWj" secondAttribute="leading" id="gl2-rL-Tdx"/>
                                     <constraint firstAttribute="centerX" secondItem="Mmt-xt-XiU" secondAttribute="centerX" id="kTY-UJ-XCm"/>

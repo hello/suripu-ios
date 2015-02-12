@@ -2305,6 +2305,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="F5X-iN-TNU" id="GKv-qY-j6y"/>
+                        <outlet property="shortcutButton" destination="3YU-EY-ydB" id="pYE-wi-H9y"/>
                         <outlet property="shortcutButtonTrailing" destination="8mv-cH-3HV" id="i0W-6i-YjT"/>
                     </connections>
                 </viewController>

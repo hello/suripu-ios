@@ -384,10 +384,15 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     CGPoint offset = scrollView.contentOffset;
     CGFloat constant = offset.y > 0 ? HEMAlarmShortcutHiddenTrailing : HEMAlarmShortcutDefaultTrailing;
     if (self.shortcutButtonTrailing.constant != constant) {
+        if (constant > 0)
+            self.shortcutButton.hidden = NO;
         self.shortcutButtonTrailing.constant = constant;
         [self.view setNeedsUpdateConstraints];
         [UIView animateWithDuration:0.2f animations:^{
             [self.view layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            if (constant < 0)
+                self.shortcutButton.hidden = YES;
         }];
     }
 }
@@ -429,8 +434,9 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
                   layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     static CGFloat const HEMEventSoundPlayerHeight = 48.f;
+    static CGFloat const HEMEventAdjustTimeHeight = 48.f;
     static CGFloat const HEMEventMessageInset = 64.f;
-    static CGFloat const HEMEventBottomPadding = 54.f;
+    static CGFloat const HEMEventBottomPadding = 38.f;
     static CGFloat const HEMEventItemSpacing = 10.f;
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     CGFloat width = CGRectGetWidth(self.view.bounds);
@@ -449,8 +455,10 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
                                                       options:options
                                                       context:nil];
             height += ceilf(CGRectGetHeight(textBounds));
-            if (segment.sound || [HEMTimelineFeedbackViewController canAdjustTimeForSegment:segment])
+            if (segment.sound)
                 height += HEMEventSoundPlayerHeight + (HEMEventItemSpacing*2) + HEMEventBottomPadding;
+            else if ([HEMTimelineFeedbackViewController canAdjustTimeForSegment:segment])
+                height += HEMEventAdjustTimeHeight + HEMEventBottomPadding;
             else if (message.length > 0)
                 height += HEMEventBottomPadding + HEMEventItemSpacing;
             return CGSizeMake(width, height);

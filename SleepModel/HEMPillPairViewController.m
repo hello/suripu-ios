@@ -114,8 +114,8 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [[self cancelItem] setEnabled:enable];
     [self showRetryButtonAsRetrying:!enable];
     [[self skipButton] setHidden:!enable
-                                 && ([self pairAttempts] < kHEMPillPairAttemptsBeforeSkip
-                                    || [self delegate] != nil)];
+                                 || [self pairAttempts] < kHEMPillPairAttemptsBeforeSkip
+                                 || [self delegate] != nil];
 
     CGFloat activityLabelAlpha = enable ? 0.0f : 1.0f;
     CGFloat skipButtonAlpha = enable ? 1.0f : 0.0f;

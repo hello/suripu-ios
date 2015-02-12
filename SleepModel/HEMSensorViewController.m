@@ -46,6 +46,7 @@
 @implementation HEMSensorViewController
 
 static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
+static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
 - (void)viewDidLoad
 {
@@ -89,6 +90,12 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
     [super viewDidDisappear:animated];
     [self.refreshTimer invalidate];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+- (void)viewDidLayoutSubviews
+{
+    [super viewDidLayoutSubviews];
+    [self adjustValueViewHeights];
 }
 
 - (void)dealloc
@@ -192,10 +199,18 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
         [statusMessage appendAttributedString:idealMessage];
     }
     self.statusMessageLabel.attributedText = statusMessage;
-
+    [self adjustValueViewHeights];
     self.graphView.colorLine = color;
     self.graphView.alphaLine = 0.7;
     self.graphView.colorBottom = [color colorWithAlphaComponent:0.2];
+}
+
+- (void)adjustValueViewHeights
+{
+    [self.view layoutIfNeeded];
+    BOOL shouldHideValue = CGRectGetHeight(self.valueLabel.bounds) < HEMSensorValueMinLabelHeight;
+    self.valueLabel.hidden = shouldHideValue;
+    self.unitLabel.hidden = shouldHideValue;
 }
 
 - (void)updateValueLabelWithValue:(NSNumber*)value
@@ -442,6 +457,7 @@ static NSTimeInterval const HEMSensorRefreshInterval = 10.f;
 }
 
 - (void)lineGraph:(BEMSimpleLineGraphView *)graph didReleaseTouchFromGraphWithClosestIndex:(CGFloat)index {
+    [self.view setNeedsUpdateConstraints];
     [self configureSensorValueViews];
     self.panning = NO;
     [UIView animateWithDuration:0.2f animations:^{

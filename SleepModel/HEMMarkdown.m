@@ -28,7 +28,10 @@
                        NSForegroundColorAttributeName: textColor },
         @(PARA) : @{ NSFontAttributeName : [UIFont backViewTextFont],
                      NSParagraphStyleAttributeName: style,
-                     NSForegroundColorAttributeName: textColor }
+                     NSForegroundColorAttributeName: textColor },
+        @(BULLETLIST) : @{NSFontAttributeName : [UIFont backViewTextFont],
+                          NSParagraphStyleAttributeName: style,
+                          NSForegroundColorAttributeName: textColor}
     };
 }
 

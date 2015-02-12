@@ -30,6 +30,7 @@
 @property (weak, nonatomic) IBOutlet UIView* selectionView;
 @property (weak, nonatomic) IBOutlet HEMGraphSectionOverlayView* overlayView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint* selectionLeftConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* tinySeparatorConstraint;
 
 @property (strong, nonatomic) NSArray* hourlyDataSeries;
 @property (strong, nonatomic) NSArray* dailyDataSeries;
@@ -57,7 +58,6 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     [self initializeGraphDataSource];
     [self configureGraphView];
     [self configureSensorValueViews];
-    [self configureBarButtonItems];
     NSString* sensorName = [[self sensor] localizedName] ?: @"";
     [SENAnalytics track:kHEMAnalyticsEventSensor
              properties:@{kHEMAnalyticsEventPropSensorName : sensorName}];
@@ -69,6 +69,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     self.view.backgroundColor = [UIColor whiteColor];
     if ([self isShowingHourlyData])
         [self positionSelectionViewUnderView:self.hourlyGraphButton animated:NO];
+    [self configureBarButtonItems];
     [self reloadData];
 }
 
@@ -143,12 +144,30 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
 - (void)configureBarButtonItems
 {
+    static CGFloat const HEMSensorBarButtonSpace = 8.f;
+    if (self.navigationItem.rightBarButtonItems.count > 1)
+        return;
+    self.tinySeparatorConstraint.constant = 0.5f;
     UIImage* image = [HelloStyleKit infoButtonIcon];
     UIButton* buttonView = [UIButton buttonWithType:UIButtonTypeCustom];
     buttonView.bounds = CGRectMake(0, 0, image.size.width, image.size.height);
     [buttonView setImage:image forState:UIControlStateNormal];
     [buttonView addTarget:self action:@selector(showTutorial) forControlEvents:UIControlEventTouchUpInside];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:buttonView];
+    UIBarButtonItem* rightItem = [[UIBarButtonItem alloc] initWithCustomView:buttonView];
+
+    UIBarButtonItem *rightFixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                                                                     target:nil
+                                                                                     action:nil];
+    rightFixedSpace.width = HEMSensorBarButtonSpace;
+    UIBarButtonItem* leftItem = self.navigationItem.leftBarButtonItem;
+    if (leftItem) {
+        UIBarButtonItem *leftFixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
+                                                                                        target:nil
+                                                                                        action:nil];
+        leftFixedSpace.width = HEMSensorBarButtonSpace;
+        self.navigationItem.leftBarButtonItems = @[leftFixedSpace, leftItem];
+    }
+    self.navigationItem.rightBarButtonItems = @[rightFixedSpace, rightItem];
 }
 
 - (void)configureDateFormatters

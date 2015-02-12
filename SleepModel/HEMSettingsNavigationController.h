@@ -11,4 +11,9 @@
 
 @interface HEMSettingsNavigationController : HEMStyledNavigationViewController
 
+/**
+ *  Apply navigation bar styling
+ */
+- (void)configureNavigationBar;
+
 @end

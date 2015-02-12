@@ -104,13 +104,13 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     
     if (![self isLoaded]) {
         [[self overlayActivityView] showActivity];
-        [self enableControls:NO];
+        [self setControlsEnabled:NO];
         [self pairPill:self];
         [self setLoaded:YES];
     }
 }
 
-- (void)enableControls:(BOOL)enable {
+- (void)setControlsEnabled:(BOOL)enable {
     [[self cancelItem] setEnabled:enable];
     [self showRetryButtonAsRetrying:!enable];
     [[self skipButton] setHidden:!enable
@@ -197,7 +197,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (IBAction)pairPill:(id)sender {
-    [self enableControls:NO];
+    [self setControlsEnabled:NO];
     [self setPairAttempts:[self pairAttempts] + 1];
     
     __weak typeof(self) weakSelf = self;
@@ -335,7 +335,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
                       image:nil
                    withHelp:YES];
     
-    [self enableControls:YES];
+    [self setControlsEnabled:YES];
     
     if (error) {
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];

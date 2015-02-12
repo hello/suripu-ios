@@ -57,7 +57,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
 }
 
 - (void)configureScrollView {
-    CGFloat x = HEMBeforeSleepTextPadding + 8.0f;
+    CGFloat x = HEMBeforeSleepTextPadding;
     CGFloat contentWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
     
     CGFloat maxLabelWidth = contentWidth - (2 * x);
@@ -172,7 +172,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
 
     if ([scrollView contentOffset].x >= prevContentOffset + fullWidth
         || [scrollView contentOffset].x <= prevContentOffset - fullWidth) {
-        [self setCurrentPage:nextPage];
+        [self advanceToPage:nextPage];
     } else if ([scrollView contentOffset].x > prevContentOffset) {
         [self swapToNextImageForPage:nextPage withPercentage:percentage];
     } else {
@@ -187,7 +187,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
 
 #pragma mark -
 
-- (void)setCurrentPage:(NSInteger)currentPage {
+- (void)advanceToPage:(NSInteger)currentPage {
     UIImageView* tempView = [self nextImageView];
     [self setNextImageView:[self currentImageView]];
     [self setCurrentImageView:tempView];
@@ -199,7 +199,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
     if (![[[self nextImageView] image] isEqual:nextImage]) {
         [[self nextImageView] setImage:nextImage];
     }
-    [[self currentImageView] setAlpha:percentage == 0.0f ?: 1-percentage];
+    [[self currentImageView] setAlpha:1-percentage];
     [[self nextImageView] setAlpha:percentage];
 }
 
@@ -209,7 +209,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
         [[self nextImageView] setImage:nextImage];
     }
     [[self currentImageView] setAlpha:percentage];
-    [[self nextImageView] setAlpha:percentage == 0.0f ?: 1-percentage];
+    [[self nextImageView] setAlpha:1-percentage];
 }
 
 - (void)moveContinueButtonWithPercentage:(CGFloat)percentage {

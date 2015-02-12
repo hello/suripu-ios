@@ -125,6 +125,8 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [_collectionView setDelegate:nil];
+    [_collectionView setDataSource:nil];
 }
 
 #pragma mark - Data Loading
@@ -387,13 +389,6 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 {
     if (self.sensors.count > indexPath.row)
         [self openDetailViewForSensor:self.sensors[indexPath.item]];
-}
-
-#pragma mark - Clean Up
-
-- (void)dealloc {
-    [_collectionView setDelegate:nil];
-    [_collectionView setDataSource:nil];
 }
 
 @end

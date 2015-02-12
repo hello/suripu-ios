@@ -162,5 +162,12 @@
     }];
 }
 
+#pragma mark - Clean Up
+
+- (void)dealloc {
+    [_collectionView setDelegate:nil];
+    [_collectionView setDataSource:nil];
+}
+
 @end
 

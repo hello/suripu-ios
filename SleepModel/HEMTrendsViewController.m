@@ -241,4 +241,11 @@ static NSString* const HEMAllScopeType = @"ALL";
     [cell showGraphOfType:type withData:trend.dataPoints];
 }
 
+#pragma mark - Clean Up
+
+- (void)dealloc {
+    [_collectionView setDelegate:nil];
+    [_collectionView setDataSource:nil];
+}
+
 @end

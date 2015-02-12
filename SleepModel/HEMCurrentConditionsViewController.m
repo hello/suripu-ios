@@ -389,4 +389,11 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
         [self openDetailViewForSensor:self.sensors[indexPath.item]];
 }
 
+#pragma mark - Clean Up
+
+- (void)dealloc {
+    [_collectionView setDelegate:nil];
+    [_collectionView setDataSource:nil];
+}
+
 @end

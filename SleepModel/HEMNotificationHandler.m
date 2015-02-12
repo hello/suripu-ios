@@ -9,6 +9,7 @@
 @implementation HEMNotificationHandler
 
 static NSString* const HEMNotificationPayload = @"aps";
+static NSString* const HEMNotificationAlert = @"alert";
 static NSString* const HEMNotificationTarget = @"target";
 static NSString* const HEMNotificationDetail = @"details";
 static NSString* const HEMNotificationTargetSensor = @"sensor";
@@ -68,9 +69,12 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
 + (void)handleRemoteNotificationWithInfo:(NSDictionary *)userInfo
                   fetchCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler
 {
-    NSDictionary* payload = userInfo[HEMNotificationPayload];
-    if (![payload isKindOfClass:[NSDictionary class]])
+    NSDictionary* payload = userInfo[HEMNotificationPayload][HEMNotificationAlert];
+    if (![payload isKindOfClass:[NSDictionary class]]) {
+        if (completionHandler)
+            completionHandler(UIBackgroundFetchResultNoData);
         return;
+    }
     NSString* target = payload[HEMNotificationTarget];
 
     if (![target isKindOfClass:[NSString class]]) {
@@ -81,8 +85,6 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
     NSString* detail = payload[HEMNotificationDetail];
     HEMAppDelegate* delegate = (id)[UIApplication sharedApplication].delegate;
     HEMRootViewController* controller = [HEMRootViewController rootViewControllerForKeyWindow];
-    NSDateFormatter* formatter = [NSDateFormatter new];
-    formatter.dateFormat = HEMNotificationTargetTimelineDateFormat;
     if ([target isEqualToString:HEMNotificationTargetSensor]) {
         if (detail) {
             [delegate openDetailViewForSensorNamed:detail];
@@ -90,6 +92,8 @@ static NSString* const HEMNotificationTargetSettings = @"settings";
             [controller showSettingsDrawerTabAtIndex:HEMRootDrawerTabConditions animated:NO];
         }
     } else if ([target isEqualToString:HEMNotificationTargetTimeline]) {
+        NSDateFormatter* formatter = [NSDateFormatter new];
+        formatter.dateFormat = HEMNotificationTargetTimelineDateFormat;
         [controller closeSettingsDrawer];
         NSDate* date = [formatter dateFromString:detail];
         if (date) {

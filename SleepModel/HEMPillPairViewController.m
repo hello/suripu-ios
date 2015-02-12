@@ -278,7 +278,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [dialogVC setOkButtonTitle:[NSLocalizedString(@"actions.skip-for-now", nil) uppercaseString]];
     [dialogVC setViewToShowThrough:[[self navigationController] view]];
     
-    [dialogVC addAction:[NSLocalizedString(@"actions.cancel", nil) uppercaseString] primary:NO actionBlock:^{
+    [dialogVC addAction:NSLocalizedString(@"actions.cancel", nil) primary:NO actionBlock:^{
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     

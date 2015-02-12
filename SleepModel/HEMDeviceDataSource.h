@@ -15,8 +15,8 @@ typedef NS_ENUM(NSUInteger, HEMDeviceWarning) {
 };
 
 typedef NS_ENUM(NSInteger, HEMDeviceError) {
-    HEMDeviceErrorNoBle = -1
-    
+    HEMDeviceErrorNoBle = -1,
+    HEMDeviceErrorDeviceInfoNotLoaded = -2
 };
 
 @class SENDevice;

@@ -38,10 +38,12 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
 }
 
 + (SENDeviceState)stateFromString:(id)stringObj {
-    SENDeviceState state = SENDeviceStateNormal;
+    SENDeviceState state = SENDeviceStateUnknown;
     if ([stringObj isKindOfClass:[NSString class]]) {
         if ([stringObj isEqualToString:SENAPIDevicePropertyStateValueLowBattery]) {
             state = SENDeviceStateLowBattery;
+        } else if ([stringObj isEqualToString:SENAPIDevicePropertyStateValueNormal]) {
+            state = SENDeviceStateNormal;
         }
     }
     return state;

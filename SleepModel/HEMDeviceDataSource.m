@@ -26,7 +26,6 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
 
 @interface HEMDeviceDataSource()
 
-@property (nonatomic, strong) NSError* deviceInfoError;
 @property (nonatomic, copy)   NSString* configuredSSID;
 @property (nonatomic, assign) SENWiFiConnectionState wifiState;
 @property (nonatomic, assign, getter=isObtainingData) BOOL obtainingData;
@@ -41,7 +40,6 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
 - (void)refresh:(void(^)(NSError* error))completion {
     [self setWifiState:SENWiFiConnectionStateUnknown];
     [self setConfiguredSSID:nil];
-    [self setDeviceInfoError:nil];
     [self setObtainingData:NO];
     [self setAttemptedDataLoad:NO];
     
@@ -56,12 +54,20 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
     [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        if (error != nil && [error code] == SENServiceDeviceErrorInProgress && completion) {
-            [strongSelf invokeWhenInfoIsLoaded:completion];
+        if (error != nil) {
+            if ([error code] == SENServiceDeviceErrorInProgress && completion) {
+                [strongSelf invokeWhenInfoIsLoaded:completion];
+            } else if (completion) {
+                [strongSelf setObtainingData:NO];
+                [strongSelf setAttemptedDataLoad:YES];
+                completion ([NSError errorWithDomain:HEMDeviceErrorDomain
+                                                code:HEMDeviceErrorDeviceInfoNotLoaded
+                                            userInfo:nil]);
+            }
+
             return;
         }
         
-        [strongSelf setDeviceInfoError:error];
         [strongSelf refreshSenseData:completion];
     }];
 }
@@ -252,7 +258,10 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
     
     UIImage* icon = nil;
     NSString* name = nil;
-    NSString* lastSeen = [device lastSeen] != nil ? [[device lastSeen] timeAgo] : NSLocalizedString(@"empty-data", nil);
+    NSString* lastSeen
+        = [device lastSeen] != nil
+        ? [[device lastSeen] timeAgo]
+        : NSLocalizedString(@"empty-data", nil);
     UIColor* lastSeenColor = [self lastSeenTextColorFor:device];
     NSString* property1Name = nil;
     NSString* property1Value = nil;
@@ -276,7 +285,7 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
         if ([device state] == SENDeviceStateLowBattery) {
             property1Value = NSLocalizedString(@"settings.device.battery.low", nil);
             property1ValueColor = [UIColor redColor];
-        } else {
+        } else if ([device state] == SENDeviceStateNormal) {
             property1Value = NSLocalizedString(@"settings.device.battery.good", nil);
         }
         

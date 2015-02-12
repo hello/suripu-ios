@@ -25,6 +25,7 @@
 #import "HEMSensePairViewController.h"
 #import "HEMSensePairDelegate.h"
 #import "HEMStyledNavigationViewController.h"
+#import "HEMBaseController+Protected.h"
 
 static CGFloat const HEMDeviceInfoHeight = 190.0f;
 static CGFloat const HEMNoDeviceHeight = 205.0f;
@@ -73,7 +74,13 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     } else if (![self loaded]) {
         __weak typeof(self) weakSelf = self;
         [[self dataSource] loadDeviceInfo:^(NSError *error) {
-            [weakSelf reloadData];
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if ([error code] == HEMDeviceErrorDeviceInfoNotLoaded) {
+                NSString* title = NSLocalizedString(@"settings.device.error.title", nil);
+                NSString* msg = NSLocalizedString(@"settings.device.error.cannot-load-info", nil);
+                [strongSelf showMessageDialog:msg title:title];
+            }
+            [strongSelf reloadData];
         }];
         
         [self setLoaded:YES];

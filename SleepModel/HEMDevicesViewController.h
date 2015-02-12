@@ -9,7 +9,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "HEMBaseController.h"
 
-@interface HEMDevicesViewController : UIViewController
+@interface HEMDevicesViewController : HEMBaseController
 
 @end

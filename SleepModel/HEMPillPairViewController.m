@@ -133,8 +133,10 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
             [manager observeUnexpectedDisconnect:^(NSError *error) {
                 __block typeof(weakSelf) strongSelf = weakSelf;
                 if (strongSelf) {
-                    NSString* msg = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
-                    [strongSelf showError:error customMessage:msg];
+                    [[strongSelf overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
+                        NSString* msg = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
+                        [strongSelf showError:error customMessage:msg];
+                    }];
                 }
             }];
     }
@@ -154,7 +156,9 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
             [self performSelector:@selector(ensureSenseIsReady:) withObject:completion afterDelay:0.1f];
         } else {
             [self setBleCheckAttempts:0]; // reset it
-            [self showError:nil customMessage:NSLocalizedString(@"pairing.activity.bluetooth-not-on", nil)];
+            [[self overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
+                [self showError:nil customMessage:NSLocalizedString(@"pairing.activity.bluetooth-not-on", nil)];
+            }];
         }
     } else {
         [self scanForPairedSense:completion];
@@ -180,9 +184,11 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         DDLogVerbose(@"looking for sense to trigger pill pairing");
         [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
             if (error != nil) {
-                NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
-                [strongSelf showError:error customMessage:msg];
-                completion (nil);
+                [[strongSelf overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
+                    NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
+                    [strongSelf showError:error customMessage:msg];
+                    completion (nil);
+                }];
                 return;
             }
             completion ([[SENServiceDevice sharedService] senseManager]);
@@ -224,9 +230,12 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     __weak typeof(self) weakSelf = self;
     [manager setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
-        DDLogVerbose(@"attempting to pair pill through %@", [[[strongSelf manager] sense] name]);
-        
         [[strongSelf overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
+            if (error != nil) {
+                [strongSelf showError:error customMessage:nil];
+                return;
+            }
+            
             [[strongSelf manager] pairWithPill:[SENAuthorizationService accessToken] success:^(id response) {
                 [strongSelf flashPairedState];
             } failure:^(NSError *error) {
@@ -244,12 +253,12 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [[self overlayActivityView] showWithText:paired activity:NO completion:^{
         [[self cancelItem] setEnabled:YES];
         
-        [[self overlayActivityView] dismissWithResultText:nil showSuccessMark:YES remove:YES completion:^{
-            SENSenseLEDState ledState = [self delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
-            __weak typeof(self) weakSelf = self;
-            [[self manager] setLED:ledState completion:^(id response, NSError *error) {
-                [weakSelf proceed];
-            }];
+        [[self overlayActivityView] dismissWithResultText:nil showSuccessMark:YES remove:YES completion:nil];
+        
+        SENSenseLEDState ledState = [self delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
+        __weak typeof(self) weakSelf = self;
+        [[self manager] setLED:ledState completion:^(id response, NSError *error) {
+            [weakSelf proceed];
         }];
 
     }];

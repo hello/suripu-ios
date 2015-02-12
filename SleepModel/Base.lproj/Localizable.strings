@@ -509,7 +509,7 @@
 "tutorial.trends.message" = "To see how your sleep is changing over time, sometimes it’s helpful to take a step back. After a week using Sense, this view will show you historical data on your sleep patterns. If you don't see any data yet, check back later.";
 
 "tutorial.sensors.title" = "Current conditions";
-"tutorial.sensors.message" = "Here you’ll see the current conditions in your bedroom: Temperature, Humidity, Particulates, Light, and Sound. Tap a card for more details.";
+"tutorial.sensors.message" = "Here you’ll see the current conditions in your bedroom: Temperature, Humidity, Light, and Sound. Tap a card for more details.";
 
 "tutorial.sensor.temperature.title" = "Temperature";
 "tutorial.sensor.temperature.message" = "A proper temperature in your bedroom is key to a good night’s sleep. Here you’ll see detailed information on the temperature levels in your bedroom. The graphs will fill in as Sense collects more data.";

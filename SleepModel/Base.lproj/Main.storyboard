@@ -421,7 +421,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="Mkx-Pl-Jlc"/>
                                 </constraints>
-                                <state key="normal" title="DONE">
+                                <state key="normal" title="SUBMIT">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -3332,13 +3332,13 @@
                                                     <color key="textColor" red="0.69725722074508667" green="0.69723641872406006" blue="0.69724822044372559" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiA-EQ-FvD" userLabel="message">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BiA-EQ-FvD" userLabel="message">
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="More info" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qyu-Cd-KY8">
-                                                    <rect key="frame" x="16" y="68" width="508" height="22"/>
+                                                    <rect key="frame" x="16" y="64" width="508" height="22"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="22" id="NYO-v9-htX"/>
                                                     </constraints>
@@ -3358,9 +3358,9 @@
                                             <constraint firstItem="Sfg-cf-Bz0" firstAttribute="leading" secondItem="Ioe-As-pln" secondAttribute="leadingMargin" constant="8" id="LXN-EU-gba"/>
                                             <constraint firstItem="qEt-pW-GLZ" firstAttribute="top" secondItem="Ioe-As-pln" secondAttribute="topMargin" constant="16" id="NWQ-EE-hjL"/>
                                             <constraint firstItem="BiA-EQ-FvD" firstAttribute="leading" secondItem="Ioe-As-pln" secondAttribute="leadingMargin" constant="8" id="P7v-kg-eMl"/>
-                                            <constraint firstItem="BiA-EQ-FvD" firstAttribute="top" secondItem="Sfg-cf-Bz0" secondAttribute="top" constant="28" id="X7d-CM-maD"/>
+                                            <constraint firstItem="BiA-EQ-FvD" firstAttribute="top" secondItem="Sfg-cf-Bz0" secondAttribute="bottom" constant="14" id="X7d-CM-maD"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="qEt-pW-GLZ" secondAttribute="trailing" constant="8" id="jNh-gl-ULB"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="qyu-Cd-KY8" secondAttribute="bottom" constant="8" id="o0d-A3-ZdP"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="qyu-Cd-KY8" secondAttribute="bottom" constant="12" id="o0d-A3-ZdP"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="BiA-EQ-FvD" secondAttribute="trailing" constant="8" id="xXF-1A-M8L"/>
                                         </constraints>
                                         <size key="customSize" width="540" height="106"/>
@@ -3376,11 +3376,21 @@
                         </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="9Ua-Ey-hb0" firstAttribute="leading" secondItem="DoT-Mt-7nK" secondAttribute="leadingMargin" constant="-16" id="2gn-Qd-H6A"/>
+                            <constraint firstAttribute="width" secondItem="9Ua-Ey-hb0" secondAttribute="width" id="38l-Zf-hwW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="9Ua-Ey-hb0" secondAttribute="trailing" constant="-16" id="7TR-nc-w7F"/>
                             <constraint firstItem="9Ua-Ey-hb0" firstAttribute="top" secondItem="eQe-3s-OvL" secondAttribute="top" constant="8" id="O7X-MA-Zy2"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9Ua-Ey-hb0" secondAttribute="trailing" constant="-16" id="Wjr-s5-Cw5"/>
                             <constraint firstItem="IbA-6B-t1D" firstAttribute="top" secondItem="9Ua-Ey-hb0" secondAttribute="bottom" constant="48" id="fx8-kC-0D4"/>
                             <constraint firstItem="9Ua-Ey-hb0" firstAttribute="leading" secondItem="DoT-Mt-7nK" secondAttribute="leadingMargin" constant="-16" id="jFZ-BL-pb8"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="38l-Zf-hwW"/>
+                                <exclude reference="Wjr-s5-Cw5"/>
+                                <exclude reference="jFZ-BL-pb8"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="8Na-Kf-cgG"/>
                     <connections>

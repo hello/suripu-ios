@@ -1373,25 +1373,22 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Before you sleep" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Tj1-4o-SDr">
-                                <rect key="frame" x="20" y="24" width="560" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="oKD-DH-JHk"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="24"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aeM-Gk-iCU">
-                                <rect key="frame" x="20" y="68" width="560" height="61"/>
-                                <string key="text">You’ll want to check that everything’s set for a good nights sleep. Simply wave your hand over Sense, and instantly you’ll know about the conditions in your room. Go ahead, give it a try now.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="senseColors.png" translatesAutoresizingMaskIntoConstraints="NO" id="I7g-Id-dOn">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="I7g-Id-dOn">
                                 <rect key="frame" x="0.0" y="129" width="600" height="401"/>
                             </imageView>
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oad-re-JII">
+                                <rect key="frame" x="0.0" y="129" width="600" height="401"/>
+                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gyy-3T-4gK">
+                                <rect key="frame" x="0.0" y="24" width="600" height="506"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="DIj-70-bYO" id="YBR-vh-jIv"/>
+                                </connections>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="mBM-ym-hmu">
+                                <rect key="frame" x="20" y="540" width="560" height="37"/>
+                            </pageControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MMQ-Qm-jOb" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
                                 <constraints>
@@ -1410,28 +1407,42 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="aeM-Gk-iCU" firstAttribute="top" secondItem="Tj1-4o-SDr" secondAttribute="bottom" constant="10" id="EU6-PQ-Fnh"/>
-                            <constraint firstItem="I7g-Id-dOn" firstAttribute="top" secondItem="aeM-Gk-iCU" secondAttribute="bottom" id="GM2-Jx-Exg"/>
+                            <constraint firstItem="oad-re-JII" firstAttribute="top" secondItem="gyy-3T-4gK" secondAttribute="top" constant="105" id="A74-Km-06U"/>
+                            <constraint firstItem="gyy-3T-4gK" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="FKo-eW-TqZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="gyy-3T-4gK" secondAttribute="trailing" constant="-16" id="HlI-f9-pIE"/>
+                            <constraint firstItem="MMQ-Qm-jOb" firstAttribute="top" secondItem="gyy-3T-4gK" secondAttribute="bottom" id="LL9-Yt-at6"/>
                             <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="MMQ-Qm-jOb" secondAttribute="bottom" constant="20" id="NbT-o3-LFI"/>
-                            <constraint firstItem="Tj1-4o-SDr" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="4" id="TrJ-E4-KCu"/>
+                            <constraint firstAttribute="width" secondItem="gyy-3T-4gK" secondAttribute="width" id="U4o-5N-kuk"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="oad-re-JII" secondAttribute="trailing" constant="-16" id="VZY-9O-UjE"/>
+                            <constraint firstItem="mBM-ym-hmu" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="4" id="WOH-pt-OBZ"/>
                             <constraint firstItem="I7g-Id-dOn" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="XKg-WU-cld"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Tj1-4o-SDr" secondAttribute="trailing" constant="4" id="bHE-xo-lbE"/>
-                            <constraint firstItem="I7g-Id-dOn" firstAttribute="bottom" secondItem="MMQ-Qm-jOb" secondAttribute="top" id="cUj-Su-UTc"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="aeM-Gk-iCU" secondAttribute="trailing" constant="4" id="ePW-ng-T5n"/>
-                            <constraint firstItem="aeM-Gk-iCU" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="4" id="jcv-t9-Q07"/>
+                            <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="I7g-Id-dOn" secondAttribute="bottom" constant="70" id="XXD-Cd-jrd"/>
+                            <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="oad-re-JII" secondAttribute="bottom" constant="70" id="XXH-Yv-2Nl"/>
+                            <constraint firstItem="gyy-3T-4gK" firstAttribute="top" secondItem="I7g-Id-dOn" secondAttribute="top" constant="-105" id="dbe-uC-08T"/>
+                            <constraint firstItem="gyy-3T-4gK" firstAttribute="top" secondItem="N0D-iB-qdk" secondAttribute="bottom" constant="4" id="efv-UB-AkF"/>
+                            <constraint firstItem="IFa-hW-Rf1" firstAttribute="top" secondItem="mBM-ym-hmu" secondAttribute="bottom" constant="23" id="gmn-yn-caP"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mBM-ym-hmu" secondAttribute="trailing" constant="4" id="iDG-X0-Y1h"/>
+                            <constraint firstItem="oad-re-JII" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="iiY-UE-9bD"/>
                             <constraint firstAttribute="trailingMargin" secondItem="MMQ-Qm-jOb" secondAttribute="trailing" constant="4" id="mQQ-5w-Ova"/>
-                            <constraint firstItem="Tj1-4o-SDr" firstAttribute="top" secondItem="N0D-iB-qdk" secondAttribute="bottom" constant="4" id="qrA-cj-08U"/>
+                            <constraint firstItem="gyy-3T-4gK" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="-16" id="o4r-9s-SVS"/>
                             <constraint firstItem="MMQ-Qm-jOb" firstAttribute="leading" secondItem="WvV-c5-RHy" secondAttribute="leadingMargin" constant="4" id="rFk-vL-JOc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="I7g-Id-dOn" secondAttribute="trailing" constant="-16" id="wUD-gc-82d"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="FKo-eW-TqZ"/>
+                                <exclude reference="HlI-f9-pIE"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="beb-ap-Ff3"/>
                     <connections>
+                        <outlet property="contentScrollView" destination="gyy-3T-4gK" id="JYG-Ca-joL"/>
                         <outlet property="continueButton" destination="MMQ-Qm-jOb" id="5XH-vp-jBI"/>
-                        <outlet property="descriptionLabel" destination="aeM-Gk-iCU" id="092-JL-wgr"/>
-                        <outlet property="descriptionTopConstraint" destination="EU6-PQ-Fnh" id="7rf-fa-r20"/>
-                        <outlet property="titleHeightConstraint" destination="oKD-DH-JHk" id="Zoq-Mi-HJm"/>
-                        <outlet property="titleLabel" destination="Tj1-4o-SDr" id="YvR-ai-IIT"/>
+                        <outlet property="continueButtonBottomConstraint" destination="NbT-o3-LFI" id="qT4-ll-hjC"/>
+                        <outlet property="currentImageView" destination="I7g-Id-dOn" id="m2g-s3-E4K"/>
+                        <outlet property="dots" destination="mBM-ym-hmu" id="RRS-dO-LCU"/>
+                        <outlet property="nextImageView" destination="oad-re-JII" id="TXS-db-DCU"/>
                         <outlet property="view" destination="WvV-c5-RHy" id="kFz-r6-vwP"/>
                         <segue destination="cpr-oG-Go7" kind="push" identifier="beforeSleeptoRoomCheck" id="M7J-nW-DOf"/>
                     </connections>
@@ -2748,7 +2759,6 @@ Have your partner visit senseapp.com to download the Sense app and create a new 
         <image name="sampleNotification.png" width="320" height="185"/>
         <image name="sense.png" width="162" height="172"/>
         <image name="senseAppIcon.png" width="32" height="32"/>
-        <image name="senseColors.png" width="320" height="237"/>
         <image name="sensePlacement.png" width="320" height="235"/>
         <image name="settingsAppIcon.png" width="32" height="32"/>
         <image name="shakePill.png" width="320" height="224"/>
@@ -2758,7 +2768,7 @@ Have your partner visit senseapp.com to download the Sense app and create a new 
     <inferredMetricsTieBreakers>
         <segue reference="ZOJ-Sh-Dzx"/>
         <segue reference="JsS-bV-f7k"/>
-        <segue reference="7LA-fg-2Jb"/>
+        <segue reference="gUR-KW-V2G"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

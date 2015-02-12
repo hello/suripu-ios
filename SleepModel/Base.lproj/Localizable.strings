@@ -28,10 +28,18 @@
 "sign-up.error.password-insecure" = "Your password is not secure enough.";
 "sign-up.error.name-too-short" = "Your name is too short.";
 "sign-up.error.name-too-long" = "Your name is too long.";
-
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "There was a problem setting your birthday.";
-"onboarding.before-sleep.description" = "You’ll want to check that everything’s set for a good nights sleep. Simply wave your hand over Sense, and instantly you’ll know about the conditions in your room. Go ahead, give it a try now.";
+"onboarding.before-sleep.1.title" = "Sense Colors";
+"onboarding.before-sleep.2.title" = "All good.";
+"onboarding.before-sleep.3.title" = "Something's not right.";
+"onboarding.before-sleep.4.title" = "We've got a problem.";
+"onboarding.before-sleep.5.title" = "Just wave.";
+"onboarding.before-sleep.1.description" = "Sense glows to tell you about the conditions in your bedroom - including temperature, humidity, light, and sound.  Sense has three different colors.";
+"onboarding.before-sleep.2.description" = "Sense glows green when the conditions in your room are just right for a good night's sleep.";
+"onboarding.before-sleep.3.description" = "Sense glows yellow when something in your bedroom is not quite right.  Check the Sense app for details.";
+"onboarding.before-sleep.4.description" = "Sense glows orange when the conditions in your bedroom would prevent restful sleep.  Check the Sense app for details.";
+"onboarding.before-sleep.5.description" = "Just wave your hand over Sense and instantly you'll know about the conditions in your bedroom.  Go ahead, give it a try now.";
 "onboarding.title.before-sleep" = "Before you sleep";
 "onboarding.end-message.well-done" = "You're all set up";
 "onboarding.end-message.sleep" = "Now all you need to\ndo is sleep";

@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.2.1
+
+New:
+
+* Added option to provide feedback to event times on your Timeline
+* Before you Sleep onboarding screen are broken up in to slides to better illustrate what colors on Sense mean
+
+Fixes:
+
+* fixed issue during wifi scan that would prevent user from restarting a scan if Sense disconnects during the scan
+* Pill pairing screen will not ask to shake the pill until Sense is ready to listen for the action
+
 ## 1.0.2.0
 
 New:

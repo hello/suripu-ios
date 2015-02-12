@@ -19,7 +19,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropSensePairingMode];
+    [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.sense-pairing-mode", nil)
+           andTrackWithStepName:kHEMAnalyticsEventPropSensePairingMode];
     [SENAnalytics track:kHEMAnalyticsEventOnBPairingMode];
 }
 

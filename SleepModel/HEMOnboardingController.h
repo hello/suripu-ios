@@ -19,7 +19,8 @@
 - (SENSenseManager*)manager;
 - (void)showCancelButtonWithSelector:(SEL)selector;
 - (void)enableBackButton:(BOOL)enable;
-- (void)showHelpButtonAndTrackWithStepName:(NSString*)stepName;
+- (void)showHelpButtonForPage:(NSString*)page
+         andTrackWithStepName:(NSString*)stepName;
 - (void)stylePrimaryButton:(UIButton*)button
            secondaryButton:(UIButton*)secondaryButton
               withDelegate:(BOOL)hasDelegate;

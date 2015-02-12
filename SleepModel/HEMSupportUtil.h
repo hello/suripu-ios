@@ -41,6 +41,15 @@
 + (void)openHelpFrom:(UIViewController*)controller;
 
 /**
+ * Opens up a screen that shows help / troubleshooting tips anchored to a
+ * particular topic identified by the page path (slug)
+ *
+ * @param page:       the specific help page to open to
+ * @param controller: the controller to present the new screen
+ */
++ (void)openHelpToPage:(NSString*)page fromController:(UIViewController*)controller;
+
+/**
  * Open a url from the controller specified
  * @param urlString:  a fully qualified http url
  * @param controller: the controller wishing to show this url

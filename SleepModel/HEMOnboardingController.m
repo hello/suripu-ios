@@ -26,6 +26,7 @@
 @property (copy,   nonatomic) NSString* analyticsHelpStep;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint* titleHeightConstraint;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint* descriptionTopConstraint;
+@property (copy,   nonatomic) NSString* helpPage;
 
 @end
 
@@ -109,27 +110,30 @@
 
 #pragma mark - Nav
 
-- (void)showHelpButtonAndTrackWithStepName:(NSString*)stepName {
+- (void)showHelpButtonForPage:(NSString*)page
+         andTrackWithStepName:(NSString*)stepName {
     UIBarButtonItem* item =
-        [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"question-mark", nil)
-                                         style:UIBarButtonItemStyleBordered
-                                        target:self
-                                        action:@selector(help:)];
+    [[UIBarButtonItem alloc] initWithTitle:NSLocalizedString(@"question-mark", nil)
+                                     style:UIBarButtonItemStyleBordered
+                                    target:self
+                                    action:@selector(help:)];
     [item setTitlePositionAdjustment:UIOffsetMake(-10.0f, 0.0f)
                        forBarMetrics:UIBarMetricsDefault];
-    [item setTitleTextAttributes:@{
-        NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor],
-        NSFontAttributeName : [UIFont helpButtonTitleFont]
-    } forState:UIControlStateNormal];
+    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor],
+                                   NSFontAttributeName : [UIFont helpButtonTitleFont]
+                                   }
+                        forState:UIControlStateNormal];
+    
     [[self navigationItem] setRightBarButtonItem:item];
     [self setAnalyticsHelpStep:stepName];
+    [self setHelpPage:page];
 }
 
 - (void)help:(id)sender {
     NSString* step = [self analyticsHelpStep] ?: @"undefined";
     NSDictionary* properties = @{kHEMAnalyticsEventPropStep : step};
     [SENAnalytics track:kHEMAnalyticsEventOnBHelp properties:properties];
-    [HEMSupportUtil openHelpFrom:self];
+    [HEMSupportUtil openHelpToPage:[self helpPage] fromController:self];
 }
 
 - (void)enableBackButton:(BOOL)enable {

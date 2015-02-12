@@ -153,9 +153,11 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 - (void)takeWarningAction:(UIButton*)sender {
     HEMDeviceWarning warning = [sender tag];
     switch (warning) {
-        case HEMDeviceWarningLongLastSeen:
-            [HEMSupportUtil openHelpFrom:self];
+        case HEMDeviceWarningLongLastSeen: {
+            NSString* page = NSLocalizedString(@"troubleshoot/pill-not-seen-in-days", nil);
+            [HEMSupportUtil openHelpToPage:page fromController:self];
             break;
+        }
         default:
             break;
     }
@@ -174,7 +176,8 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 }
 
 - (void)replaceBattery:(id)sender {
-    [HEMSupportUtil openHelpFrom:self];
+    NSString* page = NSLocalizedString(@"help.url.slug.pill-battery", nil);
+    [HEMSupportUtil openHelpToPage:page fromController:self];
 }
 
 #pragma mark - Unpairing the pill

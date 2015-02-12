@@ -42,6 +42,7 @@ extern NSString* const kHEMAnalyticsEventPropWiFiScan;
 extern NSString* const kHEMAnalyticsEventPropWiFiPass;
 extern NSString* const kHEMAnalyticsEventPropPillPairing;
 extern NSString* const kHEMAnalyticsEventPropPillPlacement;
+extern NSString* const kHEMAnalyticsEventPropPillAnother;
 extern NSString* const kHEMAnalyticsEventOnBStart;
 extern NSString* const kHEMAnalyticsEventOnBBirthday;
 extern NSString* const kHEMAnalyticsEventOnBGender;

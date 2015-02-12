@@ -213,16 +213,24 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
 
 - (void)takeWarningAction:(UIButton*)sender {
     HEMDeviceWarning warning = [sender tag];
+    NSString* helpPage = nil;
+    
     switch (warning) {
         case HEMSenseWarningNotConnectedToSense:
+            helpPage = NSLocalizedString(@"help.url.slug.sense-not-connected", nil);
+            break;
         case HEMDeviceWarningLongLastSeen:
-            [HEMSupportUtil openHelpFrom:self];
+            helpPage = NSLocalizedString(@"help.url.slug.sense-not-seen", nil);
             break;
         case HEMSenseWarningNoInternet:
-            [self changeWiFi:self];
+            helpPage = NSLocalizedString(@"help.url.slug.sense-no-internet", nil);
             break;
         default:
             break;
+    }
+    
+    if (helpPage) {
+        [HEMSupportUtil openHelpToPage:helpPage fromController:self];
     }
 }
 

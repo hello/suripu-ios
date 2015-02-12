@@ -75,7 +75,8 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     
     [self showRetryButtonAsRetrying:YES];
     
-    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropPillPairing];
+    [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.pill-pairing", nil)
+           andTrackWithStepName:kHEMAnalyticsEventPropPillPairing];
     
     if ([self delegate] != nil) {
         [self showCancelButtonWithSelector:@selector(cancel:)];

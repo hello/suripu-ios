@@ -1319,6 +1319,10 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     <action selector="pairPill:" destination="Aoy-k8-hYr" eventType="touchUpInside" id="NnP-xb-lYr"/>
                                 </connections>
                             </button>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SET-g8-gMj" customClass="HEMActivityCoverView">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1328,26 +1332,37 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <constraint firstAttribute="trailingMargin" secondItem="Myj-pb-yY5" secondAttribute="trailing" constant="4" id="FzP-yU-3Pc"/>
                             <constraint firstItem="UCq-3E-Q6s" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="-16" id="H7t-bc-SJC"/>
                             <constraint firstItem="YOR-FD-XcA" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="Igs-Hk-yba"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="SET-g8-gMj" secondAttribute="trailing" constant="-16" id="Lj5-3o-Ol6"/>
                             <constraint firstItem="lGd-9N-cHV" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="PB1-8b-HGa"/>
+                            <constraint firstItem="LXo-A8-xjK" firstAttribute="top" secondItem="SET-g8-gMj" secondAttribute="bottom" id="PCn-wh-VPT"/>
+                            <constraint firstItem="SET-g8-gMj" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="-20" id="TbY-re-bXb"/>
                             <constraint firstItem="Myj-pb-yY5" firstAttribute="bottom" secondItem="lGd-9N-cHV" secondAttribute="top" constant="-15" id="UZX-G0-k1Y"/>
                             <constraint firstAttribute="trailingMargin" secondItem="kFD-e4-hma" secondAttribute="trailing" constant="4" id="aQM-KZ-S3n"/>
                             <constraint firstItem="YOR-FD-XcA" firstAttribute="bottom" secondItem="lGd-9N-cHV" secondAttribute="top" constant="-15" id="azZ-ld-TlC"/>
                             <constraint firstItem="Myj-pb-yY5" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="bbb-je-XMs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="lGd-9N-cHV" secondAttribute="trailing" constant="4" id="cBM-V2-ce4"/>
                             <constraint firstItem="UCq-3E-Q6s" firstAttribute="top" secondItem="kFD-e4-hma" secondAttribute="bottom" id="ggj-XA-6ka"/>
+                            <constraint firstItem="SET-g8-gMj" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="-20" id="hzt-B7-YzZ"/>
                             <constraint firstItem="YOR-FD-XcA" firstAttribute="top" secondItem="UCq-3E-Q6s" secondAttribute="bottom" id="i8S-aB-YmX"/>
                             <constraint firstItem="LXo-A8-xjK" firstAttribute="top" secondItem="lGd-9N-cHV" secondAttribute="bottom" constant="20" id="kV7-jL-vUR"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YOR-FD-XcA" secondAttribute="trailing" constant="4" id="ozv-5f-t24"/>
                             <constraint firstItem="beC-YD-29R" firstAttribute="top" secondItem="yNK-Bt-vqg" secondAttribute="bottom" constant="4" id="pgv-a2-fy7"/>
                             <constraint firstItem="kFD-e4-hma" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="4" id="pl3-kM-4pU"/>
                             <constraint firstAttribute="trailingMargin" secondItem="UCq-3E-Q6s" secondAttribute="trailing" constant="-16" id="sKi-dZ-4sL"/>
+                            <constraint firstItem="SET-g8-gMj" firstAttribute="leading" secondItem="KcC-Xv-R9P" secondAttribute="leadingMargin" constant="-16" id="sjs-2p-QGq"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="hzt-B7-YzZ"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" id="AaY-kA-63k"/>
                     <connections>
                         <outlet property="activityLabel" destination="Myj-pb-yY5" id="R4H-DY-yAp"/>
                         <outlet property="descriptionLabel" destination="kFD-e4-hma" id="lSP-ut-FA4"/>
                         <outlet property="descriptionTopConstraint" destination="Dso-Ut-wpa" id="cJz-C7-kxU"/>
+                        <outlet property="overlayActivityView" destination="SET-g8-gMj" id="aMJ-Ty-jst"/>
                         <outlet property="retryButton" destination="lGd-9N-cHV" id="q88-hx-YrG"/>
                         <outlet property="retryButtonWidthConstraint" destination="eTO-Et-PGf" id="CnM-8K-AtF"/>
                         <outlet property="skipButton" destination="YOR-FD-XcA" id="eFQ-tb-zyk"/>

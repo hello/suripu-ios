@@ -456,10 +456,10 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     [cell removeAllTimeLabels];
     if (!segment)
         return;
-    NSCalendarUnit units = (NSCalendarUnitMinute|NSCalendarUnitHour|NSCalendarUnitDay);
+    NSCalendarUnit units = (NSCalendarUnitSecond|NSCalendarUnitMinute|NSCalendarUnitHour|NSCalendarUnitDay);
     NSDateComponents* components = [self.calendar components:units fromDate:segment.date];
     self.timeDateFormatter.timeZone = segment.timezone;
-    if (components.minute == 0) {
+    if (components.minute == 0 && components.second == 0) {
         [cell addTimeLabelWithText:[[self.timeDateFormatter stringFromDate:segment.date] lowercaseString]
                      atHeightRatio:0];
     }
@@ -472,6 +472,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         NSDateComponents* hourComponents = [NSDateComponents new];
         hourComponents.hour = i;
         hourComponents.minute = -components.minute;
+        hourComponents.second = -components.second;
         NSDate* hourDate = [self.calendar dateByAddingComponents:hourComponents toDate:segment.date options:0];
         hourInterval = [hourDate timeIntervalSince1970];
         if (hourInterval < endInterval) {

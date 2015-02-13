@@ -101,10 +101,20 @@
 }
 
 - (void)showMessageDialog:(NSString*)message title:(NSString*)title {
+    [self showMessageDialog:message title:title image:nil withHelpPage:nil];
+}
+
+- (void)showMessageDialog:(NSString *)message
+                    title:(NSString *)title
+                    image:(UIImage*)image
+             withHelpPage:(NSString*)helpPage {
     // only show error if user is still on the same screen.  BLE commands, especially
     // can come a long time later than when it should
     if ([[self navigationController] topViewController] == self) {
-        [super showMessageDialog:message title:title];
+        [super showMessageDialog:message
+                           title:title
+                           image:nil
+                    withHelpPage:helpPage];
     }
 }
 

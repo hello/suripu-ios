@@ -54,14 +54,14 @@
 "onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulty falling asleep.";
 
 // help links
-"help.url.order-form" = "https://order.hello.is/";
-"help.url.support" = "http://guide.hello.is/";
 "help.email.address" = "support@sayhello.com";
 "help.email.subject" = "Sense Help Request";
 "help.forgot-password" = "https://account.hello.is";
 
+"help.url.order-form" = "https://order.hello.is/";
+"help.url.support" = "http://guide.hello.is/";
 "help.url.slug.turn-on-ble" = "troubleshoot/turning-on-bluetooth";
-"help.url.slug.pill-pairing" = "troubleshoot/pairing-your-sleep-pil";
+"help.url.slug.pill-pairing" = "troubleshoot/pairing-your-sleep-pill";
 "help.url.slug.pill-setup" = "troubleshoot/attaching-sleep-pill";
 "help.url.slug.enhanced-audio" = "app/enhanced-audio";
 "help.url.slug.sense-pairing-mode" = "troubleshoot/pairing-mode";

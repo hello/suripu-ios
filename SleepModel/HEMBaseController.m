@@ -74,24 +74,28 @@ CGFloat const kHEMIPhone5Height = 568.0f;
 
 - (void)showMessageDialog:(NSString*)message title:(NSString*)title {
     UIView* seeThroughView = [self parentViewController] ? [[self parentViewController] view] : [self view];
-    [self showMessageDialog:message title:title image:nil seeThroughView:seeThroughView withHelp:NO];
+    [self showMessageDialog:message title:title image:nil seeThroughView:seeThroughView withHelpPage:nil];
 }
 
-- (void)showMessageDialog:(NSString*)message title:(NSString*)title image:(UIImage*)image withHelp:(BOOL)help {
+- (void)showMessageDialog:(NSString*)message
+                    title:(NSString*)title
+                    image:(UIImage*)image
+             withHelpPage:(NSString*)helpPage {
+    
     UIView* seeThroughView = [self parentViewController] ? [[self parentViewController] view] : [self view];
-    [self showMessageDialog:message title:title image:image seeThroughView:seeThroughView withHelp:help];
+    [self showMessageDialog:message title:title image:image seeThroughView:seeThroughView withHelpPage:helpPage];
 }
 
 - (void)showMessageDialog:(NSString*)message
                     title:(NSString*)title
                     image:(UIImage*)image
            seeThroughView:(UIView*)seeThroughView
-                 withHelp:(BOOL)help {
+                 withHelpPage:(NSString*)helpPage {
     
     HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
     [dialogVC setTitle:title];
     [dialogVC setMessage:message];
-    [dialogVC setShowHelp:help];
+    [dialogVC setHelpPage:helpPage];
     [dialogVC setDialogImage:image];
     [dialogVC setViewToShowThrough:seeThroughView];
     

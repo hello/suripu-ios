@@ -72,15 +72,13 @@
         [[[self dialogView] okButton] setTitle:[self okButtonTitle] forState:UIControlStateNormal];
     }
     
-    if ([self showHelp]) {
+    if ([[self helpPage] length] > 0) {
         __weak typeof(self) weakSelf = self;
         [self addAction:NSLocalizedString(@"dialog.help.title", nil)
                 primary:NO
             actionBlock:^{
                 __strong typeof(weakSelf) strongSelf = weakSelf;
-                if (strongSelf) {
-                    [HEMSupportUtil openHelpFrom:strongSelf];
-                }
+                [HEMSupportUtil openHelpToPage:[strongSelf helpPage] fromController:strongSelf];
             }];
     }
     

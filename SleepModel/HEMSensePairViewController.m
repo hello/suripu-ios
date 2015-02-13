@@ -439,7 +439,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         [weakSelf showMessageDialog:message
                               title:NSLocalizedString(@"pairing.failed.title", nil)
                               image:nil
-                           withHelp:YES];
+                       withHelpPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)];
     };
     
     if ([self senseManager] == nil) {

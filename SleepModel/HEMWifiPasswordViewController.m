@@ -161,7 +161,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             [strongSelf stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
                 NSString* title = NSLocalizedString(@"wifi.error.title", nil);
                 NSString* message = NSLocalizedString(@"wifi.error.unexpected-disconnnect", nil);
-                [strongSelf showMessageDialog:message title:title];
+                [strongSelf showErrorMessage:message withTitle:title];
             }];
         }];
     }
@@ -393,14 +393,9 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         }
     } failure:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
-                NSString* msg = NSLocalizedString(@"wifi.error.account-link-message", nil);
-                NSString* title = NSLocalizedString(@"wifi.error.link-account-title", nil);
-                [strongSelf showMessageDialog:msg title:title];
-            }];
-        }
-        
+        [strongSelf stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
+            [strongSelf showLinkAccountError:error];
+        }];
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }];
 }
@@ -422,7 +417,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 [strongSelf stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
                     NSString* msg = NSLocalizedString(@"wifi.error.time-zone-failed", nil);
                     NSString* title = NSLocalizedString(@"wifi.error.timezone-title", nil);
-                    [strongSelf showMessageDialog:msg title:title];
+                    [strongSelf showErrorMessage:msg withTitle:title];
                 }];
                 [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             }
@@ -538,6 +533,13 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 #pragma mark - Errors / Alerts
 
+- (void)showErrorMessage:(NSString*)errorMessage withTitle:(NSString*)title {
+    [self showMessageDialog:errorMessage
+                      title:title
+                      image:nil
+               withHelpPage:NSLocalizedString(@"troubleshoot/connecting-sense-wifi", nil)];
+}
+
 - (void)showSetWiFiError:(NSError*)error {
     NSString* title = NSLocalizedString(@"wifi.error.title", nil);
     NSString* message = nil;
@@ -558,11 +560,11 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             break;
     }
     
-    [self showMessageDialog:message title:title];
+    [self showErrorMessage:message withTitle:title];
 }
 
 - (void)showLinkAccountError:(NSError*)error {
-    NSString* title = NSLocalizedString(@"wifi.error.title", nil);
+    NSString* title = NSLocalizedString(@"wifi.error.link-account-title", nil);
     NSString* message = nil;
     
     switch ([error code]) {
@@ -577,7 +579,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
             break;
     }
     
-    [self showMessageDialog:message title:title];
+    [self showErrorMessage:message withTitle:title];
 }
 
 #pragma mark - Cleanup

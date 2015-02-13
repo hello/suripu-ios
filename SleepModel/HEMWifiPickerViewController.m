@@ -258,7 +258,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             message = NSLocalizedString(@"wifi.error.scan-general", nil);
             break;
     }
-    [self showMessageDialog:message title:title];
+    
+    [self showMessageDialog:message
+                      title:title
+                      image:nil
+               withHelpPage:NSLocalizedString(@"help.url.slug.wifi-scan", nil)];
     [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
 }
 

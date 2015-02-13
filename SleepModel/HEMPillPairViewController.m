@@ -334,7 +334,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [self showMessageDialog:message
                       title:NSLocalizedString(@"pairing.pill.error.title", nil)
                       image:nil
-                   withHelp:YES];
+               withHelpPage:NSLocalizedString(@"help.url.slug.pill-pairing", nil)];
     
     [self setControlsEnabled:YES];
     

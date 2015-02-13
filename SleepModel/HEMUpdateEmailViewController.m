@@ -51,7 +51,6 @@
     HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
     [dialogVC setTitle:NSLocalizedString(@"account.update.failed.title", nil)];
     [dialogVC setMessage:NSLocalizedString(@"account.update.error.email", nil)];
-    [dialogVC setShowHelp:YES];
     [dialogVC setViewToShowThrough:seeThroughView];
     
     [dialogVC showFrom:self onDone:^{

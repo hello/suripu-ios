@@ -229,9 +229,8 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
             break;
     }
     
-    if (helpPage) {
-        [HEMSupportUtil openHelpToPage:helpPage fromController:self];
-    }
+    // if no help page, will open to complete guide
+    [HEMSupportUtil openHelpToPage:helpPage fromController:self];
 }
 
 - (void)showConfirmation:(NSString*)title message:(NSString*)message action:(void(^)(void))action {

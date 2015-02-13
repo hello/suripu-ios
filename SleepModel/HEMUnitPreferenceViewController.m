@@ -87,7 +87,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         title = NSLocalizedString(@"settings.units.temp", nil);
         
         if ([SENSettings temperatureFormat] == SENTemperatureFormatCentigrade) {
-            value = NSLocalizedString(@"settings.units.celcius", nil);
+            value = NSLocalizedString(@"settings.units.celsius", nil);
         } else {
             value = NSLocalizedString(@"settings.units.fahrenheit", nil);
         }
@@ -127,7 +127,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             selectedIndex = [SENSettings timeFormat] == SENTimeFormat12Hour ? 0 : 1;
         } else if (row == HEMUnitPreferenceTemp) {
             title = NSLocalizedString(@"settings.units.temp", nil);
-            choices = @[NSLocalizedString(@"settings.units.celcius", nil),
+            choices = @[NSLocalizedString(@"settings.units.celsius", nil),
                         NSLocalizedString(@"settings.units.fahrenheit", nil)];
             selectedIndex = [SENSettings temperatureFormat] == SENTemperatureFormatCentigrade ? 0 : 1;
         }

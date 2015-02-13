@@ -157,7 +157,7 @@
 "settings.units" = "Units and time";
 "settings.units.24-hour" = "24 hour";
 "settings.units.12-hour" = "12 hour";
-"settings.units.celcius" = "Celcius";
+"settings.units.celsius" = "Celsius";
 "settings.units.fahrenheit" = "Fahrenheit";
 "settings.units.clock" = "Time";
 "settings.units.temp" = "Temperature units";

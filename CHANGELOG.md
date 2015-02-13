@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.0.2.2
+
+New:
+
+* support links now point to appropriate topic when appropriate
+
+Fixes:
+
+* fixed Timeline event layouts
+* fixed issue with zoomed out view of Timeline not going back to Last Night
+* fixed layout issues in Sensor views
+* when connection fails while loading device info in Sense and Sleep Pill, an alert is shown to indicate so rather than silently failing
+* fixed layout issue for Insight summaries when content contains bullet points
+* fixed crasher that can occur if you quickly move from one tab to another in the back view of the app
+* various copy changes
+
+Fixes:
+
+* various copy changes
+
 ## 1.0.2.1
 
 New:

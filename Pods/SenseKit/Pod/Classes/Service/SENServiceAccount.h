@@ -43,10 +43,12 @@ typedef NS_ENUM(NSUInteger, SENServiceAccountError) {
  *
  * @param currentPassword: the current password used for the account
  * @param password:        the new password
+ * @param username:        the username of the account
  * @param completion:      optional block to invoke when all is done
  */
 - (void)changePassword:(NSString*)currentPassword
          toNewPassword:(NSString*)password
+           forUsername:(NSString*)username
             completion:(SENAccountResponseBlock)completion;
 
 /**

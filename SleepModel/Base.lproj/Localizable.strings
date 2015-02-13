@@ -24,7 +24,7 @@
 "sign-up.error.email-invalid" = "Please enter a valid email address.";
 "sign-up.error.conflict" = "The email address you entered is already in use.";
 "sign-up.error.generic" = "Something went wrong. Please try again.";
-"sign-up.error.password-too-short" = "Your password is too short.  Passwords must be at least six characters.";
+"sign-up.error.password-too-short" = "Your password is too short. Passwords must be at least six characters.";
 "sign-up.error.password-insecure" = "Your password is not secure enough.";
 "sign-up.error.name-too-short" = "Your name is too short.";
 "sign-up.error.name-too-long" = "Your name is too long.";
@@ -32,21 +32,21 @@
 "onboarding.account.dob-not-updated" = "There was a problem setting your birthday.";
 "onboarding.before-sleep.1.title" = "Sense Colors";
 "onboarding.before-sleep.2.title" = "All good.";
-"onboarding.before-sleep.3.title" = "Something's not right.";
-"onboarding.before-sleep.4.title" = "We've got a problem.";
-"onboarding.before-sleep.5.title" = "Just wave.";
-"onboarding.before-sleep.1.description" = "Sense glows to tell you about the conditions in your bedroom - including temperature, humidity, light, and sound.  Sense has three different colors.";
+"onboarding.before-sleep.3.title" = "Something's not right";
+"onboarding.before-sleep.4.title" = "We've got a problem";
+"onboarding.before-sleep.5.title" = "Just wave";
+"onboarding.before-sleep.1.description" = "Sense glows to tell you about the conditions in your bedroom - including temperature, humidity, light, and sound. Sense has three different colors.";
 "onboarding.before-sleep.2.description" = "Sense glows green when the conditions in your room are just right for a good night's sleep.";
-"onboarding.before-sleep.3.description" = "Sense glows yellow when something in your bedroom is not quite right.  Check the Sense app for details.";
-"onboarding.before-sleep.4.description" = "Sense glows orange when the conditions in your bedroom would prevent restful sleep.  Check the Sense app for details.";
-"onboarding.before-sleep.5.description" = "Just wave your hand over Sense and instantly you'll know about the conditions in your bedroom.  Go ahead, give it a try now.";
+"onboarding.before-sleep.3.description" = "Sense glows yellow when something in your bedroom is not quite right. Check the Sense app for details.";
+"onboarding.before-sleep.4.description" = "Sense glows orange when the conditions in your bedroom would prevent restful sleep. Check the Sense app for details.";
+"onboarding.before-sleep.5.description" = "Just wave your hand over Sense and instantly you'll know about the conditions in your bedroom. Go ahead, give it a try now.";
 "onboarding.title.before-sleep" = "Before you sleep";
 "onboarding.end-message.well-done" = "You're all set up";
 "onboarding.end-message.sleep" = "Now all you need to\ndo is sleep";
 "onboarding.room-check.checking-sensor.format" = "Checking %@";
 "onboarding.room-check.ideal-condition-format" = "The %@ in your room is just right.";
 "onboarding.room-check.failed" = "Unsuccessful";
-"onboarding.room-check.failed-message" = "One or more sensors is not ready yet. Don't worry, data will show soon.  Set up a Smart Alarm first.";
+"onboarding.room-check.failed-message" = "One or more sensors is not ready yet. Don't worry, data will show soon. Set up a Smart Alarm first.";
 "onboarding.room-check.intro.temperature" = "Falling asleep can be difficult if your room is too hot or too cold.";
 "onboarding.room-check.intro.humidity" = "Proper humidity levels are important for a good night's sleep.";
 "onboarding.room-check.intro.air" = "A low Air Quality Index value represents good air quality.";
@@ -74,15 +74,15 @@
 "pairing.activity.pairing-sense" = "Pairing with Sense";
 "pairing.activity.scanning-sense" = "Looking for Sense";
 "pairing.activity.connecting-sense-ble" = "Connecting to Sense over Bluetooth";
-"pairing.activity.bluetooth-not-on" = "Bluetooth is required to pair your Sleep Pill.  Make sure it's on and try again.";
+"pairing.activity.bluetooth-not-on" = "Bluetooth is required to pair your Sleep Pill. Make sure it's on and try again.";
 "pairing.activity.looking-for-pill" = "Looking for Sleep Pill";
 "pairing.activity.connecting-sense" = "Connecting to Sense";
 "pairing.activity.linking-account" = "Linking account to Sense";
 "pairing.activity.setting-timezone" = "Setting timezone";
 "pairing.failed.title" = "Pairing Failed";
 "pairing.activity.waiting-for-sense" = "Waiting for Sense";
-"pairing.error.sense-not-found" = "Could not detect a Sense nearby.  Make sure Sense is plugged in, nearby, and in pairing mode. Ensure no other devices are connected with Sense over Bluetooth.";
-"pairing.error.could-not-pair" = "Could not connect to your Sense to pair.  Please make sure your Sense is plugged in, nearby, and in Pairing Mode. Ensure no other devices are connected with Sense over Bluetooth.";
+"pairing.error.sense-not-found" = "Could not detect a Sense nearby. Make sure Sense is plugged in, nearby, and in pairing mode. Ensure no other devices are connected with Sense over Bluetooth.";
+"pairing.error.could-not-pair" = "Could not connect to Sense to pair. Please make sure Sense is plugged in, nearby, and in Pairing Mode. Ensure no other devices are connected with Sense over Bluetooth.";
 "pairing.error.unexpected-disconnect" = "The connection with Sense was broken. Please try again.";
 "pairing.error.link-account-failed" = "Your account could not be linked with Sense.";
 "pairing.error.set-timezone-failed" = "There was a problem setting your timezone.";
@@ -91,7 +91,7 @@
 "pairing.pill.error.title" = "Sleep Pill Pairing Failed";
 "pairing.error.pill-already-paired" = "This Sleep Pill is already paired with another account.";
 "pairing.error.fail-to-load-paired-info" = "Could not load paired Sense information.";
-"pairing.error.sense-not-found" = "Could not connect to your Sense to pair your Sleep Pill.";
+"pairing.error.sense-not-found" = "Could not connect to Sense to pair your Sleep Pill.";
 "pairing.error.pill-pairing-failed" = "Sense could not pair your Sleep Pill. Please try again.";
 "pairing.check.add-second-pill-subtitle" = "Are you adding a second Sleep Pill to a Sense that has been set up previously, or are you setting up Sense for the first time?";
 "pairing.pill.skip-confirmation-title" = "Are you sure?";
@@ -124,15 +124,15 @@
 
 // location
 "location.error.title" = "Unknown Location";
-"location.error.not-enabled" = "You have denied access to, or disabled, Location Services.  You can change this preference inside the Settings app.";
-"location.error.weak-signal" = "We were unable to obtain your location.  Try moving to a different location and try again.";
+"location.error.not-enabled" = "You have denied access to, or disabled, Location Services. You can change this preference inside the Settings app.";
+"location.error.weak-signal" = "We were unable to obtain your location. Try moving to a different location and try again.";
 
 // setting up second pill
 "setup.second-pill.subtitle" = "If you're using Sense with a partner, they can create an account and set up their own Sleep Pill at this time. If your partner is not nearby, they can always do this later.";
 "setup.second-pill.error.title" = "Failed to enable Pairing Mode";
 "setup.second-pill.error.failed-to-enable-pairing-mode" = "Could not enable Pairing Mode on Sense.";
 "setup.second-pill.error.sense-full" = "Sense cannot pair with any more devices.";
-"setup.get-app.subtitle.format" = "Sense is now in Pairing Mode.\n\nHave your partner visit %@ to download the Sense app and create a new account.  They will be given instructions to set up their Sleep Pill.";
+"setup.get-app.subtitle.format" = "Sense is now in Pairing Mode.\n\nHave your partner visit %@ to download the Sense app and create a new account. They will be given instructions to set up their Sleep Pill.";
 "setup.get-app.url" = "senseapp.com";
 
 // settings
@@ -200,25 +200,25 @@
 "settings.pill.dialog.unpair-message" = "Are you sure you want to unpair your Sleep Pill? You will no longer be able to track your sleep until you pair another Sleep Pill.";
 "settings.pill.dialog.unpair-no-sense-message" = "To unpair your Sleep Pill, you must be within Bluetooth range of Sense.";
 "settings.pill.dialog.no-paired-sense-message" = "You don't currently have a paired Sense, which is required to unpair your Sleep Pill.";
-"settings.pill.dialog.unable-to-unpair-from-sense" = "Unable to unpair from Sense.  Make sure Sense is plugged in, nearby, and try again.";
-"settings.pill.dialog.unable-to-unlink-from-account" = "Unable to unpair your Sleep Pill from your account.  Make sure you are connected to the internet and try again.";
-"settings.pill.unpair-no-sense-found" = "Could not connect with Sense.  Sense must be nearby and powered on to unpair your Sleep Pill.";
+"settings.pill.dialog.unable-to-unpair-from-sense" = "Unable to unpair from Sense. Make sure Sense is plugged in, nearby, and try again.";
+"settings.pill.dialog.unable-to-unlink-from-account" = "Unable to unpair your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
+"settings.pill.unpair-no-sense-found" = "Could not connect with Sense. Sense must be nearby and powered on to unpair your Sleep Pill.";
 "settings.pill.dialog.unable-to-unpair" = "Unable to unpair your Sleep Pill.";
 "settings.pill.need-pill" = "I need a Sleep Pill";
 "settings.pill.unpair-error-title" = "Unpairing failed";
 "settings.pill.unpairing-message" = "Unpairing your Sleep Pill";
 "settings.pill.unpaired-message" = "Your Sleep Pill has been unpaired.";
-"settings.pill.warning.last-seen-format" = "Your Sleep Pill was last seen %@.  Tap below to troubleshoot.";
+"settings.pill.warning.last-seen-format" = "Your Sleep Pill was last seen %@. Tap below to troubleshoot.";
 "settings.sense.not-found-title" = "Sense not found";
 "settings.sense.signal" = "Signal";
 "settings.sense.signal.weak" = "Weak";
 "settings.sense.signal.good" = "Good";
 "settings.sense.signal.strong" = "Strong";
 "settings.sense.wifi" = "WiFi";
-"settings.sense.unpairing-message" = "Removing your Sense";
+"settings.sense.unpairing-message" = "Removing Sense";
 "settings.sense.unpair.title" = "Remove Sense";
 "settings.sense.unpair.confirmation" = "Are you sure you want to remove Sense from your account?";
-"settings.sense.unpair.failed-message" = "Unable to remove Sense from your account.  Make sure you are connected to the internet and try again.";
+"settings.sense.unpair.failed-message" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";
 "settings.sense.getting-wifi-configured" = "Checking WiFi configured";
 "settings.sense.dialog.pair-failed-title" = "Action failed";
 "settings.sense.dialog.pair-failed-message" = "Unable to put Sense into pairing mode. Make sure Sense is plugged in and nearby and try again.";
@@ -226,10 +226,10 @@
 "settings.sense.dialog.enable-pair-mode-title" = "Put Sense into Pairing Mode";
 "settings.sense.dialog.enable-pair-mode-message" = "Are you sure you want to put Sense into pairing mode?";
 "settings.sense.scanning-message" = "Connecting to Sense over Bluetooth...";
-"settings.sense.warning.last-seen-format" = "Your Sense was last seen %@.  Tap below to troubleshoot.";
-"settings.sense.warning.wifi-format" = "Your Sense %@.  Tap below to edit your WiFi credentials.";
+"settings.sense.warning.last-seen-format" = "Sense was last seen %@. Tap below to troubleshoot.";
+"settings.sense.warning.wifi-format" = "Sense %@. Tap below to edit your WiFi credentials.";
 "settings.sense.warning.cannont-connect-wifi" = "cannot connect to WiFi";
-"settings.sense.warning.not-connected-sense" = "Could not connect with Sense over Bluetooth.  Make sure Sense is plugged in and nearby.  If you're still having trouble, tap below to troubleshoot.\n\nSome actions below are disabled.";
+"settings.sense.warning.not-connected-sense" = "Could not connect with Sense over Bluetooth. Make sure Sense is plugged in and nearby. If you're still having trouble, tap below to troubleshoot.\n\nSome actions below are disabled.";
 "settings.device.info-failed-to-load" = "Failed to load information";
 "settings.sense.enabling-pairing-mode" = "Enabling pairing mode";
 "settings.device.restoring-factory-settings" = "Restoring to Factory Settings";
@@ -241,9 +241,9 @@
 
 // insights
 "insights.title" = "Insights";
-"sleep.insight.summary.no-data-message"  = "As Sense learns from your sleep habits, we will let you know how to improve.";
+"sleep.insight.summary.no-data-message" = "As Sense learns from your sleep habits, we will let you know how to improve.";
 "sleep.insight.info.title.no-text" = "Insight failed to load";
-"sleep.insight.info.message.no-text" = "Unable to load expert insight information at the moment.  Please make sure your phone has internet connection and try again.";
+"sleep.insight.info.message.no-text" = "Unable to load Insight information at the moment. Please make sure your device has an internet connection and try again.";
 
 // authentication/sign in
 "authorization.title" = "Sign in";
@@ -271,9 +271,9 @@
 "alarms.alarm.format" = "Alarm — %@";
 "alarms.alarm.meridiem.am" = "AM";
 "alarms.alarm.meridiem.pm" = "PM";
-"alarms.no-alarm.title" = "Smart alarms";
-"alarms.no-alarm.message" = "Sense's Smart Alarm will wake you up at just the right moment in your sleep cycle, so you wake feeling rested. Once set, your alarms will appear here.";
-"alarms.no-alarm.instructions" = "Set your first smart alarm";
+"alarms.no-alarm.title" = "Smart Alarms";
+"alarms.no-alarm.message" = "Sense's Smart Alarm will wake you up at the lightest point in your natural sleep cycle, so you wake feeling rested. Once set, your alarms will appear here.";
+"alarms.no-alarm.instructions" = "Set your first Smart Alarm";
 "alarms.no-data" = "Alarms are currently unavailable.";
 
 // alarm settings
@@ -293,7 +293,7 @@
 "alarm.load-error.title" = "Alarms could not be loaded";
 "alarm.delete.confirm.title" = "Delete alarm";
 "alarm.delete.confirm.message" = "Are you sure you want to delete this alarm?";
-"alarm.time-explanation.title" = "Why is alarm time flexible?";
+"alarm.time-explanation.title" = "Why is Smart Alarm time flexible?";
 "alarm.time-explanation.message" = "Sense monitors your sleep depth and determines the best time to start the alarm in the minutes before you need to awaken.";
 "alarm.clock.divider" = ":";
 "alarm.sound.no-selection" = "Default";
@@ -393,13 +393,13 @@
 "sleep-stat.time_to_sleep" = "Time to sleep";
 "sleep-stat.times_awake" = "Times awake";
 "sleep-stat.total_sleep" = "Total sleep";
-"sleep-stat.sound_sleep" = "Sound sleep";
+"sleep-stat.sound_sleep" = "Deep sleep";
 "sleep-stat.minute.format" = "%.0fm";
 "sleep-stat.hour.format" = "%.1fh";
 
 // sleep history
 "sleep-history.last-night" = "Last night";
-"sleep-history.score" = "SLEEP SCORE";
+"sleep-history.score" = "Sleep Score";
 "sleep-history.depth.awake" = "Awake";
 "sleep-history.depth.light" = "Light sleep";
 "sleep-history.depth.medium" = "Medium sleep";
@@ -435,14 +435,14 @@
 "actions.next" = "Next";
 "actions.done" = "Done";
 "actions.troubleshoot" = "troubleshoot";
-"actions.edit.wifi" = "edit wifi";
+"actions.edit.wifi" = "Edit WiFi";
 "status.success" = "Done";
 
 // actitivity messages
 "activity.thank" = "Thank";
 "activity.you" = "you.";
 "activity.loading" = "Loading...";
-"activity.share.format" = "Last night my sleep score was %.0ld — Can you beat it? http://hello.is";
+"activity.share.format" = "Last night my Sleep Score was %.0ld — can you beat it? http://hello.is";
 
 // questions
 "questions.failed.title" = "Could not submit answer";
@@ -495,38 +495,38 @@
 "alerts.device.sense-wifi.title" = "Sense Cannot Upload Data";
 "alerts.device.no-wifi" = "Sense either lost connection to WiFi or your WiFi network is having issues.";
 "alerts.device.no-sense.title" = "Sense Not Paired";
-"alerts.device.no-sense.message" = "Your account does not have a Sense paired.  Sense is required to track your sleep behavior.";
+"alerts.device.no-sense.message" = "Your account does not have a Sense paired. Sense is required to track your sleep behavior.";
 "alerts.device.no-pill.title" = "Sleep Pill Not Paired";
-"alerts.device.no-pill.message" = "Your account does not have a Sleep Pill paired.  A Sleep Pill is required to track your sleep behavior.";
+"alerts.device.no-pill.message" = "Your account does not have a Sleep Pill paired. A Sleep Pill is required to track your sleep behavior.";
 
 // tutorial
 "tutorial.timeline.title1" = "UNDERSTANDING YOUR SLEEP";
-"tutorial.timeline.message1" = "Sense collects an immense amount of data about your sleep, your behavior, and the environment in your bedroom.\n\nWe take all this data and present it in a detailed but simple way — this quick walkthrough will show you how to read your first night of sleep data.";
+"tutorial.timeline.message1" = "Sense collects a significant amount of data about your sleep and the environment in your bedroom.\n\nWe take all this data and present it in a detailed but simple way — this quick walkthrough will show you how to read your first night of sleep data.";
 "tutorial.timeline.title2" = "YOUR SLEEP SCORE";
-"tutorial.timeline.message2" = "Your Sleep Score takes all the data Sense collects about your sleep, and expresses it as one simple, rich measure of your sleep quality — out of 100.";
+"tutorial.timeline.message2" = "Your Sleep Score is calculated based on all the sensor data from your bedroom, as well as how you actually slept. It's a simple, unique measure of your sleep quality - out of 100.";
 "tutorial.timeline.title3" = "BEFORE SLEEP";
-"tutorial.timeline.message3" = "The “Before Sleep” tab will summarize the conditions of your bedroom before you went to sleep. Too hot? Noisy? You’ll see it here.";
+"tutorial.timeline.message3" = "The “before sleep” tab allows you to see if your bedroom was right for you before you went to sleep.";
 "tutorial.timeline.title4" = "YOUR SLEEP TIMELINE";
-"tutorial.timeline.message4" = "Your Sleep Timeline shows you a minute-by-minute record of your night. The blue bars break your sleep out into three categories:\n\nLight, Medium and Deep Sleep.";
+"tutorial.timeline.message4" = "Your timeline shows you a minute-by-minute record of your night. The blue bars break your sleep out into three categories: Light, medium and deep sleep.\n\nThe wider the bar, the deeper the sleep.";
 
 "tutorial.alarms.title" = "Set An Alarm";
-"tutorial.alarms.message" = "Sense's Smart Alarm will wake you up at a natural point in your sleep cycle - in a 30 minute window before the time you set. When it's time to wake up, Sense will glow and softly play your selected tone. Just wave your hand over Sense to dismiss.";
+"tutorial.alarms.message" = "Sense's Smart Alarm will wake you up at the lightest part of your natural sleep cycle - within a 30 minute window before the time you set. When it's time to wake up, Sense will glow and play your selected tone. Just wave your hand over Sense to dismiss the alarm.";
 "tutorial.alarm-smart.title" = "Smart Alarm";
-"tutorial.alarm-smart.message" = "Waking up at the wrong point in your sleep cycle can leave you feeling groggy. Sense's Smart Alarm monitors your sleeping patterns and selects the ideal point to wake you — in a 30 minute window before the time you set.";
+"tutorial.alarm-smart.message" = "Sense's Smart Alarm will wake you up at the lightest part of your natural sleep cycle, up to 30 minutes before your requested wake-up time, making sure you wake up refreshed and at the right time for you.";
 
 "tutorial.trends.title" = "Trends";
 "tutorial.trends.message" = "To see how your sleep is changing over time, sometimes it’s helpful to take a step back. After a week using Sense, this view will show you historical data on your sleep patterns. If you don't see any data yet, check back later.";
 
 "tutorial.sensors.title" = "Current conditions";
-"tutorial.sensors.message" = "Here you’ll see the current conditions in your bedroom: Temperature, Humidity, Light, and Sound. Tap a card for more details.";
+"tutorial.sensors.message" = "Here you’ll see the current conditions in your bedroom: temperature, humidity, light, and sound. Tap a card for more details.";
 
 "tutorial.sensor.temperature.title" = "Temperature";
-"tutorial.sensor.temperature.message" = "A proper temperature in your bedroom is key to a good night’s sleep. Here you’ll see detailed information on the temperature levels in your bedroom. The graphs will fill in as Sense collects more data.";
+"tutorial.sensor.temperature.message" = "A proper temperature is key to a good night’s sleep. Here you’ll see detailed information on the temperature levels in your bedroom. The graphs will fill in as Sense collects more data.";
 "tutorial.sensor.humidity.title" = "Humidity";
-"tutorial.sensor.humidity.message" = "A bedroom that's too humid or too dry can make sleep uncomfortable. Here you’ll see detailed information on the humidity levels in your bedroom. The graphs will fill in as Sense collects more data.";
+"tutorial.sensor.humidity.message" = "Humidity is a measure of the amount of moisture in the air. Here you’ll see detailed information on the humidity levels in your bedroom. The graphs will fill in as Sense collects more data.";
 "tutorial.sensor.light.title" = "Light";
-"tutorial.sensor.light.message" = "Falling asleep is easier when your bedroom is as dark as possible. Here you’ll see detailed information on the light levels in your bedroom. The graphs will fill in as Sense collects more data.";
+"tutorial.sensor.light.message" = "Sense measures light in lux (lx), which is the standard unit of illuminance. Here you’ll see detailed information on the light levels in your bedroom. The graphs will fill in as Sense collects more data.";
 "tutorial.sensor.sound.title" = "Sound";
-"tutorial.sensor.sound.message" = "Background noise or sound disturbances can disrupt your sleep. Here you’ll see detailed information on the sound levels in your bedroom. The graphs will fill in as Sense collects more data.";
+"tutorial.sensor.sound.message" = "Sense measures sound in decibels (dB). Here you’ll see detailed information on the sound levels in your bedroom. The graphs will fill in as Sense collects more data.";
 "tutorial.sensor.particulates.title" = "Air quality index";
 "tutorial.sensor.particulates.message" = "AQI stands for Air Quality Index, and is measured on a scale from 0-500. The lower the value, the better the air quality. Here you’ll see detailed information on the AQI in your bedroom. The graphs will fill in as Sense collects more data.";

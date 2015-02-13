@@ -284,8 +284,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     NSString* weight = nil;
     
     if (HEMIsMetricSystem()) {
-        CGFloat gramValue = [grams floatValue];
-        weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), gramValue];
+        CGFloat kg = [grams floatValue] / 1000;
+        weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.kg.format", nil), kg];
     } else {
         CGFloat pounds = HEMToPounds(grams);
         weight = [NSString stringWithFormat:NSLocalizedString(@"measurement.lb.format", nil), pounds];

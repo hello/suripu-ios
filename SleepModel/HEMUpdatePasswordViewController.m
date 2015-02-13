@@ -47,6 +47,15 @@
 }
 
 - (void)updatePassword {
+    SENServiceAccount* service = [SENServiceAccount sharedService];
+    NSString* username = [[service account] email];
+    
+    if ([username length] == 0) {
+        [self showMessageDialog:NSLocalizedString(@"account.update.error.missing-account-info", nil)
+                          title:NSLocalizedString(@"account.update.failed.title", nil)];
+        return;
+    }
+    
     [self enableControls:NO];
     [[self activityIndicator] startAnimating];
     
@@ -55,24 +64,21 @@
     
     __weak typeof(self) weakSelf = self;
     
-    SENServiceAccount* service = [SENServiceAccount sharedService];
     [service changePassword:currentPassword
               toNewPassword:nextPassword
+                forUsername:username
                  completion:^(NSError *error) {
                      __strong typeof(weakSelf) strongSelf = weakSelf;
-                     if (strongSelf) {
-                         [[strongSelf activityIndicator] stopAnimating];
-                         [strongSelf enableControls:YES];
-                         
-                         if (error != nil) {
-                             [strongSelf showMessageDialog:NSLocalizedString(@"account.update.error.password", nil)
-                                                     title:NSLocalizedString(@"account.update.failed.title", nil)];
-                             return;
-                         }
-                         
-                         [[strongSelf delegate] didUpdatePassword:YES from:strongSelf];
-                         
+                     [[strongSelf activityIndicator] stopAnimating];
+                     [strongSelf enableControls:YES];
+                     
+                     if (error != nil) {
+                         [strongSelf showMessageDialog:NSLocalizedString(@"account.update.error.password", nil)
+                                                 title:NSLocalizedString(@"account.update.failed.title", nil)];
+                         return;
                      }
+                     
+                     [[strongSelf delegate] didUpdatePassword:YES from:strongSelf];
                  }];
 }
 

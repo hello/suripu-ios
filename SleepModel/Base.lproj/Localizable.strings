@@ -472,6 +472,7 @@
 "account.update.failed.title" = "Update failed";
 "account.update.error.generic" = "Unable to update your information";
 "account.update.error.password" = "Unable to update your password";
+"account.update.error.missing-account-info" = "Unable to update your password because your account information is out of sync.";
 "account.update.error.email" = "Unable to update your email.";
 "account.update.error.not-supported" = "This is not supported on your device or iOS version";
 

@@ -130,9 +130,11 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 - (void)refreshWithTimelines:(NSArray*)timelines
 {
     NSDictionary* timeline = [timelines firstObject];
+    NSString* currentTitleText = [self.sleepSummaryCell.dateButton titleForState:UIControlStateNormal];
     BOOL didChange = [self.sleepResult updateWithDictionary:timeline];
+    BOOL dayChanged = ![currentTitleText isEqualToString:[self titleTextForDate]];
     [self hideLoadingViewAnimated:YES];
-    if (didChange) {
+    if (didChange || dayChanged) {
         [self.sleepResult save];
         [self.collectionView reloadData];
     }
@@ -266,6 +268,19 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     return cell;
 }
 
+- (NSString*)titleTextForDate
+{
+    NSDateComponents* diff = [self.calendar components:NSDayCalendarUnit
+                                              fromDate:self.dateForNightOfSleep
+                                                toDate:[[NSDate date] previousDay] options:0];
+    if (diff.day == 0)
+        return NSLocalizedString(@"sleep-history.last-night", nil);
+    else if (diff.day < 7)
+        return [self.weekdayDateFormatter stringFromDate:self.dateForNightOfSleep];
+    else
+        return [self.rangeDateFormatter stringFromDate:self.dateForNightOfSleep];
+}
+
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView
      sleepSummaryCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
@@ -275,20 +290,10 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     cell.messageLabel.textAlignment = NSTextAlignmentCenter;
     NSDictionary* attributes = [HEMMarkdown attributesForTimelineMessageText];
     cell.messageLabel.attributedText = [markdown_to_attr_string(self.sleepResult.message, 0, attributes) trim];
-    NSDateComponents* diff = [self.calendar components:NSDayCalendarUnit
-                                              fromDate:self.dateForNightOfSleep
-                                                toDate:[[NSDate date] previousDay] options:0];
-    NSString* dateText;
-    if (diff.day == 0)
-        dateText = NSLocalizedString(@"sleep-history.last-night", nil);
-    else if (diff.day < 7)
-        dateText = [self.weekdayDateFormatter stringFromDate:self.dateForNightOfSleep];
-    else
-        dateText = [self.rangeDateFormatter stringFromDate:self.dateForNightOfSleep];;
     [self configurePresleepSummaryForCell:cell];
     [self configureActionsForSleepSummaryCell:cell];
     [self configureSummaryStatisticsForCell:cell];
-    [cell.dateButton setTitle:dateText forState:UIControlStateNormal];
+    [cell.dateButton setTitle:[self titleTextForDate] forState:UIControlStateNormal];
     if ([self shouldBeLoading])
         [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:0.5];
     else

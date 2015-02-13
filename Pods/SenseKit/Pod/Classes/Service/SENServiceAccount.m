@@ -178,6 +178,7 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
 
 - (void)changePassword:(NSString*)currentPassword
          toNewPassword:(NSString*)password
+           forUsername:(NSString*)username
             completion:(SENAccountResponseBlock)completion {
     
     if ([currentPassword length] == 0 || [password length] == 0) {
@@ -195,8 +196,7 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
                           return;
                       }
                       
-                      [SENAuthorizationService reauthorizeUserWithPassword:password
-                                                                  callback:completion];
+                      [SENAuthorizationService reauthorizeUser:username password:password callback:completion];
                       
                   }];
 }

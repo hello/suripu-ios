@@ -19,7 +19,6 @@ NSString* const SENAuthorizationServiceDidReauthorizeNotification = @"SENAuthori
 static NSString* SENAuthorizationServiceClientID = nil;
 static NSString* const SENAuthorizationServiceTokenPath = @"oauth2/token";
 static NSString* const SENAuthorizationServiceCredentialsKey = @"credentials";
-static NSString* const SENAuthorizationServiceCredentialsEmailKey = @"email";
 static NSString* const SENAuthorizationServiceAccountIdKey = @"account_id";
 static NSString* const SENAuthorizationServiceAccessTokenKey = @"access_token";
 static NSInteger const SENAuthorizationServiceDeauthorizationCode = 401;
@@ -40,28 +39,34 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
     SENAuthorizationServiceClientID = clientID;
 }
 
-+ (void)authorizeWithUsername:(NSString*)username password:(NSString*)password callback:(void (^)(NSError*))block
++ (void)authorizeWithUsername:(NSString *)username
+                     password:(NSString *)password
+                 notification:(NSString*)notification
+                     callback:(void(^)(NSError* error))block
 {
     [self authorize:username password:password onCompletion:^(NSDictionary *response, NSError *error) {
         if (error == nil) {
-            [self authorizeRequestsWithResponse:response notify:SENAuthorizationServiceDidAuthorizeNotification];
-            [self setEmailAddressOfAuthorizedUser:username];
+            [self authorizeRequestsWithResponse:response notify:notification];
             [self setAccountIdOfAuthorizedUser:response[SENAuthorizationServiceAccountIdKey]];
         }
         if (block) block(error);
     }];
 }
 
-+ (void)reauthorizeUserWithPassword:(NSString*)password callback:(void(^)(NSError* error))block {
-    NSString* existingUsername = [self emailAddressOfAuthorizedUser];
-    [self authorize:existingUsername password:password onCompletion:^(NSDictionary *response, NSError *error) {
-        if (error == nil) {
-            [self authorizeRequestsWithResponse:response notify:SENAuthorizationServiceDidReauthorizeNotification];
-            // account id might change from the server
-            [self setAccountIdOfAuthorizedUser:response[SENAuthorizationServiceAccountIdKey]];
-        }
-        if (block) block(error);
-    }];
++ (void)authorizeWithUsername:(NSString*)username password:(NSString*)password callback:(void (^)(NSError*))block
+{
+    [self authorizeWithUsername:username
+                       password:password
+                   notification:SENAuthorizationServiceDidAuthorizeNotification
+                       callback:block];
+}
+
++ (void)reauthorizeUser:(NSString*)username password:(NSString*)password callback:(void(^)(NSError* error))block
+{
+    [self authorizeWithUsername:username
+                       password:password
+                   notification:SENAuthorizationServiceDidReauthorizeNotification
+                       callback:block];
 }
 
 + (AFHTTPRequestSerializer*)requestSerializer
@@ -80,7 +85,6 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
     [SENAPIClient DELETE:SENAuthorizationServiceTokenPath parameters:nil completion:NULL];
     [[self keychain] removeObjectForKey:SENAuthorizationServiceCredentialsKey];
     [self authorizeRequestsWithToken:nil];
-    [self setEmailAddressOfAuthorizedUser:nil];
     [self setAccountIdOfAuthorizedUser:nil];
     [self notify:SENAuthorizationServiceDidDeauthorizeNotification];
 }
@@ -105,16 +109,6 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 {
     NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
     return response.statusCode == SENAuthorizationServiceDeauthorizationCode;
-}
-
-+ (NSString*)emailAddressOfAuthorizedUser
-{
-    return [self keychain][SENAuthorizationServiceCredentialsEmailKey];
-}
-
-+ (void)setEmailAddressOfAuthorizedUser:(NSString*)emailAddress
-{
-    [self keychain][SENAuthorizationServiceCredentialsEmailKey] = emailAddress;
 }
 
 + (NSString*)accountIdOfAuthorizedUser

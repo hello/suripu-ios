@@ -212,6 +212,22 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
     return color;
 }
 
+- (NSString*)colorStringForDevice:(SENDevice*)device {
+    switch ([device color]) {
+        case SENDeviceColorBlack:
+            return NSLocalizedString(@"color.black", nil);
+        case SENDeviceColorWhite:
+            return NSLocalizedString(@"color.white", nil);
+        case SENDeviceColorBlue:
+            return NSLocalizedString(@"color.blue", nil);
+        case SENDeviceColorRed:
+            return NSLocalizedString(@"color.red", nil);
+        case SENDeviceColorUnknown:
+        default:
+            return NSLocalizedString(@"empty-data", nil);
+    }
+}
+
 #pragma mark - Cell Appearance
 
 - (void)updateCell:(UICollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
@@ -252,45 +268,54 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
     [[cell actionButton] setUserInteractionEnabled:NO]; // let the entire cell be actionable
 }
 
-- (void)updateDeviceInfoForCell:(HEMDeviceCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
-    SENDevice* device = [self deviceAtIndexPath:indexPath];
-    SENDeviceType type = [self deviceTypeAtIndexPath:indexPath]; // device may be nil
-    
-    UIImage* icon = nil;
-    NSString* name = nil;
+- (void)updateSenseInfo:(SENDevice*)senseInfo forCell:(HEMDeviceCollectionViewCell*)cell {
     NSString* lastSeen
-        = [device lastSeen] != nil
-        ? [[device lastSeen] timeAgo]
+        = [senseInfo lastSeen] != nil
+        ? [[senseInfo lastSeen] timeAgo]
         : NSLocalizedString(@"empty-data", nil);
-    UIColor* lastSeenColor = [self lastSeenTextColorFor:device];
-    NSString* property1Name = nil;
-    NSString* property1Value = nil;
-    UIColor* property1ValueColor = [UIColor blackColor];
-    NSString* property2Name = nil;
-    NSString* property2Value = nil;
     
-    if (type == SENDeviceTypeSense) {
-        icon = [HelloStyleKit senseIcon];
-        name = NSLocalizedString(@"settings.device.sense", nil);
-        property1Name = NSLocalizedString(@"settings.sense.wifi", nil);
-        property1Value = [self wifiValue];
-        property1ValueColor = [self wifiValueColor];
-        property2Name = NSLocalizedString(@"settings.device.firmware-version", nil);
-        property2Value = [device firmwareVersion];
-    } else if (type == SENDeviceTypePill) {
-        icon = [HelloStyleKit pillIcon];
-        name = NSLocalizedString(@"settings.device.pill", nil);
-        property1Name = NSLocalizedString(@"settings.device.battery", nil);
-        
-        if ([device state] == SENDeviceStateLowBattery) {
-            property1Value = NSLocalizedString(@"settings.device.battery.low", nil);
-            property1ValueColor = [UIColor redColor];
-        } else if ([device state] == SENDeviceStateNormal) {
-            property1Value = NSLocalizedString(@"settings.device.battery.good", nil);
-        }
-        
-        property2Name = NSLocalizedString(@"settings.device.color", nil);
-        property2Value = NSLocalizedString(@"empty-data", nil);
+    UIColor* lastSeenColor = [self lastSeenTextColorFor:senseInfo];
+    UIImage* icon = [HelloStyleKit senseIcon];
+    NSString* name = NSLocalizedString(@"settings.device.sense", nil);
+    NSString* property1Name = NSLocalizedString(@"settings.sense.wifi", nil);
+    NSString* property1Value = [self wifiValue];
+    UIColor* property1ValueColor = [self wifiValueColor];
+    NSString* property2Name = NSLocalizedString(@"settings.device.firmware-version", nil);
+    NSString* property2Value = [senseInfo firmwareVersion] ?: NSLocalizedString(@"empty-data", nil);
+    
+    [[cell iconImageView] setImage:icon];
+    [[cell nameLabel] setText:name];
+    [[cell lastSeenValueLabel] setText:lastSeen];
+    [[cell lastSeenValueLabel] setTextColor:lastSeenColor];
+    [[cell property1Label] setText:property1Name];
+    [[cell property1ValueLabel] setText:property1Value];
+    [[cell property1ValueLabel] setTextColor:property1ValueColor];
+    [[cell property2Label] setText:property2Name];
+    [[cell property2ValueLabel] setText:property2Value];
+}
+
+- (void)updatePillInfo:(SENDevice*)pillInfo forCell:(HEMDeviceCollectionViewCell*)cell {
+    NSString* lastSeen
+        = [pillInfo lastSeen] != nil
+        ? [[pillInfo lastSeen] timeAgo]
+        : NSLocalizedString(@"empty-data", nil);
+    
+    UIColor* lastSeenColor = [self lastSeenTextColorFor:pillInfo];
+    UIImage* icon = [HelloStyleKit pillIcon];
+    NSString* name = NSLocalizedString(@"settings.device.pill", nil);
+    NSString* property1Name = NSLocalizedString(@"settings.device.battery", nil);
+    NSString* property1Value = nil;
+    UIColor* property1ValueColor =nil;
+    NSString* property2Name = NSLocalizedString(@"settings.device.color", nil);
+    NSString* property2Value = [self colorStringForDevice:pillInfo];
+    
+    if ([pillInfo state] == SENDeviceStateLowBattery) {
+        property1Value = NSLocalizedString(@"settings.device.battery.low", nil);
+        property1ValueColor = [UIColor redColor];
+    } else if ([pillInfo state] == SENDeviceStateNormal) {
+        property1Value = NSLocalizedString(@"settings.device.battery.good", nil);
+    } else {
+        property1Value = NSLocalizedString(@"empty-data", nil);
     }
     
     [[cell iconImageView] setImage:icon];
@@ -302,6 +327,17 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
     [[cell property1ValueLabel] setTextColor:property1ValueColor];
     [[cell property2Label] setText:property2Name];
     [[cell property2ValueLabel] setText:property2Value];
+}
+
+- (void)updateDeviceInfoForCell:(HEMDeviceCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
+    SENDevice* device = [self deviceAtIndexPath:indexPath];
+    SENDeviceType type = [self deviceTypeAtIndexPath:indexPath]; // device may be nil
+    
+    if (type == SENDeviceTypeSense) {
+        [self updateSenseInfo:device forCell:cell];
+    } else if (type == SENDeviceTypePill) {
+        [self updatePillInfo:device forCell:cell];
+    }
     
     [cell showDataLoadingIndicator:[self isObtainingData] || ![self attemptedDataLoad]];
 }

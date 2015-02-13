@@ -154,7 +154,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     HEMDeviceWarning warning = [sender tag];
     switch (warning) {
         case HEMDeviceWarningLongLastSeen: {
-            NSString* page = NSLocalizedString(@"troubleshoot/pill-not-seen-in-days", nil);
+            NSString* page = NSLocalizedString(@"help.url.slug.pill-not-seen", nil);
             [HEMSupportUtil openHelpToPage:page fromController:self];
             break;
         }

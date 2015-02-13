@@ -414,6 +414,25 @@
 "sleep-stat.minute.format" = "%.0fm";
 "sleep-stat.hour.format" = "%.1fh";
 
+"sleep-stat.sleep-duration.medium.plural.format" = "You were in **Medium Sleep** for %ld minutes.";
+"sleep-stat.sleep-duration.medium.single.format" = "You were in **Medium Sleep** for one minute.";
+"sleep-stat.sleep-duration.light.plural.format" = "You were in **Light Sleep** for %ld minutes.";
+"sleep-stat.sleep-duration.light.single.format" = "You were in **Light Sleep** for one minute.";
+"sleep-stat.sleep-duration.deep.plural.format" = "You were in **Deep Sleep** for %ld minutes.";
+"sleep-stat.sleep-duration.deep.single.format" = "You were in **Deep Sleep** for one minute.";
+"sleep-stat.sleep-duration.awake.plural.format" = "You were awake for %ld minutes.";
+"sleep-stat.sleep-duration.awake.single.format" = "You were awake for one minute.";
+
+
+"sleep-stat.motion-duration.deep.plural.format" = "There was a slight amount of motion for %ld minutes.";
+"sleep-stat.motion-duration.deep.single.format" = "There was a slight amount of motion for one minute.";
+"sleep-stat.motion-duration.medium.plural.format" = "There was a moderate amount of motion for %ld minutes.";
+"sleep-stat.motion-duration.medium.single.format" = "There was a moderate amount of motion for one minute.";
+"sleep-stat.motion-duration.light.plural.format" = "There was a lot of motion for %ld minutes.";
+"sleep-stat.motion-duration.light.single.format" = "There was a lot of motion for one minute.";
+"sleep-stat.motion-duration.awake.plural.format" = "There was a lot of motion for %ld minute.";
+"sleep-stat.motion-duration.awake.single.format" = "There was a lot of motion for one minute.";
+
 // sleep history
 "sleep-history.last-night" = "Last night";
 "sleep-history.score" = "Sleep Score";

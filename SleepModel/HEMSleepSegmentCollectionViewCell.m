@@ -13,6 +13,7 @@ CGFloat const HEMSleepLineWidth = 1.f;
 @property (nonatomic, strong, readwrite) UIColor* fillColor;
 @property (nonatomic, strong, readwrite) UIColor* lineColor;
 @property (nonatomic, strong) NSMutableArray* timeViews;
+@property (nonatomic) BOOL shouldEmphasize;
 @end
 
 @implementation HEMSleepSegmentCollectionViewCell
@@ -28,6 +29,24 @@ static int const HEMNoSleepBorderDashLengthCount = 2;
 {
     self.backgroundColor = [UIColor whiteColor];
     self.timeViews = [NSMutableArray new];
+}
+
+- (void)prepareForReuse
+{
+    [super prepareForReuse];
+    self.shouldEmphasize = NO;
+}
+
+- (void)emphasizeAppearance
+{
+    self.shouldEmphasize = YES;
+    [self setNeedsDisplay];
+}
+
+- (void)deemphasizeAppearance
+{
+    self.shouldEmphasize = NO;
+    [self setNeedsDisplay];
 }
 
 - (void)removeAllTimeLabels
@@ -135,6 +154,12 @@ static int const HEMNoSleepBorderDashLengthCount = 2;
         CGRect fillRect = CGRectMake(x, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
         CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
         CGContextFillRect(ctx, fillRect);
+        if ([self shouldEmphasize]) {
+            CGContextSetStrokeColorWithColor(ctx, [HelloStyleKit tintColor].CGColor);
+            CGContextSetLineWidth(ctx, HEMSegmentBorderWidth);
+            CGContextSetLineDash(ctx, 0, HEMSegmentBorderDashLength, HEMNoSleepBorderDashLengthCount);
+            CGContextStrokeRect(ctx, fillRect);
+        }
     }
 }
 

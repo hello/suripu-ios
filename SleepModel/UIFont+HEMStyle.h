@@ -81,6 +81,10 @@
 
 + (UIFont *)sensorMessageFont;
 
++ (UIFont *)timelinePopupFont;
+
++ (UIFont *)timelinePopupBoldFont;
+
 /**
  *  Font for sensor range selection from 'last 24 hours' and
  *  'last week'

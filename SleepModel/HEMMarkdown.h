@@ -18,6 +18,7 @@
 + (NSDictionary*)attributesForTimelineMessageText;
 + (NSDictionary*)attributesForTimelineBreakdownTitle;
 + (NSDictionary*)attributesForTimelineBreakdownValueWithColor:(UIColor*)color;
++ (NSDictionary*)attributesForTimelineSegmentPopup;
 + (NSDictionary*)attributesForRoomCheckWithConditionColor:(UIColor*)color;
 + (NSDictionary*)attributesForSensorMessageWithConditionColor:(UIColor*)color;
 + (NSDictionary*)attributesForSensorGraphButtonWithSelectedState:(BOOL)isOn;

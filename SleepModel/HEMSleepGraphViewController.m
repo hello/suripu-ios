@@ -17,6 +17,7 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
+#import "HEMNoSleepEventCollectionViewCell.h"
 #import "HEMSleepSummarySlideViewController.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
@@ -24,6 +25,7 @@
 #import "HEMZoomAnimationTransitionDelegate.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"
+#import "HEMPopupView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 50.f;
 CGFloat const HEMTimelineFooterCellHeight = 50.f;
@@ -38,7 +40,9 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 @property (nonatomic, getter=presleepSectionIsExpanded) BOOL presleepExpanded;
 @property (nonatomic, strong) UIPanGestureRecognizer* panGestureRecognizer;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* shortcutButtonTrailing;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* popupViewTop;
 @property (nonatomic, weak) IBOutlet UIButton* shortcutButton;
+@property (nonatomic, weak) IBOutlet HEMPopupView* popupView;
 @end
 
 @implementation HEMSleepGraphViewController
@@ -337,6 +341,63 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 }
 
 #pragma mark UIGestureRecognizerDelegate
+
+- (IBAction)didLongPress:(UILongPressGestureRecognizer*)sender
+{
+    static CGFloat const HEMPopupAnimationDistance = 8.f;
+    static CGFloat const HEMPopupSpacingDistance = 11.f;
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        CGPoint cellLocation = [sender locationInView:self.collectionView];
+        NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:cellLocation];
+        UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+        if ([cell isKindOfClass:[HEMSleepSegmentCollectionViewCell class]] && ![indexPath isEqual:self.expandedIndexPath]) {
+            [(HEMSleepSegmentCollectionViewCell*)cell emphasizeAppearance];
+            SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+            [self.popupView setText:[self summaryPopupTextForSegment:segment]];
+            UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+            CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
+            CGFloat top = CGRectGetMinY(cellLocation) - [self.popupView intrinsicContentSize].height - HEMPopupSpacingDistance;
+            self.popupViewTop.constant = top - HEMPopupAnimationDistance;
+            [self.popupView setNeedsUpdateConstraints];
+            [self.popupView layoutIfNeeded];
+            self.popupViewTop.constant = top;
+            [self.popupView setNeedsUpdateConstraints];
+            [UIView animateWithDuration:0.2f animations:^{
+                [self.popupView layoutIfNeeded];
+                self.popupView.alpha = 1;
+            }];
+        }
+    } else if (sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled) {
+        [UIView animateWithDuration:0.15f animations:^{
+            self.popupView.alpha = 0;
+        }];
+        for (HEMSleepSegmentCollectionViewCell* cell in self.collectionView.visibleCells) {
+            if ([cell respondsToSelector:@selector(deemphasizeAppearance)])
+                [cell deemphasizeAppearance];
+        }
+    }
+}
+
+- (NSString*)summaryPopupTextForSegment:(SENSleepResultSegment*)segment
+{
+    static NSString* const HEMPopupTextFormat = @"sleep-stat.%@-duration.%@.%@.format";
+    long minutes = (long)([segment.duration floatValue]/60);
+    NSString* pluralize = minutes == 1 ? @"single" : @"plural";
+    NSString* segmentType = segment.eventType.length == 0 ? @"motion" : @"sleep";
+    NSString* depth;
+    if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
+        depth = @"awake";
+    else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
+        depth = @"deep";
+    else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
+        depth = @"medium";
+    else
+        depth = @"light";
+
+    NSString* format = [NSString stringWithFormat:HEMPopupTextFormat, segmentType, depth, pluralize];
+    NSString* localizedFormat = NSLocalizedString(format, nil);
+    return minutes == 1 ? localizedFormat : [NSString stringWithFormat:localizedFormat, minutes];
+}
 
 - (void)didPan
 {

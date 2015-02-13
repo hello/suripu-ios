@@ -6,22 +6,19 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
+#import <SenseKit/SENSleepResult.h>
 #import "UIColor+HEMStyle.h"
 #import "HelloStyleKit.h"
 
 @implementation UIColor (HEMStyle)
 
-static CGFloat const HEMColorAwakeThreshold = 0;
-static CGFloat const HEMColorDeepThreshold = 100.f;
-static CGFloat const HEMColorMediumThreshold = 60.f;
-
 + (UIColor*)colorForGenericMotionDepth:(NSUInteger)depth
 {
-    if (depth == HEMColorAwakeThreshold)
+    if (depth == SENSleepResultSegmentDepthAwake)
         return [UIColor whiteColor];
-    else if (depth == HEMColorDeepThreshold)
+    else if (depth == SENSleepResultSegmentDepthDeep)
         return [UIColor colorWithWhite:0.94 alpha:1.f];
-    else if (depth < HEMColorMediumThreshold)
+    else if (depth < SENSleepResultSegmentDepthMedium)
         return [UIColor colorWithWhite:0.99 alpha:1.f];
     else
         return [UIColor colorWithWhite:0.97 alpha:1.f];
@@ -29,11 +26,11 @@ static CGFloat const HEMColorMediumThreshold = 60.f;
 
 + (UIColor*)colorForSleepDepth:(NSUInteger)sleepDepth
 {
-    if (sleepDepth == HEMColorAwakeThreshold)
+    if (sleepDepth == SENSleepResultSegmentDepthAwake)
         return [HelloStyleKit lightSleepColor];
-    else if (sleepDepth == HEMColorDeepThreshold)
+    else if (sleepDepth == SENSleepResultSegmentDepthDeep)
         return [HelloStyleKit deepSleepColor];
-    else if (sleepDepth < HEMColorMediumThreshold)
+    else if (sleepDepth < SENSleepResultSegmentDepthMedium)
         return [HelloStyleKit lightSleepColor];
     else
         return [HelloStyleKit intermediateSleepColor];

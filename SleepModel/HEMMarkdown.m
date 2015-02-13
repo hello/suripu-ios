@@ -104,6 +104,16 @@
     };
 }
 
++ (NSDictionary *)attributesForTimelineSegmentPopup
+{
+    NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
+    style.alignment = NSTextAlignmentCenter;
+    return @{
+        @(STRONG) : @{ NSFontAttributeName : [UIFont timelinePopupBoldFont], NSParagraphStyleAttributeName: style },
+        @(PARA) : @{ NSFontAttributeName : [UIFont timelinePopupFont], NSParagraphStyleAttributeName: style }
+    };
+}
+
 + (NSDictionary*)attributesForRoomCheckWithConditionColor:(UIColor*)color
 {
     return @{

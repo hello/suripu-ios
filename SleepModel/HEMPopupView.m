@@ -6,8 +6,11 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 
+#import <AttributedMarkdown/markdown_peg.h>
 #import "HEMPopupView.h"
 #import "HelloStyleKit.h"
+#import "HEMMarkdown.h"
+#import "NSAttributedString+HEMUtils.h"
 
 @interface HEMPopupView ()
 
@@ -27,16 +30,19 @@ static CGFloat const HEMPopupMargin = 20.f;
 
 - (CGSize)intrinsicContentSize
 {
-    CGSize size = [self.label intrinsicContentSize];
+    CGRect bounds = [self.label.attributedText boundingRectWithSize:CGSizeMake(CGRectGetWidth(self.bounds) - HEMPopupMargin, CGFLOAT_MAX)
+                                                            options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
+                                                            context:nil];
+    CGSize size = bounds.size;
     size.height += HEMPopupPointerHeight + HEMPopupMargin;
     size.width += HEMPopupMargin;
     return size;
 }
 
-
 - (void)setText:(NSString *)text
 {
-    self.label.text = text;
+    NSAttributedString* labelText = [markdown_to_attr_string(text, 0, [HEMMarkdown attributesForTimelineSegmentPopup]) trim];
+    self.label.attributedText = labelText;
     [self invalidateIntrinsicContentSize];
     [self setNeedsDisplay];
 }

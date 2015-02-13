@@ -351,15 +351,15 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
         NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:cellLocation];
         UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
         if ([cell isKindOfClass:[HEMSleepSegmentCollectionViewCell class]] && ![indexPath isEqual:self.expandedIndexPath]) {
-            HEMSleepSegmentCollectionViewCell* segmentCell = (id)cell;
-            [segmentCell emphasizeAppearance];
+            [(HEMSleepSegmentCollectionViewCell*)cell emphasizeAppearance];
             SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
             long minutes = (long)([segment.duration floatValue]/60);
             NSString* format = [self summaryFormatForSegment:segment];
             NSString* localizedFormat = NSLocalizedString(format, nil);
             NSString* text = [NSString stringWithFormat:localizedFormat, minutes];
             [self.popupView setText:text];
-            CGRect cellLocation = [self.collectionView convertRect:segmentCell.frame toView:self.view];
+            UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+            CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
             CGFloat top = CGRectGetMinY(cellLocation) - [self.popupView intrinsicContentSize].height - HEMPopupSpacingDistance;
             self.popupViewTop.constant = top - HEMPopupAnimationDistance;
             [self.popupView setNeedsUpdateConstraints];

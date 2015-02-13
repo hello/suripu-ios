@@ -125,6 +125,8 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [_collectionView setDelegate:nil];
+    [_collectionView setDataSource:nil];
 }
 
 #pragma mark - Data Loading

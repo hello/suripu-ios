@@ -399,4 +399,11 @@ static NSUInteger const HEMAlarmListLimit = 8;
     return CGSizeMake(layout.itemSize.width, height);
 }
 
+#pragma mark - Clean Up
+
+- (void)dealloc {
+    [_collectionView setDelegate:nil];
+    [_collectionView setDataSource:nil];
+}
+
 @end

@@ -67,7 +67,8 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 }
 
 - (void)configureButtons {
-    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropWiFiScan];
+    [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.wifi-scan", nil)
+           andTrackWithStepName:kHEMAnalyticsEventPropWiFiScan];
     [[[self scanButton] layer] setBorderWidth:0.0f];
     
     if ([self haveDelegates]) {
@@ -257,7 +258,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             message = NSLocalizedString(@"wifi.error.scan-general", nil);
             break;
     }
-    [self showMessageDialog:message title:title];
+    
+    [self showMessageDialog:message
+                      title:title
+                      image:nil
+               withHelpPage:NSLocalizedString(@"help.url.slug.wifi-scan", nil)];
     [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
 }
 

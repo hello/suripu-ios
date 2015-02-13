@@ -28,7 +28,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropSenseSetup];
+    [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.sense-about", nil)
+           andTrackWithStepName:kHEMAnalyticsEventPropSenseSetup];
     [self enableBackButton:NO];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBSenseSetup];

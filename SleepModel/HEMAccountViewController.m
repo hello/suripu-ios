@@ -385,5 +385,11 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
+#pragma mark - Clean Up
+
+- (void)dealloc {
+    [_infoTableView setDelegate:nil];
+    [_infoTableView setDataSource:nil];
+}
 
 @end

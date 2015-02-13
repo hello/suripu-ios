@@ -16,11 +16,11 @@ typedef NS_ENUM(NSUInteger, SENDeviceType) {
 };
 
 typedef NS_ENUM(NSUInteger, SENDeviceState) {
-    SENDeviceStateNormal = 0,
-    SENDeviceStateLowBattery = 1,
-    SENDeviceStateFirmwareUpdate = 2,
-    SENDeviceStateNoData = 3,
-    SENDeviceStateUnknown = 4
+    SENDeviceStateUnknown = 0,
+    SENDeviceStateNormal = 1,
+    SENDeviceStateLowBattery = 2,
+    SENDeviceStateFirmwareUpdate = 3,
+    SENDeviceStateNoData = 4
 };
 
 @interface SENDevice : NSObject

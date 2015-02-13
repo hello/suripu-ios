@@ -32,7 +32,8 @@
 
 - (void)configureButtons {
     [self enableBackButton:NO];
-    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropAudio];
+    [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.enhanced-audio", nil)
+           andTrackWithStepName:kHEMAnalyticsEventPropAudio];
     [[self skipButton] setTitleColor:[HelloStyleKit senseBlueColor]
                             forState:UIControlStateNormal];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];

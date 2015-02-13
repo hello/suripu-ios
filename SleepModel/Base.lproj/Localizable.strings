@@ -54,11 +54,26 @@
 "onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulty falling asleep.";
 
 // help links
-"help.url.order-form" = "https://order.hello.is/";
-"help.url.support" = "https://guide.hello.is";
 "help.email.address" = "support@sayhello.com";
 "help.email.subject" = "Sense Help Request";
 "help.forgot-password" = "https://account.hello.is";
+
+"help.url.order-form" = "https://order.hello.is/";
+"help.url.support" = "http://guide.hello.is/";
+"help.url.slug.turn-on-ble" = "troubleshoot/turning-on-bluetooth";
+"help.url.slug.pill-pairing" = "troubleshoot/pairing-your-sleep-pill";
+"help.url.slug.pill-setup" = "troubleshoot/attaching-sleep-pill";
+"help.url.slug.enhanced-audio" = "app/enhanced-audio";
+"help.url.slug.sense-pairing-mode" = "troubleshoot/pairing-mode";
+"help.url.slug.sense-pairing" = "troubleshoot/pairing-sense-ble";
+"help.url.slug.sense-about" = "troubleshoot/setting-up-sense";
+"help.url.slug.wifi-scan" = "troubleshoot/connecting-sense-wifi";
+"help.url.slug.pill-setup-another" = "troubleshoot/setting-up-second-sleep-pill";
+"help.url.slug.pill-not-seen" = "troubleshoot/pill-not-seen-in-days";
+"help.url.slug.pill-battery" = "sleep-pill/battery-change";
+"help.url.slug.sense-not-seen" = "troubleshoot/sense-not-seen-in-days";
+"help.url.slug.sense-not-connected" = "troubleshoot/cannot-connect-sense-ble";
+"help.url.slug.sense-no-internet" = "troubleshoot/sense-cannot-connect-internet";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
@@ -196,6 +211,8 @@
 "settings.device.button.title.pair-sense" = "PAIR WITH SENSE";
 "settings.device.button.title.pair-pill" = "PAIR A SLEEP PILL";
 "settings.device.warning.last-seen-generic" = "a while ago";
+"settings.device.error.title" = "Failed to load";
+"settings.device.error.cannot-load-info" = "Unable to load your information.  Make sure you are connected to the internet then return to this screen.";
 "settings.pill.dialog.unpair-title" = "Unpair Sleep Pill?";
 "settings.pill.dialog.unpair-message" = "Are you sure you want to unpair your Sleep Pill? You will no longer be able to track your sleep until you pair another Sleep Pill.";
 "settings.pill.dialog.unpair-no-sense-message" = "To unpair your Sleep Pill, you must be within Bluetooth range of Sense.";

@@ -50,14 +50,6 @@ typedef NS_ENUM(NSUInteger, HEMAlertControllerStyle) {
 - (void)addActionWithText:(NSString*)text block:(void (^)())block;
 
 /**
- *  Shows a text field in an alert controller
- *
- *  @param inputView input field of the text view
- *  @param handler   block executed when the text field input changes
- */
-- (void)showTextFieldWithInputView:(UIControl*)inputView withChangeHandler:(void(^)(UITextField*))handler;
-
-/**
  *  Show the alert controller
  */
 - (void)show;

@@ -65,6 +65,16 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
     [self openURL:helpURLString from:controller];
 }
 
++ (void)openHelpToPage:(NSString*)page fromController:(UIViewController*)controller {
+    if ([page length] == 0) {
+        return [self openHelpFrom:controller];
+    }
+    
+    NSString* helpURLString = NSLocalizedString(@"help.url.support", nil);
+    NSString* url = [helpURLString stringByAppendingPathComponent:page];
+    [self openURL:url from:controller];
+}
+
 + (void)openURL:(NSString*)urlString from:(UIViewController*)controller {
     SVModalWebViewController *webViewController =
         [[SVModalWebViewController alloc] initWithAddress:urlString];

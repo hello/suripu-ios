@@ -32,7 +32,8 @@
     [super viewDidLoad];
 
     [self enableBackButton:NO];
-    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropPillPlacement];
+    [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.pill-setup", nil)
+           andTrackWithStepName:kHEMAnalyticsEventPropPillPlacement];
     
     [SENAnalytics track:kHEMAnalyticsEventOnBPillPlacement];
 }

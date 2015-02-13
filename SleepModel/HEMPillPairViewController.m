@@ -75,7 +75,8 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     
     [self showRetryButtonAsRetrying:YES];
     
-    [self showHelpButtonAndTrackWithStepName:kHEMAnalyticsEventPropPillPairing];
+    [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.pill-pairing", nil)
+           andTrackWithStepName:kHEMAnalyticsEventPropPillPairing];
     
     if ([self delegate] != nil) {
         [self showCancelButtonWithSelector:@selector(cancel:)];
@@ -277,7 +278,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [dialogVC setOkButtonTitle:[NSLocalizedString(@"actions.skip-for-now", nil) uppercaseString]];
     [dialogVC setViewToShowThrough:[[self navigationController] view]];
     
-    [dialogVC addAction:[NSLocalizedString(@"actions.cancel", nil) uppercaseString] primary:NO actionBlock:^{
+    [dialogVC addAction:NSLocalizedString(@"actions.cancel", nil) primary:NO actionBlock:^{
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     
@@ -333,7 +334,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [self showMessageDialog:message
                       title:NSLocalizedString(@"pairing.pill.error.title", nil)
                       image:nil
-                   withHelp:YES];
+               withHelpPage:NSLocalizedString(@"help.url.slug.pill-pairing", nil)];
     
     [self setControlsEnabled:YES];
     

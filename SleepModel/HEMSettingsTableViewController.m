@@ -200,4 +200,11 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewRow) {
     return nil;
 }
 
+#pragma mark - UITableViewDelegate
+
+- (void)dealloc {
+    [_settingsTableView setDelegate:nil];
+    [_settingsTableView setDataSource:nil];
+}
+
 @end

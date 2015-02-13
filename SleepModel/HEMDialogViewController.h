@@ -17,7 +17,15 @@
 @property (nonatomic, copy)   NSString* title;
 @property (nonatomic, copy)   NSString* message;
 @property (nonatomic, copy)   NSString* okButtonTitle;
-@property (nonatomic, assign) BOOL showHelp;
+
+/**
+ * @property helpURL
+ *
+ * @discussion
+ * This is the "slug" or page path to the help guide.  If this is not set, the
+ * troubleshooting button will not be shown
+ */
+@property (nonatomic, copy)   NSString* helpPage;
 
 /**
  *  Present a non-interactive dialog

@@ -353,11 +353,7 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
         if ([cell isKindOfClass:[HEMSleepSegmentCollectionViewCell class]] && ![indexPath isEqual:self.expandedIndexPath]) {
             [(HEMSleepSegmentCollectionViewCell*)cell emphasizeAppearance];
             SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-            long minutes = (long)([segment.duration floatValue]/60);
-            NSString* format = [self summaryFormatForSegment:segment];
-            NSString* localizedFormat = NSLocalizedString(format, nil);
-            NSString* text = [NSString stringWithFormat:localizedFormat, minutes];
-            [self.popupView setText:text];
+            [self.popupView setText:[self summaryPopupTextForSegment:segment]];
             UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
             CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
             CGFloat top = CGRectGetMinY(cellLocation) - [self.popupView intrinsicContentSize].height - HEMPopupSpacingDistance;
@@ -382,27 +378,25 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     }
 }
 
-- (NSString*)summaryFormatForSegment:(SENSleepResultSegment*)segment
+- (NSString*)summaryPopupTextForSegment:(SENSleepResultSegment*)segment
 {
-    if (segment.eventType.length == 0) {
-        if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
-            return @"sleep-stat.motion-duration.awake.format";
-        else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
-            return @"sleep-stat.motion-duration.deep.format";
-        else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
-            return @"sleep-stat.motion-duration.medium.format";
-        else
-            return @"sleep-stat.motion-duration.light.format";
-    } else {
-        if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
-            return @"sleep-stat.sleep-duration.awake.format";
-        else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
-            return @"sleep-stat.sleep-duration.deep.format";
-        else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
-            return @"sleep-stat.sleep-duration.medium.format";
-        else
-            return @"sleep-stat.sleep-duration.light.format";
-    }
+    static NSString* const HEMPopupTextFormat = @"sleep-stat.%@-duration.%@.%@.format";
+    long minutes = (long)([segment.duration floatValue]/60);
+    NSString* pluralize = minutes == 1 ? @"single" : @"plural";
+    NSString* segmentType = segment.eventType.length == 0 ? @"motion" : @"sleep";
+    NSString* depth;
+    if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
+        depth = @"awake";
+    else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
+        depth = @"deep";
+    else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
+        depth = @"medium";
+    else
+        depth = @"light";
+
+    NSString* format = [NSString stringWithFormat:HEMPopupTextFormat, segmentType, depth, pluralize];
+    NSString* localizedFormat = NSLocalizedString(format, nil);
+    return minutes == 1 ? localizedFormat : [NSString stringWithFormat:localizedFormat, minutes];
 }
 
 - (void)didPan

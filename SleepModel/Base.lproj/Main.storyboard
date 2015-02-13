@@ -2308,12 +2308,12 @@
                                 </connections>
                             </button>
                             <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="NKd-k3-vSA" customClass="HEMPopupView">
-                                <rect key="frame" x="210" y="150" width="180" height="115"/>
+                                <rect key="frame" x="210" y="150" width="180" height="100"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You were in Medium Sleep for 14 minutes." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBx-ft-eT4">
-                                        <rect key="frame" x="30" y="20" width="120" height="70"/>
+                                        <rect key="frame" x="10" y="4" width="160" height="88"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="120" id="PnR-6W-CMk"/>
+                                            <constraint firstAttribute="width" constant="160" id="PnR-6W-CMk"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="17"/>
                                         <color key="textColor" red="0.87566179040000003" green="0.8756355643" blue="0.87565040589999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -2323,9 +2323,9 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="centerX" secondItem="rBx-ft-eT4" secondAttribute="centerX" id="h8f-ax-Bgr"/>
-                                    <constraint firstAttribute="bottom" secondItem="rBx-ft-eT4" secondAttribute="bottom" constant="25" id="kEv-Yb-3PH"/>
+                                    <constraint firstAttribute="bottom" secondItem="rBx-ft-eT4" secondAttribute="bottom" constant="8" id="kEv-Yb-3PH"/>
                                     <constraint firstAttribute="width" constant="180" id="n7C-M0-KkO"/>
-                                    <constraint firstItem="rBx-ft-eT4" firstAttribute="top" secondItem="NKd-k3-vSA" secondAttribute="top" constant="20" id="obv-3Z-ZJL"/>
+                                    <constraint firstItem="rBx-ft-eT4" firstAttribute="top" secondItem="NKd-k3-vSA" secondAttribute="top" constant="4" id="obv-3Z-ZJL"/>
                                 </constraints>
                                 <connections>
                                     <outlet property="label" destination="rBx-ft-eT4" id="pKY-5A-6eX"/>

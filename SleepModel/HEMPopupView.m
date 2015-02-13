@@ -18,8 +18,7 @@
 
 static CGFloat const HEMPopupPointerHeight = 6.f;
 static CGFloat const HEMPopupPointerRadius = 8.f;
-static CGFloat const HEMPopupMargin = 40.f;
-static CGFloat const HEMPopupBottomOffset = 14.f;
+static CGFloat const HEMPopupMargin = 20.f;
 
 - (void)awakeFromNib
 {
@@ -38,7 +37,7 @@ static CGFloat const HEMPopupBottomOffset = 14.f;
 - (void)setText:(NSString *)text
 {
     self.label.text = text;
-    [self setNeedsUpdateConstraints];
+    [self invalidateIntrinsicContentSize];
     [self setNeedsDisplay];
 }
 
@@ -49,7 +48,7 @@ static CGFloat const HEMPopupBottomOffset = 14.f;
     CGFloat minX = CGRectGetMinX(rect);
     CGFloat midX = CGRectGetMidX(rect);
     CGFloat minY = CGRectGetMinY(rect);
-    CGFloat boxHeight = CGRectGetHeight(rect) - HEMPopupPointerHeight - HEMPopupBottomOffset;
+    CGFloat boxHeight = CGRectGetHeight(rect) - HEMPopupPointerHeight;
     [bezierPath moveToPoint: CGPointMake(midX - HEMPopupPointerRadius, boxHeight)];
     [bezierPath addLineToPoint: CGPointMake(midX, boxHeight + HEMPopupPointerHeight)];
     [bezierPath addLineToPoint: CGPointMake(midX + HEMPopupPointerRadius, boxHeight)];

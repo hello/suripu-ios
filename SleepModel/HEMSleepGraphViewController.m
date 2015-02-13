@@ -345,23 +345,27 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 - (IBAction)didLongPress:(UILongPressGestureRecognizer*)sender
 {
     static CGFloat const HEMPopupAnimationDistance = 8.f;
+    static CGFloat const HEMPopupSpacingDistance = 11.f;
     if (sender.state == UIGestureRecognizerStateBegan) {
         CGPoint cellLocation = [sender locationInView:self.collectionView];
         NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:cellLocation];
         UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
         if ([cell isKindOfClass:[HEMSleepSegmentCollectionViewCell class]] && ![indexPath isEqual:self.expandedIndexPath]) {
+            HEMSleepSegmentCollectionViewCell* segmentCell = (id)cell;
+            [segmentCell emphasizeAppearance];
             SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+            long minutes = (long)([segment.duration floatValue]/60);
             NSString* format = [self summaryFormatForSegment:segment];
             NSString* localizedFormat = NSLocalizedString(format, nil);
-            NSString* text = [NSString stringWithFormat:localizedFormat, (long)([segment.duration floatValue]/60)];
+            NSString* text = [NSString stringWithFormat:localizedFormat, minutes];
             [self.popupView setText:text];
-            CGFloat y = CGRectGetMinY(cell.frame) - CGRectGetHeight(self.popupView.bounds);
-            CGPoint collectionTop = CGPointMake(0, y);
-            CGPoint top = [self.collectionView convertPoint:collectionTop toView:self.view];
-            self.popupViewTop.constant = top.y - HEMPopupAnimationDistance;
+            CGRect cellLocation = [self.collectionView convertRect:segmentCell.frame toView:self.view];
+            CGFloat top = CGRectGetMinY(cellLocation) - [self.popupView intrinsicContentSize].height - HEMPopupSpacingDistance;
+            self.popupViewTop.constant = top - HEMPopupAnimationDistance;
             [self.popupView setNeedsUpdateConstraints];
             [self.popupView layoutIfNeeded];
-            self.popupViewTop.constant = top.y;
+            self.popupViewTop.constant = top;
+            [self.popupView setNeedsUpdateConstraints];
             [UIView animateWithDuration:0.2f animations:^{
                 [self.popupView layoutIfNeeded];
                 self.popupView.alpha = 1;
@@ -371,12 +375,16 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
         [UIView animateWithDuration:0.15f animations:^{
             self.popupView.alpha = 0;
         }];
+        for (HEMSleepSegmentCollectionViewCell* cell in self.collectionView.visibleCells) {
+            if ([cell respondsToSelector:@selector(deemphasizeAppearance)])
+                [cell deemphasizeAppearance];
+        }
     }
 }
 
 - (NSString*)summaryFormatForSegment:(SENSleepResultSegment*)segment
 {
-    if (!segment.eventType) {
+    if (segment.eventType.length == 0) {
         if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
             return @"sleep-stat.motion-duration.awake.format";
         else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)

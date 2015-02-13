@@ -1179,7 +1179,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FLk-KX-k9s" userLabel="descLabel">
                                 <rect key="frame" x="20" y="68" width="560" height="86"/>
-                                <string key="text">Sleep Pill clips to your pillow and tracks your sleep during the night. Each person using Sense has their own Sleep Pill, so if you're using Sense with a partner, they will set up their Pill separately. Next, we'll pair your Sleep Pill with Sense.</string>
+                                <string key="text">Sleep Pill clips to your pillow and tracks your sleep during the night. Each person using Sense has their own Sleep Pill, so if you're using Sense with a partner, they will set up their Sleep Pill separately. Next, we'll pair your Sleep Pill with Sense.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -1489,7 +1489,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hw2-eQ-BhX">
                                 <rect key="frame" x="20" y="68" width="560" height="61"/>
-                                <string key="text">The Sense Smart Alarm knows where you are in your sleep cycle and will wake you up at the right time for you. Just wave your hand over Sense to turn it off.</string>
+                                <string key="text">Sense's Smart Alarm knows where you are in your sleep cycle and will wake you up at the right time for you. To dismiss the alarm, just wave your hand over Sense.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -2268,7 +2268,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cxR-ry-GIM">
                                 <rect key="frame" x="20" y="68" width="560" height="41"/>
-                                <string key="text">Sense will occasionally notify you with important messages about your sleep, bedroom and deliver you your Sleep Score each morning.</string>
+                                <string key="text">Sense will occasionally notify you with important messages about your sleep, bedroom, and deliver you your Sleep Score each morning.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
@@ -2364,7 +2364,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mFI-cr-rhB" userLabel="descLabel">
                                 <rect key="frame" x="20" y="68" width="560" height="34"/>
                                 <attributedString key="attributedText">
-                                    <fragment content="Now we'll pair your phone with Sense.  Make sure Sense is plugged in, nearby, and glowing purple.  Tap Continue when ready.">
+                                    <fragment content="Now we'll pair your phone with Sense. Make sure Sense is plugged in, nearby, and glowing purple. Tap Continue when ready.">
                                         <attributes>
                                             <font key="NSFont" metaFont="system" size="18"/>
                                             <paragraphStyle key="NSParagraphStyle" alignment="natural" lineBreakMode="wordWrapping" baseWritingDirection="natural"/>
@@ -2516,7 +2516,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9L6-H0-aYi">
                                         <rect key="frame" x="81" y="58" width="479" height="39"/>
                                         <string key="text">Tap Bluetooth
-Flip the switch to On.</string>
+Flip the switch to On</string>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
@@ -2707,9 +2707,9 @@ Flip the switch to On.</string>
                                 <rect key="frame" x="20" y="63" width="560" height="67"/>
                                 <attributedString key="attributedText">
                                     <fragment>
-                                        <string key="content">Your Sense is now in Pairing Mode.
+                                        <string key="content">Sense is now in Pairing Mode.
 
-Have your partner visit senseapp.com to download the Sense app and create a new account.  They will be given instructions to set up their Sleep Pill.</string>
+Have your partner visit senseapp.com on their device to download the Sense app and create a new account. They will be given instructions to set up their Sleep Pill.</string>
                                         <attributes>
                                             <color key="NSColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <font key="NSFont" metaFont="system" size="18"/>

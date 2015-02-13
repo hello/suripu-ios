@@ -11,11 +11,6 @@
 "welcome.subtitle" = "A simple system that tracks your sleep, monitors the surroundings in your bedroom and reinvents the alarm, so you can sleep better.";
 
 // onboarding
-"onboarding.blue" = "blue";
-"onboarding.green" = "Green";
-"onboarding.orange" = "Orange";
-"onboarding.red" = "red";
-
 "sign-up.activity.message" = "Creating your account";
 "sign-up.title" = "Sign up";
 "sign-up.failed.title" = "Sign up failed";
@@ -191,6 +186,12 @@
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 
+// colors
+"color.blue" = "Blue";
+"color.red" = "Red";
+"color.black" = "Black";
+"color.white" = "White";
+
 // device management
 "settings.title" = "Settings";
 "settings.device.sense" = "Sense";
@@ -202,7 +203,6 @@
 "settings.device.last-seen" = "Last seen";
 "settings.device.never-seen" = "Paired, but never seen since";
 "settings.device.color" = "Color";
-"settings.device.color.green" = "Green";
 "settings.device.battery.good" = "Good";
 "settings.device.battery.low" = "Low";
 "settings.device.network.disconnected" = "Unable to connect";

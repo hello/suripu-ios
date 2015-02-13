@@ -22,6 +22,11 @@ NSString* const SENAPIDevicePropertyTypeValueSense = @"SENSE";
 NSString* const SENAPIDevicePropertyTypeValuePill = @"PILL";
 NSString* const SENAPIDevicePropertyState = @"state";
 NSString* const SENAPIDevicePropertyStateValueNormal = @"NORMAL";
+NSString* const SENAPIDevicePropertyColor = @"color";
+NSString* const SENAPIDevicePropertyColorBlack = @"BLACK";
+NSString* const SENAPIDevicePropertyColorWhite = @"WHITE";
+NSString* const SENAPIDevicePropertyColorRed = @"RED";
+NSString* const SENAPIDevicePropertyColorBlue = @"BLUE";
 NSString* const SENAPIDevicePropertyStateValueLowBattery = @"LOW_BATTERY";
 NSString* const SENAPIDevicePropertyFirmwareVersion = @"firmware_version";
 NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
@@ -35,6 +40,22 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
         type = SENDeviceTypePill;
     }
     return type;
+}
+
++ (SENDeviceColor)colorFromString:(id)stringObj {
+    SENDeviceColor color = SENDeviceColorUnknown;
+    if ([stringObj isKindOfClass:[NSString class]]) {
+        if ([stringObj isEqualToString:SENAPIDevicePropertyColorBlack]) {
+            color = SENDeviceColorBlack;
+        } else if ([stringObj isEqualToString:SENAPIDevicePropertyColorWhite]) {
+            color = SENDeviceColorWhite;
+        } else if ([stringObj isEqualToString:SENAPIDevicePropertyColorBlue]) {
+            color = SENDeviceColorBlue;
+        } else if ([stringObj isEqualToString:SENAPIDevicePropertyColorRed]) {
+            color = SENDeviceColorRed;
+        }
+    }
+    return color;
 }
 
 + (SENDeviceState)stateFromString:(id)stringObj {
@@ -67,16 +88,19 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
         id stateObj = [rawResponse valueForKey:SENAPIDevicePropertyState];
         id firmwareVerObj = [rawResponse valueForKey:SENAPIDevicePropertyFirmwareVersion];
         id lastSeenObj = [rawResponse valueForKey:SENAPIDevicePropertyLastSeen];
+        id colorObj = [rawResponse valueForKey:SENAPIDevicePropertyColor];
         
         NSString* deviceId = [deviceIdObj isKindOfClass:[NSString class]] ? deviceIdObj : nil;
         NSString* version = [firmwareVerObj isKindOfClass:[NSString class]] ? firmwareVerObj : nil;
         SENDeviceType type  = [self typeFromString:typeObj];
         SENDeviceState state = [self stateFromString:stateObj];
+        SENDeviceColor color = [self colorFromString:colorObj];
         NSDate* lastSeen = [self dateFromObject:lastSeenObj];
         
         device = [[SENDevice alloc] initWithDeviceId:deviceId
                                                 type:type
                                                state:state
+                                               color:color
                                      firmwareVersion:version
                                             lastSeen:lastSeen];
     }

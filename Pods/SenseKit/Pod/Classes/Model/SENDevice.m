@@ -14,6 +14,7 @@
 @property (nonatomic, assign, readwrite) SENDeviceType type;
 @property (nonatomic, assign, readwrite) SENDeviceState state;
 @property (nonatomic, copy,   readwrite) NSString* firmwareVersion;
+@property (nonatomic, assign, readwrite) SENDeviceColor color;
 @property (nonatomic, strong, readwrite) NSDate* lastSeen;
 
 @end
@@ -21,16 +22,18 @@
 @implementation SENDevice
 
 - (instancetype)initWithDeviceId:(NSString*)deviceId
-                  type:(SENDeviceType)type
-                 state:(SENDeviceState)state
-       firmwareVersion:(NSString*)version
-              lastSeen:(NSDate*)lastSeen {
+                            type:(SENDeviceType)type
+                           state:(SENDeviceState)state
+                           color:(SENDeviceColor)color
+                 firmwareVersion:(NSString*)version
+                        lastSeen:(NSDate*)lastSeen {
     
     self = [super init];
     if (self) {
         [self setDeviceId:deviceId];
         [self setType:type];
         [self setState:state];
+        [self setColor:color];
         [self setFirmwareVersion:version];
         [self setLastSeen:lastSeen];
     }

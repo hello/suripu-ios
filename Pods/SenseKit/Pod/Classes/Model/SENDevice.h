@@ -23,6 +23,14 @@ typedef NS_ENUM(NSUInteger, SENDeviceState) {
     SENDeviceStateNoData = 4
 };
 
+typedef NS_ENUM(NSUInteger, SENDeviceColor) {
+    SENDeviceColorUnknown,
+    SENDeviceColorBlack,
+    SENDeviceColorWhite,
+    SENDeviceColorBlue,
+    SENDeviceColorRed
+};
+
 @interface SENDevice : NSObject
 
 /*
@@ -41,6 +49,11 @@ typedef NS_ENUM(NSUInteger, SENDeviceState) {
 @property (nonatomic, assign, readonly) SENDeviceState state;
 
 /**
+ * @property color: the color of the device
+ */
+@property (nonatomic, assign, readonly) SENDeviceColor color;
+
+/**
  * @property firmwareVersion: specifies the current firmware version of the device
  */
 @property (nonatomic, copy, readonly)   NSString* firmwareVersion;
@@ -55,12 +68,14 @@ typedef NS_ENUM(NSUInteger, SENDeviceState) {
  * @param deviceId: @see @property deviceId
  * @param type:     @see @property type
  * @param state:    @see @property state
+ * @param color:    @see @property color
  * @param version:  @see @property version
  * @param lastSeen: @see @property lastSeen
  */
 - (instancetype)initWithDeviceId:(NSString*)deviceId
                             type:(SENDeviceType)type
                            state:(SENDeviceState)state
+                           color:(SENDeviceColor)color
                  firmwareVersion:(NSString*)version
                         lastSeen:(NSDate*)lastSeen;
 

@@ -17,6 +17,7 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
+#import "HEMNoSleepEventCollectionViewCell.h"
 #import "HEMSleepSummarySlideViewController.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
@@ -24,6 +25,7 @@
 #import "HEMZoomAnimationTransitionDelegate.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"
+#import "HEMPopupView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 50.f;
 CGFloat const HEMTimelineFooterCellHeight = 50.f;
@@ -38,7 +40,9 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 @property (nonatomic, getter=presleepSectionIsExpanded) BOOL presleepExpanded;
 @property (nonatomic, strong) UIPanGestureRecognizer* panGestureRecognizer;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* shortcutButtonTrailing;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* popupViewTop;
 @property (nonatomic, weak) IBOutlet UIButton* shortcutButton;
+@property (nonatomic, weak) IBOutlet HEMPopupView* popupView;
 @end
 
 @implementation HEMSleepGraphViewController
@@ -337,6 +341,61 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 }
 
 #pragma mark UIGestureRecognizerDelegate
+
+- (IBAction)didLongPress:(UILongPressGestureRecognizer*)sender
+{
+    static CGFloat const HEMPopupAnimationDistance = 8.f;
+    if (sender.state == UIGestureRecognizerStateBegan) {
+        CGPoint cellLocation = [sender locationInView:self.collectionView];
+        NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:cellLocation];
+        UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
+        if ([cell isKindOfClass:[HEMSleepSegmentCollectionViewCell class]] && ![indexPath isEqual:self.expandedIndexPath]) {
+            SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+            NSString* format = [self summaryFormatForSegment:segment];
+            NSString* localizedFormat = NSLocalizedString(format, nil);
+            NSString* text = [NSString stringWithFormat:localizedFormat, (long)([segment.duration floatValue]/60)];
+            [self.popupView setText:text];
+            CGFloat y = CGRectGetMinY(cell.frame) - CGRectGetHeight(self.popupView.bounds);
+            CGPoint collectionTop = CGPointMake(0, y);
+            CGPoint top = [self.collectionView convertPoint:collectionTop toView:self.view];
+            self.popupViewTop.constant = top.y - HEMPopupAnimationDistance;
+            [self.popupView setNeedsUpdateConstraints];
+            [self.popupView layoutIfNeeded];
+            self.popupViewTop.constant = top.y;
+            [UIView animateWithDuration:0.2f animations:^{
+                [self.popupView layoutIfNeeded];
+                self.popupView.alpha = 1;
+            }];
+        }
+    } else if (sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled) {
+        [UIView animateWithDuration:0.15f animations:^{
+            self.popupView.alpha = 0;
+        }];
+    }
+}
+
+- (NSString*)summaryFormatForSegment:(SENSleepResultSegment*)segment
+{
+    if (!segment.eventType) {
+        if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
+            return @"sleep-stat.motion-duration.awake.format";
+        else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
+            return @"sleep-stat.motion-duration.deep.format";
+        else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
+            return @"sleep-stat.motion-duration.medium.format";
+        else
+            return @"sleep-stat.motion-duration.light.format";
+    } else {
+        if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
+            return @"sleep-stat.sleep-duration.awake.format";
+        else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
+            return @"sleep-stat.sleep-duration.deep.format";
+        else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
+            return @"sleep-stat.sleep-duration.medium.format";
+        else
+            return @"sleep-stat.sleep-duration.light.format";
+    }
+}
 
 - (void)didPan
 {

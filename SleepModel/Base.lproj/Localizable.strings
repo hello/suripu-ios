@@ -414,6 +414,16 @@
 "sleep-stat.minute.format" = "%.0fm";
 "sleep-stat.hour.format" = "%.1fh";
 
+"sleep-stat.sleep-duration.medium.format" = "You were in Medium Sleep for %ld minutes.";
+"sleep-stat.sleep-duration.light.format" = "You slept lightly for %ld minutes.";
+"sleep-stat.sleep-duration.deep.format" = "You slept soundly for %ld minutes.";
+"sleep-stat.sleep-duration.awake.format" = "You were awake for %ld minutes.";
+
+"sleep-stat.motion-duration.deep.format" = "There was a slight amount of motion for %ld minutes.";
+"sleep-stat.motion-duration.medium.format" = "There was a moderate amount of motion for %ld minutes.";
+"sleep-stat.motion-duration.light.format" = "There was a lot of motion for %ld minutes.";
+"sleep-stat.motion-duration.awake.format" = "There was a lot of motion for %ld minutes.";
+
 // sleep history
 "sleep-history.last-night" = "Last night";
 "sleep-history.score" = "SLEEP SCORE";

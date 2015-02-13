@@ -6,6 +6,7 @@
 #import "HEMNotificationHandler.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMCurrentConditionsViewController.h"
+#import "HEMStyledNavigationViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMLogUtils.h"
 #import "HEMOnboardingUtils.h"
@@ -197,11 +198,12 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 {
     [self setScreenBrightness];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
-    [[UINavigationBar appearance] setBackgroundImage:[[UIImage alloc] init]
-                                      forBarPosition:UIBarPositionAny
-                                          barMetrics:UIBarMetricsDefault];
-    [[UINavigationBar appearance] setShadowImage:[[UIImage alloc] init]];
-    [[UINavigationBar appearance] setTitleTextAttributes:@{
+    UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[HEMStyledNavigationViewController class], nil];
+    [appearance setBackgroundImage:[[UIImage alloc] init]
+                    forBarPosition:UIBarPositionAny
+                        barMetrics:UIBarMetricsDefault];
+    [appearance setShadowImage:[[UIImage alloc] init]];
+    [appearance setTitleTextAttributes:@{
         NSForegroundColorAttributeName : [UIColor blackColor],
         NSFontAttributeName : [UIFont settingsTitleFont]
     }];

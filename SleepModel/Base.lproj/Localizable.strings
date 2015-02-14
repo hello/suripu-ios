@@ -42,11 +42,11 @@
 "onboarding.room-check.ideal-condition-format" = "The %@ in your room is just right.";
 "onboarding.room-check.failed" = "Unsuccessful";
 "onboarding.room-check.failed-message" = "One or more sensors is not ready yet. Don't worry, data will show soon. Set up a Smart Alarm first.";
-"onboarding.room-check.intro.temperature" = "Falling asleep can be difficult if your room is too hot or too cold.";
-"onboarding.room-check.intro.humidity" = "Proper humidity levels are important for a good night's sleep.";
+"onboarding.room-check.intro.temperature" = "Falling asleep, and sleep itself, can be affected if your room is too hot or too cold.";
+"onboarding.room-check.intro.humidity" = "Ideal humidity levels are important for a good night's sleep.";
 "onboarding.room-check.intro.air" = "A low Air Quality Index value represents good air quality.";
-"onboarding.room-check.intro.sound" = "Loud noises will make deep sleep difficult.";
-"onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulty falling asleep.";
+"onboarding.room-check.intro.sound" = "Noise and loud interruptions hinder a good night's sleep.";
+"onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulty falling asleep and staying asleep.";
 
 // help links
 "help.email.address" = "support@sayhello.com";
@@ -478,8 +478,7 @@
 "activity.thank" = "Thank";
 "activity.you" = "you.";
 "activity.loading" = "Loading...";
-"activity.share.last-night.format" = "My Sleep Score was %.0ld last night — can you beat it? http://hello.is";
-"activity.share.other-days.format" = "My Sleep Score was %.0ld on %@ — can you beat it? http://hello.is";
+"activity.share.format" = "Last night #mysleepscore was %.0ld -- http://hello.is";
 
 // questions
 "questions.failed.title" = "Could not submit answer";

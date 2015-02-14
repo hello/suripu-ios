@@ -511,7 +511,7 @@
 "today.section.title.current-conditions" = "Current Conditions";
 
 // cell labels
-"today.cell.title.sleep-score" = "Sleep Score";
+"today.cell.title.sleep-score" = "SLEEP SCORE";
 
 // network connection error code messages
 "network.error.not-connected" = "An internet connection is required to proceed. Make sure you are connected and try again.";

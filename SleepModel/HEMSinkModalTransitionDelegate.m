@@ -55,7 +55,13 @@ static CGFloat const HEMSinkAnimationDuration = 0.5f;
     [UIView animateWithDuration:HEMSinkAnimationDuration
                      animations:^{
                          [[toVC view] setAlpha:1.0f];
-                         [[self sinkView] setTransform:CGAffineTransformMakeScale(0.9f, 0.9f)];
+                         // must transform the layer rather than the actual view b/c applying a transform
+                         // to the actual view triggers layoutSubviews, which conequently causes autolayout
+                         // constraints to modify frames (not bounds) of the view, which is a no-no when
+                         // applying transforms.  What makes it worse is that depending on the OS version,
+                         // the transform seems to trigger layoutSubviews immediately after causing the
+                         // animation to do unexpected (additional) movements... happens in iOS 7, but not iOS8
+                         [[[self sinkView] layer] setTransform:CATransform3DMakeScale(0.9f, 0.9f, 0.9f)];
                      }
                      completion:^(BOOL finished) {
                          [context completeTransition:YES];
@@ -69,7 +75,7 @@ static CGFloat const HEMSinkAnimationDuration = 0.5f;
     [UIView animateWithDuration:HEMSinkAnimationDuration
                      animations:^{
                          [fromView setAlpha:0.0f];
-                         [[self sinkView] setTransform:CGAffineTransformIdentity];
+                         [[[self sinkView] layer] setTransform:CATransform3DIdentity];
                      }
                      completion:^(BOOL finished) {
                          [fromView removeFromSuperview];

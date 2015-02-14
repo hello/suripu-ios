@@ -70,7 +70,11 @@ extern NSString* const HEMSleepEventTypeSleeping;
 
 - (NSUInteger)numberOfSleepSegments;
 
+- (NSString*)titleTextForDate;
+
 - (HEMSleepSummaryCollectionViewCell*)sleepSummaryCell;
+
+- (BOOL)dateIsLastNight;
 
 @property (nonatomic, strong, readonly) SENSleepResult* sleepResult;
 @end

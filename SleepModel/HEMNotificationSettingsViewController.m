@@ -33,8 +33,13 @@ static NSUInteger const HEMNotificationTagOffset = 191883;
     [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
         [weakSelf.tableView reloadData];
     }];
-    self.tableView.tableFooterView = [UIView new];
-    self.tableView.tableHeaderView = [UIView new];
+    
+    CGRect frame = CGRectZero;
+    frame.size.height = HEMSettingsCellTableMargin;
+    frame.size.width = CGRectGetWidth([[self tableView] bounds]);
+    
+    self.tableView.tableFooterView = [[UIView alloc] initWithFrame:frame];
+    self.tableView.tableHeaderView = [[UIView alloc] initWithFrame:frame];
 }
 
 - (IBAction)didFlipSwitch:(UISwitch*)sender

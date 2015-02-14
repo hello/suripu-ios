@@ -33,10 +33,11 @@ extern NSString* const SENAuthorizationServiceDidReauthorizeNotification;
  * authorization token reflects the change.  Future requests will use the updated
  * token.
  *
+ *  @param username the username of the entity to authorize
  *  @param password the password for the given username
  *  @param block    a block invoked after the authentication attempt is completed
  */
-+ (void)reauthorizeUserWithPassword:(NSString*)password callback:(void(^)(NSError* error))block;
++ (void)reauthorizeUser:(NSString*)username password:(NSString*)password callback:(void(^)(NSError* error))block;
 
 /**
  *  Load any cached credentials for use in API requests
@@ -70,11 +71,6 @@ extern NSString* const SENAuthorizationServiceDidReauthorizeNotification;
  *  @return YES if the request has an authorization header set
  */
 + (BOOL)isAuthorizedRequest:(NSURLRequest*)request;
-
-/**
- *  Authenticated email address or nil
- */
-+ (NSString*)emailAddressOfAuthorizedUser;
 
 /**
  * @return authenticated account id or nil

@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.0.2.3
+
+New:
+
+* Timeline description on bars, triggered by long press
+* Pill color in device settings will now show a value when the cloud returns it
+
+Fixes:
+
+* fix timeline feedback feature by using latest api
+* fix issue where password update would fail if email is updated right before
+* fix issue where account settings would show grams rather than kg for weight
+* fix insight summary alignment issue on iOS 7 and when app goes in to foreground from background, while insight full view is shown
+* fix issue where notification preferences were cut off prematurely if you scroll 
+
 ## 1.0.2.2
 
 New:

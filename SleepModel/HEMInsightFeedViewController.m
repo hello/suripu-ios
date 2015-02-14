@@ -21,6 +21,7 @@
 #import "HEMInsightViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMSinkModalTransitionDelegate.h"
+#import "HEMStyledNavigationViewController.h"
 
 @interface HEMInsightFeedViewController () <
     UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -144,7 +145,7 @@
     [qVC setModalPresentationStyle:UIModalPresentationCustom];
     [qVC setTransitioningDelegate:[self animTransitionDelegate]];
     
-    UINavigationController* nav = [[UINavigationController alloc] initWithRootViewController:qVC];
+    HEMStyledNavigationViewController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:qVC];
     
     [self presentViewController:nav animated:YES completion:^{
         [self removeCellAtIndexPath:path];

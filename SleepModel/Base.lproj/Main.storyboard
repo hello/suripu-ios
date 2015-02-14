@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
@@ -3508,10 +3508,10 @@
             </objects>
             <point key="canvasLocation" x="2746" y="-2224"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Styled Navigation View Controller-->
         <scene sceneID="exE-yb-g4r">
             <objects>
-                <navigationController storyboardIdentifier="timelineFeedback" automaticallyAdjustsScrollViewInsets="NO" id="cey-sO-3LK" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="timelineFeedback" automaticallyAdjustsScrollViewInsets="NO" id="cey-sO-3LK" customClass="HEMStyledNavigationViewController" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="xPB-5c-CzK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>

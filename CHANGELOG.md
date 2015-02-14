@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2.4
+
+Fixes:
+
+* updated sleep score share text
+
 ## 1.0.2.3
 
 New:
@@ -9,6 +15,7 @@ New:
 
 Fixes:
 
+* fix issue where questions and timeline feedback screens were showing a navigation bar with separator unintentionally
 * fix timeline feedback feature by using latest api
 * fix issue where password update would fail if email is updated right before
 * fix issue where account settings would show grams rather than kg for weight

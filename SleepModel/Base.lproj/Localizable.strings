@@ -478,7 +478,7 @@
 "activity.thank" = "Thank";
 "activity.you" = "you.";
 "activity.loading" = "Loading...";
-"activity.share.format" = "Last night #mysleepscore was %.0ld -- http://hello.is";
+"activity.share.last-night.format" = "Last night #mysleepscore was %.0ld -- http://hello.is";
 
 // questions
 "questions.failed.title" = "Could not submit answer";

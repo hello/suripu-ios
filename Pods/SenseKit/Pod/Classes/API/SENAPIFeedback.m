@@ -8,6 +8,7 @@
 
 #import "SENAPIFeedback.h"
 #import "SENAPIClient.h"
+#import "SENSleepResult.h"
 
 @implementation SENAPIFeedback
 
@@ -21,20 +22,23 @@
     return formatter;
 }
 
-+ (void)updateEvent:(NSString *)eventType
-           withHour:(NSUInteger)hour
-             minute:(NSUInteger)minute
-    forNightOfSleep:(NSDate *)sleepDate
-         completion:(SENAPIErrorBlock)completion
++ (void)updateSegment:(SENSleepResultSegment*)segment
+             withHour:(NSUInteger)hour
+               minute:(NSUInteger)minute
+      forNightOfSleep:(NSDate *)sleepDate
+           completion:(SENAPIErrorBlock)completion
 {
     NSMutableDictionary* params = [[NSMutableDictionary alloc] initWithCapacity:4];
     NSString* formattedDate = [[self dateFormatter] stringFromDate:sleepDate];
     if (formattedDate)
-        params[@"day"] = formattedDate;
-    if (eventType)
-        params[@"event_type"] = eventType;
-    params[@"good"] = @(NO);
-    params[@"hour"] = [self parameterStringForHour:hour minute:minute];
+        params[@"date_of_night"] = formattedDate;
+    if (segment.eventType.length > 0)
+        params[@"event_type"] = segment.eventType;
+    params[@"new_time_of_event"] = [self parameterStringForHour:hour minute:minute];
+    NSCalendar* calendar = [NSCalendar currentCalendar];
+    calendar.timeZone = segment.timezone;
+    NSDateComponents* components = [calendar components:(NSHourCalendarUnit|NSMinuteCalendarUnit) fromDate:segment.date];
+    params[@"old_time_of_event"] = [self parameterStringForHour:components.hour minute:components.minute];
     [SENAPIClient POST:@"feedback/sleep" parameters:params completion:^(id data, NSError *error) {
         if (completion)
             completion(error);

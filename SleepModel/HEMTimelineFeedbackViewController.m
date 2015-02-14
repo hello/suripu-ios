@@ -76,19 +76,19 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
 
 - (IBAction)sendUpdatedTime:(id)sender
 {
-    [SENAPIFeedback updateEvent:self.segment.eventType
-                       withHour:self.clockView.hour
-                         minute:self.clockView.minute
-                forNightOfSleep:self.dateForNightOfSleep
-                     completion:^(NSError *error) {
-                         if (error) {
-                             [HEMDialogViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
-                                                                      message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
-                                                                   controller:self];
-                             return;
-                         }
-                         [self dismissViewControllerAnimated:YES completion:NULL];
-                     }];
+    [SENAPIFeedback updateSegment:self.segment
+                         withHour:self.clockView.hour
+                           minute:self.clockView.minute
+                  forNightOfSleep:self.dateForNightOfSleep
+                       completion:^(NSError *error) {
+                           if (error) {
+                               [HEMDialogViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
+                                                                        message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
+                                                                     controller:self];
+                               return;
+                           }
+                           [self dismissViewControllerAnimated:YES completion:NULL];
+                       }];
 }
 
 - (IBAction)cancelAndDismiss:(id)sender

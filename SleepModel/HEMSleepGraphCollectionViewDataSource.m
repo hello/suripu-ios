@@ -268,6 +268,14 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     return cell;
 }
 
+- (BOOL)dateIsLastNight
+{
+    NSDateComponents* diff = [self.calendar components:NSDayCalendarUnit
+                                              fromDate:self.dateForNightOfSleep
+                                                toDate:[[NSDate date] previousDay] options:0];
+    return diff.day == 0;
+}
+
 - (NSString*)titleTextForDate
 {
     NSDateComponents* diff = [self.calendar components:NSDayCalendarUnit

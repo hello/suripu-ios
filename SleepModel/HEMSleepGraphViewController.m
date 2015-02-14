@@ -240,7 +240,12 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 {
     long score = [self.dataSource.sleepResult.score longValue];
     if (score > 0) {
-        NSString* message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.format", nil), score];
+        NSString* message;
+        if ([self.dataSource dateIsLastNight]) {
+            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.last-night.format", nil), score];
+        } else {
+            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.other-days.format", nil), score, [self.dataSource titleTextForDate]];
+        }
         UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
                                                                                          applicationActivities:nil];
         [self presentViewController:activityController animated:YES completion:nil];

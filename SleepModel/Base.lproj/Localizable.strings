@@ -478,7 +478,8 @@
 "activity.thank" = "Thank";
 "activity.you" = "you.";
 "activity.loading" = "Loading...";
-"activity.share.format" = "Last night my Sleep Score was %.0ld — can you beat it? http://hello.is";
+"activity.share.last-night.format" = "My Sleep Score was %.0ld last night — can you beat it? http://hello.is";
+"activity.share.other-days.format" = "My Sleep Score was %.0ld on %@ — can you beat it? http://hello.is";
 
 // questions
 "questions.failed.title" = "Could not submit answer";

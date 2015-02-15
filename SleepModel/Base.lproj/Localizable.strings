@@ -435,7 +435,7 @@
 
 // sleep history
 "sleep-history.last-night" = "Last night";
-"sleep-history.score" = "Sleep Score";
+"sleep-history.score" = "SLEEP SCORE";
 "sleep-history.depth.awake" = "Awake";
 "sleep-history.depth.light" = "Light sleep";
 "sleep-history.depth.medium" = "Medium sleep";
@@ -511,7 +511,7 @@
 "today.section.title.current-conditions" = "Current Conditions";
 
 // cell labels
-"today.cell.title.sleep-score" = "SLEEP SCORE";
+"today.cell.title.sleep-score" = "Sleep Score";
 
 // network connection error code messages
 "network.error.not-connected" = "An internet connection is required to proceed. Make sure you are connected and try again.";

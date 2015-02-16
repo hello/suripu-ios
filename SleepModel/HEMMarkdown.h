@@ -20,6 +20,6 @@
 + (NSDictionary*)attributesForTimelineBreakdownValueWithColor:(UIColor*)color;
 + (NSDictionary*)attributesForTimelineSegmentPopup;
 + (NSDictionary*)attributesForRoomCheckWithConditionColor:(UIColor*)color;
-+ (NSDictionary*)attributesForSensorMessageWithConditionColor:(UIColor*)color;
++ (NSDictionary*)attributesForSensorMessage;
 + (NSDictionary*)attributesForSensorGraphButtonWithSelectedState:(BOOL)isOn;
 @end

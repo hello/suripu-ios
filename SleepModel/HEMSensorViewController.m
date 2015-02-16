@@ -200,7 +200,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 - (void)configureSensorValueViews
 {
     UIColor* color = [UIColor colorForSensorWithCondition:self.sensor.condition];
-    NSDictionary* statusAttributes = [HEMMarkdown attributesForSensorMessageWithConditionColor:color];
+    NSDictionary* statusAttributes = [HEMMarkdown attributesForSensorMessage];
 
     self.valueLabel.textColor = color;
     self.unitLabel.textColor = color;
@@ -211,7 +211,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
     NSMutableAttributedString* statusMessage = [[markdown_to_attr_string(self.sensor.message, 0, statusAttributes) trim] mutableCopy];
     if (self.sensor.idealConditionsMessage.length > 0) {
         static NSString* const HEMSensorContentDivider = @"\n\n";
-        NSDictionary* idealAttributes = [HEMMarkdown attributesForSensorMessageWithConditionColor:[HelloStyleKit idealSensorColor]];
+        NSDictionary* idealAttributes = [HEMMarkdown attributesForSensorMessage];
         NSAttributedString* divider = [[NSAttributedString alloc] initWithString:HEMSensorContentDivider attributes:statusAttributes];
         NSAttributedString* idealMessage = [markdown_to_attr_string(self.sensor.idealConditionsMessage, 0, idealAttributes) trim];
         [statusMessage appendAttributedString:divider];

@@ -123,11 +123,11 @@
     };
 }
 
-+ (NSDictionary*)attributesForSensorMessageWithConditionColor:(UIColor*)color
++ (NSDictionary*)attributesForSensorMessage
 {
     return @{
-        @(STRONG) : @{ NSForegroundColorAttributeName : color },
-        @(EMPH)   : @{ NSForegroundColorAttributeName : color },
+        @(STRONG) : @{ NSFontAttributeName : [UIFont sensorMessageBoldFont] },
+        @(EMPH)   : @{ NSFontAttributeName : [UIFont sensorMessageBoldFont] },
         @(PARA)   : @{ NSFontAttributeName : [UIFont sensorMessageFont] }
     };
 }

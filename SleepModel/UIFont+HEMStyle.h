@@ -81,6 +81,8 @@
 
 + (UIFont *)sensorMessageFont;
 
++ (UIFont *)sensorMessageBoldFont;
+
 + (UIFont *)timelinePopupFont;
 
 + (UIFont *)timelinePopupBoldFont;

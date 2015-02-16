@@ -191,6 +191,11 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [defaults synchronize];
     [HEMOnboardingUtils resetOnboardingCheckpoint];
     [HEMOnboardingUtils removeLastConfiguredSSID];
+    
+    // FIXME (jimmy): to ensure we are not introducing more issues, we will simply
+    // add the path back in, after it was removed above.
+    [self configureAPI];
+    
     [self resume:YES];
 }
 

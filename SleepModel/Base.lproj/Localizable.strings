@@ -423,6 +423,11 @@
 "sleep-stat.sleep-duration.awake.plural.format" = "You were awake for %ld minutes.";
 "sleep-stat.sleep-duration.awake.single.format" = "You were awake for one minute.";
 
+// remove below once we want to display the duration again.
+"sleep-stat.sleep-duration.medium" = "You were in **Medium Sleep**.";
+"sleep-stat.sleep-duration.light" = "You were in **Light Sleep**.";
+"sleep-stat.sleep-duration.deep" = "You were in **Deep Sleep**.";
+"sleep-stat.sleep-duration.awake" = "You were awake.";
 
 "sleep-stat.motion-duration.deep.plural.format" = "There was a slight amount of motion for %ld minutes.";
 "sleep-stat.motion-duration.deep.single.format" = "There was a slight amount of motion for one minute.";
@@ -432,6 +437,12 @@
 "sleep-stat.motion-duration.light.single.format" = "There was a lot of motion for one minute.";
 "sleep-stat.motion-duration.awake.plural.format" = "There was a lot of motion for %ld minute.";
 "sleep-stat.motion-duration.awake.single.format" = "There was a lot of motion for one minute.";
+
+// remove below once we want to display the duration again.
+"sleep-stat.motion-duration.deep" = "There was a slight amount of motion.";
+"sleep-stat.motion-duration.medium" = "There was a moderate amount of motion.";
+"sleep-stat.motion-duration.light" = "There was a lot of motion.";
+"sleep-stat.motion-duration.awake" = "There was a lot of motion.";
 
 // sleep history
 "sleep-history.last-night" = "Last night";

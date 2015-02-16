@@ -40,6 +40,13 @@ static CGFloat const kHEMSleepViewAnimDuration = 0.2f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+
+    // TODO (jimmy): probably should find a better way to hide the chevron
+    // back image when using the custom navigtion controller.  It also should
+    // not show a chevron on the first controller, which is currently what is
+    // doing.  In case the the navigation controller is switched back to a
+    // vanilla one, i am leaving the call to hide back button here
+    [[self navigationItem] setLeftBarButtonItem:nil];
     [[self navigationItem] setHidesBackButton:YES];
     
     [self setupBackgroundImage];

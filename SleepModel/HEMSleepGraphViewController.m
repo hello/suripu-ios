@@ -418,7 +418,7 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
         depth = @"deep";
     else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
-        depth = @"medjium";
+        depth = @"medium";
     else
         depth = @"light";
     

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2.6
+
+Fixes:
+
+* signing out of app no longer resets server path
+
 ## 1.0.2.5
 
 Fixes:

@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.2.5
+
+Fixes:
+
+* questions UI showing a back button unintentionally
+* shortening the message in the Timeline segment popup
+* updated copy in the set up another pill onboarding screen
+* updated sensor view text attributes
+
 ## 1.0.2.4
 
 Fixes:

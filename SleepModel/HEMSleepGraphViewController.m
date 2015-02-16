@@ -383,11 +383,34 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     }
 }
 
+// TODO (jimmy): commenting this out until we want to display duration again.
+// In which case, we should also update the localizable.strings files too to
+// remove unnecessary strings
+
+//- (NSString*)summaryPopupTextForSegment:(SENSleepResultSegment*)segment
+//{
+//    static NSString* const HEMPopupTextFormat = @"sleep-stat.%@-duration.%@.%@.format";
+//    long minutes = (long)([segment.duration floatValue]/60);
+//    NSString* pluralize = minutes == 1 ? @"single" : @"plural";
+//    NSString* segmentType = segment.eventType.length == 0 ? @"motion" : @"sleep";
+//    NSString* depth;
+//    if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
+//        depth = @"awake";
+//    else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
+//        depth = @"deep";
+//    else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
+//        depth = @"medium";
+//    else
+//        depth = @"light";
+//
+//    NSString* format = [NSString stringWithFormat:HEMPopupTextFormat, segmentType, depth, pluralize];
+//    NSString* localizedFormat = NSLocalizedString(format, nil);
+//    return minutes == 1 ? localizedFormat : [NSString stringWithFormat:localizedFormat, minutes];
+//}
+
 - (NSString*)summaryPopupTextForSegment:(SENSleepResultSegment*)segment
 {
-    static NSString* const HEMPopupTextFormat = @"sleep-stat.%@-duration.%@.%@.format";
-    long minutes = (long)([segment.duration floatValue]/60);
-    NSString* pluralize = minutes == 1 ? @"single" : @"plural";
+    static NSString* const HEMPopupTextFormat = @"sleep-stat.%@-duration.%@";
     NSString* segmentType = segment.eventType.length == 0 ? @"motion" : @"sleep";
     NSString* depth;
     if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
@@ -395,13 +418,12 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
         depth = @"deep";
     else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
-        depth = @"medium";
+        depth = @"medjium";
     else
         depth = @"light";
-
-    NSString* format = [NSString stringWithFormat:HEMPopupTextFormat, segmentType, depth, pluralize];
-    NSString* localizedFormat = NSLocalizedString(format, nil);
-    return minutes == 1 ? localizedFormat : [NSString stringWithFormat:localizedFormat, minutes];
+    
+    NSString* format = [NSString stringWithFormat:HEMPopupTextFormat, segmentType, depth];
+    return NSLocalizedString(format, nil);
 }
 
 - (void)didPan

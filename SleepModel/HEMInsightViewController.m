@@ -92,6 +92,7 @@ static CGFloat const HEMInsightTextVertPadding = 20.0f;
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 [strongSelf setInfoError:error];
                 [strongSelf setInfo:info];
+                [[strongSelf shareButton] setEnabled:[[info info] length] > 0];
                 [strongSelf showContent];
                 // show the content before we remove the activity
                 [activity dismissWithResultText:nil showSuccessMark:NO remove:YES completion:nil];

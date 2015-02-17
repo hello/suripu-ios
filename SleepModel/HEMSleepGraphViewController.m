@@ -69,6 +69,9 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:self.panGestureRecognizer];
     [self.view addGestureRecognizer:self.panGestureRecognizer];
     [self registerForNotifications];
+    
+    [SENAnalytics track:kHEMAnalyticsEventTimeline
+             properties:@{kHEMAnalyticsEventPropDate : [self dateForNightOfSleep] ?: @"undefined"}];
 }
 
 - (void)showTutorial

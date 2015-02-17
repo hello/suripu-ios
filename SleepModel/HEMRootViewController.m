@@ -238,11 +238,16 @@ static CGFloat const HEMRootDrawerRevealHeightStatusOffset = 20.f;
         case MSDynamicsDrawerPaneStateClosed:
             [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidCloseNotification
                                                                 object:nil];
+            [SENAnalytics track:kHEMAnalyticsEventDrawer
+                     properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventPropClose}];
             break;
-        case MSDynamicsDrawerPaneStateOpen:
+        case MSDynamicsDrawerPaneStateOpen: {
             [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidOpenNotification
                                                                 object:nil];
+            [SENAnalytics track:kHEMAnalyticsEventDrawer
+                     properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventPropOpen}];
             break;
+        }
         default:
             break;
     }

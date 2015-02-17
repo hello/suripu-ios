@@ -111,6 +111,9 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
                selector:@selector(refreshCurrentSensorValue:)
                    name:SENSensorUpdatedNotification object:nil];
     [center addObserver:self
+               selector:@selector(refreshData)
+                   name:SENAPIReachableNotification object:nil];
+    [center addObserver:self
                selector:@selector(reloadData)
                    name:SENSettingsDidUpdateNotification object:SENSettingsUpdateTypeTemp];
 }

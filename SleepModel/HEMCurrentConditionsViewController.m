@@ -68,6 +68,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 {
     [self invalidateTimers];
     [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:SENAPIReachableNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SENSensorsUpdatedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SENSensorUpdateFailedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SENAuthorizationServiceDidAuthorizeNotification object:nil];
@@ -88,6 +89,9 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     [center addObserver:self
                selector:@selector(refreshSensors)
                    name:SENSensorsUpdatedNotification object:nil];
+    [center addObserver:self
+               selector:@selector(refreshSensors)
+                   name:SENAPIReachableNotification object:nil];
     [center addObserver:self
                selector:@selector(failedToRefreshSensors)
                    name:SENSensorUpdateFailedNotification

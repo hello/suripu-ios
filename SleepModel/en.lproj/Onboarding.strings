@@ -26,8 +26,8 @@
 /* Class = "IBUITextField"; placeholder = "Email"; ObjectID = "4H9-4w-9eg"; */
 "4H9-4w-9eg.placeholder" = "Email";
 
-/* Class = "IBUIButton"; normalTitle = "Set up another Sleep Pill"; ObjectID = "4OB-Af-zlr"; */
-"4OB-Af-zlr.normalTitle" = "Add another Sleep Pill";
+/* Class = "IBUIButton"; normalTitle = "Add another Sleep Pill now"; ObjectID = "4OB-Af-zlr"; */
+"4OB-Af-zlr.normalTitle" = "Add another Sleep Pill now";
 
 /* Class = "IBUILabel"; text = "Enter your WiFi credentials:"; ObjectID = "4PT-Jb-KBo"; */
 "4PT-Jb-KBo.text" = "Enter your WiFi credentials:";
@@ -77,8 +77,8 @@
 /* Class = "IBUILabel"; text = "Thank"; ObjectID = "IrN-Am-iTa"; */
 "IrN-Am-iTa.text" = "Thank";
 
-/* Class = "IBUIButton"; normalTitle = "No Thanks"; ObjectID = "Kgp-n3-6dl"; */
-"Kgp-n3-6dl.normalTitle" = "NO THANKS";
+/* Class = "IBUIButton"; normalTitle = "NOT RIGHT NOW"; ObjectID = "Kgp-n3-6dl"; */
+"Kgp-n3-6dl.normalTitle" = "NOT RIGHT NOW";
 
 /* Class = "IBUILabel"; text = "Meet Sense."; ObjectID = "LK8-dI-wjg"; */
 "LK8-dI-wjg.text" = "Meet Sense";

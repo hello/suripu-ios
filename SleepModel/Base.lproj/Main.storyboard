@@ -1937,7 +1937,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bus-ep-dfy">
-                                                    <rect key="frame" x="16" y="62" width="553" height="39"/>
+                                                    <rect key="frame" x="16" y="62" width="537" height="39"/>
                                                     <string key="text">Sense's Smart Alarm will wake you up at just the right moment in your sleep cycle, so you wake feeling rested. Once set, your alarms will appear here.</string>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
@@ -1948,10 +1948,10 @@
                                         </view>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstItem="Bus-ep-dfy" firstAttribute="leading" secondItem="Yyh-iI-O4j" secondAttribute="leadingMargin" constant="8" id="HpE-i2-arC"/>
+                                            <constraint firstItem="Bus-ep-dfy" firstAttribute="leading" secondItem="Yyh-iI-O4j" secondAttribute="leading" constant="16" id="HpE-i2-arC"/>
                                             <constraint firstItem="Bus-ep-dfy" firstAttribute="top" secondItem="GlN-SR-oNV" secondAttribute="bottom" constant="24" id="RaH-vL-kYh"/>
                                             <constraint firstItem="GlN-SR-oNV" firstAttribute="top" secondItem="Yyh-iI-O4j" secondAttribute="top" constant="24" id="chj-x3-HNr"/>
-                                            <constraint firstItem="Bus-ep-dfy" firstAttribute="trailing" secondItem="Yyh-iI-O4j" secondAttribute="trailingMargin" constant="8" id="qVr-tu-crl"/>
+                                            <constraint firstItem="Bus-ep-dfy" firstAttribute="trailing" secondItem="Yyh-iI-O4j" secondAttribute="trailing" constant="-16" id="qVr-tu-crl"/>
                                             <constraint firstItem="GlN-SR-oNV" firstAttribute="leading" secondItem="Yyh-iI-O4j" secondAttribute="leading" constant="16" id="wv0-Cy-NqY"/>
                                         </constraints>
                                         <size key="customSize" width="568.5" height="178"/>

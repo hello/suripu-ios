@@ -5,8 +5,7 @@
 //  Created by Delisa Mason on 12/13/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <SenseKit/SENServiceQuestions.h>
-#import <SenseKit/SENQuestion.h>
+#import <SenseKit/SenseKit.h>
 
 #import "UIView+HEMSnapshot.h"
 
@@ -67,8 +66,15 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self reload];
-    
     [SENAnalytics track:kHEMAnalyticsEventFeed];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reload)
+                                                 name:SENAPIReachableNotification object:nil];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)reload {

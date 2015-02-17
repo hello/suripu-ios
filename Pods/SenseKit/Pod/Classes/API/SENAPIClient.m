@@ -1,9 +1,13 @@
 
 #import <AFNetworking/AFHTTPSessionManager.h>
+#import <AFNetworking/AFNetworkReachabilityManager.h>
 #import <NSJSONSerialization-NSNullRemoval/NSJSONSerialization+RemovingNulls.h>
 
 #import "SENAPIClient.h"
 #import "SENAuthorizationService.h"
+
+NSString* const SENAPIReachableNotification = @"SENAPIReachableNotification";
+NSString* const SENAPIUnreachableNotification = @"SENAPIUnreachableNotification";
 
 static NSString* const SENDefaultBaseURLPath = @"https://dev-api.hello.is/v1";
 static NSString* const SENAPIClientBaseURLPathKey = @"SENAPIClientBaseURLPathKey";
@@ -75,7 +79,10 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
     if (!sessionManager) {
         sessionManager = [[AFHTTPSessionManager alloc] initWithBaseURL:[self baseURL]];
         sessionManager.requestSerializer = [[AFJSONRequestSerializer alloc] init];
-        //        [sessionManager.requestSerializer setValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+        [sessionManager.reachabilityManager startMonitoring];
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(handleReachabilityUpdate:)
+                                                     name:AFNetworkingReachabilityDidChangeNotification object:nil];
     }
     return sessionManager;
 }
@@ -89,6 +96,7 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
 
 + (void)resetToDefaultBaseURL
 {
+    [sessionManager.reachabilityManager stopMonitoring];
     sessionManager = nil;
     [[NSUserDefaults standardUserDefaults] removeObjectForKey:SENAPIClientBaseURLPathKey];
 }
@@ -97,6 +105,7 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
 {
     NSURL* baseURL = [NSURL URLWithString:baseURLPath];
     if (baseURL && baseURLPath.length > 0) {
+        [sessionManager.reachabilityManager stopMonitoring];
         sessionManager = nil;
         if (baseURLPath.length == 0) {
             [[NSUserDefaults standardUserDefaults] removeObjectForKey:SENAPIClientBaseURLPathKey];
@@ -117,6 +126,28 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
         [set formUnionWithCharacterSet:[NSCharacterSet URLQueryAllowedCharacterSet]];
     });
     return [URLString stringByAddingPercentEncodingWithAllowedCharacters:set];
+}
+
++ (void)handleReachabilityUpdate:(NSNotification*)note
+{
+    AFNetworkReachabilityStatus status = [note.userInfo[AFNetworkingReachabilityNotificationStatusItem] integerValue];
+    switch (status) {
+        case AFNetworkReachabilityStatusReachableViaWWAN:
+        case AFNetworkReachabilityStatusReachableViaWiFi:
+            [[NSNotificationCenter defaultCenter] postNotificationName:SENAPIReachableNotification object:nil];
+            break;
+        case AFNetworkReachabilityStatusUnknown:
+        case AFNetworkReachabilityStatusNotReachable:
+        default:
+            [[NSNotificationCenter defaultCenter] postNotificationName:SENAPIUnreachableNotification object:nil];
+            break;
+    }
+}
+
++ (BOOL)isAPIReachable
+{
+    AFNetworkReachabilityManager* manager = sessionManager.reachabilityManager;
+    return [manager isReachable];
 }
 
 ///-------------------------------

@@ -1,10 +1,5 @@
 
-#import <SenseKit/SENSettings.h>
-#import <SenseKit/SENAuthorizationService.h>
-#import <markdown_peg.h>
-#import <SenseKit/SENSensor.h>
-#import <SenseKit/SENSettings.h>
-#import <SenseKit/SENSleepResult.h>
+#import <SenseKit/SenseKit.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
 #import "HelloStyleKit.h"
@@ -119,6 +114,10 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
                                                  name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadData)
+                                                 name:SENAPIReachableNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleAuthorization)

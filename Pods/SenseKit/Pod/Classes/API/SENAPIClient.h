@@ -4,6 +4,16 @@
 typedef void (^SENAPIDataBlock)(id data, NSError* error);
 typedef void (^SENAPIErrorBlock)(NSError* error);
 
+/**
+ *  Notification sent when Sense API is changed to reachable
+ */
+extern NSString* const SENAPIReachableNotification;
+
+/**
+ *  Notification sent when Sense API is changed to unreachable
+ */
+extern NSString* const SENAPIUnreachableNotification;
+
 @interface SENAPIClient : NSObject
 
 /**
@@ -21,6 +31,11 @@ typedef void (^SENAPIErrorBlock)(NSError* error);
  *  Updates the base URL for the suripu app service to the default URL
  */
 + (void)resetToDefaultBaseURL;
+
+/**
+ *  Returns YES if base URL is reachable
+ */
++ (BOOL)isAPIReachable;
 
 ///-------------------------------
 /// @name HTTP Requests Formatting

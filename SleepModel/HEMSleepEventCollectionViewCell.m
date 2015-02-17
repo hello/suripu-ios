@@ -22,6 +22,7 @@
 @property (nonatomic, strong) CAGradientLayer* gradientBottomLayer;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* contentViewHeightConstraint;
 @property (nonatomic, getter=isExpanded) BOOL expanded;
+@property (nonatomic, strong) NSOperationQueue* loadingQueue;
 @end
 
 @implementation HEMSleepEventCollectionViewCell
@@ -29,6 +30,7 @@
 static CGFloat const HEMEventButtonSize = 40.f;
 static CGFloat const HEMEventBlurHeight = 60.f;
 static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
+static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 
 + (NSAttributedString*)attributedMessageFromText:(NSString*)text
 {
@@ -45,6 +47,8 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    self.loadingQueue = [NSOperationQueue new];
+    self.loadingQueue.maxConcurrentOperationCount = 1;
     self.backgroundColor = [UIColor clearColor];
     self.contentViewHeightConstraint.constant = 0;
     self.lineView.image = [self dottedLineBorderImageWithColor:[HelloStyleKit tintColor]];
@@ -237,17 +241,45 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
 - (void)setAudioURL:(NSURL *)audioURL
 {
+    [self stopAudio];
+    [self.loadingQueue cancelAllOperations];
     if ([audioURL isEqual:self.waveformView.audioURL]) {
         self.playSoundButton.enabled = YES;
         return;
     }
-    self.waveformView.audioURL = audioURL;
     __weak typeof(self) weakSelf = self;
-    self.waveformView.completion = ^(NSURL* processedURL, BOOL success) {
+    [self.loadingQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (success)
-            [strongSelf handleLoadingSuccess];
-    };
+        NSData* urlData = [NSData dataWithContentsOfURL:audioURL];
+        if (!urlData) {
+            [strongSelf cancelLoading];
+            return;
+        }
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSURL *cache = [[fileManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject];
+        NSString* fileName = [NSString stringWithFormat:HEMEventPlayerFileName, (long)[audioURL hash]];
+        NSURL* localFile = [cache URLByAppendingPathComponent:fileName];
+        BOOL success = [urlData writeToURL:localFile atomically:YES];
+        if (!success) {
+            [strongSelf cancelLoading];
+            return;
+        }
+        [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
+            strongSelf.waveformView.audioURL = localFile;
+            strongSelf.waveformView.completion = ^(NSURL* processedURL, BOOL success) {
+                if (success)
+                    [strongSelf handleLoadingSuccess];
+            };
+        }]];
+    }]];
+}
+
+- (void)cancelLoading
+{
+    __weak typeof(self) weakSelf = self;
+    [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [weakSelf handleLoadingFailure];
+    }]];
 }
 
 - (IBAction)toggleAudio

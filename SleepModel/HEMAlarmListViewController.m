@@ -317,6 +317,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
                                                                       attributes:detailAttributes];
     NSString* title = [NSLocalizedString(@"alarms.no-alarm.title", nil) uppercaseString];
     cell.titleLabel.text = title;
+    cell.titleLabel.font = [UIFont backViewTitleFont];
     return cell;
 }
 

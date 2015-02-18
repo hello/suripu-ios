@@ -85,11 +85,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     }
 }
 
-- (void)applicationWillEnterForeground:(UIApplication *)application
-{
-    [self setScreenBrightness];
-}
-
 - (void)applicationDidBecomeActive:(UIApplication*)application
 {
     [HEMNotificationHandler clearNotifications];
@@ -201,7 +196,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (void)configureAppearance
 {
-    [self setScreenBrightness];
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
     UINavigationBar* appearance = [UINavigationBar appearanceWhenContainedIn:[HEMStyledNavigationViewController class], nil];
     [appearance setBackgroundImage:[[UIImage alloc] init]
@@ -216,25 +210,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
         NSFontAttributeName : [UIFont navButtonTitleFont],
         NSForegroundColorAttributeName : [HelloStyleKit tintColor]
     } forState:UIControlStateNormal];
-}
-
-- (void)setScreenBrightness
-{
-    static NSInteger const HEMLowestBrightnessEveningBound = 22;
-    static NSInteger const HEMLowestBrightnessMorningBound = 6;
-    static NSInteger const HEMLowBrightnessBound = 20;
-    static CGFloat const HEMLowestBrightnessLevel = 0.2f;
-    static CGFloat const HEMLowBrightnessLevel = 0.4f;
-    UIScreen* screen = [UIScreen mainScreen];
-    NSDateComponents* components = [[NSCalendar currentCalendar] components:NSHourCalendarUnit fromDate:[NSDate date]];
-    NSInteger hour = components.hour;
-    CGFloat brightness = screen.brightness;
-    BOOL inLowestBrightnessRange = hour >= HEMLowestBrightnessEveningBound || hour < HEMLowestBrightnessMorningBound;
-    if (inLowestBrightnessRange && brightness > HEMLowestBrightnessLevel) {
-        screen.brightness = HEMLowestBrightnessLevel;
-    } else if (hour >= HEMLowBrightnessBound && brightness > HEMLowBrightnessLevel) {
-        screen.brightness = HEMLowBrightnessLevel;
-    }
 }
 
 - (void)createAndShowWindow

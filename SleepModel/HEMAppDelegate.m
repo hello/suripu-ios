@@ -32,12 +32,13 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [application setApplicationSupportsShakeToEdit:NO];
 #endif
 
+    [self configureAPI];
+    [HEMLogUtils enableLogger];
+
     if (launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey])
         [HEMNotificationHandler handleRemoteNotificationWithInfo:launchOptions[UIApplicationLaunchOptionsRemoteNotificationKey]
                                           fetchCompletionHandler:NULL];
 
-    [HEMLogUtils enableLogger];
-    [self configureAPI];
     [self deauthorizeIfNeeded];
     [self configureSettingsDefaults];
     [self configureAnalytics];

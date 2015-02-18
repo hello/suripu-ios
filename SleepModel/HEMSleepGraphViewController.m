@@ -300,6 +300,14 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
             }
         }
         self.expandedIndexPath = indexPath;
+        
+        NSMutableDictionary* properties
+            = [@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventPropEvent} mutableCopy];
+        SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+        if ([segment eventType] != nil) {
+            properties[kHEMAnalyticsEventPropType] = [segment eventType];
+        }
+        [SENAnalytics track:kHEMAnalyticsEventTimelineAction properties:properties];
     } else {
         self.expandedIndexPath = nil;
     }

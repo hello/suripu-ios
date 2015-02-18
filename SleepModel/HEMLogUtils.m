@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 #import <sys/utsname.h>
+#import <SenseKit/SENAPIClient.h>
 #import <CocoaLumberjack/DDLog.h>
 #import <CocoaLumberjack/DDFileLogger.h>
 #import <CocoaLumberjack/DDTTYLogger.h>
@@ -46,6 +47,7 @@ static CGFloat const HEMLogUtilsRollingFrequency = 60 * 60 * 24;
     DDLogInfo(@"App Version: %@", appVersion);
     DDLogInfo(@"iOS Version: %@", device.systemVersion);
     DDLogInfo(@"Device: %@", modelName);
+    DDLogInfo(@"API Version: %@", [SENAPIClient baseURL]);
     if (device.batteryLevel >= 0) {
         NSString* batteryLevel = [NSString stringWithFormat:@"%0.f%%", device.batteryLevel * 100];
         DDLogInfo(@"Battery Level: %@", batteryLevel);

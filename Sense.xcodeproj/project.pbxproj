@@ -89,7 +89,6 @@
 		8A63D5621A6058DA00F5307D /* lightsOutEventIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A63D55F1A6058DA00F5307D /* lightsOutEventIcon@2x.png */; };
 		8A63D5631A6058DA00F5307D /* lightsOutEventIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A63D5601A6058DA00F5307D /* lightsOutEventIcon@3x.png */; };
 		8A660123199E9CF9007E6167 /* HEMOnboardingCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A660122199E9CF9007E6167 /* HEMOnboardingCache.m */; };
-		8A66013B199EBF87007E6167 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8A660139199EBF87007E6167 /* README.md */; };
 		8A66FC7C199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */; };
 		8A66FC85199C035500922ED5 /* HEMMiniSleepHistoryView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC84199C035500922ED5 /* HEMMiniSleepHistoryView.m */; };
 		8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC8A199D115D00922ED5 /* HEMBirthdatePickerViewController.m */; };
@@ -638,6 +637,7 @@
 		8A1E722F19D62C26007475D3 /* alarmSmartIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "alarmSmartIcon@2x.png"; path = "images/alarmSmartIcon@2x.png"; sourceTree = "<group>"; };
 		8A1E723019D62C26007475D3 /* alarmSoundIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = alarmSoundIcon.png; path = images/alarmSoundIcon.png; sourceTree = "<group>"; };
 		8A1E723119D62C26007475D3 /* alarmSoundIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "alarmSoundIcon@2x.png"; path = "images/alarmSoundIcon@2x.png"; sourceTree = "<group>"; };
+		8A2823561A95557900438B59 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		8A28CAFD19CB95E40044A27D /* HEMNotificationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNotificationHandler.h; sourceTree = "<group>"; };
 		8A28CAFE19CB95E40044A27D /* HEMNotificationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNotificationHandler.m; sourceTree = "<group>"; };
 		8A391FC81A39352F0090992A /* HEMZoomAnimationTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMZoomAnimationTransitionDelegate.h; sourceTree = "<group>"; };
@@ -699,7 +699,6 @@
 		8A63D5601A6058DA00F5307D /* lightsOutEventIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightsOutEventIcon@3x.png"; path = "images/lightsOutEventIcon@3x.png"; sourceTree = "<group>"; };
 		8A660121199E9CF9007E6167 /* HEMOnboardingCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingCache.h; sourceTree = "<group>"; };
 		8A660122199E9CF9007E6167 /* HEMOnboardingCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingCache.m; sourceTree = "<group>"; };
-		8A660139199EBF87007E6167 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = SleepModel/README.md; sourceTree = "<group>"; };
 		8A66FC7A199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepSummaryPagingDataSource.h; sourceTree = "<group>"; };
 		8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSummaryPagingDataSource.m; sourceTree = "<group>"; };
 		8A66FC83199C035500922ED5 /* HEMMiniSleepHistoryView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMiniSleepHistoryView.h; sourceTree = "<group>"; };
@@ -1352,8 +1351,8 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
+				8A2823561A95557900438B59 /* README.md */,
 				8AA0F57E19C2255D00556AAF /* CHANGELOG.md */,
-				8A660139199EBF87007E6167 /* README.md */,
 				6003F593195388D20070C39A /* Sense */,
 				BF7F1BCB19E304050028F799 /* SenseWidget */,
 				6003F5B5195388D20070C39A /* Tests */,
@@ -2924,7 +2923,6 @@
 				8AC4A0371989C36200C2BD63 /* humidityIcon.png in Resources */,
 				8A1E723519D62C26007475D3 /* alarmRepeatIcon@2x.png in Resources */,
 				8A8288B11A76CF1E0043B1D1 /* presleepInsightTemperature.png in Resources */,
-				8A66013B199EBF87007E6167 /* README.md in Resources */,
 				BFC3BE971A7202700022C6C2 /* settingsCheck.png in Resources */,
 				BFE8730B1A2FC65600494231 /* sensorTemperatureBlue@3x.png in Resources */,
 				8AC4A0381989C36200C2BD63 /* humidityIcon@2x.png in Resources */,

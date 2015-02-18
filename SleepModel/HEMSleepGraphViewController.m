@@ -1,10 +1,5 @@
 
-#import <SenseKit/SENSettings.h>
-#import <SenseKit/SENAuthorizationService.h>
-#import <markdown_peg.h>
-#import <SenseKit/SENSensor.h>
-#import <SenseKit/SENSettings.h>
-#import <SenseKit/SENSleepResult.h>
+#import <SenseKit/SenseKit.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
 #import "HelloStyleKit.h"
@@ -69,6 +64,9 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:self.panGestureRecognizer];
     [self.view addGestureRecognizer:self.panGestureRecognizer];
     [self registerForNotifications];
+    
+    [SENAnalytics track:kHEMAnalyticsEventTimeline
+             properties:@{kHEMAnalyticsEventPropDate : [self dateForNightOfSleep] ?: @"undefined"}];
 }
 
 - (void)showTutorial
@@ -116,6 +114,10 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
                                                  name:UIApplicationDidBecomeActiveNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadData)
+                                                 name:SENAPIReachableNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleAuthorization)
@@ -298,6 +300,14 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
             }
         }
         self.expandedIndexPath = indexPath;
+        
+        NSMutableDictionary* properties
+            = [@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventPropEvent} mutableCopy];
+        SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+        if ([segment eventType] != nil) {
+            properties[kHEMAnalyticsEventPropType] = [segment eventType];
+        }
+        [SENAnalytics track:kHEMAnalyticsEventTimelineAction properties:properties];
     } else {
         self.expandedIndexPath = nil;
     }

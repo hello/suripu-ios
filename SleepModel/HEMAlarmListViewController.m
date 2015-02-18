@@ -1,5 +1,5 @@
 
-#import <SenseKit/Model.h>
+#import <SenseKit/SenseKit.h>
 #import <SpinKit/RTSpinKitView.h>
 #import <AttributedMarkdown/markdown_peg.h>
 
@@ -63,6 +63,9 @@ static NSUInteger const HEMAlarmListLimit = 8;
 {
     [super viewWillAppear:animated];
     [self refreshAlarmList];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshAlarmList)
+                                                 name:SENAPIReachableNotification object:nil];
     [self.collectionView reloadData];
 }
 
@@ -74,6 +77,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [self touchUpOutsideAddAlarmButton:nil];
 }
 
@@ -317,6 +321,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
                                                                       attributes:detailAttributes];
     NSString* title = [NSLocalizedString(@"alarms.no-alarm.title", nil) uppercaseString];
     cell.titleLabel.text = title;
+    cell.titleLabel.font = [UIFont backViewTitleFont];
     return cell;
 }
 

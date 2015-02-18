@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.2.7
+
+Fixes:
+
+* added additional analytics to help troubleshoot issues
+* fix crasher that can occur by sharing an insight that has no content
+* better handling of intermittent network failures
+* fix issue that can occassionally cause Timeline to show a blank screen
+* minor visual and copy changes
+
 ## 1.0.2.6
 
 Fixes:

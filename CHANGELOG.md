@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.2.8
+
+Fixes:
+
+* reduced size of app by reducing size of images and removing old ones
+* fixed layout bug in Sensor screen that causes it to be off by 20px
+
 ## 1.0.2.7
 
 Fixes:

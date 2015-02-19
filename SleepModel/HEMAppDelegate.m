@@ -44,7 +44,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [self configureAnalytics];
     [self configureAppearance];
     [self registerForNotifications];
-    [self syncData];
+    [self syncHealthKitData];
     [self createAndShowWindow];
     
     return YES;
@@ -94,7 +94,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     }
 }
 
-- (void)syncData {
+- (void)syncHealthKitData {
     if ([SENAuthorizationService isAuthorized]) {
         [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
             [HEMAnalytics trackUserSession]; // update user session data

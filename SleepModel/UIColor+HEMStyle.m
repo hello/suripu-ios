@@ -10,6 +10,11 @@
 #import "UIColor+HEMStyle.h"
 #import "HelloStyleKit.h"
 
+NSUInteger const HEMSleepScoreUnknown = 0;
+NSUInteger const HEMSleepScoreLow = 50;
+NSUInteger const HEMSleepScoreMedium = 80;
+NSUInteger const HEMSleepScoreHigh = 100;
+
 @implementation UIColor (HEMStyle)
 
 + (UIColor*)colorForGenericMotionDepth:(NSUInteger)depth
@@ -52,11 +57,11 @@
 
 + (UIColor *)colorForSleepScore:(NSInteger)sleepScore
 {
-    if (sleepScore == 0)
+    if (sleepScore == HEMSleepScoreUnknown)
         return [HelloStyleKit unknownSensorColor];
-    else if (sleepScore < 45)
+    else if (sleepScore < HEMSleepScoreLow)
         return [HelloStyleKit alertSensorColor];
-    else if (sleepScore < 80)
+    else if (sleepScore < HEMSleepScoreMedium)
         return [HelloStyleKit warningSensorColor];
     else
         return [HelloStyleKit idealSensorColor];

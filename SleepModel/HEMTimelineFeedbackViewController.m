@@ -12,6 +12,7 @@
 #import "HEMClockPickerView.h"
 #import "HEMDialogViewController.h"
 #import "HEMRootViewController.h"
+#import "HelloStyleKit.h"
 
 @interface HEMTimelineFeedbackViewController ()
 @property (nonatomic, weak) IBOutlet HEMClockPickerView* clockView;
@@ -76,12 +77,25 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
 
 - (IBAction)sendUpdatedTime:(id)sender
 {
+    NSArray* rightItems = self.navigationItem.rightBarButtonItems;
+    UIBarButtonItem* rightItem = [rightItems lastObject];
+    NSArray* leftItems = self.navigationItem.leftBarButtonItems;
+    UIBarButtonItem* leftItem = [leftItems lastObject];
+    leftItem.enabled = NO;
+    UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicatorView.color = [HelloStyleKit tintColor];
+    UIBarButtonItem* indicatorItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
+    self.navigationItem.rightBarButtonItems = @[[rightItems firstObject], indicatorItem];
+    [indicatorView startAnimating];
     [SENAPIFeedback updateSegment:self.segment
                          withHour:self.clockView.hour
                            minute:self.clockView.minute
                   forNightOfSleep:self.dateForNightOfSleep
                        completion:^(NSError *error) {
+                           [indicatorView stopAnimating];
                            if (error) {
+                               self.navigationItem.rightBarButtonItems = @[[rightItems firstObject], rightItem];
+                               leftItem.enabled = YES;
                                [HEMDialogViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
                                                                         message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
                                                                      controller:self];

@@ -12,15 +12,19 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sleepEventButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sleepEventButtonHeightConstraint;
-@property (nonatomic, strong) AVAudioPlayer* player;
-@property (nonatomic, strong) NSTimer* playerUpdateTimer;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet UIImageView* lineView;
 @property (nonatomic, weak) IBOutlet UIView* contentContainerView;
+@property (weak, nonatomic) IBOutlet UIButton* playSoundButton;
+@property (weak, nonatomic) IBOutlet FDWaveformView* waveformView;
+@property (weak, nonatomic) IBOutlet RTSpinKitView* spinnerView;
+
+@property (nonatomic, strong) AVAudioPlayer* player;
+@property (nonatomic, strong) NSTimer* playerUpdateTimer;
 @property (nonatomic, strong) UIView* gradientContainerTopView;
 @property (nonatomic, strong) UIView* gradientContainerBottomView;
 @property (nonatomic, strong) CAGradientLayer* gradientTopLayer;
 @property (nonatomic, strong) CAGradientLayer* gradientBottomLayer;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* contentViewHeightConstraint;
 @property (nonatomic, getter=isExpanded) BOOL expanded;
 @property (nonatomic, strong) NSOperationQueue* loadingQueue;
 @end
@@ -60,9 +64,8 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    self.waveformView.hidden = YES;
     self.verifyDataButton.hidden = YES;
-    self.playSoundButton.hidden = YES;
+    self.audioPlayerView.hidden = YES;
     [self useExpandedLayout:NO targetSize:CGSizeZero animated:NO];
 }
 
@@ -79,17 +82,16 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 
 - (void)configureAudioPlayer
 {
-    self.waveformView.progressColor = [UIColor colorWithHue:0.56 saturation:1 brightness:1 alpha:1];
-    self.waveformView.wavesColor = [UIColor colorWithWhite:0.9f alpha:1.f];
+    self.playSoundButton.enabled = NO;
+    self.waveformView.progressColor = [HelloStyleKit tintColor];
+    self.waveformView.wavesColor = [HelloStyleKit lightSleepColor];
     self.waveformView.delegate = self;
-    self.waveformView.hidden = YES;
     self.spinnerView.color = self.waveformView.progressColor;
     self.spinnerView.spinnerSize = CGRectGetHeight(self.playSoundButton.bounds);
     self.spinnerView.style = RTSpinKitViewStyleArc;
     self.spinnerView.hidesWhenStopped = YES;
     self.spinnerView.backgroundColor = [UIColor clearColor];
-    [self.spinnerView stopAnimating];
-    self.playSoundButton.hidden = YES;
+    [self.spinnerView startAnimating];
 }
 
 - (void)configureGradientViews
@@ -230,8 +232,7 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 
 - (void)showAudioPlayer:(BOOL)isVisible
 {
-    self.waveformView.hidden = !isVisible;
-    self.playSoundButton.hidden = !isVisible;
+    self.audioPlayerView.hidden = !isVisible;
     self.playSoundButton.enabled = NO;
     if (isVisible)
         [self.spinnerView startAnimating];

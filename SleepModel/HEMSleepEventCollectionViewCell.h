@@ -10,10 +10,8 @@
 @property (weak, nonatomic) IBOutlet UILabel* eventTitleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* eventMessageLabel;
 @property (weak, nonatomic) IBOutlet UILabel* eventTimeLabel;
-@property (weak, nonatomic) IBOutlet UIButton* playSoundButton;
-@property (weak, nonatomic) IBOutlet FDWaveformView* waveformView;
-@property (weak, nonatomic) IBOutlet RTSpinKitView* spinnerView;
 @property (weak, nonatomic) IBOutlet UIButton *verifyDataButton;
+@property (weak, nonatomic) IBOutlet UIView* audioPlayerView;
 
 + (NSAttributedString*)attributedMessageFromText:(NSString*)text;
 

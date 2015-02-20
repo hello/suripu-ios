@@ -1592,13 +1592,13 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense will now check the conditions in your bedroom." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGc-8P-g1M">
-                                        <rect key="frame" x="20" y="40" width="560" height="21"/>
+                                        <rect key="frame" x="20" y="40" width="560" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="EwG-fT-RLQ">
-                                        <rect key="frame" x="0.0" y="61" width="600" height="421"/>
+                                        <rect key="frame" x="0.0" y="60.5" width="600" height="420.5"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="235" id="Eq2-1g-uLB"/>
                                         </constraints>
@@ -1685,9 +1685,9 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XpJ-Hr-RJB" customClass="HEMActionButton">
-                                        <rect key="frame" x="20" y="186" width="560" height="40"/>
+                                        <rect key="frame" x="20" y="186" width="560" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="JS1-gt-UdP"/>
+                                            <constraint firstAttribute="height" constant="50" id="JS1-gt-UdP"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>

@@ -68,35 +68,8 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
 #pragma mark - Sensor Messages
 
 - (NSAttributedString*)messageForSensor:(SENSensor*)sensor {
-    NSMutableAttributedString* attrMessage = nil;
-    if ([sensor condition] == SENSensorConditionIdeal) {
-        NSString* format = NSLocalizedString(@"onboarding.room-check.ideal-condition-format", nil);
-        NSString* message = [NSString stringWithFormat:format, [sensor localizedName]];
-        attrMessage = [self attributedMessage:message];
-    } else {
-        UIColor* color = [UIColor colorForSensorWithCondition:[sensor condition]];
-        NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckWithConditionColor:color];
-        
-        attrMessage = markdown_to_attr_string([sensor message], 0, statusAttributes);
-        NSMutableParagraphStyle* paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-        [paragraphStyle setAlignment:NSTextAlignmentCenter];
-        [attrMessage addAttribute:NSParagraphStyleAttributeName
-                            value:paragraphStyle
-                            range:NSMakeRange(0, [attrMessage length])];
-    }
-    
-    return attrMessage;
-}
-
-- (NSMutableAttributedString*)attributedMessage:(NSString*)message {
-    NSMutableParagraphStyle* paragraphStyle = [[NSMutableParagraphStyle alloc] init];
-    [paragraphStyle setAlignment:NSTextAlignmentCenter];
-    
-    NSDictionary* attributes = @{NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont],
-                                 NSForegroundColorAttributeName : [UIColor blackColor],
-                                 NSParagraphStyleAttributeName : paragraphStyle};
-    
-    return [[NSMutableAttributedString alloc] initWithString:message attributes:attributes];
+    NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckSensorMessage];
+    return markdown_to_attr_string([sensor message], 0, statusAttributes);
 }
 
 #pragma mark - Content Display
@@ -174,6 +147,7 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
             icon = [HelloStyleKit sensorSound];
             intro = NSLocalizedString(@"onboarding.room-check.intro.sound", nil);
             highlightedIcon = [HelloStyleKit sensorSoundBlue];
+            break;
         }
         default:
             break;

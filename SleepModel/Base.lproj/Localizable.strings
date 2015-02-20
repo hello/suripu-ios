@@ -39,7 +39,6 @@
 "onboarding.end-message.well-done" = "You're all set up";
 "onboarding.end-message.sleep" = "Now all you need to\ndo is sleep";
 "onboarding.room-check.checking-sensor.format" = "Checking %@";
-"onboarding.room-check.ideal-condition-format" = "The %@ in your room is just right.";
 "onboarding.room-check.failed" = "Unsuccessful";
 "onboarding.room-check.failed-message" = "One or more sensors is not ready yet. Don't worry, data will show soon. Set up a Smart Alarm first.";
 "onboarding.room-check.intro.temperature" = "Falling asleep, and sleep itself, can be affected if your room is too hot or too cold.";

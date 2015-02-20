@@ -2,7 +2,8 @@
 #import "AFHTTPSessionManager.h"
 #import "SENAPIRoom.h"
 #import "SENSensor.h"
-#import "SENSettings.h"
+#import "SENPreference.h"
+#import "SENServiceAccount.h"
 
 @implementation SENAPIRoom
 
@@ -21,7 +22,7 @@ static NSString* const SENAPIRoomParamUnit = @"temp_unit";
 
 + (void)currentWithCompletion:(SENAPIDataBlock)completion
 {
-    NSString* unitParam = [SENSettings useCentigrade] ? SENAPIRoomUnitCentigrade : SENAPIRoomUnitFahrenheit;
+    NSString* unitParam = [SENPreference useCentigrade] ? SENAPIRoomUnitCentigrade : SENAPIRoomUnitFahrenheit;
     [SENAPIClient GET:@"room/current" parameters:@{SENAPIRoomParamUnit:unitParam} completion:completion];
 }
 

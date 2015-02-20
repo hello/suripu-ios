@@ -2,7 +2,7 @@
 #import "SENAPIRoom.h"
 #import "SENSensor.h"
 #import "SENKeyedArchiver.h"
-#import "SENSettings.h"
+#import "SENPreference.h"
 
 NSString* const SENSensorUpdatedNotification = @"SENSensorUpdatedNotification";
 NSString* const SENSensorsUpdatedNotification = @"SENSensorsUpdatedNotification";
@@ -132,7 +132,7 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
 
 + (double)temperatureValueInPreferredUnit:(double)value
 {
-    if ([SENSettings temperatureFormat] == SENTemperatureFormatFahrenheit) {
+    if ([SENPreference temperatureFormat] == SENTemperatureFormatFahrenheit) {
         return (value * 1.8) + 32;
     }
     return value;

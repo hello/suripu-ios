@@ -12,7 +12,6 @@
 #import "SENAccount.h"
 #import "SENService+Protected.h"
 #import "SENPreference.h"
-#import "SENSettings.h"
 
 static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account";
 
@@ -42,7 +41,6 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     self = [super init];
     if (self) {
         [self listenForAuthChanges];
-        [self listenForSettingChanges];
     }
     return self;
 }
@@ -84,40 +82,6 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     [self refreshAccount:nil];
 }
 
-#pragma mark - Setting Changes
-
-- (void)listenForSettingChanges {
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(updatePreferenceForSetting:)
-                   name:SENSettingsDidUpdateNotification
-                 object:nil];
-}
-
-- (void)stopListeningForSettingChanges {
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center removeObserver:self name:SENSettingsDidUpdateNotification object:nil];
-}
-
-- (void)updatePreferenceForSetting:(NSNotification*)notification {
-    NSString* settingName = [notification object];
-    if ([settingName length] > 0) {
-        SENPreference* preference = nil;
-        if ([settingName isEqualToString:SENSettingsUpdateTypeTemp]) {
-            preference = [[SENPreference alloc] initWithType:SENPreferenceTypeTempCelcius
-                                                      enable:[SENSettings useCentigrade]];
-        } else if ([settingName isEqualToString:SENSettingsUpdateTypeTime]) {
-            BOOL enable = [SENSettings timeFormat] == SENTimeFormat24Hour;
-            preference = [[SENPreference alloc] initWithType:SENPreferenceTypeTime24
-                                                      enable:enable];
-        }
-        
-        if (preference) {
-            [self updatePreference:preference completion:nil]; // optimistically update
-        }
-    }
-}
-
 #pragma mark - Account Management
 
 - (void)refreshAccount:(SENAccountResponseBlock)completion {
@@ -143,37 +107,11 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (error == nil) {
             [strongSelf setPreferences:data];
-            [strongSelf updateLocalSettingsWithPreferences];
+            [[data allValues] makeObjectsPerformSelector:@selector(saveLocally)];
         }
         preferencesUpdated = YES;
         finishBlock(error);
     }];
-}
-
-- (void)updateLocalSettingsWithPreferences {
-    if ([[self preferences] count] == 0) return;
-    
-    [self stopListeningForSettingChanges];
-    
-    SENPreference* celciusPreference = [[self preferences] objectForKey:@(SENPreferenceTypeTempCelcius)];
-    if (celciusPreference != nil) {
-        SENTemperatureFormat format
-            = [celciusPreference isEnabled]
-            ? SENTemperatureFormatCentigrade
-            : SENTemperatureFormatFahrenheit;
-        [SENSettings setTemperatureFormat:format];
-    }
-    
-    SENPreference* militaryHourPreference = [[self preferences] objectForKey:@(SENPreferenceTypeTime24)];
-    if (militaryHourPreference != nil) {
-        SENTimeFormat format
-            = [militaryHourPreference isEnabled]
-            ? SENTimeFormat24Hour
-            : SENTimeFormat12Hour;
-        [SENSettings setTimeFormat:format];
-    }
-    
-    [self listenForSettingChanges];
 }
 
 - (void)changePassword:(NSString*)currentPassword
@@ -260,6 +198,9 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
         return;
     }
 
+    // optimistically update the preference locally
+    [preference saveLocally];
+    
     __weak typeof(self) weakSelf = self;
     [SENAPIPreferences updatePreference:preference completion:^(id data, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;

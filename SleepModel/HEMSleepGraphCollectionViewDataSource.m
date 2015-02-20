@@ -511,8 +511,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
                                  action:@selector(didTapEventButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     if (segment.sound) {
-        cell.waveformView.hidden = NO;
-        cell.playSoundButton.hidden = NO;
+        cell.audioPlayerView.hidden = NO;
         [cell setAudioURL:[NSURL URLWithString:segment.sound.URLPath]];
     } else if ([HEMTimelineFeedbackViewController canAdjustTimeForSegment:segment] &&
                [collectionView.delegate respondsToSelector:@selector(didTapDataVerifyButton:)]) {

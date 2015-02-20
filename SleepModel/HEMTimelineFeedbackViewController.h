@@ -8,6 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
+extern NSString* const HEMMTimelineFeedbackSuccessNotification;
+extern NSString* const HEMMTimelineFeedbackFailureNotification;
+
 @class SENSleepResultSegment;
 
 @interface HEMTimelineFeedbackViewController : UIViewController

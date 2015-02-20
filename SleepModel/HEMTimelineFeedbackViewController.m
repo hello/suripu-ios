@@ -13,6 +13,9 @@
 #import "HEMDialogViewController.h"
 #import "HEMRootViewController.h"
 
+NSString* const HEMMTimelineFeedbackSuccessNotification = @"HEMMTimelineFeedbackSuccessNotification";
+NSString* const HEMMTimelineFeedbackFailureNotification = @"HEMMTimelineFeedbackFailureNotification";
+
 @interface HEMTimelineFeedbackViewController ()
 @property (nonatomic, weak) IBOutlet HEMClockPickerView* clockView;
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
@@ -81,14 +84,10 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
                            minute:self.clockView.minute
                   forNightOfSleep:self.dateForNightOfSleep
                        completion:^(NSError *error) {
-                           if (error) {
-                               [HEMDialogViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
-                                                                        message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
-                                                                     controller:self];
-                               return;
-                           }
-                           [self dismissViewControllerAnimated:YES completion:NULL];
+                           NSString* name = error ? HEMMTimelineFeedbackFailureNotification : HEMMTimelineFeedbackSuccessNotification;
+                           [[NSNotificationCenter defaultCenter] postNotificationName:name object:error];
                        }];
+    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (IBAction)cancelAndDismiss:(id)sender

@@ -140,17 +140,17 @@ NSString* const kHEMAnalyticsEventDevicePairingMode = @"enable pairing mode";
     SENAccount* account = [[SENServiceAccount sharedService] account];
     NSMutableDictionary* uProperties = [NSMutableDictionary dictionary]; // updates profile properties
     NSMutableDictionary* gProperties = [NSMutableDictionary dictionary]; // props sent for every event
-    NSString* accountId = nil;
+    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
     
     if (account != nil) {
         NSString* name = [account name] ?: @"";
-        accountId = [account accountId] ?: @"";
         uProperties[kHEMAnalyticsEventMpPropName] = name;
-        uProperties[kHEMAnalyticsEventPropAccount] = accountId;
+        
+        if (accountId) {
+            uProperties[kHEMAnalyticsEventPropAccount] = accountId;
+        }
         
         gProperties[kHEMAnalyticsEventPropName] = name;
-    } else {
-        accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
     }
     
     uProperties[kHEMAnalyticsEventPropPlatform] = kHEMAnalyticsEventPlatform;
@@ -158,7 +158,10 @@ NSString* const kHEMAnalyticsEventDevicePairingMode = @"enable pairing mode";
     // need to additionally set the account id as a separate property so that it
     // is shown in as a user property when viewing People in Mixpanel.  If not using
     // mixpanel, we can probably just remove it
-    [SENAnalytics setUserId:accountId properties:uProperties];
+    
+    if (accountId) {
+        [SENAnalytics setUserId:accountId properties:uProperties];
+    }
     [SENAnalytics setGlobalEventProperties:gProperties];
     
 }

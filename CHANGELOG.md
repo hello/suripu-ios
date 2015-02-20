@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.2.9
+
+* Log API version for support requests
+* Fix iPad layout in landscape mode
+* Update timeline with time adjustments after sending feedback
+
 ## 1.0.2.8
 
 Fixes:

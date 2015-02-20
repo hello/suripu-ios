@@ -158,7 +158,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 
 + (BOOL)shouldShowTutorialForKey:(NSString*)key
 {
-    return [[[SENLocalPreferences sharedPreferences] userPreferenceForKey:key] boolValue];
+    return ![[[SENLocalPreferences sharedPreferences] userPreferenceForKey:key] boolValue];
 }
 
 + (void)markTutorialViewed:(NSString*)key

@@ -1784,37 +1784,23 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is used to provide you with more personalized sleep insights." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5o-GP-Ma1">
-                                <rect key="frame" x="20" y="68" width="560" height="21"/>
+                                <rect key="frame" x="20" y="68" width="560" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uO2-mX-vGj">
-                                <rect key="frame" x="20" y="160" width="560" height="270"/>
+                                <rect key="frame" x="20" y="159.5" width="560" height="270.5"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1t-tO-D6Q">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="270"/>
-                                        <inset key="titleEdgeInsets" minX="0.0" minY="100" maxX="45" maxY="0.0"/>
-                                        <inset key="imageEdgeInsets" minX="65" minY="0.0" maxX="0.0" maxY="40"/>
-                                        <state key="normal" title="Female" image="female.png">
-                                            <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="setGenderAsFemale:" destination="gpF-55-MmK" eventType="touchUpInside" id="ssY-Pr-dA1"/>
-                                        </connections>
-                                    </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lwc-2a-yNE">
-                                        <rect key="frame" x="279" y="0.0" width="1" height="270"/>
+                                        <rect key="frame" x="279" y="0.0" width="1" height="271"/>
                                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="v6H-kN-Nfj"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yLf-ik-ger">
-                                        <rect key="frame" x="280" y="0.0" width="280" height="270"/>
-                                        <inset key="titleEdgeInsets" minX="0.0" minY="100" maxX="45" maxY="0.0"/>
-                                        <inset key="imageEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="271"/>
                                         <state key="normal" title="Male" image="male.png">
                                             <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1823,20 +1809,30 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                             <action selector="setGenderAsMale:" destination="gpF-55-MmK" eventType="touchUpInside" id="xsI-Jy-dG5"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1t-tO-D6Q">
+                                        <rect key="frame" x="280" y="0.0" width="280" height="270"/>
+                                        <state key="normal" title="Female" image="female.png">
+                                            <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setGenderAsFemale:" destination="gpF-55-MmK" eventType="touchUpInside" id="ssY-Pr-dA1"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="yLf-ik-ger" secondAttribute="trailing" id="2SU-9z-EiG"/>
+                                    <constraint firstAttribute="centerX" secondItem="yLf-ik-ger" secondAttribute="trailing" id="2SU-9z-EiG"/>
                                     <constraint firstItem="lwc-2a-yNE" firstAttribute="top" secondItem="uO2-mX-vGj" secondAttribute="top" id="GJX-b9-T03"/>
                                     <constraint firstAttribute="bottom" secondItem="lwc-2a-yNE" secondAttribute="bottom" constant="-0.5" id="LGc-7x-Sfh"/>
                                     <constraint firstAttribute="centerX" secondItem="lwc-2a-yNE" secondAttribute="centerX" constant="0.5" id="LUT-yv-U1E"/>
-                                    <constraint firstItem="w1t-tO-D6Q" firstAttribute="leading" secondItem="uO2-mX-vGj" secondAttribute="leading" id="Lur-5c-Kcs"/>
+                                    <constraint firstItem="w1t-tO-D6Q" firstAttribute="leading" secondItem="uO2-mX-vGj" secondAttribute="centerX" id="Lur-5c-Kcs"/>
                                     <constraint firstAttribute="bottom" secondItem="w1t-tO-D6Q" secondAttribute="bottom" id="Pic-e6-RRg"/>
                                     <constraint firstItem="yLf-ik-ger" firstAttribute="top" secondItem="uO2-mX-vGj" secondAttribute="top" id="TBW-u5-A8P"/>
                                     <constraint firstAttribute="bottom" secondItem="yLf-ik-ger" secondAttribute="bottom" id="hmy-gx-v19"/>
                                     <constraint firstItem="w1t-tO-D6Q" firstAttribute="top" secondItem="uO2-mX-vGj" secondAttribute="top" id="tUj-GX-5Sg"/>
-                                    <constraint firstAttribute="centerX" secondItem="w1t-tO-D6Q" secondAttribute="trailing" id="vMy-Vt-rRD"/>
-                                    <constraint firstItem="yLf-ik-ger" firstAttribute="leading" secondItem="uO2-mX-vGj" secondAttribute="centerX" id="yEX-h3-nKB"/>
+                                    <constraint firstAttribute="trailing" secondItem="w1t-tO-D6Q" secondAttribute="trailing" id="vMy-Vt-rRD"/>
+                                    <constraint firstItem="yLf-ik-ger" firstAttribute="leading" secondItem="uO2-mX-vGj" secondAttribute="leading" id="yEX-h3-nKB"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdU-1v-eC1">

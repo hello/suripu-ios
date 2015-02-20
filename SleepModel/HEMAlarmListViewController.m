@@ -338,7 +338,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)updateTimeTextInCell:(HEMAlarmListCell *)cell fromAlarm:(SENAlarm *)alarm
 {
     cell.timeLabel.text = [self localizedTimeForAlarm:alarm];
-    if ([SENSettings timeFormat] == SENTimeFormat12Hour) {
+    if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
         NSString* meridiem = alarm.hour < 12 ? @"am" : @"pm";
         NSString* key = [NSString stringWithFormat:HEMAlarmListTimeKey, meridiem];
         cell.meridiemLabel.text = NSLocalizedString(key, nil);
@@ -369,7 +369,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     NSString* minuteText = time.minute < 10
         ? [NSString stringWithFormat:@"0%ld", (long)time.minute]
         : [NSString stringWithFormat:@"%ld", (long)time.minute];
-    if ([SENSettings timeFormat] == SENTimeFormat12Hour) {
+    if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
         if (time.hour > 12) {
             time.hour = (long)(time.hour - 12);
         } else if (time.hour == 0) {

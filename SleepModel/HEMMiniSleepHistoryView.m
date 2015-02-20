@@ -1,5 +1,4 @@
 
-#import <SenseKit/SENSettings.h>
 #import <SenseKit/SENSleepResult.h>
 
 #import "HEMMiniSleepHistoryView.h"

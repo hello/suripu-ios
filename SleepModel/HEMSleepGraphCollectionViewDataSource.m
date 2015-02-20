@@ -1,5 +1,5 @@
 
-#import <SenseKit/SENSettings.h>
+#import <SenseKit/SENPreference.h>
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENSleepResult.h>
 #import <SenseKit/SENAPITimeline.h>
@@ -89,7 +89,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         _collectionView = collectionView;
         _dateForNightOfSleep = date;
         _timeDateFormatter = [NSDateFormatter new];
-        _timeDateFormatter.dateFormat = ([SENSettings timeFormat] == SENTimeFormat12Hour) ? @"h:mm a" : @"H:mm";
+        _timeDateFormatter.dateFormat = ([SENPreference timeFormat] == SENTimeFormat12Hour) ? @"h:mm a" : @"H:mm";
         _rangeDateFormatter = [NSDateFormatter new];
         _rangeDateFormatter.dateFormat = @"MMMM d";
         _weekdayDateFormatter = [NSDateFormatter new];

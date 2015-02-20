@@ -1,8 +1,8 @@
 
 #import "SENAlarm.h"
 #import "SENAPIAlarms.h"
-#import "SENSettings.h"
 #import "SENKeyedArchiver.h"
+#import "SENPreference.h"
 
 @implementation SENAlarm
 
@@ -67,7 +67,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     long adjustedHour = time.hour;
     NSString* formatString;
     NSString* minuteText = time.minute < 10 ? [NSString stringWithFormat:@"0%ld", (long)time.minute] : [NSString stringWithFormat:@"%ld", (long)time.minute];
-    if ([SENSettings timeFormat] == SENTimeFormat12Hour) {
+    if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
         formatString = time.hour > 11 ? @"%ld:%@pm" : @"%ld:%@am";
         if (time.hour > 12) {
             adjustedHour = (long)(time.hour - 12);

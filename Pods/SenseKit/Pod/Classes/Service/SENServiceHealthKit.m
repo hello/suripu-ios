@@ -14,6 +14,7 @@
 #import "SENService+Protected.h"
 #import "SENSleepResult.h"
 #import "SENAPITimeline.h"
+#import "SENLocalPreferences.h"
 
 #ifndef ddLogLevel
 #define ddLogLevel LOG_LEVEL_VERBOSE
@@ -21,6 +22,7 @@
 
 static NSString* const SENServiceHKErrorDomain = @"is.hello.service.hk";
 static NSString* const SENServiceHKLastDateWritten = @"is.hello.service.hk.lastdate";
+static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
 
 @interface SENServiceHealthKit()
 
@@ -89,15 +91,15 @@ static NSString* const SENServiceHKLastDateWritten = @"is.hello.service.hk.lastd
 }
 
 - (BOOL)ddedDataPointFor:(NSDate*)date {
-    NSDate* lastWrittenDate = [[NSUserDefaults standardUserDefaults] objectForKey:SENServiceHKLastDateWritten];
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    NSDate* lastWrittenDate = [preferences userPreferenceForKey:SENServiceHKLastDateWritten];
     return [lastWrittenDate isEqualToDate:date];
 }
 
 - (void)saveLastWrittenDate:(NSDate*)date {
     if (date == nil) return;
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:date forKey:SENServiceHKLastDateWritten];
-    [defaults synchronize];
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    [preferences setUserPreference:date forKey:SENServiceHKLastDateWritten];
 }
 
 - (void)requestAuthorization:(void(^)(NSError* error))completion {
@@ -139,7 +141,7 @@ static NSString* const SENServiceHKLastDateWritten = @"is.hello.service.hk.lastd
 }
 
 - (void)sync {
-    if ([self enableWrite] && [self isSupported] && [self canWriteSleepAnalysis]) {
+    if ([self isHealthKitEnabled] && [self isSupported] && [self canWriteSleepAnalysis]) {
         NSDate* lastNight = [self lastNight];
         if (![self ddedDataPointFor:lastNight]) {
             [self writeSleepAnalysisIfDataAvailableFor:lastNight];
@@ -221,6 +223,16 @@ static NSString* const SENServiceHKLastDateWritten = @"is.hello.service.hk.lastd
             DDLogVerbose(@"failed to save sleep result to health kit with error %@", error);
         }
     }];
+}
+
+- (void)setEnableHealthKit:(BOOL)enable {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    [preferences setUserPreference:@(enable) forKey:SENSErviceHKEnable];
+}
+
+- (BOOL)isHealthKitEnabled {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    return [[preferences userPreferenceForKey:SENSErviceHKEnable] boolValue];
 }
 
 @end

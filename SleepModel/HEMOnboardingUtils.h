@@ -122,9 +122,4 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  */
 + (NSString*)lastConfiguredSSID;
 
-/**
- * @method moreve the configured SSID, if 1 was saved
- */
-+ (void)removeLastConfiguredSSID;
-
 @end

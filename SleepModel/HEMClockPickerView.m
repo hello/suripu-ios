@@ -5,7 +5,7 @@
 //  Created by Delisa Mason on 2/9/15.
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
-#import <SenseKit/SENSettings.h>
+#import <SenseKit/SENPreference.h>
 #import "HEMClockPickerView.h"
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
@@ -64,7 +64,7 @@ static NSUInteger const HEMClock24HourCount = 24;
 - (void)initializeComponents
 {
     _minuteIncrement = 1;
-    _use12Hour = [SENSettings timeFormat] == SENTimeFormat12Hour;
+    _use12Hour = [SENPreference timeFormat] == SENTimeFormat12Hour;
     _pickerView = [UIPickerView new];
     _pickerView.dataSource = self;
     _pickerView.delegate = self;

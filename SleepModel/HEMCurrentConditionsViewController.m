@@ -106,8 +106,8 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
                  object:nil];
     [center addObserver:self
                selector:@selector(tempFormatDidChange)
-                   name:SENSettingsDidUpdateNotification
-                 object:SENSettingsUpdateTypeTemp];
+                   name:SENLocalPrefDidChangeNotification
+                 object:[SENPreference nameFromType:SENPreferenceTypeTempCelcius]];
 }
 
 - (void)tempFormatDidChange

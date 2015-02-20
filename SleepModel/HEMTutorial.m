@@ -7,6 +7,7 @@
 //
 
 #import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENLocalPreferences.h>
 #import "HEMTutorial.h"
 #import "HEMFullscreenDialogView.h"
 
@@ -157,15 +158,12 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 
 + (BOOL)shouldShowTutorialForKey:(NSString*)key
 {
-    if (![SENAuthorizationService isAuthorized])
-        return NO;
-    BOOL hasBeenViewed = [[NSUserDefaults standardUserDefaults] boolForKey:key];
-    return !hasBeenViewed;
+    return ![[[SENLocalPreferences sharedPreferences] userPreferenceForKey:key] boolValue];
 }
 
 + (void)markTutorialViewed:(NSString*)key
 {
-    [[NSUserDefaults standardUserDefaults] setBool:YES forKey:key];
+    [[SENLocalPreferences sharedPreferences] setUserPreference:@YES forKey:key];
 }
 
 @end

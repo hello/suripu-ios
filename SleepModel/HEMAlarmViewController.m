@@ -1,7 +1,6 @@
 
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENAPIAlarms.h>
-#import <SenseKit/SENSettings.h>
 #import <SenseKit/SENSound.h>
 #import <markdown_peg.h>
 

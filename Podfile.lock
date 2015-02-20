@@ -22,13 +22,13 @@ PODS:
     - AFNetworking/NSURLSession
   - AttributedMarkdown (0.9.2)
   - BEMSimpleLineGraph (3.3)
-  - CocoaLumberjack (2.0.0-rc):
+  - CocoaLumberjack (2.0.0-rc2):
     - CocoaLumberjack/Default
     - CocoaLumberjack/Extensions
-  - CocoaLumberjack/Core (2.0.0-rc)
-  - CocoaLumberjack/Default (2.0.0-rc):
+  - CocoaLumberjack/Core (2.0.0-rc2)
+  - CocoaLumberjack/Default (2.0.0-rc2):
     - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.0.0-rc):
+  - CocoaLumberjack/Extensions (2.0.0-rc2):
     - CocoaLumberjack/Default
   - FDWaveformView (0.2.2)
   - FXKeychain (1.5.2)
@@ -107,7 +107,7 @@ SPEC CHECKSUMS:
   AFNetworking: 8bee59492a6ff15d69130efa4d0dc67e0094a52a
   AttributedMarkdown: de3267724c9e2175e1fc398184d03ba6697766ef
   BEMSimpleLineGraph: a3c78bfd5d2919324d970e42c028ebffc6ad7bcd
-  CocoaLumberjack: 6186e27827fc574b50b16c10102fcc591437f06c
+  CocoaLumberjack: 6027cd9a0665203a7df456c526e137f02cd547e1
   FDWaveformView: 6f3c2d4dfb25c90206da48ea08f5bf81d0afaa56
   FXKeychain: c97c352f1923809032339514ec4d6b0ed151bc3b
   iCarousel: c35a4e26b3c657847e523012b593e70ddbd84992

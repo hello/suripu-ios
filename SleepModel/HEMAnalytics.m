@@ -13,6 +13,7 @@
 
 // general
 NSString* const kHEMAnalyticsEventError = @"Error";
+NSString* const kHEMAnalyticsEventWarning = @"Warning";
 NSString* const kHEMAnalyticsEventHelp = @"Help";
 NSString* const kHEMAnalyticsEventVideo = @"Play Video";
 NSString* const kHEMAnalyticsEventPropMessage = @"Message";

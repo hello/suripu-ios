@@ -259,6 +259,10 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         SENSenseLEDState ledState = [self delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
         __weak typeof(self) weakSelf = self;
         [[self manager] setLED:ledState completion:^(id response, NSError *error) {
+            if (error != nil) {
+                [SENAnalytics track:kHEMAnalyticsEventWarning
+                         properties:@{kHEMAnalyticsEventPropMessage : @"failed to set LED on Sense"}];
+            }
             [weakSelf proceed];
         }];
 

@@ -10,6 +10,7 @@
 
 // general
 extern NSString* const kHEMAnalyticsEventError;
+extern NSString* const kHEMAnalyticsEventWarning;
 extern NSString* const kHEMAnalyticsEventHelp;
 extern NSString* const kHEMAnalyticsEventVideo;
 extern NSString* const kHEMAnalyticsEventPropMessage;

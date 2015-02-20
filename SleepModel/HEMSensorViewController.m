@@ -2,7 +2,8 @@
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENAPIRoom.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENSettings.h>
+#import <SenseKit/SENLocalPreferences.h>
+#import <SenseKit/SENPreference.h>
 #import <BEMSimpleLineGraph/BEMSimpleLineGraphView.h>
 #import <markdown_peg.h>
 
@@ -115,7 +116,8 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
                    name:SENAPIReachableNotification object:nil];
     [center addObserver:self
                selector:@selector(reloadData)
-                   name:SENSettingsDidUpdateNotification object:SENSettingsUpdateTypeTemp];
+                   name:SENLocalPrefDidChangeNotification
+                 object:[SENPreference nameFromType:SENPreferenceTypeTempCelcius]];
 }
 
 - (void)showTutorial
@@ -177,7 +179,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 {
     self.hourlyFormatter = [NSDateFormatter new];
     self.dailyFormatter = [NSDateFormatter new];
-    if ([SENSettings timeFormat] == SENTimeFormat12Hour) {
+    if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
         self.hourlyFormatter.dateFormat = @"h:mma";
         self.dailyFormatter.dateFormat = @"EEEE — h:mma";
     } else {

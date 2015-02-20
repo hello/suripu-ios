@@ -15,7 +15,6 @@
 #import "HEMAudioCache.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HEMSettingsUtil.h"
 
 @implementation HEMAppDelegate
 
@@ -40,7 +39,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
                                           fetchCompletionHandler:NULL];
 
     [self deauthorizeIfNeeded];
-    [self configureSettingsDefaults];
     [self configureAnalytics];
     [self configureAppearance];
     [self registerForNotifications];
@@ -99,7 +97,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
         [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
             [HEMAnalytics trackUserSession]; // update user session data
         }];
-        [[SENServiceHealthKit sharedService] setEnableWrite:[HEMSettingsUtil isHealthKitEnabled]];
     }
 }
 
@@ -135,16 +132,14 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 }
 
 - (BOOL)deauthorizeIfNeeded {
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults boolForKey:HEMAppForceLogout]) {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    if ([[preferences persistentPreferenceForKey:HEMAppForceLogout] boolValue]) {
         [SENAuthorizationService deauthorize];
-        [defaults removeObjectForKey:HEMAppForceLogout];
-        [defaults synchronize];
+        [preferences setPersistentPreference:nil forKey:HEMAppForceLogout];
         return YES;
-    } else if (![defaults stringForKey:HEMAppFirstLaunch]) {
+    } else if (![preferences persistentPreferenceForKey:HEMAppFirstLaunch]) {
         [SENAuthorizationService deauthorize];
-        [defaults setObject:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
-        [defaults synchronize];
+        [preferences setPersistentPreference:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
         return YES;
     }
     return NO;
@@ -181,17 +176,8 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 {
     SENClearModel();
     [HEMAudioCache clearCache];
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
-    [defaults setObject:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
-    [defaults synchronize];
+    [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
     [HEMOnboardingUtils resetOnboardingCheckpoint];
-    [HEMOnboardingUtils removeLastConfiguredSSID];
-    
-    // FIXME (jimmy): to ensure we are not introducing more issues, we will simply
-    // add the path back in, after it was removed above.
-    [self configureAPI];
-    
     [self resume:YES];
 }
 
@@ -229,15 +215,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
                selector:@selector(resetAndShowOnboarding)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
-}
-
-- (void)configureSettingsDefaults
-{
-    NSUserDefaults* userDefaults = [[NSUserDefaults alloc] initWithSuiteName:SENSettingsAppGroup];
-    NSDictionary* settingsDefaults = [SENSettings defaults];
-    // combine any other default settings here for the Settings.bundle
-    [userDefaults registerDefaults:settingsDefaults];
-    [userDefaults synchronize];
 }
 
 - (void)openSettingsDrawer {

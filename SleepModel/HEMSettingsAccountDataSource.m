@@ -13,7 +13,6 @@
 #import "HEMSettingsAccountDataSource.h"
 #import "HEMMathUtil.h"
 #import "HEMMainStoryboard.h"
-#import "HEMSettingsUtil.h"
 #import "HEMNotificationHandler.h"
 
 // \u0222 is a round dot
@@ -216,8 +215,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
             break;
         }
         case HEMSettingsAccountInfoTypeHealthKit: {
-            enabled = [[SENServiceHealthKit sharedService] canWriteSleepAnalysis]
-                        && [HEMSettingsUtil isHealthKitEnabled];
+            SENServiceHealthKit* hk = [SENServiceHealthKit sharedService];
+            enabled = [hk canWriteSleepAnalysis] && [hk isHealthKitEnabled];
         }
         default:
             break;
@@ -514,15 +513,13 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
         } else {
             [service requestAuthorization:^(NSError *error) {
                 if (error == nil) {
-                    [HEMSettingsUtil enableHealthKit:enable];
-                    [service setEnableWrite:enable];
+                    [[SENServiceHealthKit sharedService] setEnableHealthKit:enable];
                 }
                 if (completion) completion (error);
             }];
         }
     } else {
-        [HEMSettingsUtil enableHealthKit:enable];
-        [[SENServiceHealthKit sharedService] setEnableWrite:enable];
+        [[SENServiceHealthKit sharedService] setEnableHealthKit:enable];
     }
 }
 

@@ -7,7 +7,7 @@
 //
 #import <SenseKit/SENAPIAccount.h>
 #import <SenseKit/SENSenseManager.h>
-#import <SenseKit/SENSettings.h>
+#import <SenseKit/SENLocalPreferences.h>
 #import <SenseKit/SENAPIAccount.h>
 
 #import <AFNetworking/AFURLResponseSerialization.h>
@@ -74,13 +74,13 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
 #pragma mark - Checkpoints
 
 + (void)saveOnboardingCheckpoint:(HEMOnboardingCheckpoint)checkpoint {
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setInteger:checkpoint forKey:HEMOnboardingSettingCheckpoint];
-    [defaults synchronize]; // save now in case user kills app or something else
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    [preferences setPersistentPreference:@(checkpoint) forKey:HEMOnboardingSettingCheckpoint];
 }
 
 + (HEMOnboardingCheckpoint)onboardingCheckpoint {
-    return [[NSUserDefaults standardUserDefaults] integerForKey:HEMOnboardingSettingCheckpoint];
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    return [[preferences persistentPreferenceForKey:HEMOnboardingSettingCheckpoint] integerValue];
 }
 
 + (void)resetOnboardingCheckpoint {
@@ -252,20 +252,13 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
 + (void)saveConfiguredSSID:(NSString*)ssid {
     if ([ssid length] == 0) return;
     
-    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:SENSettingsAppGroup];
-    [defaults setObject:ssid forKey:HEMOnboardingSettingSSID];
-    [defaults synchronize];
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    [preferences setUserPreference:ssid forKey:HEMOnboardingSettingSSID];
 }
 
 + (NSString*)lastConfiguredSSID {
-    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:SENSettingsAppGroup];
-    return [defaults stringForKey:HEMOnboardingSettingSSID];
-}
-
-+ (void)removeLastConfiguredSSID {
-    NSUserDefaults* defaults = [[NSUserDefaults alloc] initWithSuiteName:SENSettingsAppGroup];
-    [defaults removeObjectForKey:HEMOnboardingSettingSSID];
-    [defaults synchronize];
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    return [preferences userPreferenceForKey:HEMOnboardingSettingSSID];
 }
 
 @end

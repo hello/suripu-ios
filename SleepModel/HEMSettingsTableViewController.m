@@ -1,6 +1,5 @@
 #import <MessageUI/MessageUI.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENSettings.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSMutableAttributedString+HEMFormat.h"

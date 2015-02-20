@@ -1,4 +1,3 @@
-#import <SenseKit/SENSettings.h>
 #import <SenseKit/SENAccount.h>
 
 #import "UIFont+HEMStyle.h"

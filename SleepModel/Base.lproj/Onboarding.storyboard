@@ -1184,7 +1184,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" image="sleepPill.png" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-sp-rMW">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sleepPill.png" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-sp-rMW">
                                 <rect key="frame" x="0.0" y="154" width="600" height="376"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="fol-lJ-5R8"/>
@@ -1784,13 +1784,13 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This is used to provide you with more personalized sleep insights." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="f5o-GP-Ma1">
-                                <rect key="frame" x="20" y="68" width="560" height="20.5"/>
+                                <rect key="frame" x="20" y="68" width="560" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uO2-mX-vGj">
-                                <rect key="frame" x="20" y="159.5" width="560" height="270.5"/>
+                                <rect key="frame" x="20" y="160" width="560" height="271"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lwc-2a-yNE">
                                         <rect key="frame" x="279" y="0.0" width="1" height="271"/>
@@ -2778,8 +2778,8 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="JsS-bV-f7k"/>
         <segue reference="ZOJ-Sh-Dzx"/>
+        <segue reference="u9Q-g4-qbd"/>
         <segue reference="gUR-KW-V2G"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

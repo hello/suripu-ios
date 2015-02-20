@@ -114,12 +114,20 @@
     };
 }
 
-+ (NSDictionary*)attributesForRoomCheckWithConditionColor:(UIColor*)color
++ (NSDictionary*)attributesForRoomCheckSensorMessage
 {
+    NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
+    style.alignment = NSTextAlignmentCenter;
+    
     return @{
-        @(EMPH)   : @{ NSForegroundColorAttributeName : color },
-        @(STRONG) : @{ NSForegroundColorAttributeName : color },
-        @(PLAIN)  : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont] }
+        @(EMPH)   : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorBoldFont],
+                       NSParagraphStyleAttributeName: style },
+        @(STRONG) : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorBoldFont],
+                       NSParagraphStyleAttributeName: style },
+        @(PLAIN)  : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont],
+                       NSParagraphStyleAttributeName: style },
+        @(PARA)   : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont],
+                       NSParagraphStyleAttributeName: style }
     };
 }
 

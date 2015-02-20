@@ -134,8 +134,8 @@
 /* Class = "IBUILabel"; text = "Setting up Sense"; ObjectID = "bPm-8J-k4Y"; */
 "bPm-8J-k4Y.text" = "Setting up Sense";
 
-/* Class = "IBUILabel"; text = "Introduce yourself."; ObjectID = "cY3-74-70H"; */
-"cY3-74-70H.text" = "Introduce yourself.";
+/* Class = "IBUILabel"; text = "Introduce yourself"; ObjectID = "cY3-74-70H"; */
+"cY3-74-70H.text" = "Introduce yourself";
 
 /* Class = "IBUILabel"; text = "Attach Sleep Pill to your Pillow"; ObjectID = "ded-Ea-3CR"; */
 "ded-Ea-3CR.text" = "Attach Sleep Pill to your pillow";

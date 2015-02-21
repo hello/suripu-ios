@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HEMTextFooterCollectionReusableView.h"
 
 typedef NS_ENUM(NSUInteger, HEMDeviceWarning) {
     HEMDeviceWarningLongLastSeen = 1,
@@ -23,6 +24,9 @@ typedef NS_ENUM(NSInteger, HEMDeviceError) {
 
 @interface HEMDeviceDataSource : NSObject <UICollectionViewDataSource>
 
+- (instancetype)initWithCollectionView:(UICollectionView*)collectionView
+                     andFooterDelegate:(id<HEMTextFooterDelegate>)delegate;
+
 - (void)refresh:(void(^)(NSError* error))completion;
 - (NSOrderedSet*)deviceWarningsFor:(SENDevice*)device;
 - (BOOL)isObtainingData;
@@ -32,5 +36,6 @@ typedef NS_ENUM(NSInteger, HEMDeviceError) {
 - (SENDeviceType)deviceTypeAtIndexPath:(NSIndexPath*)indexPath;
 - (void)loadDeviceInfo:(void(^)(NSError* error))completion;
 - (void)updateCell:(UICollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath;
+- (NSAttributedString*)attributedFooterText;
 
 @end

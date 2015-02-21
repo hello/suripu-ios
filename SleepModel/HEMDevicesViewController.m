@@ -26,16 +26,20 @@
 #import "HEMSensePairDelegate.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMTextFooterCollectionReusableView.h"
+#import "HEMSupportUtil.h"
 
 static CGFloat const HEMDeviceInfoHeight = 190.0f;
 static CGFloat const HEMNoDeviceHeight = 205.0f;
 
 @interface HEMDevicesViewController() <
     UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout,
     HEMPillPairDelegate,
     HEMSenseControllerDelegate,
     HEMSensePairingDelegate,
-    HEMPillControllerDelegate
+    HEMPillControllerDelegate,
+    HEMTextFooterDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -54,7 +58,9 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 }
 
 - (void)configureCollectionView {
-    HEMDeviceDataSource* dataSource = [[HEMDeviceDataSource alloc] init];
+    HEMDeviceDataSource* dataSource
+        = [[HEMDeviceDataSource alloc] initWithCollectionView:[self collectionView]
+                                            andFooterDelegate:self];
     [self setDataSource:dataSource];
     
     [[self collectionView] setDelegate:self];
@@ -104,6 +110,26 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 }
 
 #pragma mark - UICollectionViewDelegate
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+referenceSizeForFooterInSection:(NSInteger)section {
+    HEMCardFlowLayout* layout
+        = (HEMCardFlowLayout*)[[self collectionView] collectionViewLayout];
+    UIEdgeInsets insets = [layout sectionInset];
+    CGSize footerConstraint = CGSizeZero;
+    footerConstraint.width = CGRectGetWidth([collectionView bounds])-insets.left-insets.right;
+    footerConstraint.height = MAXFLOAT;
+    
+    NSAttributedString* attributedFooter = [[self dataSource] attributedFooterText];
+    CGSize size = [attributedFooter boundingRectWithSize:footerConstraint
+                                                 options:NSStringDrawingUsesFontLeading
+                                                        | NSStringDrawingUsesLineFragmentOrigin
+                                                 context:nil].size;
+    size.height += insets.top + insets.bottom;
+    DDLogVerbose(@"footer size %f, %f", size.width, size.height);
+    return size;
+}
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
@@ -227,6 +253,15 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 - (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController *)controller {
     [self updateDataWithSenseManager:senseManager];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - HEMTextFooterDelegate
+
+- (void)didTapOnLink:(NSURL *)url from:(HEMTextFooterCollectionReusableView *)view {
+    NSString* lowerScheme = [url scheme];
+    if ([lowerScheme hasPrefix:@"http"]) {
+        [HEMSupportUtil openURL:[url absoluteString] from:self];
+    }
 }
 
 #pragma mark - Segues

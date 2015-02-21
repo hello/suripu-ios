@@ -7,6 +7,8 @@
 //
 
 #import "NSAttributedString+HEMUtils.h"
+#import "UIFont+HEMStyle.h"
+#import "HelloStyleKit.h"
 
 @implementation NSAttributedString (HEMUtils)
 
@@ -17,6 +19,17 @@
     while (text.length > 0 && [whitespaceSet characterIsMember:[[text string] characterAtIndex:text.length - 1]])
         text = [text attributedSubstringFromRange:NSMakeRange(0, text.length - 1)];
     return text;
+}
+
+- (NSAttributedString *)hyperlink:(NSString*)url {
+    NSMutableAttributedString* hyperlink = [self mutableCopy];
+    
+    [hyperlink addAttributes:@{NSLinkAttributeName : url,
+                               NSFontAttributeName : [UIFont settingsHelpFont],
+                               NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor]}
+                       range:NSMakeRange(0, [hyperlink length])];
+    
+    return hyperlink;
 }
 
 @end

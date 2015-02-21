@@ -11,6 +11,8 @@
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
+#import "NSMutableAttributedString+HEMFormat.h"
+#import "NSAttributedString+HEMUtils.h"
 
 #import "HEMDeviceDataSource.h"
 #import "HEMNoDeviceCollectionViewCell.h"
@@ -19,21 +21,45 @@
 #import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingUtils.h"
+#import "HEMTextFooterCollectionReusableView.h"
+#import "HEMCardFlowLayout.h"
 
 static NSInteger const HEMDeviceRowSense = 0;
 static NSInteger const HEMDeviceRowPill = 1;
 static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
+static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 @interface HEMDeviceDataSource()
 
+@property (nonatomic, weak)   UICollectionView* collectionView;
+@property (nonatomic, copy)   NSAttributedString* attributedFooterText;
 @property (nonatomic, copy)   NSString* configuredSSID;
 @property (nonatomic, assign) SENWiFiConnectionState wifiState;
 @property (nonatomic, assign, getter=isObtainingData) BOOL obtainingData;
 @property (nonatomic, assign) BOOL attemptedDataLoad;
+@property (nonatomic, weak)   id<HEMTextFooterDelegate> footerDelegate;
 
 @end
 
 @implementation HEMDeviceDataSource
+
+- (instancetype)initWithCollectionView:(UICollectionView*)collectionView
+                     andFooterDelegate:(id<HEMTextFooterDelegate>)delegate {
+    self = [super init];
+    if (self) {
+        _collectionView = collectionView;
+        _footerDelegate = delegate;
+        
+        [self configureCollectionView];
+    }
+    return self;
+}
+
+- (void)configureCollectionView {
+    [[self collectionView] registerClass:[HEMTextFooterCollectionReusableView class]
+              forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
+                     withReuseIdentifier:HEMDevicesFooterReuseIdentifier];
+}
 
 #pragma mark - Loading Data
 
@@ -342,7 +368,41 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
     [cell showDataLoadingIndicator:[self isObtainingData] || ![self attemptedDataLoad]];
 }
 
+- (NSAttributedString*)attributedFooterText {
+    
+    if (_attributedFooterText == nil) {
+        NSString* textFormat = NSLocalizedString(@"settings.device.footer.format", nil);
+        NSString* secondPill = NSLocalizedString(@"settings.device.footer.second-pill", nil);
+        NSString* helpBaseUrl = NSLocalizedString(@"help.url.support", nil);
+        NSString* secondPillSlug = NSLocalizedString(@"help.url.slug.pill-setup-another", nil);
+        NSString* url = [helpBaseUrl stringByAppendingPathComponent:secondPillSlug];
+        UIColor* color = [HelloStyleKit backViewTextColor];
+        UIFont* font = [UIFont settingsHelpFont];
+        
+        NSAttributedString* attrPill = [[NSAttributedString alloc] initWithString:secondPill];
+        NSArray* args = @[[attrPill hyperlink:url]];
+        NSMutableAttributedString* attributedText =
+            [[NSMutableAttributedString alloc] initWithFormat:textFormat
+                                                         args:args
+                                                    baseColor:color
+                                                     baseFont:font];
+        NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
+        [style setAlignment:NSTextAlignmentCenter];
+        [attributedText addAttribute:NSParagraphStyleAttributeName
+                               value:style
+                               range:NSMakeRange(0, [attributedText length])];
+        
+        _attributedFooterText = [attributedText copy];
+    }
+
+    return _attributedFooterText;
+}
+
 #pragma mark - UICollectionViewDataSource
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView {
+    return 1;
+}
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
@@ -369,6 +429,25 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
     }
     
     return cell;
+}
+
+- (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView
+          viewForSupplementaryElementOfKind:(NSString*)kind
+                                atIndexPath:(NSIndexPath*)indexPath {
+    
+    UICollectionReusableView* view = nil;
+    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+        HEMTextFooterCollectionReusableView* footer
+            = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                 withReuseIdentifier:HEMDevicesFooterReuseIdentifier
+                                                        forIndexPath:indexPath];
+        
+        [footer setText:[self attributedFooterText]];
+        [footer setDelegate:[self footerDelegate]];
+        
+        view = footer;
+    }
+    return view;
 }
 
 @end

@@ -212,6 +212,8 @@
 "settings.device.warning.last-seen-generic" = "a while ago";
 "settings.device.error.title" = "Failed to load";
 "settings.device.error.cannot-load-info" = "Unable to load your information.  Make sure you are connected to the internet then return to this screen.";
+"settings.device.footer.format" = "Setting up a %@ for your partner?";
+"settings.device.footer.second-pill" = "second Sleep Pill";
 "settings.pill.dialog.unpair-title" = "Unpair Sleep Pill?";
 "settings.pill.dialog.unpair-message" = "Are you sure you want to unpair your Sleep Pill? You will no longer be able to track your sleep until you pair another Sleep Pill.";
 "settings.pill.dialog.unpair-no-sense-message" = "To unpair your Sleep Pill, you must be within Bluetooth range of Sense.";

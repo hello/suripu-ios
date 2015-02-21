@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.2.10
+
+New:
+
+* updated visual design of the audio player in the Timeline
+
+Fixes:
+
+* updated room check message attributes
+* properly scale Sleep Pill image in onboarding
+* healthKit preference will now remember your preference if you sign out and
+sign back in as the same user
+* changed order of gender buttons in gender picker screen to match text order
+* updated copy on sign out / sign in screen
+* better handling of enhanced audio clips
+* fixed issue with updating temperature unit preference
+
 ## 1.0.2.9
 
 * Log API version for support requests

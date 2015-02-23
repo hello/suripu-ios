@@ -28,6 +28,7 @@
 #import "HEMDynamicsStatusStyler.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMAppDelegate.h"
+#import "HEMConfig.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -311,14 +312,12 @@ static CGFloat const HEMRootDrawerRevealHeightStatusOffset = 20.f;
 }
 
 - (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
-#if BETA
-    if (motion == UIEventSubtypeMotionShake) {
+    if ([HEMConfig booleanForConfig:HEMConfAllowDebugOptions] && motion == UIEventSubtypeMotionShake) {
         if ([self debugController] == nil) {
             [self setDebugController:[[HEMDebugController alloc] initWithViewController:self]];
         }
         [[self debugController] showSupportOptions];
     }
-#endif
 }
 
 #pragma mark - Cleanup

@@ -3,7 +3,7 @@
 #import <SenseKit/SENAPIAlarms.h>
 #import "HEMAlarmUtils.h"
 #import "HEMAlarmCache.h"
-#import "HEMAlertController.h"
+#import "HEMDialogViewController.h"
 
 @implementation HEMAlarmUtils
 
@@ -43,9 +43,9 @@
              forSmartAlarm:(SENAlarm*)alarm presentingControllerForErrors:(UIViewController*)controller
 {
     if ([HEMAlarmUtils daysInUse:repeatDays excludingAlarm:alarm]) {
-        [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.repeat.day-reuse-error.title", nil)
-                                              message:NSLocalizedString(@"alarm.repeat.day-reuse-error.message", nil)
-                                 presentingController:controller];
+        [HEMDialogViewController showInfoDialogWithTitle:NSLocalizedString(@"alarm.repeat.day-reuse-error.title", nil)
+                                                 message:NSLocalizedString(@"alarm.repeat.day-reuse-error.message", nil)
+                                              controller:controller];
         return NO;
     }
     return YES;
@@ -152,9 +152,9 @@
 
 + (void)showError:(NSError*)error withTitle:(NSString*)title onController:(UIViewController*)controller
 {
-    [HEMAlertController presentInfoAlertWithTitle:title
-                                          message:error.localizedDescription
-                             presentingController:controller];
+    [HEMDialogViewController showInfoDialogWithTitle:title
+                                             message:error.localizedDescription
+                                          controller:controller];
 }
 
 @end

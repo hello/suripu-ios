@@ -11,7 +11,7 @@
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmCache.h"
-#import "HEMAlertController.h"
+#import "HEMDialogViewController.h"
 
 @interface HEMAlarmSoundTableViewController () <AVAudioPlayerDelegate>
 @property (nonatomic, strong) NSArray* possibleSleepSounds;
@@ -91,9 +91,9 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
 - (void)showAlertForError:(NSError*)error
 {
     DDLogError(@"Failed to load alarm sounds: %@", error.localizedDescription);
-    [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"alarm.sounds.error.title", nil)
-                                          message:NSLocalizedString(@"alarm.sounds.error.message", nil)
-                             presentingController:self];
+    [HEMDialogViewController showInfoDialogWithTitle:NSLocalizedString(@"alarm.sounds.error.title", nil)
+                                             message:NSLocalizedString(@"alarm.sounds.error.message", nil)
+                                          controller:self];
     UIBarButtonItem* refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                                                                  target:self
                                                                                  action:@selector(loadAlarmSounds)];

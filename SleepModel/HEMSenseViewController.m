@@ -17,7 +17,7 @@
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMAlertController.h"
+#import "HEMDialogViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMWiFiConfigurationDelegate.h"
 #import "HEMWifiPickerViewController.h"
@@ -38,7 +38,6 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
 @property (assign, nonatomic) BOOL updatedWiFi;
-@property (strong, nonatomic) HEMAlertController* alertController;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 
 @end
@@ -234,16 +233,13 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
 }
 
 - (void)showConfirmation:(NSString*)title message:(NSString*)message action:(void(^)(void))action {
-    HEMAlertController* alert = [[HEMAlertController alloc] initWithTitle:title
-                                                                  message:message
-                                                                    style:HEMAlertControllerStyleAlert
-                                                     presentingController:self];
-    
-    [alert addActionWithText:NSLocalizedString(@"actions.no", nil) block:nil];
-    [alert addActionWithText:NSLocalizedString(@"actions.yes", nil) block:action];
-    
-    [self setAlertController:alert];
-    [[self alertController] show];
+    HEMDialogViewController* dialogVC = [HEMDialogViewController new];
+    [dialogVC setTitle:title];
+    [dialogVC setMessage:message];
+    [dialogVC setOkButtonTitle:NSLocalizedString(@"actions.no", nil)];
+    [dialogVC setViewToShowThrough:self.view];
+    [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:action];
+    [dialogVC showFrom:self onDone:NULL];
 }
 
 - (void)showActivityText:(NSString*)text completion:(void(^)(void))completion {

@@ -5,7 +5,7 @@
 #import <markdown_peg.h>
 
 #import "HEMAlarmViewController.h"
-#import "HEMAlertController.h"
+#import "HEMDialogViewController.h"
 #import "HEMAlarmSoundTableViewController.h"
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMAlarmCache.h"
@@ -169,15 +169,13 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 {
     NSString* title = NSLocalizedString(@"alarm.delete.confirm.title", nil);
     NSString* message = NSLocalizedString(@"alarm.delete.confirm.message", nil);
-    HEMAlertControllerStyle style = HEMAlertControllerStyleAlert;
-    HEMAlertController* alertController = [[HEMAlertController alloc] initWithTitle:title
-                                                                            message:message
-                                                                              style:style
-                                                               presentingController:self];
-
+    HEMDialogViewController* dialogVC = [HEMDialogViewController new];
+    [dialogVC setTitle:title];
+    [dialogVC setMessage:message];
+    [dialogVC setOkButtonTitle:NSLocalizedString(@"actions.no", nil)];
+    [dialogVC setViewToShowThrough:self.view];
     __weak typeof(self) weakSelf = self;
-    [alertController addActionWithText:NSLocalizedString(@"actions.no", nil) block:NULL];
-    [alertController addActionWithText:NSLocalizedString(@"actions.yes", nil) block:^{
+    [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf.alarm delete];
         [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
@@ -187,7 +185,8 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
                 [strongSelf.alarm save];
         }];
     }];
-    [alertController show];
+
+    [dialogVC showFrom:self onDone:NULL];
 }
 
 - (IBAction)updateAlarmState:(UISwitch*)sender

@@ -114,6 +114,12 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         : SENServiceDeviceStateNormal;
     
     if (deviceState == SENServiceDeviceStateNormal) {
+        if ([self shouldWarnAboutSenseLastSeen]) {
+            deviceState = SENServiceDeviceStateSenseNotSeen;
+        }
+    }
+    
+    if (deviceState == SENServiceDeviceStateNormal) {
         switch ([[self senseInfo] state]) {
             case SENDeviceStateNoData:
                 deviceState = SENServiceDeviceStateSenseNoData;
@@ -121,10 +127,9 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
             default:
                 break;
         }
-        completion (deviceState);
-    } else {
-        completion (deviceState);
     }
+    
+    completion (deviceState);
 }
 
 - (void)checkPillPairingState:(void(^)(SENServiceDeviceState state))completion {
@@ -132,6 +137,12 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         = [self pillInfo] == nil
         ? SENServiceDeviceStatePillNotPaired
         : SENServiceDeviceStateNormal;
+    
+    if (deviceState == SENServiceDeviceStateNormal) {
+        if ([self shouldWarnAboutPillLastSeen]) {
+            deviceState = SENServiceDeviceStatePillNotSeen;
+        }
+    }
     
     if (deviceState == SENServiceDeviceStateNormal) {
         switch ([[self pillInfo] state]) {
@@ -142,6 +153,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
                 break;
         }
     }
+    
     completion (deviceState);
 }
 
@@ -182,7 +194,6 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     [self setSenseManager:nil];
     [self setInfoLoaded:NO];
     [self setLoadingInfo:NO];
-    
 }
 
 - (NSError*)errorWithType:(SENServiceDeviceError)type {
@@ -300,6 +311,25 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
             }];
         }
     }];
+}
+
+- (BOOL)shouldWarnAboutLastSeenForDevice:(SENDevice*)device {
+    if (device == nil) return NO;
+    
+    NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSDateComponents* components = [NSDateComponents new];
+    components.day = -1;
+    
+    NSDate* dayOld = [calendar dateByAddingComponents:components toDate:[NSDate date] options:0];
+    return [[device lastSeen] compare:dayOld] == NSOrderedAscending;
+}
+
+- (BOOL)shouldWarnAboutPillLastSeen {
+    return [self shouldWarnAboutLastSeenForDevice:[self pillInfo]];
+}
+
+- (BOOL)shouldWarnAboutSenseLastSeen {
+    return [self shouldWarnAboutLastSeenForDevice:[self senseInfo]];
 }
 
 #pragma mark - Scanning

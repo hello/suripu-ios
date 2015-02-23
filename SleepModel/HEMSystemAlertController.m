@@ -86,7 +86,7 @@
             *warningTitle = NSLocalizedString(@"alerts.device.no-sense.title", nil);
             *warningMessage = NSLocalizedString(@"alerts.device.no-sense.message", nil);
             break;
-        case SENServiceDeviceStateSenseLastSeen:
+        case SENServiceDeviceStateSenseNotSeen:
             *warningTitle = NSLocalizedString(@"alerts.device.sense-last-seen.title", nil);
             *warningMessage = NSLocalizedString(@"alerts.device.sense-last-seen.message", nil);
             break;
@@ -94,7 +94,7 @@
             *warningTitle = NSLocalizedString(@"alerts.device.no-pill.title", nil);
             *warningMessage = NSLocalizedString(@"alerts.device.no-pill.message", nil);
             break;
-        case SENServiceDeviceStatePillLastSeen:
+        case SENServiceDeviceStatePillNotSeen:
             *warningTitle = NSLocalizedString(@"alerts.device.pill-last-seen.title", nil);
             *warningMessage = NSLocalizedString(@"alerts.device.pill-last-seen.message", nil);
             break;
@@ -147,13 +147,13 @@
         case SENServiceDeviceStateSenseNotPaired:
             [self showSensePairController];
             break;
-        case SENServiceDeviceStateSenseLastSeen:
+        case SENServiceDeviceStateSenseNotSeen:
             [self showSenseHelp];
             break;
         case SENServiceDeviceStatePillNotPaired:
             [self showPillPairController];
             break;
-        case SENServiceDeviceStatePillLastSeen:
+        case SENServiceDeviceStatePillNotSeen:
             [self showPillHelp];
             break;
         default:

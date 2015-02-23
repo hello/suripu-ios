@@ -11,7 +11,7 @@
 #import <SenseKit/SENServiceDevice.h>
 
 #import "HEMDebugController.h"
-#import "HEMAlertController.h"
+#import "HEMActionSheetController.h"
 #import "HEMSupportUtil.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMOnboardingCache.h"
@@ -19,8 +19,8 @@
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
 @property (weak,   nonatomic) UIViewController*   presentingController;
-@property (strong, nonatomic) HEMAlertController* supportOptionController;
-@property (strong, nonatomic) HEMAlertController* ledOptionController;
+@property (strong, nonatomic) HEMActionSheetController* supportOptionController;
+@property (strong, nonatomic) HEMActionSheetController* ledOptionController;
 
 @end
 
@@ -42,10 +42,9 @@
     if ([self supportOptionController] != nil) return; // don't show it if showing now
 
     NSString* title = NSLocalizedString(@"debug.options.title", nil);
-    HEMAlertController* sheet = [[HEMAlertController alloc] initWithTitle:title
-                                                                  message:nil
-                                                                    style:HEMAlertControllerStyleSheet
-                                                     presentingController:[self presentingController]];
+    HEMActionSheetController* sheet = [[HEMActionSheetController alloc] initWithTitle:title
+                                                                              message:nil
+                                                                 presentingController:[self presentingController]];
     
     [self addContactSupportOptionTo:sheet];
     [self addResetCheckpointOptionTo:sheet];
@@ -56,7 +55,7 @@
     [[self supportOptionController] show];
 }
 
-- (void)addContactSupportOptionTo:(HEMAlertController*)sheet {
+- (void)addContactSupportOptionTo:(HEMActionSheetController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addActionWithText:NSLocalizedString(@"debug.option.contact-support", nil) block:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -67,7 +66,7 @@
     }];
 }
 
-- (void)addResetCheckpointOptionTo:(HEMAlertController*)sheet {
+- (void)addResetCheckpointOptionTo:(HEMActionSheetController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addActionWithText:NSLocalizedString(@"debug.option.reset", nil) block:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -87,7 +86,7 @@
 
 #pragma mark LED Support
 
-- (void)addLedOptionTo:(HEMAlertController*)sheet {
+- (void)addLedOptionTo:(HEMActionSheetController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addActionWithText:NSLocalizedString(@"debug.option.led", nil) block:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -102,10 +101,9 @@
     if ([self ledOptionController] != nil) return;
     
     NSString* title = NSLocalizedString(@"debug.option.led.title", nil);
-    HEMAlertController* sheet = [[HEMAlertController alloc] initWithTitle:title
-                                                                  message:nil
-                                                                    style:HEMAlertControllerStyleSheet
-                                                     presentingController:[self presentingController]];
+    HEMActionSheetController* sheet = [[HEMActionSheetController alloc] initWithTitle:title
+                                                                              message:nil
+                                                                 presentingController:[self presentingController]];
     [self addLEDOption:SENSenseLEDStateOff to:sheet];
     [self addLEDOption:SENSenseLEDStatePair to:sheet];
     [self addLEDOption:SENSenseLEDStateSuccess to:sheet];
@@ -117,7 +115,7 @@
     [[self ledOptionController] show];
 }
 
-- (void)addLEDOption:(SENSenseLEDState)ledState to:(HEMAlertController*)sheet {
+- (void)addLEDOption:(SENSenseLEDState)ledState to:(HEMActionSheetController*)sheet {
     NSString* buttonText = nil;
     switch (ledState) {
         case SENSenseLEDStatePair:
@@ -153,7 +151,7 @@
 
 #pragma mark Cancel
 
-- (void)addCancelOptionTo:(HEMAlertController*)sheet {
+- (void)addCancelOptionTo:(HEMActionSheetController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addActionWithText:NSLocalizedString(@"actions.cancel", nil) block:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;

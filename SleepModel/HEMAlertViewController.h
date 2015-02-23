@@ -1,5 +1,5 @@
 //
-//  HEMDialogViewController.h
+//  HEMAlertViewController.h
 //  Sense
 //
 //  Created by Jimmy Lu on 11/19/14.
@@ -7,9 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HEMDialogView.h"
+#import "HEMAlertView.h"
 
-@interface HEMDialogViewController : UIViewController
+@interface HEMAlertViewController : UIViewController
 
 // properties should be set prior to showing the dialog
 @property (nonatomic, weak)   UIView* viewToShowThrough;

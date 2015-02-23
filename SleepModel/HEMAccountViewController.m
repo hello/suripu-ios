@@ -25,7 +25,7 @@
 #import "HEMHeightPickerViewController.h"
 #import "HEMWeightPickerViewController.h"
 #import "HEMGenderPickerViewController.h"
-#import "HEMDialogViewController.h"
+#import "HEMAlertViewController.h"
 
 static CGFloat const HEMAccountTableSectionHeaderHeight = 20.0f;
 static CGFloat const HEMAccountTableBaseRowHeight = 56.0f;
@@ -188,7 +188,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIViewController* controller = (id)delegate.window.rootViewController;
     UIView* viewtoShowThrough = [controller view];
     
-    HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
     [dialogVC setTitle:NSLocalizedString(@"actions.sign-out", nil)];
     [dialogVC setMessage:NSLocalizedString(@"settings.sign-out.confirmation", nil)];
     [dialogVC setOkButtonTitle:NSLocalizedString(@"actions.yes", nil)];

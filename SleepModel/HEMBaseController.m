@@ -7,7 +7,7 @@
 //
 
 #import "HEMBaseController.h"
-#import "HEMDialogViewController.h"
+#import "HEMAlertViewController.h"
 #import "HEMSupportUtil.h"
 
 CGFloat const kHEMIPhone4Height = 480.0f;
@@ -92,7 +92,7 @@ CGFloat const kHEMIPhone5Height = 568.0f;
            seeThroughView:(UIView*)seeThroughView
                  withHelpPage:(NSString*)helpPage {
     
-    HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
     [dialogVC setTitle:title];
     [dialogVC setMessage:message];
     [dialogVC setHelpPage:helpPage];

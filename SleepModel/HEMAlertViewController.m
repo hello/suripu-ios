@@ -1,5 +1,5 @@
 //
-//  HEMDialogViewController.m
+//  HEMAlertViewController.m
 //  Sense
 //
 //  Created by Jimmy Lu on 11/19/14.
@@ -8,24 +8,24 @@
 
 #import "UIView+HEMSnapshot.h"
 #import "HEMRootViewController.h"
-#import "HEMDialogViewController.h"
-#import "HEMDialogView.h"
+#import "HEMAlertViewController.h"
+#import "HEMAlertView.h"
 #import "HEMSupportUtil.h"
 #import "HEMAnimationUtils.h"
 
-@interface HEMDialogViewController()
+@interface HEMAlertViewController()
 
-@property (nonatomic, strong) HEMDialogView* dialogView;
+@property (nonatomic, strong) HEMAlertView* dialogView;
 
 @end
 
-@implementation HEMDialogViewController
+@implementation HEMAlertViewController
 
 + (void)showInfoDialogWithTitle:(NSString *)title
                         message:(NSString *)message
                      controller:(UIViewController *)controller {
     UIView* view = [HEMRootViewController rootViewControllerForKeyWindow].view;
-    HEMDialogViewController* dialogVC = [HEMDialogViewController new];
+    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     dialogVC.title = title;
     dialogVC.message = message;
     dialogVC.okButtonTitle = NSLocalizedString(@"actions.ok", nil);
@@ -64,7 +64,7 @@
 }
 
 - (void)setupDialogView {
-    [self setDialogView:[[HEMDialogView alloc] initWithImage:[self dialogImage]
+    [self setDialogView:[[HEMAlertView alloc] initWithImage:[self dialogImage]
                                                        title:[self title]
                                                      message:[self message]]];
     

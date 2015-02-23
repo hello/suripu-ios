@@ -20,7 +20,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
 #import "HEMWarningCollectionViewCell.h"
-#import "HEMDialogViewController.h"
+#import "HEMAlertViewController.h"
 #import "HEMDeviceDataSource.h"
 #import "HEMActionButton.h"
 
@@ -167,7 +167,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 - (void)replacePill:(id)sender {
     NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-title", nil);
     NSString* message = NSLocalizedString(@"settings.pill.dialog.unpair-message", nil);
-    HEMDialogViewController* dialogVC = [HEMDialogViewController new];
+    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setMessage:message];
     [dialogVC setOkButtonTitle:NSLocalizedString(@"actions.no", nil)];
@@ -207,7 +207,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     }
 
     NSString* title = NSLocalizedString(@"settings.pill.unpair-error-title", nil);
-    [HEMDialogViewController showInfoDialogWithTitle:title message:message controller:self];
+    [HEMAlertViewController showInfoDialogWithTitle:title message:message controller:self];
 }
 
 - (void)unpair {

@@ -22,7 +22,7 @@
 #import "HEMSupportUtil.h"
 #import "HelloStyleKit.h"
 #import "HEMBluetoothUtils.h"
-#import "HEMDialogViewController.h"
+#import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
 
 static CGFloat const kHEMPillPairAnimDuration = 0.5f;
@@ -276,7 +276,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)showSkipConfirmation {
-    HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
     [dialogVC setTitle:NSLocalizedString(@"pairing.pill.skip-confirmation-title", nil)];
     [dialogVC setMessage:NSLocalizedString(@"pairing.pill.skip-confirmation-message", nil)];
     [dialogVC setOkButtonTitle:[NSLocalizedString(@"actions.skip-for-now", nil) uppercaseString]];

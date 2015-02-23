@@ -17,7 +17,7 @@
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMDialogViewController.h"
+#import "HEMAlertViewController.h"
 #import "HelloStyleKit.h"
 #import "HEMWiFiConfigurationDelegate.h"
 #import "HEMWifiPickerViewController.h"
@@ -233,7 +233,7 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
 }
 
 - (void)showConfirmation:(NSString*)title message:(NSString*)message action:(void(^)(void))action {
-    HEMDialogViewController* dialogVC = [HEMDialogViewController new];
+    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setMessage:message];
     [dialogVC setOkButtonTitle:NSLocalizedString(@"actions.no", nil)];

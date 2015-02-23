@@ -18,7 +18,7 @@
 #import "HelloStyleKit.h"
 #import "HEMOnboardingCache.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMDialogViewController.h"
+#import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSettingsTableViewController.h"
 
@@ -137,7 +137,7 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
     }
     
     UIView* seeThroughView = [controller parentViewController] ? [[controller parentViewController] view] : [controller view];
-    HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
     [dialogVC setTitle:errorTitle];
     [dialogVC setMessage:alertMessage];
     [dialogVC setViewToShowThrough:seeThroughView];

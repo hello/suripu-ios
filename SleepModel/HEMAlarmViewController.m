@@ -5,7 +5,7 @@
 #import <markdown_peg.h>
 
 #import "HEMAlarmViewController.h"
-#import "HEMDialogViewController.h"
+#import "HEMAlertViewController.h"
 #import "HEMAlarmSoundTableViewController.h"
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMAlarmCache.h"
@@ -169,7 +169,7 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 {
     NSString* title = NSLocalizedString(@"alarm.delete.confirm.title", nil);
     NSString* message = NSLocalizedString(@"alarm.delete.confirm.message", nil);
-    HEMDialogViewController* dialogVC = [HEMDialogViewController new];
+    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setMessage:message];
     [dialogVC setOkButtonTitle:NSLocalizedString(@"actions.no", nil)];

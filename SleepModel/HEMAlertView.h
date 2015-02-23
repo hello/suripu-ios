@@ -1,5 +1,5 @@
 //
-//  HEMDialogView.h
+//  HEMAlertView.h
 //  Sense
 //
 //  Created by Jimmy Lu on 11/19/14.
@@ -10,7 +10,7 @@
 
 typedef void(^HEMDialogActionBlock)(void);
 
-@interface HEMDialogView : UIView
+@interface HEMAlertView : UIView
 
 @property (nonatomic, weak, readonly) UIButton* okButton;
 

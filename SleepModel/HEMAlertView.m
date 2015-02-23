@@ -1,5 +1,5 @@
 //
-//  HEMDialogView.m
+//  HEMAlertView.m
 //  Sense
 //
 //  Created by Jimmy Lu on 11/19/14.
@@ -8,7 +8,7 @@
 
 #import "UIFont+HEMStyle.h"
 
-#import "HEMDialogView.h"
+#import "HEMAlertView.h"
 #import "HelloStyleKit.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
@@ -25,7 +25,7 @@ static CGFloat const kHEMDialogButtonHorzPadding = 20.0f;
 static CGFloat const kHEMDialogButtonHeight = 40.0f;
 static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 
-@interface HEMDialogView()
+@interface HEMAlertView()
 
 @property (nonatomic, assign) UIEdgeInsets contentInsets;
 @property (nonatomic, copy)   NSString* title;
@@ -36,7 +36,7 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 
 @end
 
-@implementation HEMDialogView
+@implementation HEMAlertView
 
 + (CGRect)defaultFrame {
     CGRect screenBounds = [[UIScreen mainScreen] bounds];

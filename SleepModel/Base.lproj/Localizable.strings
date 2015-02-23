@@ -546,8 +546,12 @@
 "alerts.device.no-wifi" = "Sense either lost connection to WiFi or your WiFi network is having issues.";
 "alerts.device.no-sense.title" = "Sense Not Paired";
 "alerts.device.no-sense.message" = "Your account does not have a Sense paired. Sense is required to track your sleep behavior.";
+"alerts.device.sense-last-seen.title" = "Sense";
+"alerts.device.sense-last-seen.message" = "Sense has not reported any data recently. Tap 'Fix Now' to troubleshoot.";
 "alerts.device.no-pill.title" = "Sleep Pill Not Paired";
 "alerts.device.no-pill.message" = "Your account does not have a Sleep Pill paired. A Sleep Pill is required to track your sleep behavior.";
+"alerts.device.pill-last-seen.title" = "Sleep Pill";
+"alerts.device.pill-last-seen.message" = "Sleep Pill has not reported any data recently. Tap 'Fix Now' to troubleshoot.";
 
 // tutorial
 "tutorial.timeline.title1" = "UNDERSTANDING YOUR SLEEP";

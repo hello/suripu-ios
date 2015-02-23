@@ -151,11 +151,6 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 #pragma mark - Warnings
 
-- (BOOL)hasBeenAwhile:(SENDevice*)device {
-    NSDate* badThresholdDate = [[NSDate date] previousDay];
-    return [[device lastSeen] compare:badThresholdDate] == NSOrderedAscending;
-}
-
 - (BOOL)lostInternetConnection:(SENDevice*)device {
     return [device type] == SENDeviceTypeSense
             && ([self wifiState] == SENWiFiConnectionStateNoInternet
@@ -164,7 +159,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 - (NSOrderedSet*)deviceWarningsFor:(SENDevice*)device {
     NSMutableOrderedSet* set = [[NSMutableOrderedSet alloc] init];
-    if ([self hasBeenAwhile:device]) {
+    if ([[SENServiceDevice sharedService] shouldWarnAboutLastSeenForDevice:device]) {
         [set addObject:@(HEMDeviceWarningLongLastSeen)];
     }
     if ([self lostInternetConnection:device]) {
@@ -196,7 +191,8 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 }
 
 - (UIColor*)lastSeenTextColorFor:(SENDevice*)device {
-    return [self hasBeenAwhile:device] ? [UIColor redColor] : [UIColor blackColor];
+    return [[SENServiceDevice sharedService] shouldWarnAboutLastSeenForDevice:device]
+            ? [UIColor redColor] : [UIColor blackColor];
 }
 
 - (SENDevice*)deviceAtIndexPath:(NSIndexPath*)indexPath {

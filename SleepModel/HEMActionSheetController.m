@@ -6,10 +6,10 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "HEMAlertController.h"
+#import "HEMActionSheetController.h"
 #import "UIFont+HEMStyle.h"
 
-@interface HEMAlertController () <UIAlertViewDelegate, UIActionSheetDelegate>
+@interface HEMActionSheetController () <UIActionSheetDelegate>
 
 @property (nonatomic, strong) NSString* title;
 @property (nonatomic, strong) NSString* message;
@@ -17,37 +17,22 @@
 @property (nonatomic, strong) NSMutableArray* actions;
 @property (nonatomic, strong) UIControl* inputView;
 @property (nonatomic, weak) UITextField* textField;
-@property (nonatomic) HEMAlertControllerStyle style;
 @property (nonatomic, copy) void (^inputChangeHandler)(UITextField*);
 @end
 
-@implementation HEMAlertController
+@implementation HEMActionSheetController
 
 static NSString* const HEMAlertControllerButtonTextKey = @"text";
 static NSString* const HEMAlertControllerButtonActionKey = @"action";
 static NSMutableArray* alertControllers = nil;
 
-+ (void)presentInfoAlertWithTitle:(NSString*)title
-                          message:(NSString*)message
-             presentingController:(UIViewController*)controller
-{
-    HEMAlertController* alertController = [[self alloc] initWithTitle:title
-                                                              message:message
-                                                                style:HEMAlertControllerStyleAlert
-                                                 presentingController:controller];
-    [alertController addActionWithText:NSLocalizedString(@"actions.ok", nil) block:NULL];
-    [alertController show];
-}
-
 - (instancetype)initWithTitle:(NSString*)title
                       message:(NSString*)message
-                        style:(HEMAlertControllerStyle)style
          presentingController:(UIViewController*)controller
 {
     if (self = [super init]) {
         _title = title;
         _message = message;
-        _style = style;
         _presentingController = controller;
         _actions = [NSMutableArray new];
     }
@@ -78,17 +63,12 @@ static NSMutableArray* alertControllers = nil;
     [alertControllers removeObject:[alertControllers lastObject]];
 }
 
-- (void)alertView:(UIAlertView*)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
-{
-    [self activateActionAtIndex:buttonIndex];
-}
-
 - (void)actionSheet:(UIActionSheet*)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
     [self activateActionAtIndex:buttonIndex];
 }
 
-#pragma mark - Present Alert
+#pragma mark - Present Sheet
 
 - (void)show
 {
@@ -98,8 +78,6 @@ static NSMutableArray* alertControllers = nil;
 
     if ([self shouldUseUIAlertController])
         [self presentUIAlertController];
-    else if (self.style == HEMAlertControllerStyleAlert)
-        [self presentUIAlertView];
     else if (self.presentingController)
         [self presentUIActionSheet];
 }
@@ -111,12 +89,9 @@ static NSMutableArray* alertControllers = nil;
 
 - (void)presentUIAlertController
 {
-    UIAlertControllerStyle style = self.style == HEMAlertControllerStyleAlert
-                                       ? UIAlertControllerStyleAlert
-                                       : UIAlertControllerStyleActionSheet;
     UIAlertController* alertController = [UIAlertController alertControllerWithTitle:self.title
                                                                              message:self.message
-                                                                      preferredStyle:style];
+                                                                      preferredStyle:UIAlertControllerStyleActionSheet];
     for (NSDictionary* actionProperties in self.actions) {
         void (^block)() = actionProperties[HEMAlertControllerButtonActionKey];
         void (^handler)(UIAlertAction*) = block ? ^(UIAlertAction* action) { block(); } : NULL;
@@ -129,7 +104,7 @@ static NSMutableArray* alertControllers = nil;
     if (self.inputView) {
         __weak typeof(self) weakSelf = self;
         [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
-            __strong HEMAlertController *strongSelf = weakSelf;
+            __strong HEMActionSheetController *strongSelf = weakSelf;
             textField.inputView = strongSelf.inputView;
             strongSelf.textField = textField;
             if (strongSelf.inputChangeHandler)
@@ -138,27 +113,6 @@ static NSMutableArray* alertControllers = nil;
     }
 
     [self.presentingController presentViewController:alertController animated:YES completion:NULL];
-}
-
-- (void)presentUIAlertView
-{
-    UIAlertView* alertView = [[UIAlertView alloc] initWithTitle:self.title
-                                                        message:self.message
-                                                       delegate:self
-                                              cancelButtonTitle:nil
-                                              otherButtonTitles:nil];
-    for (NSDictionary* actionProperties in self.actions) {
-        [alertView addButtonWithTitle:actionProperties[HEMAlertControllerButtonTextKey]];
-    }
-    if (self.inputView) {
-        [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
-        UITextField* textField = [alertView textFieldAtIndex:0];
-        textField.inputView = self.inputView;
-        self.textField = textField;
-        if (self.inputChangeHandler)
-            self.inputChangeHandler(textField);
-    }
-    [alertView show];
 }
 
 - (void)presentUIActionSheet

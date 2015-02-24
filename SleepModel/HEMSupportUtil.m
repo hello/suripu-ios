@@ -12,7 +12,7 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMSupportUtil.h"
-#import "HEMAlertController.h"
+#import "HEMAlertViewController.h"
 #import "HEMLogUtils.h"
 #import "HelloStyleKit.h"
 
@@ -29,9 +29,9 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
        mailDelegate:(id<MFMailComposeViewControllerDelegate>)delegate {
     
     if (![MFMailComposeViewController canSendMail]) {
-        [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"settings.support.fail.title", nil)
-                                              message:NSLocalizedString(@"settings.support.fail.message", nil)
-                                 presentingController:controller];
+        [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"settings.support.fail.title", nil)
+                                                message:NSLocalizedString(@"settings.support.fail.message", nil)
+                                             controller:controller];
         return;
     }
     

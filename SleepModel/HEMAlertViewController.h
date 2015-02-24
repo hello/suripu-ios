@@ -1,5 +1,5 @@
 //
-//  HEMDialogViewController.h
+//  HEMAlertViewController.h
 //  Sense
 //
 //  Created by Jimmy Lu on 11/19/14.
@@ -7,16 +7,22 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HEMDialogView.h"
+#import "HEMAlertView.h"
 
-@interface HEMDialogViewController : UIViewController
+@interface HEMAlertViewController : UIViewController
 
 // properties should be set prior to showing the dialog
+/**
+ *  View blurred under the popup
+ */
 @property (nonatomic, weak)   UIView* viewToShowThrough;
 @property (nonatomic, strong) UIImage* dialogImage;
 @property (nonatomic, copy)   NSString* title;
 @property (nonatomic, copy)   NSString* message;
-@property (nonatomic, copy)   NSString* okButtonTitle;
+/**
+ *  Title of the default (primary) button
+ */
+@property (nonatomic, copy)   NSString* defaultButtonTitle;
 
 /**
  * @property helpURL
@@ -49,9 +55,9 @@
  * present this view controller yourself if calling this method
  *
  * @param controller: the controller that is presenting this dialog
- * @param doneBlock:  the block to invoke when user taps on Okay button
+ * @param doneBlock:  the block to invoke when user taps on the default button
  */
-- (void)showFrom:(UIViewController*)controller onDone:(HEMDialogActionBlock)doneBlock;
+- (void)showFrom:(UIViewController*)controller onDefaultActionSelected:(HEMDialogActionBlock)doneBlock;
 
 /**
  * Call this method if you are presenting this controller yourself, which will

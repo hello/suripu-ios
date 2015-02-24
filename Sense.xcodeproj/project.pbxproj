@@ -1161,6 +1161,7 @@
 		BF98FC351A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTextFooterCollectionReusableView.m; sourceTree = "<group>"; };
 		BF98FC371A9BB29D00AEC04C /* HEMConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMConfig.h; sourceTree = "<group>"; };
 		BF98FC381A9BB29D00AEC04C /* HEMConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMConfig.m; sourceTree = "<group>"; };
+		BF98FC3D1A9C139C00AEC04C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BF9C87D619B6A199003188D4 /* HEMPillPairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillPairViewController.h; sourceTree = "<group>"; };
 		BF9C87D719B6A199003188D4 /* HEMPillPairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillPairViewController.m; sourceTree = "<group>"; };
 		BFABE75019A2E70A00AB2F0F /* UIView+HEMMotionEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HEMMotionEffects.h"; sourceTree = "<group>"; };
@@ -1200,7 +1201,6 @@
 		BFBA2B7F1A64A3F400C3AB80 /* pairOfPills@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pairOfPills@3x.png"; path = "images/pairOfPills@3x.png"; sourceTree = "<group>"; };
 		BFBECCE31A15706700335CC6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Onboarding.storyboard; sourceTree = "<group>"; };
 		BFBECCE61A15707100335CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
-		BFBECCE81A15707800335CC6 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BFBEDB601A8BF9B6006C4546 /* senseColors1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = senseColors1.png; path = images/senseColors1.png; sourceTree = "<group>"; };
 		BFBEDB611A8BF9B6006C4546 /* senseColors1@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "senseColors1@2x.png"; path = "images/senseColors1@2x.png"; sourceTree = "<group>"; };
 		BFBEDB621A8BF9B6006C4546 /* senseColors1@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "senseColors1@3x.png"; path = "images/senseColors1@3x.png"; sourceTree = "<group>"; };
@@ -3564,7 +3564,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				BFBECCE31A15706700335CC6 /* Base */,
-				BFBECCE81A15707800335CC6 /* en */,
+				BF98FC3D1A9C139C00AEC04C /* en */,
 			);
 			name = Onboarding.storyboard;
 			sourceTree = "<group>";

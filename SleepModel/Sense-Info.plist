@@ -61,6 +61,16 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>SenseApiUrl</key>
+	<string>${SENSE_API_URL}</string>
+	<key>SenseClientId</key>
+	<string>${SENSE_CLIENT_ID}</string>
+	<key>SenseAnalyticsToken</key>
+	<string>${SENSE_ANALYTICS_TOKEN}</string>
+	<key>SenseCrashReportsToken</key>
+	<string>${SENSE_CRASH_REPORTS_TOKEN}</string>
+	<key>SenseAllowSupportOptions</key>
+	<string>${SENSE_SUPPORT_OPTIONS}</string>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
 </dict>

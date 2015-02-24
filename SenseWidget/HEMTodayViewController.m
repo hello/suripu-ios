@@ -17,8 +17,8 @@
 #import "HEMTodayTableViewCell.h"
 #import "HelloStyleKit.h"
 
-static NSString* const kHEMTodayAPIProdPath = @"https://sense-api.hello.is/v1";
-static NSString* const kHEMTodayAPIDevPath  = @"https://dev-api.hello.is/v1";
+static NSString* const HEMAPIPlistKey = @"SenseApiUrl";
+static NSString* const HEMClientIdPlistKey = @"SenseClientId";
 static NSString* const kHEMTodayErrorDomain = @"is.hello.sense.today";
 static NSString* const kHEMTodaySleepScoreCellId = @"sleepScore";
 static NSString* const kHEMTodayConditionsCellId = @"info";
@@ -52,15 +52,23 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    NSString* path = nil;
-#if DEBUG
-    path = kHEMTodayAPIDevPath;
-#else
-    path = kHEMTodayAPIProdPath;
-#endif
-    [SENAPIClient setBaseURLFromPath:path];
-    [SENAuthorizationService authorizeRequestsFromKeychain];
+    
+    [self configureApi];
     [self listenForSensorUpdates];
+    [self configureContent];
+}
+
+- (void)configureApi {
+    NSBundle* bundle = [NSBundle mainBundle];
+    NSString* path = [bundle objectForInfoDictionaryKey:HEMAPIPlistKey];
+    NSString* clientId = [bundle objectForInfoDictionaryKey:HEMClientIdPlistKey];
+    
+    [SENAPIClient setBaseURLFromPath:path];
+    [SENAuthorizationService setClientAppID:clientId];
+    [SENAuthorizationService authorizeRequestsFromKeychain];
+}
+
+- (void)configureContent {
     self.tableView.rowHeight = kHEMTodayRowHeight;
     
     if ([SENAuthorizationService accessToken] != nil) {
@@ -162,7 +170,6 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
     [self loadCachedSensors];
     [self setSensorsChecked:YES];
     [self completeWhenDone];
-    
 }
 
 - (UIImage *)imageForSensor:(SENSensor *)sensor {

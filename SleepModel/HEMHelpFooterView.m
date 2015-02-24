@@ -9,6 +9,7 @@
 
 #import "UIFont+HEMStyle.h"
 #import "NSMutableAttributedString+HEMFormat.h"
+#import "NSAttributedString+HEMUtils.h"
 
 #import "HelloStyleKit.h"
 #import "HEMHelpFooterView.h"
@@ -94,11 +95,7 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
     NSString* hyperLinkText = NSLocalizedString(@"settings.help.support", nil);
     NSString* url = NSLocalizedString(@"help.url.support", nil);
     NSMutableAttributedString* link = [[NSMutableAttributedString alloc] initWithString:hyperLinkText];
-    [link addAttributes:@{NSLinkAttributeName : url,
-                          NSFontAttributeName : [UIFont settingsHelpFont],
-                          NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor]}
-                  range:NSMakeRange(0, [hyperLinkText length])];
-    return link;
+    return [link hyperlink:url];
 }
 
 - (NSAttributedString*)helpEmail {

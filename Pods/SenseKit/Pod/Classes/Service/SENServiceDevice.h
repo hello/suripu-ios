@@ -22,7 +22,9 @@ typedef NS_ENUM(NSUInteger, SENServiceDeviceState) {
     SENServiceDeviceStateSenseNotPaired = 2,
     SENServiceDeviceStateSenseNoData = 3,
     SENServiceDeviceStatePillNotPaired = 4,
-    SENServiceDeviceStatePillLowBattery = 5
+    SENServiceDeviceStatePillLowBattery = 5,
+    SENServiceDeviceStateSenseNotSeen = 6,
+    SENServiceDeviceStatePillNotSeen = 7
 };
 
 typedef NS_ENUM(NSInteger, SENServiceDeviceError) {
@@ -118,6 +120,32 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
  * @see @property senseInfo
  */
 - (void)loadDeviceInfo:(SENServiceDeviceCompletionBlock)completion;
+
+/**
+ * @method shouldWarnAboutLastSeenForDevice:
+ * 
+ * @param device: the device to check
+ * @return YES if the loaded info indicates the device hasn't been seen for a
+ *         theshold configured.  No, if no info to check or is ok.
+ */
+- (BOOL)shouldWarnAboutLastSeenForDevice:(SENDevice*)device;
+
+/**
+ * @return YES if the loaded info indicates the pill hasn't been seen for a 
+ *         theshold configured.  No, if no info to check or is ok.
+ *
+ * @see @method shouldWarnAboutLastSeenForDevice:
+ */
+- (BOOL)shouldWarnAboutPillLastSeen;
+
+/**
+ * @return YES if the loaded info indicates that Sense hasn't been seen for a
+ *         threshold configured.  No, if no info to check or is ok.
+ *
+ * @see @method shouldWarnAboutLastSeenForDevice:
+ */
+- (BOOL)shouldWarnAboutSenseLastSeen;
+
 
 /**
  * @method scanForPairedSense

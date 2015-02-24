@@ -11,5 +11,6 @@
 @interface NSAttributedString (HEMUtils)
 
 - (NSAttributedString *)trim;
+- (NSAttributedString *)hyperlink:(NSString*)url;
 
 @end

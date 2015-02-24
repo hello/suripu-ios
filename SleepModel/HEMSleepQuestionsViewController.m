@@ -99,11 +99,6 @@ static CGFloat const kHEMSleepViewAnimDuration = 0.2f;
     }
 }
 
-- (void)showActivityOn:(UIButton*)button {
-    if ([self activityLayer] != nil) [[self activityLayer] removeFromSuperlayer];
-    [self setActivityLayer:[HEMAnimationUtils animateActivityAround:button]];
-}
-
 - (void)stopActivity {
     [[self activityLayer] removeFromSuperlayer];
     [self setActivityLayer:nil];

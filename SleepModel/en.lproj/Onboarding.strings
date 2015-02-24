@@ -15,7 +15,7 @@
 "37N-ly-LlQ.normalTitle" = "CONTINUE";
 
 /* Class = "IBUIButton"; normalTitle = "Sign Up"; ObjectID = "3dT-qJ-kIJ"; */
-"3dT-qJ-kIJ.normalTitle" = "Sign Up";
+"3dT-qJ-kIJ.normalTitle" = "SIGN UP";
 
 /* Class = "IBUILabel"; text = "Enable enhanced audio"; ObjectID = "4Cj-AM-Ri7"; */
 "4Cj-AM-Ri7.text" = "Enable enhanced audio";
@@ -126,7 +126,7 @@
 "Vca-9S-Db1.text" = "How much do you weigh?";
 
 /* Class = "IBUILabel"; text = "Turn on bluetooth"; ObjectID = "WSp-oq-I62"; */
-"WSp-oq-I62.text" = "Turn on bluetooth";
+"WSp-oq-I62.text" = "Turn on Bluetooth";
 
 /* Class = "IBUILabel"; text = "3."; ObjectID = "WhI-1R-olH"; */
 "WhI-1R-olH.text" = "3.";
@@ -231,7 +231,7 @@
 "kPY-hQ-rr3.text" = "Connecting Sense to WiFi";
 
 /* Class = "IBUIButton"; normalTitle = "Retry"; ObjectID = "lGd-9N-cHV"; */
-"lGd-9N-cHV.normalTitle" = "Retry";
+"lGd-9N-cHV.normalTitle" = "RETRY";
 
 /* Class = "IBUILabel"; text = "5' 11\""; ObjectID = "lX5-4w-c9S"; */
 "lX5-4w-c9S.text" = "5' 11\"";

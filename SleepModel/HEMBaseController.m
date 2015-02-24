@@ -99,7 +99,7 @@ CGFloat const kHEMIPhone5Height = 568.0f;
     [dialogVC setDialogImage:image];
     [dialogVC setViewToShowThrough:seeThroughView];
     
-    [dialogVC showFrom:self onDone:^{
+    [dialogVC showFrom:self onDefaultActionSelected:^{
         // don't weak reference this since controller must remain until it has
         // been dismissed
         [self dismissViewControllerAnimated:YES completion:nil];

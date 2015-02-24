@@ -191,14 +191,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
     [dialogVC setTitle:NSLocalizedString(@"actions.sign-out", nil)];
     [dialogVC setMessage:NSLocalizedString(@"settings.sign-out.confirmation", nil)];
-    [dialogVC setOkButtonTitle:NSLocalizedString(@"actions.yes", nil)];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.yes", nil)];
     [dialogVC setViewToShowThrough:viewtoShowThrough];
     
     [dialogVC addAction:NSLocalizedString(@"actions.no", nil) primary:NO actionBlock:^{
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     
-    [dialogVC showFrom:self onDone:^{
+    [dialogVC showFrom:self onDefaultActionSelected:^{
         [self dismissViewControllerAnimated:YES completion:^{
             [SENAuthorizationService deauthorize];
             [self.navigationController popToRootViewControllerAnimated:YES];

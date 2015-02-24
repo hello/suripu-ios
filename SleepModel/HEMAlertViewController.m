@@ -28,9 +28,9 @@
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     dialogVC.title = title;
     dialogVC.message = message;
-    dialogVC.okButtonTitle = NSLocalizedString(@"actions.ok", nil);
+    dialogVC.defaultButtonTitle = NSLocalizedString(@"actions.ok", nil);
     dialogVC.viewToShowThrough = view;
-    [dialogVC showFrom:controller onDone:^{
+    [dialogVC showFrom:controller onDefaultActionSelected:^{
         [dialogVC dismissViewControllerAnimated:YES completion:nil];
     }];
 }
@@ -68,8 +68,8 @@
                                                        title:[self title]
                                                      message:[self message]]];
     
-    if ([[self okButtonTitle] length] > 0) {
-        [[[self dialogView] okButton] setTitle:[self okButtonTitle] forState:UIControlStateNormal];
+    if ([[self defaultButtonTitle] length] > 0) {
+        [[[self dialogView] okButton] setTitle:[self defaultButtonTitle] forState:UIControlStateNormal];
     }
     
     if ([[self helpPage] length] > 0) {
@@ -93,7 +93,7 @@
     [self updateDialogPosition];
 }
 
-- (void)showFrom:(UIViewController*)controller onDone:(HEMDialogActionBlock)doneBlock {
+- (void)showFrom:(UIViewController*)controller onDefaultActionSelected:(HEMDialogActionBlock)doneBlock {
     if ([self dialogView] == nil) {
         [self setupDialogView];
     }

@@ -170,13 +170,15 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setMessage:message];
-    [dialogVC setOkButtonTitle:NSLocalizedString(@"actions.no", nil)];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
     [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
         [self unpair];
     }];
 
-    [dialogVC showFrom:self onDone:NULL];
+    [dialogVC showFrom:self onDefaultActionSelected:^{
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
 }
 
 - (void)replaceBattery:(id)sender {

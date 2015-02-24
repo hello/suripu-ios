@@ -279,14 +279,14 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
     [dialogVC setTitle:NSLocalizedString(@"pairing.pill.skip-confirmation-title", nil)];
     [dialogVC setMessage:NSLocalizedString(@"pairing.pill.skip-confirmation-message", nil)];
-    [dialogVC setOkButtonTitle:[NSLocalizedString(@"actions.skip-for-now", nil) uppercaseString]];
+    [dialogVC setDefaultButtonTitle:[NSLocalizedString(@"actions.skip-for-now", nil) uppercaseString]];
     [dialogVC setViewToShowThrough:[[self navigationController] view]];
     
     [dialogVC addAction:NSLocalizedString(@"actions.cancel", nil) primary:NO actionBlock:^{
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     
-    [dialogVC showFrom:self onDone:^{
+    [dialogVC showFrom:self onDefaultActionSelected:^{
         [self dismissViewControllerAnimated:YES completion:^{
             [SENAnalytics track:kHEMAnalyticsEventOnBSkip properties:@{
                 kHEMAnalyticsEventPropOnBScreen : kHEMAnalyticsEventPropScreenPillPairing

@@ -53,7 +53,7 @@
     [dialogVC setMessage:NSLocalizedString(@"account.update.error.email", nil)];
     [dialogVC setViewToShowThrough:seeThroughView];
     
-    [dialogVC showFrom:self onDone:^{
+    [dialogVC showFrom:self onDefaultActionSelected:^{
         // don't weak reference this since controller must remain until it has
         // been dismissed
         [self dismissViewControllerAnimated:YES completion:nil];

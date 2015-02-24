@@ -142,7 +142,7 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
     [dialogVC setMessage:alertMessage];
     [dialogVC setViewToShowThrough:seeThroughView];
     
-    [dialogVC showFrom:controller onDone:^{
+    [dialogVC showFrom:controller onDefaultActionSelected:^{
         // don't weak reference this since controller must remain until it has
         // been dismissed
         [controller dismissViewControllerAnimated:YES completion:nil];

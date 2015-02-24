@@ -172,7 +172,7 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setMessage:message];
-    [dialogVC setOkButtonTitle:NSLocalizedString(@"actions.no", nil)];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
     __weak typeof(self) weakSelf = self;
     [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
@@ -186,7 +186,7 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
         }];
     }];
 
-    [dialogVC showFrom:self onDone:NULL];
+    [dialogVC showFrom:self onDefaultActionSelected:NULL];
 }
 
 - (IBAction)updateAlarmState:(UISwitch*)sender

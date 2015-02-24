@@ -236,10 +236,12 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setMessage:message];
-    [dialogVC setOkButtonTitle:NSLocalizedString(@"actions.no", nil)];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
     [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:action];
-    [dialogVC showFrom:self onDone:NULL];
+    [dialogVC showFrom:self onDefaultActionSelected:^{
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
 }
 
 - (void)showActivityText:(NSString*)text completion:(void(^)(void))completion {

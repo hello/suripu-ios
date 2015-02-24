@@ -65,8 +65,8 @@
 
 - (void)setupDialogView {
     [self setDialogView:[[HEMAlertView alloc] initWithImage:[self dialogImage]
-                                                       title:[self title]
-                                                     message:[self message]]];
+                                                      title:[self title]
+                                                    message:[self message]]];
     
     if ([[self defaultButtonTitle] length] > 0) {
         [[[self dialogView] okButton] setTitle:[self defaultButtonTitle] forState:UIControlStateNormal];

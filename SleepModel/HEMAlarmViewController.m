@@ -179,14 +179,19 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf.alarm delete];
         [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
-            if (success)
-                [strongSelf dismiss:NO];
-            else
+            if (success) {
+                [strongSelf dismissViewControllerAnimated:YES completion:^{
+                    [strongSelf dismiss:NO];
+                }];
+            } else {
                 [strongSelf.alarm save];
+            }
         }];
     }];
 
-    [dialogVC showFrom:self onDefaultActionSelected:NULL];
+    [dialogVC showFrom:self onDefaultActionSelected:^{
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
 }
 
 - (IBAction)updateAlarmState:(UISwitch*)sender

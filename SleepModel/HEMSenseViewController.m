@@ -240,7 +240,10 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
     [dialogVC setViewToShowThrough:self.view];
     [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:action];
     [dialogVC showFrom:self onDefaultActionSelected:^{
-        [self dismissViewControllerAnimated:YES completion:NULL];
+        [self dismissViewControllerAnimated:YES completion:^{
+            if (action)
+                action();
+        }];
     }];
 }
 

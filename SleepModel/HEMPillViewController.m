@@ -173,7 +173,9 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
     [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
-        [self unpair];
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self unpair];
+        }];
     }];
 
     [dialogVC showFrom:self onDefaultActionSelected:^{

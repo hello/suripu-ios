@@ -535,34 +535,51 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         return;
     }
     
+    __weak typeof(self) weakSelf = self;
+    
     SENServiceDeviceCompletionBlock callback = completion;
     if (!callback) callback = ^(NSError* error){};
+    
+    void(^turnOffLedThenFail)(NSError* error) = ^(NSError* error) {
+        [weakSelf setLEDState:SENSenseLEDStateOff completion:^(__unused NSError *ledError) {
+            callback (error);
+        }];
+    };
     // per discussion, we should reverse the logic as the unlinking of devices
     // currently appear to be less reliable and so we need to exit if anything
     // fails before resetting the firmware
-    __weak typeof(self) weakSelf = self;
-    __block SENSenseManager* manager = [self senseManager];
+    //
     // should make sure sense is even nearby, though, before we begin
     [self whenPairedSenseIsReadyDo:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
+        __block typeof(weakSelf) blockSelf = weakSelf;
+        
         if (error != nil) {
             callback (error);
             return;
         }
         
-        [SENAPIDevice removeAssociationsToSense:[self senseInfo] completion:^(id data, NSError *error) {
+        [blockSelf setLEDState:SENSenseLEDStateActivity completion:^(NSError *error) {
             if (error != nil) {
                 callback (error);
                 return;
             }
             
-            [manager resetToFactoryState:^(id response) {
-                [manager disconnectFromSense];
-                [strongSelf reset];
-                [strongSelf notifyFactoryRestore];
-                callback (nil);
-            } failure:callback];
+            [SENAPIDevice removeAssociationsToSense:[self senseInfo] completion:^(__unused id data, NSError *error) {
+                if (error != nil) {
+                    turnOffLedThenFail(error);
+                    return;
+                }
+                
+                [[blockSelf senseManager] resetToFactoryState:^(__unused id response) {
+                    [[blockSelf senseManager] disconnectFromSense];
+                    [blockSelf reset];
+                    [blockSelf notifyFactoryRestore];
+                    callback (nil);
+                } failure:turnOffLedThenFail];
+            }];
+            
         }];
+
     }];
 }
 
@@ -580,7 +597,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         }
         
         [[strongSelf senseManager] setLED:state completion:^(id response, NSError *error) {
-            if (completion) completion (nil);
+            if (completion) completion (error);
         }];
     }];
     

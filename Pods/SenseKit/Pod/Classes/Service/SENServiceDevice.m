@@ -524,80 +524,44 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 
 #pragma mark Factory Settings
 
-- (void)unlinkAllDevices:(SENServiceDeviceCompletionBlock)completion {
-    // so... we can unlink Sense and the Sleep Pill simulataneously, which will
-    // save a bit of time.  However, the actual operations on the server are quick
-    // so time saved is really based on the connection.  If the connection is good,
-    // then running the two actions serially will likely not take much more time
-    // then running them simultaneously since 1 action will have to turn on the radio
-    // (if not already fired up) and the radio + connection pool will be "warmed up"
-    // for the second call  Serial calls will benefit from less logic and/or avoids
-    // having to synchronize any data to call the completion call when both are done.
-    //
-    // serial it is!, unless we starting seeing this to take too long
-    __weak typeof(self) weakSelf = self;
-    [self unlinkSenseFromAccount:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            if (error != nil && [error code] != SENServiceDeviceErrorSenseNotPaired) {
-                if (completion) {
-                    completion ([strongSelf errorWithType:SENServiceDeviceErrorUnlinkSenseFromAccount]);
-                }
-                return;
-            }
-            
-            if ([strongSelf pillInfo] != nil) {
-                [strongSelf unpairSleepPill:^(NSError *error) {
-                    if (error != nil) {
-                        if (completion) {
-                            completion ([strongSelf errorWithType:SENServiceDeviceErrorUnlinkPillFromAccount]);
-                        }
-                        return;
-                    }
-                    
-                    if (completion) completion (nil);
-                }];
-            } else {
-                if (completion) completion (nil);
-            }
-            
-        }
-    }];
-}
-
 - (void)notifyFactoryRestore {
     NSString* name = SENServiceDeviceNotificationFactorySettingsRestored;
     [[NSNotificationCenter defaultCenter] postNotificationName:name object:nil];
 }
 
 - (void)restoreFactorySettings:(SENServiceDeviceCompletionBlock)completion {
+    if ([self senseInfo] == nil) {
+        if (completion) completion ([self errorWithType:SENServiceDeviceErrorSenseUnavailable]);
+        return;
+    }
+    
+    SENServiceDeviceCompletionBlock callback = completion;
+    if (!callback) callback = ^(NSError* error){};
     // per discussion, we should reverse the logic as the unlinking of devices
     // currently appear to be less reliable and so we need to exit if anything
     // fails before resetting the firmware
-    __strong typeof(self) weakSelf = self;
+    __weak typeof(self) weakSelf = self;
     __block SENSenseManager* manager = [self senseManager];
     // should make sure sense is even nearby, though, before we begin
     [self whenPairedSenseIsReadyDo:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        
         if (error != nil) {
-            if (completion) completion (error);
+            callback (error);
             return;
         }
         
-        [strongSelf unlinkAllDevices:^(NSError *error) {
-            
+        [SENAPIDevice removeAssociationsToSense:[self senseInfo] completion:^(id data, NSError *error) {
             if (error != nil) {
-                if (completion) completion (error);
+                callback (error);
                 return;
             }
             
             [manager resetToFactoryState:^(id response) {
+                [manager disconnectFromSense];
                 [strongSelf reset];
                 [strongSelf notifyFactoryRestore];
-                if (completion) completion (nil);
-            } failure:completion];
-            
+                callback (nil);
+            } failure:callback];
         }];
     }];
 }

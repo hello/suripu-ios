@@ -204,4 +204,20 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
     return [self unregisterDevice:device completion:completion];
 }
 
+#pragma mark - Factory Reset
+
++ (void)removeAssociationsToSense:(SENDevice*)sense completion:(SENAPIDataBlock)completion {
+    if ([sense type] != SENDeviceTypeSense || [sense deviceId] == nil) {
+        if (completion) {
+            completion (nil, [NSError errorWithDomain:SENAPIDeviceErrorDomain
+                                                 code:SENAPIDeviceErrorInvalidParam
+                                             userInfo:nil]);
+        }
+        return;
+    }
+    
+    NSString* path = [SENAPIDeviceEndpoint stringByAppendingFormat:@"/sense/%@/all", [sense deviceId]];
+    [SENAPIClient DELETE:path parameters:nil completion:completion];
+}
+
 @end

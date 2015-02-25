@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.3.0
+
+New:
+
+* Added help link to bottom of device settings to explain setting up second pill
+* when sense or the pill has not uploaded data for over a day, an alert will be
+displayed to let you know, giving you a link to help troubleshoot the problem
+* Updated how we complete a factory reset, which will now also properly remove
+any other accounts linked to that Sense and remove your pill as well.
+* updated confirmation and alert dialogs throughout the app to match othes used
+
+Fixes:
+
+* fixed layout in alarms screen when no alarms have been set
+* fixed layout in timeline to center information between sleep score and tabs
+* removed reference to sense-api in today extension
+* removed unused copy in app
+
 ## 1.0.2.10
 
 New:

@@ -203,6 +203,7 @@
                                 </state>
                                 <connections>
                                     <action selector="getStarted:" destination="KoM-KU-kaf" eventType="touchUpInside" id="vgP-HP-6MG"/>
+                                    <segue destination="ldR-fW-wOZ" kind="push" id="vb2-0e-IAE"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7ag-Tw-G3s">
@@ -2150,7 +2151,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable enhanced audio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Cj-AM-Ri7">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Enhanced Audio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Cj-AM-Ri7">
                                 <rect key="frame" x="20" y="24" width="560" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="iS7-kV-WDa"/>
@@ -2160,16 +2161,16 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYf-D8-Nxr">
-                                <rect key="frame" x="20" y="68" width="560" height="102"/>
-                                <string key="text">With this enabled Sense can pick up snoring, sleep talking and noise disturbances.
+                                <rect key="frame" x="20" y="68" width="560" height="82"/>
+                                <string key="text">With Enhanced Audio enabled Sense can pick up snoring, sleep talking and noise disturbances.
 
-Without enhanced audio enabled, Sense only looks at background noise levels.</string>
+Otherwise, Sense only looks at background noise levels.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="enableAudio.png" translatesAutoresizingMaskIntoConstraints="NO" id="dFU-8H-O86">
-                                <rect key="frame" x="0.0" y="170" width="600" height="306"/>
+                                <rect key="frame" x="0.0" y="150" width="600" height="326"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhf-f1-wVH" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
@@ -2778,9 +2779,10 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="7LA-fg-2Jb"/>
-        <segue reference="u9Q-g4-qbd"/>
+        <segue reference="vb2-0e-IAE"/>
         <segue reference="ZOJ-Sh-Dzx"/>
+        <segue reference="u9Q-g4-qbd"/>
+        <segue reference="7LA-fg-2Jb"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

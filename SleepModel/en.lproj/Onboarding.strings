@@ -18,7 +18,7 @@
 "3dT-qJ-kIJ.normalTitle" = "SIGN UP";
 
 /* Class = "IBUILabel"; text = "Enable enhanced audio"; ObjectID = "4Cj-AM-Ri7"; */
-"4Cj-AM-Ri7.text" = "Enable enhanced audio";
+"4Cj-AM-Ri7.text" = "Enable Enhanced Audio";
 
 /* Class = "IBUITextField"; placeholder = "Email"; ObjectID = "4H9-4w-9eg"; */
 "4H9-4w-9eg.placeholder" = "Email";
@@ -159,7 +159,7 @@
 "cY3-74-70H.text" = "Introduce yourself";
 
 /* Class = "IBUILabel"; text = "With this enabled Sense can pick up snoring, sleep talking and noise disturbances.\n\nWithout enhanced audio enabled, Sense only looks at background noise levels."; ObjectID = "cYf-D8-Nxr"; */
-"cYf-D8-Nxr.text" = "With this enabled Sense can pick up snoring, sleep talking and noise disturbances.\n\nWithout enhanced audio enabled, Sense only looks at background noise levels.";
+"cYf-D8-Nxr.text" = "With Enhanced Audio enabled Sense can pick up snoring, sleep talking and noise disturbances.\n\nOtherwise, Sense only looks at background noise levels.";
 
 /* Class = "IBUILabel"; text = "Sense will occasionally notify you with important messages about your sleep, bedroom, and deliver you your Sleep Score each morning."; ObjectID = "cxR-ry-GIM"; */
 "cxR-ry-GIM.text" = "Sense will occasionally notify you with important messages about your sleep, bedroom, and deliver you your Sleep Score each morning.";

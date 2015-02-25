@@ -24,17 +24,17 @@ typedef NS_ENUM(NSInteger, HEMDeviceError) {
 
 @interface HEMDeviceDataSource : NSObject <UICollectionViewDataSource>
 
+@property (nonatomic, assign, readonly, getter=isLoadingSense) BOOL loadingSense;
+@property (nonatomic, assign, readonly, getter=isLoadingPill)  BOOL loadingPill;
+
 - (instancetype)initWithCollectionView:(UICollectionView*)collectionView
                      andFooterDelegate:(id<HEMTextFooterDelegate>)delegate;
 
-- (void)refresh:(void(^)(NSError* error))completion;
+- (void)refreshWithUpdate:(void(^)(void))update completion:(void(^)(NSError* error))completion;
 - (NSOrderedSet*)deviceWarningsFor:(SENDevice*)device;
-- (BOOL)isObtainingData;
-- (BOOL)isMissingADevice;
 - (void)updateSenseManager:(SENSenseManager*)senseManager completion:(void(^)(NSError* error))completion;
 - (SENDevice*)deviceAtIndexPath:(NSIndexPath*)indexPath;
 - (SENDeviceType)deviceTypeAtIndexPath:(NSIndexPath*)indexPath;
-- (void)loadDeviceInfo:(void(^)(NSError* error))completion;
 - (void)updateCell:(UICollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath;
 - (NSAttributedString*)attributedFooterText;
 

@@ -444,10 +444,9 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     
     if ([self senseManager] == nil) {
         show(nil, nil);
-    } else if ([self delegate] == nil) {
-        [[self senseManager] setLED:SENSenseLEDStatePair completion:show];
     } else {
-        show(nil, nil);
+        SENSenseLEDState led = [self delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
+        [[self senseManager] setLED:led completion:show];
     }
 
 }

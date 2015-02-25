@@ -71,24 +71,9 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self setSelectedDevice:nil];
-    
-    // only load devices again on appearance if user is coming back, not when
-    // coming to, and only if devices are not configured so that we can check
-    // if it has happened.
-    if ([self loaded] && ![[self dataSource] isMissingADevice]) {
-        [self reloadData];
-    } else if (![self loaded]) {
-        __weak typeof(self) weakSelf = self;
-        [[self dataSource] loadDeviceInfo:^(NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if ([error code] == HEMDeviceErrorDeviceInfoNotLoaded) {
-                NSString* title = NSLocalizedString(@"settings.device.error.title", nil);
-                NSString* msg = NSLocalizedString(@"settings.device.error.cannot-load-info", nil);
-                [strongSelf showMessageDialog:msg title:title];
-            }
-            [strongSelf reloadData];
-        }];
-        
+
+    if (![self loaded]) {
+        [self refreshDataSource:NO];
         [self setLoaded:YES];
     }
     
@@ -101,12 +86,23 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     [[self collectionView] reloadData];
 }
 
-- (void)refreshDataSource {
+- (void)refreshDataSource:(BOOL)clearCurrentState {
     __weak typeof(self) weakSelf = self;
-    [[self dataSource] refresh:^(NSError *error) {
+    [[self dataSource] refreshWithUpdate:^{
         [weakSelf reloadData];
+    } completion:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error != nil && [error code] == HEMDeviceErrorDeviceInfoNotLoaded) {
+            NSString* title = NSLocalizedString(@"settings.device.error.title", nil);
+            NSString* msg = NSLocalizedString(@"settings.device.error.cannot-load-info", nil);
+            [strongSelf showMessageDialog:msg title:title];
+        }
+        [strongSelf reloadData];
     }];
-    [self reloadData]; // clear current display state to show activity
+    
+    if (clearCurrentState) {
+        [self reloadData]; // clear current display state to show activity
+    }
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -148,31 +144,35 @@ referenceSizeForFooterInSection:(NSInteger)section {
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[self dataSource] isObtainingData]) {
-        return;
-    }
-
     UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
     SENDeviceType type = [[self dataSource] deviceTypeAtIndexPath:indexPath];
     
     switch (type) {
-        case SENDeviceTypeSense:
-            if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
-                [self showSensePairingController];
-            } else {
-                [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
-                [self performSegueWithIdentifier:[HEMMainStoryboard senseSegueIdentifier]
-                                          sender:self];
+        case SENDeviceTypeSense: {
+            if (![[self dataSource] isLoadingSense]) {
+                if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
+                    [self showSensePairingController];
+                } else {
+                    [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
+                    [self performSegueWithIdentifier:[HEMMainStoryboard senseSegueIdentifier]
+                                              sender:self];
+                }
             }
             break;
+        }
         case SENDeviceTypePill:
-            if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
-                [self showPillPairingController];
-            } else {
-                [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
-                [self performSegueWithIdentifier:[HEMMainStoryboard pillSegueIdentifier]
-                                          sender:self];
+            if (![[self dataSource] isLoadingPill]) {
+                if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
+                    if (![[self dataSource] isLoadingSense]) { // sense is required for pill pairing
+                        [self showPillPairingController];
+                    }
+                } else {
+                    [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
+                    [self performSegueWithIdentifier:[HEMMainStoryboard pillSegueIdentifier]
+                                              sender:self];
+                }
             }
+
             break;
         default:
             break;
@@ -192,7 +192,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
 #pragma mark HEMPillPairDelegate
 
 - (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
-    [self refreshDataSource];
+    [self refreshDataSource:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -203,7 +203,7 @@ referenceSizeForFooterInSection:(NSInteger)section {
 #pragma mark HEMPillControllerDelegate
 
 - (void)didUnpairPillFrom:(HEMPillViewController *)viewController {
-    [self refreshDataSource];
+    [self refreshDataSource:YES];
     [[self navigationController] popViewControllerAnimated:NO];
 }
 
@@ -220,16 +220,16 @@ referenceSizeForFooterInSection:(NSInteger)section {
 #pragma mark HEMSenseControllerDelegate
 
 - (void)didUpdateWiFiFrom:(HEMSenseViewController *)viewController {
-    [self refreshDataSource];
+    [self refreshDataSource:YES];
 }
 
 - (void)didUnpairSenseFrom:(HEMSenseViewController *)viewController {
-    [self refreshDataSource];
+    [self refreshDataSource:YES];
     [[self navigationController] popViewControllerAnimated:NO];
 }
 
 - (void)didFactoryRestoreFrom:(HEMSenseViewController *)viewController {
-    [self refreshDataSource];
+    [self refreshDataSource:YES];
     [[self navigationController] popViewControllerAnimated:NO];
 }
 

@@ -35,9 +35,12 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 @property (nonatomic, copy)   NSAttributedString* attributedFooterText;
 @property (nonatomic, copy)   NSString* configuredSSID;
 @property (nonatomic, assign) SENWiFiConnectionState wifiState;
-@property (nonatomic, assign, getter=isObtainingData) BOOL obtainingData;
+@property (nonatomic, assign, getter=isLoadingSense) BOOL loadingSense;
+@property (nonatomic, assign, getter=isLoadingPill)  BOOL loadingPill;
 @property (nonatomic, assign) BOOL attemptedDataLoad;
 @property (nonatomic, weak)   id<HEMTextFooterDelegate> footerDelegate;
+@property (nonatomic, weak)   UIActivityIndicatorView* senseActivityIndicator;
+@property (nonatomic, weak)   UIActivityIndicatorView* pillActivityIndicator;
 
 @end
 
@@ -63,38 +66,59 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 #pragma mark - Loading Data
 
-- (void)refresh:(void(^)(NSError* error))completion {
+- (void)refreshWithUpdate:(void(^)(void))update completion:(void(^)(NSError* error))completion {
     [self setWifiState:SENWiFiConnectionStateUnknown];
     [self setConfiguredSSID:nil];
-    [self setObtainingData:NO];
-    [self setAttemptedDataLoad:NO];
+    [self setLoadingSense:YES];
+    [self setLoadingPill:YES];
     
-    [[SENServiceDevice sharedService] clearCache];
-    
-    [self loadDeviceInfo:completion];
+    __weak typeof(self) weakSelf = self;
+    [self refereshDeviceInfo:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        [strongSelf setLoadingPill:NO];
+        [strongSelf setAttemptedDataLoad:YES];
+        
+        if (error != nil) {
+            [strongSelf setLoadingSense:NO];
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            if (completion) completion (error);
+        } else {
+            if (update) update();
+            
+            [strongSelf refreshSenseData:^(NSError *error) {
+                if (error != nil) {
+                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                }
+                [strongSelf setLoadingSense:NO];
+                if (completion) completion (error);
+            }];
+        }
+    }];
 }
 
-- (void)loadDeviceInfo:(void(^)(NSError* error))completion {
-    [self setObtainingData:YES];
+- (void)refereshDeviceInfo:(void(^)(NSError* error))completion {
     __weak typeof(self) weakSelf = self;
     [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        NSError* deviceError = error;
         
         if (error != nil) {
+            
             if ([error code] == SENServiceDeviceErrorInProgress && completion) {
                 [strongSelf invokeWhenInfoIsLoaded:completion];
-            } else if (completion) {
-                [strongSelf setObtainingData:NO];
-                [strongSelf setAttemptedDataLoad:YES];
-                completion ([NSError errorWithDomain:HEMDeviceErrorDomain
-                                                code:HEMDeviceErrorDeviceInfoNotLoaded
-                                            userInfo:nil]);
+                return;
+            } else {
+                // generalize error to info not loaded so that errors can be
+                // properly presented based on this
+                deviceError = [NSError errorWithDomain:HEMDeviceErrorDomain
+                                                  code:HEMDeviceErrorDeviceInfoNotLoaded
+                                              userInfo:nil];
             }
-
-            return;
+            
         }
         
-        [strongSelf refreshSenseData:completion];
+        if (completion) completion (deviceError);
     }];
 }
 
@@ -105,8 +129,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
                    afterDelay:0.1f];
         return;
     }
-    
-    [self refreshSenseData:completion];
+    completion (nil);
 }
 
 - (void)updateSenseManager:(SENSenseManager*)senseManager completion:(void(^)(NSError* error))completion {
@@ -120,8 +143,6 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     [SENSenseManager whenBleStateAvailable:^(BOOL on) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!on) {
-            [strongSelf setObtainingData:NO];
-            [strongSelf setAttemptedDataLoad:YES];
             if (completion) completion ([NSError errorWithDomain:HEMDeviceErrorDomain
                                                             code:HEMDeviceErrorNoBle
                                                         userInfo:nil]);
@@ -139,8 +160,6 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
             NSString* wifiSSID = [ssid length] == 0 ? nil : ssid;
             [strongSelf setConfiguredSSID:wifiSSID];
             [strongSelf setWifiState:state];
-            [strongSelf setObtainingData:NO];
-            [strongSelf setAttemptedDataLoad:YES];
             
             [HEMOnboardingUtils saveConfiguredSSID:wifiSSID];
             
@@ -173,11 +192,6 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 }
 
 #pragma mark - Convenience Methods
-
-- (BOOL)isMissingADevice {
-    SENServiceDevice* service = [SENServiceDevice sharedService];
-    return ([service senseInfo] == nil || [service pillInfo] == nil) && [service isInfoLoaded];
-}
 
 - (NSString*)lastSeen:(SENDevice*)device {
     NSString* desc = nil;
@@ -265,6 +279,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     NSString* name = nil;
     NSString* message = nil;
     NSString* buttonTitle = nil;
+    UIColor* actionButtonColor = [HelloStyleKit senseBlueColor];
     
     switch ([indexPath row]) {
         case HEMDeviceRowSense:
@@ -278,6 +293,9 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
             name = NSLocalizedString(@"settings.device.pill", nil);
             message = NSLocalizedString(@"settings.device.no-pill", nil);
             buttonTitle = NSLocalizedString(@"settings.device.button.title.pair-pill", nil);
+            if ([self isLoadingSense] || ![self attemptedDataLoad]) {
+                actionButtonColor = [HelloStyleKit actionButtonDisabledColor];
+            }
             break;
         default:
             break;
@@ -288,6 +306,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     [[cell messageLabel] setText:message];
     [[cell actionButton] setTitle:buttonTitle forState:UIControlStateNormal];
     [[cell actionButton] setUserInteractionEnabled:NO]; // let the entire cell be actionable
+    [[cell actionButton] setBackgroundColor:actionButtonColor];
 }
 
 - (void)updateSenseInfo:(SENDevice*)senseInfo forCell:(HEMDeviceCollectionViewCell*)cell {
@@ -354,14 +373,17 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 - (void)updateDeviceInfoForCell:(HEMDeviceCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
     SENDevice* device = [self deviceAtIndexPath:indexPath];
     SENDeviceType type = [self deviceTypeAtIndexPath:indexPath]; // device may be nil
+    BOOL loading = NO;
     
     if (type == SENDeviceTypeSense) {
         [self updateSenseInfo:device forCell:cell];
+        loading = [self isLoadingSense];
     } else if (type == SENDeviceTypePill) {
         [self updatePillInfo:device forCell:cell];
+        loading = [self isLoadingPill];
     }
     
-    [cell showDataLoadingIndicator:[self isObtainingData] || ![self attemptedDataLoad]];
+    [cell showDataLoadingIndicator:loading || ![self attemptedDataLoad]];
 }
 
 - (NSAttributedString*)attributedFooterText {

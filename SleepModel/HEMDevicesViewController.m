@@ -127,7 +127,6 @@ referenceSizeForFooterInSection:(NSInteger)section {
                                                         | NSStringDrawingUsesLineFragmentOrigin
                                                  context:nil].size;
     size.height += insets.top + insets.bottom;
-    DDLogVerbose(@"footer size %f, %f", size.width, size.height);
     return size;
 }
 

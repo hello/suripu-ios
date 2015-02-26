@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.3.1
+
+New:
+
+* Improved the loading of Sleep Pill info in device settings
+* Turning on the LED on Sense when doing a factory reset
+
+Fixes
+
+* updated various copy
+
 ## 1.0.3.0
 
 New:

@@ -116,6 +116,7 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
     if ([lowerScheme hasPrefix:@"mailto"]) {
         [HEMSupportUtil sendEmailTo:[URL resourceSpecifier]
                         withSubject:NSLocalizedString(@"help.email.subject", nil)
+                          attachLog:YES
                                from:[self controller]
                        mailDelegate:self];
         [SENAnalytics track:kHEMAnalyticsEventEmailSupport];

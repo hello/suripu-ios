@@ -64,6 +64,10 @@
 "help.url.slug.sense-not-connected" = "troubleshoot/cannot-connect-sense-ble";
 "help.url.slug.sense-no-internet" = "troubleshoot/sense-cannot-connect-internet";
 
+// feedback
+"feedback.email.address" = "feedback@hello.is";
+"feedback.email.subject.format" = "Feedback for Sense %@";
+
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
 "video.url.intro" = "http://player.vimeo.com/external/101139949.hd.mp4?s=28ac378e29847b77e9fb7431f05d2772";
@@ -138,6 +142,7 @@
 "settings.notifications" = "Notifications";
 "settings.account" = "My account";
 "settings.units" = "Units and time";
+"settings.feedback" = "Feedback";
 "settings.units.24-hour" = "24 hour";
 "settings.units.12-hour" = "12 hour";
 "settings.units.celsius" = "Celsius";

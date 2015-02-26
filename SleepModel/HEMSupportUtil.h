@@ -17,6 +17,7 @@
  */
 + (void)sendEmailTo:(NSString*)email
         withSubject:(NSString*)subject
+          attachLog:(BOOL)attachLog
                from:(UIViewController*)controller
        mailDelegate:(id<MFMailComposeViewControllerDelegate>)delegate;
 

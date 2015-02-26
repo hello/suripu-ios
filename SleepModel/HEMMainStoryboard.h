@@ -51,6 +51,7 @@
 +(NSString *)senseSegueIdentifier;
 +(NSString *)unitsSettingsSegueIdentifier;
 +(NSString *)updateEmailSegueIdentifier;
++(NSString *)updateNameSegueIdentifier;
 +(NSString *)updatePasswordSegueIdentifier;
 
 /** View Controllers */

@@ -25,6 +25,7 @@
 #import "HEMHeightPickerViewController.h"
 #import "HEMWeightPickerViewController.h"
 #import "HEMGenderPickerViewController.h"
+#import "HEMUpdateNameViewController.h"
 #import "HEMAlertViewController.h"
 
 static CGFloat const HEMAccountTableSectionHeaderHeight = 20.0f;
@@ -35,6 +36,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 44.0f;
     UITableViewDelegate,
     HEMUpdatePasswordDelegate,
     HEMUpdateEmailDelegate,
+    HEMUpdateNameDelegate,
     HEMBirthdatePickerDelegate,
     HEMGenderPickerDelegate,
     HEMWeightPickerDelegate,
@@ -145,6 +147,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIViewController* editController = nil;
     
     switch (type) {
+        case HEMSettingsAccountInfoTypeName:
+            segueId = [HEMMainStoryboard updateNameSegueIdentifier];
+            break;
         case HEMSettingsAccountInfoTypeEmail:
             segueId = [HEMMainStoryboard updateEmailSegueIdentifier];
             break;
@@ -236,6 +241,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             HEMUpdateEmailViewController* emailVC
                 = (HEMUpdateEmailViewController*)[nav topViewController];
             [emailVC setDelegate:self];
+        } else if ([[nav topViewController] isKindOfClass:[HEMUpdateNameViewController class]]) {
+            HEMUpdateNameViewController* controller = (id)[nav topViewController];
+            controller.delegate = self;
         }
     }
 }
@@ -310,6 +318,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark Email Update Delegate
 
 - (void)didUpdateEmail:(BOOL)updated from:(HEMUpdateEmailViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark Name Update Delegate
+
+- (void)didUpdateName:(BOOL)updated from:(HEMUpdateNameViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

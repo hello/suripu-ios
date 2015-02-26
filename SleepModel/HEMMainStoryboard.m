@@ -63,6 +63,7 @@ static NSString *const _HEMtrends = @"trends";
 static NSString *const _HEMunitCell = @"unitCell";
 static NSString *const _HEMunitsSettings = @"unitsSettings";
 static NSString *const _HEMupdateEmail = @"updateEmail";
+static NSString *const _HEMupdateName = @"updateName";
 static NSString *const _HEMupdatePassword = @"updatePassword";
 static NSString *const _HEMwarning = @"warning";
 
@@ -112,6 +113,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)senseSegueIdentifier { return _HEMsense; }
 +(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
 +(NSString *)updateEmailSegueIdentifier { return _HEMupdateEmail; }
++(NSString *)updateNameSegueIdentifier { return _HEMupdateName; }
 +(NSString *)updatePasswordSegueIdentifier { return _HEMupdatePassword; }
 
 /** View Controllers */

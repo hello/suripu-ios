@@ -25,6 +25,7 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
 
 + (void)sendEmailTo:(NSString*)email
         withSubject:(NSString*)subject
+          attachLog:(BOOL)attachLog
                from:(UIViewController*)controller
        mailDelegate:(id<MFMailComposeViewControllerDelegate>)delegate {
     
@@ -38,9 +39,13 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
     MFMailComposeViewController* composer = [[MFMailComposeViewController alloc] init];
     [composer setToRecipients:@[ email ]];
     [composer setSubject:subject];
-    [composer addAttachmentData:[HEMLogUtils latestLogFileData]
-                       mimeType:HEMSupportLogFileType
-                       fileName:HEMSupportLogFileName];
+    
+    if (attachLog) {
+        [composer addAttachmentData:[HEMLogUtils latestLogFileData]
+                           mimeType:HEMSupportLogFileType
+                           fileName:HEMSupportLogFileName];
+    }
+    
     composer.mailComposeDelegate = delegate;
     [controller presentViewController:composer animated:YES completion:NULL];
     
@@ -51,6 +56,7 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
     
     [self sendEmailTo:HEMSupportContactEmail
           withSubject:HEMSupportContactSubject
+            attachLog:YES
                  from:controller
          mailDelegate:delegate];
 }

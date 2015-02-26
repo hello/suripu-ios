@@ -235,10 +235,11 @@
 "settings.factory-restore.error.unlink-pill" = "Unable to remove your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
 "settings.factory-restore.error.unlink-sense" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";
 
-// insights
+// Insights / Questions
 "insights.title" = "Insights";
 "sleep.insight.info.title.no-text" = "Insight failed to load";
 "sleep.insight.info.message.no-text" = "Unable to load Insight information at the moment. Please make sure your device has an internet connection and try again.";
+"sleep.questions.end.message" = "Thank you";
 
 // authentication/sign in
 "authorization.sign-in.activity.message" = "Signing in...";

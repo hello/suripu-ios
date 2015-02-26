@@ -500,6 +500,23 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 {
     CGPoint offset = scrollView.contentOffset;
     CGFloat constant = offset.y > 0 ? HEMAlarmShortcutHiddenTrailing : HEMAlarmShortcutDefaultTrailing;
+    [self moveShortcutButtonWithOffset:constant];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate) {
+        [self moveShortcutButtonWithOffset:HEMAlarmShortcutDefaultTrailing];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self moveShortcutButtonWithOffset:HEMAlarmShortcutDefaultTrailing];
+}
+
+- (void)moveShortcutButtonWithOffset:(CGFloat)constant
+{
     if (self.shortcutButtonTrailing.constant != constant) {
         if (constant > 0)
             self.shortcutButton.hidden = NO;

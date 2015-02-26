@@ -154,6 +154,7 @@
 "settings.account.push-conditions" = "Poor conditions";
 "settings.account.push-score" = "Sleep Score";
 "settings.wifi.other" = "Other...";
+"settings.account.name" = "Name";
 "settings.account.email" = "Email";
 "settings.account.password" = "Password";
 "settings.help.format" = "If you're having trouble, visit %@ or contact us at %@";

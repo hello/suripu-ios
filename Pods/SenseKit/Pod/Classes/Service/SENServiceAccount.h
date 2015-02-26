@@ -64,6 +64,14 @@ typedef NS_ENUM(NSUInteger, SENServiceAccountError) {
 - (void)changeEmail:(NSString*)email completion:(SENAccountResponseBlock)completion;
 
 /**
+ *  Update the name associated with the active account
+ *
+ *  @param name       new name
+ *  @param completion block invoked after asynchronous update
+ */
+- (void)changeName:(NSString*)name completion:(SENAccountResponseBlock)completion;
+
+/**
  * @method updateAccount:
  * 
  * @discussion

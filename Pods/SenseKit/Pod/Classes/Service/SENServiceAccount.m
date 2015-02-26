@@ -162,6 +162,28 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
     }];
 }
 
+- (void)changeName:(NSString *)name completion:(SENAccountResponseBlock)completion {
+    if (name.length == 0) {
+        if (completion)
+            completion([self errorWithCode:SENServiceAccountErrorInvalidArg]);
+        return;
+    }
+    __weak typeof(self) weakSelf = self;
+    [self refreshAccount:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error) {
+            if (completion)
+                completion(error);
+            return;
+        }
+        [[strongSelf account] setName:name];
+        [SENAPIAccount updateAccount:[strongSelf account] completionBlock:^(id data, NSError *error) {
+            if (completion)
+                completion(error);
+        }];
+    }];
+}
+
 - (void)updateAccount:(SENAccountResponseBlock)completion {
     
     __weak typeof(self) weakSelf = self;

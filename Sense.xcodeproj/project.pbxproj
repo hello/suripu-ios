@@ -301,6 +301,7 @@
 		8AD88C3B1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C391A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib */; };
 		8ADF03CD1A719185002B036A /* HEMDynamicsStatusStyler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADF03CC1A719185002B036A /* HEMDynamicsStatusStyler.m */; };
 		8ADF03D21A71E28A002B036A /* HEMFullscreenDialogView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8ADF03D11A71E28A002B036A /* HEMFullscreenDialogView.xib */; };
+		8AF281091A9F8AC300D61641 /* HEMUpdateNameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AF281081A9F8AC300D61641 /* HEMUpdateNameViewController.m */; };
 		8AF4FA251A12B01E00451245 /* playSound.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF4FA221A12B01E00451245 /* playSound.png */; };
 		8AF4FA261A12B01E00451245 /* playSound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF4FA231A12B01E00451245 /* playSound@2x.png */; };
 		8AF4FA271A12B01E00451245 /* playSound@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8AF4FA241A12B01E00451245 /* playSound@3x.png */; };
@@ -974,6 +975,8 @@
 		8ADF03CB1A719185002B036A /* HEMDynamicsStatusStyler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDynamicsStatusStyler.h; sourceTree = "<group>"; };
 		8ADF03CC1A719185002B036A /* HEMDynamicsStatusStyler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDynamicsStatusStyler.m; sourceTree = "<group>"; };
 		8ADF03D11A71E28A002B036A /* HEMFullscreenDialogView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMFullscreenDialogView.xib; sourceTree = "<group>"; };
+		8AF281071A9F8AC300D61641 /* HEMUpdateNameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUpdateNameViewController.h; sourceTree = "<group>"; };
+		8AF281081A9F8AC300D61641 /* HEMUpdateNameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMUpdateNameViewController.m; sourceTree = "<group>"; };
 		8AF4FA221A12B01E00451245 /* playSound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = playSound.png; path = images/playSound.png; sourceTree = "<group>"; };
 		8AF4FA231A12B01E00451245 /* playSound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "playSound@2x.png"; path = "images/playSound@2x.png"; sourceTree = "<group>"; };
 		8AF4FA241A12B01E00451245 /* playSound@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "playSound@3x.png"; path = "images/playSound@3x.png"; sourceTree = "<group>"; };
@@ -2086,8 +2089,6 @@
 		8A90F9B019635C7900AFD110 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				8A03386C197DD2D300BE8327 /* HEMSettingsTableViewController.h */,
-				8A03386D197DD2D300BE8327 /* HEMSettingsTableViewController.m */,
 				BF6E3AA11A2EA4CF0019C110 /* HEMAccountViewController.h */,
 				BF6E3AA21A2EA4CF0019C110 /* HEMAccountViewController.m */,
 				BFC3BE9A1A7202DA0022C6C2 /* HEMChoiceViewController.h */,
@@ -2102,6 +2103,8 @@
 				BFB0FBE619D38D790056FFEC /* HEMSenseViewController.m */,
 				BFB0FBF119D482E90056FFEC /* HEMSettingsNavigationController.h */,
 				BFB0FBF219D482E90056FFEC /* HEMSettingsNavigationController.m */,
+				8A03386C197DD2D300BE8327 /* HEMSettingsTableViewController.h */,
+				8A03386D197DD2D300BE8327 /* HEMSettingsTableViewController.m */,
 				8A90F9BA19637F9400AFD110 /* HEMSleepSoundTableViewController.h */,
 				8A90F9BB19637F9400AFD110 /* HEMSleepSoundTableViewController.m */,
 				8AA157B31A5E194100BF1D4A /* HEMStyledNavigationViewController.h */,
@@ -2110,6 +2113,8 @@
 				BF781E3019DC716F00B68EBC /* HEMUnitPreferenceViewController.m */,
 				BF8F89841A4A1DA400D8374F /* HEMUpdateEmailViewController.h */,
 				BF8F89851A4A1DA400D8374F /* HEMUpdateEmailViewController.m */,
+				8AF281071A9F8AC300D61641 /* HEMUpdateNameViewController.h */,
+				8AF281081A9F8AC300D61641 /* HEMUpdateNameViewController.m */,
 				BFE8730F1A323C2800494231 /* HEMUpdatePasswordViewController.h */,
 				BFE873101A323C2800494231 /* HEMUpdatePasswordViewController.m */,
 			);
@@ -3418,6 +3423,7 @@
 				6003F59A195388D20070C39A /* main.m in Sources */,
 				BF71AFCF1A48F6E700D1208B /* HEMDebugController.m in Sources */,
 				BFC3BE9C1A7202DA0022C6C2 /* HEMChoiceViewController.m in Sources */,
+				8AF281091A9F8AC300D61641 /* HEMUpdateNameViewController.m in Sources */,
 				BF8F89861A4A1DA400D8374F /* HEMUpdateEmailViewController.m in Sources */,
 				8AC276B01A3CE75300B082D9 /* HEMTrendsViewController.m in Sources */,
 				8A90F9BC19637F9400AFD110 /* HEMSleepSoundTableViewController.m in Sources */,

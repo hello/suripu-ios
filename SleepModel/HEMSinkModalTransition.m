@@ -5,46 +5,13 @@
 //  Created by Jimmy Lu on 12/17/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import "UIView+HEMSnapshot.h"
-#import "HEMSinkModalTransitionDelegate.h"
+#import "HEMSinkModalTransition.h"
 
-static CGFloat const HEMSinkAnimationDuration = 0.5f;
-
-@interface HEMSinkModalTransitionDelegate()
-
-@property (nonatomic, assign) BOOL presenting;
+@interface HEMSinkModalTransition()
 
 @end
 
-@implementation HEMSinkModalTransitionDelegate
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForDismissedController:(UIViewController *)dismissed {
-    [self setPresenting:NO];
-    return self;
-}
-
-- (id<UIViewControllerAnimatedTransitioning>)animationControllerForPresentedController:(UIViewController *)presented
-                                                                  presentingController:(UIViewController *)presenting
-                                                                      sourceController:(UIViewController *)source {
-    [self setPresenting:YES];
-    return self;
-}
-
-#pragma mark - UIViewControllerAnimatedTransitioning
-
-- (NSTimeInterval)transitionDuration:(id<UIViewControllerContextTransitioning>)transitionContext {
-    return HEMSinkAnimationDuration;
-}
-
-- (void)animateTransition:(id<UIViewControllerContextTransitioning>)transitionContext {
-
-    if ([self presenting]) {
-        [self animatePresentationWithContext:transitionContext];
-    } else {
-        [self animateDismissalWithContext:transitionContext];
-    }
-
-}
+@implementation HEMSinkModalTransition
 
 - (void)animatePresentationWithContext:(id<UIViewControllerContextTransitioning>)context {
     UIView* containerView = [context containerView];
@@ -52,7 +19,7 @@ static CGFloat const HEMSinkAnimationDuration = 0.5f;
     [[toVC view] setAlpha:0.0f];
     [containerView addSubview:[toVC view]];
     
-    [UIView animateWithDuration:HEMSinkAnimationDuration
+    [UIView animateWithDuration:[self duration]
                      animations:^{
                          [[toVC view] setAlpha:1.0f];
                          // must transform the layer rather than the actual view b/c applying a transform
@@ -72,7 +39,7 @@ static CGFloat const HEMSinkAnimationDuration = 0.5f;
     UIViewController* fromVC = [context viewControllerForKey:UITransitionContextFromViewControllerKey];
     UIView* fromView = [fromVC view];
     
-    [UIView animateWithDuration:HEMSinkAnimationDuration
+    [UIView animateWithDuration:[self duration]
                      animations:^{
                          [fromView setAlpha:0.0f];
                          [[[self sinkView] layer] setTransform:CATransform3DIdentity];

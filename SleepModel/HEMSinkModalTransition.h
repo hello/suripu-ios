@@ -7,8 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "HEMTransitionDelegate.h"
 
-@interface HEMSinkModalTransitionDelegate : NSObject <UIViewControllerAnimatedTransitioning, UIViewControllerTransitioningDelegate>
+@interface HEMSinkModalTransition : HEMTransitionDelegate
 
 @property (nonatomic, weak) UIView* sinkView;
 

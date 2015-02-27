@@ -30,8 +30,10 @@
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
 #import "HEMStyledNavigationViewController.h"
+#import "HEMTextFooterCollectionReusableView.h"
 
-static CGFloat const HEMSenseActionsCellHeight = 248.0f;
+static CGFloat const HEMSenseActionHeight = 62.0f;
+static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
 
 @interface HEMSenseViewController() <UICollectionViewDataSource, UICollectionViewDelegate, HEMWiFiConfigurationDelegate>
 
@@ -39,6 +41,8 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
 
 @property (assign, nonatomic) BOOL updatedWiFi;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
+@property (copy,   nonatomic) NSAttributedString* attributedResetDescription;
+@property (assign, nonatomic) CGSize footerSize;
 
 @end
 
@@ -54,6 +58,13 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
     [[self collectionView] setDataSource:self];
     [[self collectionView] setDelegate:self];
     [[self collectionView] setAlwaysBounceVertical:YES];
+    [[self collectionView] registerClass:[HEMTextFooterCollectionReusableView class]
+              forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
+                     withReuseIdentifier:HEMSenseFooterReuseIdentifier];
+    
+    HEMCardFlowLayout* layout
+        = (HEMCardFlowLayout*)[[self collectionView] collectionViewLayout];
+    [layout setFooterReferenceSizeFromText:[self attributedResetDescription]];
 }
 
 - (NSAttributedString*)redMessage:(NSString*)message {
@@ -138,55 +149,125 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
     return [title uppercaseString];
 }
 
+- (BOOL)isWarningCellRow:(NSInteger)row {
+    return row < [[self warnings] count];
+}
+
+- (BOOL)isFrequentActionsCellRow:(NSInteger)row {
+    return row == [[self warnings] count];
+}
+
+- (void)setupFrequentActionsCell:(HEMDeviceActionCollectionViewCell*)actionCell {
+    BOOL senseAvailable = [[SENServiceDevice sharedService] pairedSenseAvailable];
+    [[actionCell action1Button] addTarget:self
+                                   action:@selector(replaceSense:)
+                         forControlEvents:UIControlEventTouchUpInside];
+    [[actionCell action2Button] addTarget:self
+                                   action:@selector(pairingMode:)
+                         forControlEvents:UIControlEventTouchUpInside];
+    [[actionCell action2Button] setEnabled:senseAvailable];
+    [[actionCell action3Button] addTarget:self
+                                   action:@selector(changeWiFi:)
+                         forControlEvents:UIControlEventTouchUpInside];
+    [[actionCell action3Button] setEnabled:senseAvailable];
+}
+
+- (void)setupResetActionCell:(HEMDeviceActionCollectionViewCell*)actionCell {
+    BOOL senseAvailable = [[SENServiceDevice sharedService] pairedSenseAvailable];
+    [[actionCell action1Button] addTarget:self
+                                   action:@selector(factoryReset:)
+                         forControlEvents:UIControlEventTouchUpInside];
+    [[actionCell action1Button] setEnabled:senseAvailable];
+}
+
+- (void)setupWarningCell:(HEMWarningCollectionViewCell*)warningCell
+              forWarning:(HEMDeviceWarning)warning {
+    [[warningCell warningMessageLabel] setAttributedText:[self attributedMessageForWarning:warning]];
+    [[warningCell actionButton] setTitle:[self actionButtonTitleForWarning:warning]
+                                forState:UIControlStateNormal];
+    [[warningCell actionButton] setTag:warning];
+    [[warningCell actionButton] addTarget:self
+                                   action:@selector(takeWarningAction:)
+                         forControlEvents:UIControlEventTouchUpInside];
+}
+
+- (NSAttributedString*)attributedResetDescription {
+    if (_attributedResetDescription == nil) {
+        NSString* description = NSLocalizedString(@"settings.sense.factory-reset.footer", nil);
+        
+        NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
+        [style setAlignment:NSTextAlignmentCenter];
+        
+        NSDictionary* attributes = @{NSFontAttributeName: [UIFont settingsHelpFont],
+                                     NSForegroundColorAttributeName : [HelloStyleKit backViewTextColor],
+                                     NSParagraphStyleAttributeName : style};
+        
+        NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:description
+                                                                       attributes:attributes];
+        
+        _attributedResetDescription = [attrText copy];
+    }
+    return _attributedResetDescription;
+}
+
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    return 1 + [[self warnings] count];
+    return 2 + [[self warnings] count];
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString* reuseId
-        = [indexPath row] < [[self warnings] count]
-        ? [HEMMainStoryboard warningReuseIdentifier]
-        : [HEMMainStoryboard actionsReuseIdentifier];
+    NSInteger row = [indexPath row];
+    NSString* reuseId = nil;
+    BOOL warningPath = [self isWarningCellRow:row];
+    BOOL frequentActionsPath = [self isFrequentActionsCellRow:row];
+    
+    if (warningPath) {
+        reuseId = [HEMMainStoryboard warningReuseIdentifier];
+    } else if (frequentActionsPath) {
+        reuseId = [HEMMainStoryboard actionsReuseIdentifier];
+    } else {
+        reuseId = [HEMMainStoryboard resetReuseIdentifier];
+    }
     
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
                                                                            forIndexPath:indexPath];
     
     if ([cell isKindOfClass:[HEMDeviceActionCollectionViewCell class]]) {
-        BOOL senseAvailable = [[SENServiceDevice sharedService] pairedSenseAvailable];
         HEMDeviceActionCollectionViewCell* actionCell = (HEMDeviceActionCollectionViewCell*)cell;
-        [[actionCell action1Button] addTarget:self
-                                       action:@selector(replaceSense:)
-                             forControlEvents:UIControlEventTouchUpInside];
-        [[actionCell action2Button] addTarget:self
-                                       action:@selector(pairingMode:)
-                             forControlEvents:UIControlEventTouchUpInside];
-        [[actionCell action2Button] setEnabled:senseAvailable];
-        [[actionCell action3Button] addTarget:self
-                                       action:@selector(factoryReset:)
-                             forControlEvents:UIControlEventTouchUpInside];
-        [[actionCell action3Button] setEnabled:senseAvailable];
-        [[actionCell action4Button] addTarget:self
-                                       action:@selector(changeWiFi:)
-                             forControlEvents:UIControlEventTouchUpInside];
-        [[actionCell action4Button] setEnabled:senseAvailable];
+        if (frequentActionsPath) {
+            [self setupFrequentActionsCell:actionCell];
+        } else {
+            [self setupResetActionCell:actionCell];
+        }
     } else if ([cell isKindOfClass:[HEMWarningCollectionViewCell class]]) {
         HEMDeviceWarning warning = (HEMDeviceWarning)[[self warnings][[indexPath row]] integerValue];
         HEMWarningCollectionViewCell* warningCell = (HEMWarningCollectionViewCell*)cell;
-        [[warningCell warningMessageLabel] setAttributedText:[self attributedMessageForWarning:warning]];
-        [[warningCell actionButton] setTitle:[self actionButtonTitleForWarning:warning]
-                                    forState:UIControlStateNormal];
-        [[warningCell actionButton] setTag:warning];
-        [[warningCell actionButton] addTarget:self
-                                       action:@selector(takeWarningAction:)
-                             forControlEvents:UIControlEventTouchUpInside];
+        [self setupWarningCell:warningCell forWarning:warning];
     }
     
     return cell;
+}
+
+- (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView
+          viewForSupplementaryElementOfKind:(NSString*)kind
+                                atIndexPath:(NSIndexPath*)indexPath {
+    
+    UICollectionReusableView* view = nil;
+    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+        HEMTextFooterCollectionReusableView* footer
+            = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                 withReuseIdentifier:HEMSenseFooterReuseIdentifier
+                                                        forIndexPath:indexPath];
+        
+        [footer setText:[self attributedResetDescription]];
+        
+        view = footer;
+    }
+    return view;
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -198,11 +279,13 @@ static CGFloat const HEMSenseActionsCellHeight = 248.0f;
     HEMCardFlowLayout* layout = (HEMCardFlowLayout*)collectionViewLayout;
     CGSize size = [layout itemSize];
     
-    if ([indexPath row] < [[self warnings] count]) {
+    if ([self isWarningCellRow:[indexPath row]]) {
         size.height = [self heightForWarning:[[self warnings][[indexPath row]] integerValue]
                          withDefaultItemSize:size] + HEMWarningCellBaseHeight;
-    } else if ([indexPath row] == [[self warnings] count]) {
-        size.height = HEMSenseActionsCellHeight;
+    } else if ([self isFrequentActionsCellRow:[indexPath row]]) {
+        size.height = HEMSenseActionHeight * 3;
+    } else {
+        size.height = HEMSenseActionHeight;
     }
     
     return size;

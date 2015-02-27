@@ -160,6 +160,21 @@ static CGFloat const HEMCardResistanceCoefficient = 1350.f;
     return center;
 }
 
+- (void)setFooterReferenceSizeFromText:(NSAttributedString*)text {
+    UIEdgeInsets insets = [self sectionInset];
+    CGSize footerConstraint = CGSizeZero;
+    footerConstraint.width = [self itemSize].width;
+    footerConstraint.height = MAXFLOAT;
+    
+    CGSize size = [text boundingRectWithSize:footerConstraint
+                                     options:NSStringDrawingUsesFontLeading
+                                            | NSStringDrawingUsesLineFragmentOrigin
+                                     context:nil].size;
+    size.height += insets.top + insets.bottom;
+    
+    [self setFooterReferenceSize:size];
+}
+
 - (void)clearCache {
     [self.dynamicAnimator removeAllBehaviors];
     [self.visibleIndexPathsSet removeAllObjects];

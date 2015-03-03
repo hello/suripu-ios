@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.3.2
+
+New:
+
+* Added ability to update your Name
+* Added ability to send us feedback by email through settings screen
+* Visual design update on Sense settings screen to separate out Factory Reset
+* Updated how Sleep Questions are animated in and dismissed
+* Alarm shortcut button will now reappear if you stop dragging / scrolling
+
 ## 1.0.3.1
 
 New:

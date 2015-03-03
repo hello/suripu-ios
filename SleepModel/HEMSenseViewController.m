@@ -195,12 +195,8 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     if (_attributedResetDescription == nil) {
         NSString* description = NSLocalizedString(@"settings.sense.factory-reset.footer", nil);
         
-        NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
-        [style setAlignment:NSTextAlignmentCenter];
-        
         NSDictionary* attributes = @{NSFontAttributeName: [UIFont settingsHelpFont],
-                                     NSForegroundColorAttributeName : [HelloStyleKit backViewTextColor],
-                                     NSParagraphStyleAttributeName : style};
+                                     NSForegroundColorAttributeName : [HelloStyleKit backViewTextColor]};
         
         NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:description
                                                                        attributes:attributes];

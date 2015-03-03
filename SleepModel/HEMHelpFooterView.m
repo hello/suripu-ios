@@ -15,6 +15,7 @@
 #import "HEMHelpFooterView.h"
 #import "HEMSupportUtil.h"
 
+static CGFloat const HEMHelpFooterTopMargin = 12.0f;
 static CGFloat const HEMHelpFooterMargin = 20.0f;
 static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
 
@@ -40,7 +41,7 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
 - (void)setupWithWidth:(CGFloat)width {
     CGRect textFrame = {
         HEMHelpFooterMargin,
-        0.0f,
+        HEMHelpFooterTopMargin,
         width-(HEMHelpFooterMargin*2),
         0.0f
     };

@@ -17,7 +17,7 @@
 /* Class = "IBUIButton"; normalTitle = "SET UP SENSE"; ObjectID = "3dT-qJ-kIJ"; */
 "3dT-qJ-kIJ.normalTitle" = "SET UP SENSE";
 
-/* Class = "IBUILabel"; text = "Enable enhanced audio"; ObjectID = "4Cj-AM-Ri7"; */
+/* Class = "IBUILabel"; text = "Enable Enhanced Audio"; ObjectID = "4Cj-AM-Ri7"; */
 "4Cj-AM-Ri7.text" = "Enable Enhanced Audio";
 
 /* Class = "IBUITextField"; placeholder = "Email"; ObjectID = "4H9-4w-9eg"; */
@@ -101,14 +101,20 @@
 /* Class = "IBUIButton"; normalTitle = "GET STARTED"; ObjectID = "NxD-eY-cDC"; */
 "NxD-eY-cDC.normalTitle" = "GET STARTED";
 
-/* Class = "IBUILabel"; text = "Everything is working well and looks great.  Now let's set your first Smart Alarm."; ObjectID = "PFC-on-mrs"; */
-"PFC-on-mrs.text" = "Everything is working well and looks great.  Now let's set your first Smart Alarm.";
+/* Class = "IBUIButton"; normalTitle = "CONTINUE"; ObjectID = "ONz-So-uP9"; */
+"ONz-So-uP9.normalTitle" = "CONTINUE";
+
+/* Class = "IBUILabel"; text = "Everything looks great.  Now let's set your first Smart Alarm."; ObjectID = "PFC-on-mrs"; */
+"PFC-on-mrs.text" = "Everything looks great. Now let's set your first Smart Alarm.";
 
 /* Class = "IBUILabel"; text = "Room Check"; ObjectID = "PMR-Df-HyE"; */
 "PMR-Df-HyE.text" = "Room Check";
 
 /* Class = "IBUILabel"; text = "Have your partner get the app"; ObjectID = "Pe9-oy-MXl"; */
 "Pe9-oy-MXl.text" = "Have your partner get the app";
+
+/* Class = "IBUILabel"; text = "You'll need Sense and Sleep Pill handy to continue.  If you're not ready now, you can always come back later."; ObjectID = "R0B-PY-KLe"; */
+"R0B-PY-KLe.text" = "You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later.";
 
 /* Class = "IBUILabel"; text = "Are you male or female?"; ObjectID = "S9f-tS-yQg"; */
 "S9f-tS-yQg.text" = "Are you male or female?";
@@ -125,7 +131,7 @@
 /* Class = "IBUILabel"; text = "How much do you weigh?"; ObjectID = "Vca-9S-Db1"; */
 "Vca-9S-Db1.text" = "How much do you weigh?";
 
-/* Class = "IBUILabel"; text = "Turn on bluetooth"; ObjectID = "WSp-oq-I62"; */
+/* Class = "IBUILabel"; text = "Turn on Bluetooth"; ObjectID = "WSp-oq-I62"; */
 "WSp-oq-I62.text" = "Turn on Bluetooth";
 
 /* Class = "IBUILabel"; text = "3."; ObjectID = "WhI-1R-olH"; */
@@ -158,7 +164,7 @@
 /* Class = "IBUILabel"; text = "Introduce yourself"; ObjectID = "cY3-74-70H"; */
 "cY3-74-70H.text" = "Introduce yourself";
 
-/* Class = "IBUILabel"; text = "With this enabled Sense can pick up snoring, sleep talking and noise disturbances.\n\nWithout enhanced audio enabled, Sense only looks at background noise levels."; ObjectID = "cYf-D8-Nxr"; */
+/* Class = "IBUILabel"; text = "With Enhanced Audio enabled Sense can pick up snoring, sleep talking and noise disturbances.\n\nOtherwise, Sense only looks at background noise levels."; ObjectID = "cYf-D8-Nxr"; */
 "cYf-D8-Nxr.text" = "With Enhanced Audio enabled Sense can pick up snoring, sleep talking and noise disturbances.\n\nOtherwise, Sense only looks at background noise levels.";
 
 /* Class = "IBUILabel"; text = "Sense will occasionally notify you with important messages about your sleep, bedroom, and deliver you your Sleep Score each morning."; ObjectID = "cxR-ry-GIM"; */
@@ -224,13 +230,16 @@
 /* Class = "IBUIButton"; normalTitle = "ALLOW NOTIFICATIONS"; ObjectID = "je6-JT-9YZ"; */
 "je6-JT-9YZ.normalTitle" = "ALLOW NOTIFICATIONS";
 
+/* Class = "IBUILabel"; text = "Have Sense ready?"; ObjectID = "k0c-FQ-y2a"; */
+"k0c-FQ-y2a.text" = "Have Sense ready?";
+
 /* Class = "IBUILabel"; text = "Shake your Sleep Pill for three seconds to pair it with your Sense.  You may need to shake it quickly for it to register."; ObjectID = "kFD-e4-hma"; */
 "kFD-e4-hma.text" = "Shake your Sleep Pill for three seconds to pair it with your Sense.  You may need to shake it quickly for it to register.";
 
 /* Class = "IBUILabel"; text = "Connecting Sense to WiFi"; ObjectID = "kPY-hQ-rr3"; */
 "kPY-hQ-rr3.text" = "Connecting Sense to WiFi";
 
-/* Class = "IBUIButton"; normalTitle = "Retry"; ObjectID = "lGd-9N-cHV"; */
+/* Class = "IBUIButton"; normalTitle = "RETRY"; ObjectID = "lGd-9N-cHV"; */
 "lGd-9N-cHV.normalTitle" = "RETRY";
 
 /* Class = "IBUILabel"; text = "5' 11\""; ObjectID = "lX5-4w-c9S"; */
@@ -269,7 +278,7 @@
 /* Class = "IBUIButton"; normalTitle = "CONTINUE"; ObjectID = "tkw-WQ-h6F"; */
 "tkw-WQ-h6F.normalTitle" = "CONTINUE";
 
-/* Class = "IBUIButton"; normalTitle = "Log In"; ObjectID = "tuz-ez-XXK"; */
+/* Class = "IBUIButton"; normalTitle = "LOG IN"; ObjectID = "tuz-ez-XXK"; */
 "tuz-ez-XXK.normalTitle" = "LOG IN";
 
 /* Class = "IBUIButton"; normalTitle = "CONTINUE"; ObjectID = "uDw-jj-ZIo"; */

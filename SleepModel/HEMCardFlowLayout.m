@@ -104,7 +104,11 @@ static CGFloat const HEMCardResistanceCoefficient = 1350.f;
 
 - (void)updateBehaviorsForVisibleItems
 {
-    NSArray *itemsInVisibleRectArray = [super layoutAttributesForElementsInRect:CGRectInset(self.collectionView.bounds, -100, -100)];
+    CGFloat baseInset = -100.0f;
+    CGFloat dx = baseInset;
+    CGFloat dy = baseInset + -([self footerReferenceSize].height + [self headerReferenceSize].height);
+    
+    NSArray *itemsInVisibleRectArray = [super layoutAttributesForElementsInRect:CGRectInset([[self collectionView] bounds], dx, dy)];
     NSString* key = NSStringFromSelector(@selector(indexPath));
     NSSet *itemsIndexPathsInVisibleRectSet = [NSSet setWithArray:[itemsInVisibleRectArray valueForKey:key]];
 

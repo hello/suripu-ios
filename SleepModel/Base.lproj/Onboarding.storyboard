@@ -26,6 +26,7 @@
             <string>HelveticaNeue-Medium</string>
             <string>HelveticaNeue-Medium</string>
             <string>HelveticaNeue-Medium</string>
+            <string>HelveticaNeue-Medium</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -237,7 +238,7 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="5JR-hM-9bB" kind="push" id="gpv-cN-9Qy"/>
+                                    <segue destination="RYl-gV-ozZ" kind="push" id="sRv-Yt-VPY"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tuz-ez-XXK" customClass="HEMActionButton">
@@ -329,7 +330,83 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1rj-em-luD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="722" y="571"/>
+            <point key="canvasLocation" x="-209" y="535"/>
+        </scene>
+        <!--Have Sense View Controller-->
+        <scene sceneID="IYi-mC-ciF">
+            <objects>
+                <viewController id="RYl-gV-ozZ" customClass="HEMHaveSenseViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vvM-Kl-XD4"/>
+                        <viewControllerLayoutGuide type="bottom" id="pwf-tC-J0F"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RKe-xY-Xmh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Have Sense ready?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0c-FQ-y2a">
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="mRd-go-Uvt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You'll need Sense and Sleep Pill handy to continue.  If you're not ready now, you can always come back later." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0B-PY-KLe">
+                                <rect key="frame" x="20" y="68" width="560" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="senseWhite.png" translatesAutoresizingMaskIntoConstraints="NO" id="n2K-Db-VCV">
+                                <rect key="frame" x="0.0" y="109" width="600" height="421"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONz-So-uP9" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="v8x-zs-ef3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="CONTINUE">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="5JR-hM-9bB" kind="push" id="RA5-RW-zTF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="k0c-FQ-y2a" firstAttribute="top" secondItem="vvM-Kl-XD4" secondAttribute="bottom" constant="4" id="2XN-hy-W2N"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="R0B-PY-KLe" secondAttribute="trailing" constant="4" id="88x-uE-kGP"/>
+                            <constraint firstItem="k0c-FQ-y2a" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="4" id="IqC-VG-tjs"/>
+                            <constraint firstItem="n2K-Db-VCV" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="-16" id="NLs-EE-Sbp"/>
+                            <constraint firstItem="R0B-PY-KLe" firstAttribute="bottom" secondItem="n2K-Db-VCV" secondAttribute="top" id="NRU-jk-veJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="n2K-Db-VCV" secondAttribute="trailing" constant="-16" id="Rgm-OM-mB7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="k0c-FQ-y2a" secondAttribute="trailing" constant="4" id="UpE-wU-j13"/>
+                            <constraint firstItem="pwf-tC-J0F" firstAttribute="top" secondItem="ONz-So-uP9" secondAttribute="bottom" constant="20" id="agi-kV-WVh"/>
+                            <constraint firstItem="R0B-PY-KLe" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="4" id="d23-Ik-No7"/>
+                            <constraint firstItem="R0B-PY-KLe" firstAttribute="top" secondItem="k0c-FQ-y2a" secondAttribute="top" constant="44" id="dyj-EO-tGc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ONz-So-uP9" secondAttribute="trailing" constant="4" id="lIk-yJ-j5W"/>
+                            <constraint firstItem="ONz-So-uP9" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="4" id="qKi-cl-69j"/>
+                            <constraint firstItem="n2K-Db-VCV" firstAttribute="top" secondItem="R0B-PY-KLe" secondAttribute="bottom" id="wEo-NI-RHr"/>
+                            <constraint firstItem="R0B-PY-KLe" firstAttribute="top" secondItem="k0c-FQ-y2a" secondAttribute="bottom" constant="10" id="y0T-np-cds"/>
+                            <constraint firstItem="n2K-Db-VCV" firstAttribute="bottom" secondItem="ONz-So-uP9" secondAttribute="top" id="zH5-Y8-hyF"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="RQg-C6-Mhw"/>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="R0B-PY-KLe" id="wCA-5n-3HK"/>
+                        <outlet property="descriptionTopConstraint" destination="y0T-np-cds" id="3Qr-bU-Wkg"/>
+                        <outlet property="titleHeightConstraint" destination="mRd-go-Uvt" id="PGb-IY-V4G"/>
+                        <outlet property="titleLabel" destination="k0c-FQ-y2a" id="yrI-pf-51T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vOs-bg-4TL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="660" y="922"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="9ON-DX-PXS">
@@ -2772,6 +2849,7 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="sense.png" width="162" height="172"/>
         <image name="senseAppIcon.png" width="32" height="32"/>
         <image name="sensePlacement.png" width="320" height="235"/>
+        <image name="senseWhite.png" width="320" height="270"/>
         <image name="settingsAppIcon.png" width="32" height="32"/>
         <image name="shakePill.png" width="320" height="224"/>
         <image name="sleepPill.png" width="320" height="130"/>

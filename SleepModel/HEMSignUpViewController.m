@@ -34,7 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [SENAnalytics track:kHEMAnalyticsEventOnBStart];
+    [SENAnalytics track:kHEMAnalyticsEventOnBAccount];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -7,6 +7,7 @@
 //
 
 #import "HEMCardCollectionViewCell.h"
+#import "HelloStyleKit.h"
 
 @implementation HEMCardCollectionViewCell
 
@@ -20,11 +21,13 @@
 
 - (void)awakeFromNib
 {
+    NSShadow* shadow = [HelloStyleKit backViewCardShadow];
+    
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = 2.f;
-    self.layer.shadowOffset = CGSizeMake(0, 1.f);
-    self.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
-    self.layer.shadowRadius = 1.f;
+    self.layer.shadowOffset = [shadow shadowOffset];
+    self.layer.shadowColor = [[shadow shadowColor] CGColor];
+    self.layer.shadowRadius = [shadow shadowBlurRadius];
     self.layer.shadowOpacity = 0.5f;
     self.layer.masksToBounds = NO;
 }

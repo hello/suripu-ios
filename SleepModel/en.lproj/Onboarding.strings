@@ -14,8 +14,8 @@
 /* Class = "IBUIButton"; normalTitle = "CONTINUE"; ObjectID = "37N-ly-LlQ"; */
 "37N-ly-LlQ.normalTitle" = "CONTINUE";
 
-/* Class = "IBUIButton"; normalTitle = "Sign Up"; ObjectID = "3dT-qJ-kIJ"; */
-"3dT-qJ-kIJ.normalTitle" = "SIGN UP";
+/* Class = "IBUIButton"; normalTitle = "SET UP SENSE"; ObjectID = "3dT-qJ-kIJ"; */
+"3dT-qJ-kIJ.normalTitle" = "SET UP SENSE";
 
 /* Class = "IBUILabel"; text = "Enable enhanced audio"; ObjectID = "4Cj-AM-Ri7"; */
 "4Cj-AM-Ri7.text" = "Enable Enhanced Audio";

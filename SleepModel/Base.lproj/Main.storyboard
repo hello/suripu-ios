@@ -49,7 +49,7 @@
                                                     <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmSmartIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="JfE-LJ-HjM">
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="alarmSmartIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="JfE-LJ-HjM">
                                                     <rect key="frame" x="16" y="16" width="32" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="Yil-Ys-fIp"/>
@@ -1376,19 +1376,25 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="248"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="186"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9b-YW-zS0">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F9b-YW-zS0">
                                                     <rect key="frame" x="16" y="0.0" width="544" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="6x9-iK-UIu"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
                                                     <state key="normal" title="REPLACE THIS SENSE">
                                                         <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wBz-MA-Tv7">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wBz-MA-Tv7">
                                                     <rect key="frame" x="16" y="62" width="544" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="dxF-if-YQg"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
                                                     <state key="normal" title="PUT INTO PAIRING MODE">
                                                         <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1398,19 +1404,11 @@
                                                         <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vUs-wE-uSk">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vUs-wE-uSk">
                                                     <rect key="frame" x="16" y="124" width="544" height="62"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
-                                                    <state key="normal" title="FACTORY RESET">
-                                                        <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="disabled">
-                                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="F89-iJ-bdS">
-                                                    <rect key="frame" x="16" y="186" width="544" height="62"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="62" id="uzD-BL-3nc"/>
+                                                    </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
                                                     <state key="normal" title="EDIT WIFI">
                                                         <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -1423,12 +1421,54 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
-                                        <size key="customSize" width="560" height="248"/>
+                                        <constraints>
+                                            <constraint firstItem="vUs-wE-uSk" firstAttribute="top" secondItem="wBz-MA-Tv7" secondAttribute="bottom" id="54X-57-hRU"/>
+                                            <constraint firstItem="F9b-YW-zS0" firstAttribute="top" secondItem="UzI-RC-thd" secondAttribute="topMargin" constant="-8" id="92m-lE-PbL"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="F9b-YW-zS0" secondAttribute="trailing" constant="-8" id="JE6-W0-qdl"/>
+                                            <constraint firstItem="vUs-wE-uSk" firstAttribute="leading" secondItem="UzI-RC-thd" secondAttribute="leadingMargin" constant="8" id="QJH-Id-SMa"/>
+                                            <constraint firstItem="F9b-YW-zS0" firstAttribute="bottom" secondItem="wBz-MA-Tv7" secondAttribute="top" id="dv2-FM-N7X"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="wBz-MA-Tv7" secondAttribute="trailing" constant="-8" id="qRa-n1-Fnf"/>
+                                            <constraint firstItem="F9b-YW-zS0" firstAttribute="leading" secondItem="UzI-RC-thd" secondAttribute="leadingMargin" constant="8" id="teY-HC-f1B"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="vUs-wE-uSk" secondAttribute="trailing" constant="-8" id="z1T-2n-VKJ"/>
+                                            <constraint firstItem="wBz-MA-Tv7" firstAttribute="leading" secondItem="UzI-RC-thd" secondAttribute="leadingMargin" constant="8" id="z2S-Zq-0BB"/>
+                                        </constraints>
+                                        <size key="customSize" width="560" height="186"/>
                                         <connections>
                                             <outlet property="action1Button" destination="F9b-YW-zS0" id="dMe-ey-ENZ"/>
                                             <outlet property="action2Button" destination="wBz-MA-Tv7" id="x6o-hA-pdV"/>
                                             <outlet property="action3Button" destination="vUs-wE-uSk" id="ta6-zs-dKq"/>
-                                            <outlet property="action4Button" destination="F89-iJ-bdS" id="Qdr-DU-7oc"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="reset" id="QAO-rh-HGD" customClass="HEMDeviceActionCollectionViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="62"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eKQ-61-lbQ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="560" height="62"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
+                                                    <state key="normal" title="FACTORY RESET">
+                                                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <state key="disabled">
+                                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                </button>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="eKQ-61-lbQ" firstAttribute="leading" secondItem="QAO-rh-HGD" secondAttribute="leadingMargin" constant="-8" id="EHf-BQ-u30"/>
+                                            <constraint firstItem="eKQ-61-lbQ" firstAttribute="top" secondItem="QAO-rh-HGD" secondAttribute="topMargin" constant="-8" id="GNv-bY-aby"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="eKQ-61-lbQ" secondAttribute="bottom" constant="-8" id="NJg-Re-qLk"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="eKQ-61-lbQ" secondAttribute="trailing" constant="-8" id="ckF-Bg-Co9"/>
+                                        </constraints>
+                                        <size key="customSize" width="560" height="62"/>
+                                        <connections>
+                                            <outlet property="action1Button" destination="eKQ-61-lbQ" id="rLu-TQ-6sK"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

@@ -11,6 +11,7 @@
 @interface HEMCardFlowLayout : UICollectionViewFlowLayout
 
 - (void)setItemHeight:(CGFloat)itemHeight;
+- (void)setFooterReferenceSizeFromText:(NSAttributedString*)text;
 - (void)clearCache;
 
 @end

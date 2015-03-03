@@ -107,25 +107,6 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 
 #pragma mark - UICollectionViewDelegate
 
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout
-referenceSizeForFooterInSection:(NSInteger)section {
-    HEMCardFlowLayout* layout
-        = (HEMCardFlowLayout*)[[self collectionView] collectionViewLayout];
-    UIEdgeInsets insets = [layout sectionInset];
-    CGSize footerConstraint = CGSizeZero;
-    footerConstraint.width = CGRectGetWidth([collectionView bounds])-insets.left-insets.right;
-    footerConstraint.height = MAXFLOAT;
-    
-    NSAttributedString* attributedFooter = [[self dataSource] attributedFooterText];
-    CGSize size = [attributedFooter boundingRectWithSize:footerConstraint
-                                                 options:NSStringDrawingUsesFontLeading
-                                                        | NSStringDrawingUsesLineFragmentOrigin
-                                                 context:nil].size;
-    size.height += insets.top + insets.bottom;
-    return size;
-}
-
 - (CGSize)collectionView:(UICollectionView*)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {

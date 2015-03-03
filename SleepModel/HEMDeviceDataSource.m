@@ -62,6 +62,10 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     [[self collectionView] registerClass:[HEMTextFooterCollectionReusableView class]
               forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                      withReuseIdentifier:HEMDevicesFooterReuseIdentifier];
+    
+    HEMCardFlowLayout* layout
+        = (HEMCardFlowLayout*)[[self collectionView] collectionViewLayout];
+    [layout setFooterReferenceSizeFromText:[self attributedFooterText]];
 }
 
 #pragma mark - Loading Data

@@ -22,7 +22,6 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* tinySeparatorHeight;
 @property (nonatomic, weak) IBOutlet UIView* titleContainerView;
 @property (nonatomic, strong) NSCalendar* calendar;
-@property (nonatomic, strong) HEMBounceModalTransition* bounceDelegate;
 @end
 
 @implementation HEMTimelineFeedbackViewController
@@ -80,7 +79,8 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
 - (IBAction)sendUpdatedTime:(UIBarButtonItem*)sender
 {
     sender.enabled = NO;
-    // show modal
+    UIBarButtonItem* leftItem = [self.navigationItem.leftBarButtonItems lastObject];
+    leftItem.enabled = NO;
     NSArray* items = self.navigationItem.rightBarButtonItems;
     UIActivityIndicatorView* indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
     indicator.color = [HelloStyleKit tintColor];
@@ -95,16 +95,15 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
                            [indicator stopAnimating];
                            if (error) {
                                self.navigationItem.rightBarButtonItems = items;
+                               leftItem.enabled = YES;
                                sender.enabled = YES;
-                               // dismiss modal
                                [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
                                                                        message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
                                                                     controller:self];
                            } else {
-                               self.bounceDelegate = [HEMBounceModalTransition new];
-                               self.bounceDelegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
-                               self.navigationController.modalPresentationStyle = UIModalPresentationCustom;
-                               self.navigationController.transitioningDelegate = self.bounceDelegate;
+                               HEMBounceModalTransition* delegate = [HEMBounceModalTransition new];
+                               delegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
+                               self.navigationController.transitioningDelegate = delegate;
                                [self dismissViewControllerAnimated:YES completion:NULL];
                            }
                        }];
@@ -113,6 +112,8 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
 
 - (IBAction)cancelAndDismiss:(id)sender
 {
+    self.navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    self.navigationController.transitioningDelegate = nil;
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 

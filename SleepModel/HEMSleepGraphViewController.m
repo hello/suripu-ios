@@ -332,6 +332,7 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 {
     NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
     UINavigationController* navController = [HEMMainStoryboard instantiateTimelineFeedbackViewController];
+    navController.modalPresentationStyle = UIModalPresentationCustom;
     HEMTimelineFeedbackViewController* feedbackController = (id)navController.topViewController;
     feedbackController.dateForNightOfSleep = self.dateForNightOfSleep;
     feedbackController.segment = [self.dataSource sleepSegmentForIndexPath:indexPath];

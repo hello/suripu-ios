@@ -497,6 +497,10 @@
 		BFCCF5431A69F3D400D842F9 /* soundIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF5401A69F3D400D842F9 /* soundIcon@2x.png */; };
 		BFCCF5441A69F3D400D842F9 /* soundIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCCF5411A69F3D400D842F9 /* soundIcon@3x.png */; };
 		BFCCF54B1A6F1F6C00D842F9 /* HEMRulerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCCF54A1A6F1F6C00D842F9 /* HEMRulerView.m */; };
+		BFCE1D2D1AA657760076E855 /* senseWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCE1D2A1AA657760076E855 /* senseWhite.png */; };
+		BFCE1D2E1AA657760076E855 /* senseWhite@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCE1D2B1AA657760076E855 /* senseWhite@2x.png */; };
+		BFCE1D2F1AA657760076E855 /* senseWhite@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFCE1D2C1AA657760076E855 /* senseWhite@3x.png */; };
+		BFCE1D321AA65A570076E855 /* HEMHaveSenseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFCE1D311AA65A570076E855 /* HEMHaveSenseViewController.m */; };
 		BFD5643D19A3F31B002E461E /* HEMSensePairViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */; };
 		BFDCC7BA19D9C741007A922B /* sense.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B819D9C741007A922B /* sense.png */; };
 		BFDCC7BB19D9C741007A922B /* sense@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B919D9C741007A922B /* sense@2x.png */; };
@@ -1170,7 +1174,6 @@
 		BF98FC351A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTextFooterCollectionReusableView.m; sourceTree = "<group>"; };
 		BF98FC371A9BB29D00AEC04C /* HEMConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMConfig.h; sourceTree = "<group>"; };
 		BF98FC381A9BB29D00AEC04C /* HEMConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMConfig.m; sourceTree = "<group>"; };
-		BF98FC3D1A9C139C00AEC04C /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BF9C87D619B6A199003188D4 /* HEMPillPairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillPairViewController.h; sourceTree = "<group>"; };
 		BF9C87D719B6A199003188D4 /* HEMPillPairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillPairViewController.m; sourceTree = "<group>"; };
 		BFABE75019A2E70A00AB2F0F /* UIView+HEMMotionEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HEMMotionEffects.h"; sourceTree = "<group>"; };
@@ -1247,6 +1250,12 @@
 		BFCCF5411A69F3D400D842F9 /* soundIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "soundIcon@3x.png"; sourceTree = "<group>"; };
 		BFCCF5491A6F1F6C00D842F9 /* HEMRulerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRulerView.h; sourceTree = "<group>"; };
 		BFCCF54A1A6F1F6C00D842F9 /* HEMRulerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRulerView.m; sourceTree = "<group>"; };
+		BFCE1D2A1AA657760076E855 /* senseWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = senseWhite.png; path = images/senseWhite.png; sourceTree = "<group>"; };
+		BFCE1D2B1AA657760076E855 /* senseWhite@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "senseWhite@2x.png"; path = "images/senseWhite@2x.png"; sourceTree = "<group>"; };
+		BFCE1D2C1AA657760076E855 /* senseWhite@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "senseWhite@3x.png"; path = "images/senseWhite@3x.png"; sourceTree = "<group>"; };
+		BFCE1D301AA65A570076E855 /* HEMHaveSenseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHaveSenseViewController.h; sourceTree = "<group>"; };
+		BFCE1D311AA65A570076E855 /* HEMHaveSenseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHaveSenseViewController.m; sourceTree = "<group>"; };
+		BFCE1D341AA65F940076E855 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BFD5643B19A3F31B002E461E /* HEMSensePairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensePairViewController.h; sourceTree = "<group>"; };
 		BFD5643C19A3F31B002E461E /* HEMSensePairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensePairViewController.m; sourceTree = "<group>"; };
 		BFDCC7B819D9C741007A922B /* sense.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sense.png; path = images/sense.png; sourceTree = "<group>"; };
@@ -1611,6 +1620,8 @@
 				BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */,
 				BF44734E1A6341F600389ECE /* HEMOnboardingController.h */,
 				BF44734F1A6341F600389ECE /* HEMOnboardingController.m */,
+				BFCE1D301AA65A570076E855 /* HEMHaveSenseViewController.h */,
+				BFCE1D311AA65A570076E855 /* HEMHaveSenseViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -1618,6 +1629,9 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BFCE1D2A1AA657760076E855 /* senseWhite.png */,
+				BFCE1D2B1AA657760076E855 /* senseWhite@2x.png */,
+				BFCE1D2C1AA657760076E855 /* senseWhite@3x.png */,
 				BFBEDB601A8BF9B6006C4546 /* senseColors1.png */,
 				BFBEDB611A8BF9B6006C4546 /* senseColors1@2x.png */,
 				BFBEDB621A8BF9B6006C4546 /* senseColors1@3x.png */,
@@ -2893,6 +2907,7 @@
 				BFBEDB781A8BF9B6006C4546 /* senseColors4.png in Resources */,
 				8A12077C1A80A58E00758DC2 /* welcome_dialog_trends.png in Resources */,
 				BF14E3BD19EF3BD10006EFEA /* onboarding_bg_wide.png in Resources */,
+				BFCE1D2F1AA657760076E855 /* senseWhite@3x.png in Resources */,
 				BF1E2E811A04514200DDD0D0 /* particleIcon@3x.png in Resources */,
 				8A63D5611A6058DA00F5307D /* lightsOutEventIcon.png in Resources */,
 				8A93AFC41A09BED100F70A8B /* Share@3x.png in Resources */,
@@ -3094,6 +3109,7 @@
 				BFB0FBDD19D253400056FFEC /* pillIcon@2x.png in Resources */,
 				8A7D80411A41094300B0BFD7 /* settingsBarIcon.png in Resources */,
 				BF0E53A61A38C4C1002FB083 /* moon@2x.png in Resources */,
+				BFCE1D2E1AA657760076E855 /* senseWhite@2x.png in Resources */,
 				8A63D55D1A5F47A300F5307D /* unknownEventIcon@3x.png in Resources */,
 				8A7214411A1E7797008B59C4 /* backIcon@3x.png in Resources */,
 				8AA157FA1A5EFD6B00BF1D4A /* noiseEventIcon@2x.png in Resources */,
@@ -3203,6 +3219,7 @@
 				8AC8009A1A7B029300895ED3 /* miniStopButton@2x.png in Resources */,
 				8A8288B01A76CF1E0043B1D1 /* presleepInsightSound@3x.png in Resources */,
 				8AA157F81A5EFD6B00BF1D4A /* motionEventIcon@3x.png in Resources */,
+				BFCE1D2D1AA657760076E855 /* senseWhite.png in Resources */,
 				8AA157E21A5EFD6B00BF1D4A /* alarmEventIcon@2x.png in Resources */,
 				BFE872FD1A2FC65600494231 /* sensorParticulatesBlue.png in Resources */,
 				8AC8009C1A7B029300895ED3 /* senseBarIconActive@2x@2x.png in Resources */,
@@ -3367,6 +3384,7 @@
 				8AA1E6351A8E6D0E00590EB6 /* HEMPopupView.m in Sources */,
 				8A8288B61A76DDE60043B1D1 /* HEMSleepSummaryPointerGradientView.m in Sources */,
 				BF90E2B81A854F6B00816BC1 /* HEMURLImageView.m in Sources */,
+				BFCE1D321AA65A570076E855 /* HEMHaveSenseViewController.m in Sources */,
 				8AD88C3A1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m in Sources */,
 				BF005C7319FED17800E68E87 /* HEMWiFiDataSource.m in Sources */,
 				BF1E2E721A02BFC400DDD0D0 /* HEMPagingFlowLayout.m in Sources */,
@@ -3590,7 +3608,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				BFBECCE31A15706700335CC6 /* Base */,
-				BF98FC3D1A9C139C00AEC04C /* en */,
+				BFCE1D341AA65F940076E855 /* en */,
 			);
 			name = Onboarding.storyboard;
 			sourceTree = "<group>";

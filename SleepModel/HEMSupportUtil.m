@@ -7,6 +7,8 @@
 //
 #import <MessageUI/MessageUI.h>
 
+#import <sys/sysctl.h>
+
 #import <SVWebViewController/SVModalWebViewController.h>
 
 #import "UIFont+HEMStyle.h"
@@ -22,6 +24,31 @@ static NSString* const HEMSupportLogFileName = @"newest_log_file.log";
 static NSString* const HEMSupportLogFileType = @"text/plain";
 
 @implementation HEMSupportUtil
+
++ (NSString*)deviceModel {
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    char* result = malloc(size);
+    sysctlbyname("hw.machine", result, &size, NULL, 0);
+    
+    NSString* deviceModel = [NSString stringWithUTF8String:result];
+    free(result);
+    
+    return deviceModel;
+}
+
++ (NSString*)emailMessageBody {
+    UIDevice* device = [UIDevice currentDevice];
+    NSBundle* bundle = [NSBundle mainBundle];
+    
+    NSString* appName = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString* osVersion = [device systemVersion];
+    NSString* deviceModel = [self deviceModel]; // this is used over UIDevice as it gives the model number
+    
+    return [NSString stringWithFormat:@"\n\n\n\n\n-----------------\n%@ v%@\n%@\nOS %@",
+            appName, appVersion, deviceModel, osVersion];
+}
 
 + (void)sendEmailTo:(NSString*)email
         withSubject:(NSString*)subject
@@ -39,6 +66,7 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
     MFMailComposeViewController* composer = [[MFMailComposeViewController alloc] init];
     [composer setToRecipients:@[ email ]];
     [composer setSubject:subject];
+    [composer setMessageBody:[self emailMessageBody] isHTML:NO];
     
     if (attachLog) {
         [composer addAttachmentData:[HEMLogUtils latestLogFileData]

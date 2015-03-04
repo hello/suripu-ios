@@ -47,6 +47,7 @@ extern NSString* const kHEMAnalyticsEventPropPillPairing;
 extern NSString* const kHEMAnalyticsEventPropPillPlacement;
 extern NSString* const kHEMAnalyticsEventPropPillAnother;
 extern NSString* const kHEMAnalyticsEventOnBStart;
+extern NSString* const kHEMAnalyticsEventOnBAccount;
 extern NSString* const kHEMAnalyticsEventOnBBirthday;
 extern NSString* const kHEMAnalyticsEventOnBGender;
 extern NSString* const kHEMAnalyticsEventOnBHeight;

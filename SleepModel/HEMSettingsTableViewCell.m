@@ -14,11 +14,10 @@
 
 CGFloat const HEMSettingsCellTableMargin = 20.0f;
 
-static CGFloat const HEMSettingsCellCornerRadius = 3.0f;
+static CGFloat const HEMSettingsCellCornerRadius = 2.0f;
 static CGFloat const HEMSettingsCellSeparatorSize = 0.5f;
 static CGFloat const HEMSettingsCellMargins = 16.0f;
-static CGFloat const HEMSettingsCellShadowRadius = 1.0f;
-static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
+static CGFloat const HEMSettingsCellShadowOpacity = 0.5f;
 
 @interface HEMSettingsTableViewCell()
 
@@ -56,12 +55,14 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
 }
 
 - (void)addContentLayer {
+    NSShadow* shadow = [HelloStyleKit backViewCardShadow];
+    
     CAShapeLayer * layer = [CAShapeLayer layer];
     [layer setFillColor:[[UIColor whiteColor] CGColor]];
-    [layer setShadowOffset:CGSizeMake(0.0f, -0.5f)];
-    [layer setShadowRadius:HEMSettingsCellShadowRadius];
+    [layer setShadowOffset:[shadow shadowOffset]];
+    [layer setShadowRadius:[shadow shadowBlurRadius]];
     [layer setShadowOpacity:HEMSettingsCellShadowOpacity];
-    [layer setShadowColor:[[UIColor blackColor] CGColor]];
+    [layer setShadowColor:[[shadow shadowColor] CGColor]];
     
     [self setContentLayer:layer];
     [[self layer] insertSublayer:layer atIndex:0];
@@ -85,8 +86,9 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.1f;
 - (void)layoutSubviews {
     [super layoutSubviews];
     
+    NSShadow* shadow = [HelloStyleKit backViewCardShadow];
     // update the shadow based on updated bounds, if resized
-    CGRect shadowInset = CGRectInset([self layerFrame], 0.0f, HEMSettingsCellShadowRadius);
+    CGRect shadowInset = CGRectInset([self layerFrame], 0.0f, [shadow shadowBlurRadius]);
     [[self contentLayer] setShadowPath:[[UIBezierPath bezierPathWithRect:shadowInset] CGPath]];
 }
 

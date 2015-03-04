@@ -66,7 +66,7 @@
 
 // feedback
 "feedback.email.address" = "feedback@hello.is";
-"feedback.email.subject.format" = "Feedback for Sense %@";
+"feedback.email.subject" = "Feedback for Sense";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages

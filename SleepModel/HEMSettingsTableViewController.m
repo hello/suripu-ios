@@ -216,11 +216,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
             [self performSegueWithIdentifier:nextSegueId sender:self];
         }
     } else if ([indexPath section] == HEMSettingsFeedbackSection) {
-        NSString* subjectFormat = NSLocalizedString(@"feedback.email.subject.format", nil);
-        NSString* vers = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleVersion"];
-        
         [HEMSupportUtil sendEmailTo:NSLocalizedString(@"feedback.email.address", nil)
-                        withSubject:[NSString stringWithFormat:subjectFormat, vers]
+                        withSubject:NSLocalizedString(@"feedback.email.subject", nil)
                           attachLog:NO
                                from:self
                        mailDelegate:self];

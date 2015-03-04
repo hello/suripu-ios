@@ -3655,6 +3655,7 @@
 				SDKROOT = iphoneos;
 				SENSE_ANALYTICS_TOKEN = d62a169fe4856dea26f3a322750613a8;
 				SENSE_API_URL = "https://dev-api.hello.is/v1";
+				SENSE_APP_ID = is.hello.Sense;
 				SENSE_CLIENT_ID = iphone_pill;
 				SENSE_CRASH_REPORTS_TOKEN = "";
 				SENSE_SUPPORT_OPTIONS = YES;
@@ -3694,6 +3695,7 @@
 				SDKROOT = iphoneos;
 				SENSE_ANALYTICS_TOKEN = 43c61cc553f0ccf2b3e1f73bc30bbfb4;
 				SENSE_API_URL = "https://api.hello.is/v1";
+				SENSE_APP_ID = is.hello.Sense;
 				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
 				SENSE_CRASH_REPORTS_TOKEN = f464ccd280d3e5730dcdaa9b64d1d108694ee9a9;
 				SENSE_SUPPORT_OPTIONS = NO;
@@ -3872,6 +3874,7 @@
 				SDKROOT = iphoneos;
 				SENSE_ANALYTICS_TOKEN = 43c61cc553f0ccf2b3e1f73bc30bbfb4;
 				SENSE_API_URL = "https://api.hello.is/v1";
+				SENSE_APP_ID = is.hello.Sense;
 				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
 				SENSE_CRASH_REPORTS_TOKEN = f464ccd280d3e5730dcdaa9b64d1d108694ee9a9;
 				SENSE_SUPPORT_OPTIONS = YES;
@@ -3946,6 +3949,114 @@
 			};
 			name = Beta;
 		};
+		BFCE1D351AA69C470076E855 /* Dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PREPROCESSOR_DEFINITIONS = "BETA=1";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PROVISIONING_PROFILE = "5f30cfec-e3fa-4c25-8d7e-076b0a5e03a4";
+				SDKROOT = iphoneos;
+				SENSE_ANALYTICS_TOKEN = d62a169fe4856dea26f3a322750613a8;
+				SENSE_API_URL = "https://dev-api.hello.is/v1";
+				SENSE_APP_ID = is.hello.sensetest;
+				SENSE_CLIENT_ID = iphone_pill;
+				SENSE_CRASH_REPORTS_TOKEN = "";
+				SENSE_SUPPORT_OPTIONS = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Dev;
+		};
+		BFCE1D361AA69C470076E855 /* Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF79185A099B572C06592929 /* Pods.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "SleepModel/Sense-Prefix.pch";
+				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				PRODUCT_NAME = Sense;
+				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = 1;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Dev;
+		};
+		BFCE1D371AA69C470076E855 /* Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8AD11AD318ECD0AA0775D047 /* Pods-Tests.release.xcconfig */;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
+				INFOPLIST_FILE = "Tests/Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Sense.app/Sense";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Dev;
+		};
+		BFCE1D381AA69C470076E855 /* Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BF79185A099B572C06592929 /* Pods.release.xcconfig */;
+			buildSettings = {
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				INFOPLIST_FILE = SenseWidget/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
+				);
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_NAME = Sense;
+				PROVISIONING_PROFILE = "";
+				SKIP_INSTALL = YES;
+			};
+			name = Dev;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -3955,6 +4066,7 @@
 				6003F5BD195388D20070C39A /* Debug */,
 				6003F5BE195388D20070C39A /* Release */,
 				BFCCF5451A69F92200D842F9 /* Beta */,
+				BFCE1D351AA69C470076E855 /* Dev */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3965,6 +4077,7 @@
 				6003F5C0195388D20070C39A /* Debug */,
 				6003F5C1195388D20070C39A /* Release */,
 				BFCCF5461A69F92200D842F9 /* Beta */,
+				BFCE1D361AA69C470076E855 /* Dev */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3975,6 +4088,7 @@
 				6003F5C3195388D20070C39A /* Debug */,
 				6003F5C4195388D20070C39A /* Release */,
 				BFCCF5471A69F92200D842F9 /* Beta */,
+				BFCE1D371AA69C470076E855 /* Dev */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -3985,6 +4099,7 @@
 				BF7F1BD919E304050028F799 /* Debug */,
 				BF7F1BDA19E304050028F799 /* Release */,
 				BFCCF5481A69F92200D842F9 /* Beta */,
+				BFCE1D381AA69C470076E855 /* Dev */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

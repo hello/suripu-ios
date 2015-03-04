@@ -972,7 +972,7 @@
                         <viewControllerLayoutGuide type="top" id="KbS-hu-7hz"/>
                         <viewControllerLayoutGuide type="bottom" id="Eh9-8p-NMx"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="7Bn-rz-9ya">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="7Bn-rz-9ya">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -2842,7 +2842,7 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="map.png" width="320" height="229"/>
         <image name="onboarding_bg_wide.png" width="461" height="588"/>
         <image name="pairOfPills.png" width="180" height="117"/>
-        <image name="pairingMode.png" width="260" height="93"/>
+        <image name="pairingMode.png" width="320" height="93"/>
         <image name="play.png" width="67" height="67"/>
         <image name="sampleNotification.png" width="320" height="185"/>
         <image name="sense.png" width="162" height="172"/>

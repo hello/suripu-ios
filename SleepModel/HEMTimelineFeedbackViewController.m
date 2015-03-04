@@ -11,10 +11,9 @@
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMClockPickerView.h"
 #import "HEMRootViewController.h"
+#import "HEMAlertViewController.h"
+#import "HEMBounceModalTransition.h"
 #import "HelloStyleKit.h"
-
-NSString* const HEMMTimelineFeedbackSuccessNotification = @"HEMMTimelineFeedbackSuccessNotification";
-NSString* const HEMMTimelineFeedbackFailureNotification = @"HEMMTimelineFeedbackFailureNotification";
 
 @interface HEMTimelineFeedbackViewController ()
 @property (nonatomic, weak) IBOutlet HEMClockPickerView* clockView;
@@ -23,6 +22,7 @@ NSString* const HEMMTimelineFeedbackFailureNotification = @"HEMMTimelineFeedback
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* tinySeparatorHeight;
 @property (nonatomic, weak) IBOutlet UIView* titleContainerView;
 @property (nonatomic, strong) NSCalendar* calendar;
+@property (nonatomic, strong) HEMBounceModalTransition* bounceDelegate;
 @end
 
 @implementation HEMTimelineFeedbackViewController
@@ -77,17 +77,38 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
     self.navigationItem.rightBarButtonItems = @[rightFixedSpace, rightItem];
 }
 
-- (IBAction)sendUpdatedTime:(id)sender
+- (IBAction)sendUpdatedTime:(UIBarButtonItem*)sender
 {
+    sender.enabled = NO;
+    // show modal
+    NSArray* items = self.navigationItem.rightBarButtonItems;
+    UIActivityIndicatorView* indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.color = [HelloStyleKit tintColor];
+    UIBarButtonItem* indicatorItem = [[UIBarButtonItem alloc] initWithCustomView:indicator];
+    self.navigationItem.rightBarButtonItems = @[[items firstObject], indicatorItem];
+    [indicator startAnimating];
     [SENAPIFeedback updateSegment:self.segment
                          withHour:self.clockView.hour
                            minute:self.clockView.minute
                   forNightOfSleep:self.dateForNightOfSleep
                        completion:^(NSError *error) {
-                           NSString* name = error ? HEMMTimelineFeedbackFailureNotification : HEMMTimelineFeedbackSuccessNotification;
-                           [[NSNotificationCenter defaultCenter] postNotificationName:name object:error];
+                           [indicator stopAnimating];
+                           if (error) {
+                               self.navigationItem.rightBarButtonItems = items;
+                               sender.enabled = YES;
+                               // dismiss modal
+                               [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
+                                                                       message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
+                                                                    controller:self];
+                           } else {
+                               self.bounceDelegate = [HEMBounceModalTransition new];
+                               self.bounceDelegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
+                               self.navigationController.modalPresentationStyle = UIModalPresentationCustom;
+                               self.navigationController.transitioningDelegate = self.bounceDelegate;
+                               [self dismissViewControllerAnimated:YES completion:NULL];
+                           }
                        }];
-    [self dismissViewControllerAnimated:YES completion:NULL];
+
 }
 
 - (IBAction)cancelAndDismiss:(id)sender

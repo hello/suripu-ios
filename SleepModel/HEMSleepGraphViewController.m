@@ -118,14 +118,6 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
-                                                 name:HEMMTimelineFeedbackSuccessNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(feedbackFailedToSend:)
-                                                 name:HEMMTimelineFeedbackFailureNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reloadData)
                                                  name:SENAPIReachableNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -344,16 +336,6 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     feedbackController.dateForNightOfSleep = self.dateForNightOfSleep;
     feedbackController.segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     [self presentViewController:navController animated:YES completion:NULL];
-}
-
-- (void)feedbackFailedToSend:(NSNotification*)note
-{
-    __weak typeof(self) weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
-                                                message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
-                                             controller:weakSelf];
-    });
 }
 
 - (IBAction)didTapAlarmShortcut:(id)sender

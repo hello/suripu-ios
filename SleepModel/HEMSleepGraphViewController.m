@@ -303,7 +303,7 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     if (shouldExpand) {
         if (self.expandedIndexPath) {
             HEMSleepEventCollectionViewCell* oldCell = (id)[self.collectionView cellForItemAtIndexPath:self.expandedIndexPath];
-            oldCell.layer.zPosition = indexPath.row;
+            oldCell.layer.zPosition = indexPath.row + 1;
             if ([oldCell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
                 [oldCell useExpandedLayout:NO targetSize:CGSizeZero animated:YES];
             }

@@ -207,7 +207,7 @@
 "settings.device.footer.format" = "Setting up a %@ for your partner?";
 "settings.device.footer.second-pill" = "second Sleep Pill";
 "settings.pill.dialog.unpair-title" = "Unpair Sleep Pill?";
-"settings.pill.dialog.unpair-message" = "Are you sure you want to unpair your Sleep Pill? You will no longer be able to track your sleep until you pair another Sleep Pill.";
+"settings.pill.dialog.unpair-message" = "Are you sure you want to unpair your Sleep Pill? You should only do this if you have another Sleep Pill that you would like to replace it with. You will no longer be able to track your sleep until you pair another Sleep Pill. If you're having trouble, visit http://guide.hello.is for support.";
 "settings.pill.dialog.no-paired-sense-message" = "You don't currently have a paired Sense, which is required to unpair your Sleep Pill.";
 "settings.pill.dialog.unable-to-unpair-from-sense" = "Unable to unpair from Sense. Make sure Sense is plugged in, nearby, and try again.";
 "settings.pill.dialog.unable-to-unlink-from-account" = "Unable to unpair your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
@@ -222,7 +222,7 @@
 "settings.sense.wifi" = "WiFi";
 "settings.sense.unpairing-message" = "Removing Sense";
 "settings.sense.unpair.title" = "Remove Sense";
-"settings.sense.unpair.confirmation" = "Are you sure you want to remove Sense from your account?";
+"settings.sense.unpair.confirmation" = "Are you sure you want to remove Sense from your account?  You should only do this if you have another Sense that you would like to replace it with. If you're having trouble, visit http://guide.hello.is for support.";
 "settings.sense.unpair.failed-message" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";
 "settings.sense.dialog.pair-failed-title" = "Action failed";
 "settings.sense.dialog.pair-failed-message" = "Unable to put Sense into pairing mode. Make sure Sense is plugged in and nearby and try again.";

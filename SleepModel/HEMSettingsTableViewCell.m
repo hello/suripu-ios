@@ -83,24 +83,23 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.5f;
     [[self contentView] addSubview:separator];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    
-    NSShadow* shadow = [HelloStyleKit backViewCardShadow];
-    // update the shadow based on updated bounds, if resized
-    CGRect shadowInset = CGRectInset([self layerFrame], 0.0f, [shadow shadowBlurRadius]);
-    [[self contentLayer] setShadowPath:[[UIBezierPath bezierPathWithRect:shadowInset] CGPath]];
-}
-
 - (void)roundContentLayerCorners:(UIRectCorner)corners {
     CGSize cornerRadii = CGSizeMake(HEMSettingsCellCornerRadius, HEMSettingsCellCornerRadius);
-    [[self contentLayer] setPath:[[UIBezierPath bezierPathWithRoundedRect:[self layerFrame]
-                                                        byRoundingCorners:corners
-                                                              cornerRadii:cornerRadii] CGPath]];
+    CGPathRef path = [[UIBezierPath bezierPathWithRoundedRect:[self layerFrame]
+                                            byRoundingCorners:corners
+                                                  cornerRadii:cornerRadii] CGPath];
+    [[self contentLayer] setPath:path];
+}
+
+- (void)hideBottomShadow {
+    NSShadow* shadow = [HelloStyleKit backViewCardShadow];
+    CGRect shadowFrame = CGRectInset([self layerFrame], 0.0f, [shadow shadowBlurRadius]*2);
+    [[self contentLayer] setShadowPath:[[UIBezierPath bezierPathWithRect:shadowFrame] CGPath]];
 }
 
 - (void)showTopCorners {
     [self roundContentLayerCorners:UIRectCornerTopLeft|UIRectCornerTopRight];
+    [self hideBottomShadow];
     [[self separator] setHidden:NO];
 }
 
@@ -111,6 +110,7 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.5f;
 
 - (void)showNoCorners {
     [[self contentLayer] setPath:[[UIBezierPath bezierPathWithRect:[self layerFrame]] CGPath]];
+    [self hideBottomShadow];
     [[self separator] setHidden:NO];
 }
 

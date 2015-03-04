@@ -3657,6 +3657,7 @@
 				SENSE_ANALYTICS_TOKEN = d62a169fe4856dea26f3a322750613a8;
 				SENSE_API_URL = "https://dev-api.hello.is/v1";
 				SENSE_APP_ID = is.hello.Sense;
+				SENSE_APP_NAME = Sense;
 				SENSE_CLIENT_ID = iphone_pill;
 				SENSE_CRASH_REPORTS_TOKEN = "";
 				SENSE_SUPPORT_OPTIONS = YES;
@@ -3698,6 +3699,7 @@
 				SENSE_ANALYTICS_TOKEN = 43c61cc553f0ccf2b3e1f73bc30bbfb4;
 				SENSE_API_URL = "https://api.hello.is/v1";
 				SENSE_APP_ID = is.hello.Sense;
+				SENSE_APP_NAME = Sense;
 				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
 				SENSE_CRASH_REPORTS_TOKEN = f464ccd280d3e5730dcdaa9b64d1d108694ee9a9;
 				SENSE_SUPPORT_OPTIONS = NO;
@@ -3723,7 +3725,6 @@
 				GCC_PREFIX_HEADER = "SleepModel/Sense-Prefix.pch";
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = Sense;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -3747,7 +3748,6 @@
 				GCC_PREFIX_HEADER = "SleepModel/Sense-Prefix.pch";
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = Sense;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -3814,7 +3814,6 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				MTL_ENABLE_DEBUG_INFO = YES;
-				PRODUCT_NAME = Sense;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
@@ -3837,7 +3836,6 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = Sense;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
@@ -3878,6 +3876,7 @@
 				SENSE_ANALYTICS_TOKEN = 43c61cc553f0ccf2b3e1f73bc30bbfb4;
 				SENSE_API_URL = "https://api.hello.is/v1";
 				SENSE_APP_ID = is.hello.Sense;
+				SENSE_APP_NAME = Sense;
 				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
 				SENSE_CRASH_REPORTS_TOKEN = f464ccd280d3e5730dcdaa9b64d1d108694ee9a9;
 				SENSE_SUPPORT_OPTIONS = YES;
@@ -3903,7 +3902,6 @@
 				GCC_PREFIX_HEADER = "SleepModel/Sense-Prefix.pch";
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = Sense;
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -3946,7 +3944,6 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = Sense;
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};
@@ -3981,12 +3978,13 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "Sense Dev";
+				PRODUCT_NAME = Sense;
 				PROVISIONING_PROFILE = "5f30cfec-e3fa-4c25-8d7e-076b0a5e03a4";
 				SDKROOT = iphoneos;
 				SENSE_ANALYTICS_TOKEN = d62a169fe4856dea26f3a322750613a8;
 				SENSE_API_URL = "https://dev-api.hello.is/v1";
 				SENSE_APP_ID = is.hello.sensetest;
+				SENSE_APP_NAME = "Sense Dev";
 				SENSE_CLIENT_ID = iphone_pill;
 				SENSE_CRASH_REPORTS_TOKEN = "";
 				SENSE_SUPPORT_OPTIONS = YES;
@@ -4012,7 +4010,6 @@
 				GCC_PREFIX_HEADER = "SleepModel/Sense-Prefix.pch";
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
-				PRODUCT_NAME = "Sense Dev";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -4055,7 +4052,6 @@
 					"$(PROJECT_DIR)/Pods/build/Debug-iphoneos",
 				);
 				MTL_ENABLE_DEBUG_INFO = NO;
-				PRODUCT_NAME = "Sense Dev";
 				PROVISIONING_PROFILE = "";
 				SKIP_INSTALL = YES;
 			};

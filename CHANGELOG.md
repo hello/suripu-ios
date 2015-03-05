@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.3.3
+
+New:
+
+* Added transition for Sleep Questions screen
+* Added transition for Timeline Feedback screen
+* Including app version, devie model, and iOS version in email message body when sending feedback / support inquiry
+* Added new screen to onboarding to ensure user has a Sense before starting
+
+Fixes:
+
+* various copy changes
+* updated various images
+* fixed settings layout and shadows
+* fixed issue where Current Conditions would show old data when actually there is no data to show
+* fixed missing hour marker in Timeline
+
 ## 1.0.3.2
 
 New:

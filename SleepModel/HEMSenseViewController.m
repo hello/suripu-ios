@@ -137,11 +137,9 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     NSString* title = nil;
     switch (warning) {
         case HEMDeviceWarningLongLastSeen:
+        case HEMSenseWarningNoInternet:
         case HEMSenseWarningNotConnectedToSense:
             title = NSLocalizedString(@"actions.troubleshoot", nil);
-            break;
-        case HEMSenseWarningNoInternet:
-            title = NSLocalizedString(@"actions.edit.wifi", nil);
             break;
         default:
             break;

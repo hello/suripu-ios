@@ -62,7 +62,7 @@
     [UIView animateWithDuration:0.15 animations:^{
         self.graphView.alpha = 0;
     }];
-    if (!graphData) {
+    if (graphData.count == 0) {
         self.graphDataSource = nil;
         self.graphView.dataSource = nil;
         [self.graphView reloadGraph];

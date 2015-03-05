@@ -329,6 +329,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [self updateActivityText:activityMessage completion:nil];
     DDLogVerbose(@"checking if Sense has already been configured with wifi");
     
+    [self setDetectedSSID:nil]; // nil it out in case this was detected in a previous run
+    
     __weak typeof(self) weakSelf = self;
     [[self senseManager] getConfiguredWiFi:^(NSString *ssid, SENWiFiConnectionState state) {
         __block typeof(weakSelf) strongSelf = weakSelf;

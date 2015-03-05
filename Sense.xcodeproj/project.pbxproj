@@ -2839,7 +2839,7 @@
 			attributes = {
 				CLASSPREFIX = HEM;
 				LastUpgradeCheck = 0600;
-				ORGANIZATIONNAME = "Hello, Inc.";
+				ORGANIZATIONNAME = Hello;
 				TargetAttributes = {
 					6003F589195388D20070C39A = {
 						DevelopmentTeam = MSG86J7GNF;

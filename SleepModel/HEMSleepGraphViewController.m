@@ -364,6 +364,7 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     static CGFloat const HEMPopupAnimationDistance = 8.f;
     static CGFloat const HEMPopupSpacingDistance = 20.f;
     if (sender.state == UIGestureRecognizerStateBegan) {
+        [SENAnalytics track:HEMAnalyticsEventTimelineBarLongPress];
         CGPoint cellLocation = [sender locationInView:self.collectionView];
         NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:cellLocation];
         UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];

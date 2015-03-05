@@ -116,6 +116,9 @@ NSString* const kHEMAnalyticsEventDeviceAction = @"Device Action";
 NSString* const kHEMAnalyticsEventDeviceFactoryRestore = @"factory restore";
 NSString* const kHEMAnalyticsEventDevicePairingMode = @"enable pairing mode";
 
+// timeline
+NSString* const HEMAnalyticsEventTimelineBarLongPress = @"Long press sleep duration bar";
+
 @implementation HEMAnalytics
 
 + (void)trackSignUpWithName:(NSString*)userName {

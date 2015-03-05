@@ -158,12 +158,12 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 
 + (BOOL)shouldShowTutorialForKey:(NSString*)key
 {
-    return ![[[SENLocalPreferences sharedPreferences] userPreferenceForKey:key] boolValue];
+    return ![[[SENLocalPreferences sharedPreferences] sessionPreferenceForKey:key] boolValue];
 }
 
 + (void)markTutorialViewed:(NSString*)key
 {
-    [[SENLocalPreferences sharedPreferences] setUserPreference:@YES forKey:key];
+    [[SENLocalPreferences sharedPreferences] setSessionPreference:@YES forKey:key];
 }
 
 @end

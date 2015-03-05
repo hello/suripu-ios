@@ -497,7 +497,7 @@
 "tutorial.timeline.title3" = "BEFORE SLEEP";
 "tutorial.timeline.message3" = "The “before sleep” tab allows you to see if your bedroom was right for you before you went to sleep.";
 "tutorial.timeline.title4" = "YOUR SLEEP TIMELINE";
-"tutorial.timeline.message4" = "Your timeline shows you a minute-by-minute record of your night. The blue bars break your sleep out into three categories: Light, medium and deep sleep.\n\nThe wider the bar, the deeper the sleep.";
+"tutorial.timeline.message4" = "Your timeline shows you a minute-by-minute record of your night. The blue bars break your sleep out into three categories: Light, medium and deep sleep.\n\nThe wider the bar, the deeper the sleep. Press and hold a bar for more info.";
 
 "tutorial.alarms.title" = "Set An Alarm";
 "tutorial.alarms.message" = "Sense's Smart Alarm will wake you up at the lightest part of your natural sleep cycle - within a 30 minute window before the time you set. When it's time to wake up, Sense will glow and play your selected tone. Just wave your hand over Sense to dismiss the alarm.";

@@ -110,6 +110,9 @@ extern NSString* const kHEMAnalyticsEventDeviceAction;
 extern NSString* const kHEMAnalyticsEventDeviceFactoryRestore;
 extern NSString* const kHEMAnalyticsEventDevicePairingMode;
 
+// timeline
+extern NSString* const HEMAnalyticsEventTimelineBarLongPress;
+
 @interface HEMAnalytics : NSObject
 
 + (void)trackSignUpWithName:(NSString*)userName;

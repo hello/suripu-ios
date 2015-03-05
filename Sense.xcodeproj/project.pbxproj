@@ -3984,7 +3984,7 @@
 				SENSE_ANALYTICS_TOKEN = d62a169fe4856dea26f3a322750613a8;
 				SENSE_API_URL = "https://dev-api.hello.is/v1";
 				SENSE_APP_ID = is.hello.sensetest;
-				SENSE_APP_NAME = "Sense Dev";
+				SENSE_APP_NAME = Sense;
 				SENSE_CLIENT_ID = iphone_pill;
 				SENSE_CRASH_REPORTS_TOKEN = "";
 				SENSE_SUPPORT_OPTIONS = YES;

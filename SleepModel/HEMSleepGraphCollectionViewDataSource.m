@@ -115,6 +115,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         self.beLoading = NO;
         [self hideLoadingViewAnimated:NO];
     }
+    if ([self isTitleOutOfSync])
+        [self.collectionView reloadData];
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError* error) {
         __strong HEMSleepGraphCollectionViewDataSource* strongSelf = weakSelf;
@@ -130,14 +132,18 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 - (void)refreshWithTimelines:(NSArray*)timelines
 {
     NSDictionary* timeline = [timelines firstObject];
-    NSString* currentTitleText = [self.sleepSummaryCell.dateButton titleForState:UIControlStateNormal];
     BOOL didChange = [self.sleepResult updateWithDictionary:timeline];
-    BOOL dayChanged = ![currentTitleText isEqualToString:[self titleTextForDate]];
     [self hideLoadingViewAnimated:YES];
-    if (didChange || dayChanged) {
+    if (didChange || [self isTitleOutOfSync]) {
         [self.sleepResult save];
         [self.collectionView reloadData];
     }
+}
+
+- (BOOL)isTitleOutOfSync
+{
+    NSString* currentTitleText = [self.sleepSummaryCell.dateButton titleForState:UIControlStateNormal];
+    return ![currentTitleText isEqualToString:[self titleTextForDate]];
 }
 
 - (void)configureCollectionView

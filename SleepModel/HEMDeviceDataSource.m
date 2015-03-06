@@ -137,8 +137,15 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 }
 
 - (void)updateSenseManager:(SENSenseManager*)senseManager completion:(void(^)(NSError* error))completion {
+    [self setLoadingSense:YES];
+    
+    __weak typeof(self) weakSelf = self;
     SENServiceDevice* service = [SENServiceDevice sharedService];
-    [service replaceWithNewlyPairedSenseManager:senseManager completion:completion];
+    [service clearCache];
+    [service replaceWithNewlyPairedSenseManager:senseManager completion:^(NSError *error) {
+        [weakSelf setLoadingSense:NO];
+        if (completion) completion (error);
+    }];
 }
 
 - (void)refreshSenseData:(void(^)(NSError* error))completion {

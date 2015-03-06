@@ -92,10 +92,8 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
         [weakSelf reloadData];
     } completion:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error != nil && [error code] == HEMDeviceErrorDeviceInfoNotLoaded) {
-            NSString* title = NSLocalizedString(@"settings.device.error.title", nil);
-            NSString* msg = NSLocalizedString(@"settings.device.error.cannot-load-info", nil);
-            [strongSelf showMessageDialog:msg title:title];
+        if (error != nil) {
+            [strongSelf showMessageForError:error];
         }
         [strongSelf reloadData];
     }];
@@ -103,6 +101,14 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     if (clearCurrentState) {
         [self reloadData]; // clear current display state to show activity
     }
+}
+
+- (void)showMessageForError:(NSError*)error {
+    // for now, we will show the same information since the only error that occurs
+    // here is when are loading device information
+    NSString* title = NSLocalizedString(@"settings.device.error.title", nil);
+    NSString* msg = NSLocalizedString(@"settings.device.error.cannot-load-info", nil);
+    [self showMessageDialog:msg title:title];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -220,8 +226,14 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     if (senseManager != nil) {
         __weak typeof(self) weakSelf = self;
         [[self dataSource] updateSenseManager:senseManager completion:^(NSError *error) {
-            [weakSelf reloadData];
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error != nil) {
+                [strongSelf showMessageForError:error];
+            }
+            [strongSelf reloadData];
         }];
+        
+        [self reloadData]; // clear current state
     }
 }
 

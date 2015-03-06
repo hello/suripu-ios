@@ -114,8 +114,10 @@ NSString* const kHEMAnalyticsEventSignOut = @"Signed Out";
 
 // device management
 NSString* const kHEMAnalyticsEventDeviceAction = @"Device Action";
-NSString* const kHEMAnalyticsEventDeviceFactoryRestore = @"factory restore";
-NSString* const kHEMAnalyticsEventDevicePairingMode = @"enable pairing mode";
+NSString* const kHEMAnalyticsEventDeviceActionFactoryRestore = @"factory restore";
+NSString* const kHEMAnalyticsEventDeviceActionPairingMode = @"enable pairing mode";
+NSString* const kHEMAnalyticsEventDeviceActionUnpairSense = @"unpair Sense";
+NSString* const kHEMAnalyticsEventDeviceActionUnpairPill = @"unpair Sleep Pill";
 
 // timeline
 NSString* const HEMAnalyticsEventTimelineBarLongPress = @"Long press sleep duration bar";

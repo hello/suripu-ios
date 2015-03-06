@@ -354,6 +354,9 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
         [[self delegate] willUnpairSenseFrom:self];
     }
     
+    [SENAnalytics track:kHEMAnalyticsEventDeviceAction
+             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionUnpairSense}];
+    
     NSString* message = NSLocalizedString(@"settings.sense.unpairing-message", nil);
     [self showActivityText:message completion:^{
         __weak typeof(self) weakSelf = self;
@@ -402,7 +405,7 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
 
 - (void)enablePairingMode {
     [SENAnalytics track:kHEMAnalyticsEventDeviceAction
-             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDevicePairingMode}];
+             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionPairingMode}];
     
     NSString* message = NSLocalizedString(@"settings.sense.enabling-pairing-mode", nil);
     [self showActivityText:message completion:^{
@@ -463,7 +466,7 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
 
 - (void)restore {
     [SENAnalytics track:kHEMAnalyticsEventDeviceAction
-             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceFactoryRestore}];
+             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionFactoryRestore}];
 
     NSString* message = NSLocalizedString(@"settings.device.restoring-factory-settings", nil);
     [self showActivityText:message completion:^{

@@ -107,8 +107,10 @@ extern NSString* const kHEMAnalyticsEventSignOut;
 
 // device management
 extern NSString* const kHEMAnalyticsEventDeviceAction;
-extern NSString* const kHEMAnalyticsEventDeviceFactoryRestore;
-extern NSString* const kHEMAnalyticsEventDevicePairingMode;
+extern NSString* const kHEMAnalyticsEventDeviceActionFactoryRestore;
+extern NSString* const kHEMAnalyticsEventDeviceActionPairingMode;
+extern NSString* const kHEMAnalyticsEventDeviceActionUnpairSense;
+extern NSString* const kHEMAnalyticsEventDeviceActionUnpairPill;
 
 // timeline
 extern NSString* const HEMAnalyticsEventTimelineBarLongPress;

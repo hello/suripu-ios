@@ -223,6 +223,9 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
         [[self delegate] willUnpairPillFrom:self];
     }
     
+    [SENAnalytics track:kHEMAnalyticsEventDeviceAction
+             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionUnpairPill}];
+    
     id<UIApplicationDelegate> delegate = (id)[UIApplication sharedApplication].delegate;
     UIViewController* root = (id)delegate.window.rootViewController;
     

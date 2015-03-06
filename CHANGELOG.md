@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.3.4
+
+New:
+
+* logging usage of the press-n-hold Timeline action
+* enabling surveys through MP
+
+Fixes:
+
+* updated action button text for wifi warning in Sense settings
+* reload device settings screen as soon as a new Sense has been paired from it
+
 ## 1.0.3.3
 
 New:

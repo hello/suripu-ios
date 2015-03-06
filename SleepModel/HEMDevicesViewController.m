@@ -104,18 +104,11 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 }
 
 - (void)showMessageForError:(NSError*)error {
-    NSString* title = nil;
-    NSString* msg = nil;
-    
-    if ([error code] == HEMDeviceErrorDeviceInfoNotLoaded) {
-        title = NSLocalizedString(@"settings.device.error.title", nil);
-        msg = NSLocalizedString(@"settings.device.error.cannot-load-info", nil);
-    }
-    
-    // only show a message for codes we care about
-    if ([title length] > 0 || [msg length] > 0) {
-        [self showMessageDialog:msg title:title];
-    }
+    // for now, we will show the same information since the only error that occurs
+    // here is when are loading device information
+    NSString* title = NSLocalizedString(@"settings.device.error.title", nil);
+    NSString* msg = NSLocalizedString(@"settings.device.error.cannot-load-info", nil);
+    [self showMessageDialog:msg title:title];
 }
 
 #pragma mark - UICollectionViewDelegate

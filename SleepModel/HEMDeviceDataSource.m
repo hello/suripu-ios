@@ -144,7 +144,14 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     [service clearCache];
     [service replaceWithNewlyPairedSenseManager:senseManager completion:^(NSError *error) {
         [weakSelf setLoadingSense:NO];
-        if (completion) completion (error);
+        
+        NSError* opError = nil;
+        if (error) {
+            opError = [NSError errorWithDomain:HEMDeviceErrorDomain
+                                          code:HEMDeviceErrorReplacedSenseInfoNotLoaded
+                                      userInfo:nil];
+        }
+        if (completion) completion (opError);
     }];
 }
 

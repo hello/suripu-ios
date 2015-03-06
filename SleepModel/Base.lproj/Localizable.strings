@@ -192,7 +192,6 @@
 "settings.device.firmware-version" = "Firmware";
 "settings.device.battery" = "Battery level";
 "settings.device.last-seen" = "Last seen";
-"settings.device.never-seen" = "Paired, but never seen since";
 "settings.device.color" = "Color";
 "settings.device.battery.good" = "Good";
 "settings.device.battery.low" = "Low";

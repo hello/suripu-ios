@@ -104,11 +104,26 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 }
 
 - (void)showMessageForError:(NSError*)error {
-    // for now, we will show the same information since the only error that occurs
-    // here is when are loading device information
-    NSString* title = NSLocalizedString(@"settings.device.error.title", nil);
-    NSString* msg = NSLocalizedString(@"settings.device.error.cannot-load-info", nil);
-    [self showMessageDialog:msg title:title];
+    NSString* title = nil;
+    NSString* msg = nil;
+    
+    // there are other errors that can occur, but are more like warnings.  We
+    // should only display an error for codes that matter here, which is when
+    // device info could not be loaded
+    switch ([error code]) {
+        case HEMDeviceErrorDeviceInfoNotLoaded:
+        case HEMDeviceErrorReplacedSenseInfoNotLoaded:
+            title = NSLocalizedString(@"settings.device.error.title", nil);
+            msg = NSLocalizedString(@"settings.device.error.cannot-load-info", nil);
+            break;
+        default:
+            break;
+    }
+    
+    if (msg) { // title is optional
+        [self showMessageDialog:msg title:title];
+    }
+    
 }
 
 #pragma mark - UICollectionViewDelegate

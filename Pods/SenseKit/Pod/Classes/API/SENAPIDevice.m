@@ -72,10 +72,11 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
 
 + (NSDate*)dateFromObject:(id)dateObject {
     NSDate* lastSeen = nil;
-    // jimmy: strangely, last_updated is converted to a string...  is it too big
-    // for a NSNUmber?
     if ([dateObject respondsToSelector:@selector(doubleValue)]) {
-        lastSeen = [NSDate dateWithTimeIntervalSince1970:[dateObject doubleValue] / 1000];
+        double timeInMs = [dateObject doubleValue];
+        if (timeInMs > 0) {
+            lastSeen = [NSDate dateWithTimeIntervalSince1970:timeInMs / 1000];
+        }
     }
     return lastSeen;
 }

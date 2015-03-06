@@ -144,7 +144,14 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     [service clearCache];
     [service replaceWithNewlyPairedSenseManager:senseManager completion:^(NSError *error) {
         [weakSelf setLoadingSense:NO];
-        if (completion) completion (error);
+        
+        NSError* opError = nil;
+        if (error) {
+            opError = [NSError errorWithDomain:HEMDeviceErrorDomain
+                                          code:HEMDeviceErrorReplacedSenseInfoNotLoaded
+                                      userInfo:nil];
+        }
+        if (completion) completion (opError);
     }];
 }
 
@@ -206,11 +213,11 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 - (NSString*)lastSeen:(SENDevice*)device {
     NSString* desc = nil;
-    if ([device lastSeen] != nil) {
+    if ([device lastSeen] != nil && [device state] != SENDeviceStateUnknown) {
         NSString* lastSeen = NSLocalizedString(@"settings.device.last-seen", nil);
         desc = [NSString stringWithFormat:@"%@ %@", lastSeen, [[device lastSeen] timeAgo]];
     } else {
-        desc = NSLocalizedString(@"settings.device.never-seen", nil);
+        desc = NSLocalizedString(@"empty-data", nil);
     }
     return desc;
 }

@@ -8,6 +8,7 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENServiceAccount.h>
+#import <SenseKit/SENAnalytics.h>
 
 #import "HEMAnalytics.h"
 

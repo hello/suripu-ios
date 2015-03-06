@@ -74,13 +74,8 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
     NSDate* lastSeen = nil;
     if ([dateObject respondsToSelector:@selector(doubleValue)]) {
         double timeInMs = [dateObject doubleValue];
-        // this is a work around an issue on the server + firmware where it
-        // returns 0 for "last_updated" on certain occassions right after a
-        // device is linked to the user's account.
         if (timeInMs > 0) {
             lastSeen = [NSDate dateWithTimeIntervalSince1970:timeInMs / 1000];
-        } else {
-            lastSeen = [NSDate date];
         }
     }
     return lastSeen;

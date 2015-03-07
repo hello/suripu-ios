@@ -107,14 +107,12 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (strongSelf) {
                 [strongSelf setSenseManager:nil];
-                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
-                    if ([strongSelf isPairing]) {
-                        [strongSelf showCouldNotPairErrorMessage];
-                    } else {
-                        NSString* message = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
-                        [strongSelf showErrorMessage:message];
-                    }
-                }];
+                if ([strongSelf isPairing]) {
+                    [strongSelf showCouldNotPairErrorMessage];
+                } else {
+                    NSString* message = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
+                    [strongSelf showErrorMessage:message];
+                }
             }
         }];
     }
@@ -142,13 +140,14 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(scanTimeout) object:nil];
     DDLogVerbose(@"scanning for Sense timed out, oh no!");
     [self setTimedOut:YES];
+    
     [SENSenseManager stopScan];
     [[self senseManager] disconnectFromSense];
     [self setSenseManager:nil];
-    [self stopActivityWithMessage:nil success:NO completion:^{
-        NSString* msg = NSLocalizedString(@"pairing.error.timed-out", nil);
-        [self showErrorMessage:msg];
-    }];
+    
+    NSString* msg = NSLocalizedString(@"pairing.error.timed-out", nil);
+    [self showErrorMessage:msg];
+    
     [SENAnalytics track:kHEMAnalyticsEventError
              properties:@{kHEMAnalyticsEventPropMessage : @"scanning timed out"}];
 }
@@ -309,12 +308,10 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)failPairing {
-    [self stopActivityWithMessage:nil success:NO completion:^{
-        [self showCouldNotPairErrorMessage];
-        [self setPairing:NO];
-        [self setCurrentState:HEMSensePairStateNotStarted]; // reset
-        [self disconnectSense];
-    }];
+    [self setCurrentState:HEMSensePairStateNotStarted]; // reset
+    [self disconnectSense];
+    [self showCouldNotPairErrorMessage];
+    [self setPairing:NO];
 }
 
 - (void)showCouldNotPairErrorMessage {
@@ -380,13 +377,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             [strongSelf executeNextStep];
         }
     } failure:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf stopActivityWithMessage:nil success:NO completion:^{
-                NSString* msg = NSLocalizedString(@"pairing.error.link-account-failed", nil);
-                [strongSelf showErrorMessage:msg];
-            }];
-        }
+        NSString* msg = NSLocalizedString(@"pairing.error.link-account-failed", nil);
+        [weakSelf showErrorMessage:msg];
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }];
 }
@@ -406,13 +398,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             [strongSelf executeNextStep];
         } else {
             DDLogVerbose(@"failed to set time zone");
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                [strongSelf stopActivityWithMessage:nil success:NO completion:^{
-                    NSString* msg = NSLocalizedString(@"pairing.error.set-timezone-failed", nil);
-                    [strongSelf showErrorMessage:msg];
-                }];
-            }
+            NSString* msg = NSLocalizedString(@"pairing.error.set-timezone-failed", nil);
+            [weakSelf showErrorMessage:msg];
             [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
         }
     }];
@@ -438,10 +425,13 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)showErrorMessage:(NSString*)message {
     __weak typeof(self) weakSelf = self;
     void(^show)(id response, NSError* error) = ^(__unused id response, __unused NSError* error){
-        [weakSelf showMessageDialog:message
-                              title:NSLocalizedString(@"pairing.failed.title", nil)
-                              image:nil
-                       withHelpPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf stopActivityWithMessage:nil success:NO completion:^{
+            [strongSelf showMessageDialog:message
+                                    title:NSLocalizedString(@"pairing.failed.title", nil)
+                                    image:nil
+                             withHelpPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)];
+        }];
     };
     
     if ([self senseManager] == nil) {

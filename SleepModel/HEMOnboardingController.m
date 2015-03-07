@@ -195,7 +195,7 @@
 }
 
 - (void)stopActivityWithMessage:(NSString*)message success:(BOOL)sucess completion:(void(^)(void))completion {
-    if ([self activityCoverView] == nil) {
+    if (![[self activityCoverView] isShowing]) {
         if (completion) completion ();
     } else {
         [[self activityCoverView] dismissWithResultText:message showSuccessMark:sucess remove:YES completion:^{

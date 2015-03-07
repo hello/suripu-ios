@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.3.5
+
+Fixes:
+
+* adding missing device action events
+* fixed bug where devices will alert the user that something is wrong, even its simply a warning, like the pill is not paired
+* sense in device settings should no longer say that the last seen is 45 years ago
+* ensuring response is returned before the timeline feedback screen is dismissed
+
 ## 1.0.3.4
 
 New:

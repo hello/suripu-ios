@@ -156,14 +156,11 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     if ([self disconnectObserverId] == nil) {
         __weak typeof(self) weakSelf = self;
         self.disconnectObserverId =
-        [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            [strongSelf stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
+            [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
                 NSString* title = NSLocalizedString(@"wifi.error.title", nil);
                 NSString* message = NSLocalizedString(@"wifi.error.unexpected-disconnnect", nil);
-                [strongSelf showErrorMessage:message withTitle:title];
+                [weakSelf showErrorMessage:message withTitle:title];
             }];
-        }];
     }
 }
 
@@ -328,22 +325,24 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 renableControls:(BOOL)enable
                         success:(BOOL)success
                      completion:(void(^)(void))completion {
-    [self stopActivityWithMessage:message success:success completion:^{
-        [self enableControls:enable];
+    
+    __weak typeof(self) weakSelf = self;
+    void(^stopActivity)(void) = ^{
+        [weakSelf stopActivityWithMessage:message success:success completion:^{
+            [weakSelf enableControls:enable];
+            if (completion) completion ();
+        }];
+    };
+    // if it's not connected, forget about the LED, Sense should turn if off then
+    if ([[self manager] isConnected]) {
+        SENSenseLEDState led = ![self haveDelegates] ? SENSenseLEDStatePair : SENSenseLEDStateOff;
+        [[self manager] setLED:led completion:^(id response, NSError *error) {
+            stopActivity();
+        }];
+    } else {
+        stopActivity();
+    }
 
-        if (!success) {
-            SENSenseLEDState led = SENSenseLEDStateOff;
-            if (![self haveDelegates]) {
-                led = SENSenseLEDStatePair;
-            }
-            [[self manager] setLED:led completion:^(id response, NSError *error) {
-                if (completion) completion ();
-            }];
-        } else if (completion) { // success && has completion block
-            completion ();
-        }
-
-    }];
 }
 
 #pragma mark - Steps To Set Up
@@ -361,10 +360,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         [strongSelf setStepFinished:HEMWiFiSetupStepConfigureWiFi];
         [strongSelf executeNextStep];
     } failure:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
-            [strongSelf showSetWiFiError:error];
-        }];
+        [weakSelf showSetWiFiError:error];
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }];
 
@@ -387,15 +383,10 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     __weak typeof(self) weakSelf = self;
     [manager linkAccount:accessToken success:^(id response) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf setStepFinished:HEMWiFiSetupStepLinkAccount];
-            [strongSelf executeNextStep];
-        }
+        [strongSelf setStepFinished:HEMWiFiSetupStepLinkAccount];
+        [strongSelf executeNextStep];
     } failure:^(NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
-            [strongSelf showLinkAccountError:error];
-        }];
+        [weakSelf showLinkAccountError:error];
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }];
 }
@@ -414,11 +405,9 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 [strongSelf executeNextStep];
             } else {
                 DDLogWarn(@"failed to set timezone on the server");
-                [strongSelf stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
-                    NSString* msg = NSLocalizedString(@"wifi.error.time-zone-failed", nil);
-                    NSString* title = NSLocalizedString(@"wifi.error.timezone-title", nil);
-                    [strongSelf showErrorMessage:msg withTitle:title];
-                }];
+                NSString* msg = NSLocalizedString(@"wifi.error.time-zone-failed", nil);
+                NSString* title = NSLocalizedString(@"wifi.error.timezone-title", nil);
+                [strongSelf showErrorMessage:msg withTitle:title];
                 [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             }
 
@@ -534,10 +523,13 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 #pragma mark - Errors / Alerts
 
 - (void)showErrorMessage:(NSString*)errorMessage withTitle:(NSString*)title {
-    [self showMessageDialog:errorMessage
-                      title:title
-                      image:nil
-               withHelpPage:NSLocalizedString(@"troubleshoot/connecting-sense-wifi", nil)];
+    __weak typeof(self) weakSelf = self;
+    [self stopActivityWithMessage:nil renableControls:YES success:NO completion:^{
+        [weakSelf showMessageDialog:errorMessage
+                              title:title
+                              image:nil
+                       withHelpPage:NSLocalizedString(@"troubleshoot/connecting-sense-wifi", nil)];
+    }];
 }
 
 - (void)showSetWiFiError:(NSError*)error {

@@ -162,6 +162,11 @@ typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {
  */
 - (instancetype)initWithSense:(SENSense*)sense;
 
+/**
+ * @return YES if device is connected to Sense, NO otherwise
+ */
+- (BOOL)isConnected;
+
 #pragma mark - Pairing
 
 /**

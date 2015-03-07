@@ -132,13 +132,8 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         __weak typeof(self) weakSelf = self;
         self.disconnectObserverId =
             [manager observeUnexpectedDisconnect:^(NSError *error) {
-                __block typeof(weakSelf) strongSelf = weakSelf;
-                if (strongSelf) {
-                    [[strongSelf overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
-                        NSString* msg = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
-                        [strongSelf showError:error customMessage:msg];
-                    }];
-                }
+                NSString* msg = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
+                [weakSelf showError:error customMessage:msg];
             }];
     }
 }
@@ -157,9 +152,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
             [self performSelector:@selector(ensureSenseIsReady:) withObject:completion afterDelay:0.1f];
         } else {
             [self setBleCheckAttempts:0]; // reset it
-            [[self overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
-                [self showError:nil customMessage:NSLocalizedString(@"pairing.activity.bluetooth-not-on", nil)];
-            }];
+            [self showError:nil customMessage:NSLocalizedString(@"pairing.activity.bluetooth-not-on", nil)];
         }
     } else {
         [self scanForPairedSense:completion];
@@ -172,24 +165,18 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
         if (error != nil) {
-            
-            [[strongSelf overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
-                NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
-                [strongSelf showError:error customMessage:msg];
-                completion (nil);
-            }];
-            
+            NSString* msg = NSLocalizedString(@"pairing.error.fail-to-load-paired-info", nil);
+            [strongSelf showError:error customMessage:msg];
+            completion (nil);
             return;
         }
         
         DDLogVerbose(@"looking for sense to trigger pill pairing");
         [[SENServiceDevice sharedService] scanForPairedSense:^(NSError *error) {
             if (error != nil) {
-                [[strongSelf overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
-                    NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
-                    [strongSelf showError:error customMessage:msg];
-                    completion (nil);
-                }];
+                NSString* msg = NSLocalizedString(@"pairing.error.sense-not-found", nil);
+                [strongSelf showError:error customMessage:msg];
+                completion (nil);
                 return;
             }
             completion ([[SENServiceDevice sharedService] senseManager]);
@@ -206,9 +193,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf ensureSenseIsReady:^(SENSenseManager *manager) {
             if (manager == nil) {
-                [[strongSelf overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
-                    [strongSelf showError:nil customMessage:NSLocalizedString(@"pairing.error.sense-not-found", nil)];
-                }];
+                [strongSelf showError:nil customMessage:NSLocalizedString(@"pairing.error.sense-not-found", nil)];
             } else {
                 [strongSelf pairNowWith:manager];
             }
@@ -231,12 +216,12 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     __weak typeof(self) weakSelf = self;
     [manager setLED:SENSenseLEDStateActivity completion:^(id response, NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
+        if (error != nil) {
+            [strongSelf showError:error customMessage:nil];
+            return;
+        }
+        
         [[strongSelf overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
-            if (error != nil) {
-                [strongSelf showError:error customMessage:nil];
-                return;
-            }
-            
             [[strongSelf manager] pairWithPill:[SENAuthorizationService accessToken] success:^(id response) {
                 [strongSelf flashPairedState];
             } failure:^(NSError *error) {
@@ -335,12 +320,16 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         }
     }
     
-    [self showMessageDialog:message
-                      title:NSLocalizedString(@"pairing.pill.error.title", nil)
-                      image:nil
-               withHelpPage:NSLocalizedString(@"help.url.slug.pill-pairing", nil)];
-    
-    [self setControlsEnabled:YES];
+    [[self overlayActivityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
+        
+        [self showMessageDialog:message
+                          title:NSLocalizedString(@"pairing.pill.error.title", nil)
+                          image:nil
+                   withHelpPage:NSLocalizedString(@"help.url.slug.pill-pairing", nil)];
+        
+        [self setControlsEnabled:YES];
+        
+    }];
     
     if (error) {
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];

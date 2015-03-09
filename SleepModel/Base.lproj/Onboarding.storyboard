@@ -26,6 +26,7 @@
             <string>HelveticaNeue-Medium</string>
             <string>HelveticaNeue-Medium</string>
             <string>HelveticaNeue-Medium</string>
+            <string>HelveticaNeue-Medium</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -41,7 +42,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome back." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcc-O3-dxY">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Welcome back" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lcc-O3-dxY">
                                 <rect key="frame" x="20" y="88" width="560" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="pck-iL-yob"/>
@@ -229,21 +230,21 @@
                                     <action selector="playVideo:" destination="KoM-KU-kaf" eventType="touchUpInside" id="qis-kY-jZv"/>
                                 </connections>
                             </button>
-                            <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dT-qJ-kIJ" customClass="HEMActionButton">
+                            <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3dT-qJ-kIJ" customClass="HEMActionButton" propertyAccessControl="none">
                                 <rect key="frame" x="790" y="420" width="560" height="50"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <state key="normal" title="Sign Up">
+                                <state key="normal" title="SET UP SENSE">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="5JR-hM-9bB" kind="push" id="gpv-cN-9Qy"/>
+                                    <segue destination="RYl-gV-ozZ" kind="push" id="sRv-Yt-VPY"/>
                                 </connections>
                             </button>
                             <button hidden="YES" opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tuz-ez-XXK" customClass="HEMActionButton">
                                 <rect key="frame" x="790" y="490" width="560" height="50"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                <state key="normal" title="Log In">
+                                <state key="normal" title="LOG IN">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -329,7 +330,82 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1rj-em-luD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="722" y="571"/>
+            <point key="canvasLocation" x="-209" y="535"/>
+        </scene>
+        <!--Have Sense View Controller-->
+        <scene sceneID="IYi-mC-ciF">
+            <objects>
+                <viewController id="RYl-gV-ozZ" customClass="HEMHaveSenseViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="vvM-Kl-XD4"/>
+                        <viewControllerLayoutGuide type="bottom" id="pwf-tC-J0F"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="RKe-xY-Xmh">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Have Sense ready?" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k0c-FQ-y2a">
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="mRd-go-Uvt"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="R0B-PY-KLe">
+                                <rect key="frame" x="20" y="68" width="560" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="senseWhite.png" translatesAutoresizingMaskIntoConstraints="NO" id="n2K-Db-VCV">
+                                <rect key="frame" x="0.0" y="109" width="600" height="421"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ONz-So-uP9" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="v8x-zs-ef3"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="CONTINUE">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="5JR-hM-9bB" kind="push" id="RA5-RW-zTF"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="k0c-FQ-y2a" firstAttribute="top" secondItem="vvM-Kl-XD4" secondAttribute="bottom" constant="4" id="2XN-hy-W2N"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="R0B-PY-KLe" secondAttribute="trailing" constant="4" id="88x-uE-kGP"/>
+                            <constraint firstItem="k0c-FQ-y2a" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="4" id="IqC-VG-tjs"/>
+                            <constraint firstItem="n2K-Db-VCV" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="-16" id="NLs-EE-Sbp"/>
+                            <constraint firstItem="R0B-PY-KLe" firstAttribute="bottom" secondItem="n2K-Db-VCV" secondAttribute="top" id="NRU-jk-veJ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="n2K-Db-VCV" secondAttribute="trailing" constant="-16" id="Rgm-OM-mB7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="k0c-FQ-y2a" secondAttribute="trailing" constant="4" id="UpE-wU-j13"/>
+                            <constraint firstItem="pwf-tC-J0F" firstAttribute="top" secondItem="ONz-So-uP9" secondAttribute="bottom" constant="20" id="agi-kV-WVh"/>
+                            <constraint firstItem="R0B-PY-KLe" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="4" id="d23-Ik-No7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="ONz-So-uP9" secondAttribute="trailing" constant="4" id="lIk-yJ-j5W"/>
+                            <constraint firstItem="ONz-So-uP9" firstAttribute="leading" secondItem="RKe-xY-Xmh" secondAttribute="leadingMargin" constant="4" id="qKi-cl-69j"/>
+                            <constraint firstItem="n2K-Db-VCV" firstAttribute="top" secondItem="R0B-PY-KLe" secondAttribute="bottom" id="wEo-NI-RHr"/>
+                            <constraint firstItem="R0B-PY-KLe" firstAttribute="top" secondItem="k0c-FQ-y2a" secondAttribute="bottom" constant="10" id="y0T-np-cds"/>
+                            <constraint firstItem="n2K-Db-VCV" firstAttribute="bottom" secondItem="ONz-So-uP9" secondAttribute="top" id="zH5-Y8-hyF"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="RQg-C6-Mhw"/>
+                    <connections>
+                        <outlet property="descriptionLabel" destination="R0B-PY-KLe" id="wCA-5n-3HK"/>
+                        <outlet property="descriptionTopConstraint" destination="y0T-np-cds" id="3Qr-bU-Wkg"/>
+                        <outlet property="titleHeightConstraint" destination="mRd-go-Uvt" id="PGb-IY-V4G"/>
+                        <outlet property="titleLabel" destination="k0c-FQ-y2a" id="yrI-pf-51T"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vOs-bg-4TL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="660" y="922"/>
         </scene>
         <!--Sign Up View Controller-->
         <scene sceneID="9ON-DX-PXS">
@@ -343,7 +419,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Introduce yourself." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cY3-74-70H">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Introduce yourself" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cY3-74-70H">
                                 <rect key="frame" x="20" y="24" width="560" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="nkx-wh-4nQ"/>
@@ -487,7 +563,7 @@
                                     <constraint firstAttribute="height" constant="50" id="6fN-Mb-Rff"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                <state key="normal" title="Next">
+                                <state key="normal" title="NEXT">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -619,7 +695,7 @@
                                     <constraint firstAttribute="height" constant="50" id="QMZ-zo-7zG"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                <state key="normal" title="Next">
+                                <state key="normal" title="NEXT">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -896,7 +972,7 @@
                         <viewControllerLayoutGuide type="top" id="KbS-hu-7hz"/>
                         <viewControllerLayoutGuide type="bottom" id="Eh9-8p-NMx"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="7Bn-rz-9ya">
+                    <view key="view" clipsSubviews="YES" contentMode="scaleToFill" id="7Bn-rz-9ya">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -993,7 +1069,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="PillHands.png" translatesAutoresizingMaskIntoConstraints="NO" id="e7k-8I-UvG">
-                                <rect key="frame" x="0.0" y="124" width="600" height="406"/>
+                                <rect key="frame" x="0.0" y="165" width="600" height="365"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdG-tg-U0e" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
@@ -1016,8 +1092,9 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     <action selector="next:" destination="4s2-Gt-ovZ" eventType="touchUpInside" id="VjE-Z2-HDO"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="xuG-gW-rF9">
-                                <rect key="frame" x="20" y="63" width="560" height="62"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="xuG-gW-rF9">
+                                <rect key="frame" x="20" y="63" width="560" height="102"/>
+                                <string key="text">Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands. Attach your Sleep Pill to the side of your pillow closest to the edge of your bed.</string>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                 <color key="textColor" red="0.22352941179999999" green="0.22352941179999999" blue="0.22352941179999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -1184,7 +1261,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" image="sleepPill.png" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-sp-rMW">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sleepPill.png" translatesAutoresizingMaskIntoConstraints="NO" id="l6o-sp-rMW">
                                 <rect key="frame" x="0.0" y="154" width="600" height="376"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="130" id="fol-lJ-5R8"/>
@@ -1307,7 +1384,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Retry">
+                                <state key="normal" title="RETRY">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1675,7 +1752,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Everything is working well and looks great.  Now let's set your first Smart Alarm." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFC-on-mrs">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Everything looks great. Now let's set your first Smart Alarm." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFC-on-mrs">
                                         <rect key="frame" x="28" y="92" width="544" height="62"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="62" id="Zao-lG-zN2"/>
@@ -1685,9 +1762,9 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XpJ-Hr-RJB" customClass="HEMActionButton">
-                                        <rect key="frame" x="20" y="186" width="560" height="40"/>
+                                        <rect key="frame" x="20" y="186" width="560" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="JS1-gt-UdP"/>
+                                            <constraint firstAttribute="height" constant="50" id="JS1-gt-UdP"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -1790,31 +1867,17 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uO2-mX-vGj">
-                                <rect key="frame" x="20" y="160" width="560" height="270"/>
+                                <rect key="frame" x="20" y="160" width="560" height="271"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1t-tO-D6Q">
-                                        <rect key="frame" x="0.0" y="0.0" width="280" height="270"/>
-                                        <inset key="titleEdgeInsets" minX="0.0" minY="100" maxX="45" maxY="0.0"/>
-                                        <inset key="imageEdgeInsets" minX="65" minY="0.0" maxX="0.0" maxY="40"/>
-                                        <state key="normal" title="Female" image="female.png">
-                                            <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="setGenderAsFemale:" destination="gpF-55-MmK" eventType="touchUpInside" id="ssY-Pr-dA1"/>
-                                        </connections>
-                                    </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lwc-2a-yNE">
-                                        <rect key="frame" x="279" y="0.0" width="1" height="270"/>
+                                        <rect key="frame" x="279" y="0.0" width="1" height="271"/>
                                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="v6H-kN-Nfj"/>
                                         </constraints>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yLf-ik-ger">
-                                        <rect key="frame" x="280" y="0.0" width="280" height="270"/>
-                                        <inset key="titleEdgeInsets" minX="0.0" minY="100" maxX="45" maxY="0.0"/>
-                                        <inset key="imageEdgeInsets" minX="40" minY="0.0" maxX="0.0" maxY="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="280" height="271"/>
                                         <state key="normal" title="Male" image="male.png">
                                             <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -1823,20 +1886,30 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                             <action selector="setGenderAsMale:" destination="gpF-55-MmK" eventType="touchUpInside" id="xsI-Jy-dG5"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w1t-tO-D6Q">
+                                        <rect key="frame" x="280" y="0.0" width="280" height="270"/>
+                                        <state key="normal" title="Female" image="female.png">
+                                            <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="setGenderAsFemale:" destination="gpF-55-MmK" eventType="touchUpInside" id="ssY-Pr-dA1"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="yLf-ik-ger" secondAttribute="trailing" id="2SU-9z-EiG"/>
+                                    <constraint firstAttribute="centerX" secondItem="yLf-ik-ger" secondAttribute="trailing" id="2SU-9z-EiG"/>
                                     <constraint firstItem="lwc-2a-yNE" firstAttribute="top" secondItem="uO2-mX-vGj" secondAttribute="top" id="GJX-b9-T03"/>
                                     <constraint firstAttribute="bottom" secondItem="lwc-2a-yNE" secondAttribute="bottom" constant="-0.5" id="LGc-7x-Sfh"/>
                                     <constraint firstAttribute="centerX" secondItem="lwc-2a-yNE" secondAttribute="centerX" constant="0.5" id="LUT-yv-U1E"/>
-                                    <constraint firstItem="w1t-tO-D6Q" firstAttribute="leading" secondItem="uO2-mX-vGj" secondAttribute="leading" id="Lur-5c-Kcs"/>
+                                    <constraint firstItem="w1t-tO-D6Q" firstAttribute="leading" secondItem="uO2-mX-vGj" secondAttribute="centerX" id="Lur-5c-Kcs"/>
                                     <constraint firstAttribute="bottom" secondItem="w1t-tO-D6Q" secondAttribute="bottom" id="Pic-e6-RRg"/>
                                     <constraint firstItem="yLf-ik-ger" firstAttribute="top" secondItem="uO2-mX-vGj" secondAttribute="top" id="TBW-u5-A8P"/>
                                     <constraint firstAttribute="bottom" secondItem="yLf-ik-ger" secondAttribute="bottom" id="hmy-gx-v19"/>
                                     <constraint firstItem="w1t-tO-D6Q" firstAttribute="top" secondItem="uO2-mX-vGj" secondAttribute="top" id="tUj-GX-5Sg"/>
-                                    <constraint firstAttribute="centerX" secondItem="w1t-tO-D6Q" secondAttribute="trailing" id="vMy-Vt-rRD"/>
-                                    <constraint firstItem="yLf-ik-ger" firstAttribute="leading" secondItem="uO2-mX-vGj" secondAttribute="centerX" id="yEX-h3-nKB"/>
+                                    <constraint firstAttribute="trailing" secondItem="w1t-tO-D6Q" secondAttribute="trailing" id="vMy-Vt-rRD"/>
+                                    <constraint firstItem="yLf-ik-ger" firstAttribute="leading" secondItem="uO2-mX-vGj" secondAttribute="leading" id="yEX-h3-nKB"/>
                                 </constraints>
                             </view>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wdU-1v-eC1">
@@ -1860,7 +1933,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     <constraint firstAttribute="height" constant="50" id="g8t-6w-Xa2"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                <state key="normal" title="Next">
+                                <state key="normal" title="NEXT">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -1992,7 +2065,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     <constraint firstAttribute="height" constant="50" id="irU-2z-tSw"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                <state key="normal" title="Next">
+                                <state key="normal" title="NEXT">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2097,7 +2170,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     <constraint firstAttribute="height" constant="50" id="sSm-FW-Kol"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
-                                <state key="normal" title="Set Location">
+                                <state key="normal" title="SET LOCATION">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2154,7 +2227,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable enhanced audio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Cj-AM-Ri7">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enable Enhanced Audio" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Cj-AM-Ri7">
                                 <rect key="frame" x="20" y="24" width="560" height="34"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="34" id="iS7-kV-WDa"/>
@@ -2164,16 +2237,16 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cYf-D8-Nxr">
-                                <rect key="frame" x="20" y="68" width="560" height="102"/>
-                                <string key="text">With this enabled Sense can pick up snoring, sleep talking and noise disturbances.
+                                <rect key="frame" x="20" y="68" width="560" height="82"/>
+                                <string key="text">With Enhanced Audio enabled Sense can pick up snoring, sleep talking and noise disturbances.
 
-Without enhanced audio enabled, Sense only looks at background noise levels.</string>
+Otherwise, Sense only looks at background noise levels.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="enableAudio.png" translatesAutoresizingMaskIntoConstraints="NO" id="dFU-8H-O86">
-                                <rect key="frame" x="0.0" y="170" width="600" height="306"/>
+                                <rect key="frame" x="0.0" y="150" width="600" height="326"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhf-f1-wVH" customClass="HEMActionButton">
                                 <rect key="frame" x="20" y="530" width="560" height="50"/>
@@ -2457,7 +2530,7 @@ Without enhanced audio enabled, Sense only looks at background noise levels.</st
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn on bluetooth" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WSp-oq-I62">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Turn on Bluetooth" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WSp-oq-I62">
                                 <rect key="frame" x="20" y="24" width="560" height="26"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="26" id="Xxa-Zj-87F"/>
@@ -2727,7 +2800,7 @@ Have your partner visit senseapp.com on their device to download the Sense app a
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="Continue">
+                                <state key="normal" title="CONTINUE">
                                     <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2770,19 +2843,20 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="map.png" width="320" height="229"/>
         <image name="onboarding_bg_wide.png" width="461" height="588"/>
         <image name="pairOfPills.png" width="180" height="117"/>
-        <image name="pairingMode.png" width="260" height="93"/>
+        <image name="pairingMode.png" width="320" height="93"/>
         <image name="play.png" width="67" height="67"/>
         <image name="sampleNotification.png" width="320" height="185"/>
         <image name="sense.png" width="162" height="172"/>
         <image name="senseAppIcon.png" width="32" height="32"/>
         <image name="sensePlacement.png" width="320" height="235"/>
+        <image name="senseWhite.png" width="320" height="270"/>
         <image name="settingsAppIcon.png" width="32" height="32"/>
         <image name="shakePill.png" width="320" height="224"/>
         <image name="sleepPill.png" width="320" height="130"/>
         <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="JsS-bV-f7k"/>
+        <segue reference="u9Q-g4-qbd"/>
         <segue reference="ZOJ-Sh-Dzx"/>
         <segue reference="gUR-KW-V2G"/>
     </inferredMetricsTieBreakers>

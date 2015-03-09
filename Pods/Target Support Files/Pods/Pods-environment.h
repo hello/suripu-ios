@@ -111,8 +111,14 @@
 // Mixpanel
 #define COCOAPODS_POD_AVAILABLE_Mixpanel
 #define COCOAPODS_VERSION_MAJOR_Mixpanel 2
-#define COCOAPODS_VERSION_MINOR_Mixpanel 4
+#define COCOAPODS_VERSION_MINOR_Mixpanel 7
 #define COCOAPODS_VERSION_PATCH_Mixpanel 2
+
+// Mixpanel/MPCategoryHelpers
+#define COCOAPODS_POD_AVAILABLE_Mixpanel_MPCategoryHelpers
+#define COCOAPODS_VERSION_MAJOR_Mixpanel_MPCategoryHelpers 2
+#define COCOAPODS_VERSION_MINOR_Mixpanel_MPCategoryHelpers 7
+#define COCOAPODS_VERSION_PATCH_Mixpanel_MPCategoryHelpers 2
 
 // NSJSONSerialization-NSNullRemoval
 #define COCOAPODS_POD_AVAILABLE_NSJSONSerialization_NSNullRemoval
@@ -209,10 +215,4 @@
 #define COCOAPODS_VERSION_MAJOR_YapDatabase_standard 2
 #define COCOAPODS_VERSION_MINOR_YapDatabase_standard 4
 #define COCOAPODS_VERSION_PATCH_YapDatabase_standard 3
-
-// iCarousel
-#define COCOAPODS_POD_AVAILABLE_iCarousel
-#define COCOAPODS_VERSION_MAJOR_iCarousel 1
-#define COCOAPODS_VERSION_MINOR_iCarousel 7
-#define COCOAPODS_VERSION_PATCH_iCarousel 6
 

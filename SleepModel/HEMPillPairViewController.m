@@ -22,7 +22,7 @@
 #import "HEMSupportUtil.h"
 #import "HelloStyleKit.h"
 #import "HEMBluetoothUtils.h"
-#import "HEMDialogViewController.h"
+#import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
 
 static CGFloat const kHEMPillPairAnimDuration = 0.5f;
@@ -259,6 +259,10 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         SENSenseLEDState ledState = [self delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
         __weak typeof(self) weakSelf = self;
         [[self manager] setLED:ledState completion:^(id response, NSError *error) {
+            if (error != nil) {
+                [SENAnalytics track:kHEMAnalyticsEventWarning
+                         properties:@{kHEMAnalyticsEventPropMessage : @"failed to set LED on Sense"}];
+            }
             [weakSelf proceed];
         }];
 
@@ -272,17 +276,17 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)showSkipConfirmation {
-    HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
     [dialogVC setTitle:NSLocalizedString(@"pairing.pill.skip-confirmation-title", nil)];
     [dialogVC setMessage:NSLocalizedString(@"pairing.pill.skip-confirmation-message", nil)];
-    [dialogVC setOkButtonTitle:[NSLocalizedString(@"actions.skip-for-now", nil) uppercaseString]];
+    [dialogVC setDefaultButtonTitle:[NSLocalizedString(@"actions.skip-for-now", nil) uppercaseString]];
     [dialogVC setViewToShowThrough:[[self navigationController] view]];
     
     [dialogVC addAction:NSLocalizedString(@"actions.cancel", nil) primary:NO actionBlock:^{
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     
-    [dialogVC showFrom:self onDone:^{
+    [dialogVC showFrom:self onDefaultActionSelected:^{
         [self dismissViewControllerAnimated:YES completion:^{
             [SENAnalytics track:kHEMAnalyticsEventOnBSkip properties:@{
                 kHEMAnalyticsEventPropOnBScreen : kHEMAnalyticsEventPropScreenPillPairing

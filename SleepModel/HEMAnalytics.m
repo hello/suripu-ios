@@ -8,11 +8,13 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENAccount.h>
 #import <SenseKit/SENServiceAccount.h>
+#import <SenseKit/SENAnalytics.h>
 
 #import "HEMAnalytics.h"
 
 // general
 NSString* const kHEMAnalyticsEventError = @"Error";
+NSString* const kHEMAnalyticsEventWarning = @"Warning";
 NSString* const kHEMAnalyticsEventHelp = @"Help";
 NSString* const kHEMAnalyticsEventVideo = @"Play Video";
 NSString* const kHEMAnalyticsEventPropMessage = @"Message";
@@ -52,6 +54,7 @@ NSString* const kHEMAnalyticsEventPropPillPairing = @"pill_pairing";
 NSString* const kHEMAnalyticsEventPropPillPlacement = @"pill_placement";
 NSString* const kHEMAnalyticsEventPropPillAnother = @"pill_another";
 NSString* const kHEMAnalyticsEventOnBStart = @"Onboarding Start";
+NSString* const kHEMAnalyticsEventOnBAccount = @"Onboarding Account";
 NSString* const kHEMAnalyticsEventOnBBirthday = @"Onboarding Birthday";
 NSString* const kHEMAnalyticsEventOnBGender = @"Onboarding Gender";
 NSString* const kHEMAnalyticsEventOnBHeight = @"Onboarding Height";
@@ -111,8 +114,13 @@ NSString* const kHEMAnalyticsEventSignOut = @"Signed Out";
 
 // device management
 NSString* const kHEMAnalyticsEventDeviceAction = @"Device Action";
-NSString* const kHEMAnalyticsEventDeviceFactoryRestore = @"factory restore";
-NSString* const kHEMAnalyticsEventDevicePairingMode = @"enable pairing mode";
+NSString* const kHEMAnalyticsEventDeviceActionFactoryRestore = @"factory restore";
+NSString* const kHEMAnalyticsEventDeviceActionPairingMode = @"enable pairing mode";
+NSString* const kHEMAnalyticsEventDeviceActionUnpairSense = @"unpair Sense";
+NSString* const kHEMAnalyticsEventDeviceActionUnpairPill = @"unpair Sleep Pill";
+
+// timeline
+NSString* const HEMAnalyticsEventTimelineBarLongPress = @"Long press sleep duration bar";
 
 @implementation HEMAnalytics
 
@@ -140,17 +148,17 @@ NSString* const kHEMAnalyticsEventDevicePairingMode = @"enable pairing mode";
     SENAccount* account = [[SENServiceAccount sharedService] account];
     NSMutableDictionary* uProperties = [NSMutableDictionary dictionary]; // updates profile properties
     NSMutableDictionary* gProperties = [NSMutableDictionary dictionary]; // props sent for every event
-    NSString* accountId = nil;
+    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
     
     if (account != nil) {
         NSString* name = [account name] ?: @"";
-        accountId = [account accountId] ?: @"";
         uProperties[kHEMAnalyticsEventMpPropName] = name;
-        uProperties[kHEMAnalyticsEventPropAccount] = accountId;
+        
+        if (accountId) {
+            uProperties[kHEMAnalyticsEventPropAccount] = accountId;
+        }
         
         gProperties[kHEMAnalyticsEventPropName] = name;
-    } else {
-        accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
     }
     
     uProperties[kHEMAnalyticsEventPropPlatform] = kHEMAnalyticsEventPlatform;
@@ -158,7 +166,10 @@ NSString* const kHEMAnalyticsEventDevicePairingMode = @"enable pairing mode";
     // need to additionally set the account id as a separate property so that it
     // is shown in as a user property when viewing People in Mixpanel.  If not using
     // mixpanel, we can probably just remove it
-    [SENAnalytics setUserId:accountId properties:uProperties];
+    
+    if (accountId) {
+        [SENAnalytics setUserId:accountId properties:uProperties];
+    }
     [SENAnalytics setGlobalEventProperties:gProperties];
     
 }

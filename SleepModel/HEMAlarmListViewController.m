@@ -34,7 +34,6 @@
 static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
-static CGFloat const HEMAlarmListEmptyCellHeight = 208.f;
 static NSString* const HEMAlarmTimeFormat = @"%ld:%@";
 static NSString* const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 static NSUInteger const HEMAlarmListLimit = 8;
@@ -338,7 +337,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)updateTimeTextInCell:(HEMAlarmListCell *)cell fromAlarm:(SENAlarm *)alarm
 {
     cell.timeLabel.text = [self localizedTimeForAlarm:alarm];
-    if ([SENSettings timeFormat] == SENTimeFormat12Hour) {
+    if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
         NSString* meridiem = alarm.hour < 12 ? @"am" : @"pm";
         NSString* key = [NSString stringWithFormat:HEMAlarmListTimeKey, meridiem];
         cell.meridiemLabel.text = NSLocalizedString(key, nil);
@@ -369,7 +368,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     NSString* minuteText = time.minute < 10
         ? [NSString stringWithFormat:@"0%ld", (long)time.minute]
         : [NSString stringWithFormat:@"%ld", (long)time.minute];
-    if ([SENSettings timeFormat] == SENTimeFormat12Hour) {
+    if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
         if (time.hour > 12) {
             time.hour = (long)(time.hour - 12);
         } else if (time.hour == 0) {
@@ -397,11 +396,20 @@ static NSUInteger const HEMAlarmListLimit = 8;
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    static CGFloat const HEMAlarmListEmptyCellBaseHeight = 98.f;
+    static CGFloat const HEMAlarmListEmptyCellWidthInset = 32.f;
     UICollectionViewFlowLayout* layout = (id)collectionViewLayout;
     BOOL statusMessageShouldShow = [self isLoading] || [self hasLoadingFailed];
-    CGFloat height = (self.alarms.count > 0 || statusMessageShouldShow)
-        ? HEMAlarmListCellHeight : HEMAlarmListEmptyCellHeight;
-    return CGSizeMake(layout.itemSize.width, height);
+    CGFloat width = layout.itemSize.width;
+    if (self.alarms.count > 0 || statusMessageShouldShow)
+        return CGSizeMake(width, HEMAlarmListCellHeight);
+    CGFloat textWidth = width - HEMAlarmListEmptyCellWidthInset;
+    NSString* text = NSLocalizedString(@"alarms.no-alarm.message", nil);
+    CGSize textSize = [text boundingRectWithSize:CGSizeMake(textWidth, CGFLOAT_MAX)
+                                         options:(NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin)
+                                      attributes:@{NSFontAttributeName:[UIFont backViewTextFont]}
+                                         context:nil].size;
+    return CGSizeMake(width, ceilf(textSize.height) + HEMAlarmListEmptyCellBaseHeight);
 }
 
 #pragma mark - Clean Up

@@ -5,6 +5,7 @@
 
 #import "SENAPIClient.h"
 #import "SENAuthorizationService.h"
+#import "SENLocalPreferences.h"
 
 NSString* const SENAPIReachableNotification = @"SENAPIReachableNotification";
 NSString* const SENAPIUnreachableNotification = @"SENAPIUnreachableNotification";
@@ -89,7 +90,8 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
 
 + (NSURL*)baseURL
 {
-    NSString* cachedPath = [[NSUserDefaults standardUserDefaults] stringForKey:SENAPIClientBaseURLPathKey];
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    NSString* cachedPath = [preferences persistentPreferenceForKey:SENAPIClientBaseURLPathKey];
     NSString* baseURLPath = cachedPath.length > 0 ? cachedPath : SENDefaultBaseURLPath;
     return [NSURL URLWithString:baseURLPath];
 }
@@ -98,7 +100,7 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
 {
     [sessionManager.reachabilityManager stopMonitoring];
     sessionManager = nil;
-    [[NSUserDefaults standardUserDefaults] removeObjectForKey:SENAPIClientBaseURLPathKey];
+    [[SENLocalPreferences sharedPreferences] setPersistentPreference:nil forKey:SENAPIClientBaseURLPathKey];
 }
 
 + (BOOL)setBaseURLFromPath:(NSString*)baseURLPath
@@ -107,11 +109,9 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
     if (baseURL && baseURLPath.length > 0) {
         [sessionManager.reachabilityManager stopMonitoring];
         sessionManager = nil;
-        if (baseURLPath.length == 0) {
-            [[NSUserDefaults standardUserDefaults] removeObjectForKey:SENAPIClientBaseURLPathKey];
-        } else {
-            [[NSUserDefaults standardUserDefaults] setObject:baseURLPath forKey:SENAPIClientBaseURLPathKey];
-        }
+        // why would base url path have length of 0 here?
+        [[SENLocalPreferences sharedPreferences] setPersistentPreference:baseURLPath.length == 0 ? nil : baseURLPath
+                                                                  forKey:SENAPIClientBaseURLPathKey];
         return YES;
     }
     return NO;

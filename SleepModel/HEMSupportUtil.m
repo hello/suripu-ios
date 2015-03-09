@@ -7,12 +7,14 @@
 //
 #import <MessageUI/MessageUI.h>
 
+#import <sys/sysctl.h>
+
 #import <SVWebViewController/SVModalWebViewController.h>
 
 #import "UIFont+HEMStyle.h"
 
 #import "HEMSupportUtil.h"
-#import "HEMAlertController.h"
+#import "HEMAlertViewController.h"
 #import "HEMLogUtils.h"
 #import "HelloStyleKit.h"
 
@@ -23,24 +25,55 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
 
 @implementation HEMSupportUtil
 
++ (NSString*)deviceModel {
+    size_t size;
+    sysctlbyname("hw.machine", NULL, &size, NULL, 0);
+    char* result = malloc(size);
+    sysctlbyname("hw.machine", result, &size, NULL, 0);
+    
+    NSString* deviceModel = [NSString stringWithUTF8String:result];
+    free(result);
+    
+    return deviceModel;
+}
+
++ (NSString*)emailMessageBody {
+    UIDevice* device = [UIDevice currentDevice];
+    NSBundle* bundle = [NSBundle mainBundle];
+    
+    NSString* appName = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString* osVersion = [device systemVersion];
+    NSString* deviceModel = [self deviceModel]; // this is used over UIDevice as it gives the model number
+    
+    return [NSString stringWithFormat:@"\n\n\n\n\n-----------------\n%@ v%@\n%@\nOS %@",
+            appName, appVersion, deviceModel, osVersion];
+}
+
 + (void)sendEmailTo:(NSString*)email
         withSubject:(NSString*)subject
+          attachLog:(BOOL)attachLog
                from:(UIViewController*)controller
        mailDelegate:(id<MFMailComposeViewControllerDelegate>)delegate {
     
     if (![MFMailComposeViewController canSendMail]) {
-        [HEMAlertController presentInfoAlertWithTitle:NSLocalizedString(@"settings.support.fail.title", nil)
-                                              message:NSLocalizedString(@"settings.support.fail.message", nil)
-                                 presentingController:controller];
+        [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"settings.support.fail.title", nil)
+                                                message:NSLocalizedString(@"settings.support.fail.message", nil)
+                                             controller:controller];
         return;
     }
     
     MFMailComposeViewController* composer = [[MFMailComposeViewController alloc] init];
     [composer setToRecipients:@[ email ]];
     [composer setSubject:subject];
-    [composer addAttachmentData:[HEMLogUtils latestLogFileData]
-                       mimeType:HEMSupportLogFileType
-                       fileName:HEMSupportLogFileName];
+    [composer setMessageBody:[self emailMessageBody] isHTML:NO];
+    
+    if (attachLog) {
+        [composer addAttachmentData:[HEMLogUtils latestLogFileData]
+                           mimeType:HEMSupportLogFileType
+                           fileName:HEMSupportLogFileName];
+    }
+    
     composer.mailComposeDelegate = delegate;
     [controller presentViewController:composer animated:YES completion:NULL];
     
@@ -51,6 +84,7 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
     
     [self sendEmailTo:HEMSupportContactEmail
           withSubject:HEMSupportContactSubject
+            attachLog:YES
                  from:controller
          mailDelegate:delegate];
 }

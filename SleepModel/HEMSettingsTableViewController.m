@@ -1,6 +1,5 @@
 #import <MessageUI/MessageUI.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENSettings.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSMutableAttributedString+HEMFormat.h"
@@ -13,17 +12,31 @@
 #import "HEMSupportUtil.h"
 #import "HEMHelpFooterView.h"
 
-typedef NS_ENUM(NSUInteger, HEMSettingsTableViewRow) {
+static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
+
+typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRowIndex = 0,
     HEMSettingsDevicesRowIndex = 1,
     HEMSettingsNotificationRowIndex = 2,
     HEMSettingsUnitsTimeRowIndex = 3,
-    HEMSettingsTableViewRows = 4,
+    HEMSettingsAccountRows = 4,
+};
+
+typedef NS_ENUM(NSUInteger, HEMSettingsFeedbackRow) {
+    HEMSettingsFeedbackRowIndex = 0,
+    HEMSettingsFeedbackRows = 1
+};
+
+typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
+    HEMSettingsAccountSection = 0,
+    HEMSettingsFeedbackSection = 1,
+    HEMSettingsSections = 2
 };
 
 @interface HEMSettingsTableViewController () <
     UITableViewDataSource,
-    UITableViewDelegate
+    UITableViewDelegate,
+    MFMailComposeViewControllerDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UITableView* settingsTableView;
@@ -133,9 +146,38 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewRow) {
 
 #pragma mark - UITableViewDelegate
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
+    return HEMSettingsSections;
+}
+
 - (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return HEMSettingsTableViewRows;
+    switch (section) {
+        case HEMSettingsAccountSection:
+            return HEMSettingsAccountRows;
+        case HEMSettingsFeedbackSection:
+            return HEMSettingsFeedbackRows;
+            
+        default:
+            return 0;
+    }
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+    switch (section) {
+        case HEMSettingsFeedbackSection:
+            return HEMSettingsSectionHeaderHeight;
+            
+        case HEMSettingsAccountSection:
+        default:
+            return 0.0f;
+    }
+}
+
+- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView* headerView = [[UIView alloc] init];
+    [headerView setBackgroundColor:[UIColor clearColor]];
+    return headerView;
 }
 
 - (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
@@ -147,11 +189,15 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewRow) {
 - (void)tableView:(UITableView*)tableView willDisplayCell:(UITableViewCell*)cell forRowAtIndexPath:(NSIndexPath*)indexPath
 {
     HEMSettingsTableViewCell* settingsCell = (HEMSettingsTableViewCell*)cell;
-    [[settingsCell titleLabel] setText:[self titleForRowAtIndex:indexPath.row]];
+    [[settingsCell titleLabel] setText:[self titleForRowAtIndexPath:indexPath]];
     
-    if ([indexPath row] == 0) {
+    NSInteger numberOfRows = [tableView numberOfRowsInSection:[indexPath section]];
+    
+    if ([indexPath row] == 0 && [indexPath row] == numberOfRows - 1) {
+        [settingsCell showTopAndBottomCorners];
+    } else if ([indexPath row] == 0) {
         [settingsCell showTopCorners];
-    } else if ([indexPath row] == HEMSettingsTableViewRows - 1){
+    } else if ([indexPath row] == numberOfRows - 1){
         [settingsCell showBottomCorners];
     } else {
         [settingsCell showNoCorners];
@@ -162,10 +208,19 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewRow) {
 - (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
 {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    NSString* nextSegueId = [self segueIdentifierForRow:indexPath.row];
-
-    if (nextSegueId != nil) {
-        [self performSegueWithIdentifier:nextSegueId sender:self];
+    
+    if ([indexPath section] == HEMSettingsAccountSection) {
+        NSString* nextSegueId = [self segueIdentifierForRow:indexPath.row];
+        
+        if (nextSegueId != nil) {
+            [self performSegueWithIdentifier:nextSegueId sender:self];
+        }
+    } else if ([indexPath section] == HEMSettingsFeedbackSection) {
+        [HEMSupportUtil sendEmailTo:NSLocalizedString(@"feedback.email.address", nil)
+                        withSubject:NSLocalizedString(@"feedback.email.subject", nil)
+                          attachLog:NO
+                               from:self
+                       mailDelegate:self];
     }
 }
 
@@ -186,21 +241,50 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewRow) {
     }
 }
 
-- (NSString*)titleForRowAtIndex:(NSInteger)index {
-    switch (index) {
-        case HEMSettingsAccountRowIndex:
-            return NSLocalizedString(@"settings.account", nil);
-        case HEMSettingsDevicesRowIndex:
-            return NSLocalizedString(@"settings.devices", nil);
-        case HEMSettingsNotificationRowIndex:
-            return NSLocalizedString(@"settings.notifications", nil);
-        case HEMSettingsUnitsTimeRowIndex:
-            return NSLocalizedString(@"settings.units", nil);
+- (NSString*)titleForRowAtIndexPath:(NSIndexPath*)indexPath {
+    NSInteger section = [indexPath section];
+    NSInteger row = [indexPath row];
+    NSString* title = nil;
+    
+    if (section == HEMSettingsAccountSection) {
+        switch (row) {
+            case HEMSettingsAccountRowIndex:
+                title = NSLocalizedString(@"settings.account", nil);
+                break;
+            case HEMSettingsDevicesRowIndex:
+                title = NSLocalizedString(@"settings.devices", nil);
+                break;
+            case HEMSettingsNotificationRowIndex:
+                title = NSLocalizedString(@"settings.notifications", nil);
+                break;
+            case HEMSettingsUnitsTimeRowIndex:
+                title = NSLocalizedString(@"settings.units", nil);
+                break;
+            default:
+                break;
+        }
+    } else if (section == HEMSettingsFeedbackSection) {
+        switch (row) {
+            case HEMSettingsFeedbackRowIndex:
+                title = NSLocalizedString(@"settings.feedback", nil);
+                break;
+            default:
+                break;
+        }
     }
-    return nil;
+
+    return title;
 }
 
-#pragma mark - UITableViewDelegate
+#pragma mark - Mail Delegate
+
+- (void)mailComposeController:(MFMailComposeViewController*)controller
+          didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+
+#pragma mark - Cleanup
 
 - (void)dealloc {
     [_settingsTableView setDelegate:nil];

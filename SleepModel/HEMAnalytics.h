@@ -10,6 +10,7 @@
 
 // general
 extern NSString* const kHEMAnalyticsEventError;
+extern NSString* const kHEMAnalyticsEventWarning;
 extern NSString* const kHEMAnalyticsEventHelp;
 extern NSString* const kHEMAnalyticsEventVideo;
 extern NSString* const kHEMAnalyticsEventPropMessage;
@@ -46,6 +47,7 @@ extern NSString* const kHEMAnalyticsEventPropPillPairing;
 extern NSString* const kHEMAnalyticsEventPropPillPlacement;
 extern NSString* const kHEMAnalyticsEventPropPillAnother;
 extern NSString* const kHEMAnalyticsEventOnBStart;
+extern NSString* const kHEMAnalyticsEventOnBAccount;
 extern NSString* const kHEMAnalyticsEventOnBBirthday;
 extern NSString* const kHEMAnalyticsEventOnBGender;
 extern NSString* const kHEMAnalyticsEventOnBHeight;
@@ -105,8 +107,13 @@ extern NSString* const kHEMAnalyticsEventSignOut;
 
 // device management
 extern NSString* const kHEMAnalyticsEventDeviceAction;
-extern NSString* const kHEMAnalyticsEventDeviceFactoryRestore;
-extern NSString* const kHEMAnalyticsEventDevicePairingMode;
+extern NSString* const kHEMAnalyticsEventDeviceActionFactoryRestore;
+extern NSString* const kHEMAnalyticsEventDeviceActionPairingMode;
+extern NSString* const kHEMAnalyticsEventDeviceActionUnpairSense;
+extern NSString* const kHEMAnalyticsEventDeviceActionUnpairPill;
+
+// timeline
+extern NSString* const HEMAnalyticsEventTimelineBarLongPress;
 
 @interface HEMAnalytics : NSObject
 

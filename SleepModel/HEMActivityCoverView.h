@@ -8,9 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@class HEMActivityIndicatorView;
+
 @interface HEMActivityCoverView : UIView
 
 @property (nonatomic, strong, readonly) UILabel* activityLabel;
+@property (nonatomic, strong, readonly) HEMActivityIndicatorView* indicator;
 @property (nonatomic, assign, readonly, getter=isShowing) BOOL showing;
 
 /**
@@ -118,5 +121,16 @@
                        remove:(BOOL)remove
                    completion:(void(^)(void))completion;
 
+/**
+ * @method showSuccessMarkAnimated:completion
+ *
+ * @discussion
+ * Separately show the succes mark, optionally animate it in
+ *
+ * @param animate:    YES to animate it
+ * @param completion: block to invoke when this the mark is shown
+ */
+- (void)showSuccessMarkAnimated:(BOOL)animate
+                     completion:(void(^)(BOOL finished))completion;
 
 @end

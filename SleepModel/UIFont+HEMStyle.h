@@ -288,6 +288,12 @@
 + (UIFont*)onboardingRoomCheckSensorFont;
 
 /**
+ * Font for the sensor check view during onboarding's room check to be applied
+ * to strong / emphasized markdown in the message
+ */
++ (UIFont*)onboardingRoomCheckSensorBoldFont;
+
+/**
  * Font for the sensor value within the sensor check view during onboarding's
  * room check screen
  */

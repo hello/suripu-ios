@@ -10,7 +10,7 @@
 #import "HEMUpdateEmailViewController.h"
 #import "HEMSimpleLineTextField.h"
 #import "NSString+HEMUtils.h"
-#import "HEMDialogViewController.h"
+#import "HEMAlertViewController.h"
 
 @interface HEMUpdateEmailViewController() <UITextFieldDelegate>
 
@@ -48,12 +48,12 @@
 - (void)showError:(__unused NSError*)error {
     UIView* seeThroughView = [[self navigationController] view];
     
-    HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
     [dialogVC setTitle:NSLocalizedString(@"account.update.failed.title", nil)];
     [dialogVC setMessage:NSLocalizedString(@"account.update.error.email", nil)];
     [dialogVC setViewToShowThrough:seeThroughView];
     
-    [dialogVC showFrom:self onDone:^{
+    [dialogVC showFrom:self onDefaultActionSelected:^{
         // don't weak reference this since controller must remain until it has
         // been dismissed
         [self dismissViewControllerAnimated:YES completion:nil];

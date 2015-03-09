@@ -28,6 +28,7 @@
 +(NSString *)deviceReuseIdentifier;
 +(NSString *)warningReuseIdentifier;
 +(NSString *)actionsReuseIdentifier;
++(NSString *)resetReuseIdentifier;
 +(NSString *)choiceCellReuseIdentifier;
 +(NSString *)alarmListCellReuseIdentifier;
 +(NSString *)alarmListEmptyCellReuseIdentifier;
@@ -51,6 +52,7 @@
 +(NSString *)senseSegueIdentifier;
 +(NSString *)unitsSettingsSegueIdentifier;
 +(NSString *)updateEmailSegueIdentifier;
++(NSString *)updateNameSegueIdentifier;
 +(NSString *)updatePasswordSegueIdentifier;
 
 /** View Controllers */

@@ -20,12 +20,13 @@
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
 #import "HEMWarningCollectionViewCell.h"
+#import "HEMAlertViewController.h"
 #import "HEMDeviceDataSource.h"
 #import "HEMActionButton.h"
 
 static NSInteger const HEMPillActionsCellHeight = 124.0f;
 
-@interface HEMPillViewController() <UICollectionViewDataSource, UICollectionViewDelegate, UIAlertViewDelegate>
+@interface HEMPillViewController() <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
@@ -166,13 +167,20 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 - (void)replacePill:(id)sender {
     NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-title", nil);
     NSString* message = NSLocalizedString(@"settings.pill.dialog.unpair-message", nil);
-    UIAlertView* confirmDialog = [[UIAlertView alloc] initWithTitle:title
-                                                            message:message
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"actions.no", nil)
-                                                  otherButtonTitles:NSLocalizedString(@"actions.yes", nil), nil];
-    [confirmDialog setDelegate:self];
-    [confirmDialog show];
+    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
+    [dialogVC setTitle:title];
+    [dialogVC setMessage:message];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
+    [dialogVC setViewToShowThrough:self.view];
+    [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self unpair];
+        }];
+    }];
+
+    [dialogVC showFrom:self onDefaultActionSelected:^{
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
 }
 
 - (void)replaceBattery:(id)sender {
@@ -201,21 +209,9 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
             message = NSLocalizedString(@"settings.pill.dialog.unable-to-unpair", nil);
             break;
     }
-    
+
     NSString* title = NSLocalizedString(@"settings.pill.unpair-error-title", nil);
-    UIAlertView* messageDialog = [[UIAlertView alloc] initWithTitle:title
-                                                            message:message
-                                                           delegate:self
-                                                  cancelButtonTitle:NSLocalizedString(@"actions.ok", nil)
-                                                  otherButtonTitles:nil];
-    [messageDialog show];
-}
-
-
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex {
-    if (buttonIndex != [alertView cancelButtonIndex]) {
-        [self unpair];
-    }
+    [HEMAlertViewController showInfoDialogWithTitle:title message:message controller:self];
 }
 
 - (void)unpair {
@@ -226,6 +222,9 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     if ([[self delegate] respondsToSelector:@selector(willUnpairPillFrom:)]) {
         [[self delegate] willUnpairPillFrom:self];
     }
+    
+    [SENAnalytics track:kHEMAnalyticsEventDeviceAction
+             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionUnpairPill}];
     
     id<UIApplicationDelegate> delegate = (id)[UIApplication sharedApplication].delegate;
     UIViewController* root = (id)delegate.window.rootViewController;

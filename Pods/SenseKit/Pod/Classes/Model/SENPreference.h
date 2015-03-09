@@ -32,6 +32,34 @@ typedef NS_ENUM(NSUInteger, SENPreferenceType) {
     SENPreferenceTypePushConditions = 5,
 };
 
+/**
+ *  Possible values for a temperature format
+ */
+typedef NS_ENUM(NSUInteger, SENTemperatureFormat) {
+    /**
+     *  The sensible default for most of the world
+     */
+    SENTemperatureFormatCentigrade = 1,
+    /**
+     *  Something for the USA
+     */
+    SENTemperatureFormatFahrenheit = 2,
+};
+
+/**
+ *  Possible values for a clock format
+ */
+typedef NS_ENUM(NSUInteger, SENTimeFormat) {
+    /**
+     *  A 24-hour clock
+     */
+    SENTimeFormat24Hour = 1,
+    /**
+     *  12-hour clock, using meridien
+     */
+    SENTimeFormat12Hour = 2,
+};
+
 extern NSString* const SENPreferenceNameEnhancedAudio;
 extern NSString* const SENPreferenceNameTemp;
 extern NSString* const SENPreferenceNameTime;
@@ -48,6 +76,29 @@ extern NSString* const SENPreferenceNamePushConditions;
  * @return name: the name of the preference used by the api
  */
 + (NSString*)nameFromType:(SENPreferenceType)type;
+
+/**
+ *  The preferred clock format. If none specified, defaults to something
+ *  sensible based on the current locale.
+ *
+ *  @return the clock format to use
+ */
++ (SENTimeFormat)timeFormat;
+
+/**
+ *  The preferred temperature format. If none specified, defaults to
+ *  whatever the current locale probably prefers.
+ *
+ *  @return the temperature format to use
+ */
++ (SENTemperatureFormat)temperatureFormat;
+
+/**
+ *  Convenience method for obtaining the temperature format.
+ *
+ *  @return YES if the temperature format represents centigrade
+ */
++ (BOOL)useCentigrade;
 
 /**
  * @method initWithType:enable
@@ -83,5 +134,11 @@ extern NSString* const SENPreferenceNamePushConditions;
  * @see @method initWithDictionary:
  */
 - (NSDictionary*)dictionaryValue;
+
+/**
+ * Save the preference locally, using the type's name value as the key and the 
+ * value being YES or NO for enabled or not
+ */
+- (void)saveLocally;
 
 @end

@@ -10,11 +10,10 @@
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMClockPickerView.h"
-#import "HEMDialogViewController.h"
 #import "HEMRootViewController.h"
-
-NSString* const HEMMTimelineFeedbackSuccessNotification = @"HEMMTimelineFeedbackSuccessNotification";
-NSString* const HEMMTimelineFeedbackFailureNotification = @"HEMMTimelineFeedbackFailureNotification";
+#import "HEMAlertViewController.h"
+#import "HEMBounceModalTransition.h"
+#import "HelloStyleKit.h"
 
 @interface HEMTimelineFeedbackViewController ()
 @property (nonatomic, weak) IBOutlet HEMClockPickerView* clockView;
@@ -77,21 +76,43 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
     self.navigationItem.rightBarButtonItems = @[rightFixedSpace, rightItem];
 }
 
-- (IBAction)sendUpdatedTime:(id)sender
+- (IBAction)sendUpdatedTime:(UIBarButtonItem*)sender
 {
+    sender.enabled = NO;
+    UIBarButtonItem* leftItem = [self.navigationItem.leftBarButtonItems lastObject];
+    leftItem.enabled = NO;
+    NSArray* items = self.navigationItem.rightBarButtonItems;
+    UIActivityIndicatorView* indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    indicator.color = [HelloStyleKit tintColor];
+    UIBarButtonItem* indicatorItem = [[UIBarButtonItem alloc] initWithCustomView:indicator];
+    self.navigationItem.rightBarButtonItems = @[[items firstObject], indicatorItem];
+    [indicator startAnimating];
     [SENAPIFeedback updateSegment:self.segment
                          withHour:self.clockView.hour
                            minute:self.clockView.minute
                   forNightOfSleep:self.dateForNightOfSleep
                        completion:^(NSError *error) {
-                           NSString* name = error ? HEMMTimelineFeedbackFailureNotification : HEMMTimelineFeedbackSuccessNotification;
-                           [[NSNotificationCenter defaultCenter] postNotificationName:name object:error];
+                           [indicator stopAnimating];
+                           if (error) {
+                               self.navigationItem.rightBarButtonItems = items;
+                               leftItem.enabled = YES;
+                               sender.enabled = YES;
+                               [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
+                                                                       message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
+                                                                    controller:self];
+                           } else {
+                               HEMBounceModalTransition* delegate = [HEMBounceModalTransition new];
+                               delegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
+                               self.navigationController.transitioningDelegate = delegate;
+                               [self dismissViewControllerAnimated:YES completion:NULL];
+                           }
                        }];
-    [self dismissViewControllerAnimated:YES completion:NULL];
 }
 
 - (IBAction)cancelAndDismiss:(id)sender
 {
+    self.navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+    self.navigationController.transitioningDelegate = nil;
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 

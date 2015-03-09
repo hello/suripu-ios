@@ -2,7 +2,7 @@
 #import "SENAPIRoom.h"
 #import "SENSensor.h"
 #import "SENKeyedArchiver.h"
-#import "SENSettings.h"
+#import "SENPreference.h"
 
 NSString* const SENSensorUpdatedNotification = @"SENSensorUpdatedNotification";
 NSString* const SENSensorsUpdatedNotification = @"SENSensorsUpdatedNotification";
@@ -86,6 +86,12 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
             [[NSNotificationCenter defaultCenter] postNotificationName:SENSensorUpdateFailedNotification object:nil];
             return;
         }
+        NSArray* names = [data allKeys];
+        for (SENSensor* sensor in [self sensors]) {
+            if (![names containsObject:sensor.name]) {
+                [sensor delete];
+            }
+        }
         NSMutableArray* sensors = [[NSMutableArray alloc] initWithCapacity:[data count]];
         [data enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSDictionary* obj, BOOL *stop) {
             NSMutableDictionary* values = [obj mutableCopy];
@@ -132,7 +138,7 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
 
 + (double)temperatureValueInPreferredUnit:(double)value
 {
-    if ([SENSettings temperatureFormat] == SENTemperatureFormatFahrenheit) {
+    if ([SENPreference temperatureFormat] == SENTemperatureFormatFahrenheit) {
         return (value * 1.8) + 32;
     }
     return value;
@@ -257,6 +263,11 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
 {
     [SENKeyedArchiver setObject:self forKey:self.name inCollection:NSStringFromClass([SENSensor class])];
     [[NSNotificationCenter defaultCenter] postNotificationName:SENSensorUpdatedNotification object:self];
+}
+
+- (void)delete
+{
+    [SENKeyedArchiver removeAllObjectsForKey:self.name inCollection:NSStringFromClass([SENSensor class])];
 }
 
 #pragma mark formatting

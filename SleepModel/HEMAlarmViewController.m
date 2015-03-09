@@ -1,12 +1,11 @@
 
 #import <SenseKit/SENAlarm.h>
 #import <SenseKit/SENAPIAlarms.h>
-#import <SenseKit/SENSettings.h>
 #import <SenseKit/SENSound.h>
 #import <markdown_peg.h>
 
 #import "HEMAlarmViewController.h"
-#import "HEMAlertController.h"
+#import "HEMAlertViewController.h"
 #import "HEMAlarmSoundTableViewController.h"
 #import "HEMAlarmRepeatTableViewController.h"
 #import "HEMAlarmCache.h"
@@ -170,25 +169,29 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 {
     NSString* title = NSLocalizedString(@"alarm.delete.confirm.title", nil);
     NSString* message = NSLocalizedString(@"alarm.delete.confirm.message", nil);
-    HEMAlertControllerStyle style = HEMAlertControllerStyleAlert;
-    HEMAlertController* alertController = [[HEMAlertController alloc] initWithTitle:title
-                                                                            message:message
-                                                                              style:style
-                                                               presentingController:self];
-
+    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
+    [dialogVC setTitle:title];
+    [dialogVC setMessage:message];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
+    [dialogVC setViewToShowThrough:self.view];
     __weak typeof(self) weakSelf = self;
-    [alertController addActionWithText:NSLocalizedString(@"actions.no", nil) block:NULL];
-    [alertController addActionWithText:NSLocalizedString(@"actions.yes", nil) block:^{
+    [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf.alarm delete];
         [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
-            if (success)
-                [strongSelf dismiss:NO];
-            else
+            if (success) {
+                [strongSelf dismissViewControllerAnimated:YES completion:^{
+                    [strongSelf dismiss:NO];
+                }];
+            } else {
                 [strongSelf.alarm save];
+            }
         }];
     }];
-    [alertController show];
+
+    [dialogVC showFrom:self onDefaultActionSelected:^{
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
 }
 
 - (IBAction)updateAlarmState:(UISwitch*)sender

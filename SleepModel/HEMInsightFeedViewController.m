@@ -19,7 +19,8 @@
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMInsightViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HEMSinkModalTransitionDelegate.h"
+#import "HEMSinkModalTransition.h"
+#import "HEMBounceModalTransition.h"
 #import "HEMStyledNavigationViewController.h"
 
 @interface HEMInsightFeedViewController () <
@@ -27,7 +28,8 @@
 
 @property (weak,   nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) HEMInsightsFeedDataSource* dataSource;
-@property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> animTransitionDelegate;
+@property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> sinkTransition;
+@property (strong, nonatomic) id <UIViewControllerTransitioningDelegate> questionsTransition;
 
 @end
 
@@ -45,9 +47,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    HEMSinkModalTransitionDelegate* modalTransitionDelegate = [[HEMSinkModalTransitionDelegate alloc] init];
+    HEMSinkModalTransition* modalTransitionDelegate = [[HEMSinkModalTransition alloc] init];
     [modalTransitionDelegate setSinkView:[self view]];
-    [self setAnimTransitionDelegate:modalTransitionDelegate];
+    [self setSinkTransition:modalTransitionDelegate];
     
     [self setDataSource:[[HEMInsightsFeedDataSource alloc] initWithQuestionTarget:self
                                                              questionSkipSelector:@selector(skipQuestions:)
@@ -137,7 +139,7 @@
         = (HEMInsightViewController*)[HEMMainStoryboard instantiateSleepInsightViewController];
     [insightVC setInsight:insight];
     [insightVC setModalPresentationStyle:UIModalPresentationCustom];
-    [insightVC setTransitioningDelegate:[self animTransitionDelegate]];
+    [insightVC setTransitioningDelegate:[self sinkTransition]];
     [self presentViewController:insightVC animated:YES completion:nil];
 }
 
@@ -148,10 +150,16 @@
     
     HEMSleepQuestionsViewController* qVC
         = (HEMSleepQuestionsViewController*)[HEMMainStoryboard instantiateSleepQuestionsViewController];
-    [qVC setModalPresentationStyle:UIModalPresentationCustom];
-    [qVC setTransitioningDelegate:[self animTransitionDelegate]];
+    
+    if ([self questionsTransition] == nil) {
+        HEMBounceModalTransition* transition = [[HEMBounceModalTransition alloc] init];
+        [transition setMessage:NSLocalizedString(@"sleep.questions.end.message", nil)];
+        [self setQuestionsTransition:transition];
+    }
     
     HEMStyledNavigationViewController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:qVC];
+    [nav setModalPresentationStyle:UIModalPresentationCustom];
+    [nav setTransitioningDelegate:[self questionsTransition]];
     
     [self presentViewController:nav animated:YES completion:^{
         [self removeCellAtIndexPath:path];
@@ -177,4 +185,3 @@
 }
 
 @end
-

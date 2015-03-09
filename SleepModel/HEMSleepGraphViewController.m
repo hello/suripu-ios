@@ -19,7 +19,7 @@
 #import "HEMSleepEventButton.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
 #import "HEMTimelineFeedbackViewController.h"
-#import "HEMDialogViewController.h"
+#import "HEMAlertViewController.h"
 #import "HEMTutorial.h"
 #import "HEMPopupView.h"
 
@@ -115,14 +115,6 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
                                                  name:UIApplicationDidBecomeActiveNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reloadData)
-                                                 name:HEMMTimelineFeedbackSuccessNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(feedbackFailedToSend:)
-                                                 name:HEMMTimelineFeedbackFailureNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
@@ -303,7 +295,7 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     if (shouldExpand) {
         if (self.expandedIndexPath) {
             HEMSleepEventCollectionViewCell* oldCell = (id)[self.collectionView cellForItemAtIndexPath:self.expandedIndexPath];
-            oldCell.layer.zPosition = indexPath.row;
+            oldCell.layer.zPosition = indexPath.row + 1;
             if ([oldCell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
                 [oldCell useExpandedLayout:NO targetSize:CGSizeZero animated:YES];
             }
@@ -340,6 +332,7 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 {
     NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
     UINavigationController* navController = [HEMMainStoryboard instantiateTimelineFeedbackViewController];
+    navController.modalPresentationStyle = UIModalPresentationCustom;
     HEMTimelineFeedbackViewController* feedbackController = (id)navController.topViewController;
     feedbackController.dateForNightOfSleep = self.dateForNightOfSleep;
     feedbackController.segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
@@ -381,6 +374,7 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     static CGFloat const HEMPopupAnimationDistance = 8.f;
     static CGFloat const HEMPopupSpacingDistance = 20.f;
     if (sender.state == UIGestureRecognizerStateBegan) {
+        [SENAnalytics track:HEMAnalyticsEventTimelineBarLongPress];
         CGPoint cellLocation = [sender locationInView:self.collectionView];
         NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:cellLocation];
         UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
@@ -500,6 +494,23 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 {
     CGPoint offset = scrollView.contentOffset;
     CGFloat constant = offset.y > 0 ? HEMAlarmShortcutHiddenTrailing : HEMAlarmShortcutDefaultTrailing;
+    [self moveShortcutButtonWithOffset:constant];
+}
+
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+{
+    if (!decelerate) {
+        [self moveShortcutButtonWithOffset:HEMAlarmShortcutDefaultTrailing];
+    }
+}
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+{
+    [self moveShortcutButtonWithOffset:HEMAlarmShortcutDefaultTrailing];
+}
+
+- (void)moveShortcutButtonWithOffset:(CGFloat)constant
+{
     if (self.shortcutButtonTrailing.constant != constant) {
         if (constant > 0)
             self.shortcutButton.hidden = NO;

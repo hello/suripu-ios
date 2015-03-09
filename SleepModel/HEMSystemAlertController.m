@@ -20,6 +20,9 @@
 #import "HEMPillPairViewController.h"
 #import "HEMSensePairViewController.h"
 #import "HEMStyledNavigationViewController.h"
+#import "HEMRootViewController.h"
+#import "HEMDevicesViewController.h"
+#import "HEMMainStoryboard.h"
 
 @interface HEMSystemAlertController()<HEMPillPairDelegate, HEMSensePairingDelegate>
 
@@ -83,9 +86,17 @@
             *warningTitle = NSLocalizedString(@"alerts.device.no-sense.title", nil);
             *warningMessage = NSLocalizedString(@"alerts.device.no-sense.message", nil);
             break;
+        case SENServiceDeviceStateSenseNotSeen:
+            *warningTitle = NSLocalizedString(@"alerts.device.sense-last-seen.title", nil);
+            *warningMessage = NSLocalizedString(@"alerts.device.sense-last-seen.message", nil);
+            break;
         case SENServiceDeviceStatePillNotPaired:
             *warningTitle = NSLocalizedString(@"alerts.device.no-pill.title", nil);
             *warningMessage = NSLocalizedString(@"alerts.device.no-pill.message", nil);
+            break;
+        case SENServiceDeviceStatePillNotSeen:
+            *warningTitle = NSLocalizedString(@"alerts.device.pill-last-seen.title", nil);
+            *warningMessage = NSLocalizedString(@"alerts.device.pill-last-seen.message", nil);
             break;
         default:
             break;
@@ -136,8 +147,14 @@
         case SENServiceDeviceStateSenseNotPaired:
             [self showSensePairController];
             break;
+        case SENServiceDeviceStateSenseNotSeen:
+            [self showSenseHelp];
+            break;
         case SENServiceDeviceStatePillNotPaired:
             [self showPillPairController];
+            break;
+        case SENServiceDeviceStatePillNotSeen:
+            [self showPillHelp];
             break;
         default:
             break;
@@ -161,6 +178,11 @@
     [pairVC setDelegate:self];
     UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
     [[self viewController] presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)showSenseHelp {
+    NSString* senseHelpSlug = NSLocalizedString(@"help.url.slug.sense-not-seen", nil);
+    [HEMSupportUtil openHelpToPage:senseHelpSlug fromController:[self viewController]];
 }
 
 #pragma mark HEMSensePairDelegate
@@ -190,6 +212,11 @@
     [pairVC setDelegate:self];
     UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
     [[self viewController] presentViewController:nav animated:YES completion:nil];
+}
+
+- (void)showPillHelp {
+    NSString* pillHelpSlug = NSLocalizedString(@"help.url.slug.pill-not-seen", nil);
+    [HEMSupportUtil openHelpToPage:pillHelpSlug fromController:[self viewController]];
 }
 
 #pragma mark - HEMPillPairDelegate

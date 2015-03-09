@@ -31,7 +31,6 @@ static CGFloat const kHEMSleepViewAnimDuration = 0.2f;
 @property (weak, nonatomic) IBOutlet HEMActionButton *doneButton;
 
 @property (strong, nonatomic) SENQuestion* currentQuestion;
-@property (strong, nonatomic) CALayer* activityLayer;
 @property (strong, nonatomic) NSMutableSet* selectedAnswerPaths; // for multi selections only
 
 @end
@@ -99,29 +98,6 @@ static CGFloat const kHEMSleepViewAnimDuration = 0.2f;
     }
 }
 
-- (void)showActivityOn:(UIButton*)button {
-    if ([self activityLayer] != nil) [[self activityLayer] removeFromSuperlayer];
-    [self setActivityLayer:[HEMAnimationUtils animateActivityAround:button]];
-}
-
-- (void)stopActivity {
-    [[self activityLayer] removeFromSuperlayer];
-    [self setActivityLayer:nil];
-}
-
-- (void)animateOut {
-    [[self activityLayer] removeFromSuperlayer];
-    [UIView animateWithDuration:kHEMSleepViewAnimDuration
-                     animations:^{
-                         [[self questionLabel] setAlpha:0.0f];
-                         [[self skipButton] setAlpha:0.0f];
-                         [[self answerTableView] setAlpha:0.0f];
-                     }
-                     completion:^(BOOL finished) {
-                         [self dismiss];
-                     }];
-}
-
 #pragma mark - UITableViewDelegate
 
 - (void)tableView:(UITableView *)tableView
@@ -148,7 +124,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     if (![tableView allowsMultipleSelection]) {
         if (![[self dataSource] selectAnswerAtIndexPath:indexPath]) {
-            [self animateOut];
+            [self dismiss];
         } else {
             [self toNextQuestion];
         }
@@ -184,7 +160,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (IBAction)done:(id)sender {
     if (![[self dataSource] selectAnswersAtIndexPaths:[self selectedAnswerPaths]]) {
-        [self animateOut];
+        [self dismiss];
     } else {
         [self toNextQuestion];
     }

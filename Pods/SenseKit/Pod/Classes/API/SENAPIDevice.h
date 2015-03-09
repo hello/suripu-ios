@@ -61,4 +61,17 @@ typedef NS_ENUM(NSInteger, SENAPIDeviceError) {
  */
 + (void)getNumberOfAccountsForPairedSense:(NSString*)deviceId completion:(SENAPIDataBlock)completion;
 
+/**
+ * Remove associations to Sense represented by the SENDevice object.  The object
+ * must be of type SENDeviceTypeSense and contain a device id.
+ *
+ * The associations removed include any accounts currently paired to the specified
+ * sense, pills attached to those accounts, as well as any alarms attached to those 
+ * accounts.
+ *
+ * @param sense:      the device info object representing Sense
+ * @param completion: the block to invoke upon completion.
+ */
++ (void)removeAssociationsToSense:(SENDevice*)sense completion:(SENAPIDataBlock)completion;
+
 @end

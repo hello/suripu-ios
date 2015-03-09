@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 10/1/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
-#import <SenseKit/SENSettings.h>
+#import <SenseKit/SENPreference.h>
 #import <SenseKit/SENServiceAccount.h>
 
 #import "UIFont+HEMStyle.h"
@@ -77,7 +77,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         showTopCorners = YES;
         title = NSLocalizedString(@"settings.units.clock", nil);
         
-        if ([SENSettings timeFormat] == SENTimeFormat24Hour) {
+        if ([SENPreference timeFormat] == SENTimeFormat24Hour) {
             value = NSLocalizedString(@"settings.units.24-hour", nil);
         } else {
             value = NSLocalizedString(@"settings.units.12-hour", nil);
@@ -86,7 +86,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         showBotCorners = YES;
         title = NSLocalizedString(@"settings.units.temp", nil);
         
-        if ([SENSettings temperatureFormat] == SENTemperatureFormatCentigrade) {
+        if ([SENPreference temperatureFormat] == SENTemperatureFormatCentigrade) {
             value = NSLocalizedString(@"settings.units.celsius", nil);
         } else {
             value = NSLocalizedString(@"settings.units.fahrenheit", nil);
@@ -124,12 +124,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             title = NSLocalizedString(@"settings.units.clock", nil);
             choices = @[NSLocalizedString(@"settings.units.12-hour", nil),
                         NSLocalizedString(@"settings.units.24-hour", nil)];
-            selectedIndex = [SENSettings timeFormat] == SENTimeFormat12Hour ? 0 : 1;
+            selectedIndex = [SENPreference timeFormat] == SENTimeFormat12Hour ? 0 : 1;
         } else if (row == HEMUnitPreferenceTemp) {
             title = NSLocalizedString(@"settings.units.temp", nil);
             choices = @[NSLocalizedString(@"settings.units.celsius", nil),
                         NSLocalizedString(@"settings.units.fahrenheit", nil)];
-            selectedIndex = [SENSettings temperatureFormat] == SENTemperatureFormatCentigrade ? 0 : 1;
+            selectedIndex = [SENPreference temperatureFormat] == SENTemperatureFormatCentigrade ? 0 : 1;
         }
         
         [choiceVC setDelegate:self];
@@ -144,17 +144,13 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)didSelectChoiceAtIndex:(NSUInteger)index from:(HEMChoiceViewController *)controller {
     NSInteger row = [[self selectedPath] row];
     if (row == HEMUnitPreferenceTime) {
-        SENTimeFormat format
-            = index == 0
-            ? SENTimeFormat12Hour
-            : SENTimeFormat24Hour;
-        [SENSettings setTimeFormat:format];
+        SENPreference* preference = [[SENPreference alloc] initWithType:SENPreferenceTypeTime24
+                                                                 enable:index != 0];
+        [[SENServiceAccount sharedService] updatePreference:preference completion:nil];
     } else if (row == HEMUnitPreferenceTemp) {
-        SENTemperatureFormat format
-            = index == 0
-            ? SENTemperatureFormatCentigrade
-            : SENTemperatureFormatFahrenheit;
-        [SENSettings setTemperatureFormat:format];
+        SENPreference* preference = [[SENPreference alloc] initWithType:SENPreferenceTypeTempCelcius
+                                                                 enable:index == 0];
+        [[SENServiceAccount sharedService] updatePreference:preference completion:nil];
     }
     [[self unitTableView] reloadData];
 }

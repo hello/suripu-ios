@@ -9,11 +9,13 @@
 
 #import "UIFont+HEMStyle.h"
 #import "NSMutableAttributedString+HEMFormat.h"
+#import "NSAttributedString+HEMUtils.h"
 
 #import "HelloStyleKit.h"
 #import "HEMHelpFooterView.h"
 #import "HEMSupportUtil.h"
 
+static CGFloat const HEMHelpFooterTopMargin = 12.0f;
 static CGFloat const HEMHelpFooterMargin = 20.0f;
 static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
 
@@ -39,7 +41,7 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
 - (void)setupWithWidth:(CGFloat)width {
     CGRect textFrame = {
         HEMHelpFooterMargin,
-        0.0f,
+        HEMHelpFooterTopMargin,
         width-(HEMHelpFooterMargin*2),
         0.0f
     };
@@ -94,11 +96,7 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
     NSString* hyperLinkText = NSLocalizedString(@"settings.help.support", nil);
     NSString* url = NSLocalizedString(@"help.url.support", nil);
     NSMutableAttributedString* link = [[NSMutableAttributedString alloc] initWithString:hyperLinkText];
-    [link addAttributes:@{NSLinkAttributeName : url,
-                          NSFontAttributeName : [UIFont settingsHelpFont],
-                          NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor]}
-                  range:NSMakeRange(0, [hyperLinkText length])];
-    return link;
+    return [link hyperlink:url];
 }
 
 - (NSAttributedString*)helpEmail {
@@ -119,6 +117,7 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
     if ([lowerScheme hasPrefix:@"mailto"]) {
         [HEMSupportUtil sendEmailTo:[URL resourceSpecifier]
                         withSubject:NSLocalizedString(@"help.email.subject", nil)
+                          attachLog:YES
                                from:[self controller]
                        mailDelegate:self];
         [SENAnalytics track:kHEMAnalyticsEventEmailSupport];

@@ -6,7 +6,6 @@ platform :ios, '7.0'
 pod 'AttributedMarkdown', :git => 'https://github.com/dreamwieber/AttributedMarkdown.git',
                           :commit => '6bf420df77117f519af32a6393520ead4e7848c6'
 pod 'SORelativeDateTransformer', '~> 1.1.10'
-pod 'iCarousel', '~> 1.7.6'
 pod 'UIImageEffects', '~> 0.0.1'
 pod 'SpinKit', '~> 1.2.0'
 pod 'BEMSimpleLineGraph', :git => 'git@github.com:hello/BEMSimpleLineGraph.git',

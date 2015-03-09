@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <SenseKit/SENSensor.h>
 
+extern NSUInteger const HEMSleepScoreUnknown;
+extern NSUInteger const HEMSleepScoreLow;
+extern NSUInteger const HEMSleepScoreMedium;
+extern NSUInteger const HEMSleepScoreHigh;
+
 @interface UIColor (HEMStyle)
 
 /**

@@ -25,7 +25,8 @@
 #import "HEMHeightPickerViewController.h"
 #import "HEMWeightPickerViewController.h"
 #import "HEMGenderPickerViewController.h"
-#import "HEMDialogViewController.h"
+#import "HEMUpdateNameViewController.h"
+#import "HEMAlertViewController.h"
 
 static CGFloat const HEMAccountTableSectionHeaderHeight = 20.0f;
 static CGFloat const HEMAccountTableBaseRowHeight = 56.0f;
@@ -35,6 +36,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 44.0f;
     UITableViewDelegate,
     HEMUpdatePasswordDelegate,
     HEMUpdateEmailDelegate,
+    HEMUpdateNameDelegate,
     HEMBirthdatePickerDelegate,
     HEMGenderPickerDelegate,
     HEMWeightPickerDelegate,
@@ -145,6 +147,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIViewController* editController = nil;
     
     switch (type) {
+        case HEMSettingsAccountInfoTypeName:
+            segueId = [HEMMainStoryboard updateNameSegueIdentifier];
+            break;
         case HEMSettingsAccountInfoTypeEmail:
             segueId = [HEMMainStoryboard updateEmailSegueIdentifier];
             break;
@@ -188,17 +193,17 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     UIViewController* controller = (id)delegate.window.rootViewController;
     UIView* viewtoShowThrough = [controller view];
     
-    HEMDialogViewController* dialogVC = [[HEMDialogViewController alloc] init];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
     [dialogVC setTitle:NSLocalizedString(@"actions.sign-out", nil)];
     [dialogVC setMessage:NSLocalizedString(@"settings.sign-out.confirmation", nil)];
-    [dialogVC setOkButtonTitle:NSLocalizedString(@"actions.yes", nil)];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.yes", nil)];
     [dialogVC setViewToShowThrough:viewtoShowThrough];
     
     [dialogVC addAction:NSLocalizedString(@"actions.no", nil) primary:NO actionBlock:^{
         [self dismissViewControllerAnimated:YES completion:nil];
     }];
     
-    [dialogVC showFrom:self onDone:^{
+    [dialogVC showFrom:self onDefaultActionSelected:^{
         [self dismissViewControllerAnimated:YES completion:^{
             [SENAuthorizationService deauthorize];
             [self.navigationController popToRootViewControllerAnimated:YES];
@@ -236,6 +241,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             HEMUpdateEmailViewController* emailVC
                 = (HEMUpdateEmailViewController*)[nav topViewController];
             [emailVC setDelegate:self];
+        } else if ([[nav topViewController] isKindOfClass:[HEMUpdateNameViewController class]]) {
+            HEMUpdateNameViewController* controller = (id)[nav topViewController];
+            controller.delegate = self;
         }
     }
 }
@@ -310,6 +318,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark Email Update Delegate
 
 - (void)didUpdateEmail:(BOOL)updated from:(HEMUpdateEmailViewController *)controller {
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark Name Update Delegate
+
+- (void)didUpdateName:(BOOL)updated from:(HEMUpdateNameViewController *)controller {
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

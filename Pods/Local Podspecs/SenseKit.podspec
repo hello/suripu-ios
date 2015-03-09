@@ -11,10 +11,10 @@ Pod::Spec.new do |s|
   s.requires_arc = true
 
   s.resources = 'Pod/Assets/*.png'
-  
+
   s.subspec "Analytics" do |ss|
     ss.source_files = 'Pod/Classes/Analytics/*'
-    ss.dependency 'Mixpanel', '2.4.2'
+    ss.dependency 'Mixpanel', '2.7.2'
     ss.dependency 'CocoaLumberjack'
   end
 
@@ -36,7 +36,7 @@ Pod::Spec.new do |s|
     ss.source_files = 'Pod/Classes/Model/*'
     ss.dependency 'YapDatabase', '~> 2.4.3'
   end
-  
+
   s.subspec "Service" do |ss|
     ss.source_files = 'Pod/Classes/Service/*'
     ss.dependency 'CocoaLumberjack'

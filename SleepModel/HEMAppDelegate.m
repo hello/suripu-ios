@@ -15,22 +15,19 @@
 #import "HEMAudioCache.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HEMSettingsUtil.h"
+#import "HEMConfig.h"
 
 @implementation HEMAppDelegate
 
-static NSString* const HEMAppAPIProdPath = @"https://api.hello.is/v1";
-static NSString* const HEMAppAPIProdClientID = @"cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
-static NSString* const HEMAppAPIDevPath  = @"https://dev-api.hello.is/v1";
-static NSString* const HEMAppAPIDevClientID = @"iphone_pill";
 static NSString* const HEMAppForceLogout = @"HEMAppForceLogout";
 static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 
 - (BOOL)application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
 {
-#if !BETA
-    [application setApplicationSupportsShakeToEdit:NO];
-#endif
+    
+    if (![HEMConfig booleanForConfig:HEMConfAllowDebugOptions]) {
+        [application setApplicationSupportsShakeToEdit:NO];
+    }
 
     [self configureAPI];
     [HEMLogUtils enableLogger];
@@ -40,11 +37,10 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
                                           fetchCompletionHandler:NULL];
 
     [self deauthorizeIfNeeded];
-    [self configureSettingsDefaults];
     [self configureAnalytics];
     [self configureAppearance];
     [self registerForNotifications];
-    [self syncData];
+    [self syncHealthKitData];
     [self createAndShowWindow];
     
     return YES;
@@ -94,57 +90,52 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     }
 }
 
-- (void)syncData {
+- (void)syncHealthKitData {
     if ([SENAuthorizationService isAuthorized]) {
         [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
             [HEMAnalytics trackUserSession]; // update user session data
         }];
-        [[SENServiceHealthKit sharedService] setEnableWrite:[HEMSettingsUtil isHealthKitEnabled]];
     }
 }
 
 - (void)configureAPI {
-    NSString* path = nil;
-    NSString* clientID = nil;
-#if DEBUG
-    path = HEMAppAPIDevPath;
-    clientID = HEMAppAPIDevClientID;
-#else
-    path = HEMAppAPIProdPath;
-    clientID = HEMAppAPIProdClientID;
-#endif
+    NSString* path = [HEMConfig stringForConfig:HEMConfAPIURL];
+    NSString* clientID = [HEMConfig stringForConfig:HEMConfClientId];
     [SENAPIClient setBaseURLFromPath:path];
     [SENAuthorizationService setClientAppID:clientID];
+    [SENAuthorizationService authorizeRequestsFromKeychain];
 }
 
 - (void)configureAnalytics {
-    NSString* analyticsToken = nil;
-#if !DEBUG
-    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
-    [Crashlytics startWithAPIKey:@"f464ccd280d3e5730dcdaa9b64d1d108694ee9a9"];
-    if (accountId != nil) [Crashlytics setUserIdentifier:accountId];
-    analyticsToken = @"43c61cc553f0ccf2b3e1f73bc30bbfb4";
-#else
-    analyticsToken = @"d62a169fe4856dea26f3a322750613a8";
-#endif
-    [SENAuthorizationService authorizeRequestsFromKeychain];
+    NSString* analyticsToken = [HEMConfig stringForConfig:HEMConfAnalyticsToken];
+    NSString* crashylyticsToken = [HEMConfig stringForConfig:HEMConfCrashlyticsToken];
+    
+    if ([crashylyticsToken length] > 0) {
+        DDLogVerbose(@"crashlytics enabled");
+        [Crashlytics startWithAPIKey:crashylyticsToken];
+        NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
+        if (accountId != nil) [Crashlytics setUserIdentifier:accountId];
+    }
+    
+    if ([analyticsToken length] > 0) {
+        DDLogVerbose(@"analytics enabled");
+        [SENAnalytics configure:SENAnalyticsProviderNameMixpanel
+                           with:@{kSENAnalyticsProviderToken : analyticsToken}];
+        [HEMAnalytics trackUserSession];
+    }
+    
     [SENAnalytics configure:SENAnalyticsProviderNameLogger with:nil];
-    [SENAnalytics configure:SENAnalyticsProviderNameMixpanel
-                       with:@{kSENAnalyticsProviderToken : analyticsToken}];
-    [HEMAnalytics trackUserSession];
 }
 
 - (BOOL)deauthorizeIfNeeded {
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    if ([defaults boolForKey:HEMAppForceLogout]) {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    if ([[preferences persistentPreferenceForKey:HEMAppForceLogout] boolValue]) {
         [SENAuthorizationService deauthorize];
-        [defaults removeObjectForKey:HEMAppForceLogout];
-        [defaults synchronize];
+        [preferences setPersistentPreference:nil forKey:HEMAppForceLogout];
         return YES;
-    } else if (![defaults stringForKey:HEMAppFirstLaunch]) {
+    } else if (![preferences persistentPreferenceForKey:HEMAppFirstLaunch]) {
         [SENAuthorizationService deauthorize];
-        [defaults setObject:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
-        [defaults synchronize];
+        [preferences setPersistentPreference:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
         return YES;
     }
     return NO;
@@ -181,17 +172,8 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 {
     SENClearModel();
     [HEMAudioCache clearCache];
-    NSUserDefaults* defaults = [NSUserDefaults standardUserDefaults];
-    [defaults removePersistentDomainForName:[[NSBundle mainBundle] bundleIdentifier]];
-    [defaults setObject:HEMAppFirstLaunch forKey:HEMAppFirstLaunch];
-    [defaults synchronize];
+    [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
     [HEMOnboardingUtils resetOnboardingCheckpoint];
-    [HEMOnboardingUtils removeLastConfiguredSSID];
-    
-    // FIXME (jimmy): to ensure we are not introducing more issues, we will simply
-    // add the path back in, after it was removed above.
-    [self configureAPI];
-    
     [self resume:YES];
 }
 
@@ -229,15 +211,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
                selector:@selector(resetAndShowOnboarding)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
-}
-
-- (void)configureSettingsDefaults
-{
-    NSUserDefaults* userDefaults = [[NSUserDefaults alloc] initWithSuiteName:SENSettingsAppGroup];
-    NSDictionary* settingsDefaults = [SENSettings defaults];
-    // combine any other default settings here for the Settings.bundle
-    [userDefaults registerDefaults:settingsDefaults];
-    [userDefaults synchronize];
 }
 
 - (void)openSettingsDrawer {

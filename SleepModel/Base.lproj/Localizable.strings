@@ -1,7 +1,5 @@
 
 "current-conditions.title" = "Sense";
-"confidentiality-warning.format" = "Confidential - Hello Inc. (%@)";
-
 "empty-data" = "--";
 "question-mark" = "?";
 
@@ -12,7 +10,6 @@
 
 // onboarding
 "sign-up.activity.message" = "Creating your account";
-"sign-up.title" = "Sign up";
 "sign-up.failed.title" = "Sign up failed";
 "sign-up.error.password-length" = "You must provide a password.";
 "sign-up.error.name-length" = "You must provide a name.";
@@ -22,7 +19,6 @@
 "sign-up.error.password-too-short" = "Your password is too short. Passwords must be at least six characters.";
 "sign-up.error.password-insecure" = "Your password is not secure enough.";
 "sign-up.error.name-too-short" = "Your name is too short.";
-"sign-up.error.name-too-long" = "Your name is too long.";
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "There was a problem setting your birthday.";
 "onboarding.before-sleep.1.title" = "Sense Colors";
@@ -35,11 +31,9 @@
 "onboarding.before-sleep.3.description" = "Sense glows yellow when something in your bedroom is not quite right. Check the Sense app for details.";
 "onboarding.before-sleep.4.description" = "Sense glows orange when the conditions in your bedroom would prevent restful sleep. Check the Sense app for details.";
 "onboarding.before-sleep.5.description" = "Just wave your hand over Sense and instantly you'll know about the conditions in your bedroom. Go ahead, give it a try now.";
-"onboarding.title.before-sleep" = "Before you sleep";
 "onboarding.end-message.well-done" = "You're all set up";
 "onboarding.end-message.sleep" = "Now all you need to\ndo is sleep";
 "onboarding.room-check.checking-sensor.format" = "Checking %@";
-"onboarding.room-check.ideal-condition-format" = "The %@ in your room is just right.";
 "onboarding.room-check.failed" = "Unsuccessful";
 "onboarding.room-check.failed-message" = "One or more sensors is not ready yet. Don't worry, data will show soon. Set up a Smart Alarm first.";
 "onboarding.room-check.intro.temperature" = "Falling asleep, and sleep itself, can be affected if your room is too hot or too cold.";
@@ -70,11 +64,13 @@
 "help.url.slug.sense-not-connected" = "troubleshoot/cannot-connect-sense-ble";
 "help.url.slug.sense-no-internet" = "troubleshoot/sense-cannot-connect-internet";
 
+// feedback
+"feedback.email.address" = "feedback@hello.is";
+"feedback.email.subject" = "Feedback for Sense";
+
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
 "video.url.intro" = "http://player.vimeo.com/external/101139949.hd.mp4?s=28ac378e29847b77e9fb7431f05d2772";
-"video.error.title" = "Video Failed";
-"video.error.playback-failed" = "A playback error was encountered while attempting to play the video.";
 
 // user information
 "user.info.accessibility.birthdate-title" = "Select the month, day, and year of your birthday";
@@ -83,7 +79,6 @@
 "pairing.activity.checking-wifi" = "Checking WiFi";
 "pairing.activity.pairing-sense" = "Pairing with Sense";
 "pairing.activity.scanning-sense" = "Looking for Sense";
-"pairing.activity.connecting-sense-ble" = "Connecting to Sense over Bluetooth";
 "pairing.activity.bluetooth-not-on" = "Bluetooth is required to pair your Sleep Pill. Make sure it's on and try again.";
 "pairing.activity.looking-for-pill" = "Looking for Sleep Pill";
 "pairing.activity.connecting-sense" = "Connecting to Sense";
@@ -101,9 +96,7 @@
 "pairing.pill.error.title" = "Sleep Pill Pairing Failed";
 "pairing.error.pill-already-paired" = "This Sleep Pill is already paired with another account.";
 "pairing.error.fail-to-load-paired-info" = "Could not load paired Sense information.";
-"pairing.error.sense-not-found" = "Could not connect to Sense to pair your Sleep Pill.";
 "pairing.error.pill-pairing-failed" = "Sense could not pair your Sleep Pill. Please try again.";
-"pairing.check.add-second-pill-subtitle" = "Are you adding a second Sleep Pill to a Sense that has been set up previously, or are you setting up Sense for the first time?";
 "pairing.pill.skip-confirmation-title" = "Are you sure?";
 "pairing.pill.skip-confirmation-message" = "Sense is not designed to work without a Sleep Pill. You will not be able to track your sleep, or set Smart Alarms. If you're having trouble, you can skip for now, and pair a Sleep Pill later.";
 
@@ -138,7 +131,6 @@
 "location.error.weak-signal" = "We were unable to obtain your location. Try moving to a different location and try again.";
 
 // setting up second pill
-"setup.second-pill.subtitle" = "If you're using Sense with a partner, they can create an account and set up their own Sleep Pill at this time. If your partner is not nearby, they can always do this later.";
 "setup.second-pill.error.title" = "Failed to enable Pairing Mode";
 "setup.second-pill.error.failed-to-enable-pairing-mode" = "Could not enable Pairing Mode on Sense.";
 "setup.second-pill.error.sense-full" = "Sense cannot pair with any more devices.";
@@ -150,6 +142,7 @@
 "settings.notifications" = "Notifications";
 "settings.account" = "My account";
 "settings.units" = "Units and time";
+"settings.feedback" = "Feedback";
 "settings.units.24-hour" = "24 hour";
 "settings.units.12-hour" = "12 hour";
 "settings.units.celsius" = "Celsius";
@@ -166,11 +159,12 @@
 "settings.account.push-conditions" = "Poor conditions";
 "settings.account.push-score" = "Sleep Score";
 "settings.wifi.other" = "Other...";
+"settings.account.name" = "Name";
 "settings.account.email" = "Email";
 "settings.account.password" = "Password";
 "settings.help.format" = "If you're having trouble, visit %@ or contact us at %@";
 "settings.help.support" = "Support";
-"settings.enhanced-audio.desc" = "Enhanced audio allows Sense to pick up snoring, sleep talking and other noise disturbances.";
+"settings.enhanced-audio.desc" = "Enhanced Audio allows Sense to pick up snoring, sleep talking and other noise disturbances.";
 "settings.sign-out.confirmation" = "Are you sure you want to sign out of your account?";
 
 // support
@@ -193,15 +187,11 @@
 "color.white" = "White";
 
 // device management
-"settings.title" = "Settings";
 "settings.device.sense" = "Sense";
 "settings.device.pill" = "Sleep Pill";
-"settings.device.status.low-battery" = "Battery low";
-"settings.device.status.not-paired" = "Not paired";
 "settings.device.firmware-version" = "Firmware";
 "settings.device.battery" = "Battery level";
 "settings.device.last-seen" = "Last seen";
-"settings.device.never-seen" = "Paired, but never seen since";
 "settings.device.color" = "Color";
 "settings.device.battery.good" = "Good";
 "settings.device.battery.low" = "Low";
@@ -213,41 +203,35 @@
 "settings.device.warning.last-seen-generic" = "a while ago";
 "settings.device.error.title" = "Failed to load";
 "settings.device.error.cannot-load-info" = "Unable to load your information.  Make sure you are connected to the internet then return to this screen.";
+"settings.device.footer.format" = "Setting up a %@ for your partner?";
+"settings.device.footer.second-pill" = "second Sleep Pill";
 "settings.pill.dialog.unpair-title" = "Unpair Sleep Pill?";
-"settings.pill.dialog.unpair-message" = "Are you sure you want to unpair your Sleep Pill? You will no longer be able to track your sleep until you pair another Sleep Pill.";
-"settings.pill.dialog.unpair-no-sense-message" = "To unpair your Sleep Pill, you must be within Bluetooth range of Sense.";
+"settings.pill.dialog.unpair-message" = "Are you sure you want to unpair your Sleep Pill? You should only do this if you have another Sleep Pill that you would like to replace it with. You will no longer be able to track your sleep until you pair another Sleep Pill. If you're having trouble, visit http://guide.hello.is for support.";
 "settings.pill.dialog.no-paired-sense-message" = "You don't currently have a paired Sense, which is required to unpair your Sleep Pill.";
 "settings.pill.dialog.unable-to-unpair-from-sense" = "Unable to unpair from Sense. Make sure Sense is plugged in, nearby, and try again.";
 "settings.pill.dialog.unable-to-unlink-from-account" = "Unable to unpair your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
 "settings.pill.unpair-no-sense-found" = "Could not connect with Sense. Sense must be nearby and powered on to unpair your Sleep Pill.";
 "settings.pill.dialog.unable-to-unpair" = "Unable to unpair your Sleep Pill.";
-"settings.pill.need-pill" = "I need a Sleep Pill";
 "settings.pill.unpair-error-title" = "Unpairing failed";
 "settings.pill.unpairing-message" = "Unpairing your Sleep Pill";
 "settings.pill.unpaired-message" = "Your Sleep Pill has been unpaired.";
 "settings.pill.warning.last-seen-format" = "Your Sleep Pill was last seen %@. Tap below to troubleshoot.";
+"settings.sense.factory-reset.footer" = "Factory Reset will reset Sense back to its factory settings, remove Sense from all accounts linked to it, and unlink your Sleep Pill from your account.";
 "settings.sense.not-found-title" = "Sense not found";
-"settings.sense.signal" = "Signal";
-"settings.sense.signal.weak" = "Weak";
-"settings.sense.signal.good" = "Good";
-"settings.sense.signal.strong" = "Strong";
 "settings.sense.wifi" = "WiFi";
 "settings.sense.unpairing-message" = "Removing Sense";
 "settings.sense.unpair.title" = "Remove Sense";
-"settings.sense.unpair.confirmation" = "Are you sure you want to remove Sense from your account?";
+"settings.sense.unpair.confirmation" = "Are you sure you want to remove Sense from your account?  You should only do this if you have another Sense that you would like to replace it with. If you're having trouble, visit http://guide.hello.is for support.";
 "settings.sense.unpair.failed-message" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";
-"settings.sense.getting-wifi-configured" = "Checking WiFi configured";
 "settings.sense.dialog.pair-failed-title" = "Action failed";
 "settings.sense.dialog.pair-failed-message" = "Unable to put Sense into pairing mode. Make sure Sense is plugged in and nearby and try again.";
 "settings.sense.no-sense-message" = "Make sure Sense is plugged in and nearby and try again.";
 "settings.sense.dialog.enable-pair-mode-title" = "Put Sense into Pairing Mode";
 "settings.sense.dialog.enable-pair-mode-message" = "Are you sure you want to put Sense into pairing mode?";
-"settings.sense.scanning-message" = "Connecting to Sense over Bluetooth...";
 "settings.sense.warning.last-seen-format" = "Sense was last seen %@. Tap below to troubleshoot.";
 "settings.sense.warning.wifi-format" = "Sense %@. Tap below to edit your WiFi credentials.";
 "settings.sense.warning.cannont-connect-wifi" = "cannot connect to WiFi";
 "settings.sense.warning.not-connected-sense" = "Could not connect with Sense over Bluetooth. Make sure Sense is plugged in and nearby. If you're still having trouble, tap below to troubleshoot.\n\nSome actions below are disabled.";
-"settings.device.info-failed-to-load" = "Failed to load information";
 "settings.sense.enabling-pairing-mode" = "Enabling pairing mode";
 "settings.device.restoring-factory-settings" = "Restoring to Factory Settings";
 "settings.device.dialog.factory-restore-title" = "Restore Sense to Factory Settings?";
@@ -256,31 +240,17 @@
 "settings.factory-restore.error.unlink-pill" = "Unable to remove your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
 "settings.factory-restore.error.unlink-sense" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";
 
-// insights
+// Insights / Questions
 "insights.title" = "Insights";
-"sleep.insight.summary.no-data-message" = "As Sense learns from your sleep habits, we will let you know how to improve.";
 "sleep.insight.info.title.no-text" = "Insight failed to load";
 "sleep.insight.info.message.no-text" = "Unable to load Insight information at the moment. Please make sure your device has an internet connection and try again.";
+"sleep.questions.end.message" = "Thank you";
 
 // authentication/sign in
-"authorization.title" = "Sign in";
 "authorization.sign-in.activity.message" = "Signing in...";
 "authorization.forgot-pass" = "Forgot password";
-"authorization.no-token" = "No access token present";
-"authorization.set-url.button" = "Set URL";
-"authorization.sign-in.button" = "Sign in";
-"authorization.set-url.title" = "Update API URL";
-"authorization.set-url.message" = "Set the location of the sleep tracking API";
-"authorization.set-url.action.save" = "Save";
-"authorization.set-url.action.reset" = "Reset to default";
-"authorization.set-url.action.cancel" = "Cancel";
-"authorization.failed-url.title" = "URL not recognized";
-"authorization.failed-url.message" = "The system could not understand the provided URL. Please try again.";
-"authorization.sign-in.loading-message" = "Signing in";
 "authorization.sign-in.failed.title" = "Sign in failed";
 "authorization.sign-in.failed.message" = "The email and password you entered were not recognized. Please try again.";
-"authorization.sign-in.device.error.message" = "We were unable to determine the state of your account at this time.\n\nPlease try again.";
-"authorization.sign-in.device.error.title" = "Account check failed";
 
 // alarm list
 "alarms.title" = "Alarms";
@@ -294,24 +264,15 @@
 "alarms.no-data" = "Alarms are currently unavailable.";
 
 // alarm settings
-"alarm.time-range.format" = "Wake up between *%@* and *%@*";
-"alarm.update.instructions" = "*Drag* to adjust alarm time.";
-"alarm.enabled.text" = "Enabled";
 "alarm.sound.title" = "Sound";
-"alarm.title" = "Alarm";
-"alarm.state.enabled" = "Enabled";
-"alarm.state.disabled" = "Disabled";
 "alarm.repeat.title" = "Repeat";
 "alarm.repeat.days.none" = "Not repeating";
 "alarm.repeat.days.all" = "Everyday";
 "alarm.smart.title" = "Smart Alarm";
 "alarm.delete.title" = "Delete alarm";
 "alarm.save-error.title" = "Alarm could not be saved";
-"alarm.load-error.title" = "Alarms could not be loaded";
 "alarm.delete.confirm.title" = "Delete alarm";
 "alarm.delete.confirm.message" = "Are you sure you want to delete this alarm?";
-"alarm.time-explanation.title" = "Why is Smart Alarm time flexible?";
-"alarm.time-explanation.message" = "Sense monitors your sleep depth and determines the best time to start the alarm in the minutes before you need to awaken.";
 "alarm.clock.divider" = ":";
 "alarm.sound.no-selection" = "Default";
 
@@ -338,26 +299,20 @@
 
 "alarm.sounds.error.title" = "Could not load sounds";
 "alarm.sounds.error.message" = "Available alarm sounds could not be loaded at this time. Tap 'Refresh' to try again.";
-"alarm.sounds.error.no-selection.message" = "Please select a sound for this alarm.";
 
 // background noise
-"noise.state.enabled" = "Enabled";
-"noise.state.disabled" = "Disabled";
+"noise.sound-name.none" = "None";
 
 // sensors
 "sensor.temperature" = "Temperature";
 "sensor.humidity" = "Humidity";
 "sensor.particulates" = "Air quality index";
-"sensor.time-range.day" = "Past 24";
-"sensor.time-range.week" = "This week";
-"sensor.comfort-zone.title" = "Comfort Zone";
-"sensor.data-unavailable" = "Sensor data is unavailable.";
-"sensor.value.none" = "No data";
 "sensor.sound" = "Sound";
 "sensor.light" = "Light";
+"sensor.data-unavailable" = "Sensor data is unavailable.";
+"sensor.value.none" = "No data";
 "sensor.graph-button.last-day.title" = "Last day";
 "sensor.graph-button.past-week.title" = "Past week";
-"graph-data.unavailable.short" = "No data";
 "graph-data.unavailable" = "No data available";
 
 // measurements
@@ -392,6 +347,7 @@
 "sleep-event.verify.title" = "Adjust Time";
 "sleep-event.feedback.failed.title" = "Unable to send feedback";
 "sleep-event.feedback.failed.message" = "Please try again later";
+"sleep-event.feedback.success.message" = "Thank you";
 
 // sleep events
 "sleep-event.type.wake_up.name" = "Woke up";
@@ -468,15 +424,12 @@
 
 // actions
 "actions.cancel" = "Cancel";
-"actions.save" = "Save";
 "actions.ok" = "Okay";
 "actions.sign-out" = "Sign out";
 "actions.no" = "No";
 "actions.yes" = "Yes";
-"actions.close" = "Close";
 "actions.skip" = "Skip";
 "actions.skip-for-now" = "Skip for now";
-"actions.answer" = "Answer";
 "actions.later" = "Later";
 "actions.fix-now" = "Fix now";
 "actions.next" = "Next";
@@ -486,18 +439,11 @@
 "status.success" = "Done";
 
 // actitivity messages
-"activity.thank" = "Thank";
-"activity.you" = "you.";
 "activity.loading" = "Loading...";
-"activity.share.last-night.format" = "Last night #mysleepscore was %.0ld -- http://hello.is";
-"activity.share.other-days.format" = "#mysleepscore was %.0ld on %@ — can you beat it? http://hello.is";
-
-// questions
-"questions.failed.title" = "Could not submit answer";
-"questions.error.unexpected" = "Oops! Skip the question for now. We'll ask you again another time.";
+"activity.share.last-night.format" = "Last night #mysleepscore was %.0ld — http://hello.is";
+"activity.share.other-days.format" = "#mysleepscore was %.0ld on %@ — http://hello.is";
 
 // account info
-"account.gender.subtitle" = "This is used to provide you with more personalized sleep insights.";
 "account.gender.female" = "Female";
 "account.gender.male" = "Male";
 "account.update.failed.title" = "Update failed";
@@ -517,14 +463,6 @@
 "notifications.actions.weekly" = "Weekly";
 "notifications.actions.infrequently" = "Infrequently";
 
-// Today strings
-// sections
-"today.section.title.last-night" = "Last night";
-"today.section.title.current-conditions" = "Current Conditions";
-
-// cell labels
-"today.cell.title.sleep-score" = "Sleep Score";
-
 // network connection error code messages
 "network.error.not-connected" = "An internet connection is required to proceed. Make sure you are connected and try again.";
 "network.error.connection-lost" = "Connection to the internet was lost during the request. Try again.";
@@ -541,12 +479,14 @@
 "date.elapsed.years.format" = "%ldy";
 
 // device alerts
-"alerts.device.sense-wifi.title" = "Sense Cannot Upload Data";
-"alerts.device.no-wifi" = "Sense either lost connection to WiFi or your WiFi network is having issues.";
 "alerts.device.no-sense.title" = "Sense Not Paired";
 "alerts.device.no-sense.message" = "Your account does not have a Sense paired. Sense is required to track your sleep behavior.";
+"alerts.device.sense-last-seen.title" = "Sense";
+"alerts.device.sense-last-seen.message" = "Sense has not reported any data recently. Tap 'Fix Now' to troubleshoot.";
 "alerts.device.no-pill.title" = "Sleep Pill Not Paired";
 "alerts.device.no-pill.message" = "Your account does not have a Sleep Pill paired. A Sleep Pill is required to track your sleep behavior.";
+"alerts.device.pill-last-seen.title" = "Sleep Pill";
+"alerts.device.pill-last-seen.message" = "Sleep Pill has not reported any data recently. Tap 'Fix Now' to troubleshoot.";
 
 // tutorial
 "tutorial.timeline.title1" = "UNDERSTANDING YOUR SLEEP";
@@ -556,7 +496,7 @@
 "tutorial.timeline.title3" = "BEFORE SLEEP";
 "tutorial.timeline.message3" = "The “before sleep” tab allows you to see if your bedroom was right for you before you went to sleep.";
 "tutorial.timeline.title4" = "YOUR SLEEP TIMELINE";
-"tutorial.timeline.message4" = "Your timeline shows you a minute-by-minute record of your night. The blue bars break your sleep out into three categories: Light, medium and deep sleep.\n\nThe wider the bar, the deeper the sleep.";
+"tutorial.timeline.message4" = "Your timeline shows you a minute-by-minute record of your night. The blue bars break your sleep out into three categories: Light, medium and deep sleep.\n\nThe wider the bar, the deeper the sleep. Press and hold a bar for more info.";
 
 "tutorial.alarms.title" = "Set An Alarm";
 "tutorial.alarms.message" = "Sense's Smart Alarm will wake you up at the lightest part of your natural sleep cycle - within a 30 minute window before the time you set. When it's time to wake up, Sense will glow and play your selected tone. Just wave your hand over Sense to dismiss the alarm.";

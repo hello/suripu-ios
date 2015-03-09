@@ -7,9 +7,10 @@
 //
 
 #import "SENPreference.h"
+#import "SENLocalPreferences.h"
 
 NSString* const SENPreferenceNameEnhancedAudio = @"ENHANCED_AUDIO";
-NSString* const SENPreferenceNameTemp = @"TEMP_CELCIUS";
+NSString* const SENPreferenceNameTemp = @"TEMP_CELSIUS";
 NSString* const SENPreferenceNameTime = @"TIME_TWENTY_FOUR_HOUR";
 NSString* const SENPreferenceNamePushScore = @"PUSH_SCORE";
 NSString* const SENPreferenceNamePushConditions = @"PUSH_ALERT_CONDITIONS";
@@ -62,6 +63,48 @@ static NSString* const SENPreferenceEnable = @"enabled";
     }
 }
 
++ (SENTimeFormat)timeFormat {
+    SENLocalPreferences* pref = [SENLocalPreferences sharedPreferences];
+    NSNumber* enabled = [pref userPreferenceForKey:SENPreferenceNameTime];
+    SENTimeFormat timeFormat;
+    if (enabled == nil) {
+        BOOL militaryTimeEnabled = NO;
+        if ([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_US"]) {
+            timeFormat = SENTimeFormat12Hour;
+        } else {
+            timeFormat = SENTimeFormat24Hour;
+            militaryTimeEnabled = YES;
+        }
+        [pref setUserPreference:@(militaryTimeEnabled) forKey:SENPreferenceNameTime];
+    } else {
+        timeFormat = [enabled boolValue] ? SENTimeFormat24Hour : SENTimeFormat12Hour;
+    }
+    return timeFormat;
+}
+
++ (SENTemperatureFormat)temperatureFormat {
+    SENLocalPreferences* pref = [SENLocalPreferences sharedPreferences];
+    NSNumber* enabled = [pref userPreferenceForKey:SENPreferenceNameTemp];
+    SENTemperatureFormat tempFormat;
+    if (enabled == nil) {
+        BOOL celsiusEnabled = NO;
+        if ([[[NSLocale currentLocale] localeIdentifier] isEqualToString:@"en_US"]) {
+            tempFormat = SENTemperatureFormatFahrenheit;
+        } else {
+            tempFormat = SENTemperatureFormatCentigrade;
+            celsiusEnabled = YES;
+        }
+        [pref setUserPreference:@(celsiusEnabled) forKey:SENPreferenceNameTemp];
+    } else {
+        tempFormat = [enabled boolValue] ? SENTemperatureFormatCentigrade : SENTemperatureFormatFahrenheit;
+    }
+    return tempFormat;
+}
+
++ (BOOL)useCentigrade {
+    return [self temperatureFormat] == SENTemperatureFormatCentigrade;
+}
+
 - (instancetype)initWithType:(SENPreferenceType)type enable:(BOOL)enable {
     self = [super init];
     if (self) {
@@ -86,6 +129,11 @@ static NSString* const SENPreferenceEnable = @"enabled";
         ? [dictionary[SENPreferenceEnable] boolValue]
         : NO;
     return [self initWithType:type enable:enabled];
+}
+
+- (void)saveLocally {
+    SENLocalPreferences* pref = [SENLocalPreferences sharedPreferences];
+    [pref setUserPreference:@([self isEnabled]) forKey:[[self class] nameFromType:[self type]]];
 }
 
 - (NSDictionary*)dictionaryValue {

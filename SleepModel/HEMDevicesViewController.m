@@ -26,16 +26,20 @@
 #import "HEMSensePairDelegate.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMTextFooterCollectionReusableView.h"
+#import "HEMSupportUtil.h"
 
 static CGFloat const HEMDeviceInfoHeight = 190.0f;
 static CGFloat const HEMNoDeviceHeight = 205.0f;
 
 @interface HEMDevicesViewController() <
     UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout,
     HEMPillPairDelegate,
     HEMSenseControllerDelegate,
     HEMSensePairingDelegate,
-    HEMPillControllerDelegate
+    HEMPillControllerDelegate,
+    HEMTextFooterDelegate
 >
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
@@ -54,7 +58,9 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 }
 
 - (void)configureCollectionView {
-    HEMDeviceDataSource* dataSource = [[HEMDeviceDataSource alloc] init];
+    HEMDeviceDataSource* dataSource
+        = [[HEMDeviceDataSource alloc] initWithCollectionView:[self collectionView]
+                                            andFooterDelegate:self];
     [self setDataSource:dataSource];
     
     [[self collectionView] setDelegate:self];
@@ -65,24 +71,9 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self setSelectedDevice:nil];
-    
-    // only load devices again on appearance if user is coming back, not when
-    // coming to, and only if devices are not configured so that we can check
-    // if it has happened.
-    if ([self loaded] && ![[self dataSource] isMissingADevice]) {
-        [self reloadData];
-    } else if (![self loaded]) {
-        __weak typeof(self) weakSelf = self;
-        [[self dataSource] loadDeviceInfo:^(NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if ([error code] == HEMDeviceErrorDeviceInfoNotLoaded) {
-                NSString* title = NSLocalizedString(@"settings.device.error.title", nil);
-                NSString* msg = NSLocalizedString(@"settings.device.error.cannot-load-info", nil);
-                [strongSelf showMessageDialog:msg title:title];
-            }
-            [strongSelf reloadData];
-        }];
-        
+
+    if (![self loaded]) {
+        [self refreshDataSource:NO];
         [self setLoaded:YES];
     }
     
@@ -95,12 +86,44 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     [[self collectionView] reloadData];
 }
 
-- (void)refreshDataSource {
+- (void)refreshDataSource:(BOOL)clearCurrentState {
     __weak typeof(self) weakSelf = self;
-    [[self dataSource] refresh:^(NSError *error) {
+    [[self dataSource] refreshWithUpdate:^{
         [weakSelf reloadData];
+    } completion:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (error != nil) {
+            [strongSelf showMessageForError:error];
+        }
+        [strongSelf reloadData];
     }];
-    [self reloadData]; // clear current display state to show activity
+    
+    if (clearCurrentState) {
+        [self reloadData]; // clear current display state to show activity
+    }
+}
+
+- (void)showMessageForError:(NSError*)error {
+    NSString* title = nil;
+    NSString* msg = nil;
+    
+    // there are other errors that can occur, but are more like warnings.  We
+    // should only display an error for codes that matter here, which is when
+    // device info could not be loaded
+    switch ([error code]) {
+        case HEMDeviceErrorDeviceInfoNotLoaded:
+        case HEMDeviceErrorReplacedSenseInfoNotLoaded:
+            title = NSLocalizedString(@"settings.device.error.title", nil);
+            msg = NSLocalizedString(@"settings.device.error.cannot-load-info", nil);
+            break;
+        default:
+            break;
+    }
+    
+    if (msg) { // title is optional
+        [self showMessageDialog:msg title:title];
+    }
+    
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -123,31 +146,35 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    if ([[self dataSource] isObtainingData]) {
-        return;
-    }
-
     UICollectionViewCell* cell = [collectionView cellForItemAtIndexPath:indexPath];
     SENDeviceType type = [[self dataSource] deviceTypeAtIndexPath:indexPath];
     
     switch (type) {
-        case SENDeviceTypeSense:
-            if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
-                [self showSensePairingController];
-            } else {
-                [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
-                [self performSegueWithIdentifier:[HEMMainStoryboard senseSegueIdentifier]
-                                          sender:self];
+        case SENDeviceTypeSense: {
+            if (![[self dataSource] isLoadingSense]) {
+                if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
+                    [self showSensePairingController];
+                } else {
+                    [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
+                    [self performSegueWithIdentifier:[HEMMainStoryboard senseSegueIdentifier]
+                                              sender:self];
+                }
             }
             break;
+        }
         case SENDeviceTypePill:
-            if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
-                [self showPillPairingController];
-            } else {
-                [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
-                [self performSegueWithIdentifier:[HEMMainStoryboard pillSegueIdentifier]
-                                          sender:self];
+            if (![[self dataSource] isLoadingPill]) {
+                if ([cell isKindOfClass:[HEMNoDeviceCollectionViewCell class]]) {
+                    if (![[self dataSource] isLoadingSense]) { // sense is required for pill pairing
+                        [self showPillPairingController];
+                    }
+                } else {
+                    [self setSelectedDevice:[[self dataSource] deviceAtIndexPath:indexPath]];
+                    [self performSegueWithIdentifier:[HEMMainStoryboard pillSegueIdentifier]
+                                              sender:self];
+                }
             }
+
             break;
         default:
             break;
@@ -167,7 +194,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 #pragma mark HEMPillPairDelegate
 
 - (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
-    [self refreshDataSource];
+    [self refreshDataSource:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -178,7 +205,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 #pragma mark HEMPillControllerDelegate
 
 - (void)didUnpairPillFrom:(HEMPillViewController *)viewController {
-    [self refreshDataSource];
+    [self refreshDataSource:YES];
     [[self navigationController] popViewControllerAnimated:NO];
 }
 
@@ -195,16 +222,16 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 #pragma mark HEMSenseControllerDelegate
 
 - (void)didUpdateWiFiFrom:(HEMSenseViewController *)viewController {
-    [self refreshDataSource];
+    [self refreshDataSource:YES];
 }
 
 - (void)didUnpairSenseFrom:(HEMSenseViewController *)viewController {
-    [self refreshDataSource];
+    [self refreshDataSource:YES];
     [[self navigationController] popViewControllerAnimated:NO];
 }
 
 - (void)didFactoryRestoreFrom:(HEMSenseViewController *)viewController {
-    [self refreshDataSource];
+    [self refreshDataSource:YES];
     [[self navigationController] popViewControllerAnimated:NO];
 }
 
@@ -214,8 +241,14 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     if (senseManager != nil) {
         __weak typeof(self) weakSelf = self;
         [[self dataSource] updateSenseManager:senseManager completion:^(NSError *error) {
-            [weakSelf reloadData];
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error != nil) {
+                [strongSelf showMessageForError:error];
+            }
+            [strongSelf reloadData];
         }];
+        
+        [self reloadData]; // clear current state
     }
 }
 
@@ -227,6 +260,15 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 - (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController *)controller {
     [self updateDataWithSenseManager:senseManager];
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - HEMTextFooterDelegate
+
+- (void)didTapOnLink:(NSURL *)url from:(HEMTextFooterCollectionReusableView *)view {
+    NSString* lowerScheme = [url scheme];
+    if ([lowerScheme hasPrefix:@"http"]) {
+        [HEMSupportUtil openURL:[url absoluteString] from:self];
+    }
 }
 
 #pragma mark - Segues

@@ -11,6 +11,8 @@
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
+#import "NSMutableAttributedString+HEMFormat.h"
+#import "NSAttributedString+HEMUtils.h"
 
 #import "HEMDeviceDataSource.h"
 #import "HEMNoDeviceCollectionViewCell.h"
@@ -19,56 +21,108 @@
 #import "HEMActionButton.h"
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingUtils.h"
+#import "HEMTextFooterCollectionReusableView.h"
+#import "HEMCardFlowLayout.h"
 
 static NSInteger const HEMDeviceRowSense = 0;
 static NSInteger const HEMDeviceRowPill = 1;
 static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
+static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 @interface HEMDeviceDataSource()
 
+@property (nonatomic, weak)   UICollectionView* collectionView;
+@property (nonatomic, copy)   NSAttributedString* attributedFooterText;
 @property (nonatomic, copy)   NSString* configuredSSID;
 @property (nonatomic, assign) SENWiFiConnectionState wifiState;
-@property (nonatomic, assign, getter=isObtainingData) BOOL obtainingData;
+@property (nonatomic, assign, getter=isLoadingSense) BOOL loadingSense;
+@property (nonatomic, assign, getter=isLoadingPill)  BOOL loadingPill;
 @property (nonatomic, assign) BOOL attemptedDataLoad;
+@property (nonatomic, weak)   id<HEMTextFooterDelegate> footerDelegate;
+@property (nonatomic, weak)   UIActivityIndicatorView* senseActivityIndicator;
+@property (nonatomic, weak)   UIActivityIndicatorView* pillActivityIndicator;
 
 @end
 
 @implementation HEMDeviceDataSource
 
-#pragma mark - Loading Data
-
-- (void)refresh:(void(^)(NSError* error))completion {
-    [self setWifiState:SENWiFiConnectionStateUnknown];
-    [self setConfiguredSSID:nil];
-    [self setObtainingData:NO];
-    [self setAttemptedDataLoad:NO];
-    
-    [[SENServiceDevice sharedService] clearCache];
-    
-    [self loadDeviceInfo:completion];
+- (instancetype)initWithCollectionView:(UICollectionView*)collectionView
+                     andFooterDelegate:(id<HEMTextFooterDelegate>)delegate {
+    self = [super init];
+    if (self) {
+        _collectionView = collectionView;
+        _footerDelegate = delegate;
+        
+        [self configureCollectionView];
+    }
+    return self;
 }
 
-- (void)loadDeviceInfo:(void(^)(NSError* error))completion {
-    [self setObtainingData:YES];
+- (void)configureCollectionView {
+    [[self collectionView] registerClass:[HEMTextFooterCollectionReusableView class]
+              forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
+                     withReuseIdentifier:HEMDevicesFooterReuseIdentifier];
+    
+    HEMCardFlowLayout* layout
+        = (HEMCardFlowLayout*)[[self collectionView] collectionViewLayout];
+    [layout setFooterReferenceSizeFromText:[self attributedFooterText]];
+}
+
+#pragma mark - Loading Data
+
+- (void)refreshWithUpdate:(void(^)(void))update completion:(void(^)(NSError* error))completion {
+    [self setWifiState:SENWiFiConnectionStateUnknown];
+    [self setConfiguredSSID:nil];
+    [self setLoadingSense:YES];
+    [self setLoadingPill:YES];
+    
+    __weak typeof(self) weakSelf = self;
+    [self refereshDeviceInfo:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        [strongSelf setLoadingPill:NO];
+        [strongSelf setAttemptedDataLoad:YES];
+        
+        if (error != nil) {
+            [strongSelf setLoadingSense:NO];
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+            if (completion) completion (error);
+        } else {
+            if (update) update();
+            
+            [strongSelf refreshSenseData:^(NSError *error) {
+                if (error != nil) {
+                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                }
+                [strongSelf setLoadingSense:NO];
+                if (completion) completion (error);
+            }];
+        }
+    }];
+}
+
+- (void)refereshDeviceInfo:(void(^)(NSError* error))completion {
     __weak typeof(self) weakSelf = self;
     [[SENServiceDevice sharedService] loadDeviceInfo:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        NSError* deviceError = error;
         
         if (error != nil) {
+            
             if ([error code] == SENServiceDeviceErrorInProgress && completion) {
                 [strongSelf invokeWhenInfoIsLoaded:completion];
-            } else if (completion) {
-                [strongSelf setObtainingData:NO];
-                [strongSelf setAttemptedDataLoad:YES];
-                completion ([NSError errorWithDomain:HEMDeviceErrorDomain
-                                                code:HEMDeviceErrorDeviceInfoNotLoaded
-                                            userInfo:nil]);
+                return;
+            } else {
+                // generalize error to info not loaded so that errors can be
+                // properly presented based on this
+                deviceError = [NSError errorWithDomain:HEMDeviceErrorDomain
+                                                  code:HEMDeviceErrorDeviceInfoNotLoaded
+                                              userInfo:nil];
             }
-
-            return;
+            
         }
         
-        [strongSelf refreshSenseData:completion];
+        if (completion) completion (deviceError);
     }];
 }
 
@@ -79,13 +133,26 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
                    afterDelay:0.1f];
         return;
     }
-    
-    [self refreshSenseData:completion];
+    completion (nil);
 }
 
 - (void)updateSenseManager:(SENSenseManager*)senseManager completion:(void(^)(NSError* error))completion {
+    [self setLoadingSense:YES];
+    
+    __weak typeof(self) weakSelf = self;
     SENServiceDevice* service = [SENServiceDevice sharedService];
-    [service replaceWithNewlyPairedSenseManager:senseManager completion:completion];
+    [service clearCache];
+    [service replaceWithNewlyPairedSenseManager:senseManager completion:^(NSError *error) {
+        [weakSelf setLoadingSense:NO];
+        
+        NSError* opError = nil;
+        if (error) {
+            opError = [NSError errorWithDomain:HEMDeviceErrorDomain
+                                          code:HEMDeviceErrorReplacedSenseInfoNotLoaded
+                                      userInfo:nil];
+        }
+        if (completion) completion (opError);
+    }];
 }
 
 - (void)refreshSenseData:(void(^)(NSError* error))completion {
@@ -94,8 +161,6 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
     [SENSenseManager whenBleStateAvailable:^(BOOL on) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (!on) {
-            [strongSelf setObtainingData:NO];
-            [strongSelf setAttemptedDataLoad:YES];
             if (completion) completion ([NSError errorWithDomain:HEMDeviceErrorDomain
                                                             code:HEMDeviceErrorNoBle
                                                         userInfo:nil]);
@@ -113,8 +178,6 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
             NSString* wifiSSID = [ssid length] == 0 ? nil : ssid;
             [strongSelf setConfiguredSSID:wifiSSID];
             [strongSelf setWifiState:state];
-            [strongSelf setObtainingData:NO];
-            [strongSelf setAttemptedDataLoad:YES];
             
             [HEMOnboardingUtils saveConfiguredSSID:wifiSSID];
             
@@ -125,11 +188,6 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
 
 #pragma mark - Warnings
 
-- (BOOL)hasBeenAwhile:(SENDevice*)device {
-    NSDate* badThresholdDate = [[NSDate date] previousDay];
-    return [[device lastSeen] compare:badThresholdDate] == NSOrderedAscending;
-}
-
 - (BOOL)lostInternetConnection:(SENDevice*)device {
     return [device type] == SENDeviceTypeSense
             && ([self wifiState] == SENWiFiConnectionStateNoInternet
@@ -138,7 +196,7 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
 
 - (NSOrderedSet*)deviceWarningsFor:(SENDevice*)device {
     NSMutableOrderedSet* set = [[NSMutableOrderedSet alloc] init];
-    if ([self hasBeenAwhile:device]) {
+    if ([[SENServiceDevice sharedService] shouldWarnAboutLastSeenForDevice:device]) {
         [set addObject:@(HEMDeviceWarningLongLastSeen)];
     }
     if ([self lostInternetConnection:device]) {
@@ -153,24 +211,20 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
 
 #pragma mark - Convenience Methods
 
-- (BOOL)isMissingADevice {
-    SENServiceDevice* service = [SENServiceDevice sharedService];
-    return ([service senseInfo] == nil || [service pillInfo] == nil) && [service isInfoLoaded];
-}
-
 - (NSString*)lastSeen:(SENDevice*)device {
     NSString* desc = nil;
-    if ([device lastSeen] != nil) {
+    if ([device lastSeen] != nil && [device state] != SENDeviceStateUnknown) {
         NSString* lastSeen = NSLocalizedString(@"settings.device.last-seen", nil);
         desc = [NSString stringWithFormat:@"%@ %@", lastSeen, [[device lastSeen] timeAgo]];
     } else {
-        desc = NSLocalizedString(@"settings.device.never-seen", nil);
+        desc = NSLocalizedString(@"empty-data", nil);
     }
     return desc;
 }
 
 - (UIColor*)lastSeenTextColorFor:(SENDevice*)device {
-    return [self hasBeenAwhile:device] ? [UIColor redColor] : [UIColor blackColor];
+    return [[SENServiceDevice sharedService] shouldWarnAboutLastSeenForDevice:device]
+            ? [UIColor redColor] : [UIColor blackColor];
 }
 
 - (SENDevice*)deviceAtIndexPath:(NSIndexPath*)indexPath {
@@ -243,6 +297,7 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
     NSString* name = nil;
     NSString* message = nil;
     NSString* buttonTitle = nil;
+    UIColor* actionButtonColor = [HelloStyleKit senseBlueColor];
     
     switch ([indexPath row]) {
         case HEMDeviceRowSense:
@@ -256,6 +311,9 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
             name = NSLocalizedString(@"settings.device.pill", nil);
             message = NSLocalizedString(@"settings.device.no-pill", nil);
             buttonTitle = NSLocalizedString(@"settings.device.button.title.pair-pill", nil);
+            if ([self isLoadingSense] || ![self attemptedDataLoad]) {
+                actionButtonColor = [HelloStyleKit actionButtonDisabledColor];
+            }
             break;
         default:
             break;
@@ -266,6 +324,7 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
     [[cell messageLabel] setText:message];
     [[cell actionButton] setTitle:buttonTitle forState:UIControlStateNormal];
     [[cell actionButton] setUserInteractionEnabled:NO]; // let the entire cell be actionable
+    [[cell actionButton] setBackgroundColor:actionButtonColor];
 }
 
 - (void)updateSenseInfo:(SENDevice*)senseInfo forCell:(HEMDeviceCollectionViewCell*)cell {
@@ -332,17 +391,54 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
 - (void)updateDeviceInfoForCell:(HEMDeviceCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
     SENDevice* device = [self deviceAtIndexPath:indexPath];
     SENDeviceType type = [self deviceTypeAtIndexPath:indexPath]; // device may be nil
+    BOOL loading = NO;
     
     if (type == SENDeviceTypeSense) {
         [self updateSenseInfo:device forCell:cell];
+        loading = [self isLoadingSense];
     } else if (type == SENDeviceTypePill) {
         [self updatePillInfo:device forCell:cell];
+        loading = [self isLoadingPill];
     }
     
-    [cell showDataLoadingIndicator:[self isObtainingData] || ![self attemptedDataLoad]];
+    [cell showDataLoadingIndicator:loading || ![self attemptedDataLoad]];
+}
+
+- (NSAttributedString*)attributedFooterText {
+    
+    if (_attributedFooterText == nil) {
+        NSString* textFormat = NSLocalizedString(@"settings.device.footer.format", nil);
+        NSString* secondPill = NSLocalizedString(@"settings.device.footer.second-pill", nil);
+        NSString* helpBaseUrl = NSLocalizedString(@"help.url.support", nil);
+        NSString* secondPillSlug = NSLocalizedString(@"help.url.slug.pill-setup-another", nil);
+        NSString* url = [helpBaseUrl stringByAppendingPathComponent:secondPillSlug];
+        UIColor* color = [HelloStyleKit backViewTextColor];
+        UIFont* font = [UIFont settingsHelpFont];
+        
+        NSAttributedString* attrPill = [[NSAttributedString alloc] initWithString:secondPill];
+        NSArray* args = @[[attrPill hyperlink:url]];
+        NSMutableAttributedString* attributedText =
+            [[NSMutableAttributedString alloc] initWithFormat:textFormat
+                                                         args:args
+                                                    baseColor:color
+                                                     baseFont:font];
+        NSMutableParagraphStyle* style = [[NSMutableParagraphStyle alloc] init];
+        [style setAlignment:NSTextAlignmentCenter];
+        [attributedText addAttribute:NSParagraphStyleAttributeName
+                               value:style
+                               range:NSMakeRange(0, [attributedText length])];
+        
+        _attributedFooterText = [attributedText copy];
+    }
+
+    return _attributedFooterText;
 }
 
 #pragma mark - UICollectionViewDataSource
+
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView*)collectionView {
+    return 1;
+}
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
@@ -369,6 +465,25 @@ static NSString* const HEMDeviceErrorDomain = @"is.hello.sense.app.device";
     }
     
     return cell;
+}
+
+- (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView
+          viewForSupplementaryElementOfKind:(NSString*)kind
+                                atIndexPath:(NSIndexPath*)indexPath {
+    
+    UICollectionReusableView* view = nil;
+    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
+        HEMTextFooterCollectionReusableView* footer
+            = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                 withReuseIdentifier:HEMDevicesFooterReuseIdentifier
+                                                        forIndexPath:indexPath];
+        
+        [footer setText:[self attributedFooterText]];
+        [footer setDelegate:[self footerDelegate]];
+        
+        view = footer;
+    }
+    return view;
 }
 
 @end

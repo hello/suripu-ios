@@ -12,16 +12,21 @@
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sleepEventButtonWidthConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *sleepEventButtonHeightConstraint;
-@property (nonatomic, strong) AVAudioPlayer* player;
-@property (nonatomic, strong) NSTimer* playerUpdateTimer;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet UIImageView* lineView;
 @property (nonatomic, weak) IBOutlet UIView* contentContainerView;
+@property (weak, nonatomic) IBOutlet UIButton* playSoundButton;
+@property (weak, nonatomic) IBOutlet FDWaveformView* waveformView;
+@property (weak, nonatomic) IBOutlet RTSpinKitView* spinnerView;
+
+@property (nonatomic, strong) AVAudioPlayer* player;
+@property (nonatomic, strong) NSTimer* playerUpdateTimer;
 @property (nonatomic, strong) UIView* gradientContainerTopView;
 @property (nonatomic, strong) UIView* gradientContainerBottomView;
 @property (nonatomic, strong) CAGradientLayer* gradientTopLayer;
 @property (nonatomic, strong) CAGradientLayer* gradientBottomLayer;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* contentViewHeightConstraint;
 @property (nonatomic, getter=isExpanded) BOOL expanded;
+@property (nonatomic, strong) NSOperationQueue* loadingQueue;
 @end
 
 @implementation HEMSleepEventCollectionViewCell
@@ -29,6 +34,7 @@
 static CGFloat const HEMEventButtonSize = 40.f;
 static CGFloat const HEMEventBlurHeight = 60.f;
 static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
+static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 
 + (NSAttributedString*)attributedMessageFromText:(NSString*)text
 {
@@ -45,6 +51,8 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    self.loadingQueue = [NSOperationQueue new];
+    self.loadingQueue.maxConcurrentOperationCount = 1;
     self.backgroundColor = [UIColor clearColor];
     self.contentViewHeightConstraint.constant = 0;
     self.lineView.image = [self dottedLineBorderImageWithColor:[HelloStyleKit tintColor]];
@@ -56,9 +64,8 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 - (void)prepareForReuse
 {
     [super prepareForReuse];
-    self.waveformView.hidden = YES;
     self.verifyDataButton.hidden = YES;
-    self.playSoundButton.hidden = YES;
+    self.audioPlayerView.hidden = YES;
     [self useExpandedLayout:NO targetSize:CGSizeZero animated:NO];
 }
 
@@ -75,17 +82,16 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
 - (void)configureAudioPlayer
 {
-    self.waveformView.progressColor = [UIColor colorWithHue:0.56 saturation:1 brightness:1 alpha:1];
-    self.waveformView.wavesColor = [UIColor colorWithWhite:0.9f alpha:1.f];
+    self.playSoundButton.enabled = NO;
+    self.waveformView.progressColor = [HelloStyleKit tintColor];
+    self.waveformView.wavesColor = [HelloStyleKit lightSleepColor];
     self.waveformView.delegate = self;
-    self.waveformView.hidden = YES;
     self.spinnerView.color = self.waveformView.progressColor;
     self.spinnerView.spinnerSize = CGRectGetHeight(self.playSoundButton.bounds);
     self.spinnerView.style = RTSpinKitViewStyleArc;
     self.spinnerView.hidesWhenStopped = YES;
     self.spinnerView.backgroundColor = [UIColor clearColor];
-    [self.spinnerView stopAnimating];
-    self.playSoundButton.hidden = YES;
+    [self.spinnerView startAnimating];
 }
 
 - (void)configureGradientViews
@@ -226,8 +232,7 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
 - (void)showAudioPlayer:(BOOL)isVisible
 {
-    self.waveformView.hidden = !isVisible;
-    self.playSoundButton.hidden = !isVisible;
+    self.audioPlayerView.hidden = !isVisible;
     self.playSoundButton.enabled = NO;
     if (isVisible)
         [self.spinnerView startAnimating];
@@ -237,17 +242,45 @@ static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
 
 - (void)setAudioURL:(NSURL *)audioURL
 {
+    [self stopAudio];
+    [self.loadingQueue cancelAllOperations];
     if ([audioURL isEqual:self.waveformView.audioURL]) {
         self.playSoundButton.enabled = YES;
         return;
     }
-    self.waveformView.audioURL = audioURL;
     __weak typeof(self) weakSelf = self;
-    self.waveformView.completion = ^(NSURL* processedURL, BOOL success) {
+    [self.loadingQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (success)
-            [strongSelf handleLoadingSuccess];
-    };
+        NSData* urlData = [NSData dataWithContentsOfURL:audioURL];
+        if (!urlData) {
+            [strongSelf cancelLoading];
+            return;
+        }
+        NSFileManager *fileManager = [NSFileManager defaultManager];
+        NSURL *cache = [[fileManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject];
+        NSString* fileName = [NSString stringWithFormat:HEMEventPlayerFileName, (long)[audioURL hash]];
+        NSURL* localFile = [cache URLByAppendingPathComponent:fileName];
+        BOOL success = [urlData writeToURL:localFile atomically:YES];
+        if (!success) {
+            [strongSelf cancelLoading];
+            return;
+        }
+        [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
+            strongSelf.waveformView.audioURL = localFile;
+            strongSelf.waveformView.completion = ^(NSURL* processedURL, BOOL success) {
+                if (success)
+                    [strongSelf handleLoadingSuccess];
+            };
+        }]];
+    }]];
+}
+
+- (void)cancelLoading
+{
+    __weak typeof(self) weakSelf = self;
+    [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [weakSelf handleLoadingFailure];
+    }]];
 }
 
 - (IBAction)toggleAudio

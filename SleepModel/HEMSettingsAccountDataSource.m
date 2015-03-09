@@ -13,7 +13,6 @@
 #import "HEMSettingsAccountDataSource.h"
 #import "HEMMathUtil.h"
 #import "HEMMainStoryboard.h"
-#import "HEMSettingsUtil.h"
 #import "HEMNotificationHandler.h"
 
 // \u0222 is a round dot
@@ -22,7 +21,7 @@ static NSString* const HEMSettingsAcctDataSourceErrorDomain = @"is.hello.app.set
 static NSString* const HEMSettingsAcctBirthdateFormat = @"MM dd, yyyy";
 
 typedef NS_ENUM(NSUInteger, HEMSettingsAcctSection) {
-    HEMSettingsAcctSectionAccount = 0,      HEMSettingsAcctAccountTotRows = 2,
+    HEMSettingsAcctSectionAccount = 0,      HEMSettingsAcctAccountTotRows = 3,
     HEMSettingsAcctSectionDemographics = 1, HEMSettingsAcctDemographicsTotRows = 4,
     HEMSettingsAcctSectionPreferences = 2,  HEMSettingsAcctPreferenceTotRows = 2,
     HEMSettingsAcctSectionExplanations = 3, HEMSettingsAcctExplanationsTotRows = 1,
@@ -31,8 +30,9 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctSection) {
 };
 
 typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
-    HEMSettingsAcctRowEmail = 0,
-    HEMSettingsAcctRowPassword = 1,
+    HEMSettingsAcctRowName = 0,
+    HEMSettingsAcctRowEmail = 1,
+    HEMSettingsAcctRowPassword = 2,
 
     HEMSettingsAcctRowBirthdate = 0,
     HEMSettingsAcctRowGender = 1,
@@ -130,6 +130,9 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     NSString* title = nil;
     HEMSettingsAccountInfoType type = [self infoTypeAtIndexPath:indexPath];
     switch (type) {
+        case HEMSettingsAccountInfoTypeName:
+            title = NSLocalizedString(@"settings.account.name", nil);
+            break;
         case HEMSettingsAccountInfoTypeEmail:
             title = NSLocalizedString(@"settings.account.email", nil);
             break;
@@ -170,6 +173,9 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
     NSString* subtitle = nil;
     HEMSettingsAccountInfoType type = [self infoTypeAtIndexPath:indexPath];
     switch (type) {
+        case HEMSettingsAccountInfoTypeName:
+            subtitle = [[[SENServiceAccount sharedService] account] name];
+            break;
         case HEMSettingsAccountInfoTypeEmail:
             subtitle = [[[SENServiceAccount sharedService] account] email];
             break;
@@ -216,8 +222,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
             break;
         }
         case HEMSettingsAccountInfoTypeHealthKit: {
-            enabled = [[SENServiceHealthKit sharedService] canWriteSleepAnalysis]
-                        && [HEMSettingsUtil isHealthKitEnabled];
+            SENServiceHealthKit* hk = [SENServiceHealthKit sharedService];
+            enabled = [hk canWriteSleepAnalysis] && [hk isHealthKitEnabled];
         }
         default:
             break;
@@ -319,17 +325,15 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
 }
 
 - (HEMSettingsAccountInfoType)accountInfoTypeForRow:(NSInteger)row {
-    HEMSettingsAccountInfoType type = HEMSettingsAccountInfoTypeEmail;
     switch (row) {
         default:
+        case HEMSettingsAcctRowName:
+            return HEMSettingsAccountInfoTypeName;
         case HEMSettingsAcctRowEmail:
-            type = HEMSettingsAccountInfoTypeEmail;
-            break;
+            return HEMSettingsAccountInfoTypeEmail;
         case HEMSettingsAcctRowPassword:
-            type = HEMSettingsAccountInfoTypePassword;
-            break;
+            return HEMSettingsAccountInfoTypePassword;
     }
-    return type;
 }
 
 - (HEMSettingsAccountInfoType)demographicInfoTypeForRow:(NSInteger)row {
@@ -514,15 +518,13 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
         } else {
             [service requestAuthorization:^(NSError *error) {
                 if (error == nil) {
-                    [HEMSettingsUtil enableHealthKit:enable];
-                    [service setEnableWrite:enable];
+                    [[SENServiceHealthKit sharedService] setEnableHealthKit:enable];
                 }
                 if (completion) completion (error);
             }];
         }
     } else {
-        [HEMSettingsUtil enableHealthKit:enable];
-        [[SENServiceHealthKit sharedService] setEnableWrite:enable];
+        [[SENServiceHealthKit sharedService] setEnableHealthKit:enable];
     }
 }
 

@@ -104,7 +104,11 @@ static CGFloat const HEMCardResistanceCoefficient = 1350.f;
 
 - (void)updateBehaviorsForVisibleItems
 {
-    NSArray *itemsInVisibleRectArray = [super layoutAttributesForElementsInRect:CGRectInset(self.collectionView.bounds, -100, -100)];
+    CGFloat baseInset = -100.0f;
+    CGFloat dx = baseInset;
+    CGFloat dy = baseInset + -([self footerReferenceSize].height + [self headerReferenceSize].height);
+    
+    NSArray *itemsInVisibleRectArray = [super layoutAttributesForElementsInRect:CGRectInset([[self collectionView] bounds], dx, dy)];
     NSString* key = NSStringFromSelector(@selector(indexPath));
     NSSet *itemsIndexPathsInVisibleRectSet = [NSSet setWithArray:[itemsInVisibleRectArray valueForKey:key]];
 
@@ -158,6 +162,21 @@ static CGFloat const HEMCardResistanceCoefficient = 1350.f;
         center.y += MIN(self.latestDelta, self.latestDelta * scrollResistance);
     }
     return center;
+}
+
+- (void)setFooterReferenceSizeFromText:(NSAttributedString*)text {
+    UIEdgeInsets insets = [self sectionInset];
+    CGSize footerConstraint = CGSizeZero;
+    footerConstraint.width = [self itemSize].width;
+    footerConstraint.height = MAXFLOAT;
+    
+    CGSize size = [text boundingRectWithSize:footerConstraint
+                                     options:NSStringDrawingUsesFontLeading
+                                            | NSStringDrawingUsesLineFragmentOrigin
+                                     context:nil].size;
+    size.height += insets.top + insets.bottom;
+    
+    [self setFooterReferenceSize:size];
 }
 
 - (void)clearCache {

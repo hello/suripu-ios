@@ -1,5 +1,5 @@
 
-#import <SenseKit/SENSettings.h>
+#import <SenseKit/SENPreference.h>
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENSleepResult.h>
 #import <SenseKit/SENAPITimeline.h>
@@ -89,7 +89,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         _collectionView = collectionView;
         _dateForNightOfSleep = date;
         _timeDateFormatter = [NSDateFormatter new];
-        _timeDateFormatter.dateFormat = ([SENSettings timeFormat] == SENTimeFormat12Hour) ? @"h:mm a" : @"H:mm";
+        _timeDateFormatter.dateFormat = ([SENPreference timeFormat] == SENTimeFormat12Hour) ? @"h:mm a" : @"H:mm";
         _rangeDateFormatter = [NSDateFormatter new];
         _rangeDateFormatter.dateFormat = @"MMMM d";
         _weekdayDateFormatter = [NSDateFormatter new];
@@ -115,6 +115,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         self.beLoading = NO;
         [self hideLoadingViewAnimated:NO];
     }
+    if ([self isTitleOutOfSync])
+        [self.collectionView reloadData];
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError* error) {
         __strong HEMSleepGraphCollectionViewDataSource* strongSelf = weakSelf;
@@ -130,14 +132,18 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 - (void)refreshWithTimelines:(NSArray*)timelines
 {
     NSDictionary* timeline = [timelines firstObject];
-    NSString* currentTitleText = [self.sleepSummaryCell.dateButton titleForState:UIControlStateNormal];
     BOOL didChange = [self.sleepResult updateWithDictionary:timeline];
-    BOOL dayChanged = ![currentTitleText isEqualToString:[self titleTextForDate]];
     [self hideLoadingViewAnimated:YES];
-    if (didChange || dayChanged) {
+    if (didChange || [self isTitleOutOfSync]) {
         [self.sleepResult save];
         [self.collectionView reloadData];
     }
+}
+
+- (BOOL)isTitleOutOfSync
+{
+    NSString* currentTitleText = [self.sleepSummaryCell.dateButton titleForState:UIControlStateNormal];
+    return ![currentTitleText isEqualToString:[self titleTextForDate]];
 }
 
 - (void)configureCollectionView
@@ -511,8 +517,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
                                  action:@selector(didTapEventButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     if (segment.sound) {
-        cell.waveformView.hidden = NO;
-        cell.playSoundButton.hidden = NO;
+        cell.audioPlayerView.hidden = NO;
         [cell setAudioURL:[NSURL URLWithString:segment.sound.URLPath]];
     } else if ([HEMTimelineFeedbackViewController canAdjustTimeForSegment:segment] &&
                [collectionView.delegate respondsToSelector:@selector(didTapDataVerifyButton:)]) {

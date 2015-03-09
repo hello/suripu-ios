@@ -97,7 +97,8 @@
       buildConfiguration = "Debug">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Beta"
+      buildConfiguration = "Dev"
+      customArchiveName = "SenseDev"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

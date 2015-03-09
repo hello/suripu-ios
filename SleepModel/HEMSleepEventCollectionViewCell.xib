@@ -41,47 +41,59 @@
                                             <color key="titleColor" red="0.1176470667" green="0.68235296010000002" blue="0.98823535439999999" alpha="1" colorSpace="deviceRGB"/>
                                         </state>
                                     </button>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ry2-xq-WWj" customClass="RTSpinKitView">
-                                        <rect key="frame" x="29" y="110" width="43" height="43"/>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="aYY-fu-J5s" customClass="HEMAudioPlayerView">
+                                        <rect key="frame" x="29" y="110" width="259" height="52"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6K-A1-70h" userLabel="play button">
+                                                <rect key="frame" x="6" y="6" width="40" height="40"/>
+                                                <state key="normal" image="playSound.png">
+                                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="toggleAudio" destination="gTV-IL-0wX" eventType="touchUpInside" id="QUQ-8A-xiL"/>
+                                                </connections>
+                                            </button>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ry2-xq-WWj" customClass="RTSpinKitView">
+                                                <rect key="frame" x="6" y="6" width="40" height="40"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            </view>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1QB-6m-XRf" customClass="FDWaveformView">
+                                                <rect key="frame" x="56" y="15" width="178" height="23"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="23" id="cc7-nO-JZR"/>
+                                                </constraints>
+                                            </view>
+                                        </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                    </view>
-                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="k6K-A1-70h" userLabel="play button">
-                                        <rect key="frame" x="29" y="110" width="43" height="43"/>
-                                        <state key="normal" image="playSound.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="toggleAudio" destination="gTV-IL-0wX" eventType="touchUpInside" id="QUQ-8A-xiL"/>
-                                        </connections>
-                                    </button>
-                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1QB-6m-XRf" customClass="FDWaveformView">
-                                        <rect key="frame" x="84" y="120" width="213" height="23"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="23" id="cc7-nO-JZR"/>
+                                            <constraint firstItem="ry2-xq-WWj" firstAttribute="leading" secondItem="k6K-A1-70h" secondAttribute="leading" id="9ID-q9-d8K"/>
+                                            <constraint firstItem="ry2-xq-WWj" firstAttribute="trailing" secondItem="k6K-A1-70h" secondAttribute="trailing" id="Q6X-d9-PCc"/>
+                                            <constraint firstItem="ry2-xq-WWj" firstAttribute="bottom" secondItem="k6K-A1-70h" secondAttribute="bottom" id="U1B-lL-dpx"/>
+                                            <constraint firstItem="1QB-6m-XRf" firstAttribute="leading" secondItem="k6K-A1-70h" secondAttribute="trailing" constant="10" id="Xm5-Xl-7Hz"/>
+                                            <constraint firstItem="ry2-xq-WWj" firstAttribute="top" secondItem="k6K-A1-70h" secondAttribute="top" id="lIX-7d-tqX"/>
+                                            <constraint firstItem="k6K-A1-70h" firstAttribute="leading" secondItem="aYY-fu-J5s" secondAttribute="leading" constant="6" id="ls7-Dm-ced"/>
+                                            <constraint firstAttribute="centerY" secondItem="1QB-6m-XRf" secondAttribute="centerY" constant="-0.5" id="mL0-cm-1Lo"/>
+                                            <constraint firstAttribute="height" constant="52" id="nC7-4V-yRt"/>
+                                            <constraint firstAttribute="centerY" secondItem="k6K-A1-70h" secondAttribute="centerY" id="yUx-OV-HHb"/>
+                                            <constraint firstAttribute="trailing" secondItem="1QB-6m-XRf" secondAttribute="trailing" constant="25" id="zZf-t1-RE1"/>
                                         </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="5DK-SE-Ybo" firstAttribute="top" secondItem="MQC-tj-fHb" secondAttribute="top" constant="40" id="0lN-rh-cjx"/>
-                                    <constraint firstItem="k6K-A1-70h" firstAttribute="top" secondItem="ry2-xq-WWj" secondAttribute="top" id="4Mc-Ia-NhY"/>
-                                    <constraint firstAttribute="trailing" secondItem="1QB-6m-XRf" secondAttribute="trailing" constant="23" id="8hq-nL-6S7"/>
-                                    <constraint firstItem="1QB-6m-XRf" firstAttribute="leading" secondItem="k6K-A1-70h" secondAttribute="trailing" constant="12" id="EXQ-y4-jyn"/>
-                                    <constraint firstItem="k6K-A1-70h" firstAttribute="trailing" secondItem="ry2-xq-WWj" secondAttribute="trailing" id="IMf-on-aH7"/>
                                     <constraint firstAttribute="trailing" secondItem="5DK-SE-Ybo" secondAttribute="trailing" constant="10" id="O8X-Bl-7sW"/>
-                                    <constraint firstItem="k6K-A1-70h" firstAttribute="leading" secondItem="MQC-tj-fHb" secondAttribute="leading" constant="29" id="S0c-hI-q7w"/>
                                     <constraint firstItem="5DK-SE-Ybo" firstAttribute="leading" secondItem="MQC-tj-fHb" secondAttribute="leading" constant="10" id="SdH-Ge-GXy"/>
                                     <constraint firstItem="7kh-Q1-akT" firstAttribute="top" secondItem="5DK-SE-Ybo" secondAttribute="bottom" constant="24" id="TGC-pm-Cpa"/>
-                                    <constraint firstItem="k6K-A1-70h" firstAttribute="bottom" secondItem="ry2-xq-WWj" secondAttribute="bottom" id="aKp-ls-zDP"/>
-                                    <constraint firstItem="k6K-A1-70h" firstAttribute="leading" secondItem="ry2-xq-WWj" secondAttribute="leading" id="gl2-rL-Tdx"/>
+                                    <constraint firstItem="aYY-fu-J5s" firstAttribute="top" secondItem="7kh-Q1-akT" secondAttribute="bottom" constant="8" id="cqj-Hv-p67"/>
+                                    <constraint firstAttribute="trailing" secondItem="aYY-fu-J5s" secondAttribute="trailing" constant="32" id="f27-Aw-E0s"/>
                                     <constraint firstAttribute="centerX" secondItem="Mmt-xt-XiU" secondAttribute="centerX" id="kTY-UJ-XCm"/>
-                                    <constraint firstItem="k6K-A1-70h" firstAttribute="centerY" secondItem="1QB-6m-XRf" secondAttribute="centerY" id="m9R-zt-vh0"/>
+                                    <constraint firstItem="aYY-fu-J5s" firstAttribute="leading" secondItem="MQC-tj-fHb" secondAttribute="leading" constant="29" id="mcU-gu-bIS"/>
                                     <constraint firstItem="Mmt-xt-XiU" firstAttribute="top" secondItem="7kh-Q1-akT" secondAttribute="bottom" constant="10" id="p9j-xT-B32"/>
                                     <constraint firstItem="7kh-Q1-akT" firstAttribute="leading" secondItem="MQC-tj-fHb" secondAttribute="leading" constant="32" id="pO5-GH-vkv"/>
                                     <constraint firstAttribute="trailing" secondItem="7kh-Q1-akT" secondAttribute="trailing" constant="32" id="uJP-O5-PXZ"/>
-                                    <constraint firstItem="k6K-A1-70h" firstAttribute="top" secondItem="7kh-Q1-akT" secondAttribute="bottom" constant="8" id="v4t-7d-Xcz"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -139,6 +151,7 @@
             </constraints>
             <size key="customSize" width="293" height="209"/>
             <connections>
+                <outlet property="audioPlayerView" destination="aYY-fu-J5s" id="E5a-vb-acm"/>
                 <outlet property="contentContainerView" destination="fHd-pv-egS" id="cr1-ad-yQ3"/>
                 <outlet property="contentViewHeightConstraint" destination="X8N-cc-mX5" id="Gxg-dO-oYh"/>
                 <outlet property="eventMessageLabel" destination="7kh-Q1-akT" id="jcu-S5-esD"/>
@@ -157,6 +170,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="playSound.png" width="43" height="43"/>
+        <image name="playSound.png" width="40" height="40"/>
     </resources>
 </document>

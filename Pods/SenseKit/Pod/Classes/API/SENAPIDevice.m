@@ -72,10 +72,11 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
 
 + (NSDate*)dateFromObject:(id)dateObject {
     NSDate* lastSeen = nil;
-    // jimmy: strangely, last_updated is converted to a string...  is it too big
-    // for a NSNUmber?
     if ([dateObject respondsToSelector:@selector(doubleValue)]) {
-        lastSeen = [NSDate dateWithTimeIntervalSince1970:[dateObject doubleValue] / 1000];
+        double timeInMs = [dateObject doubleValue];
+        if (timeInMs > 0) {
+            lastSeen = [NSDate dateWithTimeIntervalSince1970:timeInMs / 1000];
+        }
     }
     return lastSeen;
 }
@@ -202,6 +203,22 @@ NSString* const SENAPIDevicePropertyLastSeen = @"last_updated";
     }
     
     return [self unregisterDevice:device completion:completion];
+}
+
+#pragma mark - Factory Reset
+
++ (void)removeAssociationsToSense:(SENDevice*)sense completion:(SENAPIDataBlock)completion {
+    if ([sense type] != SENDeviceTypeSense || [sense deviceId] == nil) {
+        if (completion) {
+            completion (nil, [NSError errorWithDomain:SENAPIDeviceErrorDomain
+                                                 code:SENAPIDeviceErrorInvalidParam
+                                             userInfo:nil]);
+        }
+        return;
+    }
+    
+    NSString* path = [SENAPIDeviceEndpoint stringByAppendingFormat:@"/sense/%@/all", [sense deviceId]];
+    [SENAPIClient DELETE:path parameters:nil completion:completion];
 }
 
 @end

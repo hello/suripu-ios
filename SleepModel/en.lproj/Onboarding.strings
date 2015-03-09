@@ -104,7 +104,7 @@
 /* Class = "IBUIButton"; normalTitle = "CONTINUE"; ObjectID = "ONz-So-uP9"; */
 "ONz-So-uP9.normalTitle" = "CONTINUE";
 
-/* Class = "IBUILabel"; text = "Everything looks great.  Now let's set your first Smart Alarm."; ObjectID = "PFC-on-mrs"; */
+/* Class = "IBUILabel"; text = "Everything looks great. Now let's set your first Smart Alarm."; ObjectID = "PFC-on-mrs"; */
 "PFC-on-mrs.text" = "Everything looks great. Now let's set your first Smart Alarm.";
 
 /* Class = "IBUILabel"; text = "Room Check"; ObjectID = "PMR-Df-HyE"; */
@@ -113,7 +113,7 @@
 /* Class = "IBUILabel"; text = "Have your partner get the app"; ObjectID = "Pe9-oy-MXl"; */
 "Pe9-oy-MXl.text" = "Have your partner get the app";
 
-/* Class = "IBUILabel"; text = "You'll need Sense and Sleep Pill handy to continue.  If you're not ready now, you can always come back later."; ObjectID = "R0B-PY-KLe"; */
+/* Class = "IBUILabel"; text = "You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later."; ObjectID = "R0B-PY-KLe"; */
 "R0B-PY-KLe.text" = "You'll need Sense and Sleep Pill handy to continue. If you're not ready now, you can always come back later.";
 
 /* Class = "IBUILabel"; text = "Are you male or female?"; ObjectID = "S9f-tS-yQg"; */
@@ -305,8 +305,8 @@
 /* Class = "IBUILabel"; text = "Pair your Sense"; ObjectID = "xHT-0z-rBN"; */
 "xHT-0z-rBN.text" = "Pair your Sense";
 
-/* Class = "IBUILabel"; text = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands."; ObjectID = "xuG-gW-rF9"; */
-"xuG-gW-rF9.text" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands.";
+/* Class = "IBUILabel"; text = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands. Attach your Sleep Pill to the side of your pillow closest to the edge of your bed."; ObjectID = "xuG-gW-rF9"; */
+"xuG-gW-rF9.text" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands. Attach your Sleep Pill to the side of your pillow closest to the edge of your bed.";
 
 /* Class = "IBUIButton"; normalTitle = "Male"; ObjectID = "yLf-ik-ger"; */
 "yLf-ik-ger.normalTitle" = "Male";

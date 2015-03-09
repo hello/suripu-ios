@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.3.6
+
+Fixes:
+
+* tapping on account preferences will not show the update name modal screen
+* editing name will use the default keyboard and capitalize words
+* updated copy on how to attach your Sleep Pill to the pillow
+
 ## 1.0.3.5
 
 Fixes:

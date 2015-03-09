@@ -815,7 +815,6 @@
                                         <connections>
                                             <outlet property="accessory" destination="fmk-b1-ZDT" id="VYN-53-bTh"/>
                                             <outlet property="titleLabel" destination="xOd-qg-dIm" id="Esx-bi-LYi"/>
-                                            <segue destination="PX3-Nx-7ni" kind="modal" identifier="updateName" id="qPq-rc-DAO"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationLevel="1" indentationWidth="6" reuseIdentifier="explanation" textLabel="msn-ey-z1g" rowHeight="44" style="IBUITableViewCellStyleDefault" id="EjG-XI-I2H">
@@ -876,6 +875,7 @@
                         <outlet property="infoTableView" destination="siy-bj-GCk" id="3SF-fY-OMA"/>
                         <segue destination="VtO-0e-m99" kind="modal" identifier="updatePassword" id="KfO-Hu-PIG"/>
                         <segue destination="MSg-Ph-9h5" kind="modal" identifier="updateEmail" id="uit-tU-Npy"/>
+                        <segue destination="PX3-Nx-7ni" kind="modal" identifier="updateName" id="PaL-N4-oli"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7MN-lT-xwN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1917,7 +1917,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="569" height="96"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="568.5" height="96"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RM9-XI-qde">
@@ -1970,7 +1970,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="569" height="178"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="568.5" height="178"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SMART ALARMS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GlN-SR-oNV">
@@ -2007,7 +2007,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="569" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="568.5" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarms are currently unavailable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-2N-W4J">

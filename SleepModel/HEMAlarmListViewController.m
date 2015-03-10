@@ -231,8 +231,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
     __block SENAlarm* alarm = [self.alarms objectAtIndex:sender.tag];
     BOOL on = [sender isOn];
     alarm.on = on;
-    [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
-        if (!success) {
+    [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(NSError *error) {
+        if (error) {
             alarm.on = !on;
             sender.on = !on;
         }

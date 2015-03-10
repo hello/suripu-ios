@@ -130,7 +130,7 @@
     }];
 }
 
-+ (void)updateAlarmsFromPresentingController:(UIViewController*)controller completion:(void (^)(BOOL))completion
++ (void)updateAlarmsFromPresentingController:(UIViewController*)controller completion:(void (^)(NSError*))completion
 {
     NSArray* rightButtons = controller.navigationItem.rightBarButtonItems;
     UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
@@ -146,7 +146,7 @@
                onController:controller];
         }
         if (controller && completion)
-            completion(!error);
+            completion(error);
     }];
 }
 

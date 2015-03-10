@@ -446,6 +446,11 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 #pragma mark - Finishing
 
 - (void)finish {
+    NSString* deviceId = [[[self senseManager] sense] deviceId];
+    if (deviceId) {
+        [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropSenseId : deviceId}];
+    }
+    
     // need to do this to stop the activity and set the LED simultaneously or
     // else the LED does not properly sync up with the success mark
     //

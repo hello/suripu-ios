@@ -26,6 +26,8 @@ NSString* const kHEMAnalyticsEventPlatform = @"iOS";
 NSString* const kHEMAnalyticsEventPropName = @"Name";
 NSString* const kHEMAnalyticsEventPropGender = @"Gender";
 NSString* const kHEMAnalyticsEventPropAccount = @"Account Id";
+NSString* const kHEMAnalyticsEventPropSenseId = @"Sense Id";
+NSString* const kHEMAnalyticsEventPropSenseIdUnpaired = @"unpaired";
 
 // special mixpanel special properties
 NSString* const kHEMAnalyticsEventMpPropName = @"$name";

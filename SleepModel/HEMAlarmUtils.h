@@ -21,7 +21,7 @@
  *  @param completion block invoked at completion
  */
 + (void)updateAlarmsFromPresentingController:(UIViewController*)controller
-                                  completion:(void (^)(BOOL success))completion;
+                                  completion:(void (^)(NSError *error))completion;
 
 /**
  *  Download latest alarm data from server

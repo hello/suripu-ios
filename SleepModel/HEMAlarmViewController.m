@@ -17,6 +17,7 @@
 #import "HEMAlarmTableViewCell.h"
 #import "HEMClockPickerView.h"
 #import "HEMTutorial.h"
+#import "HEMAnalytics.h"
 
 typedef NS_ENUM(NSUInteger, HEMAlarmTableIndex) {
     HEMAlarmTableIndexSmart = 0,
@@ -154,9 +155,13 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 
     [self updateAlarmFromCache:self.alarmCache];
     __weak typeof(self) weakSelf = self;
-    [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
+    [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (success)
+        [SENAnalytics track:HEMAnalyticsEventSaveAlarm properties:@{
+            HEMAnalyticsEventSaveAlarmError:error.localizedDescription ?:@"",
+            HEMAnalyticsEventSaveAlarmHour:@(self.alarmCache.hour),
+            HEMAnalyticsEventSaveAlarmMinute:@(self.alarmCache.minute)}];
+        if (!error)
             [strongSelf dismiss:YES];
         else if ([self isUnsavedAlarm])
             [strongSelf.alarm delete];
@@ -178,13 +183,13 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
     [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf.alarm delete];
-        [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
-            if (success) {
+        [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(NSError* error) {
+            if (error) {
+                [strongSelf.alarm save];
+            } else {
                 [strongSelf dismissViewControllerAnimated:YES completion:^{
                     [strongSelf dismiss:NO];
                 }];
-            } else {
-                [strongSelf.alarm save];
             }
         }];
     }];
@@ -196,7 +201,10 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 
 - (IBAction)updateAlarmState:(UISwitch*)sender
 {
-    self.alarmCache.smart = [sender isOn];
+    BOOL isSmart = [sender isOn];
+    self.alarmCache.smart = isSmart;
+    [SENAnalytics track:HEMAnalyticsEventSwitchSmartAlarm
+             properties:@{HEMAnalyticsEventSwitchSmartAlarmOn:@(isSmart)}];
 }
 
 - (IBAction)showHelpfulDialogAboutSmartness:(id)sender

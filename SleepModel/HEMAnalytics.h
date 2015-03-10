@@ -78,9 +78,6 @@ extern NSString* const kHEMAnalyticsEventPropScreenPillPairing;
 // main
 extern NSString* const kHEMAnalyticsEventAppLaunched;
 extern NSString* const kHEMAnalyticsEventAppClosed;
-extern NSString* const kHEMAnalyticsEventAlarms;
-extern NSString* const kHEMAnalyticsEventTimeline;
-extern NSString* const kHEMAnalyticsEventTimelineAction;
 extern NSString* const kHEMAnalyticsEventPropEvent;
 extern NSString* const kHEMAnalyticsEventDrawer;
 extern NSString* const kHEMAnalyticsEventPropOpen;
@@ -114,6 +111,18 @@ extern NSString* const kHEMAnalyticsEventDeviceActionUnpairPill;
 
 // timeline
 extern NSString* const HEMAnalyticsEventTimelineBarLongPress;
+extern NSString* const kHEMAnalyticsEventTimeline;
+extern NSString* const kHEMAnalyticsEventTimelineAction;
+
+// alarms
+extern NSString* const kHEMAnalyticsEventAlarms;
+extern NSString* const HEMAnalyticsEventCreateNewAlarm;
+extern NSString* const HEMAnalyticsEventSwitchSmartAlarm;
+extern NSString* const HEMAnalyticsEventSwitchSmartAlarmOn;
+extern NSString* const HEMAnalyticsEventSaveAlarm;
+extern NSString* const HEMAnalyticsEventSaveAlarmHour;
+extern NSString* const HEMAnalyticsEventSaveAlarmMinute;
+extern NSString* const HEMAnalyticsEventSaveAlarmError;
 
 @interface HEMAnalytics : NSObject
 

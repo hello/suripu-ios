@@ -85,9 +85,6 @@ NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 // main app
 NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";
 NSString* const kHEMAnalyticsEventAppClosed = @"App Closed";
-NSString* const kHEMAnalyticsEventAlarms = @"Alarms";
-NSString* const kHEMAnalyticsEventTimeline = @"Timeline";
-NSString* const kHEMAnalyticsEventTimelineAction = @"Timeline Action";
 NSString* const kHEMAnalyticsEventPropEvent = @"event";
 NSString* const kHEMAnalyticsEventDrawer = @"Drawer Action";
 NSString* const kHEMAnalyticsEventPropOpen = @"open";
@@ -121,6 +118,18 @@ NSString* const kHEMAnalyticsEventDeviceActionUnpairPill = @"unpair Sleep Pill";
 
 // timeline
 NSString* const HEMAnalyticsEventTimelineBarLongPress = @"Long press sleep duration bar";
+NSString* const kHEMAnalyticsEventTimeline = @"Timeline";
+NSString* const kHEMAnalyticsEventTimelineAction = @"Timeline Action";
+
+// alarms
+NSString* const kHEMAnalyticsEventAlarms = @"Alarms";
+NSString* const HEMAnalyticsEventCreateNewAlarm = @"Create new alarm";
+NSString* const HEMAnalyticsEventSwitchSmartAlarm = @"Flip smart alarm switch";
+NSString* const HEMAnalyticsEventSwitchSmartAlarmOn = @"on";
+NSString* const HEMAnalyticsEventSaveAlarm = @"Save alarm";
+NSString* const HEMAnalyticsEventSaveAlarmHour = @"hour";
+NSString* const HEMAnalyticsEventSaveAlarmMinute = @"minute";
+NSString* const HEMAnalyticsEventSaveAlarmError = @"error";
 
 @implementation HEMAnalytics
 

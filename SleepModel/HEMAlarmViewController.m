@@ -17,6 +17,7 @@
 #import "HEMAlarmTableViewCell.h"
 #import "HEMClockPickerView.h"
 #import "HEMTutorial.h"
+#import "HEMAnalytics.h"
 
 typedef NS_ENUM(NSUInteger, HEMAlarmTableIndex) {
     HEMAlarmTableIndexSmart = 0,
@@ -156,6 +157,10 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
     __weak typeof(self) weakSelf = self;
     [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(NSError* error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        [SENAnalytics track:HEMAnalyticsEventSaveAlarm properties:@{
+            HEMAnalyticsEventSaveAlarmError:error.localizedDescription ?:@"",
+            HEMAnalyticsEventSaveAlarmHour:@(self.alarmCache.hour),
+            HEMAnalyticsEventSaveAlarmMinute:@(self.alarmCache.minute)}];
         if (!error)
             [strongSelf dismiss:YES];
         else if ([self isUnsavedAlarm])
@@ -196,7 +201,10 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 
 - (IBAction)updateAlarmState:(UISwitch*)sender
 {
-    self.alarmCache.smart = [sender isOn];
+    BOOL isSmart = [sender isOn];
+    self.alarmCache.smart = isSmart;
+    [SENAnalytics track:HEMAnalyticsEventSwitchSmartAlarm
+             properties:@{HEMAnalyticsEventSwitchSmartAlarmOn:@(isSmart)}];
 }
 
 - (IBAction)showHelpfulDialogAboutSmartness:(id)sender

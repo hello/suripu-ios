@@ -140,7 +140,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 - (instancetype)initWithSense:(SENSense*)sense {
     self = [super init];
     if (self) {
-        DDLogVerbose(@"Sense manager initialized for %@", [sense name]);
+        DDLogVerbose(@"Sense manager initialized for %@, id %@", [sense name], [sense deviceId]);
         [self setSense:sense];
         [self setValid:YES];
         [self setMessageSuccessCallbacks:[NSMutableDictionary dictionary]];
@@ -150,6 +150,34 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     }
     return self;
 }
+
+#pragma mark - Errors
+
+- (NSError*)errorWithCode:(SENSenseManagerErrorCode)code
+              description:(NSString*)description
+      fromUnderlyingError:(NSError*)error {
+    NSMutableDictionary* userInfo = [NSMutableDictionary dictionary];
+    if (error) userInfo[NSUnderlyingErrorKey] = error;
+    if (description) userInfo[NSLocalizedDescriptionKey] = description;
+    
+    return [NSError errorWithDomain:kSENSenseErrorDomain
+                               code:code
+                           userInfo:userInfo];
+}
+
+- (void)failWithBlock:(SENSenseFailureBlock)failure andCode:(SENSenseManagerErrorCode)code {
+    [self failWithBlock:failure errorCode:code description:nil];
+}
+
+- (void)failWithBlock:(SENSenseFailureBlock)failure
+            errorCode:(SENSenseManagerErrorCode)code
+          description:(NSString*)description {
+    if (failure) {
+        failure ([self errorWithCode:code description:description fromUnderlyingError:nil]);
+    }
+}
+
+#pragma mark -
 
 - (BOOL)isConnected {
     return [[[[self sense] peripheral] cbPeripheral] state] == CBPeripheralStateConnected;
@@ -181,9 +209,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
             
             if (!foundAgain && completion) {
                 DDLogVerbose(@"Sense not found when trying to rediscover");
-                completion ([NSError errorWithDomain:kSENSenseErrorDomain
-                                                code:SENSenseManagerErrorCodeInvalidated
-                                            userInfo:nil]);
+                completion ([strongSelf errorWithCode:SENSenseManagerErrorCodeInvalidated
+                                          description:@"could not rediscover Sense"
+                                  fromUnderlyingError:nil]);
             }
             
         }
@@ -200,9 +228,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     
     LGPeripheral* peripheral = [[self sense] peripheral];
     if (peripheral == nil) {
-        completion ([NSError errorWithDomain:kSENSenseErrorDomain
-                                        code:SENSenseManagerErrorCodeNoDeviceSpecified
-                                    userInfo:nil]);
+        completion ([self errorWithCode:SENSenseManagerErrorCodeNoDeviceSpecified
+                            description:@"cannot connect to a non-existent Sense"
+                    fromUnderlyingError:nil]);
         return;
     }
     
@@ -261,22 +289,22 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                          completion:(SENSenseCompletionBlock)completion {
     if (!completion) return; // even if we do stuff, what would it be for?
     if ([characteristicIds count] == 0) {
-        completion (nil, [NSError errorWithDomain:kSENSenseErrorDomain
-                                             code:SENSenseManagerErrorCodeInvalidArgument
-                                         userInfo:nil]);
+        completion (nil, [self errorWithCode:SENSenseManagerErrorCodeInvalidArgument
+                                 description:@"no characteristic ids specified"
+                         fromUnderlyingError:nil]);
         return;
     }
     
     __weak typeof(self) weakSelf = self;
     [self connectThen:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
         if (error != nil) {
-            completion (nil, [NSError errorWithDomain:kSENSenseErrorDomain
-                                                 code:SENSenseManagerErrorCodeConnectionFailed
-                                             userInfo:nil]);
+            completion (nil, [strongSelf errorWithCode:SENSenseManagerErrorCodeConnectionFailed
+                                           description:@"could not connect to Sense"
+                                   fromUnderlyingError:error]);
             return;
         }
-        
-        __strong typeof(weakSelf) strongSelf = weakSelf;
         
         LGPeripheral* peripheral = [[strongSelf sense] peripheral];
         NSDictionary* characteristics = [strongSelf cachedCharacteristicsWithIds:characteristicIds
@@ -342,9 +370,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
         if (error != nil || [services count] != 1) {
-            completion (nil, error?error:[NSError errorWithDomain:kSENSenseErrorDomain
-                                                             code:SENSenseManagerErrorCodeUnexpectedResponse
-                                                         userInfo:nil]);
+            completion (nil, error?error:[strongSelf errorWithCode:SENSenseManagerErrorCodeUnexpectedResponse
+                                                       description:@"could not discover services"
+                                               fromUnderlyingError:nil]);
             return;
         }
         
@@ -380,14 +408,6 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                                           kSENSenseCharacteristicResponseId,
                                                           nil]
                   completion:completion];
-}
-
-- (void)failWithBlock:(SENSenseFailureBlock)failure andCode:(SENSenseManagerErrorCode)code {
-    if (failure) {
-        failure ([NSError errorWithDomain:kSENSenseErrorDomain
-                                     code:code
-                                 userInfo:nil]);
-    }
 }
 
 #pragma mark - (Private) Sending Data
@@ -484,7 +504,8 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         LGCharacteristic* reader = [response valueForKey:kSENSenseCharacteristicResponseId];
         if (writer == nil || reader == nil) {
             return [strongSelf failWithBlock:failure
-                                     andCode:SENSenseManagerErrorCodeUnexpectedResponse];
+                                   errorCode:SENSenseManagerErrorCodeUnexpectedResponse
+                                 description:@"could not discover characteristics"];
         }
         
         NSArray* packets = [strongSelf blePackets:message];
@@ -806,13 +827,16 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                     = parseError != nil
                     ? [parseError code]
                     : SENSenseManagerErrorCodeUnexpectedResponse;
-                [self failWithBlock:failure andCode:code];
+                NSString* desc = [NSString stringWithFormat:@"response error from command %ld", (long)type];
+                [self failWithBlock:failure errorCode:code description:desc];
             } else {
                 if (success) success (responseMsg);
             }
         } // else, wait for next update
     } else {
-        [self failWithBlock:failure andCode:SENSenseManagerErrorCodeUnexpectedResponse];
+        [self failWithBlock:failure
+                  errorCode:SENSenseManagerErrorCodeUnexpectedResponse
+                description:@"invalid response size"];
     }
 }
 
@@ -825,6 +849,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
  */
 - (SENSenseMessage*)messageFromBlePackets:(NSArray*)packets error:(NSError**)error {
     SENSenseMessage* response = nil;
+    NSString* errorDesc = nil;
     SENSenseManagerErrorCode errCode = SENSenseManagerErrorCodeNone;
     NSMutableData* actualPayload = [NSMutableData data];
     
@@ -843,17 +868,17 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         response = [SENSenseMessage parseFromData:actualPayload];
         if ([response hasError]) {
             errCode = [self errorCodeFrom:[response error]];
+            errorDesc = @"error returned in ble response";
             DDLogVerbose(@"ble response has an error with device code %ld", (long)errCode);
         }
     } @catch (NSException *exception) {
         DDLogWarn(@"parsing ble protobuf message encountered exception %@", exception);
         errCode = SENSenseManagerErrorCodeUnexpectedResponse;
+        errorDesc = [exception description];
     }
     
     if (errCode != SENSenseManagerErrorCodeNone && error != NULL) {
-        *error = [NSError errorWithDomain:kSENSenseErrorDomain
-                                     code:errCode
-                                 userInfo:nil];
+        *error = [self errorWithCode:errCode description:errorDesc fromUnderlyingError:nil];
     }
     return response;
 }
@@ -885,9 +910,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         SENSenseFailureBlock failureCb = [[self messageFailureCallbacks] valueForKey:cbKey];
         if (failureCb) {
             DDLogVerbose(@"firing timeout message");
-            failureCb ([NSError errorWithDomain:kSENSenseErrorDomain
-                                           code:SENSenseManagerErrorCodeTimeout
-                                       userInfo:nil]);
+            failureCb ( [self errorWithCode:SENSenseManagerErrorCodeTimeout
+                                description:@"ble message timed out"
+                        fromUnderlyingError:nil]);
         } else {
             DDLogVerbose(@"failure block not defined for time out");
         }
@@ -919,7 +944,8 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                       
                       if (reader == nil) {
                           return [strongSelf failWithBlock:failure
-                                                   andCode:SENSenseManagerErrorCodeUnexpectedResponse];
+                                                 errorCode:SENSenseManagerErrorCodeUnexpectedResponse
+                                               description:@"could not discover response characteristic when pairing"];
                       }
                       
                       NSString* cbKey = [strongSelf cacheMessageCallbacks:nil
@@ -1059,9 +1085,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                   failure:(SENSenseFailureBlock)failure {
     
     if (!success) {
-        if (failure) failure ([NSError errorWithDomain:kSENSenseErrorDomain
-                                                  code:SENSenseManagerErrorCodeInvalidArgument
-                                              userInfo:nil]);
+        if (failure) failure ([self errorWithCode:SENSenseManagerErrorCodeInvalidArgument
+                                      description:@"no callback set when asking for configured wifi"
+                              fromUnderlyingError:nil]);
         return;
     }
     
@@ -1232,9 +1258,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                         }
                         for (NSString* observerId in [strongSelf disconnectObservers]) {
                             SENSenseFailureBlock block = [[strongSelf disconnectObservers] valueForKey:observerId];
-                            block ([NSError errorWithDomain:kSENSenseErrorDomain
-                                                       code:SENSenseManagerErrorCodeUnexpectedDisconnect
-                                                   userInfo:nil]);
+                            block ([strongSelf errorWithCode:SENSenseManagerErrorCodeUnexpectedDisconnect
+                                                 description:@"unexpectedly disconnected from Sense"
+                                         fromUnderlyingError:nil]);
                         }
                     }];
 }

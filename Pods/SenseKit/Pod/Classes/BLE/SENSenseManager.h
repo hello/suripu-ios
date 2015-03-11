@@ -42,7 +42,7 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
     SENSenseManagerErrorCodeTimeout = -4,
     /** If Sense believes the mobile device has already been paired **/
     SENSenseManagerErrorCodeSenseAlreadyPaired = -5,
-    /** If some how the manager created a Sense messasge **/
+    /** If some how the manager created an invalid protobuf message**/
     SENSenseManagerErrorCodeInvalidCommand = -6,
     /** If some how, while sending a message, the connection fails **/
     SENSenseManagerErrorCodeConnectionFailed = -7,
@@ -62,8 +62,8 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
      */
     SENSenseManagerErrorCodeWifiNotInRange = -13,
     /**
-     * If trying to set WiFi credentials and Sense reports back that the endpoint
-     * is not in range for Sense to connect to.
+     * If trying to set WiFi credentials and Sense reports back that it cannot
+     * connect to the network
      */
     SENSenseManagerErrorCodeWLANConnection = -14,
     /**
@@ -76,8 +76,7 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
      */
     SENSenseManagerErrorCodeUnexpectedDisconnect = -16,
     /**
-     * Error code returned from an instance of SENSenseManager if an unexpected
-     * disconnect occurred while connected to Sense.
+     * If Sense returned that it encountered an internal data error
      */
     SENSenseManagerErrorCodeCorruptTransmission = -17
 };

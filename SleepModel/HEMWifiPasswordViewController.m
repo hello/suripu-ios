@@ -60,8 +60,10 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     
     [self configureForm];
     
-    if ([self delegate] == nil && [self sensePairDelegate] == nil) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBWiFiPass];
+    if (![self haveDelegates]) {
+        NSString* other = [self endpoint] == nil ? @"true" : @"false";
+        [SENAnalytics track:kHEMAnalyticsEventOnBWiFiPass
+                 properties:@{kHEMAnalyticsEventPropWiFiOther :other}];
     }
 }
 
@@ -345,11 +347,33 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 }
 
+#pragma mark - Analytics Helpers
+
+- (NSString*)analyticsValueForSecurityType:(SENWifiEndpointSecurityType)type {
+    switch (type) {
+        case SENWifiEndpointSecurityTypeOpen:
+            return @"open";
+        case SENWifiEndpointSecurityTypeWep:
+            return @"wep";
+        case SENWifiEndpointSecurityTypeWpa:
+            return @"wpa";
+        case SENWifiEndpointSecurityTypeWpa2:
+            return @"wpa2";
+        default:
+            return @"unknown";
+    }
+}
+
 #pragma mark - Steps To Set Up
 
 - (void)setupWiFi:(NSString*)ssid
          password:(NSString*)password
      securityType:(SENWifiEndpointSecurityType)type {
+    
+    if (![self haveDelegates]) {
+        [SENAnalytics track:kHEMAnalyticsEventOnBWiFiSubmit
+                 properties:@{kHEMAnalyticsEventPropSecurityType : [self analyticsValueForSecurityType:type]}];
+    }
     
     __weak typeof(self) weakSelf = self;
     SENSenseManager* manager = [self manager];

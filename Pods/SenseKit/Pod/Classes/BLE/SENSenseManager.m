@@ -54,6 +54,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 @property (nonatomic, strong, readwrite) NSMutableDictionary* messageFailureCallbacks;
 @property (nonatomic, strong, readwrite) NSMutableDictionary* messageUpdateCallbacks;
 @property (nonatomic, strong, readwrite) NSMutableDictionary* messageTimeoutTimers;
+@property (nonatomic, strong, readwrite) NSMutableDictionary* messageTypeForCallbacks;
 
 @end
 
@@ -147,6 +148,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         [self setMessageFailureCallbacks:[NSMutableDictionary dictionary]];
         [self setMessageUpdateCallbacks:[NSMutableDictionary dictionary]];
         [self setMessageTimeoutTimers:[NSMutableDictionary dictionary]];
+        [self setMessageTypeForCallbacks:[NSMutableDictionary dictionary]];
     }
     return self;
 }
@@ -519,7 +521,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
             NSString* cbKey = [self cacheMessageCallbacks:update
                                                   success:success
                                              failureBlock:failure
-                                               subscriber:blockReader];
+                                               subscriber:blockReader
+                                           forMessageType:[message type]];
+            
             [strongSelf scheduleMessageTimeOut:timeout withKey:cbKey];
             
             [reader setNotifyValue:YES completion:^(NSError *error) {
@@ -602,9 +606,12 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 - (NSString*)cacheMessageCallbacks:(SENSenseUpdateBlock)updateBlock
                            success:(SENSenseSuccessBlock)successBlock
                       failureBlock:(SENSenseFailureBlock)failureBlock
-                        subscriber:(LGCharacteristic*)subscriber {
+                        subscriber:(LGCharacteristic*)subscriber
+                    forMessageType:(SENSenseMessageType)type {
     
     NSString* key = [[NSUUID UUID] UUIDString];
+    
+    [[self messageTypeForCallbacks] setValue:@(type) forKey:key];
     
     if (updateBlock) {
         [[self messageUpdateCallbacks] setValue:[updateBlock copy] forKey:key];
@@ -637,6 +644,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     [[self messageFailureCallbacks] removeAllObjects];
     [[self messageSuccessCallbacks] removeAllObjects];
     [[self messageUpdateCallbacks] removeAllObjects];
+    [[self messageTypeForCallbacks] removeAllObjects];
 }
 
 - (void)clearMessageCallbacksForKey:(NSString*)key {
@@ -644,6 +652,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         [[self messageFailureCallbacks] removeObjectForKey:key];
         [[self messageSuccessCallbacks] removeObjectForKey:key];
         [[self messageUpdateCallbacks] removeObjectForKey:key];
+        [[self messageTypeForCallbacks] removeObjectForKey:key];
     }
 }
 
@@ -909,9 +918,14 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         
         SENSenseFailureBlock failureCb = [[self messageFailureCallbacks] valueForKey:cbKey];
         if (failureCb) {
-            DDLogVerbose(@"firing timeout message");
+            NSNumber* messageType = [[self messageTypeForCallbacks] objectForKey:cbKey];
+            NSString* errDesc = [NSString stringWithFormat:@"ble message timed out for type %ld",
+                                 [messageType longValue]];
+            
+            DDLogVerbose(@"%@", errDesc);
+            
             failureCb ( [self errorWithCode:SENSenseManagerErrorCodeTimeout
-                                description:@"ble message timed out"
+                                description:errDesc
                         fromUnderlyingError:nil]);
         } else {
             DDLogVerbose(@"failure block not defined for time out");
@@ -951,7 +965,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                       NSString* cbKey = [strongSelf cacheMessageCallbacks:nil
                                                                   success:success
                                                              failureBlock:failure
-                                                               subscriber:reader];
+                                                               subscriber:reader
+                                                           forMessageType:100]; // no message type for pairing
+                      
                       [strongSelf scheduleMessageTimeOut:kSENSenseDefaultTimeout withKey:cbKey];
                       
                       [reader setNotifyValue:YES completion:^(NSError *error) {
@@ -1024,6 +1040,63 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 #pragma mark - Wifi
 
++ (BOOL)isWepKeyValid:(NSString*)key {
+    NSUInteger len = [key length];
+    return len > 0 && len % 2 == 0;
+}
+
+/**
+ * Convert the wep network key (generated from the passphrase) to a base 16 bytes,
+ * which is the only way the firmware will work with WEP security.  If the network
+ * key contains a 0 in the middle of the value, it will also
+ */
+- (NSData*)dataValueForWepNetworkKey:(NSString*)networkKey error:(NSError**)error {
+    DDLogVerbose(@"formatting password for wifi with wep security");
+    
+    NSUInteger len = [networkKey length];
+    
+    if (![[self class] isWepKeyValid:networkKey]) {
+        if (error != NULL) {
+            NSString* errorMsg = @"invalid wep network key";
+            DDLogVerbose(@"%@", errorMsg);
+            *error = [self errorWithCode:SENSenseManagerErrorCodeInvalidArgument
+                             description:errorMsg
+                     fromUnderlyingError:nil];
+        }
+        return nil;
+    }
+    
+    const char* chars = [networkKey cStringUsingEncoding:NSUTF8StringEncoding];
+    NSMutableData* mutableData = [NSMutableData dataWithCapacity:len/2];
+    
+    int i = 0;
+    char bytes[3] = {'\0', '\0', '\0'};
+    unsigned long convertedLong;
+    while (i < len) {
+        bytes[0] = chars[i++];
+        bytes[1] = chars[i++];
+        convertedLong = strtol(bytes, NULL, 16);
+        [mutableData appendBytes:&convertedLong length:1];
+    }
+    
+    return mutableData;
+}
+
+- (NSData*)dataValueForWiFiPassword:(NSString*)password
+                   withSecurityType:(SENWifiEndpointSecurityType)type
+                    formattingError:(NSError**)error {
+    switch (type) {
+        case SENWifiEndpointSecurityTypeWep:
+            return [self dataValueForWepNetworkKey:password error:error];
+        case SENWifiEndpointSecurityTypeOpen:
+            return nil;
+        case SENWifiEndpointSecurityTypeWpa:
+        case SENWifiEndpointSecurityTypeWpa2:
+        default:
+            return [password dataUsingEncoding:NSUTF8StringEncoding];
+    }
+}
+
 - (void)setWiFi:(NSString*)ssid
        password:(NSString*)password
    securityType:(SENWifiEndpointSecurityType)securityType
@@ -1031,11 +1104,24 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         failure:(SENSenseFailureBlock)failure {
     
     DDLogVerbose(@"setting wifi on Sense with ssid %@", ssid);
+    NSError* passwordError = nil;
+    NSData* passwordData = [self dataValueForWiFiPassword:password
+                                         withSecurityType:securityType
+                                          formattingError:&passwordError];
+    
+    if (passwordError != nil) {
+        if (failure) {
+            failure (passwordError);
+        }
+        return;
+    }
+    
     SENSenseMessageType type = SENSenseMessageTypeSetWifiEndpoint;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [builder setSecurityType:securityType];
     [builder setWifiSsid:ssid];
-    [builder setWifiPassword:password];
+    [builder setWifiPassword:passwordData];
+    
     [self sendMessage:[builder build]
               timeout:kSENSenseSetWifiTimeout
                update:nil

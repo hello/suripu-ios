@@ -263,6 +263,12 @@ typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {
 #pragma mark - Wifi
 
 /**
+ * Determine if the WEP network key is valid / works with Sense
+ * @return YES if it should work, NO otherwise
+ */
++ (BOOL)isWepKeyValid:(NSString*)key;
+
+/**
  * @method
  * Provide the initialized Sense device with the wifi credentials that it should
  * use to connect itself with the Sense API.

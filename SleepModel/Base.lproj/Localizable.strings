@@ -108,7 +108,7 @@
 "wifi.activity.setting-timezone" = "Setting timezone";
 "wifi.error.set-sense-general" = "There was a problem connecting Sense to WiFi. Make sure Sense is plugged in and nearby and try again.";
 "wifi.activity.scanning" = "Finding WiFi networks...";
-"wifi.error.invalid-input" = "The WiFi credentials provided are invalid. Please ensure you have entered everything correctl./";
+"wifi.error.invalid-input" = "The WiFi credentials provided are invalid. Please ensure you have entered everything correctly.";
 "wifi.error.set-sense-not-in-range" = "Sense could not connect to WiFi. Please verify your credentials and ensure Sense is within WiFi range.";
 "wifi.error.set-sense-timeout" = "Timed out while setting WiFi credentials on Sense.";
 "wifi.error.set-sense-failed-connection" = "Sense could not connect to the WiFi.";

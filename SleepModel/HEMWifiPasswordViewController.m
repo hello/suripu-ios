@@ -566,8 +566,10 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (void)showInvalidInputMessage {
-    [self showErrorMessage:NSLocalizedString(@"wifi.error.invalid-input", nil)
-                 withTitle:NSLocalizedString(@"wifi.error.title", nil)];
+    [self showMessageDialog:NSLocalizedString(@"wifi.error.invalid-input", nil)
+                      title:NSLocalizedString(@"wifi.error.title", nil)
+                      image:nil
+               withHelpPage:NSLocalizedString(@"troubleshoot/connecting-sense-wifi", nil)];
 }
 
 - (void)showSetWiFiError:(NSError*)error {

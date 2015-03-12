@@ -47,7 +47,7 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 
 static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 static CGFloat const HEMRootDrawerRevealHeight = 46.f;
-static CGFloat const HEMRootDrawerRevealHeightStatusOffset = 20.f;
+static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 + (instancetype)rootViewControllerForKeyWindow
 {
@@ -171,12 +171,12 @@ static CGFloat const HEMRootDrawerRevealHeightStatusOffset = 20.f;
     CGRect screenFrame = [[UIScreen mainScreen] bounds];
     CGFloat statusBarHeight = MIN(CGRectGetHeight(statusBarFrame), CGRectGetWidth(statusBarFrame));
     CGFloat screenHeight = MAX(CGRectGetHeight(screenFrame), CGRectGetWidth(screenFrame));
-    CGFloat revealHeight = screenHeight
-        - (HEMRootDrawerRevealHeight + statusBarHeight - HEMRootDrawerRevealHeightStatusOffset);
+    CGFloat revealHeight = screenHeight - (HEMRootDrawerRevealHeight + statusBarHeight - HEMRootDrawerStatusBarOffset);
     MSDynamicsDrawerPaneState state = self.drawerViewController.paneState;
     self.drawerViewController.paneState = MSDynamicsDrawerPaneStateClosed;
     [self.drawerViewController setRevealWidth:revealHeight forDirection:MSDynamicsDrawerDirectionTop];
     self.drawerViewController.paneState = state;
+    self.drawerViewController.view.frame = screenFrame;
 }
 
 - (void)registerForNotifications {

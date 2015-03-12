@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.3.7
+
+Fixes:
+
+* fixes layout issues when the in-call status bar is visible
+* setting the device id of Sense on mixpanel as soon as an attempt to pair is triggered to help diagnose problems
+* resolved Sense WiFi connectivity issue when network uses WEP security
+* wait until all operations are finished to dismiss activity so that error messages do not appear to be delayed
+* added more information to BLE errors returned and logged
+* adding additional analytics properties and events around setting up WiFi
+* instrumented alarms UI in Mixpanel
+
 ## 1.0.3.6
 
 Fixes:

@@ -36,6 +36,7 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 @property (nonatomic, getter=presleepSectionIsExpanded) BOOL presleepExpanded;
 @property (nonatomic, strong) UIPanGestureRecognizer* panGestureRecognizer;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* shortcutButtonTrailing;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* shortcutButtonBottom;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* popupViewTop;
 @property (nonatomic, weak) IBOutlet UIButton* shortcutButton;
 @property (nonatomic, weak) IBOutlet HEMPopupView* popupView;
@@ -52,6 +53,8 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
 static CGFloat const HEMEventOverlayZPosition = 30.f;
 static CGFloat const HEMAlarmShortcutDefaultTrailing = 8.f;
 static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
+static CGFloat const HEMAlarmShortcutBottomOffset = 20.f;
+static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
 - (void)viewDidLoad
 {
@@ -65,7 +68,8 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
     [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:self.panGestureRecognizer];
     [self.view addGestureRecognizer:self.panGestureRecognizer];
     [self registerForNotifications];
-    
+    [self adjustHeight];
+
     [SENAnalytics track:kHEMAnalyticsEventTimeline
              properties:@{kHEMAnalyticsEventPropDate : [self dateForNightOfSleep] ?: @"undefined"}];
 }
@@ -140,6 +144,20 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
                                              selector:@selector(drawerDidClose)
                                                  name:HEMRootDrawerDidCloseNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(adjustHeight)
+                                                 name:UIApplicationDidChangeStatusBarFrameNotification
+                                               object:nil];
+}
+
+- (void)adjustHeight
+{
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    CGFloat statusBarHeight = MIN(CGRectGetHeight(statusBarFrame), CGRectGetWidth(statusBarFrame));
+    CGFloat bottomOffset = HEMAlarmShortcutDefaultBottom + (statusBarHeight - HEMAlarmShortcutBottomOffset);
+    self.shortcutButtonBottom.constant = bottomOffset;
+    [self.view setNeedsUpdateConstraints];
+    [self.shortcutButton layoutIfNeeded];
 }
 
 - (void)handleAuthorization
@@ -445,8 +463,10 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 
 - (BOOL)isViewPushed
 {
+    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+    CGFloat statusBarHeight = MIN(CGRectGetHeight(statusBarFrame), CGRectGetWidth(statusBarFrame));
     CGPoint location = [self.view.superview convertPoint:self.view.frame.origin fromView:nil];
-    return location.y > -10.f;
+    return location.y <= statusBarHeight;
 }
 
 - (BOOL)shouldAllowRecognizerToReceiveTouch:(UIPanGestureRecognizer*)recognizer

@@ -72,6 +72,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         [[self ssidField] setText:[[self endpoint] ssid]];
         [self setSecurityType:[[self endpoint] security]];
         [[self securityField] setHidden:YES];
+        [[self passwordField] setHidden:[self securityType] == SENWifiEndpointSecurityTypeOpen];
     } else { // default to WPA2
         [self setSecurityType:SENWifiEndpointSecurityTypeWpa2];
     }
@@ -108,7 +109,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    if ([[[self ssidField] text] length] == 0) {
+    if ([[[self ssidField] text] length] == 0 || [[self passwordField] isHidden]) {
         [[self ssidField] becomeFirstResponder];
     } else {
         [[self passwordField] becomeFirstResponder];
@@ -148,10 +149,16 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 }
 
 - (BOOL)isValid:(NSString*)ssid pass:(NSString*)pass {
-    return [ssid length] > 0
-            && ([self securityType] == SENWifiEndpointSecurityTypeOpen
-                || ([self securityType] != SENWifiEndpointSecurityTypeOpen
-                    && [pass length] > 0));
+    BOOL valid = YES;
+    if ([ssid length] == 0) {
+        valid = NO;
+    } else if ([self securityType] != SENWifiEndpointSecurityTypeOpen
+               && [pass length] == 0) {
+        valid = NO;
+    } else if ([self securityType] == SENWifiEndpointSecurityTypeWep) {
+        valid = [SENSenseManager isWepKeyValid:pass];
+    }
+    return valid;
 }
 
 - (void)observeUnexpectedDisconnects {
@@ -497,6 +504,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                 [self showActivityWithText:message completion:^{
                     [self setupWiFi:ssid password:pass securityType:[self securityType]];
                 }];
+            } else {
+                [self showInvalidInputMessage];
             }
             break;
         }
@@ -554,6 +563,11 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
                               image:nil
                        withHelpPage:NSLocalizedString(@"troubleshoot/connecting-sense-wifi", nil)];
     }];
+}
+
+- (void)showInvalidInputMessage {
+    [self showErrorMessage:NSLocalizedString(@"wifi.error.invalid-input", nil)
+                 withTitle:NSLocalizedString(@"wifi.error.title", nil)];
 }
 
 - (void)showSetWiFiError:(NSError*)error {

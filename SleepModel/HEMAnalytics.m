@@ -26,6 +26,8 @@ NSString* const kHEMAnalyticsEventPlatform = @"iOS";
 NSString* const kHEMAnalyticsEventPropName = @"Name";
 NSString* const kHEMAnalyticsEventPropGender = @"Gender";
 NSString* const kHEMAnalyticsEventPropAccount = @"Account Id";
+NSString* const kHEMAnalyticsEventPropSenseId = @"Sense Id";
+NSString* const kHEMAnalyticsEventPropSenseIdUnpaired = @"unpaired";
 
 // special mixpanel special properties
 NSString* const kHEMAnalyticsEventMpPropName = @"$name";
@@ -68,6 +70,9 @@ NSString* const kHEMAnalyticsEventOnBPairSense = @"Onboarding Pair Sense";
 NSString* const kHEMAnalyticsEventOnBWiFi = @"Onboarding WiFi";
 NSString* const kHEMAnalyticsEventOnBWiFiScan = @"Onboarding WiFi Scan";
 NSString* const kHEMAnalyticsEventOnBWiFiPass = @"Onboarding WiFi Password";
+NSString* const kHEMAnalyticsEventOnBWiFiSubmit = @"Onboarding WiFi Credentials Submitted";
+NSString* const kHEMAnalyticsEventPropSecurityType = @"Security Type";
+NSString* const kHEMAnalyticsEventPropWiFiOther = @"Is Other";
 NSString* const kHEMAnalyticsEventOnBSleepPill = @"Onboarding Sleep Pill";
 NSString* const kHEMAnalyticsEventOnBPairPill = @"Onboarding Pair Pill";
 NSString* const kHEMAnalyticsEventOnBPillPlacement = @"Onboarding Pill Placement";

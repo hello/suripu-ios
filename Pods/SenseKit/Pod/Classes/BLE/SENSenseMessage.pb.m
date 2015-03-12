@@ -1090,7 +1090,7 @@ static BatchedPillData* defaultBatchedPillDataInstance = nil;
 @property ErrorType error;
 @property (strong) NSString* wifiName;
 @property (strong) NSString* wifiSsid;
-@property (strong) NSString* wifiPassword;
+@property (strong) NSData* wifiPassword;
 @property long batteryLevel;
 @property long uptime;
 @property long motionData;
@@ -1237,7 +1237,7 @@ static BatchedPillData* defaultBatchedPillDataInstance = nil;
     self.error = ErrorTypeTimeOut;
     self.wifiName = @"";
     self.wifiSsid = @"";
-    self.wifiPassword = @"";
+    self.wifiPassword = [NSData data];
     self.batteryLevel = 0;
     self.uptime = 0;
     self.motionData = 0;
@@ -1304,7 +1304,7 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
     [output writeString:7 value:self.wifiSsid];
   }
   if (self.hasWifiPassword) {
-    [output writeString:8 value:self.wifiPassword];
+    [output writeData:8 value:self.wifiPassword];
   }
   if (self.hasBatteryLevel) {
     [output writeInt32:9 value:self.batteryLevel];
@@ -1364,7 +1364,7 @@ static SENSenseMessage* defaultSENSenseMessageInstance = nil;
     size_ += computeStringSize(7, self.wifiSsid);
   }
   if (self.hasWifiPassword) {
-    size_ += computeStringSize(8, self.wifiPassword);
+    size_ += computeDataSize(8, self.wifiPassword);
   }
   if (self.hasBatteryLevel) {
     size_ += computeInt32Size(9, self.batteryLevel);
@@ -1780,7 +1780,7 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
         break;
       }
       case 66: {
-        [self setWifiPassword:[input readString]];
+        [self setWifiPassword:[input readData]];
         break;
       }
       case 72: {
@@ -1954,17 +1954,17 @@ BOOL SENSenseMessageTypeIsValidValue(SENSenseMessageType value) {
 - (BOOL) hasWifiPassword {
   return result.hasWifiPassword;
 }
-- (NSString*) wifiPassword {
+- (NSData*) wifiPassword {
   return result.wifiPassword;
 }
-- (SENSenseMessageBuilder*) setWifiPassword:(NSString*) value {
+- (SENSenseMessageBuilder*) setWifiPassword:(NSData*) value {
   result.hasWifiPassword = YES;
   result.wifiPassword = value;
   return self;
 }
 - (SENSenseMessageBuilder*) clearWifiPassword {
   result.hasWifiPassword = NO;
-  result.wifiPassword = @"";
+  result.wifiPassword = [NSData data];
   return self;
 }
 - (BOOL) hasBatteryLevel {

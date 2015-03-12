@@ -68,7 +68,7 @@
 }
 
 - (NSString*)description {
-    return [NSString stringWithFormat:@"Sense: %@, in mode: %ld", [self name], (long)[self mode]];
+    return [NSString stringWithFormat:@"Sense: %@, in mode: %ld, id: %@", [self name], (long)[self mode], [self deviceId]];
 }
 
 - (BOOL)isEqual:(id)object {

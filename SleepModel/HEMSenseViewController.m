@@ -381,6 +381,7 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     NSString* title = NSLocalizedString(@"settings.sense.unpair.title", nil);
     NSString* question = NSLocalizedString(@"settings.sense.unpair.confirmation", nil);
     [self showConfirmation:title message:question action:^{
+        [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropSenseId : kHEMAnalyticsEventPropSenseIdUnpaired}];
         [self unlinkSense];
     }];
 }
@@ -484,6 +485,7 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
                 if ([[strongSelf delegate] respondsToSelector:@selector(didFactoryRestoreFrom:)]) {
                     [[strongSelf delegate] didFactoryRestoreFrom:strongSelf];
                 }
+                [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropSenseId : kHEMAnalyticsEventPropSenseIdUnpaired}];
                 [strongSelf dismissActivityWithSuccess:nil];
             }
         }];

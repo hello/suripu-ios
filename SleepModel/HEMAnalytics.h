@@ -23,6 +23,8 @@ extern NSString* const kHEMAnalyticsEventPropName;
 extern NSString* const kHEMAnalyticsEventMpPropName;
 extern NSString* const kHEMAnalyticsEventPropGender;
 extern NSString* const kHEMAnalyticsEventPropAccount;
+extern NSString* const kHEMAnalyticsEventPropSenseId;
+extern NSString* const kHEMAnalyticsEventPropSenseIdUnpaired;
 
 // permissions
 extern NSString* const kHEMAnalyticsEventPermissionLoc;
@@ -43,6 +45,9 @@ extern NSString* const kHEMAnalyticsEventPropSensePairing;
 extern NSString* const kHEMAnalyticsEventPropSenseSetup;
 extern NSString* const kHEMAnalyticsEventPropWiFiScan;
 extern NSString* const kHEMAnalyticsEventPropWiFiPass;
+extern NSString* const kHEMAnalyticsEventOnBWiFiSubmit;
+extern NSString* const kHEMAnalyticsEventPropSecurityType;
+extern NSString* const kHEMAnalyticsEventPropWiFiOther;
 extern NSString* const kHEMAnalyticsEventPropPillPairing;
 extern NSString* const kHEMAnalyticsEventPropPillPlacement;
 extern NSString* const kHEMAnalyticsEventPropPillAnother;
@@ -78,9 +83,6 @@ extern NSString* const kHEMAnalyticsEventPropScreenPillPairing;
 // main
 extern NSString* const kHEMAnalyticsEventAppLaunched;
 extern NSString* const kHEMAnalyticsEventAppClosed;
-extern NSString* const kHEMAnalyticsEventAlarms;
-extern NSString* const kHEMAnalyticsEventTimeline;
-extern NSString* const kHEMAnalyticsEventTimelineAction;
 extern NSString* const kHEMAnalyticsEventPropEvent;
 extern NSString* const kHEMAnalyticsEventDrawer;
 extern NSString* const kHEMAnalyticsEventPropOpen;
@@ -114,6 +116,18 @@ extern NSString* const kHEMAnalyticsEventDeviceActionUnpairPill;
 
 // timeline
 extern NSString* const HEMAnalyticsEventTimelineBarLongPress;
+extern NSString* const kHEMAnalyticsEventTimeline;
+extern NSString* const kHEMAnalyticsEventTimelineAction;
+
+// alarms
+extern NSString* const kHEMAnalyticsEventAlarms;
+extern NSString* const HEMAnalyticsEventCreateNewAlarm;
+extern NSString* const HEMAnalyticsEventSwitchSmartAlarm;
+extern NSString* const HEMAnalyticsEventSwitchSmartAlarmOn;
+extern NSString* const HEMAnalyticsEventSaveAlarm;
+extern NSString* const HEMAnalyticsEventSaveAlarmHour;
+extern NSString* const HEMAnalyticsEventSaveAlarmMinute;
+extern NSString* const HEMAnalyticsEventSaveAlarmError;
 
 @interface HEMAnalytics : NSObject
 

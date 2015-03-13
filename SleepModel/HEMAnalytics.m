@@ -26,6 +26,8 @@ NSString* const kHEMAnalyticsEventPlatform = @"iOS";
 NSString* const kHEMAnalyticsEventPropName = @"Name";
 NSString* const kHEMAnalyticsEventPropGender = @"Gender";
 NSString* const kHEMAnalyticsEventPropAccount = @"Account Id";
+NSString* const kHEMAnalyticsEventPropSenseId = @"Sense Id";
+NSString* const kHEMAnalyticsEventPropSenseIdUnpaired = @"unpaired";
 
 // special mixpanel special properties
 NSString* const kHEMAnalyticsEventMpPropName = @"$name";
@@ -68,6 +70,9 @@ NSString* const kHEMAnalyticsEventOnBPairSense = @"Onboarding Pair Sense";
 NSString* const kHEMAnalyticsEventOnBWiFi = @"Onboarding WiFi";
 NSString* const kHEMAnalyticsEventOnBWiFiScan = @"Onboarding WiFi Scan";
 NSString* const kHEMAnalyticsEventOnBWiFiPass = @"Onboarding WiFi Password";
+NSString* const kHEMAnalyticsEventOnBWiFiSubmit = @"Onboarding WiFi Credentials Submitted";
+NSString* const kHEMAnalyticsEventPropSecurityType = @"Security Type";
+NSString* const kHEMAnalyticsEventPropWiFiOther = @"Is Other";
 NSString* const kHEMAnalyticsEventOnBSleepPill = @"Onboarding Sleep Pill";
 NSString* const kHEMAnalyticsEventOnBPairPill = @"Onboarding Pair Pill";
 NSString* const kHEMAnalyticsEventOnBPillPlacement = @"Onboarding Pill Placement";
@@ -85,9 +90,6 @@ NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 // main app
 NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";
 NSString* const kHEMAnalyticsEventAppClosed = @"App Closed";
-NSString* const kHEMAnalyticsEventAlarms = @"Alarms";
-NSString* const kHEMAnalyticsEventTimeline = @"Timeline";
-NSString* const kHEMAnalyticsEventTimelineAction = @"Timeline Action";
 NSString* const kHEMAnalyticsEventPropEvent = @"event";
 NSString* const kHEMAnalyticsEventDrawer = @"Drawer Action";
 NSString* const kHEMAnalyticsEventPropOpen = @"open";
@@ -121,6 +123,18 @@ NSString* const kHEMAnalyticsEventDeviceActionUnpairPill = @"unpair Sleep Pill";
 
 // timeline
 NSString* const HEMAnalyticsEventTimelineBarLongPress = @"Long press sleep duration bar";
+NSString* const kHEMAnalyticsEventTimeline = @"Timeline";
+NSString* const kHEMAnalyticsEventTimelineAction = @"Timeline Action";
+
+// alarms
+NSString* const kHEMAnalyticsEventAlarms = @"Alarms";
+NSString* const HEMAnalyticsEventCreateNewAlarm = @"Create new alarm";
+NSString* const HEMAnalyticsEventSwitchSmartAlarm = @"Flip smart alarm switch";
+NSString* const HEMAnalyticsEventSwitchSmartAlarmOn = @"on";
+NSString* const HEMAnalyticsEventSaveAlarm = @"Save alarm";
+NSString* const HEMAnalyticsEventSaveAlarmHour = @"hour";
+NSString* const HEMAnalyticsEventSaveAlarmMinute = @"minute";
+NSString* const HEMAnalyticsEventSaveAlarmError = @"error";
 
 @implementation HEMAnalytics
 

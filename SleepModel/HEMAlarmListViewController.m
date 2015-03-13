@@ -14,6 +14,7 @@
 #import "HEMAlarmUtils.h"
 #import "HEMMainStoryboard.h"
 #import "HEMMarkdown.h"
+#import "HEMAnalytics.h"
 
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate>
 
@@ -202,6 +203,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (IBAction)addNewAlarm:(id)sender
 {
+    [SENAnalytics track:HEMAnalyticsEventCreateNewAlarm];
     void (^animations)() = ^{
         [UIView addKeyframeWithRelativeStartTime:0 relativeDuration:0.5 animations:^{
             self.addButton.layer.transform = CATransform3DMakeScale(HEMAlarmListButtonMaximumScale,
@@ -231,8 +233,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
     __block SENAlarm* alarm = [self.alarms objectAtIndex:sender.tag];
     BOOL on = [sender isOn];
     alarm.on = on;
-    [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(BOOL success) {
-        if (!success) {
+    [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(NSError *error) {
+        if (error) {
             alarm.on = !on;
             sender.on = !on;
         }

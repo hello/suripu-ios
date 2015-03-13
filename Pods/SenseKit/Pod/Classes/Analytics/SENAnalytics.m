@@ -15,6 +15,7 @@ NSString* const kSENAnalyticsConfigAPIKey = @"kSENAnalyticsConfigAPIKey";
 NSString* const kSENAnalyticsPropConnection = @"connection";
 NSString* const kSENAnalyticsPropCode = @"code";
 NSString* const kSENAnalyticsPropMessage = @"message";
+NSString* const kSENAnalyticsPropDomain = @"domain";
 
 @implementation SENAnalytics
 
@@ -79,7 +80,8 @@ static NSMutableDictionary* providers;
     NSMutableDictionary* mutableProps = [NSMutableDictionary dictionaryWithCapacity:2];
     if ([error isKindOfClass:[NSError class]]) { // making sure error is an error.  sometimes it can be NSNull...
         [mutableProps setValue:@([error code]) forKey:kSENAnalyticsPropCode];
-        [mutableProps setValue:[error description] forKey:kSENAnalyticsPropMessage];
+        [mutableProps setValue:[error localizedDescription] forKey:kSENAnalyticsPropMessage];
+        [mutableProps setValue:[error domain] forKey:kSENAnalyticsPropDomain];
     }
     [providers enumerateKeysAndObjectsUsingBlock:^(NSNumber* key, id<SENAnalyticsProvider> provider, BOOL *stop) {
         [provider track:eventName withProperties:mutableProps];

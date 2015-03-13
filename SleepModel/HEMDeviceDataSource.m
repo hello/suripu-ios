@@ -85,15 +85,11 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
         
         if (error != nil) {
             [strongSelf setLoadingSense:NO];
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             if (completion) completion (error);
         } else {
             if (update) update();
             
             [strongSelf refreshSenseData:^(NSError *error) {
-                if (error != nil) {
-                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                }
                 [strongSelf setLoadingSense:NO];
                 if (completion) completion (error);
             }];

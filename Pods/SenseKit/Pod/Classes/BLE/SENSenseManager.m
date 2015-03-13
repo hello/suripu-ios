@@ -54,6 +54,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 @property (nonatomic, strong, readwrite) NSMutableDictionary* messageFailureCallbacks;
 @property (nonatomic, strong, readwrite) NSMutableDictionary* messageUpdateCallbacks;
 @property (nonatomic, strong, readwrite) NSMutableDictionary* messageTimeoutTimers;
+@property (nonatomic, strong, readwrite) NSMutableDictionary* messageTypeForCallbacks;
 
 @end
 
@@ -140,16 +141,45 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 - (instancetype)initWithSense:(SENSense*)sense {
     self = [super init];
     if (self) {
-        DDLogVerbose(@"Sense manager initialized for %@", [sense name]);
+        DDLogVerbose(@"Sense manager initialized for %@, id %@", [sense name], [sense deviceId]);
         [self setSense:sense];
         [self setValid:YES];
         [self setMessageSuccessCallbacks:[NSMutableDictionary dictionary]];
         [self setMessageFailureCallbacks:[NSMutableDictionary dictionary]];
         [self setMessageUpdateCallbacks:[NSMutableDictionary dictionary]];
         [self setMessageTimeoutTimers:[NSMutableDictionary dictionary]];
+        [self setMessageTypeForCallbacks:[NSMutableDictionary dictionary]];
     }
     return self;
 }
+
+#pragma mark - Errors
+
+- (NSError*)errorWithCode:(SENSenseManagerErrorCode)code
+              description:(NSString*)description
+      fromUnderlyingError:(NSError*)error {
+    NSMutableDictionary* userInfo = [NSMutableDictionary dictionary];
+    if (error) userInfo[NSUnderlyingErrorKey] = error;
+    if (description) userInfo[NSLocalizedDescriptionKey] = description;
+    
+    return [NSError errorWithDomain:kSENSenseErrorDomain
+                               code:code
+                           userInfo:userInfo];
+}
+
+- (void)failWithBlock:(SENSenseFailureBlock)failure andCode:(SENSenseManagerErrorCode)code {
+    [self failWithBlock:failure errorCode:code description:nil];
+}
+
+- (void)failWithBlock:(SENSenseFailureBlock)failure
+            errorCode:(SENSenseManagerErrorCode)code
+          description:(NSString*)description {
+    if (failure) {
+        failure ([self errorWithCode:code description:description fromUnderlyingError:nil]);
+    }
+}
+
+#pragma mark -
 
 - (BOOL)isConnected {
     return [[[[self sense] peripheral] cbPeripheral] state] == CBPeripheralStateConnected;
@@ -181,9 +211,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
             
             if (!foundAgain && completion) {
                 DDLogVerbose(@"Sense not found when trying to rediscover");
-                completion ([NSError errorWithDomain:kSENSenseErrorDomain
-                                                code:SENSenseManagerErrorCodeInvalidated
-                                            userInfo:nil]);
+                completion ([strongSelf errorWithCode:SENSenseManagerErrorCodeInvalidated
+                                          description:@"could not rediscover Sense"
+                                  fromUnderlyingError:nil]);
             }
             
         }
@@ -200,9 +230,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     
     LGPeripheral* peripheral = [[self sense] peripheral];
     if (peripheral == nil) {
-        completion ([NSError errorWithDomain:kSENSenseErrorDomain
-                                        code:SENSenseManagerErrorCodeNoDeviceSpecified
-                                    userInfo:nil]);
+        completion ([self errorWithCode:SENSenseManagerErrorCodeNoDeviceSpecified
+                            description:@"cannot connect to a non-existent Sense"
+                    fromUnderlyingError:nil]);
         return;
     }
     
@@ -261,22 +291,22 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                          completion:(SENSenseCompletionBlock)completion {
     if (!completion) return; // even if we do stuff, what would it be for?
     if ([characteristicIds count] == 0) {
-        completion (nil, [NSError errorWithDomain:kSENSenseErrorDomain
-                                             code:SENSenseManagerErrorCodeInvalidArgument
-                                         userInfo:nil]);
+        completion (nil, [self errorWithCode:SENSenseManagerErrorCodeInvalidArgument
+                                 description:@"no characteristic ids specified"
+                         fromUnderlyingError:nil]);
         return;
     }
     
     __weak typeof(self) weakSelf = self;
     [self connectThen:^(NSError *error) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
         if (error != nil) {
-            completion (nil, [NSError errorWithDomain:kSENSenseErrorDomain
-                                                 code:SENSenseManagerErrorCodeConnectionFailed
-                                             userInfo:nil]);
+            completion (nil, [strongSelf errorWithCode:SENSenseManagerErrorCodeConnectionFailed
+                                           description:@"could not connect to Sense"
+                                   fromUnderlyingError:error]);
             return;
         }
-        
-        __strong typeof(weakSelf) strongSelf = weakSelf;
         
         LGPeripheral* peripheral = [[strongSelf sense] peripheral];
         NSDictionary* characteristics = [strongSelf cachedCharacteristicsWithIds:characteristicIds
@@ -342,9 +372,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
         if (error != nil || [services count] != 1) {
-            completion (nil, error?error:[NSError errorWithDomain:kSENSenseErrorDomain
-                                                             code:SENSenseManagerErrorCodeUnexpectedResponse
-                                                         userInfo:nil]);
+            completion (nil, error?error:[strongSelf errorWithCode:SENSenseManagerErrorCodeUnexpectedResponse
+                                                       description:@"could not discover services"
+                                               fromUnderlyingError:nil]);
             return;
         }
         
@@ -380,14 +410,6 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                                                           kSENSenseCharacteristicResponseId,
                                                           nil]
                   completion:completion];
-}
-
-- (void)failWithBlock:(SENSenseFailureBlock)failure andCode:(SENSenseManagerErrorCode)code {
-    if (failure) {
-        failure ([NSError errorWithDomain:kSENSenseErrorDomain
-                                     code:code
-                                 userInfo:nil]);
-    }
 }
 
 #pragma mark - (Private) Sending Data
@@ -484,7 +506,8 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         LGCharacteristic* reader = [response valueForKey:kSENSenseCharacteristicResponseId];
         if (writer == nil || reader == nil) {
             return [strongSelf failWithBlock:failure
-                                     andCode:SENSenseManagerErrorCodeUnexpectedResponse];
+                                   errorCode:SENSenseManagerErrorCodeUnexpectedResponse
+                                 description:@"could not discover characteristics"];
         }
         
         NSArray* packets = [strongSelf blePackets:message];
@@ -498,7 +521,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
             NSString* cbKey = [self cacheMessageCallbacks:update
                                                   success:success
                                              failureBlock:failure
-                                               subscriber:blockReader];
+                                               subscriber:blockReader
+                                           forMessageType:[message type]];
+            
             [strongSelf scheduleMessageTimeOut:timeout withKey:cbKey];
             
             [reader setNotifyValue:YES completion:^(NSError *error) {
@@ -581,9 +606,12 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 - (NSString*)cacheMessageCallbacks:(SENSenseUpdateBlock)updateBlock
                            success:(SENSenseSuccessBlock)successBlock
                       failureBlock:(SENSenseFailureBlock)failureBlock
-                        subscriber:(LGCharacteristic*)subscriber {
+                        subscriber:(LGCharacteristic*)subscriber
+                    forMessageType:(SENSenseMessageType)type {
     
     NSString* key = [[NSUUID UUID] UUIDString];
+    
+    [[self messageTypeForCallbacks] setValue:@(type) forKey:key];
     
     if (updateBlock) {
         [[self messageUpdateCallbacks] setValue:[updateBlock copy] forKey:key];
@@ -616,6 +644,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
     [[self messageFailureCallbacks] removeAllObjects];
     [[self messageSuccessCallbacks] removeAllObjects];
     [[self messageUpdateCallbacks] removeAllObjects];
+    [[self messageTypeForCallbacks] removeAllObjects];
 }
 
 - (void)clearMessageCallbacksForKey:(NSString*)key {
@@ -623,6 +652,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         [[self messageFailureCallbacks] removeObjectForKey:key];
         [[self messageSuccessCallbacks] removeObjectForKey:key];
         [[self messageUpdateCallbacks] removeObjectForKey:key];
+        [[self messageTypeForCallbacks] removeObjectForKey:key];
     }
 }
 
@@ -806,13 +836,16 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                     = parseError != nil
                     ? [parseError code]
                     : SENSenseManagerErrorCodeUnexpectedResponse;
-                [self failWithBlock:failure andCode:code];
+                NSString* desc = [NSString stringWithFormat:@"response error from command %ld", (long)type];
+                [self failWithBlock:failure errorCode:code description:desc];
             } else {
                 if (success) success (responseMsg);
             }
         } // else, wait for next update
     } else {
-        [self failWithBlock:failure andCode:SENSenseManagerErrorCodeUnexpectedResponse];
+        [self failWithBlock:failure
+                  errorCode:SENSenseManagerErrorCodeUnexpectedResponse
+                description:@"invalid response size"];
     }
 }
 
@@ -825,6 +858,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
  */
 - (SENSenseMessage*)messageFromBlePackets:(NSArray*)packets error:(NSError**)error {
     SENSenseMessage* response = nil;
+    NSString* errorDesc = nil;
     SENSenseManagerErrorCode errCode = SENSenseManagerErrorCodeNone;
     NSMutableData* actualPayload = [NSMutableData data];
     
@@ -843,17 +877,17 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         response = [SENSenseMessage parseFromData:actualPayload];
         if ([response hasError]) {
             errCode = [self errorCodeFrom:[response error]];
+            errorDesc = @"error returned in ble response";
             DDLogVerbose(@"ble response has an error with device code %ld", (long)errCode);
         }
     } @catch (NSException *exception) {
         DDLogWarn(@"parsing ble protobuf message encountered exception %@", exception);
         errCode = SENSenseManagerErrorCodeUnexpectedResponse;
+        errorDesc = [exception description];
     }
     
     if (errCode != SENSenseManagerErrorCodeNone && error != NULL) {
-        *error = [NSError errorWithDomain:kSENSenseErrorDomain
-                                     code:errCode
-                                 userInfo:nil];
+        *error = [self errorWithCode:errCode description:errorDesc fromUnderlyingError:nil];
     }
     return response;
 }
@@ -884,10 +918,15 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         
         SENSenseFailureBlock failureCb = [[self messageFailureCallbacks] valueForKey:cbKey];
         if (failureCb) {
-            DDLogVerbose(@"firing timeout message");
-            failureCb ([NSError errorWithDomain:kSENSenseErrorDomain
-                                           code:SENSenseManagerErrorCodeTimeout
-                                       userInfo:nil]);
+            NSNumber* messageType = [[self messageTypeForCallbacks] objectForKey:cbKey];
+            NSString* errDesc = [NSString stringWithFormat:@"ble message timed out for type %ld",
+                                 [messageType longValue]];
+            
+            DDLogVerbose(@"%@", errDesc);
+            
+            failureCb ( [self errorWithCode:SENSenseManagerErrorCodeTimeout
+                                description:errDesc
+                        fromUnderlyingError:nil]);
         } else {
             DDLogVerbose(@"failure block not defined for time out");
         }
@@ -919,13 +958,16 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                       
                       if (reader == nil) {
                           return [strongSelf failWithBlock:failure
-                                                   andCode:SENSenseManagerErrorCodeUnexpectedResponse];
+                                                 errorCode:SENSenseManagerErrorCodeUnexpectedResponse
+                                               description:@"could not discover response characteristic when pairing"];
                       }
                       
                       NSString* cbKey = [strongSelf cacheMessageCallbacks:nil
                                                                   success:success
                                                              failureBlock:failure
-                                                               subscriber:reader];
+                                                               subscriber:reader
+                                                           forMessageType:100]; // no message type for pairing
+                      
                       [strongSelf scheduleMessageTimeOut:kSENSenseDefaultTimeout withKey:cbKey];
                       
                       [reader setNotifyValue:YES completion:^(NSError *error) {
@@ -998,6 +1040,63 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 #pragma mark - Wifi
 
++ (BOOL)isWepKeyValid:(NSString*)key {
+    NSUInteger len = [key length];
+    return len > 0 && len % 2 == 0;
+}
+
+/**
+ * Convert the wep network key (generated from the passphrase) to a base 16 bytes,
+ * which is the only way the firmware will work with WEP security.  If the network
+ * key contains a 0 in the middle of the value, it will also
+ */
+- (NSData*)dataValueForWepNetworkKey:(NSString*)networkKey error:(NSError**)error {
+    DDLogVerbose(@"formatting password for wifi with wep security");
+    
+    NSUInteger len = [networkKey length];
+    
+    if (![[self class] isWepKeyValid:networkKey]) {
+        if (error != NULL) {
+            NSString* errorMsg = @"invalid wep network key";
+            DDLogVerbose(@"%@", errorMsg);
+            *error = [self errorWithCode:SENSenseManagerErrorCodeInvalidArgument
+                             description:errorMsg
+                     fromUnderlyingError:nil];
+        }
+        return nil;
+    }
+    
+    const char* chars = [networkKey cStringUsingEncoding:NSUTF8StringEncoding];
+    NSMutableData* mutableData = [NSMutableData dataWithCapacity:len/2];
+    
+    int i = 0;
+    char bytes[3] = {'\0', '\0', '\0'};
+    unsigned long convertedLong;
+    while (i < len) {
+        bytes[0] = chars[i++];
+        bytes[1] = chars[i++];
+        convertedLong = strtol(bytes, NULL, 16);
+        [mutableData appendBytes:&convertedLong length:1];
+    }
+    
+    return mutableData;
+}
+
+- (NSData*)dataValueForWiFiPassword:(NSString*)password
+                   withSecurityType:(SENWifiEndpointSecurityType)type
+                    formattingError:(NSError**)error {
+    switch (type) {
+        case SENWifiEndpointSecurityTypeWep:
+            return [self dataValueForWepNetworkKey:password error:error];
+        case SENWifiEndpointSecurityTypeOpen:
+            return nil;
+        case SENWifiEndpointSecurityTypeWpa:
+        case SENWifiEndpointSecurityTypeWpa2:
+        default:
+            return [password dataUsingEncoding:NSUTF8StringEncoding];
+    }
+}
+
 - (void)setWiFi:(NSString*)ssid
        password:(NSString*)password
    securityType:(SENWifiEndpointSecurityType)securityType
@@ -1005,11 +1104,24 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         failure:(SENSenseFailureBlock)failure {
     
     DDLogVerbose(@"setting wifi on Sense with ssid %@", ssid);
+    NSError* passwordError = nil;
+    NSData* passwordData = [self dataValueForWiFiPassword:password
+                                         withSecurityType:securityType
+                                          formattingError:&passwordError];
+    
+    if (passwordError != nil) {
+        if (failure) {
+            failure (passwordError);
+        }
+        return;
+    }
+    
     SENSenseMessageType type = SENSenseMessageTypeSetWifiEndpoint;
     SENSenseMessageBuilder* builder = [self messageBuilderWithType:type];
     [builder setSecurityType:securityType];
     [builder setWifiSsid:ssid];
-    [builder setWifiPassword:password];
+    [builder setWifiPassword:passwordData];
+    
     [self sendMessage:[builder build]
               timeout:kSENSenseSetWifiTimeout
                update:nil
@@ -1059,9 +1171,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                   failure:(SENSenseFailureBlock)failure {
     
     if (!success) {
-        if (failure) failure ([NSError errorWithDomain:kSENSenseErrorDomain
-                                                  code:SENSenseManagerErrorCodeInvalidArgument
-                                              userInfo:nil]);
+        if (failure) failure ([self errorWithCode:SENSenseManagerErrorCodeInvalidArgument
+                                      description:@"no callback set when asking for configured wifi"
+                              fromUnderlyingError:nil]);
         return;
     }
     
@@ -1232,9 +1344,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                         }
                         for (NSString* observerId in [strongSelf disconnectObservers]) {
                             SENSenseFailureBlock block = [[strongSelf disconnectObservers] valueForKey:observerId];
-                            block ([NSError errorWithDomain:kSENSenseErrorDomain
-                                                       code:SENSenseManagerErrorCodeUnexpectedDisconnect
-                                                   userInfo:nil]);
+                            block ([strongSelf errorWithCode:SENSenseManagerErrorCodeUnexpectedDisconnect
+                                                 description:@"unexpectedly disconnected from Sense"
+                                         fromUnderlyingError:nil]);
                         }
                     }];
 }

@@ -233,7 +233,10 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 - (void)showDrawerController:(BOOL)animated backView:(BOOL)backView {
     [self createDrawerViewController];
-    [self openSettingsDrawer];
+    
+    if (backView) {
+        [self openSettingsDrawer];
+    }
     
     if ([self presentedViewController] != nil) {
         [self dismissViewControllerAnimated:animated completion:nil];

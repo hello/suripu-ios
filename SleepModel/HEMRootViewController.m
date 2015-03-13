@@ -27,6 +27,7 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMDynamicsStatusStyler.h"
 #import "HEMBaseController+Protected.h"
+#import "HEMStyledNavigationViewController.h"
 #import "HEMAppDelegate.h"
 #import "HEMConfig.h"
 
@@ -91,12 +92,6 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
         [self registerForNotifications];
     }
     return self;
-}
-
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    [self createDrawerViewController];
 }
 
 - (void)viewDidBecomeActive
@@ -165,6 +160,15 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [self.drawerViewController didMoveToParentViewController:self];
 }
 
+- (void)removeDrawerViewController {
+    if ([self drawerViewController] != nil) {
+        [[self drawerViewController] willMoveToParentViewController:nil];
+        [[self drawerViewController] removeFromParentViewController]; // calls didMoveToParentViewController:self
+        [[[self drawerViewController] view] removeFromSuperview];
+        [self setDrawerViewController:nil];
+    }
+}
+
 - (void)adjustRevealHeight
 {
     CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
@@ -209,6 +213,53 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [self.drawerViewController setPaneViewController:controller
                                             animated:NO
                                           completion:NULL];
+}
+
+- (void)showArea:(HEMRootArea)area animated:(BOOL)animated {
+    switch (area) {
+        case HEMRootAreaOnboarding:
+            [self showOnboarding:animated];
+            break;
+        case HEMRootAreaTimeline:
+            [self showDrawerController:animated backView:NO];
+            break;
+        case HEMRootAreaBackView:
+            [self showDrawerController:animated backView:YES];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)showDrawerController:(BOOL)animated backView:(BOOL)backView {
+    [self createDrawerViewController];
+    [self openSettingsDrawer];
+    
+    if ([self presentedViewController] != nil) {
+        [self dismissViewControllerAnimated:animated completion:nil];
+    }
+}
+
+- (void)showOnboarding:(BOOL)animated {
+    if ([self presentedViewController] != nil) return;
+    
+    HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
+    UIViewController* controller = [HEMOnboardingUtils onboardingControllerForCheckpoint:checkpoint force:NO];
+    
+    if (controller != nil) {
+        UINavigationController* onboardingNav
+            = [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];
+        [[onboardingNav navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];
+        
+        [self presentViewController:onboardingNav animated:animated completion:^{
+            [self showStatusBar];
+            [self removeDrawerViewController];
+        }];
+    }
+}
+
+- (BOOL)isShowingOnboarding {
+    return [self presentedViewController] != nil;
 }
 
 #pragma mark - MSDynamicsDrawerViewControllerDelegate

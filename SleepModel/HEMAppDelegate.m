@@ -15,6 +15,7 @@
 #import "HEMAudioCache.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMStyledNavigationViewController.h"
+#import "HEMAuthenticationViewController.h"
 #import "HEMConfig.h"
 
 @implementation HEMAppDelegate
@@ -40,7 +41,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [self configureAnalytics];
     [self configureAppearance];
     [self registerForNotifications];
-    [self syncHealthKitData];
+    [self refreshData];
     [self createAndShowWindow];
     
     return YES;
@@ -90,7 +91,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     }
 }
 
-- (void)syncHealthKitData {
+- (void)refreshData {
     if ([SENAuthorizationService isAuthorized]) {
         [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
             [HEMAnalytics trackUserSession]; // update user session data
@@ -168,15 +169,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
                                                   }];
 }
 
-- (void)resetAndShowOnboarding
-{
-    SENClearModel();
-    [HEMAudioCache clearCache];
-    [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
-    [HEMOnboardingUtils resetOnboardingCheckpoint];
-    [self resume:YES];
-}
-
 - (void)configureAppearance
 {
     [[UIApplication sharedApplication] setStatusBarHidden:NO withAnimation:NO];
@@ -211,61 +203,44 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
                selector:@selector(resetAndShowOnboarding)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
                  object:nil];
-}
-
-- (void)openSettingsDrawer {
-    HEMRootViewController* controller = (id)self.window.rootViewController;
-    [controller openSettingsDrawer];
-}
-
-#pragma mark - App Notifications
-
-- (void)listenForAccountCreationNotification {
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center removeObserver:self name:kSENAccountNotificationAccountCreated object:nil];
+    
     [center addObserver:self
-               selector:@selector(didCreateAccount:)
-                   name:kSENAccountNotificationAccountCreated
+               selector:@selector(enterApp)
+                   name:HEMOnboardingNotificationComplete
+                 object:nil];
+    
+    [center addObserver:self
+               selector:@selector(enterApp)
+                   name:HEMAuthenticationNotificationDidSignIn
                  object:nil];
 }
 
-- (void)didCreateAccount:(NSNotification*)notification {
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center removeObserver:self name:kSENAccountNotificationAccountCreated object:nil];
-    // when sign up is complete, show the "settings" area instead of the Timeline,
-    // but only do so after sign up and not sign in, or any other scenario
-    [self openSettingsDrawer];
+- (void)resetAndShowOnboarding
+{
+    SENClearModel();
+    [HEMAudioCache clearCache];
+    [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
+    [HEMOnboardingUtils resetOnboardingCheckpoint];
+    [self resume:YES];
+}
+
+- (void)enterApp
+{
+    [self resume:YES];
 }
 
 #pragma mark - Resume Where Last Off
 
 - (void)resume:(BOOL)animated
 {
-    UIViewController* dynamicPanesController = (UIViewController*)self.window.rootViewController;
-    if ([dynamicPanesController presentedViewController] != nil) return;
-    
-    BOOL authorized = [SENAuthorizationService isAuthorized];
-    HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
-    UIViewController* onboardingController = [HEMOnboardingUtils onboardingControllerForCheckpoint:checkpoint authorized:authorized];
-    
-    if (onboardingController != nil) {
-        UINavigationController* onboardingNav
-            = [[HEMStyledNavigationViewController alloc] initWithRootViewController:onboardingController];
-        [[onboardingNav navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];
-        
-        if (checkpoint == HEMOnboardingCheckpointStart) {
-            [self listenForAccountCreationNotification];
-        } else {
-            [self openSettingsDrawer];
-        }
-        
-        [dynamicPanesController presentViewController:onboardingNav
-                                             animated:animated
-                                           completion:^{
-                                               HEMRootViewController* root = (id)self.window.rootViewController;
-                                               [root showStatusBar];
-                                           }];
-    } // let it just start the application up normally
+    HEMRootViewController* root = (id)self.window.rootViewController;
+    if (![HEMOnboardingUtils hasFinishedOnboarding]) {
+        [root showArea:HEMRootAreaOnboarding animated:animated];
+    } else if ([root isShowingOnboarding]){
+        [root showArea:HEMRootAreaBackView animated:animated];
+    } else {
+        [root showArea:HEMRootAreaTimeline animated:animated];
+    }
 }
 
 @end

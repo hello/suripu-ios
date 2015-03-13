@@ -73,7 +73,7 @@
         if (strongSelf) {
             if ([[strongSelf presentingController] isKindOfClass:[UINavigationController class]]) {
                 UINavigationController* onboardingVC = (UINavigationController*)[strongSelf presentingController];
-                UIViewController* startController = [HEMOnboardingUtils onboardingControllerForCheckpoint:HEMOnboardingCheckpointStart authorized:NO];
+                UIViewController* startController = [HEMOnboardingUtils onboardingControllerForCheckpoint:HEMOnboardingCheckpointStart force:YES];
                 if (![[onboardingVC topViewController] isKindOfClass:[startController class]]) {
                     [onboardingVC setViewControllers:@[startController] animated:YES];
                 }

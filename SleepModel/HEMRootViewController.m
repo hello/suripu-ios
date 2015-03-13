@@ -163,7 +163,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 - (void)removeDrawerViewController {
     if ([self drawerViewController] != nil) {
         [[self drawerViewController] willMoveToParentViewController:nil];
-        [[self drawerViewController] removeFromParentViewController]; // calls didMoveToParentViewController:self
+        [[self drawerViewController] removeFromParentViewController]; // calls didMoveToParentViewController:nil
         [[[self drawerViewController] view] removeFromSuperview];
         [self setDrawerViewController:nil];
     }

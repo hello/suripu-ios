@@ -129,6 +129,12 @@ extern NSString* const HEMAnalyticsEventSaveAlarmHour;
 extern NSString* const HEMAnalyticsEventSaveAlarmMinute;
 extern NSString* const HEMAnalyticsEventSaveAlarmError;
 
+// system alerts
+extern NSString* const HEMAnalyticsEventSystemAlert;
+extern NSString* const HEMAnalyticsEventSystemAlertAction;
+extern NSString* const HEMAnalyticsEventSysAlertActionLater;
+extern NSString* const HEMAnalyticsEventSysAlertActionNow;
+
 @interface HEMAnalytics : NSObject
 
 + (void)trackSignUpWithName:(NSString*)userName;

@@ -136,6 +136,12 @@ NSString* const HEMAnalyticsEventSaveAlarmHour = @"hour";
 NSString* const HEMAnalyticsEventSaveAlarmMinute = @"minute";
 NSString* const HEMAnalyticsEventSaveAlarmError = @"error";
 
+// system alerts
+NSString* const HEMAnalyticsEventSystemAlert = @"System Alert";
+NSString* const HEMAnalyticsEventSystemAlertAction = @"System Alert Action";
+NSString* const HEMAnalyticsEventSysAlertActionLater = @"later";
+NSString* const HEMAnalyticsEventSysAlertActionNow = @"now";
+
 @implementation HEMAnalytics
 
 + (void)trackSignUpWithName:(NSString*)userName {

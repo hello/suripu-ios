@@ -76,6 +76,8 @@
     
     if (title != nil && message != nil) {
         [self showDeviceWarning:title message:message];
+        [SENAnalytics track:HEMAnalyticsEventSystemAlert
+                 properties:@{kHEMAnalyticsEventPropType : @([service deviceState])}];
     }
     
 }
@@ -133,12 +135,16 @@
     [self dismissAlert:^{
         [self setWarningState:SENServiceDeviceStateUnknown];
     }];
+    [SENAnalytics track:HEMAnalyticsEventSystemAlertAction
+             properties:@{kHEMAnalyticsEventPropAction : HEMAnalyticsEventSysAlertActionLater}];
 }
 
 - (void)fixDeviceProblemNow:(id)sender {
     [self dismissAlert:^{
         [self launchHandlerForDeviceState];
     }];
+    [SENAnalytics track:HEMAnalyticsEventSystemAlertAction
+             properties:@{kHEMAnalyticsEventPropAction : HEMAnalyticsEventSysAlertActionNow}];
 }
 
 - (void)launchHandlerForDeviceState {

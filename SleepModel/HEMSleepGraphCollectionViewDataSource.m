@@ -131,6 +131,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 - (void)refreshWithTimelines:(NSArray*)timelines
 {
+    if (![timelines isKindOfClass:[NSArray class]])
+        return;
     NSDictionary* timeline = [timelines firstObject];
     BOOL didChange = [self.sleepResult updateWithDictionary:timeline];
     [self hideLoadingViewAnimated:YES];

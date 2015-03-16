@@ -177,10 +177,14 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setMessage:message];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.yes", nil)];
     [dialogVC setViewToShowThrough:self.view];
+    [dialogVC addAction:NSLocalizedString(@"actions.no", nil) primary:NO actionBlock:^{
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
+
     __weak typeof(self) weakSelf = self;
-    [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
+    [dialogVC showFrom:self onDefaultActionSelected:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf.alarm delete];
         [HEMAlarmUtils updateAlarmsFromPresentingController:self completion:^(NSError* error) {
@@ -192,10 +196,6 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
                 }];
             }
         }];
-    }];
-
-    [dialogVC showFrom:self onDefaultActionSelected:^{
-        [self dismissViewControllerAnimated:YES completion:NULL];
     }];
 }
 

@@ -139,10 +139,10 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     return self.drawerViewController.paneState != MSDynamicsDrawerPaneStateClosed;
 }
 
-- (BOOL)createDrawerViewController
+- (void)createDrawerViewController
 {
     if (self.drawerViewController != nil) {
-        return NO;
+        return;
     }
     
     self.drawerViewController = [MSDynamicsDrawerViewController new];
@@ -162,8 +162,6 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [self.view addSubview:self.drawerViewController.view];
     [self addChildViewController:self.drawerViewController];
     [self.drawerViewController didMoveToParentViewController:self];
-    
-    return YES;
 }
 
 - (void)removeDrawerViewController {

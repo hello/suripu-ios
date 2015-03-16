@@ -15,6 +15,12 @@ typedef NS_ENUM(NSUInteger, HEMRootDrawerTab) {
     HEMRootDrawerTabSettings = 4
 };
 
+typedef NS_ENUM(NSUInteger, HEMRootArea) {
+    HEMRootAreaOnboarding,
+    HEMRootAreaTimeline,
+    HEMRootAreaBackView
+};
+
 extern NSString* const HEMRootDrawerMayOpenNotification;
 extern NSString* const HEMRootDrawerMayCloseNotification;
 extern NSString* const HEMRootDrawerDidOpenNotification;
@@ -23,6 +29,10 @@ extern NSString* const HEMRootDrawerDidCloseNotification;
 @interface HEMRootViewController : HEMBaseController
 
 + (instancetype)rootViewControllerForKeyWindow;
+
+- (void)showArea:(HEMRootArea)area animated:(BOOL)animated;
+
+- (BOOL)isShowingOnboarding;
 
 - (void)reloadTimelineSlideViewControllerWithDate:(NSDate*)date;
 - (void)hideSettingsDrawerTopBar:(BOOL)hidden animated:(BOOL)animated;

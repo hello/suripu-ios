@@ -9,6 +9,7 @@
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENLocalPreferences.h>
 #import <SenseKit/SENAPIAccount.h>
+#import <SenseKit/SENAuthorizationService.h>
 
 #import <AFNetworking/AFURLResponseSerialization.h>
 
@@ -21,6 +22,8 @@
 #import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSettingsTableViewController.h"
+
+NSString* const HEMOnboardingNotificationComplete = @"HEMOnboardingNotificationComplete";
 
 CGFloat const HEMOnboardingShadowOpacity = 0.8f;
 
@@ -71,6 +74,13 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
     return [[NSAttributedString alloc] initWithString:text attributes:attributes];
 }
 
++ (BOOL)hasFinishedOnboarding {
+    HEMOnboardingCheckpoint checkpoint = [self onboardingCheckpoint];
+    return [SENAuthorizationService isAuthorized]
+            && (checkpoint == HEMOnboardingCheckpointStart // start and authorized = signed in
+                || checkpoint == HEMOnboardingCheckpointPillDone);
+}
+
 #pragma mark - Checkpoints
 
 + (void)saveOnboardingCheckpoint:(HEMOnboardingCheckpoint)checkpoint {
@@ -87,13 +97,12 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
     [self saveOnboardingCheckpoint:HEMOnboardingCheckpointStart];
 }
 
-+ (UIViewController*)onboardingControllerForCheckpoint:(HEMOnboardingCheckpoint)checkpoint
-                                            authorized:(BOOL)authorized {
++ (UIViewController*)onboardingControllerForCheckpoint:(HEMOnboardingCheckpoint)checkpoint force:(BOOL)force {
     
     UIViewController* onboardingController = nil;
     switch (checkpoint) {
         case HEMOnboardingCheckpointStart: {
-            if (!authorized) {
+            if (![SENAuthorizationService isAuthorized] || force) {
                 UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
                                                                                bundle:[NSBundle mainBundle]];
                 onboardingController = [onboardingStoryboard instantiateInitialViewController];
@@ -206,23 +215,15 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
     return message;
 }
 
-+ (void)dismissOnboardingFlowFrom:(UIViewController*)controller {
-    for (UIViewController* viewController in controller.navigationController.viewControllers) {
-        if ([viewController isKindOfClass:[HEMSettingsTableViewController class]]) {
-            [controller.navigationController popToViewController:viewController animated:YES];
-            return;
-        }
-    }
-    
-    [controller.navigationController dismissViewControllerAnimated:YES completion:NULL];
-}
-
 + (void)finisOnboardinghWithMessageFrom:(UIViewController*)controller {
+    [SENAnalytics track:kHEMAnalyticsEventOnBEnd];
+    
     [HEMOnboardingCache clearCache];
     
-    HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
+    // if you call this method, you want to leave onboarding so make sure it's set
+    [self saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
     
-    [SENAnalytics track:kHEMAnalyticsEventOnBEnd];
+    HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
     
     void (^activityShownCompletion)(void) = ^{
         dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 1.0f*NSEC_PER_SEC);
@@ -233,7 +234,8 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
                           completion:^(BOOL finished) {
                               dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2.0f*NSEC_PER_SEC);
                               dispatch_after(time, dispatch_get_main_queue(), ^{
-                                  [self dismissOnboardingFlowFrom:controller];
+                                  NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+                                  [center postNotificationName:HEMOnboardingNotificationComplete object:nil];
                               });
                           }];
         });

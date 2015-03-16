@@ -139,8 +139,12 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     return self.drawerViewController.paneState != MSDynamicsDrawerPaneStateClosed;
 }
 
-- (void)createDrawerViewController
+- (BOOL)createDrawerViewController
 {
+    if (self.drawerViewController != nil) {
+        return NO;
+    }
+    
     self.drawerViewController = [MSDynamicsDrawerViewController new];
     self.drawerViewController.paneViewController = [HEMRootViewController instantiatePaneViewControllerWithDate:nil];
     self.drawerViewController.delegate = self;
@@ -158,6 +162,8 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [self.view addSubview:self.drawerViewController.view];
     [self addChildViewController:self.drawerViewController];
     [self.drawerViewController didMoveToParentViewController:self];
+    
+    return YES;
 }
 
 - (void)removeDrawerViewController {
@@ -221,20 +227,20 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
             [self showOnboarding:animated];
             break;
         case HEMRootAreaTimeline:
-            [self showDrawerController:animated backView:NO];
+            [self showDrawerControllerAnimated:animated openSettings:NO];
             break;
         case HEMRootAreaBackView:
-            [self showDrawerController:animated backView:YES];
+            [self showDrawerControllerAnimated:animated openSettings:YES];
             break;
         default:
             break;
     }
 }
 
-- (void)showDrawerController:(BOOL)animated backView:(BOOL)backView {
+- (void)showDrawerControllerAnimated:(BOOL)animated openSettings:(BOOL)openSettings {
     [self createDrawerViewController];
     
-    if (backView) {
+    if (openSettings) {
         [self openSettingsDrawer];
     }
     

@@ -433,7 +433,7 @@
 "actions.yes" = "Yes";
 "actions.skip" = "Skip";
 "actions.skip-for-now" = "Skip for now";
-"actions.order-new" = "Order New";
+"actions.replace" = "Replace";
 "actions.later" = "Later";
 "actions.fix-now" = "Fix now";
 "actions.next" = "Next";

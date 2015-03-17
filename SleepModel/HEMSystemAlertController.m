@@ -115,7 +115,7 @@
         case SENServiceDeviceStatePillLowBattery:
             *warningMessage = NSLocalizedString(@"alerts.device.pill-low-battery.message", nil);
             *cancelTitle = NSLocalizedString(@"actions.skip", nil);
-            *fixTitle = NSLocalizedString(@"actions.order-new", nil);
+            *fixTitle = NSLocalizedString(@"actions.replace", nil);
         default:
             break;
     }

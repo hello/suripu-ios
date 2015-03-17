@@ -51,58 +51,45 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     self = [super init];
     if (self) {
         [self setDeviceState:SENServiceDeviceStateUnknown];
-        [self listenForUserChange];
     }
     return self;
 }
 
 #pragma mark - SENService Overrides
 
-- (void)serviceBecameActive {
-    [super serviceBecameActive];
-    [self checkDevicesIfEnabled];
-}
-
-- (void)checkDevicesIfEnabled {
-    if ([SENAuthorizationService isAuthorized] && [self monitorDeviceStates]) {
+- (void)checkDevicesState:(void(^)(SENServiceDeviceState state))completion {
+    if ([SENAuthorizationService isAuthorized] && ![self isCheckingStates] && completion) {
         __weak typeof(self) weakSelf = self;
+        [self setCheckingStates:YES];
         [self loadDeviceInfo:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error == nil) {
-                [strongSelf checkDevicesState];
+                [strongSelf checkSenseAndPillState:^(SENServiceDeviceState state) {
+                    [strongSelf setDeviceState:state];
+                    [strongSelf setCheckingStates:NO];
+                    completion (state);
+                }];
+            } else {
+                [strongSelf setCheckingStates:NO];
+                completion (SENServiceDeviceStateUnknown);
             }
         }];
+    } else {
+        [self setCheckingStates:NO];
+        completion (SENServiceDeviceStateUnknown);
     }
 }
 
 #pragma mark - Device State / Warnings
 
-- (void)setMonitorDeviceStates:(BOOL)monitorDeviceStates {
-    if (_monitorDeviceStates == monitorDeviceStates) return; // do nothing
-    
-    _monitorDeviceStates = monitorDeviceStates;
-    
-    // if states changed from not monitoring to now monitoring, check devices now
-    // as it likely will not automatically check
-    if (monitorDeviceStates) {
-        [self checkDevicesIfEnabled];
-    }
-
-}
-
-- (void)checkDevicesState {
-    if ([self isCheckingStates]) return;
-    
-    [self setCheckingStates:YES];
+- (void)checkSenseAndPillState:(void(^)(SENServiceDeviceState state))completion {
     __weak typeof(self) weakSelf = self;
     [self checkSenseState:^(SENServiceDeviceState state) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (state == SENServiceDeviceStateNormal) {
-            [strongSelf checkPillPairingState:^(SENServiceDeviceState pillState) {
-                [strongSelf finishCheckingDeviceState:pillState];
-            }];
+            [strongSelf checkPillState:completion];
         } else {
-            [strongSelf finishCheckingDeviceState:state];
+            completion (state);
         }
     }];
 }
@@ -132,17 +119,11 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
     completion (deviceState);
 }
 
-- (void)checkPillPairingState:(void(^)(SENServiceDeviceState state))completion {
+- (void)checkPillState:(void(^)(SENServiceDeviceState state))completion {
     SENServiceDeviceState deviceState
         = [self pillInfo] == nil
         ? SENServiceDeviceStatePillNotPaired
         : SENServiceDeviceStateNormal;
-    
-    if (deviceState == SENServiceDeviceStateNormal) {
-        if ([self shouldWarnAboutPillLastSeen]) {
-            deviceState = SENServiceDeviceStatePillNotSeen;
-        }
-    }
     
     if (deviceState == SENServiceDeviceStateNormal) {
         switch ([[self pillInfo] state]) {
@@ -154,35 +135,19 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         }
     }
     
-    completion (deviceState);
-}
-
-- (void)finishCheckingDeviceState:(SENServiceDeviceState)state {
-    [self setDeviceState:state];
-    if ([self deviceState] != SENServiceDeviceStateNormal) {
-        NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-        [center postNotificationName:SENServiceDeviceNotificationWarning object:nil];
+    if (deviceState == SENServiceDeviceStateNormal) {
+        if ([self shouldWarnAboutPillLastSeen]) {
+            deviceState = SENServiceDeviceStatePillNotSeen;
+        }
     }
-    [self setCheckingStates:NO];
+    
+    completion (deviceState);
 }
 
 #pragma mark -
 
-- (void)listenForUserChange {
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(reset)
-                   name:SENAuthorizationServiceDidDeauthorizeNotification
-                 object:nil];
-    [center addObserver:self
-               selector:@selector(checkDevicesIfEnabled)
-                   name:SENAuthorizationServiceDidAuthorizeNotification
-                 object:nil];
-}
-
-- (void)reset {
+- (void)resetDeviceStates {
     [self clearCache];
-    [self setMonitorDeviceStates:NO];
     [self setCheckingStates:NO];
     [self setDeviceState:SENServiceDeviceStateUnknown];
     [SENSenseManager stopScan]; // if it was scannig
@@ -572,7 +537,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
                 
                 [[blockSelf senseManager] resetToFactoryState:^(__unused id response) {
                     [[blockSelf senseManager] disconnectFromSense];
-                    [blockSelf reset];
+                    [blockSelf resetDeviceStates];
                     [blockSelf notifyFactoryRestore];
                     callback (nil);
                 } failure:turnOffLedThenFail];

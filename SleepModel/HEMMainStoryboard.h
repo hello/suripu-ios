@@ -56,6 +56,7 @@
 +(NSString *)updatePasswordSegueIdentifier;
 
 /** View Controllers */
++(id)instantiateRootViewController;
 +(id)instantiateAlarmListNavViewController;
 +(id)instantiateAlarmListViewController;
 +(id)instantiateAlarmNavController;

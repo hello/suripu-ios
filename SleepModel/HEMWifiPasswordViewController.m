@@ -61,9 +61,15 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     [self configureForm];
     
     if (![self haveDelegates]) {
-        NSString* other = [self endpoint] == nil ? @"true" : @"false";
+        NSString* other = @"true";
+        long rssi = 0;
+        if ([self endpoint] != nil) {
+            other = @"false";
+            rssi = [[self endpoint] rssi];
+        }
         [SENAnalytics track:kHEMAnalyticsEventOnBWiFiPass
-                 properties:@{kHEMAnalyticsEventPropWiFiOther :other}];
+                 properties:@{kHEMAnalyticsEventPropWiFiOther :other,
+                              kHEMAnalyticsEventPropWiFiRSSI : @(rssi)}];
     }
 }
 

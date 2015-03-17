@@ -8,6 +8,7 @@
 
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMmain = @"Main";
+static NSString *const _HEMrootViewController = @"RootViewController";
 static NSString *const _HEMaccountSettings = @"accountSettings";
 static NSString *const _HEMactions = @"actions";
 static NSString *const _HEMalarmChoiceCell = @"alarmChoiceCell";
@@ -119,6 +120,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)updatePasswordSegueIdentifier { return _HEMupdatePassword; }
 
 /** View Controllers */
++(id)instantiateRootViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMrootViewController]; }
 +(id)instantiateAlarmListNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListNavViewController]; }
 +(id)instantiateAlarmListViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListViewController]; }
 +(id)instantiateAlarmNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmNavController]; }

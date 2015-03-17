@@ -217,6 +217,8 @@
 "settings.pill.unpairing-message" = "Unpairing your Sleep Pill";
 "settings.pill.unpaired-message" = "Your Sleep Pill has been unpaired.";
 "settings.pill.warning.last-seen-format" = "Your Sleep Pill was last seen %@. Tap below to troubleshoot.";
+"settings.pill.warning.low-battery-format" = "Your Sleep Pill %@. We'll walk you through replacing it.";
+"settings.pill.warning.battery-low" = "battery is low";
 "settings.sense.factory-reset.footer" = "Factory Reset will reset Sense back to its factory settings, remove Sense from all accounts linked to it, and unlink your Sleep Pill from your account.";
 "settings.sense.not-found-title" = "Sense not found";
 "settings.sense.wifi" = "WiFi";
@@ -431,6 +433,7 @@
 "actions.yes" = "Yes";
 "actions.skip" = "Skip";
 "actions.skip-for-now" = "Skip for now";
+"actions.replace" = "Replace";
 "actions.later" = "Later";
 "actions.fix-now" = "Fix now";
 "actions.next" = "Next";
@@ -488,6 +491,7 @@
 "alerts.device.no-pill.message" = "Your account does not have a Sleep Pill paired. A Sleep Pill is required to track your sleep behavior.";
 "alerts.device.pill-last-seen.title" = "Sleep Pill";
 "alerts.device.pill-last-seen.message" = "Sleep Pill has not reported any data recently. Tap 'Fix Now' to troubleshoot.";
+"alerts.device.pill-low-battery.message" = "Your Sleep Pill battery is low.";
 
 // tutorial
 "tutorial.timeline.title1" = "UNDERSTANDING YOUR SLEEP";

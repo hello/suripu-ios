@@ -125,6 +125,10 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
                                                  name:SENAPIReachableNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadData)
+                                                 name:HEMTimelineFeedbackSuccessNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleAuthorization)
                                                  name:SENAuthorizationServiceDidAuthorizeNotification
                                                object:nil];

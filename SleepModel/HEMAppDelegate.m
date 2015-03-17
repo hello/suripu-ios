@@ -17,6 +17,7 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAuthenticationViewController.h"
 #import "HEMConfig.h"
+#import "HEMMainStoryboard.h"
 
 @implementation HEMAppDelegate
 
@@ -41,7 +42,6 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     [self configureAnalytics];
     [self configureAppearance];
     [self registerForNotifications];
-    [self refreshData];
     [self createAndShowWindow];
     
     return YES;
@@ -89,14 +89,21 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     if (![self deauthorizeIfNeeded]) {
         [self resume:NO];
     }
+    [self syncData];
 }
 
-- (void)refreshData {
+- (void)syncData {
+    // pre fetch account information so that it's readily availble to the user
+    // when the account is accessed.  This is per discussion with design and James
     if ([SENAuthorizationService isAuthorized]) {
         [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
             [HEMAnalytics trackUserSession]; // update user session data
         }];
     }
+    
+    // pull sleep data and write to HealthKit.  If the data has already been
+    // written for the day, it will not do so again on sync.
+    [[SENServiceHealthKit sharedService] sync];
 }
 
 - (void)configureAPI {
@@ -190,7 +197,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 - (void)createAndShowWindow
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    self.window.rootViewController = [HEMRootViewController new];
+    self.window.rootViewController = [HEMMainStoryboard instantiateRootViewController];
     [self.window makeKeyAndVisible];
 }
 

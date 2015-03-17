@@ -48,6 +48,7 @@ extern NSString* const kHEMAnalyticsEventPropWiFiPass;
 extern NSString* const kHEMAnalyticsEventOnBWiFiSubmit;
 extern NSString* const kHEMAnalyticsEventPropSecurityType;
 extern NSString* const kHEMAnalyticsEventPropWiFiOther;
+extern NSString* const kHEMAnalyticsEventPropWiFiRSSI;
 extern NSString* const kHEMAnalyticsEventPropPillPairing;
 extern NSString* const kHEMAnalyticsEventPropPillPlacement;
 extern NSString* const kHEMAnalyticsEventPropPillAnother;
@@ -128,6 +129,12 @@ extern NSString* const HEMAnalyticsEventSaveAlarm;
 extern NSString* const HEMAnalyticsEventSaveAlarmHour;
 extern NSString* const HEMAnalyticsEventSaveAlarmMinute;
 extern NSString* const HEMAnalyticsEventSaveAlarmError;
+
+// system alerts
+extern NSString* const HEMAnalyticsEventSystemAlert;
+extern NSString* const HEMAnalyticsEventSystemAlertAction;
+extern NSString* const HEMAnalyticsEventSysAlertActionLater;
+extern NSString* const HEMAnalyticsEventSysAlertActionNow;
 
 @interface HEMAnalytics : NSObject
 

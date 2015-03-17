@@ -65,11 +65,27 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     return attrWarning;
 }
 
+- (NSAttributedString*)attributedLowBatteryMessage {
+    NSString* format = NSLocalizedString(@"settings.pill.warning.low-battery-format", nil);
+    NSString* batteryLow = NSLocalizedString(@"settings.pill.warning.battery-low", nil);
+    NSArray* args = @[[self redMessage:batteryLow]];
+    
+    NSMutableAttributedString* attrWarning =
+    [[NSMutableAttributedString alloc] initWithFormat:format args:args];
+    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]}
+                         range:NSMakeRange(0, [attrWarning length])];
+    
+    return attrWarning;
+}
+
 - (NSAttributedString*)attributedMessageForWarning:(HEMDeviceWarning)warning {
     NSAttributedString* message = nil;
     switch (warning) {
         case HEMDeviceWarningLongLastSeen:
             message = [self attributedLongLastSeenMessage];
+            break;
+        case HEMPillWarningHasLowBattery:
+            message = [self attributedLowBatteryMessage];
             break;
         default:
             break;
@@ -157,6 +173,10 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
         case HEMDeviceWarningLongLastSeen: {
             NSString* page = NSLocalizedString(@"help.url.slug.pill-not-seen", nil);
             [HEMSupportUtil openHelpToPage:page fromController:self];
+            break;
+        }
+        case HEMPillWarningHasLowBattery: {
+            [self replaceBattery:self];
             break;
         }
         default:

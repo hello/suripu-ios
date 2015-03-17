@@ -59,14 +59,6 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
 @property (nonatomic, assign, readonly) SENServiceDeviceState deviceState;
 
 /**
- * @property monitorDeviceStates: 
- * 
- * @discussion
- * YES to be notified of device warning / states, NO otherwise
- */
-@property (nonatomic, assign) BOOL monitorDeviceStates;
-
-/**
  * @property senseManager: the manager for the paired Sense that was found.  You
  *                         should only use this outside of the center if it's a
  *                         one off operation that does not require any interaction
@@ -106,6 +98,23 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
  * only do this if switching users or resetting back to factory.
  */
 - (void)clearCache;
+
+/**
+ * Clears the cache and resets any device states that was cached from previous
+ * checks and stops the scanning for devices, if it was started.
+ */
+- (void)resetDeviceStates;
+
+/**
+ * Check to state of both the Sense and the Sleep Pill to see if there are any
+ * problems with the user's Sense system.
+ *
+ * @param completion: the block to invoke with the first known problem that the
+ *                    Sense system might be experiencing.  If there was a problem
+ *                    loading information about the devices, SENServiceDeviceStateUnknown
+ *                    is returned.
+ */
+- (void)checkDevicesState:(void(^)(SENServiceDeviceState state))completion;
 
 /**
  * @method loadDeviceInfo

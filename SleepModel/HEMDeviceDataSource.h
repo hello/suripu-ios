@@ -12,7 +12,8 @@
 typedef NS_ENUM(NSUInteger, HEMDeviceWarning) {
     HEMDeviceWarningLongLastSeen = 1,
     HEMSenseWarningNoInternet = 2,
-    HEMSenseWarningNotConnectedToSense = 3
+    HEMSenseWarningNotConnectedToSense = 3,
+    HEMPillWarningHasLowBattery = 4
 };
 
 typedef NS_ENUM(NSInteger, HEMDeviceError) {

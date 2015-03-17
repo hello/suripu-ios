@@ -86,19 +86,17 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     return slideController;
 }
 
-- (instancetype)init {
-    if (self = [super init]) {
-        [self setAlertController:[[HEMSystemAlertController alloc] initWithViewController:self]];
-        [self registerForNotifications];
-    }
-    return self;
-}
-
 - (void)viewDidBecomeActive
 {
     [super viewDidBecomeActive];
     [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
     [SENAnalytics track:kHEMAnalyticsEventAppLaunched];
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setAlertController:[[HEMSystemAlertController alloc] initWithViewController:self]];
+    [self registerForNotifications];
 }
 
 - (void)viewDidEnterBackground
@@ -139,10 +137,10 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     return self.drawerViewController.paneState != MSDynamicsDrawerPaneStateClosed;
 }
 
-- (void)createDrawerViewController
+- (BOOL)createDrawerViewController
 {
     if (self.drawerViewController != nil) {
-        return;
+        return NO;
     }
     
     self.drawerViewController = [MSDynamicsDrawerViewController new];
@@ -162,6 +160,8 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [self.view addSubview:self.drawerViewController.view];
     [self addChildViewController:self.drawerViewController];
     [self.drawerViewController didMoveToParentViewController:self];
+    
+    return YES;
 }
 
 - (void)removeDrawerViewController {
@@ -201,6 +201,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 - (void)didAuthorize {
     [self showSettingsDrawerTabAtIndex:HEMRootDrawerTabInsights animated:NO];
+    [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
 }
 
 - (BOOL)shouldMonitorDevices {
@@ -222,32 +223,32 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 - (void)showArea:(HEMRootArea)area animated:(BOOL)animated {
     switch (area) {
         case HEMRootAreaOnboarding:
-            [self showOnboarding:animated];
+            [self launchOnboarding:animated];
             break;
         case HEMRootAreaTimeline:
-            [self showDrawerControllerAnimated:animated openSettings:NO];
+            [self launchDrawerControllerAnimated:animated intoSettings:NO];
             break;
         case HEMRootAreaBackView:
-            [self showDrawerControllerAnimated:animated openSettings:YES];
+            [self launchDrawerControllerAnimated:animated intoSettings:YES];
             break;
         default:
             break;
     }
 }
 
-- (void)showDrawerControllerAnimated:(BOOL)animated openSettings:(BOOL)openSettings {
-    [self createDrawerViewController];
-    
-    if (openSettings) {
-        [self openSettingsDrawer];
-    }
-    
-    if ([self presentedViewController] != nil) {
-        [self dismissViewControllerAnimated:animated completion:nil];
+- (void)launchDrawerControllerAnimated:(BOOL)animated intoSettings:(BOOL)openSettings {
+    if ([self createDrawerViewController]) { // if already created, ignore
+        if (openSettings) {
+            [self openSettingsDrawer];
+        }
+        
+        if ([self presentedViewController] != nil) {
+            [self dismissViewControllerAnimated:animated completion:nil];
+        }
     }
 }
 
-- (void)showOnboarding:(BOOL)animated {
+- (void)launchOnboarding:(BOOL)animated {
     if ([self presentedViewController] != nil) return;
     
     HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];

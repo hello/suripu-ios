@@ -431,6 +431,7 @@
 "actions.yes" = "Yes";
 "actions.skip" = "Skip";
 "actions.skip-for-now" = "Skip for now";
+"actions.order-new" = "Order New";
 "actions.later" = "Later";
 "actions.fix-now" = "Fix now";
 "actions.next" = "Next";
@@ -488,6 +489,7 @@
 "alerts.device.no-pill.message" = "Your account does not have a Sleep Pill paired. A Sleep Pill is required to track your sleep behavior.";
 "alerts.device.pill-last-seen.title" = "Sleep Pill";
 "alerts.device.pill-last-seen.message" = "Sleep Pill has not reported any data recently. Tap 'Fix Now' to troubleshoot.";
+"alerts.device.pill-low-battery.message" = "Your Sleep Pill battery is low.";
 
 // tutorial
 "tutorial.timeline.title1" = "UNDERSTANDING YOUR SLEEP";

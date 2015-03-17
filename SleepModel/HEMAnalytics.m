@@ -73,6 +73,7 @@ NSString* const kHEMAnalyticsEventOnBWiFiPass = @"Onboarding WiFi Password";
 NSString* const kHEMAnalyticsEventOnBWiFiSubmit = @"Onboarding WiFi Credentials Submitted";
 NSString* const kHEMAnalyticsEventPropSecurityType = @"Security Type";
 NSString* const kHEMAnalyticsEventPropWiFiOther = @"Is Other";
+NSString* const kHEMAnalyticsEventPropWiFiRSSI = @"RSSI";
 NSString* const kHEMAnalyticsEventOnBSleepPill = @"Onboarding Sleep Pill";
 NSString* const kHEMAnalyticsEventOnBPairPill = @"Onboarding Pair Pill";
 NSString* const kHEMAnalyticsEventOnBPillPlacement = @"Onboarding Pill Placement";

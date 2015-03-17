@@ -22,13 +22,13 @@ PODS:
     - AFNetworking/NSURLSession
   - AttributedMarkdown (0.9.2)
   - BEMSimpleLineGraph (3.3)
-  - CocoaLumberjack (2.0.0-rc2):
+  - CocoaLumberjack (2.0.0):
     - CocoaLumberjack/Default
     - CocoaLumberjack/Extensions
-  - CocoaLumberjack/Core (2.0.0-rc2)
-  - CocoaLumberjack/Default (2.0.0-rc2):
+  - CocoaLumberjack/Core (2.0.0)
+  - CocoaLumberjack/Default (2.0.0):
     - CocoaLumberjack/Core
-  - CocoaLumberjack/Extensions (2.0.0-rc2):
+  - CocoaLumberjack/Extensions (2.0.0):
     - CocoaLumberjack/Default
   - FDWaveformView (0.2.2)
   - FXKeychain (1.5.2)
@@ -107,7 +107,7 @@ SPEC CHECKSUMS:
   AFNetworking: 8bee59492a6ff15d69130efa4d0dc67e0094a52a
   AttributedMarkdown: de3267724c9e2175e1fc398184d03ba6697766ef
   BEMSimpleLineGraph: a3c78bfd5d2919324d970e42c028ebffc6ad7bcd
-  CocoaLumberjack: 6027cd9a0665203a7df456c526e137f02cd547e1
+  CocoaLumberjack: fd2b1031c6c4e0f08b5ea928ef677fa0a5de517d
   FDWaveformView: 6f3c2d4dfb25c90206da48ea08f5bf81d0afaa56
   FXKeychain: c97c352f1923809032339514ec4d6b0ed151bc3b
   Kiwi: 73e1400209055ee9c8ba78c6012b6b642d0fb9f7

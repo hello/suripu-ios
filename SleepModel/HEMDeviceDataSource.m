@@ -192,6 +192,10 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 
 - (NSOrderedSet*)deviceWarningsFor:(SENDevice*)device {
     NSMutableOrderedSet* set = [[NSMutableOrderedSet alloc] init];
+    if ([device type] == SENDeviceTypePill
+        && [device state] == SENDeviceStateLowBattery) {
+        [set addObject:@(HEMPillWarningHasLowBattery)];
+    }
     if ([[SENServiceDevice sharedService] shouldWarnAboutLastSeenForDevice:device]) {
         [set addObject:@(HEMDeviceWarningLongLastSeen)];
     }

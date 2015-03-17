@@ -217,6 +217,8 @@
 "settings.pill.unpairing-message" = "Unpairing your Sleep Pill";
 "settings.pill.unpaired-message" = "Your Sleep Pill has been unpaired.";
 "settings.pill.warning.last-seen-format" = "Your Sleep Pill was last seen %@. Tap below to troubleshoot.";
+"settings.pill.warning.low-battery-format" = "Your Sleep Pill %@. We'll walk you through replacing it.";
+"settings.pill.warning.battery-low" = "battery is low";
 "settings.sense.factory-reset.footer" = "Factory Reset will reset Sense back to its factory settings, remove Sense from all accounts linked to it, and unlink your Sleep Pill from your account.";
 "settings.sense.not-found-title" = "Sense not found";
 "settings.sense.wifi" = "WiFi";

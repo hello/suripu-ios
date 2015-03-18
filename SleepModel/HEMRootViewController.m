@@ -41,7 +41,7 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 @property (strong, nonatomic) HEMDebugController* debugController;
 @property (strong, nonatomic) HEMSystemAlertController* alertController;
 @property (strong, nonatomic) MSDynamicsDrawerViewController* drawerViewController;
-@property (assign, nonatomic, getter=isControllerLoaded) BOOL controllerLoad;
+@property (assign, nonatomic, getter=isMainControllerLoaded) BOOL mainControllerLoaded;
 
 @end
 
@@ -101,7 +101,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     
     if ([HEMOnboardingUtils hasFinishedOnboarding]) {
         [self showArea:HEMRootAreaTimeline animated:NO];
-        [self setControllerLoad:YES];
+        [self setMainControllerLoaded:YES];
     }
 }
 
@@ -111,10 +111,10 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     // if controller has not been loaded yet in viewDidLoad, check and see if we
     // need to launch the onboarding controller.  Onboarding currently is presented
     // modally, which can't be loaded in viewDidLoad.
-    if (![self isControllerLoaded]) {
+    if (![self isMainControllerLoaded]) {
         if (![HEMOnboardingUtils hasFinishedOnboarding]) {
             [self showArea:HEMRootAreaOnboarding animated:NO];
-            [self setControllerLoad:YES];
+            [self setMainControllerLoaded:YES];
         }
     }
 }
@@ -227,13 +227,6 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
                  object:nil];
 }
 
-- (void)didAuthorize {
-    if ([HEMOnboardingUtils hasFinishedOnboarding]) {
-        [self showArea:HEMRootAreaTimeline animated:YES];
-    }
-    [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
-}
-
 - (BOOL)shouldMonitorDevices {
     HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
     return [SENAuthorizationService isAuthorized]
@@ -296,6 +289,13 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
             [self removeDrawerViewController];
         }];
     }
+}
+
+- (void)didAuthorize {
+    if ([HEMOnboardingUtils hasFinishedOnboarding]) {
+        [self showArea:HEMRootAreaTimeline animated:YES];
+    }
+    [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
 }
 
 - (void)didFinishOnboarding {

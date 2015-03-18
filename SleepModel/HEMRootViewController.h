@@ -30,10 +30,6 @@ extern NSString* const HEMRootDrawerDidCloseNotification;
 
 + (instancetype)rootViewControllerForKeyWindow;
 
-- (void)showArea:(HEMRootArea)area animated:(BOOL)animated;
-
-- (BOOL)isShowingOnboarding;
-
 - (void)reloadTimelineSlideViewControllerWithDate:(NSDate*)date;
 - (void)hideSettingsDrawerTopBar:(BOOL)hidden animated:(BOOL)animated;
 - (void)showPartialSettingsDrawerTopBarWithRatio:(CGFloat)ratio;

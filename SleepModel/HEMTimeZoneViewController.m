@@ -33,13 +33,32 @@
 }
 
 - (void)buildTimeZoneSource {
-    [self setDisplayNamesToTimeZone:[NSTimeZone supportedTimeZoneByDisplayNames]];
+    UIViewController* root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     
-    NSArray* sortedArray = [[self displayNamesToTimeZone] allKeys];
-    sortedArray = [sortedArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-        return [obj1 compare:obj2];
+    HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
+    
+    [activityView showInView:[root view] withText:NSLocalizedString(@"activity.loading", nil) activity:YES completion:^{
+        
+        __weak typeof(self) weakSelf = self;
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            
+            [strongSelf setDisplayNamesToTimeZone:[NSTimeZone supportedTimeZoneByDisplayNames]];
+            
+            NSArray* sortedArray = [[strongSelf displayNamesToTimeZone] allKeys];
+            sortedArray = [sortedArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+                return [obj1 compare:obj2];
+            }];
+            [strongSelf setSortedDisplayNames:sortedArray];
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[strongSelf tableView] reloadData];
+                [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:nil];
+            });
+            
+        });
     }];
-    [self setSortedDisplayNames:sortedArray];
+
 }
 
 - (void)updateTimeZoneTo:(NSTimeZone*)timeZone {

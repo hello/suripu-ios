@@ -83,7 +83,7 @@
 "pairing.activity.looking-for-pill" = "Looking for Sleep Pill";
 "pairing.activity.connecting-sense" = "Connecting to Sense";
 "pairing.activity.linking-account" = "Linking account to Sense";
-"pairing.activity.setting-timezone" = "Setting timezone";
+"pairing.activity.setting-timezone" = "Setting time zone";
 "pairing.failed.title" = "Pairing Failed";
 "pairing.activity.waiting-for-sense" = "Waiting for Sense";
 "pairing.error.sense-not-found" = "Could not detect a Sense nearby. Make sure Sense is plugged in, nearby, and in pairing mode. Ensure no other devices are connected with Sense over Bluetooth.";

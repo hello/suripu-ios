@@ -263,6 +263,10 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
 }
 
++ (UIFont *)timeZoneNameFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+}
+
 #pragma mark - Onboarding
 
 + (UIFont *)onboardingActivityFontLarge {

@@ -280,6 +280,11 @@
  */
 + (UIFont *)textfieldTextFont;
 
+/**
+ * Font used for the text to display TimeZone names
+ */
++ (UIFont *)timeZoneNameFont;
+
 #pragma mark - Onboarding
 
 /**

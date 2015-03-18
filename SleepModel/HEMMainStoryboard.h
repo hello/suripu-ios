@@ -29,6 +29,7 @@
 +(NSString *)warningReuseIdentifier;
 +(NSString *)actionsReuseIdentifier;
 +(NSString *)resetReuseIdentifier;
++(NSString *)timezoneReuseIdentifier;
 +(NSString *)choiceCellReuseIdentifier;
 +(NSString *)alarmListCellReuseIdentifier;
 +(NSString *)alarmListEmptyCellReuseIdentifier;
@@ -50,6 +51,7 @@
 +(NSString *)pickSoundSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
 +(NSString *)senseSegueIdentifier;
++(NSString *)timezoneSegueIdentifier;
 +(NSString *)unitsSettingsSegueIdentifier;
 +(NSString *)updateEmailSegueIdentifier;
 +(NSString *)updateNameSegueIdentifier;
@@ -72,6 +74,7 @@
 +(id)instantiateSleepHistoryController;
 +(id)instantiateSleepInsightViewController;
 +(id)instantiateSleepQuestionsViewController;
++(id)instantiateTimeZoneViewController;
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;
 

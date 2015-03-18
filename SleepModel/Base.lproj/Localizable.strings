@@ -524,3 +524,8 @@
 "tutorial.sensor.sound.message" = "Sense measures sound in decibels (dB). Here you’ll see detailed information on the sound levels in your bedroom. The graphs will fill in as Sense collects more data.";
 "tutorial.sensor.particulates.title" = "Air quality index";
 "tutorial.sensor.particulates.message" = "AQI stands for Air Quality Index, and is measured on a scale from 0-500. The lower the value, the better the air quality. Here you’ll see detailed information on the AQI in your bedroom. The graphs will fill in as Sense collects more data.";
+
+// timezone
+"timezone.activity.message" = "Updating Time Zone";
+"timezone.error.title" = "Update failed";
+"timezone.error.message" = "Could not update the time zone at this time. Make sure your device is connected to the internet and try again.";

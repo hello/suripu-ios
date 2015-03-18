@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.0.4.0
+
+New:
+
+* Change the time zone used by the system
+* global in-app alert is now shown when Sleep Pill battery is low
+* Sleep Pill settings will now show a warning if battery is low
+
+Fixes:
+
+* Prevents mp events from the core part of the app from firing when not visible
+* Edigint Timeline events should update the timeline after saving
+* Changed the order of action buttons in the delete alarm confirmation dialog
+* Resolved possible crasher that can occur when syncing with HealthKit if the wake up time was manually adjusted to be before the sleep time
+* Fixed issue where HealthKit may not automatically sync
+* Adding additional events for when global in-app alerts are fired.
+
 ## 1.0.3.7
 
 Fixes:

@@ -382,6 +382,8 @@
 		BF5D53271A266C6B0090DD6A /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5D53241A266C6B0090DD6A /* check@2x.png */; };
 		BF5D53281A266C6B0090DD6A /* check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5D53251A266C6B0090DD6A /* check@3x.png */; };
 		BF5D532B1A26749F0090DD6A /* HEMActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5D532A1A26749F0090DD6A /* HEMActivityIndicatorView.m */; };
+		BF6215101AB8CF730047A518 /* HEMTimeZoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF62150F1AB8CF730047A518 /* HEMTimeZoneViewController.m */; };
+		BF6215131AB8E1AC0047A518 /* NSTimeZone+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6215121AB8E1AC0047A518 /* NSTimeZone+HEMUtils.m */; };
 		BF628E941A8306A800C0CD2E /* pairingMode.png in Resources */ = {isa = PBXBuildFile; fileRef = BF628E911A8306A800C0CD2E /* pairingMode.png */; };
 		BF628E951A8306A800C0CD2E /* pairingMode@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF628E921A8306A800C0CD2E /* pairingMode@2x.png */; };
 		BF628E961A8306A800C0CD2E /* pairingMode@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF628E931A8306A800C0CD2E /* pairingMode@3x.png */; };
@@ -1090,6 +1092,11 @@
 		BF5D53251A266C6B0090DD6A /* check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check@3x.png"; path = "images/check@3x.png"; sourceTree = "<group>"; };
 		BF5D53291A26749F0090DD6A /* HEMActivityIndicatorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActivityIndicatorView.h; sourceTree = "<group>"; };
 		BF5D532A1A26749F0090DD6A /* HEMActivityIndicatorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMActivityIndicatorView.m; sourceTree = "<group>"; };
+		BF62150C1AB8C1C80047A518 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
+		BF62150E1AB8CF730047A518 /* HEMTimeZoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimeZoneViewController.h; sourceTree = "<group>"; };
+		BF62150F1AB8CF730047A518 /* HEMTimeZoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimeZoneViewController.m; sourceTree = "<group>"; };
+		BF6215111AB8E1AC0047A518 /* NSTimeZone+HEMUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+HEMUtils.h"; sourceTree = "<group>"; };
+		BF6215121AB8E1AC0047A518 /* NSTimeZone+HEMUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+HEMUtils.m"; sourceTree = "<group>"; };
 		BF628E911A8306A800C0CD2E /* pairingMode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pairingMode.png; path = images/pairingMode.png; sourceTree = "<group>"; };
 		BF628E921A8306A800C0CD2E /* pairingMode@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pairingMode@2x.png"; path = "images/pairingMode@2x.png"; sourceTree = "<group>"; };
 		BF628E931A8306A800C0CD2E /* pairingMode@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pairingMode@3x.png"; path = "images/pairingMode@3x.png"; sourceTree = "<group>"; };
@@ -1374,7 +1381,6 @@
 		6003F581195388D10070C39A = {
 			isa = PBXGroup;
 			children = (
-				8A2823561A95557900438B59 /* README.md */,
 				8AA0F57E19C2255D00556AAF /* CHANGELOG.md */,
 				6003F593195388D20070C39A /* Sense */,
 				BF7F1BCB19E304050028F799 /* SenseWidget */,
@@ -1398,6 +1404,7 @@
 		6003F58C195388D20070C39A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BF62150C1AB8C1C80047A518 /* libicucore.dylib */,
 				BF414CE01A770A6D006204DE /* HealthKit.framework */,
 				8A4B669A19F6C9E900445883 /* MessageUI.framework */,
 				BF7F1BDF19E30DCC0028F799 /* libPods.a */,
@@ -2135,6 +2142,8 @@
 				8AF281081A9F8AC300D61641 /* HEMUpdateNameViewController.m */,
 				BFE8730F1A323C2800494231 /* HEMUpdatePasswordViewController.h */,
 				BFE873101A323C2800494231 /* HEMUpdatePasswordViewController.m */,
+				BF62150E1AB8CF730047A518 /* HEMTimeZoneViewController.h */,
+				BF62150F1AB8CF730047A518 /* HEMTimeZoneViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2692,6 +2701,8 @@
 				8AB006301A48C382000CF62F /* HEMMarkdown.m */,
 				BF98FC371A9BB29D00AEC04C /* HEMConfig.h */,
 				BF98FC381A9BB29D00AEC04C /* HEMConfig.m */,
+				BF6215111AB8E1AC0047A518 /* NSTimeZone+HEMUtils.h */,
+				BF6215121AB8E1AC0047A518 /* NSTimeZone+HEMUtils.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -3448,6 +3459,7 @@
 				8A66FC9C199D308B00922ED5 /* HEMWeightPickerViewController.m in Sources */,
 				BF8E1AA11A689FB2009E421F /* HEMSenseAudioViewController.m in Sources */,
 				BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */,
+				BF6215101AB8CF730047A518 /* HEMTimeZoneViewController.m in Sources */,
 				BF98E4461A42378900E3CDEB /* HEMSinkModalTransition.m in Sources */,
 				8A4D49121A67532800DD6ECE /* HEMScopePickerView.m in Sources */,
 				8A7D80201A40DCA400B0BFD7 /* HEMCardFlowLayout.m in Sources */,
@@ -3508,6 +3520,7 @@
 				8A8288DD1A783F5D0043B1D1 /* HEMFullscreenDialogView.m in Sources */,
 				8AC49F8A1981A89D00C2BD63 /* HEMSleepHistoryViewController.m in Sources */,
 				8A78267719663BB1002882A1 /* HEMSensorViewController.m in Sources */,
+				BF6215131AB8E1AC0047A518 /* NSTimeZone+HEMUtils.m in Sources */,
 				BFEAA0BB19A578EE002FBD44 /* HEMLocationCenter.m in Sources */,
 				BFB0FBD619D243A60056FFEC /* HEMDevicesViewController.m in Sources */,
 				8A4D490C1A67462500DD6ECE /* HEMTrendCollectionViewCell.m in Sources */,

@@ -161,13 +161,17 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
                                    action:@selector(replaceSense:)
                          forControlEvents:UIControlEventTouchUpInside];
     [[actionCell action2Button] addTarget:self
+                                   action:@selector(changeTimeZone:)
+                         forControlEvents:UIControlEventTouchUpInside];
+    [[actionCell action3Button] addTarget:self
                                    action:@selector(pairingMode:)
                          forControlEvents:UIControlEventTouchUpInside];
-    [[actionCell action2Button] setEnabled:senseAvailable];
-    [[actionCell action3Button] addTarget:self
+    [[actionCell action3Button] setEnabled:senseAvailable];
+    [[actionCell action4Button] addTarget:self
                                    action:@selector(changeWiFi:)
                          forControlEvents:UIControlEventTouchUpInside];
-    [[actionCell action3Button] setEnabled:senseAvailable];
+    [[actionCell action4Button] setEnabled:senseAvailable];
+
 }
 
 - (void)setupResetActionCell:(HEMDeviceActionCollectionViewCell*)actionCell {
@@ -384,6 +388,12 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
         [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropSenseId : kHEMAnalyticsEventPropSenseIdUnpaired}];
         [self unlinkSense];
     }];
+}
+
+#pragma mark Timezone
+
+- (void)changeTimeZone:(id)sender {
+    [self performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:self];
 }
 
 #pragma mark Enable Pairing Mode

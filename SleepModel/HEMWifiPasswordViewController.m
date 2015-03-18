@@ -567,7 +567,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         [weakSelf showMessageDialog:errorMessage
                               title:title
                               image:nil
-                       withHelpPage:NSLocalizedString(@"troubleshoot/connecting-sense-wifi", nil)];
+                       withHelpPage:NSLocalizedString(@"help.url.slug.wifi-scan", nil)];
     }];
 }
 
@@ -575,7 +575,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     [self showMessageDialog:NSLocalizedString(@"wifi.error.invalid-input", nil)
                       title:NSLocalizedString(@"wifi.error.title", nil)
                       image:nil
-               withHelpPage:NSLocalizedString(@"troubleshoot/connecting-sense-wifi", nil)];
+               withHelpPage:NSLocalizedString(@"help.url.slug.wifi-scan", nil)];
 }
 
 - (void)showSetWiFiError:(NSError*)error {

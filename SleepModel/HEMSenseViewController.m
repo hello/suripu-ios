@@ -281,7 +281,7 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
         size.height = [self heightForWarning:[[self warnings][[indexPath row]] integerValue]
                          withDefaultItemSize:size] + HEMWarningCellBaseHeight;
     } else if ([self isFrequentActionsCellRow:[indexPath row]]) {
-        size.height = HEMSenseActionHeight * 3;
+        size.height = HEMSenseActionHeight * 4;
     } else {
         size.height = HEMSenseActionHeight;
     }

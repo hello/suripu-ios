@@ -41,6 +41,7 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 @property (strong, nonatomic) HEMDebugController* debugController;
 @property (strong, nonatomic) HEMSystemAlertController* alertController;
 @property (strong, nonatomic) MSDynamicsDrawerViewController* drawerViewController;
+@property (assign, nonatomic, getter=isControllerLoaded) BOOL controllerLoad;
 
 @end
 
@@ -97,6 +98,25 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [super viewDidLoad];
     [self setAlertController:[[HEMSystemAlertController alloc] initWithViewController:self]];
     [self registerForNotifications];
+    
+    if ([HEMOnboardingUtils hasFinishedOnboarding]) {
+        [self showArea:HEMRootAreaTimeline animated:NO];
+        [self setControllerLoad:YES];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    // if controller has not been loaded yet in viewDidLoad, check and see if we
+    // need to launch the onboarding controller.  Onboarding currently is presented
+    // modally, which can't be loaded in viewDidLoad.
+    if (![self isControllerLoaded]) {
+        if (![HEMOnboardingUtils hasFinishedOnboarding]) {
+            [self showArea:HEMRootAreaOnboarding animated:NO];
+            [self setControllerLoad:YES];
+        }
+    }
 }
 
 - (void)viewDidEnterBackground
@@ -197,10 +217,20 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
                selector:@selector(adjustRevealHeight)
                    name:UIApplicationDidChangeStatusBarFrameNotification
                  object:nil];
+    [center addObserver:self
+               selector:@selector(didFinishOnboarding)
+                   name:HEMOnboardingNotificationComplete
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(showOnboarding)
+                   name:SENAuthorizationServiceDidDeauthorizeNotification
+                 object:nil];
 }
 
 - (void)didAuthorize {
-    [self showSettingsDrawerTabAtIndex:HEMRootDrawerTabInsights animated:NO];
+    if ([HEMOnboardingUtils hasFinishedOnboarding]) {
+        [self showArea:HEMRootAreaTimeline animated:YES];
+    }
     [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
 }
 
@@ -219,6 +249,8 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
                                             animated:NO
                                           completion:NULL];
 }
+
+#pragma mark - Handling different state of the app
 
 - (void)showArea:(HEMRootArea)area animated:(BOOL)animated {
     switch (area) {
@@ -264,6 +296,14 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
             [self removeDrawerViewController];
         }];
     }
+}
+
+- (void)didFinishOnboarding {
+    [self showArea:HEMRootAreaBackView animated:YES];
+}
+
+- (void)showOnboarding {
+    [self showArea:HEMRootAreaOnboarding animated:YES];
 }
 
 - (BOOL)isShowingOnboarding {
@@ -362,7 +402,6 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
                       allowUserInterruption:YES
                                  completion:NULL];
 }
-
 
 #pragma mark - Shake to Show Debug Options
 

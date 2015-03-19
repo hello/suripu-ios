@@ -211,7 +211,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self scanUntilDoneWithCount:0 completion:^(NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
         DDLogVerbose(@"wifi scan completed");
-        [SENAnalytics endEvent:kHEMAnalyticsEventOnBWiFiScan];
         
         [[strongSelf wifiPickerTableView] reloadData];
         [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{

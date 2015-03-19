@@ -86,9 +86,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 - (void)applicationDidBecomeActive:(UIApplication*)application
 {
     [HEMNotificationHandler clearNotifications];
-    if (![self deauthorizeIfNeeded]) {
-        [self resume:NO];
-    }
+    [self deauthorizeIfNeeded];
     [self syncData];
 }
 
@@ -205,49 +203,18 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
 {
     [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    
     [center addObserver:self
-               selector:@selector(resetAndShowOnboarding)
+               selector:@selector(reset)
                    name:SENAuthorizationServiceDidDeauthorizeNotification
-                 object:nil];
-    
-    [center addObserver:self
-               selector:@selector(enterApp)
-                   name:HEMOnboardingNotificationComplete
-                 object:nil];
-    
-    [center addObserver:self
-               selector:@selector(enterApp)
-                   name:HEMAuthenticationNotificationDidSignIn
                  object:nil];
 }
 
-- (void)resetAndShowOnboarding
+- (void)reset
 {
     SENClearModel();
     [HEMAudioCache clearCache];
     [[SENLocalPreferences sharedPreferences] removeSessionPreferences];
     [HEMOnboardingUtils resetOnboardingCheckpoint];
-    [self resume:YES];
-}
-
-- (void)enterApp
-{
-    [self resume:YES];
-}
-
-#pragma mark - Resume Where Last Off
-
-- (void)resume:(BOOL)animated
-{
-    HEMRootViewController* root = (id)self.window.rootViewController;
-    if (![HEMOnboardingUtils hasFinishedOnboarding]) {
-        [root showArea:HEMRootAreaOnboarding animated:animated];
-    } else if ([root isShowingOnboarding]){
-        [root showArea:HEMRootAreaBackView animated:animated];
-    } else {
-        [root showArea:HEMRootAreaTimeline animated:animated];
-    }
 }
 
 @end

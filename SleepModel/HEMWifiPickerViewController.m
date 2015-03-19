@@ -268,8 +268,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Actions
 
 - (IBAction)scan:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventOnBWiFiScan];
-    
     [[self wifiDataSource] clearDetectedWifis];
     [[self wifiPickerTableView] reloadData];
     [self scanWithActivity];

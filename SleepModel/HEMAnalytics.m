@@ -93,9 +93,6 @@ NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";
 NSString* const kHEMAnalyticsEventAppClosed = @"App Closed";
 NSString* const kHEMAnalyticsEventPropEvent = @"event";
-NSString* const kHEMAnalyticsEventDrawer = @"Drawer Action";
-NSString* const kHEMAnalyticsEventPropOpen = @"open";
-NSString* const kHEMAnalyticsEventPropClose = @"close";
 NSString* const kHEMAnalyticsEventEmailSupport = @"Contact Support";
 NSString* const kHEMAnalyticsEventSettings = @"Settings";
 NSString* const kHEMAnalyticsEventTrends = @"Trends";
@@ -126,7 +123,10 @@ NSString* const kHEMAnalyticsEventDeviceActionUnpairPill = @"unpair Sleep Pill";
 // timeline
 NSString* const HEMAnalyticsEventTimelineBarLongPress = @"Long press sleep duration bar";
 NSString* const kHEMAnalyticsEventTimeline = @"Timeline";
+NSString* const kHEMAnalyticsEventTimelineChanged = @"Timeline swipe"; // case sensitive, to be same as android
 NSString* const kHEMAnalyticsEventTimelineAction = @"Timeline Action";
+NSString* const kHEMAnalyticsEventTimelineOpen = @"Timeline opened";
+NSString* const kHEMAnalyticsEventTimelineClose = @"Timeline closed";
 
 // alarms
 NSString* const kHEMAnalyticsEventAlarms = @"Alarms";

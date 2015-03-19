@@ -86,9 +86,6 @@ extern NSString* const kHEMAnalyticsEventPropScreenPillPairing;
 extern NSString* const kHEMAnalyticsEventAppLaunched;
 extern NSString* const kHEMAnalyticsEventAppClosed;
 extern NSString* const kHEMAnalyticsEventPropEvent;
-extern NSString* const kHEMAnalyticsEventDrawer;
-extern NSString* const kHEMAnalyticsEventPropOpen;
-extern NSString* const kHEMAnalyticsEventPropClose;
 extern NSString* const kHEMAnalyticsEventEmailSupport;
 extern NSString* const kHEMAnalyticsEventSettings;
 extern NSString* const kHEMAnalyticsEventTrends;
@@ -119,7 +116,10 @@ extern NSString* const kHEMAnalyticsEventDeviceActionUnpairPill;
 // timeline
 extern NSString* const HEMAnalyticsEventTimelineBarLongPress;
 extern NSString* const kHEMAnalyticsEventTimeline;
+extern NSString* const kHEMAnalyticsEventTimelineChanged;
 extern NSString* const kHEMAnalyticsEventTimelineAction;
+extern NSString* const kHEMAnalyticsEventTimelineOpen;
+extern NSString* const kHEMAnalyticsEventTimelineClose;
 
 // alarms
 extern NSString* const kHEMAnalyticsEventAlarms;

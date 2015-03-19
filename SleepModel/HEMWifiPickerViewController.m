@@ -198,7 +198,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)scanWithActivity {
-    [SENAnalytics startEvent:kHEMAnalyticsEventOnBWiFiScan];
     DDLogVerbose(@"wifi scan started");
     
     [self observeUnexpectedDisconnects];
@@ -268,6 +267,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Actions
 
 - (IBAction)scan:(id)sender {
+    [SENAnalytics startEvent:kHEMAnalyticsEventOnBWiFiScan];
     [[self wifiDataSource] clearDetectedWifis];
     [[self wifiPickerTableView] reloadData];
     [self scanWithActivity];

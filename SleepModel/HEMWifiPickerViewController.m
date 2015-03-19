@@ -94,6 +94,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     [super viewDidAppear:animated];
     // only auto start a scan if one has not yet been done before
     if (![self hasScanned]) {
+        [SENAnalytics startEvent:kHEMAnalyticsEventOnBWiFiScan];
         [self scanWithActivity];
         [self setScanned:YES];
     }
@@ -267,7 +268,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Actions
 
 - (IBAction)scan:(id)sender {
-    [SENAnalytics startEvent:kHEMAnalyticsEventOnBWiFiScan];
+    [SENAnalytics startEvent:kHEMAnalyticsEventOnBWiFiRescan];
     [[self wifiDataSource] clearDetectedWifis];
     [[self wifiPickerTableView] reloadData];
     [self scanWithActivity];

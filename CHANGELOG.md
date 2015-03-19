@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.4.1
+
+Fixes:
+
+* processing available time zones in settings in background to speed up transition
+* fixed issue where 1 of the time zone option was covered by the navigation bar 
+
 ## 1.0.4.0
 
 New:

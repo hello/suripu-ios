@@ -40,10 +40,7 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
     
     [self configureButtons];
     [self configureScale];
-    
-    if ([self delegate] == nil) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBWeight];
-    }
+    [self trackAnalyticsEvent:HEMAnalyticsEventWeight];
 }
 
 - (void)configureScale {

@@ -54,10 +54,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     
     [self configureButtons];
     [self configureActivity];
-    
-    if ([self delegate] == nil) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
-    }
+    [self trackAnalyticsEvent:HEMAnalyticsEventPairPill];
 }
 
 - (void)configureActivity {
@@ -273,7 +270,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     
     [dialogVC showFrom:self onDefaultActionSelected:^{
         [self dismissViewControllerAnimated:YES completion:^{
-            [SENAnalytics track:kHEMAnalyticsEventOnBSkip properties:@{
+            [self trackAnalyticsEvent:HEMAnalyticsEventSkip properties:@{
                 kHEMAnalyticsEventPropOnBScreen : kHEMAnalyticsEventPropScreenPillPairing
             }];
             

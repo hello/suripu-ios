@@ -54,12 +54,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     
     [self configurePicker];
     [self configureButtons];
-    [[[self activityView] activityLabel] setFont:[UIFont onboardingActivityFontMedium]];
-    
-    if (![self haveDelegates]) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBWiFi];
-    }
-    
+    [self trackAnalyticsEvent:HEMAnalyticsEventWiFi];
 }
 
 - (BOOL)haveDelegates {
@@ -79,6 +74,8 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 }
 
 - (void)configurePicker {
+    [[[self activityView] activityLabel] setFont:[UIFont onboardingActivityFontMedium]];
+    
     [self setWifiDataSource:[[HEMWiFiDataSource alloc] init]];
     [[self wifiDataSource] setKeepSenseLEDOn:![self haveDelegates]];
     [[self wifiPickerTableView] setDataSource:[self wifiDataSource]];
@@ -94,6 +91,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     [super viewDidAppear:animated];
     // only auto start a scan if one has not yet been done before
     if (![self hasScanned]) {
+        [self trackAnalyticsEvent:HEMAnalyticsEventWiFiScan];
         [self scanWithActivity];
         [self setScanned:YES];
     }
@@ -267,7 +265,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Actions
 
 - (IBAction)scan:(id)sender {
-    [SENAnalytics startEvent:kHEMAnalyticsEventOnBWiFiScan];
+    [self trackAnalyticsEvent:HEMAnalyticsEventWiFiRescan];
     [[self wifiDataSource] clearDetectedWifis];
     [[self wifiPickerTableView] reloadData];
     [self scanWithActivity];

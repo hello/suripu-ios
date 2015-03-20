@@ -44,7 +44,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
     [self configureButtons];
     [self configureScrollView];
     [self configureInitialScreen];
-    [SENAnalytics track:kHEMAnalyticsEventOnBSenseColors];
+    [self trackAnalyticsEvent:HEMAnalyticsEventSenseColors];
 }
 
 - (void)configureButtons {

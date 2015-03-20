@@ -27,7 +27,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureButtons];
-    [SENAnalytics track:kHEMAnalyticsEventOnBAudio];
+    [self trackAnalyticsEvent:HEMAnalyticsEventAudio];
 }
 
 - (void)configureButtons {

@@ -32,7 +32,7 @@
     [super viewDidLoad];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [self enableBackButton:NO];
-    [SENAnalytics track:kHEMAnalyticsEventOnBFirstAlarm];
+    [self trackAnalyticsEvent:HEMAnalyticsEventFirstAlarm];
 }
 
 - (void)next {

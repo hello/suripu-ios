@@ -16,6 +16,7 @@
 #import "HEMSupportUtil.h"
 #import "HEMActivityCoverView.h"
 #import "HEMOnboardingCache.h"
+#import "HEMOnboardingUtils.h"
 
 @interface HEMOnboardingController()
 
@@ -116,6 +117,25 @@
                            image:nil
                     withHelpPage:helpPage];
     }
+}
+
+#pragma mark - Analytics
+
+- (NSString*)onboardingAnalyticsEventNameFor:(NSString*)event {
+    NSString* reusedEvent = event;
+    if (![HEMOnboardingUtils hasFinishedOnboarding]
+        && ![event hasPrefix:HEMAnalyticsEventOnboardingPrefix]) {
+        reusedEvent = [NSString stringWithFormat:@"%@ %@", HEMAnalyticsEventOnboardingPrefix, event];
+    }
+    return reusedEvent;
+}
+
+- (void)trackAnalyticsEvent:(NSString*)event {
+    [SENAnalytics track:[self onboardingAnalyticsEventNameFor:event]];
+}
+
+- (void)trackAnalyticsEvent:(NSString *)event properties:(NSDictionary*)properties {
+    [SENAnalytics track:[self onboardingAnalyticsEventNameFor:event] properties:properties];
 }
 
 #pragma mark - Nav

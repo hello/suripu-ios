@@ -32,8 +32,7 @@
     [super viewDidLoad];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     [self enableBackButton:NO];
-    
-    [SENAnalytics track:kHEMAnalyticsEventOnBLocation];   
+    [self trackAnalyticsEvent:HEMAnalyticsEventLocation]; 
 }
 
 - (void)adjustConstraintsForIPhone4 {

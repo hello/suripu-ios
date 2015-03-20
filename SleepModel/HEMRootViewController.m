@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 11/6/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
+#import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 #import <MSDynamicsDrawerViewController/MSDynamicsDrawerViewController.h>
 #import <SenseKit/SENAuthorizationService.h>
@@ -36,7 +37,7 @@ NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotif
 NSString* const HEMRootDrawerDidOpenNotification = @"HEMRootDrawerDidOpenNotification";
 NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotification";
 
-@interface HEMRootViewController ()<MSDynamicsDrawerViewControllerDelegate>
+@interface HEMRootViewController ()<MSDynamicsDrawerViewControllerDelegate, UIPageViewControllerDelegate>
 
 @property (strong, nonatomic) HEMDebugController* debugController;
 @property (strong, nonatomic) HEMSystemAlertController* alertController;
@@ -76,12 +77,14 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
  *
  *  @return a new pane controller
  */
-+ (UIViewController*)instantiatePaneViewControllerWithDate:(NSDate*)startDate {
+- (UIViewController*)instantiatePaneViewControllerWithDate:(NSDate*)startDate {
     HEMSleepSummarySlideViewController* slideController;
     if (startDate)
         slideController = [[HEMSleepSummarySlideViewController alloc] initWithDate:startDate];
     else
         slideController = [HEMSleepSummarySlideViewController new];
+ 
+    [slideController setDelegate:self];
     [slideController.view add3DEffectWithBorder:HEMRootTopPaneParallaxDepth
                                       direction:HEMMotionEffectsDirectionVertical];
     return slideController;
@@ -164,7 +167,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     }
     
     self.drawerViewController = [MSDynamicsDrawerViewController new];
-    self.drawerViewController.paneViewController = [HEMRootViewController instantiatePaneViewControllerWithDate:nil];
+    self.drawerViewController.paneViewController = [self instantiatePaneViewControllerWithDate:nil];
     self.drawerViewController.delegate = self;
     self.drawerViewController.gravityMagnitude = 2.5;
     [self hideStatusBar];
@@ -237,7 +240,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 - (void)reloadTimelineSlideViewControllerWithDate:(NSDate *)date
 {
-    UIViewController* controller = [HEMRootViewController instantiatePaneViewControllerWithDate:date];
+    UIViewController* controller = [self instantiatePaneViewControllerWithDate:date];
     [self.drawerViewController setPaneViewController:controller
                                             animated:NO
                                           completion:NULL];
@@ -338,17 +341,26 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
         case MSDynamicsDrawerPaneStateClosed:
             [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidCloseNotification
                                                                 object:nil];
-            [SENAnalytics track:kHEMAnalyticsEventDrawer
-                     properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventPropClose}];
+            [SENAnalytics track:kHEMAnalyticsEventTimelineClose];
             break;
         case MSDynamicsDrawerPaneStateOpen:
             [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidOpenNotification
                                                                 object:nil];
-            [SENAnalytics track:kHEMAnalyticsEventDrawer
-                     properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventPropOpen}];
+            [SENAnalytics track:kHEMAnalyticsEventTimelineOpen];
             break;
         default:
             break;
+    }
+}
+
+#pragma mark - UIPageViewControllerDelegate for Timeline events
+
+- (void)pageViewController:(UIPageViewController *)pageViewController
+        didFinishAnimating:(BOOL)finished
+   previousViewControllers:(NSArray *)previousViewControllers
+       transitionCompleted:(BOOL)completed {
+    if (completed) {
+        [SENAnalytics track:kHEMAnalyticsEventTimelineChanged];
     }
 }
 

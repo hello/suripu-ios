@@ -216,7 +216,7 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
 }
 
 + (void)finisOnboardinghWithMessageFrom:(UIViewController*)controller {
-    [SENAnalytics track:kHEMAnalyticsEventOnBEnd];
+    [SENAnalytics track:HEMAnalyticsEventOnbEnd];
     
     [HEMOnboardingCache clearCache];
     

@@ -34,8 +34,7 @@
     [self enableBackButton:NO];
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.pill-setup", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropPillPlacement];
-    
-    [SENAnalytics track:kHEMAnalyticsEventOnBPillPlacement];
+    [self trackAnalyticsEvent:HEMAnalyticsEventPillPlacement];
 }
 
 #pragma mark - Actions

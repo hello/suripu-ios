@@ -42,6 +42,11 @@ NSString* const kHEManaltyicsEventStatusDisabled = @"disabled";
 NSString* const kHEManaltyicsEventStatusDenied = @"denied";
 
 // onboarding
+//
+// Some events fire outside of onboarding b/c the controllers are reused.
+// If the event is fired during onboarding, make sure HEMAnalyticsEventOnboardingPrefix
+// is added to the event name.
+NSString* const HEMAnalyticsEventOnboardingPrefix = @"Onboarding";
 NSString* const kHEMAnalyticsEventOnBNoSense = @"I don't have a Sense";
 NSString* const kHEMAnalyticsEventOnBHelp = @"Onboarding Help";
 NSString* const kHEMAnalyticsEventPropStep = @"onboarding_step";
@@ -55,36 +60,38 @@ NSString* const kHEMAnalyticsEventPropWiFiPass = @"sign_into_wifi";
 NSString* const kHEMAnalyticsEventPropPillPairing = @"pill_pairing";
 NSString* const kHEMAnalyticsEventPropPillPlacement = @"pill_placement";
 NSString* const kHEMAnalyticsEventPropPillAnother = @"pill_another";
-NSString* const kHEMAnalyticsEventOnBStart = @"Onboarding Start";
-NSString* const kHEMAnalyticsEventOnBAccount = @"Onboarding Account";
-NSString* const kHEMAnalyticsEventOnBBirthday = @"Onboarding Birthday";
-NSString* const kHEMAnalyticsEventOnBGender = @"Onboarding Gender";
-NSString* const kHEMAnalyticsEventOnBHeight = @"Onboarding Height";
-NSString* const kHEMAnalyticsEventOnBWeight = @"Onboarding Weight";
-NSString* const kHEMAnalyticsEventOnBLocation = @"Onboarding Location";
-NSString* const kHEMAnalyticsEventOnBNotification = @"Onboarding Notifications";
-NSString* const kHEMAnalyticsEventOnBNoBle = @"Onboarding No BLE";
-NSString* const kHEMAnalyticsEventOnBAudio = @"Onboarding Sense Audio";
-NSString* const kHEMAnalyticsEventOnBSenseSetup = @"Onboarding Sense Setup";
-NSString* const kHEMAnalyticsEventOnBPairSense = @"Onboarding Pair Sense";
-NSString* const kHEMAnalyticsEventOnBWiFi = @"Onboarding WiFi";
-NSString* const kHEMAnalyticsEventOnBWiFiScan = @"Onboarding WiFi Scan";
-NSString* const kHEMAnalyticsEventOnBWiFiPass = @"Onboarding WiFi Password";
-NSString* const kHEMAnalyticsEventOnBWiFiSubmit = @"Onboarding WiFi Credentials Submitted";
+
+NSString* const HEMAnalyticsEventOnbStart = @"Onboarding Start";
+NSString* const HEMAnalyticsEventAccount = @"Account";
+NSString* const HEMAnalyticsEventLocation = @"Location";
+NSString* const HEMAnalyticsEventNotification = @"Notifications";
+NSString* const HEMAnalyticsEventNoBle = @"No BLE";
+NSString* const HEMAnalyticsEventAudio = @"Sense Audio";
+NSString* const HEMAnalyticsEventSleepPill = @"Sleep Pill";
+NSString* const HEMAnalyticsEventPillPlacement = @"Pill Placement";
+NSString* const HEMAnalyticsEventAnotherPill = @"Another Pill";
+NSString* const HEMAnalyticsEventPairingMode = @"Pairing Mode Help";
+NSString* const HEMAnalyticsEventGetApp = @"Get App";
+NSString* const HEMAnalyticsEventSenseColors = @"Sense Colors";
+NSString* const HEMAnalyticsEventFirstAlarm = @"First Alarm";
+NSString* const HEMAnalyticsEventRoomCheck = @"Room Check";
+NSString* const HEMAnalyticsEventOnbEnd = @"Onboarding End";
+NSString* const HEMAnalyticsEventSkip = @"Skip";
+NSString* const HEMAnalyticsEventBirthday = @"Birthday";
+NSString* const HEMAnalyticsEventGender = @"Gender";
+NSString* const HEMAnalyticsEventHeight = @"Height";
+NSString* const HEMAnalyticsEventWeight = @"Weight";
+NSString* const HEMAnalyticsEventSenseSetup = @"Sense Setup";
+NSString* const HEMAnalyticsEventPairSense = @"Pair Sense";
+NSString* const HEMAnalyticsEventWiFi = @"WiFi";
+NSString* const HEMAnalyticsEventWiFiScan = @"WiFi Scan"; // fires when app auto starts a scan
+NSString* const HEMAnalyticsEventWiFiRescan = @"WiFi Rescan"; // fires when user triggers a scan
+NSString* const HEMAnalyticsEventWiFiPass = @"WiFi Password";
+NSString* const HEMAnalyticsEventWiFiSubmit = @"WiFi Credentials Submitted";
 NSString* const kHEMAnalyticsEventPropSecurityType = @"Security Type";
 NSString* const kHEMAnalyticsEventPropWiFiOther = @"Is Other";
 NSString* const kHEMAnalyticsEventPropWiFiRSSI = @"RSSI";
-NSString* const kHEMAnalyticsEventOnBSleepPill = @"Onboarding Sleep Pill";
-NSString* const kHEMAnalyticsEventOnBPairPill = @"Onboarding Pair Pill";
-NSString* const kHEMAnalyticsEventOnBPillPlacement = @"Onboarding Pill Placement";
-NSString* const kHEMAnalyticsEventOnBAnotherPill = @"Onboarding Another Pill";
-NSString* const kHEMAnalyticsEventOnBPairingMode = @"Onboarding Pairing Mode Help";
-NSString* const kHEMAnalyticsEventOnBGetApp = @"Onboarding Get App";
-NSString* const kHEMAnalyticsEventOnBSenseColors = @"Onboarding Sense Colors";
-NSString* const kHEMAnalyticsEventOnBFirstAlarm = @"Onboarding First Alarm";
-NSString* const kHEMAnalyticsEventOnBRoomCheck = @"Onboarding Room Check";
-NSString* const kHEMAnalyticsEventOnBEnd = @"Onboarding End";
-NSString* const kHEMAnalyticsEventOnBSkip = @"Onboarding Skip";
+NSString* const HEMAnalyticsEventPairPill = @"Pair Pill";
 NSString* const kHEMAnalyticsEventPropOnBScreen = @"Screen";
 NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 
@@ -92,9 +99,6 @@ NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";
 NSString* const kHEMAnalyticsEventAppClosed = @"App Closed";
 NSString* const kHEMAnalyticsEventPropEvent = @"event";
-NSString* const kHEMAnalyticsEventDrawer = @"Drawer Action";
-NSString* const kHEMAnalyticsEventPropOpen = @"open";
-NSString* const kHEMAnalyticsEventPropClose = @"close";
 NSString* const kHEMAnalyticsEventEmailSupport = @"Contact Support";
 NSString* const kHEMAnalyticsEventSettings = @"Settings";
 NSString* const kHEMAnalyticsEventTrends = @"Trends";
@@ -125,7 +129,10 @@ NSString* const kHEMAnalyticsEventDeviceActionUnpairPill = @"unpair Sleep Pill";
 // timeline
 NSString* const HEMAnalyticsEventTimelineBarLongPress = @"Long press sleep duration bar";
 NSString* const kHEMAnalyticsEventTimeline = @"Timeline";
+NSString* const kHEMAnalyticsEventTimelineChanged = @"Timeline swipe"; // case sensitive, to be same as android
 NSString* const kHEMAnalyticsEventTimelineAction = @"Timeline Action";
+NSString* const kHEMAnalyticsEventTimelineOpen = @"Timeline opened";
+NSString* const kHEMAnalyticsEventTimelineClose = @"Timeline closed";
 
 // alarms
 NSString* const kHEMAnalyticsEventAlarms = @"Alarms";

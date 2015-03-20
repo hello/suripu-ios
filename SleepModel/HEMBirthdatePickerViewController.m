@@ -42,8 +42,9 @@ static NSInteger const kHEMBirthdatePickerDefaultYear = 18;
         // will also apply.  If there is a delegate, we do not want to pre scan
         // as it should already be set up.
         [[HEMOnboardingCache sharedCache] preScanForSenses];
-        [SENAnalytics track:kHEMAnalyticsEventOnBBirthday];
     }
+    
+    [self trackAnalyticsEvent:HEMAnalyticsEventBirthday];
 }
 
 - (void)configureButtons {

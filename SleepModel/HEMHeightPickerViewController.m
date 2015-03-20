@@ -51,10 +51,7 @@ static NSInteger const HEMHeightDefaultInch = 8;
 
     [self configureButtons];
     [self configureRuler];
-    
-    if ([self delegate] == nil) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBHeight];
-    }
+    [self trackAnalyticsEvent:HEMAnalyticsEventHeight];
 
 }
 

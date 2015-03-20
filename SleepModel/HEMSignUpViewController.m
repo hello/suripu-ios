@@ -34,7 +34,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [SENAnalytics track:kHEMAnalyticsEventOnBAccount];
+    [self trackAnalyticsEvent:HEMAnalyticsEventAccount];
 }
 
 - (void)viewDidAppear:(BOOL)animated {

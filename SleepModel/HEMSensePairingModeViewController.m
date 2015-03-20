@@ -21,7 +21,7 @@
     [super viewDidLoad];
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.sense-pairing-mode", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropSensePairingMode];
-    [SENAnalytics track:kHEMAnalyticsEventOnBPairingMode];
+    [self trackAnalyticsEvent:HEMAnalyticsEventPairingMode];
 }
 
 - (IBAction)done:(id)sender {

@@ -43,7 +43,7 @@ static NSUInteger const HEMNoBLEMaxCheckAttempts = 10;
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.turn-on-ble", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropBluetooth];
     [self configureSteps];
-    [SENAnalytics track:kHEMAnalyticsEventOnBNoBle];
+    [self trackAnalyticsEvent:HEMAnalyticsEventNoBle];
 }
 
 - (void)configureSteps {

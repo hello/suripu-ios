@@ -29,7 +29,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self enableBackButton:NO];
-    [SENAnalytics track:kHEMAnalyticsEventOnBNotification];
+    [self trackAnalyticsEvent:HEMAnalyticsEventNotification];
 }
 
 - (void)adjustConstraintsForIPhone4 {

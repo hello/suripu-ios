@@ -37,10 +37,7 @@
     [self setSelectedBorderColor:[[HelloStyleKit senseBlueColor] colorWithAlphaComponent:0.4f]];
     [self configureButtons];
     [self configureGenderSelectors];
-    
-    if ([self delegate] == nil) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBGender];
-    }
+    [self trackAnalyticsEvent:HEMAnalyticsEventGender];
 }
 
 - (void)configureButtons {

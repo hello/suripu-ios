@@ -57,20 +57,21 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self configureForm];
-    
-    if (![self haveDelegates]) {
-        NSString* other = @"true";
-        long rssi = 0;
-        if ([self endpoint] != nil) {
-            other = @"false";
-            rssi = [[self endpoint] rssi];
-        }
-        [SENAnalytics track:kHEMAnalyticsEventOnBWiFiPass
-                 properties:@{kHEMAnalyticsEventPropWiFiOther :other,
-                              kHEMAnalyticsEventPropWiFiRSSI : @(rssi)}];
+    [self fireAnalyticsEvent];
+}
+
+- (void)fireAnalyticsEvent {
+    NSString* other = @"true";
+    long rssi = 0;
+    if ([self endpoint] != nil) {
+        other = @"false";
+        rssi = [[self endpoint] rssi];
     }
+    
+    [self trackAnalyticsEvent:HEMAnalyticsEventWiFiPass
+                         properties:@{kHEMAnalyticsEventPropWiFiOther :other,
+                                      kHEMAnalyticsEventPropWiFiRSSI : @(rssi)}];
 }
 
 - (void)configureForm {
@@ -383,10 +384,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
          password:(NSString*)password
      securityType:(SENWifiEndpointSecurityType)type {
     
-    if (![self haveDelegates]) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBWiFiSubmit
-                 properties:@{kHEMAnalyticsEventPropSecurityType : [self analyticsValueForSecurityType:type]}];
-    }
+    [self trackAnalyticsEvent:HEMAnalyticsEventWiFiSubmit
+                         properties:@{kHEMAnalyticsEventPropSecurityType : [self analyticsValueForSecurityType:type]}];
     
     __weak typeof(self) weakSelf = self;
     SENSenseManager* manager = [self manager];

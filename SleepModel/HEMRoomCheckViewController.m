@@ -53,7 +53,7 @@ static CGFloat const HEMRoomCheckMinimumExpandedHeight = 320.0f;
     [super viewDidLoad];
     [self setupDefaults];
     [self enableBackButton:NO];
-    [SENAnalytics track:kHEMAnalyticsEventOnBRoomCheck];
+    [self trackAnalyticsEvent:HEMAnalyticsEventRoomCheck];
 }
 
 - (void)setupDefaults {

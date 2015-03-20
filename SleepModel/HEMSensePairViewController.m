@@ -65,10 +65,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [super viewDidLoad];
     [self configureButtons];
     [self setCurrentState:HEMSensePairStateNotStarted];
-    
-    if ([self delegate] == nil) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBPairSense];
-    }
+    [self trackAnalyticsEvent:HEMAnalyticsEventPairSense];
 }
 
 - (void)configureButtons {

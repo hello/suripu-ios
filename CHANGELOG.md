@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.4.2
+
+New:
+
+* Added / updated timeline analytics events
+* Added / updated wifi scanning analytics events
+* Firing analytics events for screens that are reused from Onboarding as normal events.
+
+Fixes:
+
+* Resolved issue where launch image was not properly synced with the Timeline when app is launched
+* Resolved issue where WEP passwords with 00 will fail (depends on new firmware)
+
 ## 1.0.4.1
 
 Fixes:

@@ -78,9 +78,8 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 {
     if (![HEMTutorial shouldShowTutorialForTimeline])
         return;
-    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if ([root drawerIsVisible] || self.dataSource.numberOfSleepSegments == 0 || ![self isViewPushed])
+        if (![self isViewFullyVisible] || self.dataSource.numberOfSleepSegments == 0)
             return;
         [HEMTutorial showTutorialForTimelineIfNeeded];
     });
@@ -187,12 +186,12 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
 - (BOOL)shouldEnableZoomButton
 {
-    return [self isViewPushed];
+    return [self isViewFullyVisible];
 }
 
 - (BOOL)shouldHideShareButton
 {
-    return ![self isViewPushed] || [self.dataSource.sleepResult.score integerValue] == 0;
+    return ![self isViewFullyVisible] || [self.dataSource.sleepResult.score integerValue] == 0;
 }
 
 - (void)willShowDetailsForInsight:(SENSleepResultSensorInsight *)insight
@@ -224,7 +223,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
         eventCell.layer.zPosition = indexPath.row + HEMEventOverlayZPosition;
     } else if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
         HEMSleepSummaryCollectionViewCell* summaryCell = (id)cell;
-        if (![self isViewPushed])
+        if (![self isViewFullyVisible])
             [self updateTopBarActionsInCell:summaryCell withState:NO];
     }
 }
@@ -279,7 +278,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
 - (void)zoomButtonTapped:(UIButton*)sender
 {
-    if (![self isViewPushed])
+    if (![self isViewFullyVisible])
         return;
     self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
     self.historyViewController.selectedDate = self.dateForNightOfSleep;
@@ -475,12 +474,9 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 {
 }
 
-- (BOOL)isViewPushed
+- (BOOL)isViewFullyVisible
 {
-    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    CGFloat statusBarHeight = MIN(CGRectGetHeight(statusBarFrame), CGRectGetWidth(statusBarFrame));
-    CGPoint location = [self.view.superview convertPoint:self.view.frame.origin fromView:nil];
-    return location.y <= statusBarHeight;
+    return ![[HEMRootViewController rootViewControllerForKeyWindow] drawerIsVisible];
 }
 
 - (BOOL)shouldAllowRecognizerToReceiveTouch:(UIPanGestureRecognizer*)recognizer

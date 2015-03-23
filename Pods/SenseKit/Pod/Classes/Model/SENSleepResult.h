@@ -17,6 +17,8 @@ typedef NS_ENUM(NSUInteger, SENSleepResultStatisticType) {
     SENSleepResultStatisticTypeUnknown
 };
 
+extern NSInteger const SENSleepResultSentinelValue;
+
 @protocol SENSleepResultSerializable <NSObject>
 
 /**

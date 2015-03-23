@@ -111,7 +111,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     if ([self shouldShowLoadingView]) {
         self.beLoading = YES;
         [self showLoadingView];
-    } else {
+    }
+    else {
         self.beLoading = NO;
         [self hideLoadingViewAnimated:NO];
     }
@@ -175,7 +176,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     return self.sleepResult.segments.count;
 }
 
-- (HEMSleepSummaryCollectionViewCell *)sleepSummaryCell
+- (HEMSleepSummaryCollectionViewCell*)sleepSummaryCell
 {
     NSIndexPath* indexPath = [NSIndexPath indexPathForItem:0 inSection:HEMSleepGraphCollectionViewSummarySection];
     return (id)[self.collectionView cellForItemAtIndexPath:indexPath];
@@ -183,7 +184,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 #pragma mark - Loading
 
-- (RTSpinKitView *)loadingView
+- (RTSpinKitView*)loadingView
 {
     return self.sleepSummaryCell.spinnerView;
 }
@@ -201,7 +202,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     if (self.loadingView) {
         [NSObject cancelPreviousPerformRequestsWithTarget:self];
         [self.loadingView startAnimating];
-    } else {
+    }
+    else {
         self.beLoading = YES;
     }
 }
@@ -240,12 +242,13 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 - (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView viewForSupplementaryElementOfKind:(NSString*)kind atIndexPath:(NSIndexPath*)indexPath
 {
     NSString* identifier = [kind isEqualToString:UICollectionElementKindSectionHeader]
-        ? timelineHeaderReuseIdentifier : timelineFooterReuseIdentifier;
+        ? timelineHeaderReuseIdentifier
+        : timelineFooterReuseIdentifier;
     UICollectionReusableView* view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
                                                                         withReuseIdentifier:identifier
                                                                                forIndexPath:indexPath];
     view.hidden = !(indexPath.section == HEMSleepGraphCollectionViewSegmentSection
-                    && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] > 0);
+                      && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] > 0);
     return view;
 }
 
@@ -280,7 +283,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 {
     NSDateComponents* diff = [self.calendar components:NSDayCalendarUnit
                                               fromDate:self.dateForNightOfSleep
-                                                toDate:[[NSDate date] previousDay] options:0];
+                                                toDate:[[NSDate date] previousDay]
+                                               options:0];
     return diff.day == 0;
 }
 
@@ -288,7 +292,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 {
     NSDateComponents* diff = [self.calendar components:NSDayCalendarUnit
                                               fromDate:self.dateForNightOfSleep
-                                                toDate:[[NSDate date] previousDay] options:0];
+                                                toDate:[[NSDate date] previousDay]
+                                               options:0];
     if (diff.day == 0)
         return NSLocalizedString(@"sleep-history.last-night", nil);
     else if (diff.day < 7)
@@ -325,10 +330,12 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
                     forControlEvents:UIControlEventTouchUpInside];
     if ([self.collectionView.delegate respondsToSelector:@selector(shouldHideShareButton)])
         cell.shareButton.alpha = [(id<HEMSleepGraphActionDelegate>)self.collectionView.delegate
-                                  shouldHideShareButton] ? 0 : 1.f;
+                                         shouldHideShareButton]
+            ? 0
+            : 1.f;
     if ([self.collectionView.delegate respondsToSelector:@selector(shouldEnableZoomButton)])
         cell.dateButton.enabled = [(id<HEMSleepGraphActionDelegate>)self.collectionView.delegate
-                                   shouldEnableZoomButton];
+                                       shouldEnableZoomButton];
     if ([self.collectionView.delegate respondsToSelector:@selector(shareButtonTapped:)])
         [cell.shareButton addTarget:self.collectionView.delegate
                              action:@selector(shareButtonTapped:)
@@ -351,28 +358,31 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         NSString* value = nil;
         UILabel* titleLabel = nil, * valueLabel = nil;
         switch (stat.type) {
-            case SENSleepResultStatisticTypeTotalDuration:
-                titleLabel = cell.metricTitleLabel1;
-                valueLabel = cell.metricValueLabel1;
-                value = [self shortValueForMinuteValue:stat.value];
-                break;
-            case SENSleepResultStatisticTypeSoundDuration:
-                titleLabel = cell.metricTitleLabel2;
-                valueLabel = cell.metricValueLabel2;
-                value = [self shortValueForMinuteValue:stat.value];
-                break;
-            case SENSleepResultStatisticTypeTimeToSleep:
-                titleLabel = cell.metricTitleLabel4;
-                valueLabel = cell.metricValueLabel4;
-                value = [self shortValueForMinuteValue:stat.value];
-                break;
-            case SENSleepResultStatisticTypeTimesAwake:
-                titleLabel = cell.metricTitleLabel3;
-                valueLabel = cell.metricValueLabel3;
+        case SENSleepResultStatisticTypeTotalDuration:
+            titleLabel = cell.metricTitleLabel1;
+            valueLabel = cell.metricValueLabel1;
+            value = [self shortValueForMinuteValue:stat.value];
+            break;
+        case SENSleepResultStatisticTypeSoundDuration:
+            titleLabel = cell.metricTitleLabel2;
+            valueLabel = cell.metricValueLabel2;
+            value = [self shortValueForMinuteValue:stat.value];
+            break;
+        case SENSleepResultStatisticTypeTimeToSleep:
+            titleLabel = cell.metricTitleLabel4;
+            valueLabel = cell.metricValueLabel4;
+            value = [self shortValueForMinuteValue:stat.value];
+            break;
+        case SENSleepResultStatisticTypeTimesAwake:
+            titleLabel = cell.metricTitleLabel3;
+            valueLabel = cell.metricValueLabel3;
+            if (stat.value)
                 value = [NSString stringWithFormat:@"%.0f", [stat.value floatValue]];
-                break;
-            default:
-                break;
+            else
+                value = NSLocalizedString(@"empty-data", nil);
+            break;
+        default:
+            break;
         }
         titleLabel.attributedText = [[NSAttributedString alloc] initWithString:title
                                                                     attributes:titleAttributes];
@@ -383,13 +393,16 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 - (NSString*)shortValueForMinuteValue:(NSNumber*)minuteValue
 {
+    if (!minuteValue)
+        return NSLocalizedString(@"empty-data", nil);
+
     CGFloat minutes = [minuteValue floatValue];
     NSString* format;
     if (minutes < 60)
         format = NSLocalizedString(@"sleep-stat.minute.format", nil);
     else
         format = NSLocalizedString(@"sleep-stat.hour.format", nil);
-    return [NSString stringWithFormat:format, minutes/60];
+    return [NSString stringWithFormat:format, minutes / 60];
 }
 
 - (void)configurePresleepSummaryForCell:(HEMSleepSummaryCollectionViewCell*)cell
@@ -436,15 +449,20 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     UIImage* image = nil;
     if ([insight.name isEqualToString:sensorTypeTemperature]) {
         image = [HelloStyleKit presleepInsightTemperature];
-    } else if ([insight.name isEqualToString:sensorTypeHumidity]) {
+    }
+    else if ([insight.name isEqualToString:sensorTypeHumidity]) {
         image = [HelloStyleKit presleepInsightHumidity];
-    } else if ([insight.name isEqualToString:sensorTypeParticulates]) {
+    }
+    else if ([insight.name isEqualToString:sensorTypeParticulates]) {
         image = [HelloStyleKit presleepInsightParticulates];
-    } else if ([insight.name isEqualToString:sensorTypeLight]) {
+    }
+    else if ([insight.name isEqualToString:sensorTypeLight]) {
         image = [HelloStyleKit presleepInsightLight];
-    } else if ([insight.name isEqualToString:sensorTypeSound]) {
+    }
+    else if ([insight.name isEqualToString:sensorTypeSound]) {
         image = [HelloStyleKit presleepInsightSound];
-    } else {
+    }
+    else {
         image = [HelloStyleKit presleepInsightUnknown];
     }
 
@@ -462,7 +480,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     if ([segment.eventType isEqualToString:HEMSleepEventTypeSleeping]) {
         color = [UIColor colorForSleepDepth:sleepDepth];
         lineColor = [HelloStyleKit timelineLineColor];
-    } else {
+    }
+    else {
         color = [UIColor colorForGenericMotionDepth:sleepDepth];
         lineColor = [UIColor clearColor];
     }
@@ -477,7 +496,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     [cell removeAllTimeLabels];
     if (!segment)
         return;
-    NSCalendarUnit units = (NSCalendarUnitSecond|NSCalendarUnitMinute|NSCalendarUnitHour|NSCalendarUnitDay);
+    NSCalendarUnit units = (NSCalendarUnitSecond | NSCalendarUnitMinute | NSCalendarUnitHour | NSCalendarUnitDay);
     NSDateComponents* components = [self.calendar components:units fromDate:segment.date];
     self.timeDateFormatter.timeZone = segment.timezone;
     if (components.minute == 0 && components.second == 0) {
@@ -497,7 +516,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         NSDate* hourDate = [self.calendar dateByAddingComponents:hourComponents toDate:segment.date options:0];
         hourInterval = [hourDate timeIntervalSince1970];
         if (hourInterval < endInterval) {
-            CGFloat ratio = ([hourDate timeIntervalSince1970] - segmentInterval)/(endInterval - segmentInterval);
+            CGFloat ratio = ([hourDate timeIntervalSince1970] - segmentInterval) / (endInterval - segmentInterval);
             NSString* timeText = [[self.timeDateFormatter stringFromDate:hourDate] lowercaseString];
             [cell addTimeLabelWithText:timeText atHeightRatio:ratio];
         }
@@ -516,16 +535,19 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSUInteger sleepDepth = segment.sleepDepth;
     if ([collectionView.delegate respondsToSelector:@selector(didTapEventButton:)]) {
         [cell.eventTypeButton addTarget:collectionView.delegate
-                                 action:@selector(didTapEventButton:) forControlEvents:UIControlEventTouchUpInside];
+                                 action:@selector(didTapEventButton:)
+                       forControlEvents:UIControlEventTouchUpInside];
     }
     if (segment.sound) {
         cell.audioPlayerView.hidden = NO;
         [cell setAudioURL:[NSURL URLWithString:segment.sound.URLPath]];
-    } else if ([HEMTimelineFeedbackViewController canAdjustTimeForSegment:segment] &&
-               [collectionView.delegate respondsToSelector:@selector(didTapDataVerifyButton:)]) {
+    }
+    else if ([HEMTimelineFeedbackViewController canAdjustTimeForSegment:segment] &&
+        [collectionView.delegate respondsToSelector:@selector(didTapDataVerifyButton:)]) {
         cell.verifyDataButton.hidden = NO;
         [cell.verifyDataButton addTarget:collectionView.delegate
-                                  action:@selector(didTapDataVerifyButton:) forControlEvents:UIControlEventTouchUpInside];
+                                  action:@selector(didTapDataVerifyButton:)
+                        forControlEvents:UIControlEventTouchUpInside];
     }
 
     [cell.eventTypeButton setImage:[self imageForEventType:segment.eventType] forState:UIControlStateNormal];
@@ -579,7 +601,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     else if ([eventType isEqualToString:HEMSleepEventTypeOutOfBed])
         return [HelloStyleKit outOfBedEventIcon];
     else if ([eventType isEqualToString:HEMSleepEventTypeAlarm]
-             || [eventType isEqualToString:HEMSleepEventTypeSmartAlarm])
+        || [eventType isEqualToString:HEMSleepEventTypeSmartAlarm])
         return [HelloStyleKit alarmEventIcon];
 
     return [HelloStyleKit unknownEventIcon];

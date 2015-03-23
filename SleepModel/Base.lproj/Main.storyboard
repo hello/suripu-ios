@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1066" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
@@ -1504,12 +1504,30 @@
                     <connections>
                         <outlet property="collectionView" destination="Qgk-DZ-cLY" id="0cs-Bl-BoN"/>
                         <outlet property="view" destination="1Ml-OR-V9I" id="LYw-rK-OTi"/>
-                        <segue destination="kgv-M8-0BG" kind="push" identifier="timezone" id="1qi-y5-hdF"/>
+                        <segue destination="3tP-4b-YaJ" kind="modal" identifier="timezone" id="vxg-TS-gLD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h9h-4l-Pe7" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2756" y="5100"/>
+        </scene>
+        <!--Settings Navigation Controller-->
+        <scene sceneID="fgf-Oq-EcC">
+            <objects>
+                <navigationController storyboardIdentifier="timeZoneNavViewController" id="3tP-4b-YaJ" customClass="HEMSettingsNavigationController" sceneMemberID="viewController">
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" translucent="NO" prompted="NO"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="vvm-M7-8tf">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="kgv-M8-0BG" kind="relationship" relationship="rootViewController" id="DuB-G8-G6x"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="5f4-zk-4bP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3511" y="5100"/>
         </scene>
         <!--Time Zone-->
         <scene sceneID="BzI-Iu-duU">
@@ -1524,7 +1542,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="1hK-Tf-pmz">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="486"/>
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="536"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell contentMode="scaleToFill" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="5" reuseIdentifier="timezone" textLabel="U0f-WN-2TD" rowHeight="64" style="IBUITableViewCellStyleDefault" id="ZWB-9J-EpX">
@@ -1550,7 +1568,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="3lP-15-lty" firstAttribute="top" secondItem="1hK-Tf-pmz" secondAttribute="bottom" constant="50" id="0kc-em-Nr4"/>
+                            <constraint firstItem="3lP-15-lty" firstAttribute="top" secondItem="1hK-Tf-pmz" secondAttribute="bottom" id="0kc-em-Nr4"/>
                             <constraint firstItem="1hK-Tf-pmz" firstAttribute="top" secondItem="9tN-xa-DxE" secondAttribute="bottom" id="1tf-pW-VDb"/>
                             <constraint firstItem="1hK-Tf-pmz" firstAttribute="leading" secondItem="OAR-mc-Va6" secondAttribute="leadingMargin" constant="-16" id="Zbl-yj-cgs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="1hK-Tf-pmz" secondAttribute="trailing" constant="-16" id="vue-Wh-X4h"/>
@@ -1565,7 +1583,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZIH-RR-26B" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3536" y="5100"/>
+            <point key="canvasLocation" x="4242" y="5100"/>
         </scene>
         <!--Sleep Pill-->
         <scene sceneID="ALm-aT-Nq9">

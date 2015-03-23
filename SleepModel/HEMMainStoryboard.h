@@ -74,6 +74,7 @@
 +(id)instantiateSleepHistoryController;
 +(id)instantiateSleepInsightViewController;
 +(id)instantiateSleepQuestionsViewController;
++(id)instantiateTimeZoneNavViewController;
 +(id)instantiateTimeZoneViewController;
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;

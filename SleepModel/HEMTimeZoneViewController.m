@@ -16,6 +16,8 @@
 #import "HEMMainStoryboard.h"
 #import "HEMActivityCoverView.h"
 #import "HEMBaseController+Protected.h"
+#import "HelloStyleKit.h"
+#import "HEMActivityIndicatorView.h"
 
 @interface HEMTimeZoneViewController() <UITableViewDelegate, UITableViewDataSource>
 
@@ -29,63 +31,72 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureNavigationBar];
     [self buildTimeZoneSource];
 }
 
-- (void)buildTimeZoneSource {
-    UIViewController* root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    
-    HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
-    
-    [activityView showInView:[root view] withText:NSLocalizedString(@"activity.loading", nil) activity:YES completion:^{
-        
-        __weak typeof(self) weakSelf = self;
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            
-            [strongSelf setDisplayNamesToTimeZone:[NSTimeZone supportedTimeZoneByDisplayNames]];
-            
-            NSArray* sortedArray = [[strongSelf displayNamesToTimeZone] allKeys];
-            sortedArray = [sortedArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
-                return [obj1 compare:obj2];
-            }];
-            [strongSelf setSortedDisplayNames:sortedArray];
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [[strongSelf tableView] reloadData];
-                [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:nil];
-            });
-            
-        });
-    }];
+- (void)configureNavigationBar {
+    NSString* cancelText = NSLocalizedString(@"actions.cancel", nil);
+    UIBarButtonItem* cancelItem = [[UIBarButtonItem alloc] initWithTitle:cancelText
+                                                                   style:UIBarButtonItemStyleBordered
+                                                                  target:self
+                                                                  action:@selector(cancel:)];
+    [[self navigationItem] setLeftBarButtonItem:cancelItem];
+}
 
+- (void)buildTimeZoneSource {
+    __weak typeof(self) weakSelf = self;
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        [strongSelf setDisplayNamesToTimeZone:[NSTimeZone supportedTimeZoneByDisplayNames]];
+        
+        NSArray* sortedArray = [[strongSelf displayNamesToTimeZone] allKeys];
+        sortedArray = [sortedArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+            return [obj1 compare:obj2];
+        }];
+        [strongSelf setSortedDisplayNames:sortedArray];
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[strongSelf tableView] reloadData];
+        });
+        
+    });
 }
 
 - (void)updateTimeZoneTo:(NSTimeZone*)timeZone {
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
     NSString* text = NSLocalizedString(@"timezone.activity.message", nil);
     
-    UIViewController* root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
-    [activityView showInView:[root view] withText:text activity:YES completion:^{
+    [activityView showInView:[[self navigationController] view] withText:text activity:YES completion:^{
         __weak typeof(self) weakSelf = self;
         [SENAPITimeZone setTimeZone:timeZone completion:^(id data, NSError *error) {
             __strong typeof(weakSelf) strongSelf = self;
-            NSString* finishedText = nil;
-            BOOL success = NO;
+            BOOL hasError = error != nil;
             
-            if (error == nil) {
-                finishedText = NSLocalizedString(@"status.success", nil);
-                success = YES;
-                [[strongSelf navigationController] popViewControllerAnimated:YES];
-            }
-            
-            [activityView dismissWithResultText:finishedText showSuccessMark:success remove:YES completion:^{
-                if (error != nil) {
+            if (!hasError) {
+                UIImage* successIcon = [HelloStyleKit check];
+                NSString* successText = NSLocalizedString(@"status.success", nil);
+                
+                [[activityView indicator] setHidden:YES];
+                [activityView updateText:successText successIcon:successIcon hideActivity:YES completion:^(BOOL finished) {
+                    [activityView showSuccessMarkAnimated:YES completion:^(BOOL finished) {
+                        NSTimeInterval delayInSeconds = 0.5f;
+                        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                        dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
+                            [[strongSelf delegate] didUpdateTimeZoneTo:timeZone from:strongSelf];
+                            [strongSelf dismissViewControllerAnimated:YES completion:nil];
+                        });
+                    }];
+                }];
+            } else {
+                [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
                     [strongSelf showMessageDialog:NSLocalizedString(@"timezone.error.message", nil)
                                             title:NSLocalizedString(@"timezone.error.title", nil)];
                     [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                }
-            }];
+                }];
+            }
+            
         }];
     }];
 }
@@ -113,6 +124,13 @@
     NSString* displayName = [self sortedDisplayNames][[indexPath row]];
     NSTimeZone* timeZone = [self displayNamesToTimeZone][displayName];
     [self updateTimeZoneTo:timeZone];
+}
+
+#pragma mark - Actions
+
+- (void)cancel:(id)sender {
+    [[self delegate] willCancelTimeZoneUpdateFrom:self];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

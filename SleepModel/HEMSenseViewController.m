@@ -31,6 +31,8 @@
 #import "HEMSupportUtil.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMTextFooterCollectionReusableView.h"
+#import "HEMTimeZoneViewController.h"
+#import "HEMBounceModalTransition.h"
 
 static CGFloat const HEMSenseActionHeight = 62.0f;
 static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
@@ -43,6 +45,7 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (copy,   nonatomic) NSAttributedString* attributedResetDescription;
 @property (assign, nonatomic) CGSize footerSize;
+@property (strong, nonatomic) HEMBounceModalTransition* modalTransitionDelegate;
 
 @end
 
@@ -527,6 +530,21 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
         [[self delegate] didUpdateWiFiFrom:self];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue destinationViewController] isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* nav = [segue destinationViewController];
+        UIViewController* root = [nav topViewController];
+        // only apply the transition to timezone
+        if ([root isKindOfClass:[HEMTimeZoneViewController class]]) {
+            [self setModalTransitionDelegate:[[HEMBounceModalTransition alloc] init]];
+            [nav setTransitioningDelegate:[self modalTransitionDelegate]];
+            [nav setModalPresentationStyle:UIModalPresentationCustom];
+        }
+    }
 }
 
 @end

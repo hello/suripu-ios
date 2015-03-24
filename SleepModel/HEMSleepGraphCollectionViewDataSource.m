@@ -70,6 +70,7 @@ static NSString* const sensorTypeSound = @"sound";
 static NSString* const sleepEventNameFindCharacter = @"_";
 static NSString* const sleepEventNameReplaceCharacter = @" ";
 static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
+static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
 
 + (NSString*)localizedNameForSleepEventType:(NSString*)eventType
 {
@@ -255,7 +256,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     UICollectionViewCell* cell = nil;
-
+    CGFloat zPosition = indexPath.row + 1;
     switch (indexPath.section) {
     case HEMSleepGraphCollectionViewSummarySection:
         cell = [self collectionView:collectionView sleepSummaryCellForItemAtIndexPath:indexPath];
@@ -266,11 +267,12 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         }
         else {
             cell = [self collectionView:collectionView sleepEventCellForItemAtIndexPath:indexPath];
+            zPosition += HEMSleepGraphEventZPositionOffset;
         }
         break;
     }
     }
-    CGFloat zPosition = indexPath.row + 1;
+
     if (cell.layer.zPosition != zPosition)
         [cell.layer setZPosition:zPosition];
 
@@ -486,13 +488,16 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         lineColor = [UIColor clearColor];
     }
     [cell setSegmentRatio:fillRatio withFillColor:color lineColor:lineColor];
-    [self configureTimeLabelsForCell:cell withSegment:segment];
+    [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
     return cell;
 }
 
 - (void)configureTimeLabelsForCell:(HEMSleepSegmentCollectionViewCell*)cell
                        withSegment:(SENSleepResultSegment*)segment
+                         indexPath:(NSIndexPath*)indexPath
 {
+    static CGFloat const HEMTimeLabelZPositionOffset = 2;
+    NSInteger zPosition = indexPath.row + HEMTimeLabelZPositionOffset;
     [cell removeAllTimeLabels];
     if (!segment)
         return;
@@ -500,8 +505,10 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSDateComponents* components = [self.calendar components:units fromDate:segment.date];
     self.timeDateFormatter.timeZone = segment.timezone;
     if (components.minute == 0 && components.second == 0) {
-        [cell addTimeLabelWithText:[[self.timeDateFormatter stringFromDate:segment.date] lowercaseString]
+        [cell addTimeLabelWithText:[self.timeDateFormatter stringFromDate:segment.date]
                      atHeightRatio:0];
+        if (cell.layer.zPosition != zPosition)
+            cell.layer.zPosition = zPosition;
     }
     NSTimeInterval segmentInterval = [segment.date timeIntervalSince1970];
     NSDate* endDate = [NSDate dateWithTimeIntervalSince1970:segmentInterval + [segment.duration doubleValue]];
@@ -517,8 +524,10 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
         hourInterval = [hourDate timeIntervalSince1970];
         if (hourInterval < endInterval) {
             CGFloat ratio = ([hourDate timeIntervalSince1970] - segmentInterval) / (endInterval - segmentInterval);
-            NSString* timeText = [[self.timeDateFormatter stringFromDate:hourDate] lowercaseString];
+            NSString* timeText = [self.timeDateFormatter stringFromDate:hourDate];
             [cell addTimeLabelWithText:timeText atHeightRatio:ratio];
+            if (cell.layer.zPosition != zPosition)
+                cell.layer.zPosition = zPosition;
         }
         i++;
     }
@@ -562,7 +571,8 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
     [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep
             withFillColor:[UIColor colorForSleepDepth:sleepDepth]
                 lineColor:[HelloStyleKit timelineLineColor]];
-    [self configureTimeLabelsForCell:cell withSegment:segment];
+    [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
+    cell.layer.masksToBounds = NO;
     return cell;
 }
 
@@ -610,7 +620,7 @@ static NSString* const sleepEventNameFormat = @"sleep-event.type.%@.name";
 - (NSString*)timeTextForSegment:(SENSleepResultSegment*)segment
 {
     self.timeDateFormatter.timeZone = segment.timezone;
-    return [[self.timeDateFormatter stringFromDate:segment.date] lowercaseString];
+    return [self.timeDateFormatter stringFromDate:segment.date];
 }
 
 - (BOOL)segmentForSleepExistsAtIndexPath:(NSIndexPath*)indexPath

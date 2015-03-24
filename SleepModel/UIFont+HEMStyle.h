@@ -13,46 +13,45 @@
 /**
  *  Alarm picker view selected number font
  */
-+ (UIFont *)alarmNumberFont;
++ (UIFont*)alarmNumberFont;
 
 /**
  *  Alarm picker view meridiem font
  */
-+ (UIFont *)alarmMeridiemFont;
++ (UIFont*)alarmMeridiemFont;
 
-
-+ (UIFont *)tutorialDialogFont;
++ (UIFont*)tutorialDialogFont;
 
 /**
  *  Font for section and insight headings
  */
-+ (UIFont *)insightTitleFont;
++ (UIFont*)insightTitleFont;
 
 /**
  * Font for the message displayed on insight full view
  */
-+ (UIFont *)insightFullMessageFont;
++ (UIFont*)insightFullMessageFont;
 
 /**
  * Font for the bold message displayed on insight full view
  */
-+ (UIFont *)insightFullMessageBoldFont;
++ (UIFont*)insightFullMessageBoldFont;
 
 /**
  *  Font for current sensor value and sleep score
  */
-+ (UIFont *)largeNumberFont;
++ (UIFont*)largeNumberFont;
 
 /**
  *  Font for settings table cell titles
  */
-+ (UIFont *)settingsTableCellFont;
++ (UIFont*)settingsTableCellFont;
 
 /**
  *  Font for settings detail items, like sensor value and
  *  next alarm time
  */
-+ (UIFont *)settingsTableCellDetailFont;
++ (UIFont*)settingsTableCellDetailFont;
 
 /**
  *  Navigation item title font
@@ -62,188 +61,193 @@
 /**
  * Font used for the help text in settings
  */
-+ (UIFont *)settingsHelpFont;
++ (UIFont*)settingsHelpFont;
 
 /**
  * Font used for the toggle switches found in preference settings
  */
-+ (UIFont *)preferenceControlFont;
++ (UIFont*)preferenceControlFont;
 
-+ (UIFont *)sensorListValueFont;
++ (UIFont*)sensorListValueFont;
 
-+ (UIFont *)sensorListUnitFont;
++ (UIFont*)sensorListUnitFont;
 
-+ (UIFont *)backViewTextFont;
++ (UIFont*)backViewTextFont;
 
-+ (UIFont *)backViewBoldFont;
++ (UIFont*)backViewBoldFont;
 
-+ (UIFont *)backViewTitleFont;
++ (UIFont*)backViewTitleFont;
 
-+ (UIFont *)sensorMessageFont;
++ (UIFont*)sensorMessageFont;
 
-+ (UIFont *)sensorMessageBoldFont;
++ (UIFont*)sensorMessageBoldFont;
 
-+ (UIFont *)timelinePopupFont;
++ (UIFont*)timelinePopupFont;
 
-+ (UIFont *)timelinePopupBoldFont;
++ (UIFont*)timelinePopupBoldFont;
 
 /**
  *  Font for sensor range selection from 'last 24 hours' and
  *  'last week'
  */
-+ (UIFont *)sensorRangeSelectionFont;
++ (UIFont*)sensorRangeSelectionFont;
 
 /**
  *  Font for numbers at the bottom of each graph section
  */
-+ (UIFont *)sensorGraphNumberFont;
++ (UIFont*)sensorGraphNumberFont;
 
 /**
  *  Bold font for numbers
  */
-+ (UIFont *)sensorGraphNumberBoldFont;
++ (UIFont*)sensorGraphNumberBoldFont;
 
 /**
  *  Font for headings at the top of each graph section
  */
-+ (UIFont *)sensorGraphHeadingFont;
++ (UIFont*)sensorGraphHeadingFont;
 
 /**
  *  Bold font for headings at the top of each graph section
  */
-+ (UIFont *)sensorGraphHeadingBoldFont;
++ (UIFont*)sensorGraphHeadingBoldFont;
 
 /**
  *  Font for event message text in the timeline
  */
-+ (UIFont *)timelineEventMessageFont;
++ (UIFont*)timelineEventMessageFont;
 
 /**
  *  Font for event message _italic_ text in the timeline
  */
-+ (UIFont *)timelineEventMessageItalicFont;
++ (UIFont*)timelineEventMessageItalicFont;
 
 /**
  *  Bold font for event message text in the timeline
  */
-+ (UIFont *)timelineEventMessageBoldFont;
++ (UIFont*)timelineEventMessageBoldFont;
+
+/**
+ *  Font for timeline statistics titles
+ */
++ (UIFont*)timelineBreakdownTitleFont;
 
 /**
  *  Font for timeline statistics values
  */
-+ (UIFont *)timelineBreakdownValueFont;
++ (UIFont*)timelineBreakdownValueFont;
 
 /**
  *  Font for tips at the bottom of event expansion
  */
-+ (UIFont *)timelineEventTipFont;
++ (UIFont*)timelineEventTipFont;
 
 /**
  *  Bold font for tips at the bottom of event expansion
  */
-+ (UIFont *)timelineEventTipBoldFont;
++ (UIFont*)timelineEventTipBoldFont;
 
 /**
  *  Font for summary text above the timeline
  */
-+ (UIFont *)timelineMessageFont;
++ (UIFont*)timelineMessageFont;
 
 /**
  *  Bold font for summary text above the timeline
  */
-+ (UIFont *)timelineMessageBoldFont;
++ (UIFont*)timelineMessageBoldFont;
 
 /**
  *  Font for timestamps on events in the timeline
  */
-+ (UIFont *)timelineEventTimestampFont;
++ (UIFont*)timelineEventTimestampFont;
 
 /**
  *  Bold font for timestamps on important events in the timeline
  */
-+ (UIFont *)timelineEventTimestampBoldFont;
++ (UIFont*)timelineEventTimestampBoldFont;
 
 /**
  *  Font for time scopes in trends view
  */
-+ (UIFont *)trendOptionFont;
++ (UIFont*)trendOptionFont;
 
 /**
  *  Font to display the answers for questions
  */
-+ (UIFont *)questionAnswerFont;
++ (UIFont*)questionAnswerFont;
 
 /**
  *  Font for actual question
  */
-+ (UIFont *)questionFont;
++ (UIFont*)questionFont;
 
 /**
  *  Font for display any Thank You text
  */
-+ (UIFont *)thankyouFont;
++ (UIFont*)thankyouFont;
 
 /**
  *  Font used to display the blue toast that appears at the bottom of screen
  */
-+ (UIFont *)infoToastFont;
++ (UIFont*)infoToastFont;
 
 /**
  * Font to be used in a UIPIckerView that has 1 component
  */
-+ (UIFont *)singleComponentPickerViewFont;
++ (UIFont*)singleComponentPickerViewFont;
 
 /**
  * Font to be used in a HEMBirthdatePickerView
  */
-+ (UIFont *)birthdatePickerTextFont;
++ (UIFont*)birthdatePickerTextFont;
 
 /**
  * Font to be used to display the in-app browser title
  */
-+ (UIFont *)inAppBrowserTitleFont;
++ (UIFont*)inAppBrowserTitleFont;
 
 /**
  * Font to be used to display the title of a dialog
  */
-+ (UIFont *)dialogTitleFont;
++ (UIFont*)dialogTitleFont;
 
 /**
  * Font to be used to display the message of a dialog
  */
-+ (UIFont *)dialogMessageFont;
++ (UIFont*)dialogMessageFont;
 
 /**
  * Font used for normal UIButtons that should be the focus of the screen
  */
-+ (UIFont* )primaryButtonFont;
++ (UIFont*)primaryButtonFont;
 
 /**
  * Font used for normal UIButtons that are secondary actions
  */
-+ (UIFont* )secondaryButtonFont;
++ (UIFont*)secondaryButtonFont;
 
 /**
  * Font to be used with buttons on the navigation bar
  */
-+ (UIFont *)navButtonTitleFont;
++ (UIFont*)navButtonTitleFont;
 
-+ (UIFont *)confidentialityWarningFont;
++ (UIFont*)confidentialityWarningFont;
 
 /**
  * Font for the title of the action alert view
  */
-+ (UIFont *)actionViewTitleFont;
++ (UIFont*)actionViewTitleFont;
 
 /**
  * Font for the message of the action alert view
  */
-+ (UIFont *)actionViewMessageFont;
++ (UIFont*)actionViewMessageFont;
 
 /**
  * Font for the button title of the action alert view
  */
-+ (UIFont *)actionViewButtonTitleFont;
++ (UIFont*)actionViewButtonTitleFont;
 
 /**
  * Font used to display the question inside the insight feed tab
@@ -273,17 +277,17 @@
 /**
  * Font used for the placeholder text within an UITextField
  */
-+ (UIFont *)textfieldPlaceholderFont;
++ (UIFont*)textfieldPlaceholderFont;
 
 /**
  * Font used for the text within an UITextField
  */
-+ (UIFont *)textfieldTextFont;
++ (UIFont*)textfieldTextFont;
 
 /**
  * Font used for the text to display TimeZone names
  */
-+ (UIFont *)timeZoneNameFont;
++ (UIFont*)timeZoneNameFont;
 
 #pragma mark - Onboarding
 
@@ -313,46 +317,46 @@
 /**
  * Font used to display activity status full screen
  */
-+ (UIFont *)onboardingActivityFontLarge;
++ (UIFont*)onboardingActivityFontLarge;
 
 /**
  * Font used to display activity status within another view, typically
  */
-+ (UIFont *)onboardingActivityFontMedium;
++ (UIFont*)onboardingActivityFontMedium;
 
 /**
  * Font to be used for a selected value in the right view of a UITextField during
  * onboarding.  Example use would be the selected security type of wifi
  */
-+ (UIFont *)onboardingFieldRightViewFont;
++ (UIFont*)onboardingFieldRightViewFont;
 
 /**
  * Font used for onboarding screen titles
  */
-+ (UIFont *)onboardingTitleFont;
++ (UIFont*)onboardingTitleFont;
 
 /**
  * Large Font used for onboarding screen titles
  */
-+ (UIFont *)onboardingTitleLargeFont;
++ (UIFont*)onboardingTitleLargeFont;
 
 /**
  * Font to be used during onboarding screens where a description of the current
  * step is shown
  */
-+ (UIFont *)onboardingDescriptionFont;
++ (UIFont*)onboardingDescriptionFont;
 
 /**
  * Large Font to be used during onboarding screens where a description of the 
  * current step is shown
  */
-+ (UIFont *)onboardingDescriptionLargeFont;
++ (UIFont*)onboardingDescriptionLargeFont;
 
 /**
  * Font to be used during onboarding screens where a description of the current
  * step is shown and certain words / phrases are required to be bold
  */
-+ (UIFont *)onboardingDescriptionBoldFont;
++ (UIFont*)onboardingDescriptionBoldFont;
 
 /**
  * Font used for the gender selectors during onboarding / settings

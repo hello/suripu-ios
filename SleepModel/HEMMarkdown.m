@@ -21,30 +21,30 @@
     UIColor* textColor = [UIColor colorWithWhite:0.3f alpha:1.f];
     return @{
         @(EMPH) : @{ NSFontAttributeName : [UIFont backViewBoldFont],
-                     NSParagraphStyleAttributeName: style,
-                     NSForegroundColorAttributeName: textColor },
+            NSParagraphStyleAttributeName : style,
+            NSForegroundColorAttributeName : textColor },
         @(STRONG) : @{ NSFontAttributeName : [UIFont backViewBoldFont],
-                       NSParagraphStyleAttributeName: style,
-                       NSForegroundColorAttributeName: textColor },
+            NSParagraphStyleAttributeName : style,
+            NSForegroundColorAttributeName : textColor },
         @(PARA) : @{ NSFontAttributeName : [UIFont backViewTextFont],
-                     NSParagraphStyleAttributeName: style,
-                     NSForegroundColorAttributeName: textColor },
-        @(BULLETLIST) : @{NSFontAttributeName : [UIFont backViewTextFont],
-                          NSParagraphStyleAttributeName: style,
-                          NSForegroundColorAttributeName: textColor}
+            NSParagraphStyleAttributeName : style,
+            NSForegroundColorAttributeName : textColor },
+        @(BULLETLIST) : @{ NSFontAttributeName : [UIFont backViewTextFont],
+            NSParagraphStyleAttributeName : style,
+            NSForegroundColorAttributeName : textColor }
     };
 }
 
-+ (NSDictionary *)attributesForTimelineBreakdownTitle
++ (NSDictionary*)attributesForTimelineBreakdownTitle
 {
-    return @{ @(PARA) : @{ NSFontAttributeName : [UIFont backViewTitleFont],
-                           NSKernAttributeName: @1 }};
+    return @{ @(PARA) : @{ NSFontAttributeName : [UIFont timelineBreakdownTitleFont],
+        NSKernAttributeName : @1 } };
 }
 
-+ (NSDictionary *)attributesForTimelineBreakdownValueWithColor:(UIColor*)color
++ (NSDictionary*)attributesForTimelineBreakdownValueWithColor:(UIColor*)color
 {
     return @{ @(PARA) : @{ NSFontAttributeName : [UIFont timelineBreakdownValueFont],
-                           NSForegroundColorAttributeName : color }};
+        NSForegroundColorAttributeName : color } };
 }
 
 + (NSDictionary*)attributesForBackViewTitle
@@ -64,7 +64,7 @@
         @(PARA) : @{
             NSForegroundColorAttributeName : [UIColor colorWithWhite:0.0f alpha:0.7f],
             NSFontAttributeName : [UIFont insightFullMessageFont],
-            NSParagraphStyleAttributeName: style
+            NSParagraphStyleAttributeName : style
         }
     };
 }
@@ -73,8 +73,8 @@
 {
     return @{
         @(PARA) : @{
-             NSForegroundColorAttributeName : [UIColor blackColor],
-             NSFontAttributeName : [UIFont insightTitleFont]
+            NSForegroundColorAttributeName : [UIColor blackColor],
+            NSFontAttributeName : [UIFont insightTitleFont]
         }
     };
 }
@@ -85,14 +85,14 @@
     style.alignment = NSTextAlignmentCenter;
     return @{
         @(STRONG) : @{ NSFontAttributeName : [UIFont timelineEventMessageBoldFont],
-                       NSParagraphStyleAttributeName: style,
-                       NSForegroundColorAttributeName: [UIColor blackColor]},
+            NSParagraphStyleAttributeName : style,
+            NSForegroundColorAttributeName : [UIColor blackColor] },
         @(PARA) : @{ NSFontAttributeName : [UIFont timelineEventMessageFont],
-                     NSParagraphStyleAttributeName: style,
-                     NSForegroundColorAttributeName: [UIColor blackColor]},
+            NSParagraphStyleAttributeName : style,
+            NSForegroundColorAttributeName : [UIColor blackColor] },
         @(EMPH) : @{ NSFontAttributeName : [UIFont timelineEventMessageItalicFont],
-                     NSParagraphStyleAttributeName: style,
-                     NSForegroundColorAttributeName: [UIColor lightGrayColor]},
+            NSParagraphStyleAttributeName : style,
+            NSForegroundColorAttributeName : [UIColor lightGrayColor] },
     };
 }
 
@@ -104,13 +104,13 @@
     };
 }
 
-+ (NSDictionary *)attributesForTimelineSegmentPopup
++ (NSDictionary*)attributesForTimelineSegmentPopup
 {
     NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
     style.alignment = NSTextAlignmentCenter;
     return @{
-        @(STRONG) : @{ NSFontAttributeName : [UIFont timelinePopupBoldFont], NSParagraphStyleAttributeName: style },
-        @(PARA) : @{ NSFontAttributeName : [UIFont timelinePopupFont], NSParagraphStyleAttributeName: style }
+        @(STRONG) : @{ NSFontAttributeName : [UIFont timelinePopupBoldFont], NSParagraphStyleAttributeName : style },
+        @(PARA) : @{ NSFontAttributeName : [UIFont timelinePopupFont], NSParagraphStyleAttributeName : style }
     };
 }
 
@@ -118,16 +118,16 @@
 {
     NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
     style.alignment = NSTextAlignmentCenter;
-    
+
     return @{
-        @(EMPH)   : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorBoldFont],
-                       NSParagraphStyleAttributeName: style },
+        @(EMPH) : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorBoldFont],
+            NSParagraphStyleAttributeName : style },
         @(STRONG) : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorBoldFont],
-                       NSParagraphStyleAttributeName: style },
-        @(PLAIN)  : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont],
-                       NSParagraphStyleAttributeName: style },
-        @(PARA)   : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont],
-                       NSParagraphStyleAttributeName: style }
+            NSParagraphStyleAttributeName : style },
+        @(PLAIN) : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont],
+            NSParagraphStyleAttributeName : style },
+        @(PARA) : @{ NSFontAttributeName : [UIFont onboardingRoomCheckSensorFont],
+            NSParagraphStyleAttributeName : style }
     };
 }
 
@@ -135,8 +135,8 @@
 {
     return @{
         @(STRONG) : @{ NSFontAttributeName : [UIFont sensorMessageBoldFont] },
-        @(EMPH)   : @{ NSFontAttributeName : [UIFont sensorMessageBoldFont] },
-        @(PARA)   : @{ NSFontAttributeName : [UIFont sensorMessageFont] }
+        @(EMPH) : @{ NSFontAttributeName : [UIFont sensorMessageBoldFont] },
+        @(PARA) : @{ NSFontAttributeName : [UIFont sensorMessageFont] }
     };
 }
 
@@ -144,8 +144,8 @@
 {
     UIColor* color = isOn ? [HelloStyleKit tintColor] : [UIColor colorWithWhite:0.6 alpha:1.f];
     return @{ @(PARA) : @{ NSFontAttributeName : [UIFont sensorRangeSelectionFont],
-                           NSKernAttributeName : @(1.2),
-                           NSForegroundColorAttributeName : color }
+        NSKernAttributeName : @(1.2),
+        NSForegroundColorAttributeName : color }
     };
 }
 

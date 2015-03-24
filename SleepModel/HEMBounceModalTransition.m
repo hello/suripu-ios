@@ -47,8 +47,13 @@ static CGFloat const HEMBounceEndScale = 0.7f;
           initialSpringVelocity:0.0f
                         options:UIViewAnimationOptionCurveEaseInOut
                      animations:^{
+                         // adjust for the status bar to prevent odd jump of the navigation bar, if
+                         // one is used, when animation completes
+                         CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
+                         CGFloat statusHeight = CGRectGetHeight(statusBarFrame);
                          CGRect finalFrame = [[toVC view] frame];
-                         finalFrame.origin.y = 0.0f;
+                         finalFrame.origin.y = statusHeight;
+                         finalFrame.size.height -= statusHeight;
                          [[toVC view] setFrame:finalFrame];
                      }
                      completion:^(BOOL finished) {

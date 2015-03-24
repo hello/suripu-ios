@@ -8,17 +8,6 @@
 
 #import "HEMBaseController.h"
 
-@class HEMTimeZoneViewController;
-
-@protocol HEMTimeZoneConrollerDelegate <NSObject>
-
-- (void)willCancelTimeZoneUpdateFrom:(HEMTimeZoneViewController*)tzViewController;
-- (void)didUpdateTimeZoneTo:(NSTimeZone*)timeZone from:(HEMTimeZoneViewController*)tzViewController;
-
-@end
-
 @interface HEMTimeZoneViewController : HEMBaseController
-
-@property (weak, nonatomic) id<HEMTimeZoneConrollerDelegate> delegate;
 
 @end

@@ -84,7 +84,6 @@
                         NSTimeInterval delayInSeconds = 0.5f;
                         dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                         dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
-                            [[strongSelf delegate] didUpdateTimeZoneTo:timeZone from:strongSelf];
                             [strongSelf dismissViewControllerAnimated:YES completion:nil];
                         });
                     }];
@@ -129,7 +128,6 @@
 #pragma mark - Actions
 
 - (void)cancel:(id)sender {
-    [[self delegate] willCancelTimeZoneUpdateFrom:self];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

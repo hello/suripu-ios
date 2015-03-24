@@ -59,6 +59,7 @@ static UIColor* _alarmSelectionRowColor = nil;
 static UIColor* _pageControlTintColor = nil;
 static UIColor* _actionButtonDisabledColor = nil;
 static UIColor* _backViewCardShadowColor = nil;
+static UIColor* _timelineTintTextColor = nil;
 
 static NSShadow* _insightShadow = nil;
 static NSShadow* _actionViewShadow = nil;
@@ -94,21 +95,8 @@ static UIImage* _sensorsBarIcon = nil;
 static UIImage* _alarmSmartIcon = nil;
 static UIImage* _alarmSoundIcon = nil;
 static UIImage* _alarmRepeatIcon = nil;
-static UIImage* _noiseEventIcon = nil;
-static UIImage* _lightEventIcon = nil;
-static UIImage* _partnerEventIcon = nil;
-static UIImage* _sunriseEventIcon = nil;
-static UIImage* _sunsetEventIcon = nil;
-static UIImage* _motionEventIcon = nil;
-static UIImage* _wakeupEventIcon = nil;
-static UIImage* _alarmEventIcon = nil;
-static UIImage* _sleepEventIcon = nil;
-static UIImage* _unknownEventIcon = nil;
 static UIImage* _senseIcon = nil;
 static UIImage* _pillIcon = nil;
-static UIImage* _lightsOutEventIcon = nil;
-static UIImage* _outOfBedEventIcon = nil;
-static UIImage* _inBedEventIcon = nil;
 static UIImage* _presleepInsightParticulates = nil;
 static UIImage* _presleepInsightSound = nil;
 static UIImage* _presleepInsightLight = nil;
@@ -119,6 +107,19 @@ static UIImage* _loading = nil;
 static UIImage* _miniStopButton = nil;
 static UIImage* _miniPlayButton = nil;
 static UIImage* _infoButtonIcon = nil;
+static UIImage* _lightEventIcon = nil;
+static UIImage* _outOfBedEventIcon = nil;
+static UIImage* _sunriseEventIcon = nil;
+static UIImage* _sleepEventIcon = nil;
+static UIImage* _noiseEventIcon = nil;
+static UIImage* _inBedEventIcon = nil;
+static UIImage* _alarmEventIcon = nil;
+static UIImage* _partnerEventIcon = nil;
+static UIImage* _unknownEventIcon = nil;
+static UIImage* _lightsOutEventIcon = nil;
+static UIImage* _motionEventIcon = nil;
+static UIImage* _wakeupEventIcon = nil;
+static UIImage* _sunsetEventIcon = nil;
 
 #pragma mark Initialization
 
@@ -169,6 +170,7 @@ static UIImage* _infoButtonIcon = nil;
     _pageControlTintColor = [UIColor colorWithRed: 0.922 green: 0.922 blue: 0.922 alpha: 1];
     _actionButtonDisabledColor = [UIColor colorWithRed: 0.788 green: 0.788 blue: 0.788 alpha: 1];
     _backViewCardShadowColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.1];
+    _timelineTintTextColor = [UIColor colorWithRed: 0.298 green: 0.757 blue: 0.988 alpha: 1];
 
     // Shadows Initialization
     _insightShadow = [NSShadow shadowWithColor: [UIColor.blackColor colorWithAlphaComponent: 0.1] offset: CGSizeMake(0.1, -2.1) blurRadius: 3];
@@ -223,6 +225,7 @@ static UIImage* _infoButtonIcon = nil;
 + (UIColor*)pageControlTintColor { return _pageControlTintColor; }
 + (UIColor*)actionButtonDisabledColor { return _actionButtonDisabledColor; }
 + (UIColor*)backViewCardShadowColor { return _backViewCardShadowColor; }
++ (UIColor*)timelineTintTextColor { return _timelineTintTextColor; }
 
 #pragma mark Shadows
 
@@ -262,21 +265,8 @@ static UIImage* _infoButtonIcon = nil;
 + (UIImage*)alarmSmartIcon { return _alarmSmartIcon ?: (_alarmSmartIcon = [UIImage imageNamed: @"alarmSmartIcon"]); }
 + (UIImage*)alarmSoundIcon { return _alarmSoundIcon ?: (_alarmSoundIcon = [UIImage imageNamed: @"alarmSoundIcon"]); }
 + (UIImage*)alarmRepeatIcon { return _alarmRepeatIcon ?: (_alarmRepeatIcon = [UIImage imageNamed: @"alarmRepeatIcon"]); }
-+ (UIImage*)noiseEventIcon { return _noiseEventIcon ?: (_noiseEventIcon = [UIImage imageNamed: @"noiseEventIcon"]); }
-+ (UIImage*)lightEventIcon { return _lightEventIcon ?: (_lightEventIcon = [UIImage imageNamed: @"lightEventIcon"]); }
-+ (UIImage*)partnerEventIcon { return _partnerEventIcon ?: (_partnerEventIcon = [UIImage imageNamed: @"partnerEventIcon"]); }
-+ (UIImage*)sunriseEventIcon { return _sunriseEventIcon ?: (_sunriseEventIcon = [UIImage imageNamed: @"sunriseEventIcon"]); }
-+ (UIImage*)sunsetEventIcon { return _sunsetEventIcon ?: (_sunsetEventIcon = [UIImage imageNamed: @"sunsetEventIcon"]); }
-+ (UIImage*)motionEventIcon { return _motionEventIcon ?: (_motionEventIcon = [UIImage imageNamed: @"motionEventIcon"]); }
-+ (UIImage*)wakeupEventIcon { return _wakeupEventIcon ?: (_wakeupEventIcon = [UIImage imageNamed: @"wakeupEventIcon"]); }
-+ (UIImage*)alarmEventIcon { return _alarmEventIcon ?: (_alarmEventIcon = [UIImage imageNamed: @"alarmEventIcon"]); }
-+ (UIImage*)sleepEventIcon { return _sleepEventIcon ?: (_sleepEventIcon = [UIImage imageNamed: @"sleepEventIcon"]); }
-+ (UIImage*)unknownEventIcon { return _unknownEventIcon ?: (_unknownEventIcon = [UIImage imageNamed: @"unknownEventIcon"]); }
 + (UIImage*)senseIcon { return _senseIcon ?: (_senseIcon = [UIImage imageNamed: @"senseIcon"]); }
 + (UIImage*)pillIcon { return _pillIcon ?: (_pillIcon = [UIImage imageNamed: @"pillIcon"]); }
-+ (UIImage*)lightsOutEventIcon { return _lightsOutEventIcon ?: (_lightsOutEventIcon = [UIImage imageNamed: @"lightsOutEventIcon"]); }
-+ (UIImage*)outOfBedEventIcon { return _outOfBedEventIcon ?: (_outOfBedEventIcon = [UIImage imageNamed: @"outOfBedEventIcon"]); }
-+ (UIImage*)inBedEventIcon { return _inBedEventIcon ?: (_inBedEventIcon = [UIImage imageNamed: @"inBedEventIcon"]); }
 + (UIImage*)presleepInsightParticulates { return _presleepInsightParticulates ?: (_presleepInsightParticulates = [UIImage imageNamed: @"presleepInsightParticulates"]); }
 + (UIImage*)presleepInsightSound { return _presleepInsightSound ?: (_presleepInsightSound = [UIImage imageNamed: @"presleepInsightSound"]); }
 + (UIImage*)presleepInsightLight { return _presleepInsightLight ?: (_presleepInsightLight = [UIImage imageNamed: @"presleepInsightLight"]); }
@@ -287,6 +277,19 @@ static UIImage* _infoButtonIcon = nil;
 + (UIImage*)miniStopButton { return _miniStopButton ?: (_miniStopButton = [UIImage imageNamed: @"miniStopButton"]); }
 + (UIImage*)miniPlayButton { return _miniPlayButton ?: (_miniPlayButton = [UIImage imageNamed: @"miniPlayButton"]); }
 + (UIImage*)infoButtonIcon { return _infoButtonIcon ?: (_infoButtonIcon = [UIImage imageNamed: @"infoButtonIcon"]); }
++ (UIImage*)lightEventIcon { return _lightEventIcon ?: (_lightEventIcon = [UIImage imageNamed: @"lightEventIcon"]); }
++ (UIImage*)outOfBedEventIcon { return _outOfBedEventIcon ?: (_outOfBedEventIcon = [UIImage imageNamed: @"outOfBedEventIcon"]); }
++ (UIImage*)sunriseEventIcon { return _sunriseEventIcon ?: (_sunriseEventIcon = [UIImage imageNamed: @"sunriseEventIcon"]); }
++ (UIImage*)sleepEventIcon { return _sleepEventIcon ?: (_sleepEventIcon = [UIImage imageNamed: @"sleepEventIcon"]); }
++ (UIImage*)noiseEventIcon { return _noiseEventIcon ?: (_noiseEventIcon = [UIImage imageNamed: @"noiseEventIcon"]); }
++ (UIImage*)inBedEventIcon { return _inBedEventIcon ?: (_inBedEventIcon = [UIImage imageNamed: @"inBedEventIcon"]); }
++ (UIImage*)alarmEventIcon { return _alarmEventIcon ?: (_alarmEventIcon = [UIImage imageNamed: @"alarmEventIcon"]); }
++ (UIImage*)partnerEventIcon { return _partnerEventIcon ?: (_partnerEventIcon = [UIImage imageNamed: @"partnerEventIcon"]); }
++ (UIImage*)unknownEventIcon { return _unknownEventIcon ?: (_unknownEventIcon = [UIImage imageNamed: @"unknownEventIcon"]); }
++ (UIImage*)lightsOutEventIcon { return _lightsOutEventIcon ?: (_lightsOutEventIcon = [UIImage imageNamed: @"lightsOutEventIcon"]); }
++ (UIImage*)motionEventIcon { return _motionEventIcon ?: (_motionEventIcon = [UIImage imageNamed: @"motionEventIcon"]); }
++ (UIImage*)wakeupEventIcon { return _wakeupEventIcon ?: (_wakeupEventIcon = [UIImage imageNamed: @"wakeupEventIcon"]); }
++ (UIImage*)sunsetEventIcon { return _sunsetEventIcon ?: (_sunsetEventIcon = [UIImage imageNamed: @"sunsetEventIcon"]); }
 
 #pragma mark Drawing Methods
 

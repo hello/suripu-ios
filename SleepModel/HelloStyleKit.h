@@ -60,6 +60,7 @@
 + (UIColor*)pageControlTintColor;
 + (UIColor*)actionButtonDisabledColor;
 + (UIColor*)backViewCardShadowColor;
++ (UIColor*)timelineTintTextColor;
 
 // Shadows
 + (NSShadow*)insightShadow;
@@ -97,21 +98,8 @@
 + (UIImage*)alarmSmartIcon;
 + (UIImage*)alarmSoundIcon;
 + (UIImage*)alarmRepeatIcon;
-+ (UIImage*)noiseEventIcon;
-+ (UIImage*)lightEventIcon;
-+ (UIImage*)partnerEventIcon;
-+ (UIImage*)sunriseEventIcon;
-+ (UIImage*)sunsetEventIcon;
-+ (UIImage*)motionEventIcon;
-+ (UIImage*)wakeupEventIcon;
-+ (UIImage*)alarmEventIcon;
-+ (UIImage*)sleepEventIcon;
-+ (UIImage*)unknownEventIcon;
 + (UIImage*)senseIcon;
 + (UIImage*)pillIcon;
-+ (UIImage*)lightsOutEventIcon;
-+ (UIImage*)outOfBedEventIcon;
-+ (UIImage*)inBedEventIcon;
 + (UIImage*)presleepInsightParticulates;
 + (UIImage*)presleepInsightSound;
 + (UIImage*)presleepInsightLight;
@@ -122,6 +110,19 @@
 + (UIImage*)miniStopButton;
 + (UIImage*)miniPlayButton;
 + (UIImage*)infoButtonIcon;
++ (UIImage*)lightEventIcon;
++ (UIImage*)outOfBedEventIcon;
++ (UIImage*)sunriseEventIcon;
++ (UIImage*)sleepEventIcon;
++ (UIImage*)noiseEventIcon;
++ (UIImage*)inBedEventIcon;
++ (UIImage*)alarmEventIcon;
++ (UIImage*)partnerEventIcon;
++ (UIImage*)unknownEventIcon;
++ (UIImage*)lightsOutEventIcon;
++ (UIImage*)motionEventIcon;
++ (UIImage*)wakeupEventIcon;
++ (UIImage*)sunsetEventIcon;
 
 // Drawing Methods
 + (void)drawSleepScoreGraphWithSleepScore: (CGFloat)sleepScore;

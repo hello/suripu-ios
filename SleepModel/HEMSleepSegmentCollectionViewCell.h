@@ -27,7 +27,7 @@ extern CGFloat const HEMSleepLineWidth;
 
 - (void)removeAllTimeLabels;
 
-- (UIImage*)dottedLineBorderImageWithColor:(UIColor*)color;
+- (UIImage*)lineBorderImageWithColor:(UIColor*)color;
 
 @property (nonatomic, getter=isFirstSegment) BOOL firstSegment;
 @property (nonatomic, getter=isLastSegment) BOOL lastSegment;

@@ -50,7 +50,7 @@
     self.dateFormatter = [NSDateFormatter new];
     self.dateFormatter.dateFormat = @"MMM d";
     self.dayOfWeekFormatter = [NSDateFormatter new];
-    self.dayOfWeekFormatter.dateFormat = @"EEEEEE";
+    self.dayOfWeekFormatter.dateFormat = @"EEEEE";
     self.monthFormatter = [NSDateFormatter new];
     self.monthFormatter.dateFormat = @"MMM";
 }

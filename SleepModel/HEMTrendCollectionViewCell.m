@@ -223,6 +223,11 @@
         [self.overlayView layoutIfNeeded];
         NSArray* headers = [self sectionIndexValuesOfType:self.topLabelType];
         NSArray* footers = [self sectionIndexValuesOfType:self.bottomLabelType];
+        if (self.bottomLabelType == HEMTrendCellGraphLabelTypeHourValue) {
+            self.overlayView.bottomLabelColor = [HelloStyleKit lightTintColor];
+        } else {
+            self.overlayView.bottomLabelColor = [HelloStyleKit trendTextColor];
+        }
         [self.overlayView setSectionFooters:footers headers:headers];
     }
     else {

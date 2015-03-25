@@ -27,8 +27,8 @@
 
 @implementation HEMTrendsViewController
 
-static CGFloat const HEMTrendsViewCellHeight = 184.f;
-static CGFloat const HEMTrendsViewOptionsCellHeight = 235.f;
+static CGFloat const HEMTrendsViewCellHeight = 198.f;
+static CGFloat const HEMTrendsViewOptionsCellHeight = 255.f;
 
 static NSString* const HEMScoreTrendType = @"SLEEP_SCORE";
 static NSString* const HEMDurationTrendType = @"SLEEP_DURATION";
@@ -179,21 +179,19 @@ static NSString* const HEMAllScopeType = @"ALL";
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView cellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    NSDictionary* attributes = [HEMMarkdown attributesForBackViewTitle][@(PARA)];
     if (self.defaultTrends.count == 0) {
         return [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
     }
     SENTrend* trend = self.defaultTrends[indexPath.row];
-    NSAttributedString* title = [[NSAttributedString alloc] initWithString:trend.title attributes:attributes];
     if (trend.dataPoints.count <= 2) {
         HEMEmptyTrendCollectionViewCell* cell = [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
-        cell.titleLabel.attributedText = title;
+        cell.titleLabel.text = trend.title;
         return cell;
     }
     NSString* identifier = [HEMMainStoryboard trendGraphReuseIdentifier];
     HEMTrendCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
                                                                                  forIndexPath:indexPath];
-    cell.titleLabel.attributedText = title;
+    cell.titleLabel.text = trend.title;
     cell.statusLabel.hidden = YES;
     cell.delegate = self;
     [self configureGraphForCell:cell withTrend:trend];

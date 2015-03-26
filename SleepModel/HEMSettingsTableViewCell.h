@@ -15,6 +15,7 @@ extern CGFloat const HEMSettingsCellTableMargin;
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* valueLabel;
 @property (weak, nonatomic) IBOutlet UIView*  accessory;
+@property (weak, nonatomic) IBOutlet UIView*  separator;
 
 - (void)showTopCorners;
 - (void)showBottomCorners;

@@ -22,7 +22,6 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.5f;
 @interface HEMSettingsTableViewCell()
 
 @property (nonatomic, weak) CAShapeLayer* contentLayer;
-@property (nonatomic, weak) UIView* separator;
 @property (nonatomic, strong) UIActivityIndicatorView* activityView;
 
 @end
@@ -69,6 +68,8 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.5f;
 }
 
 - (void)addSeparator {
+    if ([self separator] != nil) return;
+    
     CGFloat x = CGRectGetMinX([[self titleLabel] frame]);
     CGRect separatorFrame = {
         x,
@@ -80,7 +81,21 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.5f;
     [separator setBackgroundColor:[HelloStyleKit separatorColor]];
     [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth
                                    | UIViewAutoresizingFlexibleTopMargin];
+    [self setSeparator:separator];
     [[self contentView] addSubview:separator];
+}
+
+- (void)prepareForReuse {
+    [[self contentLayer] setHidden:NO];
+    [[self separator] setHidden:NO];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    CGRect separatorFrame = [[self separator] frame];
+    separatorFrame.origin.x = CGRectGetMinX([[self titleLabel] frame]);
+    [[self separator] setFrame:separatorFrame];
 }
 
 - (void)roundContentLayerCorners:(UIRectCorner)corners {

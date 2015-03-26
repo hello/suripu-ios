@@ -170,14 +170,14 @@ static UIImage* _sunsetEventIcon = nil;
     _alarmSelectionRowColor = [UIColor colorWithRed: 0.75 green: 0.75 blue: 0.75 alpha: 1];
     _pageControlTintColor = [UIColor colorWithRed: 0.922 green: 0.922 blue: 0.922 alpha: 1];
     _actionButtonDisabledColor = [UIColor colorWithRed: 0.788 green: 0.788 blue: 0.788 alpha: 1];
-    _backViewCardShadowColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.1];
+    _backViewCardShadowColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.05];
     _lightTintColor = [UIColor colorWithRed: 0.298 green: 0.757 blue: 0.988 alpha: 1];
     _trendTextColor = [UIColor colorWithRed: 0.6 green: 0.6 blue: 0.6 alpha: 1];
 
     // Shadows Initialization
     _insightShadow = [NSShadow shadowWithColor: [UIColor.blackColor colorWithAlphaComponent: 0.1] offset: CGSizeMake(0.1, -2.1) blurRadius: 3];
     _actionViewShadow = [NSShadow shadowWithColor: [UIColor.blackColor colorWithAlphaComponent: 0.1] offset: CGSizeMake(0.1, -2.1) blurRadius: 5];
-    _backViewCardShadow = [NSShadow shadowWithColor: HelloStyleKit.backViewCardShadowColor offset: CGSizeMake(0.1, 1.1) blurRadius: 1];
+    _backViewCardShadow = [NSShadow shadowWithColor: HelloStyleKit.backViewCardShadowColor offset: CGSizeMake(0.1, 1.6) blurRadius: 0];
 
 }
 

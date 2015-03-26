@@ -37,7 +37,7 @@ NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotif
 NSString* const HEMRootDrawerDidOpenNotification = @"HEMRootDrawerDidOpenNotification";
 NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotification";
 
-@interface HEMRootViewController ()<MSDynamicsDrawerViewControllerDelegate, UIPageViewControllerDelegate>
+@interface HEMRootViewController () <MSDynamicsDrawerViewControllerDelegate, UIPageViewControllerDelegate>
 
 @property (strong, nonatomic) HEMDebugController* debugController;
 @property (strong, nonatomic) HEMSystemAlertController* alertController;
@@ -58,14 +58,16 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     return (id)delegate.window.rootViewController;
 }
 
-+ (UIViewController*)instantiateDrawerViewController {
++ (UIViewController*)instantiateDrawerViewController
+{
     HEMSnazzBarController* barController = [HEMSnazzBarController new];
     barController.viewControllers = @[
         [HEMMainStoryboard instantiateCurrentNavController],
         [HEMMainStoryboard instantiateTrendsViewController],
         [HEMMainStoryboard instantiateInsightFeedViewController],
         [HEMMainStoryboard instantiateAlarmListNavViewController],
-        [HEMMainStoryboard instantiateSettingsNavController]];
+        [HEMMainStoryboard instantiateSettingsNavController]
+    ];
     barController.selectedIndex = 2;
     return barController;
 }
@@ -77,13 +79,14 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
  *
  *  @return a new pane controller
  */
-- (UIViewController*)instantiatePaneViewControllerWithDate:(NSDate*)startDate {
+- (UIViewController*)instantiatePaneViewControllerWithDate:(NSDate*)startDate
+{
     HEMSleepSummarySlideViewController* slideController;
     if (startDate)
         slideController = [[HEMSleepSummarySlideViewController alloc] initWithDate:startDate];
     else
         slideController = [HEMSleepSummarySlideViewController new];
- 
+
     [slideController setDelegate:self];
     [slideController.view add3DEffectWithBorder:HEMRootTopPaneParallaxDepth
                                       direction:HEMMotionEffectsDirectionVertical];
@@ -97,20 +100,22 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [SENAnalytics track:kHEMAnalyticsEventAppLaunched];
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     [self setAlertController:[[HEMSystemAlertController alloc] initWithViewController:self]];
     [self registerForNotifications];
-    
+
     if ([HEMOnboardingUtils hasFinishedOnboarding]) {
         [self showArea:HEMRootAreaTimeline animated:NO];
         [self setMainControllerLoaded:YES];
     }
 }
 
-- (void)viewDidAppear:(BOOL)animated {
+- (void)viewDidAppear:(BOOL)animated
+{
     [super viewDidAppear:animated];
-    
+
     // if controller has not been loaded yet in viewDidLoad, check and see if we
     // need to launch the onboarding controller.  Onboarding currently is presented
     // modally, which can't be loaded in viewDidLoad.
@@ -145,12 +150,12 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     window.windowLevel = UIWindowLevelNormal;
 }
 
-- (UIViewController *)backController
+- (UIViewController*)backController
 {
     return [self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
 }
 
-- (UIViewController *)frontController
+- (UIViewController*)frontController
 {
     return self.drawerViewController.paneViewController;
 }
@@ -165,13 +170,16 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     if (self.drawerViewController != nil) {
         return NO;
     }
-    
+
     self.drawerViewController = [MSDynamicsDrawerViewController new];
     self.drawerViewController.paneViewController = [self instantiatePaneViewControllerWithDate:nil];
     self.drawerViewController.delegate = self;
     self.drawerViewController.gravityMagnitude = 2.5;
     [self hideStatusBar];
-    [self.drawerViewController addStylersFromArray:@[[HEMDynamicsStatusStyler styler]]
+    MSDynamicsDrawerShadowStyler* shadowStyler = [MSDynamicsDrawerShadowStyler styler];
+    shadowStyler.shadowRadius = 2.f;
+    shadowStyler.shadowOpacity = 0.08f;
+    [self.drawerViewController addStylersFromArray:@[ [HEMDynamicsStatusStyler styler], shadowStyler ]
                                       forDirection:MSDynamicsDrawerDirectionTop];
     [self.drawerViewController setDrawerViewController:[HEMRootViewController instantiateDrawerViewController]
                                           forDirection:MSDynamicsDrawerDirectionTop];
@@ -183,11 +191,12 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [self.view addSubview:self.drawerViewController.view];
     [self addChildViewController:self.drawerViewController];
     [self.drawerViewController didMoveToParentViewController:self];
-    
+
     return YES;
 }
 
-- (void)removeDrawerViewController {
+- (void)removeDrawerViewController
+{
     if ([self drawerViewController] != nil) {
         [[self drawerViewController] willMoveToParentViewController:nil];
         [[self drawerViewController] removeFromParentViewController]; // calls didMoveToParentViewController:nil
@@ -210,7 +219,8 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     self.drawerViewController.view.frame = screenFrame;
 }
 
-- (void)registerForNotifications {
+- (void)registerForNotifications
+{
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
                selector:@selector(didAuthorize)
@@ -230,15 +240,16 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
                  object:nil];
 }
 
-- (BOOL)shouldMonitorDevices {
+- (BOOL)shouldMonitorDevices
+{
     HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
     return [SENAuthorizationService isAuthorized]
-            && [self presentedViewController] == nil
-            && (checkpoint == HEMOnboardingCheckpointStart
-                || checkpoint == HEMOnboardingCheckpointPillDone);
+        && [self presentedViewController] == nil
+        && (checkpoint == HEMOnboardingCheckpointStart
+               || checkpoint == HEMOnboardingCheckpointPillDone);
 }
 
-- (void)reloadTimelineSlideViewControllerWithDate:(NSDate *)date
+- (void)reloadTimelineSlideViewControllerWithDate:(NSDate*)date
 {
     UIViewController* controller = [self instantiatePaneViewControllerWithDate:date];
     [self.drawerViewController setPaneViewController:controller
@@ -248,45 +259,49 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 #pragma mark - Handling different state of the app
 
-- (void)showArea:(HEMRootArea)area animated:(BOOL)animated {
+- (void)showArea:(HEMRootArea)area animated:(BOOL)animated
+{
     switch (area) {
-        case HEMRootAreaOnboarding:
-            [self launchOnboarding:animated];
-            break;
-        case HEMRootAreaTimeline:
-            [self launchDrawerControllerAnimated:animated intoSettings:NO];
-            break;
-        case HEMRootAreaBackView:
-            [self launchDrawerControllerAnimated:animated intoSettings:YES];
-            break;
-        default:
-            break;
+    case HEMRootAreaOnboarding:
+        [self launchOnboarding:animated];
+        break;
+    case HEMRootAreaTimeline:
+        [self launchDrawerControllerAnimated:animated intoSettings:NO];
+        break;
+    case HEMRootAreaBackView:
+        [self launchDrawerControllerAnimated:animated intoSettings:YES];
+        break;
+    default:
+        break;
     }
 }
 
-- (void)launchDrawerControllerAnimated:(BOOL)animated intoSettings:(BOOL)openSettings {
+- (void)launchDrawerControllerAnimated:(BOOL)animated intoSettings:(BOOL)openSettings
+{
     if ([self createDrawerViewController]) { // if already created, ignore
         if (openSettings) {
             [self openSettingsDrawer];
         }
-        
+
         if ([self presentedViewController] != nil) {
             [self dismissViewControllerAnimated:animated completion:nil];
         }
     }
 }
 
-- (void)launchOnboarding:(BOOL)animated {
-    if ([self presentedViewController] != nil) return;
-    
+- (void)launchOnboarding:(BOOL)animated
+{
+    if ([self presentedViewController] != nil)
+        return;
+
     HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
     UIViewController* controller = [HEMOnboardingUtils onboardingControllerForCheckpoint:checkpoint force:NO];
-    
+
     if (controller != nil) {
         UINavigationController* onboardingNav
             = [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];
         [[onboardingNav navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];
-        
+
         [self presentViewController:onboardingNav animated:animated completion:^{
             [self showStatusBar];
             [self removeDrawerViewController];
@@ -294,71 +309,76 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     }
 }
 
-- (void)didAuthorize {
+- (void)didAuthorize
+{
     if ([HEMOnboardingUtils hasFinishedOnboarding]) {
         [self showArea:HEMRootAreaTimeline animated:YES];
     }
     [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
 }
 
-- (void)didFinishOnboarding {
+- (void)didFinishOnboarding
+{
     [self showArea:HEMRootAreaBackView animated:YES];
 }
 
-- (void)showOnboarding {
+- (void)showOnboarding
+{
     [self showArea:HEMRootAreaOnboarding animated:YES];
 }
 
-- (BOOL)isShowingOnboarding {
+- (BOOL)isShowingOnboarding
+{
     return [self presentedViewController] != nil;
 }
 
 #pragma mark - MSDynamicsDrawerViewControllerDelegate
 
-- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController*)drawerViewController
                 mayUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState
                         forDirection:(MSDynamicsDrawerDirection)direction
 {
     switch (paneState) {
-        case MSDynamicsDrawerPaneStateClosed:
-            [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayCloseNotification
-                                                                object:nil];
-            break;
-        case MSDynamicsDrawerPaneStateOpen:
-            [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayOpenNotification
-                                                                object:nil];
-            break;
-        default:
-            break;
+    case MSDynamicsDrawerPaneStateClosed:
+        [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayCloseNotification
+                                                            object:nil];
+        break;
+    case MSDynamicsDrawerPaneStateOpen:
+        [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerMayOpenNotification
+                                                            object:nil];
+        break;
+    default:
+        break;
     }
 }
 
-- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController *)drawerViewController
+- (void)dynamicsDrawerViewController:(MSDynamicsDrawerViewController*)drawerViewController
                 didUpdateToPaneState:(MSDynamicsDrawerPaneState)paneState
                         forDirection:(MSDynamicsDrawerDirection)direction
 {
     switch (paneState) {
-        case MSDynamicsDrawerPaneStateClosed:
-            [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidCloseNotification
-                                                                object:nil];
-            [SENAnalytics track:kHEMAnalyticsEventTimelineClose];
-            break;
-        case MSDynamicsDrawerPaneStateOpen:
-            [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidOpenNotification
-                                                                object:nil];
-            [SENAnalytics track:kHEMAnalyticsEventTimelineOpen];
-            break;
-        default:
-            break;
+    case MSDynamicsDrawerPaneStateClosed:
+        [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidCloseNotification
+                                                            object:nil];
+        [SENAnalytics track:kHEMAnalyticsEventTimelineClose];
+        break;
+    case MSDynamicsDrawerPaneStateOpen:
+        [[NSNotificationCenter defaultCenter] postNotificationName:HEMRootDrawerDidOpenNotification
+                                                            object:nil];
+        [SENAnalytics track:kHEMAnalyticsEventTimelineOpen];
+        break;
+    default:
+        break;
     }
 }
 
 #pragma mark - UIPageViewControllerDelegate for Timeline events
 
-- (void)pageViewController:(UIPageViewController *)pageViewController
-        didFinishAnimating:(BOOL)finished
-   previousViewControllers:(NSArray *)previousViewControllers
-       transitionCompleted:(BOOL)completed {
+- (void)pageViewController:(UIPageViewController*)pageViewController
+         didFinishAnimating:(BOOL)finished
+    previousViewControllers:(NSArray*)previousViewControllers
+        transitionCompleted:(BOOL)completed
+{
     if (completed) {
         [SENAnalytics track:kHEMAnalyticsEventTimelineChanged];
     }
@@ -371,44 +391,51 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     return (id)[self.drawerViewController drawerViewControllerForDirection:MSDynamicsDrawerDirectionTop];
 }
 
-- (void)showSettingsDrawerTabAtIndex:(HEMRootDrawerTab)tabIndex animated:(BOOL)animated {
+- (void)showSettingsDrawerTabAtIndex:(HEMRootDrawerTab)tabIndex animated:(BOOL)animated
+{
     [self openSettingsDrawer];
     HEMSnazzBarController* controller = [self barController];
     [controller setSelectedIndex:tabIndex animated:animated];
 }
 
-- (void)hideSettingsDrawerTopBar:(BOOL)hidden animated:(BOOL)animated {
+- (void)hideSettingsDrawerTopBar:(BOOL)hidden animated:(BOOL)animated
+{
     HEMSnazzBarController* controller = [self barController];
     [controller hideBar:hidden animated:animated];
 }
 
-- (void)showPartialSettingsDrawerTopBarWithRatio:(CGFloat)ratio {
+- (void)showPartialSettingsDrawerTopBarWithRatio:(CGFloat)ratio
+{
     HEMSnazzBarController* controller = [self barController];
     [controller showPartialBarWithRatio:ratio];
 }
 
-- (void)openSettingsDrawer {
+- (void)openSettingsDrawer
+{
     [self setPaneState:MSDynamicsDrawerPaneStateOpen];
 }
 
-- (void)closeSettingsDrawer {
+- (void)closeSettingsDrawer
+{
     [self setPaneState:MSDynamicsDrawerPaneStateClosed];
 }
 
-- (void)toggleSettingsDrawer {
+- (void)toggleSettingsDrawer
+{
     switch (self.drawerViewController.paneState) {
-        case MSDynamicsDrawerPaneStateClosed:
-            [self openSettingsDrawer];
-            break;
-        case MSDynamicsDrawerPaneStateOpen:
-        case MSDynamicsDrawerPaneStateOpenWide:
-        default:
-            [self closeSettingsDrawer];
-            break;
+    case MSDynamicsDrawerPaneStateClosed:
+        [self openSettingsDrawer];
+        break;
+    case MSDynamicsDrawerPaneStateOpen:
+    case MSDynamicsDrawerPaneStateOpenWide:
+    default:
+        [self closeSettingsDrawer];
+        break;
     }
 }
 
-- (void)setPaneState:(MSDynamicsDrawerPaneState)state {
+- (void)setPaneState:(MSDynamicsDrawerPaneState)state
+{
     [self.drawerViewController setPaneState:state
                                    animated:YES
                       allowUserInterruption:YES
@@ -417,11 +444,13 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 #pragma mark - Shake to Show Debug Options
 
-- (BOOL)canBecomeFirstResponder {
+- (BOOL)canBecomeFirstResponder
+{
     return [HEMDebugController isEnabled];
 }
 
-- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent *)event {
+- (void)motionEnded:(UIEventSubtype)motion withEvent:(UIEvent*)event
+{
     if ([HEMConfig booleanForConfig:HEMConfAllowDebugOptions] && motion == UIEventSubtypeMotionShake) {
         if ([self debugController] == nil) {
             [self setDebugController:[[HEMDebugController alloc] initWithViewController:self]];
@@ -432,7 +461,8 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 #pragma mark - Cleanup
 
-- (void)dealloc {
+- (void)dealloc
+{
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 

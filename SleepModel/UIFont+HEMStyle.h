@@ -173,6 +173,11 @@
 + (UIFont*)trendOptionFont;
 
 /**
+ *  Font for the footer labels in trend graphs
+ */
++ (UIFont*)trendBottomLabelFont;
+
+/**
  *  Font to display the answers for questions
  */
 + (UIFont*)questionAnswerFont;

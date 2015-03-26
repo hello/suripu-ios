@@ -14,6 +14,7 @@
 @property (nonatomic) NSUInteger selectedIndex;
 @property (nonatomic, strong) UIView* selectionView;
 @property (nonatomic, strong) NSMutableArray* buttons;
+@property (nonatomic, strong) NSMutableArray* separatorViews;
 @end
 
 @implementation HEMScopePickerView
@@ -38,12 +39,16 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    CGFloat buttonWidth = CGRectGetWidth(self.bounds)/self.buttons.count;
+    CGFloat buttonWidth = CGRectGetWidth(self.bounds) / self.buttons.count;
     CGFloat buttonHeight = CGRectGetHeight(self.bounds);
     for (int i = 0; i < self.buttons.count; i++) {
         UIButton* button = self.buttons[i];
         button.frame = CGRectMake(i * buttonWidth, 0, buttonWidth, buttonHeight);
         button.selected = i == self.selectedIndex;
+        if (self.separatorViews.count > i) {
+            UIView* separator = self.separatorViews[i];
+            separator.frame = CGRectMake(CGRectGetMaxX(button.frame), buttonHeight * 0.3, 1, buttonHeight * 0.4);
+        }
     }
     if (self.buttons.count > self.selectedIndex)
         [self moveSelectionViewUnderView:self.buttons[self.selectedIndex]];
@@ -62,10 +67,11 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
     [self.delegate didTapButtonWithText:[sender titleForState:UIControlStateNormal]];
 }
 
-- (void)setButtonsWithTitles:(NSArray *)titles selectedIndex:(NSUInteger)selectedIndex
+- (void)setButtonsWithTitles:(NSArray*)titles selectedIndex:(NSUInteger)selectedIndex
 {
     [self.buttons makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    self.buttons = [NSMutableArray new];
+    self.buttons = [[NSMutableArray alloc] initWithCapacity:titles.count];
+    self.separatorViews = [[NSMutableArray alloc] initWithCapacity:titles.count];
     self.selectedIndex = selectedIndex != NSNotFound ? selectedIndex : 0;
     if (titles.count == 0) {
         [self invalidateIntrinsicContentSize];
@@ -84,6 +90,12 @@ static NSInteger const HEMScopePickerButtonOffset = 3242026;
         [button addTarget:self action:@selector(selectButton:) forControlEvents:UIControlEventTouchUpInside];
         [self.buttons addObject:button];
         [self addSubview:button];
+        if (i < titles.count - 1) {
+            UIView* separatorView = [UIView new];
+            separatorView.backgroundColor = [UIColor colorWithWhite:0.9f alpha:1.f];
+            [self.separatorViews addObject:separatorView];
+            [self addSubview:separatorView];
+        }
     }
     [self invalidateIntrinsicContentSize];
     [self setNeedsLayout];

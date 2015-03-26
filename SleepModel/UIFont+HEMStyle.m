@@ -20,18 +20,6 @@ static NSString* const HEMNumberFontFamilyNameUltraLight = @"AvenirNext-UltraLig
 static NSString* const HEMTitleFontFamilyNameDemiBold = @"AvenirNext-DemiBold";
 static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
-+ (UIFont*)scaledFontWithName:(NSString*)name baseSize:(CGFloat)baseSize
-{
-    static CGFloat const HEMFontBaseScreenWidth = 320.f;
-    static CGFloat const HEMFontEnlargedRatio = 1.07f;
-    CGFloat factor = 1.f;
-    if (CGRectGetWidth([[UIScreen mainScreen] bounds]) > HEMFontBaseScreenWidth)
-        factor = HEMFontEnlargedRatio;
-
-    NSInteger fontSize = ceilf(baseSize * factor);
-    return [UIFont fontWithName:name size:fontSize];
-}
-
 + (UIFont*)alarmMeridiemFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
@@ -134,12 +122,12 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)backViewTitleFont
 {
-    return [UIFont scaledFontWithName:HEMFontFamilyNameHeavy baseSize:11.f];
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:11.f];
 }
 
 + (UIFont*)backViewTextFont
 {
-    return [UIFont scaledFontWithName:HEMFontFamilyNameLight baseSize:14.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
 }
 
 + (UIFont*)backViewBoldFont
@@ -325,6 +313,11 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 + (UIFont*)trendOptionFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
+}
+
++ (UIFont*)trendBottomLabelFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
 }
 
 + (UIFont*)timeZoneNameFont

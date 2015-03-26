@@ -25,6 +25,8 @@
 
     self.backgroundColor = [UIColor whiteColor];
     self.layer.cornerRadius = 2.f;
+    self.layer.borderColor = [[HelloStyleKit cardBorderColor] CGColor];
+    self.layer.borderWidth = 1.f;
     self.layer.shadowOffset = [shadow shadowOffset];
     self.layer.shadowColor = [[shadow shadowColor] CGColor];
     self.layer.shadowRadius = [shadow shadowBlurRadius];

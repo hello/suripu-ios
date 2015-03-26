@@ -3322,7 +3322,7 @@
                                                     <rect key="frame" x="0.0" y="120" width="540" height="135"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="height" constant="135" id="ngO-Wr-g4F"/>
+                                                        <constraint firstAttribute="height" relation="lessThanOrEqual" constant="135" id="ngO-Wr-g4F"/>
                                                     </constraints>
                                                 </view>
                                                 <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mz2-Dc-hJA" userLabel="line graph view" customClass="BEMSimpleLineGraphView">

@@ -122,7 +122,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)backViewTitleFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:11.f];
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:11.f];
 }
 
 + (UIFont*)backViewTextFont
@@ -314,7 +314,6 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 {
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
 }
-
 
 + (UIFont*)trendBottomLabelFont
 {

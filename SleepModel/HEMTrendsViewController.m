@@ -16,6 +16,7 @@
 #import "HEMTrendCollectionViewCell.h"
 #import "HEMEmptyTrendCollectionViewCell.h"
 #import "HEMGraphSectionOverlayView.h"
+#import "UIFont+HEMStyle.h"
 #import "HEMMarkdown.h"
 #import "HEMTutorial.h"
 
@@ -183,15 +184,18 @@ static NSString* const HEMAllScopeType = @"ALL";
         return [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
     }
     SENTrend* trend = self.defaultTrends[indexPath.row];
+    NSDictionary* attributes = @{ NSKernAttributeName : @(1.2),
+        NSFontAttributeName : [UIFont backViewTitleFont] };
+    NSAttributedString* attributedTitle = [[NSAttributedString alloc] initWithString:trend.title attributes:attributes];
     if (trend.dataPoints.count <= 2) {
         HEMEmptyTrendCollectionViewCell* cell = [self collectionView:collectionView emptyCellForItemAtIndexPath:indexPath];
-        cell.titleLabel.text = trend.title;
+        cell.titleLabel.attributedText = attributedTitle;
         return cell;
     }
     NSString* identifier = [HEMMainStoryboard trendGraphReuseIdentifier];
     HEMTrendCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
                                                                                  forIndexPath:indexPath];
-    cell.titleLabel.text = trend.title;
+    cell.titleLabel.attributedText = attributedTitle;
     cell.statusLabel.hidden = YES;
     cell.delegate = self;
     [self configureGraphForCell:cell withTrend:trend];

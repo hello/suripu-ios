@@ -62,6 +62,8 @@ static UIColor* _backViewCardShadowColor = nil;
 static UIColor* _lightTintColor = nil;
 static UIColor* _trendTextColor = nil;
 static UIColor* _cardBorderColor = nil;
+static UIColor* _trendGraphBottomColor = nil;
+static UIColor* _trendGraphTopColor = nil;
 
 static NSShadow* _insightShadow = nil;
 static NSShadow* _actionViewShadow = nil;
@@ -175,6 +177,8 @@ static UIImage* _sunsetEventIcon = nil;
     _lightTintColor = [UIColor colorWithRed: 0.298 green: 0.757 blue: 0.988 alpha: 1];
     _trendTextColor = [UIColor colorWithRed: 0.6 green: 0.6 blue: 0.6 alpha: 1];
     _cardBorderColor = [UIColor colorWithRed: 0.95 green: 0.95 blue: 0.95 alpha: 1];
+    _trendGraphBottomColor = [UIColor colorWithRed: 0.95 green: 0.97 blue: 0.982 alpha: 1];
+    _trendGraphTopColor = [UIColor colorWithRed: 0.913 green: 0.966 blue: 1 alpha: 1];
 
     // Shadows Initialization
     _insightShadow = [NSShadow shadowWithColor: [UIColor.blackColor colorWithAlphaComponent: 0.1] offset: CGSizeMake(0.1, -2.1) blurRadius: 3];
@@ -232,6 +236,8 @@ static UIImage* _sunsetEventIcon = nil;
 + (UIColor*)lightTintColor { return _lightTintColor; }
 + (UIColor*)trendTextColor { return _trendTextColor; }
 + (UIColor*)cardBorderColor { return _cardBorderColor; }
++ (UIColor*)trendGraphBottomColor { return _trendGraphBottomColor; }
++ (UIColor*)trendGraphTopColor { return _trendGraphTopColor; }
 
 #pragma mark Shadows
 

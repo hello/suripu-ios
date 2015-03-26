@@ -63,6 +63,8 @@
 + (UIColor*)lightTintColor;
 + (UIColor*)trendTextColor;
 + (UIColor*)cardBorderColor;
++ (UIColor*)trendGraphBottomColor;
++ (UIColor*)trendGraphTopColor;
 
 // Shadows
 + (NSShadow*)insightShadow;

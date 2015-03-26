@@ -38,10 +38,19 @@
             barHeight = 0;
         else
             barHeight = fullHeight * ((point.yValue - min) / (max - min));
-        CGRect frame = CGRectMake(i * barWidth, fullHeight - barHeight, barWidth, barHeight);
+        CGFloat x = i * barWidth;
+        CGRect frame = CGRectMake(x, fullHeight - barHeight, barWidth, barHeight);
         UIView* barView = [[UIView alloc] initWithFrame:frame];
         UIView* lineBarView = [[UIView alloc] initWithFrame:CGRectInset(frame, -1, -1)];
-        barView.backgroundColor = [UIColor colorWithHue:0.57 saturation:0.07 brightness:1 alpha:1];
+        CAGradientLayer* layer = [CAGradientLayer layer];
+        layer.locations = @[ @0, @1 ];
+        layer.startPoint = CGPointZero;
+        layer.endPoint = CGPointMake(0, 1);
+        layer.frame = CGRectMake(0, barHeight - fullHeight, barWidth, fullHeight);
+        layer.colors = @[ (id)[HelloStyleKit trendGraphTopColor].CGColor,
+            (id)[HelloStyleKit trendGraphBottomColor].CGColor ];
+        [barView.layer insertSublayer:layer atIndex:0];
+        barView.layer.masksToBounds = YES;
         lineBarView.backgroundColor = [[HelloStyleKit tintColor] colorWithAlphaComponent:0.4f];
         [self addSubview:barView];
         [self insertSubview:lineBarView atIndex:0];

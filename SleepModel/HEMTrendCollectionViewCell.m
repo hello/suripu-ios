@@ -57,12 +57,26 @@
 
 - (void)configureLineGraphView
 {
+    CGFloat topRed, topGreen, topBlue, bottomRed, bottomGreen, bottomBlue, alpha;
+    [[HelloStyleKit trendGraphTopColor] getRed:&topRed green:&topGreen blue:&topBlue alpha:&alpha];
+    [[HelloStyleKit trendGraphBottomColor] getRed:&bottomRed green:&bottomGreen blue:&bottomBlue alpha:&alpha];
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    size_t num_locations = 2;
+    CGFloat locations[2] = { 0.0, 1.0 };
+    CGFloat components[8] = {
+        topRed, topGreen, topBlue, 1.0,
+        bottomRed, bottomGreen, bottomBlue, 1.0
+    };
+    CGGradientRef gradient = CGGradientCreateWithColorComponents(colorspace, components, locations, num_locations);
+    CGColorSpaceRelease(colorspace);
+
     self.lineGraphView.dataSource = self;
     self.lineGraphView.delegate = self;
     self.lineGraphView.sizePoint = 5.f;
     self.lineGraphView.colorTop = [UIColor clearColor];
     self.lineGraphView.colorLine = [[HelloStyleKit tintColor] colorWithAlphaComponent:0.4f];
-    self.lineGraphView.colorBottom = [[HelloStyleKit tintColor] colorWithAlphaComponent:0.07f];
+    self.lineGraphView.colorBottom = [UIColor whiteColor];
+    self.lineGraphView.gradientBottom = gradient;
     self.lineGraphView.enableBezierCurve = YES;
     self.lineGraphView.alwaysDisplayPopUpLabels = YES;
     self.lineGraphView.alwaysDisplayDots = YES;

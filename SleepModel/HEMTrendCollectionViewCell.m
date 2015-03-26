@@ -228,6 +228,7 @@
         } else {
             self.overlayView.bottomLabelColor = [HelloStyleKit trendTextColor];
         }
+        self.overlayView.bottomLabelFont = [UIFont trendBottomLabelFont];
         [self.overlayView setSectionFooters:footers headers:headers];
     }
     else {

@@ -178,6 +178,7 @@
 "debug.led.option.off" = "Off";
 "debug.led.option.success" = "Success";
 "debug.led.option.activity" = "Activity";
+"debug.option.room-check.title" = "Room Check";
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
 

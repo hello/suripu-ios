@@ -15,12 +15,15 @@
 #import "HEMSupportUtil.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMOnboardingCache.h"
+#import "HEMOnboardingStoryboard.h"
+#import "HEMStyledNavigationViewController.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
 @property (weak,   nonatomic) UIViewController*   presentingController;
 @property (strong, nonatomic) HEMActionSheetController* supportOptionController;
 @property (strong, nonatomic) HEMActionSheetController* ledOptionController;
+@property (weak,   nonatomic) UIViewController* roomCheckViewController;
 
 @end
 
@@ -49,6 +52,7 @@
     [self addContactSupportOptionTo:sheet];
     [self addResetCheckpointOptionTo:sheet];
     [self addLedOptionTo:sheet];
+    [self addRoomCheckOptionTo:sheet];
     [self addCancelOptionTo:sheet];
     
     [self setSupportOptionController:sheet]; // need to hold on to it otherwise action callbacks will crash
@@ -147,6 +151,39 @@
         }
         
     }];
+}
+
+#pragma mark Room Check
+
+- (void)addRoomCheckOptionTo:(HEMActionSheetController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addActionWithText:NSLocalizedString(@"debug.option.room-check.title", nil) block:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (strongSelf) {
+            [strongSelf showRoomCheckController];
+            [strongSelf setSupportOptionController:nil];
+        }
+    }];
+}
+
+- (void)showRoomCheckController {
+    UIViewController* rcVC = [HEMOnboardingStoryboard instantiateRoomCheckViewController];
+    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:rcVC];
+    [[self presentingController] presentViewController:nav animated:YES completion:nil];
+
+    [self setRoomCheckViewController:nav];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didEndRoomCheck:)
+                                                 name:HEMOnboardingNotificationComplete
+                                               object:nil];
+}
+
+- (void)didEndRoomCheck:(NSNotification*)notification {
+    if ([self roomCheckViewController] != nil) {
+        [[self presentingController] dismissViewControllerAnimated:YES completion:nil];
+        [self setRoomCheckViewController:nil];
+    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:HEMOnboardingNotificationComplete object:nil];
 }
 
 #pragma mark Cancel

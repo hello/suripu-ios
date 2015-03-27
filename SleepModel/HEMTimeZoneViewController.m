@@ -18,12 +18,15 @@
 #import "HEMBaseController+Protected.h"
 #import "HelloStyleKit.h"
 #import "HEMActivityIndicatorView.h"
+#import "HEMSettingsTableViewCell.h"
 
 @interface HEMTimeZoneViewController() <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak,   nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSDictionary* displayNamesToTimeZone;
 @property (strong, nonatomic) NSArray* sortedDisplayNames;
+@property (copy,   nonatomic) NSString* selectedTimeZoneName;
+@property (copy,   nonatomic) NSString* configuredTimeZoneName;
 
 @end
 
@@ -32,7 +35,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureNavigationBar];
-    [self buildTimeZoneSource];
+    [self configureTableView];
 }
 
 - (void)configureNavigationBar {
@@ -44,7 +47,46 @@
     [[self navigationItem] setLeftBarButtonItem:cancelItem];
 }
 
-- (void)buildTimeZoneSource {
+- (void)configureTableView {
+    __block BOOL loadedConfiguredTz = NO;
+    __block BOOL loadedTableViewDs = NO;
+    __weak typeof(self) weakSelf = self;
+    
+    HEMActivityCoverView* busyView = [[HEMActivityCoverView alloc] init];
+
+    void(^show)(void) = ^{
+        if (loadedConfiguredTz && loadedTableViewDs) {
+            [[weakSelf tableView] reloadData];
+            [busyView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:nil];
+        }
+    };
+    
+    [busyView showInView:[self view] activity:YES completion:^{
+        [self loadConfiguredTimeZone:^{
+            loadedConfiguredTz = YES;
+            show();
+        }];
+        
+        [self loadTimeZoneDataSources:^{
+            loadedTableViewDs = YES;
+            show();
+        }];
+    }];
+
+}
+
+- (void)loadConfiguredTimeZone:(void(^)(void))completion {
+    __weak typeof(self) weakSelf = self;
+    [SENAPITimeZone getConfiguredTimeZone:^(NSTimeZone* tz, NSError *error) {
+        if (error) {
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        }
+        [weakSelf setConfiguredTimeZoneName:[tz displayNameForCurrentLocale]];
+        completion ();
+    }];
+}
+
+- (void)loadTimeZoneDataSources:(void(^)(void))completion {
     __weak typeof(self) weakSelf = self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -57,16 +99,17 @@
         }];
         [strongSelf setSortedDisplayNames:sortedArray];
         
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [[strongSelf tableView] reloadData];
-        });
+        dispatch_async(dispatch_get_main_queue(), completion);
         
     });
 }
 
-- (void)updateTimeZoneTo:(NSTimeZone*)timeZone {
+- (void)updateTimeZoneTo:(NSTimeZone*)timeZone withName:(NSString*)displayName {
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
     NSString* text = NSLocalizedString(@"timezone.activity.message", nil);
+    
+    NSString* previousConfiguredTzName = [[self configuredTimeZoneName] copy];
+    [self setConfiguredTimeZoneName:displayName];
     
     [activityView showInView:[[self navigationController] view] withText:text activity:YES completion:^{
         __weak typeof(self) weakSelf = self;
@@ -89,6 +132,8 @@
                     }];
                 }];
             } else {
+                [strongSelf setConfiguredTimeZoneName:previousConfiguredTzName];
+                
                 [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
                     [strongSelf showMessageDialog:NSLocalizedString(@"timezone.error.message", nil)
                                             title:NSLocalizedString(@"timezone.error.title", nil)];
@@ -112,23 +157,43 @@
 
 #pragma mark - UITableViewDelegate
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    [[cell textLabel] setFont:[UIFont timeZoneNameFont]];
-    [[cell textLabel] setText:[self sortedDisplayNames][[indexPath row]]];
+- (void)tableView:(UITableView *)tableView
+  willDisplayCell:(UITableViewCell *)cell
+forRowAtIndexPath:(NSIndexPath *)indexPath {
+    
+    NSString* displayName = [self sortedDisplayNames][[indexPath row]];
+    BOOL isSelected = [displayName isEqualToString:[self configuredTimeZoneName]];
+    
+    HEMSettingsTableViewCell* settingsCell = (id)cell;
+    [settingsCell setTag:[indexPath row]];
+    [[settingsCell titleLabel] setText:[self sortedDisplayNames][[indexPath row]]];
+    [[settingsCell accessory] setHidden:!isSelected];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
+    NSArray* visibleCells = [tableView visibleCells];
+    for (HEMSettingsTableViewCell* cell in visibleCells) {
+        [[cell accessory] setHidden:[cell tag] != [indexPath row]];
+    }
+    
     NSString* displayName = [self sortedDisplayNames][[indexPath row]];
     NSTimeZone* timeZone = [self displayNamesToTimeZone][displayName];
-    [self updateTimeZoneTo:timeZone];
+    [self updateTimeZoneTo:timeZone withName:displayName];
 }
 
 #pragma mark - Actions
 
 - (void)cancel:(id)sender {
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Clean Up
+
+- (void)dealloc {
+    [_tableView setDelegate:nil];
+    [_tableView setDataSource:nil];
 }
 
 @end

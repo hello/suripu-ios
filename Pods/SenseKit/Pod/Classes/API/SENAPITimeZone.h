@@ -9,6 +9,11 @@
 #import <Foundation/Foundation.h>
 #import "SENAPIClient.h"
 
+typedef NS_ENUM(NSInteger, SENAPITimeZoneError) {
+    SENAPITimeZoneErrorInvalidArgument = -1,
+    SENAPITimeZoneErrorInvalidResponse = -2
+};
+
 @interface SENAPITimeZone : NSObject
 
 /**
@@ -34,5 +39,16 @@
  * @param completion: the block to invoke when operation is complete
  */
 + (void)setTimeZone:(NSTimeZone*)timeZone completion:(SENAPIDataBlock)completion;
+
+/**
+ * @method getConfiguredTimeZone:
+ *
+ * @discussion
+ * Get the configured time zone for the currently signed in user, if a time zone
+ * was set correctly.  The response will return a NSTimeZone object or nil.
+ *
+ * @param completion: block to invoke when operation is complete
+ */
++ (void)getConfiguredTimeZone:(SENAPIDataBlock)completion;
 
 @end

@@ -29,4 +29,11 @@
  */
 + (NSDictionary*)supportedTimeZoneByDisplayNames;
 
+/**
+ * @method displayNameForCurrentLocale
+ *
+ * @return localized display name of the time zone for current locale
+ */
+- (NSString*)displayNameForCurrentLocale;
+
 @end

@@ -41,4 +41,9 @@
     return names;
 }
 
+- (NSString*)displayNameForCurrentLocale {
+    NSLocale* locale = [NSLocale currentLocale];
+    return [self localizedName:NSTimeZoneNameStyleGeneric locale:locale];
+}
+
 @end

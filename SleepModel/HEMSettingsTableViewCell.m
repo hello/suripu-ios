@@ -20,9 +20,8 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
 
 @interface HEMSettingsTableViewCell ()
 
-@property (nonatomic, weak) CAShapeLayer *contentLayer;
-@property (nonatomic, weak) UIView *separator;
-@property (nonatomic, strong) UIActivityIndicatorView *activityView;
+@property (nonatomic, weak) CAShapeLayer* contentLayer;
+@property (nonatomic, strong) UIActivityIndicatorView* activityView;
 
 @end
 
@@ -62,14 +61,31 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
 }
 
 - (void)addSeparator {
+    if ([self separator] != nil) return;
+    
     CGFloat x = CGRectGetMinX([[self titleLabel] frame]);
     CGRect separatorFrame
         = { x, CGRectGetHeight([self bounds]) - HEMSettingsCellSeparatorSize,
             CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x, HEMSettingsCellSeparatorSize };
     UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
     [separator setBackgroundColor:[HelloStyleKit separatorColor]];
-    [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
+    [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth
+                                   | UIViewAutoresizingFlexibleTopMargin];
+    [self setSeparator:separator];
     [[self contentView] addSubview:separator];
+}
+
+- (void)prepareForReuse {
+    [[self contentLayer] setHidden:NO];
+    [[self separator] setHidden:NO];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    CGRect separatorFrame = [[self separator] frame];
+    separatorFrame.origin.x = CGRectGetMinX([[self titleLabel] frame]);
+    [[self separator] setFrame:separatorFrame];
 }
 
 - (void)roundContentLayerCorners:(UIRectCorner)corners {

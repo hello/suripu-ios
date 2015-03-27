@@ -12,8 +12,6 @@
 #import "HEMSupportUtil.h"
 #import "HEMHelpFooterView.h"
 
-static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
-
 typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRowIndex = 0,
     HEMSettingsDevicesRowIndex = 1,
@@ -39,6 +37,9 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
 @end
 
 @implementation HEMSettingsTableViewController
+
+static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
+static CGFloat const HEMVersionLabelHeightOffset = -24.f;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -67,9 +68,6 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     HEMHelpFooterView *footer = [[HEMHelpFooterView alloc] initWithWidth:width andContainingController:self];
     [self addVersionLabelToFooter:footer];
     [[self settingsTableView] setTableFooterView:footer];
-
-    DDLogVerbose(@"content height %f, footer height %f, table height %f", [[self settingsTableView] contentSize].height,
-                 CGRectGetHeight([footer bounds]), CGRectGetHeight([[self settingsTableView] bounds]));
 }
 
 - (void)addVersionLabelToFooter:(UIView *)footer {
@@ -87,7 +85,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
 
     CGRect versionFrame = [versionLabel frame];
     versionFrame.origin.x = (CGRectGetWidth([footer bounds]) - CGRectGetWidth(versionFrame)) / 2;
-    versionFrame.origin.y = CGRectGetHeight([footer bounds]) + HEMSettingsCellTableMargin;
+    versionFrame.origin.y = CGRectGetHeight([footer bounds]) + HEMSettingsCellTableMargin + HEMVersionLabelHeightOffset;
     [versionLabel setFrame:versionFrame];
 
     [footer addSubview:versionLabel];
@@ -117,7 +115,8 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
         CGFloat adjustedFooterHeight = tableHeight - CGRectGetMaxY(relativeFrame) + footerHeight;
 
         CGRect versionFrame = [[self versionLabel] frame];
-        versionFrame.origin.y = adjustedFooterHeight - HEMSettingsCellTableMargin - versionHeight;
+        versionFrame.origin.y = adjustedFooterHeight - HEMSettingsCellTableMargin - versionHeight
+                                + HEMVersionLabelHeightOffset;
         [[self versionLabel] setFrame:versionFrame];
 
         footerFrame.size.height = adjustedFooterHeight;

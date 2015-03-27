@@ -74,7 +74,7 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
     NSMutableAttributedString *attrHelp =
         [[NSMutableAttributedString alloc] initWithFormat:helpFormat args:args baseColor:color baseFont:font];
     NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-    [paraStyle setAlignment:NSTextAlignmentCenter];
+    [paraStyle setAlignment:NSTextAlignmentLeft];
     [paraStyle setLineHeightMultiple:HEMHelpLineHeightMultiple];
     [attrHelp addAttribute:NSParagraphStyleAttributeName value:paraStyle range:NSMakeRange(0, [attrHelp length])];
 

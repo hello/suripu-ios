@@ -124,6 +124,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 44.0f;
 
         if (type == HEMSettingsAccountInfoTypeSignOut) {
             [[settingsCell titleLabel] setTextColor:[UIColor redColor]];
+            [[settingsCell titleLabel] setFont:[UIFont signOutFont]];
         }
 
     } else {

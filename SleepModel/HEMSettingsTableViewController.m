@@ -22,10 +22,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRows = 4,
 };
 
-typedef NS_ENUM(NSUInteger, HEMSettingsFeedbackRow) {
-    HEMSettingsFeedbackRowIndex = 0,
-    HEMSettingsFeedbackRows = 1
-};
+typedef NS_ENUM(NSUInteger, HEMSettingsFeedbackRow) { HEMSettingsFeedbackRowIndex = 0, HEMSettingsFeedbackRows = 1 };
 
 typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     HEMSettingsAccountSection = 0,
@@ -33,14 +30,11 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     HEMSettingsSections = 2
 };
 
-@interface HEMSettingsTableViewController () <
-    UITableViewDataSource,
-    UITableViewDelegate,
-    MFMailComposeViewControllerDelegate
->
+@interface HEMSettingsTableViewController () <UITableViewDataSource, UITableViewDelegate,
+                                              MFMailComposeViewControllerDelegate>
 
-@property (weak, nonatomic) IBOutlet UITableView* settingsTableView;
-@property (weak, nonatomic) UILabel* versionLabel;
+@property (weak, nonatomic) IBOutlet UITableView *settingsTableView;
+@property (weak, nonatomic) UILabel *versionLabel;
 
 @end
 
@@ -55,59 +49,54 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self configureTableView];
 }
 
 - (void)configureTableView {
     CGFloat width = CGRectGetWidth([[self settingsTableView] bounds]);
-    
+
     // header
     CGRect frame = CGRectZero;
     frame.size.height = HEMSettingsCellTableMargin;
     frame.size.width = width;
     [[self settingsTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
-    
+
     // footer
-    HEMHelpFooterView* footer = [[HEMHelpFooterView alloc] initWithWidth:width
-                                                 andContainingController:self];
+    HEMHelpFooterView *footer = [[HEMHelpFooterView alloc] initWithWidth:width andContainingController:self];
     [self addVersionLabelToFooter:footer];
     [[self settingsTableView] setTableFooterView:footer];
-    
-    DDLogVerbose(@"content height %f, footer height %f, table height %f",
-                 [[self settingsTableView] contentSize].height,
-                 CGRectGetHeight([footer bounds]),
-                 CGRectGetHeight([[self settingsTableView] bounds]));
+
+    DDLogVerbose(@"content height %f, footer height %f, table height %f", [[self settingsTableView] contentSize].height,
+                 CGRectGetHeight([footer bounds]), CGRectGetHeight([[self settingsTableView] bounds]));
 }
 
-- (void)addVersionLabelToFooter:(UIView*)footer {
-    NSBundle* bundle = [NSBundle mainBundle];
-    NSString* name = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
-    NSString* vers = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
-    NSString* versionText = [NSString stringWithFormat:@"%@ %@", name, vers];
-    
-    UILabel* versionLabel = [[UILabel alloc] init];
+- (void)addVersionLabelToFooter:(UIView *)footer {
+    NSBundle *bundle = [NSBundle mainBundle];
+    NSString *name = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
+    NSString *vers = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+    NSString *versionText = [NSString stringWithFormat:@"%@ %@", name, vers];
+
+    UILabel *versionLabel = [[UILabel alloc] init];
     [versionLabel setText:versionText];
     [versionLabel setFont:[UIFont settingsHelpFont]];
     [versionLabel setTextColor:[HelloStyleKit backViewTextColor]];
-    [versionLabel setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin
-                                      |UIViewAutoresizingFlexibleRightMargin];
+    [versionLabel setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
     [versionLabel sizeToFit];
-    
+
     CGRect versionFrame = [versionLabel frame];
-    versionFrame.origin.x = (CGRectGetWidth([footer bounds])-CGRectGetWidth(versionFrame))/2;
+    versionFrame.origin.x = (CGRectGetWidth([footer bounds]) - CGRectGetWidth(versionFrame)) / 2;
     versionFrame.origin.y = CGRectGetHeight([footer bounds]) + HEMSettingsCellTableMargin;
     [versionLabel setFrame:versionFrame];
-    
+
     [footer addSubview:versionLabel];
-    
+
     // adjust the footer
     CGRect footerFrame = [footer frame];
     footerFrame.size.height = CGRectGetMaxY([versionLabel frame]);
     [footer setFrame:footerFrame];
-    
+
     [self setVersionLabel:versionLabel];
 }
 
@@ -118,20 +107,17 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     CGFloat contentHeight = [[self settingsTableView] contentSize].height;
     CGFloat versionHeight = CGRectGetHeight([[self versionLabel] bounds]);
     CGFloat bottomAnchorY = tableHeight - versionHeight - HEMSettingsCellTableMargin;
-    
+
     if (contentHeight < bottomAnchorY) {
         // move the version label to the bottom of the table view
-        UIView* tableFooter = [[self settingsTableView] tableFooterView];
+        UIView *tableFooter = [[self settingsTableView] tableFooterView];
         CGRect footerFrame = [tableFooter frame];
         CGRect relativeFrame = [tableFooter convertRect:[tableFooter bounds] toView:[self view]];
         CGFloat footerHeight = CGRectGetHeight(footerFrame);
         CGFloat adjustedFooterHeight = tableHeight - CGRectGetMaxY(relativeFrame) + footerHeight;
-        
+
         CGRect versionFrame = [[self versionLabel] frame];
-        versionFrame.origin.y =
-            adjustedFooterHeight
-            - HEMSettingsCellTableMargin
-            - versionHeight;
+        versionFrame.origin.y = adjustedFooterHeight - HEMSettingsCellTableMargin - versionHeight;
         [[self versionLabel] setFrame:versionFrame];
 
         footerFrame.size.height = adjustedFooterHeight;
@@ -150,68 +136,65 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     return HEMSettingsSections;
 }
 
-- (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
-        case HEMSettingsAccountSection:
-            return HEMSettingsAccountRows;
-        case HEMSettingsFeedbackSection:
-            return HEMSettingsFeedbackRows;
-            
-        default:
-            return 0;
+    case HEMSettingsAccountSection:
+        return HEMSettingsAccountRows;
+    case HEMSettingsFeedbackSection:
+        return HEMSettingsFeedbackRows;
+
+    default:
+        return 0;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     switch (section) {
-        case HEMSettingsFeedbackSection:
-            return HEMSettingsSectionHeaderHeight;
-            
-        case HEMSettingsAccountSection:
-        default:
-            return 0.0f;
+    case HEMSettingsFeedbackSection:
+        return HEMSettingsSectionHeaderHeight;
+
+    case HEMSettingsAccountSection:
+    default:
+        return 0.0f;
     }
 }
 
-- (UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
-    UIView* headerView = [[UIView alloc] init];
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+    UIView *headerView = [[UIView alloc] init];
     [headerView setBackgroundColor:[UIColor clearColor]];
     return headerView;
 }
 
-- (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    NSString* reuseId = [HEMMainStoryboard settingsCellReuseIdentifier];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *reuseId = [HEMMainStoryboard settingsCellReuseIdentifier];
     return [tableView dequeueReusableCellWithIdentifier:reuseId];
 }
 
-- (void)tableView:(UITableView*)tableView willDisplayCell:(UITableViewCell*)cell forRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    HEMSettingsTableViewCell* settingsCell = (HEMSettingsTableViewCell*)cell;
+- (void)tableView:(UITableView *)tableView
+      willDisplayCell:(UITableViewCell *)cell
+    forRowAtIndexPath:(NSIndexPath *)indexPath {
+    HEMSettingsTableViewCell *settingsCell = (HEMSettingsTableViewCell *)cell;
     [[settingsCell titleLabel] setText:[self titleForRowAtIndexPath:indexPath]];
-    
+
     NSInteger numberOfRows = [tableView numberOfRowsInSection:[indexPath section]];
-    
+
     if ([indexPath row] == 0 && [indexPath row] == numberOfRows - 1) {
         [settingsCell showTopAndBottomCorners];
     } else if ([indexPath row] == 0) {
         [settingsCell showTopCorners];
-    } else if ([indexPath row] == numberOfRows - 1){
+    } else if ([indexPath row] == numberOfRows - 1) {
         [settingsCell showBottomCorners];
     } else {
         [settingsCell showNoCorners];
     }
-    
 }
 
-- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
-    
+
     if ([indexPath section] == HEMSettingsAccountSection) {
-        NSString* nextSegueId = [self segueIdentifierForRow:indexPath.row];
-        
+        NSString *nextSegueId = [self segueIdentifierForRow:indexPath.row];
+
         if (nextSegueId != nil) {
             [self performSegueWithIdentifier:nextSegueId sender:self];
         }
@@ -224,52 +207,51 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     }
 }
 
-- (NSString*)segueIdentifierForRow:(NSUInteger)row
-{
+- (NSString *)segueIdentifierForRow:(NSUInteger)row {
     switch (row) {
-        case HEMSettingsAccountRowIndex:
-            return [HEMMainStoryboard accountSettingsSegueIdentifier];
-        case HEMSettingsDevicesRowIndex:
-            return [HEMMainStoryboard devicesSettingsSegueIdentifier];
-        case HEMSettingsUnitsTimeRowIndex:
-            return [HEMMainStoryboard unitsSettingsSegueIdentifier];
-        case HEMSettingsNotificationRowIndex:
-            return [HEMMainStoryboard notificationSettingsSegueIdentifier];
+    case HEMSettingsAccountRowIndex:
+        return [HEMMainStoryboard accountSettingsSegueIdentifier];
+    case HEMSettingsDevicesRowIndex:
+        return [HEMMainStoryboard devicesSettingsSegueIdentifier];
+    case HEMSettingsUnitsTimeRowIndex:
+        return [HEMMainStoryboard unitsSettingsSegueIdentifier];
+    case HEMSettingsNotificationRowIndex:
+        return [HEMMainStoryboard notificationSettingsSegueIdentifier];
 
-        default:
-            return nil;
+    default:
+        return nil;
     }
 }
 
-- (NSString*)titleForRowAtIndexPath:(NSIndexPath*)indexPath {
+- (NSString *)titleForRowAtIndexPath:(NSIndexPath *)indexPath {
     NSInteger section = [indexPath section];
     NSInteger row = [indexPath row];
-    NSString* title = nil;
-    
+    NSString *title = nil;
+
     if (section == HEMSettingsAccountSection) {
         switch (row) {
-            case HEMSettingsAccountRowIndex:
-                title = NSLocalizedString(@"settings.account", nil);
-                break;
-            case HEMSettingsDevicesRowIndex:
-                title = NSLocalizedString(@"settings.devices", nil);
-                break;
-            case HEMSettingsNotificationRowIndex:
-                title = NSLocalizedString(@"settings.notifications", nil);
-                break;
-            case HEMSettingsUnitsTimeRowIndex:
-                title = NSLocalizedString(@"settings.units", nil);
-                break;
-            default:
-                break;
+        case HEMSettingsAccountRowIndex:
+            title = NSLocalizedString(@"settings.account", nil);
+            break;
+        case HEMSettingsDevicesRowIndex:
+            title = NSLocalizedString(@"settings.devices", nil);
+            break;
+        case HEMSettingsNotificationRowIndex:
+            title = NSLocalizedString(@"settings.notifications", nil);
+            break;
+        case HEMSettingsUnitsTimeRowIndex:
+            title = NSLocalizedString(@"settings.units", nil);
+            break;
+        default:
+            break;
         }
     } else if (section == HEMSettingsFeedbackSection) {
         switch (row) {
-            case HEMSettingsFeedbackRowIndex:
-                title = NSLocalizedString(@"settings.feedback", nil);
-                break;
-            default:
-                break;
+        case HEMSettingsFeedbackRowIndex:
+            title = NSLocalizedString(@"settings.feedback", nil);
+            break;
+        default:
+            break;
         }
     }
 
@@ -278,11 +260,11 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
 
 #pragma mark - Mail Delegate
 
-- (void)mailComposeController:(MFMailComposeViewController*)controller
-          didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error {
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
-
 
 #pragma mark - Cleanup
 

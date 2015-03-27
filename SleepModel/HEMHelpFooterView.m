@@ -19,17 +19,16 @@ static CGFloat const HEMHelpFooterTopMargin = 12.0f;
 static CGFloat const HEMHelpFooterMargin = 20.0f;
 static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
 
-@interface HEMHelpFooterView()<UITextViewDelegate, MFMailComposeViewControllerDelegate>
+@interface HEMHelpFooterView () <UITextViewDelegate, MFMailComposeViewControllerDelegate>
 
-@property (nonatomic, weak) UIViewController* controller;
+@property (nonatomic, weak) UIViewController *controller;
 
 @end
 
 @implementation HEMHelpFooterView
 
-- (instancetype)initWithWidth:(CGFloat)width
-      andContainingController:(UIViewController*)controller {
-    
+- (instancetype)initWithWidth:(CGFloat)width andContainingController:(UIViewController *)controller {
+
     self = [super init];
     if (self) {
         _controller = controller;
@@ -39,81 +38,73 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
 }
 
 - (void)setupWithWidth:(CGFloat)width {
-    CGRect textFrame = {
-        HEMHelpFooterMargin,
-        HEMHelpFooterTopMargin,
-        width-(HEMHelpFooterMargin*2),
-        0.0f
-    };
+    CGRect textFrame = { HEMHelpFooterMargin, HEMHelpFooterTopMargin, width - (HEMHelpFooterMargin * 2), 0.0f };
     CGSize constraint = textFrame.size;
     constraint.height = MAXFLOAT;
-    
-    UITextView* textView = [[UITextView alloc] init];
+
+    UITextView *textView = [[UITextView alloc] init];
     [textView setAttributedText:[self attributedHelpText]];
     [textView setEditable:NO];
     [textView setDelegate:self];
     [textView setScrollEnabled:NO];
     [textView setBackgroundColor:[UIColor clearColor]];
-    [textView setDataDetectorTypes:UIDataDetectorTypeLink|UIDataDetectorTypeAddress];
+    [textView setDataDetectorTypes:UIDataDetectorTypeLink | UIDataDetectorTypeAddress];
     [textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 
     CGSize textSize = [textView sizeThatFits:constraint];
     textFrame.size.height = textSize.height + ([[UIFont settingsHelpFont] lineHeight] * HEMHelpLineHeightMultiple);
     [textView setFrame:textFrame];
-    
+
     CGRect frame = CGRectZero;
     frame.size.width = width;
     frame.size.height = CGRectGetHeight(textFrame) + HEMHelpFooterMargin;
-    
+
     [self setFrame:frame];
     [self setBackgroundColor:[UIColor clearColor]];
     [self addSubview:textView];
     [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 }
 
-- (NSAttributedString*)attributedHelpText {
-    NSString* helpFormat = NSLocalizedString(@"settings.help.format", nil);
-    NSArray* args = @[[self supportLink],[self helpEmail]];
-    UIColor* color = [HelloStyleKit backViewTextColor];
-    UIFont* font = [UIFont settingsHelpFont];
-    
-    NSMutableAttributedString* attrHelp
-        = [[NSMutableAttributedString alloc] initWithFormat:helpFormat
-                                                       args:args
-                                                  baseColor:color
-                                                   baseFont:font];
-    NSMutableParagraphStyle* paraStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+- (NSAttributedString *)attributedHelpText {
+    NSString *helpFormat = NSLocalizedString(@"settings.help.format", nil);
+    NSArray *args = @[ [self supportLink], [self helpEmail] ];
+    UIColor *color = [HelloStyleKit backViewTextColor];
+    UIFont *font = [UIFont settingsHelpFont];
+
+    NSMutableAttributedString *attrHelp =
+        [[NSMutableAttributedString alloc] initWithFormat:helpFormat args:args baseColor:color baseFont:font];
+    NSMutableParagraphStyle *paraStyle = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
     [paraStyle setAlignment:NSTextAlignmentCenter];
     [paraStyle setLineHeightMultiple:HEMHelpLineHeightMultiple];
-    [attrHelp addAttribute:NSParagraphStyleAttributeName
-                     value:paraStyle
-                     range:NSMakeRange(0, [attrHelp length])];
-    
+    [attrHelp addAttribute:NSParagraphStyleAttributeName value:paraStyle range:NSMakeRange(0, [attrHelp length])];
+
     return attrHelp;
 }
 
-- (NSAttributedString*)supportLink {
-    NSString* hyperLinkText = NSLocalizedString(@"settings.help.support", nil);
-    NSString* url = NSLocalizedString(@"help.url.support", nil);
-    NSMutableAttributedString* link = [[NSMutableAttributedString alloc] initWithString:hyperLinkText];
+- (NSAttributedString *)supportLink {
+    NSString *hyperLinkText = NSLocalizedString(@"settings.help.support", nil);
+    NSString *url = NSLocalizedString(@"help.url.support", nil);
+    NSMutableAttributedString *link = [[NSMutableAttributedString alloc] initWithString:hyperLinkText];
     return [link hyperlink:url];
 }
 
-- (NSAttributedString*)helpEmail {
-    NSString* text = NSLocalizedString(@"help.email.address", nil);
-    NSMutableAttributedString* helpEmail = [[NSMutableAttributedString alloc] initWithString:text];
-    [helpEmail addAttributes:@{NSFontAttributeName : [UIFont settingsHelpFont],
-                               NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor]}
-                       range:NSMakeRange(0, [text length])];
+- (NSAttributedString *)helpEmail {
+    NSString *text = NSLocalizedString(@"help.email.address", nil);
+    NSMutableAttributedString *helpEmail = [[NSMutableAttributedString alloc] initWithString:text];
+    [helpEmail addAttributes:@{
+        NSFontAttributeName : [UIFont settingsHelpFont],
+        NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor]
+    } range:NSMakeRange(0, [text length])];
     return helpEmail;
 }
 
 #pragma mark - UITextViewDelegate
 
 - (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
-    if ([self controller] == nil) return YES; // let default behavior handle it
-    
-    NSString* lowerScheme = [URL scheme];
+    if ([self controller] == nil)
+        return YES; // let default behavior handle it
+
+    NSString *lowerScheme = [URL scheme];
     if ([lowerScheme hasPrefix:@"mailto"]) {
         [HEMSupportUtil sendEmailTo:[URL resourceSpecifier]
                         withSubject:NSLocalizedString(@"help.email.subject", nil)
@@ -121,7 +112,7 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
                                from:[self controller]
                        mailDelegate:self];
         [SENAnalytics track:kHEMAnalyticsEventEmailSupport];
-    } else if ([lowerScheme hasPrefix:@"http"]){
+    } else if ([lowerScheme hasPrefix:@"http"]) {
         [HEMSupportUtil openURL:[URL absoluteString] from:[self controller]];
         [SENAnalytics track:kHEMAnalyticsEventHelp];
     }
@@ -130,8 +121,9 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
 
 #pragma mark - Mail Delegate
 
-- (void)mailComposeController:(MFMailComposeViewController*)controller
-          didFinishWithResult:(MFMailComposeResult)result error:(NSError*)error {
+- (void)mailComposeController:(MFMailComposeViewController *)controller
+          didFinishWithResult:(MFMailComposeResult)result
+                        error:(NSError *)error {
     [[self controller] dismissViewControllerAnimated:YES completion:NULL];
 }
 

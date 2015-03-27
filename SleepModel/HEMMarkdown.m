@@ -18,7 +18,7 @@
     NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
     style.lineSpacing = 2.f;
     style.alignment = NSTextAlignmentLeft;
-    UIColor* textColor = [UIColor colorWithWhite:0.3f alpha:1.f];
+    UIColor* textColor = [UIColor blackColor];
     return @{
         @(EMPH) : @{ NSFontAttributeName : [UIFont backViewBoldFont],
             NSParagraphStyleAttributeName : style,

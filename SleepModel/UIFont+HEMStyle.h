@@ -59,6 +59,11 @@
 + (UIFont*)settingsTitleFont;
 
 /**
+ *  Font used for 'sign out' text in account settings
+ */
++ (UIFont*)signOutFont;
+
+/**
  * Font used for the help text in settings
  */
 + (UIFont*)settingsHelpFont;
@@ -171,6 +176,11 @@
  *  Font for time scopes in trends view
  */
 + (UIFont*)trendOptionFont;
+
+/**
+ *  Font for the footer labels in trend graphs
+ */
++ (UIFont*)trendBottomLabelFont;
 
 /**
  *  Font to display the answers for questions

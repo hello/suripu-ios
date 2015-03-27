@@ -66,7 +66,6 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self addTopShadow];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
                                                  name:UIApplicationDidBecomeActiveNotification
@@ -86,17 +85,6 @@
      | UIPageViewControllerNavigationDirectionReverse
                     animated:NO
                   completion:nil];
-}
-
-- (void)addTopShadow {
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:[[self view] bounds]];
-    CALayer* layer = [[self view] layer];
-    [layer setMasksToBounds:NO];
-    [layer setShadowColor:[[UIColor blackColor] CGColor]];
-    [layer setShadowOffset:CGSizeMake(0.0f, 5.0f)];
-    [layer setShadowOpacity:0.6f];
-    [layer setShadowRadius:5.0f];
-    [layer setShadowPath:[shadowPath CGPath]];
 }
 
 #pragma mark - Drawer Events

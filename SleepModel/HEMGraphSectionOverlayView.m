@@ -19,7 +19,7 @@
 @implementation HEMGraphSectionOverlayView
 
 static NSInteger const HEMGraphSectionLineWidth = 1.f;
-static CGFloat const HEMGraphSectionLabelHeight = 15.f;
+static CGFloat const HEMGraphSectionLabelHeight = 20.f;
 static CGFloat const HEMGraphLabelInset = 5.f;
 static CGFloat const HEMGraphLabelBottomOffset = 9.f;
 

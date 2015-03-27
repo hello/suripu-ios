@@ -14,4 +14,4 @@ All new code is added to branches forked from the `develop` branch, which is whe
 
 ### Code Style
 
-We are using a modified version of [WebKit style](http://www.webkit.org/coding/coding-style.html), detailed in the [style specification file](https://github.com/hello/suripu-ios/blob/develop/.clang-format). Notable differences are "attach" (same line) style for braces and a space in pointers.
+We are using a modified version of [WebKit style](http://www.webkit.org/coding/coding-style.html), detailed in the [style specification file](https://github.com/hello/suripu-ios/blob/develop/.clang-format). Notable differences are "attach" (same line) style for braces, a space in pointers, and allowing inlining of short statements. Explanation for the options in the specification file can be found [here](http://clang.llvm.org/docs/ClangFormatStyleOptions.html#configurable-format-style-options).

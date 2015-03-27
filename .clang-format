@@ -6,9 +6,9 @@ ConstructorInitializerIndentWidth: 4
 AlignEscapedNewlinesLeft: false
 AlignTrailingComments: false
 AllowAllParametersOfDeclarationOnNextLine: true
-AllowShortBlocksOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: false
-AllowShortIfStatementsOnASingleLine: false
+AllowShortBlocksOnASingleLine: true
+AllowShortCaseLabelsOnASingleLine: true
+AllowShortIfStatementsOnASingleLine: true
 AllowShortLoopsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: All
 AlwaysBreakAfterDefinitionReturnType: false
@@ -16,7 +16,7 @@ AlwaysBreakTemplateDeclarations: false
 AlwaysBreakBeforeMultilineStrings: false
 BreakBeforeBinaryOperators: All
 BreakBeforeTernaryOperators: true
-BreakConstructorInitializersBeforeComma: true
+BreakConstructorInitializersBeforeComma: false
 BinPackParameters: true
 BinPackArguments: true
 ColumnLimit:     120

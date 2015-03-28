@@ -11,7 +11,7 @@
 
 CGFloat const HEMQuestionCellTextPadding = 22.0f;
 CGFloat const HEMQuestionCellContentPadding = 8.0f;
-CGFloat const HEMQuestionCellBaseHeight = 168.0f;
+CGFloat const HEMQuestionCellBaseHeight = 141.0f;
 
 @interface HEMQuestionCell()
 

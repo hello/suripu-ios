@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.4.3
+
+New:
+
+* Present time zone update screen modally and show current selection
+* visual tweaks to Timeline, dialogs, loading indicators, trends, settings, and welcome screen
+
+Fixes:
+
+* share icon on Timeline will no longer reappear when its been opened and app is brought back in to the foreground
+
 ## 1.0.4.2
 
 New:

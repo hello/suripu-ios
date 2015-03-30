@@ -166,7 +166,7 @@ static UIImage* _sunsetEventIcon = nil;
     _textfieldPlaceholderColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.4];
     _rulerSegmentDarkColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.2];
     _rulerSegmentLightColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.1];
-    _settingsValueTextColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.2];
+    _settingsValueTextColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.4];
     _textfieldTextColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.7];
     _unknownSensorColor = [UIColor colorWithRed: 0.787 green: 0.787 blue: 0.787 alpha: 1];
     _actionButtonTextColor = [UIColor colorWithRed: 1 green: 1 blue: 1 alpha: 1];
@@ -176,14 +176,14 @@ static UIImage* _sunsetEventIcon = nil;
     _backViewCardShadowColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 1];
     _lightTintColor = [UIColor colorWithRed: 0.298 green: 0.757 blue: 0.988 alpha: 1];
     _trendTextColor = [UIColor colorWithRed: 0.6 green: 0.6 blue: 0.6 alpha: 1];
-    _cardBorderColor = [UIColor colorWithRed: 0.95 green: 0.95 blue: 0.95 alpha: 1];
+    _cardBorderColor = [UIColor colorWithRed: 0 green: 0 blue: 0 alpha: 0.1];
     _trendGraphBottomColor = [UIColor colorWithRed: 0.95 green: 0.97 blue: 0.982 alpha: 1];
     _trendGraphTopColor = [UIColor colorWithRed: 0.913 green: 0.966 blue: 1 alpha: 1];
 
     // Shadows Initialization
     _insightShadow = [NSShadow shadowWithColor: [UIColor.blackColor colorWithAlphaComponent: 0.1] offset: CGSizeMake(0.1, -2.1) blurRadius: 3];
     _actionViewShadow = [NSShadow shadowWithColor: [UIColor.blackColor colorWithAlphaComponent: 0.1] offset: CGSizeMake(0.1, -2.1) blurRadius: 5];
-    _backViewCardShadow = [NSShadow shadowWithColor: [HelloStyleKit.backViewCardShadowColor colorWithAlphaComponent: 0.05] offset: CGSizeMake(0.1, 1.6) blurRadius: 0];
+    _backViewCardShadow = [NSShadow shadowWithColor: [HelloStyleKit.backViewCardShadowColor colorWithAlphaComponent: 0.025] offset: CGSizeMake(0, 1.5) blurRadius: 0];
 
 }
 

@@ -177,8 +177,8 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     self.drawerViewController.gravityMagnitude = 2.5;
     [self hideStatusBar];
     MSDynamicsDrawerShadowStyler* shadowStyler = [MSDynamicsDrawerShadowStyler styler];
-    shadowStyler.shadowRadius = 2.f;
-    shadowStyler.shadowOpacity = 0.08f;
+    shadowStyler.shadowRadius = 3.f;
+    shadowStyler.shadowOpacity = 0.2f;
     [self.drawerViewController addStylersFromArray:@[ [HEMDynamicsStatusStyler styler], shadowStyler ]
                                       forDirection:MSDynamicsDrawerDirectionTop];
     [self.drawerViewController setDrawerViewController:[HEMRootViewController instantiateDrawerViewController]

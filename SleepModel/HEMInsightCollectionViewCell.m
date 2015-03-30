@@ -13,11 +13,11 @@
 
 CGFloat const HEMInsightCellMessagePadding = 16.0f;
 
-static CGFloat const HEMInsightCellBaseHeight = 106.0f;
+static CGFloat const HEMInsightCellBaseHeight = 115.0f;
 
 @interface HEMInsightCollectionViewCell()
 
-@property (weak, nonatomic) IBOutlet UILabel* moreLabel;
+@property (weak, nonatomic) IBOutlet UIView *separator;
 
 @end
 

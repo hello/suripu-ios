@@ -3613,6 +3613,7 @@
                                         </constraints>
                                         <size key="customSize" width="540" height="115"/>
                                         <connections>
+                                            <outlet property="accessory" destination="VlW-ON-5ld" id="ed3-nw-bof"/>
                                             <outlet property="dateLabel" destination="qEt-pW-GLZ" id="JPo-kC-vMG"/>
                                             <outlet property="messageLabel" destination="BiA-EQ-FvD" id="dDi-qL-sqw"/>
                                             <outlet property="previewLabel" destination="mwi-tJ-btX" id="zSk-da-m9T"/>

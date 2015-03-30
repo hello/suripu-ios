@@ -194,6 +194,18 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     return body;
 }
 
+- (NSString*)infoPreviewTextForCellAtIndexPath:(NSIndexPath*)indexPath {
+    NSString* preview = nil;
+    id dataObj = [self objectAtIndexPath:indexPath];
+    
+    if ([dataObj isKindOfClass:[SENInsight class]]) {
+        SENInsight* insight = (SENInsight*)dataObj;
+        preview = [insight infoPreview];
+    }
+    
+    return preview;
+}
+
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withWidth:(CGFloat)width {
     NSString* body = [self bodyTextForCellAtIndexPath:indexPath];
     if ([body length] == 0) return 0.0f;
@@ -213,7 +225,10 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
                                          context:nil];
         calculatedHeight = ceilf(CGRectGetHeight(rect)) + HEMQuestionCellBaseHeight;
     } else if ([dataObj isKindOfClass:[SENInsight class]]) {
-        calculatedHeight = [HEMInsightCollectionViewCell contentHeightWithMessage:body inWidth:width];
+        NSString* preview = [self infoPreviewTextForCellAtIndexPath:indexPath];
+        calculatedHeight = [HEMInsightCollectionViewCell contentHeightWithMessage:body
+                                                                      infoPreview:preview
+                                                                          inWidth:width];
     }
 
     [[self heightCache] setObject:@(calculatedHeight) forKey:body];
@@ -273,6 +288,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
         HEMInsightCollectionViewCell* iCell = (HEMInsightCollectionViewCell*)cell;
         [iCell setMessage:body];
         [iCell setTitle:[self insightTitleForCellAtIndexPath:indexPath]];
+        [iCell setInfoPreview:[self infoPreviewTextForCellAtIndexPath:indexPath]];
         [[iCell dateLabel] setText:[self dateForCellAtIndexPath:indexPath]];
     }
 }

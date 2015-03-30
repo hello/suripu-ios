@@ -16,6 +16,7 @@ pod 'MSDynamicsDrawerViewController', '1.5.1'
 
 # Private
 pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'
+pod 'LGBluetooth', :git => 'git@github.com:hello/LGBluetooth.git'
 pod 'SenseKit', :git => 'git@github.com:hello/SenseKit.git'
 # pod 'SenseKit', :path => '../SenseKit'
 

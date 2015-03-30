@@ -6,7 +6,6 @@
 //
 //
 #import <CocoaLumberjack/DDLog.h>
-#import <CocoaLumberjack/DDLogMacros.h>
 
 #import <HealthKit/HealthKit.h>
 

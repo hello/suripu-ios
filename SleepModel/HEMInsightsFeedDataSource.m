@@ -161,7 +161,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
 
     if ([dataObj isKindOfClass:[SENInsight class]]) {
         SENInsight* insight = (SENInsight*)dataObj;
-        date = [[insight dateCreated] elapsed];
+        date = [[[insight dateCreated] elapsed] uppercaseString];
     }
     
     return date;

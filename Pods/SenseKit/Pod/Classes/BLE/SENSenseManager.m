@@ -7,7 +7,6 @@
 //
 
 #import <CocoaLumberjack/DDLog.h>
-#import <CocoaLumberjack/DDLogMacros.h>
 
 #import <CoreBluetooth/CoreBluetooth.h>
 

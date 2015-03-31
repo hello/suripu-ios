@@ -13,7 +13,6 @@ extern CGFloat const HEMInsightCellMessagePadding;
 
 @interface HEMInsightCollectionViewCell : HEMCardCollectionViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak, nonatomic) IBOutlet UILabel *messageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *previewLabel;
@@ -23,7 +22,6 @@ extern CGFloat const HEMInsightCellMessagePadding;
                         infoPreview:(NSString*)infoPreview
                             inWidth:(CGFloat)contentWidth;
 - (void)setMessage:(NSString*)message;
-- (void)setTitle:(NSString*)title;
 - (void)setInfoPreview:(NSString*)infoPreview;
 
 @end

@@ -55,16 +55,6 @@ static CGFloat const HEMInsightCellPreviewHeight = 51.0f;
     [self showPreview:YES];
 }
 
-- (void)setTitle:(NSString*)title {
-    if (title.length == 0) {
-        self.titleLabel.text = nil;
-        return;
-    }
-    NSDictionary* attributes = [HEMMarkdown attributesForBackViewTitle];
-    NSAttributedString* text = [markdown_to_attr_string(title, 0, attributes) trim];
-    self.titleLabel.attributedText = text;
-}
-
 - (void)setMessage:(NSString*)message {
     if ([message length] == 0) {
         return;
@@ -85,7 +75,8 @@ static CGFloat const HEMInsightCellPreviewHeight = 51.0f;
         [self showPreview:NO];
         return;
     }
-    NSDictionary* attributes = [HEMMarkdown attributesForBackViewTitle];
+    
+    NSDictionary* attributes = [HEMMarkdown attributesForInsightPreviewText];
     NSAttributedString* text = [markdown_to_attr_string(infoPreview, 0, attributes) trim];
     self.previewLabel.attributedText = text;
 }

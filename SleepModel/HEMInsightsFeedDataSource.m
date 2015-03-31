@@ -201,6 +201,9 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     if ([dataObj isKindOfClass:[SENInsight class]]) {
         SENInsight* insight = (SENInsight*)dataObj;
         preview = [insight infoPreview];
+        if ([preview length] == 0 && [insight isGeneric]) {
+            preview = [insight title];
+        }
     }
     
     return preview;
@@ -287,7 +290,6 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     } else if ([cell isKindOfClass:[HEMInsightCollectionViewCell class]]) {
         HEMInsightCollectionViewCell* iCell = (HEMInsightCollectionViewCell*)cell;
         [iCell setMessage:body];
-        [iCell setTitle:[self insightTitleForCellAtIndexPath:indexPath]];
         [iCell setInfoPreview:[self infoPreviewTextForCellAtIndexPath:indexPath]];
         [[iCell dateLabel] setText:[self dateForCellAtIndexPath:indexPath]];
     }

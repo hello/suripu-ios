@@ -14,20 +14,20 @@
 #import "HEMAlertViewController.h"
 
 @interface HEMAlarmSoundTableViewController () <AVAudioPlayerDelegate>
-@property (nonatomic, strong) NSArray* possibleSleepSounds;
-@property (nonatomic, strong) AVAudioPlayer* player;
+@property (nonatomic, strong) NSArray *possibleSleepSounds;
+@property (nonatomic, strong) AVAudioPlayer *player;
 @property (nonatomic, getter=isLoading) BOOL loading;
-@property (nonatomic, strong) NSOperationQueue* loadingQueue;
-@property (nonatomic, strong) NSIndexPath* loadingIndexPath;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* lineViewHeightConstraint;
+@property (nonatomic, strong) NSOperationQueue *loadingQueue;
+@property (nonatomic, strong) NSIndexPath *loadingIndexPath;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *lineViewHeightConstraint;
+@property (nonatomic, weak) IBOutlet UINavigationItem* customNavItem;
 @end
 
 @implementation HEMAlarmSoundTableViewController
 
-static NSString* const HEMAlarmSoundFormat = @"m4a";
+static NSString *const HEMAlarmSoundFormat = @"m4a";
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     self.loadingQueue = [NSOperationQueue new];
     self.loadingQueue.maxConcurrentOperationCount = 1;
@@ -36,113 +36,105 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
     [[self tableView] setTableFooterView:[[UIView alloc] init]];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
-{
+- (void)viewWillDisappear:(BOOL)animated {
     [super viewWillDisappear:animated];
     [self stopAudio];
 }
 
-- (void)loadAlarmSounds
-{
+- (IBAction)goBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)loadAlarmSounds {
     [self loadAlarmSoundsWithRetryCount:3];
 }
 
-- (void)loadAlarmSoundsWithRetryCount:(NSInteger)count
-{
-    static NSArray* alarmSounds = nil;
+- (void)loadAlarmSoundsWithRetryCount:(NSInteger)count {
+    static NSArray *alarmSounds = nil;
     if (alarmSounds.count > 0) {
         [self updateTableWithSounds:alarmSounds];
         return;
     }
     if ([self isLoading])
         return;
-    UIActivityIndicatorView* indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
+    UIActivityIndicatorView *indicatorView =
+        [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    self.customNavItem.rightBarButtonItem = [[UIBarButtonItem alloc] initWithCustomView:indicatorView];
     [indicatorView startAnimating];
     self.loading = YES;
     __weak typeof(self) weakSelf = self;
-    __weak UIActivityIndicatorView* weakIndicator = indicatorView;
-    [SENAPIAlarms availableSoundsWithCompletion:^(NSArray* sounds, NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        [weakIndicator stopAnimating];
-        strongSelf.navigationItem.rightBarButtonItem = nil;
-        if (!error) {
-            alarmSounds = sounds;
-            [strongSelf updateTableWithSounds:sounds];
-            strongSelf.loading = NO;
-            return;
-        }
-        strongSelf.loading = NO;
-        if (count > 0)
-            [strongSelf loadAlarmSoundsWithRetryCount:count - 1];
-        else
-            [strongSelf showAlertForError:error];
+    __weak UIActivityIndicatorView *weakIndicator = indicatorView;
+    [SENAPIAlarms availableSoundsWithCompletion:^(NSArray *sounds, NSError *error) {
+      __strong typeof(weakSelf) strongSelf = weakSelf;
+      [weakIndicator stopAnimating];
+      strongSelf.customNavItem.rightBarButtonItem = nil;
+      if (!error) {
+          alarmSounds = sounds;
+          [strongSelf updateTableWithSounds:sounds];
+          strongSelf.loading = NO;
+          return;
+      }
+      strongSelf.loading = NO;
+      if (count > 0)
+          [strongSelf loadAlarmSoundsWithRetryCount:count - 1];
+      else
+          [strongSelf showAlertForError:error];
     }];
 }
 
-- (void)updateTableWithSounds:(NSArray*)sounds
-{
-    self.possibleSleepSounds = [sounds sortedArrayUsingComparator:^NSComparisonResult(SENSound* obj1, SENSound* obj2) {
-        return [obj1.displayName compare:obj2.displayName];
+- (void)updateTableWithSounds:(NSArray *)sounds {
+    self.possibleSleepSounds = [sounds sortedArrayUsingComparator:^NSComparisonResult(SENSound *obj1, SENSound *obj2) {
+      return [obj1.displayName compare:obj2.displayName];
     }];
     [self.tableView reloadData];
 }
 
-- (void)showAlertForError:(NSError*)error
-{
+- (void)showAlertForError:(NSError *)error {
     DDLogError(@"Failed to load alarm sounds: %@", error.localizedDescription);
     [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"alarm.sounds.error.title", nil)
                                             message:NSLocalizedString(@"alarm.sounds.error.message", nil)
                                          controller:self];
-    UIBarButtonItem* refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
+    UIBarButtonItem *refreshItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemRefresh
                                                                                  target:self
                                                                                  action:@selector(loadAlarmSounds)];
     refreshItem.tintColor = [HelloStyleKit tintColor];
-    self.navigationItem.rightBarButtonItem = refreshItem;
+    self.customNavItem.rightBarButtonItem = refreshItem;
 }
 
 #pragma mark - Table view data source
 
-- (NSInteger)tableView:(UITableView*)tableView numberOfRowsInSection:(NSInteger)section
-{
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return self.possibleSleepSounds.count;
 }
 
-- (UITableViewCell*)tableView:(UITableView*)tableView cellForRowAtIndexPath:(NSIndexPath*)indexPath
-{
-    NSString* identifier = [HEMMainStoryboard alarmChoiceCellReuseIdentifier];
-    HEMAlarmPropertyTableViewCell* cell = [tableView dequeueReusableCellWithIdentifier:identifier
-                                                                          forIndexPath:indexPath];
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *identifier = [HEMMainStoryboard alarmChoiceCellReuseIdentifier];
+    HEMAlarmPropertyTableViewCell *cell =
+        [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
 
-    SENSound* sound = [self.possibleSleepSounds objectAtIndex:indexPath.row];
+    SENSound *sound = [self.possibleSleepSounds objectAtIndex:indexPath.row];
     BOOL isSelected = [sound.displayName isEqualToString:self.alarmCache.soundName];
     BOOL isLoading = [self.loadingIndexPath isEqual:indexPath];
     cell.titleLabel.text = sound.displayName;
     cell.disclosureImageView.hidden = !isSelected;
-    cell.titleLabel.textColor = isSelected
-        ? [HelloStyleKit alarmSelectionRowColor] : [HelloStyleKit backViewNavTitleColor];
+    cell.titleLabel.textColor = isSelected ? [HelloStyleKit alarmSelectionRowColor]
+                                           : [HelloStyleKit backViewNavTitleColor];
     if (isLoading) {
         [cell.loadingIndicatorView startAnimating];
-    } else {
-        [cell.loadingIndicatorView stopAnimating];
-    }
+    } else { [cell.loadingIndicatorView stopAnimating]; }
     if (isSelected && !isLoading) {
-        UIImage* image = [self.player isPlaying]
-            ? [HelloStyleKit miniStopButton] : [HelloStyleKit miniPlayButton];
+        UIImage *image = [self.player isPlaying] ? [HelloStyleKit miniStopButton] : [HelloStyleKit miniPlayButton];
         [cell.playStopButton setImage:image forState:UIControlStateNormal];
         cell.playStopButton.hidden = NO;
-    } else {
-        cell.playStopButton.hidden = YES;
-    }
+    } else { cell.playStopButton.hidden = YES; }
     return cell;
 }
 
 #pragma mark - Table view delegate
 
-- (NSInteger)selectedSoundIndex
-{
+- (NSInteger)selectedSoundIndex {
     for (int index = 0; index < self.possibleSleepSounds.count; index++) {
-        SENSound* sound = self.possibleSleepSounds[index];
+        SENSound *sound = self.possibleSleepSounds[index];
         if ([sound.displayName isEqualToString:self.alarmCache.soundName]) {
             return index;
         }
@@ -150,17 +142,15 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
     return NSNotFound;
 }
 
-- (void)selectSoundAtIndex:(NSInteger)index
-{
+- (void)selectSoundAtIndex:(NSInteger)index {
     if (index >= self.possibleSleepSounds.count)
         return;
-    SENSound* sound = [self.possibleSleepSounds objectAtIndex:index];
+    SENSound *sound = [self.possibleSleepSounds objectAtIndex:index];
     self.alarmCache.soundName = sound.displayName;
     self.alarmCache.soundID = sound.identifier;
 }
 
-- (void)tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath*)indexPath
-{
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     NSUInteger previousSelectionIndex = [self selectedSoundIndex];
     if (indexPath.row == previousSelectionIndex)
@@ -174,50 +164,44 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
 
 #pragma mark - Audio
 
-- (IBAction)toggleAudio:(UIButton*)sender
-{
+- (IBAction)toggleAudio:(UIButton *)sender {
     if ([self.player isPlaying]) {
         [self stopAudio];
-    } else {
-        [self playAudio];
-    }
+    } else { [self playAudio]; }
 }
 
-- (void)playAudioForSelectedSound
-{
+- (void)playAudioForSelectedSound {
     [self stopAudio];
     [self.loadingQueue cancelAllOperations];
-    SENSound* sound = self.possibleSleepSounds[[self selectedSoundIndex]];
-    NSURL* url = [NSURL URLWithString:sound.URLPath];
+    SENSound *sound = self.possibleSleepSounds[[self selectedSoundIndex]];
+    NSURL *url = [NSURL URLWithString:sound.URLPath];
 
     __weak typeof(self) weakSelf = self;
     [self.loadingQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        NSData* urlData = [NSData dataWithContentsOfURL:url];
-        if (!urlData) {
-            [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
-                [strongSelf stopLoadingAnimation];
-            }]];
-            return;
-        }
+      __strong typeof(weakSelf) strongSelf = weakSelf;
+      NSData *urlData = [NSData dataWithContentsOfURL:url];
+      if (!urlData) {
+          [[NSOperationQueue mainQueue]
+              addOperation:[NSBlockOperation blockOperationWithBlock:^{ [strongSelf stopLoadingAnimation]; }]];
+          return;
+      }
 
-        [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
-            [strongSelf stopLoadingAnimation];
-            NSError* error = nil;
-            strongSelf.player = [[AVAudioPlayer alloc] initWithData:urlData error:&error];
-            strongSelf.player.delegate = self;
-            strongSelf.player.volume = 1.f;
-            if (error)
-                [strongSelf stopAudio];
-            else {
-                [strongSelf playAudio];
-            }
-        }]];
+      [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
+        [strongSelf stopLoadingAnimation];
+        NSError *error = nil;
+        strongSelf.player = [[AVAudioPlayer alloc] initWithData:urlData error:&error];
+        strongSelf.player.delegate = self;
+        strongSelf.player.volume = 1.f;
+        if (error)
+            [strongSelf stopAudio];
+        else {
+            [strongSelf playAudio];
+        }
+      }]];
     }]];
 }
 
-- (void)playAudio
-{
+- (void)playAudio {
     if (self.player) {
         [self.player play];
         [self updatePlayButtonWithImage:[HelloStyleKit miniStopButton]];
@@ -228,43 +212,37 @@ static NSString* const HEMAlarmSoundFormat = @"m4a";
     }
 }
 
-- (void)stopAudio
-{
+- (void)stopAudio {
     [self.player stop];
     self.player.currentTime = 0;
     [self updatePlayButtonWithImage:[HelloStyleKit miniPlayButton]];
 }
 
-- (void)updatePlayButtonWithImage:(UIImage*)image
-{
+- (void)updatePlayButtonWithImage:(UIImage *)image {
     NSInteger selectedIndex = [self selectedSoundIndex];
     if (selectedIndex == NSNotFound || selectedIndex >= [self.tableView numberOfRowsInSection:0])
         return;
-    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:selectedIndex inSection:0];
-    HEMAlarmPropertyTableViewCell* cell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
+    NSIndexPath *indexPath = [NSIndexPath indexPathForRow:selectedIndex inSection:0];
+    HEMAlarmPropertyTableViewCell *cell = (id)[self.tableView cellForRowAtIndexPath:indexPath];
     [cell.playStopButton setImage:image forState:UIControlStateNormal];
 }
 
-- (void)stopLoadingAnimation
-{
+- (void)stopLoadingAnimation {
     self.loadingIndexPath = nil;
     [self.tableView reloadData];
 }
 
 #pragma mark AVAudioPlayerDelegate
 
-- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player
-{
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
     [self stopAudio];
 }
 
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
-{
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
     [self stopAudio];
 }
 
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags
-{
+- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags {
     [self stopAudio];
 }
 

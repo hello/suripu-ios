@@ -64,6 +64,7 @@ static UIColor* _trendTextColor = nil;
 static UIColor* _cardBorderColor = nil;
 static UIColor* _trendGraphBottomColor = nil;
 static UIColor* _trendGraphTopColor = nil;
+static UIColor* _switchOffBackgroundColor = nil;
 
 static NSShadow* _insightShadow = nil;
 static NSShadow* _actionViewShadow = nil;
@@ -179,6 +180,7 @@ static UIImage* _sunsetEventIcon = nil;
     _cardBorderColor = [UIColor colorWithRed: 0.9 green: 0.9 blue: 0.9 alpha: 1];
     _trendGraphBottomColor = [UIColor colorWithRed: 0.95 green: 0.97 blue: 0.982 alpha: 1];
     _trendGraphTopColor = [UIColor colorWithRed: 0.913 green: 0.966 blue: 1 alpha: 1];
+    _switchOffBackgroundColor = [UIColor colorWithRed: 0.95 green: 0.95 blue: 0.95 alpha: 1];
 
     // Shadows Initialization
     _insightShadow = [NSShadow shadowWithColor: [UIColor.blackColor colorWithAlphaComponent: 0.1] offset: CGSizeMake(0.1, -2.1) blurRadius: 3];
@@ -238,6 +240,7 @@ static UIImage* _sunsetEventIcon = nil;
 + (UIColor*)cardBorderColor { return _cardBorderColor; }
 + (UIColor*)trendGraphBottomColor { return _trendGraphBottomColor; }
 + (UIColor*)trendGraphTopColor { return _trendGraphTopColor; }
++ (UIColor*)switchOffBackgroundColor { return _switchOffBackgroundColor; }
 
 #pragma mark Shadows
 

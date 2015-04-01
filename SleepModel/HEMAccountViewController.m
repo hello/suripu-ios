@@ -11,26 +11,27 @@
 
 #import "UIFont+HEMStyle.h"
 
-#import "HEMBaseController+Protected.h"
 #import "HEMAccountViewController.h"
-#import "HEMSettingsTableViewCell.h"
-#import "HEMSettingsAccountDataSource.h"
+#import "HEMAlertViewController.h"
+#import "HEMBaseController+Protected.h"
+#import "HEMBirthdatePickerViewController.h"
+#import "HEMGenderPickerViewController.h"
+#import "HEMHeightPickerViewController.h"
+#import "HEMHelpFooterTableViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HelloStyleKit.h"
+#import "HEMSettingsAccountDataSource.h"
+#import "HEMSettingsTableViewCell.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HEMUpdatePasswordViewController.h"
 #import "HEMUpdateEmailViewController.h"
-#import "HEMBirthdatePickerViewController.h"
-#import "HEMHeightPickerViewController.h"
-#import "HEMWeightPickerViewController.h"
-#import "HEMGenderPickerViewController.h"
 #import "HEMUpdateNameViewController.h"
-#import "HEMAlertViewController.h"
+#import "HEMUpdatePasswordViewController.h"
+#import "HEMWeightPickerViewController.h"
+#import "HelloStyleKit.h"
 
 static CGFloat const HEMAccountTableSectionHeaderHeight = 20.0f;
 static CGFloat const HEMAccountTableBaseRowHeight = 56.0f;
-static CGFloat const HEMAccountTableAudioExplanationRowHeight = 44.0f;
+static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 
 @interface HEMAccountViewController () <UITableViewDelegate, HEMUpdatePasswordDelegate, HEMUpdateEmailDelegate,
                                         HEMUpdateNameDelegate, HEMBirthdatePickerDelegate, HEMGenderPickerDelegate,
@@ -127,10 +128,11 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 44.0f;
             [[settingsCell titleLabel] setFont:[UIFont signOutFont]];
         }
 
-    } else {
-        [[cell textLabel] setFont:[UIFont settingsHelpFont]];
-        [[cell textLabel] setTextColor:[HelloStyleKit backViewTextColor]];
-        [[cell textLabel] setText:title];
+    } else if ([cell isKindOfClass:[HEMHelpFooterTableViewCell class]]) {
+        HEMHelpFooterTableViewCell* helpCell = (id)cell;
+        helpCell.contentLabel.textColor = [HelloStyleKit backViewTextColor];
+        helpCell.contentLabel.text = title;
+        helpCell.contentLabel.font = [UIFont settingsHelpFont];
     }
 }
 

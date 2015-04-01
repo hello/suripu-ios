@@ -15,6 +15,7 @@ CGFloat const HEMSnazzBarAnimationDuration = 0.25f;
 @interface HEMSnazzBar ()
 
 @property (nonatomic, strong) UIView* indicatorView;
+@property (nonatomic, strong) UIView* bottomBorderView;
 @property (nonatomic) NSUInteger selectionIndex;
 @end
 
@@ -30,6 +31,9 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
         self.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.1f].CGColor;
         self.layer.shadowRadius = 0;
         self.layer.shadowOpacity = 0.85f;
+        _bottomBorderView = [UIView new];
+        _bottomBorderView.backgroundColor = [UIColor colorWithWhite:0.9 alpha:1.f];
+        [self addSubview:_bottomBorderView];
     }
     return self;
 }
@@ -38,6 +42,7 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
 {
     [super layoutSubviews];
     [self layoutBarButtons];
+    self.bottomBorderView.frame = CGRectMake(0, CGRectGetHeight(self.bounds) - HEMSnazzBarIndicatorHeight, CGRectGetWidth(self.bounds), HEMSnazzBarIndicatorHeight);
 }
 
 - (void)layoutBarButtons
@@ -112,7 +117,7 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
     [button setImage:image forState:UIControlStateNormal];
     [button setImage:selectedImage forState:UIControlStateSelected];
     [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self addSubview:button];
+    [self insertSubview:button atIndex:0];
     [self setNeedsLayout];
 }
 

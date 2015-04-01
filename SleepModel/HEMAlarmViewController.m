@@ -147,7 +147,7 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
                                              }];
                                     if (!error)
                                         [strongSelf dismiss:YES];
-                                    else if ([self isUnsavedAlarm])
+                                    else if ([strongSelf isUnsavedAlarm])
                                         [strongSelf.alarm delete];
                                     else
                                         [strongSelf updateAlarmFromCache:strongSelf.originalAlarmCache];
@@ -172,7 +172,7 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
           __strong typeof(weakSelf) strongSelf = weakSelf;
           [strongSelf.alarm delete];
           [HEMAlarmUtils
-              updateAlarmsFromPresentingController:self
+              updateAlarmsFromPresentingController:strongSelf
                                         completion:^(NSError *error) {
                                           if (error) {
                                               [strongSelf.alarm save];

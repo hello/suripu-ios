@@ -26,7 +26,7 @@
 "onboarding.before-sleep.3.title" = "Something's not right";
 "onboarding.before-sleep.4.title" = "We've got a problem";
 "onboarding.before-sleep.5.title" = "Just wave";
-"onboarding.before-sleep.1.description" = "Sense glows to tell you about the conditions in your bedroom - including temperature, humidity, light, and sound. Sense has three different colors.";
+"onboarding.before-sleep.1.description" = "Sense glows to tell you about the conditions in your bedroom - including temperature, humidity, AQI, light, and sound. Sense has three different colors.";
 "onboarding.before-sleep.2.description" = "Sense glows green when the conditions in your room are just right for a good night's sleep.";
 "onboarding.before-sleep.3.description" = "Sense glows yellow when something in your bedroom is not quite right. Check the Sense app for details.";
 "onboarding.before-sleep.4.description" = "Sense glows orange when the conditions in your bedroom would prevent restful sleep. Check the Sense app for details.";
@@ -513,7 +513,7 @@
 "tutorial.trends.message" = "To see how your sleep is changing over time, sometimes it’s helpful to take a step back. After a week using Sense, this view will show you historical data on your sleep patterns. If you don't see any data yet, check back later.";
 
 "tutorial.sensors.title" = "Current conditions";
-"tutorial.sensors.message" = "Here you’ll see the current conditions in your bedroom: temperature, humidity, light, and sound. Tap a card for more details.";
+"tutorial.sensors.message" = "Here you’ll see the current conditions in your bedroom: temperature, humidity, AQI, light, and sound. Tap a card for more details.";
 
 "tutorial.sensor.temperature.title" = "Temperature";
 "tutorial.sensor.temperature.message" = "A proper temperature is key to a good night’s sleep. Here you’ll see detailed information on the temperature levels in your bedroom. The graphs will fill in as Sense collects more data.";

@@ -15,7 +15,8 @@
     NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
     NSDateComponents* components = [calendar components:NSDayCalendarUnit
                                                fromDate:self
-                                                 toDate:now options:NSCalendarMatchStrictly];
+                                                 toDate:now
+                                                options:NSCalendarMatchStrictly];
     long days = components.day;
     NSString* elapsed = nil;
     
@@ -23,16 +24,25 @@
         elapsed = NSLocalizedString(@"date.elapsed.today", nil);
     } else {
         NSString* format = nil;
-        if (days < 7) {
+        long value = 1;
+        
+        if (days == 1) {
+            format = NSLocalizedString(@"date.elapsed.day.format", nil);
+        } if (days < 7) {
             format = NSLocalizedString(@"date.elapsed.days.format", nil);
-            elapsed = [NSString stringWithFormat:format, days];
+        } else if (days == 7) {
+            format = NSLocalizedString(@"date.elapsed.week.format", nil);
         } else if (days < 365) {
             format = NSLocalizedString(@"date.elapsed.weeks.format", nil);
-            elapsed = [NSString stringWithFormat:format, (long)ceilf(days/7.0f)];
+            value = (long)ceilf(days/7.0f);
+        } else if (days == 365) {
+            format = NSLocalizedString(@"date.elapsed.year.format", nil);
         } else {
             format = NSLocalizedString(@"date.elapsed.years.format", nil);
-            elapsed = [NSString stringWithFormat:format, (long)ceilf(days/365.0f)];
+            value = (long)ceilf(days/365.0f);
         }
+        
+        elapsed = [NSString stringWithFormat:format, value];
     }
     
     return elapsed;

@@ -479,9 +479,12 @@
 
 // SORelativeDateTransformer
 "date.elapsed.today" = "TODAY";
-"date.elapsed.days.format" = "%ldd";
-"date.elapsed.weeks.format" = "%ldw";
-"date.elapsed.years.format" = "%ldy";
+"date.elapsed.day.format" = "%ld day ago";
+"date.elapsed.days.format" = "%ld days ago";
+"date.elapsed.week.format" = "%ld week ago";
+"date.elapsed.weeks.format" = "%ld weeks ago";
+"date.elapsed.year.format" = "%ld year ago";
+"date.elapsed.years.format" = "%ld years ago";
 
 // alerts
 "alerts.timezone.title" = "Time Zone";

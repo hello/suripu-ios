@@ -79,6 +79,16 @@
     };
 }
 
++ (NSDictionary*)attributesForInsightPreviewText
+{
+    return @{
+        @(PARA) : @{
+            NSForegroundColorAttributeName : [UIColor blackColor],
+            NSFontAttributeName : [UIFont backViewBoldFont]
+        }
+    };
+}
+
 + (NSDictionary*)attributesForEventMessageText
 {
     NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];

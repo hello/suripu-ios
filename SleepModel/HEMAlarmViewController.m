@@ -36,7 +36,7 @@ typedef NS_ENUM(NSUInteger, HEMAlarmTableIndex) {
 @property (nonatomic, strong) HEMAlarmCache *alarmCache;
 @property (nonatomic, strong) HEMAlarmCache *originalAlarmCache;
 @property (nonatomic, getter=isUnsavedAlarm) BOOL unsavedAlarm;
-
+@property (nonatomic, getter=didLoadOnce) BOOL loadOnce;
 @end
 
 @implementation HEMAlarmViewController
@@ -53,7 +53,10 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    [self configureClockView];
+    if (![self didLoadOnce]) {
+        [self configureClockView];
+        self.loadOnce = YES;
+    }
     [self.tableView reloadData];
 }
 

@@ -295,7 +295,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.0];
 }
 
-+ (UIFont*)deviceAlertMessageFont
++ (UIFont*)systemAlertMessageFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }

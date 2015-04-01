@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENServiceDevice.h>
 #import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENAPITimeZone.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -23,13 +24,15 @@
 #import "HEMRootViewController.h"
 #import "HEMDevicesViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMBounceModalTransition.h"
 
 @interface HEMSystemAlertController()<HEMPillPairDelegate, HEMSensePairingDelegate>
 
 @property (nonatomic, strong) HEMActionView* alertView;
 @property (nonatomic, weak)   UIViewController* viewController;
 @property (nonatomic, assign) SENServiceDeviceState warningState;
-@property (nonatomic, assign) BOOL enableDeviceMonitoring;
+@property (nonatomic, assign) BOOL enableSystemMonitoring;
+@property (nonatomic, strong) HEMBounceModalTransition* modalTransitionDelegate;
 
 @end
 
@@ -43,23 +46,107 @@
     return self;
 }
 
-- (void)enableDeviceMonitoring:(BOOL)enable {
-    _enableDeviceMonitoring = enable;
+- (void)enableSystemMonitoring:(BOOL)enable {
+    _enableSystemMonitoring = enable;
     
     if (enable) {
-        [self checkDevicesIfEnabled];
+        [self checkSystemIfEnabled];
     } else {
         [[SENServiceDevice sharedService] resetDeviceStates];
     }
 
 }
 
-- (void)checkDevicesIfEnabled {
-    if ([self enableDeviceMonitoring]) {
+- (HEMActionView*)configureAlertViewWithTitle:(NSString*)title
+                                      message:(NSString*)message
+                            cancelButtonTitle:(NSString*)cancelTitle
+                               fixButtonTitle:(NSString*)fixTitle {
+    
+    NSMutableParagraphStyle* messageStyle
+    = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    [messageStyle setAlignment:NSTextAlignmentCenter];
+    NSDictionary* messageAttributes = @{
+                                        NSFontAttributeName : [UIFont systemAlertMessageFont],
+                                        NSForegroundColorAttributeName : [HelloStyleKit deviceAlertMessageColor],
+                                        NSParagraphStyleAttributeName : messageStyle};
+    
+    NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message
+                                                                      attributes:messageAttributes];
+    HEMActionView* alert = [[HEMActionView alloc] initWithTitle:title message:attrMessage];
+    [[alert cancelButton] setTitle:[cancelTitle uppercaseString] forState:UIControlStateNormal];
+    [[alert okButton] setTitle:[fixTitle uppercaseString] forState:UIControlStateNormal];
+    
+    return alert;
+}
+
+- (void)cancelAlert:(id)sender {
+    [self dismissAlert:nil];
+    [SENAnalytics track:HEMAnalyticsEventSystemAlertAction
+             properties:@{kHEMAnalyticsEventPropAction : HEMAnalyticsEventSysAlertActionLater}];
+}
+
+#pragma mark - Time Zone
+
+- (void)checkTimeZone {
+    __weak typeof(self) weakSelf = self;
+    [SENAPITimeZone getConfiguredTimeZone:^(NSTimeZone* data, NSError *error) {
+        if (data == nil && error == nil) {
+            [weakSelf showTimeZoneWarning];
+        }
+    }];
+}
+
+- (void)showTimeZoneWarning {
+    if ([self alertView] != nil) {
+        DDLogVerbose(@"another alert is currently shown, skip showing time zone alert");
+        return;
+    }
+    
+    NSString* title = NSLocalizedString(@"alerts.timezone.title", nil);
+    NSString* message = NSLocalizedString(@"alerts.timezone.message", nil);
+    NSString* cancelTitle = NSLocalizedString(@"actions.later", nil);
+    NSString* fixTitle = NSLocalizedString(@"actions.fix-now", nil);
+    
+    HEMActionView* alert = [self configureAlertViewWithTitle:title
+                                                     message:message
+                                           cancelButtonTitle:cancelTitle
+                                              fixButtonTitle:fixTitle];
+    [self setAlertView:alert];
+    [[[self alertView] cancelButton] addTarget:self
+                                        action:@selector(cancelAlert:)
+                              forControlEvents:UIControlEventTouchUpInside];
+    [[[self alertView] okButton] addTarget:self
+                                    action:@selector(fixTimeZoneNow:)
+                          forControlEvents:UIControlEventTouchUpInside];
+    [[self alertView] showInView:[[self viewController] view] animated:YES completion:nil];
+    
+    [SENAnalytics track:HEMAnalyticsEventSystemAlert
+             properties:@{kHEMAnalyticsEventPropType : @"time zone"}];
+}
+
+- (void)fixTimeZoneNow:(id)sender {
+    [self dismissAlert:^{
+        UIViewController* tzVC = [HEMMainStoryboard instantiateTimeZoneNavViewController];
+        [self setModalTransitionDelegate:[[HEMBounceModalTransition alloc] init]];
+        [tzVC setTransitioningDelegate:[self modalTransitionDelegate]];
+        [tzVC setModalPresentationStyle:UIModalPresentationCustom];
+        [[self viewController] presentViewController:tzVC animated:YES completion:nil];
+    }];
+    [SENAnalytics track:HEMAnalyticsEventSystemAlertAction
+             properties:@{kHEMAnalyticsEventPropAction : HEMAnalyticsEventSysAlertActionNow}];
+}
+
+#pragma mark - Devices
+
+- (void)checkSystemIfEnabled {
+    if ([self enableSystemMonitoring]) {
         __weak typeof(self) weakSelf = self;
         [[SENServiceDevice sharedService] checkDevicesState:^(SENServiceDeviceState state) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
             if (state != SENServiceDeviceStateUnknown && state != SENServiceDeviceStateNormal) {
-                [weakSelf showDeviceWarning];
+                [strongSelf showDeviceWarning];
+            } else {
+                [strongSelf checkTimeZone];
             }
         }];
     }
@@ -135,25 +222,14 @@
 - (void)showDeviceWarningWithTitle:(NSString*)title message:(NSString*)message
                  cancelButtonTitle:(NSString*)cancelTitle fixButtonTitle:(NSString*)fixTitle {
     
-    NSMutableParagraphStyle* messageStyle
-        = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-    [messageStyle setAlignment:NSTextAlignmentCenter];
-    NSDictionary* messageAttributes = @{
-                                        NSFontAttributeName : [UIFont deviceAlertMessageFont],
-                                        NSForegroundColorAttributeName : [HelloStyleKit deviceAlertMessageColor],
-                                        NSParagraphStyleAttributeName : messageStyle};
-    
-    NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message
-                                                                      attributes:messageAttributes];
-    HEMActionView* alert = [[HEMActionView alloc] initWithTitle:title message:attrMessage];
+    HEMActionView* alert = [self configureAlertViewWithTitle:title
+                                                     message:message
+                                           cancelButtonTitle:cancelTitle
+                                              fixButtonTitle:fixTitle];
     [self setAlertView:alert];
-    [[[self alertView] cancelButton] setTitle:[cancelTitle uppercaseString]
-                                     forState:UIControlStateNormal];
     [[[self alertView] cancelButton] addTarget:self
                                         action:@selector(fixDeviceProblemLater:)
                               forControlEvents:UIControlEventTouchUpInside];
-    [[[self alertView] okButton] setTitle:[fixTitle uppercaseString]
-                                 forState:UIControlStateNormal];
     [[[self alertView] okButton] addTarget:self
                                     action:@selector(fixDeviceProblemNow:)
                           forControlEvents:UIControlEventTouchUpInside];
@@ -284,7 +360,7 @@
 
 - (void)userDidSignOut {
     [self dismissAlert:nil];
-    [self setEnableDeviceMonitoring:NO];
+    [self setEnableSystemMonitoring:NO];
 }
 
 #pragma mark - Clean Up

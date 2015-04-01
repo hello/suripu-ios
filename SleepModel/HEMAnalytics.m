@@ -130,9 +130,13 @@ NSString* const kHEMAnalyticsEventDeviceActionUnpairPill = @"unpair Sleep Pill";
 NSString* const HEMAnalyticsEventTimelineBarLongPress = @"Long press sleep duration bar";
 NSString* const kHEMAnalyticsEventTimeline = @"Timeline";
 NSString* const kHEMAnalyticsEventTimelineChanged = @"Timeline swipe"; // case sensitive, to be same as android
-NSString* const kHEMAnalyticsEventTimelineAction = @"Timeline Action";
+NSString* const kHEMAnalyticsEventTimelineAction = @"Timeline Event tapped";
 NSString* const kHEMAnalyticsEventTimelineOpen = @"Timeline opened";
 NSString* const kHEMAnalyticsEventTimelineClose = @"Timeline closed";
+NSString* const HEMAnalyticsEventSleepScoreBreakdown = @"Sleep Score breakdown";
+NSString* const HEMAnalyticsEventTimelineZoomOut = @"Timeline zoomed out";
+NSString* const HEMAnalyticsEventTimelineZoomIn = @"Timeline zoomed in";
+NSString* const HEMAnalyticsEventTimelineAdjustTime = @"Timeline adjust time tapped";
 
 // alarms
 NSString* const kHEMAnalyticsEventAlarms = @"Alarms";

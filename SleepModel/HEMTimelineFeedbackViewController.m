@@ -45,6 +45,8 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     [self configureSegmentViews];
     [self configureBarButtonItems];
+    
+    [SENAnalytics track:HEMAnalyticsEventTimelineAdjustTime];
 }
 
 - (void)configureSegmentViews

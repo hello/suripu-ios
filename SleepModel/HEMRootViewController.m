@@ -96,7 +96,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 - (void)viewDidBecomeActive
 {
     [super viewDidBecomeActive];
-    [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
+    [[self alertController] enableSystemMonitoring:[self shouldMonitorSystem]];
     [SENAnalytics track:kHEMAnalyticsEventAppLaunched];
 }
 
@@ -177,8 +177,8 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     self.drawerViewController.gravityMagnitude = 2.5;
     [self hideStatusBar];
     MSDynamicsDrawerShadowStyler* shadowStyler = [MSDynamicsDrawerShadowStyler styler];
-    shadowStyler.shadowRadius = 2.f;
-    shadowStyler.shadowOpacity = 0.08f;
+    shadowStyler.shadowRadius = 3.f;
+    shadowStyler.shadowOpacity = 0.2f;
     [self.drawerViewController addStylersFromArray:@[ [HEMDynamicsStatusStyler styler], shadowStyler ]
                                       forDirection:MSDynamicsDrawerDirectionTop];
     [self.drawerViewController setDrawerViewController:[HEMRootViewController instantiateDrawerViewController]
@@ -240,7 +240,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
                  object:nil];
 }
 
-- (BOOL)shouldMonitorDevices
+- (BOOL)shouldMonitorSystem
 {
     HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
     return [SENAuthorizationService isAuthorized]
@@ -314,7 +314,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     if ([HEMOnboardingUtils hasFinishedOnboarding]) {
         [self showArea:HEMRootAreaTimeline animated:YES];
     }
-    [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
+    [[self alertController] enableSystemMonitoring:[self shouldMonitorSystem]];
 }
 
 - (void)didFinishOnboarding

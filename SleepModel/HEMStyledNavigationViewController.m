@@ -47,4 +47,15 @@
     [self popViewControllerAnimated:YES];
 }
 
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    UIViewController* rootController = [self.viewControllers firstObject];
+    UIView* rootView = rootController.view;
+    while (rootView && ![rootView isKindOfClass:[UIWindow class]]) {
+        if (rootView == gestureRecognizer.view)
+            return NO;
+        rootView = [rootView superview];
+    }
+    return YES;
+}
+
 @end

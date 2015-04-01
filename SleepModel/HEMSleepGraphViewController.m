@@ -18,6 +18,7 @@
 #import "UIView+HEMSnapshot.h"
 #import "HEMSleepEventButton.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
+#import "HEMBounceModalTransition.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMTutorial.h"
@@ -35,6 +36,7 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 @property (nonatomic, strong) NSIndexPath* expandedIndexPath;
 @property (nonatomic, getter=presleepSectionIsExpanded) BOOL presleepExpanded;
 @property (nonatomic, strong) UIPanGestureRecognizer* panGestureRecognizer;
+@property (nonatomic, strong) HEMBounceModalTransition* dataVerifyTransitionDelegate;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* shortcutButtonTrailing;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* shortcutButtonBottom;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* popupViewTop;
@@ -62,6 +64,8 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
     [self configureCollectionView];
     [self reloadData];
     self.animationDelegate = [HEMZoomAnimationTransitionDelegate new];
+    self.dataVerifyTransitionDelegate = [HEMBounceModalTransition new];
+    self.dataVerifyTransitionDelegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
     self.transitioningDelegate = self.animationDelegate;
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan)];
     self.panGestureRecognizer.delegate = self;
@@ -357,6 +361,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 {
     NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
     UINavigationController* navController = [HEMMainStoryboard instantiateTimelineFeedbackViewController];
+    navController.transitioningDelegate = self.dataVerifyTransitionDelegate;
     navController.modalPresentationStyle = UIModalPresentationCustom;
     HEMTimelineFeedbackViewController* feedbackController = (id)navController.topViewController;
     feedbackController.dateForNightOfSleep = self.dateForNightOfSleep;

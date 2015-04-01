@@ -182,6 +182,8 @@ static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
             [self.breakdownSeparatorView layoutIfNeeded];
             self.breakdownSeparatorGradient.frame = self.breakdownSeparatorView.bounds;
         } completion:NULL];
+        
+        [SENAnalytics track:HEMAnalyticsEventSleepScoreBreakdown];
     }];
 }
 

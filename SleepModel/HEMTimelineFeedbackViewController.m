@@ -45,6 +45,8 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     [self configureSegmentViews];
     [self configureBarButtonItems];
+    
+    [SENAnalytics track:HEMAnalyticsEventTimelineAdjustTime];
 }
 
 - (void)configureSegmentViews
@@ -89,23 +91,19 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
     UIBarButtonItem* indicatorItem = [[UIBarButtonItem alloc] initWithCustomView:indicator];
     self.navigationItem.rightBarButtonItems = @[ [items firstObject], indicatorItem ];
     [indicator startAnimating];
-    void (^completion)(NSError*) = ^(NSError* error) {
-        [indicator stopAnimating];
-        if (error) {
-            self.navigationItem.rightBarButtonItems = items;
-            leftItem.enabled = YES;
-            sender.enabled = YES;
-            [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
-                                                    message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
-                                                 controller:self];
-        } else {
-            HEMBounceModalTransition* delegate = [HEMBounceModalTransition new];
-            delegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
-            self.navigationController.transitioningDelegate = delegate;
-            [self dismissViewControllerAnimated:YES completion:NULL];
-            [[NSNotificationCenter defaultCenter] postNotificationName:HEMTimelineFeedbackSuccessNotification
-                                                                object:nil];
-        }
+    void (^completion)(NSError *) = ^(NSError *error) {
+      [indicator stopAnimating];
+      if (error) {
+          self.navigationItem.rightBarButtonItems = items;
+          leftItem.enabled = YES;
+          sender.enabled = YES;
+          [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
+                                                  message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
+                                               controller:self];
+      } else {
+          [self dismissViewControllerAnimated:YES completion:NULL];
+          [[NSNotificationCenter defaultCenter] postNotificationName:HEMTimelineFeedbackSuccessNotification object:nil];
+      }
     };
     [SENAPIFeedback updateSegment:self.segment
                          withHour:self.clockView.hour

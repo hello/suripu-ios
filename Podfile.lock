@@ -36,6 +36,7 @@ PODS:
     - Mixpanel/MPCategoryHelpers (= 2.7.2)
   - Mixpanel/MPCategoryHelpers (2.7.2)
   - MSDynamicsDrawerViewController (1.5.1)
+  - NAPickerView (0.0.1)
   - NSJSONSerialization-NSNullRemoval (1.0.1)
   - SenseKit (0.1.0):
     - SenseKit/Analytics (= 0.1.0)
@@ -81,6 +82,7 @@ DEPENDENCIES:
   - Kiwi
   - LGBluetooth (from `git@github.com:hello/LGBluetooth.git`)
   - MSDynamicsDrawerViewController (= 1.5.1)
+  - NAPickerView (from `git@github.com:hello/NAPickerView.git`)
   - SenseKit (from `git@github.com:hello/SenseKit.git`)
   - SHSProtoBuf (from `git@github.com:hello/protobuf-objc.git`)
   - SORelativeDateTransformer (~> 1.1.10)
@@ -99,6 +101,8 @@ EXTERNAL SOURCES:
     :git: git@github.com:hello/FDWaveformView.git
   LGBluetooth:
     :git: git@github.com:hello/LGBluetooth.git
+  NAPickerView:
+    :git: git@github.com:hello/NAPickerView.git
   SenseKit:
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
@@ -119,6 +123,9 @@ CHECKOUT OPTIONS:
   LGBluetooth:
     :commit: bb9399161f3231e3bb3dddc89aae99018c77cdad
     :git: git@github.com:hello/LGBluetooth.git
+  NAPickerView:
+    :commit: 717c233c241d2d2b407f3c3dd555517bd2e82e29
+    :git: git@github.com:hello/NAPickerView.git
   SenseKit:
     :commit: 46d0b8e471bc1af26b52bafb4c95de151a789ca9
     :git: git@github.com:hello/SenseKit.git
@@ -140,6 +147,7 @@ SPEC CHECKSUMS:
   LGBluetooth: 79ee89969ebb6db8f566c35452aade206ea1d149
   Mixpanel: e9bcb16eb0e2a98fc330ceeb0d8b7f4aec4182ab
   MSDynamicsDrawerViewController: 2874df90f5e9453dc7d4e32f8038b50615d4baa7
+  NAPickerView: cac3bd6f38e36374e53309335e28f4fc9cd93c94
   NSJSONSerialization-NSNullRemoval: 4c50d948b7805807ea8ce690d48e05ee679ef5b7
   SenseKit: 76ba86681697b32a268a4c91d14e4a6cb3edf7a5
   SHSProtoBuf: 89a179d27f35dea460139a630e8ac22378eabbe3

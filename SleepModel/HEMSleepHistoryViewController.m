@@ -33,6 +33,8 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     [self configureCollectionView];
     [self loadData];
     self.historyCollectionView.delegate = self;
+    
+    [SENAnalytics track:HEMAnalyticsEventTimelineZoomOut];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -179,6 +181,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
             [self dismissViewControllerAnimated:YES completion:nil];
         });
     }
+    [SENAnalytics track:HEMAnalyticsEventTimelineZoomIn];
 }
 
 #pragma mark - UIScrollViewDelegate

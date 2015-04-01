@@ -114,6 +114,12 @@
 #define COCOAPODS_VERSION_MINOR_Mixpanel_MPCategoryHelpers 7
 #define COCOAPODS_VERSION_PATCH_Mixpanel_MPCategoryHelpers 2
 
+// NAPickerView
+#define COCOAPODS_POD_AVAILABLE_NAPickerView
+#define COCOAPODS_VERSION_MAJOR_NAPickerView 0
+#define COCOAPODS_VERSION_MINOR_NAPickerView 0
+#define COCOAPODS_VERSION_PATCH_NAPickerView 1
+
 // NSJSONSerialization-NSNullRemoval
 #define COCOAPODS_POD_AVAILABLE_NSJSONSerialization_NSNullRemoval
 #define COCOAPODS_VERSION_MAJOR_NSJSONSerialization_NSNullRemoval 1

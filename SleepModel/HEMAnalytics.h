@@ -122,6 +122,10 @@ extern NSString* const kHEMAnalyticsEventTimelineChanged;
 extern NSString* const kHEMAnalyticsEventTimelineAction;
 extern NSString* const kHEMAnalyticsEventTimelineOpen;
 extern NSString* const kHEMAnalyticsEventTimelineClose;
+extern NSString* const HEMAnalyticsEventSleepScoreBreakdown;
+extern NSString* const HEMAnalyticsEventTimelineZoomOut;
+extern NSString* const HEMAnalyticsEventTimelineZoomIn;
+extern NSString* const HEMAnalyticsEventTimelineAdjustTime;
 
 // alarms
 extern NSString* const kHEMAnalyticsEventAlarms;

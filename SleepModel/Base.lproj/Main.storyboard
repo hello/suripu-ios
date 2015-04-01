@@ -2093,7 +2093,7 @@
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="AM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2r6-zA-JWU">
-                                                    <rect key="frame" x="87" y="58" width="26" height="22"/>
+                                                    <rect key="frame" x="90" y="58" width="26" height="22"/>
                                                     <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="16"/>
                                                     <color key="textColor" red="0.5" green="0.5" blue="0.5" alpha="1" colorSpace="deviceRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -2110,7 +2110,7 @@
                                             <constraint firstItem="tbK-mA-0ly" firstAttribute="top" secondItem="qn6-Ss-e8C" secondAttribute="top" constant="16" id="hy2-3c-Cdg"/>
                                             <constraint firstAttribute="trailing" secondItem="6IN-Cs-tBU" secondAttribute="trailing" constant="16" id="swi-yE-jda"/>
                                             <constraint firstItem="RM9-XI-qde" firstAttribute="centerY" secondItem="2r6-zA-JWU" secondAttribute="centerY" constant="-5.5" id="uWE-bk-gxt"/>
-                                            <constraint firstItem="2r6-zA-JWU" firstAttribute="leading" secondItem="RM9-XI-qde" secondAttribute="trailing" id="zy9-zb-T6U"/>
+                                            <constraint firstItem="2r6-zA-JWU" firstAttribute="leading" secondItem="RM9-XI-qde" secondAttribute="trailing" constant="3" id="zy9-zb-T6U"/>
                                         </constraints>
                                         <connections>
                                             <outlet property="enabledSwitch" destination="6IN-Cs-tBU" id="XuJ-hB-PHs"/>

@@ -46,6 +46,7 @@
 		8A1E723919D62C26007475D3 /* alarmSoundIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1E723119D62C26007475D3 /* alarmSoundIcon@2x.png */; };
 		8A28235A1A9686E200438B59 /* HEMAudioPlayerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A2823591A9686E200438B59 /* HEMAudioPlayerView.m */; };
 		8A28CAFF19CB95E40044A27D /* HEMNotificationHandler.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A28CAFE19CB95E40044A27D /* HEMNotificationHandler.m */; };
+		8A37764F1ACA26A80074D5C8 /* HEMSwitchControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A37764E1ACA26A80074D5C8 /* HEMSwitchControl.m */; };
 		8A391FCA1A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A391FC91A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m */; };
 		8A45797F1A805603009A7863 /* welcome_dialog_humidity.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A45796D1A805603009A7863 /* welcome_dialog_humidity.png */; };
 		8A4579801A805603009A7863 /* welcome_dialog_humidity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A45796E1A805603009A7863 /* welcome_dialog_humidity@2x.png */; };
@@ -653,6 +654,8 @@
 		8A2823591A9686E200438B59 /* HEMAudioPlayerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAudioPlayerView.m; sourceTree = "<group>"; };
 		8A28CAFD19CB95E40044A27D /* HEMNotificationHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMNotificationHandler.h; sourceTree = "<group>"; };
 		8A28CAFE19CB95E40044A27D /* HEMNotificationHandler.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMNotificationHandler.m; sourceTree = "<group>"; };
+		8A37764D1ACA26A80074D5C8 /* HEMSwitchControl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSwitchControl.h; sourceTree = "<group>"; };
+		8A37764E1ACA26A80074D5C8 /* HEMSwitchControl.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSwitchControl.m; sourceTree = "<group>"; };
 		8A391FC81A39352F0090992A /* HEMZoomAnimationTransitionDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMZoomAnimationTransitionDelegate.h; sourceTree = "<group>"; };
 		8A391FC91A39352F0090992A /* HEMZoomAnimationTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMZoomAnimationTransitionDelegate.m; sourceTree = "<group>"; };
 		8A45796D1A805603009A7863 /* welcome_dialog_humidity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = welcome_dialog_humidity.png; path = images/welcome_dialog_humidity.png; sourceTree = "<group>"; };
@@ -2660,6 +2663,8 @@
 				BF1E2E711A02BFC400DDD0D0 /* HEMPagingFlowLayout.m */,
 				BF90E2B61A854F6B00816BC1 /* HEMURLImageView.h */,
 				BF90E2B71A854F6B00816BC1 /* HEMURLImageView.m */,
+				8A37764D1ACA26A80074D5C8 /* HEMSwitchControl.h */,
+				8A37764E1ACA26A80074D5C8 /* HEMSwitchControl.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3413,6 +3418,7 @@
 				BFF3B4501A5E208B00B11643 /* HEMDeviceActionCollectionViewCell.m in Sources */,
 				8AB2684719CCFF8800017818 /* HEMAlarmUtils.m in Sources */,
 				BF98FC391A9BB29D00AEC04C /* HEMConfig.m in Sources */,
+				8A37764F1ACA26A80074D5C8 /* HEMSwitchControl.m in Sources */,
 				BFC3BE9F1A722BEB0022C6C2 /* HEMHelpFooterView.m in Sources */,
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,
 				BF90E2BB1A8578E900816BC1 /* HEMImageCollectionViewCell.m in Sources */,

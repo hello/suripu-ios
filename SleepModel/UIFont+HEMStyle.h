@@ -15,6 +15,8 @@
  */
 + (UIFont*)alarmNumberFont;
 
++ (UIFont*)alarmSelectedNumberFont;
+
 /**
  *  Alarm picker view meridiem font
  */

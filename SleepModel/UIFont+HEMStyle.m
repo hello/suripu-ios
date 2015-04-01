@@ -27,7 +27,12 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)alarmNumberFont
 {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:50.f];
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:28.f];
+}
+
++ (UIFont*)alarmSelectedNumberFont
+{
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:56.f];
 }
 
 + (UIFont*)insightTitleFont

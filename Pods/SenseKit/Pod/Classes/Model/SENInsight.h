@@ -3,10 +3,11 @@
 
 @interface SENInsight : NSObject <NSCoding>
 
-@property (nonatomic, copy) NSDate* dateCreated;
-@property (nonatomic, copy) NSString* title;
-@property (nonatomic, copy) NSString* message;
-@property (nonatomic, copy) NSString* category;
+@property (nonatomic, strong, readonly) NSDate* dateCreated;
+@property (nonatomic, copy, readonly)   NSString* title;
+@property (nonatomic, copy, readonly)   NSString* message;
+@property (nonatomic, copy, readonly)   NSString* category;
+@property (nonatomic, copy, readonly)   NSString* infoPreview;
 
 - (instancetype)initWithDictionary:(NSDictionary*)dict;
 

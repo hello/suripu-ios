@@ -96,7 +96,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 - (void)viewDidBecomeActive
 {
     [super viewDidBecomeActive];
-    [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
+    [[self alertController] enableSystemMonitoring:[self shouldMonitorSystem]];
     [SENAnalytics track:kHEMAnalyticsEventAppLaunched];
 }
 
@@ -240,7 +240,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
                  object:nil];
 }
 
-- (BOOL)shouldMonitorDevices
+- (BOOL)shouldMonitorSystem
 {
     HEMOnboardingCheckpoint checkpoint = [HEMOnboardingUtils onboardingCheckpoint];
     return [SENAuthorizationService isAuthorized]
@@ -314,7 +314,7 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     if ([HEMOnboardingUtils hasFinishedOnboarding]) {
         [self showArea:HEMRootAreaTimeline animated:YES];
     }
-    [[self alertController] enableDeviceMonitoring:[self shouldMonitorDevices]];
+    [[self alertController] enableSystemMonitoring:[self shouldMonitorSystem]];
 }
 
 - (void)didFinishOnboarding

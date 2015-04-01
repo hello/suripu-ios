@@ -12,6 +12,6 @@
 
 - (instancetype)initWithViewController:(UIViewController*)viewController;
 
-- (void)enableDeviceMonitoring:(BOOL)enable;
+- (void)enableSystemMonitoring:(BOOL)enable;
 
 @end

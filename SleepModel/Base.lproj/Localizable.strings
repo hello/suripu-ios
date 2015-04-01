@@ -483,7 +483,9 @@
 "date.elapsed.weeks.format" = "%ldw";
 "date.elapsed.years.format" = "%ldy";
 
-// device alerts
+// alerts
+"alerts.timezone.title" = "Time Zone";
+"alerts.timezone.message" = "Your account is currently not set up with a time zone required to calculate your sleep data.";
 "alerts.device.no-sense.title" = "Sense Not Paired";
 "alerts.device.no-sense.message" = "Your account does not have a Sense paired. Sense is required to track your sleep behavior.";
 "alerts.device.sense-last-seen.title" = "Sense";

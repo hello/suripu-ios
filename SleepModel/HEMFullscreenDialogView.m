@@ -20,9 +20,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property (weak, nonatomic) IBOutlet UIView *shadowView;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cardTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cardBottomConstraint;
+
 @property (strong, nonatomic) NSArray *contents;
 @property (nonatomic) NSUInteger selectedIndex;
 @property (strong, nonatomic) UISwipeGestureRecognizer *previousGestureRecognizer;
@@ -35,6 +39,7 @@
 
 @implementation HEMFullscreenDialogView
 
+static CGFloat const HEMFullscreenDialogDefaultCardSpacing = 60.f;
 static CGFloat const HEMFullscreenDialogCornerRadius = 2.f;
 static CGFloat const HEMFullscreenDialogLineSpacing = 6.f;
 static HEMFullscreenDialogView *fullscreenDialogView = nil;
@@ -45,10 +50,7 @@ static HEMFullscreenDialogView *fullscreenDialogView = nil;
     fullscreenDialogView = [self createDialogView];
     fullscreenDialogView.contents = contents;
     [fullscreenDialogView start];
-    [UIView animateWithDuration:0.25f
-                     animations:^{
-                       fullscreenDialogView.alpha = 1;
-                     }];
+    [UIView animateWithDuration:0.25f animations:^{ fullscreenDialogView.alpha = 1; }];
 }
 
 + (HEMFullscreenDialogView *)createDialogView {
@@ -78,6 +80,10 @@ static HEMFullscreenDialogView *fullscreenDialogView = nil;
                 forControlEvents:UIControlEventTouchUpInside];
     [self.pageControl addTarget:self action:@selector(changeSelectedPage:) forControlEvents:UIControlEventValueChanged];
     [self configureGestureRecognizers];
+    CGFloat height = CGRectGetHeight([[UIScreen mainScreen] bounds]);
+    self.cardTopConstraint.constant = height;
+    self.cardBottomConstraint.constant = -(height - (HEMFullscreenDialogDefaultCardSpacing * 2));
+    [self setNeedsUpdateConstraints];
 }
 
 - (void)configureGestureRecognizers {
@@ -97,12 +103,8 @@ static HEMFullscreenDialogView *fullscreenDialogView = nil;
     } else {
         __weak typeof(self) weakSelf = self;
         [UIView animateWithDuration:0.25f
-            animations:^{
-              weakSelf.alpha = 0;
-            }
-            completion:^(BOOL finished) {
-              [weakSelf removeFromSuperview];
-            }];
+            animations:^{ weakSelf.alpha = 0; }
+            completion:^(BOOL finished) { [weakSelf removeFromSuperview]; }];
         fullscreenDialogView = nil;
     }
 }
@@ -142,7 +144,16 @@ static HEMFullscreenDialogView *fullscreenDialogView = nil;
     NSString *buttonTitle = NSLocalizedString(buttonKey, nil);
     [self.actionButton setTitle:[buttonTitle uppercaseString] forState:UIControlStateNormal];
     [self updateDialogWithTitle:title message:message image:content.image];
-    [self setNeedsUpdateConstraints];
+    if (self.cardBottomConstraint.constant != HEMFullscreenDialogDefaultCardSpacing) {
+        __weak typeof(self) weakSelf = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+          __strong typeof(weakSelf) strongSelf = weakSelf;
+          strongSelf.cardTopConstraint.constant = HEMFullscreenDialogDefaultCardSpacing;
+          strongSelf.cardBottomConstraint.constant = HEMFullscreenDialogDefaultCardSpacing;
+          [strongSelf setNeedsUpdateConstraints];
+          [UIView animateWithDuration:0.25f animations:^{ [strongSelf.contentContainerView layoutIfNeeded]; }];
+        });
+    } else { [self setNeedsUpdateConstraints]; }
 }
 
 - (void)updateDialogWithTitle:(NSAttributedString *)title message:(NSAttributedString *)message image:(UIImage *)image {
@@ -168,9 +179,7 @@ static HEMFullscreenDialogView *fullscreenDialogView = nil;
                 self.textView.alpha = 1;
                 if (hasScrollableContent) {
                     [self showShadow];
-                } else {
-                    [self hideShadow];
-                }
+                } else { [self hideShadow]; }
               }
               completion:^(BOOL finished) {
                 if (hasScrollableContent)
@@ -201,9 +210,7 @@ static HEMFullscreenDialogView *fullscreenDialogView = nil;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView.contentOffset.y + CGRectGetHeight(scrollView.bounds) == scrollView.contentSize.height) {
         [self hideShadow];
-    } else {
-        [self showShadow];
-    }
+    } else { [self showShadow]; }
 }
 
 - (void)showShadow {

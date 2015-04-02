@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.4.5
+
+Fixes:
+
+* back view icons were reversed
+
 ## 1.0.4.4
 
 New:

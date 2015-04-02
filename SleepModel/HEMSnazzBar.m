@@ -117,7 +117,7 @@ static CGFloat const HEMSnazzBarIndicatorHeight = 1.f;
     [button setImage:image forState:UIControlStateNormal];
     [button setImage:selectedImage forState:UIControlStateSelected];
     [button addTarget:self action:@selector(buttonPressed:) forControlEvents:UIControlEventTouchUpInside];
-    [self insertSubview:button atIndex:0];
+    [self addSubview:button];
     [self setNeedsLayout];
 }
 

@@ -20,9 +20,9 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
 
 @interface HEMSettingsTableViewCell ()
 
-@property (nonatomic, weak) CAShapeLayer* contentLayer;
-@property (nonatomic, strong) UIActivityIndicatorView* activityView;
-
+@property (nonatomic, weak) CAShapeLayer *contentLayer;
+@property (nonatomic, weak) CAShapeLayer *borderLayer;
+@property (nonatomic, strong) UIActivityIndicatorView *activityView;
 @end
 
 @implementation HEMSettingsTableViewCell
@@ -58,19 +58,23 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
 
     [self setContentLayer:layer];
     [[self layer] insertSublayer:layer atIndex:0];
+    CAShapeLayer *borderLyer = [CAShapeLayer layer];
+    [borderLyer setFillColor:[[HelloStyleKit cardBorderColor] CGColor]];
+    self.borderLayer = borderLyer;
+    [self.layer insertSublayer:borderLyer atIndex:0];
 }
 
 - (void)addSeparator {
-    if ([self separator] != nil) return;
-    
+    if ([self separator] != nil)
+        return;
+
     CGFloat x = CGRectGetMinX([[self titleLabel] frame]);
     CGRect separatorFrame
         = { x, CGRectGetHeight([self bounds]) - HEMSettingsCellSeparatorSize,
             CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x, HEMSettingsCellSeparatorSize };
     UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
     [separator setBackgroundColor:[HelloStyleKit separatorColor]];
-    [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth
-                                   | UIViewAutoresizingFlexibleTopMargin];
+    [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
     [self setSeparator:separator];
     [[self contentView] addSubview:separator];
 }
@@ -82,7 +86,7 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    
+
     CGRect separatorFrame = [[self separator] frame];
     separatorFrame.origin.x = CGRectGetMinX([[self titleLabel] frame]);
     [[self separator] setFrame:separatorFrame];
@@ -90,10 +94,21 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
 
 - (void)roundContentLayerCorners:(UIRectCorner)corners {
     CGSize cornerRadii = CGSizeMake(HEMSettingsCellCornerRadius, HEMSettingsCellCornerRadius);
-    CGPathRef path = [[UIBezierPath bezierPathWithRoundedRect:[self layerFrame]
-                                            byRoundingCorners:corners
-                                                  cornerRadii:cornerRadii] CGPath];
-    [[self contentLayer] setPath:path];
+    CGRect contentFrame = [self layerFrame];
+    CGPathRef contentPath = [
+        [UIBezierPath bezierPathWithRoundedRect:contentFrame byRoundingCorners:corners cornerRadii:cornerRadii] CGPath];
+    [[self contentLayer] setPath:contentPath];
+    CGRect borderFrame = CGRectInset(contentFrame, -1.f, 0);
+    if ((corners & (UIRectCornerTopLeft | UIRectCornerTopRight)) != 0) {
+        borderFrame.origin.y -= 1;
+        borderFrame.size.height += 1;
+    }
+    if ((corners & (UIRectCornerBottomLeft | UIRectCornerBottomRight)) != 0) {
+        borderFrame.size.height += 1;
+    }
+    CGPathRef borderPath =
+        [[UIBezierPath bezierPathWithRoundedRect:borderFrame byRoundingCorners:corners cornerRadii:cornerRadii] CGPath];
+    [[self borderLayer] setPath:borderPath];
 }
 
 - (void)showShadow:(BOOL)isVisible {
@@ -104,9 +119,7 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
         layer.shadowOpacity = 1.f;
         layer.shadowRadius = shadow.shadowBlurRadius;
         layer.shadowColor = [shadow.shadowColor CGColor];
-    } else {
-        layer.shadowOpacity = 0;
-    }
+    } else { layer.shadowOpacity = 0; }
 }
 
 - (void)showTopCorners {
@@ -122,7 +135,7 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
 }
 
 - (void)showNoCorners {
-    [[self contentLayer] setPath:[[UIBezierPath bezierPathWithRect:[self layerFrame]] CGPath]];
+    [self roundContentLayerCorners:0];
     [self showShadow:NO];
     [[self separator] setHidden:NO];
 }

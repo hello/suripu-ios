@@ -1,7 +1,5 @@
 
-#import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/Model.h>
-#import <SenseKit/SENAPIRoom.h>
+#import <SenseKit/SenseKit.h>
 #import <BEMSimpleLineGraph/BEMSimpleLineGraphView.h>
 
 #import "HEMCurrentConditionsViewController.h"
@@ -13,9 +11,14 @@
 #import "UIColor+HEMStyle.h"
 #import "UIFont+HEMStyle.h"
 #import "HEMTutorial.h"
+#import "HEMNoDeviceCollectionViewCell.h"
+#import "HEMSensePairViewController.h"
+#import "HEMOnboardingStoryboard.h"
+#import "HEMStyledNavigationViewController.h"
+#import "HEMActionButton.h"
 
 @interface HEMCurrentConditionsViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
-                                                  UICollectionViewDelegateFlowLayout>
+                                                  UICollectionViewDelegateFlowLayout, HEMSensePairingDelegate>
 @property (nonatomic, strong) NSArray *sensors;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
 @property (nonatomic, strong) NSTimer *refreshTimer;
@@ -23,6 +26,7 @@
 @property (nonatomic) CGFloat refreshRate;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic) BOOL shouldReload;
+@property (nonatomic, getter=hasNoSense) BOOL noSense;
 @property (nonatomic, strong) NSDate *lastRefreshDate;
 @end
 
@@ -31,6 +35,7 @@
 static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 10.f;
 static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
+static CGFloat const HEMCurrentConditionsPairViewHeight = 205.0f;
 static NSUInteger const HEMConditionGraphPointLimit = 30;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -133,10 +138,41 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 - (void)refreshSensors {
     if (![SENAuthorizationService isAuthorized])
         return;
+    self.noSense = NO;
+    SENServiceDevice *service = [SENServiceDevice sharedService];
+    if ([service isInfoLoaded]) {
+        [self checkDeviceInfoForSenseAndRefresh];
+    } else {
+        [service loadDeviceInfo:^(NSError *error) {
+          if (error) {
+              self.noSense = NO;
+              self.loading = NO;
+              [self.collectionView reloadData];
+          } else { [self checkDeviceInfoForSenseAndRefresh]; }
+        }];
+    }
+}
+
+- (void)checkDeviceInfoForSenseAndRefresh {
+    SENServiceDevice *service = [SENServiceDevice sharedService];
+    self.noSense = service.senseInfo == nil;
+    if ([self hasNoSense]) {
+        self.noSense = YES;
+        self.loading = NO;
+        self.sensors = nil;
+        HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+        [layout clearCache];
+        [self.collectionView reloadData];
+    } else { [self updateSensorsFromCache]; }
+}
+
+- (void)updateSensorsFromCache {
     DDLogVerbose(@"Refreshing sensor data (rate: %f)", self.refreshRate);
     NSArray *cachedSensors = [self sortedCachedSensors];
     if (![self.sensors isEqualToArray:cachedSensors]) {
         self.sensors = cachedSensors;
+        HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+        [layout clearCache];
         [self.collectionView reloadData];
         if ([self isViewLoaded] && self.view.window)
             [HEMTutorial showTutorialForSensorsIfNeeded];
@@ -253,6 +289,28 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     [self.refreshTimer invalidate];
 }
 
+#pragma mark - Pairing Sense
+
+- (IBAction)pairSense:(id)sender {
+    HEMSensePairViewController *pairVC
+        = (HEMSensePairViewController *)[HEMOnboardingStoryboard instantiateSensePairViewController];
+    [pairVC setDelegate:self];
+    UINavigationController *nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark HEMSensePairDelegate
+
+- (void)didPairSenseUsing:(SENSenseManager *)senseManager from:(UIViewController *)controller {
+    [self refreshSensors];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didSetupWiFiForPairedSense:(SENSenseManager *)senseManager from:(UIViewController *)controller {
+    [self refreshSensors];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - UICollectionView
 
 - (void)configureCollectionView {
@@ -290,14 +348,26 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = [HEMMainStoryboard sensorGraphCellReuseIdentifier];
-    HEMSensorGraphCollectionViewCell *cell =
-        [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    if ([self hasNoSense]) {
+        NSString *identifier = [HEMMainStoryboard pairReuseIdentifier];
+        HEMNoDeviceCollectionViewCell *cell =
+            [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+        cell.iconImageView.image = [HelloStyleKit senseIcon];
+        cell.nameLabel.text = NSLocalizedString(@"settings.device.sense", nil);
+        cell.messageLabel.text = NSLocalizedString(@"settings.device.no-sense", nil);
+        [cell.actionButton setTitle:NSLocalizedString(@"settings.device.button.title.pair-sense", nil)
+                           forState:UIControlStateNormal];
+        return cell;
+    } else {
+        NSString *identifier = [HEMMainStoryboard sensorGraphCellReuseIdentifier];
+        HEMSensorGraphCollectionViewCell *cell =
+            [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
 
-    if (self.sensors.count > indexPath.row) {
-        [self configureSensorCell:cell forItemAtIndexPath:indexPath];
-    } else { [self configureNoSensorsCell:cell]; }
-    return cell;
+        if (self.sensors.count > indexPath.row) {
+            [self configureSensorCell:cell forItemAtIndexPath:indexPath];
+        } else { [self configureNoSensorsCell:cell]; }
+        return cell;
+    }
 }
 
 - (void)configureSensorCell:(HEMSensorGraphCollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
@@ -363,6 +433,15 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.sensors.count > indexPath.row)
         [self openDetailViewForSensor:self.sensors[indexPath.item]];
+}
+
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                    layout:(UICollectionViewLayout *)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGSize defaultSize = ((UICollectionViewFlowLayout *)collectionViewLayout).itemSize;
+    if ([self hasNoSense])
+        return CGSizeMake(defaultSize.width, HEMCurrentConditionsPairViewHeight);
+    return defaultSize;
 }
 
 @end

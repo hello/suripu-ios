@@ -2725,6 +2725,74 @@
                                             <outlet property="statusLabel" destination="bEK-bM-6TS" id="bnT-d0-aIu"/>
                                         </connections>
                                     </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pair" id="VGs-ap-Mnm" customClass="HEMNoDeviceCollectionViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="560" height="205"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="senseIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="7LE-py-rFj">
+                                                    <rect key="frame" x="16" y="16" width="36" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="36" id="EDi-ja-V6Q"/>
+                                                        <constraint firstAttribute="height" constant="36" id="IAY-gI-phV"/>
+                                                    </constraints>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ir5-2m-A4Z">
+                                                    <rect key="frame" x="68" y="16" width="476" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="36" id="7xS-oS-p3s"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Tzb-fH-BSr" customClass="HEMActionButton">
+                                                    <rect key="frame" x="16" y="142" width="528" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="8qH-Ud-V5g"/>
+                                                    </constraints>
+                                                    <state key="normal" title="PAIR A SENSE">
+                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="pairSense:" destination="kT5-aR-lha" eventType="touchUpInside" id="Ccf-SW-T1e"/>
+                                                    </connections>
+                                                </button>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You don't currently have a Sense connected to your account." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hao-nF-lYk">
+                                                    <rect key="frame" x="16" y="76" width="528" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="tpu-tJ-LCj"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="13"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <constraints>
+                                            <constraint firstItem="Tzb-fH-BSr" firstAttribute="leading" secondItem="VGs-ap-Mnm" secondAttribute="leadingMargin" constant="8" id="AWX-Xz-ser"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="hao-nF-lYk" secondAttribute="trailing" constant="8" id="SLZ-Gl-mle"/>
+                                            <constraint firstItem="hao-nF-lYk" firstAttribute="leading" secondItem="VGs-ap-Mnm" secondAttribute="leadingMargin" constant="8" id="ST4-nl-Uno"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="Tzb-fH-BSr" secondAttribute="bottom" constant="15" id="d1l-KL-0yd"/>
+                                            <constraint firstItem="ir5-2m-A4Z" firstAttribute="top" secondItem="VGs-ap-Mnm" secondAttribute="topMargin" constant="8" id="dQZ-2c-fVO"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="ir5-2m-A4Z" secondAttribute="trailing" constant="8" id="hig-fG-x8U"/>
+                                            <constraint firstItem="7LE-py-rFj" firstAttribute="top" secondItem="VGs-ap-Mnm" secondAttribute="topMargin" constant="8" id="hnM-g2-wCy"/>
+                                            <constraint firstItem="7LE-py-rFj" firstAttribute="bottom" secondItem="hao-nF-lYk" secondAttribute="top" constant="-24" id="n4b-KL-xLV"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="Tzb-fH-BSr" secondAttribute="trailing" constant="8" id="t0p-ds-cKM"/>
+                                            <constraint firstItem="ir5-2m-A4Z" firstAttribute="leading" secondItem="7LE-py-rFj" secondAttribute="trailing" constant="16" id="wVG-iZ-Lw4"/>
+                                            <constraint firstItem="7LE-py-rFj" firstAttribute="leading" secondItem="VGs-ap-Mnm" secondAttribute="leadingMargin" constant="8" id="yrf-hR-dTu"/>
+                                        </constraints>
+                                        <size key="customSize" width="560" height="205"/>
+                                        <connections>
+                                            <outlet property="iconImageView" destination="7LE-py-rFj" id="bwQ-gw-gRT"/>
+                                            <outlet property="messageLabel" destination="hao-nF-lYk" id="Luf-wK-oW1"/>
+                                            <outlet property="nameLabel" destination="ir5-2m-A4Z" id="WnT-59-SwR"/>
+                                        </connections>
+                                    </collectionViewCell>
                                 </cells>
                                 <connections>
                                     <outlet property="dataSource" destination="kT5-aR-lha" id="7oo-tF-oEp"/>

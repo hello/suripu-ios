@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.4.4
+
+New:
+
+* updated insights visual design
+* removed sharing of insights
+* updated alarm visual design
+* if time zone is not properly set for your account, an alert will be shown
+* updated copy
+* added additional timeline analytics
+
+Fixes:
+
+* resolved issue with the app showing a black screen after adjusting timeline time on devices running iOS 7.1.  Does not affect other iOS versions.
+* prevent app from freezing if trying to swipe to go back from the alarm view
+
 ## 1.0.4.3
 
 New:

@@ -14,15 +14,16 @@
 #import "UIFont+HEMStyle.h"
 #import "HEMTutorial.h"
 
-@interface HEMCurrentConditionsViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
-@property (nonatomic, strong) NSArray* sensors;
+@interface HEMCurrentConditionsViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
+                                                  UICollectionViewDelegateFlowLayout>
+@property (nonatomic, strong) NSArray *sensors;
 @property (nonatomic, assign, getter=isLoading) BOOL loading;
-@property (nonatomic, strong) NSTimer* refreshTimer;
-@property (nonatomic, strong) NSMutableDictionary* sensorGraphData;
+@property (nonatomic, strong) NSTimer *refreshTimer;
+@property (nonatomic, strong) NSMutableDictionary *sensorGraphData;
 @property (nonatomic) CGFloat refreshRate;
-@property (nonatomic, weak) IBOutlet UICollectionView* collectionView;
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic) BOOL shouldReload;
-@property (nonatomic, strong) NSDate* lastRefreshDate;
+@property (nonatomic, strong) NSDate *lastRefreshDate;
 @end
 
 @implementation HEMCurrentConditionsViewController
@@ -41,8 +42,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     return self;
 }
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self configureCollectionView];
     self.loading = YES;
@@ -64,18 +64,18 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     [SENAnalytics track:kHEMAnalyticsEventCurrentConditions];
 }
 
-- (void)viewDidDisappear:(BOOL)animated
-{
+- (void)viewDidDisappear:(BOOL)animated {
     [self invalidateTimers];
     [super viewDidDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SENAPIReachableNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SENSensorsUpdatedNotification object:nil];
     [[NSNotificationCenter defaultCenter] removeObserver:self name:SENSensorUpdateFailedNotification object:nil];
-    [[NSNotificationCenter defaultCenter] removeObserver:self name:SENAuthorizationServiceDidAuthorizeNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:SENAuthorizationServiceDidAuthorizeNotification
+                                                  object:nil];
 }
 
-- (void)didReceiveMemoryWarning
-{
+- (void)didReceiveMemoryWarning {
     if (![self isViewLoaded] || !self.view.window) {
         self.shouldReload = YES;
         self.sensors = nil;
@@ -83,15 +83,10 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     [super didReceiveMemoryWarning];
 }
 
-- (void)registerForNotifications
-{
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center addObserver:self
-               selector:@selector(refreshSensors)
-                   name:SENSensorsUpdatedNotification object:nil];
-    [center addObserver:self
-               selector:@selector(refreshSensors)
-                   name:SENAPIReachableNotification object:nil];
+- (void)registerForNotifications {
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self selector:@selector(refreshSensors) name:SENSensorsUpdatedNotification object:nil];
+    [center addObserver:self selector:@selector(refreshSensors) name:SENAPIReachableNotification object:nil];
     [center addObserver:self
                selector:@selector(failedToRefreshSensors)
                    name:SENSensorUpdateFailedNotification
@@ -110,24 +105,19 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
                  object:[SENPreference nameFromType:SENPreferenceTypeTempCelcius]];
 }
 
-- (void)tempFormatDidChange
-{
+- (void)tempFormatDidChange {
     if ([self isViewLoaded] && self.view.window) {
         [self reloadData];
-    } else {
-        self.shouldReload = YES;
-    }
+    } else { self.shouldReload = YES; }
 }
 
-- (void)handleSignOut
-{
+- (void)handleSignOut {
     [self invalidateTimers];
     self.sensors = nil;
     self.shouldReload = YES;
 }
 
-- (void)dealloc
-{
+- (void)dealloc {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_collectionView setDelegate:nil];
     [_collectionView setDataSource:nil];
@@ -135,18 +125,16 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 
 #pragma mark - Data Loading
 
-- (void)refreshCachedSensors
-{
+- (void)refreshCachedSensors {
     [self setLoading:YES];
     [SENSensor refreshCachedSensors];
 }
 
-- (void)refreshSensors
-{
+- (void)refreshSensors {
     if (![SENAuthorizationService isAuthorized])
         return;
     DDLogVerbose(@"Refreshing sensor data (rate: %f)", self.refreshRate);
-    NSArray* cachedSensors = [self sortedCachedSensors];
+    NSArray *cachedSensors = [self sortedCachedSensors];
     if (![self.sensors isEqualToArray:cachedSensors]) {
         self.sensors = cachedSensors;
         [self.collectionView reloadData];
@@ -159,9 +147,8 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     [self setLoading:NO];
 }
 
-- (void)updateSensorRefreshInterval
-{
-    NSMutableArray* values = [[self.sensors valueForKey:NSStringFromSelector(@selector(value))] mutableCopy];
+- (void)updateSensorRefreshInterval {
+    NSMutableArray *values = [[self.sensors valueForKey:NSStringFromSelector(@selector(value))] mutableCopy];
     [values removeObject:[NSNull null]];
     if (values.count == 0)
         [self configureFailureRefreshTimer];
@@ -169,54 +156,55 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
         [self configureRefreshTimer];
 }
 
-- (NSArray*)sortedCachedSensors
-{
-    return [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor* obj1, SENSensor* obj2) {
-        return [@([self indexForSensor:obj1]) compare:@([self indexForSensor:obj2])];
+- (NSArray *)sortedCachedSensors {
+    return [[SENSensor sensors] sortedArrayUsingComparator:^NSComparisonResult(SENSensor *obj1, SENSensor *obj2) {
+      return [@([self indexForSensor:obj1]) compare:@([self indexForSensor:obj2])];
     }];
 }
 
-- (NSUInteger)indexForSensor:(SENSensor*)sensor
-{
+- (NSUInteger)indexForSensor:(SENSensor *)sensor {
     switch (sensor.unit) {
-        case SENSensorUnitDegreeCentigrade: return 0;
-        case SENSensorUnitPercent: return 1;
-        case SENSensorUnitAQI: return 2;
-        case SENSensorUnitLux: return 3;
-        case SENSensorUnitDecibel: return 4;
+        case SENSensorUnitDegreeCentigrade:
+            return 0;
+        case SENSensorUnitPercent:
+            return 1;
+        case SENSensorUnitAQI:
+            return 2;
+        case SENSensorUnitLux:
+            return 3;
+        case SENSensorUnitDecibel:
+            return 4;
         case SENSensorUnitUnknown:
         default:
             return 5;
     }
 }
 
-- (void)fetchGraphData
-{
+- (void)fetchGraphData {
     __weak typeof(self) weakSelf = self;
-    [SENAPIRoom historicalConditionsForLast24HoursWithCompletion:^(NSDictionary* data, NSError *error) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (error) {
-            strongSelf.sensorGraphData = [[NSMutableDictionary alloc] init];
-            [strongSelf reloadData];
-        } else {
-            __block NSMutableDictionary* graphData = [[NSMutableDictionary alloc] initWithCapacity:data.count];
-            [data enumerateKeysAndObjectsUsingBlock:^(NSString* key, NSArray* points, BOOL *stop) {
-                [graphData setValue:[self filteredPointsFromData:points] forKey:key];
-            }];
-            if (![graphData isEqual:strongSelf.sensorGraphData]) {
-                strongSelf.sensorGraphData = graphData;
-                [strongSelf reloadData];
-            }
-        }
+    [SENAPIRoom historicalConditionsForLast24HoursWithCompletion:^(NSDictionary *data, NSError *error) {
+      __strong typeof(weakSelf) strongSelf = weakSelf;
+      if (error) {
+          strongSelf.sensorGraphData = [[NSMutableDictionary alloc] init];
+          [strongSelf reloadData];
+      } else {
+          __block NSMutableDictionary *graphData = [[NSMutableDictionary alloc] initWithCapacity:data.count];
+          [data enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSArray *points, BOOL *stop) {
+            [graphData setValue:[self filteredPointsFromData:points] forKey:key];
+          }];
+          if (![graphData isEqual:strongSelf.sensorGraphData]) {
+              strongSelf.sensorGraphData = graphData;
+              [strongSelf reloadData];
+          }
+      }
     }];
 }
 
-- (NSArray*)filteredPointsFromData:(NSArray*)data
-{
+- (NSArray *)filteredPointsFromData:(NSArray *)data {
     if (data.count > HEMConditionGraphPointLimit) {
         NSRange range = NSMakeRange(data.count - HEMConditionGraphPointLimit, HEMConditionGraphPointLimit);
-        NSArray* filteredData = [data subarrayWithRange:range];
-        SENSensorDataPoint* point = [data lastObject];
+        NSArray *filteredData = [data subarrayWithRange:range];
+        SENSensorDataPoint *point = [data lastObject];
         if ([point.value floatValue] == 0) {
             range.length -= 1;
             filteredData = [data subarrayWithRange:range];
@@ -226,33 +214,28 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     return data;
 }
 
-- (void)failedToRefreshSensors
-{
+- (void)failedToRefreshSensors {
     [self setLoading:NO];
     [self.collectionView reloadData];
 }
 
-- (void)reloadData
-{
+- (void)reloadData {
     [self.collectionView reloadData];
 }
 
 #pragma mark Refresh Timer
 
-- (void)configureRefreshTimer
-{
+- (void)configureRefreshTimer {
     self.refreshRate = HEMCurrentConditionsRefreshIntervalInSeconds;
     [self updateTimer];
 }
 
-- (void)configureFailureRefreshTimer
-{
+- (void)configureFailureRefreshTimer {
     self.refreshRate = MIN(HEMCurrentConditionsRefreshIntervalInSeconds, self.refreshRate * 2);
     [self updateTimer];
 }
 
-- (void)updateTimer
-{
+- (void)updateTimer {
     [self invalidateTimers];
     self.refreshTimer = [NSTimer scheduledTimerWithTimeInterval:self.refreshRate
                                                          target:self
@@ -266,36 +249,32 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     [self refreshCachedSensors];
 }
 
-- (void)invalidateTimers
-{
+- (void)invalidateTimers {
     [self.refreshTimer invalidate];
 }
 
 #pragma mark - UICollectionView
 
-
-- (void)configureCollectionView
-{
+- (void)configureCollectionView {
     self.collectionView.backgroundColor = [UIColor clearColor];
-    HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
+    HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
     [layout setItemHeight:HEMCurrentConditionsSensorViewHeight];
 }
 
-- (void)updateCellAtIndex:(NSUInteger)index
-{
-    NSIndexPath* indexPath = [NSIndexPath indexPathForItem:index inSection:0];
-    HEMSensorGraphCollectionViewCell* cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+- (void)updateCellAtIndex:(NSUInteger)index {
+    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:index inSection:0];
+    HEMSensorGraphCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
     [self configureSensorCell:cell forItemAtIndexPath:indexPath];
 }
 
-- (void)openDetailViewForSensor:(SENSensor*)sensor {
-    HEMSensorViewController* controller = [HEMMainStoryboard instantiateSensorViewController];
+- (void)openDetailViewForSensor:(SENSensor *)sensor {
+    HEMSensorViewController *controller = [HEMMainStoryboard instantiateSensorViewController];
     controller.sensor = sensor;
     [self.navigationController pushViewController:controller animated:YES];
 }
 
 - (void)openDetailViewForSensorNamed:(NSString *)name {
-    for (SENSensor* sensor in self.sensors) {
+    for (SENSensor *sensor in self.sensors) {
         if ([sensor.name isEqualToString:name]) {
             [self openDetailViewForSensor:sensor];
             return;
@@ -305,30 +284,24 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 
 #pragma mark UICollectionViewDatasource
 
-- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section
-{
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
     return self.sensors.count > 0 ? self.sensors.count : 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                  cellForItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString* identifier = [HEMMainStoryboard sensorGraphCellReuseIdentifier];
-    HEMSensorGraphCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier
-                                                                                       forIndexPath:indexPath];
+                  cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *identifier = [HEMMainStoryboard sensorGraphCellReuseIdentifier];
+    HEMSensorGraphCollectionViewCell *cell =
+        [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
 
     if (self.sensors.count > indexPath.row) {
         [self configureSensorCell:cell forItemAtIndexPath:indexPath];
-    } else {
-        [self configureNoSensorsCell:cell];
-    }
+    } else { [self configureNoSensorsCell:cell]; }
     return cell;
 }
 
-
-- (void)configureSensorCell:(HEMSensorGraphCollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
-{
-    SENSensor* sensor = self.sensors[indexPath.row];
+- (void)configureSensorCell:(HEMSensorGraphCollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
+    SENSensor *sensor = self.sensors[indexPath.row];
     cell.sensorValueLabel.attributedText = [self valueTextForSensor:sensor];
     cell.sensorValueLabel.textColor = [UIColor colorForSensorWithCondition:sensor.condition];
     cell.sensorValueLabel.hidden = NO;
@@ -345,31 +318,30 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     cell.statusLabel.hidden = YES;
 }
 
-- (NSAttributedString*)valueTextForSensor:(SENSensor*)sensor
-{
+- (NSAttributedString *)valueTextForSensor:(SENSensor *)sensor {
     static NSInteger HEMSensorUnitVerticalOffset = 14;
-    NSDictionary* baseAttributes = @{NSFontAttributeName:[UIFont sensorListValueFont]};
+    NSDictionary *baseAttributes = @{ NSFontAttributeName : [UIFont sensorListValueFont] };
     if (!sensor.value) {
-        return [[NSAttributedString alloc] initWithString:NSLocalizedString(@"empty-data", nil)
-                                               attributes:baseAttributes];
+        return
+            [[NSAttributedString alloc] initWithString:NSLocalizedString(@"empty-data", nil) attributes:baseAttributes];
     }
-    NSNumber* value = sensor.valueInPreferredUnit;
-    NSString* valueText = [NSString stringWithFormat:@"%ld", [value longValue]];
-    NSMutableAttributedString* composite = [[NSMutableAttributedString alloc] initWithString:valueText
-                                                                                  attributes:baseAttributes];
-    NSDictionary* unitAttributes = @{NSFontAttributeName:[UIFont sensorListUnitFont],
-                                     NSBaselineOffsetAttributeName : @(HEMSensorUnitVerticalOffset)};
-    NSAttributedString* unit = [[NSAttributedString alloc] initWithString:sensor.localizedUnit
-                                                               attributes:unitAttributes];
+    NSNumber *value = sensor.valueInPreferredUnit;
+    NSString *valueText = [NSString stringWithFormat:@"%ld", [value longValue]];
+    NSMutableAttributedString *composite =
+        [[NSMutableAttributedString alloc] initWithString:valueText attributes:baseAttributes];
+    NSDictionary *unitAttributes = @{
+        NSFontAttributeName : [UIFont sensorListUnitFont],
+        NSBaselineOffsetAttributeName : @(HEMSensorUnitVerticalOffset)
+    };
+    NSAttributedString *unit =
+        [[NSAttributedString alloc] initWithString:sensor.localizedUnit attributes:unitAttributes];
     [composite appendAttributedString:unit];
     return composite;
 }
 
-- (void)configureNoSensorsCell:(HEMSensorGraphCollectionViewCell *)cell
-{
-    cell.statusLabel.text = [self isLoading]
-        ? NSLocalizedString(@"activity.loading", nil)
-        : NSLocalizedString(@"sensor.data-unavailable", nil);
+- (void)configureNoSensorsCell:(HEMSensorGraphCollectionViewCell *)cell {
+    cell.statusLabel.text = [self isLoading] ? NSLocalizedString(@"activity.loading", nil)
+                                             : NSLocalizedString(@"sensor.data-unavailable", nil);
     cell.statusLabel.hidden = NO;
     cell.sensorValueLabel.hidden = YES;
     cell.sensorMessageLabel.hidden = YES;
@@ -381,16 +353,14 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 
 - (void)collectionView:(UICollectionView *)collectionView
        willDisplayCell:(UICollectionViewCell *)cell
-    forItemAtIndexPath:(NSIndexPath *)indexPath
-{
+    forItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[HEMSensorGraphCollectionViewCell class]]) {
-        HEMSensorGraphCollectionViewCell* graphCell = (id)cell;
+        HEMSensorGraphCollectionViewCell *graphCell = (id)cell;
         [graphCell.sensorMessageLabel layoutIfNeeded];
     }
 }
 
-- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
-{
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if (self.sensors.count > indexPath.row)
         [self openDetailViewForSensor:self.sensors[indexPath.item]];
 }

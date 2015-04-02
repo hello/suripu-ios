@@ -36,6 +36,7 @@ static CGFloat const HEMCurrentConditionsRefreshIntervalInSeconds = 10.f;
 static CGFloat const HEMCurrentConditionsFailureIntervalInSeconds = 1.f;
 static CGFloat const HEMCurrentConditionsSensorViewHeight = 104.0f;
 static CGFloat const HEMCurrentConditionsPairViewHeight = 205.0f;
+static CGFloat const HEMCurrentConditionsItemSpacing = 8.f;
 static NSUInteger const HEMConditionGraphPointLimit = 30;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -316,6 +317,8 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 - (void)configureCollectionView {
     self.collectionView.backgroundColor = [UIColor clearColor];
     HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+    layout.minimumInteritemSpacing = HEMCurrentConditionsItemSpacing;
+    layout.minimumLineSpacing = HEMCurrentConditionsItemSpacing;
     [layout setItemHeight:HEMCurrentConditionsSensorViewHeight];
 }
 

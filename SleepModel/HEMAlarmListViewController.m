@@ -43,6 +43,7 @@ static CGFloat const HEMAlarmListButtonMinimumScale = 0.95f;
 static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
 static CGFloat const HEMAlarmListPairCellHeight = 205.f;
+static CGFloat const HEMAlarmListItemSpacing = 8.f;
 static NSString *const HEMAlarmTimeFormat = @"%ld:%@";
 static NSString *const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
 static NSUInteger const HEMAlarmListLimit = 8;
@@ -326,6 +327,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (void)configureCollectionView {
     CGRect bounds = [[UIScreen mainScreen] bounds];
     HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+    layout.minimumInteritemSpacing = HEMAlarmListItemSpacing;
+    layout.minimumLineSpacing = HEMAlarmListItemSpacing;
     UIEdgeInsets sectionInsets = layout.sectionInset;
     sectionInsets.bottom = CGRectGetHeight(bounds) - CGRectGetMinY(self.addButton.frame);
     layout.sectionInset = sectionInsets;

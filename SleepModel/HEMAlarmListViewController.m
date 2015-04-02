@@ -15,19 +15,27 @@
 #import "HEMMainStoryboard.h"
 #import "HEMMarkdown.h"
 #import "HEMAnalytics.h"
+#import "HEMSensePairViewController.h"
+#import "HEMOnboardingStoryboard.h"
+#import "HEMStyledNavigationViewController.h"
+#import "HEMNoDeviceCollectionViewCell.h"
+#import "HEMActionButton.h"
 
-@interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate>
+@interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
+                                          UICollectionViewDelegateFlowLayout, HEMAlarmControllerDelegate,
+                                          HEMSensePairingDelegate>
 
-@property (strong, nonatomic) NSArray* alarms;
-@property (weak, nonatomic) IBOutlet UICollectionView* collectionView;
-@property (weak, nonatomic) IBOutlet HEMAlarmAddButton* addButton;
-@property (weak, nonatomic) IBOutlet UILabel* noAlarmLabel;
-@property (weak, nonatomic) IBOutlet RTSpinKitView* spinnerView;
-@property (strong, nonatomic) NSDateFormatter* hour24Formatter;
-@property (strong, nonatomic) NSDateFormatter* hour12Formatter;
-@property (strong, nonatomic) NSDateFormatter* meridiemFormatter;
+@property (strong, nonatomic) NSArray *alarms;
+@property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet HEMAlarmAddButton *addButton;
+@property (weak, nonatomic) IBOutlet UILabel *noAlarmLabel;
+@property (weak, nonatomic) IBOutlet RTSpinKitView *spinnerView;
+@property (strong, nonatomic) NSDateFormatter *hour24Formatter;
+@property (strong, nonatomic) NSDateFormatter *hour12Formatter;
+@property (strong, nonatomic) NSDateFormatter *meridiemFormatter;
 @property (nonatomic, getter=isLoading) BOOL loading;
 @property (nonatomic, getter=hasLoadingFailed) BOOL loadingFailed;
+@property (nonatomic, getter=hasNoSense) BOOL noSense;
 @end
 
 @implementation HEMAlarmListViewController
@@ -37,6 +45,7 @@ static CGFloat const HEMAlarmListButtonMaximumScale = 1.2f;
 static CGFloat const HEMAlarmListCellHeight = 96.f;
 static NSString* const HEMAlarmTimeFormat = @"%ld:%@";
 static NSString* const HEMAlarmListTimeKey = @"alarms.alarm.meridiem.%@";
+static CGFloat const HEMAlarmListPairCellHeight = 205.f;
 static NSUInteger const HEMAlarmListLimit = 8;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -56,16 +65,17 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self configureSpinnerView];
     [self configureNoAlarmInstructions];
     [self configureDateFormatters];
-    [self refreshAlarmList];
+    [self refreshData];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self refreshAlarmList];
+    [self refreshData];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(refreshAlarmList)
-                                                 name:SENAPIReachableNotification object:nil];
+                                             selector:@selector(refreshData)
+                                                 name:SENAPIReachableNotification
+                                               object:nil];
     [self.collectionView reloadData];
 }
 
@@ -128,35 +138,74 @@ static NSUInteger const HEMAlarmListLimit = 8;
     self.meridiemFormatter.dateFormat = @"a";
 }
 
-- (void)refreshAlarmList
-{
+- (void)refreshData {
     if ([self isLoading])
         return;
     self.loading = YES;
     self.addButton.enabled = NO;
+    self.noSense = NO;
     [self.spinnerView startAnimating];
-    [HEMAlarmUtils refreshAlarmsFromPresentingController:self completion:^(NSError* error) {
-        [self.spinnerView stopAnimating];
-        if (error) {
-            self.loadingFailed = YES;
-            self.loading = NO;
-            if (self.alarms.count == 0) {
-                [self.collectionView reloadData];
-                return;
-            }
-        } else {
-            self.loadingFailed = NO;
-            HEMCardFlowLayout* layout = (id)self.collectionView.collectionViewLayout;
-            [layout clearCache];
-            [self reloadData];
-        }
-        self.addButton.enabled = YES;
-    }];
+    SENServiceDevice *service = [SENServiceDevice sharedService];
+    if ([service isInfoLoaded]) {
+        [self checkDeviceInfoForSenseAndRefresh];
+    } else {
+        [service loadDeviceInfo:^(NSError *error) {
+          [self.spinnerView stopAnimating];
+          if (error) {
+              self.noSense = NO;
+              self.loadingFailed = YES;
+              self.loading = NO;
+              [self.collectionView reloadData];
+              self.noAlarmLabel.hidden = YES;
+          } else { [self checkDeviceInfoForSenseAndRefresh]; }
+        }];
+    }
 }
 
-- (void)reloadData
-{
-    NSArray* cachedAlarms = [self sortedCachedAlarms];
+- (void)checkDeviceInfoForSenseAndRefresh {
+    SENServiceDevice *service = [SENServiceDevice sharedService];
+    BOOL hasSense = [service senseInfo] != nil;
+    if (hasSense) {
+        self.noSense = NO;
+        [self refreshAlarmList];
+    } else {
+        self.noSense = YES;
+        self.loading = NO;
+        self.loadingFailed = NO;
+        HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
+        [layout clearCache];
+        self.alarms = nil;
+        self.noAlarmLabel.hidden = YES;
+        self.addButton.enabled = NO;
+        [self.collectionView reloadData];
+    }
+    [self.spinnerView stopAnimating];
+}
+
+- (void)refreshAlarmList {
+    [HEMAlarmUtils refreshAlarmsFromPresentingController:self
+                                              completion:^(NSError *error) {
+                                                [self.spinnerView stopAnimating];
+                                                if (error) {
+                                                    self.loadingFailed = YES;
+                                                    self.loading = NO;
+                                                    if (self.alarms.count == 0) {
+                                                        [self.collectionView reloadData];
+                                                        return;
+                                                    }
+                                                } else {
+                                                    self.loadingFailed = NO;
+                                                    HEMCardFlowLayout *layout
+                                                        = (id)self.collectionView.collectionViewLayout;
+                                                    [layout clearCache];
+                                                    [self reloadData];
+                                                }
+                                                self.addButton.enabled = YES;
+                                              }];
+}
+
+- (void)reloadData {
+    NSArray *cachedAlarms = [self sortedCachedAlarms];
     if ([self.alarms isEqualToArray:cachedAlarms]) {
         if ([self isLoading]) {
             self.loading = NO;
@@ -250,17 +299,37 @@ static NSUInteger const HEMAlarmListLimit = 8;
     [self presentViewController:controller animated:YES completion:nil];
 }
 
+- (IBAction)pairSense:(id)sender {
+    HEMSensePairViewController *pairVC
+        = (HEMSensePairViewController *)[HEMOnboardingStoryboard instantiateSensePairViewController];
+    [pairVC setDelegate:self];
+    UINavigationController *nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:pairVC];
+    [self presentViewController:nav animated:YES completion:nil];
+}
+
+#pragma mark - HEMSensePairDelegate
+
+- (void)didPairSenseUsing:(SENSenseManager *)senseManager from:(UIViewController *)controller {
+    [self refreshData];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (void)didSetupWiFiForPairedSense:(SENSenseManager *)senseManager from:(UIViewController *)controller {
+    [self refreshData];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 #pragma mark - HEMAlarmControllerDelegate
 
 - (void)didCancelAlarmFrom:(HEMAlarmViewController *)alarmVC
 {
-    [self refreshAlarmList];
+    [self refreshData];
     [alarmVC dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didSaveAlarm:(SENAlarm *)alarm from:(HEMAlarmViewController *)alarmVC
 {
-    [self refreshAlarmList];
+    [self refreshData];
     [alarmVC dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -289,9 +358,9 @@ static NSUInteger const HEMAlarmListLimit = 8;
         return [self collectionView:collectionView alarmCellAtIndexPath:indexPath];
     } else if ([self isLoading] || [self hasLoadingFailed]) {
         return [self collectionView:collectionView statusCellAtIndexPath:indexPath];
-    } else {
-        return [self collectionView:collectionView emptyCellAtIndexPath:indexPath];
-    }
+    } else if ([self hasNoSense]) {
+        return [self collectionView:collectionView pairingCellForItemAtIndexPath:indexPath];
+    } else { return [self collectionView:collectionView emptyCellAtIndexPath:indexPath]; }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -309,11 +378,23 @@ static NSUInteger const HEMAlarmListLimit = 8;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-                    emptyCellAtIndexPath:(NSIndexPath *)indexPath
-{
-    NSString* identifier = [HEMMainStoryboard alarmListEmptyCellReuseIdentifier];
-    HEMAlarmListCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
-    NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
+           pairingCellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *identifer = [HEMMainStoryboard pairReuseIdentifier];
+    HEMNoDeviceCollectionViewCell *cell =
+        [collectionView dequeueReusableCellWithReuseIdentifier:identifer forIndexPath:indexPath];
+    cell.iconImageView.image = [HelloStyleKit senseIcon];
+    cell.nameLabel.text = NSLocalizedString(@"settings.device.sense", nil);
+    cell.messageLabel.text = NSLocalizedString(@"settings.device.no-sense", nil);
+    [cell.actionButton setTitle:NSLocalizedString(@"settings.device.button.title.pair-sense", nil)
+                       forState:UIControlStateNormal];
+    return cell;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+                    emptyCellAtIndexPath:(NSIndexPath *)indexPath {
+    NSString *identifier = [HEMMainStoryboard alarmListEmptyCellReuseIdentifier];
+    HEMAlarmListCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.lineSpacing = 8.f;
     NSMutableDictionary* detailAttributes = [[HEMMarkdown attributesForBackViewText][@(PARA)] mutableCopy];
     [detailAttributes removeObjectForKey:NSForegroundColorAttributeName];
@@ -405,6 +486,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
     CGFloat width = layout.itemSize.width;
     if (self.alarms.count > 0 || statusMessageShouldShow)
         return CGSizeMake(width, HEMAlarmListCellHeight);
+    else if ([self hasNoSense])
+        return CGSizeMake(width, HEMAlarmListPairCellHeight);
     CGFloat textWidth = width - HEMAlarmListEmptyCellWidthInset;
     NSString* text = NSLocalizedString(@"alarms.no-alarm.message", nil);
     CGSize textSize = [text boundingRectWithSize:CGSizeMake(textWidth, CGFLOAT_MAX)

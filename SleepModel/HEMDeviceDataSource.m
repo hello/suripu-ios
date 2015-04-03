@@ -293,24 +293,14 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 }
 
 - (void)updateMissingDeviceForCell:(HEMNoDeviceCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
-    UIImage* icon = nil;
-    NSString* name = nil;
-    NSString* message = nil;
-    NSString* buttonTitle = nil;
     UIColor* actionButtonColor = [HelloStyleKit senseBlueColor];
     
     switch ([indexPath row]) {
         case HEMDeviceRowSense:
-            icon = [HelloStyleKit senseIcon];
-            name = NSLocalizedString(@"settings.device.sense", nil);
-            message = NSLocalizedString(@"settings.device.no-sense", nil);
-            buttonTitle = NSLocalizedString(@"settings.device.button.title.pair-sense", nil);
+            [cell configureForSense];
             break;
         case HEMDeviceRowPill:
-            icon = [HelloStyleKit pillIcon];
-            name = NSLocalizedString(@"settings.device.pill", nil);
-            message = NSLocalizedString(@"settings.device.no-pill", nil);
-            buttonTitle = NSLocalizedString(@"settings.device.button.title.pair-pill", nil);
+            [cell configureForPill];
             if ([self isLoadingSense] || ![self attemptedDataLoad]) {
                 actionButtonColor = [HelloStyleKit actionButtonDisabledColor];
             }
@@ -318,11 +308,6 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
         default:
             break;
     }
-    
-    [[cell iconImageView] setImage:icon];
-    [[cell nameLabel] setText:name];
-    [[cell messageLabel] setText:message];
-    [[cell actionButton] setTitle:buttonTitle forState:UIControlStateNormal];
     [[cell actionButton] setUserInteractionEnabled:NO]; // let the entire cell be actionable
     [[cell actionButton] setBackgroundColor:actionButtonColor];
 }

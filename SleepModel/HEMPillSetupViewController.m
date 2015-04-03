@@ -40,6 +40,8 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 
+@property (strong, nonatomic) NSAttributedString* attributedTitle;
+@property (strong, nonatomic) NSAttributedString* attributedDescription;
 @property (assign, nonatomic, getter=isWaitingForLED) BOOL waitingForLED;
 
 @end
@@ -69,18 +71,26 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
 }
 
 - (NSAttributedString*)attributedTitle {
-    return [[NSAttributedString alloc] initWithString:NSLocalizedString(@"onboarding.pill-setup.title", nil)
-                                           attributes:@{NSFontAttributeName : [UIFont onboardingTitleFont],
-                                                        NSForegroundColorAttributeName : [HelloStyleKit onboardingTitleColor]}];
+    if (_attributedTitle == nil) {
+        _attributedTitle =
+            [[NSAttributedString alloc] initWithString:NSLocalizedString(@"onboarding.pill-setup.title", nil)
+                                            attributes:@{NSFontAttributeName : [UIFont onboardingTitleFont],
+                                                         NSForegroundColorAttributeName : [HelloStyleKit    onboardingTitleColor]}];
+    }
+    return _attributedTitle;
 }
 
 - (NSAttributedString*)attributedDecription {
-    NSMutableParagraphStyle* style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-    [style setLineHeightMultiple:1.1f];
-    return [[NSAttributedString alloc] initWithString:NSLocalizedString(@"onboarding.pill-setup.description", nil)
-                                           attributes:@{NSFontAttributeName : [UIFont onboardingDescriptionFont],
-                                                        NSForegroundColorAttributeName : [HelloStyleKit onboardingDescriptionColor],
-                                                        NSParagraphStyleAttributeName : style}];
+    if (_attributedDescription == nil) {
+        NSMutableParagraphStyle* style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+        [style setLineHeightMultiple:1.1f];
+        _attributedDescription =
+            [[NSAttributedString alloc] initWithString:NSLocalizedString(@"onboarding.pill-setup.description", nil)
+                                            attributes:@{NSFontAttributeName : [UIFont onboardingDescriptionFont],
+                                                         NSForegroundColorAttributeName : [HelloStyleKit    onboardingDescriptionColor],
+                                                         NSParagraphStyleAttributeName : style}];
+    }
+    return _attributedDescription;
 }
 
 - (void)viewDidLayoutSubviews {

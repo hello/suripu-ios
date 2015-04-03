@@ -158,7 +158,6 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
     SENServiceDevice *service = [SENServiceDevice sharedService];
     self.noSense = service.senseInfo == nil;
     if ([self hasNoSense]) {
-        self.noSense = YES;
         self.loading = NO;
         self.sensors = nil;
         HEMCardFlowLayout *layout = (id)self.collectionView.collectionViewLayout;
@@ -227,7 +226,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
       } else {
           __block NSMutableDictionary *graphData = [[NSMutableDictionary alloc] initWithCapacity:data.count];
           [data enumerateKeysAndObjectsUsingBlock:^(NSString *key, NSArray *points, BOOL *stop) {
-            [graphData setValue:[self filteredPointsFromData:points] forKey:key];
+            [graphData setValue:[strongSelf filteredPointsFromData:points] forKey:key];
           }];
           if (![graphData isEqual:strongSelf.sensorGraphData]) {
               strongSelf.sensorGraphData = graphData;

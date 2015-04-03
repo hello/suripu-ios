@@ -369,11 +369,7 @@ static NSUInteger const HEMAlarmListLimit = 8;
     NSString *identifer = [HEMMainStoryboard pairReuseIdentifier];
     HEMNoDeviceCollectionViewCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:identifer forIndexPath:indexPath];
-    cell.iconImageView.image = [HelloStyleKit senseIcon];
-    cell.nameLabel.text = NSLocalizedString(@"settings.device.sense", nil);
-    cell.messageLabel.text = NSLocalizedString(@"settings.device.no-sense", nil);
-    [cell.actionButton setTitle:NSLocalizedString(@"settings.device.button.title.pair-sense", nil)
-                       forState:UIControlStateNormal];
+    [cell configureForSense];
     return cell;
 }
 

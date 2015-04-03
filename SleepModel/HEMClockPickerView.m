@@ -259,12 +259,13 @@ static NSUInteger const HEMClock24HourCount = 24;
     NSUInteger adjustedHour = hour;
     if ([self shouldUse12Hour]) {
         NSString *pmText = [NSLocalizedString(@"alarms.alarm.meridiem.pm", nil) uppercaseString];
-        if ([self.selectedMeridiemText isEqualToString:pmText])
-            adjustedHour = hour + 12;
-        if (adjustedHour == 24)
-            adjustedHour = 12;
-        else if (adjustedHour == 12)
-            adjustedHour = 0;
+        if ([self.selectedMeridiemText isEqualToString:pmText]) {
+            if (adjustedHour < HEMClock12HourCount)
+                adjustedHour = hour + 12;
+        } else {
+            if (adjustedHour >= HEMClock12HourCount)
+                adjustedHour = hour - 12;
+        }
     }
     self.hour = adjustedHour;
 }

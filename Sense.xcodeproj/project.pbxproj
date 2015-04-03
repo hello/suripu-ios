@@ -396,9 +396,6 @@
 		BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A9C1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m */; };
 		BF6E3AA01A2E51290019C110 /* HEMSingleResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A9F1A2E51290019C110 /* HEMSingleResponseCell.m */; };
 		BF6E3AA31A2EA4CF0019C110 /* HEMAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3AA21A2EA4CF0019C110 /* HEMAccountViewController.m */; };
-		BF71AFC91A43C22600D1208B /* PillHands.png in Resources */ = {isa = PBXBuildFile; fileRef = BF71AFC61A43C22600D1208B /* PillHands.png */; };
-		BF71AFCA1A43C22600D1208B /* PillHands@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF71AFC71A43C22600D1208B /* PillHands@2x.png */; };
-		BF71AFCB1A43C22600D1208B /* PillHands@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF71AFC81A43C22600D1208B /* PillHands@3x.png */; };
 		BF71AFCF1A48F6E700D1208B /* HEMDebugController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF71AFCE1A48F6E700D1208B /* HEMDebugController.m */; };
 		BF7417B21A7B005200399C0E /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7417AF1A7B005200399C0E /* loading.png */; };
 		BF7417B31A7B005200399C0E /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7417B01A7B005200399C0E /* loading@2x.png */; };
@@ -1123,9 +1120,6 @@
 		BF6E3A9F1A2E51290019C110 /* HEMSingleResponseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSingleResponseCell.m; sourceTree = "<group>"; };
 		BF6E3AA11A2EA4CF0019C110 /* HEMAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAccountViewController.h; sourceTree = "<group>"; };
 		BF6E3AA21A2EA4CF0019C110 /* HEMAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAccountViewController.m; sourceTree = "<group>"; };
-		BF71AFC61A43C22600D1208B /* PillHands.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = PillHands.png; path = images/PillHands.png; sourceTree = "<group>"; };
-		BF71AFC71A43C22600D1208B /* PillHands@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PillHands@2x.png"; path = "images/PillHands@2x.png"; sourceTree = "<group>"; };
-		BF71AFC81A43C22600D1208B /* PillHands@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "PillHands@3x.png"; path = "images/PillHands@3x.png"; sourceTree = "<group>"; };
 		BF71AFCD1A48F6E700D1208B /* HEMDebugController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDebugController.h; sourceTree = "<group>"; };
 		BF71AFCE1A48F6E700D1208B /* HEMDebugController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDebugController.m; sourceTree = "<group>"; };
 		BF7417AF1A7B005200399C0E /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = loading.png; path = images/loading.png; sourceTree = "<group>"; };
@@ -1697,9 +1691,6 @@
 				BF4473541A63535F00389ECE /* male.png */,
 				BF4473551A63535F00389ECE /* male@2x.png */,
 				BF4473561A63535F00389ECE /* male@3x.png */,
-				BF71AFC61A43C22600D1208B /* PillHands.png */,
-				BF71AFC71A43C22600D1208B /* PillHands@2x.png */,
-				BF71AFC81A43C22600D1208B /* PillHands@3x.png */,
 				BF0E53A21A38C4C1002FB083 /* moon.png */,
 				BF0E53A31A38C4C1002FB083 /* moon@2x.png */,
 				BF0E53A41A38C4C1002FB083 /* moon@3x.png */,
@@ -3051,7 +3042,6 @@
 				8AA157F41A5EFD6B00BF1D4A /* lightEventIcon@2x.png in Resources */,
 				8AA158011A5EFD6B00BF1D4A /* sleepEventIcon@3x.png in Resources */,
 				BF4473571A63535F00389ECE /* female.png in Resources */,
-				BF71AFC91A43C22600D1208B /* PillHands.png in Resources */,
 				8A45798A1A805603009A7863 /* welcome_dialog_sensors@3x.png in Resources */,
 				8A1743C419A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.xib in Resources */,
 				8A8288B31A76CF1E0043B1D1 /* presleepInsightTemperature@3x.png in Resources */,
@@ -3115,7 +3105,6 @@
 				BF1E2E821A04514200DDD0D0 /* temperatureIcon@3x.png in Resources */,
 				BFE872FE1A2FC65600494231 /* sensorParticulatesBlue@2x.png in Resources */,
 				8AF4FA261A12B01E00451245 /* playSound@2x.png in Resources */,
-				BF71AFCA1A43C22600D1208B /* PillHands@2x.png in Resources */,
 				BF0E53A71A38C4C1002FB083 /* moon@3x.png in Resources */,
 				8AD142681A78679800A83AD8 /* timeline_explain_graph@3x.png in Resources */,
 				8A4579861A805603009A7863 /* welcome_dialog_particulates@2x.png in Resources */,
@@ -3201,7 +3190,6 @@
 				8AC4A03A1989C36200C2BD63 /* particleIcon@2x.png in Resources */,
 				8A63D5621A6058DA00F5307D /* lightsOutEventIcon@2x.png in Resources */,
 				BFE872FB1A2FC65600494231 /* sensorParticulates@2x.png in Resources */,
-				BF71AFCB1A43C22600D1208B /* PillHands@3x.png in Resources */,
 				8ACAF40E1A69B7980054885A /* outOfBedEventIcon@2x.png in Resources */,
 				8A8288D71A7800820043B1D1 /* settingsBarIconActive@3x.png in Resources */,
 				8AD142641A78679800A83AD8 /* timeline_explain_before@2x.png in Resources */,

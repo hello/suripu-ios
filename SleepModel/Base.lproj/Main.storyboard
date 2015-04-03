@@ -2368,13 +2368,13 @@
         <!--Adjust Time-->
         <scene sceneID="FoW-qG-gJO">
             <objects>
-                <viewController id="dmd-i6-J7b" customClass="HEMTimelineFeedbackViewController" sceneMemberID="viewController">
+                <viewController extendedLayoutIncludesOpaqueBars="YES" id="dmd-i6-J7b" customClass="HEMTimelineFeedbackViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="VaA-g6-Dco"/>
                         <viewControllerLayoutGuide type="bottom" id="qYL-P4-nsr"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="IOD-qM-VrA">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <rect key="frame" x="0.0" y="64" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4cs-CN-ZpX">
@@ -2405,16 +2405,14 @@
                                 <rect key="frame" x="0.0" y="181" width="600" height="419"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="e6V-IF-Dcc" customClass="HEMClockPickerView">
-                                        <rect key="frame" x="0.0" y="99" width="600" height="222"/>
+                                        <rect key="frame" x="0.0" y="40" width="600" height="339"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="222" id="w5R-Cm-bxz"/>
-                                        </constraints>
                                     </view>
                                 </subviews>
                                 <color key="backgroundColor" red="0.9748079776763916" green="0.97477877140045166" blue="0.97479534149169922" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="centerY" secondItem="e6V-IF-Dcc" secondAttribute="centerY" id="6GE-AJ-HCW"/>
+                                    <constraint firstItem="e6V-IF-Dcc" firstAttribute="top" secondItem="tlU-7S-PhF" secondAttribute="top" constant="40" id="Cgc-Pk-HlL"/>
+                                    <constraint firstAttribute="bottom" secondItem="e6V-IF-Dcc" secondAttribute="bottom" constant="40" id="Tao-lC-Egt"/>
                                     <constraint firstItem="e6V-IF-Dcc" firstAttribute="leading" secondItem="tlU-7S-PhF" secondAttribute="leading" id="aK0-jh-3uQ"/>
                                     <constraint firstAttribute="trailing" secondItem="e6V-IF-Dcc" secondAttribute="trailing" id="axf-Hp-gwj"/>
                                 </constraints>
@@ -3768,9 +3766,9 @@
         <!--Styled Navigation View Controller-->
         <scene sceneID="exE-yb-g4r">
             <objects>
-                <navigationController storyboardIdentifier="timelineFeedback" automaticallyAdjustsScrollViewInsets="NO" id="cey-sO-3LK" customClass="HEMStyledNavigationViewController" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="timelineFeedback" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="cey-sO-3LK" customClass="HEMStyledNavigationViewController" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="xPB-5c-CzK">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" translucent="NO" id="xPB-5c-CzK">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>

@@ -34,31 +34,18 @@ static CGFloat const HEMBounceEndScale = 0.7f;
 
 - (void)animatePresentationWithContext:(id<UIViewControllerContextTransitioning>)context {
     UIViewController* toVC = [context viewControllerForKey:UITransitionContextToViewControllerKey];
-    
     CGRect initialFrame = [[toVC view] frame];
-    initialFrame.origin.y = CGRectGetHeight([[context containerView] bounds]);
-    [[toVC view] setFrame:initialFrame];
+    CGRect offsetFrame = initialFrame;
+    offsetFrame.origin.y = CGRectGetHeight([[context containerView] bounds]);
+    [[toVC view] setFrame:offsetFrame];
+    [[toVC view] layoutIfNeeded];
     
     [[context containerView] addSubview:[toVC view]];
-    
-    [UIView animateWithDuration:[self duration]
-                          delay:0.0f
-         usingSpringWithDamping:[self bounceDamping]
-          initialSpringVelocity:0.0f
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         // adjust for the status bar to prevent odd jump of the navigation bar, if
-                         // one is used, when animation completes
-                         CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-                         CGFloat statusHeight = CGRectGetHeight(statusBarFrame);
-                         CGRect finalFrame = [[toVC view] frame];
-                         finalFrame.origin.y = statusHeight;
-                         finalFrame.size.height -= statusHeight;
-                         [[toVC view] setFrame:finalFrame];
-                     }
-                     completion:^(BOOL finished) {
-                         [context completeTransition:YES];
-                     }];
+    [UIView animateWithDuration:[self duration] animations:^{
+        [[toVC view] setFrame:initialFrame];
+    } completion:^(BOOL finished) {
+        [context completeTransition:YES];
+    }];
 }
 
 - (void)animateDismissalWithContext:(id<UIViewControllerContextTransitioning>)context {

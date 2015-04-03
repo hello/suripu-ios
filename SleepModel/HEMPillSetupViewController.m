@@ -39,7 +39,6 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet HEMActionButton *continueButton;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainer;
-@property (weak, nonatomic) IBOutlet UIScrollView *contentView;
 
 @property (assign, nonatomic, getter=isWaitingForLED) BOOL waitingForLED;
 

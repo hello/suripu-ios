@@ -38,7 +38,6 @@ static CGFloat const HEMBounceEndScale = 0.7f;
     CGRect offsetFrame = initialFrame;
     offsetFrame.origin.y = CGRectGetHeight([[context containerView] bounds]);
     [[toVC view] setFrame:offsetFrame];
-    [[toVC view] layoutIfNeeded];
     
     [[context containerView] addSubview:[toVC view]];
     [UIView animateWithDuration:[self duration] animations:^{

@@ -1062,38 +1062,42 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Attach Sleep Pill to your pillow" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ded-Ea-3CR">
-                                <rect key="frame" x="20" y="24" width="560" height="34"/>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attach Sleep Pill to your pillow" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ded-Ea-3CR">
+                                <rect key="frame" x="20" y="24" width="560" height="28.5"/>
                                 <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
                                 <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="PillHands.png" translatesAutoresizingMaskIntoConstraints="NO" id="e7k-8I-UvG">
-                                <rect key="frame" x="0.0" y="165" width="600" height="365"/>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="pillSetup.png" translatesAutoresizingMaskIntoConstraints="NO" id="e7k-8I-UvG">
+                                <rect key="frame" x="0.0" y="251" width="600" height="286"/>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdG-tg-U0e" customClass="HEMActionButton">
-                                <rect key="frame" x="20" y="530" width="560" height="50"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qKC-Ye-ncl">
+                                <rect key="frame" x="0.0" y="509" width="600" height="91"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qdG-tg-U0e" customClass="HEMActionButton">
+                                        <rect key="frame" x="20" y="20" width="560" height="50"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                        <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        <state key="normal" title="CONTINUE">
+                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="next:" destination="4s2-Gt-ovZ" eventType="touchUpInside" id="VjE-Z2-HDO"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="220" id="95v-Wj-KF1"/>
-                                    <constraint firstAttribute="height" constant="50" id="ex9-pe-VVs"/>
+                                    <constraint firstItem="qdG-tg-U0e" firstAttribute="leading" secondItem="qKC-Ye-ncl" secondAttribute="leading" constant="20" id="Ap1-L7-2yp"/>
+                                    <constraint firstAttribute="height" constant="91" id="Kd7-uB-FG5"/>
+                                    <constraint firstAttribute="bottom" secondItem="qdG-tg-U0e" secondAttribute="bottom" constant="21" id="PmW-KJ-Yqc"/>
+                                    <constraint firstItem="qdG-tg-U0e" firstAttribute="top" secondItem="qKC-Ye-ncl" secondAttribute="top" constant="20" id="rSH-OE-bzI"/>
+                                    <constraint firstAttribute="trailing" secondItem="qdG-tg-U0e" secondAttribute="trailing" constant="20" id="xUr-fy-wkf"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                <state key="normal" title="CONTINUE">
-                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="95v-Wj-KF1"/>
-                                    </mask>
-                                </variation>
-                                <connections>
-                                    <action selector="next:" destination="4s2-Gt-ovZ" eventType="touchUpInside" id="VjE-Z2-HDO"/>
-                                </connections>
-                            </button>
+                            </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="xuG-gW-rF9">
-                                <rect key="frame" x="20" y="63" width="560" height="102"/>
+                                <rect key="frame" x="20" y="60.5" width="560" height="102.5"/>
                                 <string key="text">Clip Sleep Pill to your pillowcase by pulling the edge of the pillowcase taught. For best results, place your Sleep Pill on the side of your pillowcase closest to the edge of the bed.</string>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
                                 <color key="textColor" red="0.22352941179999999" green="0.22352941179999999" blue="0.22352941179999999" alpha="1" colorSpace="calibratedRGB"/>
@@ -1103,25 +1107,26 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailingMargin" secondItem="ded-Ea-3CR" secondAttribute="trailing" constant="4" id="8qq-TD-zyY"/>
-                            <constraint firstItem="qdG-tg-U0e" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="4" id="9da-y7-4hm"/>
-                            <constraint firstItem="ded-Ea-3CR" firstAttribute="bottom" secondItem="xuG-gW-rF9" secondAttribute="top" constant="-10" id="Aep-AF-zm1"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="qdG-tg-U0e" secondAttribute="trailing" constant="4" id="BSA-o5-PTe"/>
+                            <constraint firstItem="ded-Ea-3CR" firstAttribute="bottom" secondItem="xuG-gW-rF9" secondAttribute="top" constant="-8" id="Aep-AF-zm1"/>
+                            <constraint firstItem="ccb-Ef-kXd" firstAttribute="top" secondItem="e7k-8I-UvG" secondAttribute="bottom" constant="63" id="CLp-HH-F9M"/>
                             <constraint firstAttribute="trailingMargin" secondItem="xuG-gW-rF9" secondAttribute="trailing" constant="4" id="Cfe-kX-mgl"/>
-                            <constraint firstItem="ccb-Ef-kXd" firstAttribute="top" secondItem="qdG-tg-U0e" secondAttribute="bottom" constant="20" id="DCJ-le-Oqh"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qKC-Ye-ncl" secondAttribute="trailing" constant="-16" id="Hcq-s2-IFE"/>
                             <constraint firstItem="xuG-gW-rF9" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="4" id="LNX-7y-kvZ"/>
+                            <constraint firstItem="qKC-Ye-ncl" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="-16" id="Mvf-Q3-HOX"/>
                             <constraint firstItem="e7k-8I-UvG" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="-16" id="Zzl-nN-aV7"/>
-                            <constraint firstItem="e7k-8I-UvG" firstAttribute="bottom" secondItem="qdG-tg-U0e" secondAttribute="top" id="ifd-PA-6HM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="e7k-8I-UvG" secondAttribute="trailing" constant="-16" id="jTb-4p-dXn"/>
-                            <constraint firstItem="e7k-8I-UvG" firstAttribute="top" secondItem="xuG-gW-rF9" secondAttribute="bottom" id="pu9-sV-imG"/>
+                            <constraint firstItem="ccb-Ef-kXd" firstAttribute="top" secondItem="qKC-Ye-ncl" secondAttribute="bottom" id="maV-pv-6G6"/>
                             <constraint firstItem="ded-Ea-3CR" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="4" id="rCu-3L-GJ4"/>
                             <constraint firstItem="ded-Ea-3CR" firstAttribute="top" secondItem="SS5-15-dp3" secondAttribute="bottom" constant="4" id="yXX-qo-gHo"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rMe-eX-uln"/>
                     <connections>
+                        <outlet property="buttonContainer" destination="qKC-Ye-ncl" id="4xd-6S-5D0"/>
                         <outlet property="continueButton" destination="qdG-tg-U0e" id="PIQ-2A-zSC"/>
                         <outlet property="descriptionLabel" destination="xuG-gW-rF9" id="LKg-J5-YUJ"/>
                         <outlet property="descriptionTopConstraint" destination="Aep-AF-zm1" id="9vc-uz-MFc"/>
+                        <outlet property="imageBottomConstraint" destination="CLp-HH-F9M" id="TdT-Q9-OVO"/>
                         <outlet property="titleLabel" destination="ded-Ea-3CR" id="VPe-Cs-8q2"/>
                         <outlet property="view" destination="lwn-in-ftH" id="5W8-Rh-obp"/>
                         <segue destination="DIj-70-bYO" kind="push" identifier="pillSetupToColors" id="gUR-KW-V2G"/>
@@ -2831,11 +2836,10 @@ Have your partner visit senseapp.com on their device to download the Sense app a
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4BU-cG-ggd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="15818" y="1720"/>
+            <point key="canvasLocation" x="16647" y="1718"/>
         </scene>
     </scenes>
     <resources>
-        <image name="PillHands.png" width="320" height="214"/>
         <image name="bluetooth.png" width="32" height="32"/>
         <image name="enableAudio.png" width="320" height="195"/>
         <image name="female.png" width="50" height="83"/>
@@ -2844,6 +2848,7 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="onboarding_bg_wide.png" width="461" height="588"/>
         <image name="pairOfPills.png" width="180" height="117"/>
         <image name="pairingMode.png" width="320" height="93"/>
+        <image name="pillSetup.png" width="320" height="286"/>
         <image name="play.png" width="67" height="67"/>
         <image name="sampleNotification.png" width="320" height="185"/>
         <image name="sense.png" width="162" height="172"/>
@@ -2856,8 +2861,8 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="u9Q-g4-qbd"/>
         <segue reference="ZOJ-Sh-Dzx"/>
+        <segue reference="u9Q-g4-qbd"/>
         <segue reference="gUR-KW-V2G"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

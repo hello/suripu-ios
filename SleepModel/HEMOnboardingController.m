@@ -94,7 +94,7 @@
     if ([self titleHeightConstraint] != nil) {
         [[self descriptionTopConstraint] setConstant:constant];
     } else {
-        constant = CGRectGetHeight([[self titleLabel] bounds]);
+        constant = CGRectGetMinY([[self descriptionLabel] frame]);
         [[self descriptionTopConstraint] setConstant:constant];
     }
     

@@ -438,7 +438,7 @@
 		BF8F89861A4A1DA400D8374F /* HEMUpdateEmailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF8F89851A4A1DA400D8374F /* HEMUpdateEmailViewController.m */; };
 		BF90E2B81A854F6B00816BC1 /* HEMURLImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2B71A854F6B00816BC1 /* HEMURLImageView.m */; };
 		BF90E2BB1A8578E900816BC1 /* HEMImageCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2BA1A8578E900816BC1 /* HEMImageCollectionViewCell.m */; };
-		BF90E2BE1A857DF600816BC1 /* HEMInsightTextCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2BD1A857DF600816BC1 /* HEMInsightTextCollectionViewCell.m */; };
+		BF90E2BE1A857DF600816BC1 /* HEMTextCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF90E2BD1A857DF600816BC1 /* HEMTextCollectionViewCell.m */; };
 		BF98E4431A422D0B00E3CDEB /* NSDate+HEMRelative.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98E4421A422D0B00E3CDEB /* NSDate+HEMRelative.m */; };
 		BF98E4461A42378900E3CDEB /* HEMSinkModalTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98E4451A42378900E3CDEB /* HEMSinkModalTransition.m */; };
 		BF98FC361A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF98FC351A98017C00AEC04C /* HEMTextFooterCollectionReusableView.m */; };
@@ -1180,8 +1180,8 @@
 		BF90E2B71A854F6B00816BC1 /* HEMURLImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMURLImageView.m; sourceTree = "<group>"; };
 		BF90E2B91A8578E900816BC1 /* HEMImageCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMImageCollectionViewCell.h; sourceTree = "<group>"; };
 		BF90E2BA1A8578E900816BC1 /* HEMImageCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMImageCollectionViewCell.m; sourceTree = "<group>"; };
-		BF90E2BC1A857DF600816BC1 /* HEMInsightTextCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightTextCollectionViewCell.h; sourceTree = "<group>"; };
-		BF90E2BD1A857DF600816BC1 /* HEMInsightTextCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightTextCollectionViewCell.m; sourceTree = "<group>"; };
+		BF90E2BC1A857DF600816BC1 /* HEMTextCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTextCollectionViewCell.h; sourceTree = "<group>"; };
+		BF90E2BD1A857DF600816BC1 /* HEMTextCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTextCollectionViewCell.m; sourceTree = "<group>"; };
 		BF98E4411A422D0B00E3CDEB /* NSDate+HEMRelative.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+HEMRelative.h"; sourceTree = "<group>"; };
 		BF98E4421A422D0B00E3CDEB /* NSDate+HEMRelative.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+HEMRelative.m"; sourceTree = "<group>"; };
 		BF98E4441A42378900E3CDEB /* HEMSinkModalTransition.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSinkModalTransition.h; sourceTree = "<group>"; };
@@ -2562,10 +2562,6 @@
 			children = (
 				BF1E2E5B1A00691000DDD0D0 /* HEMInsightCollectionViewCell.h */,
 				BF1E2E5C1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m */,
-				BF90E2B91A8578E900816BC1 /* HEMImageCollectionViewCell.h */,
-				BF90E2BA1A8578E900816BC1 /* HEMImageCollectionViewCell.m */,
-				BF90E2BC1A857DF600816BC1 /* HEMInsightTextCollectionViewCell.h */,
-				BF90E2BD1A857DF600816BC1 /* HEMInsightTextCollectionViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2678,6 +2674,10 @@
 				BF90E2B71A854F6B00816BC1 /* HEMURLImageView.m */,
 				8A37764D1ACA26A80074D5C8 /* HEMSwitchControl.h */,
 				8A37764E1ACA26A80074D5C8 /* HEMSwitchControl.m */,
+				BF90E2B91A8578E900816BC1 /* HEMImageCollectionViewCell.h */,
+				BF90E2BA1A8578E900816BC1 /* HEMImageCollectionViewCell.m */,
+				BF90E2BC1A857DF600816BC1 /* HEMTextCollectionViewCell.h */,
+				BF90E2BD1A857DF600816BC1 /* HEMTextCollectionViewCell.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3430,7 +3430,7 @@
 				BF005C7319FED17800E68E87 /* HEMWiFiDataSource.m in Sources */,
 				BF1E2E721A02BFC400DDD0D0 /* HEMPagingFlowLayout.m in Sources */,
 				BF14E3E619EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m in Sources */,
-				BF90E2BE1A857DF600816BC1 /* HEMInsightTextCollectionViewCell.m in Sources */,
+				BF90E2BE1A857DF600816BC1 /* HEMTextCollectionViewCell.m in Sources */,
 				BFF3B4501A5E208B00B11643 /* HEMDeviceActionCollectionViewCell.m in Sources */,
 				8AB2684719CCFF8800017818 /* HEMAlarmUtils.m in Sources */,
 				BF98FC391A9BB29D00AEC04C /* HEMConfig.m in Sources */,

@@ -5,16 +5,16 @@
 //  Created by Jimmy Lu on 2/6/15.
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
-#import "HEMInsightTextCollectionViewCell.h"
+#import "HEMTextCollectionViewCell.h"
 #import "HelloStyleKit.h"
 
-@interface HEMInsightTextCollectionViewCell()
+@interface HEMTextCollectionViewCell()
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* separatorHeightConstraint;
 
 @end
 
-@implementation HEMInsightTextCollectionViewCell
+@implementation HEMTextCollectionViewCell
 
 - (void)awakeFromNib {
     [self setBackgroundColor:[UIColor clearColor]];

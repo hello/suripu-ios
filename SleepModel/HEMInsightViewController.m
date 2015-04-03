@@ -19,7 +19,7 @@
 #import "HEMURLImageView.h"
 #import "HEMRootViewController.h"
 #import "HEMImageCollectionViewCell.h"
-#import "HEMInsightTextCollectionViewCell.h"
+#import "HEMTextCollectionViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
 
@@ -184,7 +184,7 @@ static CGFloat const HEMInsightTextVertPadding = 20.0f;
         cell = imageCell;
     } else {
         reuseId = [HEMMainStoryboard textReuseIdentifier];
-        HEMInsightTextCollectionViewCell* textCell =
+        HEMTextCollectionViewCell* textCell =
             [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
                                                       forIndexPath:indexPath];
         NSAttributedString* attributedText = nil;

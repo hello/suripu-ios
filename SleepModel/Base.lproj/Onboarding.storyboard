@@ -14,7 +14,6 @@
             <string>HelveticaNeue-Light</string>
             <string>HelveticaNeue-Light</string>
             <string>HelveticaNeue-Light</string>
-            <string>HelveticaNeue-Light</string>
         </mutableArray>
         <mutableArray key="HelveticaNeue-Medium.otf">
             <string>HelveticaNeue-Medium</string>
@@ -1053,7 +1052,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
         <!--Pill Setup View Controller-->
         <scene sceneID="Eoe-Ki-OxF">
             <objects>
-                <viewController id="4s2-Gt-ovZ" customClass="HEMPillSetupViewController" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="4s2-Gt-ovZ" customClass="HEMPillSetupViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="SS5-15-dp3"/>
                         <viewControllerLayoutGuide type="bottom" id="ccb-Ef-kXd"/>
@@ -1062,15 +1061,81 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Attach Sleep Pill to your pillow" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ded-Ea-3CR">
-                                <rect key="frame" x="20" y="24" width="560" height="28.5"/>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Light" family="Helvetica Neue" pointSize="24"/>
-                                <color key="textColor" red="0.21176470589999999" green="0.21176470589999999" blue="0.21176470589999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" image="pillSetup.png" translatesAutoresizingMaskIntoConstraints="NO" id="e7k-8I-UvG">
-                                <rect key="frame" x="0.0" y="251" width="600" height="286"/>
-                            </imageView>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="oIk-07-Zii">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="509"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="0fC-yE-GZR">
+                                    <size key="itemSize" width="600" height="50"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pillSetupTextCell" id="yo3-RC-j2v" customClass="HEMTextCollectionViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="50"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="UY8-cb-5so">
+                                                    <rect key="frame" x="20" y="0.0" width="560" height="50"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="UY8-cb-5so" firstAttribute="top" secondItem="yo3-RC-j2v" secondAttribute="topMargin" constant="-8" id="K68-nE-Kek"/>
+                                            <constraint firstItem="UY8-cb-5so" firstAttribute="leading" secondItem="yo3-RC-j2v" secondAttribute="leadingMargin" constant="12" id="SfC-7E-c4i"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="UY8-cb-5so" secondAttribute="trailing" constant="12" id="WTB-bW-n8M"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="UY8-cb-5so" secondAttribute="bottom" constant="-8" id="pUp-uH-JZd"/>
+                                        </constraints>
+                                        <size key="customSize" width="600" height="50"/>
+                                        <connections>
+                                            <outlet property="textLabel" destination="UY8-cb-5so" id="0J6-Ke-PAz"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="pillSetupImageCell" id="G0v-rz-O5i" customClass="HEMImageCollectionViewCell">
+                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="313"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="pillSetup.png" translatesAutoresizingMaskIntoConstraints="NO" id="37l-V6-nno" customClass="HEMURLImageView">
+                                                    <rect key="frame" x="0.0" y="27" width="600" height="286"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="286" id="FrF-LZ-2DF"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="bottomMargin" secondItem="37l-V6-nno" secondAttribute="bottom" constant="-8" id="1wT-ly-Yiw"/>
+                                            <constraint firstItem="37l-V6-nno" firstAttribute="top" secondItem="G0v-rz-O5i" secondAttribute="topMargin" constant="19" id="dgU-AP-G5A"/>
+                                            <constraint firstItem="37l-V6-nno" firstAttribute="leading" secondItem="G0v-rz-O5i" secondAttribute="leadingMargin" constant="-8" id="qpt-hP-gbX"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="37l-V6-nno" secondAttribute="trailing" constant="-8" id="wIR-aL-98u"/>
+                                        </constraints>
+                                        <size key="customSize" width="600" height="313"/>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="dgU-AP-G5A"/>
+                                            </mask>
+                                        </variation>
+                                        <connections>
+                                            <outlet property="urlImageView" destination="37l-V6-nno" id="CGf-QK-7z3"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="4s2-Gt-ovZ" id="B5S-a1-MxA"/>
+                                    <outlet property="delegate" destination="4s2-Gt-ovZ" id="r3U-c8-BA5"/>
+                                </connections>
+                            </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qKC-Ye-ncl">
                                 <rect key="frame" x="0.0" y="509" width="600" height="91"/>
                                 <subviews>
@@ -1096,38 +1161,23 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     <constraint firstAttribute="trailing" secondItem="qdG-tg-U0e" secondAttribute="trailing" constant="20" id="xUr-fy-wkf"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="274" translatesAutoresizingMaskIntoConstraints="NO" id="xuG-gW-rF9">
-                                <rect key="frame" x="20" y="60.5" width="560" height="102.5"/>
-                                <string key="text">Clip Sleep Pill to your pillowcase by pulling the edge of the pillowcase taught. For best results, place your Sleep Pill on the side of your pillowcase closest to the edge of the bed.</string>
-                                <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
-                                <color key="textColor" red="0.22352941179999999" green="0.22352941179999999" blue="0.22352941179999999" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailingMargin" secondItem="ded-Ea-3CR" secondAttribute="trailing" constant="4" id="8qq-TD-zyY"/>
-                            <constraint firstItem="ded-Ea-3CR" firstAttribute="bottom" secondItem="xuG-gW-rF9" secondAttribute="top" constant="-8" id="Aep-AF-zm1"/>
-                            <constraint firstItem="ccb-Ef-kXd" firstAttribute="top" secondItem="e7k-8I-UvG" secondAttribute="bottom" constant="63" id="CLp-HH-F9M"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="xuG-gW-rF9" secondAttribute="trailing" constant="4" id="Cfe-kX-mgl"/>
                             <constraint firstAttribute="trailingMargin" secondItem="qKC-Ye-ncl" secondAttribute="trailing" constant="-16" id="Hcq-s2-IFE"/>
-                            <constraint firstItem="xuG-gW-rF9" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="4" id="LNX-7y-kvZ"/>
                             <constraint firstItem="qKC-Ye-ncl" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="-16" id="Mvf-Q3-HOX"/>
-                            <constraint firstItem="e7k-8I-UvG" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="-16" id="Zzl-nN-aV7"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="e7k-8I-UvG" secondAttribute="trailing" constant="-16" id="jTb-4p-dXn"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="oIk-07-Zii" secondAttribute="trailing" constant="-16" id="S0a-Fs-VtB"/>
+                            <constraint firstItem="oIk-07-Zii" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="-16" id="e55-Bk-2Rp"/>
+                            <constraint firstItem="oIk-07-Zii" firstAttribute="top" secondItem="SS5-15-dp3" secondAttribute="bottom" constant="-20" id="l7g-vf-ciY"/>
                             <constraint firstItem="ccb-Ef-kXd" firstAttribute="top" secondItem="qKC-Ye-ncl" secondAttribute="bottom" id="maV-pv-6G6"/>
-                            <constraint firstItem="ded-Ea-3CR" firstAttribute="leading" secondItem="lwn-in-ftH" secondAttribute="leadingMargin" constant="4" id="rCu-3L-GJ4"/>
-                            <constraint firstItem="ded-Ea-3CR" firstAttribute="top" secondItem="SS5-15-dp3" secondAttribute="bottom" constant="4" id="yXX-qo-gHo"/>
+                            <constraint firstItem="qKC-Ye-ncl" firstAttribute="top" secondItem="oIk-07-Zii" secondAttribute="bottom" id="tRs-HZ-Wem"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="rMe-eX-uln"/>
                     <connections>
                         <outlet property="buttonContainer" destination="qKC-Ye-ncl" id="4xd-6S-5D0"/>
+                        <outlet property="collectionView" destination="oIk-07-Zii" id="PQC-71-kk3"/>
                         <outlet property="continueButton" destination="qdG-tg-U0e" id="PIQ-2A-zSC"/>
-                        <outlet property="descriptionLabel" destination="xuG-gW-rF9" id="LKg-J5-YUJ"/>
-                        <outlet property="descriptionTopConstraint" destination="Aep-AF-zm1" id="9vc-uz-MFc"/>
-                        <outlet property="imageBottomConstraint" destination="CLp-HH-F9M" id="TdT-Q9-OVO"/>
-                        <outlet property="titleLabel" destination="ded-Ea-3CR" id="VPe-Cs-8q2"/>
                         <outlet property="view" destination="lwn-in-ftH" id="5W8-Rh-obp"/>
                         <segue destination="DIj-70-bYO" kind="push" identifier="pillSetupToColors" id="gUR-KW-V2G"/>
                     </connections>
@@ -2861,8 +2911,8 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="ZOJ-Sh-Dzx"/>
         <segue reference="u9Q-g4-qbd"/>
+        <segue reference="ZOJ-Sh-Dzx"/>
         <segue reference="gUR-KW-V2G"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>

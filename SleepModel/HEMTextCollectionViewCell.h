@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface HEMInsightTextCollectionViewCell : UICollectionViewCell
+@interface HEMTextCollectionViewCell : UICollectionViewCell
 
 @property (nonatomic, weak) IBOutlet UILabel* textLabel;
 @property (nonatomic, weak) IBOutlet UIView* separator;

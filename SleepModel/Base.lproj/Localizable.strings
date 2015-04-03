@@ -41,6 +41,8 @@
 "onboarding.room-check.intro.air" = "A low Air Quality Index value represents good air quality.";
 "onboarding.room-check.intro.sound" = "Noise and loud interruptions hinder a good night's sleep.";
 "onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulty falling asleep and staying asleep.";
+"onboarding.pill-setup.title" = "Attach Sleep Pill to your pillow";
+"onboarding.pill-setup.description" = "Clip Sleep Pill to your pillowcase by pulling the edge of the pillowcase taught. For best results, place your Sleep Pill on the side of your pillowcase closest to the edge of the bed.";
 
 // help links
 "help.email.address" = "support@hello.is";

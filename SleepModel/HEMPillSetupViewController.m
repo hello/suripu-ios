@@ -30,7 +30,6 @@ typedef NS_ENUM(NSUInteger, HEMPillSetupRow) {
     HEMPillSetupRows = 3
 };
 
-static CGFloat const HEMPillSetupImageCellHeight = 398.0f;
 static CGFloat const HEMPillSetupTextHorzPadding = 20.0f;
 static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
 
@@ -42,6 +41,9 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
 
 @property (strong, nonatomic) NSAttributedString* attributedTitle;
 @property (strong, nonatomic) NSAttributedString* attributedDescription;
+@property (assign, nonatomic) CGFloat titleHeight;
+@property (assign, nonatomic) CGFloat descriptionHeight;
+@property (assign, nonatomic) CGFloat imageHeight;
 @property (assign, nonatomic, getter=isWaitingForLED) BOOL waitingForLED;
 
 @end
@@ -68,6 +70,36 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
     [containerLayer setShadowOffset:[shadow shadowOffset]];
     [containerLayer setShadowRadius:[shadow shadowBlurRadius]];
     [containerLayer setShadowOpacity:1.0f];
+}
+
+- (void)calculateHeights {
+    NSAttributedString* title = [self attributedTitle];
+    [self setTitleHeight:[self heightForAttributedText:title]];
+    
+    NSAttributedString* desc = [self attributedDecription];
+    [self setDescriptionHeight:[self heightForAttributedText:desc]];
+    
+    CGFloat contentHeight =
+        [self titleHeight]
+        + HEMPillSetupLayoutMinLineSpacing
+        + [self descriptionHeight]
+        + HEMPillSetupLayoutMinLineSpacing;
+    
+    UIImage* image = [HelloStyleKit pillSetup];
+    CGFloat imageHeight = CGRectGetHeight([[self collectionView] bounds]) - contentHeight;
+    [self setImageHeight:MAX(image.size.height, imageHeight)];
+}
+
+- (CGFloat)heightForAttributedText:(NSAttributedString*)attributedText {
+    UICollectionViewFlowLayout* layout = (id)[[self collectionView] collectionViewLayout];
+    CGFloat itemWidth = [layout itemSize].width;
+    
+    CGSize constraint = CGSizeZero;
+    constraint.width = itemWidth - (HEMPillSetupTextHorzPadding*2);
+    constraint.height = MAXFLOAT;
+    NSStringDrawingOptions options = NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin;
+    CGRect textFrame = [attributedText boundingRectWithSize:constraint options:options context:nil];
+    return ceilf(CGRectGetHeight(textFrame));
 }
 
 - (NSAttributedString*)attributedTitle {
@@ -98,6 +130,13 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
     UICollectionViewFlowLayout* layout = (id)[[self collectionView] collectionViewLayout];
     [layout setMinimumLineSpacing:HEMPillSetupLayoutMinLineSpacing];
     [layout setItemSize:CGSizeMake(CGRectGetWidth([[self collectionView] bounds]), 0.0f)];
+    
+    CGFloat contentHeight = [[self collectionView] contentSize].height;
+    CGFloat viewHeight = CGRectGetHeight([[self collectionView] bounds]);
+    BOOL scroll = contentHeight - HEMPillSetupLayoutMinLineSpacing > viewHeight;
+    [[self collectionView] setScrollEnabled:scroll];
+
+    [self calculateHeights];
 }
 
 #pragma mark - UICollectionViewDataSource / Delegate
@@ -162,28 +201,13 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
     
     switch (row) {
         case HEMPillSetupRowTitle:
-        case HEMPillSetupRowDescription: {
-            NSAttributedString* attributedText = nil;
-            
-            if (row == HEMPillSetupRowTitle) {
-                attributedText = [self attributedTitle];
-            } else {
-                attributedText = [self attributedDecription];
-            }
-            
-            CGSize constraint = CGSizeZero;
-            constraint.width = itemSize.width - (HEMPillSetupTextHorzPadding*2);
-            constraint.height = MAXFLOAT;
-            NSStringDrawingOptions options = NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin;
-            CGRect textFrame = [attributedText boundingRectWithSize:constraint options:options context:nil];
-            itemSize.height = ceilf(CGRectGetHeight(textFrame));
+            itemSize.height = [self titleHeight];
             break;
-        }
+        case HEMPillSetupRowDescription:
+            itemSize.height = [self descriptionHeight];
+            break;
         case HEMPillSetupRowImage:
-            itemSize.height = HEMPillSetupImageCellHeight;
-            if ([self isIPhone4Family] || [self isIPhone5Family]) {
-                itemSize.height -= 100.0f;
-            }
+            itemSize.height = [self imageHeight];
             break;
         default:
             break;

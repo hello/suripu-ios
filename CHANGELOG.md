@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.4.6
+
+New:
+
+* Updated Sleep Pill setup screen
+* Welcome dialogs animate in
+* visual design tweaks to Settings
+* Current conditions and Alarm view indicate when a Sense is not paired
+
+Fixes
+
+* time picker fixes for timeline feedback views
+
 ## 1.0.4.5
 
 Fixes:

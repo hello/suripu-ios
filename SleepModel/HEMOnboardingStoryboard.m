@@ -25,6 +25,8 @@ static NSString *const _HEMnetwork = @"network";
 static NSString *const _HEMnoBleToBirthday = @"noBleToBirthday";
 static NSString *const _HEMpillDescription = @"pillDescription";
 static NSString *const _HEMpillPair = @"pillPair";
+static NSString *const _HEMpillSetupImageCell = @"pillSetupImageCell";
+static NSString *const _HEMpillSetupTextCell = @"pillSetupTextCell";
 static NSString *const _HEMpillSetupToColors = @"pillSetupToColors";
 static NSString *const _HEMpushToAudio = @"pushToAudio";
 static NSString *const _HEMroomCheck = @"roomCheck";
@@ -50,6 +52,8 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 
 /** Cell Reuse Identifiers */
 +(NSString *)networkReuseIdentifier { return _HEMnetwork; }
++(NSString *)pillSetupImageCellReuseIdentifier { return _HEMpillSetupImageCell; }
++(NSString *)pillSetupTextCellReuseIdentifier { return _HEMpillSetupTextCell; }
 
 /** Segue Identifiers */
 +(NSString *)alarmToAnotherPillSegueIdentifier { return _HEMalarmToAnotherPill; }

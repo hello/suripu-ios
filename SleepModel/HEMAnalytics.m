@@ -92,6 +92,7 @@ NSString* const kHEMAnalyticsEventPropSecurityType = @"Security Type";
 NSString* const kHEMAnalyticsEventPropWiFiOther = @"Is Other";
 NSString* const kHEMAnalyticsEventPropWiFiRSSI = @"RSSI";
 NSString* const HEMAnalyticsEventPairPill = @"Pair Pill";
+NSString* const HEMAnalyticsEventPairPillRetry = @"Pair Pill Retry";
 NSString* const kHEMAnalyticsEventPropOnBScreen = @"Screen";
 NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 

@@ -151,7 +151,13 @@ static HEMFullscreenDialogView *fullscreenDialogView = nil;
           strongSelf.cardTopConstraint.constant = HEMFullscreenDialogDefaultCardSpacing;
           strongSelf.cardBottomConstraint.constant = HEMFullscreenDialogDefaultCardSpacing;
           [strongSelf setNeedsUpdateConstraints];
-          [UIView animateWithDuration:0.25f animations:^{ [strongSelf.contentContainerView layoutIfNeeded]; }];
+          [UIView animateWithDuration:0.5f
+                                delay:0
+               usingSpringWithDamping:0.8
+                initialSpringVelocity:0.5
+                              options:0
+                           animations:^{ [strongSelf.contentContainerView layoutIfNeeded]; }
+                           completion:NULL];
         });
     } else { [self setNeedsUpdateConstraints]; }
 }

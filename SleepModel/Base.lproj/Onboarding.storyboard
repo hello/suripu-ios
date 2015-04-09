@@ -1788,73 +1788,6 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7x8-Kt-tEQ" userLabel="resultView">
-                                <rect key="frame" x="0.0" y="600" width="600" height="254"/>
-                                <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xz9-46-8eZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="2JQ-PR-di1"/>
-                                        </constraints>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Success!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyG-C0-uLF">
-                                        <rect key="frame" x="38" y="45" width="524" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="1GZ-UA-IOz"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="28"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Everything looks great. Now let's set your first Smart Alarm." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFC-on-mrs">
-                                        <rect key="frame" x="28" y="92" width="544" height="62"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="62" id="Zao-lG-zN2"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XpJ-Hr-RJB" customClass="HEMActionButton">
-                                        <rect key="frame" x="20" y="186" width="560" height="50"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="JS1-gt-UdP"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                        <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                        <state key="normal" title="CONTINUE">
-                                            <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <segue destination="0qJ-qR-xla" kind="push" id="dtA-7f-cpn"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstItem="XpJ-Hr-RJB" firstAttribute="leading" secondItem="7x8-Kt-tEQ" secondAttribute="leading" constant="20" id="0Jp-fQ-S1w"/>
-                                    <constraint firstItem="PFC-on-mrs" firstAttribute="bottom" secondItem="XpJ-Hr-RJB" secondAttribute="top" constant="-32" id="1r5-Jz-Lz8"/>
-                                    <constraint firstAttribute="height" constant="254" id="3Xn-Ve-OEb"/>
-                                    <constraint firstItem="Xz9-46-8eZ" firstAttribute="top" secondItem="7x8-Kt-tEQ" secondAttribute="top" id="Hk4-rc-Mv8"/>
-                                    <constraint firstItem="eyG-C0-uLF" firstAttribute="leading" secondItem="7x8-Kt-tEQ" secondAttribute="leading" constant="38" id="MJZ-dE-Qfb"/>
-                                    <constraint firstItem="PFC-on-mrs" firstAttribute="leading" secondItem="7x8-Kt-tEQ" secondAttribute="leading" constant="28" id="Opn-MF-hfO"/>
-                                    <constraint firstItem="Xz9-46-8eZ" firstAttribute="leading" secondItem="7x8-Kt-tEQ" secondAttribute="leading" id="UID-RH-wG1"/>
-                                    <constraint firstAttribute="trailing" secondItem="PFC-on-mrs" secondAttribute="trailing" constant="28" id="aJc-pl-aeZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="eyG-C0-uLF" secondAttribute="trailing" constant="38" id="geX-nU-WM8"/>
-                                    <constraint firstItem="eyG-C0-uLF" firstAttribute="top" secondItem="7x8-Kt-tEQ" secondAttribute="top" constant="45" id="kHm-3J-ECb"/>
-                                    <constraint firstAttribute="trailing" secondItem="XpJ-Hr-RJB" secondAttribute="trailing" constant="20" id="kdk-db-VCa"/>
-                                    <constraint firstAttribute="centerX" secondItem="XpJ-Hr-RJB" secondAttribute="centerX" id="mgG-eB-gjW"/>
-                                    <constraint firstAttribute="trailing" secondItem="Xz9-46-8eZ" secondAttribute="trailing" id="wEa-Vj-Hr0"/>
-                                    <constraint firstItem="PFC-on-mrs" firstAttribute="topMargin" secondItem="eyG-C0-uLF" secondAttribute="bottom" constant="23" id="xz9-u7-5GR"/>
-                                </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="mgG-eB-gjW"/>
-                                    </mask>
-                                </variation>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -1862,10 +1795,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <constraint firstItem="AIh-GX-j1H" firstAttribute="top" secondItem="bQ9-yM-CGX" secondAttribute="bottom" constant="4" id="1n6-4D-baI"/>
                             <constraint firstItem="AIh-GX-j1H" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-16" id="2Xz-5S-pQd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AIh-GX-j1H" secondAttribute="trailing" constant="-16" id="L2R-YJ-Dz7"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="7x8-Kt-tEQ" secondAttribute="trailing" constant="-16" id="UbA-dX-jxI"/>
-                            <constraint firstItem="FHw-CT-xtm" firstAttribute="top" secondItem="7x8-Kt-tEQ" secondAttribute="bottom" constant="-254" id="Wh1-sD-b8U"/>
                             <constraint firstItem="FHw-CT-xtm" firstAttribute="top" secondItem="Ybq-zx-dgL" secondAttribute="bottom" id="aAW-D0-WY4"/>
-                            <constraint firstItem="7x8-Kt-tEQ" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-16" id="gzX-ub-ocv"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ybq-zx-dgL" secondAttribute="trailing" constant="-16" id="haO-de-0xt"/>
                             <constraint firstItem="Ybq-zx-dgL" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-16" id="vmF-qH-dlr"/>
                         </constraints>
@@ -1877,13 +1807,6 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="descriptionLabel" destination="iGc-8P-g1M" id="kYg-Ly-nT4"/>
                         <outlet property="descriptionTopConstraint" destination="XEC-kL-BVD" id="Ci8-nh-MX7"/>
                         <outlet property="illustrationView" destination="EwG-fT-RLQ" id="74f-CH-Apu"/>
-                        <outlet property="nextButton" destination="XpJ-Hr-RJB" id="N0Q-Qy-d1O"/>
-                        <outlet property="resultBottomConstraint" destination="Wh1-sD-b8U" id="ocy-lE-J4w"/>
-                        <outlet property="resultHeightConstraint" destination="3Xn-Ve-OEb" id="uUO-NE-gG2"/>
-                        <outlet property="resultMessageLabel" destination="PFC-on-mrs" id="BAx-D3-kWC"/>
-                        <outlet property="resultSeparator" destination="Xz9-46-8eZ" id="ydS-s6-Qcq"/>
-                        <outlet property="resultTitleLabel" destination="eyG-C0-uLF" id="YdX-9v-giS"/>
-                        <outlet property="resultView" destination="7x8-Kt-tEQ" id="a9R-Wr-Sii"/>
                         <outlet property="startButton" destination="tkw-WQ-h6F" id="XAR-Gw-KRZ"/>
                         <outlet property="titleHeightConstraint" destination="sBh-3g-dOO" id="kYi-P6-K9b"/>
                         <outlet property="titleLabel" destination="PMR-Df-HyE" id="xt1-m9-8WQ"/>

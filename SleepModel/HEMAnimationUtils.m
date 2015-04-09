@@ -71,4 +71,21 @@ static CGFloat const kHEMAnimationDefaultDuration = 0.2f;
     }];
 }
 
++ (void)fade:(UIView*)view out:(void(^)(void))outBlock thenIn:(void(^)(void))inBlock {
+    [UIView animateWithDuration:kHEMAnimationDefaultDuration animations:^{
+        [view setAlpha:0.0f];
+    } completion:^(BOOL finished) {
+        if (outBlock) {
+            outBlock();
+        }
+        [UIView animateWithDuration:kHEMAnimationActivityDuration animations:^{
+            [view setAlpha:1.0f];
+        } completion:^(BOOL finished) {
+            if (inBlock) {
+                inBlock();
+            }
+        }];
+    }];
+}
+
 @end

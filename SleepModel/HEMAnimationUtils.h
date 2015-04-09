@@ -45,4 +45,14 @@
  */
 + (void)grow:(UIView*)view completion:(void(^)(BOOL finished))completion;
 
+/**
+ * Fade the view out, make a callback when it's not visible, then fade it back in
+ * after the operation is done and call the inBlock
+ *
+ * @param view: view to animate
+ * @param outBlock: the block to call when view is temporarily not visible
+ * @param inBlock: the block to call when view is once again visible
+ */
++ (void)fade:(UIView*)view out:(void(^)(void))outBlock thenIn:(void(^)(void))inBlock;
+
 @end

@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^HEMDialogActionBlock)(void);
+typedef void(^HEMDialogLinkActionBlock)(NSString* link);
 
 @interface HEMAlertView : UIView
 
@@ -60,5 +61,12 @@ typedef void(^HEMDialogActionBlock)(void);
 - (void)addActionButtonWithTitle:(NSString*)title
                          primary:(BOOL)primary
                           action:(HEMDialogActionBlock)block;
+
+/**
+ * Set the callback to invoke when a link in the body of the alert is pressed
+ * 
+ * @param linkBlock: the block to call
+ */
+- (void)onLinkTap:(HEMDialogLinkActionBlock)linkBlock;
 
 @end

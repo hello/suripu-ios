@@ -130,6 +130,14 @@ typedef void(^SENServiceDeviceCompletionBlock)(NSError* error);
  */
 - (void)loadDeviceInfo:(SENServiceDeviceCompletionBlock)completion;
 
+
+/**
+ * Load device info if not previously loaded, invoke completion after loading is
+ * completed or an error occurs
+ * @param completion block invoked when request is completed
+ */
+- (void)loadDeviceInfoIfNeeded:(SENServiceDeviceCompletionBlock)completion;
+
 /**
  * @method shouldWarnAboutLastSeenForDevice:
  * 

@@ -9,6 +9,11 @@
 #import "HEMSpinnerView.h"
 #import "HEMAnimationUtils.h"
 
+static CGFloat const HEMSpinnerDefaultDamping = 1.0f;
+static CGFloat const HEMSpinnerEndDamping = 0.6f;
+static CGFloat const HEMSpinnerDefaultDuration = 0.05f;
+static CGFloat const HEMSpinnerDefaultInitialVelocity = 2.0f;
+
 @interface HEMSpinnerView()
 
 @property (nonatomic, strong) UIFont* font;
@@ -96,13 +101,13 @@
     
     NSUInteger itemCount = [[self items] count];
     CGFloat slotHeight = CGRectGetHeight([self bounds]);
-    CGFloat damping = 1.0f;
-    CGFloat duration = 0.05f;
-    CGFloat velocity = 2.0f;
+    CGFloat damping = HEMSpinnerDefaultDamping;
+    CGFloat duration = HEMSpinnerDefaultDuration;
+    CGFloat velocity = HEMSpinnerDefaultInitialVelocity;
     BOOL willFinish = [[[self offScreenLabel] text] isEqualToString:targetItem];
     
     if (willFinish) {
-        damping = 0.6f;
+        damping = HEMSpinnerEndDamping;
         duration = (1 + damping) / velocity;
     }
     
@@ -117,29 +122,25 @@
                          [self move:[self offScreenLabel] byY:slotHeight];
                      }
                      completion:^(BOOL finished) {
-                         if (willFinish && completion) {
-                             completion (finished);
+                         if (willFinish) {
+                             if (completion) {
+                                 completion (finished);
+                             }
+                         } else {
+                             NSUInteger nextIndex = ([[self offScreenLabel] tag] + 1) % itemCount;
+                             NSString* nextTargetItem = [self items][nextIndex];
+                             
+                             UILabel* tempLabel = [self onScreenLabel];
+                             [self setOnScreenLabel:[self offScreenLabel]];
+                             [self setOffScreenLabel:tempLabel];
+                             
+                             [[self offScreenLabel] setText:nextTargetItem];
+                             [[self offScreenLabel] setTag:nextIndex];
+                             [self move:[self offScreenLabel] byY:-2 * slotHeight];
+                             
+                             [self spinTo:targetItem completion:completion];
                          }
                      }];
-    
-    if (!willFinish) {
-        int64_t delayInSeconds = (int64_t)(duration * NSEC_PER_SEC);
-        dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds);
-        dispatch_after(delay, dispatch_get_main_queue(), ^{
-            NSUInteger nextIndex = ([[self offScreenLabel] tag] + 1) % itemCount;
-            NSString* nextTargetItem = [self items][nextIndex];
-            
-            UILabel* tempLabel = [self onScreenLabel];
-            [self setOnScreenLabel:[self offScreenLabel]];
-            [self setOffScreenLabel:tempLabel];
-            
-            [[self offScreenLabel] setText:nextTargetItem];
-            [[self offScreenLabel] setTag:nextIndex];
-            [self move:[self offScreenLabel] byY:-2 * slotHeight];
-            
-            [self spinTo:targetItem completion:completion];
-        });
-    }
     
 }
 

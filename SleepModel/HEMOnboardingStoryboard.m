@@ -30,6 +30,7 @@ static NSString *const _HEMpillSetupTextCell = @"pillSetupTextCell";
 static NSString *const _HEMpillSetupToColors = @"pillSetupToColors";
 static NSString *const _HEMpushToAudio = @"pushToAudio";
 static NSString *const _HEMroomCheck = @"roomCheck";
+static NSString *const _HEMroomcheckToSmartAlarm = @"roomcheckToSmartAlarm";
 static NSString *const _HEMsenseAudio = @"senseAudio";
 static NSString *const _HEMsensePairToPill = @"sensePairToPill";
 static NSString *const _HEMsensePairViewController = @"sensePairViewController";
@@ -69,6 +70,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 +(NSString *)noBleToBirthdaySegueIdentifier { return _HEMnoBleToBirthday; }
 +(NSString *)pillSetupToColorsSegueIdentifier { return _HEMpillSetupToColors; }
 +(NSString *)pushToAudioSegueIdentifier { return _HEMpushToAudio; }
++(NSString *)roomcheckToSmartAlarmSegueIdentifier { return _HEMroomcheckToSmartAlarm; }
 +(NSString *)sensePairToPillSegueIdentifier { return _HEMsensePairToPill; }
 +(NSString *)signupToNoBleSegueIdentifier { return _HEMsignupToNoBle; }
 +(NSString *)skipPillPairSegue { return _HEMskipPillPairSegue; }

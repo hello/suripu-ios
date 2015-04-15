@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1066" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
@@ -36,9 +36,12 @@
                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rie-2e-3zn" userLabel="sensorValueContainer">
-                    <rect key="frame" x="0.0" y="458" width="600" height="105"/>
+                <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rie-2e-3zn" userLabel="sensorValueContainer">
+                    <rect key="frame" x="0.0" y="410" width="600" height="105"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="105" id="LHk-UK-h8X"/>
+                    </constraints>
                 </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -54,19 +57,23 @@
                 <constraint firstAttribute="trailing" secondItem="bRK-dj-oeP" secondAttribute="trailing" id="XJ4-zm-gpJ"/>
                 <constraint firstItem="FvV-r0-P2l" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="fuK-pX-EgV"/>
                 <constraint firstItem="pco-pJ-gp9" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="179" id="l6r-bu-5u4"/>
-                <constraint firstItem="xnU-64-6En" firstAttribute="bottom" secondItem="Rie-2e-3zn" secondAttribute="top" priority="750" constant="-50" id="n0S-Z9-diT"/>
                 <constraint firstAttribute="trailing" secondItem="pco-pJ-gp9" secondAttribute="trailing" id="pgY-26-9p2"/>
                 <constraint firstItem="xnU-64-6En" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="tGn-Bk-BrA"/>
-                <constraint firstAttribute="bottom" secondItem="Rie-2e-3zn" secondAttribute="bottom" constant="37" id="ykL-Ch-bII"/>
+                <constraint firstAttribute="bottom" secondItem="Rie-2e-3zn" secondAttribute="bottom" constant="85" id="ykL-Ch-bII"/>
                 <constraint firstAttribute="trailing" secondItem="FvV-r0-P2l" secondAttribute="trailing" id="zP3-dB-uDM"/>
             </constraints>
             <connections>
+                <outlet property="bgImageTopConstraint" destination="l6r-bu-5u4" id="T0g-fX-fGh"/>
                 <outlet property="senseBgImageView" destination="pco-pJ-gp9" id="U9W-QA-G7U"/>
                 <outlet property="senseImageView" destination="FvV-r0-P2l" id="6qN-Pb-Bnd"/>
+                <outlet property="sensorContainerTopConstraint" destination="CMl-eU-Lc0" id="rxe-97-9HR"/>
                 <outlet property="sensorContainerView" destination="bRK-dj-oeP" id="nWS-nX-Fj0"/>
                 <outlet property="sensorMessageHeightConstraint" destination="6eO-F7-I3r" id="yCQ-Hb-Q3T"/>
                 <outlet property="sensorMessageLabel" destination="xnU-64-6En" id="kpy-01-1TF"/>
+                <outlet property="sensorMessageTopConstraint" destination="Tek-x0-8S5" id="dkB-aH-eVw"/>
+                <outlet property="sensorTopConstraint" destination="Tek-x0-8S5" id="nTy-or-irr"/>
                 <outlet property="sensorValueContainer" destination="Rie-2e-3zn" id="RmO-Su-LqN"/>
+                <outlet property="sensorValueContainerBottomConstraint" destination="ykL-Ch-bII" id="YDH-hm-nKQ"/>
             </connections>
         </view>
     </objects>

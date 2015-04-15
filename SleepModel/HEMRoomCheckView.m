@@ -5,7 +5,7 @@
 //  Created by Jimmy Lu on 4/6/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
-#import <NAPickerView/NAPickerView.h>
+#import <markdown_peg.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSMutableAttributedString+HEMFormat.h"
@@ -14,18 +14,19 @@
 #import "HEMActivityIndicatorView.h"
 #import "HelloStyleKit.h"
 #import "HEMAnimationUtils.h"
+#import "HEMSpinnerView.h"
+#import "HEMMarkdown.h"
 
 static CGFloat const HEMRoomCheckViewSensorIconSpacing = 28.0f;
 static CGFloat const HEMRoomCheckViewSensorIconSize = 40.0f;
-static CGFloat const HEMRoomCheckViewSensorIconActivitySize = 44.0f;
+static CGFloat const HEMRoomCheckViewSensorIconActivitySize = 40.0f;
 static CGFloat const HEMRoomCheckViewSensorDigitWidth = 41.0f;
 static CGFloat const HEMRoomCheckViewSensorDigitHeight = 98.0f;
 static CGFloat const HEMRoomCheckViewSensorDigitSpacing = 3.0f;
 static CGFloat const HEMRoomCheckViewSensorDigitToUnitSpacing = 7.0f;
 static CGFloat const HEMRoomCheckViewSensorUnitHeight = 44.0f;
 static CGFloat const HEMRoomCheckViewSensorUnitYOffset = 14.0f;
-static CGFloat const HEMRoomCheckViewArtificialActivityDuration = 1.5f;
-static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 2.0f;
+static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
 
 @interface HEMRoomCheckView()
 
@@ -33,13 +34,20 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 2.0f;
 @property (weak, nonatomic) IBOutlet UIImageView *senseImageView;
 @property (weak, nonatomic) IBOutlet UIView *sensorContainerView;
 @property (weak, nonatomic) IBOutlet UILabel *sensorMessageLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorMessageHeightConstraint;
 @property (weak, nonatomic) IBOutlet UIView *sensorValueContainer;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorContainerTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorMessageHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorValueContainerBottomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sensorMessageTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *bgImageTopConstraint;
 
 @property (assign, nonatomic) NSInteger numberOfSensors;
 @property (assign, nonatomic, getter=isLoaded) BOOL loaded;
 @property (assign, nonatomic, getter=isAnimating) BOOL animating;
 @property (strong, nonatomic) NSMutableArray* sensorValueRotaries;
+@property (weak,   nonatomic) HEMActivityIndicatorView* currentSensorActivity;
+@property (assign, nonatomic) NSUInteger currentSensorIndex;
 
 @end
 
@@ -61,8 +69,31 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 2.0f;
     [self setSensorValueRotaries:[NSMutableArray array]];
 }
 
+- (void)adjustForiPhone4 {
+    CGFloat bgImageTopConstant = [[self bgImageTopConstraint] constant] * 0.8f;
+    [[self bgImageTopConstraint] setConstant:bgImageTopConstant];
+    
+    CGFloat sensorContainerTopConstrant = [[self sensorContainerTopConstraint] constant] * 0.075f;
+    [[self sensorContainerTopConstraint] setConstant:sensorContainerTopConstrant];
+    
+    CGFloat sensorMessageTopConstant = [[self sensorMessageTopConstraint] constant] * 0.5f;
+    [[self sensorMessageTopConstraint] setConstant:sensorMessageTopConstant];
+    
+    CGFloat sensorValueBottomConstraint = [[self sensorValueContainerBottomConstraint] constant] * 0.34f;
+    [[self sensorValueContainerBottomConstraint] setConstant:sensorValueBottomConstraint];
+}
+
+- (void)adjustForiPhone5 {
+    CGFloat sensorContainerTopConstrant = [[self sensorContainerTopConstraint] constant] * 0.5f;
+    [[self sensorContainerTopConstraint] setConstant:sensorContainerTopConstrant];
+    
+    CGFloat sensorValueBottomConstraint = [[self sensorValueContainerBottomConstraint] constant] * 0.63f;
+    [[self sensorValueContainerBottomConstraint] setConstant:sensorValueBottomConstraint];
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
     if (![self isLoaded]) {
         [self reload];
         [self setLoaded:YES];
@@ -94,6 +125,7 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 2.0f;
     if ([self numberOfSensors] > 0) {
         [self layoutSensorIcons];
         [self configureRotariesForSensorAtIndex:0];
+        [self setCurrentSensorIndex:0];
     }
 }
 
@@ -143,8 +175,7 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 2.0f;
     CGSize unitSize = [self sizeOfAttributedSensorValueUnit:attrUnit];
     CGFloat requiredWidth
         = (digits * HEMRoomCheckViewSensorDigitWidth)
-        + ((digits - 1) * HEMRoomCheckViewSensorDigitSpacing)
-        + unitSize.width;
+        + ((digits - 1) * HEMRoomCheckViewSensorDigitSpacing);
     
     CGRect containerBounds = [[self sensorValueContainer] bounds];
     CGRect valueFrame = CGRectZero;
@@ -153,35 +184,27 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 2.0f;
     valueFrame.size = CGSizeMake(HEMRoomCheckViewSensorDigitWidth, HEMRoomCheckViewSensorDigitHeight);
     
     for (int i = 0; i < digits; i++) {
-        [self addDigitRotaryWithFrame:valueFrame];
-        valueFrame.origin.x += HEMRoomCheckViewSensorDigitWidth + HEMRoomCheckViewSensorDigitHeight;
+        [self addDigitRotaryWithFrame:valueFrame color:color];
+        valueFrame.origin.x += HEMRoomCheckViewSensorDigitWidth + HEMRoomCheckViewSensorDigitSpacing;
     }
     
     [self appendSensorUnit:attrUnit withSize:unitSize];
 }
 
-- (void)addDigitRotaryWithFrame:(CGRect)frame {
+- (void)addDigitRotaryWithFrame:(CGRect)frame color:(UIColor*)color {
     NSMutableArray* digits = [NSMutableArray arrayWithCapacity:10];
     for (long i = 0; i < 10; i++) {
         [digits addObject:[NSString stringWithFormat:@"%ld", i]];
     }
     
-    NAPickerView* digitRotary = [[NAPickerView alloc] initWithFrame:frame andItems:digits andDelegate:nil];
-    [digitRotary setInfiniteScrolling:YES];
-    [digitRotary setShowOverlay:NO];
-    [digitRotary setUserInteractionEnabled:NO];
-    [digitRotary setCellHeight:HEMRoomCheckViewSensorDigitHeight];
-    [digitRotary setBackgroundColor:[UIColor clearColor]];
-    [digitRotary setConfigureBlock:^(NALabelCell *cell, NSString *item) {
-        [[cell textView] setFont:[UIFont onboardingRoomCheckSensorValueFont]];
-        [[cell textView] setText:item];
-        [[cell textView] setTextAlignment:NSTextAlignmentCenter];
-        [[cell textView] setBackgroundColor:[UIColor clearColor]];
-        [[cell textView] setAlpha:([self isAnimating] ? 0.2f : 1.0f)];
-    }];
+    UIFont* font = [UIFont onboardingRoomCheckSensorValueFont];
+    HEMSpinnerView* rotary = [[HEMSpinnerView alloc] initWithItems:digits
+                                                              font:font
+                                                             color:color];
+    [rotary setFrame:frame];
     
-    [[self sensorValueRotaries] addObject:digitRotary];
-    [[self sensorValueContainer] addSubview:digitRotary];
+    [[self sensorValueRotaries] addObject:rotary];
+    [[self sensorValueContainer] addSubview:rotary];
 }
 
 - (void)appendSensorUnit:(NSAttributedString*)attributedUnit withSize:(CGSize)size {
@@ -208,14 +231,32 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 2.0f;
     [[self sensorMessageLabel] setText:[message uppercaseString]];
     [[self sensorMessageLabel] setTextColor:[UIColor colorWithWhite:0.0f alpha:0.4f]];
     [self resizeSensorMessageLabel];
-
 }
 
 - (void)showSensorMessageForSensorAtIndex:(NSUInteger)index {
-    [[self sensorMessageLabel] setFont:[UIFont onboardingRoomCheckSensorFont]];
+    NSDictionary* statusAttributes = [HEMMarkdown attributesForRoomCheckSensorMessage];
+    NSString* message = [[self delegate] sensorMessageAtIndex:index inRoomCheckView:self];
+    NSAttributedString* attrMessage = markdown_to_attr_string(message, 0, statusAttributes);
+    
     [[self sensorMessageLabel] setTextColor:[UIColor blackColor]];
-    [[self sensorMessageLabel] setText:[[self delegate] sensorMessageAtIndex:index inRoomCheckView:self]];
+    [[self sensorMessageLabel] setAttributedText:attrMessage];
     [self resizeSensorMessageLabel];
+}
+
+- (void)showSensorIconForSensorAtIndex:(NSUInteger)index {
+    UIImageView* iconView = [[self sensorContainerView] subviews][index];
+    UIImage* loadedIcon = [[self delegate] sensorIconImageAtIndex:index
+                                                         forState:HEMRoomCheckStateLoaded
+                                                  inRoomCheckView:self];
+    [iconView setImage:loadedIcon];
+    [iconView setHighlighted:NO];
+}
+
+- (void)setSenseImageToDefaultForSensorIndex:(NSUInteger)sensorIndex {
+    UIImage* image = [[self delegate] senseImageForSensorAtIndex:sensorIndex
+                                                        forState:HEMRoomCheckStateWaiting
+                                                 inRoomCheckView:self];
+    [[self senseImageView] setImage:image];
 }
 
 - (void)resizeSensorMessageLabel {
@@ -225,59 +266,63 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 2.0f;
     [[self sensorMessageHeightConstraint] setConstant:textHeight];
 }
 
-- (void)delay:(CGFloat)duration then:(void(^)(void))thenBlock {
-    int64_t delaySecs = (int64_t)(HEMRoomCheckViewArtificialActivityDuration * NSEC_PER_SEC);
-    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delaySecs);
-    dispatch_after(delay, dispatch_get_main_queue(), thenBlock);
-}
-
-- (void)animate {
+- (void)animate:(void(^)(void))completion {
     // TODO jimmy: handle no sensors
-    [self animateSensorAtIndex:0];
+    [self animateSensorAtIndex:0 completion:completion];
 }
 
-- (void)animateSensorAtIndex:(NSUInteger)index {
+- (void)animateSensorAtIndex:(NSUInteger)index completion:(void(^)(void))completion {
     if (index >= [self numberOfSensors]) {
-        // show continue button
+        if (completion) completion ();
         return;
     }
     
+    [self setCurrentSensorIndex:index];
+    [self setSenseImageToDefaultForSensorIndex:index];
     [self setDefaultMessageForSensorAtIndex:index];
-    
-    [self animateSensorValueAtIndex:index infinite:YES];
-    [self animateProgressAroundSensorIconAtIndex:index beforeRemoval:^{
-        [self animateSensorValueAtIndex:index infinite:NO];
-    } afterRemoval:^{
+    [self showActivityAroundSensorIconAtIndex:index];
+    [self animateSensorValueAtIndex:index completion:^{
+        [self showSensorIconForSensorAtIndex:index];
+        [self showSensorImageForSensorAtIndex:index];
+        [self hideActivityAroundSensorIcon];
         [HEMAnimationUtils fade:[self sensorMessageLabel] out:^{
             [self showSensorMessageForSensorAtIndex:index];
         } thenIn:^{
-            [self delay:HEMRoomCheckViewSensorDisplayDuration then:^{
+            int64_t delayInSeconds = (int64_t)(HEMRoomCheckViewSensorDisplayDuration * NSEC_PER_SEC);
+            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds);
+            dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
                 NSUInteger nextIndex = index + 1;
                 [self configureRotariesForSensorAtIndex:nextIndex];
-                [self animateSensorAtIndex:nextIndex];
-            }];
+                [self animateSensorAtIndex:nextIndex completion:completion];
+            });
         }];
     }];
 }
 
-- (void)animateSensorValueAtIndex:(NSUInteger)index infinite:(BOOL)infinite {
+- (void)animateSensorValueAtIndex:(NSUInteger)index completion:(void(^)(void))completion {
+    
     NSInteger value = [[self delegate] sensorValueAtIndex:index inRoomCheckView:self];
     NSString* valueString = [@(value) stringValue];
+    NSString* digitString = nil;
     for (NSInteger i = [valueString length] - 1; i >= 0; i--) {
-        unichar digit = [valueString characterAtIndex:i];
-        if (isdigit(digit)) {
-            NAPickerView* rotary = [self sensorValueRotaries][i];
-            [UIView animateWithDuration:0.5f animations:^{
-                [rotary setIndex:digit];
-            }];
-        }
+        digitString = [valueString substringWithRange:NSMakeRange(i, 1)];
+        HEMSpinnerView* rotary = [self sensorValueRotaries][i];
+        [rotary spinTo:digitString completion:^(BOOL finished) {
+            if (i == 0 && completion) {
+                completion ();
+            }
+        }];
     }
 }
 
-- (void)animateProgressAroundSensorIconAtIndex:(NSUInteger)index
-                                 beforeRemoval:(void(^)(void))beforeRemoval
-                                  afterRemoval:(void(^)(void))afterRemoval {
-    
+- (void)showSensorImageForSensorAtIndex:(NSUInteger)index {
+    UIImage* image = [[self delegate] senseImageForSensorAtIndex:index
+                                                        forState:HEMRoomCheckStateLoaded
+                                                 inRoomCheckView:self];
+    [[self senseImageView] setImage:image];
+}
+
+- (void)showActivityAroundSensorIconAtIndex:(NSUInteger)index {
     UIImageView* iconView = [[self sensorContainerView] subviews][index];
     [iconView setHighlighted:YES];
     
@@ -288,28 +333,20 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 2.0f;
     activityFrame.origin.y = CGRectGetMinY([iconView frame]) - activityOriginDiff;
     
     HEMActivityIndicatorView* activity = [[HEMActivityIndicatorView alloc] initWithFrame:activityFrame];
+    [self setCurrentSensorActivity:activity];
     [[self sensorContainerView] addSubview:activity];
-    [activity start];
-    
-    UIImage* loadedIcon = [[self delegate] sensorIconImageAtIndex:index forState:HEMRoomCheckStateLoaded inRoomCheckView:self];
-    
-    [self delay:HEMRoomCheckViewArtificialActivityDuration then:^{
-        if (beforeRemoval) {
-            beforeRemoval();
-        }
-        [UIView animateWithDuration:0.5f
-                         animations:^{
-                             [activity setAlpha:0.0f];
-                         }
-                         completion:^(BOOL finished) {
-                             [activity removeFromSuperview];
-                             [iconView setImage:loadedIcon];
-                             [iconView setHighlighted:NO];
-                             if (afterRemoval) {
-                                 afterRemoval();
-                             }
-                         }];
-    }];
+    [[self currentSensorActivity] start];
+}
+
+- (void)hideActivityAroundSensorIcon {
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         [[self currentSensorActivity] setAlpha:0.0f];
+                     }
+                     completion:^(BOOL finished) {
+                         [[self currentSensorActivity] removeFromSuperview];
+                         [self setCurrentSensorActivity:nil];
+                     }];
 }
 
 @end

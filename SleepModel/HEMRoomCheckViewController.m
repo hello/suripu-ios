@@ -19,6 +19,7 @@
 #import "HEMSensorCheckView.h"
 #import "HEMRoomCheckView.h"
 #import "HEMMarkdown.h"
+#import "HEMBaseController+Protected.h"
 
 static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
@@ -28,6 +29,13 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainer;
 @property (weak, nonatomic) IBOutlet HEMActionButton *startButton;
 @property (weak, nonatomic) IBOutlet UIImageView *illustrationView;
+@property (weak, nonatomic) IBOutlet UIView *resultsContainer;
+@property (weak, nonatomic) IBOutlet UILabel *resultsTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *resultsDescriptionLabel;
+@property (weak, nonatomic) IBOutlet HEMActionButton *nextButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *resultsHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *resultsBottomConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
 
 @property (strong, nonatomic) NSArray* sensors;
 @property (assign, nonatomic) BOOL sensorsOk;
@@ -49,6 +57,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     [self setSensors:[SENSensor sensors]];
     
     [self setRoomCheckView:[HEMRoomCheckView createRoomCheckViewWithFrame:[[self view] bounds]]];
+    [[self roomCheckView] setAlpha:0.0f];
     [[self roomCheckView] setDelegate:self];
     [[self view] insertSubview:[self roomCheckView] atIndex:0];
 }
@@ -81,6 +90,48 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     return [UIImage imageNamed:iconImageName];
 }
 
+- (UIImage*)senseImageForSensorCondition:(SENSensorCondition)condition  {
+    NSString* imageName = @"roomcheckSense";
+    switch (condition) {
+        case SENSensorConditionAlert:
+            imageName = [imageName stringByAppendingString:@"Red"];
+            break;
+        case SENSensorConditionIdeal:
+            imageName = [imageName stringByAppendingString:@"Green"];
+            break;
+        case SENSensorConditionWarning:
+            imageName = [imageName stringByAppendingString:@"Yellow"];
+            break;
+        default:
+            imageName = [imageName stringByAppendingString:@"Gray"];
+            break;
+    }
+    return [UIImage imageNamed:imageName];
+}
+
+- (SENSensorCondition)averageConditionForAllSensors {
+    if ([[self sensors] count] == 0) {
+        return SENSensorConditionUnknown;
+    }
+    
+    NSUInteger averageConditionValue = 0;
+    for (SENSensor* sensor in [self sensors]) {
+        averageConditionValue += [sensor condition];
+    }
+    long roundedAverage = lroundf((averageConditionValue / [[self sensors] count]) + 0.5f);
+    return [SENSensor conditionFromValue:@(roundedAverage)];
+}
+
+- (void)adjustConstraintsForIphone5 {
+    [self updateConstraint:[self resultsHeightConstraint] withDiff:-40.0f];
+    [[self roomCheckView] adjustForiPhone5];
+}
+
+- (void)adjustConstraintsForIPhone4 {
+    [self updateConstraint:[self resultsHeightConstraint] withDiff:-60.0f];
+    [[self roomCheckView] adjustForiPhone4];
+}
+
 #pragma mark - HEMRoomCheckDelegate
 
 - (NSUInteger)numberOfSensorsInRoomCheckView:(HEMRoomCheckView*)roomCheckView {
@@ -91,6 +142,23 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                           forState:(HEMRoomCheckState)state
                    inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
     return [self iconForSensor:[self sensors][sensorIndex] forState:state];
+}
+
+- (UIImage*)senseImageForSensorAtIndex:(NSUInteger)sensorIndex
+                              forState:(HEMRoomCheckState)state
+                       inRoomCheckView:(HEMRoomCheckView *)roomCheckView {
+    SENSensorCondition condition = SENSensorConditionUnknown;
+    
+    if (state != HEMRoomCheckStateWaiting) {
+        if (sensorIndex == [[self sensors] count] - 1) {
+            condition = [self averageConditionForAllSensors];
+        } else {
+            SENSensor* sensor = [self sensors][sensorIndex];
+            condition = [sensor condition];
+        }
+    }
+
+    return [self senseImageForSensorCondition:condition];
 }
 
 - (NSString*)sensorNameAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView *)roomCheckView {
@@ -105,7 +173,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
 - (NSInteger)sensorValueAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
     SENSensor* sensor = [self sensors][sensorIndex];
-    return [[sensor value] integerValue];
+    return [[sensor valueInPreferredUnit] integerValue];
 }
 
 - (NSString*)sensorValueUnitAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
@@ -129,8 +197,11 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
 - (void)hideContent:(void(^)(BOOL finished))completion {
     [self setTitle:nil]; // make sure title is also not shown, if showing in navbar
+    
     [UIView animateWithDuration:HEMRoomCheckAnimationDuration
                      animations:^{
+                         [[self roomCheckView] setAlpha:1.0f];
+                         
                          [[self contentView] setAlpha:0.0f];
                          CGRect contentFrame = [[self contentView] frame];
                          contentFrame.origin.y -= CGRectGetHeight(contentFrame)/2;
@@ -143,238 +214,27 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
                      }
                      completion:completion];
 }
-//
-//- (void)showSensors:(void(^)(BOOL finished))completion {
-//    CGFloat totalCollapsedHeight = HEMSensorCheckCollapsedHeight * 5;
-//    CGFloat nextY = (CGRectGetHeight([[self view] bounds]) - totalCollapsedHeight)/2;
-//    NSArray* sensors = [SENSensor sensors];
-//    for (SENSensor* sensor in sensors) {
-//        if ([sensor unit] != SENSensorUnitUnknown) {
-//            [self setSensorsOk:[self sensorsOk] && [sensor condition] != SENSensorConditionUnknown];
-//            nextY += CGRectGetHeight([[self addSensorViewFor:sensor atY:nextY] bounds]);
-//        }
-//    }
-//    
-//    // show each sensor view in collapsed state
-//    [UIView animateWithDuration:HEMRoomCheckAnimationDuration
-//                     animations:^{
-//                         for (UIView* view in [self sensorViews]) {
-//                             [view setAlpha:1.0f];
-//                         }
-//                     }
-//                     completion:completion];
-//    
-//}
-//
-//- (HEMSensorCheckView*)addSensorViewFor:(SENSensor*)sensor atY:(CGFloat)yOrigin {
-//    UIImage* icon = nil;
-//    UIImage* highlightedIcon = nil;
-//    NSString* intro = nil;
-//
-//    switch ([sensor unit]) {
-//        case SENSensorUnitAQI: {
-//            icon = [HelloStyleKit sensorParticulates];
-//            intro = NSLocalizedString(@"onboarding.room-check.intro.air", nil);
-//            highlightedIcon = [HelloStyleKit sensorParticulatesBlue];
-//            break;
-//        }
-//        case SENSensorUnitDegreeCentigrade: {
-//            icon = [HelloStyleKit sensorTemperature];
-//            intro = NSLocalizedString(@"onboarding.room-check.intro.temperature", nil);
-//            highlightedIcon = [HelloStyleKit sensorTemperatureBlue];
-//            break;
-//        }
-//        case SENSensorUnitPercent: {
-//            icon = [HelloStyleKit sensorHumidity];
-//            intro = NSLocalizedString(@"onboarding.room-check.intro.humidity", nil);
-//            highlightedIcon = [HelloStyleKit sensorHumidityBlue];
-//            break;
-//        }
-//        case SENSensorUnitLux: {
-//            icon = [HelloStyleKit sensorLight];
-//            intro = NSLocalizedString(@"onboarding.room-check.intro.light", nil);
-//            highlightedIcon = [HelloStyleKit sensorLightBlue];
-//            break;
-//        }
-//        case SENSensorUnitDecibel: {
-//            icon = [HelloStyleKit sensorSound];
-//            intro = NSLocalizedString(@"onboarding.room-check.intro.sound", nil);
-//            highlightedIcon = [HelloStyleKit sensorSoundBlue];
-//            break;
-//        }
-//        default:
-//            break;
-//    }
-//    
-//    return [self addSensorViewWithIcon:icon
-//                       highlightedIcon:highlightedIcon
-//                                  name:[sensor localizedName]
-//                               message:[self messageForSensor:sensor]
-//                          introMessage:intro
-//                                 value:[[sensor valueInPreferredUnit] integerValue]
-//                         andValueColor:[UIColor colorForSensorWithCondition:[sensor condition]]
-//                              withUnit:[sensor localizedUnit]
-//                                   atY:yOrigin];
-//}
-//
-//- (HEMSensorCheckView*)addSensorViewWithIcon:(UIImage*)icon
-//                             highlightedIcon:(UIImage*)highlightedIcon
-//                                        name:(NSString*)name
-//                                     message:(NSAttributedString*)message
-//                                introMessage:(NSString*)introMessage
-//                                       value:(NSInteger)value
-//                               andValueColor:(UIColor*)color
-//                                    withUnit:(NSString*)unit
-//                                         atY:(CGFloat)yOrigin {
-//    
-//    NSString* titleFormat = NSLocalizedString(@"onboarding.room-check.checking-sensor.format", nil);
-//    NSString* title = [NSString stringWithFormat:titleFormat, name];
-//    
-//    HEMSensorCheckView* view = [[HEMSensorCheckView alloc] initWithIcon:icon
-//                                                        highlightedIcon:highlightedIcon
-//                                                                  title:title
-//                                                                message:message
-//                                                           introMessage:introMessage
-//                                                                  value:value
-//                                                     withConditionColor:color
-//                                                                   unit:unit];
-//    
-//    CGRect frame = [view frame];
-//    frame.origin.y = yOrigin;
-//    [view setFrame:frame];
-//    [view setAlpha:0.0f];
-//    
-//    if ([self sensorViews] == nil) {
-//        [self setSensorViews:[NSMutableArray array]];
-//    }
-//    [[self sensorViews] addObject:view];
-//    
-//    [[self view] addSubview:view];
-//    
-//    return view;
-//}
-//
-//- (void)showResult {
-//    if (![self sensorsOk]) {
-//        [[self resultTitleLabel] setText:NSLocalizedString(@"onboarding.room-check.failed", nil)];
-//        [[self resultMessageLabel] setText:NSLocalizedString(@"onboarding.room-check.failed-message", nil)];
-//    }
-//    
-//    HEMSensorCheckView* view = [[self sensorViews] lastObject];
-//    CGFloat viewY = CGRectGetMinY([view frame]);
-//    CGFloat configuredHeight = [[self resultHeightConstraint] constant];
-//    CGFloat statusHeight = CGRectGetHeight([[UIApplication sharedApplication] statusBarFrame]);
-//    
-//    [UIView animateWithDuration:HEMRoomCheckAnimationDuration
-//                     animations:^{
-//                         [view collapse];
-//                         
-//                         CGFloat bHeight = CGRectGetHeight([[self view] bounds]);
-//                         CGFloat remainingHeight
-//                            = bHeight
-//                            - viewY
-//                            - HEMSensorCheckCollapsedHeight
-//                            - HEMRoomCheckMinVerticalPadding;
-//                         CGFloat resultHeight = remainingHeight;
-//                         
-//                         if (remainingHeight < configuredHeight) {
-//                             resultHeight = configuredHeight;
-//                             CGFloat diff = configuredHeight - remainingHeight;
-//                             for (HEMSensorCheckView* sensorView in [self sensorViews]) {
-//                                 CGRect frame = [sensorView frame];
-//                                 frame.origin.y -= diff;
-//                                 [sensorView setFrame:frame];
-//                                 
-//                                 CGFloat y = CGRectGetMinY(frame);
-//                                 if (y < statusHeight) {
-//                                     CGFloat percentageOff = (fabsf(y)/CGRectGetHeight(frame)) * 2; // 2 to make it fade sooner
-//                                     [sensorView setAlpha:1-percentageOff];
-//                                 }
-//                             }
-//                         }
-//                         
-//                         [[self resultHeightConstraint] setConstant:resultHeight];
-//                         [[self resultBottomConstraint] setConstant:0.0f];
-//                         [[self view] layoutIfNeeded];
-//                     }];
-//}
-//
-//- (CGFloat)minimumYForLastSensorInCollapsedState {
-//    CGFloat totalSensors = [[self sensorViews] count];
-//    CGFloat collapsedSensors = totalSensors - 1; // first 1 will be expanded
-//    CGFloat lastCollapsedY = (collapsedSensors - 1) * HEMSensorCheckCollapsedHeight;
-//    return [self currentTopY]
-//            + HEMRoomCheckMinimumExpandedHeight
-//            + lastCollapsedY;
-//}
-//
-//- (void)moveOtherSensorsDownToMakeRoom {
-//    CGFloat bHeight = CGRectGetHeight([[self view] bounds]);
-//    CGFloat lastSensorYOffset = HEMSensorCheckCollapsedHeight - HEMRoomCheckMinVerticalPadding;
-//    CGFloat suggestedMinY = bHeight - lastSensorYOffset;
-//    CGFloat requiredMinY = [self minimumYForLastSensorInCollapsedState];
-//    CGFloat y = MAX(suggestedMinY, requiredMinY);
-//    
-//    for (NSInteger i = [[self sensorViews] count] - 1; i > 0; i--) {
-//        UIView* otherView = [self sensorViews][i];
-//        
-//        CGRect frame = [otherView frame];
-//        frame.origin.y = y;
-//        [otherView setFrame:frame];
-//        
-//        y -= CGRectGetHeight([otherView bounds]);
-//    }
-//}
-//
-//- (void)displaySensorDataAtIndex:(NSInteger)index {
-//    NSInteger sensorCount = [[self sensorViews] count];
-//    if (index == sensorCount) {
-//        [self showResult];
-//        return;
-//    }
-//    
-//    HEMSensorCheckView* view = [self sensorViews][index];
-//    
-//    NSInteger collapsedCount = sensorCount - index + 1;
-//    CGFloat bHeight = CGRectGetHeight([[self view] bounds]);
-//    CGFloat viewHeight
-//        = bHeight
-//        - [self currentTopY]
-//        - HEMRoomCheckMinVerticalPadding
-//        - ((collapsedCount-1)*HEMSensorCheckCollapsedHeight);
-//    viewHeight = MAX(viewHeight, HEMRoomCheckMinimumExpandedHeight);
-//    
-//    if (index == sensorCount - 1) { // last
-//        viewHeight = bHeight - [self currentTopY];
-//    }
-//    
-//    [view moveTo:[self currentTopY] andExpandTo:viewHeight whileAnimating:^{
-//        for (NSInteger prevIndex = 0; prevIndex < index; prevIndex++) {
-//            HEMSensorCheckView* prevView = [self sensorViews][prevIndex];
-//            [prevView collapse];
-//        }
-//        
-//        if (index == 0) {
-//            [self moveOtherSensorsDownToMakeRoom];
-//        }
-//    } onCompletion:^(BOOL finished) {
-//        [self setCurrentTopY:[self currentTopY] + HEMSensorCheckCollapsedHeight];
-//        [view showSensorValue:^{
-//            int64_t delaySecs = (int64_t)(HEMRoomCheckDataDisplayTime * NSEC_PER_SEC);
-//            dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delaySecs);
-//            dispatch_after(delay, dispatch_get_main_queue(), ^{
-//                [self displaySensorDataAtIndex:index + 1];
-//            });
-//        }];
-//        
-//    }];
-//}
+
+- (void)showResults {
+    [[self resultsDescriptionLabel] setAlpha:0.0f];
+    [[self resultsTitleLabel] setAlpha:0.0f];
+    [[self titleTopConstraint] setConstant:30.0f];
+    [UIView animateWithDuration:HEMRoomCheckAnimationDuration animations:^{
+        [[self resultsDescriptionLabel] setAlpha:1.0f];
+        [[self resultsTitleLabel] setAlpha:1.0f];
+        [[self resultsBottomConstraint] setConstant:0.0f];
+        [[self titleTopConstraint] setConstant:0.0f];
+        [[self view] layoutIfNeeded];
+    }];
+}
 
 #pragma mark - Actions
 
 - (IBAction)start:(id)sender {
     [self hideContent:^(BOOL finished) {
-        [[self roomCheckView] animate];
+        [[self roomCheckView] animate:^{
+            [self showResults];
+        }];
     }];
 }
 

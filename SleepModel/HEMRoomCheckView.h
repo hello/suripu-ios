@@ -22,6 +22,9 @@ typedef NS_ENUM(NSUInteger, HEMRoomCheckState) {
 - (UIImage*)sensorIconImageAtIndex:(NSUInteger)sensorIndex
                           forState:(HEMRoomCheckState)state
                    inRoomCheckView:(HEMRoomCheckView*)roomCheckView;
+- (UIImage*)senseImageForSensorAtIndex:(NSUInteger)sensorIndex
+                              forState:(HEMRoomCheckState)state
+                       inRoomCheckView:(HEMRoomCheckView *)roomCheckView;
 - (NSString*)sensorNameAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView;
 - (NSString*)sensorMessageAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView;
 - (NSInteger)sensorValueAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView;
@@ -36,6 +39,8 @@ typedef NS_ENUM(NSUInteger, HEMRoomCheckState) {
 
 @property (nonatomic, weak) id<HEMRoomCheckDelegate> delegate;
 
-- (void)animate;
+- (void)animate:(void(^)(void))completion;
+- (void)adjustForiPhone4;
+- (void)adjustForiPhone5;
 
 @end

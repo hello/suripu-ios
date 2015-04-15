@@ -13,6 +13,7 @@ static CGFloat const HEMSpinnerDefaultDamping = 1.0f;
 static CGFloat const HEMSpinnerEndDamping = 0.6f;
 static CGFloat const HEMSpinnerDefaultDuration = 0.05f;
 static CGFloat const HEMSpinnerDefaultInitialVelocity = 2.0f;
+static CGFloat const HEMSpinnerNextDuration = 0.5f;
 
 @interface HEMSpinnerView()
 
@@ -137,7 +138,6 @@ static CGFloat const HEMSpinnerDefaultInitialVelocity = 2.0f;
                          } else {
                              NSUInteger nextIndex = [self prepareForReuse];
                              
-                             DDLogVerbose(@"next index %ld", (long)nextIndex);
                              if (nextIndex == 0) {
                                  [self setCurrentRotation:[self currentRotation] + 1];
                                  if (onRotation) {
@@ -156,7 +156,7 @@ static CGFloat const HEMSpinnerDefaultInitialVelocity = 2.0f;
 
 - (void)next:(void(^)(NSString* itemShowing))completion {
     CGFloat slotHeight = CGRectGetHeight([self bounds]);
-    [UIView animateWithDuration:0.5f
+    [UIView animateWithDuration:HEMSpinnerNextDuration
                      animations:^{
                          [self move:[self onScreenLabel] byY:slotHeight];
                          [self move:[self offScreenLabel] byY:slotHeight];

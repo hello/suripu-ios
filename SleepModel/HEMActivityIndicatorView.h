@@ -10,6 +10,7 @@
 
 @interface HEMActivityIndicatorView : UIView
 
+- (instancetype)initWithImage:(UIImage*)image andFrame:(CGRect)frame;
 - (void)start;
 - (void)stop;
 

@@ -21,6 +21,7 @@ static CGFloat const HEMSpinnerDefaultInitialVelocity = 2.0f;
 @property (nonatomic, strong) UIColor* color;
 @property (nonatomic, weak)   UILabel* offScreenLabel;
 @property (nonatomic, weak)   UILabel* onScreenLabel;
+@property (nonatomic, assign) NSUInteger currentRotation;
 
 @end
 
@@ -47,6 +48,7 @@ static CGFloat const HEMSpinnerDefaultInitialVelocity = 2.0f;
         _items = [items copy];
         _font = font;
         _color = color;
+        _currentRotation = 0;
         [self configureDefaultProperties];
         [self configureSpinner];
     }
@@ -97,14 +99,17 @@ static CGFloat const HEMSpinnerDefaultInitialVelocity = 2.0f;
 #pragma mark - Animations
 
 - (void)spinTo:(NSString*)targetItem
+     rotations:(NSUInteger)rotations
+    onRotation:(void(^)(HEMSpinnerView* view, NSUInteger rotation))onRotation
     completion:(void(^)(BOOL finished))completion {
-    
-    NSUInteger itemCount = [[self items] count];
+
     CGFloat slotHeight = CGRectGetHeight([self bounds]);
     CGFloat damping = HEMSpinnerDefaultDamping;
-    CGFloat duration = HEMSpinnerDefaultDuration;
+    CGFloat duration = HEMSpinnerDefaultDuration / MAX(1, rotations);
     CGFloat velocity = HEMSpinnerDefaultInitialVelocity;
-    BOOL willFinish = [[[self offScreenLabel] text] isEqualToString:targetItem];
+    BOOL willFinish =
+        [[[self offScreenLabel] text] isEqualToString:targetItem]
+        && (rotations == 0 || [self currentRotation] > rotations);
     
     if (willFinish) {
         damping = HEMSpinnerEndDamping;
@@ -123,25 +128,62 @@ static CGFloat const HEMSpinnerDefaultInitialVelocity = 2.0f;
                      }
                      completion:^(BOOL finished) {
                          if (willFinish) {
+                             [self setCurrentRotation:0];
+                             
                              if (completion) {
                                  completion (finished);
                              }
+                             
                          } else {
-                             NSUInteger nextIndex = ([[self offScreenLabel] tag] + 1) % itemCount;
-                             NSString* nextTargetItem = [self items][nextIndex];
+                             NSUInteger nextIndex = [self prepareForReuse];
                              
-                             UILabel* tempLabel = [self onScreenLabel];
-                             [self setOnScreenLabel:[self offScreenLabel]];
-                             [self setOffScreenLabel:tempLabel];
+                             DDLogVerbose(@"next index %ld", (long)nextIndex);
+                             if (nextIndex == 0) {
+                                 [self setCurrentRotation:[self currentRotation] + 1];
+                                 if (onRotation) {
+                                     onRotation (self, [self currentRotation]);
+                                 }
+                             }
                              
-                             [[self offScreenLabel] setText:nextTargetItem];
-                             [[self offScreenLabel] setTag:nextIndex];
-                             [self move:[self offScreenLabel] byY:-2 * slotHeight];
-                             
-                             [self spinTo:targetItem completion:completion];
+                             [self spinTo:targetItem
+                                rotations:rotations
+                               onRotation:onRotation
+                               completion:completion];
                          }
                      }];
     
+}
+
+- (void)next:(void(^)(NSString* itemShowing))completion {
+    CGFloat slotHeight = CGRectGetHeight([self bounds]);
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         [self move:[self onScreenLabel] byY:slotHeight];
+                         [self move:[self offScreenLabel] byY:slotHeight];
+                     }
+                     completion:^(BOOL finished) {
+                         [self prepareForReuse];
+                         if (completion) {
+                             completion ([[self onScreenLabel] text]);
+                         }
+                     }];
+}
+
+- (NSInteger)prepareForReuse {
+    NSUInteger itemCount = [[self items] count];
+    CGFloat slotHeight = CGRectGetHeight([self bounds]);
+    NSUInteger nextIndex = ([[self offScreenLabel] tag] + 1) % itemCount;
+    NSString* nextTargetItem = [self items][nextIndex];
+    
+    UILabel* tempLabel = [self onScreenLabel];
+    [self setOnScreenLabel:[self offScreenLabel]];
+    [self setOffScreenLabel:tempLabel];
+    
+    [[self offScreenLabel] setText:nextTargetItem];
+    [[self offScreenLabel] setTag:nextIndex];
+    [self move:[self offScreenLabel] byY:-2 * slotHeight];
+    
+    return nextIndex;
 }
 
 - (void)move:(UIView*)view byY:(CGFloat)y {

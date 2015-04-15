@@ -65,11 +65,9 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 - (UIImage*)iconForSensor:(SENSensor*)sensor forState:(HEMRoomCheckState)state {
     NSString* iconImageName = [[[sensor name] lowercaseString] stringByAppendingString:@"Icon"];
 
-    if (state == HEMRoomCheckStateWaiting) {
+    if (state != HEMRoomCheckStateLoaded) {
         iconImageName = [iconImageName stringByAppendingString:@"Gray"];
-    } else if (state == HEMRoomCheckStateLoading) {
-        iconImageName = [iconImageName stringByAppendingString:@"Blue"];
-    } else if (state == HEMRoomCheckStateLoaded) {
+    } else {
         SENSensorCondition condition = [sensor condition];
         switch (condition) {
             case SENSensorConditionAlert:

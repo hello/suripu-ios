@@ -184,14 +184,14 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
     valueFrame.size = CGSizeMake(HEMRoomCheckViewSensorDigitWidth, HEMRoomCheckViewSensorDigitHeight);
     
     for (int i = 0; i < digits; i++) {
-        [self addDigitRotaryWithFrame:valueFrame color:color];
+        [self addDigitRotaryWithFrame:valueFrame color:color atIndex:i];
         valueFrame.origin.x += HEMRoomCheckViewSensorDigitWidth + HEMRoomCheckViewSensorDigitSpacing;
     }
     
     [self appendSensorUnit:attrUnit withSize:unitSize];
 }
 
-- (void)addDigitRotaryWithFrame:(CGRect)frame color:(UIColor*)color {
+- (void)addDigitRotaryWithFrame:(CGRect)frame color:(UIColor*)color atIndex:(NSInteger)index {
     NSMutableArray* digits = [NSMutableArray arrayWithCapacity:10];
     for (long i = 0; i < 10; i++) {
         [digits addObject:[NSString stringWithFormat:@"%ld", i]];
@@ -201,6 +201,7 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
     HEMSpinnerView* rotary = [[HEMSpinnerView alloc] initWithItems:digits
                                                               font:font
                                                              color:color];
+    [rotary setTag:index];
     [rotary setFrame:frame];
     
     [[self sensorValueRotaries] addObject:rotary];
@@ -300,16 +301,40 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
 }
 
 - (void)animateSensorValueAtIndex:(NSUInteger)index completion:(void(^)(void))completion {
-    
     NSInteger value = [[self delegate] sensorValueAtIndex:index inRoomCheckView:self];
     NSString* valueString = [@(value) stringValue];
-    NSString* digitString = nil;
-    for (NSInteger i = [valueString length] - 1; i >= 0; i--) {
-        digitString = [valueString substringWithRange:NSMakeRange(i, 1)];
-        HEMSpinnerView* rotary = [self sensorValueRotaries][i];
-        [rotary spinTo:digitString completion:^(BOOL finished) {
-            if (i == 0 && completion) {
-                completion ();
+    NSUInteger digitsCount = [valueString length];
+    
+    if (digitsCount == 0) {
+        if (completion) {
+            completion ();
+        }
+        return;
+    }
+    
+    NSInteger digitIndex = digitsCount - 1;
+    NSString* digitString = [valueString substringWithRange:NSMakeRange(digitIndex, 1)];
+    NSInteger rotations = 0;
+    if (digitsCount > 1) {
+        rotations = [[valueString substringToIndex:digitIndex] integerValue];
+    }
+    
+    HEMSpinnerView* rotary = [self sensorValueRotaries][digitIndex];
+    [rotary spinTo:digitString rotations:rotations onRotation:^(HEMSpinnerView* view, NSUInteger rotation) {
+        [self incrementAdjacentRotaryAtIndex:[view tag] - 1];
+    } completion:^(BOOL finished) {
+        if (completion) {
+            completion ();
+        }
+    }];
+}
+
+- (void)incrementAdjacentRotaryAtIndex:(NSInteger)index {
+    if (index >= 0) {
+        HEMSpinnerView* rotary = [self sensorValueRotaries][index];
+        [rotary next:^(NSString *itemShowing) {
+            if ([itemShowing isEqualToString:@"0"]) {
+                [self incrementAdjacentRotaryAtIndex:[rotary tag] - 1];
             }
         }];
     }
@@ -332,21 +357,17 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
     activityFrame.origin.x = CGRectGetMinX([iconView frame]) - activityOriginDiff;
     activityFrame.origin.y = CGRectGetMinY([iconView frame]) - activityOriginDiff;
     
-    HEMActivityIndicatorView* activity = [[HEMActivityIndicatorView alloc] initWithFrame:activityFrame];
+    HEMActivityIndicatorView* activity =
+        [[HEMActivityIndicatorView alloc] initWithImage:[HelloStyleKit sensorLoader] andFrame:activityFrame];
     [self setCurrentSensorActivity:activity];
     [[self sensorContainerView] addSubview:activity];
     [[self currentSensorActivity] start];
 }
 
 - (void)hideActivityAroundSensorIcon {
-    [UIView animateWithDuration:0.5f
-                     animations:^{
-                         [[self currentSensorActivity] setAlpha:0.0f];
-                     }
-                     completion:^(BOOL finished) {
-                         [[self currentSensorActivity] removeFromSuperview];
-                         [self setCurrentSensorActivity:nil];
-                     }];
+    [[self currentSensorActivity] setAlpha:0.0f];
+    [[self currentSensorActivity] removeFromSuperview];
+    [self setCurrentSensorActivity:nil];
 }
 
 @end

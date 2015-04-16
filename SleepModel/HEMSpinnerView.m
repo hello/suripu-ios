@@ -68,15 +68,13 @@ static CGFloat const HEMSpinnerNextDuration = 0.5f;
     if (itemCount == 0) {
         return;
     }
-    
-    NSInteger index = 0;
-    UILabel* onScreenLabel = [self labelWithText:[self items][index] withTag:index];
+
+    UILabel* onScreenLabel = [self labelWithText:[self items][0] withTag:0];
     [self addSubview:onScreenLabel];
     [self setOnScreenLabel:onScreenLabel];
     
     if (itemCount > 1) {
-        index = 1;
-        UILabel* offScreenLabel = [self labelWithText:[self items][index] withTag:index];
+        UILabel* offScreenLabel = [self labelWithText:[self items][1] withTag:1];
         CGRect offScreenFrame = [offScreenLabel frame];
         offScreenFrame.origin.y = -CGRectGetHeight([self bounds]);
         [offScreenLabel setFrame:offScreenFrame];

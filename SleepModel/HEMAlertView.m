@@ -248,7 +248,6 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 - (void)onLink:(NSString*)url tap:(HEMDialogLinkActionBlock)actionBlock {
     [[self actionsCallbacks] setValue:[actionBlock copy] forKey:url];
 }
-
 - (void)addActionButtonWithTitle:(NSString*)title
                          primary:(BOOL)primary
                           action:(HEMDialogActionBlock)block {

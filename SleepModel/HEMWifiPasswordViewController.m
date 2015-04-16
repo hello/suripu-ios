@@ -173,9 +173,12 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         __weak typeof(self) weakSelf = self;
         self.disconnectObserverId =
             [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
-                NSString* title = NSLocalizedString(@"wifi.error.title", nil);
-                NSString* message = NSLocalizedString(@"wifi.error.unexpected-disconnnect", nil);
-                [weakSelf showErrorMessage:message withTitle:title];
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if ([strongSelf isVisible]) {
+                    NSString* title = NSLocalizedString(@"wifi.error.title", nil);
+                    NSString* message = NSLocalizedString(@"wifi.error.unexpected-disconnnect", nil);
+                    [weakSelf showErrorMessage:message withTitle:title];
+                }
             }];
     }
 }

@@ -42,7 +42,6 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 @property (strong, nonatomic) HEMWiFiDataSource* wifiDataSource;
 @property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
-@property (assign, nonatomic, getter=isVisible) BOOL visible;
 @property (assign, nonatomic, getter=hasScanned) BOOL scanned;
 
 @end
@@ -82,11 +81,6 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     [[self wifiPickerTableView] setDelegate:self];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self setVisible:YES];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     // only auto start a scan if one has not yet been done before
@@ -96,11 +90,6 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
         [self setScanned:YES];
     }
     
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self setVisible:NO];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -118,7 +107,9 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
                 [[strongSelf cancelItem] setEnabled:YES];
-                [strongSelf showError:error];
+                if ([strongSelf isVisible]) {
+                    [strongSelf showError:error];
+                }
             }];
         }];
     }

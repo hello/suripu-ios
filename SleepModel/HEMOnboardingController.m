@@ -28,6 +28,7 @@
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint* titleHeightConstraint;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint* descriptionTopConstraint;
 @property (copy,   nonatomic) NSString* helpPage;
+@property (assign, nonatomic, getter=isVisible) BOOL visible;
 
 @end
 
@@ -43,6 +44,12 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self enableBackButton:[self enableBack]];
+    [self setVisible:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self setVisible:NO];
 }
 
 - (void)configureTitle {

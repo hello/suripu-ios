@@ -15,6 +15,8 @@
 @property (weak, nonatomic) IBOutlet UILabel* titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel* descriptionLabel;
 
+@property (assign, nonatomic, readonly, getter=isVisible) BOOL visible;
+
 - (UIBarButtonItem*)cancelItem;
 - (SENSenseManager*)manager;
 - (void)showCancelButtonWithSelector:(SEL)selector;

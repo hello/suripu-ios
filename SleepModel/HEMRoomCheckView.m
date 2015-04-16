@@ -268,7 +268,6 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
 }
 
 - (void)animate:(void(^)(void))completion {
-    // TODO jimmy: handle no sensors
     [self animateSensorAtIndex:0 completion:completion];
 }
 

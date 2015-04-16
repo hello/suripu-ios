@@ -92,6 +92,7 @@
 "pairing.error.could-not-pair" = "Could not connect to Sense to pair. Please make sure Sense is plugged in, nearby, and in Pairing Mode. Ensure no other devices are connected with Sense over Bluetooth.";
 "pairing.error.unexpected-disconnect" = "The connection with Sense was broken. Please try again.";
 "pairing.error.link-account-failed" = "Your account could not be linked with Sense.";
+"pairing.error.link-account-failed-edit-wifi" = "Your account could not be linked with Sense. You can try changing the WiFi Sense is configured to.";
 "pairing.error.set-timezone-failed" = "There was a problem setting your timezone.";
 "pairing.error.timed-out" = "Sense did not respond in time.";
 "pairing.done" = "Paired";

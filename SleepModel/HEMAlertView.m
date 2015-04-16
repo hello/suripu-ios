@@ -25,7 +25,7 @@ static CGFloat const kHEMDialogButtonHorzPadding = 20.0f;
 static CGFloat const kHEMDialogButtonHeight = 40.0f;
 static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 
-@interface HEMAlertView()
+@interface HEMAlertView() <UITextViewDelegate>
 
 @property (nonatomic, assign) UIEdgeInsets contentInsets;
 @property (nonatomic, copy)   NSString* title;
@@ -33,6 +33,7 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 @property (nonatomic, strong) UIImage* image;
 @property (nonatomic, weak)   UIButton* okButton; // used as anchor for actions
 @property (nonatomic, strong) NSMutableDictionary* actionsCallbacks; // key = title, value = block
+@property (nonatomic, copy)   NSAttributedString* attributedMessage;
 
 @end
 
@@ -51,6 +52,19 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
             message:(NSString*)message {
     
     return [self initWithImage:image title:title message:message frame:[[self class] defaultFrame]];
+}
+
+- (id)initWithImage:(UIImage*)image
+              title:(NSString*)title
+  attributedMessage:(NSAttributedString*)message {
+    self = [super initWithFrame:[[self class] defaultFrame]];
+    if (self) {
+        [self setImage:image];
+        [self setTitle:title];
+        [self setAttributedMessage:message];
+        [self setup];
+    }
+    return self;
 }
 
 - (id)initWithImage:(UIImage*)image
@@ -81,7 +95,7 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     
     CGFloat maxY = [self addDialogImage];
     maxY = [self addTitleLabelAtY:maxY];
-    maxY = [self addMessageLabel:maxY];
+    maxY = [self addMessageView:maxY];
     maxY = [self addOkButtonAtY:maxY];
     
     CGRect myFrame = [self frame];
@@ -92,10 +106,11 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 - (CGFloat)addDialogImage {
     CGFloat maxY = kHEMDialogContentTopPadding;
     if ([self image] != nil) {
+        CGFloat horzPadding = [self contentInsets].left + [self contentInsets].right;
         CGRect imageFrame = {
             [self contentInsets].left,
             [self contentInsets].top,
-            CGRectGetWidth([self bounds]) - (2*kHEMDialogContentHorzPadding),
+            CGRectGetWidth([self bounds]) - horzPadding,
             MIN(kHEMDialogContentMaxImageHeight, [[self image] size].height)
         };
         
@@ -113,24 +128,21 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     return maxY;
 }
 
-- (CGFloat)addLabelWithText:(NSString*)text
-                   withFont:(UIFont*)font
-              numberOfLines:(NSInteger)lines
-                        atY:(CGFloat)y {
-    
+- (CGFloat)addTitleLabelAtY:(CGFloat)y {
     CGFloat maxY = y;
     
-    if ([text length] > 0) {
+    if ([[self title] length] > 0) {
         UILabel* label = [[UILabel alloc] init];
-        [label setText:text];
+        [label setText:[self title]];
         [label setTextColor:[UIColor blackColor]];
-        [label setFont:font];
-        [label setNumberOfLines:lines];
+        [label setFont:[UIFont dialogTitleFont]];
+        [label setNumberOfLines:0];
         
+        CGFloat horzPadding = [self contentInsets].left + [self contentInsets].right;
         CGRect labelFrame = {
             [self contentInsets].left,
             y,
-            CGRectGetWidth([self bounds]) - (2*kHEMDialogContentHorzPadding),
+            CGRectGetWidth([self bounds]) - horzPadding,
             MAXFLOAT // will get resized later
         };
         CGSize constraint = labelFrame.size;
@@ -146,12 +158,50 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     return maxY;
 }
 
-- (CGFloat)addTitleLabelAtY:(CGFloat)y {
-    return [self addLabelWithText:[self title] withFont:[UIFont dialogTitleFont] numberOfLines:0 atY:y];
+- (NSAttributedString*)attributedMessage {
+    if (_attributedMessage) {
+        return _attributedMessage;
+    } else if (_message) {
+        NSDictionary* atts = @{NSFontAttributeName : [UIFont dialogMessageFont],
+                               NSForegroundColorAttributeName : [UIColor blackColor]};
+        return [[NSAttributedString alloc] initWithString:_message attributes:atts];
+    } else {
+        return nil;
+    }
 }
 
-- (CGFloat)addMessageLabel:(CGFloat)y {
-    return [self addLabelWithText:[self message] withFont:[UIFont dialogMessageFont] numberOfLines:0 atY:y];
+- (CGFloat)addMessageView:(CGFloat)y {
+    UITextView *textView = [[UITextView alloc] init];
+    [textView setAttributedText:[self attributedMessage]];
+    [textView setEditable:NO];
+    [textView setDelegate:self];
+    [textView setScrollEnabled:NO];
+    [textView setBackgroundColor:[UIColor clearColor]];
+    [textView setDataDetectorTypes:UIDataDetectorTypeLink | UIDataDetectorTypeAddress];
+    [textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [textView setLinkTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor],
+                                      NSFontAttributeName : [UIFont dialogMessageBoldFont]}];
+    
+    // remove the magic padding / margins in the text view.
+    [textView setTextContainerInset:UIEdgeInsetsZero];
+    [[textView textContainer] setLineFragmentPadding:0.0f];
+    
+    // size the text view based on the attribted text's required height, leaving
+    // the width as is
+    CGFloat horzPadding = [self contentInsets].left + [self contentInsets].right;
+    CGRect messageFrame = CGRectZero;
+    messageFrame.origin = CGPointMake([self contentInsets].left, y);
+    messageFrame.size   = CGSizeMake(CGRectGetWidth([self bounds]) - horzPadding, MAXFLOAT);
+    
+    CGSize constraint = messageFrame.size;
+    constraint.height = MAXFLOAT;
+    CGSize textSize = [textView sizeThatFits:constraint];
+    messageFrame.size.height = textSize.height;
+    
+    [textView setFrame:messageFrame];
+    [self addSubview:textView];
+    
+    return CGRectGetMaxY(messageFrame) + kHEMDialogContentSpacing;
 }
 
 - (CGRect)buttonFrameAtY:(CGFloat)y {
@@ -178,6 +228,16 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     return CGRectGetMaxY([ok frame]) + kHEMDialogButtonSpacing;
 }
 
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    HEMDialogLinkActionBlock actionBlock = [[self actionsCallbacks] objectForKey:[URL absoluteString]];
+    if (actionBlock) {
+        actionBlock (URL);
+    }
+    return NO;
+}
+
 #pragma mark - Actions
 
 - (void)onDone:(HEMDialogActionBlock)doneBlock {
@@ -185,6 +245,9 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     [[self actionsCallbacks] setValue:[doneBlock copy] forKey:doneTitle];
 }
 
+- (void)onLink:(NSString*)url tap:(HEMDialogLinkActionBlock)actionBlock {
+    [[self actionsCallbacks] setValue:[actionBlock copy] forKey:url];
+}
 - (void)addActionButtonWithTitle:(NSString*)title
                          primary:(BOOL)primary
                           action:(HEMDialogActionBlock)block {

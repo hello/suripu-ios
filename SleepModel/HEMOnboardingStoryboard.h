@@ -17,6 +17,7 @@
 /** Segue Identifiers */
 +(NSString *)alarmToAnotherPillSegueIdentifier;
 +(NSString *)audioToSetupSegueIdentifier;
++(NSString *)beforeSleepToSmartAlarmSegueIdentifier;
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier;
 +(NSString *)doneSegueIdentifier;
 +(NSString *)genderSegueIdentifier;

@@ -93,6 +93,11 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     return message;
 }
 
+- (NSDictionary*)dialogMessageAttributes:(BOOL)bold {
+    return @{NSFontAttributeName : bold ? [UIFont dialogMessageBoldFont] : [UIFont dialogMessageFont],
+             NSForegroundColorAttributeName : [UIColor blackColor]};
+}
+
 - (CGFloat)heightForWarning:(HEMDeviceWarning)warning withDefaultItemSize:(CGSize)size {
     NSAttributedString* message = [self attributedMessageForWarning:warning];
     CGRect bounds = [message boundingRectWithSize:CGSizeMake(size.width, MAXFLOAT)
@@ -186,10 +191,21 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 
 - (void)replacePill:(id)sender {
     NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-title", nil);
-    NSString* message = NSLocalizedString(@"settings.pill.dialog.unpair-message", nil);
+    NSString* messageFormat = NSLocalizedString(@"settings.pill.dialog.unpair-message.format", nil);
+    NSString* helpLink = NSLocalizedString(@"help.url.support", nil);
+    
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:helpLink
+                                                      attributes:[self dialogMessageAttributes:YES]]];
+    
+    NSAttributedString* confirmation =
+        [[NSMutableAttributedString alloc] initWithFormat:messageFormat
+                                                     args:args
+                                                baseColor:[UIColor blackColor]
+                                                 baseFont:[UIFont dialogMessageFont]];
+    
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
-    [dialogVC setMessage:message];
+    [dialogVC setAttributedMessage:confirmation];
     [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
     [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
@@ -197,7 +213,11 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
             [self unpair];
         }];
     }];
-
+    [dialogVC onLinkTapOf:helpLink takeAction:^(NSURL *link) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [HEMSupportUtil openHelpFrom:self];
+        }];
+    }];
     [dialogVC showFrom:self onDefaultActionSelected:^{
         [self dismissViewControllerAnimated:YES completion:NULL];
     }];

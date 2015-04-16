@@ -129,8 +129,11 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         __weak typeof(self) weakSelf = self;
         self.disconnectObserverId =
             [manager observeUnexpectedDisconnect:^(NSError *error) {
-                NSString* msg = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
-                [weakSelf showError:error customMessage:msg];
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if ([strongSelf isVisible]) {
+                    NSString* msg = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
+                    [strongSelf showError:error customMessage:msg];
+                }
             }];
     }
 }

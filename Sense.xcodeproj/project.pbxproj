@@ -396,6 +396,10 @@
 		BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A9C1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m */; };
 		BF6E3AA01A2E51290019C110 /* HEMSingleResponseCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A9F1A2E51290019C110 /* HEMSingleResponseCell.m */; };
 		BF6E3AA31A2EA4CF0019C110 /* HEMAccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3AA21A2EA4CF0019C110 /* HEMAccountViewController.m */; };
+		BF7105CA1ADC6DAE0066885B /* HEMSpinnerView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7105C91ADC6DAE0066885B /* HEMSpinnerView.m */; };
+		BF7105CE1ADF2D650066885B /* sensorLoader.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7105CB1ADF2D650066885B /* sensorLoader.png */; };
+		BF7105CF1ADF2D650066885B /* sensorLoader@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7105CC1ADF2D650066885B /* sensorLoader@2x.png */; };
+		BF7105D01ADF2D650066885B /* sensorLoader@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7105CD1ADF2D650066885B /* sensorLoader@3x.png */; };
 		BF71AFCF1A48F6E700D1208B /* HEMDebugController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF71AFCE1A48F6E700D1208B /* HEMDebugController.m */; };
 		BF7417B21A7B005200399C0E /* loading.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7417AF1A7B005200399C0E /* loading.png */; };
 		BF7417B31A7B005200399C0E /* loading@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF7417B01A7B005200399C0E /* loading@2x.png */; };
@@ -444,6 +448,83 @@
 		BFAB22D51ACE055300CCBF8A /* pillSetup.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22D21ACE055300CCBF8A /* pillSetup.png */; };
 		BFAB22D61ACE055300CCBF8A /* pillSetup@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22D31ACE055300CCBF8A /* pillSetup@2x.png */; };
 		BFAB22D71ACE055300CCBF8A /* pillSetup@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22D41ACE055300CCBF8A /* pillSetup@3x.png */; };
+		BFAB22D91AD35F9C00CCBF8A /* HEMRoomCheckView.xib in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22D81AD35F9C00CCBF8A /* HEMRoomCheckView.xib */; };
+		BFAB22DC1AD3613800CCBF8A /* HEMRoomCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAB22DB1AD3613800CCBF8A /* HEMRoomCheckView.m */; };
+		BFAB22EC1AD3675300CCBF8A /* roomcheckSenseBackground.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22DD1AD3675300CCBF8A /* roomcheckSenseBackground.png */; };
+		BFAB22ED1AD3675300CCBF8A /* roomcheckSenseBackground@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22DE1AD3675300CCBF8A /* roomcheckSenseBackground@2x.png */; };
+		BFAB22EE1AD3675300CCBF8A /* roomcheckSenseBackground@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22DF1AD3675300CCBF8A /* roomcheckSenseBackground@3x.png */; };
+		BFAB22EF1AD3675300CCBF8A /* roomcheckSenseGray.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22E01AD3675300CCBF8A /* roomcheckSenseGray.png */; };
+		BFAB22F01AD3675300CCBF8A /* roomcheckSenseGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22E11AD3675300CCBF8A /* roomcheckSenseGray@2x.png */; };
+		BFAB22F11AD3675300CCBF8A /* roomcheckSenseGray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22E21AD3675300CCBF8A /* roomcheckSenseGray@3x.png */; };
+		BFAB22F21AD3675300CCBF8A /* roomcheckSenseGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22E31AD3675300CCBF8A /* roomcheckSenseGreen.png */; };
+		BFAB22F31AD3675300CCBF8A /* roomcheckSenseGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22E41AD3675300CCBF8A /* roomcheckSenseGreen@2x.png */; };
+		BFAB22F41AD3675300CCBF8A /* roomcheckSenseGreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22E51AD3675300CCBF8A /* roomcheckSenseGreen@3x.png */; };
+		BFAB22F51AD3675300CCBF8A /* roomcheckSenseRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22E61AD3675300CCBF8A /* roomcheckSenseRed.png */; };
+		BFAB22F61AD3675300CCBF8A /* roomcheckSenseRed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22E71AD3675300CCBF8A /* roomcheckSenseRed@2x.png */; };
+		BFAB22F71AD3675300CCBF8A /* roomcheckSenseRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22E81AD3675300CCBF8A /* roomcheckSenseRed@3x.png */; };
+		BFAB22F81AD3675300CCBF8A /* roomcheckSenseYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22E91AD3675300CCBF8A /* roomcheckSenseYellow.png */; };
+		BFAB22F91AD3675300CCBF8A /* roomcheckSenseYellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22EA1AD3675300CCBF8A /* roomcheckSenseYellow@2x.png */; };
+		BFAB22FA1AD3675300CCBF8A /* roomcheckSenseYellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22EB1AD3675300CCBF8A /* roomcheckSenseYellow@3x.png */; };
+		BFAB230A1AD4B0B200CCBF8A /* humidityIconGray.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22FB1AD4B0B200CCBF8A /* humidityIconGray.png */; };
+		BFAB230B1AD4B0B200CCBF8A /* humidityIconGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22FC1AD4B0B200CCBF8A /* humidityIconGray@2x.png */; };
+		BFAB230C1AD4B0B200CCBF8A /* humidityIconGray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22FD1AD4B0B200CCBF8A /* humidityIconGray@3x.png */; };
+		BFAB230D1AD4B0B200CCBF8A /* lightIconGray.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22FE1AD4B0B200CCBF8A /* lightIconGray.png */; };
+		BFAB230E1AD4B0B200CCBF8A /* lightIconGray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB22FF1AD4B0B200CCBF8A /* lightIconGray@3x.png */; };
+		BFAB230F1AD4B0B200CCBF8A /* lightIconGray2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23001AD4B0B200CCBF8A /* lightIconGray2x.png */; };
+		BFAB23101AD4B0B200CCBF8A /* particulatesIconGray.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23011AD4B0B200CCBF8A /* particulatesIconGray.png */; };
+		BFAB23111AD4B0B200CCBF8A /* particulatesIconGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23021AD4B0B200CCBF8A /* particulatesIconGray@2x.png */; };
+		BFAB23121AD4B0B200CCBF8A /* particulatesIconGray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23031AD4B0B200CCBF8A /* particulatesIconGray@3x.png */; };
+		BFAB23131AD4B0B200CCBF8A /* soundIconGray.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23041AD4B0B200CCBF8A /* soundIconGray.png */; };
+		BFAB23141AD4B0B200CCBF8A /* soundIconGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23051AD4B0B200CCBF8A /* soundIconGray@2x.png */; };
+		BFAB23151AD4B0B200CCBF8A /* soundIconGray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23061AD4B0B200CCBF8A /* soundIconGray@3x.png */; };
+		BFAB23161AD4B0B200CCBF8A /* temperatureIconGray.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23071AD4B0B200CCBF8A /* temperatureIconGray.png */; };
+		BFAB23171AD4B0B200CCBF8A /* temperatureIconGray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23081AD4B0B200CCBF8A /* temperatureIconGray@2x.png */; };
+		BFAB23181AD4B0B200CCBF8A /* temperatureIconGray@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23091AD4B0B200CCBF8A /* temperatureIconGray@3x.png */; };
+		BFAB23401AD5D15E00CCBF8A /* humidityIconGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB231C1AD5D15E00CCBF8A /* humidityIconGreen.png */; };
+		BFAB23411AD5D15E00CCBF8A /* humidityIconGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB231D1AD5D15E00CCBF8A /* humidityIconGreen@2x.png */; };
+		BFAB23421AD5D15E00CCBF8A /* humidityIconGreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB231E1AD5D15E00CCBF8A /* humidityIconGreen@3x.png */; };
+		BFAB23431AD5D15E00CCBF8A /* humidityIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB231F1AD5D15E00CCBF8A /* humidityIconRed.png */; };
+		BFAB23441AD5D15E00CCBF8A /* humidityIconRed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23201AD5D15E00CCBF8A /* humidityIconRed@2x.png */; };
+		BFAB23451AD5D15E00CCBF8A /* humidityIconRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23211AD5D15E00CCBF8A /* humidityIconRed@3x.png */; };
+		BFAB23461AD5D15E00CCBF8A /* humidityIconYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23221AD5D15E00CCBF8A /* humidityIconYellow.png */; };
+		BFAB23471AD5D15E00CCBF8A /* humidityIconYellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23231AD5D15E00CCBF8A /* humidityIconYellow@2x.png */; };
+		BFAB23481AD5D15E00CCBF8A /* humidityIconYellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23241AD5D15E00CCBF8A /* humidityIconYellow@3x.png */; };
+		BFAB234C1AD5D15E00CCBF8A /* lightIconGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23281AD5D15E00CCBF8A /* lightIconGreen.png */; };
+		BFAB234D1AD5D15E00CCBF8A /* lightIconGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23291AD5D15E00CCBF8A /* lightIconGreen@2x.png */; };
+		BFAB234E1AD5D15E00CCBF8A /* lightIconGreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB232A1AD5D15E00CCBF8A /* lightIconGreen@3x.png */; };
+		BFAB234F1AD5D15E00CCBF8A /* lightIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB232B1AD5D15E00CCBF8A /* lightIconRed.png */; };
+		BFAB23501AD5D15E00CCBF8A /* lightIconRed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB232C1AD5D15E00CCBF8A /* lightIconRed@2x.png */; };
+		BFAB23511AD5D15E00CCBF8A /* lightIconRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB232D1AD5D15E00CCBF8A /* lightIconRed@3x.png */; };
+		BFAB23521AD5D15E00CCBF8A /* lightIconYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB232E1AD5D15E00CCBF8A /* lightIconYellow.png */; };
+		BFAB23531AD5D15E00CCBF8A /* lightIconYellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB232F1AD5D15E00CCBF8A /* lightIconYellow@2x.png */; };
+		BFAB23541AD5D15E00CCBF8A /* lightIconYellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23301AD5D15E00CCBF8A /* lightIconYellow@3x.png */; };
+		BFAB23581AD5D15E00CCBF8A /* particulatesIconGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23341AD5D15E00CCBF8A /* particulatesIconGreen.png */; };
+		BFAB23591AD5D15E00CCBF8A /* particulatesIconGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23351AD5D15E00CCBF8A /* particulatesIconGreen@2x.png */; };
+		BFAB235A1AD5D15E00CCBF8A /* particulatesIconGreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23361AD5D15E00CCBF8A /* particulatesIconGreen@3x.png */; };
+		BFAB235B1AD5D15E00CCBF8A /* particulatesIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23371AD5D15E00CCBF8A /* particulatesIconRed.png */; };
+		BFAB235C1AD5D15E00CCBF8A /* particulatesIconRed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23381AD5D15E00CCBF8A /* particulatesIconRed@2x.png */; };
+		BFAB235D1AD5D15E00CCBF8A /* particulatesIconRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23391AD5D15E00CCBF8A /* particulatesIconRed@3x.png */; };
+		BFAB235E1AD5D15E00CCBF8A /* particulatesIconYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB233A1AD5D15E00CCBF8A /* particulatesIconYellow.png */; };
+		BFAB235F1AD5D15E00CCBF8A /* particulatesIconYellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB233B1AD5D15E00CCBF8A /* particulatesIconYellow@2x.png */; };
+		BFAB23601AD5D15E00CCBF8A /* particulatesIconYellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB233C1AD5D15E00CCBF8A /* particulatesIconYellow@3x.png */; };
+		BFAB23821AD5D2AA00CCBF8A /* soundIconGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23671AD5D2AA00CCBF8A /* soundIconGreen.png */; };
+		BFAB23831AD5D2AA00CCBF8A /* soundIconGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23681AD5D2AA00CCBF8A /* soundIconGreen@2x.png */; };
+		BFAB23841AD5D2AA00CCBF8A /* soundIconGreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23691AD5D2AA00CCBF8A /* soundIconGreen@3x.png */; };
+		BFAB23851AD5D2AA00CCBF8A /* soundIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB236A1AD5D2AA00CCBF8A /* soundIconRed.png */; };
+		BFAB23861AD5D2AA00CCBF8A /* soundIconRed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB236B1AD5D2AA00CCBF8A /* soundIconRed@2x.png */; };
+		BFAB23871AD5D2AA00CCBF8A /* soundIconRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB236C1AD5D2AA00CCBF8A /* soundIconRed@3x.png */; };
+		BFAB23881AD5D2AA00CCBF8A /* soundIconYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB236D1AD5D2AA00CCBF8A /* soundIconYellow.png */; };
+		BFAB23891AD5D2AA00CCBF8A /* soundIconYellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB236E1AD5D2AA00CCBF8A /* soundIconYellow@2x.png */; };
+		BFAB238A1AD5D2AA00CCBF8A /* soundIconYellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB236F1AD5D2AA00CCBF8A /* soundIconYellow@3x.png */; };
+		BFAB238E1AD5D2AA00CCBF8A /* temperatureIconGreen.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23731AD5D2AA00CCBF8A /* temperatureIconGreen.png */; };
+		BFAB238F1AD5D2AA00CCBF8A /* temperatureIconGreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23741AD5D2AA00CCBF8A /* temperatureIconGreen@2x.png */; };
+		BFAB23901AD5D2AA00CCBF8A /* temperatureIconGreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23751AD5D2AA00CCBF8A /* temperatureIconGreen@3x.png */; };
+		BFAB23911AD5D2AA00CCBF8A /* temperatureIconRed.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23761AD5D2AA00CCBF8A /* temperatureIconRed.png */; };
+		BFAB23921AD5D2AA00CCBF8A /* temperatureIconRed@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23771AD5D2AA00CCBF8A /* temperatureIconRed@2x.png */; };
+		BFAB23931AD5D2AA00CCBF8A /* temperatureIconRed@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23781AD5D2AA00CCBF8A /* temperatureIconRed@3x.png */; };
+		BFAB23941AD5D2AA00CCBF8A /* temperatureIconYellow.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB23791AD5D2AA00CCBF8A /* temperatureIconYellow.png */; };
+		BFAB23951AD5D2AA00CCBF8A /* temperatureIconYellow@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB237A1AD5D2AA00CCBF8A /* temperatureIconYellow@2x.png */; };
+		BFAB23961AD5D2AA00CCBF8A /* temperatureIconYellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFAB237B1AD5D2AA00CCBF8A /* temperatureIconYellow@3x.png */; };
 		BFABE75219A2E70A00AB2F0F /* UIView+HEMMotionEffects.m in Sources */ = {isa = PBXBuildFile; fileRef = BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */; };
 		BFACC71A19A4282A00FC77EE /* HEMWifiPasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFACC71919A4282A00FC77EE /* HEMWifiPasswordViewController.m */; };
 		BFAE0B1419AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFAE0B1319AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m */; };
@@ -510,36 +591,6 @@
 		BFDCC7BB19D9C741007A922B /* sense@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFDCC7B919D9C741007A922B /* sense@2x.png */; };
 		BFDCC7BE19DA078F007A922B /* HEMAnimationUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BFDCC7BD19DA078F007A922B /* HEMAnimationUtils.m */; };
 		BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */; };
-		BFE872EE1A2FC65600494231 /* sensorHumidity.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D01A2FC65600494231 /* sensorHumidity.png */; };
-		BFE872EF1A2FC65600494231 /* sensorHumidity@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D11A2FC65600494231 /* sensorHumidity@2x.png */; };
-		BFE872F01A2FC65600494231 /* sensorHumidity@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D21A2FC65600494231 /* sensorHumidity@3x.png */; };
-		BFE872F11A2FC65600494231 /* sensorHumidityBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D31A2FC65600494231 /* sensorHumidityBlue.png */; };
-		BFE872F21A2FC65600494231 /* sensorHumidityBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D41A2FC65600494231 /* sensorHumidityBlue@2x.png */; };
-		BFE872F31A2FC65600494231 /* sensorHumidityBlue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D51A2FC65600494231 /* sensorHumidityBlue@3x.png */; };
-		BFE872F41A2FC65600494231 /* sensorLight.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D61A2FC65600494231 /* sensorLight.png */; };
-		BFE872F51A2FC65600494231 /* sensorLight@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D71A2FC65600494231 /* sensorLight@2x.png */; };
-		BFE872F61A2FC65600494231 /* sensorLight@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D81A2FC65600494231 /* sensorLight@3x.png */; };
-		BFE872F71A2FC65600494231 /* sensorLightBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872D91A2FC65600494231 /* sensorLightBlue.png */; };
-		BFE872F81A2FC65600494231 /* sensorLightBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872DA1A2FC65600494231 /* sensorLightBlue@2x.png */; };
-		BFE872F91A2FC65600494231 /* sensorLightBlue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872DB1A2FC65600494231 /* sensorLightBlue@3x.png */; };
-		BFE872FA1A2FC65600494231 /* sensorParticulates.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872DC1A2FC65600494231 /* sensorParticulates.png */; };
-		BFE872FB1A2FC65600494231 /* sensorParticulates@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872DD1A2FC65600494231 /* sensorParticulates@2x.png */; };
-		BFE872FC1A2FC65600494231 /* sensorParticulates@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872DE1A2FC65600494231 /* sensorParticulates@3x.png */; };
-		BFE872FD1A2FC65600494231 /* sensorParticulatesBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872DF1A2FC65600494231 /* sensorParticulatesBlue.png */; };
-		BFE872FE1A2FC65600494231 /* sensorParticulatesBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E01A2FC65600494231 /* sensorParticulatesBlue@2x.png */; };
-		BFE872FF1A2FC65600494231 /* sensorParticulatesBlue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E11A2FC65600494231 /* sensorParticulatesBlue@3x.png */; };
-		BFE873001A2FC65600494231 /* sensorSound.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E21A2FC65600494231 /* sensorSound.png */; };
-		BFE873011A2FC65600494231 /* sensorSound@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E31A2FC65600494231 /* sensorSound@2x.png */; };
-		BFE873021A2FC65600494231 /* sensorSound@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E41A2FC65600494231 /* sensorSound@3x.png */; };
-		BFE873031A2FC65600494231 /* sensorSoundBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E51A2FC65600494231 /* sensorSoundBlue.png */; };
-		BFE873041A2FC65600494231 /* sensorSoundBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E61A2FC65600494231 /* sensorSoundBlue@2x.png */; };
-		BFE873051A2FC65600494231 /* sensorSoundBlue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E71A2FC65600494231 /* sensorSoundBlue@3x.png */; };
-		BFE873061A2FC65600494231 /* sensorTemperature.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E81A2FC65600494231 /* sensorTemperature.png */; };
-		BFE873071A2FC65600494231 /* sensorTemperature@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872E91A2FC65600494231 /* sensorTemperature@2x.png */; };
-		BFE873081A2FC65600494231 /* sensorTemperature@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872EA1A2FC65600494231 /* sensorTemperature@3x.png */; };
-		BFE873091A2FC65600494231 /* sensorTemperatureBlue.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872EB1A2FC65600494231 /* sensorTemperatureBlue.png */; };
-		BFE8730A1A2FC65600494231 /* sensorTemperatureBlue@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872EC1A2FC65600494231 /* sensorTemperatureBlue@2x.png */; };
-		BFE8730B1A2FC65600494231 /* sensorTemperatureBlue@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFE872ED1A2FC65600494231 /* sensorTemperatureBlue@3x.png */; };
 		BFE8730E1A2FC8A000494231 /* HEMSensorCheckView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE8730D1A2FC8A000494231 /* HEMSensorCheckView.m */; };
 		BFE873111A323C2800494231 /* HEMUpdatePasswordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFE873101A323C2800494231 /* HEMUpdatePasswordViewController.m */; };
 		BFEAA0A819A51DCF002FBD44 /* HEMWelcomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */; };
@@ -1120,6 +1171,11 @@
 		BF6E3A9F1A2E51290019C110 /* HEMSingleResponseCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSingleResponseCell.m; sourceTree = "<group>"; };
 		BF6E3AA11A2EA4CF0019C110 /* HEMAccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMAccountViewController.h; sourceTree = "<group>"; };
 		BF6E3AA21A2EA4CF0019C110 /* HEMAccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMAccountViewController.m; sourceTree = "<group>"; };
+		BF7105C81ADC6DAE0066885B /* HEMSpinnerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSpinnerView.h; sourceTree = "<group>"; };
+		BF7105C91ADC6DAE0066885B /* HEMSpinnerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSpinnerView.m; sourceTree = "<group>"; };
+		BF7105CB1ADF2D650066885B /* sensorLoader.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorLoader.png; path = images/sensorLoader.png; sourceTree = "<group>"; };
+		BF7105CC1ADF2D650066885B /* sensorLoader@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorLoader@2x.png"; path = "images/sensorLoader@2x.png"; sourceTree = "<group>"; };
+		BF7105CD1ADF2D650066885B /* sensorLoader@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorLoader@3x.png"; path = "images/sensorLoader@3x.png"; sourceTree = "<group>"; };
 		BF71AFCD1A48F6E700D1208B /* HEMDebugController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMDebugController.h; sourceTree = "<group>"; };
 		BF71AFCE1A48F6E700D1208B /* HEMDebugController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMDebugController.m; sourceTree = "<group>"; };
 		BF7417AF1A7B005200399C0E /* loading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = loading.png; path = images/loading.png; sourceTree = "<group>"; };
@@ -1190,6 +1246,84 @@
 		BFAB22D21ACE055300CCBF8A /* pillSetup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pillSetup.png; path = images/pillSetup.png; sourceTree = "<group>"; };
 		BFAB22D31ACE055300CCBF8A /* pillSetup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pillSetup@2x.png"; path = "images/pillSetup@2x.png"; sourceTree = "<group>"; };
 		BFAB22D41ACE055300CCBF8A /* pillSetup@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pillSetup@3x.png"; path = "images/pillSetup@3x.png"; sourceTree = "<group>"; };
+		BFAB22D81AD35F9C00CCBF8A /* HEMRoomCheckView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMRoomCheckView.xib; sourceTree = "<group>"; };
+		BFAB22DA1AD3613800CCBF8A /* HEMRoomCheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRoomCheckView.h; sourceTree = "<group>"; };
+		BFAB22DB1AD3613800CCBF8A /* HEMRoomCheckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRoomCheckView.m; sourceTree = "<group>"; };
+		BFAB22DD1AD3675300CCBF8A /* roomcheckSenseBackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = roomcheckSenseBackground.png; path = images/roomcheckSenseBackground.png; sourceTree = "<group>"; };
+		BFAB22DE1AD3675300CCBF8A /* roomcheckSenseBackground@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roomcheckSenseBackground@2x.png"; path = "images/roomcheckSenseBackground@2x.png"; sourceTree = "<group>"; };
+		BFAB22DF1AD3675300CCBF8A /* roomcheckSenseBackground@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roomcheckSenseBackground@3x.png"; path = "images/roomcheckSenseBackground@3x.png"; sourceTree = "<group>"; };
+		BFAB22E01AD3675300CCBF8A /* roomcheckSenseGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = roomcheckSenseGray.png; path = images/roomcheckSenseGray.png; sourceTree = "<group>"; };
+		BFAB22E11AD3675300CCBF8A /* roomcheckSenseGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roomcheckSenseGray@2x.png"; path = "images/roomcheckSenseGray@2x.png"; sourceTree = "<group>"; };
+		BFAB22E21AD3675300CCBF8A /* roomcheckSenseGray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roomcheckSenseGray@3x.png"; path = "images/roomcheckSenseGray@3x.png"; sourceTree = "<group>"; };
+		BFAB22E31AD3675300CCBF8A /* roomcheckSenseGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = roomcheckSenseGreen.png; path = images/roomcheckSenseGreen.png; sourceTree = "<group>"; };
+		BFAB22E41AD3675300CCBF8A /* roomcheckSenseGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roomcheckSenseGreen@2x.png"; path = "images/roomcheckSenseGreen@2x.png"; sourceTree = "<group>"; };
+		BFAB22E51AD3675300CCBF8A /* roomcheckSenseGreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roomcheckSenseGreen@3x.png"; path = "images/roomcheckSenseGreen@3x.png"; sourceTree = "<group>"; };
+		BFAB22E61AD3675300CCBF8A /* roomcheckSenseRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = roomcheckSenseRed.png; path = images/roomcheckSenseRed.png; sourceTree = "<group>"; };
+		BFAB22E71AD3675300CCBF8A /* roomcheckSenseRed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roomcheckSenseRed@2x.png"; path = "images/roomcheckSenseRed@2x.png"; sourceTree = "<group>"; };
+		BFAB22E81AD3675300CCBF8A /* roomcheckSenseRed@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roomcheckSenseRed@3x.png"; path = "images/roomcheckSenseRed@3x.png"; sourceTree = "<group>"; };
+		BFAB22E91AD3675300CCBF8A /* roomcheckSenseYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = roomcheckSenseYellow.png; path = images/roomcheckSenseYellow.png; sourceTree = "<group>"; };
+		BFAB22EA1AD3675300CCBF8A /* roomcheckSenseYellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roomcheckSenseYellow@2x.png"; path = "images/roomcheckSenseYellow@2x.png"; sourceTree = "<group>"; };
+		BFAB22EB1AD3675300CCBF8A /* roomcheckSenseYellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "roomcheckSenseYellow@3x.png"; path = "images/roomcheckSenseYellow@3x.png"; sourceTree = "<group>"; };
+		BFAB22FB1AD4B0B200CCBF8A /* humidityIconGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = humidityIconGray.png; path = images/humidityIconGray.png; sourceTree = "<group>"; };
+		BFAB22FC1AD4B0B200CCBF8A /* humidityIconGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "humidityIconGray@2x.png"; path = "images/humidityIconGray@2x.png"; sourceTree = "<group>"; };
+		BFAB22FD1AD4B0B200CCBF8A /* humidityIconGray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "humidityIconGray@3x.png"; path = "images/humidityIconGray@3x.png"; sourceTree = "<group>"; };
+		BFAB22FE1AD4B0B200CCBF8A /* lightIconGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightIconGray.png; path = images/lightIconGray.png; sourceTree = "<group>"; };
+		BFAB22FF1AD4B0B200CCBF8A /* lightIconGray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightIconGray@3x.png"; path = "images/lightIconGray@3x.png"; sourceTree = "<group>"; };
+		BFAB23001AD4B0B200CCBF8A /* lightIconGray2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightIconGray2x.png; path = images/lightIconGray2x.png; sourceTree = "<group>"; };
+		BFAB23011AD4B0B200CCBF8A /* particulatesIconGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = particulatesIconGray.png; path = images/particulatesIconGray.png; sourceTree = "<group>"; };
+		BFAB23021AD4B0B200CCBF8A /* particulatesIconGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "particulatesIconGray@2x.png"; path = "images/particulatesIconGray@2x.png"; sourceTree = "<group>"; };
+		BFAB23031AD4B0B200CCBF8A /* particulatesIconGray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "particulatesIconGray@3x.png"; path = "images/particulatesIconGray@3x.png"; sourceTree = "<group>"; };
+		BFAB23041AD4B0B200CCBF8A /* soundIconGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = soundIconGray.png; path = images/soundIconGray.png; sourceTree = "<group>"; };
+		BFAB23051AD4B0B200CCBF8A /* soundIconGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "soundIconGray@2x.png"; path = "images/soundIconGray@2x.png"; sourceTree = "<group>"; };
+		BFAB23061AD4B0B200CCBF8A /* soundIconGray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "soundIconGray@3x.png"; path = "images/soundIconGray@3x.png"; sourceTree = "<group>"; };
+		BFAB23071AD4B0B200CCBF8A /* temperatureIconGray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = temperatureIconGray.png; path = images/temperatureIconGray.png; sourceTree = "<group>"; };
+		BFAB23081AD4B0B200CCBF8A /* temperatureIconGray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "temperatureIconGray@2x.png"; path = "images/temperatureIconGray@2x.png"; sourceTree = "<group>"; };
+		BFAB23091AD4B0B200CCBF8A /* temperatureIconGray@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "temperatureIconGray@3x.png"; path = "images/temperatureIconGray@3x.png"; sourceTree = "<group>"; };
+		BFAB231C1AD5D15E00CCBF8A /* humidityIconGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = humidityIconGreen.png; path = images/humidityIconGreen.png; sourceTree = "<group>"; };
+		BFAB231D1AD5D15E00CCBF8A /* humidityIconGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "humidityIconGreen@2x.png"; path = "images/humidityIconGreen@2x.png"; sourceTree = "<group>"; };
+		BFAB231E1AD5D15E00CCBF8A /* humidityIconGreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "humidityIconGreen@3x.png"; path = "images/humidityIconGreen@3x.png"; sourceTree = "<group>"; };
+		BFAB231F1AD5D15E00CCBF8A /* humidityIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = humidityIconRed.png; path = images/humidityIconRed.png; sourceTree = "<group>"; };
+		BFAB23201AD5D15E00CCBF8A /* humidityIconRed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "humidityIconRed@2x.png"; path = "images/humidityIconRed@2x.png"; sourceTree = "<group>"; };
+		BFAB23211AD5D15E00CCBF8A /* humidityIconRed@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "humidityIconRed@3x.png"; path = "images/humidityIconRed@3x.png"; sourceTree = "<group>"; };
+		BFAB23221AD5D15E00CCBF8A /* humidityIconYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = humidityIconYellow.png; path = images/humidityIconYellow.png; sourceTree = "<group>"; };
+		BFAB23231AD5D15E00CCBF8A /* humidityIconYellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "humidityIconYellow@2x.png"; path = "images/humidityIconYellow@2x.png"; sourceTree = "<group>"; };
+		BFAB23241AD5D15E00CCBF8A /* humidityIconYellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "humidityIconYellow@3x.png"; path = "images/humidityIconYellow@3x.png"; sourceTree = "<group>"; };
+		BFAB23281AD5D15E00CCBF8A /* lightIconGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightIconGreen.png; path = images/lightIconGreen.png; sourceTree = "<group>"; };
+		BFAB23291AD5D15E00CCBF8A /* lightIconGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightIconGreen@2x.png"; path = "images/lightIconGreen@2x.png"; sourceTree = "<group>"; };
+		BFAB232A1AD5D15E00CCBF8A /* lightIconGreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightIconGreen@3x.png"; path = "images/lightIconGreen@3x.png"; sourceTree = "<group>"; };
+		BFAB232B1AD5D15E00CCBF8A /* lightIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightIconRed.png; path = images/lightIconRed.png; sourceTree = "<group>"; };
+		BFAB232C1AD5D15E00CCBF8A /* lightIconRed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightIconRed@2x.png"; path = "images/lightIconRed@2x.png"; sourceTree = "<group>"; };
+		BFAB232D1AD5D15E00CCBF8A /* lightIconRed@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightIconRed@3x.png"; path = "images/lightIconRed@3x.png"; sourceTree = "<group>"; };
+		BFAB232E1AD5D15E00CCBF8A /* lightIconYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = lightIconYellow.png; path = images/lightIconYellow.png; sourceTree = "<group>"; };
+		BFAB232F1AD5D15E00CCBF8A /* lightIconYellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightIconYellow@2x.png"; path = "images/lightIconYellow@2x.png"; sourceTree = "<group>"; };
+		BFAB23301AD5D15E00CCBF8A /* lightIconYellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "lightIconYellow@3x.png"; path = "images/lightIconYellow@3x.png"; sourceTree = "<group>"; };
+		BFAB23341AD5D15E00CCBF8A /* particulatesIconGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = particulatesIconGreen.png; path = images/particulatesIconGreen.png; sourceTree = "<group>"; };
+		BFAB23351AD5D15E00CCBF8A /* particulatesIconGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "particulatesIconGreen@2x.png"; path = "images/particulatesIconGreen@2x.png"; sourceTree = "<group>"; };
+		BFAB23361AD5D15E00CCBF8A /* particulatesIconGreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "particulatesIconGreen@3x.png"; path = "images/particulatesIconGreen@3x.png"; sourceTree = "<group>"; };
+		BFAB23371AD5D15E00CCBF8A /* particulatesIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = particulatesIconRed.png; path = images/particulatesIconRed.png; sourceTree = "<group>"; };
+		BFAB23381AD5D15E00CCBF8A /* particulatesIconRed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "particulatesIconRed@2x.png"; path = "images/particulatesIconRed@2x.png"; sourceTree = "<group>"; };
+		BFAB23391AD5D15E00CCBF8A /* particulatesIconRed@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "particulatesIconRed@3x.png"; path = "images/particulatesIconRed@3x.png"; sourceTree = "<group>"; };
+		BFAB233A1AD5D15E00CCBF8A /* particulatesIconYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = particulatesIconYellow.png; path = images/particulatesIconYellow.png; sourceTree = "<group>"; };
+		BFAB233B1AD5D15E00CCBF8A /* particulatesIconYellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "particulatesIconYellow@2x.png"; path = "images/particulatesIconYellow@2x.png"; sourceTree = "<group>"; };
+		BFAB233C1AD5D15E00CCBF8A /* particulatesIconYellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "particulatesIconYellow@3x.png"; path = "images/particulatesIconYellow@3x.png"; sourceTree = "<group>"; };
+		BFAB23671AD5D2AA00CCBF8A /* soundIconGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = soundIconGreen.png; path = images/soundIconGreen.png; sourceTree = "<group>"; };
+		BFAB23681AD5D2AA00CCBF8A /* soundIconGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "soundIconGreen@2x.png"; path = "images/soundIconGreen@2x.png"; sourceTree = "<group>"; };
+		BFAB23691AD5D2AA00CCBF8A /* soundIconGreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "soundIconGreen@3x.png"; path = "images/soundIconGreen@3x.png"; sourceTree = "<group>"; };
+		BFAB236A1AD5D2AA00CCBF8A /* soundIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = soundIconRed.png; path = images/soundIconRed.png; sourceTree = "<group>"; };
+		BFAB236B1AD5D2AA00CCBF8A /* soundIconRed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "soundIconRed@2x.png"; path = "images/soundIconRed@2x.png"; sourceTree = "<group>"; };
+		BFAB236C1AD5D2AA00CCBF8A /* soundIconRed@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "soundIconRed@3x.png"; path = "images/soundIconRed@3x.png"; sourceTree = "<group>"; };
+		BFAB236D1AD5D2AA00CCBF8A /* soundIconYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = soundIconYellow.png; path = images/soundIconYellow.png; sourceTree = "<group>"; };
+		BFAB236E1AD5D2AA00CCBF8A /* soundIconYellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "soundIconYellow@2x.png"; path = "images/soundIconYellow@2x.png"; sourceTree = "<group>"; };
+		BFAB236F1AD5D2AA00CCBF8A /* soundIconYellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "soundIconYellow@3x.png"; path = "images/soundIconYellow@3x.png"; sourceTree = "<group>"; };
+		BFAB23731AD5D2AA00CCBF8A /* temperatureIconGreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = temperatureIconGreen.png; path = images/temperatureIconGreen.png; sourceTree = "<group>"; };
+		BFAB23741AD5D2AA00CCBF8A /* temperatureIconGreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "temperatureIconGreen@2x.png"; path = "images/temperatureIconGreen@2x.png"; sourceTree = "<group>"; };
+		BFAB23751AD5D2AA00CCBF8A /* temperatureIconGreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "temperatureIconGreen@3x.png"; path = "images/temperatureIconGreen@3x.png"; sourceTree = "<group>"; };
+		BFAB23761AD5D2AA00CCBF8A /* temperatureIconRed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = temperatureIconRed.png; path = images/temperatureIconRed.png; sourceTree = "<group>"; };
+		BFAB23771AD5D2AA00CCBF8A /* temperatureIconRed@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "temperatureIconRed@2x.png"; path = "images/temperatureIconRed@2x.png"; sourceTree = "<group>"; };
+		BFAB23781AD5D2AA00CCBF8A /* temperatureIconRed@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "temperatureIconRed@3x.png"; path = "images/temperatureIconRed@3x.png"; sourceTree = "<group>"; };
+		BFAB23791AD5D2AA00CCBF8A /* temperatureIconYellow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = temperatureIconYellow.png; path = images/temperatureIconYellow.png; sourceTree = "<group>"; };
+		BFAB237A1AD5D2AA00CCBF8A /* temperatureIconYellow@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "temperatureIconYellow@2x.png"; path = "images/temperatureIconYellow@2x.png"; sourceTree = "<group>"; };
+		BFAB237B1AD5D2AA00CCBF8A /* temperatureIconYellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "temperatureIconYellow@3x.png"; path = "images/temperatureIconYellow@3x.png"; sourceTree = "<group>"; };
 		BFABE75019A2E70A00AB2F0F /* UIView+HEMMotionEffects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+HEMMotionEffects.h"; sourceTree = "<group>"; };
 		BFABE75119A2E70A00AB2F0F /* UIView+HEMMotionEffects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+HEMMotionEffects.m"; sourceTree = "<group>"; };
 		BFACC71819A4282A00FC77EE /* HEMWifiPasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWifiPasswordViewController.h; sourceTree = "<group>"; };
@@ -1278,36 +1412,6 @@
 		BFE3B8FA19F5F1E50055B3B6 /* HEMAnalytics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMAnalytics.h; sourceTree = "<group>"; };
 		BFE872CC1A2F9ADC00494231 /* HEMRoomCheckViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMRoomCheckViewController.h; sourceTree = "<group>"; };
 		BFE872CD1A2F9ADC00494231 /* HEMRoomCheckViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMRoomCheckViewController.m; sourceTree = "<group>"; };
-		BFE872D01A2FC65600494231 /* sensorHumidity.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorHumidity.png; path = images/sensorHumidity.png; sourceTree = "<group>"; };
-		BFE872D11A2FC65600494231 /* sensorHumidity@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorHumidity@2x.png"; path = "images/sensorHumidity@2x.png"; sourceTree = "<group>"; };
-		BFE872D21A2FC65600494231 /* sensorHumidity@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorHumidity@3x.png"; path = "images/sensorHumidity@3x.png"; sourceTree = "<group>"; };
-		BFE872D31A2FC65600494231 /* sensorHumidityBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorHumidityBlue.png; path = images/sensorHumidityBlue.png; sourceTree = "<group>"; };
-		BFE872D41A2FC65600494231 /* sensorHumidityBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorHumidityBlue@2x.png"; path = "images/sensorHumidityBlue@2x.png"; sourceTree = "<group>"; };
-		BFE872D51A2FC65600494231 /* sensorHumidityBlue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorHumidityBlue@3x.png"; path = "images/sensorHumidityBlue@3x.png"; sourceTree = "<group>"; };
-		BFE872D61A2FC65600494231 /* sensorLight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorLight.png; path = images/sensorLight.png; sourceTree = "<group>"; };
-		BFE872D71A2FC65600494231 /* sensorLight@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorLight@2x.png"; path = "images/sensorLight@2x.png"; sourceTree = "<group>"; };
-		BFE872D81A2FC65600494231 /* sensorLight@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorLight@3x.png"; path = "images/sensorLight@3x.png"; sourceTree = "<group>"; };
-		BFE872D91A2FC65600494231 /* sensorLightBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorLightBlue.png; path = images/sensorLightBlue.png; sourceTree = "<group>"; };
-		BFE872DA1A2FC65600494231 /* sensorLightBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorLightBlue@2x.png"; path = "images/sensorLightBlue@2x.png"; sourceTree = "<group>"; };
-		BFE872DB1A2FC65600494231 /* sensorLightBlue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorLightBlue@3x.png"; path = "images/sensorLightBlue@3x.png"; sourceTree = "<group>"; };
-		BFE872DC1A2FC65600494231 /* sensorParticulates.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorParticulates.png; path = images/sensorParticulates.png; sourceTree = "<group>"; };
-		BFE872DD1A2FC65600494231 /* sensorParticulates@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorParticulates@2x.png"; path = "images/sensorParticulates@2x.png"; sourceTree = "<group>"; };
-		BFE872DE1A2FC65600494231 /* sensorParticulates@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorParticulates@3x.png"; path = "images/sensorParticulates@3x.png"; sourceTree = "<group>"; };
-		BFE872DF1A2FC65600494231 /* sensorParticulatesBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorParticulatesBlue.png; path = images/sensorParticulatesBlue.png; sourceTree = "<group>"; };
-		BFE872E01A2FC65600494231 /* sensorParticulatesBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorParticulatesBlue@2x.png"; path = "images/sensorParticulatesBlue@2x.png"; sourceTree = "<group>"; };
-		BFE872E11A2FC65600494231 /* sensorParticulatesBlue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorParticulatesBlue@3x.png"; path = "images/sensorParticulatesBlue@3x.png"; sourceTree = "<group>"; };
-		BFE872E21A2FC65600494231 /* sensorSound.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorSound.png; path = images/sensorSound.png; sourceTree = "<group>"; };
-		BFE872E31A2FC65600494231 /* sensorSound@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorSound@2x.png"; path = "images/sensorSound@2x.png"; sourceTree = "<group>"; };
-		BFE872E41A2FC65600494231 /* sensorSound@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorSound@3x.png"; path = "images/sensorSound@3x.png"; sourceTree = "<group>"; };
-		BFE872E51A2FC65600494231 /* sensorSoundBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorSoundBlue.png; path = images/sensorSoundBlue.png; sourceTree = "<group>"; };
-		BFE872E61A2FC65600494231 /* sensorSoundBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorSoundBlue@2x.png"; path = "images/sensorSoundBlue@2x.png"; sourceTree = "<group>"; };
-		BFE872E71A2FC65600494231 /* sensorSoundBlue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorSoundBlue@3x.png"; path = "images/sensorSoundBlue@3x.png"; sourceTree = "<group>"; };
-		BFE872E81A2FC65600494231 /* sensorTemperature.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorTemperature.png; path = images/sensorTemperature.png; sourceTree = "<group>"; };
-		BFE872E91A2FC65600494231 /* sensorTemperature@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorTemperature@2x.png"; path = "images/sensorTemperature@2x.png"; sourceTree = "<group>"; };
-		BFE872EA1A2FC65600494231 /* sensorTemperature@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorTemperature@3x.png"; path = "images/sensorTemperature@3x.png"; sourceTree = "<group>"; };
-		BFE872EB1A2FC65600494231 /* sensorTemperatureBlue.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = sensorTemperatureBlue.png; path = images/sensorTemperatureBlue.png; sourceTree = "<group>"; };
-		BFE872EC1A2FC65600494231 /* sensorTemperatureBlue@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorTemperatureBlue@2x.png"; path = "images/sensorTemperatureBlue@2x.png"; sourceTree = "<group>"; };
-		BFE872ED1A2FC65600494231 /* sensorTemperatureBlue@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "sensorTemperatureBlue@3x.png"; path = "images/sensorTemperatureBlue@3x.png"; sourceTree = "<group>"; };
 		BFE8730C1A2FC8A000494231 /* HEMSensorCheckView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSensorCheckView.h; sourceTree = "<group>"; };
 		BFE8730D1A2FC8A000494231 /* HEMSensorCheckView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSensorCheckView.m; sourceTree = "<group>"; };
 		BFE8730F1A323C2800494231 /* HEMUpdatePasswordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMUpdatePasswordViewController.h; sourceTree = "<group>"; };
@@ -1643,6 +1747,84 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BF7105CB1ADF2D650066885B /* sensorLoader.png */,
+				BF7105CC1ADF2D650066885B /* sensorLoader@2x.png */,
+				BF7105CD1ADF2D650066885B /* sensorLoader@3x.png */,
+				BFAB23671AD5D2AA00CCBF8A /* soundIconGreen.png */,
+				BFAB23681AD5D2AA00CCBF8A /* soundIconGreen@2x.png */,
+				BFAB23691AD5D2AA00CCBF8A /* soundIconGreen@3x.png */,
+				BFAB236A1AD5D2AA00CCBF8A /* soundIconRed.png */,
+				BFAB236B1AD5D2AA00CCBF8A /* soundIconRed@2x.png */,
+				BFAB236C1AD5D2AA00CCBF8A /* soundIconRed@3x.png */,
+				BFAB236D1AD5D2AA00CCBF8A /* soundIconYellow.png */,
+				BFAB236E1AD5D2AA00CCBF8A /* soundIconYellow@2x.png */,
+				BFAB236F1AD5D2AA00CCBF8A /* soundIconYellow@3x.png */,
+				BFAB23731AD5D2AA00CCBF8A /* temperatureIconGreen.png */,
+				BFAB23741AD5D2AA00CCBF8A /* temperatureIconGreen@2x.png */,
+				BFAB23751AD5D2AA00CCBF8A /* temperatureIconGreen@3x.png */,
+				BFAB23761AD5D2AA00CCBF8A /* temperatureIconRed.png */,
+				BFAB23771AD5D2AA00CCBF8A /* temperatureIconRed@2x.png */,
+				BFAB23781AD5D2AA00CCBF8A /* temperatureIconRed@3x.png */,
+				BFAB23791AD5D2AA00CCBF8A /* temperatureIconYellow.png */,
+				BFAB237A1AD5D2AA00CCBF8A /* temperatureIconYellow@2x.png */,
+				BFAB237B1AD5D2AA00CCBF8A /* temperatureIconYellow@3x.png */,
+				BFAB231C1AD5D15E00CCBF8A /* humidityIconGreen.png */,
+				BFAB231D1AD5D15E00CCBF8A /* humidityIconGreen@2x.png */,
+				BFAB231E1AD5D15E00CCBF8A /* humidityIconGreen@3x.png */,
+				BFAB231F1AD5D15E00CCBF8A /* humidityIconRed.png */,
+				BFAB23201AD5D15E00CCBF8A /* humidityIconRed@2x.png */,
+				BFAB23211AD5D15E00CCBF8A /* humidityIconRed@3x.png */,
+				BFAB23221AD5D15E00CCBF8A /* humidityIconYellow.png */,
+				BFAB23231AD5D15E00CCBF8A /* humidityIconYellow@2x.png */,
+				BFAB23241AD5D15E00CCBF8A /* humidityIconYellow@3x.png */,
+				BFAB23281AD5D15E00CCBF8A /* lightIconGreen.png */,
+				BFAB23291AD5D15E00CCBF8A /* lightIconGreen@2x.png */,
+				BFAB232A1AD5D15E00CCBF8A /* lightIconGreen@3x.png */,
+				BFAB232B1AD5D15E00CCBF8A /* lightIconRed.png */,
+				BFAB232C1AD5D15E00CCBF8A /* lightIconRed@2x.png */,
+				BFAB232D1AD5D15E00CCBF8A /* lightIconRed@3x.png */,
+				BFAB232E1AD5D15E00CCBF8A /* lightIconYellow.png */,
+				BFAB232F1AD5D15E00CCBF8A /* lightIconYellow@2x.png */,
+				BFAB23301AD5D15E00CCBF8A /* lightIconYellow@3x.png */,
+				BFAB23341AD5D15E00CCBF8A /* particulatesIconGreen.png */,
+				BFAB23351AD5D15E00CCBF8A /* particulatesIconGreen@2x.png */,
+				BFAB23361AD5D15E00CCBF8A /* particulatesIconGreen@3x.png */,
+				BFAB23371AD5D15E00CCBF8A /* particulatesIconRed.png */,
+				BFAB23381AD5D15E00CCBF8A /* particulatesIconRed@2x.png */,
+				BFAB23391AD5D15E00CCBF8A /* particulatesIconRed@3x.png */,
+				BFAB233A1AD5D15E00CCBF8A /* particulatesIconYellow.png */,
+				BFAB233B1AD5D15E00CCBF8A /* particulatesIconYellow@2x.png */,
+				BFAB233C1AD5D15E00CCBF8A /* particulatesIconYellow@3x.png */,
+				BFAB22FB1AD4B0B200CCBF8A /* humidityIconGray.png */,
+				BFAB22FC1AD4B0B200CCBF8A /* humidityIconGray@2x.png */,
+				BFAB22FD1AD4B0B200CCBF8A /* humidityIconGray@3x.png */,
+				BFAB22FE1AD4B0B200CCBF8A /* lightIconGray.png */,
+				BFAB22FF1AD4B0B200CCBF8A /* lightIconGray@3x.png */,
+				BFAB23001AD4B0B200CCBF8A /* lightIconGray2x.png */,
+				BFAB23011AD4B0B200CCBF8A /* particulatesIconGray.png */,
+				BFAB23021AD4B0B200CCBF8A /* particulatesIconGray@2x.png */,
+				BFAB23031AD4B0B200CCBF8A /* particulatesIconGray@3x.png */,
+				BFAB23041AD4B0B200CCBF8A /* soundIconGray.png */,
+				BFAB23051AD4B0B200CCBF8A /* soundIconGray@2x.png */,
+				BFAB23061AD4B0B200CCBF8A /* soundIconGray@3x.png */,
+				BFAB23071AD4B0B200CCBF8A /* temperatureIconGray.png */,
+				BFAB23081AD4B0B200CCBF8A /* temperatureIconGray@2x.png */,
+				BFAB23091AD4B0B200CCBF8A /* temperatureIconGray@3x.png */,
+				BFAB22DD1AD3675300CCBF8A /* roomcheckSenseBackground.png */,
+				BFAB22DE1AD3675300CCBF8A /* roomcheckSenseBackground@2x.png */,
+				BFAB22DF1AD3675300CCBF8A /* roomcheckSenseBackground@3x.png */,
+				BFAB22E01AD3675300CCBF8A /* roomcheckSenseGray.png */,
+				BFAB22E11AD3675300CCBF8A /* roomcheckSenseGray@2x.png */,
+				BFAB22E21AD3675300CCBF8A /* roomcheckSenseGray@3x.png */,
+				BFAB22E31AD3675300CCBF8A /* roomcheckSenseGreen.png */,
+				BFAB22E41AD3675300CCBF8A /* roomcheckSenseGreen@2x.png */,
+				BFAB22E51AD3675300CCBF8A /* roomcheckSenseGreen@3x.png */,
+				BFAB22E61AD3675300CCBF8A /* roomcheckSenseRed.png */,
+				BFAB22E71AD3675300CCBF8A /* roomcheckSenseRed@2x.png */,
+				BFAB22E81AD3675300CCBF8A /* roomcheckSenseRed@3x.png */,
+				BFAB22E91AD3675300CCBF8A /* roomcheckSenseYellow.png */,
+				BFAB22EA1AD3675300CCBF8A /* roomcheckSenseYellow@2x.png */,
+				BFAB22EB1AD3675300CCBF8A /* roomcheckSenseYellow@3x.png */,
 				BFAB22D21ACE055300CCBF8A /* pillSetup.png */,
 				BFAB22D31ACE055300CCBF8A /* pillSetup@2x.png */,
 				BFAB22D41ACE055300CCBF8A /* pillSetup@3x.png */,
@@ -1694,36 +1876,6 @@
 				BF0E53A21A38C4C1002FB083 /* moon.png */,
 				BF0E53A31A38C4C1002FB083 /* moon@2x.png */,
 				BF0E53A41A38C4C1002FB083 /* moon@3x.png */,
-				BFE872D01A2FC65600494231 /* sensorHumidity.png */,
-				BFE872D11A2FC65600494231 /* sensorHumidity@2x.png */,
-				BFE872D21A2FC65600494231 /* sensorHumidity@3x.png */,
-				BFE872D31A2FC65600494231 /* sensorHumidityBlue.png */,
-				BFE872D41A2FC65600494231 /* sensorHumidityBlue@2x.png */,
-				BFE872D51A2FC65600494231 /* sensorHumidityBlue@3x.png */,
-				BFE872D61A2FC65600494231 /* sensorLight.png */,
-				BFE872D71A2FC65600494231 /* sensorLight@2x.png */,
-				BFE872D81A2FC65600494231 /* sensorLight@3x.png */,
-				BFE872D91A2FC65600494231 /* sensorLightBlue.png */,
-				BFE872DA1A2FC65600494231 /* sensorLightBlue@2x.png */,
-				BFE872DB1A2FC65600494231 /* sensorLightBlue@3x.png */,
-				BFE872DC1A2FC65600494231 /* sensorParticulates.png */,
-				BFE872DD1A2FC65600494231 /* sensorParticulates@2x.png */,
-				BFE872DE1A2FC65600494231 /* sensorParticulates@3x.png */,
-				BFE872DF1A2FC65600494231 /* sensorParticulatesBlue.png */,
-				BFE872E01A2FC65600494231 /* sensorParticulatesBlue@2x.png */,
-				BFE872E11A2FC65600494231 /* sensorParticulatesBlue@3x.png */,
-				BFE872E21A2FC65600494231 /* sensorSound.png */,
-				BFE872E31A2FC65600494231 /* sensorSound@2x.png */,
-				BFE872E41A2FC65600494231 /* sensorSound@3x.png */,
-				BFE872E51A2FC65600494231 /* sensorSoundBlue.png */,
-				BFE872E61A2FC65600494231 /* sensorSoundBlue@2x.png */,
-				BFE872E71A2FC65600494231 /* sensorSoundBlue@3x.png */,
-				BFE872E81A2FC65600494231 /* sensorTemperature.png */,
-				BFE872E91A2FC65600494231 /* sensorTemperature@2x.png */,
-				BFE872EA1A2FC65600494231 /* sensorTemperature@3x.png */,
-				BFE872EB1A2FC65600494231 /* sensorTemperatureBlue.png */,
-				BFE872EC1A2FC65600494231 /* sensorTemperatureBlue@2x.png */,
-				BFE872ED1A2FC65600494231 /* sensorTemperatureBlue@3x.png */,
 				BF5D53231A266C6B0090DD6A /* check.png */,
 				BF5D53241A266C6B0090DD6A /* check@2x.png */,
 				BF5D53251A266C6B0090DD6A /* check@3x.png */,
@@ -1931,6 +2083,9 @@
 				BFE8730D1A2FC8A000494231 /* HEMSensorCheckView.m */,
 				BFCCF5491A6F1F6C00D842F9 /* HEMRulerView.h */,
 				BFCCF54A1A6F1F6C00D842F9 /* HEMRulerView.m */,
+				BFAB22D81AD35F9C00CCBF8A /* HEMRoomCheckView.xib */,
+				BFAB22DA1AD3613800CCBF8A /* HEMRoomCheckView.h */,
+				BFAB22DB1AD3613800CCBF8A /* HEMRoomCheckView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2669,6 +2824,8 @@
 				BF90E2BA1A8578E900816BC1 /* HEMImageCollectionViewCell.m */,
 				BF90E2BC1A857DF600816BC1 /* HEMTextCollectionViewCell.h */,
 				BF90E2BD1A857DF600816BC1 /* HEMTextCollectionViewCell.m */,
+				BF7105C81ADC6DAE0066885B /* HEMSpinnerView.h */,
+				BF7105C91ADC6DAE0066885B /* HEMSpinnerView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -2927,9 +3084,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BFAB230B1AD4B0B200CCBF8A /* humidityIconGray@2x.png in Resources */,
+				BFAB22F71AD3675300CCBF8A /* roomcheckSenseRed@3x.png in Resources */,
 				8A8288AE1A76CF1E0043B1D1 /* presleepInsightSound.png in Resources */,
 				8A8288CE1A7800820043B1D1 /* presleepInsightUnknown@3x.png in Resources */,
 				BF5703DA1A8185F200B613F0 /* sleepPill.png in Resources */,
+				BFAB23111AD4B0B200CCBF8A /* particulatesIconGray@2x.png in Resources */,
 				BFBA2B821A64A3F400C3AB80 /* pairOfPills@3x.png in Resources */,
 				8A7D80441A41094300B0BFD7 /* trendsBarIcon.png in Resources */,
 				8A03386B1974AFD800BE8327 /* Podfile in Resources */,
@@ -2943,6 +3103,8 @@
 				8A93AFC41A09BED100F70A8B /* Share@3x.png in Resources */,
 				8ACAF40C1A69B7980054885A /* inBedEventIcon@3x.png in Resources */,
 				8A8288CB1A7800820043B1D1 /* alarmBarIconActive@3x.png in Resources */,
+				BFAB23521AD5D15E00CCBF8A /* lightIconYellow.png in Resources */,
+				BFAB22F51AD3675300CCBF8A /* roomcheckSenseRed.png in Resources */,
 				8A8288D01A7800820043B1D1 /* senseBarIconActive@2x.png in Resources */,
 				BFBA2B761A647E7C00C3AB80 /* settingsAppIcon@3x.png in Resources */,
 				8A93AFC31A09BED100F70A8B /* Share@2x.png in Resources */,
@@ -2961,24 +3123,29 @@
 				8A457E841A805B7E009A7863 /* infoButtonIcon@3x.png in Resources */,
 				BF628E941A8306A800C0CD2E /* pairingMode.png in Resources */,
 				8AA8D92B19ABB0AA00349FD0 /* HEMSleepSummaryCollectionViewCell.xib in Resources */,
+				BFAB23531AD5D15E00CCBF8A /* lightIconYellow@2x.png in Resources */,
 				8A4579831A805603009A7863 /* welcome_dialog_light@2x.png in Resources */,
 				8AA157F91A5EFD6B00BF1D4A /* noiseEventIcon.png in Resources */,
+				BFAB23471AD5D15E00CCBF8A /* humidityIconYellow@2x.png in Resources */,
 				8AA1E6221A89785000590EB6 /* smart_alarm_dialog@2x.png in Resources */,
 				8AA158051A5EFD6B00BF1D4A /* sunsetEventIcon.png in Resources */,
 				8A8288D41A7800820043B1D1 /* sensorsBarIconActive@3x.png in Resources */,
+				BFAB230F1AD4B0B200CCBF8A /* lightIconGray2x.png in Resources */,
 				8A8288861A76BD8D0043B1D1 /* before_sleep.png in Resources */,
 				8AF4FA6D1A12F46F00451245 /* stopSound@2x.png in Resources */,
-				BFE873041A2FC65600494231 /* sensorSoundBlue@2x.png in Resources */,
+				BFAB23511AD5D15E00CCBF8A /* lightIconRed@3x.png in Resources */,
 				BF14E3BE19EF3BD10006EFEA /* onboarding_bg_wide@2x.png in Resources */,
 				BF5703D61A817D2A00B613F0 /* sampleNotification@3x.png in Resources */,
+				BFAB23941AD5D2AA00CCBF8A /* temperatureIconYellow.png in Resources */,
 				8A45798E1A805603009A7863 /* welcome_dialog_temperature.png in Resources */,
 				8A45798C1A805603009A7863 /* welcome_dialog_sound@2x.png in Resources */,
 				8A8288AF1A76CF1E0043B1D1 /* presleepInsightSound@2x.png in Resources */,
 				8A45798F1A805603009A7863 /* welcome_dialog_temperature@2x.png in Resources */,
 				BF7417B21A7B005200399C0E /* loading.png in Resources */,
-				BFE872F51A2FC65600494231 /* sensorLight@2x.png in Resources */,
 				8AC800961A7B029300895ED3 /* miniPlayButton.png in Resources */,
 				BFDCC7BA19D9C741007A922B /* sense.png in Resources */,
+				BFAB23871AD5D2AA00CCBF8A /* soundIconRed@3x.png in Resources */,
+				BFAB23911AD5D2AA00CCBF8A /* temperatureIconRed.png in Resources */,
 				BF8E1A9E1A689D34009E421F /* enableAudio@3x.png in Resources */,
 				8A1E723819D62C26007475D3 /* alarmSoundIcon.png in Resources */,
 				BFC8215419E7441200E09D5D /* play@2x.png in Resources */,
@@ -2989,6 +3156,8 @@
 				BF05C8ED1A3A6AD6002A1307 /* questions_circle@3x.png in Resources */,
 				8AA1E61F1A89785000590EB6 /* infoButtonIconSmall@2x.png in Resources */,
 				8A8288881A76BD8D0043B1D1 /* before_sleep@3x.png in Resources */,
+				BFAB23831AD5D2AA00CCBF8A /* soundIconGreen@2x.png in Resources */,
+				BF7105D01ADF2D650066885B /* sensorLoader@3x.png in Resources */,
 				BFF3B4441A5CBF6800B11643 /* accessory@3x.png in Resources */,
 				BF8E1A9D1A689D34009E421F /* enableAudio@2x.png in Resources */,
 				8A4579881A805603009A7863 /* welcome_dialog_sensors.png in Resources */,
@@ -2996,15 +3165,17 @@
 				8A1E723519D62C26007475D3 /* alarmRepeatIcon@2x.png in Resources */,
 				8A8288B11A76CF1E0043B1D1 /* presleepInsightTemperature.png in Resources */,
 				BFC3BE971A7202700022C6C2 /* settingsCheck.png in Resources */,
-				BFE8730B1A2FC65600494231 /* sensorTemperatureBlue@3x.png in Resources */,
 				8AC4A0381989C36200C2BD63 /* humidityIcon@2x.png in Resources */,
 				8A8288CC1A7800820043B1D1 /* presleepInsightUnknown.png in Resources */,
 				8A1E723619D62C26007475D3 /* alarmSmartIcon.png in Resources */,
+				BFAB230A1AD4B0B200CCBF8A /* humidityIconGray.png in Resources */,
+				BFAB238A1AD5D2AA00CCBF8A /* soundIconYellow@3x.png in Resources */,
+				BFAB23161AD4B0B200CCBF8A /* temperatureIconGray.png in Resources */,
 				8AA157FD1A5EFD6B00BF1D4A /* partnerEventIcon@2x.png in Resources */,
-				BFE872F11A2FC65600494231 /* sensorHumidityBlue.png in Resources */,
 				8AC8009D1A7B029300895ED3 /* senseBarIconActive@3x@2x.png in Resources */,
 				BF05C8EC1A3A6AD6002A1307 /* questions_circle@2x.png in Resources */,
 				BFF3B4581A5F008A00B11643 /* warning@2x.png in Resources */,
+				BFAB234C1AD5D15E00CCBF8A /* lightIconGreen.png in Resources */,
 				8A8288D31A7800820043B1D1 /* sensorsBarIconActive@2x.png in Resources */,
 				BF5703DB1A8185F200B613F0 /* sleepPill@2x.png in Resources */,
 				8A8288AD1A76CF1E0043B1D1 /* presleepInsightParticulates@3x.png in Resources */,
@@ -3016,52 +3187,60 @@
 				8A8288A51A76CF1E0043B1D1 /* presleepInsightHumidity.png in Resources */,
 				BFBEDB761A8BF9B6006C4546 /* senseColors3@2x.png in Resources */,
 				8ACAF40D1A69B7980054885A /* outOfBedEventIcon.png in Resources */,
+				BFAB230E1AD4B0B200CCBF8A /* lightIconGray@3x.png in Resources */,
 				8AA1E6291A897FA000590EB6 /* alarmShortcut@3x.png in Resources */,
 				8A63D55B1A5F47A300F5307D /* unknownEventIcon.png in Resources */,
 				8AFD8A1A1A649F3900124CCE /* checkmark@2x.png in Resources */,
 				8A8288C91A7800820043B1D1 /* alarmBarIconActive.png in Resources */,
-				BFE872F01A2FC65600494231 /* sensorHumidity@3x.png in Resources */,
 				8AA157F51A5EFD6B00BF1D4A /* lightEventIcon@3x.png in Resources */,
+				BFAB23461AD5D15E00CCBF8A /* humidityIconYellow.png in Resources */,
 				BF05C8E91A3A6AD6002A1307 /* questions_check@2x.png in Resources */,
 				8A7D803F1A41094300B0BFD7 /* sensorsBarIcon@2x.png in Resources */,
 				BFBEDB711A8BF9B6006C4546 /* senseColors1@3x.png in Resources */,
 				BFBA2B741A647E7C00C3AB80 /* settingsAppIcon.png in Resources */,
 				8AA158031A5EFD6B00BF1D4A /* sunriseEventIcon@2x.png in Resources */,
 				BF0F63661A250A050084E6B4 /* smartAlarm@3x.png in Resources */,
+				BFAB23881AD5D2AA00CCBF8A /* soundIconYellow.png in Resources */,
 				BF5703DC1A8185F200B613F0 /* sleepPill@3x.png in Resources */,
 				8A8288871A76BD8D0043B1D1 /* before_sleep@2x.png in Resources */,
 				8A8288A91A76CF1E0043B1D1 /* presleepInsightLight@2x.png in Resources */,
 				BF770F251A155455008611E9 /* sensePlacement@2x.png in Resources */,
 				8A457E831A805B7E009A7863 /* infoButtonIcon@2x.png in Resources */,
 				BF44735C1A63535F00389ECE /* male@3x.png in Resources */,
+				BFAB22F91AD3675300CCBF8A /* roomcheckSenseYellow@2x.png in Resources */,
 				8A45798D1A805603009A7863 /* welcome_dialog_sound@3x.png in Resources */,
+				BFAB23841AD5D2AA00CCBF8A /* soundIconGreen@3x.png in Resources */,
 				8A93AFD11A09BF0300F70A8B /* settingsIcon@3x.png in Resources */,
 				8AA157F71A5EFD6B00BF1D4A /* motionEventIcon@2x.png in Resources */,
 				8A4579811A805603009A7863 /* welcome_dialog_humidity@3x.png in Resources */,
 				BFBEDB791A8BF9B6006C4546 /* senseColors4@2x.png in Resources */,
 				8AA157F41A5EFD6B00BF1D4A /* lightEventIcon@2x.png in Resources */,
 				8AA158011A5EFD6B00BF1D4A /* sleepEventIcon@3x.png in Resources */,
+				BFAB22EE1AD3675300CCBF8A /* roomcheckSenseBackground@3x.png in Resources */,
 				BF4473571A63535F00389ECE /* female.png in Resources */,
 				8A45798A1A805603009A7863 /* welcome_dialog_sensors@3x.png in Resources */,
 				8A1743C419A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.xib in Resources */,
 				8A8288B31A76CF1E0043B1D1 /* presleepInsightTemperature@3x.png in Resources */,
-				BFE872F71A2FC65600494231 /* sensorLightBlue.png in Resources */,
-				BFE872EF1A2FC65600494231 /* sensorHumidity@2x.png in Resources */,
 				8A7D80381A41094300B0BFD7 /* alarmBarIcon.png in Resources */,
 				8A72143F1A1E7797008B59C4 /* backIcon.png in Resources */,
+				BFAB22EC1AD3675300CCBF8A /* roomcheckSenseBackground.png in Resources */,
 				BF14E3BF19EF3BD10006EFEA /* onboarding_bg_wide@3x.png in Resources */,
 				8AD1426D1A78679800A83AD8 /* timeline_explain_sleep@2x.png in Resources */,
+				BFAB235E1AD5D15E00CCBF8A /* particulatesIconYellow.png in Resources */,
 				8A4579851A805603009A7863 /* welcome_dialog_particulates.png in Resources */,
 				8A7D80431A41094300B0BFD7 /* settingsBarIcon@3x.png in Resources */,
+				BF7105CF1ADF2D650066885B /* sensorLoader@2x.png in Resources */,
+				BFAB23921AD5D2AA00CCBF8A /* temperatureIconRed@2x.png in Resources */,
 				8AA158081A5EFD6B00BF1D4A /* wakeupEventIcon.png in Resources */,
 				BF770F281A15559E008611E9 /* sense@3x.png in Resources */,
 				8AA157FF1A5EFD6B00BF1D4A /* sleepEventIcon.png in Resources */,
-				BFE872F31A2FC65600494231 /* sensorHumidityBlue@3x.png in Resources */,
 				8A12077A1A80A58E00758DC2 /* welcome_dialog_alarm@2x.png in Resources */,
-				BFE872FA1A2FC65600494231 /* sensorParticulates.png in Resources */,
+				BFAB230C1AD4B0B200CCBF8A /* humidityIconGray@3x.png in Resources */,
+				BFAB22ED1AD3675300CCBF8A /* roomcheckSenseBackground@2x.png in Resources */,
+				BFAB23851AD5D2AA00CCBF8A /* soundIconRed.png in Resources */,
 				8AA157E11A5EFD6B00BF1D4A /* alarmEventIcon.png in Resources */,
 				8A93AFCD1A09BF0300F70A8B /* caret up.png in Resources */,
-				BFE872F81A2FC65600494231 /* sensorLightBlue@2x.png in Resources */,
+				BFAB23481AD5D15E00CCBF8A /* humidityIconYellow@3x.png in Resources */,
 				BFF3B4591A5F008A00B11643 /* warning@3x.png in Resources */,
 				BFB0FBDC19D253400056FFEC /* pillIcon.png in Resources */,
 				8ACAF40A1A69B7980054885A /* inBedEventIcon.png in Resources */,
@@ -3069,6 +3248,7 @@
 				8AC4A0401989C5A100C2BD63 /* settingsIcon@2x.png in Resources */,
 				BFBEDB771A8BF9B6006C4546 /* senseColors3@3x.png in Resources */,
 				BF770F261A155455008611E9 /* sensePlacement@3x.png in Resources */,
+				BFAB22F81AD3675300CCBF8A /* roomcheckSenseYellow.png in Resources */,
 				8AC4A0391989C36200C2BD63 /* particleIcon.png in Resources */,
 				8A8288A71A76CF1E0043B1D1 /* presleepInsightHumidity@3x.png in Resources */,
 				8A93AFC21A09BED100F70A8B /* Share.png in Resources */,
@@ -3079,18 +3259,21 @@
 				BF4473591A63535F00389ECE /* female@3x.png in Resources */,
 				BF0F63651A250A050084E6B4 /* smartAlarm@2x.png in Resources */,
 				BFB0FBE319D377380056FFEC /* senseIcon.png in Resources */,
-				BFE873091A2FC65600494231 /* sensorTemperatureBlue.png in Resources */,
 				BF0E53A51A38C4C1002FB083 /* moon.png in Resources */,
 				8AA1E6231A89785000590EB6 /* smart_alarm_dialog@3x.png in Resources */,
+				BFAB23401AD5D15E00CCBF8A /* humidityIconGreen.png in Resources */,
 				8AD142631A78679800A83AD8 /* timeline_explain_before.png in Resources */,
 				8A63D5631A6058DA00F5307D /* lightsOutEventIcon@3x.png in Resources */,
 				BF5D53271A266C6B0090DD6A /* check@2x.png in Resources */,
-				BFE873031A2FC65600494231 /* sensorSoundBlue.png in Resources */,
 				8A93AFBE1A09BED100F70A8B /* caret up@3x.png in Resources */,
 				BF628E951A8306A800C0CD2E /* pairingMode@2x.png in Resources */,
 				8AF4FA251A12B01E00451245 /* playSound.png in Resources */,
 				8A8288D51A7800820043B1D1 /* settingsBarIconActive.png in Resources */,
+				BFAB23411AD5D15E00CCBF8A /* humidityIconGreen@2x.png in Resources */,
+				BFAB230D1AD4B0B200CCBF8A /* lightIconGray.png in Resources */,
+				BFAB23931AD5D2AA00CCBF8A /* temperatureIconRed@3x.png in Resources */,
 				BF005C7E19FED57E00E68E87 /* wifiIcon@2x.png in Resources */,
+				BFAB235A1AD5D15E00CCBF8A /* particulatesIconGreen@3x.png in Resources */,
 				8A1743BC19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.xib in Resources */,
 				BF5D53261A266C6B0090DD6A /* check.png in Resources */,
 				8AC4A03B1989C36200C2BD63 /* temperatureIcon.png in Resources */,
@@ -3100,16 +3283,17 @@
 				8A7D80401A41094300B0BFD7 /* sensorsBarIcon@3x.png in Resources */,
 				8A93AFCE1A09BF0300F70A8B /* caret up@2x.png in Resources */,
 				8AC4A03C1989C36200C2BD63 /* temperatureIcon@2x.png in Resources */,
+				BFAB23171AD4B0B200CCBF8A /* temperatureIconGray@2x.png in Resources */,
 				BFF3B4421A5CBF6800B11643 /* accessory.png in Resources */,
-				BFE872FC1A2FC65600494231 /* sensorParticulates@3x.png in Resources */,
 				BF1E2E821A04514200DDD0D0 /* temperatureIcon@3x.png in Resources */,
-				BFE872FE1A2FC65600494231 /* sensorParticulatesBlue@2x.png in Resources */,
 				8AF4FA261A12B01E00451245 /* playSound@2x.png in Resources */,
 				BF0E53A71A38C4C1002FB083 /* moon@3x.png in Resources */,
 				8AD142681A78679800A83AD8 /* timeline_explain_graph@3x.png in Resources */,
+				BFAB23181AD4B0B200CCBF8A /* temperatureIconGray@3x.png in Resources */,
+				BFAB22F61AD3675300CCBF8A /* roomcheckSenseRed@2x.png in Resources */,
 				8A4579861A805603009A7863 /* welcome_dialog_particulates@2x.png in Resources */,
-				BFE8730A1A2FC65600494231 /* sensorTemperatureBlue@2x.png in Resources */,
 				8A8288CF1A7800820043B1D1 /* senseBarIconActive.png in Resources */,
+				BFAB23421AD5D15E00CCBF8A /* humidityIconGreen@3x.png in Resources */,
 				8AA1580A1A5EFD6B00BF1D4A /* wakeupEventIcon@3x.png in Resources */,
 				BF005C7A19FED57E00E68E87 /* lockIcon.png in Resources */,
 				8AD1426C1A78679800A83AD8 /* timeline_explain_sleep.png in Resources */,
@@ -3117,17 +3301,20 @@
 				8A8288D81A7800820043B1D1 /* trendsBarIconActive.png in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				8A8288921A76BDA00043B1D1 /* sleep_summary.png in Resources */,
+				BFAB23951AD5D2AA00CCBF8A /* temperatureIconYellow@2x.png in Resources */,
 				BF770F141A143E63008611E9 /* shakePill@3x.png in Resources */,
 				8AD1426B1A78679800A83AD8 /* timeline_explain_score@3x.png in Resources */,
 				8A4579891A805603009A7863 /* welcome_dialog_sensors@2x.png in Resources */,
-				BFE872EE1A2FC65600494231 /* sensorHumidity.png in Resources */,
 				8A8288D61A7800820043B1D1 /* settingsBarIconActive@2x.png in Resources */,
 				8AD142691A78679800A83AD8 /* timeline_explain_score.png in Resources */,
+				BFAB238E1AD5D2AA00CCBF8A /* temperatureIconGreen.png in Resources */,
+				BFAB23451AD5D15E00CCBF8A /* humidityIconRed@3x.png in Resources */,
 				8A457E821A805B7E009A7863 /* infoButtonIcon.png in Resources */,
 				BFDCC7BB19D9C741007A922B /* sense@2x.png in Resources */,
 				BF770F121A143E63008611E9 /* shakePill.png in Resources */,
 				BFBEDB701A8BF9B6006C4546 /* senseColors1@2x.png in Resources */,
 				8AC4A03F1989C5A100C2BD63 /* settingsIcon.png in Resources */,
+				BFAB23131AD4B0B200CCBF8A /* soundIconGray.png in Resources */,
 				8A8288D11A7800820043B1D1 /* senseBarIconActive@3x.png in Resources */,
 				BF7417B41A7B005200399C0E /* loading@3x.png in Resources */,
 				8A8288CA1A7800820043B1D1 /* alarmBarIconActive@2x.png in Resources */,
@@ -3137,18 +3324,26 @@
 				BFB0FBDD19D253400056FFEC /* pillIcon@2x.png in Resources */,
 				8A7D80411A41094300B0BFD7 /* settingsBarIcon.png in Resources */,
 				BF0E53A61A38C4C1002FB083 /* moon@2x.png in Resources */,
+				BFAB23591AD5D15E00CCBF8A /* particulatesIconGreen@2x.png in Resources */,
 				BFCE1D2E1AA657760076E855 /* senseWhite@2x.png in Resources */,
 				8A63D55D1A5F47A300F5307D /* unknownEventIcon@3x.png in Resources */,
+				BFAB235C1AD5D15E00CCBF8A /* particulatesIconRed@2x.png in Resources */,
 				8A7214411A1E7797008B59C4 /* backIcon@3x.png in Resources */,
 				8AA157FA1A5EFD6B00BF1D4A /* noiseEventIcon@2x.png in Resources */,
+				BFAB23891AD5D2AA00CCBF8A /* soundIconYellow@2x.png in Resources */,
 				BFBEDB7D1A8BF9B6006C4546 /* senseColors5@3x.png in Resources */,
 				BF005C7B19FED57E00E68E87 /* lockIcon@2x.png in Resources */,
 				8AA1E6201A89785000590EB6 /* infoButtonIconSmall@3x.png in Resources */,
 				8AA157FE1A5EFD6B00BF1D4A /* partnerEventIcon@3x.png in Resources */,
+				BFAB23101AD4B0B200CCBF8A /* particulatesIconGray.png in Resources */,
+				BFAB23601AD5D15E00CCBF8A /* particulatesIconYellow@3x.png in Resources */,
 				BF770F241A155455008611E9 /* sensePlacement.png in Resources */,
 				8AD1426E1A78679800A83AD8 /* timeline_explain_sleep@3x.png in Resources */,
+				BFAB23861AD5D2AA00CCBF8A /* soundIconRed@2x.png in Resources */,
 				8A98AC041A2D5B8D00A1296E /* verifyAlertIcon@3x.png in Resources */,
 				BFBA2B751A647E7C00C3AB80 /* settingsAppIcon@2x.png in Resources */,
+				BFAB23121AD4B0B200CCBF8A /* particulatesIconGray@3x.png in Resources */,
+				BFAB23501AD5D15E00CCBF8A /* lightIconRed@2x.png in Resources */,
 				8AA158061A5EFD6B00BF1D4A /* sunsetEventIcon@2x.png in Resources */,
 				BF14E3BB19EF3BD10006EFEA /* map@2x.png in Resources */,
 				BF005C7D19FED57E00E68E87 /* wifiIcon.png in Resources */,
@@ -3157,7 +3352,9 @@
 				8ACAF40F1A69B7980054885A /* outOfBedEventIcon@3x.png in Resources */,
 				8A8288941A76BDA00043B1D1 /* sleep_summary@3x.png in Resources */,
 				8A1E723419D62C26007475D3 /* alarmRepeatIcon.png in Resources */,
+				BFAB23441AD5D15E00CCBF8A /* humidityIconRed@2x.png in Resources */,
 				BF4473581A63535F00389ECE /* female@2x.png in Resources */,
+				BFAB23961AD5D2AA00CCBF8A /* temperatureIconYellow@3x.png in Resources */,
 				8AC800981A7B029300895ED3 /* miniPlayButton@3x.png in Resources */,
 				8AA158091A5EFD6B00BF1D4A /* wakeupEventIcon@2x.png in Resources */,
 				8AF4FA6C1A12F46F00451245 /* stopSound.png in Resources */,
@@ -3173,24 +3370,20 @@
 				BFF3B4431A5CBF6800B11643 /* accessory@2x.png in Resources */,
 				BFBEDB751A8BF9B6006C4546 /* senseColors3.png in Resources */,
 				BFB0FBE419D377380056FFEC /* senseIcon@2x.png in Resources */,
-				BFE873051A2FC65600494231 /* sensorSoundBlue@3x.png in Resources */,
 				8AFD8A1B1A649F3900124CCE /* checkmark@3x.png in Resources */,
 				BF14E3BC19EF3BD10006EFEA /* map@3x.png in Resources */,
 				8A7D803D1A41094300B0BFD7 /* senseBarIcon@3x.png in Resources */,
 				8AA158101A5EFD9500BF1D4A /* alarmSoundIcon@3x.png in Resources */,
-				BFE872FF1A2FC65600494231 /* sensorParticulatesBlue@3x.png in Resources */,
 				8A63D5571A5F38FE00F5307D /* HEMTimelineFooterCollectionReusableView.xib in Resources */,
 				8A1E723919D62C26007475D3 /* alarmSoundIcon@2x.png in Resources */,
-				BFE873021A2FC65600494231 /* sensorSound@3x.png in Resources */,
+				BFAB235F1AD5D15E00CCBF8A /* particulatesIconYellow@2x.png in Resources */,
 				8A93AFBF1A09BED100F70A8B /* Menu.png in Resources */,
-				BFE873071A2FC65600494231 /* sensorTemperature@2x.png in Resources */,
-				BFE873081A2FC65600494231 /* sensorTemperature@3x.png in Resources */,
 				8A7D803E1A41094300B0BFD7 /* sensorsBarIcon.png in Resources */,
-				BFE873011A2FC65600494231 /* sensorSound@2x.png in Resources */,
 				8AC4A03A1989C36200C2BD63 /* particleIcon@2x.png in Resources */,
 				8A63D5621A6058DA00F5307D /* lightsOutEventIcon@2x.png in Resources */,
-				BFE872FB1A2FC65600494231 /* sensorParticulates@2x.png in Resources */,
+				BFAB23581AD5D15E00CCBF8A /* particulatesIconGreen.png in Resources */,
 				8ACAF40E1A69B7980054885A /* outOfBedEventIcon@2x.png in Resources */,
+				BFAB22F01AD3675300CCBF8A /* roomcheckSenseGray@2x.png in Resources */,
 				8A8288D71A7800820043B1D1 /* settingsBarIconActive@3x.png in Resources */,
 				8AD142641A78679800A83AD8 /* timeline_explain_before@2x.png in Resources */,
 				BFBEDB721A8BF9B6006C4546 /* senseColors2.png in Resources */,
@@ -3199,30 +3392,36 @@
 				8A98AC021A2D5B8D00A1296E /* verifyAlertIcon.png in Resources */,
 				8AA1580E1A5EFD9500BF1D4A /* alarmRepeatIcon@3x.png in Resources */,
 				8AA1580F1A5EFD9500BF1D4A /* alarmSmartIcon@3x.png in Resources */,
-				BFE872F41A2FC65600494231 /* sensorLight.png in Resources */,
-				BFE873001A2FC65600494231 /* sensorSound.png in Resources */,
+				BFAB234F1AD5D15E00CCBF8A /* lightIconRed.png in Resources */,
+				BFAB234E1AD5D15E00CCBF8A /* lightIconGreen@3x.png in Resources */,
 				6003F5A1195388D20070C39A /* Main.storyboard in Resources */,
 				8A7214401A1E7797008B59C4 /* backIcon@2x.png in Resources */,
+				BFAB238F1AD5D2AA00CCBF8A /* temperatureIconGreen@2x.png in Resources */,
 				BF5703D51A817D2A00B613F0 /* sampleNotification@2x.png in Resources */,
 				8AA158001A5EFD6B00BF1D4A /* sleepEventIcon@2x.png in Resources */,
 				BFBEDB6F1A8BF9B6006C4546 /* senseColors1.png in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
+				BFAB23901AD5D2AA00CCBF8A /* temperatureIconGreen@3x.png in Resources */,
 				BFBA2B801A64A3F400C3AB80 /* pairOfPills.png in Resources */,
 				8A4579871A805603009A7863 /* welcome_dialog_particulates@3x.png in Resources */,
 				8A8288A81A76CF1E0043B1D1 /* presleepInsightLight.png in Resources */,
 				8AA157FC1A5EFD6B00BF1D4A /* partnerEventIcon.png in Resources */,
-				BFE872F61A2FC65600494231 /* sensorLight@3x.png in Resources */,
 				BF005C7C19FED57E00E68E87 /* lockIcon@3x.png in Resources */,
+				BFAB235D1AD5D15E00CCBF8A /* particulatesIconRed@3x.png in Resources */,
 				BFAB22D61ACE055300CCBF8A /* pillSetup@2x.png in Resources */,
 				8A8288CD1A7800820043B1D1 /* presleepInsightUnknown@2x.png in Resources */,
 				8A4579801A805603009A7863 /* welcome_dialog_humidity@2x.png in Resources */,
+				BFAB22F21AD3675300CCBF8A /* roomcheckSenseGreen.png in Resources */,
 				8A8288AA1A76CF1E0043B1D1 /* presleepInsightLight@3x.png in Resources */,
 				BF0F63641A250A050084E6B4 /* smartAlarm.png in Resources */,
 				BFAB22D51ACE055300CCBF8A /* pillSetup.png in Resources */,
+				BFAB22EF1AD3675300CCBF8A /* roomcheckSenseGray.png in Resources */,
 				8A7D803C1A41094300B0BFD7 /* senseBarIcon@2x.png in Resources */,
 				8A7D803B1A41094300B0BFD7 /* senseBarIcon.png in Resources */,
 				8AD142671A78679800A83AD8 /* timeline_explain_graph@2x.png in Resources */,
+				BFAB23431AD5D15E00CCBF8A /* humidityIconRed.png in Resources */,
 				BF781E3E19DF0F7400B68EBC /* Settings.bundle in Resources */,
+				BFAB23821AD5D2AA00CCBF8A /* soundIconGreen.png in Resources */,
 				8A1E723719D62C26007475D3 /* alarmSmartIcon@2x.png in Resources */,
 				BFC3BE991A7202700022C6C2 /* settingsCheck@3x.png in Resources */,
 				8A4579821A805603009A7863 /* welcome_dialog_light.png in Resources */,
@@ -3230,27 +3429,32 @@
 				BFC3BE981A7202700022C6C2 /* settingsCheck@2x.png in Resources */,
 				8AC8009B1A7B029300895ED3 /* miniStopButton@3x.png in Resources */,
 				8A98AC031A2D5B8D00A1296E /* verifyAlertIcon@2x.png in Resources */,
+				BFAB22FA1AD3675300CCBF8A /* roomcheckSenseYellow@3x.png in Resources */,
 				8A93AFC01A09BED100F70A8B /* Menu@2x.png in Resources */,
 				8A12077D1A80A58E00758DC2 /* welcome_dialog_trends@2x.png in Resources */,
 				8AF4FA271A12B01E00451245 /* playSound@3x.png in Resources */,
 				8AD88C3B1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib in Resources */,
 				8AC800971A7B029300895ED3 /* miniPlayButton@2x.png in Resources */,
 				BFC8215319E7441200E09D5D /* play.png in Resources */,
+				BFAB22D91AD35F9C00CCBF8A /* HEMRoomCheckView.xib in Resources */,
 				8AA1E61E1A89785000590EB6 /* infoButtonIconSmall.png in Resources */,
 				8A93AFCF1A09BF0300F70A8B /* pillIcon@3x.png in Resources */,
-				BFE872F91A2FC65600494231 /* sensorLightBlue@3x.png in Resources */,
 				BFBEDB7A1A8BF9B6006C4546 /* senseColors4@3x.png in Resources */,
 				8AFD8A191A649F3900124CCE /* checkmark.png in Resources */,
 				8AA158021A5EFD6B00BF1D4A /* sunriseEventIcon.png in Resources */,
 				8A8288D91A7800820043B1D1 /* trendsBarIconActive@2x.png in Resources */,
+				BFAB23141AD4B0B200CCBF8A /* soundIconGray@2x.png in Resources */,
 				8AA158071A5EFD6B00BF1D4A /* sunsetEventIcon@3x.png in Resources */,
+				BFAB22F11AD3675300CCBF8A /* roomcheckSenseGray@3x.png in Resources */,
 				8A8288B21A76CF1E0043B1D1 /* presleepInsightTemperature@2x.png in Resources */,
 				8AC8009A1A7B029300895ED3 /* miniStopButton@2x.png in Resources */,
 				8A8288B01A76CF1E0043B1D1 /* presleepInsightSound@3x.png in Resources */,
+				BF7105CE1ADF2D650066885B /* sensorLoader.png in Resources */,
 				8AA157F81A5EFD6B00BF1D4A /* motionEventIcon@3x.png in Resources */,
+				BFAB23541AD5D15E00CCBF8A /* lightIconYellow@3x.png in Resources */,
 				BFCE1D2D1AA657760076E855 /* senseWhite.png in Resources */,
+				BFAB23151AD4B0B200CCBF8A /* soundIconGray@3x.png in Resources */,
 				8AA157E21A5EFD6B00BF1D4A /* alarmEventIcon@2x.png in Resources */,
-				BFE872FD1A2FC65600494231 /* sensorParticulatesBlue.png in Resources */,
 				8AC8009C1A7B029300895ED3 /* senseBarIconActive@2x@2x.png in Resources */,
 				8AD1426A1A78679800A83AD8 /* timeline_explain_score@2x.png in Resources */,
 				8A8288931A76BDA00043B1D1 /* sleep_summary@2x.png in Resources */,
@@ -3260,17 +3464,19 @@
 				8A8288D21A7800820043B1D1 /* sensorsBarIconActive.png in Resources */,
 				8A8288AC1A76CF1E0043B1D1 /* presleepInsightParticulates@2x.png in Resources */,
 				8A8288A61A76CF1E0043B1D1 /* presleepInsightHumidity@2x.png in Resources */,
+				BFAB235B1AD5D15E00CCBF8A /* particulatesIconRed.png in Resources */,
 				BF770F131A143E63008611E9 /* shakePill@2x.png in Resources */,
 				BFBEDB7B1A8BF9B6006C4546 /* senseColors5.png in Resources */,
 				8A7D803A1A41094300B0BFD7 /* alarmBarIcon@3x.png in Resources */,
 				BFBA2B7C1A6482DA00C3AB80 /* senseAppIcon@3x.png in Resources */,
 				8A7D80421A41094300B0BFD7 /* settingsBarIcon@2x.png in Resources */,
 				BF770F201A1550E0008611E9 /* bluetooth@3x.png in Resources */,
+				BFAB234D1AD5D15E00CCBF8A /* lightIconGreen@2x.png in Resources */,
 				BF05C8EB1A3A6AD6002A1307 /* questions_circle.png in Resources */,
 				8A93AFD01A09BF0300F70A8B /* senseIcon@3x.png in Resources */,
-				BFE873061A2FC65600494231 /* sensorTemperature.png in Resources */,
+				BFAB22F41AD3675300CCBF8A /* roomcheckSenseGreen@3x.png in Resources */,
+				BFAB22F31AD3675300CCBF8A /* roomcheckSenseGreen@2x.png in Resources */,
 				8A7D80391A41094300B0BFD7 /* alarmBarIcon@2x.png in Resources */,
-				BFE872F21A2FC65600494231 /* sensorHumidityBlue@2x.png in Resources */,
 				BF5D53281A266C6B0090DD6A /* check@3x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3481,6 +3687,7 @@
 				8A91EEF819E46D9900EA6E5F /* HEMAlarmCache.m in Sources */,
 				8A66FC9C199D308B00922ED5 /* HEMWeightPickerViewController.m in Sources */,
 				BF8E1AA11A689FB2009E421F /* HEMSenseAudioViewController.m in Sources */,
+				BF7105CA1ADC6DAE0066885B /* HEMSpinnerView.m in Sources */,
 				BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */,
 				BF6215101AB8CF730047A518 /* HEMTimeZoneViewController.m in Sources */,
 				BF98E4461A42378900E3CDEB /* HEMSinkModalTransition.m in Sources */,
@@ -3559,6 +3766,7 @@
 				8A1743B719A7B471001E3C15 /* HEMSleepGraphViewController.m in Sources */,
 				8AC49FA219832FE100C2BD63 /* HEMDeviceTableViewCell.m in Sources */,
 				BFE872CE1A2F9ADC00494231 /* HEMRoomCheckViewController.m in Sources */,
+				BFAB22DC1AD3613800CCBF8A /* HEMRoomCheckView.m in Sources */,
 				BF9C87D819B6A199003188D4 /* HEMPillPairViewController.m in Sources */,
 				BFF3B4471A5CD60300B11643 /* HEMDeviceCollectionViewCell.m in Sources */,
 			);
@@ -3690,7 +3898,7 @@
 				SDKROOT = iphoneos;
 				SENSE_ANALYTICS_TOKEN = d62a169fe4856dea26f3a322750613a8;
 				SENSE_API_URL = "https://dev-api.hello.is/v1";
-				SENSE_APP_ID = is.hello.Sense;
+				SENSE_APP_ID = is.hello.sensetest;
 				SENSE_APP_NAME = Sense;
 				SENSE_CLIENT_ID = iphone_pill;
 				SENSE_CRASH_REPORTS_TOKEN = "";
@@ -3746,7 +3954,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = ED068BEFEEBEC0C48801356C /* Pods.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-Dev";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CODE_SIGN_ENTITLEMENTS = SenseWidget/Sense.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Developer";

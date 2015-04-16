@@ -304,6 +304,11 @@
 #pragma mark - Onboarding
 
 /**
+ * Font used for the light, checking ..., message in room check
+ */
++ (UIFont*)onboardingRoomCheckSensorLightFont;
+
+/**
  * Font for the sensor check view during onboarding's room check
  */
 + (UIFont*)onboardingRoomCheckSensorFont;

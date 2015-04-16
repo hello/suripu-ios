@@ -28,6 +28,7 @@
 +(NSString *)noBleToBirthdaySegueIdentifier;
 +(NSString *)pillSetupToColorsSegueIdentifier;
 +(NSString *)pushToAudioSegueIdentifier;
++(NSString *)roomCheckToSmartAlarmSegueIdentifier;
 +(NSString *)sensePairToPillSegueIdentifier;
 +(NSString *)signupToNoBleSegueIdentifier;
 +(NSString *)skipPillPairSegue;

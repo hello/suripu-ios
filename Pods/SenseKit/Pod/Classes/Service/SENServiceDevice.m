@@ -206,10 +206,10 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         if (completion) completion ([self errorWithType:SENServiceDeviceErrorInProgress]);
         return;
     }
-    
+
     // no need to set InfoLoaded to NO here b/c we will not clear the cache unless
     // caller explicitly calls clear or when response comes back without error.
-    
+
     [self setLoadingInfo:YES];
     __weak typeof(self) weakSelf = self;
     [SENAPIDevice getPairedDevices:^(NSArray* devicesInfo, NSError *error) {
@@ -223,6 +223,18 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         }
         if (completion) completion( error );
     }];
+}
+
+- (void)loadDeviceInfoIfNeeded:(SENServiceDeviceCompletionBlock)completion {
+    if ([self isLoadingInfo]) {
+        if (completion)
+            completion([self errorWithType:SENServiceDeviceErrorInProgress]);
+    } else if ([self isInfoLoaded]) {
+        if (completion)
+            completion(nil);
+    } else {
+        [self loadDeviceInfo:completion];
+    }
 }
 
 - (void)processDeviceInfo:(NSArray*)devicesInfo {

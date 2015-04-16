@@ -82,6 +82,7 @@ extern NSString* const HEMAnalyticsEventWiFiRescan;
 extern NSString* const HEMAnalyticsEventWiFiPass;
 extern NSString* const HEMAnalyticsEventWiFiSubmit;
 extern NSString* const HEMAnalyticsEventPairPill;
+extern NSString* const HEMAnalyticsEventPairPillRetry;
 
 
 // main

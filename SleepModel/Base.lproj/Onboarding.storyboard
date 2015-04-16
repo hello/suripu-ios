@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1066" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KoM-KU-kaf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KoM-KU-kaf">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
@@ -1724,13 +1724,13 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense will now check the conditions in your bedroom." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iGc-8P-g1M">
-                                        <rect key="frame" x="20" y="40" width="560" height="21"/>
+                                        <rect key="frame" x="20" y="43" width="560" height="21"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="EwG-fT-RLQ">
-                                        <rect key="frame" x="0.0" y="61" width="600" height="421"/>
+                                        <rect key="frame" x="0.0" y="64" width="600" height="418"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="235" id="Eq2-1g-uLB"/>
                                         </constraints>
@@ -1745,7 +1745,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <constraints>
                                     <constraint firstItem="EwG-fT-RLQ" firstAttribute="top" secondItem="iGc-8P-g1M" secondAttribute="bottom" id="HCm-dg-8uw"/>
                                     <constraint firstAttribute="trailing" secondItem="EwG-fT-RLQ" secondAttribute="trailing" id="ONU-aI-0Iq"/>
-                                    <constraint firstItem="iGc-8P-g1M" firstAttribute="top" secondItem="PMR-Df-HyE" secondAttribute="top" constant="40" id="XEC-kL-BVD"/>
+                                    <constraint firstItem="iGc-8P-g1M" firstAttribute="top" secondItem="PMR-Df-HyE" secondAttribute="bottom" constant="10" id="XEC-kL-BVD"/>
                                     <constraint firstAttribute="bottom" secondItem="EwG-fT-RLQ" secondAttribute="bottom" id="gcA-aY-IUC"/>
                                     <constraint firstItem="iGc-8P-g1M" firstAttribute="leading" secondItem="AIh-GX-j1H" secondAttribute="leading" constant="20" id="iuZ-hc-8YN"/>
                                     <constraint firstAttribute="trailing" secondItem="iGc-8P-g1M" secondAttribute="trailing" constant="20" id="ogv-h4-leG"/>
@@ -1788,38 +1788,27 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                     </mask>
                                 </variation>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7x8-Kt-tEQ" userLabel="resultView">
-                                <rect key="frame" x="0.0" y="600" width="600" height="254"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MyL-An-EOd">
+                                <rect key="frame" x="0.0" y="600" width="600" height="277"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xz9-46-8eZ">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="1"/>
-                                        <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.20000000000000001" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="1" id="2JQ-PR-di1"/>
-                                        </constraints>
-                                    </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Success!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eyG-C0-uLF">
-                                        <rect key="frame" x="38" y="45" width="524" height="32"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="32" id="1GZ-UA-IOz"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="28"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Success!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MmC-AT-a0e">
+                                        <rect key="frame" x="20" y="0.0" width="560" height="44"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="32"/>
                                         <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Everything looks great. Now let's set your first Smart Alarm." textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PFC-on-mrs">
-                                        <rect key="frame" x="28" y="92" width="544" height="62"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="62" id="Zao-lG-zN2"/>
-                                        </constraints>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wOT-kZ-3fG">
+                                        <rect key="frame" x="20" y="52" width="560" height="41"/>
+                                        <string key="text">Everything looks great.
+Now let’s set your first Smart Alarm</string>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="15"/>
-                                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XpJ-Hr-RJB" customClass="HEMActionButton">
-                                        <rect key="frame" x="20" y="186" width="560" height="50"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="x7L-Mj-BCr" customClass="HEMActionButton">
+                                        <rect key="frame" x="20" y="205" width="560" height="50"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="50" id="JS1-gt-UdP"/>
+                                            <constraint firstAttribute="height" constant="50" id="hHi-JS-e1X"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <color key="tintColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
@@ -1828,32 +1817,23 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="0qJ-qR-xla" kind="push" id="dtA-7f-cpn"/>
+                                            <segue destination="0qJ-qR-xla" kind="push" identifier="roomCheckToSmartAlarm" id="tkT-Pb-lgk"/>
                                         </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstItem="XpJ-Hr-RJB" firstAttribute="leading" secondItem="7x8-Kt-tEQ" secondAttribute="leading" constant="20" id="0Jp-fQ-S1w"/>
-                                    <constraint firstItem="PFC-on-mrs" firstAttribute="bottom" secondItem="XpJ-Hr-RJB" secondAttribute="top" constant="-32" id="1r5-Jz-Lz8"/>
-                                    <constraint firstAttribute="height" constant="254" id="3Xn-Ve-OEb"/>
-                                    <constraint firstItem="Xz9-46-8eZ" firstAttribute="top" secondItem="7x8-Kt-tEQ" secondAttribute="top" id="Hk4-rc-Mv8"/>
-                                    <constraint firstItem="eyG-C0-uLF" firstAttribute="leading" secondItem="7x8-Kt-tEQ" secondAttribute="leading" constant="38" id="MJZ-dE-Qfb"/>
-                                    <constraint firstItem="PFC-on-mrs" firstAttribute="leading" secondItem="7x8-Kt-tEQ" secondAttribute="leading" constant="28" id="Opn-MF-hfO"/>
-                                    <constraint firstItem="Xz9-46-8eZ" firstAttribute="leading" secondItem="7x8-Kt-tEQ" secondAttribute="leading" id="UID-RH-wG1"/>
-                                    <constraint firstAttribute="trailing" secondItem="PFC-on-mrs" secondAttribute="trailing" constant="28" id="aJc-pl-aeZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="eyG-C0-uLF" secondAttribute="trailing" constant="38" id="geX-nU-WM8"/>
-                                    <constraint firstItem="eyG-C0-uLF" firstAttribute="top" secondItem="7x8-Kt-tEQ" secondAttribute="top" constant="45" id="kHm-3J-ECb"/>
-                                    <constraint firstAttribute="trailing" secondItem="XpJ-Hr-RJB" secondAttribute="trailing" constant="20" id="kdk-db-VCa"/>
-                                    <constraint firstAttribute="centerX" secondItem="XpJ-Hr-RJB" secondAttribute="centerX" id="mgG-eB-gjW"/>
-                                    <constraint firstAttribute="trailing" secondItem="Xz9-46-8eZ" secondAttribute="trailing" id="wEa-Vj-Hr0"/>
-                                    <constraint firstItem="PFC-on-mrs" firstAttribute="topMargin" secondItem="eyG-C0-uLF" secondAttribute="bottom" constant="23" id="xz9-u7-5GR"/>
+                                    <constraint firstAttribute="bottom" secondItem="x7L-Mj-BCr" secondAttribute="bottom" constant="22" id="1ag-b1-RqU"/>
+                                    <constraint firstItem="MmC-AT-a0e" firstAttribute="bottom" secondItem="wOT-kZ-3fG" secondAttribute="top" constant="-8" id="Aha-0a-DwS"/>
+                                    <constraint firstItem="wOT-kZ-3fG" firstAttribute="leading" secondItem="MyL-An-EOd" secondAttribute="leading" constant="20" id="BHj-kn-jr1"/>
+                                    <constraint firstAttribute="trailing" secondItem="MmC-AT-a0e" secondAttribute="trailing" constant="20" id="EWU-HQ-nxY"/>
+                                    <constraint firstAttribute="trailing" secondItem="wOT-kZ-3fG" secondAttribute="trailing" constant="20" id="Njd-A5-s0a"/>
+                                    <constraint firstItem="MmC-AT-a0e" firstAttribute="top" secondItem="MyL-An-EOd" secondAttribute="top" id="Oo5-oa-ZaI"/>
+                                    <constraint firstAttribute="trailing" secondItem="x7L-Mj-BCr" secondAttribute="trailing" constant="20" id="Pnk-3u-oBf"/>
+                                    <constraint firstItem="x7L-Mj-BCr" firstAttribute="leading" secondItem="MyL-An-EOd" secondAttribute="leading" constant="20" id="XC3-Li-Tch"/>
+                                    <constraint firstItem="MmC-AT-a0e" firstAttribute="leading" secondItem="MyL-An-EOd" secondAttribute="leading" constant="20" id="p1N-Mg-uJk"/>
+                                    <constraint firstAttribute="height" constant="277" id="tmm-Vg-MSZ"/>
                                 </constraints>
-                                <variation key="default">
-                                    <mask key="constraints">
-                                        <exclude reference="mgG-eB-gjW"/>
-                                    </mask>
-                                </variation>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1862,12 +1842,12 @@ Sense will glow purple when it is in Pairing Mode.</string>
                             <constraint firstItem="AIh-GX-j1H" firstAttribute="top" secondItem="bQ9-yM-CGX" secondAttribute="bottom" constant="4" id="1n6-4D-baI"/>
                             <constraint firstItem="AIh-GX-j1H" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-16" id="2Xz-5S-pQd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="AIh-GX-j1H" secondAttribute="trailing" constant="-16" id="L2R-YJ-Dz7"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="7x8-Kt-tEQ" secondAttribute="trailing" constant="-16" id="UbA-dX-jxI"/>
-                            <constraint firstItem="FHw-CT-xtm" firstAttribute="top" secondItem="7x8-Kt-tEQ" secondAttribute="bottom" constant="-254" id="Wh1-sD-b8U"/>
                             <constraint firstItem="FHw-CT-xtm" firstAttribute="top" secondItem="Ybq-zx-dgL" secondAttribute="bottom" id="aAW-D0-WY4"/>
-                            <constraint firstItem="7x8-Kt-tEQ" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-16" id="gzX-ub-ocv"/>
+                            <constraint firstItem="MyL-An-EOd" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-16" id="dL7-xO-M1Y"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Ybq-zx-dgL" secondAttribute="trailing" constant="-16" id="haO-de-0xt"/>
+                            <constraint firstItem="FHw-CT-xtm" firstAttribute="top" secondItem="MyL-An-EOd" secondAttribute="bottom" constant="-277" id="oW3-Qq-VoT"/>
                             <constraint firstItem="Ybq-zx-dgL" firstAttribute="leading" secondItem="DTD-zX-IEN" secondAttribute="leadingMargin" constant="-16" id="vmF-qH-dlr"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="MyL-An-EOd" secondAttribute="trailing" constant="-16" id="yJM-VB-S8q"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xFV-9x-N8l"/>
@@ -1877,16 +1857,16 @@ Sense will glow purple when it is in Pairing Mode.</string>
                         <outlet property="descriptionLabel" destination="iGc-8P-g1M" id="kYg-Ly-nT4"/>
                         <outlet property="descriptionTopConstraint" destination="XEC-kL-BVD" id="Ci8-nh-MX7"/>
                         <outlet property="illustrationView" destination="EwG-fT-RLQ" id="74f-CH-Apu"/>
-                        <outlet property="nextButton" destination="XpJ-Hr-RJB" id="N0Q-Qy-d1O"/>
-                        <outlet property="resultBottomConstraint" destination="Wh1-sD-b8U" id="ocy-lE-J4w"/>
-                        <outlet property="resultHeightConstraint" destination="3Xn-Ve-OEb" id="uUO-NE-gG2"/>
-                        <outlet property="resultMessageLabel" destination="PFC-on-mrs" id="BAx-D3-kWC"/>
-                        <outlet property="resultSeparator" destination="Xz9-46-8eZ" id="ydS-s6-Qcq"/>
-                        <outlet property="resultTitleLabel" destination="eyG-C0-uLF" id="YdX-9v-giS"/>
-                        <outlet property="resultView" destination="7x8-Kt-tEQ" id="a9R-Wr-Sii"/>
+                        <outlet property="nextButton" destination="x7L-Mj-BCr" id="yaS-87-S1J"/>
+                        <outlet property="resultsBottomConstraint" destination="oW3-Qq-VoT" id="sKV-8L-TUo"/>
+                        <outlet property="resultsContainer" destination="MyL-An-EOd" id="ZUl-3g-awR"/>
+                        <outlet property="resultsDescriptionLabel" destination="wOT-kZ-3fG" id="XZU-ZH-lxe"/>
+                        <outlet property="resultsHeightConstraint" destination="tmm-Vg-MSZ" id="rUU-RN-ubJ"/>
+                        <outlet property="resultsTitleLabel" destination="MmC-AT-a0e" id="8wi-MU-xcK"/>
                         <outlet property="startButton" destination="tkw-WQ-h6F" id="XAR-Gw-KRZ"/>
                         <outlet property="titleHeightConstraint" destination="sBh-3g-dOO" id="kYi-P6-K9b"/>
                         <outlet property="titleLabel" destination="PMR-Df-HyE" id="xt1-m9-8WQ"/>
+                        <outlet property="titleTopConstraint" destination="Oo5-oa-ZaI" id="6xN-wu-iWM"/>
                         <outlet property="view" destination="DTD-zX-IEN" id="koj-lQ-qim"/>
                     </connections>
                 </viewController>

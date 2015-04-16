@@ -316,15 +316,25 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     [HEMSupportUtil openHelpToPage:helpPage fromController:self];
 }
 
-- (void)showConfirmation:(NSString*)title message:(NSString*)message action:(void(^)(void))action {
+- (NSDictionary*)dialogMessageAttributes:(BOOL)bold {
+    return @{NSFontAttributeName : bold ? [UIFont dialogMessageBoldFont] : [UIFont dialogMessageFont],
+             NSForegroundColorAttributeName : [UIColor blackColor]};
+}
+
+- (void)showConfirmation:(NSString*)title message:(NSAttributedString*)message action:(void(^)(void))action {
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
-    [dialogVC setMessage:message];
+    [dialogVC setAttributedMessage:message];
     [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
     [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
         [self dismissViewControllerAnimated:YES completion:^{
             if (action) action();
+        }];
+    }];
+    [dialogVC onLinkTapOf:NSLocalizedString(@"help.url.support", nil) takeAction:^(NSURL *link) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [HEMSupportUtil openHelpFrom:self];
         }];
     }];
     [dialogVC showFrom:self onDefaultActionSelected:^{
@@ -385,9 +395,22 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
 }
 
 - (void)replaceSense:(id)sender {
+    UIColor* baseColor = [UIColor blackColor];
+    
     NSString* title = NSLocalizedString(@"settings.sense.unpair.title", nil);
-    NSString* question = NSLocalizedString(@"settings.sense.unpair.confirmation", nil);
-    [self showConfirmation:title message:question action:^{
+    NSString* questionFormat = NSLocalizedString(@"settings.sense.unpair.confirmation.format", nil);
+    NSString* guideLink = NSLocalizedString(@"help.url.support", nil);
+    
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:guideLink
+                                                      attributes:[self dialogMessageAttributes:YES]]];
+    
+    NSAttributedString* message =
+        [[NSMutableAttributedString alloc] initWithFormat:questionFormat
+                                                     args:args
+                                                baseColor:baseColor
+                                                 baseFont:[UIFont dialogMessageFont]];
+    
+    [self showConfirmation:title message:message action:^{
         [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropSenseId : kHEMAnalyticsEventPropSenseIdUnpaired}];
         [self unlinkSense];
     }];
@@ -404,9 +427,11 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
 - (void)pairingMode:(id)sender {
     NSString* title = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-title", nil);
     NSString* message = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-message", nil);
+    NSAttributedString* attributedMessage =
+        [[NSAttributedString alloc] initWithString:message attributes:[self dialogMessageAttributes:NO]];
     
     __weak typeof(self) weakSelf = self;
-    [self showConfirmation:title message:message action:^{
+    [self showConfirmation:title message:attributedMessage action:^{
         [weakSelf enablePairingMode];
     }];
 }
@@ -443,9 +468,11 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
 - (void)factoryReset:(id)sender {
     NSString* title = NSLocalizedString(@"settings.device.dialog.factory-restore-title", nil);
     NSString* message = NSLocalizedString(@"settings.device.dialog.factory-restore-message", nil);
+    NSAttributedString* attributedMessage =
+        [[NSAttributedString alloc] initWithString:message attributes:[self dialogMessageAttributes:NO]];
     
     __weak typeof(self) weakSelf = self;
-    [self showConfirmation:title message:message action:^{
+    [self showConfirmation:title message:attributedMessage action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
             [strongSelf restore];

@@ -250,6 +250,11 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
 }
 
++ (UIFont*)dialogMessageBoldFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:15.0f];
+}
+
 + (UIFont*)primaryButtonFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:16.0f];

@@ -19,6 +19,8 @@
 @property (nonatomic, strong) UIImage* dialogImage;
 @property (nonatomic, copy)   NSString* title;
 @property (nonatomic, copy)   NSString* message;
+@property (nonatomic, copy)   NSAttributedString* attributedMessage;
+
 /**
  *  Title of the default (primary) button
  */
@@ -49,6 +51,15 @@
  * @param block:   the block to invoke when button is tapped
  */
 - (void)addAction:(NSString*)title primary:(BOOL)primary actionBlock:(HEMDialogActionBlock)block;
+
+/**
+ * If the message set has a link, this configures the dialog to forward the tap
+ * to the the block specified
+ *
+ * @param url:    the url of the link
+ * @param action: the block to invoke when a tap to the link is detected
+ */
+- (void)onLinkTapOf:(NSString*)url takeAction:(HEMDialogLinkActionBlock)action;
 
 /**
  * Call this method to show the actual dialog, which will present itself.  Do not

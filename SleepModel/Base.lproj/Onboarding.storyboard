@@ -1817,7 +1817,7 @@ Now let’s set your first Smart Alarm</string>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <segue destination="0qJ-qR-xla" kind="push" identifier="roomcheckToSmartAlarm" id="tkT-Pb-lgk"/>
+                                            <segue destination="0qJ-qR-xla" kind="push" identifier="roomCheckToSmartAlarm" id="tkT-Pb-lgk"/>
                                         </connections>
                                     </button>
                                 </subviews>

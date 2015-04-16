@@ -56,6 +56,19 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
 
 - (id)initWithImage:(UIImage*)image
               title:(NSString*)title
+  attributedMessage:(NSAttributedString*)message {
+    self = [super initWithFrame:[[self class] defaultFrame]];
+    if (self) {
+        [self setImage:image];
+        [self setTitle:title];
+        [self setAttributedMessage:message];
+        [self setup];
+    }
+    return self;
+}
+
+- (id)initWithImage:(UIImage*)image
+              title:(NSString*)title
             message:(NSString*)message
               frame:(CGRect)frame {
     self = [super initWithFrame:frame];
@@ -166,6 +179,8 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     [textView setBackgroundColor:[UIColor clearColor]];
     [textView setDataDetectorTypes:UIDataDetectorTypeLink | UIDataDetectorTypeAddress];
     [textView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
+    [textView setLinkTextAttributes:@{NSForegroundColorAttributeName : [UIColor blackColor],
+                                      NSFontAttributeName : [UIFont dialogMessageBoldFont]}];
     
     // remove the magic padding / margins in the text view.
     [textView setTextContainerInset:UIEdgeInsetsZero];
@@ -186,7 +201,7 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     [textView setFrame:messageFrame];
     [self addSubview:textView];
     
-    return CGRectGetMaxY(messageFrame);
+    return CGRectGetMaxY(messageFrame) + kHEMDialogContentSpacing;
 }
 
 - (CGRect)buttonFrameAtY:(CGFloat)y {
@@ -213,6 +228,16 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     return CGRectGetMaxY([ok frame]) + kHEMDialogButtonSpacing;
 }
 
+#pragma mark - UITextViewDelegate
+
+- (BOOL)textView:(UITextView *)textView shouldInteractWithURL:(NSURL *)URL inRange:(NSRange)characterRange {
+    HEMDialogLinkActionBlock actionBlock = [[self actionsCallbacks] objectForKey:[URL absoluteString]];
+    if (actionBlock) {
+        actionBlock (URL);
+    }
+    return NO;
+}
+
 #pragma mark - Actions
 
 - (void)onDone:(HEMDialogActionBlock)doneBlock {
@@ -220,8 +245,8 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     [[self actionsCallbacks] setValue:[doneBlock copy] forKey:doneTitle];
 }
 
-- (void)onLinkTap:(HEMDialogLinkActionBlock)linkBlock {
-    
+- (void)onLink:(NSString*)url tap:(HEMDialogLinkActionBlock)actionBlock {
+    [[self actionsCallbacks] setValue:[actionBlock copy] forKey:url];
 }
 
 - (void)addActionButtonWithTitle:(NSString*)title

@@ -64,9 +64,15 @@
 }
 
 - (void)setupDialogView {
-    [self setDialogView:[[HEMAlertView alloc] initWithImage:[self dialogImage]
-                                                      title:[self title]
-                                                    message:[self message]]];
+    if ([self attributedMessage]) {
+        [self setDialogView:[[HEMAlertView alloc] initWithImage:[self dialogImage]
+                                                          title:[self title]
+                                              attributedMessage:[self attributedMessage]]];
+    } else {
+        [self setDialogView:[[HEMAlertView alloc] initWithImage:[self dialogImage]
+                                                          title:[self title]
+                                                        message:[self message]]];
+    }
     
     if ([[self defaultButtonTitle] length] > 0) {
         [[[self dialogView] okButton] setTitle:[self defaultButtonTitle] forState:UIControlStateNormal];
@@ -91,6 +97,13 @@
     }
     [[self dialogView] addActionButtonWithTitle:title primary:primary action:block];
     [self updateDialogPosition];
+}
+
+- (void)onLinkTapOf:(NSString*)url takeAction:(HEMDialogLinkActionBlock)action {
+    if ([self dialogView] == nil) {
+        [self setupDialogView];
+    }
+    [[self dialogView] onLink:url tap:action];
 }
 
 - (void)showFrom:(UIViewController*)controller onDefaultActionSelected:(HEMDialogActionBlock)doneBlock {

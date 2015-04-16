@@ -230,6 +230,11 @@
 + (UIFont*)dialogMessageFont;
 
 /**
+ * Font to be used to display the message of a dialog in bold
+ */
++ (UIFont*)dialogMessageBoldFont;
+
+/**
  * Font used for normal UIButtons that should be the focus of the screen
  */
 + (UIFont*)primaryButtonFont;

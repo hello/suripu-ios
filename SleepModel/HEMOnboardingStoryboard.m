@@ -10,6 +10,7 @@ static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMonboarding = @"Onboarding";
 static NSString *const _HEMalarmToAnotherPill = @"alarmToAnotherPill";
 static NSString *const _HEMaudioToSetup = @"audioToSetup";
+static NSString *const _HEMbeforeSleepToSmartAlarm = @"beforeSleepToSmartAlarm";
 static NSString *const _HEMbeforeSleeptoRoomCheck = @"beforeSleeptoRoomCheck";
 static NSString *const _HEMdobViewController = @"dobViewController";
 static NSString *const _HEMdone = @"done";
@@ -59,6 +60,7 @@ static NSString *const _HEMwifiViewController = @"wifiViewController";
 /** Segue Identifiers */
 +(NSString *)alarmToAnotherPillSegueIdentifier { return _HEMalarmToAnotherPill; }
 +(NSString *)audioToSetupSegueIdentifier { return _HEMaudioToSetup; }
++(NSString *)beforeSleepToSmartAlarmSegueIdentifier { return _HEMbeforeSleepToSmartAlarm; }
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier { return _HEMbeforeSleeptoRoomCheck; }
 +(NSString *)doneSegueIdentifier { return _HEMdone; }
 +(NSString *)genderSegueIdentifier { return _HEMgender; }

@@ -1,5 +1,30 @@
 # Changelog
 
+## 1.0.5.1
+
+New:
+
+* If linking account fails twice on the Sense pairing screen (WiFi is set), an option is provided to the user to edit the WiFi from the error dialog.
+* Skip the room check during onboarding if sensor data is not available
+* Alert dialogs containing links are now tappable.  Affects Sense and Pill settings screen.
+
+Fixes:
+
+* Unexpected disconnects during onboarding will have no effect if the screen in which is listening to such event is not currently visible
+* Will now record the first sleep event and the last wake up event in HealthKit rather than just taking the first detected event for each type in case there are multiple of each.
+
+## 1.0.5.0
+
+New:
+
+* Updated visual design of room check
+* Updated visual design of timeline
+* Added analytics event for retrying pill pairing during onboarding
+
+Fixes:
+
+* fixed analytics event not being prefixed with Onboarding for screens post pill pairing
+
 ## 1.0.4.6
 
 New:

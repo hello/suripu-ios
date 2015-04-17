@@ -79,8 +79,10 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
     NSAttributedString* desc = [self attributedDecription];
     [self setDescriptionHeight:[self heightForAttributedText:desc]];
     
+    UICollectionViewFlowLayout* layout = (id)[[self collectionView] collectionViewLayout];
     CGFloat contentHeight =
-        [self titleHeight]
+        [layout sectionInset].top
+        + [self titleHeight]
         + HEMPillSetupLayoutMinLineSpacing
         + [self descriptionHeight]
         + HEMPillSetupLayoutMinLineSpacing;

@@ -117,12 +117,8 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
         averageConditionValue += [sensor condition];
     }
     
-    float average = (averageConditionValue / (float)[[self sensors] count]);
-    long roundedAverage =
-        average == ceilf(average)
-        ? (long) average
-        : lroundf(average + 0.5f);
-    return [SENSensor conditionFromValue:@(MIN(SENSensorConditionWarning,roundedAverage))];
+    float average = ceilf((averageConditionValue / (float)[[self sensors] count]));
+    return [SENSensor conditionFromValue:@(MIN(SENSensorConditionWarning, (int)average))];
 }
 
 - (void)adjustConstraintsForIphone5 {

@@ -230,8 +230,13 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
                 [strongSelf flashPairedState];
             } failure:^(NSError *error) {
                 SENSenseLEDState ledState = [strongSelf delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
-                [[strongSelf manager] setLED:ledState completion:^(id response, NSError *error) {
-                    [strongSelf showError:error customMessage:nil];
+                [[strongSelf manager] setLED:ledState completion:^(id response, NSError *ledError) {
+                    [strongSelf showError:error ?: ledError customMessage:nil];
+                    if (error && ledError) {
+                        // if there are errors from both, log the led error since showError: will
+                        // show the error for pill pairing failure instead, which will log that
+                        [SENAnalytics trackError:ledError withEventName:kHEMAnalyticsEventWarning];
+                    }
                 }];
             }];
         }];

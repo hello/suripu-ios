@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.5.2
+
+New:
+
+* Visual design tweaks to Timeline
+
+Fixes:
+
+* Layout tweaks to Attach Sleep Pill screen in onboarding
+* Room check sensor value now matches value after animation completion
+* Devices settings now is refreshed when Sense is paired from system alert
+* Devices settings now is refreshed when Pill is paired from system alert
+
 ## 1.0.5.1
 
 New:

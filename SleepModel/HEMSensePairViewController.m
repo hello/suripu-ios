@@ -517,6 +517,8 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 }
 
 - (void)next {
+    [HEMOnboardingUtils notifyOfSensePairingChange:[self senseManager]];
+    
     if ([self delegate] == nil) {
         NSString* segueId = nil;
         if ([self detectedSSID] != nil) {

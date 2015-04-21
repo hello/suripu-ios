@@ -280,13 +280,47 @@
 - (void)dismissAlert:(void(^)(void))completion {
     [[self alertView] dismiss:YES completion:^{
         [self setAlertView:nil];
+        [self stopListeningForPairingChanges];
         if (completion) completion ();
     }];
 }
 
-#pragma mark  - Sense Problems
+- (void)listenForPairingChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(didUpdatePairing:)
+                   name:HEMOnboardingNotificationDidChangeSensePairing
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(didUpdatePairing:)
+                   name:HEMOnboardingNotificationDidChangePillPairing
+                 object:nil];
+}
+
+- (void)stopListeningForPairingChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:HEMOnboardingNotificationDidChangeSensePairing object:nil];
+    [center removeObserver:self name:HEMOnboardingNotificationDidChangePillPairing object:nil];
+}
+
+- (void)didUpdatePairing:(NSNotification*)notification {
+    switch ([self warningState]) {
+        case SENServiceDeviceStateSenseNotPaired:
+        case SENServiceDeviceStatePillNotPaired:
+            if ([self alertView]) {
+                [self dismissAlert:nil];
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - Sense Problems
 
 - (void)showSensePairController {
+    [self listenForPairingChanges];
+    
     HEMSensePairViewController* pairVC =
         (HEMSensePairViewController*) [HEMOnboardingStoryboard instantiateSensePairViewController];
     [pairVC setDelegate:self];
@@ -301,26 +335,19 @@
 
 #pragma mark HEMSensePairDelegate
 
-- (void)cacheSenseManager:(SENSenseManager*)senseManager {
-    if (senseManager != nil) {
-        SENServiceDevice* service = [SENServiceDevice sharedService];
-        [service replaceWithNewlyPairedSenseManager:senseManager completion:nil];
-    }
-}
-
 - (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController*)controller {
-    [self cacheSenseManager:senseManager];
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController*)controller {
-    [self cacheSenseManager:senseManager];
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Pill Problems
 
 - (void)showPillPairController {
+    [self listenForPairingChanges];
+    
     HEMPillPairViewController* pairVC =
         (HEMPillPairViewController*) [HEMOnboardingStoryboard instantiatePillPairViewController];
     [pairVC setDelegate:self];

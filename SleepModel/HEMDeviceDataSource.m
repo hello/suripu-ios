@@ -471,4 +471,8 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     return view;
 }
 
+- (void)dealloc {
+    [SENSenseManager stopScan];
+}
+
 @end

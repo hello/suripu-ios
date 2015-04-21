@@ -23,6 +23,9 @@
 #import "HEMActivityCoverView.h"
 #import "HEMSettingsTableViewController.h"
 
+NSString* const HEMOnboardingNotificationDidChangeSensePairing = @"HEMOnboardingNotificationDidChangeSensePairing";
+NSString* const HEMOnboardingNotificationUserInfoSenseManager = @"HEMOnboardingNotificationUserInfoSenseManager";
+NSString* const HEMOnboardingNotificationDidChangePillPairing = @"HEMOnboardingNotificationDidChangePillPairing";
 NSString* const HEMOnboardingNotificationComplete = @"HEMOnboardingNotificationComplete";
 
 CGFloat const HEMOnboardingShadowOpacity = 0.8f;
@@ -234,8 +237,7 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
                           completion:^(BOOL finished) {
                               dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 2.0f*NSEC_PER_SEC);
                               dispatch_after(time, dispatch_get_main_queue(), ^{
-                                  NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-                                  [center postNotificationName:HEMOnboardingNotificationComplete object:nil];
+                                  [self notify:HEMOnboardingNotificationComplete];
                               });
                           }];
         });
@@ -261,6 +263,30 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
 + (NSString*)lastConfiguredSSID {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
     return [preferences userPreferenceForKey:HEMOnboardingSettingSSID];
+}
+
+#pragma mark - Notifications
+
++ (void)notify:(NSString*)notificationName {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center postNotificationName:notificationName object:nil];
+}
+
++ (void)notifyOfSensePairingChange:(SENSenseManager*)manager {
+    NSString* name = HEMOnboardingNotificationDidChangeSensePairing;
+    NSDictionary* userInfo = nil;
+    if (manager) {
+        userInfo = @{HEMOnboardingNotificationUserInfoSenseManager : manager};
+    }
+    NSNotification* notification = [NSNotification notificationWithName:name
+                                                                 object:nil
+                                                               userInfo:userInfo];
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center postNotification:notification];
+}
+
++ (void)notifyOfPillPairingChange {
+    [self notify:HEMOnboardingNotificationDidChangePillPairing];
 }
 
 @end

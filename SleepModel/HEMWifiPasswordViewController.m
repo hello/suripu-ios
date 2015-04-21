@@ -474,6 +474,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         [[HEMOnboardingCache sharedCache] startPollingSensorData];
     }
     
+    [HEMOnboardingUtils notifyOfSensePairingChange:[self manager]];
+    
     __weak typeof(self) weakSelf = self;
     void(^proceed)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;

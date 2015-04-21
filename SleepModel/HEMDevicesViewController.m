@@ -28,6 +28,7 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMTextFooterCollectionReusableView.h"
 #import "HEMSupportUtil.h"
+#import "HEMOnboardingUtils.h"
 
 static CGFloat const HEMDeviceInfoHeight = 190.0f;
 static CGFloat const HEMNoDeviceHeight = 205.0f;
@@ -54,6 +55,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureCollectionView];
+    [self listenForPairingChanges];
     [SENAnalytics track:kHEMAnalyticsEventDevices];
 }
 
@@ -66,6 +68,18 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     [[self collectionView] setDelegate:self];
     [[self collectionView] setDataSource:dataSource];
     [[self collectionView] setAlwaysBounceVertical:YES];
+}
+
+- (void)listenForPairingChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(didUpdatePairing:)
+                   name:HEMOnboardingNotificationDidChangeSensePairing
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(didUpdatePairing:)
+                   name:HEMOnboardingNotificationDidChangePillPairing
+                 object:nil];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -84,6 +98,31 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
         = (HEMCardFlowLayout*)[[self collectionView] collectionViewLayout];
     [layout clearCache];
     [[self collectionView] reloadData];
+}
+
+- (void)didUpdatePairing:(NSNotification*)notification {
+    NSString* managerKey = HEMOnboardingNotificationUserInfoSenseManager;
+    SENSenseManager* manager = [[notification userInfo] objectForKey:managerKey];
+    if (manager) {
+        [self updateDataWithSenseManager:manager];
+    } else {
+        [self refreshDataSource:YES];
+    }
+}
+
+- (void)updateDataWithSenseManager:(SENSenseManager*)senseManager {
+    if (senseManager != nil) {
+        __weak typeof(self) weakSelf = self;
+        [[self dataSource] updateSenseManager:senseManager completion:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error != nil) {
+                [strongSelf showMessageForError:error];
+            }
+            [strongSelf reloadData];
+        }];
+        
+        [self reloadData]; // clear current state
+    }
 }
 
 - (void)refreshDataSource:(BOOL)clearCurrentState {
@@ -194,7 +233,6 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 #pragma mark HEMPillPairDelegate
 
 - (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
-    [self refreshDataSource:YES];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -237,28 +275,11 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 
 #pragma mark HEMSensePairDelegate
 
-- (void)updateDataWithSenseManager:(SENSenseManager*)senseManager {
-    if (senseManager != nil) {
-        __weak typeof(self) weakSelf = self;
-        [[self dataSource] updateSenseManager:senseManager completion:^(NSError *error) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (error != nil) {
-                [strongSelf showMessageForError:error];
-            }
-            [strongSelf reloadData];
-        }];
-        
-        [self reloadData]; // clear current state
-    }
-}
-
 - (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController *)controller {
-    [self updateDataWithSenseManager:senseManager];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController *)controller {
-    [self updateDataWithSenseManager:senseManager];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -288,6 +309,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 #pragma mark - Cleanup
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_collectionView setDelegate:nil];
     [_collectionView setDataSource:nil];
 }

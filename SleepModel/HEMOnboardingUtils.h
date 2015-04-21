@@ -9,6 +9,9 @@
 #import <Foundation/Foundation.h>
 
 extern NSString* const HEMOnboardingNotificationComplete;
+extern NSString* const HEMOnboardingNotificationDidChangeSensePairing;
+extern NSString* const HEMOnboardingNotificationUserInfoSenseManager;
+extern NSString* const HEMOnboardingNotificationDidChangePillPairing;
 
 /**
  * Checkpoints to be saved when progressing through the onboarding flow so that
@@ -128,5 +131,23 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  * Retrieve the last known SSID saved, if any
  */
 + (NSString*)lastConfiguredSSID;
+
+/**
+ * @method notifyOfSensePairingChange
+ *
+ * @discussion
+ * Convenience method to post a notification about a Sense pairing change
+ *
+ * @param: manager: optional sense manager that represents the new sense paired, if any
+ */
++ (void)notifyOfSensePairingChange:(SENSenseManager*)manager;
+
+/**
+ * @method notifyOfSensePairingChange
+ *
+ * @discussion
+ * Convenience method to post a notification about a Sleep Pill pairing change
+ */
++ (void)notifyOfPillPairingChange;
 
 @end

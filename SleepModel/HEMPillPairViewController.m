@@ -296,6 +296,8 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 #pragma mark - Next
 
 - (void)proceed {
+    [HEMOnboardingUtils notifyOfPillPairingChange];
+    
     if ([self delegate] == nil) {
         [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
         

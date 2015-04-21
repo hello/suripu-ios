@@ -400,11 +400,13 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
 
     CGFloat minutes = [minuteValue floatValue];
     NSString* format;
-    if (minutes < 60)
+    if (minutes < 60) {
         format = NSLocalizedString(@"sleep-stat.minute.format", nil);
-    else
+        return [NSString stringWithFormat:format, minutes];
+    } else {
         format = NSLocalizedString(@"sleep-stat.hour.format", nil);
-    return [NSString stringWithFormat:format, minutes / 60];
+        return [NSString stringWithFormat:format, minutes / 60];
+    }
 }
 
 - (void)configurePresleepSummaryForCell:(HEMSleepSummaryCollectionViewCell*)cell

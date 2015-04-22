@@ -11,7 +11,7 @@
 #import <SenseKit/SENServiceDevice.h>
 
 #import "HEMDebugController.h"
-#import "HEMActionSheetController.h"
+#import "HEMActionSheetViewController.h"
 #import "HEMSupportUtil.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMOnboardingCache.h"
@@ -21,8 +21,8 @@
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
 @property (weak,   nonatomic) UIViewController*   presentingController;
-@property (strong, nonatomic) HEMActionSheetController* supportOptionController;
-@property (strong, nonatomic) HEMActionSheetController* ledOptionController;
+@property (strong, nonatomic) HEMActionSheetViewController* supportOptionController;
+@property (strong, nonatomic) HEMActionSheetViewController* ledOptionController;
 @property (weak,   nonatomic) UIViewController* roomCheckViewController;
 
 @end
@@ -45,8 +45,7 @@
     if ([self supportOptionController] != nil) return; // don't show it if showing now
 
     NSString* title = NSLocalizedString(@"debug.options.title", nil);
-    HEMActionSheetController* sheet = [[HEMActionSheetController alloc] initWithTitle:title
-                                                                              message:nil
+    HEMActionSheetViewController* sheet = [[HEMActionSheetViewController alloc] initWithTitle:title
                                                                  presentingController:[self presentingController]];
     
     [self addContactSupportOptionTo:sheet];
@@ -59,7 +58,7 @@
     [[self supportOptionController] show];
 }
 
-- (void)addContactSupportOptionTo:(HEMActionSheetController*)sheet {
+- (void)addContactSupportOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addActionWithText:NSLocalizedString(@"debug.option.contact-support", nil) block:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -70,7 +69,7 @@
     }];
 }
 
-- (void)addResetCheckpointOptionTo:(HEMActionSheetController*)sheet {
+- (void)addResetCheckpointOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addActionWithText:NSLocalizedString(@"debug.option.reset", nil) block:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -90,7 +89,7 @@
 
 #pragma mark LED Support
 
-- (void)addLedOptionTo:(HEMActionSheetController*)sheet {
+- (void)addLedOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addActionWithText:NSLocalizedString(@"debug.option.led", nil) block:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -105,8 +104,7 @@
     if ([self ledOptionController] != nil) return;
     
     NSString* title = NSLocalizedString(@"debug.option.led.title", nil);
-    HEMActionSheetController* sheet = [[HEMActionSheetController alloc] initWithTitle:title
-                                                                              message:nil
+    HEMActionSheetViewController* sheet = [[HEMActionSheetViewController alloc] initWithTitle:title
                                                                  presentingController:[self presentingController]];
     [self addLEDOption:SENSenseLEDStateOff to:sheet];
     [self addLEDOption:SENSenseLEDStatePair to:sheet];
@@ -119,7 +117,7 @@
     [[self ledOptionController] show];
 }
 
-- (void)addLEDOption:(SENSenseLEDState)ledState to:(HEMActionSheetController*)sheet {
+- (void)addLEDOption:(SENSenseLEDState)ledState to:(HEMActionSheetViewController*)sheet {
     NSString* buttonText = nil;
     switch (ledState) {
         case SENSenseLEDStatePair:
@@ -155,7 +153,7 @@
 
 #pragma mark Room Check
 
-- (void)addRoomCheckOptionTo:(HEMActionSheetController*)sheet {
+- (void)addRoomCheckOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addActionWithText:NSLocalizedString(@"debug.option.room-check.title", nil) block:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -188,7 +186,7 @@
 
 #pragma mark Cancel
 
-- (void)addCancelOptionTo:(HEMActionSheetController*)sheet {
+- (void)addCancelOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
     [sheet addActionWithText:NSLocalizedString(@"actions.cancel", nil) block:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;

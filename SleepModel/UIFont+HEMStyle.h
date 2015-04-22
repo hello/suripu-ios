@@ -400,4 +400,21 @@
  */
 + (UIFont*)bluetoothStepsFont;
 
+#pragma mark - Action Sheet
+
+/**
+ * Font used to display the optional title in the custom action sheet
+ */
++ (UIFont*)actionSheetTitleFont;
+
+/**
+ * Font used to display the option title in the custom action sheet
+ */
++ (UIFont*)actionSheetOptionTitleFont;
+
+/**
+ * Font used to display the option description in the custom action sheet
+ */
++ (UIFont*)actionSheetOptionDescriptionFont;
+
 @end

@@ -86,16 +86,6 @@
 + (UIImage*)shakePill;
 + (UIImage*)smartAlarm;
 + (UIImage*)check;
-+ (UIImage*)sensorHumidity;
-+ (UIImage*)sensorHumidityBlue;
-+ (UIImage*)sensorLight;
-+ (UIImage*)sensorLightBlue;
-+ (UIImage*)sensorParticulates;
-+ (UIImage*)sensorParticulatesBlue;
-+ (UIImage*)sensorSound;
-+ (UIImage*)sensorSoundBlue;
-+ (UIImage*)sensorTemperatureBlue;
-+ (UIImage*)sensorTemperature;
 + (UIImage*)moon;
 + (UIImage*)alarmBarIcon;
 + (UIImage*)senseBarIcon;

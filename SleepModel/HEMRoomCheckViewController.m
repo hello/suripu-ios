@@ -62,49 +62,57 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     [[self view] insertSubview:[self roomCheckView] atIndex:0];
 }
 
+- (NSString*)imageName:(NSString*)imageName withColorFromCondition:(SENSensorCondition)condition {
+    NSString* name = [imageName copy];
+    switch (condition) {
+        case SENSensorConditionAlert:
+            name = [name stringByAppendingString:@"Red"];
+            break;
+        case SENSensorConditionWarning:
+            name = [name stringByAppendingString:@"Yellow"];
+            break;
+        case SENSensorConditionIdeal:
+            name = [name stringByAppendingString:@"Green"];
+            break;
+        default:
+            name = [name stringByAppendingString:@"Gray"];
+            break;
+    }
+    return name;
+}
+
 - (UIImage*)iconForSensor:(SENSensor*)sensor forState:(HEMRoomCheckState)state {
     NSString* iconImageName = [[[sensor name] lowercaseString] stringByAppendingString:@"Icon"];
-
-    if (state != HEMRoomCheckStateLoaded) {
-        iconImageName = [iconImageName stringByAppendingString:@"Gray"];
-    } else {
-        SENSensorCondition condition = [sensor condition];
-        switch (condition) {
-            case SENSensorConditionAlert:
-                iconImageName = [iconImageName stringByAppendingString:@"Red"];
-                break;
-            case SENSensorConditionWarning:
-                iconImageName = [iconImageName stringByAppendingString:@"Yellow"];
-                break;
-            case SENSensorConditionIdeal:
-                iconImageName = [iconImageName stringByAppendingString:@"Green"];
-                break;
-            default:
-                iconImageName = [iconImageName stringByAppendingString:@"Gray"];
-                break;
+    
+    switch (state) {
+        case HEMRoomCheckStateLoaded: {
+            SENSensorCondition condition = [sensor condition];
+            iconImageName = [self imageName:iconImageName withColorFromCondition:condition];
+            break;
         }
+        case HEMRoomCheckStateLoading: {
+            SENSensorCondition condition = [sensor condition];
+            NSString* baseName = [iconImageName stringByAppendingString:@"NoBorder"];
+            iconImageName = [self imageName:baseName withColorFromCondition:condition];
+            break;
+        }
+        case HEMRoomCheckStateWaiting:
+        default:
+            iconImageName = [iconImageName stringByAppendingString:@"Gray"];
+            break;
     }
     
     return [UIImage imageNamed:iconImageName];
 }
 
 - (UIImage*)senseImageForSensorCondition:(SENSensorCondition)condition  {
-    NSString* imageName = @"roomcheckSense";
-    switch (condition) {
-        case SENSensorConditionAlert:
-            imageName = [imageName stringByAppendingString:@"Red"];
-            break;
-        case SENSensorConditionIdeal:
-            imageName = [imageName stringByAppendingString:@"Green"];
-            break;
-        case SENSensorConditionWarning:
-            imageName = [imageName stringByAppendingString:@"Yellow"];
-            break;
-        default:
-            imageName = [imageName stringByAppendingString:@"Gray"];
-            break;
-    }
-    return [UIImage imageNamed:imageName];
+    return [UIImage imageNamed:[self imageName:@"roomcheckSense"
+                        withColorFromCondition:condition]];
+}
+
+- (UIImage*)sensorActivityImageForSensorCondition:(SENSensorCondition)condition {
+    return [UIImage imageNamed:[self imageName:@"sensorLoader"
+                        withColorFromCondition:condition]];
 }
 
 - (SENSensorCondition)averageConditionForAllSensors {
@@ -183,6 +191,11 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 - (UIColor*)sensorValueColorAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
     SENSensor* sensor = [self sensors][sensorIndex];
     return [UIColor colorForSensorWithCondition:[sensor condition]];
+}
+
+- (UIImage*)sensorActivityImageForSensorAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView *)roomCheckView {
+    SENSensor* sensor = [self sensors][sensorIndex];
+    return [self sensorActivityImageForSensorCondition:[sensor condition]];
 }
 
 #pragma mark - Sensor Messages

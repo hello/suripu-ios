@@ -356,8 +356,12 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
     activityFrame.origin.x = CGRectGetMinX([iconView frame]) - activityOriginDiff;
     activityFrame.origin.y = CGRectGetMinY([iconView frame]) - activityOriginDiff;
     
+    UIImage* activityImage = [[self delegate] sensorActivityImageForSensorAtIndex:index
+                                                                  inRoomCheckView:self];
+    
     HEMActivityIndicatorView* activity =
-        [[HEMActivityIndicatorView alloc] initWithImage:[HelloStyleKit sensorLoader] andFrame:activityFrame];
+        [[HEMActivityIndicatorView alloc] initWithImage:activityImage andFrame:activityFrame];
+    
     [self setCurrentSensorActivity:activity];
     [[self sensorContainerView] addSubview:activity];
     [[self currentSensorActivity] start];

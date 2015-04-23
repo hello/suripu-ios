@@ -840,6 +840,9 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                 NSString* desc = [NSString stringWithFormat:@"response error from command %ld", (long)type];
                 [self failWithBlock:failure errorCode:code description:desc];
             } else {
+                if (type != [responseMsg type]) {
+                    DDLogWarn(@"ble response %u does not match request %u", [responseMsg type], type);
+                }
                 // jimmy 3/15/2015: firmware updated message version to pivot
                 // on how certain messages are handled so for us to send them
                 // the correct version, we need to see what it sends back first

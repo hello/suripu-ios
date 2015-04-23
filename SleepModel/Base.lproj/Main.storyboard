@@ -731,7 +731,7 @@
         <!--Action Sheet View Controller-->
         <scene sceneID="ztW-II-S6y">
             <objects>
-                <viewController id="1sS-ea-iGH" customClass="HEMActionSheetViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="actionSheetViewController" id="1sS-ea-iGH" customClass="HEMActionSheetViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WiC-nt-nak"/>
                         <viewControllerLayoutGuide type="bottom" id="Vxn-LS-Gao"/>
@@ -740,21 +740,23 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P3D-kP-BZq">
+                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4sX-Ex-Y2e">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4sX-Ex-Y2e">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.40000000000000002" colorSpace="calibratedRGB"/>
+                                <gestureRecognizers/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="QEP-wf-8MB" appends="YES" id="tGI-1f-YTc"/>
+                                    <outletCollection property="gestureRecognizers" destination="RdE-FD-uG2" appends="YES" id="iTh-Wf-ypH"/>
+                                </connections>
                             </view>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="92" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4Nn-Ec-X43">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="84" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="4Nn-Ec-X43">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="600" id="S8s-3f-oBn"/>
                                 </constraints>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="option" id="sap-01-bZB" customClass="HEMActionSheetOptionCell">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="none" indentationWidth="10" reuseIdentifier="option" id="sap-01-bZB" customClass="HEMActionSheetOptionCell">
                                         <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="sap-01-bZB" id="JsL-x8-oq0">
@@ -766,8 +768,8 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2u-YN-8VF">
-                                                    <rect key="frame" x="24" y="45" width="556" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2u-YN-8VF">
+                                                    <rect key="frame" x="24" y="45" width="552" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -776,29 +778,39 @@
                                             <constraints>
                                                 <constraint firstItem="C2u-YN-8VF" firstAttribute="top" secondItem="nAK-rd-1sW" secondAttribute="bottom" constant="4" id="GP3-VZ-2oF"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="nAK-rd-1sW" secondAttribute="trailing" constant="16" id="Gs7-Bb-tcB"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="C2u-YN-8VF" secondAttribute="bottom" priority="750" constant="12" id="Tsg-aN-CLN"/>
                                                 <constraint firstItem="nAK-rd-1sW" firstAttribute="top" secondItem="JsL-x8-oq0" secondAttribute="topMargin" constant="12" id="ojI-n2-A8g"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="C2u-YN-8VF" secondAttribute="trailing" constant="12" id="rqq-fV-PU6"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="C2u-YN-8VF" secondAttribute="trailing" constant="16" id="rqq-fV-PU6"/>
                                                 <constraint firstItem="C2u-YN-8VF" firstAttribute="leading" secondItem="JsL-x8-oq0" secondAttribute="leadingMargin" constant="16" id="sLC-ww-d24"/>
                                                 <constraint firstItem="nAK-rd-1sW" firstAttribute="leading" secondItem="JsL-x8-oq0" secondAttribute="leadingMargin" constant="16" id="vWy-n5-rme"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="Tsg-aN-CLN"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
+                                        <inset key="separatorInset" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
+                                            <outlet property="descriptionBottomConstraint" destination="Tsg-aN-CLN" id="11w-AS-twW"/>
                                             <outlet property="descriptionLabel" destination="C2u-YN-8VF" id="zCq-Sl-4cg"/>
+                                            <outlet property="descriptionTopConstraint" destination="GP3-VZ-2oF" id="Caj-a7-w5p"/>
                                             <outlet property="titleLabel" destination="nAK-rd-1sW" id="5y3-gK-Q5a"/>
+                                            <outlet property="titleTopConstraint" destination="ojI-n2-A8g" id="ydr-Aw-JcG"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="1sS-ea-iGH" id="CW2-Ta-Arj"/>
+                                    <outlet property="delegate" destination="1sS-ea-iGH" id="5x3-gC-lvZ"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Vxn-LS-Gao" firstAttribute="top" secondItem="4sX-Ex-Y2e" secondAttribute="bottom" id="LJh-X3-Hvv"/>
-                            <constraint firstItem="P3D-kP-BZq" firstAttribute="top" secondItem="WiC-nt-nak" secondAttribute="bottom" constant="-20" id="MpD-0y-doY"/>
-                            <constraint firstItem="Vxn-LS-Gao" firstAttribute="top" secondItem="P3D-kP-BZq" secondAttribute="bottom" id="TXb-Vc-NhO"/>
                             <constraint firstItem="4sX-Ex-Y2e" firstAttribute="leading" secondItem="XvS-uF-wsS" secondAttribute="leadingMargin" constant="-16" id="ZvY-nf-Nep"/>
-                            <constraint firstItem="P3D-kP-BZq" firstAttribute="leading" secondItem="XvS-uF-wsS" secondAttribute="leadingMargin" constant="-16" id="iR4-fx-ZbG"/>
                             <constraint firstAttribute="trailingMargin" secondItem="4Nn-Ec-X43" secondAttribute="trailing" constant="-16" id="jIH-nH-OOY"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="P3D-kP-BZq" secondAttribute="trailing" constant="-16" id="jO0-fg-vIS"/>
                             <constraint firstItem="Vxn-LS-Gao" firstAttribute="top" secondItem="4Nn-Ec-X43" secondAttribute="bottom" id="rfl-yl-g6z"/>
                             <constraint firstItem="4Nn-Ec-X43" firstAttribute="leading" secondItem="XvS-uF-wsS" secondAttribute="leadingMargin" constant="-16" id="uqc-jw-5Yc"/>
                             <constraint firstItem="4sX-Ex-Y2e" firstAttribute="top" secondItem="WiC-nt-nak" secondAttribute="bottom" constant="-20" id="xVm-9H-6OF"/>
@@ -806,7 +818,6 @@
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="backgroundImageView" destination="P3D-kP-BZq" id="Nbo-0Y-HxK"/>
                         <outlet property="oTVBottomConstraint" destination="rfl-yl-g6z" id="Z4Z-mS-5eC"/>
                         <outlet property="oTVHeightConstraint" destination="S8s-3f-oBn" id="Y80-cB-coR"/>
                         <outlet property="optionTableView" destination="4Nn-Ec-X43" id="7X5-io-OzN"/>
@@ -814,6 +825,16 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JER-FL-ruv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="QEP-wf-8MB">
+                    <connections>
+                        <action selector="tapOnOverlay:" destination="1sS-ea-iGH" id="aXt-fh-KDr"/>
+                    </connections>
+                </tapGestureRecognizer>
+                <panGestureRecognizer minimumNumberOfTouches="1" id="RdE-FD-uG2">
+                    <connections>
+                        <action selector="panOnOverlay:" destination="1sS-ea-iGH" id="rPL-eF-zEL"/>
+                    </connections>
+                </panGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="500" y="3020"/>
         </scene>

@@ -10,6 +10,7 @@ static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMmain = @"Main";
 static NSString *const _HEMrootViewController = @"RootViewController";
 static NSString *const _HEMaccountSettings = @"accountSettings";
+static NSString *const _HEMactionSheetViewController = @"actionSheetViewController";
 static NSString *const _HEMactions = @"actions";
 static NSString *const _HEMalarmChoiceCell = @"alarmChoiceCell";
 static NSString *const _HEMalarmDeleteCell = @"alarmDeleteCell";
@@ -37,6 +38,7 @@ static NSString *const _HEMinsight = @"insight";
 static NSString *const _HEMinsightFeed = @"insightFeed";
 static NSString *const _HEMmultiple = @"multiple";
 static NSString *const _HEMnotificationSettings = @"notificationSettings";
+static NSString *const _HEMoption = @"option";
 static NSString *const _HEMoverTime = @"overTime";
 static NSString *const _HEMpair = @"pair";
 static NSString *const _HEMpickSound = @"pickSound";
@@ -93,6 +95,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)insightReuseIdentifier { return _HEMinsight; }
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
++(NSString *)optionReuseIdentifier { return _HEMoption; }
 +(NSString *)overTimeReuseIdentifier { return _HEMoverTime; }
 +(NSString *)pairReuseIdentifier { return _HEMpair; }
 +(NSString *)preferenceReuseIdentifier { return _HEMpreference; }
@@ -126,6 +129,7 @@ static NSString *const _HEMwarning = @"warning";
 
 /** View Controllers */
 +(id)instantiateRootViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMrootViewController]; }
++(id)instantiateActionSheetViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMactionSheetViewController]; }
 +(id)instantiateAlarmListNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListNavViewController]; }
 +(id)instantiateAlarmListViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListViewController]; }
 +(id)instantiateAlarmNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmNavController]; }

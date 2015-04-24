@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.5.3
+
+New:
+
+* Custom action sheet for debug options
+* Moved factory reset and remove device options in to an action sheet, under Advanced
+* Updated room check sensor icons
+
+Fixes:
+
+* time to sleep value will properly display in minutes
+* pill pairing errors will no longer be swalloed by LED operations
+* factory reset will now properly dismiss overlay if Sense unexpectedly disconnects during the process
+
 ## 1.0.5.2
 
 New:

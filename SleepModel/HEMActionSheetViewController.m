@@ -58,7 +58,9 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 }
 
 -(void)setDefaults {
-    [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
+    if ([self respondsToSelector:@selector(presentationController)]) {
+        [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
+    }
 }
 
 - (void)addOptionWithTitle:(NSString*)optionTitle action:(HEMActionSheetCallback)action {
@@ -108,19 +110,24 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     [[self view] setBackgroundColor:[UIColor clearColor]];
 }
 
+- (void)updateViewConstraints {
+    [super updateViewConstraints];
+    CGSize optionsContentSize = [[self optionTableView] contentSize];
+    [[self oTVHeightConstraint] setConstant:optionsContentSize.height];
+    [[self oTVBottomConstraint] setConstant:-optionsContentSize.height];
+    
+    if (optionsContentSize.height > 0 && [[self optionTableView] tableHeaderView]) {
+        [self show];
+    }
+}
+
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
     if (![self isOptionsLaidOut]) {
         [self configureTableViewHeader];
-        [self layoutOptions];
+        [[self view] setNeedsUpdateConstraints];
         [self setOptionsLaidOut:YES];
     }
-}
-
-- (void)layoutOptions {
-    CGSize optionsContentSize = [[self optionTableView] contentSize];
-    [[self oTVHeightConstraint] setConstant:optionsContentSize.height];
-    [[self oTVBottomConstraint] setConstant:-optionsContentSize.height];
 }
 
 - (void)show {
@@ -145,7 +152,11 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
                          [[self oTVBottomConstraint] setConstant:-height];
                          [[self view] layoutIfNeeded];
                      }
-                     completion:completion];
+                     completion:^(BOOL finished) {
+                         [[self optionTableView] removeFromSuperview];
+                         [self setOptionTableView:nil];
+                         if (completion) completion (finished);
+                     }];
 }
 
 - (void)configureTableViewHeader {
@@ -237,9 +248,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)dismiss {
     [self hide:^(BOOL finished) {
+        __block HEMActionSheetCallback dismissBlock = [self dismissAction];
         [self dismissViewControllerAnimated:YES completion:^{
-            if ([self dismissAction]) {
-                [self dismissAction]();
+            if (dismissBlock) {
+                dismissBlock();
             }
         }];
     }];

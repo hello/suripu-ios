@@ -12,13 +12,13 @@
 #import "HEMActionSheetOptionCell.h"
 
 static CGFloat const HEMActionSheetOptionLabelSpacing = 4.0f;
-static CGFloat const HEMActionSheetOptionMargin = 20.0f;
+static CGFloat const HEMActionSheetOptionVertMargin = 20.0f;
+static CGFloat const HEMActionSheetOptionHorzMargin = 24.0f;
 
 @interface HEMActionSheetOptionCell()
 
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTopConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionBottomConstraint;
 
 @end
 
@@ -28,7 +28,7 @@ static CGFloat const HEMActionSheetOptionMargin = 20.0f;
                description:(NSString*)description
                   maxWidth:(CGFloat)width {
     
-    CGFloat height = HEMActionSheetOptionMargin;
+    CGFloat height = HEMActionSheetOptionVertMargin;
     
     UIFont* titleFont = [UIFont actionSheetOptionTitleFont];
     height += [self heightForText:title usingFont:titleFont constrainedToWidth:width];
@@ -40,17 +40,17 @@ static CGFloat const HEMActionSheetOptionMargin = 20.0f;
         height += [self heightForText:description usingFont:descFont constrainedToWidth:width];
     }
     
-    height += HEMActionSheetOptionMargin;
+    height += HEMActionSheetOptionVertMargin;
     
     return ceilf(height);
 }
 
 + (CGFloat)heightForText:(NSString*)text usingFont:(UIFont*)font constrainedToWidth:(CGFloat)width {
     NSDictionary* attributes = @{NSFontAttributeName : font};
-    CGSize constraint = CGSizeMake(width-(2*HEMActionSheetOptionMargin), MAXFLOAT);
+    CGSize constraint = CGSizeMake(width-(2*HEMActionSheetOptionHorzMargin), MAXFLOAT);
     return [text boundingRectWithSize:constraint
-                                  options:NSStringDrawingUsesFontLeading
-                                          |NSStringDrawingUsesLineFragmentOrigin
+                              options:NSStringDrawingUsesFontLeading
+                                      |NSStringDrawingUsesLineFragmentOrigin
                            attributes:attributes
                               context:nil].size.height;
 }

@@ -337,8 +337,11 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
                            }];
     }
     
-    
     UIViewController* root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    if (![root respondsToSelector:@selector(presentationController)]) {
+        [root setModalPresentationStyle:UIModalPresentationCurrentContext];
+    }
+    
     [root presentViewController:sheet animated:YES completion:^{
         [sheet show];
     }];

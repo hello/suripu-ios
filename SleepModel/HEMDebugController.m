@@ -45,8 +45,11 @@
 
 - (void)presentOptions:(HEMActionSheetViewController*)optionsVC {
     [optionsVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    if (![[self presentingController] respondsToSelector:@selector(presentationController)]) {
+        [[self presentingController] setModalPresentationStyle:UIModalPresentationCurrentContext];
+    }
     [[self presentingController] presentViewController:optionsVC animated:YES completion:^{
-        [optionsVC show];
+//        [optionsVC show];
     }];
 }
 

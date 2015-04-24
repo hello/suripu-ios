@@ -19,6 +19,7 @@
 +(NSString *)preferenceReuseIdentifier;
 +(NSString *)imageReuseIdentifier;
 +(NSString *)textReuseIdentifier;
++(NSString *)optionReuseIdentifier;
 +(NSString *)infoReuseIdentifier;
 +(NSString *)explanationReuseIdentifier;
 +(NSString *)signoutReuseIdentifier;
@@ -28,7 +29,6 @@
 +(NSString *)deviceReuseIdentifier;
 +(NSString *)warningReuseIdentifier;
 +(NSString *)actionsReuseIdentifier;
-+(NSString *)resetReuseIdentifier;
 +(NSString *)timezoneReuseIdentifier;
 +(NSString *)choiceCellReuseIdentifier;
 +(NSString *)alarmListCellReuseIdentifier;
@@ -59,6 +59,7 @@
 
 /** View Controllers */
 +(id)instantiateRootViewController;
++(id)instantiateActionSheetViewController;
 +(id)instantiateAlarmListNavViewController;
 +(id)instantiateAlarmListViewController;
 +(id)instantiateAlarmNavController;

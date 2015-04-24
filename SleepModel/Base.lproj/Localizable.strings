@@ -223,7 +223,14 @@
 "settings.pill.warning.last-seen-format" = "Your Sleep Pill was last seen %@. Tap below to troubleshoot.";
 "settings.pill.warning.low-battery-format" = "Your Sleep Pill %@. We'll walk you through replacing it.";
 "settings.pill.warning.battery-low" = "battery is low";
-"settings.sense.factory-reset.footer" = "Factory Reset will reset Sense back to its factory settings, remove Sense from all accounts linked to it, and unlink your Sleep Pill from your account.";
+"settings.pill.advanced.option.title" = "Advanced";
+"settings.pill.advanced.option.replace-pill" = "Replace this Sleep Pill";
+"settings.pill.advanced.option.replace-pill.desc" = "If you have a new Sleep Pill you want to pair with this account.";
+"settings.sense.advanced.option.title" = "Advanced";
+"settings.sense.advanced.option.replace-sense" = "Replace this Sense";
+"settings.sense.advanced.option.replace-sense.desc" = "If you have a new Sense you want to pair with this account.";
+"settings.sense.advanced.option.factory-reset" = "Factory reset";
+"settings.sense.advanced.option.factory-reset.desc" = "If you are going to give Sense to someone else.";
 "settings.sense.not-found-title" = "Sense not found";
 "settings.sense.wifi" = "WiFi";
 "settings.sense.unpairing-message" = "Removing Sense";
@@ -246,6 +253,8 @@
 "settings.factory-restore.error.title" = "Factory restore failed";
 "settings.factory-restore.error.unlink-pill" = "Unable to remove your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
 "settings.factory-restore.error.unlink-sense" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";
+"settings.sense.operation-failed.title" = "Sense operation failed";
+"settings.sense.operation-failed.unexpected-disconnect" = "Sense unexpectedly disconnected.  Make sure you are near Sense and try again.";
 
 // Insights / Questions
 "insights.title" = "Insights";

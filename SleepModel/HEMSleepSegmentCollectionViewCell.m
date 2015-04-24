@@ -19,7 +19,6 @@ CGFloat const HEMSleepLineWidth = 1.f;
 @implementation HEMSleepSegmentCollectionViewCell
 
 static CGFloat const HEMSegmentTimeLabelHeight = 16.f;
-static CGFloat const HEMSegmentTimeLabelVerticalSpacing = 2.f;
 static CGFloat const HEMSegmentTimeLabelHorizontalSpacing = 10.f;
 static CGFloat const HEMSegmentBorderWidth = 1.f;
 

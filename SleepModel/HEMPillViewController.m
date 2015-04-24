@@ -23,6 +23,7 @@
 #import "HEMAlertViewController.h"
 #import "HEMDeviceDataSource.h"
 #import "HEMActionButton.h"
+#import "HEMActionSheetViewController.h"
 
 static NSInteger const HEMPillActionsCellHeight = 124.0f;
 
@@ -128,10 +129,10 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     if ([cell isKindOfClass:[HEMDeviceActionCollectionViewCell class]]) {
         HEMDeviceActionCollectionViewCell* actionCell = (HEMDeviceActionCollectionViewCell*)cell;
         [[actionCell action1Button] addTarget:self
-                                       action:@selector(replacePill:)
+                                       action:@selector(replaceBattery:)
                              forControlEvents:UIControlEventTouchUpInside];
         [[actionCell action2Button] addTarget:self
-                                       action:@selector(replaceBattery:)
+                                       action:@selector(showAdvancedOptions:)
                              forControlEvents:UIControlEventTouchUpInside];
     } else if ([cell isKindOfClass:[HEMWarningCollectionViewCell class]]) {
         HEMDeviceWarning warning = (HEMDeviceWarning)[[self warnings][[indexPath row]] integerValue];
@@ -189,7 +190,34 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     }
 }
 
-- (void)replacePill:(id)sender {
+- (void)showAdvancedOptions:(id)sender {
+    HEMActionSheetViewController* sheet =
+        [HEMMainStoryboard instantiateActionSheetViewController];
+    [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [sheet setTitle:NSLocalizedString(@"settings.pill.advanced.option.title", nil)];
+    
+    __weak typeof (self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"settings.pill.advanced.option.replace-pill", nil)
+                   titleColor:nil
+                  description:NSLocalizedString(@"settings.pill.advanced.option.replace-pill.desc", nil)
+                       action:^{
+                           [weakSelf replacePill];
+                       }];
+    
+    UIViewController* root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    [root presentViewController:sheet animated:YES completion:^{
+        [sheet show];
+    }];
+}
+
+- (void)replaceBattery:(id)sender {
+    NSString* page = NSLocalizedString(@"help.url.slug.pill-battery", nil);
+    [HEMSupportUtil openHelpToPage:page fromController:self];
+}
+
+#pragma mark - Unpairing the pill
+
+- (void)replacePill {
     NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-title", nil);
     NSString* messageFormat = NSLocalizedString(@"settings.pill.dialog.unpair-message.format", nil);
     NSString* helpLink = NSLocalizedString(@"help.url.support", nil);
@@ -198,10 +226,10 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
                                                       attributes:[self dialogMessageAttributes:YES]]];
     
     NSAttributedString* confirmation =
-        [[NSMutableAttributedString alloc] initWithFormat:messageFormat
-                                                     args:args
-                                                baseColor:[UIColor blackColor]
-                                                 baseFont:[UIFont dialogMessageFont]];
+    [[NSMutableAttributedString alloc] initWithFormat:messageFormat
+                                                 args:args
+                                            baseColor:[UIColor blackColor]
+                                             baseFont:[UIFont dialogMessageFont]];
     
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
@@ -222,13 +250,6 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
         [self dismissViewControllerAnimated:YES completion:NULL];
     }];
 }
-
-- (void)replaceBattery:(id)sender {
-    NSString* page = NSLocalizedString(@"help.url.slug.pill-battery", nil);
-    [HEMSupportUtil openHelpToPage:page fromController:self];
-}
-
-#pragma mark - Unpairing the pill
 
 - (void)showUnpairMessageForError:(NSError*)error {
     NSString* message = nil;

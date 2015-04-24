@@ -29,7 +29,6 @@
 +(NSString *)deviceReuseIdentifier;
 +(NSString *)warningReuseIdentifier;
 +(NSString *)actionsReuseIdentifier;
-+(NSString *)resetReuseIdentifier;
 +(NSString *)timezoneReuseIdentifier;
 +(NSString *)choiceCellReuseIdentifier;
 +(NSString *)alarmListCellReuseIdentifier;

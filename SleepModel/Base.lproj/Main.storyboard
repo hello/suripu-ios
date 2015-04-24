@@ -1527,7 +1527,7 @@
                                                         <constraint firstAttribute="height" constant="62" id="6x9-iK-UIu"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
-                                                    <state key="normal" title="REPLACE THIS SENSE">
+                                                    <state key="normal" title="CHANGE TIME ZONE">
                                                         <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -1538,7 +1538,7 @@
                                                         <constraint firstAttribute="height" constant="62" id="dxF-if-YQg"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
-                                                    <state key="normal" title="CHANGE TIMEZONE">
+                                                    <state key="normal" title="PUT INTO PAIRING MODE">
                                                         <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -1552,7 +1552,7 @@
                                                         <constraint firstAttribute="height" constant="62" id="uzD-BL-3nc"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
-                                                    <state key="normal" title="PUT INTO PAIRING MODE">
+                                                    <state key="normal" title="EDIT WIFI">
                                                         <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -1566,7 +1566,7 @@
                                                         <constraint firstAttribute="height" constant="62" id="Mya-Gt-vzG"/>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
-                                                    <state key="normal" title="EDIT WIFI">
+                                                    <state key="normal" title="ADVANCED">
                                                         <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -1597,38 +1597,6 @@
                                             <outlet property="action2Button" destination="wBz-MA-Tv7" id="x6o-hA-pdV"/>
                                             <outlet property="action3Button" destination="vUs-wE-uSk" id="ta6-zs-dKq"/>
                                             <outlet property="action4Button" destination="t3M-KZ-5qp" id="YF7-hh-iHR"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="reset" id="QAO-rh-HGD" customClass="HEMDeviceActionCollectionViewCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="560" height="62"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eKQ-61-lbQ">
-                                                    <rect key="frame" x="0.0" y="0.0" width="560" height="62"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
-                                                    <state key="normal" title="FACTORY RESET">
-                                                        <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                    <state key="disabled">
-                                                        <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                                    </state>
-                                                </button>
-                                            </subviews>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        </view>
-                                        <constraints>
-                                            <constraint firstItem="eKQ-61-lbQ" firstAttribute="leading" secondItem="QAO-rh-HGD" secondAttribute="leadingMargin" constant="-8" id="EHf-BQ-u30"/>
-                                            <constraint firstItem="eKQ-61-lbQ" firstAttribute="top" secondItem="QAO-rh-HGD" secondAttribute="topMargin" constant="-8" id="GNv-bY-aby"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="eKQ-61-lbQ" secondAttribute="bottom" constant="-8" id="NJg-Re-qLk"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="eKQ-61-lbQ" secondAttribute="trailing" constant="-8" id="ckF-Bg-Co9"/>
-                                        </constraints>
-                                        <size key="customSize" width="560" height="62"/>
-                                        <connections>
-                                            <outlet property="action1Button" destination="eKQ-61-lbQ" id="rLu-TQ-6sK"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -1778,7 +1746,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="clJ-yN-0S9">
                                                     <rect key="frame" x="16" y="0.0" width="544" height="62"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
-                                                    <state key="normal" title="REPLACE THIS PILL">
+                                                    <state key="normal" title="REPLACE BATTERY">
                                                         <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>
@@ -1786,7 +1754,7 @@
                                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IEe-6V-aqn">
                                                     <rect key="frame" x="16" y="62" width="544" height="62"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="13"/>
-                                                    <state key="normal" title="REPLACE BATTERY">
+                                                    <state key="normal" title="ADVANCED">
                                                         <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                                     </state>

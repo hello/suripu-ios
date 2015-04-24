@@ -6,11 +6,12 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "HEMActionSheetViewController.h"
 #import "UIFont+HEMStyle.h"
+
+#import "HEMActionSheetViewController.h"
+#import "HEMActionSheetOptionCell.h"
 #import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
-#import "HEMActionSheetOptionCell.h"
 
 static NSString* const HEMActionSheetOptionColor = @"color";
 static NSString* const HEMActionSheetOptionDescription = @"description";

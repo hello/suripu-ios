@@ -253,6 +253,8 @@
 "settings.factory-restore.error.title" = "Factory restore failed";
 "settings.factory-restore.error.unlink-pill" = "Unable to remove your Sleep Pill from your account. Make sure you are connected to the internet and try again.";
 "settings.factory-restore.error.unlink-sense" = "Unable to remove Sense from your account. Make sure you are connected to the internet and try again.";
+"settings.sense.operation-failed.title" = "Sense operation failed";
+"settings.sense.operation-failed.unexpected-disconnect" = "Sense unexpectedly disconnected.  Make sure you are near Sense and try again.";
 
 // Insights / Questions
 "insights.title" = "Insights";

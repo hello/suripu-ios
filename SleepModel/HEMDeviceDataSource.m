@@ -202,8 +202,9 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
     if ([self lostInternetConnection:device]) {
         [set addObject:@(HEMSenseWarningNoInternet)];
     }
-    if (![[SENServiceDevice sharedService] pairedSenseAvailable]
-        && [device type] == SENDeviceTypeSense) {
+    if ([device type] == SENDeviceTypeSense
+        && (![[SENServiceDevice sharedService] pairedSenseAvailable]
+         || ![[[SENServiceDevice sharedService] senseManager] isConnected])) {
         [set addObject:@(HEMSenseWarningNotConnectedToSense)];
     }
     return set;

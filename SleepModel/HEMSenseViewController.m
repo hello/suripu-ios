@@ -40,10 +40,12 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+@property (assign, nonatomic, getter=isVisible) BOOL visible;
 @property (assign, nonatomic) BOOL updatedWiFi;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
 @property (assign, nonatomic) CGSize footerSize;
 @property (strong, nonatomic) HEMBounceModalTransition* modalTransitionDelegate;
+@property (strong, nonatomic) id disconnectObserverId;
 
 @end
 
@@ -53,6 +55,16 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     [super viewDidLoad];
     [self configureCollectionView];
     [SENAnalytics track:kHEMAnalyticsEventSense];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self setVisible:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self setVisible:NO];
 }
 
 - (void)configureCollectionView {
@@ -145,19 +157,23 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     return row < [[self warnings] count];
 }
 
+- (BOOL)isConnectedToSense {
+    SENServiceDevice* service = [SENServiceDevice sharedService];
+    return [service pairedSenseAvailable] && [[service senseManager] isConnected];
+}
+
 - (void)setupFrequentActionsCell:(HEMDeviceActionCollectionViewCell*)actionCell {
-    BOOL senseAvailable = [[SENServiceDevice sharedService] pairedSenseAvailable];
     [[actionCell action1Button] addTarget:self
                                    action:@selector(changeTimeZone:)
                          forControlEvents:UIControlEventTouchUpInside];
     [[actionCell action2Button] addTarget:self
                                    action:@selector(pairingMode:)
                          forControlEvents:UIControlEventTouchUpInside];
-    [[actionCell action2Button] setEnabled:senseAvailable];
+    [[actionCell action2Button] setEnabled:[self isConnectedToSense]];
     [[actionCell action3Button] addTarget:self
                                    action:@selector(changeWiFi:)
                          forControlEvents:UIControlEventTouchUpInside];
-    [[actionCell action3Button] setEnabled:senseAvailable];
+    [[actionCell action3Button] setEnabled:[self isConnectedToSense]];
     [[actionCell action4Button] addTarget:self
                                    action:@selector(showAdvancedOptions:)
                          forControlEvents:UIControlEventTouchUpInside];
@@ -312,7 +328,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
                            [weakSelf replaceSense];
                        }];
     
-    if ([[SENServiceDevice sharedService] pairedSenseAvailable]) {
+    if ([self isConnectedToSense]) {
         [sheet addOptionWithTitle:NSLocalizedString(@"settings.sense.advanced.option.factory-reset", nil)
                        titleColor:[UIColor redColor]
                       description:NSLocalizedString(@"settings.sense.advanced.option.factory-reset.desc", nil)
@@ -443,10 +459,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     
     __weak typeof(self) weakSelf = self;
     [self showConfirmation:title message:attributedMessage action:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf restore];
-        }
+        [weakSelf restore];
     }];
 }
 
@@ -472,13 +485,37 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     }
     
     [self showMessageDialog:message title:title];
+    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
 }
 
+- (void)listenForDisconnects {
+    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
+
+    if ([self disconnectObserverId] == nil && manager != nil) {
+        __weak typeof(self) weakSelf = self;
+        self.disconnectObserverId =
+        [manager observeUnexpectedDisconnect:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if ([strongSelf isVisible]) {
+                if ([strongSelf activityView] != nil) {
+                    [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                        NSString* title = NSLocalizedString(@"settings.sense.operation-failed.title", nil);
+                        NSString* message = NSLocalizedString(@"settings.sense.operation-failed.unexpected-disconnect", nil);
+                        [strongSelf showMessageDialog:message title:title];
+                        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                    }];
+                }
+            }
+        }];
+    }
+}
 
 - (void)restore {
     [SENAnalytics track:kHEMAnalyticsEventDeviceAction
              properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionFactoryRestore}];
 
+    [self listenForDisconnects];
+    
     NSString* message = NSLocalizedString(@"settings.device.restoring-factory-settings", nil);
     [self showActivityText:message completion:^{
         __weak typeof(self) weakSelf = self;

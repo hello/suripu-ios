@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.5.4
+
+New:
+
+* Room check animation and visual tweaks
+
+Fixes:
+
+* Fix issue with modal transitions on iOS 7 devices
+
 ## 1.0.5.3
 
 New:

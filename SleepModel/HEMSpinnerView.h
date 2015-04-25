@@ -17,6 +17,7 @@
 - (void)spinTo:(NSString*)targetItem
      rotations:(NSUInteger)rotations
     onRotation:(void(^)(HEMSpinnerView* view, NSUInteger rotation))onRotation
+  willComplete:(void(^)(void))willComplete
     completion:(void(^)(BOOL finished))completion;
 
 - (void)next:(void(^)(NSString* itemShowing))completion;

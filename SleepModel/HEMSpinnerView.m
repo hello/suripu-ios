@@ -12,7 +12,7 @@
 static CGFloat const HEMSpinnerDefaultDamping = 1.0f;
 static CGFloat const HEMSpinnerEndDamping = 0.6f;
 static CGFloat const HEMSpinnerDefaultDuration = 0.05f;
-static CGFloat const HEMSpinnerDefaultInitialVelocity = 2.0f;
+static CGFloat const HEMSpinnerDefaultInitialVelocity = 2.25f;
 static CGFloat const HEMSpinnerNextDuration = 0.5f;
 
 @interface HEMSpinnerView()
@@ -100,6 +100,7 @@ static CGFloat const HEMSpinnerNextDuration = 0.5f;
 - (void)spinTo:(NSString*)targetItem
      rotations:(NSUInteger)rotations
     onRotation:(void(^)(HEMSpinnerView* view, NSUInteger rotation))onRotation
+  willComplete:(void(^)(void))willComplete
     completion:(void(^)(BOOL finished))completion {
 
     CGFloat slotHeight = CGRectGetHeight([self bounds]);
@@ -113,6 +114,9 @@ static CGFloat const HEMSpinnerNextDuration = 0.5f;
     if (willFinish) {
         damping = HEMSpinnerEndDamping;
         duration = (1 + damping) / velocity;
+        if (willComplete) {
+            willComplete();
+        }
     }
     
     [UIView animateWithDuration:duration
@@ -120,7 +124,7 @@ static CGFloat const HEMSpinnerNextDuration = 0.5f;
          usingSpringWithDamping:damping
           initialSpringVelocity:velocity
                         options:UIViewAnimationOptionBeginFromCurrentState
-                                |UIViewAnimationOptionCurveEaseIn
+                                |UIViewAnimationOptionCurveLinear
                      animations:^{
                          [self move:[self onScreenLabel] byY:slotHeight];
                          [self move:[self offScreenLabel] byY:slotHeight];
@@ -146,6 +150,7 @@ static CGFloat const HEMSpinnerNextDuration = 0.5f;
                              [self spinTo:targetItem
                                 rotations:rotations
                                onRotation:onRotation
+                             willComplete:willComplete
                                completion:completion];
                          }
                      }];

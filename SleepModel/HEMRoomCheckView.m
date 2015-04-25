@@ -26,7 +26,7 @@ static CGFloat const HEMRoomCheckViewSensorDigitSpacing = 3.0f;
 static CGFloat const HEMRoomCheckViewSensorDigitToUnitSpacing = 7.0f;
 static CGFloat const HEMRoomCheckViewSensorUnitHeight = 44.0f;
 static CGFloat const HEMRoomCheckViewSensorUnitYOffset = 14.0f;
-static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
+static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 3.0f;
 
 @interface HEMRoomCheckView()
 
@@ -133,9 +133,18 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
     NSArray* sensorIconViews = [[self sensorContainerView] subviews];
     [sensorIconViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     
+    NSInteger spacesRequired = [self numberOfSensors] - 1;
+    
+    CGFloat spacing = HEMRoomCheckViewSensorIconSpacing;
+    CGFloat totalSpacing = spacesRequired * spacing;
     CGFloat requiredWidth =
-        ([self numberOfSensors] * HEMRoomCheckViewSensorIconSize)
-        + (([self numberOfSensors] - 1) * HEMRoomCheckViewSensorIconSpacing);
+        ([self numberOfSensors] * HEMRoomCheckViewSensorIconSize) + totalSpacing;
+    
+    if (requiredWidth > CGRectGetWidth([self bounds]) - (2*HEMRoomCheckViewSensorIconSpacing)) {
+        spacing = (totalSpacing - (HEMRoomCheckViewSensorIconSpacing * 2))/spacesRequired;
+        requiredWidth =
+            ([self numberOfSensors] * HEMRoomCheckViewSensorIconSize) + (spacesRequired * spacing);
+    }
     
     CGRect iconFrame = CGRectZero;
     iconFrame.size = CGSizeMake(HEMRoomCheckViewSensorIconSize, HEMRoomCheckViewSensorIconSize);
@@ -154,7 +163,7 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
         
         [[self sensorContainerView] addSubview:iconView];
         
-        iconFrame.origin.x += CGRectGetWidth(iconFrame) + HEMRoomCheckViewSensorIconSpacing;
+        iconFrame.origin.x += CGRectGetWidth(iconFrame) + spacing;
     }
 }
 
@@ -244,15 +253,6 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
     [self resizeSensorMessageLabel];
 }
 
-- (void)showSensorIconForSensorAtIndex:(NSUInteger)index {
-    UIImageView* iconView = [[self sensorContainerView] subviews][index];
-    UIImage* loadedIcon = [[self delegate] sensorIconImageAtIndex:index
-                                                         forState:HEMRoomCheckStateLoaded
-                                                  inRoomCheckView:self];
-    [iconView setImage:loadedIcon];
-    [iconView setHighlighted:NO];
-}
-
 - (void)setSenseImageToDefaultForSensorIndex:(NSUInteger)sensorIndex {
     UIImage* image = [[self delegate] senseImageForSensorAtIndex:sensorIndex
                                                         forState:HEMRoomCheckStateWaiting
@@ -265,6 +265,29 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
     constraint.height = MAXFLOAT;
     CGFloat textHeight = [[self sensorMessageLabel] sizeThatFits:constraint].height;
     [[self sensorMessageHeightConstraint] setConstant:textHeight];
+}
+
+- (void)animateSenseImageToLoadedStateForSensorAtIndex:(NSUInteger)index {
+    UIImage* image = [[self delegate] senseImageForSensorAtIndex:index
+                                                        forState:HEMRoomCheckStateLoaded
+                                                 inRoomCheckView:self];
+    UIImageView* toSenseImageView = [[UIImageView alloc] initWithImage:image];
+    [toSenseImageView setContentMode:[[self senseImageView] contentMode]];
+    [HEMAnimationUtils crossFadeFrom:[self senseImageView] toView:toSenseImageView then:^(BOOL finished) {
+        [self setSenseImageView:toSenseImageView];
+    }];
+}
+
+- (void)animateSensorIconToLoadedStateAtIndex:(NSUInteger)index {
+    UIImageView* iconView = [[self sensorContainerView] subviews][index];
+    UIImage* loadedIcon = [[self delegate] sensorIconImageAtIndex:index
+                                                         forState:HEMRoomCheckStateLoaded
+                                                  inRoomCheckView:self];
+    UIImageView* toLoadedIconView = [[UIImageView alloc] initWithImage:loadedIcon];
+    [toLoadedIconView setContentMode:[iconView contentMode]];
+    [HEMAnimationUtils crossFadeFrom:iconView toView:toLoadedIconView then:^(BOOL finished) {
+        [iconView removeFromSuperview];
+    }];
 }
 
 - (void)animate:(void(^)(void))completion {
@@ -281,9 +304,9 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
     [self setSenseImageToDefaultForSensorIndex:index];
     [self setDefaultMessageForSensorAtIndex:index];
     [self showActivityAroundSensorIconAtIndex:index];
-    [self animateSensorValueAtIndex:index completion:^{
-        [self showSensorIconForSensorAtIndex:index];
-        [self showSensorImageForSensorAtIndex:index];
+    [self animateSensorValueAtIndex:index willComplete:^{
+        [self animateSenseImageToLoadedStateForSensorAtIndex:index];
+        [self animateSensorIconToLoadedStateAtIndex:index];
         [self hideActivityAroundSensorIcon];
         [HEMAnimationUtils fade:[self sensorMessageLabel] out:^{
             [self showSensorMessageForSensorAtIndex:index];
@@ -296,10 +319,12 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
                 [self animateSensorAtIndex:nextIndex completion:completion];
             });
         }];
-    }];
+    } completion:nil];
 }
 
-- (void)animateSensorValueAtIndex:(NSUInteger)index completion:(void(^)(void))completion {
+- (void)animateSensorValueAtIndex:(NSUInteger)index
+                     willComplete:(void(^)(void))willComplete
+                       completion:(void(^)(void))completion {
     NSInteger value = [[self delegate] sensorValueAtIndex:index inRoomCheckView:self];
     NSString* valueString = [@(value) stringValue];
     NSUInteger digitsCount = [valueString length];
@@ -321,7 +346,7 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
     HEMSpinnerView* rotary = [self sensorValueRotaries][digitIndex];
     [rotary spinTo:digitString rotations:rotations onRotation:^(HEMSpinnerView* view, NSUInteger rotation) {
         [self incrementAdjacentRotaryAtIndex:[view tag] - 1];
-    } completion:^(BOOL finished) {
+    } willComplete:willComplete completion:^(BOOL finished) {
         if (completion) {
             completion ();
         }
@@ -368,9 +393,12 @@ static CGFloat const HEMRoomCheckViewSensorDisplayDuration = 1.0f;
 }
 
 - (void)hideActivityAroundSensorIcon {
-    [[self currentSensorActivity] setAlpha:0.0f];
-    [[self currentSensorActivity] removeFromSuperview];
-    [self setCurrentSensorActivity:nil];
+    [UIView animateWithDuration:kHEMAnimationDefaultDuration+kHEMAnimationActivityDuration animations:^{
+        [[self currentSensorActivity] setAlpha:0.0f];
+    } completion:^(BOOL finished) {
+        [[self currentSensorActivity] removeFromSuperview];
+        [self setCurrentSensorActivity:nil];
+    }];
 }
 
 @end

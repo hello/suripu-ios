@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+extern CGFloat const kHEMAnimationActivityDuration;
+extern CGFloat const kHEMAnimationDefaultDuration;
+
 @interface HEMAnimationUtils : NSObject
 
 /**
@@ -54,5 +57,25 @@
  * @param inBlock: the block to call when view is once again visible
  */
 + (void)fade:(UIView*)view out:(void(^)(void))outBlock thenIn:(void(^)(void))inBlock;
+
+/**
+ * Fade a group of views out, making a callback when it's not visible, then fade
+ * it back in after the operation is done and call the inBlock
+ *
+ * @param views: views to animate out and in
+ * @param outBlock: the block to call when view is temporarily not visible
+ * @param inBlock: the block to call when view is once again visible
+ */
++ (void)fadeAll:(NSArray*)views out:(void(^)(void))outBlock thenIn:(void(^)(void))inBlock;
+
+/**
+ * Cross fade the current view, fromView, out while simultaneously fading in the toView,
+ * adding the toView behind the fromView before the animation.
+ *
+ * @param fromView: view currently displayed that needs to be "replaced" with the toView
+ * @param toView: the view that should be cross faded in, to replace the fromView
+ * @param thenBlock: the block to call when the animation has completed
+ */
++ (void)crossFadeFrom:(UIView*)fromView toView:(UIView*)toView then:(void(^)(BOOL finished))thenBlock;
 
 @end

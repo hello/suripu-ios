@@ -206,11 +206,13 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     
     UIViewController* root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     if (![root respondsToSelector:@selector(presentationController)]) {
+        UIModalPresentationStyle origStyle = [root modalPresentationStyle];
         [root setModalPresentationStyle:UIModalPresentationCurrentContext];
+        [sheet addDismissAction:^{
+            [root setModalPresentationStyle:origStyle];
+        }];
     }
-    [root presentViewController:sheet animated:YES completion:^{
-        [sheet show];
-    }];
+    [root presentViewController:sheet animated:YES completion:nil];
 }
 
 - (void)replaceBattery:(id)sender {

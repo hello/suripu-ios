@@ -26,6 +26,7 @@
 @property (strong, nonatomic) HEMActionSheetViewController* supportOptionController;
 @property (strong, nonatomic) HEMActionSheetViewController* ledOptionController;
 @property (weak,   nonatomic) UIViewController* roomCheckViewController;
+@property (assign, nonatomic) UIModalPresentationStyle origPresentationStyle;
 
 @end
 
@@ -39,8 +40,16 @@
     self = [super init];
     if (self) {
         [self setPresentingController:[controller presentedViewController] ?: controller];
+        [self setOrigPresentationStyle:[[self presentingController] modalPresentationStyle]];
     }
     return self;
+}
+
+- (void)setSupportOptionController:(HEMActionSheetViewController *)supportOptionController {
+    _supportOptionController = supportOptionController;
+    if (_supportOptionController == nil) {
+        [[self presentingController] setModalPresentationStyle:[self origPresentationStyle]];
+    }
 }
 
 - (void)presentOptions:(HEMActionSheetViewController*)optionsVC {
@@ -48,9 +57,7 @@
     if (![[self presentingController] respondsToSelector:@selector(presentationController)]) {
         [[self presentingController] setModalPresentationStyle:UIModalPresentationCurrentContext];
     }
-    [[self presentingController] presentViewController:optionsVC animated:YES completion:^{
-//        [optionsVC show];
-    }];
+    [[self presentingController] presentViewController:optionsVC animated:YES completion:nil];
 }
 
 - (void)showSupportOptions {

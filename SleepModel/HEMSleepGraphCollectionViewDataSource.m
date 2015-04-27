@@ -119,10 +119,17 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     }
     if ([self isTitleOutOfSync])
         [self.collectionView reloadData];
+    
+    if (self.dateForNightOfSleep) {
+        [SENAnalytics track:HEMAnalyticsEventTimelineDataRequest
+                 properties:@{kHEMAnalyticsEventPropDate : self.dateForNightOfSleep}];
+    }
+    
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline timelineForDate:self.dateForNightOfSleep completion:^(NSArray* timelines, NSError* error) {
         __strong HEMSleepGraphCollectionViewDataSource* strongSelf = weakSelf;
         if (error) {
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
             [strongSelf hideLoadingViewAnimated:YES];
             return;

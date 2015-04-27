@@ -11,9 +11,9 @@
 
 static CGFloat const HEMSpinnerDefaultDamping = 1.0f;
 static CGFloat const HEMSpinnerEndDamping = 0.6f;
-static CGFloat const HEMSpinnerDefaultDuration = 0.05f;
-static CGFloat const HEMSpinnerDefaultInitialVelocity = 2.25f;
-static CGFloat const HEMSpinnerNextDuration = 0.5f;
+static CGFloat const HEMSpinnerDefaultDuration = 0.075f;
+static CGFloat const HEMSpinnerDefaultInitialVelocity = 1.6f;
+static CGFloat const HEMSpinnerNextDuration = 0.15f;
 
 @interface HEMSpinnerView()
 
@@ -123,8 +123,7 @@ static CGFloat const HEMSpinnerNextDuration = 0.5f;
                           delay:0.0f
          usingSpringWithDamping:damping
           initialSpringVelocity:velocity
-                        options:UIViewAnimationOptionBeginFromCurrentState
-                                |UIViewAnimationOptionCurveLinear
+                        options:UIViewAnimationOptionCurveLinear
                      animations:^{
                          [self move:[self onScreenLabel] byY:slotHeight];
                          [self move:[self offScreenLabel] byY:slotHeight];

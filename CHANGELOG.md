@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.5.5
+
+New:
+
+* Added Timeline data request and error mp events
+
+Fixes:
+
+* Adjusted loading text font on trends and current conditions to match
+* Adjusted animation parameters on Room Check to fix choppiness on iOS 7
+
 ## 1.0.5.4
 
 New:

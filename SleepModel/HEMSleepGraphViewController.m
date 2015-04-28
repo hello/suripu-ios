@@ -42,6 +42,7 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* popupViewTop;
 @property (nonatomic, weak) IBOutlet UIButton* shortcutButton;
 @property (nonatomic, weak) IBOutlet HEMPopupView* popupView;
+@property (nonatomic, assign, getter=isLastNight) BOOL lastNight;
 @end
 
 @implementation HEMSleepGraphViewController
@@ -271,7 +272,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
     long score = [self.dataSource.sleepResult.score longValue];
     if (score > 0) {
         NSString* message;
-        if ([self.dataSource dateIsLastNight]) {
+        if (self.lastNight) {
             message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.last-night.format", nil), score];
         }
         else {
@@ -563,6 +564,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
         return;
 
     [self loadDataSourceForDate:self.dateForNightOfSleep];
+    self.lastNight = [self.dataSource dateIsLastNight];
 }
 
 - (void)configureCollectionView

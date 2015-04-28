@@ -137,24 +137,22 @@ static CGFloat const HEMVersionLabelHeightOffset = -24.f;
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     switch (section) {
-    case HEMSettingsAccountSection:
-        return HEMSettingsAccountRows;
-    case HEMSettingsFeedbackSection:
-        return HEMSettingsFeedbackRows;
-
-    default:
-        return 0;
+        case HEMSettingsAccountSection:
+            return HEMSettingsAccountRows;
+        case HEMSettingsFeedbackSection:
+            return HEMSettingsFeedbackRows;
+        default:
+            return 0;
     }
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     switch (section) {
-    case HEMSettingsFeedbackSection:
-        return HEMSettingsSectionHeaderHeight;
-
-    case HEMSettingsAccountSection:
-    default:
-        return 0.0f;
+        case HEMSettingsFeedbackSection:
+            return HEMSettingsSectionHeaderHeight;
+        case HEMSettingsAccountSection:
+        default:
+            return 0.0f;
     }
 }
 
@@ -229,28 +227,28 @@ static CGFloat const HEMVersionLabelHeightOffset = -24.f;
 
     if (section == HEMSettingsAccountSection) {
         switch (row) {
-        case HEMSettingsAccountRowIndex:
-            title = NSLocalizedString(@"settings.account", nil);
-            break;
-        case HEMSettingsDevicesRowIndex:
-            title = NSLocalizedString(@"settings.devices", nil);
-            break;
-        case HEMSettingsNotificationRowIndex:
-            title = NSLocalizedString(@"settings.notifications", nil);
-            break;
-        case HEMSettingsUnitsTimeRowIndex:
-            title = NSLocalizedString(@"settings.units", nil);
-            break;
-        default:
-            break;
+            case HEMSettingsAccountRowIndex:
+                title = NSLocalizedString(@"settings.account", nil);
+                break;
+            case HEMSettingsDevicesRowIndex:
+                title = NSLocalizedString(@"settings.devices", nil);
+                break;
+            case HEMSettingsNotificationRowIndex:
+                title = NSLocalizedString(@"settings.notifications", nil);
+                break;
+            case HEMSettingsUnitsTimeRowIndex:
+                title = NSLocalizedString(@"settings.units", nil);
+                break;
+            default:
+                break;
         }
     } else if (section == HEMSettingsFeedbackSection) {
         switch (row) {
-        case HEMSettingsFeedbackRowIndex:
-            title = NSLocalizedString(@"settings.feedback", nil);
-            break;
-        default:
-            break;
+            case HEMSettingsFeedbackRowIndex:
+                title = NSLocalizedString(@"settings.feedback", nil);
+                break;
+            default:
+                break;
         }
     }
 

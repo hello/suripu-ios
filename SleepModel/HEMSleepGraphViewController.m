@@ -382,6 +382,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
 - (IBAction)didTapAlarmShortcut:(id)sender
 {
+    [SENAnalytics track:HEMAnalyticsEventTimelineAlarmShortcut properties:nil];
     HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
     [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
 }

@@ -139,6 +139,7 @@ NSString* const HEMAnalyticsEventTimelineZoomOut = @"Timeline zoomed out";
 NSString* const HEMAnalyticsEventTimelineZoomIn = @"Timeline zoomed in";
 NSString* const HEMAnalyticsEventTimelineAdjustTime = @"Timeline adjust time tapped";
 NSString* const HEMAnalyticsEventTimelineDataRequest = @"Timeline data request";
+NSString* const HEMAnalyticsEventTimelineAlarmShortcut = @"Timeline alarm shorcut";
 
 // alarms
 NSString* const kHEMAnalyticsEventAlarms = @"Alarms";

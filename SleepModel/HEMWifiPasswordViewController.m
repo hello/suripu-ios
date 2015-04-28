@@ -474,16 +474,17 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         [[HEMOnboardingCache sharedCache] startPollingSensorData];
     }
     
-    [HEMOnboardingUtils notifyOfSensePairingChange:[self manager]];
-    
     __weak typeof(self) weakSelf = self;
     void(^proceed)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        [HEMOnboardingUtils notifyOfSensePairingChange:[strongSelf manager]];
+        
         if ([strongSelf delegate] != nil) {
             [HEMOnboardingCache clearCache];
             [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
         } else if ([strongSelf sensePairDelegate] != nil) {
-            [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:[strongSelf manager] from:self];
+            [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:[strongSelf manager] from:strongSelf];
         } else {
             [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard wifiToPillSegueIdentifier]
@@ -491,13 +492,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         }
     };
     
-    SENSenseLEDState led = ![self haveDelegates] ? SENSenseLEDStatePair : SENSenseLEDStateOff;
     NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
-    // simultaneously show connected message and flash led
-    [self stopActivityWithMessage:msg renableControls:NO success:YES completion:nil];
-    [[self manager] setLED:led completion:^(id response, NSError *error) {
-        proceed();
-    }];
+    [self stopActivityWithMessage:msg renableControls:NO success:YES completion:proceed];
 }
 
 - (void)executeNextStep {

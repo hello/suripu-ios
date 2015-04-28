@@ -23,6 +23,7 @@
 #import "HEMAlertViewController.h"
 #import "HEMDeviceDataSource.h"
 #import "HEMActionButton.h"
+#import "HEMActionSheetViewController.h"
 
 static NSInteger const HEMPillActionsCellHeight = 124.0f;
 
@@ -65,16 +66,37 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     return attrWarning;
 }
 
+- (NSAttributedString*)attributedLowBatteryMessage {
+    NSString* format = NSLocalizedString(@"settings.pill.warning.low-battery-format", nil);
+    NSString* batteryLow = NSLocalizedString(@"settings.pill.warning.battery-low", nil);
+    NSArray* args = @[[self redMessage:batteryLow]];
+    
+    NSMutableAttributedString* attrWarning =
+    [[NSMutableAttributedString alloc] initWithFormat:format args:args];
+    [attrWarning addAttributes:@{NSFontAttributeName : [UIFont deviceCellWarningMessageFont]}
+                         range:NSMakeRange(0, [attrWarning length])];
+    
+    return attrWarning;
+}
+
 - (NSAttributedString*)attributedMessageForWarning:(HEMDeviceWarning)warning {
     NSAttributedString* message = nil;
     switch (warning) {
         case HEMDeviceWarningLongLastSeen:
             message = [self attributedLongLastSeenMessage];
             break;
+        case HEMPillWarningHasLowBattery:
+            message = [self attributedLowBatteryMessage];
+            break;
         default:
             break;
     }
     return message;
+}
+
+- (NSDictionary*)dialogMessageAttributes:(BOOL)bold {
+    return @{NSFontAttributeName : bold ? [UIFont dialogMessageBoldFont] : [UIFont dialogMessageFont],
+             NSForegroundColorAttributeName : [UIColor blackColor]};
 }
 
 - (CGFloat)heightForWarning:(HEMDeviceWarning)warning withDefaultItemSize:(CGSize)size {
@@ -107,10 +129,10 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     if ([cell isKindOfClass:[HEMDeviceActionCollectionViewCell class]]) {
         HEMDeviceActionCollectionViewCell* actionCell = (HEMDeviceActionCollectionViewCell*)cell;
         [[actionCell action1Button] addTarget:self
-                                       action:@selector(replacePill:)
+                                       action:@selector(replaceBattery:)
                              forControlEvents:UIControlEventTouchUpInside];
         [[actionCell action2Button] addTarget:self
-                                       action:@selector(replaceBattery:)
+                                       action:@selector(showAdvancedOptions:)
                              forControlEvents:UIControlEventTouchUpInside];
     } else if ([cell isKindOfClass:[HEMWarningCollectionViewCell class]]) {
         HEMDeviceWarning warning = (HEMDeviceWarning)[[self warnings][[indexPath row]] integerValue];
@@ -159,28 +181,38 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
             [HEMSupportUtil openHelpToPage:page fromController:self];
             break;
         }
+        case HEMPillWarningHasLowBattery: {
+            [self replaceBattery:self];
+            break;
+        }
         default:
             break;
     }
 }
 
-- (void)replacePill:(id)sender {
-    NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-title", nil);
-    NSString* message = NSLocalizedString(@"settings.pill.dialog.unpair-message", nil);
-    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
-    [dialogVC setTitle:title];
-    [dialogVC setMessage:message];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
-    [dialogVC setViewToShowThrough:self.view];
-    [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
-        [self dismissViewControllerAnimated:YES completion:^{
-            [self unpair];
+- (void)showAdvancedOptions:(id)sender {
+    HEMActionSheetViewController* sheet =
+        [HEMMainStoryboard instantiateActionSheetViewController];
+    [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [sheet setTitle:NSLocalizedString(@"settings.pill.advanced.option.title", nil)];
+    
+    __weak typeof (self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"settings.pill.advanced.option.replace-pill", nil)
+                   titleColor:nil
+                  description:NSLocalizedString(@"settings.pill.advanced.option.replace-pill.desc", nil)
+                       action:^{
+                           [weakSelf replacePill];
+                       }];
+    
+    UIViewController* root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    if (![root respondsToSelector:@selector(presentationController)]) {
+        UIModalPresentationStyle origStyle = [root modalPresentationStyle];
+        [root setModalPresentationStyle:UIModalPresentationCurrentContext];
+        [sheet addDismissAction:^{
+            [root setModalPresentationStyle:origStyle];
         }];
-    }];
-
-    [dialogVC showFrom:self onDefaultActionSelected:^{
-        [self dismissViewControllerAnimated:YES completion:NULL];
-    }];
+    }
+    [root presentViewController:sheet animated:YES completion:nil];
 }
 
 - (void)replaceBattery:(id)sender {
@@ -189,6 +221,40 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 }
 
 #pragma mark - Unpairing the pill
+
+- (void)replacePill {
+    NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-title", nil);
+    NSString* messageFormat = NSLocalizedString(@"settings.pill.dialog.unpair-message.format", nil);
+    NSString* helpLink = NSLocalizedString(@"help.url.support", nil);
+    
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:helpLink
+                                                      attributes:[self dialogMessageAttributes:YES]]];
+    
+    NSAttributedString* confirmation =
+    [[NSMutableAttributedString alloc] initWithFormat:messageFormat
+                                                 args:args
+                                            baseColor:[UIColor blackColor]
+                                             baseFont:[UIFont dialogMessageFont]];
+    
+    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
+    [dialogVC setTitle:title];
+    [dialogVC setAttributedMessage:confirmation];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
+    [dialogVC setViewToShowThrough:self.view];
+    [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self unpair];
+        }];
+    }];
+    [dialogVC onLinkTapOf:helpLink takeAction:^(NSURL *link) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [HEMSupportUtil openHelpFrom:self];
+        }];
+    }];
+    [dialogVC showFrom:self onDefaultActionSelected:^{
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
+}
 
 - (void)showUnpairMessageForError:(NSError*)error {
     NSString* message = nil;

@@ -7,8 +7,9 @@
 //
 
 static CGFloat const kHEMAnimationActivityLineWidth = 2.0f;
-static CGFloat const kHEMAnimationActivityDuration = 3.0f;
-static CGFloat const kHEMAnimationDefaultDuration = 0.2f;
+
+CGFloat const kHEMAnimationActivityDuration = 1.0f;
+CGFloat const kHEMAnimationDefaultDuration = 0.2f;
 
 #import "HEMAnimationUtils.h"
 
@@ -69,6 +70,45 @@ static CGFloat const kHEMAnimationDefaultDuration = 0.2f;
             [view setTransform:CGAffineTransformIdentity];
         } completion:completion];
     }];
+}
+
++ (void)fade:(UIView*)view out:(void(^)(void))outBlock thenIn:(void(^)(void))inBlock {
+    if (!view) return;
+    [self fadeAll:@[view] out:outBlock thenIn:inBlock];
+}
+
++ (void)fadeAll:(NSArray*)views out:(void(^)(void))outBlock thenIn:(void(^)(void))inBlock {
+    [UIView animateWithDuration:kHEMAnimationDefaultDuration animations:^{
+        for (UIView* view in views) {
+            [view setAlpha:0.0f];
+        }
+    } completion:^(BOOL finished) {
+        if (outBlock) {
+            outBlock();
+        }
+        [UIView animateWithDuration:kHEMAnimationActivityDuration animations:^{
+            for (UIView* view in views) {
+                [view setAlpha:1.0f];
+            }
+        } completion:^(BOOL finished) {
+            if (inBlock) {
+                inBlock();
+            }
+        }];
+    }];
+}
+
++ (void)crossFadeFrom:(UIView*)fromView toView:(UIView*)toView then:(void(^)(BOOL finished))thenBlock {
+    [fromView setAlpha:1.0f];
+    [toView setAlpha:0.0f];
+    
+    [toView setFrame:[fromView frame]];
+    [[fromView superview] insertSubview:toView belowSubview:fromView];
+    
+    [UIView animateWithDuration:kHEMAnimationDefaultDuration+kHEMAnimationActivityDuration animations:^{
+        [fromView setAlpha:0.0f];
+        [toView setAlpha:1.0f];
+    } completion:thenBlock];
 }
 
 @end

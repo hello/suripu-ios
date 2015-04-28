@@ -21,8 +21,6 @@
 #import "HEMSingleResponseCell.h"
 #import "HEMMultipleResponseCell.h"
 
-static CGFloat const kHEMSleepViewAnimDuration = 0.2f;
-
 @interface HEMSleepQuestionsViewController () <UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *answerTableView;

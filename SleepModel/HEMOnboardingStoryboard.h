@@ -11,10 +11,13 @@
 
 /** Cell Reuse Identifiers */
 +(NSString *)networkReuseIdentifier;
++(NSString *)pillSetupTextCellReuseIdentifier;
++(NSString *)pillSetupImageCellReuseIdentifier;
 
 /** Segue Identifiers */
 +(NSString *)alarmToAnotherPillSegueIdentifier;
 +(NSString *)audioToSetupSegueIdentifier;
++(NSString *)beforeSleepToSmartAlarmSegueIdentifier;
 +(NSString *)beforeSleeptoRoomCheckSegueIdentifier;
 +(NSString *)doneSegueIdentifier;
 +(NSString *)genderSegueIdentifier;
@@ -26,6 +29,7 @@
 +(NSString *)noBleToBirthdaySegueIdentifier;
 +(NSString *)pillSetupToColorsSegueIdentifier;
 +(NSString *)pushToAudioSegueIdentifier;
++(NSString *)roomCheckToSmartAlarmSegueIdentifier;
 +(NSString *)sensePairToPillSegueIdentifier;
 +(NSString *)signupToNoBleSegueIdentifier;
 +(NSString *)skipPillPairSegue;

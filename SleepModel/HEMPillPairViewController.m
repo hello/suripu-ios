@@ -54,10 +54,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     
     [self configureButtons];
     [self configureActivity];
-    
-    if ([self delegate] == nil) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBPairPill];
-    }
+    [self trackAnalyticsEvent:HEMAnalyticsEventPairPill];
 }
 
 - (void)configureActivity {
@@ -132,8 +129,11 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
         __weak typeof(self) weakSelf = self;
         self.disconnectObserverId =
             [manager observeUnexpectedDisconnect:^(NSError *error) {
-                NSString* msg = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
-                [weakSelf showError:error customMessage:msg];
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if ([strongSelf isVisible]) {
+                    NSString* msg = NSLocalizedString(@"pairing.error.unexpected-disconnect", nil);
+                    [strongSelf showError:error customMessage:msg];
+                }
             }];
     }
 }
@@ -188,6 +188,10 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     [self setControlsEnabled:NO];
     [self setPairAttempts:[self pairAttempts] + 1];
     
+    if ([self pairAttempts] > 1) {
+        [self trackAnalyticsEvent:HEMAnalyticsEventPairPillRetry];
+    }
+    
     __weak typeof(self) weakSelf = self;
     void(^begin)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
@@ -226,8 +230,13 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
                 [strongSelf flashPairedState];
             } failure:^(NSError *error) {
                 SENSenseLEDState ledState = [strongSelf delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
-                [[strongSelf manager] setLED:ledState completion:^(id response, NSError *error) {
-                    [strongSelf showError:error customMessage:nil];
+                [[strongSelf manager] setLED:ledState completion:^(id response, NSError *ledError) {
+                    [strongSelf showError:error ?: ledError customMessage:nil];
+                    if (error && ledError) {
+                        // if there are errors from both, log the led error since showError: will
+                        // show the error for pill pairing failure instead, which will log that
+                        [SENAnalytics trackError:ledError withEventName:kHEMAnalyticsEventWarning];
+                    }
                 }];
             }];
         }];
@@ -273,7 +282,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
     
     [dialogVC showFrom:self onDefaultActionSelected:^{
         [self dismissViewControllerAnimated:YES completion:^{
-            [SENAnalytics track:kHEMAnalyticsEventOnBSkip properties:@{
+            [self trackAnalyticsEvent:HEMAnalyticsEventSkip properties:@{
                 kHEMAnalyticsEventPropOnBScreen : kHEMAnalyticsEventPropScreenPillPairing
             }];
             
@@ -292,6 +301,8 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 #pragma mark - Next
 
 - (void)proceed {
+    [HEMOnboardingUtils notifyOfPillPairingChange];
+    
     if ([self delegate] == nil) {
         [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];
         

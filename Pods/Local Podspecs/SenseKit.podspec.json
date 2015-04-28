@@ -1,0 +1,81 @@
+{
+  "name": "SenseKit",
+  "version": "0.1.0",
+  "summary": "Toolkit for building Sense apps",
+  "homepage": "https://github.com/hello/SenseKit",
+  "authors": {
+    "Delisa Mason": "iskanamagus@gmail.com"
+  },
+  "source": {
+    "git": "https://github.com/hello/SenseKit.git",
+    "tag": "0.1.0"
+  },
+  "platforms": {
+    "ios": "7.0"
+  },
+  "requires_arc": true,
+  "resources": "Pod/Assets/*.png",
+  "source_files": "Pod/Classes/SenseKit.h",
+  "subspecs": [
+    {
+      "name": "Analytics",
+      "source_files": "Pod/Classes/Analytics/*",
+      "dependencies": {
+        "Mixpanel": [
+          "2.7.2"
+        ],
+        "CocoaLumberjack": [
+          "1.6.3"
+        ]
+      }
+    },
+    {
+      "name": "API",
+      "source_files": "Pod/Classes/API/*",
+      "dependencies": {
+        "FXKeychain": [
+          "~> 1.5.1"
+        ],
+        "AFNetworking": [
+          "~> 2.5.0"
+        ],
+        "NSJSONSerialization-NSNullRemoval": [
+          "~> 1.0.0"
+        ]
+      }
+    },
+    {
+      "name": "BLE",
+      "source_files": "Pod/Classes/BLE/**/*.{h,m}",
+      "dependencies": {
+        "LGBluetooth": [
+
+        ],
+        "SHSProtoBuf": [
+
+        ],
+        "CocoaLumberjack": [
+          "1.6.3"
+        ]
+      }
+    },
+    {
+      "name": "Model",
+      "source_files": "Pod/Classes/Model/*",
+      "dependencies": {
+        "YapDatabase": [
+          "~> 2.4.3"
+        ]
+      }
+    },
+    {
+      "name": "Service",
+      "source_files": "Pod/Classes/Service/*",
+      "dependencies": {
+        "CocoaLumberjack": [
+          "1.6.3"
+        ]
+      }
+    }
+  ]
+}

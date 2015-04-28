@@ -15,16 +15,14 @@
 CGFloat const HEMSettingsCellTableMargin = 20.0f;
 
 static CGFloat const HEMSettingsCellCornerRadius = 2.0f;
-static CGFloat const HEMSettingsCellSeparatorSize = 0.5f;
+static CGFloat const HEMSettingsCellSeparatorSize = 1.0f;
 static CGFloat const HEMSettingsCellMargins = 16.0f;
-static CGFloat const HEMSettingsCellShadowOpacity = 0.5f;
 
-@interface HEMSettingsTableViewCell()
+@interface HEMSettingsTableViewCell ()
 
-@property (nonatomic, weak) CAShapeLayer* contentLayer;
-@property (nonatomic, weak) UIView* separator;
-@property (nonatomic, strong) UIActivityIndicatorView* activityView;
-
+@property (nonatomic, weak) CAShapeLayer *contentLayer;
+@property (nonatomic, weak) CAShapeLayer *borderLayer;
+@property (nonatomic, strong) UIActivityIndicatorView *activityView;
 @end
 
 @implementation HEMSettingsTableViewCell
@@ -33,14 +31,14 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.5f;
     [self setBackgroundColor:[UIColor clearColor]];
     [[self contentView] setBackgroundColor:[UIColor clearColor]];
     [self setSelectionStyle:UITableViewCellSelectionStyleNone];
-    
+
     [self addContentLayer];
     [self addSeparator];
-    
+
     [[self titleLabel] setFont:[UIFont settingsTableCellFont]];
     [[self titleLabel] setTextColor:[HelloStyleKit backViewTextColor]];
     [[self titleLabel] setBackgroundColor:[UIColor clearColor]];
-    
+
     [[self valueLabel] setFont:[UIFont settingsTableCellDetailFont]];
     [[self valueLabel] setTextColor:[HelloStyleKit settingsValueTextColor]];
     [[self valueLabel] setBackgroundColor:[UIColor clearColor]];
@@ -50,72 +48,101 @@ static CGFloat const HEMSettingsCellShadowOpacity = 0.5f;
 - (CGRect)layerFrame {
     CGRect frame = [self bounds];
     frame.origin.x = HEMSettingsCellMargins;
-    frame.size.width = CGRectGetWidth(frame) - (2*HEMSettingsCellMargins);
+    frame.size.width = CGRectGetWidth(frame) - (2 * HEMSettingsCellMargins);
     return frame;
 }
 
 - (void)addContentLayer {
-    NSShadow* shadow = [HelloStyleKit backViewCardShadow];
-    
-    CAShapeLayer * layer = [CAShapeLayer layer];
+    CAShapeLayer *layer = [CAShapeLayer layer];
     [layer setFillColor:[[UIColor whiteColor] CGColor]];
-    [layer setShadowOffset:[shadow shadowOffset]];
-    [layer setShadowRadius:[shadow shadowBlurRadius]];
-    [layer setShadowOpacity:HEMSettingsCellShadowOpacity];
-    [layer setShadowColor:[[shadow shadowColor] CGColor]];
-    
+
     [self setContentLayer:layer];
     [[self layer] insertSublayer:layer atIndex:0];
+    CAShapeLayer *borderLyer = [CAShapeLayer layer];
+    [borderLyer setFillColor:[[HelloStyleKit cardBorderColor] CGColor]];
+    self.borderLayer = borderLyer;
+    [self.layer insertSublayer:borderLyer atIndex:0];
 }
 
 - (void)addSeparator {
+    if ([self separator] != nil)
+        return;
+
     CGFloat x = CGRectGetMinX([[self titleLabel] frame]);
-    CGRect separatorFrame = {
-        x,
-        CGRectGetHeight([self bounds])-HEMSettingsCellSeparatorSize,
-        CGRectGetWidth([self bounds])-HEMSettingsCellMargins - x,
-        HEMSettingsCellSeparatorSize
-    };
-    UIView* separator = [[UIView alloc] initWithFrame:separatorFrame];
+    CGRect separatorFrame
+        = { x, CGRectGetHeight([self bounds]) - HEMSettingsCellSeparatorSize,
+            CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x, HEMSettingsCellSeparatorSize };
+    UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
     [separator setBackgroundColor:[HelloStyleKit separatorColor]];
-    [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth
-                                   | UIViewAutoresizingFlexibleTopMargin];
+    [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
+    [self setSeparator:separator];
     [[self contentView] addSubview:separator];
+}
+
+- (void)prepareForReuse {
+    [[self contentLayer] setHidden:NO];
+    [[self separator] setHidden:NO];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+
+    CGRect separatorFrame = [[self separator] frame];
+    separatorFrame.origin.x = CGRectGetMinX([[self titleLabel] frame]);
+    [[self separator] setFrame:separatorFrame];
 }
 
 - (void)roundContentLayerCorners:(UIRectCorner)corners {
     CGSize cornerRadii = CGSizeMake(HEMSettingsCellCornerRadius, HEMSettingsCellCornerRadius);
-    CGPathRef path = [[UIBezierPath bezierPathWithRoundedRect:[self layerFrame]
-                                            byRoundingCorners:corners
-                                                  cornerRadii:cornerRadii] CGPath];
-    [[self contentLayer] setPath:path];
+    CGRect contentFrame = [self layerFrame];
+    CGPathRef contentPath = [
+        [UIBezierPath bezierPathWithRoundedRect:contentFrame byRoundingCorners:corners cornerRadii:cornerRadii] CGPath];
+    [[self contentLayer] setPath:contentPath];
+    CGRect borderFrame = CGRectInset(contentFrame, -1.f, 0);
+    if ((corners & (UIRectCornerTopLeft | UIRectCornerTopRight)) != 0) {
+        borderFrame.origin.y -= 1;
+        borderFrame.size.height += 1;
+    }
+    if ((corners & (UIRectCornerBottomLeft | UIRectCornerBottomRight)) != 0) {
+        borderFrame.size.height += 1;
+    }
+    CGPathRef borderPath =
+        [[UIBezierPath bezierPathWithRoundedRect:borderFrame byRoundingCorners:corners cornerRadii:cornerRadii] CGPath];
+    [[self borderLayer] setPath:borderPath];
 }
 
-- (void)hideBottomShadow {
-    NSShadow* shadow = [HelloStyleKit backViewCardShadow];
-    CGRect shadowFrame = CGRectInset([self layerFrame], 0.0f, [shadow shadowBlurRadius]*2);
-    [[self contentLayer] setShadowPath:[[UIBezierPath bezierPathWithRect:shadowFrame] CGPath]];
+- (void)showShadow:(BOOL)isVisible {
+    CALayer *layer = [self.layer.sublayers firstObject];
+    if (isVisible) {
+        NSShadow *shadow = [HelloStyleKit backViewCardShadow];
+        layer.shadowOffset = shadow.shadowOffset;
+        layer.shadowOpacity = 1.f;
+        layer.shadowRadius = shadow.shadowBlurRadius;
+        layer.shadowColor = [shadow.shadowColor CGColor];
+    } else { layer.shadowOpacity = 0; }
 }
 
 - (void)showTopCorners {
-    [self roundContentLayerCorners:UIRectCornerTopLeft|UIRectCornerTopRight];
-    [self hideBottomShadow];
+    [self roundContentLayerCorners:UIRectCornerTopLeft | UIRectCornerTopRight];
+    [self showShadow:NO];
     [[self separator] setHidden:NO];
 }
 
 - (void)showBottomCorners {
-    [self roundContentLayerCorners:UIRectCornerBottomLeft|UIRectCornerBottomRight];
+    [self roundContentLayerCorners:UIRectCornerBottomLeft | UIRectCornerBottomRight];
+    [self showShadow:YES];
     [[self separator] setHidden:YES];
 }
 
 - (void)showNoCorners {
-    [[self contentLayer] setPath:[[UIBezierPath bezierPathWithRect:[self layerFrame]] CGPath]];
-    [self hideBottomShadow];
+    [self roundContentLayerCorners:0];
+    [self showShadow:NO];
     [[self separator] setHidden:NO];
 }
 
 - (void)showTopAndBottomCorners {
     [self roundContentLayerCorners:UIRectCornerAllCorners];
+    [self showShadow:YES];
     [[self separator] setHidden:YES];
 }
 

@@ -31,7 +31,7 @@
     [super viewDidLoad];
     [self configureButtons];
     [self enableBackButton:NO];
-    [SENAnalytics track:kHEMAnalyticsEventOnBAnotherPill];
+    [self trackAnalyticsEvent:HEMAnalyticsEventAnotherPill];
 }
 
 - (void)configureButtons {

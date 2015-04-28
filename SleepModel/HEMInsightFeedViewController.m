@@ -22,6 +22,7 @@
 #import "HEMSinkModalTransition.h"
 #import "HEMBounceModalTransition.h"
 #import "HEMStyledNavigationViewController.h"
+#import "HEMOnboardingUtils.h"
 
 @interface HEMInsightFeedViewController () <
     UICollectionViewDelegate, UICollectionViewDelegateFlowLayout>
@@ -58,6 +59,8 @@
     [[self collectionView] setDataSource:[self dataSource]];
     [[self collectionView] setDelegate:self];
     [[self collectionView] setAlwaysBounceVertical:YES];
+    
+    [SENAnalytics track:kHEMAnalyticsEventFeed];
 }
 
 - (void)viewDidBecomeActive {
@@ -68,7 +71,6 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self reload];
-    [SENAnalytics track:kHEMAnalyticsEventFeed];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reload)
                                                  name:SENAPIReachableNotification object:nil];

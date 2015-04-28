@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+extern NSString* const HEMOnboardingNotificationComplete;
+extern NSString* const HEMOnboardingNotificationDidChangeSensePairing;
+extern NSString* const HEMOnboardingNotificationUserInfoSenseManager;
+extern NSString* const HEMOnboardingNotificationDidChangePillPairing;
+
 /**
  * Checkpoints to be saved when progressing through the onboarding flow so that
  * user can resume from where user left off.  It is important that '...Start'
@@ -56,6 +61,11 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 + (NSAttributedString*)boldAttributedText:(NSString *)text withColor:(UIColor*)color;
 
 /**
+ * @return YES if onboarding has finished, NO otherwise
+ */
++ (BOOL)hasFinishedOnboarding;
+
+/**
  * Save the onboarding checkpoint so that when user comes back, user can resume
  * from where user left off.
  *
@@ -73,10 +83,10 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
 
 /**
  * @param checkpoint: the onboarding checkpoint
- * @param authorized: YES if user is authorized, NO otherwise
+ * @param force: YES to force the checkpoint, regardless of account state
  * @return the controller to show for the specified checkpoint
  */
-+ (UIViewController*)onboardingControllerForCheckpoint:(HEMOnboardingCheckpoint)checkpoint authorized:(BOOL)authorized;
++ (UIViewController*)onboardingControllerForCheckpoint:(HEMOnboardingCheckpoint)checkpoint force:(BOOL)force;
 
 /**
  * Clear checkpoints by resetting it to the beginning
@@ -121,5 +131,23 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  * Retrieve the last known SSID saved, if any
  */
 + (NSString*)lastConfiguredSSID;
+
+/**
+ * @method notifyOfSensePairingChange
+ *
+ * @discussion
+ * Convenience method to post a notification about a Sense pairing change
+ *
+ * @param: manager: optional sense manager that represents the new sense paired, if any
+ */
++ (void)notifyOfSensePairingChange:(SENSenseManager*)manager;
+
+/**
+ * @method notifyOfSensePairingChange
+ *
+ * @discussion
+ * Convenience method to post a notification about a Sleep Pill pairing change
+ */
++ (void)notifyOfPillPairingChange;
 
 @end

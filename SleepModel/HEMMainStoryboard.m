@@ -8,7 +8,9 @@
 
 static UIStoryboard *_storyboard = nil;
 static NSString *const _HEMmain = @"Main";
+static NSString *const _HEMrootViewController = @"RootViewController";
 static NSString *const _HEMaccountSettings = @"accountSettings";
+static NSString *const _HEMactionSheetViewController = @"actionSheetViewController";
 static NSString *const _HEMactions = @"actions";
 static NSString *const _HEMalarmChoiceCell = @"alarmChoiceCell";
 static NSString *const _HEMalarmDeleteCell = @"alarmDeleteCell";
@@ -36,13 +38,13 @@ static NSString *const _HEMinsight = @"insight";
 static NSString *const _HEMinsightFeed = @"insightFeed";
 static NSString *const _HEMmultiple = @"multiple";
 static NSString *const _HEMnotificationSettings = @"notificationSettings";
+static NSString *const _HEMoption = @"option";
 static NSString *const _HEMoverTime = @"overTime";
 static NSString *const _HEMpair = @"pair";
 static NSString *const _HEMpickSound = @"pickSound";
 static NSString *const _HEMpill = @"pill";
 static NSString *const _HEMpreference = @"preference";
 static NSString *const _HEMquestion = @"question";
-static NSString *const _HEMreset = @"reset";
 static NSString *const _HEMsense = @"sense";
 static NSString *const _HEMsensorGraphCell = @"sensorGraphCell";
 static NSString *const _HEMsensorViewController = @"sensorViewController";
@@ -58,7 +60,10 @@ static NSString *const _HEMsleepInsight = @"sleepInsight";
 static NSString *const _HEMsleepQuestions = @"sleepQuestions";
 static NSString *const _HEMtext = @"text";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
+static NSString *const _HEMtimeZoneNavViewController = @"timeZoneNavViewController";
+static NSString *const _HEMtimeZoneViewController = @"timeZoneViewController";
 static NSString *const _HEMtimelineFeedback = @"timelineFeedback";
+static NSString *const _HEMtimezone = @"timezone";
 static NSString *const _HEMtrendGraph = @"trendGraph";
 static NSString *const _HEMtrends = @"trends";
 static NSString *const _HEMunitCell = @"unitCell";
@@ -89,17 +94,18 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)insightReuseIdentifier { return _HEMinsight; }
 +(NSString *)multipleReuseIdentifier { return _HEMmultiple; }
++(NSString *)optionReuseIdentifier { return _HEMoption; }
 +(NSString *)overTimeReuseIdentifier { return _HEMoverTime; }
 +(NSString *)pairReuseIdentifier { return _HEMpair; }
 +(NSString *)preferenceReuseIdentifier { return _HEMpreference; }
 +(NSString *)questionReuseIdentifier { return _HEMquestion; }
-+(NSString *)resetReuseIdentifier { return _HEMreset; }
 +(NSString *)sensorGraphCellReuseIdentifier { return _HEMsensorGraphCell; }
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
 +(NSString *)signoutReuseIdentifier { return _HEMsignout; }
 +(NSString *)singleReuseIdentifier { return _HEMsingle; }
 +(NSString *)textReuseIdentifier { return _HEMtext; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
++(NSString *)timezoneReuseIdentifier { return _HEMtimezone; }
 +(NSString *)trendGraphReuseIdentifier { return _HEMtrendGraph; }
 +(NSString *)unitCellReuseIdentifier { return _HEMunitCell; }
 +(NSString *)warningReuseIdentifier { return _HEMwarning; }
@@ -113,12 +119,15 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)pickSoundSegueIdentifier { return _HEMpickSound; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
 +(NSString *)senseSegueIdentifier { return _HEMsense; }
++(NSString *)timezoneSegueIdentifier { return _HEMtimezone; }
 +(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
 +(NSString *)updateEmailSegueIdentifier { return _HEMupdateEmail; }
 +(NSString *)updateNameSegueIdentifier { return _HEMupdateName; }
 +(NSString *)updatePasswordSegueIdentifier { return _HEMupdatePassword; }
 
 /** View Controllers */
++(id)instantiateRootViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMrootViewController]; }
++(id)instantiateActionSheetViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMactionSheetViewController]; }
 +(id)instantiateAlarmListNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListNavViewController]; }
 +(id)instantiateAlarmListViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmListViewController]; }
 +(id)instantiateAlarmNavController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMalarmNavController]; }
@@ -134,6 +143,8 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateSleepHistoryController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepHistoryController]; }
 +(id)instantiateSleepInsightViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepInsight]; }
 +(id)instantiateSleepQuestionsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMsleepQuestions]; }
++(id)instantiateTimeZoneNavViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimeZoneNavViewController]; }
++(id)instantiateTimeZoneViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimeZoneViewController]; }
 +(id)instantiateTimelineFeedbackViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimelineFeedback]; }
 +(id)instantiateTrendsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtrends]; }
 

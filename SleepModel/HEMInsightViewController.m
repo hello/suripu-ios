@@ -19,7 +19,7 @@
 #import "HEMURLImageView.h"
 #import "HEMRootViewController.h"
 #import "HEMImageCollectionViewCell.h"
-#import "HEMInsightTextCollectionViewCell.h"
+#import "HEMTextCollectionViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
 
@@ -31,7 +31,6 @@ static CGFloat const HEMInsightTextVertPadding = 20.0f;
 
 @property (weak, nonatomic) IBOutlet UICollectionView *contentView;
 @property (weak, nonatomic) IBOutlet UIView *buttonContainer;
-@property (weak, nonatomic) IBOutlet UIButton *shareButton;
 @property (weak, nonatomic) IBOutlet UIButton *doneButton;
 
 @property (strong, nonatomic) SENInsightInfo* info;
@@ -62,14 +61,16 @@ static CGFloat const HEMInsightTextVertPadding = 20.0f;
     itemSize.width = CGRectGetWidth([[self contentView] bounds]);
     [layout setItemSize:itemSize];
     
-    if ([self bottomOfContent] > CGRectGetHeight([[self contentView] bounds])) {
-        NSShadow* shadow = [HelloStyleKit insightShadow];
-        CALayer* layer = [[self buttonContainer] layer];
-        [layer setShadowRadius:[shadow shadowBlurRadius]];
-        [layer setShadowOffset:[shadow shadowOffset]];
-        [layer setShadowColor:[[shadow shadowColor] CGColor]];
-        [layer setShadowOpacity:1.0f];
-    }
+    NSShadow* shadow = [HelloStyleKit insightShadow];
+    CALayer* layer = [[self buttonContainer] layer];
+    [layer setShadowRadius:[shadow shadowBlurRadius]];
+    [layer setShadowOffset:[shadow shadowOffset]];
+    [layer setShadowColor:[[shadow shadowColor] CGColor]];
+    [layer setShadowOpacity:[self shouldShowShadow] ? 1.0f : 0.0f];
+}
+
+- (BOOL)shouldShowShadow {
+    return [self bottomOfContent] > CGRectGetHeight([[self contentView] bounds]);
 }
 
 - (CGFloat)bottomOfContent {
@@ -92,7 +93,6 @@ static CGFloat const HEMInsightTextVertPadding = 20.0f;
                 __strong typeof(weakSelf) strongSelf = weakSelf;
                 [strongSelf setInfoError:error];
                 [strongSelf setInfo:info];
-                [[strongSelf shareButton] setEnabled:[[info info] length] > 0];
                 [strongSelf showContent];
                 // show the content before we remove the activity
                 [activity dismissWithResultText:nil showSuccessMark:NO remove:YES completion:nil];
@@ -184,7 +184,7 @@ static CGFloat const HEMInsightTextVertPadding = 20.0f;
         cell = imageCell;
     } else {
         reuseId = [HEMMainStoryboard textReuseIdentifier];
-        HEMInsightTextCollectionViewCell* textCell =
+        HEMTextCollectionViewCell* textCell =
             [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
                                                       forIndexPath:indexPath];
         NSAttributedString* attributedText = nil;
@@ -243,14 +243,6 @@ static CGFloat const HEMInsightTextVertPadding = 20.0f;
     CGFloat currentBottom = CGRectGetHeight([scrollView bounds])+yOffset;
     CGFloat percentage = MIN(MAX(0.0f, ([self bottomOfContent] - currentBottom)/10.0f), 1.0f);
     [[[self buttonContainer] layer] setShadowOpacity:percentage];
-}
-
-#pragma mark - Actions
-
-- (IBAction)share:(id)sender {
-    UIActivityViewController *activityController =
-        [[UIActivityViewController alloc] initWithActivityItems:@[[self messageToShow]] applicationActivities:nil];
-    [self presentViewController:activityController animated:YES completion:nil];
 }
 
 - (IBAction)done:(id)sender {

@@ -11,16 +11,22 @@
 #import <SenseKit/SENServiceDevice.h>
 
 #import "HEMDebugController.h"
-#import "HEMActionSheetController.h"
+#import "HEMActionSheetViewController.h"
 #import "HEMSupportUtil.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMOnboardingCache.h"
+#import "HEMOnboardingStoryboard.h"
+#import "HEMStyledNavigationViewController.h"
+#import "HEMMainStoryboard.h"
+#import "HelloStyleKit.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
 @property (weak,   nonatomic) UIViewController*   presentingController;
-@property (strong, nonatomic) HEMActionSheetController* supportOptionController;
-@property (strong, nonatomic) HEMActionSheetController* ledOptionController;
+@property (strong, nonatomic) HEMActionSheetViewController* supportOptionController;
+@property (strong, nonatomic) HEMActionSheetViewController* ledOptionController;
+@property (weak,   nonatomic) UIViewController* roomCheckViewController;
+@property (assign, nonatomic) UIModalPresentationStyle origPresentationStyle;
 
 @end
 
@@ -34,76 +40,93 @@
     self = [super init];
     if (self) {
         [self setPresentingController:[controller presentedViewController] ?: controller];
+        [self setOrigPresentationStyle:[[self presentingController] modalPresentationStyle]];
     }
     return self;
+}
+
+- (void)setSupportOptionController:(HEMActionSheetViewController *)supportOptionController {
+    _supportOptionController = supportOptionController;
+    if (_supportOptionController == nil) {
+        [[self presentingController] setModalPresentationStyle:[self origPresentationStyle]];
+    }
+}
+
+- (void)presentOptions:(HEMActionSheetViewController*)optionsVC {
+    [optionsVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    if (![[self presentingController] respondsToSelector:@selector(presentationController)]) {
+        [[self presentingController] setModalPresentationStyle:UIModalPresentationCurrentContext];
+    }
+    [[self presentingController] presentViewController:optionsVC animated:YES completion:nil];
 }
 
 - (void)showSupportOptions {
     if ([self supportOptionController] != nil) return; // don't show it if showing now
 
-    NSString* title = NSLocalizedString(@"debug.options.title", nil);
-    HEMActionSheetController* sheet = [[HEMActionSheetController alloc] initWithTitle:title
-                                                                              message:nil
-                                                                 presentingController:[self presentingController]];
+    HEMActionSheetViewController* sheet =
+        [HEMMainStoryboard instantiateActionSheetViewController];
+    [sheet setTitle:NSLocalizedString(@"debug.options.title", nil)];
     
     [self addContactSupportOptionTo:sheet];
     [self addResetCheckpointOptionTo:sheet];
     [self addLedOptionTo:sheet];
+    [self addRoomCheckOptionTo:sheet];
     [self addCancelOptionTo:sheet];
     
-    [self setSupportOptionController:sheet]; // need to hold on to it otherwise action callbacks will crash
-    [[self supportOptionController] show];
+    [self setSupportOptionController:sheet];
+    
+    [sheet addDismissAction:^{
+        [self setSupportOptionController:nil];
+    }];
+    
+    [self presentOptions:sheet];
 }
 
-- (void)addContactSupportOptionTo:(HEMActionSheetController*)sheet {
+- (void)addContactSupportOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
-    [sheet addActionWithText:NSLocalizedString(@"debug.option.contact-support", nil) block:^{
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.contact-support", nil) action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [HEMSupportUtil contactSupportFrom:[strongSelf presentingController] mailDelegate:strongSelf];
-            [strongSelf setSupportOptionController:nil];
-        }
+        [HEMSupportUtil contactSupportFrom:[strongSelf presentingController]
+                              mailDelegate:strongSelf];
+        [strongSelf setSupportOptionController:nil];
     }];
 }
 
-- (void)addResetCheckpointOptionTo:(HEMActionSheetController*)sheet {
+- (void)addResetCheckpointOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
-    [sheet addActionWithText:NSLocalizedString(@"debug.option.reset", nil) block:^{
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset", nil) action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            if ([[strongSelf presentingController] isKindOfClass:[UINavigationController class]]) {
-                UINavigationController* onboardingVC = (UINavigationController*)[strongSelf presentingController];
-                UIViewController* startController = [HEMOnboardingUtils onboardingControllerForCheckpoint:HEMOnboardingCheckpointStart authorized:NO];
-                if (![[onboardingVC topViewController] isKindOfClass:[startController class]]) {
-                    [onboardingVC setViewControllers:@[startController] animated:YES];
-                }
+        if ([[strongSelf presentingController] isKindOfClass:[UINavigationController class]]) {
+            UINavigationController* onboardingVC = (UINavigationController*)[strongSelf presentingController];
+            UIViewController* startController =
+            [HEMOnboardingUtils onboardingControllerForCheckpoint:HEMOnboardingCheckpointStart force:YES];
+            if (![[onboardingVC topViewController] isKindOfClass:[startController class]]) {
+                [onboardingVC setViewControllers:@[startController] animated:YES];
             }
-            [strongSelf setSupportOptionController:nil];
-            [SENAuthorizationService deauthorize];
         }
+        [strongSelf setSupportOptionController:nil];
+        [SENAuthorizationService deauthorize];
     }];
 }
 
 #pragma mark LED Support
 
-- (void)addLedOptionTo:(HEMActionSheetController*)sheet {
+- (void)addLedOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
-    [sheet addActionWithText:NSLocalizedString(@"debug.option.led", nil) block:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf showLEDOptions];
-            [strongSelf setSupportOptionController:nil];
-        }
-    }];
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.led", nil) action:^{
+                           __strong typeof(weakSelf) strongSelf = weakSelf;
+                           [strongSelf showLEDOptions];
+                           [strongSelf setSupportOptionController:nil];
+                       }];
 }
 
 - (void)showLEDOptions {
     if ([self ledOptionController] != nil) return;
     
-    NSString* title = NSLocalizedString(@"debug.option.led.title", nil);
-    HEMActionSheetController* sheet = [[HEMActionSheetController alloc] initWithTitle:title
-                                                                              message:nil
-                                                                 presentingController:[self presentingController]];
+    HEMActionSheetViewController* sheet =
+        [HEMMainStoryboard instantiateActionSheetViewController];
+    [sheet setTitle:NSLocalizedString(@"debug.option.led.title", nil)];
+    
     [self addLEDOption:SENSenseLEDStateOff to:sheet];
     [self addLEDOption:SENSenseLEDStatePair to:sheet];
     [self addLEDOption:SENSenseLEDStateSuccess to:sheet];
@@ -112,10 +135,16 @@
     
     [self setSupportOptionController:sheet];
     [self setLedOptionController:sheet];
-    [[self ledOptionController] show];
+    
+    [sheet addDismissAction:^{
+        [self setSupportOptionController:nil];
+        [self setLedOptionController:nil];
+    }];
+    
+    [self presentOptions:sheet];
 }
 
-- (void)addLEDOption:(SENSenseLEDState)ledState to:(HEMActionSheetController*)sheet {
+- (void)addLEDOption:(SENSenseLEDState)ledState to:(HEMActionSheetViewController*)sheet {
     NSString* buttonText = nil;
     switch (ledState) {
         case SENSenseLEDStatePair:
@@ -134,31 +163,58 @@
     }
     
     __weak typeof(self) weakSelf = self;
-    [sheet addActionWithText:buttonText block:^{
+    [sheet addOptionWithTitle:buttonText action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf setLedOptionController:nil];
-        }
+        [strongSelf setLedOptionController:nil];
+        [strongSelf setSupportOptionController:nil];
         
         if ([[HEMOnboardingCache sharedCache] senseManager] != nil) {
             [[[HEMOnboardingCache sharedCache] senseManager] setLED:ledState completion:nil];
         } else {
             [[SENServiceDevice sharedService] setLEDState:ledState completion:nil];
         }
-        
     }];
+}
+
+#pragma mark Room Check
+
+- (void)addRoomCheckOptionTo:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.room-check.title", nil) action:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        [strongSelf showRoomCheckController];
+        [strongSelf setSupportOptionController:nil];
+    }];
+}
+
+- (void)showRoomCheckController {
+    UIViewController* rcVC = [HEMOnboardingStoryboard instantiateRoomCheckViewController];
+    UINavigationController* nav = [[HEMStyledNavigationViewController alloc] initWithRootViewController:rcVC];
+    [[self presentingController] presentViewController:nav animated:YES completion:nil];
+
+    [self setRoomCheckViewController:nav];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(didEndRoomCheck:)
+                                                 name:HEMOnboardingNotificationComplete
+                                               object:nil];
+}
+
+- (void)didEndRoomCheck:(NSNotification*)notification {
+    if ([self roomCheckViewController] != nil) {
+        [[self presentingController] dismissViewControllerAnimated:YES completion:nil];
+        [self setRoomCheckViewController:nil];
+    }
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:HEMOnboardingNotificationComplete object:nil];
 }
 
 #pragma mark Cancel
 
-- (void)addCancelOptionTo:(HEMActionSheetController*)sheet {
+- (void)addCancelOptionTo:(HEMActionSheetViewController*)sheet {
     __weak typeof(self) weakSelf = self;
-    [sheet addActionWithText:NSLocalizedString(@"actions.cancel", nil) block:^{
+    [sheet addOptionWithTitle:NSLocalizedString(@"actions.cancel", nil) action:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf setSupportOptionController:nil];
-            [strongSelf setLedOptionController:nil];
-        }
+        [strongSelf setSupportOptionController:nil];
+        [strongSelf setLedOptionController:nil];
     }];
 }
 

@@ -9,6 +9,7 @@ static NSString* const SENInsightCategory = @"category";
 static NSString* const SENInsightId = @"identifier";
 static NSString* const SENInsightText = @"text";
 static NSString* const SENInsightImageUri = @"image_url";
+static NSString* const SENInsightInfoPreviewKey = @"info_preview";
 
 static NSString* const SENInsightCategoryGeneric = @"GENERIC";
 
@@ -17,10 +18,11 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
 - (instancetype)initWithDictionary:(NSDictionary *)dict
 {
     if (self = [super init]) {
-        _title = dict[SENInsightTitleKey];
-        _message = dict[SENInsightMessageKey];
+        _title = [dict[SENInsightTitleKey] copy];
+        _message = [dict[SENInsightMessageKey] copy];
         _dateCreated = [self dateFromNumber:dict[SENInsightDateCreatedKey]];
-        _category = dict[SENInsightCategory];
+        _category = [dict[SENInsightCategory] copy];
+        _infoPreview = [dict[SENInsightInfoPreviewKey] copy];
     }
     return self;
 }
@@ -93,10 +95,10 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
     if (self = [super init]) {
         id identifierObj = dict[SENInsightId];
         _identifier = [identifierObj isKindOfClass:[NSNumber class]] ? [identifierObj integerValue] : NSNotFound;
-        _category = dict[SENInsightCategory];
-        _info = dict[SENInsightText];
-        _imageURI = dict[SENInsightImageUri];
-        _title = dict[SENInsightTitleKey];
+        _category = [dict[SENInsightCategory] copy];
+        _info = [dict[SENInsightText] copy];
+        _imageURI = [dict[SENInsightImageUri] copy];
+        _title = [dict[SENInsightTitleKey] copy];
     }
     return self;
 }

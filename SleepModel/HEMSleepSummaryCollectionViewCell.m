@@ -8,11 +8,11 @@
 
 @interface HEMSleepSummaryCollectionViewCell ()
 
-@property (weak, nonatomic) IBOutlet UIButton *presleepButton;
-@property (weak, nonatomic) IBOutlet UIButton *sleepSummaryButton;
-@property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
-@property (weak, nonatomic) IBOutlet UIView *presleepContainerView;
-@property (weak, nonatomic) IBOutlet HEMSleepSummaryPointerGradientView *pointerView;
+@property (weak, nonatomic) IBOutlet UIButton* presleepButton;
+@property (weak, nonatomic) IBOutlet UIButton* sleepSummaryButton;
+@property (weak, nonatomic) IBOutlet UILabel* sleepScoreTextLabel;
+@property (weak, nonatomic) IBOutlet UIView* presleepContainerView;
+@property (weak, nonatomic) IBOutlet HEMSleepSummaryPointerGradientView* pointerView;
 @property (weak, nonatomic) IBOutlet UIView* separatorView;
 @property (weak, nonatomic) IBOutlet HEMBreakdownButton* breakdownButton;
 @property (weak, nonatomic) IBOutlet UIView* breakdownContainerView;
@@ -28,16 +28,16 @@
 @implementation HEMSleepSummaryCollectionViewCell
 
 static CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
-static CGFloat const HEMSleepSummaryBreakdownMiniDiameter = 60.f;
+static CGFloat const HEMSleepSummaryBreakdownMiniDiameter = 70.f;
 static CGFloat const HEMSleepSummaryBreakdownExpandedDiameter = 144.f;
 static CGFloat const HEMSleepSummaryBreakdownExpandedDistance = 28.f;
-static CGFloat const HEMSleepSummaryBreakdownSeparatorHeight = 148.f;
+static CGFloat const HEMSleepSummaryBreakdownSeparatorHeight = 168.f;
 static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
 
 - (id)initWithCoder:(NSCoder*)aDecoder
 {
     if (self = [super initWithCoder:aDecoder]) {
-        NSDictionary* attributes = @{NSKernAttributeName:@1};
+        NSDictionary* attributes = @{ NSKernAttributeName : @1 };
         _sleepScoreLabelText = [[NSAttributedString alloc] initWithString:NSLocalizedString(@"sleep-history.score", nil)
                                                                attributes:attributes];
     }
@@ -57,11 +57,12 @@ static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
     if (!self.breakdownSeparatorGradient) {
         self.breakdownSeparatorGradient = [CAGradientLayer new];
         self.breakdownSeparatorGradient.colors = @[
-            (id)[UIColor colorWithWhite:0.95f alpha:1.f].CGColor,
-            (id)[UIColor colorWithWhite:1.f alpha:0].CGColor];
+            (id)[UIColor colorWithWhite:0 alpha:0.1f].CGColor,
+            (id)[UIColor colorWithWhite:0 alpha:0].CGColor
+        ];
         self.breakdownSeparatorGradient.startPoint = CGPointZero;
         self.breakdownSeparatorGradient.endPoint = CGPointMake(0, 1);
-        self.breakdownSeparatorGradient.locations = @[@(0.5), @1];
+        self.breakdownSeparatorGradient.locations = @[ @(0.5), @1 ];
         self.breakdownSeparatorView.backgroundColor = [UIColor clearColor];
         [self.breakdownSeparatorView.layer addSublayer:self.breakdownSeparatorGradient];
     }
@@ -127,7 +128,8 @@ static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
         return;
     if ([self.breakdownButton isVisible]) {
         [self hideBreakdown];
-    } else {
+    }
+    else {
         [self showBreakdown];
     }
 }
@@ -180,13 +182,15 @@ static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
             [self.breakdownSeparatorView layoutIfNeeded];
             self.breakdownSeparatorGradient.frame = self.breakdownSeparatorView.bounds;
         } completion:NULL];
+        
+        [SENAnalytics track:HEMAnalyticsEventSleepScoreBreakdown];
     }];
 }
 
-- (void)setTintColor:(UIColor *)tintColor onButton:(UIButton*)button
+- (void)setTintColor:(UIColor*)tintColor onButton:(UIButton*)button
 {
-    NSDictionary* attributes = @{NSKernAttributeName:@(HEMSleepSummaryButtonKerning),
-                                 NSForegroundColorAttributeName:tintColor};
+    NSDictionary* attributes = @{ NSKernAttributeName : @(HEMSleepSummaryButtonKerning),
+        NSForegroundColorAttributeName : tintColor };
     NSAttributedString* text = [[NSAttributedString alloc] initWithString:[button titleForState:UIControlStateNormal]
                                                                attributes:attributes];
     [button setAttributedTitle:text forState:UIControlStateNormal];

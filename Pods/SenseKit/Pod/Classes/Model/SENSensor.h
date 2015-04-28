@@ -22,10 +22,10 @@ extern NSString* const SENSensorUpdateFailedNotification;
 extern NSInteger const SENSensorSentinelValue;
 
 typedef NS_ENUM(NSUInteger, SENSensorCondition) {
-    SENSensorConditionUnknown,
-    SENSensorConditionAlert,
-    SENSensorConditionIdeal,
-    SENSensorConditionWarning,
+    SENSensorConditionUnknown = 0,
+    SENSensorConditionAlert = 1,
+    SENSensorConditionWarning = 2,
+    SENSensorConditionIdeal = 3
 };
 
 typedef NS_ENUM(NSUInteger, SENSensorUnit) {

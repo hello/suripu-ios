@@ -1,5 +1,172 @@
 # Changelog
 
+## 1.0.5.6
+
+New:
+
+* Added Timeline mp event for the alarm shortcut
+
+Fixes:
+
+* removed an extra call to set the LED after setting wifi credentials 
+
+## 1.0.5.5
+
+New:
+
+* Added Timeline data request and error mp events
+
+Fixes:
+
+* Fixes issue where Timeline for Last Night is not updated when app resumes from background to foreground.
+* Adjusted loading text font on trends and current conditions to match
+* Adjusted animation parameters on Room Check to fix choppiness on iOS 7
+
+## 1.0.5.4
+
+New:
+
+* Room check animation and visual tweaks
+
+Fixes:
+
+* Fix issue with modal transitions on iOS 7 devices
+
+## 1.0.5.3
+
+New:
+
+* Custom action sheet for debug options
+* Moved factory reset and remove device options in to an action sheet, under Advanced
+* Updated room check sensor icons
+
+Fixes:
+
+* time to sleep value will properly display in minutes
+* pill pairing errors will no longer be swalloed by LED operations
+* factory reset will now properly dismiss overlay if Sense unexpectedly disconnects during the process
+
+## 1.0.5.2
+
+New:
+
+* Visual design tweaks to Timeline
+
+Fixes:
+
+* Layout tweaks to Attach Sleep Pill screen in onboarding
+* Room check sensor value now matches value after animation completion
+* Devices settings now is refreshed when Sense is paired from system alert
+* Devices settings now is refreshed when Pill is paired from system alert
+
+## 1.0.5.1
+
+New:
+
+* If linking account fails twice on the Sense pairing screen (WiFi is set), an option is provided to the user to edit the WiFi from the error dialog.
+* Skip the room check during onboarding if sensor data is not available
+* Alert dialogs containing links are now tappable.  Affects Sense and Pill settings screen.
+
+Fixes:
+
+* Unexpected disconnects during onboarding will have no effect if the screen in which is listening to such event is not currently visible
+* Will now record the first sleep event and the last wake up event in HealthKit rather than just taking the first detected event for each type in case there are multiple of each.
+
+## 1.0.5.0
+
+New:
+
+* Updated visual design of room check
+* Updated visual design of timeline
+* Added analytics event for retrying pill pairing during onboarding
+
+Fixes:
+
+* fixed analytics event not being prefixed with Onboarding for screens post pill pairing
+
+## 1.0.4.6
+
+New:
+
+* Updated Sleep Pill setup screen
+* Welcome dialogs animate in
+* visual design tweaks to Settings
+* Current conditions and Alarm view indicate when a Sense is not paired
+
+Fixes
+
+* time picker fixes for timeline feedback views
+
+## 1.0.4.5
+
+Fixes:
+
+* back view icons were reversed
+
+## 1.0.4.4
+
+New:
+
+* updated insights visual design
+* removed sharing of insights
+* updated alarm visual design
+* if time zone is not properly set for your account, an alert will be shown
+* updated copy
+* added additional timeline analytics
+
+Fixes:
+
+* resolved issue with the app showing a black screen after adjusting timeline time on devices running iOS 7.1.  Does not affect other iOS versions.
+* prevent app from freezing if trying to swipe to go back from the alarm view
+
+## 1.0.4.3
+
+New:
+
+* Present time zone update screen modally and show current selection
+* visual tweaks to Timeline, dialogs, loading indicators, trends, settings, and welcome screen
+
+Fixes:
+
+* share icon on Timeline will no longer reappear when its been opened and app is brought back in to the foreground
+
+## 1.0.4.2
+
+New:
+
+* Added / updated timeline analytics events
+* Added / updated wifi scanning analytics events
+* Firing analytics events for screens that are reused from Onboarding as normal events.
+
+Fixes:
+
+* Resolved issue where launch image was not properly synced with the Timeline when app is launched
+* Resolved issue where WEP passwords with 00 will fail (depends on new firmware)
+
+## 1.0.4.1
+
+Fixes:
+
+* processing available time zones in settings in background to speed up transition
+* fixed issue where 1 of the time zone option was covered by the navigation bar 
+
+## 1.0.4.0
+
+New:
+
+* Change the time zone used by the system
+* global in-app alert is now shown when Sleep Pill battery is low
+* Sleep Pill settings will now show a warning if battery is low
+
+Fixes:
+
+* Prevents mp events from the core part of the app from firing when not visible
+* Edigint Timeline events should update the timeline after saving
+* Changed the order of action buttons in the delete alarm confirmation dialog
+* Resolved possible crasher that can occur when syncing with HealthKit if the wake up time was manually adjusted to be before the sleep time
+* Fixed issue where HealthKit may not automatically sync
+* Adding additional events for when global in-app alerts are fired.
+
 ## 1.0.3.7
 
 Fixes:

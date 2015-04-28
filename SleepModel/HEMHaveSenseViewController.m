@@ -12,7 +12,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [SENAnalytics track:kHEMAnalyticsEventOnBStart];
+    [SENAnalytics track:HEMAnalyticsEventOnbStart];
 }
 
 @end

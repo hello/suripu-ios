@@ -18,7 +18,7 @@
     // start checking for paired accounts to the previously paired Sense so
     // that future steps in the flow can use the cached data
     [[HEMOnboardingCache sharedCache] checkNumberOfPairedAccounts];
-    [SENAnalytics track:kHEMAnalyticsEventOnBSleepPill];
+    [self trackAnalyticsEvent:HEMAnalyticsEventSleepPill];
 }
 
 @end

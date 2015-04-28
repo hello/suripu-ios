@@ -18,6 +18,7 @@
 #import "UIView+HEMSnapshot.h"
 #import "HEMSleepEventButton.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
+#import "HEMBounceModalTransition.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMTutorial.h"
@@ -35,11 +36,13 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 @property (nonatomic, strong) NSIndexPath* expandedIndexPath;
 @property (nonatomic, getter=presleepSectionIsExpanded) BOOL presleepExpanded;
 @property (nonatomic, strong) UIPanGestureRecognizer* panGestureRecognizer;
+@property (nonatomic, strong) HEMBounceModalTransition* dataVerifyTransitionDelegate;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* shortcutButtonTrailing;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* shortcutButtonBottom;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* popupViewTop;
 @property (nonatomic, weak) IBOutlet UIButton* shortcutButton;
 @property (nonatomic, weak) IBOutlet HEMPopupView* popupView;
+@property (nonatomic, assign, getter=isLastNight) BOOL lastNight;
 @end
 
 @implementation HEMSleepGraphViewController
@@ -62,6 +65,8 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
     [self configureCollectionView];
     [self reloadData];
     self.animationDelegate = [HEMZoomAnimationTransitionDelegate new];
+    self.dataVerifyTransitionDelegate = [HEMBounceModalTransition new];
+    self.dataVerifyTransitionDelegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
     self.transitioningDelegate = self.animationDelegate;
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan)];
     self.panGestureRecognizer.delegate = self;
@@ -71,16 +76,15 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
     [self adjustHeight];
 
     [SENAnalytics track:kHEMAnalyticsEventTimeline
-             properties:@{kHEMAnalyticsEventPropDate : [self dateForNightOfSleep] ?: @"undefined"}];
+             properties:@{ kHEMAnalyticsEventPropDate : [self dateForNightOfSleep] ?: @"undefined" }];
 }
 
 - (void)showTutorial
 {
     if (![HEMTutorial shouldShowTutorialForTimeline])
         return;
-    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if ([root drawerIsVisible] || self.dataSource.numberOfSleepSegments == 0 || ![self isViewPushed])
+        if (![self isViewFullyVisible] || self.dataSource.numberOfSleepSegments == 0)
             return;
         [HEMTutorial showTutorialForTimelineIfNeeded];
     });
@@ -125,6 +129,10 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
                                                  name:SENAPIReachableNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(reloadData)
+                                                 name:HEMTimelineFeedbackSuccessNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleAuthorization)
                                                  name:SENAuthorizationServiceDidAuthorizeNotification
                                                object:nil];
@@ -167,7 +175,8 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
     [self reloadData];
 }
 
-- (void)dealloc {
+- (void)dealloc
+{
     _historyViewController = nil;
     _dataSource = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -183,15 +192,15 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
 - (BOOL)shouldEnableZoomButton
 {
-    return [self isViewPushed];
+    return [self isViewFullyVisible];
 }
 
 - (BOOL)shouldHideShareButton
 {
-    return ![self isViewPushed] || [self.dataSource.sleepResult.score integerValue] == 0;
+    return ![self isViewFullyVisible] || [self.dataSource.sleepResult.score integerValue] == 0;
 }
 
-- (void)willShowDetailsForInsight:(SENSleepResultSensorInsight *)insight
+- (void)willShowDetailsForInsight:(SENSleepResultSensorInsight*)insight
 {
     if (![self presleepSectionIsExpanded]) {
         self.presleepExpanded = YES;
@@ -218,9 +227,10 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
                     sizeForItemAtIndexPath:indexPath];
         [eventCell useExpandedLayout:YES targetSize:size animated:NO];
         eventCell.layer.zPosition = indexPath.row + HEMEventOverlayZPosition;
-    } else if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
+    }
+    else if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
         HEMSleepSummaryCollectionViewCell* summaryCell = (id)cell;
-        if (![self isViewPushed])
+        if (![self isViewFullyVisible])
             [self updateTopBarActionsInCell:summaryCell withState:NO];
     }
 }
@@ -262,12 +272,13 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
     long score = [self.dataSource.sleepResult.score longValue];
     if (score > 0) {
         NSString* message;
-        if ([self.dataSource dateIsLastNight]) {
+        if (self.lastNight) {
             message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.last-night.format", nil), score];
-        } else {
+        }
+        else {
             message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.other-days.format", nil), score, [self.dataSource titleTextForDate]];
         }
-        UIActivityViewController *activityController = [[UIActivityViewController alloc] initWithActivityItems:@[message]
+        UIActivityViewController* activityController = [[UIActivityViewController alloc] initWithActivityItems:@[ message ]
                                                                                          applicationActivities:nil];
         [self presentViewController:activityController animated:YES completion:nil];
     }
@@ -275,7 +286,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
 - (void)zoomButtonTapped:(UIButton*)sender
 {
-    if (![self isViewPushed])
+    if (![self isViewFullyVisible])
         return;
     self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
     self.historyViewController.selectedDate = self.dateForNightOfSleep;
@@ -319,15 +330,16 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
             }
         }
         self.expandedIndexPath = indexPath;
-        
+
         NSMutableDictionary* properties
-            = [@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventPropEvent} mutableCopy];
+            = [@{ kHEMAnalyticsEventPropAction : kHEMAnalyticsEventPropEvent } mutableCopy];
         SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
         if ([segment eventType] != nil) {
             properties[kHEMAnalyticsEventPropType] = [segment eventType];
         }
         [SENAnalytics track:kHEMAnalyticsEventTimelineAction properties:properties];
-    } else {
+    }
+    else {
         self.expandedIndexPath = nil;
     }
     CGSize size = [self collectionView:self.collectionView
@@ -341,15 +353,16 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
     [self animateAllCellHeightChanges];
     CGRect cellRect = [self.collectionView convertRect:cell.frame toView:self.collectionView.superview];
     if (shouldExpand && !CGRectContainsRect(self.collectionView.frame, cellRect))
-            [self.collectionView scrollToItemAtIndexPath:indexPath
-                                        atScrollPosition:UICollectionViewScrollPositionCenteredVertically
-                                                animated:YES];
+        [self.collectionView scrollToItemAtIndexPath:indexPath
+                                    atScrollPosition:UICollectionViewScrollPositionCenteredVertically
+                                            animated:YES];
 }
 
 - (void)didTapDataVerifyButton:(UIButton*)sender
 {
     NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
     UINavigationController* navController = [HEMMainStoryboard instantiateTimelineFeedbackViewController];
+    navController.transitioningDelegate = self.dataVerifyTransitionDelegate;
     navController.modalPresentationStyle = UIModalPresentationCustom;
     HEMTimelineFeedbackViewController* feedbackController = (id)navController.topViewController;
     feedbackController.dateForNightOfSleep = self.dateForNightOfSleep;
@@ -369,6 +382,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
 - (IBAction)didTapAlarmShortcut:(id)sender
 {
+    [SENAnalytics track:HEMAnalyticsEventTimelineAlarmShortcut properties:nil];
     HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
     [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
 }
@@ -400,7 +414,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
             [(HEMSleepSegmentCollectionViewCell*)cell emphasizeAppearance];
             SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
             [self.popupView setText:[self summaryPopupTextForSegment:segment]];
-            UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+            UICollectionViewLayoutAttributes* attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
             CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
             CGFloat top = CGRectGetMinY(cellLocation) - [self.popupView intrinsicContentSize].height - HEMPopupSpacingDistance;
             self.popupViewTop.constant = top - HEMPopupAnimationDistance;
@@ -413,7 +427,8 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
                 self.popupView.alpha = 1;
             }];
         }
-    } else if (sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled) {
+    }
+    else if (sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled) {
         [UIView animateWithDuration:0.15f animations:^{
             self.popupView.alpha = 0;
         }];
@@ -462,7 +477,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
         depth = @"medium";
     else
         depth = @"light";
-    
+
     NSString* format = [NSString stringWithFormat:HEMPopupTextFormat, segmentType, depth];
     return NSLocalizedString(format, nil);
 }
@@ -471,12 +486,9 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 {
 }
 
-- (BOOL)isViewPushed
+- (BOOL)isViewFullyVisible
 {
-    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    CGFloat statusBarHeight = MIN(CGRectGetHeight(statusBarFrame), CGRectGetWidth(statusBarFrame));
-    CGPoint location = [self.view.superview convertPoint:self.view.frame.origin fromView:nil];
-    return location.y <= statusBarHeight;
+    return ![[HEMRootViewController rootViewControllerForKeyWindow] drawerIsVisible];
 }
 
 - (BOOL)shouldAllowRecognizerToReceiveTouch:(UIPanGestureRecognizer*)recognizer
@@ -510,21 +522,21 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
 #pragma mark UIScrollViewDelegate
 
-- (void)scrollViewDidScroll:(UIScrollView *)scrollView
+- (void)scrollViewDidScroll:(UIScrollView*)scrollView
 {
     CGPoint offset = scrollView.contentOffset;
     CGFloat constant = offset.y > 0 ? HEMAlarmShortcutHiddenTrailing : HEMAlarmShortcutDefaultTrailing;
     [self moveShortcutButtonWithOffset:constant];
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
+- (void)scrollViewDidEndDragging:(UIScrollView*)scrollView willDecelerate:(BOOL)decelerate
 {
     if (!decelerate) {
         [self moveShortcutButtonWithOffset:HEMAlarmShortcutDefaultTrailing];
     }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
+- (void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView
 {
     [self moveShortcutButtonWithOffset:HEMAlarmShortcutDefaultTrailing];
 }
@@ -553,6 +565,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
         return;
 
     [self loadDataSourceForDate:self.dateForNightOfSleep];
+    self.lastNight = [self.dataSource dateIsLastNight];
 }
 
 - (void)configureCollectionView
@@ -579,7 +592,8 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 }
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath*)indexPath
+                    layout:(UICollectionViewLayout*)collectionViewLayout
+    sizeForItemAtIndexPath:(NSIndexPath*)indexPath
 {
     static CGFloat const HEMEventSoundPlayerHeight = 48.f;
     static CGFloat const HEMEventAdjustTimeHeight = 48.f;
@@ -598,21 +612,23 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
         if ([self.expandedIndexPath isEqual:indexPath]) {
             CGFloat height = HEMSleepGraphCollectionViewEventTitleOnlyHeight;
             NSAttributedString* message = [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
-            NSStringDrawingOptions options = (NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading);
+            NSStringDrawingOptions options = (NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading);
             CGRect textBounds = [message boundingRectWithSize:CGSizeMake(width - HEMEventMessageInset, CGFLOAT_MAX)
                                                       options:options
                                                       context:nil];
             height += ceilf(CGRectGetHeight(textBounds));
             if (segment.sound)
-                height += HEMEventSoundPlayerHeight + (HEMEventItemSpacing*2) + HEMEventBottomPadding;
+                height += HEMEventSoundPlayerHeight + (HEMEventItemSpacing * 2) + HEMEventBottomPadding;
             else if ([HEMTimelineFeedbackViewController canAdjustTimeForSegment:segment])
                 height += HEMEventAdjustTimeHeight + HEMEventBottomPadding;
             else if (message.length > 0)
                 height += HEMEventBottomPadding + HEMEventItemSpacing;
             return CGSizeMake(width, height);
-        } else if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
+        }
+        else if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
             return CGSizeMake(width, MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight));
-        } else {
+        }
+        else {
             return CGSizeMake(width, ceilf(durationHeight));
         }
     }
@@ -625,11 +641,12 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 - (CGFloat)heightForCellWithSegment:(SENSleepResultSegment*)segment
 {
     return ([segment.duration doubleValue] / 3600) * (CGRectGetHeight([UIScreen mainScreen].bounds)
-                                                      / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
+                                                         / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
 }
 
 - (CGSize)collectionView:(UICollectionView*)collectionView
-                  layout:(UICollectionViewLayout*)collectionViewLayout referenceSizeForHeaderInSection:(NSInteger)section
+                             layout:(UICollectionViewLayout*)collectionViewLayout
+    referenceSizeForHeaderInSection:(NSInteger)section
 {
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     if (!hasSegments || section != HEMSleepGraphCollectionViewSegmentSection)
@@ -638,8 +655,9 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
     return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMTimelineHeaderCellHeight);
 }
 
-- (CGSize)collectionView:(UICollectionView *)collectionView
-                  layout:(UICollectionViewLayout *)collectionViewLayout referenceSizeForFooterInSection:(NSInteger)section
+- (CGSize)collectionView:(UICollectionView*)collectionView
+                             layout:(UICollectionViewLayout*)collectionViewLayout
+    referenceSizeForFooterInSection:(NSInteger)section
 {
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     if (!hasSegments || section != HEMSleepGraphCollectionViewSegmentSection)
@@ -649,7 +667,8 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 }
 
 - (CGFloat)collectionView:(UICollectionView*)collectionView
-                   layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
+                                 layout:(UICollectionViewLayout*)collectionViewLayout
+    minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
     return 0;
 }

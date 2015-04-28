@@ -16,7 +16,7 @@
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
 
-@interface HEMTrendCollectionViewCell ()<HEMScopePickerViewDelegate, BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate>
+@interface HEMTrendCollectionViewCell () <HEMScopePickerViewDelegate, BEMSimpleLineGraphDataSource, BEMSimpleLineGraphDelegate>
 
 @property (nonatomic, strong) NSArray* points;
 @property (nonatomic) CGFloat max;
@@ -50,19 +50,33 @@
     self.dateFormatter = [NSDateFormatter new];
     self.dateFormatter.dateFormat = @"MMM d";
     self.dayOfWeekFormatter = [NSDateFormatter new];
-    self.dayOfWeekFormatter.dateFormat = @"EEEEEE";
+    self.dayOfWeekFormatter.dateFormat = @"EEEEE";
     self.monthFormatter = [NSDateFormatter new];
     self.monthFormatter.dateFormat = @"MMM";
 }
 
 - (void)configureLineGraphView
 {
+    CGFloat topRed, topGreen, topBlue, bottomRed, bottomGreen, bottomBlue, alpha;
+    [[HelloStyleKit trendGraphTopColor] getRed:&topRed green:&topGreen blue:&topBlue alpha:&alpha];
+    [[HelloStyleKit trendGraphBottomColor] getRed:&bottomRed green:&bottomGreen blue:&bottomBlue alpha:&alpha];
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    size_t num_locations = 2;
+    CGFloat locations[2] = { 0.0, 1.0 };
+    CGFloat components[8] = {
+        topRed, topGreen, topBlue, 1.0,
+        bottomRed, bottomGreen, bottomBlue, 1.0
+    };
+    CGGradientRef gradient = CGGradientCreateWithColorComponents(colorspace, components, locations, num_locations);
+    CGColorSpaceRelease(colorspace);
+
     self.lineGraphView.dataSource = self;
     self.lineGraphView.delegate = self;
     self.lineGraphView.sizePoint = 5.f;
     self.lineGraphView.colorTop = [UIColor clearColor];
     self.lineGraphView.colorLine = [[HelloStyleKit tintColor] colorWithAlphaComponent:0.4f];
-    self.lineGraphView.colorBottom = [[HelloStyleKit tintColor] colorWithAlphaComponent:0.07f];
+    self.lineGraphView.colorBottom = [UIColor whiteColor];
+    self.lineGraphView.gradientBottom = gradient;
     self.lineGraphView.enableBezierCurve = YES;
     self.lineGraphView.alwaysDisplayPopUpLabels = YES;
     self.lineGraphView.alwaysDisplayDots = YES;
@@ -89,7 +103,7 @@
     [self.scopePickerView setButtonsWithTitles:options selectedIndex:selectedIndex];
 }
 
-- (void)showGraphOfType:(HEMTrendCellGraphType)type withData:(NSArray *)data
+- (void)showGraphOfType:(HEMTrendCellGraphType)type withData:(NSArray*)data
 {
     self.points = data;
     NSArray* values = [data valueForKey:NSStringFromSelector(@selector(yValue))];
@@ -108,7 +122,8 @@
     if (showBarGraph) {
         [self layoutIfNeeded];
         [self.barGraphView setValues:data];
-    } else if (showLineGraph) {
+    }
+    else if (showLineGraph) {
         [self configureLineGraphView];
     }
     [self.lineGraphView reloadGraph];
@@ -120,7 +135,8 @@
     }];
 }
 
-- (NSArray*)sectionIndexValuesOfType:(HEMTrendCellGraphLabelType)type {
+- (NSArray*)sectionIndexValuesOfType:(HEMTrendCellGraphLabelType)type
+{
     NSMutableArray* labels = [[NSMutableArray alloc] initWithCapacity:self.labeledIndexes.count];
     NSArray* indexes = [self.labeledIndexes sortedArrayUsingSelector:@selector(compare:)];
     int counter = 0;
@@ -128,30 +144,30 @@
         SENTrendDataPoint* dataPoint = self.points[[index integerValue]];
         NSString* formattedValue = nil;
         switch (type) {
-            case HEMTrendCellGraphLabelTypeValue: {
-                if (dataPoint.yValue == 0)
-                    formattedValue = NSLocalizedString(@"empty-data", nil);
-                else
-                    formattedValue = [NSString stringWithFormat:@"%.0f", dataPoint.yValue];
-            } break;
-            case HEMTrendCellGraphLabelTypeDate:
-                formattedValue = [self.dateFormatter stringFromDate:dataPoint.date];
-                break;
-            case HEMTrendCellGraphLabelTypeDayOfWeek: {
-                if (dataPoint.date)
-                    formattedValue = [self.dayOfWeekFormatter stringFromDate:dataPoint.date];
-                else
-                    formattedValue = [self dayOfWeekForIndex:counter % 7];
-            } break;
-            case HEMTrendCellGraphLabelTypeMonth:
-                formattedValue = [self.monthFormatter stringFromDate:dataPoint.date];
-                break;
-            case HEMTrendCellGraphLabelTypeHourValue:
-                formattedValue = [NSString stringWithFormat:@"%.1fh", dataPoint.yValue/60];
-                break;
-            case HEMTrendCellGraphLabelTypeNone:
-            default:
-                break;
+        case HEMTrendCellGraphLabelTypeValue: {
+            if (dataPoint.yValue == 0)
+                formattedValue = NSLocalizedString(@"empty-data", nil);
+            else
+                formattedValue = [NSString stringWithFormat:@"%.0f", dataPoint.yValue];
+        } break;
+        case HEMTrendCellGraphLabelTypeDate:
+            formattedValue = [self.dateFormatter stringFromDate:dataPoint.date];
+            break;
+        case HEMTrendCellGraphLabelTypeDayOfWeek: {
+            if (dataPoint.date)
+                formattedValue = [self.dayOfWeekFormatter stringFromDate:dataPoint.date];
+            else
+                formattedValue = [self dayOfWeekForIndex:counter % 7];
+        } break;
+        case HEMTrendCellGraphLabelTypeMonth:
+            formattedValue = [self.monthFormatter stringFromDate:dataPoint.date];
+            break;
+        case HEMTrendCellGraphLabelTypeHourValue:
+            formattedValue = [NSString stringWithFormat:@"%.1fh", dataPoint.yValue / 60];
+            break;
+        case HEMTrendCellGraphLabelTypeNone:
+        default:
+            break;
         }
         if (formattedValue)
             [labels addObject:formattedValue];
@@ -163,32 +179,40 @@
 - (NSString*)dayOfWeekForIndex:(int)index
 {
     switch (index) {
-        case 0: return NSLocalizedString(@"trends.days.sunday.short", nil);
-        case 1: return NSLocalizedString(@"trends.days.monday.short", nil);
-        case 2: return NSLocalizedString(@"trends.days.tuesday.short", nil);
-        case 3: return NSLocalizedString(@"trends.days.wednesday.short", nil);
-        case 4: return NSLocalizedString(@"trends.days.thursday.short", nil);
-        case 5: return NSLocalizedString(@"trends.days.friday.short", nil);
-        case 6: return NSLocalizedString(@"trends.days.saturday.short", nil);
-        default: return nil;
+    case 0:
+        return NSLocalizedString(@"trends.days.sunday.short", nil);
+    case 1:
+        return NSLocalizedString(@"trends.days.monday.short", nil);
+    case 2:
+        return NSLocalizedString(@"trends.days.tuesday.short", nil);
+    case 3:
+        return NSLocalizedString(@"trends.days.wednesday.short", nil);
+    case 4:
+        return NSLocalizedString(@"trends.days.thursday.short", nil);
+    case 5:
+        return NSLocalizedString(@"trends.days.friday.short", nil);
+    case 6:
+        return NSLocalizedString(@"trends.days.saturday.short", nil);
+    default:
+        return nil;
     }
 }
 
 #pragma mark HEMScopePickerViewDelegate
 
-- (void)didTapButtonWithText:(NSString *)text
+- (void)didTapButtonWithText:(NSString*)text
 {
     [self.delegate didTapTimeScopeInCell:self withText:text];
 }
 
 #pragma mark BEMSimpleLineGraphDataSource
 
-- (NSInteger)numberOfPointsInLineGraph:(BEMSimpleLineGraphView *)graph
+- (NSInteger)numberOfPointsInLineGraph:(BEMSimpleLineGraphView*)graph
 {
     return self.points.count;
 }
 
-- (CGFloat)lineGraph:(BEMSimpleLineGraphView *)graph valueForPointAtIndex:(NSInteger)index
+- (CGFloat)lineGraph:(BEMSimpleLineGraphView*)graph valueForPointAtIndex:(NSInteger)index
 {
     SENTrendDataPoint* point = self.points[index];
     return point.yValue;
@@ -196,44 +220,53 @@
 
 #pragma mark BEMSimpleLineGraphDelegate
 
-- (BOOL)noDataLabelEnableForLineGraph:(BEMSimpleLineGraphView *)graph
+- (BOOL)noDataLabelEnableForLineGraph:(BEMSimpleLineGraphView*)graph
 {
     return NO;
 }
 
-- (void)lineGraphDidBeginLoading:(BEMSimpleLineGraphView *)graph
+- (void)lineGraphDidBeginLoading:(BEMSimpleLineGraphView*)graph
 {
     self.labeledIndexes = [NSMutableArray new];
 }
 
-- (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView *)graph
+- (void)lineGraphDidFinishLoading:(BEMSimpleLineGraphView*)graph
 {
     if ([self shouldShowGraphLabels]) {
         self.overlayView.hidden = NO;
         [self.overlayView layoutIfNeeded];
         NSArray* headers = [self sectionIndexValuesOfType:self.topLabelType];
         NSArray* footers = [self sectionIndexValuesOfType:self.bottomLabelType];
+        if (self.bottomLabelType == HEMTrendCellGraphLabelTypeHourValue) {
+            self.overlayView.bottomLabelColor = [HelloStyleKit lightTintColor];
+        } else {
+            self.overlayView.bottomLabelColor = [HelloStyleKit trendTextColor];
+        }
+        self.overlayView.bottomLabelFont = [UIFont trendBottomLabelFont];
         [self.overlayView setSectionFooters:footers headers:headers];
-    } else {
+    }
+    else {
         self.overlayView.hidden = YES;
     }
 }
 
-- (NSInteger)numberOfGapsBetweenLabelsOnLineGraph:(BEMSimpleLineGraphView *)graph {
-    return self.points.count/(self.numberOfGraphSections + 1);
+- (NSInteger)numberOfGapsBetweenLabelsOnLineGraph:(BEMSimpleLineGraphView*)graph
+{
+    return self.points.count / (self.numberOfGraphSections + 1);
 }
 
-- (NSString *)lineGraph:(BEMSimpleLineGraphView *)graph labelOnXAxisForIndex:(NSInteger)index {
+- (NSString*)lineGraph:(BEMSimpleLineGraphView*)graph labelOnXAxisForIndex:(NSInteger)index
+{
     [self.labeledIndexes addObject:@(index)];
     return @"";
 }
 
-- (BOOL)lineGraph:(BEMSimpleLineGraphView *)graph alwaysDisplayPopUpAtIndex:(CGFloat)index
+- (BOOL)lineGraph:(BEMSimpleLineGraphView*)graph alwaysDisplayPopUpAtIndex:(CGFloat)index
 {
     return index == self.maxIndex || index == self.minIndex;
 }
 
-- (UIColor *)lineGraph:(BEMSimpleLineGraphView *)graph colorForDotAtIndex:(NSInteger)index
+- (UIColor*)lineGraph:(BEMSimpleLineGraphView*)graph colorForDotAtIndex:(NSInteger)index
 {
     if (index == self.maxIndex || index == self.minIndex) {
         CGFloat value = [self lineGraph:graph valueForPointAtIndex:index];
@@ -242,12 +275,12 @@
     return nil;
 }
 
-- (BOOL)lineGraph:(BEMSimpleLineGraphView *)graph alwaysDisplayDotAtIndex:(NSInteger)index
+- (BOOL)lineGraph:(BEMSimpleLineGraphView*)graph alwaysDisplayDotAtIndex:(NSInteger)index
 {
     return index == self.maxIndex || index == self.minIndex;
 }
 
-- (UIColor *)lineGraph:(BEMSimpleLineGraphView *)graph colorForPopUpAtIndex:(NSInteger)index
+- (UIColor*)lineGraph:(BEMSimpleLineGraphView*)graph colorForPopUpAtIndex:(NSInteger)index
 {
     return [self lineGraph:graph colorForDotAtIndex:index];
 }

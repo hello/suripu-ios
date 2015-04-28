@@ -7,6 +7,7 @@
 //
 #import <SenseKit/SENServiceDevice.h>
 #import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENAPITimeZone.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -23,12 +24,15 @@
 #import "HEMRootViewController.h"
 #import "HEMDevicesViewController.h"
 #import "HEMMainStoryboard.h"
+#import "HEMBounceModalTransition.h"
 
 @interface HEMSystemAlertController()<HEMPillPairDelegate, HEMSensePairingDelegate>
 
 @property (nonatomic, strong) HEMActionView* alertView;
 @property (nonatomic, weak)   UIViewController* viewController;
 @property (nonatomic, assign) SENServiceDeviceState warningState;
+@property (nonatomic, assign) BOOL enableSystemMonitoring;
+@property (nonatomic, strong) HEMBounceModalTransition* modalTransitionDelegate;
 
 @end
 
@@ -38,49 +42,146 @@
     self = [super init];
     if (self) {
         [self setViewController:viewController];
-        [self listenForSignOut];
     }
     return self;
 }
 
-- (void)enableDeviceMonitoring:(BOOL)enable {
-    // if already in current state, ignore
-    if ([[SENServiceDevice sharedService] monitorDeviceStates] == enable) return;
+- (void)enableSystemMonitoring:(BOOL)enable {
+    _enableSystemMonitoring = enable;
     
-    [[SENServiceDevice sharedService] setMonitorDeviceStates:enable];
-    
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     if (enable) {
-        [center addObserver:self
-                   selector:@selector(showDeviceWarning)
-                       name:SENServiceDeviceNotificationWarning
-                     object:nil];
+        [self checkSystemIfEnabled];
     } else {
-        [center removeObserver:self name:SENServiceDeviceNotificationWarning object:nil];
+        [[SENServiceDevice sharedService] resetDeviceStates];
+    }
+
+}
+
+- (HEMActionView*)configureAlertViewWithTitle:(NSString*)title
+                                      message:(NSString*)message
+                            cancelButtonTitle:(NSString*)cancelTitle
+                               fixButtonTitle:(NSString*)fixTitle {
+    
+    NSMutableParagraphStyle* messageStyle
+    = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
+    [messageStyle setAlignment:NSTextAlignmentCenter];
+    NSDictionary* messageAttributes = @{
+                                        NSFontAttributeName : [UIFont systemAlertMessageFont],
+                                        NSForegroundColorAttributeName : [HelloStyleKit deviceAlertMessageColor],
+                                        NSParagraphStyleAttributeName : messageStyle};
+    
+    NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message
+                                                                      attributes:messageAttributes];
+    HEMActionView* alert = [[HEMActionView alloc] initWithTitle:title message:attrMessage];
+    [[alert cancelButton] setTitle:[cancelTitle uppercaseString] forState:UIControlStateNormal];
+    [[alert okButton] setTitle:[fixTitle uppercaseString] forState:UIControlStateNormal];
+    
+    return alert;
+}
+
+- (void)cancelAlert:(id)sender {
+    [self dismissAlert:nil];
+    [SENAnalytics track:HEMAnalyticsEventSystemAlertAction
+             properties:@{kHEMAnalyticsEventPropAction : HEMAnalyticsEventSysAlertActionLater}];
+}
+
+#pragma mark - Time Zone
+
+- (void)checkTimeZone {
+    __weak typeof(self) weakSelf = self;
+    [SENAPITimeZone getConfiguredTimeZone:^(NSTimeZone* data, NSError *error) {
+        if (data == nil && error == nil) {
+            [weakSelf showTimeZoneWarning];
+        }
+    }];
+}
+
+- (void)showTimeZoneWarning {
+    if ([self alertView] != nil) {
+        DDLogVerbose(@"another alert is currently shown, skip showing time zone alert");
+        return;
+    }
+    
+    NSString* title = NSLocalizedString(@"alerts.timezone.title", nil);
+    NSString* message = NSLocalizedString(@"alerts.timezone.message", nil);
+    NSString* cancelTitle = NSLocalizedString(@"actions.later", nil);
+    NSString* fixTitle = NSLocalizedString(@"actions.fix-now", nil);
+    
+    HEMActionView* alert = [self configureAlertViewWithTitle:title
+                                                     message:message
+                                           cancelButtonTitle:cancelTitle
+                                              fixButtonTitle:fixTitle];
+    [self setAlertView:alert];
+    [[[self alertView] cancelButton] addTarget:self
+                                        action:@selector(cancelAlert:)
+                              forControlEvents:UIControlEventTouchUpInside];
+    [[[self alertView] okButton] addTarget:self
+                                    action:@selector(fixTimeZoneNow:)
+                          forControlEvents:UIControlEventTouchUpInside];
+    [[self alertView] showInView:[[self viewController] view] animated:YES completion:nil];
+    
+    [SENAnalytics track:HEMAnalyticsEventSystemAlert
+             properties:@{kHEMAnalyticsEventPropType : @"time zone"}];
+}
+
+- (void)fixTimeZoneNow:(id)sender {
+    [self dismissAlert:^{
+        UIViewController* tzVC = [HEMMainStoryboard instantiateTimeZoneNavViewController];
+        [self setModalTransitionDelegate:[[HEMBounceModalTransition alloc] init]];
+        [tzVC setTransitioningDelegate:[self modalTransitionDelegate]];
+        [tzVC setModalPresentationStyle:UIModalPresentationCustom];
+        [[self viewController] presentViewController:tzVC animated:YES completion:nil];
+    }];
+    [SENAnalytics track:HEMAnalyticsEventSystemAlertAction
+             properties:@{kHEMAnalyticsEventPropAction : HEMAnalyticsEventSysAlertActionNow}];
+}
+
+#pragma mark - Devices
+
+- (void)checkSystemIfEnabled {
+    if ([self enableSystemMonitoring]) {
+        __weak typeof(self) weakSelf = self;
+        [[SENServiceDevice sharedService] checkDevicesState:^(SENServiceDeviceState state) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (state != SENServiceDeviceStateUnknown && state != SENServiceDeviceStateNormal) {
+                [strongSelf showDeviceWarning];
+            } else {
+                [strongSelf checkTimeZone];
+            }
+        }];
     }
 }
 
 - (void)showDeviceWarning {
     if ([self alertView] != nil) {
         SENServiceDevice* service = [SENServiceDevice sharedService];
-        DDLogVerbose(@"another device warning (%ld) received, but alert already showing somethig",
+        DDLogVerbose(@"another alert is currently shown, skip showing %ld",
                      [service deviceState]);
         return;
     }
     
     NSString* title = nil;
     NSString* message = nil;
+    NSString* cancelTitle = nil;
+    NSString* fixTitle = nil;
+    
     SENServiceDevice* service = [SENServiceDevice sharedService];
     [self setWarningState:[service deviceState]];
-    [self deviceWarningTitle:&title message:&message];
+    [self deviceWarningTitle:&title message:&message cancelButtonTitle:&cancelTitle fixButtonTitle:&fixTitle];
     
-    if (title != nil && message != nil) {
-        [self showDeviceWarning:title message:message];
+    if ( message != nil) { // title is optional, but if message its nil, then we assume warning is not supported
+        [self showDeviceWarningWithTitle:title message:message cancelButtonTitle:cancelTitle fixButtonTitle:fixTitle];
+        [SENAnalytics track:HEMAnalyticsEventSystemAlert
+                 properties:@{kHEMAnalyticsEventPropType : @([service deviceState])}];
     }
     
 }
 
-- (void)deviceWarningTitle:(NSString**)warningTitle message:(NSString**)warningMessage {
+- (void)deviceWarningTitle:(NSString**)warningTitle
+                   message:(NSString**)warningMessage
+         cancelButtonTitle:(NSString**)cancelTitle
+            fixButtonTitle:(NSString**)fixTitle {
+    
     switch ([self warningState]) {
         case SENServiceDeviceStateSenseNotPaired:
             *warningTitle = NSLocalizedString(@"alerts.device.no-sense.title", nil);
@@ -98,31 +199,37 @@
             *warningTitle = NSLocalizedString(@"alerts.device.pill-last-seen.title", nil);
             *warningMessage = NSLocalizedString(@"alerts.device.pill-last-seen.message", nil);
             break;
+        case SENServiceDeviceStatePillLowBattery:
+            *warningMessage = NSLocalizedString(@"alerts.device.pill-low-battery.message", nil);
+            *cancelTitle = NSLocalizedString(@"actions.skip", nil);
+            *fixTitle = NSLocalizedString(@"actions.replace", nil);
         default:
             break;
     }
+    
+    if (*warningMessage != nil) {
+        if (*cancelTitle == nil) {
+            *cancelTitle = NSLocalizedString(@"actions.later", nil);
+        }
+        
+        if (*fixTitle == nil) {
+            *fixTitle = NSLocalizedString(@"actions.fix-now", nil);
+        }
+    }
+
 }
 
-- (void)showDeviceWarning:(NSString*)title message:(NSString*)message {
-    NSMutableParagraphStyle* messageStyle
-        = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
-    [messageStyle setAlignment:NSTextAlignmentCenter];
-    NSDictionary* messageAttributes = @{
-        NSFontAttributeName : [UIFont deviceAlertMessageFont],
-        NSForegroundColorAttributeName : [HelloStyleKit deviceAlertMessageColor],
-        NSParagraphStyleAttributeName : messageStyle};
+- (void)showDeviceWarningWithTitle:(NSString*)title message:(NSString*)message
+                 cancelButtonTitle:(NSString*)cancelTitle fixButtonTitle:(NSString*)fixTitle {
     
-    NSAttributedString* attrMessage = [[NSAttributedString alloc] initWithString:message
-                                                                      attributes:messageAttributes];
-    HEMActionView* alert = [[HEMActionView alloc] initWithTitle:title message:attrMessage];
+    HEMActionView* alert = [self configureAlertViewWithTitle:title
+                                                     message:message
+                                           cancelButtonTitle:cancelTitle
+                                              fixButtonTitle:fixTitle];
     [self setAlertView:alert];
-    [[[self alertView] cancelButton] setTitle:[NSLocalizedString(@"actions.later", nil) uppercaseString]
-                                     forState:UIControlStateNormal];
     [[[self alertView] cancelButton] addTarget:self
                                         action:@selector(fixDeviceProblemLater:)
                               forControlEvents:UIControlEventTouchUpInside];
-    [[[self alertView] okButton] setTitle:[NSLocalizedString(@"actions.fix-now", nil) uppercaseString]
-                                 forState:UIControlStateNormal];
     [[[self alertView] okButton] addTarget:self
                                     action:@selector(fixDeviceProblemNow:)
                           forControlEvents:UIControlEventTouchUpInside];
@@ -133,12 +240,16 @@
     [self dismissAlert:^{
         [self setWarningState:SENServiceDeviceStateUnknown];
     }];
+    [SENAnalytics track:HEMAnalyticsEventSystemAlertAction
+             properties:@{kHEMAnalyticsEventPropAction : HEMAnalyticsEventSysAlertActionLater}];
 }
 
 - (void)fixDeviceProblemNow:(id)sender {
     [self dismissAlert:^{
         [self launchHandlerForDeviceState];
     }];
+    [SENAnalytics track:HEMAnalyticsEventSystemAlertAction
+             properties:@{kHEMAnalyticsEventPropAction : HEMAnalyticsEventSysAlertActionNow}];
 }
 
 - (void)launchHandlerForDeviceState {
@@ -156,6 +267,9 @@
         case SENServiceDeviceStatePillNotSeen:
             [self showPillHelp];
             break;
+        case SENServiceDeviceStatePillLowBattery:
+            [self showHowToReplacePillBattery];
+            break;
         default:
             break;
     }
@@ -166,13 +280,47 @@
 - (void)dismissAlert:(void(^)(void))completion {
     [[self alertView] dismiss:YES completion:^{
         [self setAlertView:nil];
+        [self stopListeningForPairingChanges];
         if (completion) completion ();
     }];
 }
 
-#pragma mark  - Sense Problems
+- (void)listenForPairingChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(didUpdatePairing:)
+                   name:HEMOnboardingNotificationDidChangeSensePairing
+                 object:nil];
+    [center addObserver:self
+               selector:@selector(didUpdatePairing:)
+                   name:HEMOnboardingNotificationDidChangePillPairing
+                 object:nil];
+}
+
+- (void)stopListeningForPairingChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:HEMOnboardingNotificationDidChangeSensePairing object:nil];
+    [center removeObserver:self name:HEMOnboardingNotificationDidChangePillPairing object:nil];
+}
+
+- (void)didUpdatePairing:(NSNotification*)notification {
+    switch ([self warningState]) {
+        case SENServiceDeviceStateSenseNotPaired:
+        case SENServiceDeviceStatePillNotPaired:
+            if ([self alertView]) {
+                [self dismissAlert:nil];
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+#pragma mark - Sense Problems
 
 - (void)showSensePairController {
+    [self listenForPairingChanges];
+    
     HEMSensePairViewController* pairVC =
         (HEMSensePairViewController*) [HEMOnboardingStoryboard instantiateSensePairViewController];
     [pairVC setDelegate:self];
@@ -187,26 +335,19 @@
 
 #pragma mark HEMSensePairDelegate
 
-- (void)cacheSenseManager:(SENSenseManager*)senseManager {
-    if (senseManager != nil) {
-        SENServiceDevice* service = [SENServiceDevice sharedService];
-        [service replaceWithNewlyPairedSenseManager:senseManager completion:nil];
-    }
-}
-
 - (void)didPairSenseUsing:(SENSenseManager*)senseManager from:(UIViewController*)controller {
-    [self cacheSenseManager:senseManager];
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (void)didSetupWiFiForPairedSense:(SENSenseManager*)senseManager from:(UIViewController*)controller {
-    [self cacheSenseManager:senseManager];
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
 #pragma mark - Pill Problems
 
 - (void)showPillPairController {
+    [self listenForPairingChanges];
+    
     HEMPillPairViewController* pairVC =
         (HEMPillPairViewController*) [HEMOnboardingStoryboard instantiatePillPairViewController];
     [pairVC setDelegate:self];
@@ -219,6 +360,11 @@
     [HEMSupportUtil openHelpToPage:pillHelpSlug fromController:[self viewController]];
 }
 
+- (void)showHowToReplacePillBattery {
+    NSString* page = NSLocalizedString(@"help.url.slug.pill-battery", nil);
+    [HEMSupportUtil openHelpToPage:page fromController:[self viewController]];
+}
+
 #pragma mark - HEMPillPairDelegate
 
 - (void)didPairWithPillFrom:(HEMPillPairViewController *)controller {
@@ -229,9 +375,9 @@
     [[self viewController] dismissViewControllerAnimated:YES completion:nil];
 }
 
-#pragma mark - Sign Outs
+#pragma mark - Auth Changes
 
-- (void)listenForSignOut {
+- (void)listenForAuthChanges {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
                selector:@selector(userDidSignOut)
@@ -241,11 +387,7 @@
 
 - (void)userDidSignOut {
     [self dismissAlert:nil];
-    
-    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
-    [center removeObserver:self name:SENServiceDeviceNotificationWarning object:nil];
-    
-    [[SENServiceDevice sharedService] setMonitorDeviceStates:NO];
+    [self setEnableSystemMonitoring:NO];
 }
 
 #pragma mark - Clean Up

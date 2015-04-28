@@ -6,7 +6,6 @@
 //
 //
 #import <CocoaLumberjack/DDLog.h>
-#import <CocoaLumberjack/DDLogMacros.h>
 
 #import <HealthKit/HealthKit.h>
 
@@ -70,13 +69,6 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
     }
 }
 
-#pragma mark - SENServiceOverrides
-
-- (void)serviceBecameActive {
-    [super serviceBecameActive];
-    [self sync];
-}
-
 #pragma mark -
 
 - (BOOL)isSupported {
@@ -90,7 +82,7 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
     return status == HKAuthorizationStatusSharingAuthorized;
 }
 
-- (BOOL)ddedDataPointFor:(NSDate*)date {
+- (BOOL)addedDataPointFor:(NSDate*)date {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
     NSDate* lastWrittenDate = [preferences userPreferenceForKey:SENServiceHKLastDateWritten];
     return [lastWrittenDate isEqualToDate:date];
@@ -143,7 +135,7 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
 - (void)sync {
     if ([self isHealthKitEnabled] && [self isSupported] && [self canWriteSleepAnalysis]) {
         NSDate* lastNight = [self lastNight];
-        if (![self ddedDataPointFor:lastNight]) {
+        if (![self addedDataPointFor:lastNight]) {
             [self writeSleepAnalysisIfDataAvailableFor:lastNight];
         }
     }
@@ -171,36 +163,56 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
         DDLogVerbose(@"pulling from server since no data is in the cache");
         [SENAPITimeline timelineForDate:date completion:^(NSArray* timelines, NSError* error) {
             if (error == nil) {
-                DDLogVerbose(@"adding sleep data point to health kit for date %@", [result date]);
-                NSDictionary* timeline = [timelines firstObject];
-                [result updateWithDictionary:timeline];
-                [result save];
-                [weakSelf addSleepDataPoints:result forDate:date];
+                if ([[result segments] count] > 0) {
+                    DDLogVerbose(@"adding sleep data point to HealthKit for date %@", [result date]);
+                    NSDictionary* timeline = [timelines firstObject];
+                    [result updateWithDictionary:timeline];
+                    [result save];
+                    [weakSelf addSleepDataPoints:result forDate:date];
+                } else {
+                    DDLogVerbose(@"no sleep data to input to HealthKit");
+                }
             }
         }];
     }
 }
 
 - (NSArray*)sleepDataPointsForSleepResult:(SENSleepResult*)sleepResult {
-    NSMutableArray* dataPoints = [NSMutableArray arrayWithCapacity:2];
+    NSMutableArray* dataPoints = [NSMutableArray arrayWithCapacity:1];
     HKCategoryType* hkSleepCategory = [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSleepAnalysis];
     NSDate* wakeUpDate = nil;
     NSDate* sleepDate = nil;
+    NSArray* segments = [sleepResult segments];
     
-    for (SENSleepResultSegment* segment in [sleepResult segments]) {
-        if (wakeUpDate == nil && [[segment eventType] isEqualToString:SENSleepResultSegmentEventTypeWakeUp]) {
-            wakeUpDate = [segment date];
-        } else if (sleepDate == nil && [[segment eventType] isEqualToString:SENSleepResultSegmentEventTypeSleep]) {
+    // first, find the sleep date from the front of the array
+    for (SENSleepResultSegment* segment in segments) {
+        if ([[segment eventType] isEqualToString:SENSleepResultSegmentEventTypeSleep]) {
             sleepDate = [segment date];
+            break;
         }
-        
-        if (wakeUpDate != nil && sleepDate != nil) {
-            DDLogVerbose(@"adding asleep data point");
+    }
+    
+    if (sleepDate != nil) {
+        // look for wake up time from the back
+        SENSleepResultSegment* segment = nil;
+        for (NSInteger i = [segments count] - 1; i >= 0; i--) {
+            segment = segments[i];
+            if ([[segment eventType] isEqualToString:SENSleepResultSegmentEventTypeWakeUp]) {
+                wakeUpDate = [segment date];
+                break;
+            }
+        }
+    }
+    
+    if (wakeUpDate != nil && sleepDate != nil) {
+        DDLogVerbose(@"adding asleep data point");
+        if ([wakeUpDate compare:sleepDate] > NSOrderedAscending) {
             [dataPoints addObject:[HKCategorySample categorySampleWithType:hkSleepCategory
                                                                      value:HKCategoryValueSleepAnalysisAsleep
                                                                  startDate:sleepDate
                                                                    endDate:wakeUpDate]];
-            break;
+        } else {
+            DDLogVerbose(@"wake up time %@ is before sleep time %@", wakeUpDate, sleepDate);
         }
     }
     

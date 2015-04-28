@@ -20,320 +20,433 @@ static NSString* const HEMNumberFontFamilyNameUltraLight = @"AvenirNext-UltraLig
 static NSString* const HEMTitleFontFamilyNameDemiBold = @"AvenirNext-DemiBold";
 static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
-+ (UIFont *)scaledFontWithName:(NSString*)name baseSize:(CGFloat)baseSize {
-    static CGFloat const HEMFontBaseScreenWidth = 320.f;
-    static CGFloat const HEMFontEnlargedRatio = 1.07f;
-    CGFloat factor = 1.f;
-    if (CGRectGetWidth([[UIScreen mainScreen] bounds]) > HEMFontBaseScreenWidth)
-        factor = HEMFontEnlargedRatio;
-
-    NSInteger fontSize = ceilf(baseSize * factor);
-    return [UIFont fontWithName:name size:fontSize];
-}
-
-+ (UIFont *)alarmMeridiemFont {
++ (UIFont*)alarmMeridiemFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
 }
 
-+ (UIFont *)alarmNumberFont {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:50.f];
++ (UIFont*)alarmNumberFont
+{
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:28.f];
 }
 
-+ (UIFont *)insightTitleFont {
++ (UIFont*)alarmSelectedNumberFont
+{
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:56.f];
+}
+
++ (UIFont*)insightTitleFont
+{
     return [UIFont fontWithName:HEMTitleFontFamilyNameDemiBold size:24.f];
 }
 
-+ (UIFont *)insightFullMessageFont {
++ (UIFont*)insightFullMessageFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
 }
 
-+ (UIFont *)insightFullMessageBoldFont {
++ (UIFont*)insightFullMessageBoldFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:16.f];
 }
 
-+ (UIFont *)largeNumberFont {
++ (UIFont*)largeNumberFont
+{
     return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:72.f];
 }
 
-+ (UIFont *)settingsTableCellFont {
++ (UIFont*)settingsTableCellFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
 }
 
-+ (UIFont *)settingsTableCellDetailFont {
++ (UIFont*)settingsTableCellDetailFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:15.f];
 }
 
-+ (UIFont *)settingsTitleFont {
++ (UIFont*)settingsTitleFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
 }
 
-+ (UIFont *)settingsHelpFont {
++ (UIFont*)signOutFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:16.f];
+}
+
++ (UIFont*)settingsHelpFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:13.0f];
 }
 
-+ (UIFont *)preferenceControlFont {
++ (UIFont*)preferenceControlFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
-+ (UIFont *)sensorRangeSelectionFont {
++ (UIFont*)sensorRangeSelectionFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
 }
 
-+ (UIFont *)sensorGraphNumberFont {
++ (UIFont*)sensorGraphNumberFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:13.f];
 }
 
-+ (UIFont *)sensorGraphNumberBoldFont {
++ (UIFont*)sensorGraphNumberBoldFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:13.f];
 }
 
-+ (UIFont *)sensorGraphHeadingFont {
++ (UIFont*)sensorGraphHeadingFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameBook size:10.f];
 }
 
-+ (UIFont *)sensorGraphHeadingBoldFont {
++ (UIFont*)sensorGraphHeadingBoldFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:10.f];
 }
 
-+ (UIFont *)sensorListValueFont {
++ (UIFont*)sensorListValueFont
+{
     return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:36.f];
 }
 
-+ (UIFont *)sensorListUnitFont {
++ (UIFont*)sensorListUnitFont
+{
     return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:16.f];
 }
 
-+ (UIFont *)sensorMessageFont {
++ (UIFont*)sensorMessageFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
 }
 
-+ (UIFont *)sensorMessageBoldFont {
++ (UIFont*)sensorMessageBoldFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:16.0f];
 }
 
-+ (UIFont *)backViewTitleFont {
-    return [UIFont scaledFontWithName:HEMFontFamilyNameHeavy baseSize:11.f];
++ (UIFont*)backViewTitleFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:11.f];
 }
 
-+ (UIFont *)backViewTextFont {
-    return [UIFont scaledFontWithName:HEMFontFamilyNameLight baseSize:14.f];
++ (UIFont*)backViewTextFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
 }
 
-+ (UIFont *)backViewBoldFont {
++ (UIFont*)backViewBoldFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
 }
 
-+ (UIFont *)timelineBreakdownValueFont {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:24.f];
-}
-
-+ (UIFont *)timelineEventMessageFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
-}
-
-+ (UIFont *)timelineEventMessageItalicFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLightOblique size:13.f];
-}
-
-+ (UIFont *)timelineEventMessageBoldFont {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
-}
-
-+ (UIFont *)timelineEventTimestampFont {
++ (UIFont*)timelineBreakdownTitleFont
+{
     return [UIFont fontWithName:HEMNumberFontFamilyNameMedium size:11.f];
 }
 
-+ (UIFont *)timelineEventTimestampBoldFont {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
++ (UIFont*)timelineBreakdownValueFont
+{
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:28.f];
 }
 
-+ (UIFont *)timelineEventTipFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLightOblique size:13.f];
-}
-
-+ (UIFont *)timelineEventTipBoldFont {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavyOblique size:13.f];
-}
-
-+ (UIFont *)timelineMessageFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
-}
-
-+ (UIFont *)timelineMessageBoldFont {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
-}
-
-+ (UIFont *)timelinePopupFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
-}
-
-+ (UIFont *)timelinePopupBoldFont {
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
-}
-
-+ (UIFont *)tutorialDialogFont {
++ (UIFont*)timelineEventMessageFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
 }
 
-+ (UIFont *)questionAnswerFont {
++ (UIFont*)timelineEventMessageItalicFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLightOblique size:13.f];
+}
+
++ (UIFont*)timelineEventMessageBoldFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
+}
+
++ (UIFont*)timelineEventTimestampFont
+{
+    return [UIFont fontWithName:HEMNumberFontFamilyNameMedium size:11.f];
+}
+
++ (UIFont*)timelineEventTimestampBoldFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
+}
+
++ (UIFont*)timelineEventTipFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLightOblique size:13.f];
+}
+
++ (UIFont*)timelineEventTipBoldFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameHeavyOblique size:13.f];
+}
+
++ (UIFont*)timelineMessageFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
+}
+
++ (UIFont*)timelineMessageBoldFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
+}
+
++ (UIFont*)timelinePopupFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
+}
+
++ (UIFont*)timelinePopupBoldFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
+}
+
++ (UIFont*)tutorialDialogFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
+}
+
++ (UIFont*)questionAnswerFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];
 }
 
-+ (UIFont *)questionFont {
++ (UIFont*)questionFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
 }
 
-+ (UIFont *)thankyouFont {
++ (UIFont*)thankyouFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
 }
 
-+ (UIFont *)infoToastFont {
++ (UIFont*)infoToastFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:20.0f];
 }
 
-+ (UIFont *)inAppBrowserTitleFont {
++ (UIFont*)inAppBrowserTitleFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
 }
 
-+ (UIFont *)dialogTitleFont {
++ (UIFont*)dialogTitleFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:18.0f];
 }
 
-+ (UIFont *)dialogMessageFont {
++ (UIFont*)dialogMessageFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
 }
 
-+ (UIFont* )primaryButtonFont {
++ (UIFont*)dialogMessageBoldFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:15.0f];
+}
+
++ (UIFont*)primaryButtonFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:16.0f];
 }
 
-+ (UIFont* )secondaryButtonFont {
++ (UIFont*)secondaryButtonFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameBook size:16.0f];
 }
 
-+ (UIFont *)navButtonTitleFont {
++ (UIFont*)navButtonTitleFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
-+ (UIFont *)confidentialityWarningFont {
++ (UIFont*)confidentialityWarningFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:11.f];
 }
 
-+ (UIFont *)actionViewTitleFont {
++ (UIFont*)actionViewTitleFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:15.0f];
 }
 
-+ (UIFont *)actionViewMessageFont {
++ (UIFont*)actionViewMessageFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
 }
 
-+ (UIFont *)actionViewButtonTitleFont {
++ (UIFont*)actionViewButtonTitleFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];
 }
 
-+ (UIFont*)feedQuestionFont {
++ (UIFont*)feedQuestionFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
-+ (UIFont*)feedInsightMessageFont {
++ (UIFont*)feedInsightMessageFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:13.0];
 }
 
-+ (UIFont*)feedInsightMessageBoldFont {
++ (UIFont*)feedInsightMessageBoldFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.0];
 }
 
-+ (UIFont*)deviceAlertMessageFont {
++ (UIFont*)systemAlertMessageFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
-+ (UIFont*)deviceCellWarningMessageFont {
++ (UIFont*)deviceCellWarningMessageFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:13.0f];
 }
 
-+ (UIFont *)textfieldPlaceholderFont {
++ (UIFont*)textfieldPlaceholderFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
-+ (UIFont *)textfieldTextFont {
++ (UIFont*)textfieldTextFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
-+ (UIFont *)trendOptionFont {
++ (UIFont*)trendOptionFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
+}
+
++ (UIFont*)trendBottomLabelFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
+}
+
++ (UIFont*)timeZoneNameFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
 #pragma mark - Onboarding
 
-+ (UIFont *)onboardingActivityFontLarge {
++ (UIFont*)onboardingActivityFontLarge
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
 }
 
-+ (UIFont *)onboardingActivityFontMedium {
++ (UIFont*)onboardingActivityFontMedium
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
-+ (UIFont *)singleComponentPickerViewFont {
++ (UIFont*)singleComponentPickerViewFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:18.0f];
 }
 
-+ (UIFont *)birthdatePickerTextFont {
++ (UIFont*)birthdatePickerTextFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:20.0f];
 }
 
-+ (UIFont *)onboardingFieldRightViewFont {
++ (UIFont*)onboardingFieldRightViewFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:16.0f];
 }
 
-+ (UIFont *)onboardingTitleFont {
++ (UIFont*)onboardingTitleFont
+{
     return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:24.0f];
 }
 
-+ (UIFont *)onboardingTitleLargeFont {
++ (UIFont*)onboardingTitleLargeFont
+{
     return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:32.0f];
 }
 
-+ (UIFont *)onboardingDescriptionFont {
++ (UIFont*)onboardingDescriptionFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
 }
 
-+ (UIFont *)onboardingDescriptionLargeFont {
++ (UIFont*)onboardingDescriptionLargeFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
-+ (UIFont *)onboardingDescriptionBoldFont {
++ (UIFont*)onboardingDescriptionBoldFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.0f];
 }
 
-+ (UIFont*)onboardingRoomCheckSensorFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
++ (UIFont*)onboardingRoomCheckSensorLightFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:11.0f];
 }
 
-+ (UIFont*)onboardingRoomCheckSensorBoldFont {
++ (UIFont*)onboardingRoomCheckSensorFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
+}
+
++ (UIFont*)onboardingRoomCheckSensorBoldFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:16.0f];
 }
 
-+ (UIFont*)onboardingRoomCheckSensorValueFont {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:80.0f];
++ (UIFont*)onboardingRoomCheckSensorValueFont
+{
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:72.0f];
 }
 
-+ (UIFont*)onboardingRoomCheckSensorUnitFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
++ (UIFont*)onboardingRoomCheckSensorUnitFont
+{
+    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:32.0f];
 }
 
-+ (UIFont*)genderButtonTitleFont {
++ (UIFont*)genderButtonTitleFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:20.0f];
 }
 
-+ (UIFont*)helpButtonTitleFont {
++ (UIFont*)helpButtonTitleFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
 }
 
-+ (UIFont*)wifiTitleFont {
++ (UIFont*)wifiTitleFont
+{
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
-+ (UIFont*)bluetoothStepsFont {
++ (UIFont*)bluetoothStepsFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
+}
+
+#pragma mark - Action Sheet
+
++ (UIFont*)actionSheetTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:11.0f];
+}
+
++ (UIFont*)actionSheetOptionTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+}
+
++ (UIFont*)actionSheetOptionDescriptionFont {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
 }
 

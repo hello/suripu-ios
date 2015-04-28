@@ -57,14 +57,21 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
     [self configureForm];
-    
-    if (![self haveDelegates]) {
-        NSString* other = [self endpoint] == nil ? @"true" : @"false";
-        [SENAnalytics track:kHEMAnalyticsEventOnBWiFiPass
-                 properties:@{kHEMAnalyticsEventPropWiFiOther :other}];
+    [self fireAnalyticsEvent];
+}
+
+- (void)fireAnalyticsEvent {
+    NSString* other = @"true";
+    long rssi = 0;
+    if ([self endpoint] != nil) {
+        other = @"false";
+        rssi = [[self endpoint] rssi];
     }
+    
+    [self trackAnalyticsEvent:HEMAnalyticsEventWiFiPass
+                         properties:@{kHEMAnalyticsEventPropWiFiOther :other,
+                                      kHEMAnalyticsEventPropWiFiRSSI : @(rssi)}];
 }
 
 - (void)configureForm {
@@ -166,9 +173,12 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         __weak typeof(self) weakSelf = self;
         self.disconnectObserverId =
             [[self manager] observeUnexpectedDisconnect:^(NSError *error) {
-                NSString* title = NSLocalizedString(@"wifi.error.title", nil);
-                NSString* message = NSLocalizedString(@"wifi.error.unexpected-disconnnect", nil);
-                [weakSelf showErrorMessage:message withTitle:title];
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if ([strongSelf isVisible]) {
+                    NSString* title = NSLocalizedString(@"wifi.error.title", nil);
+                    NSString* message = NSLocalizedString(@"wifi.error.unexpected-disconnnect", nil);
+                    [strongSelf showErrorMessage:message withTitle:title];
+                }
             }];
     }
 }
@@ -377,10 +387,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
          password:(NSString*)password
      securityType:(SENWifiEndpointSecurityType)type {
     
-    if (![self haveDelegates]) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBWiFiSubmit
-                 properties:@{kHEMAnalyticsEventPropSecurityType : [self analyticsValueForSecurityType:type]}];
-    }
+    [self trackAnalyticsEvent:HEMAnalyticsEventWiFiSubmit
+                         properties:@{kHEMAnalyticsEventPropSecurityType : [self analyticsValueForSecurityType:type]}];
     
     __weak typeof(self) weakSelf = self;
     SENSenseManager* manager = [self manager];
@@ -469,11 +477,14 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     __weak typeof(self) weakSelf = self;
     void(^proceed)(void) = ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        [HEMOnboardingUtils notifyOfSensePairingChange:[strongSelf manager]];
+        
         if ([strongSelf delegate] != nil) {
             [HEMOnboardingCache clearCache];
             [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
         } else if ([strongSelf sensePairDelegate] != nil) {
-            [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:[strongSelf manager] from:self];
+            [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:[strongSelf manager] from:strongSelf];
         } else {
             [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             [strongSelf performSegueWithIdentifier:[HEMOnboardingStoryboard wifiToPillSegueIdentifier]
@@ -481,13 +492,8 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         }
     };
     
-    SENSenseLEDState led = ![self haveDelegates] ? SENSenseLEDStatePair : SENSenseLEDStateOff;
     NSString* msg = NSLocalizedString(@"wifi.setup.complete", nil);
-    // simultaneously show connected message and flash led
-    [self stopActivityWithMessage:msg renableControls:NO success:YES completion:nil];
-    [[self manager] setLED:led completion:^(id response, NSError *error) {
-        proceed();
-    }];
+    [self stopActivityWithMessage:msg renableControls:NO success:YES completion:proceed];
 }
 
 - (void)executeNextStep {
@@ -561,7 +567,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         [weakSelf showMessageDialog:errorMessage
                               title:title
                               image:nil
-                       withHelpPage:NSLocalizedString(@"troubleshoot/connecting-sense-wifi", nil)];
+                       withHelpPage:NSLocalizedString(@"help.url.slug.wifi-scan", nil)];
     }];
 }
 
@@ -569,7 +575,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     [self showMessageDialog:NSLocalizedString(@"wifi.error.invalid-input", nil)
                       title:NSLocalizedString(@"wifi.error.title", nil)
                       image:nil
-               withHelpPage:NSLocalizedString(@"troubleshoot/connecting-sense-wifi", nil)];
+               withHelpPage:NSLocalizedString(@"help.url.slug.wifi-scan", nil)];
 }
 
 - (void)showSetWiFiError:(NSError*)error {

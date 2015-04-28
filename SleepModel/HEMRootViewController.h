@@ -15,6 +15,12 @@ typedef NS_ENUM(NSUInteger, HEMRootDrawerTab) {
     HEMRootDrawerTabSettings = 4
 };
 
+typedef NS_ENUM(NSUInteger, HEMRootArea) {
+    HEMRootAreaOnboarding,
+    HEMRootAreaTimeline,
+    HEMRootAreaBackView
+};
+
 extern NSString* const HEMRootDrawerMayOpenNotification;
 extern NSString* const HEMRootDrawerMayCloseNotification;
 extern NSString* const HEMRootDrawerDidOpenNotification;

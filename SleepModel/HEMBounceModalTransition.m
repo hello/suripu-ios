@@ -34,26 +34,17 @@ static CGFloat const HEMBounceEndScale = 0.7f;
 
 - (void)animatePresentationWithContext:(id<UIViewControllerContextTransitioning>)context {
     UIViewController* toVC = [context viewControllerForKey:UITransitionContextToViewControllerKey];
-    
     CGRect initialFrame = [[toVC view] frame];
-    initialFrame.origin.y = CGRectGetHeight([[context containerView] bounds]);
-    [[toVC view] setFrame:initialFrame];
+    CGRect offsetFrame = initialFrame;
+    offsetFrame.origin.y = CGRectGetHeight([[context containerView] bounds]);
+    [[toVC view] setFrame:offsetFrame];
     
     [[context containerView] addSubview:[toVC view]];
-    
-    [UIView animateWithDuration:[self duration]
-                          delay:0.0f
-         usingSpringWithDamping:[self bounceDamping]
-          initialSpringVelocity:0.0f
-                        options:UIViewAnimationOptionCurveEaseInOut
-                     animations:^{
-                         CGRect finalFrame = [[toVC view] frame];
-                         finalFrame.origin.y = 0.0f;
-                         [[toVC view] setFrame:finalFrame];
-                     }
-                     completion:^(BOOL finished) {
-                         [context completeTransition:YES];
-                     }];
+    [UIView animateWithDuration:[self duration] animations:^{
+        [[toVC view] setFrame:initialFrame];
+    } completion:^(BOOL finished) {
+        [context completeTransition:YES];
+    }];
 }
 
 - (void)animateDismissalWithContext:(id<UIViewControllerContextTransitioning>)context {

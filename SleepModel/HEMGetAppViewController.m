@@ -23,9 +23,8 @@
     [super viewDidLoad];
 
     [self setupDescription];
-    
     [self enableBackButton:NO];
-    [SENAnalytics track:kHEMAnalyticsEventOnBGetApp];
+    [self trackAnalyticsEvent:HEMAnalyticsEventGetApp];
 }
 
 - (void)setupDescription {

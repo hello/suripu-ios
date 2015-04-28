@@ -8,10 +8,10 @@
 #import "HelloStyleKit.h"
 #import "HEMMarkdown.h"
 
-@interface HEMSleepEventCollectionViewCell ()<AVAudioPlayerDelegate, FDWaveformViewDelegate>
+@interface HEMSleepEventCollectionViewCell () <AVAudioPlayerDelegate, FDWaveformViewDelegate>
 
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sleepEventButtonWidthConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *sleepEventButtonHeightConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* sleepEventButtonWidthConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint* sleepEventButtonHeightConstraint;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* contentViewHeightConstraint;
 @property (nonatomic, weak) IBOutlet UIImageView* lineView;
 @property (nonatomic, weak) IBOutlet UIView* contentContainerView;
@@ -51,11 +51,13 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 - (void)awakeFromNib
 {
     [super awakeFromNib];
+    self.clipsToBounds = NO;
     self.loadingQueue = [NSOperationQueue new];
     self.loadingQueue.maxConcurrentOperationCount = 1;
     self.backgroundColor = [UIColor clearColor];
     self.contentViewHeightConstraint.constant = 0;
-    self.lineView.image = [self dottedLineBorderImageWithColor:[HelloStyleKit tintColor]];
+    self.lineView.image = [self lineBorderImageWithColor:[HelloStyleKit lightTintColor]];
+    self.eventTimeLabel.textColor = [HelloStyleKit lightTintColor];
     [self configureVerifyButton];
     [self configureAudioPlayer];
     [self configureGradientViews];
@@ -72,8 +74,8 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 - (void)configureVerifyButton
 {
     self.verifyDataButton.hidden = YES;
-    NSDictionary* attributes = @{NSUnderlineStyleAttributeName:@(NSUnderlinePatternSolid|NSUnderlineStyleSingle),
-                                 NSForegroundColorAttributeName:[HelloStyleKit tintColor]};
+    NSDictionary* attributes = @{ NSUnderlineStyleAttributeName : @(NSUnderlinePatternSolid | NSUnderlineStyleSingle),
+        NSForegroundColorAttributeName : [HelloStyleKit tintColor] };
     NSString* localizedTitle = NSLocalizedString(@"sleep-event.verify.title", nil);
     NSAttributedString* title = [[NSAttributedString alloc] initWithString:localizedTitle
                                                                 attributes:attributes];
@@ -105,8 +107,8 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     self.gradientContainerBottomView.alpha = 0;
     [self insertSubview:self.gradientContainerTopView atIndex:0];
     [self insertSubview:self.gradientContainerBottomView atIndex:0];
-    NSArray* topColors = @[(id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0].CGColor,
-                           (id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0.1f].CGColor];
+    NSArray* topColors = @[ (id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0].CGColor,
+        (id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0.1f].CGColor ];
 
     CAGradientLayer* topLayer = [CAGradientLayer layer];
     topLayer.colors = topColors;
@@ -129,7 +131,7 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 - (void)layoutSubviews
 {
     [super layoutSubviews];
-    CGFloat inset = HEMEventButtonSize/2;
+    CGFloat inset = HEMEventButtonSize / 2;
     CGFloat width = CGRectGetWidth(self.bounds);
     self.gradientContainerTopView.frame = CGRectMake(0, -HEMEventBlurHeight + inset, width, HEMEventBlurHeight);
     self.gradientContainerBottomView.frame = CGRectMake(0, CGRectGetHeight(self.bounds) - inset, width, HEMEventBlurHeight);
@@ -148,12 +150,11 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 - (void)useExpandedLayout:(BOOL)isExpanded targetSize:(CGSize)size animated:(BOOL)animated
 {
     self.expanded = isExpanded;
-    self.clipsToBounds = isExpanded ? NO : [self numberOfTimeLabels] == 0;
     [self setNeedsDisplay];
     void (^endAnimations)() = NULL;
     void (^startAnimations)() = NULL;
     if (isExpanded) {
-        self.contentViewHeightConstraint.constant = MAX(size.height - HEMEventButtonSize/2, 0);
+        self.contentViewHeightConstraint.constant = MAX(size.height - HEMEventButtonSize / 2, 0);
         startAnimations = ^{
             self.lineView.alpha = 0;
             self.contentContainerView.alpha = 1;
@@ -168,7 +169,8 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
             self.eventTitleLabel.alpha = 1;
             self.eventMessageLabel.alpha = 1;
         };
-    } else {
+    }
+    else {
         self.contentViewHeightConstraint.constant = 0;
         endAnimations = ^{
             self.lineView.alpha = 1;
@@ -189,8 +191,9 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
         [self.contentContainerView setNeedsUpdateConstraints];
         [UIView animateWithDuration:0.2f animations:startAnimations completion:^(BOOL finished) {
              [UIView animateWithDuration:0.2f animations:endAnimations];
-         }];
-    } else {
+        }];
+    }
+    else {
         startAnimations();
         endAnimations();
     }
@@ -204,20 +207,21 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGFloat width = HEMSleepLineWidth;
     CGFloat height = 0;
-    CGFloat x = CGRectGetMidX(rect)  - width;
-    CGFloat halfButton = ceilf(HEMEventButtonSize/2);
+    CGFloat x = CGRectGetMidX(rect) - width;
+    CGFloat halfButton = ceilf(HEMEventButtonSize / 2);
     CGContextSetFillColorWithColor(ctx, self.lineColor.CGColor);
     if ([self isLastSegment] && ![self isFirstSegment]) {
         height = halfButton;
-    } else if ([self isFirstSegment] && ![self isLastSegment]) {
+    }
+    else if ([self isFirstSegment] && ![self isLastSegment]) {
         height = CGRectGetHeight(rect) - halfButton;
-    } else {
+    }
+    else {
         height = CGRectGetHeight(rect);
     }
     CGRect contentRect = CGRectMake(x, CGRectGetMidY(rect), width, height);
     CGContextFillRect(ctx, contentRect);
 }
-
 
 - (void)setLoading:(BOOL)isLoading
 {
@@ -240,7 +244,7 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
         [self.spinnerView stopAnimating];
 }
 
-- (void)setAudioURL:(NSURL *)audioURL
+- (void)setAudioURL:(NSURL*)audioURL
 {
     [self stopAudio];
     [self.loadingQueue cancelAllOperations];
@@ -304,7 +308,8 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     self.player.delegate = self;
     if (error) {
         [self stopAudio];
-    } else {
+    }
+    else {
         [self.waveformView setProgressRatio:0];
         [self.player play];
         [self.playSoundButton setImage:[UIImage imageNamed:@"stopSound"] forState:UIControlStateNormal];
@@ -327,39 +332,39 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 
 - (void)updateAudioProgress
 {
-    [self.waveformView setProgressRatio:self.player.currentTime/self.player.duration];
+    [self.waveformView setProgressRatio:self.player.currentTime / self.player.duration];
 }
 
 #pragma mark AVAudioPlayerDelegate
 
-- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player
+- (void)audioPlayerBeginInterruption:(AVAudioPlayer*)player
 {
     [self stopAudio];
 }
 
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer*)player successfully:(BOOL)flag
 {
     [self stopAudio];
 }
 
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags
+- (void)audioPlayerEndInterruption:(AVAudioPlayer*)player withOptions:(NSUInteger)flags
 {
     [self stopAudio];
 }
 
 #pragma mark FDWaveformView
 
-- (void)waveformViewWillLoad:(FDWaveformView *)waveformView
+- (void)waveformViewWillLoad:(FDWaveformView*)waveformView
 {
     [self performSelectorOnMainThread:@selector(handleLoadingStart) withObject:nil waitUntilDone:NO];
 }
 
-- (void)waveformViewDidRender:(FDWaveformView *)waveformView
+- (void)waveformViewDidRender:(FDWaveformView*)waveformView
 {
     [self performSelectorOnMainThread:@selector(handleLoadingSuccess) withObject:nil waitUntilDone:NO];
 }
 
-- (void)waveformViewDidFail:(FDWaveformView *)waveformView error:(NSError *)error
+- (void)waveformViewDidFail:(FDWaveformView*)waveformView error:(NSError*)error
 {
     [self performSelectorOnMainThread:@selector(handleLoadingFailure) withObject:nil waitUntilDone:NO];
 }
@@ -384,6 +389,5 @@ static NSString* const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
         [self.spinnerView stopAnimating];
     self.playSoundButton.enabled = YES;
 }
-
 
 @end

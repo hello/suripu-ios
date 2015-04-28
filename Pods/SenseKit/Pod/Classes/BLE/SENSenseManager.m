@@ -7,7 +7,6 @@
 //
 
 #import <CocoaLumberjack/DDLog.h>
-#import <CocoaLumberjack/DDLogMacros.h>
 
 #import <CoreBluetooth/CoreBluetooth.h>
 
@@ -38,7 +37,7 @@ static NSString* const kSENSenseServiceID = @"0000FEE1-1212-EFDE-1523-785FEABCD1
 static NSString* const kSENSenseCharacteristicInputId = @"BEEB";
 static NSString* const kSENSenseCharacteristicResponseId = @"B00B";
 static NSInteger const kSENSensePacketSize = 20;
-static NSInteger const kSENSenseMessageVersion = 0;
+static NSInteger const kSENSensePVTMessageVersion = 0; // 1 = WEP passcode fix, but we don't know what firmware supports
 
 static NSInteger const kSENSenseMaxBleRetries = 10;
 
@@ -46,6 +45,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 
 @interface SENSenseManager()
 
+@property (nonatomic, assign, readwrite) long messageVersion;
 @property (nonatomic, assign, readwrite, getter=isValid) BOOL valid;
 @property (nonatomic, strong, readwrite) SENSense* sense;
 @property (nonatomic, strong, readwrite) id disconnectNotifyObserver;
@@ -144,6 +144,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         DDLogVerbose(@"Sense manager initialized for %@, id %@", [sense name], [sense deviceId]);
         [self setSense:sense];
         [self setValid:YES];
+        [self setMessageVersion:kSENSensePVTMessageVersion];
         [self setMessageSuccessCallbacks:[NSMutableDictionary dictionary]];
         [self setMessageFailureCallbacks:[NSMutableDictionary dictionary]];
         [self setMessageUpdateCallbacks:[NSMutableDictionary dictionary]];
@@ -417,7 +418,7 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
 - (SENSenseMessageBuilder*)messageBuilderWithType:(SENSenseMessageType)type {
     SENSenseMessageBuilder* builder = [[SENSenseMessageBuilder alloc] init];
     [builder setType:type];
-    [builder setVersion:kSENSenseMessageVersion];
+    [builder setVersion:[self messageVersion]];
     return builder;
 }
 
@@ -839,6 +840,15 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                 NSString* desc = [NSString stringWithFormat:@"response error from command %ld", (long)type];
                 [self failWithBlock:failure errorCode:code description:desc];
             } else {
+                if (type != [responseMsg type]) {
+                    DDLogWarn(@"ble response %u does not match request %u", [responseMsg type], type);
+                }
+                // jimmy 3/15/2015: firmware updated message version to pivot
+                // on how certain messages are handled so for us to send them
+                // the correct version, we need to see what it sends back first
+                // and use that message going forwared.  We should remove this
+                // once we are sure all users have the latest firmware version.
+                [self setMessageVersion:[responseMsg version]];
                 if (success) success (responseMsg);
             }
         } // else, wait for next update
@@ -1086,10 +1096,13 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
                    withSecurityType:(SENWifiEndpointSecurityType)type
                     formattingError:(NSError**)error {
     switch (type) {
-        case SENWifiEndpointSecurityTypeWep:
-            return [self dataValueForWepNetworkKey:password error:error];
         case SENWifiEndpointSecurityTypeOpen:
             return nil;
+        case SENWifiEndpointSecurityTypeWep: {
+            if ([self messageVersion] == kSENSensePVTMessageVersion) {
+                return [self dataValueForWepNetworkKey:password error:error];
+            } // else, let it go through to default like all other types
+        }
         case SENWifiEndpointSecurityTypeWpa:
         case SENWifiEndpointSecurityTypeWpa2:
         default:

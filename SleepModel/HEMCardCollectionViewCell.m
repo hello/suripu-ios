@@ -11,10 +11,10 @@
 
 @implementation HEMCardCollectionViewCell
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder*)aDecoder
 {
     if (self = [super initWithCoder:aDecoder]) {
-        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
+        self.contentView.autoresizingMask = UIViewAutoresizingFlexibleHeight | UIViewAutoresizingFlexibleWidth;
     }
     return self;
 }
@@ -22,13 +22,15 @@
 - (void)awakeFromNib
 {
     NSShadow* shadow = [HelloStyleKit backViewCardShadow];
-    
+
     self.backgroundColor = [UIColor whiteColor];
-    self.layer.cornerRadius = 2.f;
+    self.layer.cornerRadius = 3.f;
+    self.layer.borderColor = [[HelloStyleKit cardBorderColor] CGColor];
+    self.layer.borderWidth = 1.f;
     self.layer.shadowOffset = [shadow shadowOffset];
     self.layer.shadowColor = [[shadow shadowColor] CGColor];
     self.layer.shadowRadius = [shadow shadowBlurRadius];
-    self.layer.shadowOpacity = 0.5f;
+    self.layer.shadowOpacity = 1.f;
     self.layer.masksToBounds = NO;
 }
 

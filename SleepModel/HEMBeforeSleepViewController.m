@@ -5,6 +5,7 @@
 //  Created by Jimmy Lu on 11/20/14.
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
+#import <SenseKit/SENSensor.h>
 
 #import "NSMutableAttributedString+HEMFormat.h"
 
@@ -44,7 +45,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
     [self configureButtons];
     [self configureScrollView];
     [self configureInitialScreen];
-    [SENAnalytics track:kHEMAnalyticsEventOnBSenseColors];
+    [self trackAnalyticsEvent:HEMAnalyticsEventSenseColors];
 }
 
 - (void)configureButtons {
@@ -222,8 +223,26 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
 
 #pragma mark - Navigation
 
+- (BOOL)sensorsAreReady {
+    NSArray* sensors = [SENSensor sensors];
+    if ([sensors count] == 0) {
+        return NO;
+    }
+    
+    for (SENSensor* sensor in sensors) {
+        if ([sensor condition] == SENSensorConditionUnknown) {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
+
 - (IBAction)next:(id)sender {
-    NSString* nextSegueId = [HEMOnboardingStoryboard beforeSleeptoRoomCheckSegueIdentifier];
+    NSString* nextSegueId
+        = [self sensorsAreReady]
+        ? [HEMOnboardingStoryboard beforeSleeptoRoomCheckSegueIdentifier]
+        : [HEMOnboardingStoryboard beforeSleepToSmartAlarmSegueIdentifier];
     [self performSegueWithIdentifier:nextSegueId sender:self];
 }
 

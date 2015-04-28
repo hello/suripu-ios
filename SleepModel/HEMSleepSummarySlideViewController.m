@@ -48,10 +48,7 @@
 
 - (void)__initStackWithControllerForDate:(NSDate*)date
 {
-    HEMSleepGraphViewController* controller
-    = (HEMSleepGraphViewController*)[HEMMainStoryboard instantiateSleepGraphController];
-    [controller setDateForNightOfSleep:date];
-    [self reloadDataWithController:controller];
+    [self reloadDataWithController:[self timelineControllerForDate:date]];
     [self setData:[[HEMSleepSummaryPagingDataSource alloc] init]];
     [self setDataSource:[self data]];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -64,9 +61,15 @@
                                                object:nil];
 }
 
+- (UIViewController*)timelineControllerForDate:(NSDate*)date {
+    HEMSleepGraphViewController* controller
+    = (HEMSleepGraphViewController*)[HEMMainStoryboard instantiateSleepGraphController];
+    [controller setDateForNightOfSleep:date];
+    return controller;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self addTopShadow];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
                                                  name:UIApplicationDidBecomeActiveNotification
@@ -74,8 +77,19 @@
 }
 
 - (void)reloadData {
-    if ([self isViewLoaded] && self.view.window)
-        [self reloadDataWithController:[[self viewControllers] firstObject]];
+    if ([self isViewLoaded] && self.view.window) {
+        UIViewController* firstController = [[self viewControllers] firstObject];
+        if ([firstController isKindOfClass:[HEMSleepGraphViewController class]]) {
+            HEMSleepGraphViewController* timelineVC = (id)firstController;
+            if ([timelineVC isLastNight]) {
+                NSDate* updatedLastNight = [[NSDate date] previousDay];
+                if (![[timelineVC dateForNightOfSleep] isOnSameDay:updatedLastNight]) {
+                    firstController = [self timelineControllerForDate:updatedLastNight];
+                }
+            }
+        }
+        [self reloadDataWithController:firstController];
+    }
 }
 
 - (void)reloadDataWithController:(UIViewController*)controller {
@@ -86,17 +100,6 @@
      | UIPageViewControllerNavigationDirectionReverse
                     animated:NO
                   completion:nil];
-}
-
-- (void)addTopShadow {
-    UIBezierPath *shadowPath = [UIBezierPath bezierPathWithRect:[[self view] bounds]];
-    CALayer* layer = [[self view] layer];
-    [layer setMasksToBounds:NO];
-    [layer setShadowColor:[[UIColor blackColor] CGColor]];
-    [layer setShadowOffset:CGSizeMake(0.0f, 5.0f)];
-    [layer setShadowOpacity:0.6f];
-    [layer setShadowRadius:5.0f];
-    [layer setShadowPath:[shadowPath CGPath]];
 }
 
 #pragma mark - Drawer Events

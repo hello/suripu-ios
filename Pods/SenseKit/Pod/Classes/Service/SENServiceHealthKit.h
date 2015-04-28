@@ -22,6 +22,14 @@ typedef NS_ENUM(NSUInteger, SENServiceHealthKitError) {
 + (id)sharedService;
 
 /**
+ * @method sync
+ *
+ * @discussion
+ * Call this to trigger a sync of the Sense sleep data to HealthKit
+ */
+- (void)sync;
+
+/**
  * Request authorization from the user to read/write from/in to HealthKit
  * @param completion: block to invoke when user completes denying/authorizing
  */

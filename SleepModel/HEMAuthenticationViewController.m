@@ -14,6 +14,8 @@
 #import "HEMNotificationHandler.h"
 #import "HEMSupportUtil.h"
 
+NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNotificationDidSignIn";
+
 @interface HEMAuthenticationViewController ()
 
 @property (weak, nonatomic) IBOutlet UITextField* usernameField;
@@ -136,7 +138,7 @@
     [SENAnalytics track:kHEMAnalyticsEventSignIn];
     [HEMNotificationHandler registerForRemoteNotificationsIfEnabled];
     [[self view] endEditing:NO];
-    [[self navigationController] dismissViewControllerAnimated:YES completion:nil];
+    [[NSNotificationCenter defaultCenter] postNotificationName:HEMAuthenticationNotificationDidSignIn object:nil];
 }
 
 #pragma mark - Actions

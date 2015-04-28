@@ -16,23 +16,29 @@ static CGFloat const HEMActivityIndicatorAnimDuration = 1.0f;
 @interface HEMActivityIndicatorView()
 
 @property (nonatomic, strong) CALayer* indicatorLayer;
+@property (nonatomic, strong) UIImage* indicatorImage;
 
 @end
 
 @implementation HEMActivityIndicatorView
 
-- (id)initWithFrame:(CGRect)frame {
+- (instancetype)initWithImage:(UIImage*)image andFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
+        _indicatorImage = image;
         [self setup];
     }
     return self;
 }
 
+- (id)initWithFrame:(CGRect)frame {
+    return [self initWithImage:[HelloStyleKit loading] andFrame:frame];
+}
+
 - (void)setup {
     [self setBackgroundColor:[UIColor clearColor]];
     
-    UIImageView* indicator = [[UIImageView alloc] initWithImage:[HelloStyleKit loading]];
+    UIImageView* indicator = [[UIImageView alloc] initWithImage:[self indicatorImage]];
     [indicator setContentMode:UIViewContentModeScaleAspectFill];
     [indicator setBackgroundColor:[UIColor clearColor]];
     [indicator setFrame:[self bounds]];

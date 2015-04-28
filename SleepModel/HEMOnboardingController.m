@@ -16,6 +16,7 @@
 #import "HEMSupportUtil.h"
 #import "HEMActivityCoverView.h"
 #import "HEMOnboardingCache.h"
+#import "HEMOnboardingUtils.h"
 
 @interface HEMOnboardingController()
 
@@ -27,6 +28,7 @@
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint* titleHeightConstraint;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint* descriptionTopConstraint;
 @property (copy,   nonatomic) NSString* helpPage;
+@property (assign, nonatomic, getter=isVisible) BOOL visible;
 
 @end
 
@@ -42,6 +44,12 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self enableBackButton:[self enableBack]];
+    [self setVisible:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self setVisible:NO];
 }
 
 - (void)configureTitle {
@@ -93,7 +101,7 @@
     if ([self titleHeightConstraint] != nil) {
         [[self descriptionTopConstraint] setConstant:constant];
     } else {
-        constant = CGRectGetHeight([[self titleLabel] bounds]);
+        constant = CGRectGetMinY([[self descriptionLabel] frame]);
         [[self descriptionTopConstraint] setConstant:constant];
     }
     
@@ -116,6 +124,25 @@
                            image:nil
                     withHelpPage:helpPage];
     }
+}
+
+#pragma mark - Analytics
+
+- (NSString*)onboardingAnalyticsEventNameFor:(NSString*)event {
+    NSString* reusedEvent = event;
+    if (![HEMOnboardingUtils hasFinishedOnboarding]
+        && ![event hasPrefix:HEMAnalyticsEventOnboardingPrefix]) {
+        reusedEvent = [NSString stringWithFormat:@"%@ %@", HEMAnalyticsEventOnboardingPrefix, event];
+    }
+    return reusedEvent;
+}
+
+- (void)trackAnalyticsEvent:(NSString*)event {
+    [SENAnalytics track:[self onboardingAnalyticsEventNameFor:event]];
+}
+
+- (void)trackAnalyticsEvent:(NSString *)event properties:(NSDictionary*)properties {
+    [SENAnalytics track:[self onboardingAnalyticsEventNameFor:event] properties:properties];
 }
 
 #pragma mark - Nav

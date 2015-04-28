@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 typedef void(^HEMDialogActionBlock)(void);
+typedef void(^HEMDialogLinkActionBlock)(NSURL* link);
 
 @interface HEMAlertView : UIView
 
@@ -26,6 +27,19 @@ typedef void(^HEMDialogActionBlock)(void);
 - (id)initWithImage:(UIImage*)image
               title:(NSString*)title
             message:(NSString*)message;
+
+/**
+ * Initiallize the dialog with an image that sits
+ * above the title, the title of the message, and
+ * the message for the dialog to display
+ *
+ * @param image:   the image to show above the title
+ * @param title:   the title of the dialog
+ * @param message: the attributed message of the dialog
+ */
+- (id)initWithImage:(UIImage*)image
+              title:(NSString*)title
+  attributedMessage:(NSAttributedString*)message;
 
 /**
  * Initiallize the dialog with an image that sits
@@ -60,5 +74,13 @@ typedef void(^HEMDialogActionBlock)(void);
 - (void)addActionButtonWithTitle:(NSString*)title
                          primary:(BOOL)primary
                           action:(HEMDialogActionBlock)block;
+
+/**
+ * Set the callback to invoke when a link in the body of the alert is pressed
+ * 
+ * @param url:         the url string that should trigger the action block
+ * @param actionBlock: the block to call when the url is tapped on
+ */
+- (void)onLink:(NSString*)url tap:(HEMDialogLinkActionBlock)actionBlock;
 
 @end

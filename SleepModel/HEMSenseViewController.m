@@ -30,19 +30,22 @@
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
 #import "HEMStyledNavigationViewController.h"
-#import "HEMTextFooterCollectionReusableView.h"
+#import "HEMTimeZoneViewController.h"
+#import "HEMBounceModalTransition.h"
+#import "HEMActionSheetViewController.h"
 
 static CGFloat const HEMSenseActionHeight = 62.0f;
-static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
 
 @interface HEMSenseViewController() <UICollectionViewDataSource, UICollectionViewDelegate, HEMWiFiConfigurationDelegate>
 
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 
+@property (assign, nonatomic, getter=isVisible) BOOL visible;
 @property (assign, nonatomic) BOOL updatedWiFi;
 @property (strong, nonatomic) HEMActivityCoverView* activityView;
-@property (copy,   nonatomic) NSAttributedString* attributedResetDescription;
 @property (assign, nonatomic) CGSize footerSize;
+@property (strong, nonatomic) HEMBounceModalTransition* modalTransitionDelegate;
+@property (strong, nonatomic) id disconnectObserverId;
 
 @end
 
@@ -54,17 +57,20 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     [SENAnalytics track:kHEMAnalyticsEventSense];
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self setVisible:YES];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self setVisible:NO];
+}
+
 - (void)configureCollectionView {
     [[self collectionView] setDataSource:self];
     [[self collectionView] setDelegate:self];
     [[self collectionView] setAlwaysBounceVertical:YES];
-    [[self collectionView] registerClass:[HEMTextFooterCollectionReusableView class]
-              forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
-                     withReuseIdentifier:HEMSenseFooterReuseIdentifier];
-    
-    HEMCardFlowLayout* layout
-        = (HEMCardFlowLayout*)[[self collectionView] collectionViewLayout];
-    [layout setFooterReferenceSizeFromText:[self attributedResetDescription]];
 }
 
 - (NSAttributedString*)redMessage:(NSString*)message {
@@ -151,31 +157,27 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     return row < [[self warnings] count];
 }
 
-- (BOOL)isFrequentActionsCellRow:(NSInteger)row {
-    return row == [[self warnings] count];
+- (BOOL)isConnectedToSense {
+    SENServiceDevice* service = [SENServiceDevice sharedService];
+    return [service pairedSenseAvailable] && [[service senseManager] isConnected];
 }
 
 - (void)setupFrequentActionsCell:(HEMDeviceActionCollectionViewCell*)actionCell {
-    BOOL senseAvailable = [[SENServiceDevice sharedService] pairedSenseAvailable];
     [[actionCell action1Button] addTarget:self
-                                   action:@selector(replaceSense:)
+                                   action:@selector(changeTimeZone:)
                          forControlEvents:UIControlEventTouchUpInside];
     [[actionCell action2Button] addTarget:self
                                    action:@selector(pairingMode:)
                          forControlEvents:UIControlEventTouchUpInside];
-    [[actionCell action2Button] setEnabled:senseAvailable];
+    [[actionCell action2Button] setEnabled:[self isConnectedToSense]];
     [[actionCell action3Button] addTarget:self
                                    action:@selector(changeWiFi:)
                          forControlEvents:UIControlEventTouchUpInside];
-    [[actionCell action3Button] setEnabled:senseAvailable];
-}
-
-- (void)setupResetActionCell:(HEMDeviceActionCollectionViewCell*)actionCell {
-    BOOL senseAvailable = [[SENServiceDevice sharedService] pairedSenseAvailable];
-    [[actionCell action1Button] addTarget:self
-                                   action:@selector(factoryReset:)
+    [[actionCell action3Button] setEnabled:[self isConnectedToSense]];
+    [[actionCell action4Button] addTarget:self
+                                   action:@selector(showAdvancedOptions:)
                          forControlEvents:UIControlEventTouchUpInside];
-    [[actionCell action1Button] setEnabled:senseAvailable];
+
 }
 
 - (void)setupWarningCell:(HEMWarningCollectionViewCell*)warningCell
@@ -189,26 +191,11 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
                          forControlEvents:UIControlEventTouchUpInside];
 }
 
-- (NSAttributedString*)attributedResetDescription {
-    if (_attributedResetDescription == nil) {
-        NSString* description = NSLocalizedString(@"settings.sense.factory-reset.footer", nil);
-        
-        NSDictionary* attributes = @{NSFontAttributeName: [UIFont settingsHelpFont],
-                                     NSForegroundColorAttributeName : [HelloStyleKit backViewTextColor]};
-        
-        NSAttributedString* attrText = [[NSAttributedString alloc] initWithString:description
-                                                                       attributes:attributes];
-        
-        _attributedResetDescription = [attrText copy];
-    }
-    return _attributedResetDescription;
-}
-
 #pragma mark - UICollectionViewDataSource
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView
      numberOfItemsInSection:(NSInteger)section {
-    return 2 + [[self warnings] count];
+    return 1 + [[self warnings] count];
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView *)collectionView
@@ -217,14 +204,11 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     NSInteger row = [indexPath row];
     NSString* reuseId = nil;
     BOOL warningPath = [self isWarningCellRow:row];
-    BOOL frequentActionsPath = [self isFrequentActionsCellRow:row];
     
     if (warningPath) {
         reuseId = [HEMMainStoryboard warningReuseIdentifier];
-    } else if (frequentActionsPath) {
-        reuseId = [HEMMainStoryboard actionsReuseIdentifier];
     } else {
-        reuseId = [HEMMainStoryboard resetReuseIdentifier];
+        reuseId = [HEMMainStoryboard actionsReuseIdentifier];
     }
     
     UICollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseId
@@ -232,11 +216,7 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     
     if ([cell isKindOfClass:[HEMDeviceActionCollectionViewCell class]]) {
         HEMDeviceActionCollectionViewCell* actionCell = (HEMDeviceActionCollectionViewCell*)cell;
-        if (frequentActionsPath) {
-            [self setupFrequentActionsCell:actionCell];
-        } else {
-            [self setupResetActionCell:actionCell];
-        }
+        [self setupFrequentActionsCell:actionCell];
     } else if ([cell isKindOfClass:[HEMWarningCollectionViewCell class]]) {
         HEMDeviceWarning warning = (HEMDeviceWarning)[[self warnings][[indexPath row]] integerValue];
         HEMWarningCollectionViewCell* warningCell = (HEMWarningCollectionViewCell*)cell;
@@ -244,24 +224,6 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     }
     
     return cell;
-}
-
-- (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView
-          viewForSupplementaryElementOfKind:(NSString*)kind
-                                atIndexPath:(NSIndexPath*)indexPath {
-    
-    UICollectionReusableView* view = nil;
-    if ([kind isEqualToString:UICollectionElementKindSectionFooter]) {
-        HEMTextFooterCollectionReusableView* footer
-            = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                 withReuseIdentifier:HEMSenseFooterReuseIdentifier
-                                                        forIndexPath:indexPath];
-        
-        [footer setText:[self attributedResetDescription]];
-        
-        view = footer;
-    }
-    return view;
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -276,10 +238,8 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     if ([self isWarningCellRow:[indexPath row]]) {
         size.height = [self heightForWarning:[[self warnings][[indexPath row]] integerValue]
                          withDefaultItemSize:size] + HEMWarningCellBaseHeight;
-    } else if ([self isFrequentActionsCellRow:[indexPath row]]) {
-        size.height = HEMSenseActionHeight * 3;
     } else {
-        size.height = HEMSenseActionHeight;
+        size.height = HEMSenseActionHeight * 4;
     }
     
     return size;
@@ -309,15 +269,25 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     [HEMSupportUtil openHelpToPage:helpPage fromController:self];
 }
 
-- (void)showConfirmation:(NSString*)title message:(NSString*)message action:(void(^)(void))action {
+- (NSDictionary*)dialogMessageAttributes:(BOOL)bold {
+    return @{NSFontAttributeName : bold ? [UIFont dialogMessageBoldFont] : [UIFont dialogMessageFont],
+             NSForegroundColorAttributeName : [UIColor blackColor]};
+}
+
+- (void)showConfirmation:(NSString*)title message:(NSAttributedString*)message action:(void(^)(void))action {
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
-    [dialogVC setMessage:message];
+    [dialogVC setAttributedMessage:message];
     [dialogVC setDefaultButtonTitle:NSLocalizedString(@"actions.no", nil)];
     [dialogVC setViewToShowThrough:self.view];
     [dialogVC addAction:NSLocalizedString(@"actions.yes", nil) primary:NO actionBlock:^{
         [self dismissViewControllerAnimated:YES completion:^{
             if (action) action();
+        }];
+    }];
+    [dialogVC onLinkTapOf:NSLocalizedString(@"help.url.support", nil) takeAction:^(NSURL *link) {
+        [self dismissViewControllerAnimated:YES completion:^{
+            [HEMSupportUtil openHelpFrom:self];
         }];
     }];
     [dialogVC showFrom:self onDefaultActionSelected:^{
@@ -339,6 +309,44 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
 - (void)dismissActivityWithSuccess:(void(^)(void))completion {
     NSString* done = NSLocalizedString(@"status.success", nil);
     [[self activityView] dismissWithResultText:done showSuccessMark:YES remove:YES completion:completion];
+}
+
+#pragma mark Advanced Options
+
+- (void)showAdvancedOptions:(id)sender {
+    HEMActionSheetViewController* sheet =
+        [HEMMainStoryboard instantiateActionSheetViewController];
+    [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [sheet setTitle:NSLocalizedString(@"settings.sense.advanced.option.title", nil)];
+    
+    __weak typeof (self) weakSelf = self;
+    
+    [sheet addOptionWithTitle:NSLocalizedString(@"settings.sense.advanced.option.replace-sense", nil)
+                   titleColor:nil
+                  description:NSLocalizedString(@"settings.sense.advanced.option.replace-sense.desc", nil)
+                       action:^{
+                           [weakSelf replaceSense];
+                       }];
+    
+    if ([self isConnectedToSense]) {
+        [sheet addOptionWithTitle:NSLocalizedString(@"settings.sense.advanced.option.factory-reset", nil)
+                       titleColor:[UIColor redColor]
+                      description:NSLocalizedString(@"settings.sense.advanced.option.factory-reset.desc", nil)
+                           action:^{
+                               [weakSelf factoryReset];
+                           }];
+    }
+    
+    UIViewController* root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    if (![root respondsToSelector:@selector(presentationController)]) {
+        UIModalPresentationStyle origStyle = [root modalPresentationStyle];
+        [root setModalPresentationStyle:UIModalPresentationCurrentContext];
+        [sheet addDismissAction:^{
+            [root setModalPresentationStyle:origStyle];
+        }];
+    }
+    
+    [root presentViewController:sheet animated:YES completion:nil];
 }
 
 #pragma mark Unpair Sense
@@ -377,13 +385,32 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     }];
 }
 
-- (void)replaceSense:(id)sender {
+- (void)replaceSense {
+    UIColor* baseColor = [UIColor blackColor];
+    
     NSString* title = NSLocalizedString(@"settings.sense.unpair.title", nil);
-    NSString* question = NSLocalizedString(@"settings.sense.unpair.confirmation", nil);
-    [self showConfirmation:title message:question action:^{
+    NSString* questionFormat = NSLocalizedString(@"settings.sense.unpair.confirmation.format", nil);
+    NSString* guideLink = NSLocalizedString(@"help.url.support", nil);
+    
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:guideLink
+                                                      attributes:[self dialogMessageAttributes:YES]]];
+    
+    NSAttributedString* message =
+        [[NSMutableAttributedString alloc] initWithFormat:questionFormat
+                                                     args:args
+                                                baseColor:baseColor
+                                                 baseFont:[UIFont dialogMessageFont]];
+    
+    [self showConfirmation:title message:message action:^{
         [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropSenseId : kHEMAnalyticsEventPropSenseIdUnpaired}];
         [self unlinkSense];
     }];
+}
+
+#pragma mark Timezone
+
+- (void)changeTimeZone:(id)sender {
+    [self performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:self];
 }
 
 #pragma mark Enable Pairing Mode
@@ -391,9 +418,11 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
 - (void)pairingMode:(id)sender {
     NSString* title = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-title", nil);
     NSString* message = NSLocalizedString(@"settings.sense.dialog.enable-pair-mode-message", nil);
+    NSAttributedString* attributedMessage =
+        [[NSAttributedString alloc] initWithString:message attributes:[self dialogMessageAttributes:NO]];
     
     __weak typeof(self) weakSelf = self;
-    [self showConfirmation:title message:message action:^{
+    [self showConfirmation:title message:attributedMessage action:^{
         [weakSelf enablePairingMode];
     }];
 }
@@ -427,16 +456,15 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
 
 #pragma mark Factory Reset
 
-- (void)factoryReset:(id)sender {
+- (void)factoryReset {
     NSString* title = NSLocalizedString(@"settings.device.dialog.factory-restore-title", nil);
     NSString* message = NSLocalizedString(@"settings.device.dialog.factory-restore-message", nil);
+    NSAttributedString* attributedMessage =
+        [[NSAttributedString alloc] initWithString:message attributes:[self dialogMessageAttributes:NO]];
     
     __weak typeof(self) weakSelf = self;
-    [self showConfirmation:title message:message action:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf restore];
-        }
+    [self showConfirmation:title message:attributedMessage action:^{
+        [weakSelf restore];
     }];
 }
 
@@ -462,13 +490,37 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
     }
     
     [self showMessageDialog:message title:title];
+    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
 }
 
+- (void)listenForDisconnects {
+    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
+
+    if ([self disconnectObserverId] == nil && manager != nil) {
+        __weak typeof(self) weakSelf = self;
+        self.disconnectObserverId =
+        [manager observeUnexpectedDisconnect:^(NSError *error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if ([strongSelf isVisible]) {
+                if ([strongSelf activityView] != nil) {
+                    [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                        NSString* title = NSLocalizedString(@"settings.sense.operation-failed.title", nil);
+                        NSString* message = NSLocalizedString(@"settings.sense.operation-failed.unexpected-disconnect", nil);
+                        [strongSelf showMessageDialog:message title:title];
+                        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                    }];
+                }
+            }
+        }];
+    }
+}
 
 - (void)restore {
     [SENAnalytics track:kHEMAnalyticsEventDeviceAction
              properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionFactoryRestore}];
 
+    [self listenForDisconnects];
+    
     NSString* message = NSLocalizedString(@"settings.device.restoring-factory-settings", nil);
     [self showActivityText:message completion:^{
         __weak typeof(self) weakSelf = self;
@@ -517,6 +569,21 @@ static NSString* const HEMSenseFooterReuseIdentifier = @"resetDescription";
         [[self delegate] didUpdateWiFiFrom:self];
     }
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+#pragma mark - Segues
+
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    if ([[segue destinationViewController] isKindOfClass:[UINavigationController class]]) {
+        UINavigationController* nav = [segue destinationViewController];
+        UIViewController* root = [nav topViewController];
+        // only apply the transition to timezone
+        if ([root isKindOfClass:[HEMTimeZoneViewController class]]) {
+            [self setModalTransitionDelegate:[[HEMBounceModalTransition alloc] init]];
+            [nav setTransitioningDelegate:[self modalTransitionDelegate]];
+            [nav setModalPresentationStyle:UIModalPresentationCustom];
+        }
+    }
 }
 
 @end

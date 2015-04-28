@@ -2,6 +2,8 @@
 #import "SENSleepResult.h"
 #import "SENKeyedArchiver.h"
 
+NSInteger const SENSleepResultSentinelValue = -1;
+
 static NSDate* SENSleepResultDateFromTimestamp(NSNumber* timestampMillis)
 {
     return [NSDate dateWithTimeIntervalSince1970:[timestampMillis doubleValue] / 1000];
@@ -101,9 +103,9 @@ static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
     return self;
 }
 
-- (NSString *)description
+- (NSString*)description
 {
-    static NSString* const SENSleepResultDescriptionFormat =  @"<SENSleepResult @key=%@ @score=%@>";
+    static NSString* const SENSleepResultDescriptionFormat = @"<SENSleepResult @key=%@ @score=%@>";
     return [NSString stringWithFormat:SENSleepResultDescriptionFormat, [self retrievalKey], self.score];
 }
 
@@ -169,7 +171,7 @@ static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
     if (![statisticData isKindOfClass:[NSDictionary class]])
         return nil;
     __block NSMutableArray* stats = [[NSMutableArray alloc] initWithCapacity:statisticData.count];
-    [statisticData enumerateKeysAndObjectsUsingBlock:^(NSString* name, NSNumber* value, BOOL *stop) {
+    [statisticData enumerateKeysAndObjectsUsingBlock:^(NSString* name, NSNumber* value, BOOL* stop) {
         if ([name isKindOfClass:[NSString class]] && [value isKindOfClass:[NSNumber class]]) {
             SENSleepResultStatistic* stat = [[SENSleepResultStatistic alloc] initWithName:name value:value];
             if (stat)
@@ -231,9 +233,10 @@ static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
 static NSString* const SENSleepResultSoundURL = @"url";
 static NSString* const SENSleepResultSoundDuration = @"duration_millis";
 
-- (instancetype)initWithDictionary:(NSDictionary *)data
+- (instancetype)initWithDictionary:(NSDictionary*)data
 {
-    if (!data) return nil;
+    if (!data)
+        return nil;
     if (self = [super init]) {
         _URLPath = data[SENSleepResultSoundURL];
         _durationMillis = [data[SENSleepResultSoundDuration] longValue];
@@ -241,7 +244,7 @@ static NSString* const SENSleepResultSoundDuration = @"duration_millis";
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder*)aDecoder
 {
     if (self = [super init]) {
         _URLPath = [aDecoder decodeObjectForKey:SENSleepResultSoundURL];
@@ -250,9 +253,9 @@ static NSString* const SENSleepResultSoundDuration = @"duration_millis";
     return self;
 }
 
-- (NSString *)description
+- (NSString*)description
 {
-    static NSString* const SENSleepResultSoundDescriptionFormat =  @"<SENSleepResultSound @URLPath=%@ @durationMillis=%ld>";
+    static NSString* const SENSleepResultSoundDescriptionFormat = @"<SENSleepResultSound @URLPath=%@ @durationMillis=%ld>";
     return [NSString stringWithFormat:SENSleepResultSoundDescriptionFormat, self.URLPath, self.durationMillis];
 }
 
@@ -269,13 +272,13 @@ static NSString* const SENSleepResultSoundDuration = @"duration_millis";
     return [self.URLPath hash] + self.durationMillis;
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
+- (void)encodeWithCoder:(NSCoder*)aCoder
 {
     [aCoder encodeObject:self.URLPath forKey:SENSleepResultSoundURL];
     [aCoder encodeObject:@(self.durationMillis) forKey:SENSleepResultSoundDuration];
 }
 
-- (BOOL)updateWithDictionary:(NSDictionary *)data
+- (BOOL)updateWithDictionary:(NSDictionary*)data
 {
     BOOL changed = NO;
     if (data[SENSleepResultSoundURL] && ![self.URLPath isEqual:data[SENSleepResultSoundURL]]) {
@@ -339,9 +342,9 @@ static NSString* const SENSleepResultSegmentSound = @"sound";
     return self;
 }
 
-- (NSString *)description
+- (NSString*)description
 {
-    static NSString* const SENSleepResultSegmentDescriptionFormat =  @"<SENSleepResultSegment @sleepDepth=%ld @duration=%@ @eventType=%@>";
+    static NSString* const SENSleepResultSegmentDescriptionFormat = @"<SENSleepResultSegment @sleepDepth=%ld @duration=%@ @eventType=%@>";
     return [NSString stringWithFormat:SENSleepResultSegmentDescriptionFormat, (long)self.sleepDepth, self.duration, self.eventType];
 }
 
@@ -456,19 +459,19 @@ static NSString* const SENSleepResultStatisticNameTimeToSleep = @"time_to_sleep"
     return SENSleepResultStatisticTypeUnknown;
 }
 
-- (instancetype)initWithName:(NSString *)name value:(NSNumber*)value
+- (instancetype)initWithName:(NSString*)name value:(NSNumber*)value
 {
     if (self = [super init]) {
         if ([name isKindOfClass:[NSString class]])
             _name = name;
-        if ([value isKindOfClass:[NSNumber class]])
+        if ([value isKindOfClass:[NSNumber class]] && [value doubleValue] != SENSleepResultSentinelValue)
             _value = value;
         _type = [SENSleepResultStatistic typeFromName:name];
     }
     return self;
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder
+- (id)initWithCoder:(NSCoder*)aDecoder
 {
     if (self = [super init]) {
         _name = [aDecoder decodeObjectForKey:SENSleepResultStatisticNameKey];
@@ -478,13 +481,13 @@ static NSString* const SENSleepResultStatisticNameTimeToSleep = @"time_to_sleep"
     return self;
 }
 
-- (NSString *)description
+- (NSString*)description
 {
-    static NSString* const SENSleepResultStatDescriptionFormat =  @"<SENSleepResultStatistic @name=%@ @value=%@>";
+    static NSString* const SENSleepResultStatDescriptionFormat = @"<SENSleepResultStatistic @name=%@ @value=%@>";
     return [NSString stringWithFormat:SENSleepResultStatDescriptionFormat, self.name, self.value];
 }
 
-- (void)encodeWithCoder:(NSCoder *)aCoder
+- (void)encodeWithCoder:(NSCoder*)aCoder
 {
     [aCoder encodeObject:self.name forKey:SENSleepResultStatisticNameKey];
     [aCoder encodeObject:self.value forKey:SENSleepResultStatisticValueKey];
@@ -533,9 +536,9 @@ static NSString* const SENSleepResultSensorInsightCondition = @"condition";
     return self;
 }
 
-- (NSString *)description
+- (NSString*)description
 {
-    static NSString* const SENSleepResultInsightDescriptionFormat =  @"<SENSleepResultSensorInsight @name=%@ @message=%@>";
+    static NSString* const SENSleepResultInsightDescriptionFormat = @"<SENSleepResultSensorInsight @name=%@ @message=%@>";
     return [NSString stringWithFormat:SENSleepResultInsightDescriptionFormat, self.name, self.message];
 }
 

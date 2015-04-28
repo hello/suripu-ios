@@ -64,7 +64,7 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
 }
 
 - (void)configureTitle {
-    [[self titleLabel] setTextColor:[UIColor blackColor]];
+    [[self titleLabel] setTextColor:[UIColor whiteColor]];
     [[self titleLabel] setFont:[UIFont onboardingTitleLargeFont]];
 }
 
@@ -109,7 +109,7 @@ static CGFloat const kHEMWelcomeButtonDelayIncrements = 0.15f;
     
     NSMutableAttributedString* attrText = [[NSMutableAttributedString alloc] initWithString:text];
     [attrText addAttributes:@{NSFontAttributeName : [UIFont onboardingDescriptionLargeFont],
-                              NSForegroundColorAttributeName : [HelloStyleKit onboardingDescriptionColor]}
+                              NSForegroundColorAttributeName : [UIColor whiteColor]}
                       range:NSMakeRange(0, [attrText length])];
     
     [[self subtitleLabel] setAttributedText:attrText];

@@ -42,7 +42,6 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 @property (strong, nonatomic) HEMWiFiDataSource* wifiDataSource;
 @property (weak,   nonatomic) UIBarButtonItem* cancelItem;
 @property (copy,   nonatomic) NSString* disconnectObserverId;
-@property (assign, nonatomic, getter=isVisible) BOOL visible;
 @property (assign, nonatomic, getter=hasScanned) BOOL scanned;
 
 @end
@@ -54,12 +53,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
     
     [self configurePicker];
     [self configureButtons];
-    [[[self activityView] activityLabel] setFont:[UIFont onboardingActivityFontMedium]];
-    
-    if (![self haveDelegates]) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBWiFi];
-    }
-    
+    [self trackAnalyticsEvent:HEMAnalyticsEventWiFi];
 }
 
 - (BOOL)haveDelegates {
@@ -79,30 +73,23 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 }
 
 - (void)configurePicker {
+    [[[self activityView] activityLabel] setFont:[UIFont onboardingActivityFontMedium]];
+    
     [self setWifiDataSource:[[HEMWiFiDataSource alloc] init]];
     [[self wifiDataSource] setKeepSenseLEDOn:![self haveDelegates]];
     [[self wifiPickerTableView] setDataSource:[self wifiDataSource]];
     [[self wifiPickerTableView] setDelegate:self];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    [self setVisible:YES];
-}
-
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     // only auto start a scan if one has not yet been done before
     if (![self hasScanned]) {
+        [self trackAnalyticsEvent:HEMAnalyticsEventWiFiScan];
         [self scanWithActivity];
         [self setScanned:YES];
     }
     
-}
-
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [self setVisible:NO];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -120,7 +107,9 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
             __strong typeof(weakSelf) strongSelf = weakSelf;
             [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
                 [[strongSelf cancelItem] setEnabled:YES];
-                [strongSelf showError:error];
+                if ([strongSelf isVisible]) {
+                    [strongSelf showError:error];
+                }
             }];
         }];
     }
@@ -198,7 +187,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 }
 
 - (void)scanWithActivity {
-    [SENAnalytics startEvent:kHEMAnalyticsEventOnBWiFiScan];
     DDLogVerbose(@"wifi scan started");
     
     [self observeUnexpectedDisconnects];
@@ -211,7 +199,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     [self scanUntilDoneWithCount:0 completion:^(NSError *error) {
         __block typeof(weakSelf) strongSelf = weakSelf;
         DDLogVerbose(@"wifi scan completed");
-        [SENAnalytics endEvent:kHEMAnalyticsEventOnBWiFiScan];
         
         [[strongSelf wifiPickerTableView] reloadData];
         [[strongSelf activityView] dismissWithResultText:nil showSuccessMark:NO remove:NO completion:^{
@@ -269,8 +256,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Actions
 
 - (IBAction)scan:(id)sender {
-    [SENAnalytics track:kHEMAnalyticsEventOnBWiFiScan];
-    
+    [self trackAnalyticsEvent:HEMAnalyticsEventWiFiRescan];
     [[self wifiDataSource] clearDetectedWifis];
     [[self wifiPickerTableView] reloadData];
     [self scanWithActivity];

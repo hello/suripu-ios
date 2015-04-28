@@ -1,0 +1,1 @@
+../../../LGBluetooth/LGBluetooth/LGCentralManager.h

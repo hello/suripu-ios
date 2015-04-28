@@ -21,24 +21,26 @@
 #import "HelloStyleKit.h"
 #import "HEMSupportUtil.h"
 #import "HEMWifiPickerViewController.h"
+#import "HEMAlertViewController.h"
 
 typedef NS_ENUM(NSUInteger, HEMSensePairState) {
     HEMSensePairStateNotStarted = 0,
     HEMSensePairStateSenseFound = 1,
     HEMSensePairStateSensePaired = 2,
-    HEMSensePairStateAddingSleepPill = 3,
-    HEMSensePairStateSettingUpNewSense = 4,
-    HEMSensePairStateWiFiNotDetected = 5,
-    HEMSensePairStateWiFiDetected = 6,
-    HEMSensePairStateAccountLinked = 7,
-    HEMSensePairStateTimezoneSet = 8,
-    HEMSensePairStateForceDataUpload = 9
+    HEMSensePairStateSettingUpNewSense = 3,
+    HEMSensePairStateWiFiNotDetected = 4,
+    HEMSensePairStateWiFiDetected = 5,
+    HEMSensePairStateAccountLinked = 6,
+    HEMSensePairStateTimezoneSet = 7,
+    HEMSensePairStateForceDataUpload = 8,
+    HEMSensePairStateNeedWiFiChange = 9
 };
 
 // I've tested the scanning process multiple times starting with a timeout of
 // 15 to 20.  Out of say 5 tries, I've seen it return in time once.  30 secs
 // seem to allow the response to return in time reliably.
 static CGFloat const kHEMSensePairScanTimeout = 30.0f;
+static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 
 @interface HEMSensePairViewController()
 
@@ -56,6 +58,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 @property (copy,   nonatomic) NSString* detectedSSID;
 @property (assign, nonatomic, getter=isTimedOut) BOOL timedOut;
 @property (assign, nonatomic, getter=isPairing) BOOL pairing;
+@property (assign, nonatomic) NSUInteger linkAccountAttempts;
 
 @end
 
@@ -65,10 +68,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     [super viewDidLoad];
     [self configureButtons];
     [self setCurrentState:HEMSensePairStateNotStarted];
-    
-    if ([self delegate] == nil) {
-        [SENAnalytics track:kHEMAnalyticsEventOnBPairSense];
-    }
+    [self setLinkAccountAttempts:0];
+    [self trackAnalyticsEvent:HEMAnalyticsEventPairSense];
 }
 
 - (void)configureButtons {
@@ -105,8 +106,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         self.disconnectObserverId =
         [[self senseManager] observeUnexpectedDisconnect:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                [strongSelf setSenseManager:nil];
+            [strongSelf setSenseManager:nil];
+            if ([strongSelf isVisible]) {
                 if ([strongSelf isPairing]) {
                     [strongSelf showCouldNotPairErrorMessage];
                 } else {
@@ -262,6 +263,11 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
             [self finish];
             break;
         }
+        case HEMSensePairStateNeedWiFiChange: {
+            [self setDetectedSSID:nil];
+            [self next];
+            break;
+        }
         default: {
             DDLogWarn(@"state %ld not recognized", (long)[self currentState]);
             break;
@@ -379,13 +385,16 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
     __weak typeof(self) weakSelf = self;
     [manager linkAccount:accessToken success:^(id response) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        if (strongSelf) {
-            [strongSelf setCurrentState:HEMSensePairStateAccountLinked];
-            [strongSelf executeNextStep];
-        }
+        [strongSelf setCurrentState:HEMSensePairStateAccountLinked];
+        [strongSelf executeNextStep];
     } failure:^(NSError *error) {
-        NSString* msg = NSLocalizedString(@"pairing.error.link-account-failed", nil);
-        [weakSelf showErrorMessage:msg];
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        NSUInteger attempts = [strongSelf linkAccountAttempts];
+        [strongSelf setLinkAccountAttempts:attempts + 1];
+        
+        BOOL allowWiFiEdit = attempts + 1 >= HEMSensePairAttemptsBeforeWiFiChangeOption;
+        [strongSelf showLinkAccountError:allowWiFiEdit];
+        
         [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }];
 }
@@ -395,7 +404,7 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 - (void)setupTimeZone {
     NSString* activityMessage = NSLocalizedString(@"pairing.activity.setting-timezone", nil);
     [self updateActivityText:activityMessage completion:nil];
-    DDLogVerbose(@"setting timezone");;
+    DDLogVerbose(@"setting timezone");
     
     __weak typeof(self) weakSelf = self;
     [SENAPITimeZone setCurrentTimeZone:^(id data, NSError *error) {
@@ -429,16 +438,11 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 
 #pragma mark - Errors
 
-- (void)showErrorMessage:(NSString*)message {
+- (void)stopActivityBefore:(void(^)(void))action {
     __weak typeof(self) weakSelf = self;
     void(^show)(id response, NSError* error) = ^(__unused id response, __unused NSError* error){
         __strong typeof(weakSelf) strongSelf = weakSelf;
-        [strongSelf stopActivityWithMessage:nil success:NO completion:^{
-            [strongSelf showMessageDialog:message
-                                    title:NSLocalizedString(@"pairing.failed.title", nil)
-                                    image:nil
-                             withHelpPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)];
-        }];
+        [strongSelf stopActivityWithMessage:nil success:NO completion:action];
     };
     
     if ([self senseManager] == nil) {
@@ -447,7 +451,50 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
         SENSenseLEDState led = [self delegate] == nil ? SENSenseLEDStatePair : SENSenseLEDStateOff;
         [[self senseManager] setLED:led completion:show];
     }
+}
 
+- (void)showLinkAccountError:(BOOL)allowWiFiEdit {
+    __weak typeof(self) weakSelf = self;
+    [self stopActivityBefore:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        UIView* seeThroughView
+            = [strongSelf parentViewController]
+            ? [[strongSelf parentViewController] view]
+            : [strongSelf view];
+        
+        HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
+        [dialogVC setTitle:NSLocalizedString(@"pairing.failed.title", nil)];
+        [dialogVC setViewToShowThrough:seeThroughView];
+
+        if (allowWiFiEdit) {
+            [dialogVC setMessage:NSLocalizedString(@"pairing.error.link-account-failed-edit-wifi", nil)];
+            [dialogVC addAction:NSLocalizedString(@"actions.edit.wifi", nil) primary:NO actionBlock:^{
+                [strongSelf dismissViewControllerAnimated:YES completion:^{
+                    [strongSelf setCurrentState:HEMSensePairStateNeedWiFiChange];
+                    [strongSelf executeNextStep];
+                }];
+            }];
+        } else {
+            [dialogVC setMessage:NSLocalizedString(@"pairing.error.link-account-failed", nil)];
+            [dialogVC setHelpPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)];
+        }
+        
+        [dialogVC showFrom:strongSelf onDefaultActionSelected:^{
+            // don't weak reference this since controller must remain until it has
+            // been dismissed
+            [strongSelf dismissViewControllerAnimated:YES completion:nil];
+        }];
+    }];
+}
+
+- (void)showErrorMessage:(NSString*)message {
+    __weak typeof(self) weakSelf = self;
+    [self stopActivityBefore:^{
+        [weakSelf showMessageDialog:message
+                              title:NSLocalizedString(@"pairing.failed.title", nil)
+                              image:nil
+                       withHelpPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)];
+    }];
 }
 
 #pragma mark - Finishing
@@ -470,6 +517,8 @@ static CGFloat const kHEMSensePairScanTimeout = 30.0f;
 }
 
 - (void)next {
+    [HEMOnboardingUtils notifyOfSensePairingChange:[self senseManager]];
+    
     if ([self delegate] == nil) {
         NSString* segueId = nil;
         if ([self detectedSSID] != nil) {

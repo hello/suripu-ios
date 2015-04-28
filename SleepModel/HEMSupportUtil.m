@@ -11,7 +11,7 @@
 
 #import <SVWebViewController/SVModalWebViewController.h>
 
-#import <SenseKit/SENAuthorizationService.h>
+#import <SenseKit/SENServiceAccount.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -47,10 +47,15 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
     NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
     NSString* osVersion = [device systemVersion];
     NSString* deviceModel = [self deviceModel]; // this is used over UIDevice as it gives the model number
-    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser] ?: @"";
+    NSString* accountEmail = [[[SENServiceAccount sharedService] account] email];
     
-    return [NSString stringWithFormat:@"\n\n\n\n\n-----------------\n%@ v%@\naccount %@\n%@\nOS %@",
-            appName, appVersion, accountId, deviceModel, osVersion];
+    if (accountEmail) {
+        return [NSString stringWithFormat:@"\n\n\n\n\n-----------------\n%@ v%@\nAccount %@\n%@\nOS %@",
+                appName, appVersion, accountEmail, deviceModel, osVersion];
+    } else {
+        return [NSString stringWithFormat:@"\n\n\n\n\n-----------------\n%@ v%@\n%@\nOS %@",
+                appName, appVersion, deviceModel, osVersion];
+    }
 }
 
 + (void)sendEmailTo:(NSString*)email

@@ -8,6 +8,7 @@ New:
 
 Fixes:
 
+* Fixes issue where Timeline for Last Night is not updated when app resumes from background to foreground.
 * Adjusted loading text font on trends and current conditions to match
 * Adjusted animation parameters on Room Check to fix choppiness on iOS 7
 

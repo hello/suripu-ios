@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.5.6
+
+New:
+
+* Added Timeline mp event for the alarm shortcut
+
+Fixes:
+
+* removed an extra call to set the LED after setting wifi credentials 
+
 ## 1.0.5.5
 
 New:

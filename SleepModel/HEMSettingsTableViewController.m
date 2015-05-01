@@ -12,6 +12,8 @@
 #import "HEMSupportUtil.h"
 #import "HEMHelpFooterView.h"
 
+static CGFloat const HEMSettingsBottomMargin = 10.0f;
+
 typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRowIndex = 0,
     HEMSettingsDevicesRowIndex = 1,
@@ -20,7 +22,11 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRows = 4,
 };
 
-typedef NS_ENUM(NSUInteger, HEMSettingsFeedbackRow) { HEMSettingsFeedbackRowIndex = 0, HEMSettingsFeedbackRows = 1 };
+typedef NS_ENUM(NSUInteger, HEMSettingsFeedbackRow) {
+    HEMSettingsFeedbackRowIndex = 0,
+    HEMSettingsUserGuideRowIndex = 1,
+    HEMSettingsFeedbackRows = 2
+};
 
 typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     HEMSettingsAccountSection = 0,
@@ -39,7 +45,6 @@ typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
 @implementation HEMSettingsTableViewController
 
 static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
-static CGFloat const HEMVersionLabelHeightOffset = -24.f;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -63,7 +68,7 @@ static CGFloat const HEMVersionLabelHeightOffset = -24.f;
     frame.size.height = HEMSettingsCellTableMargin;
     frame.size.width = width;
     [[self settingsTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
-
+    
     // footer
     HEMHelpFooterView *footer = [[HEMHelpFooterView alloc] initWithWidth:width andContainingController:self];
     [self addVersionLabelToFooter:footer];
@@ -83,16 +88,31 @@ static CGFloat const HEMVersionLabelHeightOffset = -24.f;
     [versionLabel setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleRightMargin];
     [versionLabel sizeToFit];
 
+    CGFloat footerHeight = CGRectGetHeight([footer bounds]);
+    CGFloat versionHeight = CGRectGetHeight([versionLabel bounds]);
+    CGFloat contentHeight = [[self settingsTableView] contentSize].height + footerHeight;
+    CGFloat tableHeight = CGRectGetHeight([[self settingsTableView] bounds]);
+    CGFloat versionY = 0.0f;
+    if (contentHeight + versionHeight + HEMSettingsBottomMargin < tableHeight) {
+        versionY = tableHeight
+                    - contentHeight
+                    + footerHeight
+                    - CGRectGetHeight([versionLabel bounds])
+                    - HEMSettingsBottomMargin;
+    } else {
+        versionY = footerHeight;
+    }
+    
     CGRect versionFrame = [versionLabel frame];
     versionFrame.origin.x = (CGRectGetWidth([footer bounds]) - CGRectGetWidth(versionFrame)) / 2;
-    versionFrame.origin.y = CGRectGetHeight([footer bounds]) + HEMSettingsCellTableMargin + HEMVersionLabelHeightOffset;
+    versionFrame.origin.y = versionY;
     [versionLabel setFrame:versionFrame];
 
     [footer addSubview:versionLabel];
 
     // adjust the footer
     CGRect footerFrame = [footer frame];
-    footerFrame.size.height = CGRectGetMaxY([versionLabel frame]);
+    footerFrame.size.height = CGRectGetMaxY([versionLabel frame]) + HEMSettingsBottomMargin;
     [footer setFrame:footerFrame];
 
     [self setVersionLabel:versionLabel];
@@ -100,27 +120,8 @@ static CGFloat const HEMVersionLabelHeightOffset = -24.f;
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
-
-    CGFloat tableHeight = CGRectGetHeight([[self settingsTableView] bounds]);
-    CGFloat contentHeight = [[self settingsTableView] contentSize].height;
-    CGFloat versionHeight = CGRectGetHeight([[self versionLabel] bounds]);
-    CGFloat bottomAnchorY = tableHeight - versionHeight - HEMSettingsCellTableMargin;
-
-    if (contentHeight < bottomAnchorY) {
-        // move the version label to the bottom of the table view
-        UIView *tableFooter = [[self settingsTableView] tableFooterView];
-        CGRect footerFrame = [tableFooter frame];
-        CGRect relativeFrame = [tableFooter convertRect:[tableFooter bounds] toView:[self view]];
-        CGFloat footerHeight = CGRectGetHeight(footerFrame);
-        CGFloat adjustedFooterHeight = tableHeight - CGRectGetMaxY(relativeFrame) + footerHeight;
-
-        CGRect versionFrame = [[self versionLabel] frame];
-        versionFrame.origin.y = adjustedFooterHeight - HEMSettingsCellTableMargin - versionHeight
-                                + HEMVersionLabelHeightOffset;
-        [[self versionLabel] setFrame:versionFrame];
-
-        footerFrame.size.height = adjustedFooterHeight;
-        [tableFooter setFrame:footerFrame];
+    if ([[self settingsTableView] tableFooterView] == nil) {
+        [self configureTableView];
     }
 }
 
@@ -196,11 +197,7 @@ static CGFloat const HEMVersionLabelHeightOffset = -24.f;
             [self performSegueWithIdentifier:nextSegueId sender:self];
         }
     } else if ([indexPath section] == HEMSettingsSupportSection) {
-        [HEMSupportUtil sendEmailTo:NSLocalizedString(@"feedback.email.address", nil)
-                        withSubject:NSLocalizedString(@"feedback.email.subject", nil)
-                          attachLog:NO
-                               from:self
-                       mailDelegate:self];
+        [self handleSupportActionAtRow:[indexPath row]];
     }
 }
 
@@ -247,12 +244,42 @@ static CGFloat const HEMVersionLabelHeightOffset = -24.f;
             case HEMSettingsFeedbackRowIndex:
                 title = NSLocalizedString(@"settings.feedback", nil);
                 break;
+            case HEMSettingsUserGuideRowIndex:
+                title = NSLocalizedString(@"settings.user-guide", nil);
+                break;
             default:
                 break;
         }
     }
 
     return title;
+}
+
+#pragma mark - Support Actions
+
+- (void)handleSupportActionAtRow:(NSUInteger)row {
+    switch (row) {
+        case HEMSettingsFeedbackRowIndex:
+            [self draftFeedbackEmail];
+            break;
+        case HEMSettingsUserGuideRowIndex:
+            [self openUserGuide];
+            break;
+        default:
+            break;
+    }
+}
+
+- (void)openUserGuide {
+    [HEMSupportUtil openHelpFrom:self];
+}
+
+- (void)draftFeedbackEmail {
+    [HEMSupportUtil sendEmailTo:NSLocalizedString(@"feedback.email.address", nil)
+                    withSubject:NSLocalizedString(@"feedback.email.subject", nil)
+                      attachLog:NO
+                           from:self
+                   mailDelegate:self];
 }
 
 #pragma mark - Mail Delegate

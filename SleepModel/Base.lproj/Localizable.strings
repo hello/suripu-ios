@@ -147,6 +147,7 @@
 "settings.account" = "My account";
 "settings.units" = "Units and time";
 "settings.feedback" = "Feedback";
+"settings.user-guide" = "User Guide";
 "settings.units.24-hour" = "24 hour";
 "settings.units.12-hour" = "12 hour";
 "settings.units.celsius" = "Celsius";
@@ -166,8 +167,7 @@
 "settings.account.name" = "Name";
 "settings.account.email" = "Email";
 "settings.account.password" = "Password";
-"settings.help.format" = "If you're having trouble, visit %@ or contact us at %@";
-"settings.help.support" = "Support";
+"settings.help.format" = "If you're having trouble, please contact us at %@";
 "settings.enhanced-audio.desc" = "Enhanced Audio allows Sense to pick up snoring, sleep talking and other noise disturbances.";
 "settings.sign-out.confirmation" = "Are you sure you want to sign out of your account?";
 

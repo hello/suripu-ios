@@ -67,7 +67,7 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
 
 - (NSAttributedString *)attributedHelpText {
     NSString *helpFormat = NSLocalizedString(@"settings.help.format", nil);
-    NSArray *args = @[ [self supportLink], [self helpEmail] ];
+    NSArray *args = @[ [self helpEmail] ];
     UIColor *color = [HelloStyleKit backViewTextColor];
     UIFont *font = [UIFont settingsHelpFont];
 
@@ -79,13 +79,6 @@ static CGFloat const HEMHelpLineHeightMultiple = 1.2f;
     [attrHelp addAttribute:NSParagraphStyleAttributeName value:paraStyle range:NSMakeRange(0, [attrHelp length])];
 
     return attrHelp;
-}
-
-- (NSAttributedString *)supportLink {
-    NSString *hyperLinkText = NSLocalizedString(@"settings.help.support", nil);
-    NSString *url = NSLocalizedString(@"help.url.support", nil);
-    NSMutableAttributedString *link = [[NSMutableAttributedString alloc] initWithString:hyperLinkText];
-    return [link hyperlink:url];
 }
 
 - (NSAttributedString *)helpEmail {

@@ -24,7 +24,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsFeedbackRow) { HEMSettingsFeedbackRowInde
 
 typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
     HEMSettingsAccountSection = 0,
-    HEMSettingsFeedbackSection = 1,
+    HEMSettingsSupportSection = 1,
     HEMSettingsSections = 2
 };
 
@@ -139,7 +139,7 @@ static CGFloat const HEMVersionLabelHeightOffset = -24.f;
     switch (section) {
         case HEMSettingsAccountSection:
             return HEMSettingsAccountRows;
-        case HEMSettingsFeedbackSection:
+        case HEMSettingsSupportSection:
             return HEMSettingsFeedbackRows;
         default:
             return 0;
@@ -148,7 +148,7 @@ static CGFloat const HEMVersionLabelHeightOffset = -24.f;
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
     switch (section) {
-        case HEMSettingsFeedbackSection:
+        case HEMSettingsSupportSection:
             return HEMSettingsSectionHeaderHeight;
         case HEMSettingsAccountSection:
         default:
@@ -195,7 +195,7 @@ static CGFloat const HEMVersionLabelHeightOffset = -24.f;
         if (nextSegueId != nil) {
             [self performSegueWithIdentifier:nextSegueId sender:self];
         }
-    } else if ([indexPath section] == HEMSettingsFeedbackSection) {
+    } else if ([indexPath section] == HEMSettingsSupportSection) {
         [HEMSupportUtil sendEmailTo:NSLocalizedString(@"feedback.email.address", nil)
                         withSubject:NSLocalizedString(@"feedback.email.subject", nil)
                           attachLog:NO
@@ -242,7 +242,7 @@ static CGFloat const HEMVersionLabelHeightOffset = -24.f;
             default:
                 break;
         }
-    } else if (section == HEMSettingsFeedbackSection) {
+    } else if (section == HEMSettingsSupportSection) {
         switch (row) {
             case HEMSettingsFeedbackRowIndex:
                 title = NSLocalizedString(@"settings.feedback", nil);

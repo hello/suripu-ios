@@ -231,6 +231,8 @@
 "settings.sense.advanced.option.replace-sense.desc" = "If you have a new Sense you want to pair with this account.";
 "settings.sense.advanced.option.factory-reset" = "Factory reset";
 "settings.sense.advanced.option.factory-reset.desc" = "If you are going to give Sense to someone else.";
+"settings.sense.factory-reset.complete.title" = "Power Cycle Sense";
+"settings.sense.factory-reset.complete.confirmation" = "Sense has successfully restored to factory settings.  Please remove Sense in your Settings app under Bluetooth, unplug Sense, wait a few seconds, and plug it back in before you continue.";
 "settings.sense.not-found-title" = "Sense not found";
 "settings.sense.wifi" = "WiFi";
 "settings.sense.unpairing-message" = "Removing Sense";

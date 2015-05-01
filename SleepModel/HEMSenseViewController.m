@@ -308,7 +308,14 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 
 - (void)dismissActivityWithSuccess:(void(^)(void))completion {
     NSString* done = NSLocalizedString(@"status.success", nil);
-    [[self activityView] dismissWithResultText:done showSuccessMark:YES remove:YES completion:completion];
+    [[self activityView] dismissWithResultText:done showSuccessMark:YES remove:YES completion:^{
+        if ([[self delegate] respondsToSelector:@selector(didDismissActivityFrom:)]) {
+            [[self delegate] didDismissActivityFrom:self];
+        }
+        if (completion) {
+            completion ();
+        }
+    }];
 }
 
 #pragma mark Advanced Options

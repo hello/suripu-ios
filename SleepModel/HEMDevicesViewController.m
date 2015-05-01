@@ -46,6 +46,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (strong, nonatomic) HEMDeviceDataSource* dataSource;
 @property (assign, nonatomic) BOOL loaded;
+@property (assign, nonatomic, getter=isWaitingToShowFactoryResetDialog) BOOL waitingToShowFactoryResetDialog;
 @property (strong, nonatomic) SENDevice* selectedDevice;
 
 @end
@@ -163,6 +164,7 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
         [self showMessageDialog:msg title:title];
     }
     
+    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -270,7 +272,17 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
 
 - (void)didFactoryRestoreFrom:(HEMSenseViewController *)viewController {
     [self refreshDataSource:YES];
+    [self setWaitingToShowFactoryResetDialog:YES];
     [[self navigationController] popViewControllerAnimated:NO];
+}
+
+- (void)didDismissActivityFrom:(HEMSenseViewController *)viewController {
+    if ([self isWaitingToShowFactoryResetDialog]) {
+        NSString* title = NSLocalizedString(@"settings.sense.factory-reset.complete.title", nil);
+        NSString* msg = NSLocalizedString(@"settings.sense.factory-reset.complete.confirmation", nil);
+        [self showMessageDialog:msg title:title];
+        [self setWaitingToShowFactoryResetDialog:NO];
+    }
 }
 
 #pragma mark HEMSensePairDelegate

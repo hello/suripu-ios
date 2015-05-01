@@ -55,11 +55,6 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
     return self;
 }
 
-- (void)viewDidLoad {
-    [super viewDidLoad];
-    [self configureTableView];
-}
-
 - (void)configureTableView {
     CGFloat width = CGRectGetWidth([[self settingsTableView] bounds]);
 

@@ -765,6 +765,21 @@ typedef BOOL(^SENSenseUpdateBlock)(id response);
         case ErrorTypeInternalDataError:
             code = SENSenseManagerErrorCodeCorruptTransmission;
             break;
+        case ErrorTypeWlanEndpointDeleteFailed:
+            code = SENSenseManagerErrorCodeWLANEndpointDeletionFailure;
+            break;
+        case ErrorTypeInvalidAccountId:
+            code = SENSenseManagerErrorCodeInvalidAccountId;
+            break;
+        case ErrorTypeForceDataPushFailed:
+            code = SENSenseManagerErrorCodeForceDataPushFailed;
+            break;
+        case ErrorTypeProtobufEncodeFailed:
+            code = SENSenseManagerErrorCodeProtobufEncodingFailed;
+            break;
+        case ErrorTypeProtobufDecodeFailed:
+            code = SENSenseManagerErrorCodeProtobufDecodingFailed;
+            break;
         default:
             code = SENSenseManagerErrorCodeUnexpectedResponse;
             break;

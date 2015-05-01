@@ -78,7 +78,29 @@ typedef NS_ENUM (NSInteger, SENSenseManagerErrorCode) {
     /**
      * If Sense returned that it encountered an internal data error
      */
-    SENSenseManagerErrorCodeCorruptTransmission = -17
+    SENSenseManagerErrorCodeCorruptTransmission = -17,
+    /**
+     * If Sense failed to delete a network
+     */
+    SENSenseManagerErrorCodeWLANEndpointDeletionFailure = -18,
+    /**
+     * While pairing an account to Sense or with the Pill, Sense reports that
+     * the account id (token) is invalid
+     */
+    SENSenseManagerErrorCodeInvalidAccountId = -19,
+    /**
+     * Forcing data upload from Sense failed
+     */
+    SENSenseManagerErrorCodeForceDataPushFailed = -20,
+    /**
+     * Sense failed to encode the protobuf, usually while attempting to transmit
+     * to the server
+     */
+    SENSenseManagerErrorCodeProtobufEncodingFailed = -21,
+    /**
+     * Sense failed to decode the protobuf, usually from server responses
+     */
+    SENSenseManagerErrorCodeProtobufDecodingFailed = -22
 };
 
 typedef NS_ENUM(NSInteger, SENWiFiConnectionState) {

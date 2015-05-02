@@ -19,6 +19,7 @@
 #import "HEMActionButton.h"
 #import "HEMActivityCoverView.h"
 #import "HEMSupportUtil.h"
+#import "HEMWifiUtils.h"
 
 static CGFloat const kHEMWifiCellHeight = 44.0f;
 static CGFloat const kHEMWifiPickerIconPadding = 5.0f;
@@ -119,7 +120,7 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
 
 - (UIView*)wifiAccessoryView {
     UIImage* lockIcon = [HelloStyleKit lockIcon];
-    UIImage* wifiIcon = [HelloStyleKit wifiIcon];
+    UIImage* wifiIcon = [HEMWifiUtils wifiIconForRssi:-1]; // make sure to use a strong signal icon to start
     
     CGRect lockFrame = CGRectZero;
     lockFrame.size = lockIcon.size;
@@ -156,13 +157,15 @@ static NSUInteger const kHEMWifiPickerScansRequired = 1;
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
 
+    SENWifiEndpoint* endpoint = [[self wifiDataSource] endpointAtIndexPath:indexPath];
+    DDLogVerbose(@"endpoint %@, rssi %ld", [endpoint ssid], [endpoint rssi]);
+    
     UIView* accessoryView = [cell accessoryView];
     if (accessoryView == nil) {
         accessoryView = [self wifiAccessoryView];
         [cell setAccessoryView:accessoryView];
     }
     
-    SENWifiEndpoint* endpoint = [[self wifiDataSource] endpointAtIndexPath:indexPath];
     BOOL showWifiIcon = YES;
     NSString* ssid = [endpoint ssid];
     if (ssid == nil) {
@@ -175,6 +178,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     UIImageView* wifiView = (UIImageView*)[accessoryView viewWithTag:kHEMWifiPickerTagWifi];
     [wifiView setHidden:!showWifiIcon];
+    [wifiView setImage:[HEMWifiUtils wifiIconForRssi:[endpoint rssi]]];
     
     [[cell textLabel] setFont:[UIFont wifiTitleFont]];
     [[cell textLabel] setText:ssid];

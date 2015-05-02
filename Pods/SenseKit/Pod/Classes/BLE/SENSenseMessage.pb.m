@@ -32,6 +32,11 @@ BOOL ErrorTypeIsValidValue(ErrorType value) {
     case ErrorTypeNoEndpointInRange:
     case ErrorTypeWlanConnectionError:
     case ErrorTypeFailToObtainIp:
+    case ErrorTypeWlanEndpointDeleteFailed:
+    case ErrorTypeInvalidAccountId:
+    case ErrorTypeForceDataPushFailed:
+    case ErrorTypeProtobufEncodeFailed:
+    case ErrorTypeProtobufDecodeFailed:
       return YES;
     default:
       return NO;

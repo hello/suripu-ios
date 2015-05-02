@@ -8,6 +8,13 @@
 
 #import <Foundation/Foundation.h>
 
+typedef NS_ENUM(NSUInteger, WiFiRssiSignalStrength) {
+    WiFiRssiSignalStrengthNone,
+    WiFiRssiSignalStrengthLow,
+    WiFiRssiSignalStrengthMedium,
+    WiFiRssiSignalStrengthHigh
+};
+
 @interface HEMWifiUtils : NSObject
 
 /**
@@ -23,5 +30,13 @@
  * @return ssid of connected WIFI
  */
 + (NSString*)connectedWifiSSID;
+
+/**
+ * Convenience method to return wifi signal icon based ont he rssi value
+ * specified.
+ * @param rssi value for the wifi endpoint
+ * @return the wifi icon image that represents the strength of the signal
+ */
++ (UIImage*)wifiIconForRssi:(long)rssi;
 
 @end

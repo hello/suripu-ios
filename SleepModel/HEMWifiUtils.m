@@ -8,6 +8,10 @@
 #import <SystemConfiguration/CaptiveNetwork.h>
 #import "HEMWifiUtils.h"
 
+static CGFloat const HEMWiFiRssiSignalNone = 0.0f;
+static CGFloat const HEMWiFiRssiSignalLow = -90.0f;
+static CGFloat const HEMWiFiRssiSignalMed = -60.0f;
+
 @implementation HEMWifiUtils
 
 + (NSDictionary*)connectedWifiInfo {
@@ -34,6 +38,20 @@
 + (NSString*)connectedWifiSSID {
     NSDictionary* info = [self connectedWifiInfo];
     return info != nil ? [info valueForKey:@"SSID"] : nil;
+}
+
++ (UIImage*)wifiIconForRssi:(long)rssi {
+    NSString* imageName = @"wifiIcon";
+    if (rssi == HEMWiFiRssiSignalNone) {
+        imageName = [imageName stringByAppendingString:@"None"];
+    } else if (rssi > HEMWiFiRssiSignalMed) {
+        imageName = [imageName stringByAppendingString:@"High"];
+    } else if (rssi > HEMWiFiRssiSignalLow) {
+        imageName = [imageName stringByAppendingString:@"Medium"];
+    } else {
+        imageName = [imageName stringByAppendingString:@"Low"];
+    }
+    return [UIImage imageNamed:imageName];
 }
 
 @end

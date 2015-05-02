@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.6.0
+
+New:
+
+* WiFi signal strength is now shown through the wifi icon when scanning for WiFi
+* Link to the user guide is now made more prominent in Settings
+* An alert is shown after successfully factory resetting sense to describe what to do next
+* Updated protobuf definition to support additional Sense error codes
+* Account email is now attached to the support emails triggered by the app
+
 ## 1.0.5.6
 
 New:

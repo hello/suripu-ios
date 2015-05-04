@@ -25,8 +25,13 @@
 
 - (void)userWithId:(NSString *)userId didSignupWithProperties:(NSDictionary *)properties {
     Mixpanel* mp = [Mixpanel sharedInstance];
-    [mp createAlias:userId forDistinctID:[mp distinctId]];
-    [self setUserId:userId withProperties:properties];
+    NSString* origDistinctId = [[mp distinctId] copy];
+    [mp createAlias:userId forDistinctID:origDistinctId];
+    // per Mixpanel, we need to use mixpanel's original distinct id when we
+    // identify the user while creating the alias to prevent a race condition
+    // where identify: completes before the createAlias:forDistinctId call, causing
+    // people profiles to never show up
+    [self setUserId:origDistinctId withProperties:properties];
 }
 
 - (void)setUserId:(NSString*)userId withProperties:(NSDictionary *)properties {

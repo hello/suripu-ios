@@ -108,35 +108,22 @@ typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
     
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center addObserver:self
-               selector:@selector(didLoseInternet)
+               selector:@selector(showNoInternetAlert)
                    name:SENAPIUnreachableNotification
                  object:nil];
     [center addObserver:self
-               selector:@selector(didGetInternetBack)
+               selector:@selector(dismissNoInternetAlert)
                    name:SENAPIReachableNotification
                  object:nil];
-    [center addObserver:self
-               selector:@selector(checkInternetConnectivity)
-                   name:UIApplicationDidBecomeActiveNotification
-                 object:nil];
-}
-
-- (void)checkInternetConnectivity {
-    if (![SENAPIClient isAPIReachable]) {
-        [self didLoseInternet];
-    } else {
-        [self didGetInternetBack];
-    }
 }
 
 - (void)stopListeningForInternetConnectivityChanges {
     NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
     [center removeObserver:self name:SENAPIUnreachableNotification object:nil];
     [center removeObserver:self name:SENAPIReachableNotification object:nil];
-    [center removeObserver:self name:UIApplicationDidBecomeActiveNotification object:nil];
 }
 
-- (void)didLoseInternet {
+- (void)showNoInternetAlert {
     if ([self alertView]) {
         DDLogVerbose(@"another alert is currently shown, skip showing no internet alert");
         return;
@@ -163,7 +150,7 @@ typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
              properties:@{kHEMAnalyticsEventPropType : @"no internet"}];
 }
 
-- (void)didGetInternetBack {
+- (void)dismissNoInternetAlert {
     if ([[self alertView] tag] == HEMSystemAlertTypeNoInternet) {
         [self dismissAlert:nil];
     }
@@ -242,17 +229,22 @@ typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
 
 - (void)checkSystemIfEnabled {
     if ([self enableSystemMonitoring]) {
+        if ([SENAPIClient isAPIReachable]) {
+            [self dismissNoInternetAlert];
+            
+            __weak typeof(self) weakSelf = self;
+            [[SENServiceDevice sharedService] checkDevicesState:^(SENServiceDeviceState state) {
+                __strong typeof(weakSelf) strongSelf = weakSelf;
+                if (state != SENServiceDeviceStateUnknown && state != SENServiceDeviceStateNormal) {
+                    [strongSelf showDeviceWarning];
+                } else {
+                    [strongSelf checkTimeZone];
+                }
+            }];
+        } else {
+            [self showNoInternetAlert];
+        }
         [self listenForInternetConnectivityChanges];
-        
-        __weak typeof(self) weakSelf = self;
-        [[SENServiceDevice sharedService] checkDevicesState:^(SENServiceDeviceState state) {
-            __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (state != SENServiceDeviceStateUnknown && state != SENServiceDeviceStateNormal) {
-                [strongSelf showDeviceWarning];
-            } else {
-                [strongSelf checkTimeZone];
-            }
-        }];
     }
 }
 

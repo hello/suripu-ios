@@ -205,19 +205,35 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
 }
 
 - (void)drawRect:(CGRect)rect {
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSaveGState(context);
-    CGContextSetStrokeColorWithColor(context, [[HelloStyleKit buttonDividerColor] CGColor]);
-    CGContextSetLineWidth(context, HEMActionButtonDividerWidth);
+    if (![[self okButton] isHidden]) {
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSaveGState(context);
+        CGContextSetStrokeColorWithColor(context, [[HelloStyleKit buttonDividerColor] CGColor]);
+        CGContextSetLineWidth(context, HEMActionButtonDividerWidth);
+        
+        // add a line at the middle of the view, at the bottom where the button container is
+        CGFloat x = ((CGRectGetWidth([self bounds]) - HEMActionButtonDividerWidth))/2;
+        CGFloat y = (CGRectGetMinY([[self buttonContainer] frame])) + HEMActionButtonDividerVertPadding;
+        CGContextMoveToPoint(context, x, y);
+        CGContextAddLineToPoint(context, x, y + HEMActionButtonDividerHeight);
+        
+        CGContextStrokePath(context);
+        CGContextRestoreGState(context);
+    }
+}
+
+- (void)hideOkButton {
+    CGFloat okWidth = CGRectGetWidth([[self okButton] frame]);
     
-    // add a line at the middle of the view, at the bottom where the button container is
-    CGFloat x = ((CGRectGetWidth([self bounds]) - HEMActionButtonDividerWidth))/2;
-    CGFloat y = (CGRectGetMinY([[self buttonContainer] frame])) + HEMActionButtonDividerVertPadding;
-    CGContextMoveToPoint(context, x, y);
-    CGContextAddLineToPoint(context, x, y + HEMActionButtonDividerHeight);
+    CGRect cancelFrame = [[self cancelButton] frame];
+    cancelFrame.size.width += okWidth;
+    [[self cancelButton] setFrame:cancelFrame];
     
-    CGContextStrokePath(context);
-    CGContextRestoreGState(context);
+    [[self cancelButton] setTitleColor:[HelloStyleKit senseBlueColor] forState:UIControlStateNormal];
+    
+    [[self okButton] setHidden:YES];
+    
+    [self setNeedsDisplay];
 }
 
 #pragma mark - Show / Hide

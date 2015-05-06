@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.6.1
+
+New:
+
+* System alert when internet connection is lost
+* Include the device id in analytics of the device removed from the in-app device settings
+
+Fixes:
+
+* Fixes the analytics race condition that causes people profiles to not appear
+* Prevent user tapping on the dots of the Sense color screen
+* Insight summary cards should no longer have overllapping text due to
+cached calculated text heights
+
 ## 1.0.6.0
 
 New:

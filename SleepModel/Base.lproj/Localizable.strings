@@ -501,6 +501,8 @@
 "date.elapsed.years.format" = "%ld years ago";
 
 // alerts
+"alerts.no-internet.title" = "No Connection";
+"alerts.no-internet.message" = "We're having trouble connecting to the internet. Please check your connection or try again in a few minutes.";
 "alerts.timezone.title" = "Time Zone";
 "alerts.timezone.message" = "Your account is currently not set up with a time zone required to calculate your sleep data.";
 "alerts.device.no-sense.title" = "Sense Not Paired";

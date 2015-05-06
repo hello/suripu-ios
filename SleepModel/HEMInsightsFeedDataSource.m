@@ -209,12 +209,25 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
     return preview;
 }
 
+- (NSString*)keyForHeightCachedForCellAtIndexPath:(NSIndexPath*)indexPath {
+    NSString* body = [self bodyTextForCellAtIndexPath:indexPath];
+    NSString* preview = [self infoPreviewTextForCellAtIndexPath:indexPath];
+    NSString* key = body;
+    
+    if (preview) {
+        key = [body stringByAppendingString:preview];
+    }
+    
+    return key;
+}
+
 - (CGFloat)heightForCellAtIndexPath:(NSIndexPath*)indexPath withWidth:(CGFloat)width {
     NSString* body = [self bodyTextForCellAtIndexPath:indexPath];
     if ([body length] == 0) return 0.0f;
     
-    if ([[self heightCache] objectForKey:body] != nil) {
-        return [[[self heightCache] objectForKey:body] floatValue];
+    NSString* cacheKey = [self keyForHeightCachedForCellAtIndexPath:indexPath];
+    if ([[self heightCache] objectForKey:cacheKey] != nil) {
+        return [[[self heightCache] objectForKey:cacheKey] floatValue];
     }
 
     CGFloat calculatedHeight = 0;
@@ -234,7 +247,7 @@ static NSString* const HEMInsightsFeedReuseIdInsight = @"insight";
                                                                           inWidth:width];
     }
 
-    [[self heightCache] setObject:@(calculatedHeight) forKey:body];
+    [[self heightCache] setObject:@(calculatedHeight) forKey:cacheKey];
     return calculatedHeight;
 
 }

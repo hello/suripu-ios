@@ -1,5 +1,13 @@
 # Changelog
 
+## 1.0.6.2
+
+Fixes:
+
+* Sleep score animation smoothing
+* Play alarm preview audio when phone is muted
+* Typo fixes
+
 ## 1.0.6.1
 
 New:

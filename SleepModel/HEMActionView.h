@@ -51,4 +51,9 @@
  */
 - (void)dismiss:(BOOL)animated completion:(void(^)(void))completion;
 
+/**
+ * Hide the OK button so that only the cancel button is visible.
+ */
+- (void)hideOkButton;
+
 @end

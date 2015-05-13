@@ -1,5 +1,29 @@
 # Changelog
 
+## 1.0.6.1
+
+New:
+
+* System alert when internet connection is lost
+* Include the device id in analytics of the device removed from the in-app device settings
+
+Fixes:
+
+* Fixes the analytics race condition that causes people profiles to not appear
+* Prevent user tapping on the dots of the Sense color screen
+* Insight summary cards should no longer have overllapping text due to
+cached calculated text heights
+
+## 1.0.6.0
+
+New:
+
+* WiFi signal strength is now shown through the wifi icon when scanning for WiFi
+* Link to the user guide is now made more prominent in Settings
+* An alert is shown after successfully factory resetting sense to describe what to do next
+* Updated protobuf definition to support additional Sense error codes
+* Account email is now attached to the support emails triggered by the app
+
 ## 1.0.5.6
 
 New:

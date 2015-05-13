@@ -89,8 +89,8 @@
 /* Class = "UIButton"; normalTitle = "NOT RIGHT NOW"; ObjectID = "Kgp-n3-6dl"; */
 "Kgp-n3-6dl.normalTitle" = "NOT RIGHT NOW";
 
-/* Class = "UILabel"; text = "Meet Sense."; ObjectID = "LK8-dI-wjg"; */
-"LK8-dI-wjg.text" = "Meet Sense.";
+/* Class = "UILabel"; text = "Meet Sense"; ObjectID = "LK8-dI-wjg"; */
+"LK8-dI-wjg.text" = "Meet Sense";
 
 /* Class = "UIButton"; normalTitle = "NEXT"; ObjectID = "M0L-MG-dGi"; */
 "M0L-MG-dGi.normalTitle" = "NEXT";

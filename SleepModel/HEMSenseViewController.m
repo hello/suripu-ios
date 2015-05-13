@@ -308,7 +308,14 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 
 - (void)dismissActivityWithSuccess:(void(^)(void))completion {
     NSString* done = NSLocalizedString(@"status.success", nil);
-    [[self activityView] dismissWithResultText:done showSuccessMark:YES remove:YES completion:completion];
+    [[self activityView] dismissWithResultText:done showSuccessMark:YES remove:YES completion:^{
+        if ([[self delegate] respondsToSelector:@selector(didDismissActivityFrom:)]) {
+            [[self delegate] didDismissActivityFrom:self];
+        }
+        if (completion) {
+            completion ();
+        }
+    }];
 }
 
 #pragma mark Advanced Options
@@ -362,8 +369,10 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         [[self delegate] willUnpairSenseFrom:self];
     }
     
+    NSString* senseId = [[[SENServiceDevice sharedService] senseInfo] deviceId];
     [SENAnalytics track:kHEMAnalyticsEventDeviceAction
-             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionUnpairSense}];
+             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionUnpairSense,
+                          kHEMAnalyticsEventPropSenseId : senseId ?: @"unknown"}];
     
     NSString* message = NSLocalizedString(@"settings.sense.unpairing-message", nil);
     [self showActivityText:message completion:^{
@@ -516,15 +525,21 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 }
 
 - (void)restore {
+    
+    SENServiceDevice* deviceService = [SENServiceDevice sharedService];
+    NSString* senseId = [[deviceService senseInfo] deviceId];
+    NSString* pillId = [[deviceService pillInfo] deviceId];
     [SENAnalytics track:kHEMAnalyticsEventDeviceAction
-             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionFactoryRestore}];
+             properties:@{kHEMAnalyticsEventPropAction : kHEMAnalyticsEventDeviceActionFactoryRestore,
+                          kHEMAnalyticsEventPropSenseId : senseId ?: @"unknown",
+                          kHEMAnalyticsEventPropPillId : pillId ?: @"unknown"}];
 
     [self listenForDisconnects];
     
     NSString* message = NSLocalizedString(@"settings.device.restoring-factory-settings", nil);
     [self showActivityText:message completion:^{
         __weak typeof(self) weakSelf = self;
-        [[SENServiceDevice sharedService] restoreFactorySettings:^(NSError *error) {
+        [deviceService restoreFactorySettings:^(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
             if (error != nil) {
                 [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];

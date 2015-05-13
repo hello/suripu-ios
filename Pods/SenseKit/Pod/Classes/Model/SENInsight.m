@@ -39,16 +39,18 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
         _message = [aDecoder decodeObjectForKey:SENInsightMessageKey];
         _dateCreated = [aDecoder decodeObjectForKey:SENInsightDateCreatedKey];
         _category = [aDecoder decodeObjectForKey:SENInsightCategory];
+        _infoPreview = [aDecoder decodeObjectForKey:SENInsightInfoPreviewKey];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:self.title forKey:SENInsightTitleKey];
-    [aCoder encodeObject:self.message forKey:SENInsightMessageKey];
-    [aCoder encodeObject:self.dateCreated forKey:SENInsightDateCreatedKey];
-    [aCoder encodeObject:self.category forKey:SENInsightCategory];
+    if (self.title) [aCoder encodeObject:self.title forKey:SENInsightTitleKey];
+    if (self.message) [aCoder encodeObject:self.message forKey:SENInsightMessageKey];
+    if (self.dateCreated) [aCoder encodeObject:self.dateCreated forKey:SENInsightDateCreatedKey];
+    if (self.category) [aCoder encodeObject:self.category forKey:SENInsightCategory];
+    if (self.infoPreview) [aCoder encodeObject:self.infoPreview forKey:SENInsightInfoPreviewKey];
 }
 
 - (BOOL)isGeneric {
@@ -65,13 +67,14 @@ static NSString* const SENInsightCategoryGeneric = @"GENERIC";
         return ((self.title && [self.title isEqualToString:other.title]) || (!self.title && !other.title))
             && ((self.message && [self.message isEqualToString:other.message]) || (!self.message && !other.message))
             && ((self.dateCreated && [self.dateCreated isEqualToDate:other.dateCreated]) || (!self.dateCreated && !other.dateCreated))
+            && ((self.infoPreview && [self.infoPreview isEqualToString:other.infoPreview]) || (!self.infoPreview && !other.infoPreview))
             && ((self.category && [self.category isEqualToString:other.category]) || (!self.category && !other.category));
     }
 }
 
 - (NSUInteger)hash
 {
-    return [self.title hash] + [self.message hash] + [self.dateCreated hash] + [self.category hash];
+    return [self.title hash] + [self.message hash] + [self.dateCreated hash] + [self.category hash] + [self.infoPreview hash];
 }
 
 @end

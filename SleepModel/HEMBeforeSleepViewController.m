@@ -110,6 +110,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
     [[self dots] setNumberOfPages:HEMBeforeSleepNumberOfScreens];
     [[self dots] setCurrentPageIndicatorTintColor:[HelloStyleKit senseBlueColor]];
     [[self dots] setPageIndicatorTintColor:[HelloStyleKit pageControlTintColor]];
+    [[self dots] setUserInteractionEnabled:NO];
     [[self dots] setCurrentPage:0];
 }
 
@@ -215,7 +216,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
 
 - (void)moveContinueButtonWithPercentage:(CGFloat)percentage {
     CGFloat height = CGRectGetHeight([[self continueButton] bounds]);
-    CGFloat totalDiff = fabsf([self origContinueButtonBottomConstant]) + height;
+    CGFloat totalDiff = fabs([self origContinueButtonBottomConstant]) + height;
     CGFloat movement = totalDiff * percentage;
     [[self continueButtonBottomConstraint] setConstant:-height + movement];
     [[self view] layoutIfNeeded];

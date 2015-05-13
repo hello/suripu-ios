@@ -35,6 +35,11 @@ typedef enum {
   ErrorTypeNoEndpointInRange = 7,
   ErrorTypeWlanConnectionError = 8,
   ErrorTypeFailToObtainIp = 9,
+  ErrorTypeWlanEndpointDeleteFailed = 10,
+  ErrorTypeInvalidAccountId = 11,
+  ErrorTypeForceDataPushFailed = 12,
+  ErrorTypeProtobufEncodeFailed = 13,
+  ErrorTypeProtobufDecodeFailed = 14,
 } ErrorType;
 
 BOOL ErrorTypeIsValidValue(ErrorType value);

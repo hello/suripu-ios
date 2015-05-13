@@ -144,10 +144,12 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
                                     __strong typeof(weakSelf) strongSelf = weakSelf;
                                     [SENAnalytics track:HEMAnalyticsEventSaveAlarm
                                              properties:@{
-                                                 HEMAnalyticsEventSaveAlarmError : error.localizedDescription ?: @"",
                                                  HEMAnalyticsEventSaveAlarmHour : @(self.alarmCache.hour),
                                                  HEMAnalyticsEventSaveAlarmMinute : @(self.alarmCache.minute)
                                              }];
+                                    if (error) {
+                                        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                                    }
                                     if (!error)
                                         [strongSelf dismiss:YES];
                                     else if ([strongSelf isUnsavedAlarm])

@@ -172,7 +172,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)timelineEventTimestampFont
 {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameMedium size:11.f];
+    return [UIFont fontWithName:HEMFontFamilyNameBook size:12.f];
 }
 
 + (UIFont*)timelineEventTimestampBoldFont

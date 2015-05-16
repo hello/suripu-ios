@@ -19,11 +19,10 @@ CGFloat const HEMSleepLineWidth = 1.f;
 @implementation HEMSleepSegmentCollectionViewCell
 
 static CGFloat const HEMSegmentTimeLabelHeight = 16.f;
-static CGFloat const HEMSegmentTimeLabelHorizontalSpacing = 10.f;
 static CGFloat const HEMSegmentBorderWidth = 1.f;
 
 - (void)awakeFromNib {
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor clearColor];
     self.timeViews = [NSMutableArray new];
 }
 
@@ -99,21 +98,19 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
 }
 
 - (void)drawRect:(CGRect)rect {
+    static CGFloat const HEMSegmentMinimumWidth = 32.f;
+    static CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     [super drawRect:rect];
-    if (![self isLastSegment] && ![self isFirstSegment]) {
-        CGContextRef ctx = UIGraphicsGetCurrentContext();
-        CGFloat inset = HEMLinedCollectionViewCellLineOffset + HEMLinedCollectionViewCellLineWidth;
-        CGFloat maximumFillWidth = (CGRectGetWidth(rect) - (inset * 2));
-        CGFloat width = maximumFillWidth * self.fillRatio;
-        CGFloat x = (CGRectGetWidth(rect) - width) / 2;
-        CGRect fillRect = CGRectMake(x, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
-        CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
-        CGContextFillRect(ctx, fillRect);
-        if ([self shouldEmphasize]) {
-            CGContextSetStrokeColorWithColor(ctx, [HelloStyleKit tintColor].CGColor);
-            CGContextSetLineWidth(ctx, HEMSegmentBorderWidth);
-            CGContextStrokeRect(ctx, fillRect);
-        }
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGFloat maximumFillWidth = CGRectGetWidth(rect) * HEMSegmentMaximumWidthRatio;
+    CGFloat width = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.fillRatio);
+    CGRect fillRect = CGRectMake(0, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
+    CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
+    CGContextFillRect(ctx, fillRect);
+    if ([self shouldEmphasize]) {
+        CGContextSetStrokeColorWithColor(ctx, [HelloStyleKit tintColor].CGColor);
+        CGContextSetLineWidth(ctx, HEMSegmentBorderWidth);
+        CGContextStrokeRect(ctx, fillRect);
     }
 }
 

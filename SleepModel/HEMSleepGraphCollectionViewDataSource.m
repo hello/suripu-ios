@@ -171,11 +171,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
                                                     bundle:bundle]
           forCellWithReuseIdentifier:sleepEventReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass(
-                                                               [HEMTimelineHeaderCollectionReusableView class])
-                                                    bundle:bundle]
-          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
-                 withReuseIdentifier:timelineHeaderReuseIdentifier];
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass(
                                                                [HEMTimelineFooterCollectionReusableView class])
                                                     bundle:bundle]
           forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
@@ -248,10 +243,8 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
-    NSString *identifier = [kind isEqualToString:UICollectionElementKindSectionHeader] ? timelineHeaderReuseIdentifier
-                                                                                       : timelineFooterReuseIdentifier;
     UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                                        withReuseIdentifier:identifier
+                                                                        withReuseIdentifier:timelineFooterReuseIdentifier
                                                                                forIndexPath:indexPath];
     view.hidden = !(indexPath.section == HEMSleepGraphCollectionViewSegmentSection
                     && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] > 0);
@@ -527,11 +520,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     if (!segment)
         return cell;
     NSUInteger sleepDepth = segment.sleepDepth;
-    if ([collectionView.delegate respondsToSelector:@selector(didTapEventButton:)]) {
-        [cell.eventTypeButton addTarget:collectionView.delegate
-                                 action:@selector(didTapEventButton:)
-                       forControlEvents:UIControlEventTouchUpInside];
-    }
     if (segment.sound) {
         cell.audioPlayerView.hidden = NO;
         [cell setAudioURL:[NSURL URLWithString:segment.sound.URLPath]];
@@ -543,12 +531,9 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
                         forControlEvents:UIControlEventTouchUpInside];
     }
 
-    [cell.eventTypeButton setImage:[self imageForEventType:segment.eventType] forState:UIControlStateNormal];
-    NSString *titleFormat = NSLocalizedString(@"sleep-event.title.format", nil);
-    NSString *titleText = [[self class] localizedNameForSleepEventType:segment.eventType];
+    [cell.eventTypeImageView setImage:[self imageForEventType:segment.eventType]];
     NSString *timeText = [self timeTextForSegment:segment];
     cell.eventTimeLabel.text = timeText;
-    cell.eventTitleLabel.text = [[NSString stringWithFormat:titleFormat, titleText, timeText] uppercaseString];
     cell.eventMessageLabel.attributedText = [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;

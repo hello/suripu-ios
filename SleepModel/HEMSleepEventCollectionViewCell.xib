@@ -14,10 +14,16 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="210"/>
                 <subviews>
                     <view opaque="NO" alpha="0.0" contentMode="scaleToFill" placeholderIntrinsicWidth="276" placeholderIntrinsicHeight="48" translatesAutoresizingMaskIntoConstraints="NO" id="fHd-pv-egS" userLabel="contentContainerView" customClass="HEMEventBubbleView">
-                        <rect key="frame" x="-10" y="-16" width="276" height="48"/>
+                        <rect key="frame" x="-10" y="-16" width="270" height="48"/>
                         <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TNn-do-Y9M" userLabel="actionSheetButton">
+                                <rect key="frame" x="0.0" y="0.0" width="270" height="48"/>
+                                <state key="normal">
+                                    <color key="titleShadowColor" red="0.94901960780000005" green="0.94901960780000005" blue="0.94901960780000005" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kh-Q1-akT">
-                                <rect key="frame" x="51" y="13" width="159" height="22"/>
+                                <rect key="frame" x="51" y="13" width="153" height="22"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -30,7 +36,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="900" horizontalCompressionResistancePriority="1000" text="12:59 am" textAlignment="right" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JFc-fa-7rh">
-                                <rect key="frame" x="218" y="12" width="48" height="24"/>
+                                <rect key="frame" x="212" y="12" width="48" height="24"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="24" id="0Xq-m6-7LT"/>
@@ -44,10 +50,15 @@
                         <constraints>
                             <constraint firstItem="UZO-fd-oeR" firstAttribute="leading" secondItem="fHd-pv-egS" secondAttribute="leading" constant="3" id="12A-Sd-5sa"/>
                             <constraint firstItem="7kh-Q1-akT" firstAttribute="leading" secondItem="UZO-fd-oeR" secondAttribute="trailing" constant="8" id="7p2-JH-XG1"/>
+                            <constraint firstAttribute="bottom" secondItem="7kh-Q1-akT" secondAttribute="bottom" constant="13" id="EV8-B8-nwL"/>
+                            <constraint firstItem="TNn-do-Y9M" firstAttribute="top" secondItem="fHd-pv-egS" secondAttribute="top" id="PJz-vK-vgU"/>
                             <constraint firstItem="JFc-fa-7rh" firstAttribute="leading" secondItem="7kh-Q1-akT" secondAttribute="trailing" constant="8" id="Rlf-Mk-TYE"/>
-                            <constraint firstItem="UZO-fd-oeR" firstAttribute="top" secondItem="7kh-Q1-akT" secondAttribute="top" constant="-9" id="X0V-1U-nkY"/>
                             <constraint firstItem="UZO-fd-oeR" firstAttribute="centerY" secondItem="JFc-fa-7rh" secondAttribute="centerY" id="Ybq-rT-b77"/>
+                            <constraint firstItem="TNn-do-Y9M" firstAttribute="leading" secondItem="fHd-pv-egS" secondAttribute="leading" id="Ylt-q6-Be7"/>
+                            <constraint firstAttribute="bottom" secondItem="TNn-do-Y9M" secondAttribute="bottom" id="bCh-Mh-gHs"/>
+                            <constraint firstAttribute="trailing" secondItem="TNn-do-Y9M" secondAttribute="trailing" id="cgA-wa-00R"/>
                             <constraint firstItem="UZO-fd-oeR" firstAttribute="top" secondItem="fHd-pv-egS" secondAttribute="top" constant="4" id="hZj-bP-O55"/>
+                            <constraint firstItem="7kh-Q1-akT" firstAttribute="top" secondItem="fHd-pv-egS" secondAttribute="top" constant="13" id="yKZ-Fg-enI"/>
                             <constraint firstAttribute="trailing" secondItem="JFc-fa-7rh" secondAttribute="trailing" constant="10" id="zF6-EO-XdN"/>
                         </constraints>
                         <connections>
@@ -60,11 +71,12 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="top" secondItem="fHd-pv-egS" secondAttribute="top" constant="16" id="1O9-6n-eyx"/>
-                <constraint firstAttribute="trailing" secondItem="fHd-pv-egS" secondAttribute="trailing" constant="54" id="TZa-qP-SAL"/>
+                <constraint firstAttribute="trailing" secondItem="fHd-pv-egS" secondAttribute="trailing" constant="60" id="TZa-qP-SAL"/>
                 <constraint firstItem="fHd-pv-egS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="-10" id="y5u-Ny-B9E"/>
             </constraints>
             <size key="customSize" width="293" height="209"/>
             <connections>
+                <outlet property="actionButton" destination="TNn-do-Y9M" id="vgi-6R-Ufg"/>
                 <outlet property="contentContainerView" destination="fHd-pv-egS" id="cr1-ad-yQ3"/>
                 <outlet property="contentContainerViewLeading" destination="y5u-Ny-B9E" id="imO-cl-yWX"/>
                 <outlet property="contentContainerViewTrailing" destination="TZa-qP-SAL" id="AIJ-sO-jud"/>

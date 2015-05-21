@@ -18,7 +18,8 @@
 
 CGFloat const HEMEventBubbleTextWidthOffset = 149.f;
 CGFloat const HEMEventBubbleWidthOffset = 36.f;
-CGFloat const HEMEventBubbleTextHeightOffset = 26.f;
+CGFloat const HEMEventBubbleTextHeightOffset = 28.f;
+CGFloat const HEMEventBubbleMinimumHeight = 48.f;
 
 - (void)awakeFromNib {
     self.layer.shadowOffset = CGSizeZero;
@@ -34,7 +35,7 @@ CGFloat const HEMEventBubbleTextHeightOffset = 26.f;
     CGFloat width = CGRectGetWidth(screenSize) - HEMEventBubbleTextWidthOffset;
     CGSize textSize = [self.textLabel.attributedText sizeWithWidth:width];
     return CGSizeMake(CGRectGetWidth(screenSize) - HEMEventBubbleWidthOffset,
-                      textSize.height + HEMEventBubbleTextHeightOffset);
+                      MAX(textSize.height + HEMEventBubbleTextHeightOffset, HEMEventBubbleMinimumHeight));
 }
 
 @end

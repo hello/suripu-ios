@@ -2,27 +2,28 @@
 #import <SenseKit/SenseKit.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
-#import "HelloStyleKit.h"
-#import "HEMRootViewController.h"
+#import "HEMActionSheetViewController.h"
+#import "HEMAlertViewController.h"
 #import "HEMAudioCache.h"
+#import "HEMBounceModalTransition.h"
 #import "HEMMainStoryboard.h"
+#import "HEMNoSleepEventCollectionViewCell.h"
+#import "HEMPopupView.h"
+#import "HEMRootViewController.h"
+#import "HEMSleepEventButton.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphView.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
-#import "HEMNoSleepEventCollectionViewCell.h"
 #import "HEMSleepSummarySlideViewController.h"
+#import "HEMTimelineFeedbackViewController.h"
+#import "HEMTutorial.h"
+#import "HEMZoomAnimationTransitionDelegate.h"
+#import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
-#import "HEMSleepEventButton.h"
-#import "HEMZoomAnimationTransitionDelegate.h"
-#import "HEMBounceModalTransition.h"
-#import "HEMTimelineFeedbackViewController.h"
-#import "HEMAlertViewController.h"
-#import "HEMTutorial.h"
-#import "HEMPopupView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 24.f;
 CGFloat const HEMTimelineFooterCellHeight = 50.f;
@@ -278,15 +279,43 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
 #pragma mark Event Info
 
-- (void)didTapDataVerifyButton:(UIButton *)sender {
-    NSIndexPath *indexPath = [self indexPathForEventCellWithSubview:sender];
+- (void)updateTimeOfEventOnSegment:(SENSleepResultSegment *)segment {
     UINavigationController *navController = [HEMMainStoryboard instantiateTimelineFeedbackViewController];
     navController.transitioningDelegate = self.dataVerifyTransitionDelegate;
     navController.modalPresentationStyle = UIModalPresentationCustom;
     HEMTimelineFeedbackViewController *feedbackController = (id)navController.topViewController;
     feedbackController.dateForNightOfSleep = self.dateForNightOfSleep;
-    feedbackController.segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    feedbackController.segment = segment;
     [self presentViewController:navController animated:YES completion:NULL];
+}
+
+- (void)didTapActionSheetButton:(UIButton *)sender {
+    NSIndexPath *indexPath = [self indexPathForEventCellWithSubview:sender];
+    SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
+    [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [sheet setTitle:[segment.message stringByReplacingOccurrencesOfString:@"*" withString:@""]];
+    [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.approve.title", nil)
+                   titleColor:[HelloStyleKit idealSensorColor]
+                  description:NSLocalizedString(@"sleep-event.action.approve.message", nil)
+                       action:^{}];
+    [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
+                   titleColor:[HelloStyleKit warningSensorColor]
+                  description:NSLocalizedString(@"sleep-event.action.adjust.message", nil)
+                       action:^{ [self updateTimeOfEventOnSegment:segment]; }];
+    [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.delete.title", nil)
+                   titleColor:[HelloStyleKit alertSensorColor]
+                  description:NSLocalizedString(@"sleep-event.action.delete.message", nil)
+                       action:^{}];
+
+    UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    if (![root respondsToSelector:@selector(presentationController)]) {
+        UIModalPresentationStyle origStyle = [root modalPresentationStyle];
+        [root setModalPresentationStyle:UIModalPresentationCurrentContext];
+        [sheet addDismissAction:^{ [root setModalPresentationStyle:origStyle]; }];
+    }
+
+    [root presentViewController:sheet animated:YES completion:nil];
 }
 
 - (void)feedbackFailedToSend:(NSNotification *)note {

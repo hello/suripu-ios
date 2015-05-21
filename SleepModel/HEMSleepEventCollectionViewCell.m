@@ -47,27 +47,9 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     [super awakeFromNib];
     self.loadingQueue = [NSOperationQueue new];
     self.loadingQueue.maxConcurrentOperationCount = 1;
-    [self configureVerifyButton];
     [self configureAudioPlayer];
     [self configureGradientViews];
     [self animateContentView];
-}
-
-- (void)prepareForReuse {
-    [super prepareForReuse];
-    self.verifyDataButton.hidden = YES;
-    self.audioPlayerView.hidden = YES;
-}
-
-- (void)configureVerifyButton {
-    self.verifyDataButton.hidden = YES;
-    NSDictionary *attributes = @{
-        NSUnderlineStyleAttributeName : @(NSUnderlinePatternSolid | NSUnderlineStyleSingle),
-        NSForegroundColorAttributeName : [HelloStyleKit tintColor]
-    };
-    NSString *localizedTitle = NSLocalizedString(@"sleep-event.verify.title", nil);
-    NSAttributedString *title = [[NSAttributedString alloc] initWithString:localizedTitle attributes:attributes];
-    [self.verifyDataButton setAttributedTitle:title forState:UIControlStateNormal];
 }
 
 - (void)configureAudioPlayer {
@@ -116,12 +98,16 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 
 - (void)animateContentView {
     self.contentContainerViewLeading.constant = 8.f;
-    self.contentContainerViewTrailing.constant = 36.f;
+    self.contentContainerViewTrailing.constant = 42.f;
     [self setNeedsUpdateConstraints];
-    [UIView animateWithDuration:0.25f delay:0.2f options:0 animations:^{
-        [self.contentContainerView layoutIfNeeded];
-        self.contentContainerView.alpha = 1.f;
-    } completion:NULL];
+    [UIView animateWithDuration:0.25f
+                          delay:0.2f
+                        options:0
+                     animations:^{
+                       [self.contentContainerView layoutIfNeeded];
+                       self.contentContainerView.alpha = 1.f;
+                     }
+                     completion:NULL];
 }
 
 - (void)layoutSubviews {
@@ -153,7 +139,6 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 #pragma mark - Audio
 
 - (void)showAudioPlayer:(BOOL)isVisible {
-    self.audioPlayerView.hidden = !isVisible;
     self.playSoundButton.enabled = NO;
     if (isVisible)
         [self.spinnerView startAnimating];

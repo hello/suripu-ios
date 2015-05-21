@@ -176,7 +176,7 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
           forSupplementaryViewOfKind:UICollectionElementKindSectionFooter
                  withReuseIdentifier:timelineFooterReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass(
-                                                                             [HEMTimelineFooterCollectionReusableView class])
+                                                               [HEMTimelineFooterCollectionReusableView class])
                                                     bundle:bundle]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                  withReuseIdentifier:timelineFooterReuseIdentifier];
@@ -248,9 +248,10 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
-    UICollectionReusableView *view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                                                        withReuseIdentifier:timelineFooterReuseIdentifier
-                                                                               forIndexPath:indexPath];
+    UICollectionReusableView *view =
+        [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                           withReuseIdentifier:timelineFooterReuseIdentifier
+                                                  forIndexPath:indexPath];
     view.hidden = !(indexPath.section == HEMSleepGraphCollectionViewSegmentSection
                     && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] > 0);
     return view;
@@ -447,7 +448,7 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     self.hourDateFormatter.timeZone = segment.timezone;
     self.timeDateFormatter.timeZone = segment.timezone;
     if (components.minute == 0 && components.second == 0) {
-        [cell addTimeLabelWithText:[self.timeDateFormatter stringFromDate:segment.date] atHeightRatio:0];
+        [cell addTimeLabelWithText:[self.hourDateFormatter stringFromDate:segment.date] atHeightRatio:0];
         if (cell.layer.zPosition != zPosition)
             cell.layer.zPosition = zPosition;
     }
@@ -483,14 +484,11 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
         return cell;
     NSUInteger sleepDepth = segment.sleepDepth;
     if (segment.sound) {
-        cell.audioPlayerView.hidden = NO;
         [cell setAudioURL:[NSURL URLWithString:segment.sound.URLPath]];
-    } else if ([HEMTimelineFeedbackViewController canAdjustTimeForSegment:segment]
-               && [collectionView.delegate respondsToSelector:@selector(didTapDataVerifyButton:)]) {
-        cell.verifyDataButton.hidden = NO;
-        [cell.verifyDataButton addTarget:collectionView.delegate
-                                  action:@selector(didTapDataVerifyButton:)
-                        forControlEvents:UIControlEventTouchUpInside];
+    } else if ([collectionView.delegate respondsToSelector:@selector(didTapActionSheetButton:)]) {
+        [cell.actionButton addTarget:collectionView.delegate
+                              action:@selector(didTapActionSheetButton:)
+                    forControlEvents:UIControlEventTouchUpInside];
     }
 
     [cell.eventTypeImageView setImage:[self imageForEventType:segment.eventType]];

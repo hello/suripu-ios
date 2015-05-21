@@ -12,7 +12,7 @@ extern CGFloat const HEMTimelineHeaderCellHeight;
 
 @protocol HEMSleepEventActionDelegate <NSObject>
 
-- (void)didTapDataVerifyButton:(UIButton*)sender;
+- (void)didTapActionSheetButton:(UIButton *)sender;
 
 @end
 
@@ -21,7 +21,7 @@ extern CGFloat const HEMTimelineHeaderCellHeight;
 /**
  *  The date which is represented by this controller
  */
-@property (nonatomic, strong) NSDate* dateForNightOfSleep;
-@property (nonatomic, strong) IBOutlet UICollectionView* collectionView;
+@property (nonatomic, strong) NSDate *dateForNightOfSleep;
+@property (nonatomic, strong) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, assign, getter=isLastNight, readonly) BOOL lastNight;
 @end

@@ -52,7 +52,7 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
 
 - (void)addTimeLabelWithText:(NSString *)text atHeightRatio:(CGFloat)heightRatio {
     static CGFloat const HEMTimeLabelLineOffset = 8.f;
-    static CGFloat const HEMTimeLabelWidth = 32.f;
+    static CGFloat const HEMTimeLabelWidth = 30.f;
     self.clipsToBounds = NO;
     CGFloat textInset = HEMTimeLabelLineOffset * 2 + HEMTimeLabelWidth;
     CGFloat lineYOffset = MIN(CGRectGetHeight(self.bounds) * heightRatio,

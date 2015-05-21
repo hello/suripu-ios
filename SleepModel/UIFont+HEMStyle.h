@@ -168,11 +168,6 @@
 + (UIFont*)timelineEventTimestampFont;
 
 /**
- *  Bold font for timestamps on important events in the timeline
- */
-+ (UIFont*)timelineEventTimestampBoldFont;
-
-/**
  *  Font for time scopes in trends view
  */
 + (UIFont*)trendOptionFont;
@@ -196,11 +191,6 @@
  *  Font for display any Thank You text
  */
 + (UIFont*)thankyouFont;
-
-/**
- *  Font used to display the blue toast that appears at the bottom of screen
- */
-+ (UIFont*)infoToastFont;
 
 /**
  * Font to be used in a UIPIckerView that has 1 component

@@ -24,7 +24,7 @@
 #import "HEMTutorial.h"
 #import "HEMPopupView.h"
 
-CGFloat const HEMTimelineHeaderCellHeight = 20.f;
+CGFloat const HEMTimelineHeaderCellHeight = 24.f;
 CGFloat const HEMTimelineFooterCellHeight = 50.f;
 
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>

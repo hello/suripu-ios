@@ -13,10 +13,10 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="210"/>
                 <subviews>
-                    <view opaque="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fHd-pv-egS" userLabel="contentContainerView" customClass="HEMEventBubbleView">
-                        <rect key="frame" x="-10" y="-16" width="276" height="206"/>
+                    <view opaque="NO" alpha="0.0" contentMode="scaleToFill" placeholderIntrinsicWidth="276" placeholderIntrinsicHeight="48" translatesAutoresizingMaskIntoConstraints="NO" id="fHd-pv-egS" userLabel="contentContainerView" customClass="HEMEventBubbleView">
+                        <rect key="frame" x="-10" y="-16" width="276" height="48"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kh-Q1-akT">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7kh-Q1-akT">
                                 <rect key="frame" x="51" y="13" width="159" height="22"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -29,7 +29,7 @@
                                     <constraint firstAttribute="height" constant="40" id="TCY-MZ-jZE"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="251" text="12:59 am" textAlignment="right" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JFc-fa-7rh">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="900" horizontalCompressionResistancePriority="1000" text="12:59 am" textAlignment="right" lineBreakMode="tailTruncation" minimumScaleFactor="0.5" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JFc-fa-7rh">
                                 <rect key="frame" x="218" y="12" width="48" height="24"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -50,6 +50,9 @@
                             <constraint firstItem="UZO-fd-oeR" firstAttribute="top" secondItem="fHd-pv-egS" secondAttribute="top" constant="4" id="hZj-bP-O55"/>
                             <constraint firstAttribute="trailing" secondItem="JFc-fa-7rh" secondAttribute="trailing" constant="10" id="zF6-EO-XdN"/>
                         </constraints>
+                        <connections>
+                            <outlet property="textLabel" destination="7kh-Q1-akT" id="14s-kN-c5k"/>
+                        </connections>
                     </view>
                 </subviews>
                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -57,7 +60,6 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="top" secondItem="fHd-pv-egS" secondAttribute="top" constant="16" id="1O9-6n-eyx"/>
-                <constraint firstAttribute="bottom" secondItem="fHd-pv-egS" secondAttribute="bottom" constant="20" id="2vF-1q-qNI"/>
                 <constraint firstAttribute="trailing" secondItem="fHd-pv-egS" secondAttribute="trailing" constant="54" id="TZa-qP-SAL"/>
                 <constraint firstItem="fHd-pv-egS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="-10" id="y5u-Ny-B9E"/>
             </constraints>

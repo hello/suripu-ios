@@ -53,6 +53,18 @@ Fixes:
 * removed calls that are firing even if user is not authenticated
 * no longer removing the Sense Id in analytics profile when unpairing
 
+## 1.0.7.0
+
+New:
+
+* Timeline style, work in progress
+
+Known issues:
+
+* Overlap between close events
+* Incomplete implementation of design
+* Poor performance on lower-range devices
+
 ## 1.0.6.2
 
 Fixes:
@@ -93,7 +105,7 @@ New:
 
 Fixes:
 
-* removed an extra call to set the LED after setting wifi credentials 
+* removed an extra call to set the LED after setting wifi credentials
 
 ## 1.0.5.5
 
@@ -233,7 +245,7 @@ Fixes:
 Fixes:
 
 * processing available time zones in settings in background to speed up transition
-* fixed issue where 1 of the time zone option was covered by the navigation bar 
+* fixed issue where 1 of the time zone option was covered by the navigation bar
 
 ## 1.0.4.0
 
@@ -424,7 +436,7 @@ Fixes:
 * fix issue where password update would fail if email is updated right before
 * fix issue where account settings would show grams rather than kg for weight
 * fix insight summary alignment issue on iOS 7 and when app goes in to foreground from background, while insight full view is shown
-* fix issue where notification preferences were cut off prematurely if you scroll 
+* fix issue where notification preferences were cut off prematurely if you scroll
 
 ## 1.0.2.2
 
@@ -606,7 +618,7 @@ Fixes:
 * fixed issue where saving an alarm can sometimes cause it to fail on iphone 5 and 4s.
 * fixed issue where you cannot cancel out of Pill pairing from settings
 * fixed issue where insight summary was being truncated
-* fixed issue during onboarding where the no BLE screen does not properly detect fast state changes 
+* fixed issue during onboarding where the no BLE screen does not properly detect fast state changes
 * errors when creating an account are more descriptive
 * fixed issue where SSID shown initially in devices may not reflect what Sense is currently configured to at the moment.
 * when you sign in, your time and temperature preferences are now pulled down
@@ -903,7 +915,7 @@ conflicting builds so that Ben Rose can install build.
 New:
 
 * Added a Before You Sleep screen to describe Sense colors.  This replaces the
-  previous well done screen. 
+  previous well done screen.
 * Hooked up illustration for clipping your Sleep Pill
 
 Fixes:

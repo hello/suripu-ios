@@ -92,7 +92,7 @@
 + (NSDictionary*)attributesForEventMessageText
 {
     NSMutableParagraphStyle* style = [NSMutableParagraphStyle new];
-    style.alignment = NSTextAlignmentCenter;
+    style.alignment = NSTextAlignmentLeft;
     return @{
         @(STRONG) : @{ NSFontAttributeName : [UIFont timelineEventMessageBoldFont],
             NSParagraphStyleAttributeName : style,

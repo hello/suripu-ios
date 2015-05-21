@@ -3,7 +3,6 @@
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HEMSleepSummaryPointerGradientView.h"
-#import "HEMBreakdownButton.h"
 #import "HelloStyleKit.h"
 
 @interface HEMSleepSummaryCollectionViewCell ()
@@ -13,25 +12,13 @@
 @property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
 @property (weak, nonatomic) IBOutlet UIView *presleepContainerView;
 @property (weak, nonatomic) IBOutlet UIView *separatorView;
-@property (weak, nonatomic) IBOutlet HEMBreakdownButton *breakdownButton;
-@property (weak, nonatomic) IBOutlet UIView *breakdownContainerView;
 @property (weak, nonatomic) IBOutlet UIView *summaryContainerView;
-@property (weak, nonatomic) IBOutlet UIView *breakdownSeparatorView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *breakdownLeftConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *breakdownRightConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *breakdownSeparatorHeightConstraint;
 @property (nonatomic, strong) NSAttributedString *sleepScoreLabelText;
-@property (strong, nonatomic) CAGradientLayer *breakdownSeparatorGradient;
 @end
 
 @implementation HEMSleepSummaryCollectionViewCell
 
-static CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
-static CGFloat const HEMSleepSummaryBreakdownMiniDiameter = 70.f;
-static CGFloat const HEMSleepSummaryBreakdownExpandedDiameter = 144.f;
-static CGFloat const HEMSleepSummaryBreakdownExpandedDistance = 28.f;
-static CGFloat const HEMSleepSummaryBreakdownSeparatorHeight = 168.f;
-static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
+CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
@@ -48,21 +35,6 @@ static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
     [self showSleepSummary:nil];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    if (!self.breakdownSeparatorGradient) {
-        self.breakdownSeparatorGradient = [CAGradientLayer new];
-        self.breakdownSeparatorGradient.colors =
-            @[ (id)[UIColor colorWithWhite:0 alpha:0.1f].CGColor, (id)[UIColor colorWithWhite:0 alpha:0].CGColor ];
-        self.breakdownSeparatorGradient.startPoint = CGPointZero;
-        self.breakdownSeparatorGradient.endPoint = CGPointMake(0, 1);
-        self.breakdownSeparatorGradient.locations = @[ @(0.5), @1 ];
-        self.breakdownSeparatorView.backgroundColor = [UIColor clearColor];
-        [self.breakdownSeparatorView.layer addSublayer:self.breakdownSeparatorGradient];
-    }
-    self.breakdownSeparatorGradient.frame = self.breakdownSeparatorView.bounds;
-}
-
 - (void)configureSpinner {
     self.spinnerView.color = [UIColor colorWithWhite:0.1 alpha:0.2];
     self.spinnerView.spinnerSize = CGRectGetWidth(self.spinnerView.bounds);
@@ -77,7 +49,6 @@ static CGFloat const HEMSleepSummaryBreakdownContractedDistance = 22.f;
     self.presleepButton.hidden = scoreIsEmpty;
     self.sleepSummaryButton.hidden = scoreIsEmpty;
     self.separatorView.hidden = scoreIsEmpty;
-    self.breakdownButton.sleepScore = sleepScore;
     if (!scoreIsEmpty)
         [self.spinnerView stopAnimating];
     [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];

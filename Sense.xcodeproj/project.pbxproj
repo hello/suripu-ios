@@ -70,7 +70,6 @@
 		8A457E821A805B7E009A7863 /* infoButtonIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A457E7F1A805B7E009A7863 /* infoButtonIcon.png */; };
 		8A457E831A805B7E009A7863 /* infoButtonIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A457E801A805B7E009A7863 /* infoButtonIcon@2x.png */; };
 		8A457E841A805B7E009A7863 /* infoButtonIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A457E811A805B7E009A7863 /* infoButtonIcon@3x.png */; };
-		8A45E66C1A81683F0038AA7A /* HEMBreakdownButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A45E66B1A81683F0038AA7A /* HEMBreakdownButton.m */; };
 		8A4B3D491992CB4500856BDE /* HEMSimpleLineTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D481992CB4500856BDE /* HEMSimpleLineTextField.m */; };
 		8A4B3D5E199534F000856BDE /* HEMMainStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5A199534F000856BDE /* HEMMainStoryboard.m */; };
 		8A4B3D5F199534F000856BDE /* HEMOnboardingStoryboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4B3D5C199534F000856BDE /* HEMOnboardingStoryboard.m */; };
@@ -98,6 +97,7 @@
 		8A66FC8E199D17C000922ED5 /* HEMHeightPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC8D199D17C000922ED5 /* HEMHeightPickerViewController.m */; };
 		8A66FC99199D295F00922ED5 /* HEMGenderPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC98199D295F00922ED5 /* HEMGenderPickerViewController.m */; };
 		8A66FC9C199D308B00922ED5 /* HEMWeightPickerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A66FC9B199D308B00922ED5 /* HEMWeightPickerViewController.m */; };
+		8A6FCDE41B0E52AE004EB7ED /* HEMEventBubbleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A6FCDE31B0E52AE004EB7ED /* HEMEventBubbleView.m */; };
 		8A72143B1A1E6CEC008B59C4 /* HEMTimelineTopButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A72143A1A1E6CEC008B59C4 /* HEMTimelineTopButton.m */; };
 		8A72143F1A1E7797008B59C4 /* backIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A72143C1A1E7797008B59C4 /* backIcon.png */; };
 		8A7214401A1E7797008B59C4 /* backIcon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A72143D1A1E7797008B59C4 /* backIcon@2x.png */; };
@@ -806,8 +806,6 @@
 		8A457E7F1A805B7E009A7863 /* infoButtonIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = infoButtonIcon.png; path = images/infoButtonIcon.png; sourceTree = "<group>"; };
 		8A457E801A805B7E009A7863 /* infoButtonIcon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "infoButtonIcon@2x.png"; path = "images/infoButtonIcon@2x.png"; sourceTree = "<group>"; };
 		8A457E811A805B7E009A7863 /* infoButtonIcon@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "infoButtonIcon@3x.png"; path = "images/infoButtonIcon@3x.png"; sourceTree = "<group>"; };
-		8A45E66A1A81683F0038AA7A /* HEMBreakdownButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBreakdownButton.h; sourceTree = "<group>"; };
-		8A45E66B1A81683F0038AA7A /* HEMBreakdownButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBreakdownButton.m; sourceTree = "<group>"; };
 		8A4B3D471992CB4500856BDE /* HEMSimpleLineTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSimpleLineTextField.h; sourceTree = "<group>"; };
 		8A4B3D481992CB4500856BDE /* HEMSimpleLineTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSimpleLineTextField.m; sourceTree = "<group>"; };
 		8A4B3D59199534F000856BDE /* HEMMainStoryboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMMainStoryboard.h; sourceTree = "<group>"; };
@@ -854,6 +852,8 @@
 		8A66FC98199D295F00922ED5 /* HEMGenderPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMGenderPickerViewController.m; sourceTree = "<group>"; };
 		8A66FC9A199D308B00922ED5 /* HEMWeightPickerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWeightPickerViewController.h; sourceTree = "<group>"; };
 		8A66FC9B199D308B00922ED5 /* HEMWeightPickerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWeightPickerViewController.m; sourceTree = "<group>"; };
+		8A6FCDE21B0E52AE004EB7ED /* HEMEventBubbleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMEventBubbleView.h; sourceTree = "<group>"; };
+		8A6FCDE31B0E52AE004EB7ED /* HEMEventBubbleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMEventBubbleView.m; sourceTree = "<group>"; };
 		8A7214391A1E6CEC008B59C4 /* HEMTimelineTopButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimelineTopButton.h; sourceTree = "<group>"; };
 		8A72143A1A1E6CEC008B59C4 /* HEMTimelineTopButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineTopButton.m; sourceTree = "<group>"; };
 		8A72143C1A1E7797008B59C4 /* backIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = backIcon.png; path = images/backIcon.png; sourceTree = "<group>"; };
@@ -2311,14 +2311,20 @@
 		8A660135199EBEB8007E6167 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				8A45E66A1A81683F0038AA7A /* HEMBreakdownButton.h */,
-				8A45E66B1A81683F0038AA7A /* HEMBreakdownButton.m */,
+				8A2823581A9686E200438B59 /* HEMAudioPlayerView.h */,
+				8A2823591A9686E200438B59 /* HEMAudioPlayerView.m */,
 				8A7214461A1FE8C3008B59C4 /* HEMDateButton.h */,
 				8A7214471A1FE8C3008B59C4 /* HEMDateButton.m */,
+				8A6FCDE21B0E52AE004EB7ED /* HEMEventBubbleView.h */,
+				8A6FCDE31B0E52AE004EB7ED /* HEMEventBubbleView.m */,
+				8AB833A01B0D3D7E005F2BFB /* HEMGradientCollectionView.h */,
+				8AB833A11B0D3D7E005F2BFB /* HEMGradientCollectionView.m */,
 				8A66FC83199C035500922ED5 /* HEMMiniSleepHistoryView.h */,
 				8A66FC84199C035500922ED5 /* HEMMiniSleepHistoryView.m */,
 				8AC49F941981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.h */,
 				8AC49F951981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m */,
+				8AA1E6331A8E6D0E00590EB6 /* HEMPopupView.h */,
+				8AA1E6341A8E6D0E00590EB6 /* HEMPopupView.m */,
 				8AAEECBA19A431E1006517C4 /* HEMSleepEventButton.h */,
 				8AAEECBB19A431E1006517C4 /* HEMSleepEventButton.m */,
 				8A5C1ECA1A30F1F900CBF393 /* HEMSleepGraphView.h */,
@@ -2329,12 +2335,6 @@
 				8A8288B51A76DDE60043B1D1 /* HEMSleepSummaryPointerGradientView.m */,
 				8A7214391A1E6CEC008B59C4 /* HEMTimelineTopButton.h */,
 				8A72143A1A1E6CEC008B59C4 /* HEMTimelineTopButton.m */,
-				8AA1E6331A8E6D0E00590EB6 /* HEMPopupView.h */,
-				8AA1E6341A8E6D0E00590EB6 /* HEMPopupView.m */,
-				8A2823581A9686E200438B59 /* HEMAudioPlayerView.h */,
-				8A2823591A9686E200438B59 /* HEMAudioPlayerView.m */,
-				8AB833A01B0D3D7E005F2BFB /* HEMGradientCollectionView.h */,
-				8AB833A11B0D3D7E005F2BFB /* HEMGradientCollectionView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -3993,6 +3993,7 @@
 				8AC4A05B198ACE4800C2BD63 /* HEMLineGraphDataSource.m in Sources */,
 				BFB1F3D91A0D9F7600E620AD /* HEMSetupAnotherPillViewController.m in Sources */,
 				8ADF03CD1A719185002B036A /* HEMDynamicsStatusStyler.m in Sources */,
+				8A6FCDE41B0E52AE004EB7ED /* HEMEventBubbleView.m in Sources */,
 				8AB006311A48C382000CF62F /* HEMMarkdown.m in Sources */,
 				BF6E3AA01A2E51290019C110 /* HEMSingleResponseCell.m in Sources */,
 				8A66FC8B199D115D00922ED5 /* HEMBirthdatePickerViewController.m in Sources */,
@@ -4048,7 +4049,6 @@
 				BF4473501A6341F600389ECE /* HEMOnboardingController.m in Sources */,
 				8AA1E62F1A899C0100590EB6 /* HEMTimelineFeedbackViewController.m in Sources */,
 				8AC3C2E21A3C8CC90074A87F /* HEMSnazzBarButton.m in Sources */,
-				8A45E66C1A81683F0038AA7A /* HEMBreakdownButton.m in Sources */,
 				BF0E53A11A37A968002FB083 /* HEMEnablePushViewController.m in Sources */,
 				BF257EE71A1D1C2600DAF923 /* HEMAlertViewController.m in Sources */,
 				8A4B669E19F6CE4400445883 /* HEMActionSheetViewController.m in Sources */,

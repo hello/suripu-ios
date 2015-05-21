@@ -11,6 +11,8 @@
 @interface HEMSleepEventCollectionViewCell () <AVAudioPlayerDelegate, FDWaveformViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UIView *contentContainerView;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewLeading;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewTrailing;
 @property (weak, nonatomic) IBOutlet UIButton *playSoundButton;
 @property (weak, nonatomic) IBOutlet FDWaveformView *waveformView;
 @property (weak, nonatomic) IBOutlet RTSpinKitView *spinnerView;
@@ -48,6 +50,7 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     [self configureVerifyButton];
     [self configureAudioPlayer];
     [self configureGradientViews];
+    [self animateContentView];
 }
 
 - (void)prepareForReuse {
@@ -81,12 +84,6 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 }
 
 - (void)configureGradientViews {
-    self.contentContainerView.layer.shadowOffset = CGSizeZero;
-    self.contentContainerView.layer.shadowRadius = 1.5f;
-    self.contentContainerView.layer.shadowColor = [UIColor blackColor].CGColor;
-    self.contentContainerView.layer.shadowOpacity = 0.2f;
-    self.contentContainerView.layer.cornerRadius = 3.f;
-    self.contentContainerView.backgroundColor = [UIColor whiteColor];
     self.gradientContainerTopView = [UIView new];
     self.gradientContainerTopView.alpha = 0;
     self.gradientContainerBottomView = [UIView new];
@@ -115,6 +112,16 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     bottomLayer.endPoint = CGPointMake(0, 1);
     self.gradientBottomLayer = bottomLayer;
     [self.gradientContainerBottomView.layer insertSublayer:bottomLayer atIndex:0];
+}
+
+- (void)animateContentView {
+    self.contentContainerViewLeading.constant = 8.f;
+    self.contentContainerViewTrailing.constant = 36.f;
+    [self setNeedsUpdateConstraints];
+    [UIView animateWithDuration:0.25f delay:0.2f options:0 animations:^{
+        [self.contentContainerView layoutIfNeeded];
+        self.contentContainerView.alpha = 1.f;
+    } completion:NULL];
 }
 
 - (void)layoutSubviews {

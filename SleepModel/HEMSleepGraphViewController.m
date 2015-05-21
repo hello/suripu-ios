@@ -24,7 +24,7 @@
 #import "HEMTutorial.h"
 #import "HEMPopupView.h"
 
-CGFloat const HEMTimelineHeaderCellHeight = 50.f;
+CGFloat const HEMTimelineHeaderCellHeight = 20.f;
 CGFloat const HEMTimelineFooterCellHeight = 50.f;
 
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
@@ -516,6 +516,14 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
            * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
 }
 
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                             layout:(UICollectionViewLayout *)collectionViewLayout
+    referenceSizeForHeaderInSection:(NSInteger)section {
+    BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
+    if (!hasSegments || section != HEMSleepGraphCollectionViewSegmentSection)
+        return CGSizeZero;
+    return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMTimelineHeaderCellHeight);
+}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
                              layout:(UICollectionViewLayout *)collectionViewLayout

@@ -26,7 +26,7 @@
         NSString* format = nil;
         long value = 1;
         
-        if (days == 1) {
+        if (days < 2) {
             format = NSLocalizedString(@"date.elapsed.day.format", nil);
         } if (days < 7) {
             format = NSLocalizedString(@"date.elapsed.days.format", nil);

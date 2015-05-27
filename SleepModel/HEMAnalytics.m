@@ -28,6 +28,7 @@ NSString* const kHEMAnalyticsEventPropGender = @"Gender";
 NSString* const kHEMAnalyticsEventPropAccount = @"Account Id";
 NSString* const kHEMAnalyticsEventPropSenseId = @"Sense Id";
 NSString* const kHEMAnalyticsEventPropPillId = @"Pill Id";
+NSString* const kHEMAnalyticsEventPropHealthKit = @"HealthKit";
 
 // special mixpanel special properties
 NSString* const kHEMAnalyticsEventMpPropName = @"$name";
@@ -40,6 +41,7 @@ NSString* const kHEManaltyicsEventStatusSkipped = @"skipped";
 NSString* const kHEManaltyicsEventStatusEnabled = @"enabled";
 NSString* const kHEManaltyicsEventStatusDisabled = @"disabled";
 NSString* const kHEManaltyicsEventStatusDenied = @"denied";
+NSString* const kHEManaltyicsEventStatusNotSupported = @"not supported";
 
 // onboarding
 //

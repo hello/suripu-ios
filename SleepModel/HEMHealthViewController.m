@@ -37,10 +37,13 @@
     __weak typeof(self) weakSelf = self;
     [service requestAuthorization:^(NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
+        
         if (error) {
-            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-            [strongSelf showMessageDialog:NSLocalizedString(@"onboarding.health.enable.failure.generic", @"")
-                                    title:NSLocalizedString(@"onboarding.health.enable.failure.title", @"")];
+            if ([error code] != SENServiceHealthKitErrorCancelledAuthorization) {
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [strongSelf showMessageDialog:NSLocalizedString(@"onboarding.health.enable.failure.generic", @"")
+                                        title:NSLocalizedString(@"onboarding.health.enable.failure.title", @"")];
+            }
             return;
         }
         

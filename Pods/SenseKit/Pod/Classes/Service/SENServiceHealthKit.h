@@ -10,7 +10,8 @@
 
 typedef NS_ENUM(NSUInteger, SENServiceHealthKitError) {
     SENServiceHealthKitErrorNotAuthorized,
-    SENServiceHealthKitErrorNotSupported
+    SENServiceHealthKitErrorNotSupported,
+    SENServiceHealthKitErrorCancelledAuthorization
 };
 
 @interface SENServiceHealthKit : SENService

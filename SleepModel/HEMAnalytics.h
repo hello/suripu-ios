@@ -25,7 +25,6 @@ extern NSString* const kHEMAnalyticsEventPropGender;
 extern NSString* const kHEMAnalyticsEventPropAccount;
 extern NSString* const kHEMAnalyticsEventPropSenseId;
 extern NSString* const kHEMAnalyticsEventPropPillId;
-extern NSString* const kHEMAnalyticsEventPropSenseIdUnpaired;
 
 // permissions
 extern NSString* const kHEMAnalyticsEventPermissionLoc;

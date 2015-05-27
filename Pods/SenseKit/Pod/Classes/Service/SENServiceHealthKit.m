@@ -111,16 +111,19 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
     [[self hkStore] requestAuthorizationToShareTypes:writeTypes readTypes:readTypes completion:^(BOOL success, NSError *error) {
         NSError* serviceError = error;
         HKAuthorizationStatus status = [[self hkStore] authorizationStatusForType:hkSleepCategory];
-        
-        if (success && status == HKAuthorizationStatusSharingAuthorized) {
-            DDLogVerbose(@"healthkit authorization granted");
-        } else if (success && status == HKAuthorizationStatusSharingDenied) {
-            DDLogVerbose(@"healthkit authorization was denied");
-            serviceError = [NSError errorWithDomain:SENServiceHKErrorDomain
-                                               code:SENServiceHealthKitErrorNotAuthorized
-                                           userInfo:nil];
-        } else {
-            DDLogVerbose(@"healthkit authorization request failed %@", error);
+        switch (status) {
+            case HKAuthorizationStatusSharingDenied:
+                serviceError = [NSError errorWithDomain:SENServiceHKErrorDomain
+                                                   code:SENServiceHealthKitErrorNotAuthorized
+                                               userInfo:nil];
+                break;
+            case HKAuthorizationStatusNotDetermined: // user cancelled form
+                serviceError = [NSError errorWithDomain:SENServiceHKErrorDomain
+                                                   code:SENServiceHealthKitErrorCancelledAuthorization
+                                               userInfo:nil];
+                break;
+            default:
+                break;
         }
         
         if (completion) {

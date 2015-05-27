@@ -54,6 +54,7 @@ extern NSString* const kHEMAnalyticsEventPropPillPairing;
 extern NSString* const kHEMAnalyticsEventPropPillPlacement;
 extern NSString* const kHEMAnalyticsEventPropPillAnother;
 extern NSString* const HEMAnalyticsEventOnbStart;
+extern NSString* const HEMAnalyticsEventHealth;
 extern NSString* const HEMAnalyticsEventAccount;
 extern NSString* const HEMAnalyticsEventLocation;
 extern NSString* const HEMAnalyticsEventNotification;

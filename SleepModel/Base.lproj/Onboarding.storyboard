@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6751" systemVersion="13F1077" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KoM-KU-kaf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="KoM-KU-kaf">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6736"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
@@ -16,6 +16,7 @@
             <string>HelveticaNeue-Light</string>
         </mutableArray>
         <mutableArray key="HelveticaNeue-Medium.otf">
+            <string>HelveticaNeue-Medium</string>
             <string>HelveticaNeue-Medium</string>
             <string>HelveticaNeue-Medium</string>
             <string>HelveticaNeue-Medium</string>
@@ -635,7 +636,7 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mL9-pT-JXG">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" bounces="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mL9-pT-JXG">
                                 <rect key="frame" x="492" y="114" width="88" height="317"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -854,7 +855,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pkd-iJ-jh2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10872" y="746"/>
+            <point key="canvasLocation" x="11616" y="746"/>
         </scene>
         <!--Wifi Picker View Controller-->
         <scene sceneID="22e-KB-YCx">
@@ -961,7 +962,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="uGV-Fr-TJ4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10122" y="746"/>
+            <point key="canvasLocation" x="10866" y="746"/>
         </scene>
         <!--Sense Pairing Mode View Controller-->
         <scene sceneID="GUG-m6-qYs">
@@ -994,7 +995,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="pairingMode.png" translatesAutoresizingMaskIntoConstraints="NO" id="ryD-Go-K8h">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="pairingMode.png" translatesAutoresizingMaskIntoConstraints="NO" id="ryD-Go-K8h">
                                 <rect key="frame" x="0.0" y="219" width="600" height="312"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="93" id="tQT-rX-OHU"/>
@@ -1047,7 +1048,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Gqv-eX-b5T" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9389" y="1672"/>
+            <point key="canvasLocation" x="10133" y="1672"/>
         </scene>
         <!--Pill Setup View Controller-->
         <scene sceneID="Eoe-Ki-OxF">
@@ -1184,7 +1185,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Z94-uI-D3y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="13306" y="535"/>
+            <point key="canvasLocation" x="14050" y="535"/>
         </scene>
         <!--Setup Another Pill View Controller-->
         <scene sceneID="HZY-VN-bUX">
@@ -1287,7 +1288,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ybc-rT-E02" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16647" y="905"/>
+            <point key="canvasLocation" x="17391" y="905"/>
         </scene>
         <!--Pill Description View Controller-->
         <scene sceneID="BGh-WE-MUR">
@@ -1377,7 +1378,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1yE-pK-lVv" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="11695" y="895"/>
+            <point key="canvasLocation" x="12439" y="895"/>
         </scene>
         <!--Pill Pair View Controller-->
         <scene sceneID="zKq-xs-xPt">
@@ -1507,7 +1508,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="rQM-de-S9i" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="12504" y="905"/>
+            <point key="canvasLocation" x="13248" y="905"/>
         </scene>
         <!--Before Sleep View Controller-->
         <scene sceneID="Fg5-Nv-Y74">
@@ -1598,7 +1599,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="g3P-F6-Zsf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14122" y="905"/>
+            <point key="canvasLocation" x="14866" y="905"/>
         </scene>
         <!--Onboard Alarm View Controller-->
         <scene sceneID="rm2-FM-ynv">
@@ -1698,7 +1699,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dxo-YG-lyE" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="15815" y="905"/>
+            <point key="canvasLocation" x="16559" y="905"/>
         </scene>
         <!--Room Check View Controller-->
         <scene sceneID="XHB-1W-ISz">
@@ -1730,7 +1731,7 @@ Sense will glow purple when it is in Pairing Mode.</string>
                                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="EwG-fT-RLQ">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="EwG-fT-RLQ">
                                         <rect key="frame" x="0.0" y="64" width="600" height="418"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="235" id="Eq2-1g-uLB"/>
@@ -1873,7 +1874,7 @@ Now let’s set your first Smart Alarm</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sWL-6c-EWF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="14969" y="661"/>
+            <point key="canvasLocation" x="15713" y="661"/>
         </scene>
         <!--Gender View Controller-->
         <scene sceneID="s4K-5F-Rau">
@@ -1902,17 +1903,17 @@ Now let’s set your first Smart Alarm</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uO2-mX-vGj">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="uO2-mX-vGj">
                                 <rect key="frame" x="20" y="160" width="560" height="271"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="lwc-2a-yNE">
+                                    <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lwc-2a-yNE">
                                         <rect key="frame" x="279" y="0.0" width="1" height="271"/>
                                         <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="1" id="v6H-kN-Nfj"/>
                                         </constraints>
                                     </view>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yLf-ik-ger">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yLf-ik-ger">
                                         <rect key="frame" x="0.0" y="0.0" width="280" height="271"/>
                                         <state key="normal" title="Male" image="male.png">
                                             <color key="titleColor" red="0.0" green="0.61176470589999998" blue="1" alpha="1" colorSpace="calibratedRGB"/>
@@ -2251,6 +2252,101 @@ Now let’s set your first Smart Alarm</string>
             </objects>
             <point key="canvasLocation" x="6346" y="922"/>
         </scene>
+        <!--Health View Controller-->
+        <scene sceneID="2T3-xv-8MO">
+            <objects>
+                <viewController id="ufA-sU-dsq" customClass="HEMHealthViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1eZ-gx-h45"/>
+                        <viewControllerLayoutGuide type="bottom" id="1Ho-FR-hxD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="OTU-OI-8wa">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Works with Health" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qjM-t5-PIi">
+                                <rect key="frame" x="20" y="24" width="560" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="r2J-KU-7cw"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sense can sync your sleep data to Apple's Health app so you can see all your information at a glance." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pZv-GO-TM0">
+                                <rect key="frame" x="20" y="68" width="560" height="41"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="healthApp.png" translatesAutoresizingMaskIntoConstraints="NO" id="ecN-29-cDA">
+                                <rect key="frame" x="0.0" y="109" width="600" height="366"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vxw-dz-vOU">
+                                <rect key="frame" x="240" y="475" width="119" height="28"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="119" id="6Zm-0E-4tT"/>
+                                    <constraint firstAttribute="height" constant="28" id="r4x-z6-LLE"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Skip for now">
+                                    <color key="titleColor" red="0.0" green="0.60392156860000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="skip:" destination="ihV-hq-yEO" eventType="touchUpInside" id="hPj-XI-5NJ"/>
+                                    <segue destination="ldR-fW-wOZ" kind="push" identifier="healthToAudio" id="Rx9-79-Bza"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19L-c5-l2p" customClass="HEMActionButton">
+                                <rect key="frame" x="20" y="530" width="560" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="fza-Q4-5cg"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="13"/>
+                                <state key="normal" title="SYNC WITH HEALTH">
+                                    <color key="titleColor" red="0.33333333329999998" green="0.51764705879999995" blue="0.96078431369999995" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="enableHealthKit:" destination="ufA-sU-dsq" eventType="touchUpInside" id="8fU-W0-1dU"/>
+                                    <action selector="enableNotifications:" destination="ihV-hq-yEO" eventType="touchUpInside" id="ugO-Xn-iCY"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="ecN-29-cDA" secondAttribute="trailing" constant="-16" id="8ns-tC-YgZ"/>
+                            <constraint firstItem="1Ho-FR-hxD" firstAttribute="top" secondItem="19L-c5-l2p" secondAttribute="bottom" constant="20" id="H6g-fZ-AvF"/>
+                            <constraint firstItem="qjM-t5-PIi" firstAttribute="bottom" secondItem="pZv-GO-TM0" secondAttribute="top" constant="-10" id="JU3-Kt-7Z8"/>
+                            <constraint firstItem="pZv-GO-TM0" firstAttribute="bottom" secondItem="ecN-29-cDA" secondAttribute="top" id="Lpw-Ga-kK2"/>
+                            <constraint firstItem="vxw-dz-vOU" firstAttribute="top" secondItem="ecN-29-cDA" secondAttribute="bottom" id="NpE-Z3-57P"/>
+                            <constraint firstItem="qjM-t5-PIi" firstAttribute="leading" secondItem="OTU-OI-8wa" secondAttribute="leadingMargin" constant="4" id="XjY-PO-4Wc"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="19L-c5-l2p" secondAttribute="trailing" constant="4" id="ZlG-XV-5ye"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="qjM-t5-PIi" secondAttribute="trailing" constant="4" id="gCU-Ed-Ux2"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="pZv-GO-TM0" secondAttribute="trailing" constant="4" id="imu-WR-BLQ"/>
+                            <constraint firstItem="19L-c5-l2p" firstAttribute="leading" secondItem="OTU-OI-8wa" secondAttribute="leadingMargin" constant="4" id="isi-73-BSN"/>
+                            <constraint firstItem="19L-c5-l2p" firstAttribute="bottom" secondItem="vxw-dz-vOU" secondAttribute="bottom" constant="77" id="k2c-10-2hR"/>
+                            <constraint firstItem="ecN-29-cDA" firstAttribute="leading" secondItem="OTU-OI-8wa" secondAttribute="leadingMargin" constant="-16" id="ljJ-hK-6Uw"/>
+                            <constraint firstItem="pZv-GO-TM0" firstAttribute="leading" secondItem="OTU-OI-8wa" secondAttribute="leadingMargin" constant="4" id="qKk-I2-549"/>
+                            <constraint firstItem="qjM-t5-PIi" firstAttribute="top" secondItem="1eZ-gx-h45" secondAttribute="bottom" constant="4" id="qQ4-LC-pPX"/>
+                            <constraint firstAttribute="centerX" secondItem="vxw-dz-vOU" secondAttribute="centerX" constant="0.5" id="qo8-Uo-Rn3"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="oYU-AF-wkg"/>
+                    <connections>
+                        <outlet property="descImageView" destination="ecN-29-cDA" id="oeJ-Qk-CNp"/>
+                        <outlet property="descriptionLabel" destination="pZv-GO-TM0" id="F2M-WU-HOd"/>
+                        <outlet property="descriptionTopConstraint" destination="JU3-Kt-7Z8" id="1Cp-7L-VaE"/>
+                        <outlet property="titleHeightConstraint" destination="r2J-KU-7cw" id="uhV-hk-PBY"/>
+                        <outlet property="titleLabel" destination="qjM-t5-PIi" id="eZs-9p-hiU"/>
+                        <outlet property="view" destination="OTU-OI-8wa" id="5xQ-WT-ota"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Wd8-1z-fqa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="7855" y="690"/>
+        </scene>
         <!--Sense Audio View Controller-->
         <scene sceneID="FZQ-fc-285">
             <objects>
@@ -2281,7 +2377,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" image="enableAudio.png" translatesAutoresizingMaskIntoConstraints="NO" id="dFU-8H-O86">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="enableAudio.png" translatesAutoresizingMaskIntoConstraints="NO" id="dFU-8H-O86">
                                 <rect key="frame" x="0.0" y="150" width="600" height="326"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uhf-f1-wVH" customClass="HEMActionButton">
@@ -2353,7 +2449,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="M6X-uC-NAt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7861" y="915"/>
+            <point key="canvasLocation" x="8605" y="915"/>
         </scene>
         <!--Enable Push View Controller-->
         <scene sceneID="FBt-NZ-uar">
@@ -2443,7 +2539,8 @@ Otherwise, Sense only looks at background noise levels.</string>
                         <outlet property="skipButton" destination="9ia-GF-Swk" id="aFd-NJ-3lO"/>
                         <outlet property="titleHeightConstraint" destination="eFQ-oR-ERS" id="cIT-vD-3Si"/>
                         <outlet property="titleLabel" destination="Go7-Z7-kmw" id="rG7-w3-c7Q"/>
-                        <segue destination="ldR-fW-wOZ" kind="push" identifier="pushToAudio" id="DHf-Bv-2QP"/>
+                        <segue destination="ufA-sU-dsq" kind="push" identifier="notificationToHealth" id="QQC-LL-pys"/>
+                        <segue destination="ldR-fW-wOZ" kind="push" identifier="notificationToAudio" id="zLj-M6-XwY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QJV-po-vQN" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2483,7 +2580,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView userInteractionEnabled="NO" contentMode="center" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
+                            <imageView userInteractionEnabled="NO" contentMode="center" misplaced="YES" image="sense.png" translatesAutoresizingMaskIntoConstraints="NO" id="Awm-Mz-tO7">
                                 <rect key="frame" x="0.0" y="102" width="600" height="374"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bX7-3Z-6yh">
@@ -2552,7 +2649,7 @@ Otherwise, Sense only looks at background noise levels.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hsS-E7-Lfd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9389" y="915"/>
+            <point key="canvasLocation" x="10133" y="915"/>
         </scene>
         <!--NoBLE View Controller-->
         <scene sceneID="HBA-jc-u2O">
@@ -2738,7 +2835,7 @@ Flip the switch to On</string>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="oY6-8b-LCZ">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" misplaced="YES" image="sensePlacement.png" translatesAutoresizingMaskIntoConstraints="NO" id="oY6-8b-LCZ">
                                 <rect key="frame" x="0.0" y="89" width="600" height="442"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="235" id="TpR-T0-aTD"/>
@@ -2793,7 +2890,7 @@ Flip the switch to On</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="tgu-An-3r9" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8642" y="915"/>
+            <point key="canvasLocation" x="9386" y="915"/>
         </scene>
         <!--Get App View Controller-->
         <scene sceneID="vUb-Wh-tE1">
@@ -2867,13 +2964,14 @@ Have your partner visit senseapp.com on their device to download the Sense app a
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4BU-cG-ggd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="16647" y="1718"/>
+            <point key="canvasLocation" x="17391" y="1718"/>
         </scene>
     </scenes>
     <resources>
         <image name="bluetooth.png" width="32" height="32"/>
         <image name="enableAudio.png" width="320" height="195"/>
         <image name="female.png" width="50" height="83"/>
+        <image name="healthApp.png" width="281" height="180"/>
         <image name="male.png" width="75" height="72"/>
         <image name="map.png" width="320" height="229"/>
         <image name="onboarding_bg_wide.png" width="461" height="588"/>
@@ -2892,10 +2990,11 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="zLj-M6-XwY"/>
         <segue reference="ZOJ-Sh-Dzx"/>
-        <segue reference="u9Q-g4-qbd"/>
-        <segue reference="gUR-KW-V2G"/>
-        <segue reference="zxE-Zn-Swl"/>
+        <segue reference="JsS-bV-f7k"/>
+        <segue reference="7LA-fg-2Jb"/>
+        <segue reference="tkT-Pb-lgk"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.24352326060000001" green="0.29607953479999999" blue="0.29641878599999999" alpha="1" colorSpace="calibratedRGB"/>
 </document>

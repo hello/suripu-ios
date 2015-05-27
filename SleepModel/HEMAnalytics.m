@@ -64,6 +64,7 @@ NSString* const kHEMAnalyticsEventPropPillAnother = @"pill_another";
 
 NSString* const HEMAnalyticsEventOnbStart = @"Onboarding Start";
 NSString* const HEMAnalyticsEventAccount = @"Account";
+NSString* const HEMAnalyticsEventHealth = @"Health";
 NSString* const HEMAnalyticsEventLocation = @"Location";
 NSString* const HEMAnalyticsEventNotification = @"Notifications";
 NSString* const HEMAnalyticsEventNoBle = @"No BLE";

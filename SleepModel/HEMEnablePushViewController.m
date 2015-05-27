@@ -7,6 +7,8 @@
 //
 #import <SenseKit/SENAPIPreferences.h>
 #import <SenseKit/SENPreference.h>
+#import <SenseKit/SENServiceHealthKit.h>
+
 #import "HEMEnablePushViewController.h"
 #import "HEMActionButton.h"
 #import "UIFont+HEMStyle.h"
@@ -62,8 +64,16 @@
 
 - (void)next {
     [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard pushToAudioSegueIdentifier]
-                              sender:self];
+    
+    NSString* segueId = nil;
+    if ([[SENServiceHealthKit sharedService] isSupported]) {
+        segueId = [HEMOnboardingStoryboard notificationToHealthSegueIdentifier];
+    } else {
+        segueId = [HEMOnboardingStoryboard notificationToAudioSegueIdentifier];
+    }
+    
+    [self performSegueWithIdentifier:segueId sender:self];
+
 }
 
 @end

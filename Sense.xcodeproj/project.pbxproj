@@ -354,6 +354,10 @@
 		BF14E3DB19EF3C3D0006EFEA /* HEMSenseSetupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3D219EF3C3D0006EFEA /* HEMSenseSetupViewController.m */; };
 		BF14E3E019EF3C520006EFEA /* HEMOnboardingUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3DF19EF3C520006EFEA /* HEMOnboardingUtils.m */; };
 		BF14E3E619EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m in Sources */ = {isa = PBXBuildFile; fileRef = BF14E3E519EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m */; };
+		BF1C46AB1B15586300AFCB7B /* healthApp.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1C46A81B15586300AFCB7B /* healthApp.png */; };
+		BF1C46AC1B15586300AFCB7B /* healthApp@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1C46A91B15586300AFCB7B /* healthApp@2x.png */; };
+		BF1C46AD1B15586300AFCB7B /* healthApp@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1C46AA1B15586300AFCB7B /* healthApp@3x.png */; };
+		BF1C46B11B155B4900AFCB7B /* HEMHealthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1C46B01B155B4900AFCB7B /* HEMHealthViewController.m */; };
 		BF1E2E5D1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E2E5C1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m */; };
 		BF1E2E721A02BFC400DDD0D0 /* HEMPagingFlowLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = BF1E2E711A02BFC400DDD0D0 /* HEMPagingFlowLayout.m */; };
 		BF1E2E801A04514200DDD0D0 /* humidityIcon@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF1E2E7D1A04514200DDD0D0 /* humidityIcon@3x.png */; };
@@ -1174,6 +1178,12 @@
 		BF14E3DF19EF3C520006EFEA /* HEMOnboardingUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingUtils.m; sourceTree = "<group>"; };
 		BF14E3E419EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableAttributedString+HEMFormat.h"; sourceTree = "<group>"; };
 		BF14E3E519EF4FFD0006EFEA /* NSMutableAttributedString+HEMFormat.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableAttributedString+HEMFormat.m"; sourceTree = "<group>"; };
+		BF1C46A81B15586300AFCB7B /* healthApp.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = healthApp.png; path = images/healthApp.png; sourceTree = "<group>"; };
+		BF1C46A91B15586300AFCB7B /* healthApp@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "healthApp@2x.png"; path = "images/healthApp@2x.png"; sourceTree = "<group>"; };
+		BF1C46AA1B15586300AFCB7B /* healthApp@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "healthApp@3x.png"; path = "images/healthApp@3x.png"; sourceTree = "<group>"; };
+		BF1C46AF1B155B4900AFCB7B /* HEMHealthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHealthViewController.h; sourceTree = "<group>"; };
+		BF1C46B01B155B4900AFCB7B /* HEMHealthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHealthViewController.m; sourceTree = "<group>"; };
+		BF1C46B31B155CD400AFCB7B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BF1E2E5B1A00691000DDD0D0 /* HEMInsightCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMInsightCollectionViewCell.h; sourceTree = "<group>"; };
 		BF1E2E5C1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMInsightCollectionViewCell.m; sourceTree = "<group>"; };
 		BF1E2E701A02BFC400DDD0D0 /* HEMPagingFlowLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPagingFlowLayout.h; sourceTree = "<group>"; };
@@ -1306,7 +1316,6 @@
 		BF98FC381A9BB29D00AEC04C /* HEMConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMConfig.m; sourceTree = "<group>"; };
 		BF9C87D619B6A199003188D4 /* HEMPillPairViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMPillPairViewController.h; sourceTree = "<group>"; };
 		BF9C87D719B6A199003188D4 /* HEMPillPairViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMPillPairViewController.m; sourceTree = "<group>"; };
-		BFAB22D11ACC760D00CCBF8A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Onboarding.strings; sourceTree = "<group>"; };
 		BFAB22D21ACE055300CCBF8A /* pillSetup.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pillSetup.png; path = images/pillSetup.png; sourceTree = "<group>"; };
 		BFAB22D31ACE055300CCBF8A /* pillSetup@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pillSetup@2x.png"; path = "images/pillSetup@2x.png"; sourceTree = "<group>"; };
 		BFAB22D41ACE055300CCBF8A /* pillSetup@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pillSetup@3x.png"; path = "images/pillSetup@3x.png"; sourceTree = "<group>"; };
@@ -1856,6 +1865,7 @@
 		8A660129199EBCD0007E6167 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BF1C46AE1B155B2600AFCB7B /* Optional Features */,
 				BF045B6F1A1EC2480026D5B9 /* Account */,
 				BF045B701A1EC2A90026D5B9 /* Demographics */,
 				BF045B721A1EC3420026D5B9 /* Pill */,
@@ -1863,10 +1873,6 @@
 				BF045B711A1EC2F00026D5B9 /* Sense */,
 				BFEAA0A619A51DCF002FBD44 /* HEMWelcomeViewController.h */,
 				BFEAA0A719A51DCF002FBD44 /* HEMWelcomeViewController.m */,
-				BF0E539F1A37A968002FB083 /* HEMEnablePushViewController.h */,
-				BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */,
-				BF44734E1A6341F600389ECE /* HEMOnboardingController.h */,
-				BF44734F1A6341F600389ECE /* HEMOnboardingController.m */,
 				BFCE1D301AA65A570076E855 /* HEMHaveSenseViewController.h */,
 				BFCE1D311AA65A570076E855 /* HEMHaveSenseViewController.m */,
 			);
@@ -1876,6 +1882,9 @@
 		8A66012A199EBCFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BF1C46A81B15586300AFCB7B /* healthApp.png */,
+				BF1C46A91B15586300AFCB7B /* healthApp@2x.png */,
+				BF1C46AA1B15586300AFCB7B /* healthApp@3x.png */,
 				BFE277441AF44E2F00C1FB4A /* wifiIconLow.png */,
 				BFE277451AF44E2F00C1FB4A /* wifiIconLow@2x.png */,
 				BFE277461AF44E2F00C1FB4A /* wifiIconLow@3x.png */,
@@ -2860,6 +2869,19 @@
 			name = "Post Set Up";
 			sourceTree = "<group>";
 		};
+		BF1C46AE1B155B2600AFCB7B /* Optional Features */ = {
+			isa = PBXGroup;
+			children = (
+				BF0E539F1A37A968002FB083 /* HEMEnablePushViewController.h */,
+				BF0E53A01A37A968002FB083 /* HEMEnablePushViewController.m */,
+				BF44734E1A6341F600389ECE /* HEMOnboardingController.h */,
+				BF44734F1A6341F600389ECE /* HEMOnboardingController.m */,
+				BF1C46AF1B155B4900AFCB7B /* HEMHealthViewController.h */,
+				BF1C46B01B155B4900AFCB7B /* HEMHealthViewController.m */,
+			);
+			name = "Optional Features";
+			sourceTree = "<group>";
+		};
 		BF1E2E5A1A0068AA00DDD0D0 /* Insights */ = {
 			isa = PBXGroup;
 			children = (
@@ -3329,6 +3351,7 @@
 				BFE277541AF44E2F00C1FB4A /* wifiIconNone@2x.png in Resources */,
 				BFAB23471AD5D15E00CCBF8A /* humidityIconYellow@2x.png in Resources */,
 				BFC3FE711AE7321D0061D6A1 /* temperatureIconNoBorderYellow.png in Resources */,
+				BF1C46AC1B15586300AFCB7B /* healthApp@2x.png in Resources */,
 				8AA1E6221A89785000590EB6 /* smart_alarm_dialog@2x.png in Resources */,
 				8AA158051A5EFD6B00BF1D4A /* sunsetEventIcon.png in Resources */,
 				8A8288D41A7800820043B1D1 /* sensorsBarIconActive@3x.png in Resources */,
@@ -3338,6 +3361,7 @@
 				8AF4FA6D1A12F46F00451245 /* stopSound@2x.png in Resources */,
 				BFAB23511AD5D15E00CCBF8A /* lightIconRed@3x.png in Resources */,
 				BF14E3BE19EF3BD10006EFEA /* onboarding_bg_wide@2x.png in Resources */,
+				BF1C46AD1B15586300AFCB7B /* healthApp@3x.png in Resources */,
 				BFE2774E1AF44E2F00C1FB4A /* wifiIconLow@2x.png in Resources */,
 				BF5703D61A817D2A00B613F0 /* sampleNotification@3x.png in Resources */,
 				BFAB23941AD5D2AA00CCBF8A /* temperatureIconYellow.png in Resources */,
@@ -3459,6 +3483,7 @@
 				8A12077A1A80A58E00758DC2 /* welcome_dialog_alarm@2x.png in Resources */,
 				BFAB230C1AD4B0B200CCBF8A /* humidityIconGray@3x.png in Resources */,
 				BFAB22ED1AD3675300CCBF8A /* roomcheckSenseBackground@2x.png in Resources */,
+				BF1C46AB1B15586300AFCB7B /* healthApp.png in Resources */,
 				BFAB23851AD5D2AA00CCBF8A /* soundIconRed.png in Resources */,
 				8AA157E11A5EFD6B00BF1D4A /* alarmEventIcon.png in Resources */,
 				8A93AFCD1A09BF0300F70A8B /* caret up.png in Resources */,
@@ -4000,6 +4025,7 @@
 				8A1C94B81A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */,
 				BF781E3519DCB0B500B68EBC /* HEMDeviceInfoTableViewCell.m in Sources */,
 				8A28CAFF19CB95E40044A27D /* HEMNotificationHandler.m in Sources */,
+				BF1C46B11B155B4900AFCB7B /* HEMHealthViewController.m in Sources */,
 				BF4E88E71A12FB3700831380 /* UIView+HEMSnapshot.m in Sources */,
 				8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */,
 				BF8E1A821A6873A2009E421F /* HEMSensePairingModeViewController.m in Sources */,
@@ -4108,7 +4134,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				BFBECCE31A15706700335CC6 /* Base */,
-				BFAB22D11ACC760D00CCBF8A /* en */,
+				BF1C46B31B155CD400AFCB7B /* en */,
 			);
 			name = Onboarding.storyboard;
 			sourceTree = "<group>";

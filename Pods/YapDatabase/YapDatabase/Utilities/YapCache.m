@@ -56,9 +56,7 @@
 
 @implementation YapCache
 {
-	Class keyClass;
 	CFMutableDictionaryRef cfdict;
-	
 	NSUInteger countLimit;
 	
 	__unsafe_unretained YapCacheItem *mostRecentCacheItem;
@@ -73,43 +71,37 @@
 #endif
 }
 
+@synthesize allowedKeyClasses = allowedKeyClasses;
+@synthesize allowedObjectClasses = allowedObjectClasses;
+
 #if YAP_CACHE_STATISTICS
 @synthesize hitCount = hitCount;
 @synthesize missCount = missCount;
 @synthesize evictionCount = evictionCount;
 #endif
 
-- (id)init
+- (instancetype)init
 {
-	return [self initWithKeyClass:NULL countLimit:0];
+	return [self initWithCountLimit:0 keyCallbacks:kCFTypeDictionaryKeyCallBacks];
 }
 
-- (id)initWithKeyClass:(Class)inKeyClass
+- (instancetype)initWithCountLimit:(NSUInteger)inCountLimit
 {
-	return [self initWithKeyClass:inKeyClass countLimit:0];
+	return [self initWithCountLimit:inCountLimit keyCallbacks:kCFTypeDictionaryKeyCallBacks];
 }
 
-- (id)initWithKeyClass:(Class)inKeyClass countLimit:(NSUInteger)inCountLimit
+- (id)initWithCountLimit:(NSUInteger)inCountLimit keyCallbacks:(CFDictionaryKeyCallBacks)inKeyCallbacks
 {
 	if ((self = [super init]))
 	{
-		if (inKeyClass == NULL)
-			keyClass = [NSString class];
-		else
-			keyClass = inKeyClass;
-		
 		if (inCountLimit == 0)
 			countLimit = YAP_CACHE_DEFAULT_COUNT_LIMIT;
 		else
 			countLimit = inCountLimit;
 		
-		// We actually use countLimit plus one.
-		// This is because we evict items after the count surpasses the countLimit.
-		// In other words, we evict items when the count reaches countLimit plus one.
-		
 		cfdict = CFDictionaryCreateMutable(kCFAllocatorDefault,
 		                                   0,
-		                                   &kCFTypeDictionaryKeyCallBacks,
+		                                   &inKeyCallbacks,
 		                                   &kCFTypeDictionaryValueCallBacks);
 	}
 	return self;
@@ -132,7 +124,7 @@
 		countLimit = newCountLimit;
 		
 		if (countLimit != 0) {
-			while (CFDictionaryGetCount(cfdict) > countLimit)
+			while (CFDictionaryGetCount(cfdict) > (CFIndex)countLimit)
 			{
 				leastRecentCacheItem->prev->next = nil;
 				
@@ -156,7 +148,9 @@
 
 - (id)objectForKey:(id)key
 {
-	NSAssert([key isKindOfClass:keyClass], @"Unexpected key class. Expected %@, passed %@", keyClass, [key class]);
+	#ifndef NS_BLOCK_ASSERTIONS
+	AssertAllowedKeyClass(key, allowedKeyClasses);
+	#endif
 	
 	YapCacheItem *item = CFDictionaryGetValue(cfdict, (const void *)key);
 	if (item)
@@ -202,14 +196,19 @@
 
 - (BOOL)containsKey:(id)key
 {
-	NSAssert([key isKindOfClass:keyClass], @"Unexpected key class. Expected %@, passed %@", keyClass, [key class]);
+	#ifndef NS_BLOCK_ASSERTIONS
+	AssertAllowedKeyClass(key, allowedKeyClasses);
+	#endif
 	
 	return CFDictionaryContainsKey(cfdict, (const void *)key);
 }
 
 - (void)setObject:(id)object forKey:(id)key
 {
-	NSAssert([key isKindOfClass:keyClass], @"Unexpected key class. Expected %@, passed %@", keyClass, [key class]);
+	#ifndef NS_BLOCK_ASSERTIONS
+	AssertAllowedKeyClass(key, allowedKeyClasses);
+	AssertAllowedObjectClass(object, allowedObjectClasses);
+	#endif
 	
 	YapCacheItem *item = CFDictionaryGetValue(cfdict, (const void *)key);
 	if (item)
@@ -279,7 +278,7 @@
 		
 		// Evict leastRecentCacheItem if needed
 		
-		if ((countLimit != 0) && (CFDictionaryGetCount(cfdict) > countLimit))
+		if ((countLimit != 0) && (CFDictionaryGetCount(cfdict) > (CFIndex)countLimit))
 		{
 			YDBLogVerbose(@"key(%@), out(%@)", key, leastRecentCacheItem->key);
 			
@@ -342,7 +341,9 @@
 
 - (void)removeObjectForKey:(id)key
 {
-	NSAssert([key isKindOfClass:keyClass], @"Unexpected key class. Expected %@, passed %@", keyClass, [key class]);
+	#ifndef NS_BLOCK_ASSERTIONS
+	AssertAllowedKeyClass(key, allowedKeyClasses);
+	#endif
 	
 	YapCacheItem *item = CFDictionaryGetValue(cfdict, (const void *)key);
 	if (item)
@@ -367,7 +368,9 @@
 {
 	for (id key in keys)
 	{
-		NSAssert([key isKindOfClass:keyClass], @"Unexpected key class. Expected %@, passed %@", keyClass, [key class]);
+		#ifndef NS_BLOCK_ASSERTIONS
+		AssertAllowedKeyClass(key, allowedKeyClasses);
+		#endif
 		
 		YapCacheItem *item = CFDictionaryGetValue(cfdict, (const void *)key);
 		if (item)
@@ -432,6 +435,52 @@
 	
 	return description;
 }
+
+#ifndef NS_BLOCK_ASSERTIONS
+static void AssertAllowedKeyClass(id key, NSSet *allowedKeyClasses)
+{
+	if (allowedKeyClasses == nil) return;
+
+	// This doesn't work.
+	// For example, @(number) gives us class '__NSCFNumber', which is not NSNumber.
+	// And there are also class clusters which break this technique too.
+	//
+	// return [allowedKeyClasses containsObject:keyClass];
+	
+	// So we have to use the isKindOfClass method,
+	// which means we need to enumerate the allowedKeyClasses.
+	
+	for (Class allowedKeyClass in allowedKeyClasses)
+	{
+		if ([key isKindOfClass:allowedKeyClass]) return;
+	}
+	
+	NSCAssert(NO, @"Unexpected key class. Passed %@, expected: %@", [key class], allowedKeyClasses);
+}
+#endif
+
+#ifndef NS_BLOCK_ASSERTIONS
+static void AssertAllowedObjectClass(id obj, NSSet *allowedObjectClasses)
+{
+	if (allowedObjectClasses == nil) return;
+	
+	// This doesn't work.
+	// For example, @(number) gives us class '__NSCFNumber', which is not NSNumber.
+	// And there are also class clusters which break this technique too.
+	//
+	// return [allowedKeyClasses containsObject:keyClass];
+	
+	// So we have to use the isKindOfClass method,
+	// which means we need to enumerate the allowedKeyClasses.
+	
+	for (Class allowedObjectClass in allowedObjectClasses)
+	{
+		if ([obj isKindOfClass:allowedObjectClass]) return;
+	}
+	
+	NSCAssert(NO, @"Unexpected object class. Passed %@, expected: %@", [obj class], allowedObjectClasses);
+}
+#endif
 
 /*
 - (void)debug

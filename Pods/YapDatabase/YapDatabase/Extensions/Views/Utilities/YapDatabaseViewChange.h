@@ -1,20 +1,19 @@
 #import <Foundation/Foundation.h>
 #import "YapCollectionKey.h"
 
-typedef enum {
+typedef NS_ENUM(NSInteger, YapDatabaseViewChangeType) {
 	YapDatabaseViewChangeInsert = 1,
 	YapDatabaseViewChangeDelete = 2,
 	YapDatabaseViewChangeMove   = 3,
 	YapDatabaseViewChangeUpdate = 4,
-	
-} YapDatabaseViewChangeType;
+};
 
-typedef enum {
+typedef NS_OPTIONS(NSUInteger, YapDatabaseViewChangesBitMask) {
 	YapDatabaseViewChangedObject     = 1 << 0, // 0001
 	YapDatabaseViewChangedMetadata   = 1 << 1, // 0010
-	YapDatabaseViewChangedDependency = 1 << 2, // 0100
-	
-} YapDatabaseViewChangesBitMask;
+	YapDatabaseViewChangedDependency = 1 << 2, // 0100  (used by YapDatabaseViewMappings)
+	YapDatabaseViewChangedSnippets   = 1 << 3, // 1000  (used by YapDatabaseSearchResultsView)
+};
 
 
 /**
@@ -25,11 +24,11 @@ typedef enum {
  * which are designed to give you an overview of the various technologies available.
  * 
  * General information about setting up and using Views:
- * https://github.com/yaptv/YapDatabase/wiki/Views
+ * https://github.com/yapstudios/YapDatabase/wiki/Views
  * 
  * General information about technologies which integrate with Views:
- * https://github.com/yaptv/YapDatabase/wiki/LongLivedReadTransactions
- * https://github.com/yaptv/YapDatabase/wiki/YapDatabaseModifiedNotification
+ * https://github.com/yapstudios/YapDatabase/wiki/LongLivedReadTransactions
+ * https://github.com/yapstudios/YapDatabase/wiki/YapDatabaseModifiedNotification
 **/
 
 @interface YapDatabaseViewSectionChange : NSObject <NSCopying>
@@ -118,7 +117,7 @@ typedef enum {
  *
  * @see YapDatabaseViewChangesBitMask
 **/
-@property (nonatomic, readonly) int changes;
+@property (nonatomic, readonly) YapDatabaseViewChangesBitMask changes;
 
 /**
  * The indexPath & newIndexPath are available after
@@ -183,7 +182,7 @@ typedef enum {
  * Once you have the sectionChanges & rowChanges, you can animate your tableView very simply like so:
  * 
  * PS - For a FULL CODE EXAMPLE, see the wiki:
- * https://github.com/yaptv/YapDatabase/wiki/Views#wiki-animating_updates_in_tableviews_collectionviews
+ * https://github.com/yapstudios/YapDatabase/wiki/Views#wiki-animating_updates_in_tableviews_collectionviews
  *
  * if ([sectionChanges count] == 0 & [rowChanges count] == 0)
  * {

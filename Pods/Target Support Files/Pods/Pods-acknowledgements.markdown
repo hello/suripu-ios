@@ -3,7 +3,7 @@ This application makes use of the following third party libraries:
 
 ## AFNetworking
 
-Copyright (c) 2013-2015 AFNetworking (http://afnetworking.com/)
+Copyright (c) 2011–2015 Alamofire Software Foundation (http://alamofire.org/)
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -191,7 +191,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 FXKeychain
 
-Version 1.5.2, October 13th, 2014
+Version 1.5.3, May 22nd, 2015
 
 Copyright (C) 2012 Charcoal Design
 

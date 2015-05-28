@@ -25,7 +25,7 @@ extern NSString* const kHEMAnalyticsEventPropGender;
 extern NSString* const kHEMAnalyticsEventPropAccount;
 extern NSString* const kHEMAnalyticsEventPropSenseId;
 extern NSString* const kHEMAnalyticsEventPropPillId;
-extern NSString* const kHEMAnalyticsEventPropSenseIdUnpaired;
+extern NSString* const kHEMAnalyticsEventPropHealthKit;
 
 // permissions
 extern NSString* const kHEMAnalyticsEventPermissionLoc;
@@ -34,6 +34,7 @@ extern NSString* const kHEManaltyicsEventStatusSkipped;
 extern NSString* const kHEManaltyicsEventStatusEnabled;
 extern NSString* const kHEManaltyicsEventStatusDenied;
 extern NSString* const kHEManaltyicsEventStatusDisabled;
+extern NSString* const kHEManaltyicsEventStatusNotSupported;
 
 // onboarding
 extern NSString* const HEMAnalyticsEventOnboardingPrefix;
@@ -110,6 +111,11 @@ extern NSString* const kHEMAnalyticsEventPill;
 extern NSString* const kHEMAnalyticsEventSignInStart;
 extern NSString* const kHEMAnalyticsEventSignIn;
 extern NSString* const kHEMAnalyticsEventSignOut;
+
+// time zone
+extern NSString* const HEMAnalyticsEventTimeZone;
+extern NSString* const HEMAnalyticsEventTimeZoneChanged;
+extern NSString* const HEMAnalyticsEventPropTZ;
 
 // device management
 extern NSString* const kHEMAnalyticsEventDeviceAction;

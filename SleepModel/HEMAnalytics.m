@@ -28,7 +28,7 @@ NSString* const kHEMAnalyticsEventPropGender = @"Gender";
 NSString* const kHEMAnalyticsEventPropAccount = @"Account Id";
 NSString* const kHEMAnalyticsEventPropSenseId = @"Sense Id";
 NSString* const kHEMAnalyticsEventPropPillId = @"Pill Id";
-NSString* const kHEMAnalyticsEventPropSenseIdUnpaired = @"unpaired";
+NSString* const kHEMAnalyticsEventPropHealthKit = @"HealthKit";
 
 // special mixpanel special properties
 NSString* const kHEMAnalyticsEventMpPropName = @"$name";
@@ -41,6 +41,7 @@ NSString* const kHEManaltyicsEventStatusSkipped = @"skipped";
 NSString* const kHEManaltyicsEventStatusEnabled = @"enabled";
 NSString* const kHEManaltyicsEventStatusDisabled = @"disabled";
 NSString* const kHEManaltyicsEventStatusDenied = @"denied";
+NSString* const kHEManaltyicsEventStatusNotSupported = @"not supported";
 
 // onboarding
 //
@@ -121,6 +122,11 @@ NSString* const kHEMAnalyticsEventPill = @"Pill Detail";
 NSString* const kHEMAnalyticsEventSignInStart = @"Sign In Start";
 NSString* const kHEMAnalyticsEventSignIn = @"Signed In";
 NSString* const kHEMAnalyticsEventSignOut = @"Signed Out";
+
+// time zone
+NSString* const HEMAnalyticsEventTimeZone = @"Time Zone";
+NSString* const HEMAnalyticsEventTimeZoneChanged = @"Time Zone Changed";
+NSString* const HEMAnalyticsEventPropTZ = @"tz";
 
 // device management
 NSString* const kHEMAnalyticsEventDeviceAction = @"Device Action";

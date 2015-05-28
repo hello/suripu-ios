@@ -135,46 +135,72 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
     }];
 }
 
-- (void)sync {
-    if ([self isHealthKitEnabled] && [self isSupported] && [self canWriteSleepAnalysis]) {
+- (void)sync:(void(^)(NSError* error))completion {
+    void(^done)(NSError* error) = ^(NSError* error) {
+        if (completion) {
+            completion (error);
+        }
+    };
+    
+    BOOL enabled = [self isHealthKitEnabled];
+    BOOL supported = [self isSupported];
+    BOOL authorized = [self canWriteSleepAnalysis];
+    if (enabled && supported && authorized) {
         NSDate* lastNight = [self lastNight];
         if (![self addedDataPointFor:lastNight]) {
-            [self writeSleepAnalysisIfDataAvailableFor:lastNight];
+            [self writeSleepAnalysisIfDataAvailableFor:lastNight completion:completion];
+            return;
+        } else {
+            done ([NSError errorWithDomain:SENServiceHKErrorDomain
+                                      code:SENServiceHealthKitErrorAlreadySynced
+                                  userInfo:nil]);
         }
+    } else {
+        SENServiceHealthKitError code;
+        if (!enabled) {
+            code = SENServiceHealthKitErrorNotEnabled;
+        } else if (!supported) {
+            code = SENServiceHealthKitErrorNotSupported;
+        } else {
+            code = SENServiceHealthKitErrorNotAuthorized;
+        }
+        done ([NSError errorWithDomain:SENServiceHKErrorDomain code:code userInfo:nil]);
     }
 }
 
 - (NSDate*)lastNight {
-    // if we want last night's data, we need to request just under 48 hours
-    NSTimeInterval diff = -86400 *2;
-    NSCalendar* calendar = [NSCalendar currentCalendar];
-    NSDate* todayWithoutTime = [calendar dateFromComponents:[self dateOnlyComponents]];
-    return [NSDate dateWithTimeInterval:diff sinceDate:todayWithoutTime];
+    NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSDateComponents* components = [NSDateComponents new];
+    components.day = -1;
+    return [calendar dateByAddingComponents:components toDate:[NSDate date] options:0];
 }
 
-- (void)writeSleepAnalysisIfDataAvailableFor:(NSDate*)date {
+- (void)writeSleepAnalysisIfDataAvailableFor:(NSDate*)date completion:(void(^)(NSError* error))completion {
     SENSleepResult* result = [SENSleepResult sleepResultForDate:date];
-    __weak typeof(self) weakSelf = self;
-    
+
     if ([[result segments] count] > 0) {
-        long queuePriority = DISPATCH_QUEUE_PRIORITY_DEFAULT;
-        dispatch_async(dispatch_get_global_queue(queuePriority, 0), ^{
-            DDLogVerbose(@"adding sleep data point to health kit for date %@", [result date]);
-            [weakSelf addSleepDataPoints:result forDate:date];
-        });
+        DDLogVerbose(@"adding sleep data point to health kit for date %@", [result date]);
+        [self writeSleepDataPoints:result forDate:date completion:completion];
     } else {
         DDLogVerbose(@"pulling from server since no data is in the cache");
         [SENAPITimeline timelineForDate:date completion:^(NSArray* timelines, NSError* error) {
             if (error == nil) {
+                
                 if ([[result segments] count] > 0) {
                     DDLogVerbose(@"adding sleep data point to HealthKit for date %@", [result date]);
                     NSDictionary* timeline = [timelines firstObject];
                     [result updateWithDictionary:timeline];
                     [result save];
-                    [weakSelf addSleepDataPoints:result forDate:date];
+                    [self writeSleepDataPoints:result forDate:date completion:completion];
                 } else {
-                    DDLogVerbose(@"no sleep data to input to HealthKit");
+                    if (completion) {
+                        completion ([NSError errorWithDomain:SENServiceHKErrorDomain
+                                                        code:SENServiceHealthKitErrorNoDataToWrite
+                                                    userInfo:nil]);
+                    }
                 }
+            } else if (completion) {
+                completion (error);
             }
         }];
     }
@@ -222,22 +248,53 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
     return dataPoints;
 }
 
-- (void)addSleepDataPoints:(SENSleepResult*)sleepReult forDate:(NSDate*)date {
-    if (sleepReult == nil || ![self isSupported]) return;
+- (void)writeSleepDataPoints:(SENSleepResult*)sleepReult
+                     forDate:(NSDate*)date
+                  completion:(void(^)(NSError* error))competion {
     
-    NSArray* sleepObjects = [self sleepDataPointsForSleepResult:sleepReult];
+    if (![self isSupported]) {
+        if (competion) {
+            competion ([NSError errorWithDomain:SENServiceHKErrorDomain
+                                           code:SENServiceHealthKitErrorNotSupported
+                                       userInfo:nil]);
+        }
+        return;
+    }
     
-    if ([sleepObjects count] == 0) return;
+    void(^finishOnMainThread)(NSError* error) = ^(NSError* error) {
+        if (competion) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                competion (error);
+            });
+        }
+    };
     
     __weak typeof(self) weakSelf = self;
-    [[self hkStore] saveObjects:sleepObjects withCompletion:^(BOOL success, NSError *error) {
-        if (success) {
-            DDLogVerbose(@"saved sleep result to health kit.");
-            [weakSelf saveLastWrittenDate:date];
-        } else {
-            DDLogVerbose(@"failed to save sleep result to health kit with error %@", error);
+    long queuePriority = DISPATCH_QUEUE_PRIORITY_DEFAULT;
+    dispatch_async(dispatch_get_global_queue(queuePriority, 0), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        NSArray* sleepObjects = [strongSelf sleepDataPointsForSleepResult:sleepReult];
+        
+        if ([sleepObjects count] == 0) {
+            finishOnMainThread ([NSError errorWithDomain:SENServiceHKErrorDomain
+                                                    code:SENServiceHealthKitErrorNoDataToWrite
+                                                userInfo:nil]);
+            return;
         }
-    }];
+        
+        [[strongSelf hkStore] saveObjects:sleepObjects withCompletion:^(BOOL success, NSError *error) {
+            
+            if (success) {
+                DDLogVerbose(@"saved sleep result to health kit.");
+                [strongSelf saveLastWrittenDate:date];
+            } else {
+                DDLogVerbose(@"failed to save sleep result to health kit with error %@", error);
+            }
+            
+            finishOnMainThread (error);
+        }];
+    });
+
 }
 
 - (void)setEnableHealthKit:(BOOL)enable {

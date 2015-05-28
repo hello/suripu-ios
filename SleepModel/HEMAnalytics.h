@@ -112,6 +112,11 @@ extern NSString* const kHEMAnalyticsEventSignInStart;
 extern NSString* const kHEMAnalyticsEventSignIn;
 extern NSString* const kHEMAnalyticsEventSignOut;
 
+// time zone
+extern NSString* const HEMAnalyticsEventTimeZone;
+extern NSString* const HEMAnalyticsEventTimeZoneChanged;
+extern NSString* const HEMAnalyticsEventPropTZ;
+
 // device management
 extern NSString* const kHEMAnalyticsEventDeviceAction;
 extern NSString* const kHEMAnalyticsEventDeviceActionFactoryRestore;

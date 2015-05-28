@@ -123,6 +123,11 @@ NSString* const kHEMAnalyticsEventSignInStart = @"Sign In Start";
 NSString* const kHEMAnalyticsEventSignIn = @"Signed In";
 NSString* const kHEMAnalyticsEventSignOut = @"Signed Out";
 
+// time zone
+NSString* const HEMAnalyticsEventTimeZone = @"Time Zone";
+NSString* const HEMAnalyticsEventTimeZoneChanged = @"Time Zone Changed";
+NSString* const HEMAnalyticsEventPropTZ = @"tz";
+
 // device management
 NSString* const kHEMAnalyticsEventDeviceAction = @"Device Action";
 NSString* const kHEMAnalyticsEventDeviceActionFactoryRestore = @"factory restore";

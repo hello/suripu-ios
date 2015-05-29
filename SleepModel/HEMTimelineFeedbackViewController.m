@@ -100,6 +100,8 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
           [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
                                                   message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
                                                controller:self];
+          [SENAnalytics trackError:error
+                     withEventName:HEMAnalyticsEventTimelineAdjustTimeFailed];
       } else {
           [self dismissViewControllerAnimated:YES completion:NULL];
           [[NSNotificationCenter defaultCenter] postNotificationName:HEMTimelineFeedbackSuccessNotification object:nil];

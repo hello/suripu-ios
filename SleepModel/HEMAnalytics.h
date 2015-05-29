@@ -135,6 +135,7 @@ extern NSString* const HEMAnalyticsEventSleepScoreBreakdown;
 extern NSString* const HEMAnalyticsEventTimelineZoomOut;
 extern NSString* const HEMAnalyticsEventTimelineZoomIn;
 extern NSString* const HEMAnalyticsEventTimelineAdjustTime;
+extern NSString* const HEMAnalyticsEventTimelineAdjustTimeFailed;
 extern NSString* const HEMAnalyticsEventTimelineDataRequest;
 extern NSString* const HEMAnalyticsEventTimelineAlarmShortcut;
 

@@ -26,7 +26,6 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
 @interface SENServiceHealthKit()
 
 @property (nonatomic, strong) HKHealthStore* hkStore;
-@property (nonatomic, strong) NSDateComponents* dateOnlyComponents;
 
 @end
 
@@ -49,7 +48,6 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
     self = [super init];
     if (self) {
         [self configureStore];
-        [self configureDates];
     }
     return self;
 }
@@ -57,15 +55,6 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
 - (void)configureStore {
     if ([HKHealthStore isHealthDataAvailable]) {
         [self setHkStore:[[HKHealthStore alloc] init]];
-    }
-}
-
-- (void)configureDates {
-    if ([self hkStore] != nil) {
-        NSCalendar* calendar = [NSCalendar currentCalendar];
-        NSCalendarUnit unitsWeWant = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit;
-        NSDateComponents *components = [calendar components:unitsWeWant fromDate:[NSDate date]];
-        [self setDateOnlyComponents:components];
     }
 }
 
@@ -168,11 +157,19 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
     }
 }
 
+/**
+ * @return NSDate without time to represent the previous day
+ */
 - (NSDate*)lastNight {
     NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
-    NSDateComponents* components = [NSDateComponents new];
-    components.day = -1;
-    return [calendar dateByAddingComponents:components toDate:[NSDate date] options:0];
+    
+    NSCalendarUnit unitsWeWant = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit;
+    NSDateComponents* todayComponents = [calendar components:unitsWeWant fromDate:[NSDate date]];
+    NSDate* today = [calendar dateFromComponents:todayComponents];
+    
+    NSDateComponents* lastNightComponents = [[NSDateComponents alloc] init];
+    [lastNightComponents setDay:-1];
+    return [calendar dateByAddingComponents:lastNightComponents toDate:today options:0];
 }
 
 - (void)writeSleepAnalysisIfDataAvailableFor:(NSDate*)date completion:(void(^)(NSError* error))completion {

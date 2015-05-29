@@ -112,6 +112,7 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
         if (error != nil) {
             switch ([error code]) {
                 case SENServiceHealthKitErrorAlreadySynced:
+                    DDLogVerbose(@"healthkit has already been synced, ignore");
                     break; // do nothing
                 case SENServiceHealthKitErrorNotAuthorized: {
                     NSDictionary* props = @{kHEMAnalyticsEventPropHealthKit : kHEManaltyicsEventStatusDenied};
@@ -133,6 +134,9 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
                     [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
                     break;
             }
+        } else {
+            [SENAnalytics track:HEMAnalyticsEventHealthSync];
+            [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropHealthKit : kHEManaltyicsEventStatusEnabled}];
         }
     }];
 }

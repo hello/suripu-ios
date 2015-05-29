@@ -106,6 +106,7 @@ extern NSString* const kHEMAnalyticsEventSensor;
 extern NSString* const kHEMAnalyticsEventPropSensorName;
 extern NSString* const kHEMAnalyticsEventSense;
 extern NSString* const kHEMAnalyticsEventPill;
+extern NSString* const HEMAnalyticsEventHealthSync;
 
 // authentication
 extern NSString* const kHEMAnalyticsEventSignInStart;

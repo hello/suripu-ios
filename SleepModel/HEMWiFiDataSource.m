@@ -53,6 +53,13 @@ static NSString* const kHEMWifiNetworkErrorDomain = @"is.hello.ble.wifi";
     
     NSInteger insertionIndex = 0;
     for (SENWifiEndpoint* network in networks) {
+        // seems like there is a possibility that the ssid is nil, in which case
+        // we should ignore it to prevent a possible crash and also because we
+        // can't use the network object anyways
+        if (![network ssid]) {
+            continue;
+        }
+        
         if (![[self uniqueSSIDs] containsObject:[network ssid]]) {
             insertionIndex =
                 [[self wifisDetected] indexOfObject:network

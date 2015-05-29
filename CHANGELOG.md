@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.0.7.1
+
+New:
+
+* Health integration screen in oboarding
+* Instrumented manual time zone changes inside settings
+* Instrumented healthkit sync
+* Sync last nights data to Health app, even if timeline is not final, to prevent
+* people from thinking its not working after set up.
+
+Fixes:
+
+* fixed typo in insights created date
+* removed calls that are firing even if user is not authenticated
+* no longer removing the Sense Id in analytics profile when unpairing
+
 ## 1.0.6.2
 
 Fixes:

@@ -182,13 +182,15 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
         DDLogVerbose(@"pulling from server since no data is in the cache");
         [SENAPITimeline timelineForDate:date completion:^(NSArray* timelines, NSError* error) {
             if (error == nil) {
+                SENSleepResult* freshResult = nil;
+                if ([timelines isKindOfClass:[NSArray class]] && [timelines count] > 0) {
+                    freshResult = [[SENSleepResult alloc] initWithDictionary:[timelines firstObject]];
+                }
                 
-                if ([[result segments] count] > 0) {
-                    DDLogVerbose(@"adding sleep data point to HealthKit for date %@", [result date]);
-                    NSDictionary* timeline = [timelines firstObject];
-                    [result updateWithDictionary:timeline];
-                    [result save];
-                    [self writeSleepDataPoints:result forDate:date completion:completion];
+                if ([[freshResult segments] count] > 0) {
+                    DDLogVerbose(@"adding sleep data point to HealthKit for date %@", [freshResult date]);
+                    [freshResult save];
+                    [self writeSleepDataPoints:freshResult forDate:date completion:completion];
                 } else {
                     if (completion) {
                         completion ([NSError errorWithDomain:SENServiceHKErrorDomain

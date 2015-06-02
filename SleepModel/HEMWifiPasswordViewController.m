@@ -584,14 +584,22 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     
     switch ([error code]) {
         case SENSenseManagerErrorCodeWifiNotInRange:
-            message = NSLocalizedString(@"wifi.error.set-sense-not-in-range", nil);
+            if ([self securityType] == SENWifiEndpointSecurityTypeWep) {
+                message = NSLocalizedString(@"wifi.error.wep.no-ascii", nil);
+            } else {
+                message = NSLocalizedString(@"wifi.error.set-sense-not-in-range", nil);
+            }
             break;
         case SENSenseManagerErrorCodeTimeout:
             message = NSLocalizedString(@"wifi.error.set-sense-timeout", nil);
             break;
         case SENSenseManagerErrorCodeWLANConnection:
         case SENSenseManagerErrorCodeFailToObtainIP:
-            message = NSLocalizedString(@"wifi.error.set-sense-failed-connection", nil);
+            if ([self securityType] == SENWifiEndpointSecurityTypeWep) {
+                message = NSLocalizedString(@"wifi.error.wep.no-ascii", nil);
+            } else {
+                message = NSLocalizedString(@"wifi.error.set-sense-failed-connection", nil);
+            }
             break;
         default:
             message = NSLocalizedString(@"wifi.error.set-sense-general", nil);

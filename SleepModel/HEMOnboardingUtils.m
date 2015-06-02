@@ -137,13 +137,10 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
 + (void)showAlertForHTTPError:(NSError*)error
                     withTitle:(NSString*)errorTitle
                          from:(UIViewController*)controller {
-    
-    NSString* alertMessage = [self accountErrorMessgaeFromError:error];
-    
     UIView* seeThroughView = [controller parentViewController] ? [[controller parentViewController] view] : [controller view];
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
     [dialogVC setTitle:errorTitle];
-    [dialogVC setMessage:alertMessage];
+    [dialogVC setMessage:[self accountErrorMessgaeFromError:error]];
     [dialogVC setViewToShowThrough:seeThroughView];
     
     [dialogVC showFrom:controller onDefaultActionSelected:^{

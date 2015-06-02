@@ -71,10 +71,12 @@
     [fieldCell setTag:[indexPath row]];
     
     NSString* placeHolderText = [[self delegate] placeHolderTextIn:self atIndex:[indexPath row]];
-    NSString* currentText = [[self formContent] objectForKey:placeHolderText];
-    
-    [fieldCell setDefaultText: currentText ?: [[self delegate] defaultTextIn:self atIndex:[indexPath row]]];
     [fieldCell setPlaceHolder:placeHolderText];
+    
+    if ([[self delegate] respondsToSelector:@selector(defaultTextIn:atIndex:)]) {
+        NSString* currentText = [[self formContent] objectForKey:placeHolderText];
+        [fieldCell setDefaultText: currentText ?: [[self delegate] defaultTextIn:self atIndex:[indexPath row]]];
+    }
 
     if ([[self delegate] respondsToSelector:@selector(keyboardTypeForFieldIn:atIndex:)]) {
         [fieldCell setKeyboardType:[[self delegate] keyboardTypeForFieldIn:self atIndex:[indexPath row]]];

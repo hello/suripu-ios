@@ -8,6 +8,20 @@
 
 #import "HEMSettingsTableViewCell.h"
 
+@class HEMFieldTableViewCell;
+
+@protocol HEMFieldTableViewCellDelegate <NSObject>
+
+- (void)didChangeTextTo:(NSString*)text from:(HEMFieldTableViewCell*)cell;
+
+@end
+
 @interface HEMFieldTableViewCell : HEMSettingsTableViewCell
+
+@property (nonatomic, weak) id<HEMFieldTableViewCellDelegate> delegate;
+
+- (void)setPlaceHolder:(NSString*)text;
+- (NSString*)placeHolderText;
+- (void)setDefaultText:(NSString*)text;
 
 @end

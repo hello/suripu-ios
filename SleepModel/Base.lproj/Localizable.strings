@@ -173,6 +173,19 @@
 "settings.help.format" = "If you're having trouble, please contact us at %@";
 "settings.enhanced-audio.desc" = "Enhanced Audio allows Sense to pick up snoring, sleep talking and other noise disturbances.";
 "settings.sign-out.confirmation" = "Are you sure you want to sign out of your account?";
+"settings.account.email.placeholder" = "Email address";
+"settings.account.name.placeholder" = "Name";
+"settings.account.password-current.placeholder" = "Current password";
+"settings.account.password-new.placeholder" = "New password";
+"settings.account.password-new-confirm.placeholder" = "New password again";
+"settings.account.password.does-not-match" = "New passwords entered do not match.";
+"settings.account.email.update.title" = "Change email";
+"settings.account.name.update.title" = "Change name";
+"settings.account.password.update.title" = "Change password";
+"settings.account.update.failed" = "Could not update the changes.";
+"settings.account.update.failed.name-length" = "A name is required for your account.";
+"settings.account.update.failed.email-invalid" = "The email entered is invalid.";
+"settings.account.update.failed.password-invalid" = "The password entered is invalid.";
 
 // support
 "debug.options.title" = "Debug options";

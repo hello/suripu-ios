@@ -19,7 +19,11 @@
 @implementation HEMFieldTableViewCell
 
 - (void)awakeFromNib {
+    [super awakeFromNib];
     [[self textField] setFont:[UIFont textfieldTextFont]];
+    [[self textField] addTarget:self
+                         action:@selector(didChangeTextInField:)
+               forControlEvents:UIControlEventEditingChanged];
 }
 
 - (void)prepareForReuse {
@@ -37,6 +41,18 @@
         [[NSAttributedString alloc] initWithString:text attributes:attributes];
     
     [[self textField] setAttributedPlaceholder:attributedPlaceHolder];
+}
+
+- (NSString*)placeHolderText {
+    return [[[self textField] attributedPlaceholder] string];
+}
+
+- (void)setDefaultText:(NSString*)text {
+    [[self textField] setText:text];
+}
+
+- (void)didChangeTextInField:(UITextField*)textField {
+    [[self delegate] didChangeTextTo:[textField text] from:self];
 }
 
 @end

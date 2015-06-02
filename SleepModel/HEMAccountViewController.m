@@ -8,6 +8,7 @@
 
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENServiceAccount.h>
+#import <SenseKit/SENAPIAccount.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -20,6 +21,7 @@
 #import "HEMHelpFooterTableViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HEMOnboardingStoryboard.h"
+#import "HEMOnboardingUtils.h"
 #import "HEMSettingsAccountDataSource.h"
 #import "HEMSettingsTableViewCell.h"
 #import "HEMStyledNavigationViewController.h"
@@ -406,17 +408,6 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     return title;
 }
 
-- (NSString*)errorMessageForAccountUpdateError:(NSError*)error {
-    NSString* errorMessage = nil;
-    switch ([error code]) {
-        case SENServiceAccountErrorInvalidArg:
-        default:
-            errorMessage = NSLocalizedString(@"settings.account.update.failed", nil);
-            break;
-    }
-    return errorMessage;
-}
-
 - (NSUInteger)numberOfFieldsIn:(HEMFormViewController *)formViewController {
     NSUInteger fields = 0;
     if ([self selectedInfoType] == HEMSettingsAccountInfoTypeEmail
@@ -462,6 +453,15 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
     return text;
 }
 
+- (NSString*)errorMessageFromAccountUpdateError:(NSError*)error {
+    switch ([error code]) {
+        case SENServiceAccountErrorInvalidArg:
+            return NSLocalizedString(@"settings.account.update.failure", nil);
+        default:
+            return [HEMOnboardingUtils accountErrorMessgaeFromError:error];
+    }
+}
+
 - (void)saveFormContent:(NSDictionary*)content
                    from:(HEMFormViewController*)formViewController
              completion:(void(^)(NSString* errorMessage))completion {
@@ -471,7 +471,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
         NSString* errorMessage = nil;
         if (error) {
             [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-            errorMessage = [weakSelf errorMessageForAccountUpdateError:error];
+            errorMessage = [weakSelf errorMessageFromAccountUpdateError:error];
         }
         if (completion) {
             completion (errorMessage);

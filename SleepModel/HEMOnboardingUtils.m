@@ -161,6 +161,20 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
     }];
 }
 
++ (NSString*)accountErrorMessgaeFromError:(NSError*)error {
+    NSString* alertMessage = nil;
+    SENAPIAccountError errorType = [SENAPIAccount errorForAPIResponseError:error];
+    
+    if (errorType == SENAPIAccountErrorUnknown) {
+        NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
+        alertMessage = [self httpErrorMessageForStatusCode:[response statusCode]];
+    } else {
+        alertMessage = [self accountErrorMessageForType:errorType];
+    }
+    
+    return alertMessage;
+}
+
 + (NSString*)accountErrorMessageForType:(SENAPIAccountError)errorType {
     NSString* message = nil;
     switch (errorType) {

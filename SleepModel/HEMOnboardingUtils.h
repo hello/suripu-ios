@@ -150,4 +150,16 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  */
 + (void)notifyOfPillPairingChange;
 
+/**
+ * @method accountErrorMessgaeFromError:
+ *
+ * @discussion
+ * Method to translate an error obtained from account updates to a localized
+ * error message
+ *
+ * @param error: the error obtained from account api responses
+ * @return error message translated from the error
+ */
++ (NSString*)accountErrorMessgaeFromError:(NSError*)error;
+
 @end

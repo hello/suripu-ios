@@ -182,10 +182,7 @@
 "settings.account.email.update.title" = "Change email";
 "settings.account.name.update.title" = "Change name";
 "settings.account.password.update.title" = "Change password";
-"settings.account.update.failed" = "Could not update the changes.";
-"settings.account.update.failed.name-length" = "A name is required for your account.";
-"settings.account.update.failed.email-invalid" = "The email entered is invalid.";
-"settings.account.update.failed.password-invalid" = "The password entered is invalid.";
+"settings.account.update.failure" = "A value is required for your account.";
 
 // support
 "debug.options.title" = "Debug options";

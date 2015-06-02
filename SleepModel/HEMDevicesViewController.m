@@ -162,9 +162,9 @@ static CGFloat const HEMNoDeviceHeight = 205.0f;
     
     if (msg) { // title is optional
         [self showMessageDialog:msg title:title];
+        // only log an error if an error is displayed to the user
+        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }
-    
-    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
 }
 
 #pragma mark - UICollectionViewDelegate

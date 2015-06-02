@@ -316,6 +316,7 @@ typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
             *cancelTitle = NSLocalizedString(@"actions.skip", nil);
             *fixTitle = NSLocalizedString(@"actions.replace", nil);
             *type = HEMSystemAlertTypePillLowBattery;
+            break;
         default:
             *type = HEMSystemAlertTypeUnknown;
             break;

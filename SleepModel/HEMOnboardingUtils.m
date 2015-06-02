@@ -138,15 +138,7 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
                     withTitle:(NSString*)errorTitle
                          from:(UIViewController*)controller {
     
-    NSString* alertMessage = nil;
-    SENAPIAccountError errorType = [SENAPIAccount errorForAPIResponseError:error];
-    
-    if (errorType == SENAPIAccountErrorUnknown) {
-        NSHTTPURLResponse* response = error.userInfo[AFNetworkingOperationFailingURLResponseErrorKey];
-        alertMessage = [self httpErrorMessageForStatusCode:[response statusCode]];
-    } else {
-        alertMessage = [self accountErrorMessageForType:errorType];
-    }
+    NSString* alertMessage = [self accountErrorMessgaeFromError:error];
     
     UIView* seeThroughView = [controller parentViewController] ? [[controller parentViewController] view] : [controller view];
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];

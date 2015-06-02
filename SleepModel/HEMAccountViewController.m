@@ -379,6 +379,21 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 
 #pragma mark HEMFormViewControllerDelegate
 
+- (BOOL)shouldFieldBeSecureIn:(HEMFormViewController *)formViewController atIndex:(NSUInteger)index {
+    return [self selectedInfoType] == HEMSettingsAccountInfoTypePassword;
+}
+
+- (UIKeyboardType)keyboardTypeForFieldIn:(HEMFormViewController *)formViewController
+                                 atIndex:(NSUInteger)index {
+    
+    switch ([self selectedInfoType]) {
+        case HEMSettingsAccountInfoTypeEmail:
+            return UIKeyboardTypeEmailAddress;
+        default:
+            return UIKeyboardTypeDefault;
+    }
+}
+
 - (NSString*)titleForForm:(HEMFormViewController*)formViewController {
     NSString* title = nil;
     if ([self selectedInfoType] == HEMSettingsAccountInfoTypeEmail) {

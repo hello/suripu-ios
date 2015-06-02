@@ -10,7 +10,7 @@
 #import "UIFont+HEMStyle.h"
 #import "HelloStyleKit.h"
 
-@interface HEMFieldTableViewCell()
+@interface HEMFieldTableViewCell() <UITextFieldDelegate>
 
 @property (nonatomic, weak) IBOutlet UITextField* textField;
 
@@ -21,6 +21,7 @@
 - (void)awakeFromNib {
     [super awakeFromNib];
     [[self textField] setFont:[UIFont textfieldTextFont]];
+    [[self textField] setDelegate:self];
     [[self textField] addTarget:self
                          action:@selector(didChangeTextInField:)
                forControlEvents:UIControlEventEditingChanged];
@@ -30,6 +31,11 @@
     [super prepareForReuse];
     [[self textField] setAttributedPlaceholder:nil];
     [[self textField] setText:nil];
+    [[self textField] setSecureTextEntry:NO];
+}
+
+- (CGFloat)separatorIndentation {
+    return CGRectGetMinX([[self textField] frame]);
 }
 
 - (void)setPlaceHolder:(NSString*)text {
@@ -51,8 +57,33 @@
     [[self textField] setText:text];
 }
 
+- (void)setKeyboardType:(UIKeyboardType)keyboardType {
+    [[self textField] setKeyboardType:keyboardType];
+}
+
+- (void)setKeyboardReturnKeyType:(UIReturnKeyType)returnType {
+    [[self textField] setReturnKeyType:returnType];
+}
+
+- (void)setSecure:(BOOL)secure {
+    [[self textField] setSecureTextEntry:secure];
+}
+
+- (void)becomeFirstResponder {
+    [[self textField] becomeFirstResponder];
+}
+
 - (void)didChangeTextInField:(UITextField*)textField {
     [[self delegate] didChangeTextTo:[textField text] from:self];
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+    if ([[self delegate] respondsToSelector:@selector(didTapOnKeyboardReturnKeyFrom:)]) {
+        [[self delegate] didTapOnKeyboardReturnKeyFrom:self];
+    }
+    return YES;
 }
 
 @end

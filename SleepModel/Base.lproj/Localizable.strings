@@ -477,6 +477,7 @@
 "activity.loading" = "Loading...";
 "activity.share.last-night.format" = "Last night #mysleepscore was %.0ld — http://hello.is";
 "activity.share.other-days.format" = "#mysleepscore was %.0ld on %@ — http://hello.is";
+"activity.saving.changes" = "Saving changes...";
 
 // account info
 "account.gender.female" = "Female";

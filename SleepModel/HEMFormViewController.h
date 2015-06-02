@@ -34,6 +34,10 @@
 
 @optional
 - (NSString*)titleForForm:(HEMFormViewController*)formViewController;
+- (UIKeyboardType)keyboardTypeForFieldIn:(HEMFormViewController*)formViewController
+                                 atIndex:(NSUInteger)index;
+- (BOOL)shouldFieldBeSecureIn:(HEMFormViewController*)formViewController
+                      atIndex:(NSUInteger)index;
 
 @end
 

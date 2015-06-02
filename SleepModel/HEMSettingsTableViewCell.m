@@ -64,11 +64,15 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
     [self.layer insertSublayer:borderLyer atIndex:0];
 }
 
+- (CGFloat)separatorIndentation {
+    return CGRectGetMinX([[self titleLabel] frame]);
+}
+
 - (void)addSeparator {
     if ([self separator] != nil)
         return;
 
-    CGFloat x = CGRectGetMinX([[self titleLabel] frame]);
+    CGFloat x = [self separatorIndentation];
     CGRect separatorFrame
         = { x, CGRectGetHeight([self bounds]) - HEMSettingsCellSeparatorSize,
             CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x, HEMSettingsCellSeparatorSize };
@@ -88,7 +92,7 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
     [super layoutSubviews];
 
     CGRect separatorFrame = [[self separator] frame];
-    separatorFrame.origin.x = CGRectGetMinX([[self titleLabel] frame]);
+    separatorFrame.origin.x = [self separatorIndentation];
     [[self separator] setFrame:separatorFrame];
 }
 

@@ -14,6 +14,9 @@
 
 - (void)didChangeTextTo:(NSString*)text from:(HEMFieldTableViewCell*)cell;
 
+@optional
+- (void)didTapOnKeyboardReturnKeyFrom:(HEMFieldTableViewCell*)cell;
+
 @end
 
 @interface HEMFieldTableViewCell : HEMSettingsTableViewCell
@@ -23,5 +26,9 @@
 - (void)setPlaceHolder:(NSString*)text;
 - (NSString*)placeHolderText;
 - (void)setDefaultText:(NSString*)text;
+- (void)setKeyboardType:(UIKeyboardType)keyboardType;
+- (void)setKeyboardReturnKeyType:(UIReturnKeyType)returnType;
+- (void)setSecure:(BOOL)secure;
+- (void)becomeFirstResponder;
 
 @end

@@ -1,5 +1,15 @@
 # Changelog
 
+## 1.0.7.2
+
+Fixes:
+
+* Prevent Health saving sleep data multiple times on the same day
+* Fix writing incorrect day to Health while app is in the background
+* Prevent unauthorized requests sent from the app after signing out
+* Additional analytics
+* Fix typo in insights
+
 ## 1.0.7.1
 
 New:
@@ -8,7 +18,7 @@ New:
 * Instrumented manual time zone changes inside settings
 * Instrumented healthkit sync
 * Sync last nights data to Health app, even if timeline is not final, to prevent
-* people from thinking its not working after set up.
+  people from thinking its not working after set up.
 
 Fixes:
 

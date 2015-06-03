@@ -26,7 +26,7 @@
 @interface YapDatabaseRelationship () {
 @public
 
-	int version;
+	NSString *versionTag;
 	YapDatabaseRelationshipOptions *options;
 }
 
@@ -48,7 +48,7 @@
 @public
 	
 	BOOL disableYapDatabaseRelationshipNodeProtocol;
-	NSSet *allowedCollections;
+	YapWhitelistBlacklist *allowedCollections;
 }
 
 @end

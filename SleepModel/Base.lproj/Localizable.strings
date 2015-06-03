@@ -43,6 +43,9 @@
 "onboarding.room-check.intro.light" = "If your room is too bright, you may have difficulty falling asleep and staying asleep.";
 "onboarding.pill-setup.title" = "Attach Sleep Pill to your pillow";
 "onboarding.pill-setup.description" = "Clip your Sleep Pill to the pillowcase you sleep on. You may need to pull it taut between two hands. Attach your Sleep Pill to the side of your pillow closest to the edge of your bed.";
+"onboarding.health.enable.failure.title" = "Failed to enable Health integration";
+"onboarding.health.enable.failure.unsupported" = "Health app is not supported on your device.";
+"onboarding.health.enable.failure.generic" = "You may have previously denied access.  Go to your Health app, find Sleep Analysis data, Share Data, and edit the data sources to enable Sense.";
 
 // help links
 "help.email.address" = "support@hello.is";
@@ -113,6 +116,7 @@
 "wifi.activity.scanning" = "Finding WiFi networks...";
 "wifi.error.invalid-input" = "The WiFi credentials provided are invalid. Please ensure you have entered everything correctly.";
 "wifi.error.set-sense-not-in-range" = "Sense could not connect to WiFi. Please verify your credentials and ensure Sense is within WiFi range.";
+"wifi.error.wep.no-ascii" = "Sense could not connect to WiFi. Make sure you are using your network's WEP key.";
 "wifi.error.set-sense-timeout" = "Timed out while setting WiFi credentials on Sense.";
 "wifi.error.set-sense-failed-connection" = "Sense could not connect to the WiFi.";
 "wifi.error.account-link-message" = "Unable to link your account with Sense.";
@@ -170,6 +174,16 @@
 "settings.help.format" = "If you're having trouble, please contact us at %@";
 "settings.enhanced-audio.desc" = "Enhanced Audio allows Sense to pick up snoring, sleep talking and other noise disturbances.";
 "settings.sign-out.confirmation" = "Are you sure you want to sign out of your account?";
+"settings.account.email.placeholder" = "Email address";
+"settings.account.name.placeholder" = "Name";
+"settings.account.password-current.placeholder" = "Current password";
+"settings.account.password-new.placeholder" = "New password";
+"settings.account.password-new-confirm.placeholder" = "New password again";
+"settings.account.password.does-not-match" = "New passwords entered do not match.";
+"settings.account.email.update.title" = "Change email";
+"settings.account.name.update.title" = "Change name";
+"settings.account.password.update.title" = "Change password";
+"settings.account.update.failure" = "A value is required for your account.";
 
 // support
 "debug.options.title" = "Debug options";
@@ -461,6 +475,7 @@
 "activity.loading" = "Loading...";
 "activity.share.last-night.format" = "Last night #mysleepscore was %.0ld — http://hello.is";
 "activity.share.other-days.format" = "#mysleepscore was %.0ld on %@ — http://hello.is";
+"activity.saving.changes" = "Saving changes...";
 
 // account info
 "account.gender.female" = "Female";

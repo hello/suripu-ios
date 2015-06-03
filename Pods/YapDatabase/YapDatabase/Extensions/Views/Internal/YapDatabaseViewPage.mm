@@ -24,7 +24,7 @@
 	return self;
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone __unused *)zone
 {
 	YapDatabaseViewPage *copy = [[YapDatabaseViewPage alloc] initWithCapacity:[self count]];
 	
@@ -114,6 +114,16 @@
 - (void)removeAllRowids
 {
 	vector->clear();
+}
+
+- (void)appendPage:(YapDatabaseViewPage *)page
+{
+	vector->insert(vector->end(), page->vector->begin(), page->vector->end());
+}
+
+- (void)prependPage:(YapDatabaseViewPage *)page
+{
+	vector->insert(vector->begin(), page->vector->begin(), page->vector->end());
 }
 
 - (void)appendRange:(NSRange)range ofPage:(YapDatabaseViewPage *)page

@@ -51,11 +51,6 @@ static NSString* const SENServiceAccountErrorDomain = @"is.hello.service.account
                            userInfo:nil];
 }
 
-- (void)serviceBecameActive {
-    [super serviceBecameActive];
-    [self refreshAccount:nil];
-}
-
 - (void)serviceReceivedMemoryWarning {
     [super serviceReceivedMemoryWarning];
     [self setAccount:nil];

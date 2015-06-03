@@ -1,23 +1,23 @@
 PODS:
-  - AFNetworking (2.5.3):
-    - AFNetworking/NSURLConnection (= 2.5.3)
-    - AFNetworking/NSURLSession (= 2.5.3)
-    - AFNetworking/Reachability (= 2.5.3)
-    - AFNetworking/Security (= 2.5.3)
-    - AFNetworking/Serialization (= 2.5.3)
-    - AFNetworking/UIKit (= 2.5.3)
-  - AFNetworking/NSURLConnection (2.5.3):
+  - AFNetworking (2.5.4):
+    - AFNetworking/NSURLConnection (= 2.5.4)
+    - AFNetworking/NSURLSession (= 2.5.4)
+    - AFNetworking/Reachability (= 2.5.4)
+    - AFNetworking/Security (= 2.5.4)
+    - AFNetworking/Serialization (= 2.5.4)
+    - AFNetworking/UIKit (= 2.5.4)
+  - AFNetworking/NSURLConnection (2.5.4):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.5.3):
+  - AFNetworking/NSURLSession (2.5.4):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.5.3)
-  - AFNetworking/Security (2.5.3)
-  - AFNetworking/Serialization (2.5.3)
-  - AFNetworking/UIKit (2.5.3):
+  - AFNetworking/Reachability (2.5.4)
+  - AFNetworking/Security (2.5.4)
+  - AFNetworking/Serialization (2.5.4)
+  - AFNetworking/UIKit (2.5.4):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
   - AttributedMarkdown (0.9.2)
@@ -29,7 +29,7 @@ PODS:
   - CocoaLumberjack/Extensions (1.6.3):
     - CocoaLumberjack/Core
   - FDWaveformView (0.2.2)
-  - FXKeychain (1.5.2)
+  - FXKeychain (1.5.3)
   - Kiwi (2.3.1)
   - LGBluetooth (1.1.4)
   - Mixpanel (2.7.2):
@@ -56,7 +56,7 @@ PODS:
     - LGBluetooth
     - SHSProtoBuf
   - SenseKit/Model (0.1.0):
-    - YapDatabase (~> 2.4.3)
+    - YapDatabase (~> 2.6.4)
   - SenseKit/Service (0.1.0):
     - CocoaLumberjack (= 1.6.3)
   - SHSProtoBuf (0.9):
@@ -66,12 +66,10 @@ PODS:
   - SpinKit (1.2.0)
   - SVWebViewController (1.0)
   - UIImageEffects (0.0.1)
-  - YapDatabase (2.4.3):
-    - YapDatabase/standard (= 2.4.3)
-  - YapDatabase/common (2.4.3):
-    - CocoaLumberjack (~> 1.6.3)
-  - YapDatabase/standard (2.4.3):
-    - YapDatabase/common
+  - YapDatabase (2.6.4):
+    - YapDatabase/standard (= 2.6.4)
+  - YapDatabase/standard (2.6.4):
+    - CocoaLumberjack (~> 1)
 
 DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`,
@@ -127,7 +125,7 @@ CHECKOUT OPTIONS:
     :commit: 717c233c241d2d2b407f3c3dd555517bd2e82e29
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 6f1afe22317c6f6cdc077b1abd5515d3756f0ff9
+    :commit: 5f393d5826f855ff6bef345d66079fa07aa1cd09
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: e44003540c7b52b8fa29a05a059e43751e25d0d4
@@ -137,24 +135,24 @@ CHECKOUT OPTIONS:
     :git: https://github.com/TransitApp/SVWebViewController.git
 
 SPEC CHECKSUMS:
-  AFNetworking: e1d86c2a96bb5d2e7408da36149806706ee122fe
+  AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   AttributedMarkdown: ac5060667280be8cc8ee33a46c73e4ec6b17ca1a
   BEMSimpleLineGraph: 5999b2da02b6e935121608cfc58f6c369e06bde8
   CocoaLumberjack: 79086d1841c6c61383afa50cafc8883b7f44f63c
   FDWaveformView: d6c1f8adcfb6917fa6350a3374873289b865d945
-  FXKeychain: 1a711bddc04a2bd69850dcfe297b8a43027a9980
+  FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
   Kiwi: f038a6c61f7a9e4d7766bff5717aa3b3fdb75f55
   LGBluetooth: 79ee89969ebb6db8f566c35452aade206ea1d149
   Mixpanel: e9bcb16eb0e2a98fc330ceeb0d8b7f4aec4182ab
   MSDynamicsDrawerViewController: 2874df90f5e9453dc7d4e32f8038b50615d4baa7
   NAPickerView: cac3bd6f38e36374e53309335e28f4fc9cd93c94
   NSJSONSerialization-NSNullRemoval: 4c50d948b7805807ea8ce690d48e05ee679ef5b7
-  SenseKit: 76ba86681697b32a268a4c91d14e4a6cb3edf7a5
+  SenseKit: 80ec61d63f9281ba0ce0c1168b379388e967726c
   SHSProtoBuf: 89a179d27f35dea460139a630e8ac22378eabbe3
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a
   SVWebViewController: aa2e18a41ff5f45be7aeec8e92ca5bcc50b5ebb1
   UIImageEffects: 37b99fa461e4965f332ca82e92f2c22a1075ee84
-  YapDatabase: 49c927513f7fce1b2e3fd2b237c1dc1921662249
+  YapDatabase: f9051e178a38f48d0f3a78562423a5bc969f1ca3
 
-COCOAPODS: 0.36.1
+COCOAPODS: 0.37.2

@@ -12,55 +12,36 @@
 /**
  * Welcome to YapDatabase!
  * 
- * https://github.com/yaptv/YapDatabase
+ * https://github.com/yapstudios/YapDatabase
  * 
  * The project wiki has a wealth of documentation if you have any questions.
- * https://github.com/yaptv/YapDatabase/wiki
+ * https://github.com/yapstudios/YapDatabase/wiki
  *
  * YapDatabaseView is an extension designed to work with YapDatabase.
  * It gives you a persistent sorted "view" of a configurable subset of your data.
  *
  * For the full documentation on Views, please see the related wiki article:
- * https://github.com/yaptv/YapDatabase/wiki/Views
- * 
- * Just in case you don't have Internet access,
- * see the quick overview in YapDatabaseView.h.
+ * https://github.com/yapstudios/YapDatabase/wiki/Views
 **/
 @interface YapDatabaseView : YapDatabaseExtension
 
-/* Inherited from YapDatabaseExtension
- 
-@property (nonatomic, strong, readonly) NSString *registeredName;
-
-*/
-
 /**
  * See the wiki for an example of how to initialize a view:
- * https://github.com/yaptv/YapDatabase/wiki/Views#wiki-initializing_a_view
+ * https://github.com/yapstudios/YapDatabase/wiki/Views#wiki-initializing_a_view
  *
- * @param groupingBlock
+ * @param grouping
  * 
  *   The grouping block handles both filtering and grouping.
+ *   There are multiple groupingBlock types that are supported.
  *   
- *   @see YapDatabaseViewTypes.h for block type definition(s).
+ *   @see YapDatabaseViewTypes.h for block type definitions.
  * 
- * @param groupingBlockType
- * 
- *   Specify the type of groupingBlock that is being passed.
- *   
- *   @see YapDatabaseViewTypes.h for block type definition(s).
- * 
- * @param sortingBlock
+ * @param sorting
  * 
  *   The sorting block handles sorting of objects within their group.
+ *   There are multiple sortingBlock types that are supported.
  *   
- *   @see YapDatabaseViewTypes.h for block type definition(s).
- * 
- * @param sortingBlockType
- * 
- *   Specify the type of sortingBlock that is being passed.
- *   
- *   @see YapDatabaseViewTypes.h for block type definition(s).
+ *   @see YapDatabaseViewTypes.h for block type definitions.
  *
  * @param versionTag
  *
@@ -73,23 +54,18 @@
  *   The options allow you to specify things like creating an in-memory-only view (non persistent).
 **/
 
-- (id)initWithGroupingBlock:(YapDatabaseViewGroupingBlock)groupingBlock
-          groupingBlockType:(YapDatabaseViewBlockType)groupingBlockType
-               sortingBlock:(YapDatabaseViewSortingBlock)sortingBlock
-           sortingBlockType:(YapDatabaseViewBlockType)sortingBlockType;
+- (instancetype)initWithGrouping:(YapDatabaseViewGrouping *)grouping
+                         sorting:(YapDatabaseViewSorting *)sorting;
 
-- (id)initWithGroupingBlock:(YapDatabaseViewGroupingBlock)groupingBlock
-          groupingBlockType:(YapDatabaseViewBlockType)groupingBlockType
-               sortingBlock:(YapDatabaseViewSortingBlock)sortingBlock
-           sortingBlockType:(YapDatabaseViewBlockType)sortingBlockType
-                 versionTag:(NSString *)versionTag;
+- (instancetype)initWithGrouping:(YapDatabaseViewGrouping *)grouping
+                         sorting:(YapDatabaseViewSorting *)sorting
+                      versionTag:(NSString *)versionTag;
 
-- (id)initWithGroupingBlock:(YapDatabaseViewGroupingBlock)groupingBlock
-          groupingBlockType:(YapDatabaseViewBlockType)groupingBlockType
-               sortingBlock:(YapDatabaseViewSortingBlock)sortingBlock
-           sortingBlockType:(YapDatabaseViewBlockType)sortingBlockType
-                 versionTag:(NSString *)versionTag
-                    options:(YapDatabaseViewOptions *)options;
+- (instancetype)initWithGrouping:(YapDatabaseViewGrouping *)grouping
+                         sorting:(YapDatabaseViewSorting *)sorting
+                      versionTag:(NSString *)versionTag
+                         options:(YapDatabaseViewOptions *)options;
+
 
 @property (nonatomic, strong, readonly) YapDatabaseViewGroupingBlock groupingBlock;
 @property (nonatomic, strong, readonly) YapDatabaseViewSortingBlock sortingBlock;
@@ -116,6 +92,13 @@
  * 
  * NSString *localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
  * NSString *versionTag = [NSString stringWithFormat:@"1-%@", localeIdentifier];
+ * 
+ * The groupingBlock/sortingBlock/versionTag can me changed after the view has been created.
+ * See YapDatabaseViewTransaction(ReadWrite).
+ * 
+ * Note:
+ * - [YapDatabaseView versionTag]            = versionTag of most recent commit
+ * - [YapDatabaseViewTransaction versionTag] = versionTag of this commit
 **/
 @property (nonatomic, copy, readonly) NSString *versionTag;
 
@@ -123,5 +106,27 @@
  * The options allow you to specify things like creating an in-memory-only view (non persistent).
 **/
 @property (nonatomic, copy, readonly) YapDatabaseViewOptions *options;
+
+/**
+ * Allows you to fetch the versionTag from a view that was registered during the last app launch.
+ * 
+ * For example, let's say you have a view that sorts contacts.
+ * And you support 2 different sort options:
+ * - First, Last
+ * - Last, First
+ * 
+ * To support this, you use 2 different versionTags:
+ * - "First,Last"
+ * - "Last,First"
+ * 
+ * And you want to ensure that when you first register the view (during app launch),
+ * you choose the same block & versionTag from a previous app launch (if possible).
+ * This prevents the view from enumerating the database & re-populating itself
+ * during registration if the versionTag is different from last time.
+ * 
+ * So you can use this method to fetch the previous versionTag.
+**/
++ (NSString *)previousVersionTagForRegisteredViewName:(NSString *)name
+                                      withTransaction:(YapDatabaseReadTransaction *)transaction;
 
 @end

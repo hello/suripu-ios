@@ -94,14 +94,51 @@ static NSString* const HEMAppFirstLaunch = @"HEMAppFirstLaunch";
     // pre fetch account information so that it's readily availble to the user
     // when the account is accessed.  This is per discussion with design and James
     if ([SENAuthorizationService isAuthorized]) {
+        
         [[SENServiceAccount sharedService] refreshAccount:^(NSError *error) {
             [HEMAnalytics trackUserSession]; // update user session data
         }];
+        
+        [self syncHealthKit];
     }
-    
-    // pull sleep data and write to HealthKit.  If the data has already been
-    // written for the day, it will not do so again on sync.
-    [[SENServiceHealthKit sharedService] sync];
+}
+
+/**
+ * Sync sleep data to the Health app if available.  If data has already been written
+ * for the day, this will have no effect.
+ */
+- (void)syncHealthKit {
+    [[SENServiceHealthKit sharedService] sync:^(NSError *error) {
+        if (error != nil) {
+            switch ([error code]) {
+                case SENServiceHealthKitErrorAlreadySynced:
+                    DDLogVerbose(@"healthkit has already been synced, ignore");
+                    break; // do nothing
+                case SENServiceHealthKitErrorNotAuthorized: {
+                    NSDictionary* props = @{kHEMAnalyticsEventPropHealthKit : kHEManaltyicsEventStatusDenied};
+                    [SENAnalytics setUserProperties:props];
+                    break;
+                }
+                case SENServiceHealthKitErrorNotSupported: {
+                    NSDictionary* props = @{kHEMAnalyticsEventPropHealthKit : kHEManaltyicsEventStatusNotSupported};
+                    [SENAnalytics setUserProperties:props];
+                    break;
+                }
+                case SENServiceHealthKitErrorNotEnabled: {
+                    NSDictionary* props = @{kHEMAnalyticsEventPropHealthKit : kHEManaltyicsEventStatusDisabled};
+                    [SENAnalytics setUserProperties:props];
+                    break;
+                }
+                case SENServiceHealthKitErrorNoDataToWrite:
+                default:
+                    [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventWarning];
+                    break;
+            }
+        } else {
+            [SENAnalytics track:HEMAnalyticsEventHealthSync];
+            [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropHealthKit : kHEManaltyicsEventStatusEnabled}];
+        }
+    }];
 }
 
 - (void)configureAPI {

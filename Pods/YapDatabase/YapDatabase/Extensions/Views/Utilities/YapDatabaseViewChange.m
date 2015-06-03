@@ -1,6 +1,26 @@
 #import "YapDatabaseViewChange.h"
 #import "YapDatabaseViewChangePrivate.h"
 #import "YapDatabaseViewMappingsPrivate.h"
+#import "YapDatabaseLogging.h"
+
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#endif
+
+#if ! __has_feature(objc_arc)
+#warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
+#endif
+
+/**
+ * Define log level for this file: OFF, ERROR, WARN, INFO, VERBOSE
+ * See YapDatabaseLogging.h for more information.
+**/
+#if DEBUG
+  static const int ydbLogLevel = YDB_LOG_LEVEL_VERBOSE;
+#else
+  static const int ydbLogLevel = YDB_LOG_LEVEL_WARN;
+#endif
+#pragma unused(ydbLogLevel)
 
 
 @implementation YapDatabaseViewSectionChange {
@@ -55,7 +75,7 @@
 	return op;
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone __unused *)zone
 {
 	YapDatabaseViewSectionChange *op = [[YapDatabaseViewSectionChange alloc] init];
 	op->type = type;
@@ -123,7 +143,7 @@
 
 @public
 	
-	id key; // immutable
+	YapCollectionKey *collectionKey; // immutable
 	
 	NSString *originalGroup; // immutable
 	NSString *finalGroup;    // mutable during consolidation
@@ -184,23 +204,13 @@
 
 - (YapCollectionKey *)collectionKey
 {
-	// Note: The key should always be a YapCollectionKey,
-	// except for unit tests which might use a string for simplicity.
-	
-	if ([key isKindOfClass:[YapCollectionKey class]])
-	{
-		return (YapCollectionKey *)key;
-	}
-	else
-	{
-		return nil;
-	}
+	return collectionKey;
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone __unused *)zone
 {
 	YapDatabaseViewRowChange *op = [[YapDatabaseViewRowChange alloc] init];
-	op->key = key;
+	op->collectionKey = collectionKey;
 	op->originalGroup = originalGroup;
 	op->finalGroup = finalGroup;
 	op->type = type;
@@ -215,11 +225,13 @@
 	return op;
 }
 
-+ (YapDatabaseViewRowChange *)insertKey:(id)key inGroup:(NSString *)group atIndex:(NSUInteger)index
++ (YapDatabaseViewRowChange *)insertCollectionKey:(YapCollectionKey *)collectionKey
+                                          inGroup:(NSString *)group
+                                          atIndex:(NSUInteger)index
 {
 	YapDatabaseViewRowChange *op = [[YapDatabaseViewRowChange alloc] init];
 	op->type = YapDatabaseViewChangeInsert;
-	op->key = key;
+	op->collectionKey = collectionKey;
 	op->changes = YapDatabaseViewChangedObject | YapDatabaseViewChangedMetadata;
 	
 	op->originalGroup = nil;                              // invalid in insert type
@@ -233,11 +245,13 @@
 	return op;
 }
 
-+ (YapDatabaseViewRowChange *)deleteKey:(id)key inGroup:(NSString *)group atIndex:(NSUInteger)index
++ (YapDatabaseViewRowChange *)deleteCollectionKey:(YapCollectionKey *)collectionKey
+                                          inGroup:(NSString *)group
+                                          atIndex:(NSUInteger)index
 {
 	YapDatabaseViewRowChange *op = [[YapDatabaseViewRowChange alloc] init];
 	op->type = YapDatabaseViewChangeDelete;
-	op->key = key;
+	op->collectionKey = collectionKey;
 	op->changes = YapDatabaseViewChangedObject | YapDatabaseViewChangedMetadata;
 	
 	op->originalGroup = group;
@@ -251,11 +265,14 @@
 	return op;
 }
 
-+ (YapDatabaseViewRowChange *)updateKey:(id)key changes:(int)flags inGroup:(NSString *)group atIndex:(NSUInteger)index
++ (YapDatabaseViewRowChange *)updateCollectionKey:(YapCollectionKey *)collectionKey
+                                          inGroup:(NSString *)group
+                                          atIndex:(NSUInteger)index
+                                      withChanges:(YapDatabaseViewChangesBitMask)flags
 {
 	YapDatabaseViewRowChange *op = [[YapDatabaseViewRowChange alloc] init];
 	op->type = YapDatabaseViewChangeUpdate;
-	op->key = key;
+	op->collectionKey = collectionKey;
 	op->changes = flags;
 	
 	op->originalGroup = group;
@@ -277,15 +294,15 @@
 		{
 			// Internal style (for debugging the processAndConsolidateOperations method)
 			return [NSString stringWithFormat:
-			    @"<YapDatabaseViewRowChange: Insert pre(~ -> %lu) post(~ -> %lu) group(%@) key(%@)",
-			        (unsigned long)opFinalIndex, (unsigned long)finalIndex, finalGroup, key];
+			  @"<YapDatabaseViewRowChange: Insert pre(~ -> %lu) post(~ -> %lu) group(%@) collectionKey(%@)",
+			    (unsigned long)opFinalIndex, (unsigned long)finalIndex, finalGroup, collectionKey];
 		}
 		else
 		{
 			// External style (for debugging UITableView & UICollectionView updates)
 			return [NSString stringWithFormat:
-			    @"<YapDatabaseViewRowChange: Insert indexPath(nil) newIndexPath(%lu, %lu) group(%@) key(%@)>",
-			        (unsigned long)finalSection, (unsigned long)finalIndex, finalGroup, key];
+			  @"<YapDatabaseViewRowChange: Insert indexPath(nil) newIndexPath(%lu, %lu) group(%@) collectionKey(%@)>",
+			    (unsigned long)finalSection, (unsigned long)finalIndex, finalGroup, collectionKey];
 		}
 	}
 	else if (type == YapDatabaseViewChangeDelete)
@@ -294,15 +311,15 @@
 		{
 			// Internal style (for debugging the processAndConsolidateOperations method)
 			return [NSString stringWithFormat:
-			    @"<YapDatabaseViewRowChange: Delete pre(%lu -> ~) post(%lu -> ~) group(%@) key(%@)",
-			        (unsigned long)opOriginalIndex, (unsigned long)originalIndex, originalGroup, key];
+			  @"<YapDatabaseViewRowChange: Delete pre(%lu -> ~) post(%lu -> ~) group(%@) collectionKey(%@)",
+			      (unsigned long)opOriginalIndex, (unsigned long)originalIndex, originalGroup, collectionKey];
 		}
 		else
 		{
 			// External style (for debugging UITableView & UICollectionView updates)
 			return [NSString stringWithFormat:
-			    @"<YapDatabaseViewRowChange: Delete indexPath(%lu, %lu) newIndexPath(nil) group(%@) key(%@)>",
-			        (unsigned long)originalSection, (unsigned long)originalIndex, originalGroup, key];
+			  @"<YapDatabaseViewRowChange: Delete indexPath(%lu, %lu) newIndexPath(nil) group(%@) collectionKey(%@)>",
+			    (unsigned long)originalSection, (unsigned long)originalIndex, originalGroup, collectionKey];
 		}
 	}
 	else if (type == YapDatabaseViewChangeMove)
@@ -311,19 +328,19 @@
 		{
 			// Internal style (for debugging the processAndConsolidateOperations method)
 			return [NSString stringWithFormat:
-				@"<YapDatabaseViewRowChange: Move pre(%lu -> %lu) post(%lu -> %lu) group(%@ -> %@) key(%@)",
-					(unsigned long)opOriginalIndex, (unsigned long)opFinalIndex,
-					(unsigned long)originalIndex,   (unsigned long)finalIndex,
-					originalGroup, finalGroup, key];
+			  @"<YapDatabaseViewRowChange: Move pre(%lu -> %lu) post(%lu -> %lu) group(%@ -> %@) collectionKey(%@)",
+			    (unsigned long)opOriginalIndex, (unsigned long)opFinalIndex,
+			    (unsigned long)originalIndex,   (unsigned long)finalIndex,
+			    originalGroup, finalGroup, collectionKey];
 		}
 		else
 		{
 			// External style (for debugging UITableView & UICollectionView updates)
 			return [NSString stringWithFormat:
-				@"<YapDatabaseViewRowChange: Move indexPath(%lu, %lu) newIndexPath(%lu, %lu) group(%@ -> %@) key(%@)",
-					(unsigned long)originalSection, (unsigned long)originalIndex,
-					(unsigned long)finalSection,    (unsigned long)finalIndex,
-					originalGroup, finalGroup, key];
+			  @"<YapDatabaseViewRowChange: Move indexPath(%lu, %lu) newIndexPath(%lu, %lu) group(%@ -> %@) collectionKey(%@)",
+			    (unsigned long)originalSection, (unsigned long)originalIndex,
+			    (unsigned long)finalSection,    (unsigned long)finalIndex,
+			    originalGroup, finalGroup, collectionKey];
 		}
 	}
 	else // if (type == YapDatabaseViewChangeUpdate)
@@ -332,16 +349,16 @@
 		{
 			// Internal style (for debugging the processAndConsolidateOperations method)
 			return [NSString stringWithFormat:
-				@"<YapDatabaseViewRowChange: Update pre(%lu) post(%lu -> %lu) group(%@) key(%@)",
-					(unsigned long)opOriginalIndex,
-					(unsigned long)originalIndex,   (unsigned long)finalIndex, originalGroup, key];
+			  @"<YapDatabaseViewRowChange: Update pre(%lu) post(%lu -> %lu) group(%@) collectionKey(%@)",
+			    (unsigned long)opOriginalIndex,
+			    (unsigned long)originalIndex,   (unsigned long)finalIndex, originalGroup, collectionKey];
 		}
 		else
 		{
 			// External style (for debugging UITableView & UICollectionView updates)
 			return [NSString stringWithFormat:
-				@"<YapDatabaseViewRowChange: Update indexPath(%lu, %lu) group(%@) key(%@)",
-					(unsigned long)originalSection, (unsigned long)originalIndex, originalGroup, key];
+			  @"<YapDatabaseViewRowChange: Update indexPath(%lu, %lu) group(%@) collectionKey(%@)",
+			    (unsigned long)originalSection, (unsigned long)originalIndex, originalGroup, collectionKey];
 		}
 	}
 }
@@ -379,7 +396,7 @@
 	//
 	// We also may need to inject extra changes.
 	// The user may specify, as a configuration option within mappings,
-	// the the drawing of cells has an dependency upon neighboring cells.
+	// that the drawing of cells has a dependency upon neighboring cells.
 	
 	NSMutableArray *sectionChanges = [NSMutableArray arrayWithCapacity:1];
 	NSMutableArray *rowChanges = [NSMutableArray arrayWithCapacity:[changes count]];
@@ -440,21 +457,16 @@
 							}
 						}
 						
-						YapDatabaseViewRangePosition rangePosition =
-						  [originalMappings rangePositionForGroup:sectionChange->group];
-						
-						NSUInteger prevRowOffset = rangePosition.offsetFromBeginning;
-						NSUInteger prevRowCount = rangePosition.length;
-						
-						while (prevRowCount > 0)
+						NSUInteger groupCount = [originalMappings fullCountForGroup:sectionChange->group];
+						while (groupCount > 0)
 						{
 							YapDatabaseViewRowChange *rowChange =
-							    [YapDatabaseViewRowChange deleteKey:nil
-							                                inGroup:sectionChange->group
-							                                atIndex:(prevRowOffset+prevRowCount-1)];
+							  [YapDatabaseViewRowChange deleteCollectionKey:nil
+							                                        inGroup:sectionChange->group
+							                                        atIndex:(groupCount-1)];
 							
 							[rowChanges addObject:rowChange];
-							prevRowCount--;
+							groupCount--;
 						}
 						
 						[counts setObject:@(0) forKey:sectionChange->group];
@@ -539,17 +551,20 @@
 					if (wasDelete)
 						dependencyIndex--;
 				}
-				else if ((offset < 0) && (-1*offset <= groupIndex))
+				else if ((offset < 0) && (-1*offset <= (NSInteger)groupIndex))
 				{
 					dependencyIndex = groupIndex + offset;
 				}
 				
 				if (dependencyIndex < groupCount)
 				{
-					int flags = YapDatabaseViewChangedDependency;
+					YapDatabaseViewChangesBitMask flags = YapDatabaseViewChangedDependency;
 					
 					YapDatabaseViewRowChange *rowChange =
-					    [YapDatabaseViewRowChange updateKey:nil changes:flags inGroup:group atIndex:dependencyIndex];
+					  [YapDatabaseViewRowChange updateCollectionKey:nil
+					                                        inGroup:group
+					                                        atIndex:dependencyIndex
+					                                    withChanges:flags];
 					
 					[rowChanges addObject:rowChange];
 				}
@@ -574,7 +589,9 @@
  * This method takes a list of YapDatabaseViewRowChange objects and processes them to
  * properly calculate and set the original and/or final index of each row change.
 **/
-+ (void)processRowChanges:(NSMutableArray *)changes
++ (void)processRowChanges:(NSMutableArray *)rowChanges
+     withOriginalMappings:(YapDatabaseViewMappings *)originalMappings
+            finalMappings:(YapDatabaseViewMappings *)finalMappings
 {
 	// Each YapDatabaseViewRowChange object is one of:
 	// 
@@ -609,496 +626,136 @@
 	// Please see the UNIT TESTS for a bunch of examples that may shed additional light on the algorithm:
 	// TestViewChangeLogic.m
 	
-	NSUInteger i;
-	NSUInteger j;
+	__block NSUInteger i;
+	__block NSUInteger j;
 	
+	// STEP 1
+	//
 	// First we enumerate the items BACKWARDS,
-	// and update the ORIGINAL values.
+	// and update the ORIGINAL index values.
 	
-	NSUInteger count = [changes count];
+	NSUInteger rowChangesCount = [rowChanges count];
 	
-	for (i = count; i > 0; i--)
+	__unsafe_unretained id *_rowChanges = (__unsafe_unretained id *)malloc(sizeof(id) * rowChangesCount);
+	[rowChanges getObjects:_rowChanges range:NSMakeRange(0, rowChangesCount)];
+	
+	for (i = rowChangesCount; i > 0; i--)
 	{
-		YapDatabaseViewRowChange *change = [changes objectAtIndex:(i-1)];
+		__unsafe_unretained YapDatabaseViewRowChange *rowChange = _rowChanges[i-1];
 		
-		if (change->type == YapDatabaseViewChangeDelete)
+		if (rowChange->type == YapDatabaseViewChangeDelete)
 		{
 			// A DELETE operation may affect the ORIGINAL index value of operations that occurred AFTER it,
 			//  IF the later operation occurs at a greater or equal index value.  ( +1 )
 			
-			for (j = i; j < count; j++)
+			for (j = i; j < rowChangesCount; j++)
 			{
-				YapDatabaseViewRowChange *laterChange = [changes objectAtIndex:j];
+				__unsafe_unretained YapDatabaseViewRowChange *laterRowChange = _rowChanges[j];
 				
-				if (laterChange->type == YapDatabaseViewChangeDelete ||
-					laterChange->type == YapDatabaseViewChangeUpdate)
+				if (laterRowChange->type == YapDatabaseViewChangeDelete ||
+					laterRowChange->type == YapDatabaseViewChangeUpdate)
 				{
-					if (laterChange->originalIndex >= change->opOriginalIndex &&
-					   [laterChange->originalGroup isEqualToString:change->originalGroup])
+					if (laterRowChange->originalIndex >= rowChange->opOriginalIndex &&
+					   [laterRowChange->originalGroup isEqualToString:rowChange->originalGroup])
 					{
-						laterChange->originalIndex += 1;
+						laterRowChange->originalIndex += 1;
 					}
 				}
 			}
 		}
-		else if (change->type == YapDatabaseViewChangeInsert)
+		else if (rowChange->type == YapDatabaseViewChangeInsert)
 		{
 			// An INSERT operation may affect the ORIGINAL index value of operations that occurred AFTER it,
-			//   IF the later operation occurs at a greater or equal index value. ( -1 )
+			//   IF the later operation occurs at a greater (but not equal) index value.  ( -1 )
 			
-			for (j = i; j < count; j++)
+			for (j = i; j < rowChangesCount; j++)
 			{
-				YapDatabaseViewRowChange *laterChange = [changes objectAtIndex:j];
+				__unsafe_unretained YapDatabaseViewRowChange *laterRowChange = _rowChanges[j];
 				
-				if (laterChange->type == YapDatabaseViewChangeDelete ||
-				    laterChange->type == YapDatabaseViewChangeUpdate)
+				if (laterRowChange->type == YapDatabaseViewChangeDelete ||
+				    laterRowChange->type == YapDatabaseViewChangeUpdate)
 				{
-					if (laterChange->originalIndex >= change->opFinalIndex &&
-					   [laterChange->originalGroup isEqualToString:change->finalGroup])
+					if (laterRowChange->originalIndex > rowChange->opFinalIndex &&
+					   [laterRowChange->originalGroup isEqualToString:rowChange->finalGroup])
 					{
-						laterChange->originalIndex -= 1;
+						laterRowChange->originalIndex -= 1;
 					}
 				}
 			}
 		}
 	}
 	
+	// STEP 2
+	//
 	// Next we enumerate the items FORWARDS,
-	// and update the FINAL values.
+	// and update the FINAL index values.
 	
-	for (i = 1; i < count; i++)
+	for (i = 1; i < rowChangesCount; i++)
 	{
-		YapDatabaseViewRowChange *change = [changes objectAtIndex:i];
+		__unsafe_unretained YapDatabaseViewRowChange *rowChange = _rowChanges[i];
 		
-		if (change->type == YapDatabaseViewChangeDelete)
+		if (rowChange->type == YapDatabaseViewChangeDelete)
 		{
 			// A DELETE operation may affect the FINAL index value of operations that occurred BEFORE it,
 			//  IF the earlier operation occurs at a greater (but not equal) index value. ( -1 )
 			
 			for (j = i; j > 0; j--)
 			{
-				YapDatabaseViewRowChange *earlierChange = [changes objectAtIndex:(j-1)];
+				__unsafe_unretained YapDatabaseViewRowChange *earlierRowChange = _rowChanges[j-1];
 				
-				if (earlierChange->type == YapDatabaseViewChangeInsert ||
-				    earlierChange->type == YapDatabaseViewChangeUpdate  )
+				if (earlierRowChange->type == YapDatabaseViewChangeInsert ||
+				    earlierRowChange->type == YapDatabaseViewChangeUpdate  )
 				{
-					if (earlierChange->finalIndex > change->opOriginalIndex &&
-					   [earlierChange->finalGroup isEqualToString:change->originalGroup])
+					if (earlierRowChange->finalIndex > rowChange->opOriginalIndex &&
+					   [earlierRowChange->finalGroup isEqualToString:rowChange->originalGroup])
 					{
-						earlierChange->finalIndex -= 1;
+						earlierRowChange->finalIndex -= 1;
 					}
 				}
 			}
 		}
-		else if (change->type == YapDatabaseViewChangeInsert)
+		else if (rowChange->type == YapDatabaseViewChangeInsert)
 		{
 			// An INSERT operation may affect the FINAL index value of operations that occurred BEFORE it,
-			//   IF the earlier operation occurs at a greater index value ( +1 )
+			//   IF the earlier operation occurs at a greater or equal index value ( +1 )
 			
 			for (j = i; j > 0; j--)
 			{
-				YapDatabaseViewRowChange *earlierChange = [changes objectAtIndex:(j-1)];
+				__unsafe_unretained YapDatabaseViewRowChange *earlierRowChange = _rowChanges[j-1];
 				
-				if (earlierChange->type == YapDatabaseViewChangeInsert ||
-				    earlierChange->type == YapDatabaseViewChangeUpdate)
+				if (earlierRowChange->type == YapDatabaseViewChangeInsert ||
+				    earlierRowChange->type == YapDatabaseViewChangeUpdate)
 				{
-					if (earlierChange->finalIndex >= change->opFinalIndex &&
-					   [earlierChange->finalGroup isEqualToString:change->finalGroup])
+					if (earlierRowChange->finalIndex >= rowChange->opFinalIndex &&
+					   [earlierRowChange->finalGroup isEqualToString:rowChange->finalGroup])
 					{
-						earlierChange->finalIndex += 1;
+						earlierRowChange->finalIndex += 1;
 					}
 				}
 			}
 		}
 	}
-}
-
-/**
- * This method consolidates multiple changes to the same row into a single change that reflects
- * the original and final position of each changed row.
-**/
-+ (void)consolidateRowChanges:(NSMutableArray *)changes
-{
-	NSUInteger i;
-	NSUInteger j;
 	
-	NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-	
-	i = 0;
-	while (i < [changes count])
-	{
-		YapDatabaseViewRowChange *firstChangeForKey = [changes objectAtIndex:i];
-		YapDatabaseViewRowChange *mostRecentChangeForKey = firstChangeForKey;
-		
-		// Find later operations with the same key
-		
-		for (j = i+1; j < [changes count]; j++)
-		{
-			YapDatabaseViewRowChange *laterChange = [changes objectAtIndex:j];
-			BOOL changesAreForSameKey = NO;
-			
-			if (firstChangeForKey->key && laterChange->key)
-			{
-				// Compare keys
-				
-				if ([laterChange->key isEqual:firstChangeForKey->key])
-					changesAreForSameKey = YES;
-			}
-			else
-			{
-				// Compare indexes & groups
-				//
-				// This technique is used if one of the keys is nil,
-				// and applies to situations where one of the changes is an Update with a nil key,
-				// which was injected during pre-processing due to cell drawing dependencies.
-				
-				if (mostRecentChangeForKey->type == YapDatabaseViewChangeUpdate)
-				{
-					if (laterChange->type == YapDatabaseViewChangeUpdate ||
-					    laterChange->type == YapDatabaseViewChangeDelete)
-					{
-						if (mostRecentChangeForKey->originalIndex == laterChange->originalIndex &&
-						   [mostRecentChangeForKey->originalGroup isEqualToString:laterChange->originalGroup]) {
-							changesAreForSameKey = YES;
-						}
-					}
-				}
-				else if (mostRecentChangeForKey->type == YapDatabaseViewChangeInsert)
-				{
-					if (laterChange->type == YapDatabaseViewChangeUpdate)
-					{
-						if (mostRecentChangeForKey->originalIndex == laterChange->originalIndex &&
-						   [mostRecentChangeForKey->originalGroup isEqualToString:laterChange->originalGroup]) {
-							changesAreForSameKey = YES;
-						}
-					}
-				}
-				
-				if (changesAreForSameKey)
-				{
-					if (mostRecentChangeForKey->key == nil)
-						mostRecentChangeForKey->key = laterChange->key;
-					else
-						laterChange->key = mostRecentChangeForKey->key;
-				}
-			}
-			
-			if (changesAreForSameKey)
-			{
-				firstChangeForKey->changes |= laterChange->changes;
-				[indexSet addIndex:j];
-				
-				mostRecentChangeForKey = laterChange;
-			}
-		}
-		
-		if ([indexSet count] == 0)
-		{
-			i++; // continue;
-		}
-		else
-		{
-			YapDatabaseViewRowChange *lastChangeForKey = [changes objectAtIndex:[indexSet lastIndex]];
-			
-			if (firstChangeForKey->type == YapDatabaseViewChangeDelete)
-			{
-				if (lastChangeForKey->type == YapDatabaseViewChangeDelete)
-				{
-					// Delete + Insert + ... + Delete
-					//
-					// All operations except the first are no-ops
-					
-					[changes removeObjectsAtIndexes:indexSet];
-					i++;
-				}
-				else if (lastChangeForKey->type == YapDatabaseViewChangeInsert)
-				{
-					// Delete + Insert = Move
-					//
-					// This is always a move operation.
-					// Even if the final location hasn't ultimately changed, we still want to treat it as a move.
-					// Only a true update, where the index never budged, can be emitted as an update.
-					//
-					// If we attempt to consolidate this into an update,
-					// then the tableView/collectionView will offset the update's index
-					// based on insertions & deletions at smaller indexes,
-					// and may ultimately update the wrong cell.
-					
-					firstChangeForKey->type = YapDatabaseViewChangeMove;
-					firstChangeForKey->finalIndex = lastChangeForKey->finalIndex;
-					firstChangeForKey->finalGroup = lastChangeForKey->finalGroup;
-					firstChangeForKey->opFinalIndex = lastChangeForKey->opFinalIndex; // for postProcessing
-					
-					[changes removeObjectsAtIndexes:indexSet];
-					i++;
-				}
-				else if (lastChangeForKey->type == YapDatabaseViewChangeUpdate)
-				{
-					// Delete + Insert + ... + Update = Move
-					//
-					// This is always a move operation.
-					// Even if the final location hasn't ultimately changed, we still want to treat it as a move.
-					// Only a true update, where the index never budged, can be emitted as an update.
-					//
-					// If we attempt to consolidate this into an update,
-					// then the tableView/collectionView will offset the update's index
-					// based on insertions & deletions at smaller indexes,
-					// and may ultimately update the wrong cell.
-					
-					firstChangeForKey->type = YapDatabaseViewChangeMove;
-					firstChangeForKey->finalIndex = lastChangeForKey->finalIndex;
-					firstChangeForKey->finalGroup = lastChangeForKey->finalGroup;
-					firstChangeForKey->opFinalIndex = lastChangeForKey->opFinalIndex; // for postProcessing
-					
-					[changes removeObjectsAtIndexes:indexSet];
-					i++;
-				}
-			}
-			else if (firstChangeForKey->type == YapDatabaseViewChangeInsert)
-			{
-				if (lastChangeForKey->type == YapDatabaseViewChangeDelete)
-				{
-					// Insert + Delete
-					//
-					// All operations are no-ops (& i remains the same)
-					
-					[changes removeObjectsAtIndexes:indexSet];
-					[changes removeObjectAtIndex:i];
-				}
-				else if (lastChangeForKey->type == YapDatabaseViewChangeInsert)
-				{
-					// Insert + Delete + ... + Insert
-					//
-					// All operations except the last are no-ops.
-					
-					firstChangeForKey->finalIndex = lastChangeForKey->finalIndex;
-					firstChangeForKey->finalGroup = lastChangeForKey->finalGroup;
-					
-					[changes removeObjectsAtIndexes:indexSet];
-					i++;
-				}
-				else // if (lastChangeForKey->type == YapDatabaseViewChangeUpdate)
-				{
-					// Insert + Update
-					//
-					// This is still an insert, but the final location may have changed.
-					
-					firstChangeForKey->finalIndex = lastChangeForKey->finalIndex;
-					firstChangeForKey->finalGroup = lastChangeForKey->finalGroup;
-					
-					[changes removeObjectsAtIndexes:indexSet];
-					i++;
-				}
-			}
-			else if (firstChangeForKey->type == YapDatabaseViewChangeUpdate)
-			{
-				if (lastChangeForKey->type == YapDatabaseViewChangeDelete)
-				{
-					// Update + Delete
-					//
-					// This is ultimately a Delete.
-					// We need to be sure to use the original original index.
-					
-					firstChangeForKey->type = YapDatabaseViewChangeDelete;
-					
-					[changes removeObjectsAtIndexes:indexSet];
-					i++;
-				}
-				else if (lastChangeForKey->type == YapDatabaseViewChangeInsert)
-				{
-					// Update + Delete + ... + Insert = Move
-					//
-					// This is always a move operation.
-					// Even if the final location hasn't ultimately changed, we still want to treat it as a move.
-					// Only a true update, where the index never budged, can be emitted as an update.
-					//
-					// If we attempt to consolidate this into an update,
-					// then the tableView/collectionView will offset the update's index
-					// based on insertions & deletions at smaller indexes,
-					// and may ultimately update the wrong cell.
-					//
-					// The final location comes from the last update
-					
-					firstChangeForKey->type = YapDatabaseViewChangeMove;
-					firstChangeForKey->finalIndex = lastChangeForKey->finalIndex;
-					firstChangeForKey->finalGroup = lastChangeForKey->finalGroup;
-					firstChangeForKey->opFinalIndex = lastChangeForKey->opFinalIndex; // for postProcessing
-					
-					[changes removeObjectsAtIndexes:indexSet];
-					i++;
-				}
-				else // if (lastChangeForKey->type == YapDatabaseViewChangeUpdate)
-				{
-					// Update + ... + Update
-					//
-					// This is either an Update or a Move.
-					// Only a true update, where the index never budged, can be emitted as an update.
-					//
-					// So we scan all the changes, and if every single one is an update, then we can emit an update.
-					
-					__block BOOL isTrueUpdate = YES;
-					
-					[indexSet enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
-						
-						YapDatabaseViewRowChange *changeForKey = [changes objectAtIndex:idx];
-						
-						if (changeForKey->type != YapDatabaseViewChangeUpdate)
-						{
-							isTrueUpdate = NO;
-							*stop = YES;
-						}
-					}];
-					
-					if (isTrueUpdate)
-					{
-						// = Update
-						
-						[changes removeObjectsAtIndexes:indexSet];
-						i++;
-					}
-					else
-					{
-						// = Move
-						//
-						// The final location comes from the last update
-						
-						firstChangeForKey->type = YapDatabaseViewChangeMove;
-						firstChangeForKey->finalIndex = lastChangeForKey->finalIndex;
-						firstChangeForKey->finalGroup = lastChangeForKey->finalGroup;
-						firstChangeForKey->opFinalIndex = lastChangeForKey->opFinalIndex; // for postProcessing
-						
-						[changes removeObjectsAtIndexes:indexSet];
-						i++;
-					}
-				}
-			}
-			
-			[indexSet removeAllIndexes];
-			
-		} // ([indexSet count] > 0)
-		
-	} // while (i < [changes count])
-}
-
-/**
- * This method consolidates multiple changes to the same section into a single change.
-**/
-+ (void)consolidateSectionChanges:(NSMutableArray *)changes
-{
-	NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
-	
-	NSUInteger i = 0;
-	while (i < [changes count])
-	{
-		YapDatabaseViewSectionChange *firstSectionChangeForGroup = [changes objectAtIndex:i];
-		
-		// Find later operations with the same group
-		
-		for (NSUInteger j = i+1; j < [changes count]; j++)
-		{
-			YapDatabaseViewSectionChange *laterSectionChange = [changes objectAtIndex:j];
-			
-			if ([laterSectionChange->group isEqualToString:firstSectionChangeForGroup->group])
-			{
-				[indexSet addIndex:j];
-			}
-		}
-		
-		if ([indexSet count] == 0)
-		{
-			i++;
-		}
-		else
-		{
-			YapDatabaseViewSectionChange *lastSectionChangeForGroup = [changes objectAtIndex:[indexSet lastIndex]];
-			
-			if (firstSectionChangeForGroup->type == YapDatabaseViewChangeDelete)
-			{
-				if (lastSectionChangeForGroup->type == YapDatabaseViewChangeDelete)
-				{
-					// Delete + Insert + ... + Delete
-					//
-					// All operations except the first are no-ops
-					
-					[changes removeObjectsAtIndexes:indexSet];
-					i++;
-				}
-				else // if (lastSectionChangeForGroup->type == YapDatabaseViewChangeInsert)
-				{
-					// Delete + Insert
-					//
-					// All operations are no-ops (& i remains the same)
-					
-					[changes removeObjectsAtIndexes:indexSet];
-					[changes removeObjectAtIndex:i];
-				}
-			}
-			else if (firstSectionChangeForGroup->type == YapDatabaseViewChangeInsert)
-			{
-				if (lastSectionChangeForGroup->type == YapDatabaseViewChangeDelete)
-				{
-					// Insert + Delete
-					//
-					// All operations are no-ops (& i remains the same)
-					
-					[changes removeObjectsAtIndexes:indexSet];
-					[changes removeObjectAtIndex:i];
-				}
-				else if (lastSectionChangeForGroup->type == YapDatabaseViewChangeInsert)
-				{
-					// Insert + Delete + ... + Insert
-					//
-					// All operations except the first are no-ops.
-					
-					[changes removeObjectsAtIndexes:indexSet];
-					i++;
-				}
-			}
-            
-            [indexSet removeAllIndexes];
-		}
-	}
-}
-
-/**
- * This method applies the given mappings to the processed list of row changes.
- * Based upon the configuration of the mappings, it will
- * 
- * - filter items that are excluded based on per-group range configurations
- * - alter indexes based on per-group range configurations
- * - reverse indexes based on per-group reversal settings
-**/
-+ (void)postProcessAndFilterRowChanges:(NSMutableArray *)rowChanges
-                  withOriginalMappings:(YapDatabaseViewMappings *)originalMappings
-                         finalMappings:(YapDatabaseViewMappings *)finalMappings
-{
-	
-	// The user may have various range options set for each section/group.
-	// For example:
+	// STEP 3
 	//
-	// The user has a hard range on group "fiction" in the "bookSalesRank" view in order to display the top 20.
-	// So any items outside of that range must be filtered.
+	// The user may have various range options set for each group.
+	// Here we update the range length & offset to match the basic changes made to the group.
 	
-	NSDictionary *rangeOptions = [finalMappings rangeOptions];
-	BOOL rangeOptionsChanged = YES;
+	__block BOOL rangeOptionsChanged = NO;
 	
-	// Note: The rangeOptions are the same between originalMappings & finalMappings.
-	
-	for (NSString *group in rangeOptions)
-	{
-		YapDatabaseViewRangeOptions *rangeOpts = [rangeOptions objectForKey:group];
+	void (^UpdateRangeOptionsForGroup)(NSString *group);
+	UpdateRangeOptionsForGroup = ^(NSString *group){
 		
 		NSUInteger originalGroupCount = [originalMappings fullCountForGroup:group];
 		NSUInteger finalGroupCount    = [finalMappings fullCountForGroup:group];
 		
-		YapDatabaseViewPin pin = rangeOpts.pin;
+		// Note: At this point, the rangeOptions are the same between originalMappings & finalMappings.
+		YapDatabaseViewRangeOptions *originalRangeOpts = [originalMappings _rangeOptionsForGroup:group];
 		
-		//
-		// STEP 1 : Calculate the originalRange & finalRange
-		//
+		YapDatabaseViewPin pin = originalRangeOpts.pin;
 		
-		NSUInteger originalRangeLength = rangeOpts.length;
-		NSUInteger originalRangeOffset = rangeOpts.offset;
+		NSUInteger originalRangeLength = originalRangeOpts.length;
+		NSUInteger originalRangeOffset = originalRangeOpts.offset;
 		
 		NSUInteger originalRangeMin;
 		NSUInteger originalRangeMax;
@@ -1120,17 +777,10 @@
 			}
 		}
 		
-		NSUInteger finalRangeLength;
-		NSUInteger finalRangeOffset;
+		NSUInteger finalRangeLength; // calculate me
+		NSUInteger finalRangeOffset; // calculate me
 		
-		NSUInteger finalRangeMin;
-		NSUInteger finalRangeMax;
-		
-		NSUInteger flexibleRangeNonPinSideDeleteDiff = 0;
-		NSUInteger flexibleRangePinSideInsertDiff = 0;
-		NSUInteger flexibleRangeNonPinSideInsertDiff = 0;
-		
-		if (rangeOpts.isFixedRange)
+		if (originalRangeOpts.isFixedRange)
 		{
 			// FIXED Range:
 			//
@@ -1142,14 +792,14 @@
 			//
 			//   Group : <---------------------------------------->
 			//   Range :                  <--------->
-			//   Offset: <---------------->                          (pin == YapDatabaseViewBeginning)
+			//   Offset: <--------------->                           (pin == YapDatabaseViewBeginning)
 			//
 			// If pinned to the END:
 			//   The offset represents how far the end of the range is from the end of the group.
 			//
 			//   Group : <---------------------------------------->
 			//   Range :                  <--------->
-			//   Offset:                            <------------->  (pin == YapDatabaseViewEnd)
+			//   Offset:                             <------------>  (pin == YapDatabaseViewEnd)
 			
 			finalRangeOffset = originalRangeOffset;
 			
@@ -1159,41 +809,26 @@
 			else
 				maxFinalRangeLength = 0;
 			
-			finalRangeLength = MIN(rangeOpts.maxLength, maxFinalRangeLength);
-			
-			if (pin == YapDatabaseViewBeginning)
-			{
-				finalRangeMin = finalRangeOffset;
-				finalRangeMax = finalRangeOffset + finalRangeLength;
-			}
-			else // if (pin == YapDatabaseViewEnd)
-			{
-				if (finalRangeOffset < finalGroupCount) {
-					finalRangeMax = finalGroupCount - finalRangeOffset;
-					finalRangeMin = finalRangeMax - finalRangeLength;
-				}
-				else {
-					finalRangeMax = 0;
-					finalRangeMin = 0;
-				}
-			}
+			finalRangeLength = MIN(originalRangeOpts.maxLength, maxFinalRangeLength);
 		}
-		else // if (rangeOpts.isFlexibleRange)
+		else // if (originalRangeOpts.isFlexibleRange)
 		{
 			// FLEXIBLE Range:
 			// 
 			// The length changes as items are inserted and deleted with the range boundary.
 			// The offset changes as items are inserted and deleted between the range and its pinned end.
 			
-			finalRangeMin = originalRangeMin;
-			finalRangeMax = originalRangeMax;
+			NSUInteger finalRangeMin = originalRangeMin;
+			NSUInteger finalRangeMax = originalRangeMax;
 			
 			BOOL finalRangeWasEmpty = ((finalRangeMax - finalRangeMin) == 0);
 			
-			YapDatabaseViewGrowOptions growOptions = rangeOpts.growOptions;
+			YapDatabaseViewGrowOptions growOptions = originalRangeOpts.growOptions;
 			
-			for (YapDatabaseViewRowChange *rowChange in rowChanges)
+			for (i = 0; i < rowChangesCount; i++)
 			{
+				__unsafe_unretained YapDatabaseViewRowChange *rowChange = _rowChanges[i];
+				
 				if (rowChange->type == YapDatabaseViewChangeDelete || rowChange->type == YapDatabaseViewChangeMove)
 				{
 					if ([rowChange->originalGroup isEqualToString:group])
@@ -1204,12 +839,25 @@
 					
 						if (rowChange->opOriginalIndex < finalRangeMin)
 						{
+						//	NSLog(@"rowChange(%lu) < finalRangeMin(%lu) <= finalRangeMax(%lu)",
+						//		  (unsigned long)(rowChange->opOriginalIndex),
+						//		  (unsigned long)finalRangeMin,
+						//		  (unsigned long)finalRangeMax);
+							
 							finalRangeMin -= 1;
 						}
 						if (rowChange->opOriginalIndex < finalRangeMax)
 						{
+						//	NSLog(@"rowChange(%lu) < finalRangeMax(%lu)",
+						//		  (unsigned long)(rowChange->opOriginalIndex),
+						//		  (unsigned long)finalRangeMax);
+							
 							finalRangeMax -= 1;
 						}
+						
+					//	NSLog(@"finalRangeMin(%lu) <= finalRangeMax(%lu)",
+					//		  (unsigned long)finalRangeMin,
+					//		  (unsigned long)finalRangeMax);
 					}
 					
 				}// fi (rowChange->type == YapDatabaseViewChangeDelete || rowChange->type == YapDatabaseViewChangeMove)
@@ -1283,22 +931,587 @@
 				// If the range ever becomes empty,
 				// then we need to effectively set the growOptions to YapDatabaseViewGrowOnBothSides.
 				//
-				// With an empty range, there is no different between PinSide and NonPinSide.
+				// With an empty range, there is no difference between PinSide and NonPinSide.
 				//
 				// Notice that this flag, once set, remains set.
 				
-				finalRangeWasEmpty = finalRangeWasEmpty || ((finalRangeMax - finalRangeMin) == 0);
+				if (!finalRangeWasEmpty) {
+					finalRangeWasEmpty = (finalRangeMax - finalRangeMin) == 0;
+				}
 				
 			} // end for (YapDatabaseViewRowChange *rowChange in rowChanges)
 			
-			
-			// Adjust if we exceed max length, or drop below min length
+			// And finally,
+			// update finalLength & finalOffset
 			
 			finalRangeLength = finalRangeMax - finalRangeMin;
 			
-			if (finalRangeLength > rangeOpts.maxLength)
+			if (pin == YapDatabaseViewBeginning)
+				finalRangeOffset = finalRangeMin;
+			else
+				finalRangeOffset = finalGroupCount - finalRangeMax;
+			
+		} // end else if (rangeOpts.isFlexibleRange)
+		
+		
+		YapDatabaseViewRangeOptions *finalRangeOpts = [finalMappings _rangeOptionsForGroup:group];
+		
+		if ((finalRangeLength != finalRangeOpts.length) || (finalRangeOffset != finalRangeOpts.offset))
+		{
+			[finalMappings updateRangeOptionsForGroup:group withNewLength:finalRangeLength newOffset:finalRangeOffset];
+			rangeOptionsChanged = YES;
+		}
+		
+	}; // end UpdateRangeOptionsForGroup
+	
+	
+	if ([originalMappings hasRangeOptions] || [finalMappings hasRangeOptions])
+	{
+		NSMutableSet *handledGroups = [NSMutableSet set];
+		
+		for (NSString *group in [originalMappings allGroups])
+		{
+			if ([originalMappings hasRangeOptionsForGroup:group])
 			{
-				NSUInteger diff = finalRangeLength - rangeOpts.maxLength;
+				UpdateRangeOptionsForGroup(group);
+				[handledGroups addObject:group];
+			}
+		}
+		
+		for (NSString *group in [finalMappings allGroups])
+		{
+			if (![handledGroups containsObject:group])
+			{
+				if ([finalMappings hasRangeOptionsForGroup:group])
+				{
+					UpdateRangeOptionsForGroup(group);
+				}
+			}
+		}
+	}
+	
+	if (rangeOptionsChanged)
+	{
+		[finalMappings updateVisibility];
+	}
+	
+	// DONE
+	
+	if (_rowChanges) {
+		free(_rowChanges);
+	}
+}
+
+/**
+ * This method consolidates multiple changes to the same row into a single change that reflects
+ * the original and final position of each changed row.
+**/
++ (void)consolidateRowChanges:(NSMutableArray *)changes
+{
+	NSUInteger i;
+	NSUInteger j;
+	
+	NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
+	NSMutableIndexSet *indexesThatMatch = [NSMutableIndexSet indexSet];
+	
+	NSUInteger changesCount = [changes count];
+	
+	__unsafe_unretained id *_changes = (__unsafe_unretained id *)malloc(sizeof(id) * changesCount);
+	[changes getObjects:_changes range:NSMakeRange(0, changesCount)];
+	
+	for (i = 0; i < changesCount; i++)
+	{
+		if ([indexesToRemove containsIndex:i]) continue;
+		
+		__unsafe_unretained YapDatabaseViewRowChange *firstChangeForKey = _changes[i];
+		__unsafe_unretained YapDatabaseViewRowChange *mostRecentChangeForKey = firstChangeForKey;
+		
+		NSUInteger mostRecentChangeForKey_OpIndex = 0;
+		
+		if (mostRecentChangeForKey->type == YapDatabaseViewChangeUpdate ||
+			mostRecentChangeForKey->type == YapDatabaseViewChangeInsert)
+			mostRecentChangeForKey_OpIndex = mostRecentChangeForKey->opFinalIndex;
+		
+		// Find later operations with the same key
+		
+		for (j = i+1; j < changesCount; j++)
+		{
+			__unsafe_unretained YapDatabaseViewRowChange *laterChange = _changes[j];
+			BOOL changesAreForSameKey = NO;
+			
+			if (![indexesToRemove containsIndex:j])
+			{
+				if (firstChangeForKey->collectionKey && laterChange->collectionKey)
+				{
+					// Compare keys
+					
+					if (YapCollectionKeyEqual(laterChange->collectionKey, firstChangeForKey->collectionKey))
+						changesAreForSameKey = YES;
+				}
+				else
+				{
+					// Compare indexes & groups
+					//
+					// This technique is used if one of the keys is nil,
+					// and applies to situations where one of the changes is an Update with a nil key,
+					// which was injected during pre-processing due to cell drawing dependencies.
+					
+					if (mostRecentChangeForKey->type == YapDatabaseViewChangeUpdate)
+					{
+						if (laterChange->type == YapDatabaseViewChangeUpdate ||
+						    laterChange->type == YapDatabaseViewChangeDelete)
+						{
+							if (mostRecentChangeForKey_OpIndex == laterChange->opOriginalIndex &&
+							   [mostRecentChangeForKey->originalGroup isEqualToString:laterChange->originalGroup]) {
+								changesAreForSameKey = YES;
+							}
+						}
+					}
+					else if (mostRecentChangeForKey->type == YapDatabaseViewChangeInsert)
+					{
+						if (laterChange->type == YapDatabaseViewChangeUpdate)
+						{
+							if (mostRecentChangeForKey_OpIndex == laterChange->opOriginalIndex &&
+							   [mostRecentChangeForKey->finalGroup isEqualToString:laterChange->finalGroup]) {
+								changesAreForSameKey = YES;
+							}
+						}
+					}
+					
+					if (changesAreForSameKey)
+					{
+						if (mostRecentChangeForKey->collectionKey == nil)
+							mostRecentChangeForKey->collectionKey = laterChange->collectionKey;
+						else
+							laterChange->collectionKey = mostRecentChangeForKey->collectionKey;
+						
+						if (firstChangeForKey->collectionKey == nil)
+							firstChangeForKey->collectionKey = mostRecentChangeForKey->collectionKey;
+					}
+				}
+			}
+			
+			if (changesAreForSameKey)
+			{
+				firstChangeForKey->changes |= laterChange->changes;
+				[indexesThatMatch addIndex:j];
+				
+				mostRecentChangeForKey = laterChange;
+				
+				if (mostRecentChangeForKey->type == YapDatabaseViewChangeUpdate ||
+				    mostRecentChangeForKey->type == YapDatabaseViewChangeInsert)
+					mostRecentChangeForKey_OpIndex = mostRecentChangeForKey->opFinalIndex;
+				else
+					mostRecentChangeForKey_OpIndex = 0;
+			}
+			else
+			{
+				if (mostRecentChangeForKey->type == YapDatabaseViewChangeUpdate ||
+				    mostRecentChangeForKey->type == YapDatabaseViewChangeInsert)
+				{
+					if (laterChange->type == YapDatabaseViewChangeInsert)
+					{
+						if (laterChange->opFinalIndex <= mostRecentChangeForKey_OpIndex &&
+							[laterChange->finalGroup isEqualToString:mostRecentChangeForKey->finalGroup])
+						{
+							mostRecentChangeForKey_OpIndex++;
+						}
+					}
+					else if (laterChange->type == YapDatabaseViewChangeDelete)
+					{
+						if (laterChange->opOriginalIndex < mostRecentChangeForKey_OpIndex &&
+							[laterChange->originalGroup isEqualToString:mostRecentChangeForKey->finalGroup])
+						{
+							mostRecentChangeForKey_OpIndex--;
+						}
+					}
+				}
+			}
+		
+		} // end for (j = i+1; j < changesCount; j++)
+		
+		if ([indexesThatMatch count] > 0)
+		{
+			__unsafe_unretained YapDatabaseViewRowChange *lastChangeForKey = _changes[[indexesThatMatch lastIndex]];
+			
+			if (firstChangeForKey->type == YapDatabaseViewChangeDelete)
+			{
+				if (lastChangeForKey->type == YapDatabaseViewChangeDelete)
+				{
+					// Delete + Insert + ... + Delete
+					//
+					// All operations except the first are no-ops
+					
+					[indexesToRemove addIndexes:indexesThatMatch];
+				}
+				else if (lastChangeForKey->type == YapDatabaseViewChangeInsert)
+				{
+					// Delete + Insert = Move
+					//
+					// This is always a move operation.
+					// Even if the final location hasn't ultimately changed, we still want to treat it as a move.
+					// Only a true update, where the index never budged, can be emitted as an update.
+					//
+					// If we attempt to consolidate this into an update,
+					// then the tableView/collectionView will offset the update's index
+					// based on insertions & deletions at smaller indexes,
+					// and may ultimately update the wrong cell.
+					
+					firstChangeForKey->type = YapDatabaseViewChangeMove;
+					firstChangeForKey->finalIndex = lastChangeForKey->finalIndex;
+					firstChangeForKey->finalGroup = lastChangeForKey->finalGroup;
+					firstChangeForKey->opFinalIndex = lastChangeForKey->opFinalIndex; // for postProcessing
+					
+					[indexesToRemove addIndexes:indexesThatMatch];
+				}
+				else if (lastChangeForKey->type == YapDatabaseViewChangeUpdate)
+				{
+					// Delete + Insert + ... + Update = Move
+					//
+					// This is always a move operation.
+					// Even if the final location hasn't ultimately changed, we still want to treat it as a move.
+					// Only a true update, where the index never budged, can be emitted as an update.
+					//
+					// If we attempt to consolidate this into an update,
+					// then the tableView/collectionView will offset the update's index
+					// based on insertions & deletions at smaller indexes,
+					// and may ultimately update the wrong cell.
+					
+					firstChangeForKey->type = YapDatabaseViewChangeMove;
+					firstChangeForKey->finalIndex = lastChangeForKey->finalIndex;
+					firstChangeForKey->finalGroup = lastChangeForKey->finalGroup;
+					firstChangeForKey->opFinalIndex = lastChangeForKey->opFinalIndex; // for postProcessing
+					
+					[indexesToRemove addIndexes:indexesThatMatch];
+				}
+			}
+			else if (firstChangeForKey->type == YapDatabaseViewChangeInsert)
+			{
+				if (lastChangeForKey->type == YapDatabaseViewChangeDelete)
+				{
+					// Insert + Delete
+					//
+					// All operations are no-ops (& i remains the same)
+					
+					[indexesToRemove addIndexes:indexesThatMatch];
+					[indexesToRemove addIndex:i];
+				}
+				else if (lastChangeForKey->type == YapDatabaseViewChangeInsert)
+				{
+					// Insert + Delete + ... + Insert
+					//
+					// All operations except the last are no-ops.
+					
+					firstChangeForKey->finalIndex = lastChangeForKey->finalIndex;
+					firstChangeForKey->finalGroup = lastChangeForKey->finalGroup;
+					
+					[indexesToRemove addIndexes:indexesThatMatch];
+				}
+				else // if (lastChangeForKey->type == YapDatabaseViewChangeUpdate)
+				{
+					// Insert + Update
+					//
+					// This is still an insert, but the final location may have changed.
+					
+					firstChangeForKey->finalIndex = lastChangeForKey->finalIndex;
+					firstChangeForKey->finalGroup = lastChangeForKey->finalGroup;
+					
+					[indexesToRemove addIndexes:indexesThatMatch];
+				}
+			}
+			else if (firstChangeForKey->type == YapDatabaseViewChangeUpdate)
+			{
+				if (lastChangeForKey->type == YapDatabaseViewChangeDelete)
+				{
+					// Update + Delete
+					//
+					// This is ultimately a Delete.
+					// We need to be sure to use the original original index.
+					
+					firstChangeForKey->type = YapDatabaseViewChangeDelete;
+					
+					[indexesToRemove addIndexes:indexesThatMatch];
+				}
+				else if (lastChangeForKey->type == YapDatabaseViewChangeInsert)
+				{
+					// Update + Delete + ... + Insert = Move
+					//
+					// This is always a move operation.
+					// Even if the final location hasn't ultimately changed, we still want to treat it as a move.
+					// Only a true update, where the index never budged, can be emitted as an update.
+					//
+					// If we attempt to consolidate this into an update,
+					// then the tableView/collectionView will offset the update's index
+					// based on insertions & deletions at smaller indexes,
+					// and may ultimately update the wrong cell.
+					//
+					// The final location comes from the last update
+					
+					firstChangeForKey->type = YapDatabaseViewChangeMove;
+					firstChangeForKey->finalIndex = lastChangeForKey->finalIndex;
+					firstChangeForKey->finalGroup = lastChangeForKey->finalGroup;
+					firstChangeForKey->opFinalIndex = lastChangeForKey->opFinalIndex; // for postProcessing
+					
+					[indexesToRemove addIndexes:indexesThatMatch];
+				}
+				else // if (lastChangeForKey->type == YapDatabaseViewChangeUpdate)
+				{
+					// Update + ... + Update
+					//
+					// This is either an Update or a Move.
+					// Only a true update, where the index never budged, can be emitted as an update.
+					//
+					// So we scan all the changes, and if every single one is an update, then we can emit an update.
+					
+					__block BOOL isTrueUpdate = YES;
+					
+					[indexesThatMatch enumerateIndexesUsingBlock:^(NSUInteger idx, BOOL *stop) {
+						
+						__unsafe_unretained YapDatabaseViewRowChange *changeForKey = _changes[idx];
+						
+						if (changeForKey->type != YapDatabaseViewChangeUpdate)
+						{
+							isTrueUpdate = NO;
+							*stop = YES;
+						}
+					}];
+					
+					if (isTrueUpdate)
+					{
+						// = Update
+						
+						[indexesToRemove addIndexes:indexesThatMatch];
+					}
+					else
+					{
+						// = Move
+						//
+						// The final location comes from the last update
+						
+						firstChangeForKey->type = YapDatabaseViewChangeMove;
+						firstChangeForKey->finalIndex = lastChangeForKey->finalIndex;
+						firstChangeForKey->finalGroup = lastChangeForKey->finalGroup;
+						firstChangeForKey->opFinalIndex = lastChangeForKey->opFinalIndex; // for postProcessing
+						
+						[indexesToRemove addIndexes:indexesThatMatch];
+					}
+				}
+			}
+			
+			[indexesThatMatch removeAllIndexes];
+			
+		} // fi ([indexesThatMatch count] > 0)
+		
+	} // while (i < count)
+	
+	if (_changes) {
+		free(_changes);
+	}
+	
+	if ([indexesToRemove count] > 0) {
+		[changes removeObjectsAtIndexes:indexesToRemove];
+	}
+}
+
+/**
+ * This method consolidates multiple changes to the same section into a single change.
+**/
++ (void)consolidateSectionChanges:(NSMutableArray *)changes
+{
+	NSUInteger i;
+	NSUInteger j;
+	
+	NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
+	NSMutableIndexSet *indexesThatMatch = [NSMutableIndexSet indexSet];
+	
+	NSUInteger changesCount = [changes count];
+	
+	__unsafe_unretained id *_changes = (__unsafe_unretained id *)malloc(sizeof(id) * changesCount);
+	[changes getObjects:_changes range:NSMakeRange(0, changesCount)];
+	
+	for (i = 0; i < changesCount; i++)
+	{
+		if ([indexesToRemove containsIndex:i]) continue;
+		
+		__unsafe_unretained YapDatabaseViewSectionChange *firstSectionChangeForGroup = _changes[i];
+		
+		// Find later operations with the same group
+		
+		for (j = i+1; j < changesCount; j++)
+		{
+			if ([indexesToRemove containsIndex:j]) continue;
+			
+			__unsafe_unretained YapDatabaseViewSectionChange *laterSectionChange = _changes[j];
+			
+			if ([laterSectionChange->group isEqualToString:firstSectionChangeForGroup->group])
+			{
+				[indexesThatMatch addIndex:j];
+			}
+		}
+		
+		if ([indexesThatMatch count] > 0)
+		{
+			__unsafe_unretained YapDatabaseViewSectionChange *lastSectionChangeForGroup =
+			  _changes[[indexesThatMatch lastIndex]];
+			
+			if (firstSectionChangeForGroup->type == YapDatabaseViewChangeDelete)
+			{
+				if (lastSectionChangeForGroup->type == YapDatabaseViewChangeDelete)
+				{
+					// Delete + Insert + ... + Delete
+					//
+					// All operations except the first are no-ops
+					
+					[indexesToRemove addIndexes:indexesThatMatch];
+				}
+				else // if (lastSectionChangeForGroup->type == YapDatabaseViewChangeInsert)
+				{
+					// Delete + Insert
+					//
+					// All operations are no-ops (& i remains the same)
+					
+					[indexesToRemove addIndexes:indexesThatMatch];
+					[indexesToRemove addIndex:i];
+				}
+			}
+			else if (firstSectionChangeForGroup->type == YapDatabaseViewChangeInsert)
+			{
+				if (lastSectionChangeForGroup->type == YapDatabaseViewChangeDelete)
+				{
+					// Insert + Delete
+					//
+					// All operations are no-ops (& i remains the same)
+					
+					[indexesToRemove addIndexes:indexesThatMatch];
+					[indexesToRemove addIndex:i];
+				}
+				else if (lastSectionChangeForGroup->type == YapDatabaseViewChangeInsert)
+				{
+					// Insert + Delete + ... + Insert
+					//
+					// All operations except the first are no-ops.
+					
+					[indexesToRemove addIndexes:indexesThatMatch];
+				}
+			}
+            
+            [indexesThatMatch removeAllIndexes];
+			
+		} // fi ([indexesThatMatch count] > 0)
+		
+	} // end for (i = 0; i < changesCount; i++)
+	
+	if (_changes) {
+		free(_changes);
+	}
+	
+	if ([indexesToRemove count] > 0) {
+		[changes removeObjectsAtIndexes:indexesToRemove];
+	}
+}
+
+/**
+ * This method applies the given mappings to the processed list of row changes.
+ * Based upon the configuration of the mappings, it will
+ * 
+ * - filter items that are excluded based on per-group range configurations
+ * - alter indexes based on per-group range configurations
+ * - reverse indexes based on per-group reversal settings
+**/
++ (void)postProcessAndFilterRowChanges:(NSMutableArray *)rowChanges
+                  withOriginalMappings:(YapDatabaseViewMappings *)originalMappings
+                         finalMappings:(YapDatabaseViewMappings *)finalMappings
+{
+	
+	// The user may have various range options set for each section/group.
+	// For example:
+	//
+	// The user has a hard range on group "fiction" in the "bookSalesRank" view in order to display the top 20.
+	// So any items outside of that range must be filtered.
+	
+	__block BOOL rangeOptionsChanged = NO;
+	
+	void (^ApplyRangeOptionsForGroup)(NSString *group);
+	ApplyRangeOptionsForGroup = ^(NSString *group)
+	{
+		NSUInteger originalGroupCount = [originalMappings fullCountForGroup:group];
+		NSUInteger finalGroupCount    = [finalMappings fullCountForGroup:group];
+		
+		YapDatabaseViewRangeOptions *originalRangeOpts = [originalMappings _rangeOptionsForGroup:group];
+		
+		NSUInteger originalRangeLength = originalRangeOpts.length;
+		NSUInteger originalRangeOffset = originalRangeOpts.offset;
+		
+		NSUInteger originalRangeMin;
+		NSUInteger originalRangeMax;
+		
+		if (originalRangeOpts.pin == YapDatabaseViewBeginning)
+		{
+			originalRangeMin = originalRangeOffset;
+			originalRangeMax = originalRangeOffset + originalRangeLength;
+		}
+		else // if (originalRangeOpts.pin == YapDatabaseViewEnd)
+		{
+			if (originalRangeOffset < originalGroupCount) {
+				originalRangeMax = originalGroupCount - originalRangeOffset;
+				originalRangeMin = originalRangeMax - originalRangeLength;
+			}
+			else {
+				originalRangeMax = 0;
+				originalRangeMin = 0;
+			}
+		}
+		
+		YapDatabaseViewRangeOptions *finalRangeOpts = [finalMappings _rangeOptionsForGroup:group];
+		
+		NSUInteger finalRangeLength = finalRangeOpts.length;
+		NSUInteger finalRangeOffset = finalRangeOpts.offset;
+		
+		NSUInteger finalRangeMin;
+		NSUInteger finalRangeMax;
+		
+		if (finalRangeOpts.pin == YapDatabaseViewBeginning)
+		{
+			finalRangeMin = finalRangeOffset;
+			finalRangeMax = finalRangeOffset + finalRangeLength;
+		}
+		else // if (finalRangeOpts.pin == YapDatabaseViewEnd)
+		{
+			if (finalRangeOffset < finalGroupCount) {
+				finalRangeMax = finalGroupCount - finalRangeOffset;
+				finalRangeMin = finalRangeMax - finalRangeLength;
+			}
+			else {
+				finalRangeMax = 0;
+				finalRangeMin = 0;
+			}
+		}
+		
+		NSAssert(originalRangeOpts.pin == finalRangeOpts.pin, @"Logic error: Pins do not match !");
+		
+		YapDatabaseViewPin pin = finalRangeOpts.pin;
+		
+		NSUInteger flexibleRangeNonPinSideDeleteDiff = 0;
+		NSUInteger flexibleRangePinSideInsertDiff = 0;
+		NSUInteger flexibleRangeNonPinSideInsertDiff = 0;
+		
+		//
+		// STEP 1 : Update flexible range if it excceeds maxLength, or falls below minLength.
+		
+		if (finalRangeOpts.isFlexibleRange)
+		{
+			// FLEXIBLE Range:
+			// 
+			// The length changes as items are inserted and deleted with the range boundary.
+			// The offset changes as items are inserted and deleted between the range and its pinned end.
+			
+			// Adjust if we exceed max length, or drop below min length
+			
+			if (finalRangeLength > finalRangeOpts.maxLength)
+			{
+				// Range grew to exceed maxLength
+				
+				NSUInteger diff = finalRangeLength - finalRangeOpts.maxLength;
 				flexibleRangeNonPinSideDeleteDiff = diff;
 				
 				if (pin == YapDatabaseViewBeginning)
@@ -1313,9 +1526,11 @@
 				}
 				
 			}
-			else if ((finalRangeLength < rangeOpts.minLength) && (finalRangeLength < finalGroupCount))
+			else if ((finalRangeLength < finalRangeOpts.minLength) && (finalRangeLength < finalGroupCount))
 			{
-				NSUInteger diff = rangeOpts.minLength - finalRangeLength;
+				// Range shrunk to below minLength (and we can increase it)
+				
+				NSUInteger diff = finalRangeOpts.minLength - finalRangeLength;
 				
 				if (pin == YapDatabaseViewBeginning)
 				{
@@ -1372,7 +1587,7 @@
 			else
 				finalRangeOffset = finalGroupCount - finalRangeMax;
 		
-		} // END if (rangeOpts.isFlexibleRange)
+		} // END if (finalRangeOpts.isFlexibleRange)
 		
 		//
 		// STEP 2 : Filter items that are outside the range, and "map" items that are inside the range.
@@ -1384,11 +1599,11 @@
 		NSUInteger deleteCount = 0;
 		NSUInteger insertCount = 0;
 		
-		NSUInteger i = 0;
-		while (i < [rowChanges count])
+		NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
+		
+		NSUInteger rowChangeIndex = 0;
+		for (YapDatabaseViewRowChange *rowChange in rowChanges)
 		{
-			YapDatabaseViewRowChange *rowChange = [rowChanges objectAtIndex:i];
-			
 			if (rowChange->type == YapDatabaseViewChangeDelete)
 			{
 				if ([rowChange->originalGroup isEqualToString:group])
@@ -1397,7 +1612,6 @@
 					    rowChange->originalIndex <  originalRangeMax)
 					{
 						// Include in changeset
-						i++;
 						deleteCount++;
 						
 						// Update index to match range
@@ -1406,7 +1620,7 @@
 					else
 					{
 						// Exclude from changeset
-						[rowChanges removeObjectAtIndex:i];
+						[indexesToRemove addIndex:rowChangeIndex];
 					}
 				}
 			}
@@ -1418,7 +1632,6 @@
 					    rowChange->finalIndex <  finalRangeMax)
 					{
 						// Include in changeset
-						i++;
 						insertCount++;
 						
 						// Update index to match range
@@ -1427,7 +1640,7 @@
 					else
 					{
 						// Exclude from changeset
-						[rowChanges removeObjectAtIndex:i];
+						[indexesToRemove addIndex:rowChangeIndex];
 					}
 				}
 			}
@@ -1439,7 +1652,6 @@
 					    rowChange->originalIndex <  originalRangeMax)
 					{
 						// Include in changeset
-						i++;
 						
 						// Update index to match range
 						rowChange->originalIndex -= originalRangeMin;
@@ -1448,7 +1660,7 @@
 					else
 					{
 						// Exclude from changeset
-						[rowChanges removeObjectAtIndex:i];
+						[indexesToRemove addIndex:rowChangeIndex];
 					}
 				}
 			}
@@ -1459,70 +1671,82 @@
 				// Sometimes only one.
 				// Sometimes neither.
 				
-				BOOL filterDelete = NO;
-				BOOL filterInsert = NO;
+				BOOL deleteAffectsGroup = [rowChange->originalGroup isEqualToString:group];
+				BOOL insertAffectsGroup = [rowChange->finalGroup isEqualToString:group];
 				
-				if ([rowChange->originalGroup isEqualToString:group])
+				if (deleteAffectsGroup || insertAffectsGroup)
 				{
-					if (rowChange->originalIndex >= originalRangeMin &&
-					    rowChange->originalIndex <  originalRangeMax)
+					BOOL filterDelete = NO;
+					BOOL filterInsert = NO;
+					
+					if (deleteAffectsGroup)
 					{
-						// Include (delete operation) in changeset
-						
-						// Update index to match range
-						rowChange->originalIndex -= originalRangeMin;
+						if (rowChange->originalIndex >= originalRangeMin &&
+						    rowChange->originalIndex <  originalRangeMax)
+						{
+							// Include (delete operation) in changeset
+							
+							// Update index to match range
+							rowChange->originalIndex -= originalRangeMin;
+						}
+						else
+						{
+							// Exclude (delete operation) from changeset
+							filterDelete = YES;
+						}
+					}
+					
+					if (insertAffectsGroup)
+					{
+						if (rowChange->finalIndex >= finalRangeMin &&
+						    rowChange->finalIndex <  finalRangeMax)
+						{
+							// Include (insert operation) in changeset
+							
+							// Update index to match range
+							rowChange->finalIndex -= finalRangeMin;
+						}
+						else
+						{
+							// Exclude (insert operation) from changeset
+							filterInsert = YES;
+						}
+					}
+					
+					if (filterDelete && filterInsert)
+					{
+						// Exclude from changeset
+						[indexesToRemove addIndex:rowChangeIndex];
+					}
+					else if (filterDelete && !filterInsert)
+					{
+						// Move -> Insert
+						rowChange->type = YapDatabaseViewChangeInsert;
+						insertCount++;
+					}
+					else if (!filterDelete && filterInsert)
+					{
+						// Move -> Delete
+						rowChange->type = YapDatabaseViewChangeDelete;
+						deleteCount++;
 					}
 					else
 					{
-						// Exclude (delete operation) from changeset
-						filterDelete = YES;
+						// Move
+						insertCount++;
+						deleteCount++;
 					}
-				}
-				
-				if ([rowChange->finalGroup isEqualToString:group])
-				{
-					if (rowChange->finalIndex >= finalRangeMin &&
-					    rowChange->finalIndex <  finalRangeMax)
-					{
-						// Include (insert operation) in changeset
-						
-						// Update index to match range
-						rowChange->finalIndex -= finalRangeMin;
-					}
-					else
-					{
-						// Exclude (insert operation) from changeset
-						filterInsert = YES;
-					}
-				}
-				
-				if (filterDelete && filterInsert)
-				{
-					// Exclude from changeset
-					[rowChanges removeObjectAtIndex:i];
-				}
-				else if (filterDelete && !filterInsert)
-				{
-					// Move -> Insert
-					rowChange->type = YapDatabaseViewChangeInsert;
-					i++;
-					insertCount++;
-				}
-				else if (!filterDelete && filterInsert)
-				{
-					// Move -> Delete
-					rowChange->type = YapDatabaseViewChangeDelete;
-					i++;
-					deleteCount++;
-				}
-				else
-				{
-					// Move
-					i++;
-					insertCount++;
-					deleteCount++;
-				}
-			}
+					
+				} // end if (deleteAffectsGroup || insertAffectsGroup)
+			
+			} // end else if (rowChange->type == YapDatabaseViewChangeMove)
+			
+			rowChangeIndex++;
+			
+		} // end for (YapDatabaseViewRowChange *rowChange in rowChanges)
+		
+		if ([indexesToRemove count] > 0) {
+			[rowChanges removeObjectsAtIndexes:indexesToRemove];
 		}
 		
 		//
@@ -1532,7 +1756,7 @@
 		NSUInteger numberOfInsertOperationsToManuallyAdd = 0;
 		NSUInteger numberOfDeleteOperationsToManuallyAdd = 0;
 		
-		if (rangeOpts.isFixedRange)
+		if (finalRangeOpts.isFixedRange)
 		{
 			// FIXED Range:
 			//
@@ -1646,9 +1870,9 @@
 			
 			NSUInteger index;
 			if (pin == YapDatabaseViewBeginning)
-				index = originalRangeLength - 1;
+				index = originalRangeLength - 1; // Note: offset ignored because op's already mapped
 			else
-				index = 0;
+				index = 0;                       // Note: offset ignored because op's already mapped
 			
 			while (count < numberOfDeleteOperationsToManuallyAdd)
 			{
@@ -1686,7 +1910,7 @@
 				if (!found)
 				{
 					YapDatabaseViewRowChange *rowChange =
-					    [YapDatabaseViewRowChange deleteKey:nil inGroup:group atIndex:index];
+					  [YapDatabaseViewRowChange deleteCollectionKey:nil inGroup:group atIndex:index];
 					
 					[rowChanges addObject:rowChange];
 					count++;
@@ -1710,14 +1934,14 @@
 			//
 			// Note: This code path is only taken if using a flexibleRange
 			
-			i = 0;
+			NSUInteger i = 0;
 			NSUInteger count = 0;
 			
 			NSUInteger index;
 			if (pin == YapDatabaseViewBeginning)
-				index = finalRangeMin;
+				index = finalRangeMin;        // Note: offset ignored because op's already mapped
 			else
-				index = finalRangeLength - 1;
+				index = finalRangeLength - 1; // Note: offset ignored because op's already mapped
 			
 			while ((count < numberOfInsertOperationsToManuallyAdd) && (i < flexibleRangePinSideInsertDiff))
 			{
@@ -1757,7 +1981,7 @@
 				if (!found)
 				{
 					YapDatabaseViewRowChange *rowChange =
-					    [YapDatabaseViewRowChange insertKey:nil inGroup:group atIndex:index];
+					  [YapDatabaseViewRowChange insertCollectionKey:nil inGroup:group atIndex:index];
 					
 					[rowChanges addObject:rowChange];
 					count++;
@@ -1787,9 +2011,9 @@
 			
 			NSUInteger index;
 			if (pin == YapDatabaseViewBeginning)
-				index = finalRangeLength - 1;
+				index = finalRangeLength - 1; // Note: offset ignored because op's already mapped
 			else
-				index = 0;
+				index = 0;                    // Note: offset ignored because op's already mapped
 			
 			while (count < numberOfInsertOperationsToManuallyAdd)
 			{
@@ -1829,7 +2053,7 @@
 				if (!found)
 				{
 					YapDatabaseViewRowChange *rowChange =
-					    [YapDatabaseViewRowChange insertKey:nil inGroup:group atIndex:index];
+					  [YapDatabaseViewRowChange insertCollectionKey:nil inGroup:group atIndex:index];
 					
 					[rowChanges addObject:rowChange];
 					count++;
@@ -1845,15 +2069,39 @@
 		//
 		// STEP 4.A : Update finalMappings if needed (by updating rangeOpts.length & rangeOpts.offset)
 		
-		if ((originalRangeLength != finalRangeLength) || (originalRangeOffset != finalRangeOffset))
+		if ((finalRangeLength != finalRangeOpts.length) || (finalRangeOffset != finalRangeOpts.offset))
 		{
 			[finalMappings updateRangeOptionsForGroup:group withNewLength:finalRangeLength newOffset:finalRangeOffset];
 			rangeOptionsChanged = YES;
 		}
 		
-	} // for (NSString *group in rangeOptions)
+	}; // end ApplyRangeOptionsForGroup
 
-	// Step 4.B : Update finalMappings if needed (by updating visibleGroups)
+	
+	if ([originalMappings hasRangeOptions] || [finalMappings hasRangeOptions])
+	{
+		NSMutableSet *handledGroups = [NSMutableSet set];
+		
+		for (NSString *group in [originalMappings allGroups])
+		{
+			if ([originalMappings hasRangeOptionsForGroup:group])
+			{
+				ApplyRangeOptionsForGroup(group);
+				[handledGroups addObject:group];
+			}
+		}
+		
+		for (NSString *group in [finalMappings allGroups])
+		{
+			if (![handledGroups containsObject:group])
+			{
+				if ([finalMappings hasRangeOptionsForGroup:group])
+				{
+					ApplyRangeOptionsForGroup(group);
+				}
+			}
+		}
+	}
 
 	if (rangeOptionsChanged)
 	{
@@ -1945,21 +2193,27 @@
 		//
 		// - calculate original & final offset for each group
 		
-		NSArray *allGroups = [originalMappings allGroups];
+		NSArray *originalGroups = [originalMappings allGroups];
+		NSArray *finalGroups    = [finalMappings allGroups];
 		
-		NSMutableDictionary *originalOffsets = [NSMutableDictionary dictionaryWithCapacity:[allGroups count]];
-		NSMutableDictionary *finalOffsets = [NSMutableDictionary dictionaryWithCapacity:[allGroups count]];
+		NSMutableDictionary *originalOffsets = [NSMutableDictionary dictionaryWithCapacity:[originalGroups count]];
+		NSMutableDictionary *finalOffsets = [NSMutableDictionary dictionaryWithCapacity:[finalGroups count]];
 		
 		NSUInteger originalOffset = 0;
 		NSUInteger finalOffset = 0;
 		
-		for (NSString *group in allGroups)
+		for (NSString *group in originalGroups)
 		{
 			[originalOffsets setObject:@(originalOffset) forKey:group];
-			[finalOffsets    setObject:@(finalOffset)    forKey:group];
 			
 			originalOffset += [originalMappings visibleCountForGroup:group];
-			finalOffset    += [finalMappings visibleCountForGroup:group];
+		}
+		
+		for (NSString *group in finalGroups)
+		{
+			[finalOffsets setObject:@(finalOffset) forKey:group];
+			
+			finalOffset += [finalMappings visibleCountForGroup:group];
 		}
 		
 		// Step 2
@@ -2030,12 +2284,12 @@
 		//
 		// - calculate the offsets for each group within the consolidated group
 		
-		NSArray *allGroups = [originalMappings allGroups];
+		NSArray *finalGroups = [finalMappings allGroups];
 		
-		NSMutableDictionary *finalOffsets = [NSMutableDictionary dictionaryWithCapacity:[allGroups count]];
+		NSMutableDictionary *finalOffsets = [NSMutableDictionary dictionaryWithCapacity:[finalGroups count]];
 		NSUInteger finalOffset = 0;
 		
-		for (NSString *group in allGroups)
+		for (NSString *group in finalGroups)
 		{
 			[finalOffsets setObject:@(finalOffset) forKey:group];
 			
@@ -2064,7 +2318,7 @@
 				
 				for (NSUInteger i = 0; i < beginningChangeCount; i++)
 				{
-					YapDatabaseViewRowChange *rowChange = [rowChanges objectAtIndex:i];
+					__unsafe_unretained YapDatabaseViewRowChange *rowChange = [rowChanges objectAtIndex:i];
 					
 					if (rowChange->type != YapDatabaseViewChangeInsert &&
 					    rowChange->originalSection == originalSection &&
@@ -2107,7 +2361,7 @@
 				{
 					YapDatabaseViewRowChange *op = [[YapDatabaseViewRowChange alloc] init];
 					op->type = YapDatabaseViewChangeMove;
-					op->key = nil;
+					op->collectionKey = nil;
 					op->changes = 0;
 					
 					op->originalGroup = group;
@@ -2132,7 +2386,7 @@
 		
 		for (NSUInteger i = 0; i < beginningChangeCount; i++)
 		{
-			YapDatabaseViewRowChange *rowChange = [rowChanges objectAtIndex:i];
+			__unsafe_unretained YapDatabaseViewRowChange *rowChange = [rowChanges objectAtIndex:i];
 			
 			if (rowChange->type == YapDatabaseViewChangeInsert)
 			{
@@ -2174,13 +2428,13 @@
 		//
 		// - calculate the offsets for each group within the consolidated group
 		
-		NSArray *allGroups = [originalMappings allGroups];
+		NSArray *originalGroups = [originalMappings allGroups];
 		
-		NSMutableDictionary *originalOffsets = [NSMutableDictionary dictionaryWithCapacity:[allGroups count]];
+		NSMutableDictionary *originalOffsets = [NSMutableDictionary dictionaryWithCapacity:[originalGroups count]];
 		
 		NSUInteger originalOffset = 0;
 		
-		for (NSString *group in allGroups)
+		for (NSString *group in originalGroups)
 		{
 			[originalOffsets setObject:@(originalOffset) forKey:group];
 			
@@ -2209,7 +2463,7 @@
 				
 				for (NSUInteger i = 0; i < beginningChangeCount; i++)
 				{
-					YapDatabaseViewRowChange *rowChange = [rowChanges objectAtIndex:i];
+					__unsafe_unretained YapDatabaseViewRowChange *rowChange = [rowChanges objectAtIndex:i];
 					
 					if (rowChange->type != YapDatabaseViewChangeInsert &&
 					    rowChange->originalSection == originalSection &&
@@ -2252,7 +2506,7 @@
 				{
 					YapDatabaseViewRowChange *op = [[YapDatabaseViewRowChange alloc] init];
 					op->type = YapDatabaseViewChangeMove;
-					op->key = nil;
+					op->collectionKey = nil;
 					op->changes = 0;
 					
 					NSUInteger originalGroupOffset = [[originalOffsets objectForKey:group] unsignedIntegerValue];
@@ -2277,7 +2531,7 @@
 		
 		for (NSUInteger i = 0; i < beginningChangeCount; i++)
 		{
-			YapDatabaseViewRowChange *rowChange = [rowChanges objectAtIndex:i];
+			__unsafe_unretained YapDatabaseViewRowChange *rowChange = [rowChanges objectAtIndex:i];
 			
 			if (rowChange->type == YapDatabaseViewChangeDelete)
 			{
@@ -2321,11 +2575,11 @@
 	// STEP 1 : Handle dynamic sections
 	//
 	
-	NSUInteger i = 0;
-	while (i < [sectionChanges count])
+	NSMutableIndexSet *indexesToRemove = [NSMutableIndexSet indexSet];
+	
+	NSUInteger sectionChangeIndex = 0;
+	for (YapDatabaseViewSectionChange *sectionChange in sectionChanges)
 	{
-		YapDatabaseViewSectionChange *sectionChange = [sectionChanges objectAtIndex:i];
-		
 		if (sectionChange->type == YapDatabaseViewChangeDelete)
 		{
 			// Although a group was deleted, the user may be allowing empty sections.
@@ -2338,12 +2592,11 @@
 			{
 				// Emit
 				sectionChange->originalSection = originalSection;
-				i++;
 			}
 			else
 			{
 				// Don't emit
-				[sectionChanges removeObjectAtIndex:i];
+				[indexesToRemove addIndex:sectionChangeIndex];
 			}
 		}
 		else // if (sectionChange->type == YapDatabaseViewChangeInsert)
@@ -2358,14 +2611,20 @@
 			{
 				// Emit
 				sectionChange->finalSection = finalSection;
-				i++;
 			}
 			else
 			{
 				// Don't emit
-				[sectionChanges removeObjectAtIndex:i];
+				[indexesToRemove addIndex:sectionChangeIndex];
 			}
 		}
+		
+		sectionChangeIndex++;
+		
+	} // end for (YapDatabaseViewSectionChange *sectionChange in sectionChanges)
+	
+	if ([indexesToRemove count] > 0) {
+		[sectionChanges removeObjectsAtIndexes:indexesToRemove];
 	}
 	
 	//
@@ -2477,7 +2736,9 @@
 	// This is where the magic happens.
 	// Calculates original and final index of every change.
 	
-	[self processRowChanges:rowChanges];
+	[self processRowChanges:rowChanges
+	   withOriginalMappings:originalMappings
+	          finalMappings:finalMappings];
 	
 	// CONSOLIDATION
 	//
@@ -2485,14 +2746,13 @@
 	// Merge multiple changes to a group into a zero or one change.
 	
 	[self consolidateRowChanges:rowChanges];
-	
 	[self consolidateSectionChanges:sectionChanges];
 	
 	//
 	// POST-PROCESSING
 	//
 	// This is where we apply the mappings to filter & alter the changeset.
-
+	
 	[self postProcessAndFilterRowChanges:rowChanges
 	                withOriginalMappings:originalMappings
 	                       finalMappings:finalMappings];

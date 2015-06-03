@@ -22,13 +22,15 @@
 +(NSString *)doneSegueIdentifier;
 +(NSString *)genderSegueIdentifier;
 +(NSString *)getAppSegueIdentifier;
++(NSString *)healthToAudioSegueIdentifier;
 +(NSString *)heightSegueIdentifier;
 +(NSString *)locationSegueIdentifier;
 +(NSString *)locationToPushSegueIdentifier;
 +(NSString *)moreInfoSegueIdentifier;
 +(NSString *)noBleToBirthdaySegueIdentifier;
++(NSString *)notificationToAudioSegueIdentifier;
++(NSString *)notificationToHealthSegueIdentifier;
 +(NSString *)pillSetupToColorsSegueIdentifier;
-+(NSString *)pushToAudioSegueIdentifier;
 +(NSString *)roomCheckToSmartAlarmSegueIdentifier;
 +(NSString *)sensePairToPillSegueIdentifier;
 +(NSString *)signupToNoBleSegueIdentifier;

@@ -32,8 +32,7 @@
  *
  * Note: You must pass a different versionTag, or this method does nothing.
 **/
-- (void)setFilteringBlock:(YapDatabaseViewFilteringBlock)filteringBlock
-       filteringBlockType:(YapDatabaseViewBlockType)filteringBlockType
-               versionTag:(NSString *)tag;
+- (void)setFiltering:(YapDatabaseViewFiltering *)filtering
+          versionTag:(NSString *)tag;
 
 @end

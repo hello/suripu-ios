@@ -25,7 +25,9 @@ extern NSString* const kHEMAnalyticsEventPropGender;
 extern NSString* const kHEMAnalyticsEventPropAccount;
 extern NSString* const kHEMAnalyticsEventPropSenseId;
 extern NSString* const kHEMAnalyticsEventPropPillId;
-extern NSString* const kHEMAnalyticsEventPropSenseIdUnpaired;
+extern NSString* const kHEMAnalyticsEventPropHealthKit;
+extern NSString* const kHEMAnalyticsEventPropSSID;
+extern NSString* const kHEMAnalyticsEventPropPassLength;
 
 // permissions
 extern NSString* const kHEMAnalyticsEventPermissionLoc;
@@ -34,6 +36,7 @@ extern NSString* const kHEManaltyicsEventStatusSkipped;
 extern NSString* const kHEManaltyicsEventStatusEnabled;
 extern NSString* const kHEManaltyicsEventStatusDenied;
 extern NSString* const kHEManaltyicsEventStatusDisabled;
+extern NSString* const kHEManaltyicsEventStatusNotSupported;
 
 // onboarding
 extern NSString* const HEMAnalyticsEventOnboardingPrefix;
@@ -54,6 +57,7 @@ extern NSString* const kHEMAnalyticsEventPropPillPairing;
 extern NSString* const kHEMAnalyticsEventPropPillPlacement;
 extern NSString* const kHEMAnalyticsEventPropPillAnother;
 extern NSString* const HEMAnalyticsEventOnbStart;
+extern NSString* const HEMAnalyticsEventHealth;
 extern NSString* const HEMAnalyticsEventAccount;
 extern NSString* const HEMAnalyticsEventLocation;
 extern NSString* const HEMAnalyticsEventNotification;
@@ -104,11 +108,17 @@ extern NSString* const kHEMAnalyticsEventSensor;
 extern NSString* const kHEMAnalyticsEventPropSensorName;
 extern NSString* const kHEMAnalyticsEventSense;
 extern NSString* const kHEMAnalyticsEventPill;
+extern NSString* const HEMAnalyticsEventHealthSync;
 
 // authentication
 extern NSString* const kHEMAnalyticsEventSignInStart;
 extern NSString* const kHEMAnalyticsEventSignIn;
 extern NSString* const kHEMAnalyticsEventSignOut;
+
+// time zone
+extern NSString* const HEMAnalyticsEventTimeZone;
+extern NSString* const HEMAnalyticsEventTimeZoneChanged;
+extern NSString* const HEMAnalyticsEventPropTZ;
 
 // device management
 extern NSString* const kHEMAnalyticsEventDeviceAction;
@@ -128,6 +138,7 @@ extern NSString* const HEMAnalyticsEventSleepScoreBreakdown;
 extern NSString* const HEMAnalyticsEventTimelineZoomOut;
 extern NSString* const HEMAnalyticsEventTimelineZoomIn;
 extern NSString* const HEMAnalyticsEventTimelineAdjustTime;
+extern NSString* const HEMAnalyticsEventTimelineAdjustTimeFailed;
 extern NSString* const HEMAnalyticsEventTimelineDataRequest;
 extern NSString* const HEMAnalyticsEventTimelineAlarmShortcut;
 

@@ -6,6 +6,8 @@
 
 @synthesize disableYapDatabaseRelationshipNodeProtocol = disableYapDatabaseRelationshipNodeProtocol;
 @synthesize allowedCollections = allowedCollections;
+@synthesize destinationFilePathEncryptor;
+@synthesize destinationFilePathDecryptor;
 
 - (id)init
 {
@@ -17,11 +19,17 @@
 	return self;
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone __unused *)zone
 {
 	YapDatabaseRelationshipOptions *copy = [[YapDatabaseRelationshipOptions alloc] init];
 	copy->disableYapDatabaseRelationshipNodeProtocol = disableYapDatabaseRelationshipNodeProtocol;
 	copy->allowedCollections = allowedCollections;
+	
+	if (destinationFilePathEncryptor && destinationFilePathDecryptor)
+	{
+		copy->destinationFilePathEncryptor = destinationFilePathEncryptor;
+		copy->destinationFilePathDecryptor = destinationFilePathDecryptor;
+	}
 	
 	return copy;
 }

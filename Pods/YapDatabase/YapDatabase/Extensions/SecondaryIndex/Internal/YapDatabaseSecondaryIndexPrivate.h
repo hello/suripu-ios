@@ -3,11 +3,10 @@
 #import "YapDatabaseTransaction.h"
 
 #import "YapDatabaseSecondaryIndex.h"
+#import "YapDatabaseSecondaryIndexSetup.h"
+#import "YapDatabaseSecondaryIndexHandler.h"
 #import "YapDatabaseSecondaryIndexConnection.h"
 #import "YapDatabaseSecondaryIndexTransaction.h"
-
-#import "YapDatabaseSecondaryIndexSetup.h"
-#import "YapDatabaseSecondaryIndexSetupPrivate.h"
 
 #import "YapCache.h"
 
@@ -21,15 +20,39 @@
 #define YAP_DATABASE_SECONDARY_INDEX_CLASS_VERSION 1
 
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+@interface YapDatabaseSecondaryIndexSetup ()
+
+/**
+ * This method compares its setup to a current table structure.
+ * 
+ * @param columns
+ *   
+ *   Dictionary of column names and affinity.
+ * 
+ * @see YapDatabase columnNamesAndAffinityForTable:using:
+**/
+- (BOOL)matchesExistingColumnNamesAndAffinity:(NSDictionary *)columns;
+
+@end
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark -
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 @interface YapDatabaseSecondaryIndex () {
 @public
 	
 	YapDatabaseSecondaryIndexSetup *setup;
+	YapDatabaseSecondaryIndexOptions *options;
 	
 	YapDatabaseSecondaryIndexBlock block;
 	YapDatabaseSecondaryIndexBlockType blockType;
 	
-	int version;
+	NSString *versionTag;
 	
 	id columnNamesSharedKeySet;
 }

@@ -25,6 +25,7 @@
 
 + (void)dropTablesForRegisteredName:(NSString *)registeredName
                     withTransaction:(YapDatabaseReadWriteTransaction *)transaction
+                      wasPersistent:(BOOL __unused)wasPersistent
 {
 	sqlite3 *db = transaction->connection->db;
 	NSString *tableName = [self tableNameForRegisteredName:registeredName];
@@ -53,7 +54,7 @@
 #pragma mark Instance
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-@synthesize version = version;
+@synthesize versionTag = versionTag;
 
 - (id)init
 {
@@ -62,16 +63,22 @@
 }
 
 - (id)initWithSetup:(YapDatabaseSecondaryIndexSetup *)inSetup
-              block:(YapDatabaseSecondaryIndexBlock)inBlock
-          blockType:(YapDatabaseSecondaryIndexBlockType)inBlockType
+            handler:(YapDatabaseSecondaryIndexHandler *)inHandler
 {
-	return [self initWithSetup:inSetup block:inBlock blockType:inBlockType version:0];
+	return [self initWithSetup:inSetup handler:inHandler versionTag:nil options:nil];
 }
 
 - (id)initWithSetup:(YapDatabaseSecondaryIndexSetup *)inSetup
-              block:(YapDatabaseSecondaryIndexBlock)inBlock
-          blockType:(YapDatabaseSecondaryIndexBlockType)inBlockType
-            version:(int)inVersion
+            handler:(YapDatabaseSecondaryIndexHandler *)inHandler
+         versionTag:(NSString *)inVersionTag
+{
+	return [self initWithSetup:inSetup handler:inHandler versionTag:inVersionTag options:nil];
+}
+
+- (id)initWithSetup:(YapDatabaseSecondaryIndexSetup *)inSetup
+            handler:(YapDatabaseSecondaryIndexHandler *)inHandler
+         versionTag:(NSString *)inVersionTag
+            options:(YapDatabaseSecondaryIndexOptions *)inOptions
 {
 	// Sanity checks
 	
@@ -91,22 +98,11 @@
 		return nil;
 	}
 	
-	if (inBlock == NULL)
+	if (inHandler == NULL)
 	{
-		NSAssert(NO, @"Invalid block: NULL");
+		NSAssert(NO, @"Invalid handler: NULL");
 		
-		YDBLogError(@"%@: Invalid block: NULL", THIS_METHOD);
-		return nil;
-	}
-	
-	if (inBlockType != YapDatabaseSecondaryIndexBlockTypeWithKey      &&
-	    inBlockType != YapDatabaseSecondaryIndexBlockTypeWithObject   &&
-	    inBlockType != YapDatabaseSecondaryIndexBlockTypeWithMetadata &&
-	    inBlockType != YapDatabaseSecondaryIndexBlockTypeWithRow       )
-	{
-		NSAssert(NO, @"Invalid blockType");
-		
-		YDBLogError(@"%@: Invalid blockType", THIS_METHOD);
+		YDBLogError(@"%@: Invalid handler: NULL", THIS_METHOD);
 		return nil;
 	}
 	
@@ -116,34 +112,16 @@
 	{
 		setup = [inSetup copy];
 		
-		block = inBlock;
-		blockType = inBlockType;
+		block = inHandler.block;
+		blockType = inHandler.blockType;
 		
 		columnNamesSharedKeySet = [NSDictionary sharedKeySetForKeys:[setup columnNames]];
 		
-		version = inVersion;
+		versionTag = inVersionTag ? [inVersionTag copy] : @"";
+		
+		options = inOptions ? [inOptions copy] : [[YapDatabaseSecondaryIndexOptions alloc] init];
 	}
 	return self;
-}
-
-/**
- * Subclasses must implement this method.
- * This method is called during the view registration process to enusre the extension supports the database type.
- *
- * Return YES if the class/instance supports the particular type of database (YapDatabase vs YapDatabase).
-**/
-- (BOOL)supportsDatabase:(YapDatabase *)database withRegisteredExtensions:(NSDictionary *)registeredExtensions;
-{
-	if ([database isKindOfClass:[YapDatabase class]])
-	{
-		return YES;
-	}
-	else
-	{
-		YDBLogError(@"YapDatabaseSecondaryIndex only supports YapDatabase, not YapDatabase."
-		            @"You want YapDatabaseSecondaryIndex.");
-		return NO;
-	}
 }
 
 - (YapDatabaseExtensionConnection *)newConnection:(YapDatabaseConnection *)databaseConnection

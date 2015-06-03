@@ -1,10 +1,12 @@
 #import "YapDatabaseViewMappingsPrivate.h"
 #import "YapDatabaseViewRangeOptionsPrivate.h"
 #import "YapDatabaseViewTransaction.h"
-
 #import "YapDatabasePrivate.h"
-
 #import "YapDatabaseLogging.h"
+
+#if TARGET_OS_IPHONE
+#import <UIKit/UIKit.h>
+#endif
 
 #if ! __has_feature(objc_arc)
 #warning This file must be compiled with ARC. Use -fobjc-arc flag (or convert project to ARC).
@@ -30,17 +32,16 @@
     
     BOOL viewGroupsAreDynamic;
     YapDatabaseViewMappingGroupFilter groupFilterBlock;
-    YapDatabaseViewMappingGroupSort groupSort;
+    YapDatabaseViewMappingGroupSort groupSortBlock;
     
 	// Mappings and cached counts
 	NSMutableArray *visibleGroups;
 	NSMutableDictionary *counts;
 	BOOL isUsingConsolidatedGroup;
 	BOOL autoConsolidationDisabled;
-	BOOL isDynamicSectionForAllGroups;
     
 	// Configuration
-	NSMutableSet *dynamicSections;
+	NSMutableDictionary *dynamicSections;
 	NSMutableSet *reverse;
 	NSMutableDictionary *rangeOptions;
 	NSMutableDictionary *dependencies;
@@ -71,44 +72,48 @@
         viewGroupsAreDynamic = NO;
 		
 		visibleGroups = [[NSMutableArray alloc] initWithCapacity:allGroupsCount];
-		dynamicSections = [[NSMutableSet alloc] initWithCapacity:allGroupsCount];
-		reverse         = [[NSMutableSet alloc] initWithCapacity:allGroupsCount];
+		reverse       =   [[NSMutableSet alloc] initWithCapacity:allGroupsCount];
 		
-		id sharedKeySet = [NSDictionary sharedKeySetForKeys:allGroups];
-		counts       = [NSMutableDictionary dictionaryWithSharedKeySet:sharedKeySet];
-		rangeOptions = [NSMutableDictionary dictionaryWithCapacity:allGroupsCount];
-		dependencies = [NSMutableDictionary dictionaryWithCapacity:allGroupsCount];
+		id sharedKeySet = [NSDictionary sharedKeySetForKeys:[allGroups arrayByAddingObject:[NSNull null]]];
+		counts          = [NSMutableDictionary dictionaryWithSharedKeySet:sharedKeySet];
+		dynamicSections = [NSMutableDictionary dictionaryWithSharedKeySet:sharedKeySet];
+		rangeOptions    = [NSMutableDictionary dictionaryWithSharedKeySet:sharedKeySet];
+		dependencies    = [NSMutableDictionary dictionaryWithSharedKeySet:sharedKeySet];
 		
-        [self _initWithView:inRegisteredViewName];
-
+        [self commonInit:inRegisteredViewName];
 	}
 	return self;
 }
 
-- (id)initWithGroupFilterBlock:(YapDatabaseViewMappingGroupFilter)inFilter sortBlock:(YapDatabaseViewMappingGroupSort)inSort view:(NSString *)inRegisteredViewName{
-    if (self = [super init]){
-        groupFilterBlock = inFilter;
-         groupSort = inSort;
-        viewGroupsAreDynamic = YES;
-
-        //we don't know what our capacity is going to be yet.
-        visibleGroups = [NSMutableArray new];
-        dynamicSections = [NSMutableSet new];
-        reverse = [NSMutableSet new];
-        rangeOptions = [NSMutableDictionary new];
-        dependencies = [NSMutableDictionary new];
+- (id)initWithGroupFilterBlock:(YapDatabaseViewMappingGroupFilter)inFilter
+                     sortBlock:(YapDatabaseViewMappingGroupSort)inSort
+                          view:(NSString *)inRegisteredViewName
+{
+	if ((self = [super init]))
+	{
+		groupFilterBlock = inFilter;
+		groupSortBlock = inSort;
+		viewGroupsAreDynamic = YES;
+		
+		// We don't know what our capacity is going to be yet.
+		visibleGroups = [NSMutableArray new];
+		dynamicSections = [NSMutableDictionary new];
+		reverse = [NSMutableSet new];
+		rangeOptions = [NSMutableDictionary new];
+		dependencies = [NSMutableDictionary new];
         
-        [self _initWithView:inRegisteredViewName];
+        [self commonInit:inRegisteredViewName];
     }
     return self;
 }
 
-- (void)_initWithView:(NSString *)inRegisteredViewName{
-    registeredViewName = [inRegisteredViewName copy];
-    snapshotOfLastUpdate = UINT64_MAX;
+- (void)commonInit:(NSString *)inRegisteredViewName
+{
+	registeredViewName = [inRegisteredViewName copy];
+	snapshotOfLastUpdate = UINT64_MAX;
 }
 
-- (id)copyWithZone:(NSZone *)zone
+- (id)copyWithZone:(NSZone __unused *)zone
 {
 	YapDatabaseViewMappings *copy = [[YapDatabaseViewMappings alloc] init];
 	copy->allGroups = allGroups;
@@ -116,14 +121,13 @@
     
     copy->viewGroupsAreDynamic = viewGroupsAreDynamic;
     copy->groupFilterBlock = groupFilterBlock;
-    copy->groupSort = groupSort;
+    copy->groupSortBlock = groupSortBlock;
 	
 	copy->visibleGroups = [visibleGroups mutableCopy];
 	copy->counts = [counts mutableCopy];
 	copy->isUsingConsolidatedGroup = isUsingConsolidatedGroup;
 	copy->autoConsolidationDisabled = autoConsolidationDisabled;
 	
-    copy->isDynamicSectionForAllGroups = isDynamicSectionForAllGroups;
 	copy->dynamicSections = [dynamicSections mutableCopy];
 	copy->reverse = [reverse mutableCopy];
 	copy->rangeOptions = [rangeOptions mutableCopy];
@@ -137,22 +141,20 @@
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-#pragma mark Configuration
+#pragma mark Utilities
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-- (void)setIsDynamicSectionForAllGroups:(BOOL)isDynamic
+- (BOOL)isGroupNameValid:(NSString *)group
 {
-	isDynamicSectionForAllGroups = isDynamic;
+	if (viewGroupsAreDynamic)
+		return YES; // group list changes dynamically, so any group name could be valid
+	else
+		return [allGroups containsObject:group];
 }
 
-- (BOOL)isDynamicSectionForAllGroups
-{
-    return isDynamicSectionForAllGroups;
-}
-
-- (BOOL)isGroupNameValid:(NSString *)group{
-    return viewGroupsAreDynamic || [allGroups containsObject:group];
-}
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#pragma mark Configuration
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 - (void)setIsDynamicSection:(BOOL)isDynamic forGroup:(NSString *)group
 {
@@ -161,15 +163,27 @@
 		return;
 	}
 	
-	if (isDynamic)
-		[dynamicSections addObject:group];
-	else
-		[dynamicSections removeObject:group];
+	[dynamicSections setObject:@(isDynamic) forKey:group];
 }
 
 - (BOOL)isDynamicSectionForGroup:(NSString *)group
 {
-	return [dynamicSections containsObject:group];
+	NSNumber *isDynamic = [dynamicSections objectForKey:group];
+	if (isDynamic == nil)
+		isDynamic = [dynamicSections objectForKey:[NSNull null]];
+	
+	return [isDynamic boolValue];
+}
+
+- (void)setIsDynamicSectionForAllGroups:(BOOL)isDynamic
+{
+	[dynamicSections removeAllObjects];
+	[dynamicSections setObject:@(isDynamic) forKey:[NSNull null]];
+}
+
+- (BOOL)isDynamicSectionForAllGroups
+{
+	return [[dynamicSections objectForKey:[NSNull null]] boolValue];
 }
 
 - (void)setRangeOptions:(YapDatabaseViewRangeOptions *)rangeOpts forGroup:(NSString *)group
@@ -322,6 +336,12 @@
 
 - (void)updateWithTransaction:(YapDatabaseReadTransaction *)transaction
 {
+	[self updateWithTransaction:transaction forceUpdateRangeOptions:YES];
+}
+
+- (void)updateWithTransaction:(YapDatabaseReadTransaction *)transaction
+      forceUpdateRangeOptions:(BOOL)forceUpdateRangeOptions
+{
 	if (![transaction->connection isInLongLivedReadTransaction])
 	{
 		NSString *reason = @"YapDatabaseViewMappings requires the connection to be in a longLivedReadTransaction.";
@@ -333,7 +353,7 @@
 			@" YapDatabaseModifiedNotifications. This ensures that the data-source for your UI remains in a steady"
 			@" state at all times, and that updates are properly handled using the appropriate update mechanisms"
 			@" (and properly animated if desired)."
-			@" For example code, please see the wiki: https://github.com/yaptv/YapDatabase/wiki/Views";
+			@" For example code, please see the wiki: https://github.com/yapstudios/YapDatabase/wiki/Views";
 			
 		NSString *suggestion =
 		    @"You must invoke [databaseConnection beginLongLivedReadTransaction] before you initialize the mappings";
@@ -373,7 +393,7 @@
     
 	for (NSString *group in allGroups)
 	{
-		NSUInteger count = [viewTransaction numberOfKeysInGroup:group];
+		NSUInteger count = [viewTransaction numberOfItemsInGroup:group];
 		
 		[counts setObject:@(count) forKey:group];
 	}
@@ -381,9 +401,13 @@
 	BOOL firstUpdate = (snapshotOfLastUpdate == UINT64_MAX);
 	snapshotOfLastUpdate = [transaction->connection snapshot];
 	
-	if (firstUpdate)
-		[self initializeRangeOptsLength];
-	
+	if (firstUpdate || forceUpdateRangeOptions) {
+		[self updateRangeOptionsLength];
+	}
+	else {
+		// This method is being called via getSectionChanges:rowChanges:forNotifications:withMappings:.
+		// That code path will manually update the rangeOptions during processing.
+	}
 	[self updateVisibility];
 }
 
@@ -418,24 +442,24 @@
 		}
 	}
 	
-	[newAllGroups sortUsingComparator:^NSComparisonResult(id obj1, id obj2) {
+	[newAllGroups sortUsingComparator:^NSComparisonResult(NSString *group1, NSString *group2) {
 		
-		return groupSort(obj1, obj2, transaction);
+		return groupSortBlock(group1, group2, transaction);
 	}];
     
     return [newAllGroups copy];
 }
 
-- (BOOL)shouldUpdateAllGroupsWithNewGroups:(NSArray *)newGroups{
-    return ![allGroups isEqualToArray:newGroups];
+- (BOOL)shouldUpdateAllGroupsWithNewGroups:(NSArray *)newGroups
+{
+	return ![allGroups isEqualToArray:newGroups];
 }
 
-
 /**
- * This method is internal.
+ * For UNIT TESTING only.
  * It is only for use by the unit tests in TestViewChangeLogic.
 **/
-- (void)updateWithCounts:(NSDictionary *)newCounts
+- (void)updateWithCounts:(NSDictionary *)newCounts forceUpdateRangeOptions:(BOOL)forceUpdateRangeOptions
 {
 	if (viewGroupsAreDynamic)
 	{
@@ -457,13 +481,16 @@
 	BOOL firstUpdate = (snapshotOfLastUpdate == UINT64_MAX);
 	snapshotOfLastUpdate = 0;
 	
-	if (firstUpdate)
-		[self initializeRangeOptsLength];
-	
+	if (firstUpdate || forceUpdateRangeOptions) {
+		[self updateRangeOptionsLength];
+	}
+	else {
+		// Simulating code path: getSectionChanges:rowChanges:forNotifications:withMappings:.
+	}
 	[self updateVisibility];
 }
 
-- (void)initializeRangeOptsLength
+- (void)updateRangeOptionsLength
 {
 	NSAssert(snapshotOfLastUpdate != UINT64_MAX, @"The counts are needed to set rangeOpts.length");
 	
@@ -503,9 +530,11 @@
 - (void)updateRangeOptionsForGroup:(NSString *)group withNewLength:(NSUInteger)newLength newOffset:(NSUInteger)newOffset
 {
 	YapDatabaseViewRangeOptions *rangeOpts = [rangeOptions objectForKey:group];
-	rangeOpts = [rangeOpts copyWithNewLength:newLength newOffset:newOffset];
-	
-	[rangeOptions setObject:rangeOpts forKey:group];
+	if (rangeOpts)
+	{
+		rangeOpts = [rangeOpts copyWithNewLength:newLength newOffset:newOffset];
+		[rangeOptions setObject:rangeOpts forKey:group];
+	}
 }
 
 - (void)updateVisibility
@@ -536,16 +565,23 @@
 		isUsingConsolidatedGroup = NO;
 }
 
--(BOOL)isGroupDynamic:(NSString *)group{
-    if (!isDynamicSectionForAllGroups){
-        return [dynamicSections containsObject:group];
-    }
-    return YES;
+- (BOOL)isGroupDynamic:(NSString *)group
+{
+	NSNumber *isDynamic = [dynamicSections objectForKey:group];
+	if (isDynamic == nil)
+		isDynamic = [dynamicSections objectForKey:[NSNull null]];
+	
+	return [isDynamic boolValue];
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 #pragma mark Internal
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+- (void)setAutoConsolidatingDisabled:(BOOL)disabled
+{
+	autoConsolidationDisabled = disabled;
+}
 
 - (NSMutableDictionary *)counts
 {
@@ -562,9 +598,20 @@
 	return [self numberOfItemsInGroup:group];
 }
 
-- (NSDictionary *)rangeOptions
+- (BOOL)hasRangeOptions
 {
-	return [rangeOptions copy];
+	return ([rangeOptions count] > 0);
+}
+
+- (BOOL)hasRangeOptionsForGroup:(NSString *)group
+{
+	return ([rangeOptions objectForKey:group] != nil);
+}
+
+- (YapDatabaseViewRangeOptions *)_rangeOptionsForGroup:(NSString *)group
+{
+	// Do NOT reverse the range options before returning them
+	return [[rangeOptions objectForKey:group] copy];
 }
 
 - (NSDictionary *)dependencies
@@ -575,11 +622,6 @@
 - (NSSet *)reverse
 {
 	return [reverse copy];
-}
-
-- (void)setAutoConsolidatingDisabled:(BOOL)disabled
-{
-	autoConsolidationDisabled = disabled;
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -1461,12 +1503,12 @@
  *
  *     for (YapDatabaseViewSectionChange *sectionChange in sectionChanges)
  *     {
- *         // ... (see https://github.com/yaptv/YapDatabase/wiki/Views )
+ *         // ... (see https://github.com/yapstudios/YapDatabase/wiki/Views )
  *     }
  *
  *     for (YapDatabaseViewRowChange *rowChange in rowChanges)
  *     {
- *         // ... (see https://github.com/yaptv/YapDatabase/wiki/Views )
+ *         // ... (see https://github.com/yapstudios/YapDatabase/wiki/Views )
  *     }
  *
  *     [self.tableView endUpdates];

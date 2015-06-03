@@ -36,6 +36,8 @@
     [super viewDidLoad];
     [self configureNavigationBar];
     [self configureTableView];
+    
+    [SENAnalytics track:HEMAnalyticsEventTimeZone];
 }
 
 - (void)configureNavigationBar {
@@ -118,6 +120,10 @@
             BOOL hasError = error != nil;
             
             if (!hasError) {
+                NSString* tz = [timeZone name] ?: @"unknown";
+                [SENAnalytics track:HEMAnalyticsEventTimeZoneChanged
+                         properties:@{HEMAnalyticsEventPropTZ : tz}];
+                
                 UIImage* successIcon = [HelloStyleKit check];
                 NSString* successText = NSLocalizedString(@"status.success", nil);
                 

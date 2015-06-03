@@ -411,7 +411,6 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
                                                  baseFont:[UIFont dialogMessageFont]];
     
     [self showConfirmation:title message:message action:^{
-        [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropSenseId : kHEMAnalyticsEventPropSenseIdUnpaired}];
         [self unlinkSense];
     }];
 }
@@ -552,7 +551,6 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
                 if ([[strongSelf delegate] respondsToSelector:@selector(didFactoryRestoreFrom:)]) {
                     [[strongSelf delegate] didFactoryRestoreFrom:strongSelf];
                 }
-                [SENAnalytics setUserProperties:@{kHEMAnalyticsEventPropSenseId : kHEMAnalyticsEventPropSenseIdUnpaired}];
                 [strongSelf dismissActivityWithSuccess:nil];
             }
         }];

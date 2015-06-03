@@ -28,7 +28,9 @@ NSString* const kHEMAnalyticsEventPropGender = @"Gender";
 NSString* const kHEMAnalyticsEventPropAccount = @"Account Id";
 NSString* const kHEMAnalyticsEventPropSenseId = @"Sense Id";
 NSString* const kHEMAnalyticsEventPropPillId = @"Pill Id";
-NSString* const kHEMAnalyticsEventPropSenseIdUnpaired = @"unpaired";
+NSString* const kHEMAnalyticsEventPropHealthKit = @"HealthKit";
+NSString* const kHEMAnalyticsEventPropSSID = @"SSID";
+NSString* const kHEMAnalyticsEventPropPassLength = @"Password length";
 
 // special mixpanel special properties
 NSString* const kHEMAnalyticsEventMpPropName = @"$name";
@@ -41,6 +43,7 @@ NSString* const kHEManaltyicsEventStatusSkipped = @"skipped";
 NSString* const kHEManaltyicsEventStatusEnabled = @"enabled";
 NSString* const kHEManaltyicsEventStatusDisabled = @"disabled";
 NSString* const kHEManaltyicsEventStatusDenied = @"denied";
+NSString* const kHEManaltyicsEventStatusNotSupported = @"not supported";
 
 // onboarding
 //
@@ -64,6 +67,7 @@ NSString* const kHEMAnalyticsEventPropPillAnother = @"pill_another";
 
 NSString* const HEMAnalyticsEventOnbStart = @"Onboarding Start";
 NSString* const HEMAnalyticsEventAccount = @"Account";
+NSString* const HEMAnalyticsEventHealth = @"Health";
 NSString* const HEMAnalyticsEventLocation = @"Location";
 NSString* const HEMAnalyticsEventNotification = @"Notifications";
 NSString* const HEMAnalyticsEventNoBle = @"No BLE";
@@ -115,11 +119,17 @@ NSString* const kHEMAnalyticsEventSensor = @"Sensor History";
 NSString* const kHEMAnalyticsEventPropSensorName = @"sensor_name";
 NSString* const kHEMAnalyticsEventSense = @"Sense Detail";
 NSString* const kHEMAnalyticsEventPill = @"Pill Detail";
+NSString* const HEMAnalyticsEventHealthSync = @"Health app sync";
 
 // authentication
 NSString* const kHEMAnalyticsEventSignInStart = @"Sign In Start";
 NSString* const kHEMAnalyticsEventSignIn = @"Signed In";
 NSString* const kHEMAnalyticsEventSignOut = @"Signed Out";
+
+// time zone
+NSString* const HEMAnalyticsEventTimeZone = @"Time Zone";
+NSString* const HEMAnalyticsEventTimeZoneChanged = @"Time Zone Changed";
+NSString* const HEMAnalyticsEventPropTZ = @"tz";
 
 // device management
 NSString* const kHEMAnalyticsEventDeviceAction = @"Device Action";
@@ -139,6 +149,7 @@ NSString* const HEMAnalyticsEventSleepScoreBreakdown = @"Sleep Score breakdown";
 NSString* const HEMAnalyticsEventTimelineZoomOut = @"Timeline zoomed out";
 NSString* const HEMAnalyticsEventTimelineZoomIn = @"Timeline zoomed in";
 NSString* const HEMAnalyticsEventTimelineAdjustTime = @"Timeline adjust time tapped";
+NSString* const HEMAnalyticsEventTimelineAdjustTimeFailed = @"Timeline adjust time failed";
 NSString* const HEMAnalyticsEventTimelineDataRequest = @"Timeline data request";
 NSString* const HEMAnalyticsEventTimelineAlarmShortcut = @"Timeline alarm shorcut";
 

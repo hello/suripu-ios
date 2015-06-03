@@ -24,14 +24,12 @@
         elapsed = NSLocalizedString(@"date.elapsed.today", nil);
     } else {
         NSString* format = nil;
-        long value = 1;
+        long value = days;
         
-        if (days == 1) {
+        if (days < 2) {
             format = NSLocalizedString(@"date.elapsed.day.format", nil);
         } if (days < 7) {
             format = NSLocalizedString(@"date.elapsed.days.format", nil);
-        } else if (days == 7) {
-            format = NSLocalizedString(@"date.elapsed.week.format", nil);
         } else if (days < 365) {
             format = NSLocalizedString(@"date.elapsed.weeks.format", nil);
             value = (long)ceilf(days/7.0f);

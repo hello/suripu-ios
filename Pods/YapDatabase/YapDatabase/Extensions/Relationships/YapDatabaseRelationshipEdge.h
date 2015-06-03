@@ -4,33 +4,31 @@
  * Welcome to YapDatabase!
  *
  * The project page has a wealth of documentation if you have any questions.
- * https://github.com/yaptv/YapDatabase
+ * https://github.com/yapstudios/YapDatabase
  *
  * If you're new to the project you may want to visit the wiki.
- * https://github.com/yaptv/YapDatabase/wiki
+ * https://github.com/yapstudios/YapDatabase/wiki
  *
  * The YapDatabaseRelationship extension allow you to create relationships between objects,
  * and configure automatic deletion rules.
  *
  * For tons of information about this extension, see the wiki article:
- * https://github.com/yaptv/YapDatabase/wiki/Relationships
+ * https://github.com/yapstudios/YapDatabase/wiki/Relationships
 **/
 
-enum {
-	// notify only
-	YDB_NotifyIfSourceDeleted      = 1 << 0,
-	YDB_NotifyIfDestinationDeleted = 1 << 1,
-	
-	// one-to-one
-	YDB_DeleteSourceIfDestinationDeleted = 1 << 2,
-	YDB_DeleteDestinationIfSourceDeleted = 1 << 3,
-	
-	// one-to-many & many-to-many
-	YDB_DeleteSourceIfAllDestinationsDeleted = 1 << 4,
-	YDB_DeleteDestinationIfAllSourcesDeleted = 1 << 5,
+typedef NS_OPTIONS(uint16_t, YDB_NodeDeleteRules) {
+    // notify only
+    YDB_NotifyIfSourceDeleted      = 1 << 0,
+    YDB_NotifyIfDestinationDeleted = 1 << 1,
+    
+    // one-to-one
+    YDB_DeleteSourceIfDestinationDeleted = 1 << 2,
+    YDB_DeleteDestinationIfSourceDeleted = 1 << 3,
+    
+    // one-to-many & many-to-many
+    YDB_DeleteSourceIfAllDestinationsDeleted = 1 << 4,
+    YDB_DeleteDestinationIfAllSourcesDeleted = 1 << 5,
 };
-typedef uint16_t YDB_NodeDeleteRules;
-
 
 @interface YapDatabaseRelationshipEdge : NSObject <NSCoding, NSCopying>
 

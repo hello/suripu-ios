@@ -1,18 +1,19 @@
 #import <Foundation/Foundation.h>
+#import "YapWhitelistBlacklist.h"
 
 /**
  * Welcome to YapDatabase!
  *
- * https://github.com/yaptv/YapDatabase
+ * https://github.com/yapstudios/YapDatabase
  *
  * The project wiki has a wealth of documentation if you have any questions.
- * https://github.com/yaptv/YapDatabase/wiki
+ * https://github.com/yapstudios/YapDatabase/wiki
  *
  * YapDatabaseView is an extension designed to work with YapDatabase.
  * It gives you a persistent sorted "view" of a configurable subset of your data.
  *
  * For the full documentation on Views, please see the related wiki article:
- * https://github.com/yaptv/YapDatabase/wiki/Views
+ * https://github.com/yapstudios/YapDatabase/wiki/Views
 **/
 
 @interface YapDatabaseViewOptions : NSObject <NSCopying>
@@ -58,6 +59,13 @@
  *
  * The default value is nil.
 **/
-@property (nonatomic, copy, readwrite) NSSet *allowedCollections;
+@property (nonatomic, strong, readwrite) YapWhitelistBlacklist *allowedCollections;
+
+/**
+ * You can configure the view to skip the initial view population.
+ *
+ * The default value is NO.
+**/
+@property (nonatomic, assign, readwrite) BOOL skipInitialViewPopulation;
 
 @end

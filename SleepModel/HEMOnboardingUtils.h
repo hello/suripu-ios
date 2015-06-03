@@ -160,6 +160,6 @@ typedef NS_ENUM(NSUInteger, HEMOnboardingCheckpoint) {
  * @param error: the error obtained from account api responses
  * @return error message translated from the error
  */
-+ (NSString*)accountErrorMessgaeFromError:(NSError*)error;
++ (NSString*)accountErrorMessageFromError:(NSError*)error;
 
 @end

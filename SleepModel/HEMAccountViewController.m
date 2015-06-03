@@ -458,7 +458,7 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
         case SENServiceAccountErrorInvalidArg:
             return NSLocalizedString(@"settings.account.update.failure", nil);
         default:
-            return [HEMOnboardingUtils accountErrorMessgaeFromError:error];
+            return [HEMOnboardingUtils accountErrorMessageFromError:error];
     }
 }
 

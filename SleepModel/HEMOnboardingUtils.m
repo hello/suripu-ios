@@ -140,7 +140,7 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
     UIView* seeThroughView = [controller parentViewController] ? [[controller parentViewController] view] : [controller view];
     HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
     [dialogVC setTitle:errorTitle];
-    [dialogVC setMessage:[self accountErrorMessgaeFromError:error]];
+    [dialogVC setMessage:[self accountErrorMessageFromError:error]];
     [dialogVC setViewToShowThrough:seeThroughView];
     
     [dialogVC showFrom:controller onDefaultActionSelected:^{
@@ -150,7 +150,7 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
     }];
 }
 
-+ (NSString*)accountErrorMessgaeFromError:(NSError*)error {
++ (NSString*)accountErrorMessageFromError:(NSError*)error {
     NSString* alertMessage = nil;
     SENAPIAccountError errorType = [SENAPIAccount errorForAPIResponseError:error];
     

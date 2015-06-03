@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.7.3
+
+New:
+
+* Updated visual design on the name settings screen
+* Updated visual design on the email settings screen
+* Updated visual design on the password settings screen
+
+Fixes:
+
+* Copy changes around WEP WiFi failures
+* Fixed issue causing a WARNING on first try in syncing with Health app
+* Added more analytics to understand WiFi set up
+
 ## 1.0.7.2
 
 Fixes:

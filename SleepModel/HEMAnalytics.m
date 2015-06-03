@@ -29,6 +29,8 @@ NSString* const kHEMAnalyticsEventPropAccount = @"Account Id";
 NSString* const kHEMAnalyticsEventPropSenseId = @"Sense Id";
 NSString* const kHEMAnalyticsEventPropPillId = @"Pill Id";
 NSString* const kHEMAnalyticsEventPropHealthKit = @"HealthKit";
+NSString* const kHEMAnalyticsEventPropSSID = @"SSID";
+NSString* const kHEMAnalyticsEventPropPassLength = @"Password length";
 
 // special mixpanel special properties
 NSString* const kHEMAnalyticsEventMpPropName = @"$name";

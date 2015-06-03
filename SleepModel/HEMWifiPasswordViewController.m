@@ -387,8 +387,13 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
          password:(NSString*)password
      securityType:(SENWifiEndpointSecurityType)type {
     
+    NSDictionary* properties = @{
+        kHEMAnalyticsEventPropSecurityType : [self analyticsValueForSecurityType:type],
+        kHEMAnalyticsEventPropSSID : ssid ?: @"undefined",
+        kHEMAnalyticsEventPropPassLength : @([password length])
+    };
     [self trackAnalyticsEvent:HEMAnalyticsEventWiFiSubmit
-                         properties:@{kHEMAnalyticsEventPropSecurityType : [self analyticsValueForSecurityType:type]}];
+                         properties:properties];
     
     __weak typeof(self) weakSelf = self;
     SENSenseManager* manager = [self manager];

@@ -2150,7 +2150,8 @@ Now let’s set your first Smart Alarm</string>
                         <outlet property="titleHeightConstraint" destination="HeH-0k-zJV" id="hF2-rV-A7U"/>
                         <outlet property="titleLabel" destination="Vca-9S-Db1" id="3PV-w0-uNz"/>
                         <outlet property="topWeightLabel" destination="YLN-GF-KON" id="vjs-dj-iqi"/>
-                        <segue destination="KXH-dY-O28" kind="push" identifier="location" id="RYF-eT-cgh"/>
+                        <segue destination="ufA-sU-dsq" kind="push" identifier="weightToHealthKit" id="HXF-IR-iTO"/>
+                        <segue destination="KXH-dY-O28" kind="push" identifier="weightToLocation" id="3DQ-Vg-FaT"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qJk-Le-TAF" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2250,7 +2251,7 @@ Now let’s set your first Smart Alarm</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IpC-eY-cSk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6346" y="922"/>
+            <point key="canvasLocation" x="7147" y="915"/>
         </scene>
         <!--Health View Controller-->
         <scene sceneID="2T3-xv-8MO">
@@ -2294,8 +2295,8 @@ Now let’s set your first Smart Alarm</string>
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
+                                    <action selector="skip:" destination="ufA-sU-dsq" eventType="touchUpInside" id="W1k-Ov-Ccz"/>
                                     <action selector="skip:" destination="ihV-hq-yEO" eventType="touchUpInside" id="hPj-XI-5NJ"/>
-                                    <segue destination="ldR-fW-wOZ" kind="push" identifier="healthToAudio" id="Rx9-79-Bza"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19L-c5-l2p" customClass="HEMActionButton">
@@ -2341,11 +2342,12 @@ Now let’s set your first Smart Alarm</string>
                         <outlet property="titleHeightConstraint" destination="r2J-KU-7cw" id="uhV-hk-PBY"/>
                         <outlet property="titleLabel" destination="qjM-t5-PIi" id="eZs-9p-hiU"/>
                         <outlet property="view" destination="OTU-OI-8wa" id="5xQ-WT-ota"/>
+                        <segue destination="KXH-dY-O28" kind="push" identifier="healthKitToLocation" id="zvu-eW-603"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Wd8-1z-fqa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7855" y="690"/>
+            <point key="canvasLocation" x="6341" y="462"/>
         </scene>
         <!--Sense Audio View Controller-->
         <scene sceneID="FZQ-fc-285">
@@ -2539,13 +2541,12 @@ Otherwise, Sense only looks at background noise levels.</string>
                         <outlet property="skipButton" destination="9ia-GF-Swk" id="aFd-NJ-3lO"/>
                         <outlet property="titleHeightConstraint" destination="eFQ-oR-ERS" id="cIT-vD-3Si"/>
                         <outlet property="titleLabel" destination="Go7-Z7-kmw" id="rG7-w3-c7Q"/>
-                        <segue destination="ufA-sU-dsq" kind="push" identifier="notificationToHealth" id="QQC-LL-pys"/>
                         <segue destination="ldR-fW-wOZ" kind="push" identifier="notificationToAudio" id="zLj-M6-XwY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QJV-po-vQN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7101" y="915"/>
+            <point key="canvasLocation" x="7877" y="915"/>
         </scene>
         <!--Sense Pair View Controller-->
         <scene sceneID="cKk-Qb-F4O">
@@ -2990,8 +2991,8 @@ Have your partner visit senseapp.com on their device to download the Sense app a
         <image name="smartAlarm.png" width="320" height="179"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="zLj-M6-XwY"/>
         <segue reference="ZOJ-Sh-Dzx"/>
+        <segue reference="3DQ-Vg-FaT"/>
         <segue reference="JsS-bV-f7k"/>
         <segue reference="7LA-fg-2Jb"/>
         <segue reference="tkT-Pb-lgk"/>

@@ -32,6 +32,7 @@ static NSString *const _HEMcurrentNavController = @"currentNavController";
 static NSString *const _HEMdevice = @"device";
 static NSString *const _HEMdevicesSettings = @"devicesSettings";
 static NSString *const _HEMexplanation = @"explanation";
+static NSString *const _HEMfieldCell = @"fieldCell";
 static NSString *const _HEMimage = @"image";
 static NSString *const _HEMinfo = @"info";
 static NSString *const _HEMinsight = @"insight";
@@ -68,9 +69,7 @@ static NSString *const _HEMtrendGraph = @"trendGraph";
 static NSString *const _HEMtrends = @"trends";
 static NSString *const _HEMunitCell = @"unitCell";
 static NSString *const _HEMunitsSettings = @"unitsSettings";
-static NSString *const _HEMupdateEmail = @"updateEmail";
-static NSString *const _HEMupdateName = @"updateName";
-static NSString *const _HEMupdatePassword = @"updatePassword";
+static NSString *const _HEMupdateAccountInfo = @"updateAccountInfo";
 static NSString *const _HEMwarning = @"warning";
 
 @implementation HEMMainStoryboard
@@ -90,6 +89,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)choiceCellReuseIdentifier { return _HEMchoiceCell; }
 +(NSString *)deviceReuseIdentifier { return _HEMdevice; }
 +(NSString *)explanationReuseIdentifier { return _HEMexplanation; }
++(NSString *)fieldCellReuseIdentifier { return _HEMfieldCell; }
 +(NSString *)imageReuseIdentifier { return _HEMimage; }
 +(NSString *)infoReuseIdentifier { return _HEMinfo; }
 +(NSString *)insightReuseIdentifier { return _HEMinsight; }
@@ -121,9 +121,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)senseSegueIdentifier { return _HEMsense; }
 +(NSString *)timezoneSegueIdentifier { return _HEMtimezone; }
 +(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
-+(NSString *)updateEmailSegueIdentifier { return _HEMupdateEmail; }
-+(NSString *)updateNameSegueIdentifier { return _HEMupdateName; }
-+(NSString *)updatePasswordSegueIdentifier { return _HEMupdatePassword; }
++(NSString *)updateAccountInfoSegueIdentifier { return _HEMupdateAccountInfo; }
 
 /** View Controllers */
 +(id)instantiateRootViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMrootViewController]; }

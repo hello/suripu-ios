@@ -137,7 +137,20 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
 + (void)showAlertForHTTPError:(NSError*)error
                     withTitle:(NSString*)errorTitle
                          from:(UIViewController*)controller {
+    UIView* seeThroughView = [controller parentViewController] ? [[controller parentViewController] view] : [controller view];
+    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
+    [dialogVC setTitle:errorTitle];
+    [dialogVC setMessage:[self accountErrorMessageFromError:error]];
+    [dialogVC setViewToShowThrough:seeThroughView];
     
+    [dialogVC showFrom:controller onDefaultActionSelected:^{
+        // don't weak reference this since controller must remain until it has
+        // been dismissed
+        [controller dismissViewControllerAnimated:YES completion:nil];
+    }];
+}
+
++ (NSString*)accountErrorMessageFromError:(NSError*)error {
     NSString* alertMessage = nil;
     SENAPIAccountError errorType = [SENAPIAccount errorForAPIResponseError:error];
     
@@ -148,17 +161,7 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
         alertMessage = [self accountErrorMessageForType:errorType];
     }
     
-    UIView* seeThroughView = [controller parentViewController] ? [[controller parentViewController] view] : [controller view];
-    HEMAlertViewController* dialogVC = [[HEMAlertViewController alloc] init];
-    [dialogVC setTitle:errorTitle];
-    [dialogVC setMessage:alertMessage];
-    [dialogVC setViewToShowThrough:seeThroughView];
-    
-    [dialogVC showFrom:controller onDefaultActionSelected:^{
-        // don't weak reference this since controller must remain until it has
-        // been dismissed
-        [controller dismissViewControllerAnimated:YES completion:nil];
-    }];
+    return alertMessage;
 }
 
 + (NSString*)accountErrorMessageForType:(SENAPIAccountError)errorType {

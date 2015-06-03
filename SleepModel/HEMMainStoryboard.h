@@ -41,6 +41,7 @@
 +(NSString *)trendGraphReuseIdentifier;
 +(NSString *)questionReuseIdentifier;
 +(NSString *)insightReuseIdentifier;
++(NSString *)fieldCellReuseIdentifier;
 
 /** Segue Identifiers */
 +(NSString *)accountSettingsSegueIdentifier;
@@ -53,9 +54,7 @@
 +(NSString *)senseSegueIdentifier;
 +(NSString *)timezoneSegueIdentifier;
 +(NSString *)unitsSettingsSegueIdentifier;
-+(NSString *)updateEmailSegueIdentifier;
-+(NSString *)updateNameSegueIdentifier;
-+(NSString *)updatePasswordSegueIdentifier;
++(NSString *)updateAccountInfoSegueIdentifier;
 
 /** View Controllers */
 +(id)instantiateRootViewController;

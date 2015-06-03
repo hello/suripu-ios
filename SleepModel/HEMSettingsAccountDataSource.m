@@ -170,31 +170,36 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
 }
 
 - (NSString*)valueForCellAtIndexPath:(NSIndexPath*)indexPath {
-    NSString* subtitle = nil;
     HEMSettingsAccountInfoType type = [self infoTypeAtIndexPath:indexPath];
+    NSString* value = [self valueForInfoType:type];
+    return value ?: NSLocalizedString(@"empty-data", nil);
+}
+
+- (NSString*)valueForInfoType:(HEMSettingsAccountInfoType)type {
+    NSString* value = nil;
     switch (type) {
         case HEMSettingsAccountInfoTypeName:
-            subtitle = [[[SENServiceAccount sharedService] account] name];
+            value = [[[SENServiceAccount sharedService] account] name];
             break;
         case HEMSettingsAccountInfoTypeEmail:
-            subtitle = [[[SENServiceAccount sharedService] account] email];
+            value = [[[SENServiceAccount sharedService] account] email];
             break;
         case HEMSettingsAccountInfoTypePassword:
-            subtitle = HEMSettingsAcctPasswordPlaceholder;
+            value = HEMSettingsAcctPasswordPlaceholder;
             break;
         case HEMSettingsAccountInfoTypeBirthday: {
             SENAccount* account = [[SENServiceAccount sharedService] account];
-            subtitle = [account localizedBirthdateWithStyle:NSDateFormatterLongStyle];
+            value = [account localizedBirthdateWithStyle:NSDateFormatterLongStyle];
             break;
         }
         case HEMSettingsAccountInfoTypeGender:
-            subtitle = [self gender];
+            value = [self gender];
             break;
         case HEMSettingsAccountInfoTypeHeight:
-            subtitle = [self height];
+            value = [self height];
             break;
         case HEMSettingsAccountInfoTypeWeight:
-            subtitle = [self weight];
+            value = [self weight];
             break;
         case HEMSettingsAccountInfoTypeHealthKit:
         case HEMSettingsAccountInfoTypeEnhancedAudio:
@@ -203,8 +208,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
         default:
             break;
     }
-    
-    return subtitle ?: NSLocalizedString(@"empty-data", nil);
+    return value;
 }
 
 - (BOOL)isEnabledAtIndexPath:(NSIndexPath*)indexPath {
@@ -390,6 +394,48 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAcctRow) {
 }
 
 #pragma mark - Updates
+
+- (void)updateName:(NSString*)name completion:(void(^)(NSError* error))completion {
+    __weak typeof(self) weakSelf = self;
+    [[SENServiceAccount sharedService] changeName:name completion:^(NSError *error) {
+        if (!error) {
+            [[weakSelf tableView] reloadData];
+        }
+        if (completion) {
+            completion (error);
+        }
+    }];
+}
+
+- (void)updateEmail:(NSString*)email completion:(void(^)(NSError* error))completion {
+    __weak typeof(self) weakSelf = self;
+    [[SENServiceAccount sharedService] changeEmail:email completion:^(NSError *error) {
+        if (!error) {
+            [[weakSelf tableView] reloadData];
+        }
+        if (completion) {
+            completion (error);
+        }
+    }];
+}
+
+- (void)updatePassword:(NSString*)password
+       currentPassword:(NSString*)currentPassword
+            completion:(void(^)(NSError* error))completion {
+    
+    SENServiceAccount* accountService = [SENServiceAccount sharedService];
+    NSString* email = [[accountService account] email];
+    
+    __weak typeof(self) weakSelf = self;
+    [accountService changePassword:currentPassword toNewPassword:password forUsername:email completion:^(NSError *error) {
+        if (!error) {
+            [[weakSelf tableView] reloadData];
+        }
+        if (completion) {
+            completion (error);
+        }
+    }];
+}
 
 - (void)updateAccount:(void(^)(NSError* error))completion {
     [[self tableView] reloadData]; // reload first to reflect temp change

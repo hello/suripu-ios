@@ -35,6 +35,7 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountError) {
 - (instancetype)initWithTableView:(UITableView*)tableView;
 - (void)reload:(void(^)(NSError* error))completion;
 - (HEMSettingsAccountInfoType)infoTypeAtIndexPath:(NSIndexPath*)indexPath;
+- (NSString*)valueForInfoType:(HEMSettingsAccountInfoType)type;
 - (NSString*)titleForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (NSString*)valueForCellAtIndexPath:(NSIndexPath*)indexPath;
 - (BOOL)isEnabledAtIndexPath:(NSIndexPath*)indexPath;
@@ -60,6 +61,12 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountError) {
 
 - (void)updateGender:(SENAccountGender)gender
           completion:(void(^)(NSError* error))completion;
+
+- (void)updateName:(NSString*)name completion:(void(^)(NSError* error))completion;
+- (void)updateEmail:(NSString*)email completion:(void(^)(NSError* error))completion;
+- (void)updatePassword:(NSString*)password
+       currentPassword:(NSString*)currentPassword
+            completion:(void(^)(NSError* error))completion;
 
 - (void)enablePreference:(BOOL)enable
                  forType:(HEMSettingsAccountInfoType)type

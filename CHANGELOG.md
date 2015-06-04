@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.7.4
+
+New:
+
+* Moved the Health screen during onboarding
+* Updated text in account settings to show Sync with Health
+
 ## 1.0.7.3
 
 New:

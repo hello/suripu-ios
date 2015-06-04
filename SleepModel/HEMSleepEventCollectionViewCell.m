@@ -5,17 +5,20 @@
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepEventButton.h"
 #import "NSAttributedString+HEMUtils.h"
+#import "HEMTimelineLayoutAttributes.h"
 #import "HelloStyleKit.h"
 #import "HEMMarkdown.h"
 
 @interface HEMSleepEventCollectionViewCell () <AVAudioPlayerDelegate, FDWaveformViewDelegate>
 
 @property (nonatomic, weak) IBOutlet UIView *contentContainerView;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewLeading;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewTrailing;
 @property (weak, nonatomic) IBOutlet UIButton *playSoundButton;
 @property (weak, nonatomic) IBOutlet FDWaveformView *waveformView;
 @property (weak, nonatomic) IBOutlet RTSpinKitView *spinnerView;
+
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewTop;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewLeading;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewTrailing;
 
 @property (nonatomic, strong) AVAudioPlayer *player;
 @property (nonatomic, strong) NSTimer *playerUpdateTimer;
@@ -43,13 +46,16 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     [super addTimeLabelWithText:text atHeightRatio:ratio];
 }
 
+- (void)applyLayoutAttributes:(HEMTimelineLayoutAttributes *)layoutAttributes {
+    [self animateContentViewWithAttributes:layoutAttributes];
+}
+
 - (void)awakeFromNib {
     [super awakeFromNib];
     self.loadingQueue = [NSOperationQueue new];
     self.loadingQueue.maxConcurrentOperationCount = 1;
     [self configureAudioPlayer];
     [self configureGradientViews];
-    [self animateContentView];
 }
 
 - (void)configureAudioPlayer {
@@ -73,8 +79,7 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     [self insertSubview:self.gradientContainerTopView atIndex:0];
     [self insertSubview:self.gradientContainerBottomView atIndex:0];
     NSArray *topColors = @[
-        (id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0]
-            .CGColor,
+        (id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0].CGColor,
         (id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0.1f].CGColor
     ];
 
@@ -96,16 +101,29 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     [self.gradientContainerBottomView.layer insertSublayer:bottomLayer atIndex:0];
 }
 
-- (void)animateContentView {
-    self.contentContainerViewLeading.constant = 8.f;
-    self.contentContainerViewTrailing.constant = 42.f;
+- (void)animateContentViewWithAttributes:(HEMTimelineLayoutAttributes *)attributes {
+    CGFloat const minContainerViewLeading = -10.f;
+    CGFloat const maxContainerViewLeading = 8.f;
+    CGFloat const minContainerViewTrailing = -60.f;
+    CGFloat const maxContainerViewTrailing = -42.f;
+    CGFloat const maxContainerViewTop = 10.f;
+    CGFloat const minContainerViewTop = 0;
+    CGFloat ratio = 1 - fabs(attributes.ratioFromCenter);
+    CGFloat adjustedRatio = MIN(1, ratio * 5);
+    CGFloat diff = (maxContainerViewLeading - minContainerViewLeading) * adjustedRatio;
+    CGFloat leading = MIN(minContainerViewLeading + diff, maxContainerViewLeading);
+    CGFloat trailing = MIN(minContainerViewTrailing + diff, maxContainerViewTrailing);
+    CGFloat top = MAX(minContainerViewTop, maxContainerViewTop * attributes.ratioFromCenter);
+    self.contentContainerViewLeading.constant = leading;
+    self.contentContainerViewTrailing.constant = trailing;
+    self.contentContainerViewTop.constant = top;
     [self setNeedsUpdateConstraints];
-    [UIView animateWithDuration:0.25f
-                          delay:0.2f
+    [UIView animateWithDuration:0.05f
+                          delay:0
                         options:0
                      animations:^{
-                       [self.contentContainerView layoutIfNeeded];
-                       self.contentContainerView.alpha = 1.f;
+                         self.alpha = MAX(0.5, MIN(1, ratio * 5));
+                         [self.contentContainerView layoutIfNeeded];
                      }
                      completion:NULL];
 }

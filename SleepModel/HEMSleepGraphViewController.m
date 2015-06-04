@@ -6,6 +6,7 @@
 #import "HEMAlertViewController.h"
 #import "HEMAudioCache.h"
 #import "HEMBounceModalTransition.h"
+#import "HEMFadingParallaxLayout.h"
 #import "HEMMainStoryboard.h"
 #import "HEMNoSleepEventCollectionViewCell.h"
 #import "HEMPopupView.h"
@@ -500,6 +501,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 }
 
 - (void)configureCollectionView {
+    self.collectionView.collectionViewLayout = [HEMFadingParallaxLayout new];
     self.collectionView.backgroundColor = [HelloStyleKit lightTintColor];
     self.collectionView.delegate = self;
 }
@@ -513,10 +515,6 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
-
-- (void)animateAllCellHeightChanges {
-    [self.collectionView setCollectionViewLayout:[UICollectionViewFlowLayout new] animated:YES];
-}
 
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout

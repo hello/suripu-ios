@@ -21,10 +21,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self enableBackButton:NO];
     [self trackAnalyticsEvent:HEMAnalyticsEventHealth];
 }
 
 #pragma mark - Actions
+
+- (IBAction)skip:(id)sender {
+    [self next];
+}
 
 - (IBAction)enableHealthKit:(id)sender {
     SENServiceHealthKit* service = [SENServiceHealthKit sharedService];
@@ -55,7 +60,7 @@
 #pragma mark - Segues
 
 - (void)next {
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard healthToAudioSegueIdentifier] sender:self];
+    [self performSegueWithIdentifier:[HEMOnboardingStoryboard healthKitToLocationSegueIdentifier] sender:self];
 }
 
 @end

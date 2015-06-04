@@ -1,5 +1,6 @@
 
 #import <SenseKit/SENAccount.h>
+#import <SenseKit/SENServiceHealthKit.h>
 
 #import "UIFont+HEMStyle.h"
 
@@ -133,8 +134,16 @@ static CGFloat const HEMWeightDefaultMale = 175.0f;
 }
 
 - (void)next {
-    [self performSegueWithIdentifier:[HEMOnboardingStoryboard locationSegueIdentifier]
-                              sender:self];
+    [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountDone];
+    
+    NSString* segueId = nil;
+    if ([[SENServiceHealthKit sharedService] isSupported]) {
+        segueId = [HEMOnboardingStoryboard weightToHealthKitSegueIdentifier];
+    } else {
+        segueId = [HEMOnboardingStoryboard weightToLocationSegueIdentifier];
+    }
+    
+    [self performSegueWithIdentifier:segueId sender:self];
 }
 
 @end

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.7.5
+
+Fixes:
+
+* updated Health app image in onboarding
+
 ## 1.0.7.4
 
 New:

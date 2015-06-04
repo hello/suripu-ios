@@ -184,20 +184,6 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
     return ![self isViewFullyVisible] || [self.dataSource.sleepResult.score integerValue] == 0;
 }
 
-- (void)willShowDetailsForInsight:(SENSleepResultSensorInsight *)insight {
-    if (![self presleepSectionIsExpanded]) {
-        self.presleepExpanded = YES;
-        [self animateAllCellHeightChanges];
-    }
-}
-
-- (void)willHideInsightDetails {
-    if ([self presleepSectionIsExpanded]) {
-        self.presleepExpanded = NO;
-        [self animateAllCellHeightChanges];
-    }
-}
-
 - (void)didLoadCell:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
     if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
         HEMSleepSummaryCollectionViewCell *summaryCell = (id)cell;

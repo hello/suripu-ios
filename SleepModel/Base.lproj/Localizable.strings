@@ -164,7 +164,7 @@
 "settings.personal.info.height" = "Height";
 "settings.personal.info.weight" = "Weight";
 "settings.account.enhanced-audio" = "Enhanced audio";
-"settings.account.healthkit" = "HealthKit";
+"settings.account.healthkit" = "Sync with Health";
 "settings.account.push-conditions" = "Poor conditions";
 "settings.account.push-score" = "Sleep Score";
 "settings.wifi.other" = "Other...";

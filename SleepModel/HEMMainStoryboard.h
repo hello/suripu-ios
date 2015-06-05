@@ -27,6 +27,7 @@
 +(NSString *)settingsCellReuseIdentifier;
 +(NSString *)pairReuseIdentifier;
 +(NSString *)deviceReuseIdentifier;
++(NSString *)supportCellReuseIdentifier;
 +(NSString *)warningReuseIdentifier;
 +(NSString *)actionsReuseIdentifier;
 +(NSString *)timezoneReuseIdentifier;
@@ -52,6 +53,7 @@
 +(NSString *)pickSoundSegueIdentifier;
 +(NSString *)pillSegueIdentifier;
 +(NSString *)senseSegueIdentifier;
++(NSString *)settingsToSupportSegueIdentifier;
 +(NSString *)timezoneSegueIdentifier;
 +(NSString *)unitsSettingsSegueIdentifier;
 +(NSString *)updateAccountInfoSegueIdentifier;

@@ -52,6 +52,7 @@ static NSString *const _HEMsensorViewController = @"sensorViewController";
 static NSString *const _HEMsettingsCell = @"settingsCell";
 static NSString *const _HEMsettingsController = @"settingsController";
 static NSString *const _HEMsettingsNavController = @"settingsNavController";
+static NSString *const _HEMsettingsToSupport = @"settingsToSupport";
 static NSString *const _HEMsignout = @"signout";
 static NSString *const _HEMsingle = @"single";
 static NSString *const _HEMsleepGraphController = @"sleepGraphController";
@@ -59,6 +60,7 @@ static NSString *const _HEMsleepGraphNavController = @"sleepGraphNavController";
 static NSString *const _HEMsleepHistoryController = @"sleepHistoryController";
 static NSString *const _HEMsleepInsight = @"sleepInsight";
 static NSString *const _HEMsleepQuestions = @"sleepQuestions";
+static NSString *const _HEMsupportCell = @"supportCell";
 static NSString *const _HEMtext = @"text";
 static NSString *const _HEMtimeSliceCell = @"timeSliceCell";
 static NSString *const _HEMtimeZoneNavViewController = @"timeZoneNavViewController";
@@ -103,6 +105,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)settingsCellReuseIdentifier { return _HEMsettingsCell; }
 +(NSString *)signoutReuseIdentifier { return _HEMsignout; }
 +(NSString *)singleReuseIdentifier { return _HEMsingle; }
++(NSString *)supportCellReuseIdentifier { return _HEMsupportCell; }
 +(NSString *)textReuseIdentifier { return _HEMtext; }
 +(NSString *)timeSliceCellReuseIdentifier { return _HEMtimeSliceCell; }
 +(NSString *)timezoneReuseIdentifier { return _HEMtimezone; }
@@ -119,6 +122,7 @@ static NSString *const _HEMwarning = @"warning";
 +(NSString *)pickSoundSegueIdentifier { return _HEMpickSound; }
 +(NSString *)pillSegueIdentifier { return _HEMpill; }
 +(NSString *)senseSegueIdentifier { return _HEMsense; }
++(NSString *)settingsToSupportSegueIdentifier { return _HEMsettingsToSupport; }
 +(NSString *)timezoneSegueIdentifier { return _HEMtimezone; }
 +(NSString *)unitsSettingsSegueIdentifier { return _HEMunitsSettings; }
 +(NSString *)updateAccountInfoSegueIdentifier { return _HEMupdateAccountInfo; }

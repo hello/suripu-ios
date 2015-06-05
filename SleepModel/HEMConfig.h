@@ -13,7 +13,10 @@ typedef NS_ENUM(NSUInteger, HEMConf) {
     HEMConfClientId,
     HEMConfAnalyticsToken,
     HEMConfCrashlyticsToken,
-    HEMConfAllowDebugOptions
+    HEMConfAllowDebugOptions,
+    HEMConfZendeskToken,
+    HEMConfZendeskURL,
+    HEMConfZendeskClientId
 };
 
 @interface HEMConfig : NSObject

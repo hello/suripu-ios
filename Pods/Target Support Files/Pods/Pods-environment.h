@@ -210,3 +210,10 @@
 #define COCOAPODS_VERSION_MINOR_YapDatabase_standard 6
 #define COCOAPODS_VERSION_PATCH_YapDatabase_standard 4
 
+// ZendeskSDK
+#define COCOAPODS_POD_AVAILABLE_ZendeskSDK
+// This library does not follow semantic-versioning,
+// so we were not able to define version macros.
+// Please contact the author.
+// Version: 1.3.0.1.
+

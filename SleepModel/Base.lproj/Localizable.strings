@@ -150,8 +150,10 @@
 "settings.notifications" = "Notifications";
 "settings.account" = "My account";
 "settings.units" = "Units and time";
-"settings.feedback" = "Feedback";
-"settings.user-guide" = "User Guide";
+"settings.support" = "Support";
+"settings.user-guide" = "User guide";
+"settings.contact-us" = "Contact us";
+"settings.my-tickets" = "My tickets";
 "settings.units.24-hour" = "24 hour";
 "settings.units.12-hour" = "12 hour";
 "settings.units.celsius" = "Celsius";

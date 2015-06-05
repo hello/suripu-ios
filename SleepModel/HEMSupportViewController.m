@@ -6,6 +6,8 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMSupportViewController.h"
 #import "HEMSettingsTableViewCell.h"
 #import "HEMMainStoryboard.h"
@@ -26,10 +28,19 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 
 @implementation HEMSupportViewController
 
++ (void)initialize {
+    [[ZDKCreateRequestView appearance] setTextEntryFont:[UIFont supportTicketDescriptionFont]];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureTableView];
-    [[HEMZendeskService sharedService] configure:nil];
+    [[HEMZendeskService sharedService] configure:^(NSError *error) {
+        if (error) {
+            DDLogWarn(@"failed to configure zendesk with error %@", error);
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        }
+    }];
 }
 
 - (void)configureTableView {

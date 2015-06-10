@@ -49,18 +49,10 @@ static CGFloat const HEMPopupMargin = 20.f;
 
 - (void)drawRect:(CGRect)rect
 {
-    [[HelloStyleKit tintColor] setFill];
-    UIBezierPath* bezierPath = [UIBezierPath bezierPath];
+    [[UIColor whiteColor] setFill];
     CGFloat minX = CGRectGetMinX(rect);
-    CGFloat midX = CGRectGetMidX(rect);
     CGFloat minY = CGRectGetMinY(rect);
     CGFloat boxHeight = CGRectGetHeight(rect) - HEMPopupPointerHeight;
-    [bezierPath moveToPoint: CGPointMake(midX - HEMPopupPointerRadius, boxHeight)];
-    [bezierPath addLineToPoint: CGPointMake(midX, boxHeight + HEMPopupPointerHeight)];
-    [bezierPath addLineToPoint: CGPointMake(midX + HEMPopupPointerRadius, boxHeight)];
-    [bezierPath closePath];
-    [bezierPath fill];
-
     CGRect containerRect = CGRectMake(minX, minY, CGRectGetWidth(rect), boxHeight);
     UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect:containerRect cornerRadius: 4];
     [rectanglePath fill];

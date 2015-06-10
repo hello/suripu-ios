@@ -67,6 +67,7 @@ static NSString *const _HEMtimelineFeedback = @"timelineFeedback";
 static NSString *const _HEMtimezone = @"timezone";
 static NSString *const _HEMtrendGraph = @"trendGraph";
 static NSString *const _HEMtrends = @"trends";
+static NSString *const _HEMtutorialViewController = @"tutorialViewController";
 static NSString *const _HEMunitCell = @"unitCell";
 static NSString *const _HEMunitsSettings = @"unitsSettings";
 static NSString *const _HEMupdateAccountInfo = @"updateAccountInfo";
@@ -145,5 +146,6 @@ static NSString *const _HEMwarning = @"warning";
 +(id)instantiateTimeZoneViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimeZoneViewController]; }
 +(id)instantiateTimelineFeedbackViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtimelineFeedback]; }
 +(id)instantiateTrendsViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtrends]; }
++(id)instantiateTutorialViewController { return [[self storyboard] instantiateViewControllerWithIdentifier:_HEMtutorialViewController]; }
 
 @end

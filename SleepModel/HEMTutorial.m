@@ -10,6 +10,10 @@
 #import <SenseKit/SENLocalPreferences.h>
 #import "HEMTutorial.h"
 #import "HEMFullscreenDialogView.h"
+#import "HEMTutorialContent.h"
+#import "HEMTutorialViewController.h"
+#import "HEMMainStoryboard.h"
+#import "UIView+HEMSnapshot.h"
 
 @implementation HEMTutorial
 
@@ -22,10 +26,11 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 
 + (void)showTutorialForTimelineIfNeeded
 {
-    if ([self shouldShowTutorialForTimeline]) {
-        [self showTutorialForTimeline];
-        [self markTutorialViewed:HEMTutorialTimelineKey];
-    }
+//    if ([self shouldShowTutorialForTimeline]) {
+//        [self showTutorialForTimeline];
+//        [self markTutorialViewed:HEMTutorialTimelineKey];
+//    }
+    [self showTutorialForTimeline];
 }
 
 + (BOOL)shouldShowTutorialForTimeline
@@ -83,23 +88,31 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 
 + (void)showTutorialForTimeline
 {
-    HEMDialogContent* content1 = [HEMDialogContent new];
-    content1.title = NSLocalizedString(@"tutorial.timeline.title1", nil);
-    content1.content = NSLocalizedString(@"tutorial.timeline.message1", nil);
-    content1.image = [UIImage imageNamed:@"timeline_explain_sleep"];
-    HEMDialogContent* content2 = [HEMDialogContent new];
-    content2.title = NSLocalizedString(@"tutorial.timeline.title2", nil);
-    content2.content = NSLocalizedString(@"tutorial.timeline.message2", nil);
-    content2.image = [UIImage imageNamed:@"timeline_explain_score"];
-    HEMDialogContent* content3 = [HEMDialogContent new];
-    content3.title = NSLocalizedString(@"tutorial.timeline.title3", nil);
-    content3.content = NSLocalizedString(@"tutorial.timeline.message3", nil);
-    content3.image = [UIImage imageNamed:@"timeline_explain_before"];
-    HEMDialogContent* content4 = [HEMDialogContent new];
-    content4.title = NSLocalizedString(@"tutorial.timeline.title4", nil);
-    content4.content = NSLocalizedString(@"tutorial.timeline.message4", nil);
-    content4.image = [UIImage imageNamed:@"timeline_explain_graph"];
-    [HEMFullscreenDialogView showDialogsWithContent:@[content1, content2, content3, content4]];
+    HEMTutorialContent* tutorial1 =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title1", nil)
+                                         text:NSLocalizedString(@"tutorial.timeline.message1", nil)
+                                        image:[UIImage imageNamed:@"timeline_explain_sleep"]];
+    HEMTutorialContent* tutorial2 =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title2", nil)
+                                         text:NSLocalizedString(@"tutorial.timeline.message2", nil)
+                                        image:[UIImage imageNamed:@"timeline_explain_score"]];
+    HEMTutorialContent* tutorial3 =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title3", nil)
+                                         text:NSLocalizedString(@"tutorial.timeline.message3", nil)
+                                        image:[UIImage imageNamed:@"timeline_explain_before"]];
+    HEMTutorialContent* tutorial4 =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title4", nil)
+                                         text:NSLocalizedString(@"tutorial.timeline.message4", nil)
+                                        image:[UIImage imageNamed:@"timeline_explain_graph"]];
+    
+    UIViewController* rootVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    UIImage* snapshot = [[rootVC view] blurredSnapshotWithTint:[UIColor colorWithWhite:0.0f alpha:0.3f]];
+
+    HEMTutorialViewController* tutorialVC = [HEMMainStoryboard instantiateTutorialViewController];
+    [tutorialVC setTutorials:@[tutorial1, tutorial2, tutorial3, tutorial4]];
+    [tutorialVC setBackgroundImage:snapshot];
+    
+    [rootVC presentViewController:tutorialVC animated:YES completion:nil];
 }
 
 + (void)showTutorialForSensors

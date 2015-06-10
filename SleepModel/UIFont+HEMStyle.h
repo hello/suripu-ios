@@ -22,8 +22,6 @@
  */
 + (UIFont*)alarmMeridiemFont;
 
-+ (UIFont*)tutorialDialogFont;
-
 /**
  *  Font for section and insight headings
  */
@@ -416,5 +414,19 @@
  * Font used to display the option description in the custom action sheet
  */
 + (UIFont*)actionSheetOptionDescriptionFont;
+
+#pragma mark - Tutorial Dialogs
+
++ (UIFont*)tutorialDialogFont;
+
+/**
+ * Font used to display a tutorial's title
+ */
++ (UIFont*)tutorialTitleFont;
+
+/**
+ * Font used to display a tutorial's content / description
+ */
++ (UIFont*)tutorialDescriptionFont;
 
 @end

@@ -831,6 +831,58 @@
             </objects>
             <point key="canvasLocation" x="500" y="3020"/>
         </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="Dum-Cq-3pF">
+            <objects>
+                <viewController storyboardIdentifier="tutorialViewController" id="Wyk-Hb-XFm" customClass="HEMTutorialViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Jja-rX-grm"/>
+                        <viewControllerLayoutGuide type="bottom" id="bPi-4p-Z0W"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="eLM-0Y-FnO">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="yBM-x2-iLi">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M5p-f7-sPF">
+                                <rect key="frame" x="0.0" y="20" width="600" height="495"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Wyk-Hb-XFm" id="Gmy-31-zWe"/>
+                                </connections>
+                            </scrollView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="cIs-SU-wY1">
+                                <rect key="frame" x="280" y="539" width="39" height="37"/>
+                            </pageControl>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <constraints>
+                            <constraint firstItem="yBM-x2-iLi" firstAttribute="leading" secondItem="eLM-0Y-FnO" secondAttribute="leadingMargin" constant="-16" id="25r-Yh-QNd"/>
+                            <constraint firstItem="M5p-f7-sPF" firstAttribute="top" secondItem="Jja-rX-grm" secondAttribute="bottom" id="8vG-VE-Ztc"/>
+                            <constraint firstItem="bPi-4p-Z0W" firstAttribute="top" secondItem="cIs-SU-wY1" secondAttribute="bottom" constant="24" id="LK2-Bu-YBR"/>
+                            <constraint firstItem="M5p-f7-sPF" firstAttribute="leading" secondItem="eLM-0Y-FnO" secondAttribute="leadingMargin" constant="-16" id="NLf-f9-Iex"/>
+                            <constraint firstItem="bPi-4p-Z0W" firstAttribute="top" secondItem="yBM-x2-iLi" secondAttribute="bottom" id="Vul-Vg-Q5T"/>
+                            <constraint firstItem="M5p-f7-sPF" firstAttribute="bottom" secondItem="cIs-SU-wY1" secondAttribute="top" constant="-24" id="gT6-Fe-DHq"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="M5p-f7-sPF" secondAttribute="trailing" constant="-16" id="hAr-Tc-O8f"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="yBM-x2-iLi" secondAttribute="trailing" constant="-16" id="tVu-Im-7Dx"/>
+                            <constraint firstAttribute="centerX" secondItem="cIs-SU-wY1" secondAttribute="centerX" id="wqH-BL-Bbm"/>
+                            <constraint firstItem="yBM-x2-iLi" firstAttribute="top" secondItem="Jja-rX-grm" secondAttribute="bottom" constant="-20" id="zML-K7-0Xl"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="backgroundView" destination="yBM-x2-iLi" id="2Gu-JI-d3J"/>
+                        <outlet property="contentContainerView" destination="M5p-f7-sPF" id="qcV-2m-BlW"/>
+                        <outlet property="pageControl" destination="cIs-SU-wY1" id="RlV-us-1bd"/>
+                        <outlet property="view" destination="eLM-0Y-FnO" id="uhF-0c-Wkz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="XEx-SZ-heL" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="497" y="3814"/>
+        </scene>
         <!--My account-->
         <scene sceneID="a37-H4-b9a">
             <objects>

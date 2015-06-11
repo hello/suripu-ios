@@ -36,8 +36,7 @@
 }
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset {
-    CGRect rect = CGRectMake(proposedContentOffset.x, 0,
-                             CGRectGetWidth(self.collectionView.bounds),
+    CGRect rect = CGRectMake(proposedContentOffset.x, 0, CGRectGetWidth(self.collectionView.bounds),
                              CGRectGetHeight(self.collectionView.bounds));
     NSArray *array = [self layoutAttributesForElementsInRect:rect];
     for (HEMTimelineLayoutAttributes *attrs in array) {
@@ -49,6 +48,7 @@
 - (void)updateAttributes:(HEMTimelineLayoutAttributes *)attrs {
     CGPoint offset = [self offsetFromCenterWithAttributes:attrs];
     attrs.ratioFromCenter = [self ratioFromCenterWithOffsetFromCenter:offset];
+    attrs.ratioFromTop = [self ratioFromTopWithAttributes:attrs];
 }
 
 - (CGPoint)offsetFromCenterWithAttributes:(HEMTimelineLayoutAttributes *)attrs {
@@ -58,9 +58,16 @@
     return CGPointMake(boundsCenter.x - cellCenter.x, boundsCenter.y - cellCenter.y);
 }
 
+- (CGFloat)ratioFromTopWithAttributes:(HEMTimelineLayoutAttributes *)attrs {
+    CGRect bounds = self.collectionView.bounds;
+    CGPoint cellCenter = attrs.center;
+    CGFloat ratio = cellCenter.y / CGRectGetMaxY(bounds);
+    return ratio;
+}
+
 - (CGFloat)ratioFromCenterWithOffsetFromCenter:(CGPoint)offsetFromCenter {
     CGRect bounds = self.collectionView.bounds;
-    CGFloat halfHeight = CGRectGetHeight(bounds)/2;
+    CGFloat halfHeight = CGRectGetHeight(bounds) / 2;
     CGFloat ratio = offsetFromCenter.y / halfHeight;
     return ratio;
 }

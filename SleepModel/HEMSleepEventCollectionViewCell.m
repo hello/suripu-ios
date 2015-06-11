@@ -79,7 +79,8 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     [self insertSubview:self.gradientContainerTopView atIndex:0];
     [self insertSubview:self.gradientContainerBottomView atIndex:0];
     NSArray *topColors = @[
-        (id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0].CGColor,
+        (id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0]
+            .CGColor,
         (id)[[HelloStyleKit tintColor] colorWithAlphaComponent:0.1f].CGColor
     ];
 
@@ -108,24 +109,28 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     CGFloat const maxContainerViewTrailing = -42.f;
     CGFloat const maxContainerViewTop = 10.f;
     CGFloat const minContainerViewTop = 0;
+    CGFloat const motionDelta = 1.f;
     CGFloat ratio = 1 - fabs(attributes.ratioFromCenter);
     CGFloat adjustedRatio = MIN(1, ratio * 5);
     CGFloat diff = (maxContainerViewLeading - minContainerViewLeading) * adjustedRatio;
     CGFloat leading = MIN(minContainerViewLeading + diff, maxContainerViewLeading);
     CGFloat trailing = MIN(minContainerViewTrailing + diff, maxContainerViewTrailing);
     CGFloat top = MAX(minContainerViewTop, maxContainerViewTop * attributes.ratioFromCenter);
-    self.contentContainerViewLeading.constant = leading;
-    self.contentContainerViewTrailing.constant = trailing;
-    self.contentContainerViewTop.constant = top;
-    [self setNeedsUpdateConstraints];
-    [UIView animateWithDuration:0.05f
-                          delay:0
-                        options:0
-                     animations:^{
-                         self.alpha = MAX(0.5, MIN(1, ratio * 5));
-                         [self.contentContainerView layoutIfNeeded];
-                     }
-                     completion:NULL];
+    if (fabs(self.contentContainerViewTop.constant - top) > motionDelta
+        || fabs(self.contentContainerViewTrailing.constant - trailing) > motionDelta
+        || fabs(self.contentContainerViewLeading.constant - leading) > motionDelta) {
+        self.contentContainerViewLeading.constant = leading;
+        self.contentContainerViewTrailing.constant = trailing;
+        self.contentContainerViewTop.constant = top;
+        [self setNeedsUpdateConstraints];
+        [UIView animateWithDuration:0.05f
+                              delay:0
+                            options:0
+                         animations:^{ [self.contentContainerView layoutIfNeeded]; }
+                         completion:NULL];
+    }
+    CGFloat alphaRatio = ratio < 0 ? MAX(0.4, MIN(1, fabs(ratio))) : 1;
+    self.contentContainerView.alpha = alphaRatio;
 }
 
 - (void)layoutSubviews {

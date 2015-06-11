@@ -94,7 +94,7 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
             _hourDateFormatter.dateFormat = @"h a";
         } else {
             _timeDateFormatter.dateFormat = @"H:mm";
-            _hourDateFormatter.dateFormat = @"H";
+            _hourDateFormatter.dateFormat = @"H:00";
         }
         _rangeDateFormatter = [NSDateFormatter new];
         _rangeDateFormatter.dateFormat = @"MMMM d";

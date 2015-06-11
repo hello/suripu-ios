@@ -48,7 +48,7 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 
 @implementation HEMSleepGraphViewController
 
-static CGFloat const HEMSleepSummaryCellHeight = 384.f;
+static CGFloat const HEMSleepSummaryCellHeight = 304.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMTopItemsConstraintConstant = 4.f;

@@ -11,4 +11,5 @@
 @interface HEMTimelineLayoutAttributes : UICollectionViewLayoutAttributes
 
 @property (nonatomic) CGFloat ratioFromCenter;
+@property (nonatomic) CGFloat ratioFromTop;
 @end

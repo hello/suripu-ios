@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="210"/>
                 <subviews>
                     <view opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="276" placeholderIntrinsicHeight="48" translatesAutoresizingMaskIntoConstraints="NO" id="fHd-pv-egS" userLabel="contentContainerView" customClass="HEMEventBubbleView">
-                        <rect key="frame" x="-10" y="-16" width="270" height="48"/>
+                        <rect key="frame" x="-10" y="0.0" width="270" height="48"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TNn-do-Y9M" userLabel="actionSheetButton">
                                 <rect key="frame" x="0.0" y="0.0" width="270" height="48"/>
@@ -70,7 +70,7 @@
             </view>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="top" secondItem="fHd-pv-egS" secondAttribute="top" constant="16" id="1O9-6n-eyx"/>
+                <constraint firstAttribute="top" secondItem="fHd-pv-egS" secondAttribute="top" id="1O9-6n-eyx"/>
                 <constraint firstItem="fHd-pv-egS" firstAttribute="trailing" secondItem="gTV-IL-0wX" secondAttribute="trailing" constant="-60" id="TZa-qP-SAL"/>
                 <constraint firstItem="fHd-pv-egS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="-10" id="y5u-Ny-B9E"/>
             </constraints>

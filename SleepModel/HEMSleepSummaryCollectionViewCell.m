@@ -7,11 +7,7 @@
 
 @interface HEMSleepSummaryCollectionViewCell ()
 
-@property (weak, nonatomic) IBOutlet UIButton *presleepButton;
-@property (weak, nonatomic) IBOutlet UIButton *sleepSummaryButton;
 @property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
-@property (weak, nonatomic) IBOutlet UIView *presleepContainerView;
-@property (weak, nonatomic) IBOutlet UIView *separatorView;
 @property (weak, nonatomic) IBOutlet UIView *summaryContainerView;
 @property (nonatomic, strong) NSAttributedString *sleepScoreLabelText;
 @end
@@ -32,7 +28,6 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 - (void)awakeFromNib {
     [self configureSpinner];
     self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
-    [self showSleepSummary:nil];
 }
 
 - (void)configureSpinner {
@@ -46,38 +41,14 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 - (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated {
     BOOL scoreIsEmpty = sleepScore == 0;
     self.sleepScoreTextLabel.hidden = scoreIsEmpty;
-    self.presleepButton.hidden = scoreIsEmpty;
-    self.sleepSummaryButton.hidden = scoreIsEmpty;
-    self.separatorView.hidden = scoreIsEmpty;
     if (!scoreIsEmpty)
         [self.spinnerView stopAnimating];
     [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];
 }
 
-- (IBAction)showSleepSummary:(id)sender {
-    UIColor *tintColor = [HelloStyleKit tintColor];
-    UIColor *inactiveColor = [HelloStyleKit barButtonDisabledColor];
-    [self setTintColor:tintColor onButton:self.sleepSummaryButton];
-    [self setTintColor:inactiveColor onButton:self.presleepButton];
-    [self setSummaryViewsVisible:YES];
-}
-
-- (IBAction)showPresleepSummary:(id)sender {
-    UIColor *tintColor = [HelloStyleKit tintColor];
-    UIColor *inactiveColor = [HelloStyleKit barButtonDisabledColor];
-    [self setTintColor:tintColor onButton:self.presleepButton];
-    [self setTintColor:inactiveColor onButton:self.sleepSummaryButton];
-    [self setSummaryViewsVisible:NO];
-}
-
 - (void)setSummaryViewsVisible:(BOOL)visible {
     CGFloat summaryAlpha = visible ? 1.f : 0;
-    CGFloat presleepAlpha = visible ? 0 : 1.f;
-    [UIView animateWithDuration:0.25
-                     animations:^{
-                       self.summaryContainerView.alpha = summaryAlpha;
-                       self.presleepContainerView.alpha = presleepAlpha;
-                     }];
+    [UIView animateWithDuration:0.25 animations:^{ self.summaryContainerView.alpha = summaryAlpha; }];
 }
 
 - (void)setTintColor:(UIColor *)tintColor onButton:(UIButton *)button {

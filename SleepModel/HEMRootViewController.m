@@ -90,7 +90,13 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [slideController setDelegate:self];
     [slideController.view add3DEffectWithBorder:HEMRootTopPaneParallaxDepth
                                       direction:HEMMotionEffectsDirectionVertical];
-    return slideController;
+    UIViewController* container = [HEMMainStoryboard instantiateTimelineContainerController];
+    [slideController willMoveToParentViewController:nil];
+    [slideController removeFromParentViewController];
+    [container.view insertSubview:slideController.view atIndex:0];
+    [container addChildViewController:slideController];
+    [slideController didMoveToParentViewController:container];
+    return container;
 }
 
 - (void)viewDidBecomeActive

@@ -70,12 +70,12 @@
 +(id)instantiateSettingsController;
 +(id)instantiateSettingsNavController;
 +(id)instantiateSleepGraphController;
-+(id)instantiateSleepGraphNavController;
 +(id)instantiateSleepHistoryController;
 +(id)instantiateSleepInsightViewController;
 +(id)instantiateSleepQuestionsViewController;
 +(id)instantiateTimeZoneNavViewController;
 +(id)instantiateTimeZoneViewController;
++(id)instantiateTimelineContainerController;
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;
 +(id)instantiateTutorialViewController;

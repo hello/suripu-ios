@@ -41,6 +41,7 @@
         HEMURLImageView* imageView = [[HEMURLImageView alloc] initWithFrame:imageFrame];
         [imageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
         [imageView setContentMode:UIViewContentModeScaleAspectFill];
+        [imageView setClipsToBounds:YES];
         [[self contentView] addSubview:imageView];
         [self setUrlImageView:imageView];
     }

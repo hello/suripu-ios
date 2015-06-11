@@ -22,9 +22,10 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundView;
 
 @property (strong, nonatomic) NSMutableArray* tutorialScreens;
+// hold on to data sources as they are weak when assigned to collection views
 @property (strong, nonatomic) NSMutableArray* tutorialDataSources;
 @property (assign, nonatomic) CGFloat previousScrollOffsetX;
-@property (assign, nonatomic) NSInteger currentPage;
+@property (assign, nonatomic) UIView* focusedScreen;
 
 @end
 
@@ -77,8 +78,8 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
         [[self tutorialScreens] addObject:screen];
         [[self contentContainerView] insertSubview:screen atIndex:0];
         
+        contentFrame.origin.x = CGRectGetMaxX(contentFrame) - HEMTutorialContentHorzPadding;
         index++;
-        contentFrame.origin.x += (CGRectGetWidth(contentFrame) - (HEMTutorialContentHorzPadding));
     }
     
     CGSize contentSize = [[self contentContainerView] contentSize];
@@ -107,68 +108,52 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
 
 #pragma mark - UIScrollViewDelegate
 
-- (void)scrollToTheRightScreens {
-    NSInteger currentPage = [self currentPage];
-    NSInteger nextPage = currentPage + 1;
-    
-    DDLogVerbose(@"right: current page %ld", currentPage);
-    
-    while (nextPage < [[self tutorialScreens] count]) {
-        UIView* nextScreen = [self tutorialScreens][nextPage];
-        CGFloat contentX = [[self contentContainerView] contentOffset].x;
-        CGFloat scrollWidth = CGRectGetWidth([[self contentContainerView] bounds]);
-        CGFloat nextPageOffsetX = nextPage * scrollWidth;
-        CGFloat percentageToNextPage = MIN(contentX / nextPageOffsetX, 1.0f);
-        CGFloat fadedAlpha = HEMTutorialContentNextScreenOpacity;
-        CGFloat opacity = MIN(fadedAlpha + ((1 - fadedAlpha) * percentageToNextPage), 1.0f);
-        CGFloat smallScale = HEMTutorialContentMinScale;
-        CGFloat scale = MIN(smallScale + ((1 - smallScale) * percentageToNextPage), 1.0f);
-        
-        // calculate how much distance to move from initial offset x of next screen
-        // to the nextPageOffsetX minus padding
-        CGFloat nextScreenInitialOffsetX = nextPageOffsetX - (2 * HEMTutorialContentHorzPadding * nextPage);
-        CGFloat distanceToMove = nextScreenInitialOffsetX - nextPageOffsetX - HEMTutorialContentHorzPadding;
-        
-        CGPoint nextCenter = [nextScreen center];
-        nextCenter.x = nextScreenInitialOffsetX - (percentageToNextPage * distanceToMove) + (CGRectGetWidth([nextScreen bounds])/2);
-        
-        [nextScreen setAlpha:opacity];
-        [nextScreen setTransform:CGAffineTransformMakeScale(scale, scale)];
-        [nextScreen setCenter:nextCenter];
-        
-        nextPage++;
+- (void)scrollContent {
+    UIScrollView* scrollView = [self contentContainerView];
+    CGFloat offsetX = [scrollView contentOffset].x;
+    if (offsetX < 0) {
+        return;
     }
-}
 
-- (void)scrollToTheLeftScreens {
-    NSInteger currentPage = [[self pageControl] currentPage];
-    NSInteger lastPage = [[self tutorialScreens] count] - 1;
-    CGFloat scrollWidth = CGRectGetWidth([[self contentContainerView] bounds]);
-    CGFloat lastPageX = lastPage * scrollWidth;
-    CGFloat contentX = [[self contentContainerView] contentOffset].x;
+    CGFloat scrollWidth = CGRectGetWidth([scrollView bounds]);
+    CGFloat previousAdjustedMaxX = 0.0f;
+    CGFloat fullTutorialScreenWidth = scrollWidth - (3 * HEMTutorialContentHorzPadding);
     
-    DDLogVerbose(@"left: current page %ld", currentPage);
-    
-    if (currentPage > 0 && contentX < lastPageX - HEMTutorialContentHorzPadding) {
-        UIView* currentScreen = [self tutorialScreens][currentPage];
+    for (UICollectionView* screen in [self tutorialScreens]) {
+        CGFloat screenScale = [screen transform].a;
+        CGFloat scaledX = floorf(CGRectGetMinX([screen frame]) * screenScale);
+        CGFloat diff = scaledX - offsetX;
+        
+        if (CGRectIntersectsRect([scrollView bounds], [screen frame])) {
 
-        CGFloat page = contentX / scrollWidth;
-        CGFloat percentageMoved = 1.0f - (page - floorf(page));
-        
-        CGFloat scale = 1.0f - ((1.0f - HEMTutorialContentMinScale) * percentageMoved);
-        [currentScreen setTransform:CGAffineTransformMakeScale(scale, scale)];
-        
-        CGFloat alpha = 1.0f - ((1.0f - HEMTutorialContentNextScreenOpacity) * percentageMoved);
-        [currentScreen setAlpha:alpha];
-        
-        CGFloat halfWidth = CGRectGetWidth([currentScreen bounds]) / 2;
-        CGFloat startingX = (currentPage * scrollWidth);
-        CGFloat moved = percentageMoved * 2 * HEMTutorialContentHorzPadding;
+            if (diff < fullTutorialScreenWidth && diff > HEMTutorialContentHorzPadding) {
+                CGFloat fullnessPercentage = MIN(fabs(1 - ((diff - HEMTutorialContentHorzPadding) / fullTutorialScreenWidth)), 1.0f);
+                CGFloat adjustedScale = MIN(HEMTutorialContentMinScale + ((1 - HEMTutorialContentMinScale) * fullnessPercentage), 1.0f);
+                CGFloat adjustedAlpha = MIN(HEMTutorialContentNextScreenOpacity + ((1 - HEMTutorialContentNextScreenOpacity) * fullnessPercentage), 1.0f);
+                CGFloat adjustedX = 0.0f;
+                
+                if (scaledX < offsetX + fullTutorialScreenWidth) {
+                    CGFloat addlPadding = [screen tag] > 2 ? 1 : 0;
+                    adjustedX = ((3+addlPadding) * HEMTutorialContentHorzPadding * fullnessPercentage);
+                }
 
-        CGPoint currentCenter = [currentScreen center];
-        currentCenter.x = startingX + halfWidth - moved;
-        [currentScreen setCenter:currentCenter];
+                CGAffineTransform scaleXForm = CGAffineTransformMakeScale(adjustedScale, adjustedScale);
+                CGAffineTransform transXForm = CGAffineTransformMakeTranslation(adjustedX, 0.0f);
+                CGAffineTransform combinedXForm = CGAffineTransformConcat(scaleXForm, transXForm);
+                
+                [screen setAlpha:adjustedAlpha];
+                [screen setTransform:combinedXForm];
+            }
+            
+        } else if (diff > 0) {
+            CGRect notVisibleScreenFrame = [screen frame];
+            notVisibleScreenFrame.origin.x = previousAdjustedMaxX - (HEMTutorialContentMinScale * screenScale);
+            [screen setFrame:notVisibleScreenFrame];
+        }
+        
+        previousAdjustedMaxX = CGRectGetMaxX([screen frame]);
     }
+
 }
 
 - (void)updatePageControl {
@@ -180,23 +165,8 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     if (scrollView == [self contentContainerView]) {
-        CGFloat contentX = [scrollView contentOffset].x;
-        BOOL movingRight = contentX > [self previousScrollOffsetX];
-
-        if (movingRight) {
-            [self scrollToTheRightScreens];
-        } else {
-            [self scrollToTheLeftScreens];
-        }
-        
+        [self scrollContent];
         [self updatePageControl];
-        [self setPreviousScrollOffsetX:contentX];
-    }
-}
-
-- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if (scrollView == [self contentContainerView]) {
-        [self setCurrentPage:[[self pageControl] currentPage]];
     }
 }
 

@@ -15,13 +15,13 @@
                 <subviews>
                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gDL-0C-m7y" userLabel="border view">
                         <rect key="frame" x="0.0" y="370" width="320" height="1"/>
-                        <color key="backgroundColor" red="0.91639330110497241" green="0.91639330110497241" blue="0.91639330110497241" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.74747553649208343" green="0.903644060681283" blue="0.98823535439999999" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="GuY-Cl-e9q"/>
                         </constraints>
                     </view>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1cj-i9-Ywi" userLabel="summary container view">
-                        <rect key="frame" x="0.0" y="13" width="320" height="358"/>
+                        <rect key="frame" x="0.0" y="33" width="320" height="338"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T3i-WO-VZQ" customClass="HEMSleepScoreGraphView">
                                 <rect key="frame" x="82" y="16" width="157" height="157"/>
@@ -42,7 +42,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="1000" text="Last night you were in bed for 8.5 hours and slept for 6 hours." textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.45000000000000001" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="buK-Of-ZfH">
-                                <rect key="frame" x="21" y="185" width="278" height="161"/>
+                                <rect key="frame" x="21" y="185" width="278" height="141"/>
                                 <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                 <color key="textColor" red="0.29999999999999999" green="0.29999999999999999" blue="0.29999999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
@@ -72,7 +72,7 @@
                 <constraint firstAttribute="trailing" secondItem="gDL-0C-m7y" secondAttribute="trailing" id="4Ql-1a-nOU"/>
                 <constraint firstItem="gDL-0C-m7y" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="AOW-Gn-8co"/>
                 <constraint firstAttribute="trailing" secondItem="1cj-i9-Ywi" secondAttribute="trailing" id="L6x-we-CFt"/>
-                <constraint firstItem="1cj-i9-Ywi" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="13" id="p1b-n7-DSe"/>
+                <constraint firstItem="1cj-i9-Ywi" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="33" id="p1b-n7-DSe"/>
                 <constraint firstAttribute="bottom" secondItem="1cj-i9-Ywi" secondAttribute="bottom" id="reS-1n-cKM"/>
                 <constraint firstItem="1cj-i9-Ywi" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" id="t3W-aa-24f"/>
                 <constraint firstAttribute="bottom" secondItem="gDL-0C-m7y" secondAttribute="bottom" id="tU1-jm-dZL"/>

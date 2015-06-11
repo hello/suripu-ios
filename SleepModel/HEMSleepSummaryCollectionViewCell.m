@@ -10,6 +10,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
 @property (weak, nonatomic) IBOutlet UIView *summaryContainerView;
 @property (nonatomic, strong) NSAttributedString *sleepScoreLabelText;
+@property (nonatomic, strong) CAGradientLayer *gradientLayer;
 @end
 
 @implementation HEMSleepSummaryCollectionViewCell
@@ -27,6 +28,7 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 
 - (void)awakeFromNib {
     [self configureSpinner];
+    [self configureGradientViews];
     self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
 }
 
@@ -59,6 +61,26 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
         [[NSAttributedString alloc] initWithString:[button titleForState:UIControlStateNormal] attributes:attributes];
     [button setAttributedTitle:text forState:UIControlStateNormal];
     [button setTintColor:tintColor];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.gradientLayer.frame = self.bounds;
+}
+
+#pragma mark - Gradient background
+
+- (void)configureGradientViews {
+    NSArray *topColors = @[ (id)[UIColor whiteColor].CGColor, (id)[UIColor colorWithWhite:0.96f alpha:1.f].CGColor ];
+
+    CAGradientLayer *topLayer = [CAGradientLayer layer];
+    topLayer.colors = topColors;
+    topLayer.frame = self.bounds;
+    topLayer.locations = @[ @(0.5), @1 ];
+    topLayer.startPoint = CGPointZero;
+    topLayer.endPoint = CGPointMake(0, 1);
+    self.gradientLayer = topLayer;
+    [self.layer insertSublayer:topLayer atIndex:0];
 }
 
 @end

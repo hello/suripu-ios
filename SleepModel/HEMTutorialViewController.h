@@ -19,6 +19,12 @@
  */
 @property (nonatomic, strong) NSArray* tutorials;
 
+/**
+ * @property backgroundImage
+ *
+ * @discussion
+ * A UIImage that is shown behind the tutorial content
+ */
 @property (nonatomic, strong) UIImage* backgroundImage;
 
 @end

@@ -175,8 +175,8 @@
                                                     <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmSoundIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="8dY-0j-fHj">
-                                                    <rect key="frame" x="16" y="17" width="32" height="25"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="alarmSoundIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="8dY-0j-fHj">
+                                                    <rect key="frame" x="16" y="16" width="32" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="xAz-Af-V7B"/>
                                                     </constraints>
@@ -225,8 +225,8 @@
                                                     <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmRepeatIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="cat-rB-3EA">
-                                                    <rect key="frame" x="16" y="17" width="32" height="25"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="alarmRepeatIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="cat-rB-3EA">
+                                                    <rect key="frame" x="16" y="16" width="32" height="28"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="9fF-oU-aFA"/>
                                                     </constraints>
@@ -857,10 +857,10 @@
                                 <rect key="frame" x="280" y="539" width="39" height="37"/>
                             </pageControl>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YvJ-me-StN">
-                                <rect key="frame" x="288" y="600" width="24" height="24"/>
+                                <rect key="frame" x="284" y="658" width="32" height="32"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="24" id="V5U-tW-VKf"/>
-                                    <constraint firstAttribute="height" constant="24" id="xBy-cy-DE3"/>
+                                    <constraint firstAttribute="width" constant="32" id="V5U-tW-VKf"/>
+                                    <constraint firstAttribute="height" constant="32" id="xBy-cy-DE3"/>
                                 </constraints>
                                 <state key="normal" image="x.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -875,13 +875,13 @@
                         <constraints>
                             <constraint firstItem="yBM-x2-iLi" firstAttribute="leading" secondItem="eLM-0Y-FnO" secondAttribute="leadingMargin" constant="-16" id="25r-Yh-QNd"/>
                             <constraint firstItem="M5p-f7-sPF" firstAttribute="top" secondItem="Jja-rX-grm" secondAttribute="bottom" id="8vG-VE-Ztc"/>
-                            <constraint firstItem="bPi-4p-Z0W" firstAttribute="top" secondItem="YvJ-me-StN" secondAttribute="bottom" constant="-24" id="CKX-Qg-bDZ"/>
                             <constraint firstItem="bPi-4p-Z0W" firstAttribute="top" secondItem="cIs-SU-wY1" secondAttribute="bottom" constant="24" id="LK2-Bu-YBR"/>
                             <constraint firstItem="M5p-f7-sPF" firstAttribute="leading" secondItem="eLM-0Y-FnO" secondAttribute="leadingMargin" constant="-16" id="NLf-f9-Iex"/>
                             <constraint firstAttribute="centerX" secondItem="YvJ-me-StN" secondAttribute="centerX" id="TM3-7e-phh"/>
                             <constraint firstItem="bPi-4p-Z0W" firstAttribute="top" secondItem="yBM-x2-iLi" secondAttribute="bottom" id="Vul-Vg-Q5T"/>
                             <constraint firstItem="M5p-f7-sPF" firstAttribute="bottom" secondItem="cIs-SU-wY1" secondAttribute="top" constant="-24" id="gT6-Fe-DHq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="M5p-f7-sPF" secondAttribute="trailing" constant="-16" id="hAr-Tc-O8f"/>
+                            <constraint firstItem="bPi-4p-Z0W" firstAttribute="top" secondItem="YvJ-me-StN" secondAttribute="top" constant="-58" id="qAr-wz-Paz"/>
                             <constraint firstAttribute="trailingMargin" secondItem="yBM-x2-iLi" secondAttribute="trailing" constant="-16" id="tVu-Im-7Dx"/>
                             <constraint firstAttribute="centerX" secondItem="cIs-SU-wY1" secondAttribute="centerX" id="wqH-BL-Bbm"/>
                             <constraint firstItem="yBM-x2-iLi" firstAttribute="top" secondItem="Jja-rX-grm" secondAttribute="bottom" constant="-20" id="zML-K7-0Xl"/>
@@ -890,7 +890,7 @@
                     <connections>
                         <outlet property="backgroundView" destination="yBM-x2-iLi" id="2Gu-JI-d3J"/>
                         <outlet property="closeButton" destination="YvJ-me-StN" id="Qce-e8-eyK"/>
-                        <outlet property="closeButtonBottomConstraint" destination="CKX-Qg-bDZ" id="ZKR-7n-MSA"/>
+                        <outlet property="closeButtonBottomConstraint" destination="qAr-wz-Paz" id="hW6-xO-TXc"/>
                         <outlet property="contentContainerView" destination="M5p-f7-sPF" id="qcV-2m-BlW"/>
                         <outlet property="pageControl" destination="cIs-SU-wY1" id="RlV-us-1bd"/>
                         <outlet property="view" destination="eLM-0Y-FnO" id="uhF-0c-Wkz"/>
@@ -2199,7 +2199,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="568.5" height="96"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="569" height="96"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RM9-XI-qde">
@@ -2252,7 +2252,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="568.5" height="178"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="569" height="178"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SMART ALARMS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GlN-SR-oNV">
@@ -2289,7 +2289,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="568.5" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="569" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarms are currently unavailable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-2N-W4J">

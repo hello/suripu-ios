@@ -62,7 +62,7 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [HEMTutorial showTutorialForAlarmsIfNeeded];
+    [HEMTutorial showTutorialForAlarmsIfNeededFrom:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -199,7 +199,7 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 }
 
 - (IBAction)showHelpfulDialogAboutSmartness:(id)sender {
-    [HEMTutorial showTutorialForAlarmSmartness];
+    [HEMTutorial showTutorialForAlarmSmartnessFrom:self];
 }
 
 - (void)updateAlarmFromCache:(HEMAlarmCache *)cache {

@@ -18,6 +18,7 @@ static CGFloat const HEMTutorialParallaxCoefficientBase = 3.0f;
 static CGFloat const HEMTutorialParallaxOffscreenCoefficient = 0.06f;
 static CGFloat const HEMTutorialContentDisplayDelay = 0.2f;
 static CGFloat const HEMTutorialContentAnimDuration = 0.5f;
+static CGFloat const HEMTutorialAnimDamping = 0.6f;
 
 @interface HEMTutorialViewController () <UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
@@ -40,11 +41,19 @@ static CGFloat const HEMTutorialContentAnimDuration = 0.5f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self setCloseButtonInitialButtonConstraint:[[self closeButtonBottomConstraint] constant]];
+    [[self backgroundView] setImage:[self backgroundImage]];
+    [self configureControls];
 }
 
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
+- (void)configureControls {
+    [self setCloseButtonInitialButtonConstraint:[[self closeButtonBottomConstraint] constant]];
+    if ([[self tutorials] count] <= 1) {
+        [[self pageControl] setAlpha:0.0f];
+    }
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
     if ([[self tutorialScreens] count] == 0) {
         [self configureContent];
     }
@@ -52,7 +61,6 @@ static CGFloat const HEMTutorialContentAnimDuration = 0.5f;
 
 - (void)configureContent {
     NSInteger tutorialCount = [[self tutorials] count];
-    [[self backgroundView] setImage:[self backgroundImage]];
     [[self pageControl] setNumberOfPages:tutorialCount];
     [[self pageControl] setUserInteractionEnabled:NO];
     [self setTutorialScreens:[[NSMutableArray alloc] init]];
@@ -62,7 +70,7 @@ static CGFloat const HEMTutorialContentAnimDuration = 0.5f;
 
 - (void)addAndDisplayContent {
     CGFloat fullWidth = CGRectGetWidth([[self contentContainerView] bounds]);
-    CGFloat animationOffset = [self tutorials] > 0 ? fullWidth : 0.0f;
+    CGFloat animationOffset = fullWidth;
     
     // move all sreens offscreen by fullWidth, then animate it back in
     CGRect contentFrame = CGRectZero;
@@ -94,9 +102,14 @@ static CGFloat const HEMTutorialContentAnimDuration = 0.5f;
     
     [self updateContentSize];
     
-    if (animationOffset > 0.0f) {
-        [self animateContentAtIndex:0 fromOffset:animationOffset];
-    }
+    [self animateContentAtIndex:0 fromOffset:animationOffset completion:^{
+        if ([[self tutorials] count] <= 1) {
+            [UIView animateWithDuration:HEMTutorialContentAnimDuration animations:^{
+                [self swapPageControlAndCloseButtonWithPercentage:1.0f];
+                [[self closeButton] layoutIfNeeded];
+            }];
+        }
+    }];
 }
 
 - (UICollectionView*)tutorialScreenWithFrame:(CGRect)frame tag:(NSInteger)tag {
@@ -121,19 +134,24 @@ static CGFloat const HEMTutorialContentAnimDuration = 0.5f;
     [[self contentContainerView] setContentSize:contentSize];
 }
 
-- (void)animateContentAtIndex:(NSInteger)index fromOffset:(CGFloat)offset {
+- (void)animateContentAtIndex:(NSInteger)index
+                   fromOffset:(CGFloat)offset
+                   completion:(void(^)(void))completion {
+    
     if (index >= [[self tutorialScreens] count]) {
         [[self contentContainerView] setScrollEnabled:YES];
+        if (completion) {
+            completion ();
+        }
         return;
     }
     
     [[self contentContainerView] setScrollEnabled:NO];
     
-    CGFloat damping = 0.6f;
-    CGFloat duration = HEMTutorialContentAnimDuration * (1 + damping);
+    CGFloat duration = HEMTutorialContentAnimDuration * (1 + HEMTutorialAnimDamping);
     [UIView animateWithDuration:duration
                           delay:HEMTutorialContentDisplayDelay
-         usingSpringWithDamping:damping
+         usingSpringWithDamping:HEMTutorialAnimDamping
           initialSpringVelocity:1.0f
                         options:UIViewAnimationOptionCurveEaseIn
                      animations:^{
@@ -148,7 +166,7 @@ static CGFloat const HEMTutorialContentAnimDuration = 0.5f;
     int64_t delayInSecs = delay * NSEC_PER_SEC;
     dispatch_time_t dispatchTime = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
     dispatch_after(dispatchTime, dispatch_get_main_queue(), ^{
-        [self animateContentAtIndex:index + 1 fromOffset:offset];
+        [self animateContentAtIndex:index + 1 fromOffset:offset completion:completion];
     });
 
 }

@@ -47,28 +47,27 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
 
 - (void)configureControls {
     [self setCloseButtonInitialButtonConstraint:[[self closeButtonBottomConstraint] constant]];
-    if ([[self tutorials] count] <= 1) {
+    
+    NSInteger tutorialCount = [[self tutorials] count];
+    if (tutorialCount <= 1) {
         [[self pageControl] setAlpha:0.0f];
+    } else {
+        [[self pageControl] setNumberOfPages:tutorialCount];
+        [[self pageControl] setUserInteractionEnabled:NO];
     }
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     if ([[self tutorialScreens] count] == 0) {
-        [self configureContent];
+        [self addAndDisplayContent];
     }
 }
 
-- (void)configureContent {
-    NSInteger tutorialCount = [[self tutorials] count];
-    [[self pageControl] setNumberOfPages:tutorialCount];
-    [[self pageControl] setUserInteractionEnabled:NO];
+- (void)addAndDisplayContent {
     [self setTutorialScreens:[[NSMutableArray alloc] init]];
     [self setTutorialDataSources:[[NSMutableArray alloc] init]];
-    [self addAndDisplayContent];
-}
-
-- (void)addAndDisplayContent {
+    
     CGFloat fullWidth = CGRectGetWidth([[self contentContainerView] bounds]);
     CGFloat animationOffset = fullWidth;
     

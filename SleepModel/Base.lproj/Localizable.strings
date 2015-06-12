@@ -533,13 +533,13 @@
 
 // tutorial
 "tutorial.timeline.title1" = "Understanding your sleep";
-"tutorial.timeline.message1" = "Sense collects a significant amount of data about your sleep and the environment in your bedroom.\n\nWe take all this data and present it in a detailed but simple way — this quick walkthrough will show you how to read your first night of sleep data.";
-"tutorial.timeline.title2" = "Your sleep score";
-"tutorial.timeline.message2" = "Your Sleep Score is calculated based on all the sensor data from your bedroom, as well as how you actually slept. It's a simple, unique measure of your sleep quality - out of 100.";
+"tutorial.timeline.message1" = "Sense monitors the environment in your bedroom, and recognizes your movements during the night, giving you the full picture of your sleep.\n\nSwipe left to learn how this information is presented to you in a detailed yet easy to understand way.";
+"tutorial.timeline.title2" = "Sleep score";
+"tutorial.timeline.message2" = "Each morning, you'll receive a personalized Sleep Score — out of 100 — based on the conditions of your room and how you slept the night before.";
 "tutorial.timeline.title3" = "Sleep summary";
-"tutorial.timeline.message3" = "The “before sleep” tab allows you to see if your bedroom was right for you before you went to sleep.";
-"tutorial.timeline.title4" = "Your sleep timeline";
-"tutorial.timeline.message4" = "Your timeline shows you a minute-by-minute record of your night. The blue bars break your sleep out into three categories: Light, medium and deep sleep.\n\nThe wider the bar, the deeper the sleep. Press and hold a bar for more info.";
+"tutorial.timeline.message3" = "Tap on your Sleep Summary at the top of the Timeline to view detailed information about your night.\n\nYou'll see how long it took you to fall asleep, how much of your night was spent asleep, what the environmental conditions of your bedroom were like before and during your sleep, and more.";
+"tutorial.timeline.title4" = "Sleep timeline";
+"tutorial.timeline.message4" = "Your Timeline shows you everything that happened during the night, from the moment you go to bed until the time you wake up.\n\nThe blue bars represent your time spent sleeping. The wider the bar, the deeper the sleep. Tap on any bar to view more details.\n\nYour Timeline will also show key events from your night, including time spent tossing and turning, loud noises and more.";
 
 "tutorial.alarms.title" = "Set An Alarm";
 "tutorial.alarms.message" = "Sense's Smart Alarm will wake you up at the lightest part of your natural sleep cycle - within a 30 minute window before the time you set. When it's time to wake up, Sense will glow and play your selected tone. Just wave your hand over Sense to dismiss the alarm.";

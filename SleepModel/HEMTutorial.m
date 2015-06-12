@@ -26,17 +26,15 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 
 + (void)showTutorialForTimelineIfNeeded
 {
-//    if ([self shouldShowTutorialForTimeline]) {
-//        [self showTutorialForTimeline];
-//        [self markTutorialViewed:HEMTutorialTimelineKey];
-//    }
-    [self showTutorialForTimeline];
+    if ([self shouldShowTutorialForTimeline]) {
+        [self showTutorialForTimeline];
+        [self markTutorialViewed:HEMTutorialTimelineKey];
+    }
 }
 
 + (BOOL)shouldShowTutorialForTimeline
 {
-    return YES;
-//    return [self shouldShowTutorialForKey:HEMTutorialTimelineKey];
+    return [self shouldShowTutorialForKey:HEMTutorialTimelineKey];
 }
 
 + (void)showTutorialForSensorsIfNeeded
@@ -110,6 +108,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     UIImage* snapshot = [[rootVC view] blurredSnapshotWithTint:[UIColor colorWithWhite:0.0f alpha:0.3f]];
 
     HEMTutorialViewController* tutorialVC = [HEMMainStoryboard instantiateTutorialViewController];
+    [tutorialVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [tutorialVC setTutorials:@[tutorial1, tutorial2, tutorial3, tutorial4]];
     [tutorialVC setBackgroundImage:snapshot];
     

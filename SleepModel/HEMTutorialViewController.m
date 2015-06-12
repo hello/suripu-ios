@@ -14,6 +14,10 @@ static CGFloat const HEMTutorialContentHorzPadding = 20.0f;
 static CGFloat const HEMTutorialContentMinScale = 0.9f;
 static CGFloat const HEMTutorialContentCornerRadius = 3.0f;
 static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
+static CGFloat const HEMTutorialParallaxCoefficientBase = 3.0f;
+static CGFloat const HEMTutorialParallaxOffscreenCoefficient = 0.06f;
+static CGFloat const HEMTutorialContentDisplayDelay = 0.2f;
+static CGFloat const HEMTutorialContentAnimDuration = 0.5f;
 
 @interface HEMTutorialViewController () <UICollectionViewDelegateFlowLayout, UIScrollViewDelegate>
 
@@ -53,33 +57,31 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
     [[self pageControl] setUserInteractionEnabled:NO];
     [self setTutorialScreens:[[NSMutableArray alloc] init]];
     [self setTutorialDataSources:[[NSMutableArray alloc] init]];
-    [self addContent];
+    [self addAndDisplayContent];
 }
 
-- (void)addContent {
+- (void)addAndDisplayContent {
+    CGFloat fullWidth = CGRectGetWidth([[self contentContainerView] bounds]);
+    CGFloat animationOffset = [self tutorials] > 0 ? fullWidth : 0.0f;
+    
+    // move all sreens offscreen by fullWidth, then animate it back in
     CGRect contentFrame = CGRectZero;
-    contentFrame.origin.x = HEMTutorialContentHorzPadding;
-    contentFrame.size.width = CGRectGetWidth([[self contentContainerView] bounds]) - (2*HEMTutorialContentHorzPadding);
+    contentFrame.origin.x = animationOffset + HEMTutorialContentHorzPadding;
+    contentFrame.size.width = fullWidth - (2*HEMTutorialContentHorzPadding);
     contentFrame.size.height = CGRectGetHeight([[self contentContainerView] bounds]);
     
     NSInteger index = 0;
     for (HEMTutorialContent* content in [self tutorials]) {
-        UICollectionViewFlowLayout* layout = [[UICollectionViewFlowLayout alloc] init];
-        [layout setScrollDirection:UICollectionViewScrollDirectionVertical];
-        [layout setMinimumLineSpacing:0.0f];
-        
-        UICollectionView* screen = [[UICollectionView alloc] initWithFrame:contentFrame collectionViewLayout:layout];
-        [screen setBackgroundColor:[UIColor whiteColor]];
-        [screen setDelegate:self];
-        [screen setTag:index];
-        [[screen layer] setCornerRadius:HEMTutorialContentCornerRadius];
+        UICollectionView* screen = [self tutorialScreenWithFrame:contentFrame tag:index];
         
         if ([[self tutorialScreens] count] > 0) {
-            [screen setTransform:CGAffineTransformMakeScale(HEMTutorialContentMinScale, HEMTutorialContentMinScale)];
+            CGFloat scale = HEMTutorialContentMinScale;
+            [screen setTransform:CGAffineTransformMakeScale(scale, scale)];
             [screen setAlpha:HEMTutorialContentNextScreenOpacity];
         }
         
-        HEMTutorialDataSource* dataSource = [[HEMTutorialDataSource alloc] initWithContent:content forCollectionView:screen];
+        HEMTutorialDataSource* dataSource = [[HEMTutorialDataSource alloc] initWithContent:content
+                                                                         forCollectionView:screen];
         [screen setDataSource:dataSource];
         
         [[self tutorialDataSources] addObject:dataSource];
@@ -90,9 +92,65 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
         index++;
     }
     
+    [self updateContentSize];
+    
+    if (animationOffset > 0.0f) {
+        [self animateContentAtIndex:0 fromOffset:animationOffset];
+    }
+}
+
+- (UICollectionView*)tutorialScreenWithFrame:(CGRect)frame tag:(NSInteger)tag {
+    UICollectionViewFlowLayout* layout = [[UICollectionViewFlowLayout alloc] init];
+    [layout setScrollDirection:UICollectionViewScrollDirectionVertical];
+    
+    UICollectionView* screen = [[UICollectionView alloc] initWithFrame:frame
+                                                  collectionViewLayout:layout];
+    
+    [screen setBackgroundColor:[UIColor whiteColor]];
+    [screen setDelegate:self];
+    [screen setTag:tag];
+    [[screen layer] setCornerRadius:HEMTutorialContentCornerRadius];
+    
+    return screen;
+}
+
+- (void)updateContentSize {
+    CGFloat count = [[self tutorials] count];
     CGSize contentSize = [[self contentContainerView] contentSize];
-    contentSize.width = CGRectGetWidth([[self contentContainerView] bounds]) * index;
+    contentSize.width = CGRectGetWidth([[self contentContainerView] bounds]) * count;
     [[self contentContainerView] setContentSize:contentSize];
+}
+
+- (void)animateContentAtIndex:(NSInteger)index fromOffset:(CGFloat)offset {
+    if (index >= [[self tutorialScreens] count]) {
+        [[self contentContainerView] setScrollEnabled:YES];
+        return;
+    }
+    
+    [[self contentContainerView] setScrollEnabled:NO];
+    
+    CGFloat damping = 0.6f;
+    CGFloat duration = HEMTutorialContentAnimDuration * (1 + damping);
+    [UIView animateWithDuration:duration
+                          delay:HEMTutorialContentDisplayDelay
+         usingSpringWithDamping:damping
+          initialSpringVelocity:1.0f
+                        options:UIViewAnimationOptionCurveEaseIn
+                     animations:^{
+                         UIView* screen = [self tutorialScreens][index];
+                         CGRect frame = [screen frame];
+                         frame.origin.x -= offset;
+                         [screen setFrame:frame];
+                     }
+                     completion:nil];
+    
+    NSTimeInterval delay = HEMTutorialContentDisplayDelay;
+    int64_t delayInSecs = delay * NSEC_PER_SEC;
+    dispatch_time_t dispatchTime = dispatch_time(DISPATCH_TIME_NOW, delayInSecs);
+    dispatch_after(dispatchTime, dispatch_get_main_queue(), ^{
+        [self animateContentAtIndex:index + 1 fromOffset:offset];
+    });
+
 }
 
 #pragma mark - UICollectionViewDelegateFlowLayout
@@ -116,6 +174,13 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
 
 #pragma mark - UIScrollViewDelegate
 
+- (CGFloat)parallaxCoefficientForScreen:(NSUInteger)screenNumber {
+    CGFloat base = HEMTutorialParallaxCoefficientBase;
+    CGFloat off = HEMTutorialParallaxOffscreenCoefficient;
+    CGFloat pad = HEMTutorialContentHorzPadding;
+    return (base + (screenNumber > 1 ? screenNumber * off : 0.0f)) * pad;
+}
+
 - (void)scrollContent {
     UIScrollView* scrollView = [self contentContainerView];
     CGFloat offsetX = [scrollView contentOffset].x;
@@ -123,22 +188,30 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
         return;
     }
 
+    BOOL toTheRight = offsetX > [self previousScrollOffsetX];
+    CGFloat padding = HEMTutorialContentHorzPadding;
+    CGFloat directionOffset = toTheRight ? -padding : padding;
     CGFloat scrollWidth = CGRectGetWidth([scrollView bounds]);
-    CGFloat fullTutorialScreenWidth = scrollWidth - (3 * HEMTutorialContentHorzPadding);
+    CGFloat fullTutorialScreenWidth = scrollWidth - (2 * padding);
+    CGFloat previousMaxX = 0.0f;
     
     for (UICollectionView* screen in [self tutorialScreens]) {
         CGFloat screenX = CGRectGetMinX([screen frame]);
         CGFloat diff = screenX - offsetX;
         
-        if (CGRectIntersectsRect([scrollView bounds], [screen frame])) {
+        if (CGRectIntersectsRect([scrollView bounds], [screen frame])) { // onscreen tutorials
 
-            if (diff < fullTutorialScreenWidth && diff > HEMTutorialContentHorzPadding) {
-                CGFloat fullnessPercentage = MIN(fabs(1 - ((diff - HEMTutorialContentHorzPadding) / fullTutorialScreenWidth)), 1.0f);
-                NSInteger roundedPercent = (fullnessPercentage * 100);
-                fullnessPercentage = roundedPercent / 100.0f;
-                CGFloat adjustedScale = MIN(HEMTutorialContentMinScale + ((1 - HEMTutorialContentMinScale) * fullnessPercentage), 1.0f);
-                CGFloat adjustedAlpha = MIN(HEMTutorialContentNextScreenOpacity + ((1 - HEMTutorialContentNextScreenOpacity) * fullnessPercentage), 1.0f);
-                CGFloat adjustedX = floorf(3 * HEMTutorialContentHorzPadding * fullnessPercentage);
+            if (diff < fullTutorialScreenWidth && diff > padding) {
+                CGFloat distanceToFull = MIN(diff + directionOffset, fullTutorialScreenWidth);
+                CGFloat fullnessPercentage = fabs(1 - (distanceToFull / fullTutorialScreenWidth));
+                
+                CGFloat scaleToAdd = (1 - HEMTutorialContentMinScale) * fullnessPercentage;
+                CGFloat adjustedScale = MIN(HEMTutorialContentMinScale + scaleToAdd, 1.0f);
+                CGFloat alphaToAdd = (1 - HEMTutorialContentNextScreenOpacity) * fullnessPercentage;
+                CGFloat adjustedAlpha = MIN(HEMTutorialContentNextScreenOpacity + alphaToAdd, 1.0f);
+                
+                CGFloat coefficient = [self parallaxCoefficientForScreen:[screen tag]];
+                CGFloat adjustedX = coefficient * fullnessPercentage * adjustedScale;
                 
                 CGAffineTransform scaleXForm = CGAffineTransformMakeScale(adjustedScale, adjustedScale);
                 CGAffineTransform transXForm = CGAffineTransformMakeTranslation(adjustedX, 0.0f);
@@ -152,17 +225,18 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
                 }
             }
             
-        } else if (diff > 0) {
+        } else if (diff > 0) { // offscreen tutorials
             CGRect notVisibleScreenFrame = [screen frame];
-            notVisibleScreenFrame.origin.x = ([screen tag] * scrollWidth) - HEMTutorialContentHorzPadding;
+            notVisibleScreenFrame.origin.x = previousMaxX;
             [screen setFrame:notVisibleScreenFrame];
         }
+        
+        previousMaxX = CGRectGetMaxX([screen frame]);
     }
 
 }
 
 - (void)swapPageControlAndCloseButtonWithPercentage:(CGFloat)percentage {
-    DDLogVerbose(@"updating percentage %f", percentage);
     [[self pageControl] setAlpha:1.0f - percentage];
     
     CGFloat bottomConstant = [self closeButtonInitialButtonConstraint];
@@ -182,6 +256,7 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
     if (scrollView == [self contentContainerView]) {
         [self scrollContent];
         [self updatePageControl];
+        [self setPreviousScrollOffsetX:[scrollView contentOffset].x];
     }
 }
 

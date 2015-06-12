@@ -83,12 +83,11 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 {
     if (![HEMTutorial shouldShowTutorialForTimeline])
         return;
-//    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-//        if (![self isViewFullyVisible] || self.dataSource.numberOfSleepSegments == 0)
-//            return;
-//        [HEMTutorial showTutorialForTimelineIfNeeded];
-//    });
-    [HEMTutorial showTutorialForTimelineIfNeeded];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (![self isViewFullyVisible] || self.dataSource.numberOfSleepSegments == 0)
+            return;
+        [HEMTutorial showTutorialForTimelineIfNeeded];
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated

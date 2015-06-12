@@ -447,11 +447,6 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 #pragma mark - Tutorial Dialogs
 
-+ (UIFont*)tutorialDialogFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
-}
-
 + (UIFont*)tutorialTitleFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];

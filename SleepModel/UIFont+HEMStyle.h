@@ -417,8 +417,6 @@
 
 #pragma mark - Tutorial Dialogs
 
-+ (UIFont*)tutorialDialogFont;
-
 /**
  * Font used to display a tutorial's title
  */

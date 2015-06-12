@@ -78,5 +78,6 @@
 +(id)instantiateTimeZoneViewController;
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;
++(id)instantiateTutorialViewController;
 
 @end

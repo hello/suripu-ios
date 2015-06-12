@@ -19,6 +19,7 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
+#import "HEMTutorial.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -71,6 +72,7 @@
     [self addResetCheckpointOptionTo:sheet];
     [self addLedOptionTo:sheet];
     [self addRoomCheckOptionTo:sheet];
+    [self addResetTutorialsOptionTo:sheet];
     [self addCancelOptionTo:sheet];
     
     [self setSupportOptionController:sheet];
@@ -205,6 +207,14 @@
         [self setRoomCheckViewController:nil];
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:HEMOnboardingNotificationComplete object:nil];
+}
+
+#pragma mark Tutorials
+
+- (void)addResetTutorialsOptionTo:(HEMActionSheetViewController*)sheet {
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset-tutorials", nil) action:^{
+        [HEMTutorial resetTutorials];
+    }];
 }
 
 #pragma mark Cancel

@@ -19,6 +19,34 @@
     [[self contentView] setBackgroundColor:[UIColor blackColor]];
 }
 
+- (id)initWithFrame:(CGRect)frame {
+    self = [super initWithFrame:frame];
+    if (self) {
+        [self configureImageView];
+    }
+    return self;
+}
+
+- (id)init {
+    self = [super init];
+    if (self) {
+        [self configureImageView];
+    }
+    return self;
+}
+
+- (void)configureImageView {
+    if (![self urlImageView]) {
+        CGRect imageFrame = [[self contentView] bounds];
+        HEMURLImageView* imageView = [[HEMURLImageView alloc] initWithFrame:imageFrame];
+        [imageView setAutoresizingMask:UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight];
+        [imageView setContentMode:UIViewContentModeScaleAspectFill];
+        [imageView setClipsToBounds:YES];
+        [[self contentView] addSubview:imageView];
+        [self setUrlImageView:imageView];
+    }
+}
+
 - (void)prepareForReuse {
     [super prepareForReuse];
     [[self urlImageView] cancelImageDownload];

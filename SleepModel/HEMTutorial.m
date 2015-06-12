@@ -9,7 +9,11 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENLocalPreferences.h>
 #import "HEMTutorial.h"
-#import "HEMFullscreenDialogView.h"
+#import "HEMTutorialContent.h"
+#import "HEMTutorialViewController.h"
+#import "HEMMainStoryboard.h"
+#import "UIView+HEMSnapshot.h"
+#import "HelloStyleKit.h"
 
 @implementation HEMTutorial
 
@@ -61,11 +65,11 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     }
 }
 
-+ (void)showTutorialForAlarmsIfNeeded
++ (void)showTutorialForAlarmsIfNeededFrom:(UIViewController *)controller
 {
     if ([self shouldShowTutorialForKey:HEMTutorialAlarmsKey]) {
         [self delayBlock:^{
-            [self showTutorialForAlarms];
+            [self showTutorialForAlarmsFrom:controller];
             [self markTutorialViewed:HEMTutorialAlarmsKey];
         }];
     }
@@ -81,34 +85,52 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     }
 }
 
++ (void)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
+    UIImage* snapshot = [[controller view] blurredSnapshotWithTint:[HelloStyleKit tutorialBackgroundColor]];
+    
+    HEMTutorialViewController* tutorialVC = [HEMMainStoryboard instantiateTutorialViewController];
+    [tutorialVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [tutorialVC setTutorials:content];
+    [tutorialVC setBackgroundImage:snapshot];
+    
+    [controller presentViewController:tutorialVC animated:YES completion:nil];
+}
+
++ (void)showTutorialWithContent:(NSArray*)content {
+    UIViewController* rootVC = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    [self showTutorialWithContent:content from:rootVC];
+}
+
 + (void)showTutorialForTimeline
 {
-    HEMDialogContent* content1 = [HEMDialogContent new];
-    content1.title = NSLocalizedString(@"tutorial.timeline.title1", nil);
-    content1.content = NSLocalizedString(@"tutorial.timeline.message1", nil);
-    content1.image = [UIImage imageNamed:@"timeline_explain_sleep"];
-    HEMDialogContent* content2 = [HEMDialogContent new];
-    content2.title = NSLocalizedString(@"tutorial.timeline.title2", nil);
-    content2.content = NSLocalizedString(@"tutorial.timeline.message2", nil);
-    content2.image = [UIImage imageNamed:@"timeline_explain_score"];
-    HEMDialogContent* content3 = [HEMDialogContent new];
-    content3.title = NSLocalizedString(@"tutorial.timeline.title3", nil);
-    content3.content = NSLocalizedString(@"tutorial.timeline.message3", nil);
-    content3.image = [UIImage imageNamed:@"timeline_explain_before"];
-    HEMDialogContent* content4 = [HEMDialogContent new];
-    content4.title = NSLocalizedString(@"tutorial.timeline.title4", nil);
-    content4.content = NSLocalizedString(@"tutorial.timeline.message4", nil);
-    content4.image = [UIImage imageNamed:@"timeline_explain_graph"];
-    [HEMFullscreenDialogView showDialogsWithContent:@[content1, content2, content3, content4]];
+    HEMTutorialContent* tutorial1 =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title1", nil)
+                                         text:NSLocalizedString(@"tutorial.timeline.message1", nil)
+                                        image:[UIImage imageNamed:@"timeline_explain_sleep"]];
+    HEMTutorialContent* tutorial2 =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title2", nil)
+                                         text:NSLocalizedString(@"tutorial.timeline.message2", nil)
+                                        image:[UIImage imageNamed:@"timeline_explain_score"]];
+    HEMTutorialContent* tutorial3 =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title3", nil)
+                                         text:NSLocalizedString(@"tutorial.timeline.message3", nil)
+                                        image:[UIImage imageNamed:@"timeline_explain_before"]];
+    HEMTutorialContent* tutorial4 =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.timeline.title4", nil)
+                                         text:NSLocalizedString(@"tutorial.timeline.message4", nil)
+                                        image:[UIImage imageNamed:@"timeline_explain_graph"]];
+    
+    [self showTutorialWithContent:@[tutorial1, tutorial2, tutorial3, tutorial4]];
 }
 
 + (void)showTutorialForSensors
 {
-    HEMDialogContent* content = [HEMDialogContent new];
-    content.title = NSLocalizedString(@"tutorial.sensors.title", nil);
-    content.content = NSLocalizedString(@"tutorial.sensors.message", nil);
-    content.image = [UIImage imageNamed:@"welcome_dialog_sensors"];
-    [HEMFullscreenDialogView showDialogsWithContent:@[content]];
+    HEMTutorialContent* tutorial =
+        [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.sensors.title", nil)
+                                             text:NSLocalizedString(@"tutorial.sensors.message", nil)
+                                            image:[UIImage imageNamed:@"welcome_dialog_sensors"]];
+    
+    [self showTutorialWithContent:@[tutorial]];
 }
 
 + (void)showTutorialForSensorNamed:(NSString*)sensorName
@@ -122,38 +144,42 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 
     NSString* localizedTitleKey = [NSString stringWithFormat:titleFormat, sensorName];
     NSString* localizedMessageKey = [NSString stringWithFormat:messageFormat, sensorName];
-    HEMDialogContent* content = [HEMDialogContent new];
-    content.title = NSLocalizedString(localizedTitleKey, nil);
-    content.content = NSLocalizedString(localizedMessageKey, nil);
-    content.image = image;
-    [HEMFullscreenDialogView showDialogsWithContent:@[content]];
+    
+    HEMTutorialContent* tutorial =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(localizedTitleKey, nil)
+                                         text:NSLocalizedString(localizedMessageKey, nil)
+                                        image:image];
+    
+    [self showTutorialWithContent:@[tutorial]];
 }
 
-+ (void)showTutorialForAlarms
++ (void)showTutorialForAlarmsFrom:(UIViewController*)controller
 {
-    HEMDialogContent* content = [HEMDialogContent new];
-    content.title = NSLocalizedString(@"tutorial.alarms.title", nil);
-    content.content = NSLocalizedString(@"tutorial.alarms.message", nil);
-    content.image = [UIImage imageNamed:@"welcome_dialog_alarm"];
-    [HEMFullscreenDialogView showDialogsWithContent:@[content]];
+    HEMTutorialContent* tutorial =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.alarms.title", nil)
+                                         text:NSLocalizedString(@"tutorial.alarms.message", nil)
+                                        image:[UIImage imageNamed:@"welcome_dialog_alarm"]];
+    
+    [self showTutorialWithContent:@[tutorial] from:controller];
 }
 
-+ (void)showTutorialForAlarmSmartness
++ (void)showTutorialForAlarmSmartnessFrom:(UIViewController*)controller
 {
-    HEMDialogContent* content = [HEMDialogContent new];
-    content.title = NSLocalizedString(@"tutorial.alarm-smart.title", nil);
-    content.content = NSLocalizedString(@"tutorial.alarm-smart.message", nil);
-    content.image = [UIImage imageNamed:@"smart_alarm_dialog"];
-    [HEMFullscreenDialogView showDialogsWithContent:@[content]];
+    HEMTutorialContent* tutorial =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.alarm-smart.title", nil)
+                                         text:NSLocalizedString(@"tutorial.alarm-smart.message", nil)
+                                        image:[UIImage imageNamed:@"smart_alarm_dialog"]];
+    
+    [self showTutorialWithContent:@[tutorial] from:controller];
 }
 
 + (void)showTutorialForTrends
 {
-    HEMDialogContent* content = [HEMDialogContent new];
-    content.title = NSLocalizedString(@"tutorial.trends.title", nil);
-    content.content = NSLocalizedString(@"tutorial.trends.message", nil);
-    content.image = [UIImage imageNamed:@"welcome_dialog_trends"];
-    [HEMFullscreenDialogView showDialogsWithContent:@[content]];
+    HEMTutorialContent* tutorial =
+    [[HEMTutorialContent alloc] initWithTitle:NSLocalizedString(@"tutorial.trends.title", nil)
+                                         text:NSLocalizedString(@"tutorial.trends.message", nil)
+                                        image:[UIImage imageNamed:@"welcome_dialog_trends"]];
+    [self showTutorialWithContent:@[tutorial]];
 }
 
 + (BOOL)shouldShowTutorialForKey:(NSString*)key
@@ -164,6 +190,13 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 + (void)markTutorialViewed:(NSString*)key
 {
     [[SENLocalPreferences sharedPreferences] setSessionPreference:@YES forKey:key];
+}
+
++ (void)resetTutorials {
+    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialTimelineKey];
+    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialSensorsKey];
+    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialAlarmsKey];
+    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialTrendsKey];
 }
 
 @end

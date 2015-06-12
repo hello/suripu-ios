@@ -210,11 +210,6 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
 }
 
-+ (UIFont*)tutorialDialogFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
-}
-
 + (UIFont*)questionAnswerFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];
@@ -448,6 +443,18 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 + (UIFont*)actionSheetOptionDescriptionFont {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
+}
+
+#pragma mark - Tutorial Dialogs
+
++ (UIFont*)tutorialTitleFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];
+}
+
++ (UIFont*)tutorialDescriptionFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameBook size:16.0f];
 }
 
 @end

@@ -494,7 +494,7 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 - (BOOL)shouldAllowRecognizerToReceiveTouch:(UIPanGestureRecognizer*)recognizer
 {
     CGPoint velocity = [recognizer velocityInView:self.view];
-    BOOL movingMostlyVertically = fabsf(velocity.x) <= fabsf(velocity.y);
+    BOOL movingMostlyVertically = fabs(velocity.x) <= fabs(velocity.y);
     BOOL movingUpwards = velocity.y > 0;
     return [self isScrolledToTop] && movingUpwards && movingMostlyVertically;
 }

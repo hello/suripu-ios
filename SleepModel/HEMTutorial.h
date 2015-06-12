@@ -43,15 +43,25 @@
 + (void)showTutorialForTrends;
 
 /**
- *  Present the tutorial for alarms if not previously viewed
+ * Present the tutorial for alarms if not previously viewed
+ * @param controller: the alarm controller to show tutorial on top of
  */
-+ (void)showTutorialForAlarmsIfNeeded;
++ (void)showTutorialForAlarmsIfNeededFrom:(UIViewController*)controller;
 
-+ (void)showTutorialForAlarms;
+/**
+ * Present the tutorial for alarms
+ * @param controller: the alarm controller to show tutorial on top of
+ */
++ (void)showTutorialForAlarmsFrom:(UIViewController*)controller;
 
 /**
  *  Show a dialog about making alarms smart
  */
-+ (void)showTutorialForAlarmSmartness;
++ (void)showTutorialForAlarmSmartnessFrom:(UIViewController*)controller;
+
+/**
+ * Mark all tutorials as unviewed so that they can be triggered again
+ */
++ (void)resetTutorials;
 
 @end

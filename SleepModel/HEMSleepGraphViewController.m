@@ -53,8 +53,6 @@ static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMTopItemsConstraintConstant = 4.f;
 static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
-static CGFloat const HEMAlarmShortcutDefaultTrailing = 8.f;
-static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
 static CGFloat const HEMAlarmShortcutBottomOffset = 20.f;
 static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 

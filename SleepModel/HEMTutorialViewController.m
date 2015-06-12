@@ -20,16 +20,24 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
 @property (weak, nonatomic) IBOutlet UIScrollView *contentContainerView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundView;
+@property (weak, nonatomic) IBOutlet UIButton *closeButton;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *closeButtonBottomConstraint;
 
 @property (strong, nonatomic) NSMutableArray* tutorialScreens;
 // hold on to data sources as they are weak when assigned to collection views
 @property (strong, nonatomic) NSMutableArray* tutorialDataSources;
 @property (assign, nonatomic) CGFloat previousScrollOffsetX;
 @property (assign, nonatomic) UIView* focusedScreen;
+@property (assign, nonatomic) CGFloat closeButtonInitialButtonConstraint;
 
 @end
 
 @implementation HEMTutorialViewController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    [self setCloseButtonInitialButtonConstraint:[[self closeButtonBottomConstraint] constant]];
+}
 
 - (void)viewDidLayoutSubviews {
     [super viewDidLayoutSubviews];
@@ -116,44 +124,51 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
     }
 
     CGFloat scrollWidth = CGRectGetWidth([scrollView bounds]);
-    CGFloat previousAdjustedMaxX = 0.0f;
     CGFloat fullTutorialScreenWidth = scrollWidth - (3 * HEMTutorialContentHorzPadding);
     
     for (UICollectionView* screen in [self tutorialScreens]) {
-        CGFloat screenScale = [screen transform].a;
-        CGFloat scaledX = floorf(CGRectGetMinX([screen frame]) * screenScale);
-        CGFloat diff = scaledX - offsetX;
+        CGFloat screenX = CGRectGetMinX([screen frame]);
+        CGFloat diff = screenX - offsetX;
         
         if (CGRectIntersectsRect([scrollView bounds], [screen frame])) {
 
             if (diff < fullTutorialScreenWidth && diff > HEMTutorialContentHorzPadding) {
                 CGFloat fullnessPercentage = MIN(fabs(1 - ((diff - HEMTutorialContentHorzPadding) / fullTutorialScreenWidth)), 1.0f);
+                NSInteger roundedPercent = (fullnessPercentage * 100);
+                fullnessPercentage = roundedPercent / 100.0f;
                 CGFloat adjustedScale = MIN(HEMTutorialContentMinScale + ((1 - HEMTutorialContentMinScale) * fullnessPercentage), 1.0f);
                 CGFloat adjustedAlpha = MIN(HEMTutorialContentNextScreenOpacity + ((1 - HEMTutorialContentNextScreenOpacity) * fullnessPercentage), 1.0f);
-                CGFloat adjustedX = 0.0f;
+                CGFloat adjustedX = floorf(3 * HEMTutorialContentHorzPadding * fullnessPercentage);
                 
-                if (scaledX < offsetX + fullTutorialScreenWidth) {
-                    CGFloat addlPadding = [screen tag] > 2 ? 1 : 0;
-                    adjustedX = ((3+addlPadding) * HEMTutorialContentHorzPadding * fullnessPercentage);
-                }
-
                 CGAffineTransform scaleXForm = CGAffineTransformMakeScale(adjustedScale, adjustedScale);
                 CGAffineTransform transXForm = CGAffineTransformMakeTranslation(adjustedX, 0.0f);
                 CGAffineTransform combinedXForm = CGAffineTransformConcat(scaleXForm, transXForm);
                 
                 [screen setAlpha:adjustedAlpha];
                 [screen setTransform:combinedXForm];
+                
+                if ([screen tag] == [[self tutorialScreens] count] - 1) {
+                    [self swapPageControlAndCloseButtonWithPercentage:fullnessPercentage];
+                }
             }
             
         } else if (diff > 0) {
             CGRect notVisibleScreenFrame = [screen frame];
-            notVisibleScreenFrame.origin.x = previousAdjustedMaxX - (HEMTutorialContentMinScale * screenScale);
+            notVisibleScreenFrame.origin.x = ([screen tag] * scrollWidth) - HEMTutorialContentHorzPadding;
             [screen setFrame:notVisibleScreenFrame];
         }
-        
-        previousAdjustedMaxX = CGRectGetMaxX([screen frame]);
     }
 
+}
+
+- (void)swapPageControlAndCloseButtonWithPercentage:(CGFloat)percentage {
+    DDLogVerbose(@"updating percentage %f", percentage);
+    [[self pageControl] setAlpha:1.0f - percentage];
+    
+    CGFloat bottomConstant = [self closeButtonInitialButtonConstraint];
+    CGFloat distance = fabs(bottomConstant) * 2;
+    CGFloat adjustedConstant = distance * percentage;
+    [[self closeButtonBottomConstraint] setConstant:bottomConstant + adjustedConstant];
 }
 
 - (void)updatePageControl {
@@ -168,6 +183,12 @@ static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
         [self scrollContent];
         [self updatePageControl];
     }
+}
+
+#pragma mark - Actions
+
+- (IBAction)close:(id)sender {
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

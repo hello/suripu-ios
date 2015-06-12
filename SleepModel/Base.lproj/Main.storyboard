@@ -856,14 +856,29 @@
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="cIs-SU-wY1">
                                 <rect key="frame" x="280" y="539" width="39" height="37"/>
                             </pageControl>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YvJ-me-StN">
+                                <rect key="frame" x="288" y="600" width="24" height="24"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="24" id="V5U-tW-VKf"/>
+                                    <constraint firstAttribute="height" constant="24" id="xBy-cy-DE3"/>
+                                </constraints>
+                                <state key="normal" image="x.png">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="close:" destination="Wyk-Hb-XFm" eventType="touchUpInside" id="GTr-tK-OEH"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="yBM-x2-iLi" firstAttribute="leading" secondItem="eLM-0Y-FnO" secondAttribute="leadingMargin" constant="-16" id="25r-Yh-QNd"/>
                             <constraint firstItem="M5p-f7-sPF" firstAttribute="top" secondItem="Jja-rX-grm" secondAttribute="bottom" id="8vG-VE-Ztc"/>
+                            <constraint firstItem="bPi-4p-Z0W" firstAttribute="top" secondItem="YvJ-me-StN" secondAttribute="bottom" constant="-24" id="CKX-Qg-bDZ"/>
                             <constraint firstItem="bPi-4p-Z0W" firstAttribute="top" secondItem="cIs-SU-wY1" secondAttribute="bottom" constant="24" id="LK2-Bu-YBR"/>
                             <constraint firstItem="M5p-f7-sPF" firstAttribute="leading" secondItem="eLM-0Y-FnO" secondAttribute="leadingMargin" constant="-16" id="NLf-f9-Iex"/>
+                            <constraint firstAttribute="centerX" secondItem="YvJ-me-StN" secondAttribute="centerX" id="TM3-7e-phh"/>
                             <constraint firstItem="bPi-4p-Z0W" firstAttribute="top" secondItem="yBM-x2-iLi" secondAttribute="bottom" id="Vul-Vg-Q5T"/>
                             <constraint firstItem="M5p-f7-sPF" firstAttribute="bottom" secondItem="cIs-SU-wY1" secondAttribute="top" constant="-24" id="gT6-Fe-DHq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="M5p-f7-sPF" secondAttribute="trailing" constant="-16" id="hAr-Tc-O8f"/>
@@ -874,6 +889,8 @@
                     </view>
                     <connections>
                         <outlet property="backgroundView" destination="yBM-x2-iLi" id="2Gu-JI-d3J"/>
+                        <outlet property="closeButton" destination="YvJ-me-StN" id="Qce-e8-eyK"/>
+                        <outlet property="closeButtonBottomConstraint" destination="CKX-Qg-bDZ" id="ZKR-7n-MSA"/>
                         <outlet property="contentContainerView" destination="M5p-f7-sPF" id="qcV-2m-BlW"/>
                         <outlet property="pageControl" destination="cIs-SU-wY1" id="RlV-us-1bd"/>
                         <outlet property="view" destination="eLM-0Y-FnO" id="uhF-0c-Wkz"/>
@@ -3844,5 +3861,6 @@
         <image name="senseIcon.png" width="40" height="40"/>
         <image name="settingsCheck.png" width="16" height="13"/>
         <image name="warning.png" width="24" height="22"/>
+        <image name="x.png" width="24" height="24"/>
     </resources>
 </document>

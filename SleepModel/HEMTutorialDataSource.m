@@ -149,6 +149,7 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
         (id)[collectionView dequeueReusableCellWithReuseIdentifier:HEMTutorialCellReuseIdDesc forIndexPath:indexPath];
     [[descriptionCell textLabel] setFont:[UIFont tutorialDescriptionFont]];
     [[descriptionCell textLabel] setText:[[self content] text]];
+    [[descriptionCell textLabel] setTextColor:[UIColor colorWithWhite:0.0f alpha:0.5f]];
     return descriptionCell;
 }
 

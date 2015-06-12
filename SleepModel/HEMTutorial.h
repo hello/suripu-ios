@@ -54,4 +54,9 @@
  */
 + (void)showTutorialForAlarmSmartness;
 
+/**
+ * Mark all tutorials as unviewed so that they can be triggered again
+ */
++ (void)resetTutorials;
+
 @end

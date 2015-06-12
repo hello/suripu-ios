@@ -179,4 +179,11 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [[SENLocalPreferences sharedPreferences] setSessionPreference:@YES forKey:key];
 }
 
++ (void)resetTutorials {
+    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialTimelineKey];
+    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialSensorsKey];
+    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialAlarmsKey];
+    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialTrendsKey];
+}
+
 @end

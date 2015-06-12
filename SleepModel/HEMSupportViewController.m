@@ -20,9 +20,10 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     HEMSupportRows = 3
 };
 
-@interface HEMSupportViewController() <UITableViewDataSource, UITableViewDelegate>
+@interface HEMSupportViewController() <UITableViewDataSource, UITableViewDelegate, UINavigationControllerDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
+@property (weak, nonatomic) id<UINavigationControllerDelegate> origNavDelegate;
 
 @end
 
@@ -41,6 +42,19 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
             [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
         }
     }];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    if (![self origNavDelegate]) {
+        if ([[self navigationController] delegate] != self) {
+            [self setOrigNavDelegate:[[self navigationController] delegate]];
+        }
+    } else {
+        [[self navigationController] setDelegate:[self origNavDelegate]];
+        [self setOrigNavDelegate:nil];
+    }
 }
 
 - (void)configureTableView {
@@ -103,6 +117,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch ([indexPath row]) {
         case HEMSupportRowIndexUserGuide:
+            [[self navigationController] setDelegate:self];
             [ZDKHelpCenter showHelpCenterWithNavController:[self navigationController]];
             break;
         case HEMSupportRowIndexContactUs:
@@ -115,6 +130,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             break;
     }
     
+}
+
+#pragma mark - UINavigationControllerDelegate
+
+- (void)navigationController:(UINavigationController *)navigationController
+      willShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated {
+    [[viewController navigationItem] setRightBarButtonItems:nil];
 }
 
 #pragma mark - Clean up

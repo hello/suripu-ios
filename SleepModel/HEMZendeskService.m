@@ -8,6 +8,8 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENServiceAccount.h>
 #import <SenseKit/SENAccount.h>
+#import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENDevice.h>
 
 #import <ZendeskSDK/ZendeskSDK.h>
 
@@ -17,11 +19,6 @@
 
 // the following are values found in the Zendesk admin interface that maps
 // to the custom fields created
-
-// static long const HEMZendeskCustomFieldIdFirmware = 24385215;
-static long const HEMZendeskCustomFieldIdOSVersion = 24385205;
-static long const HEMZendeskCustomFieldIdDeviceModel = 24385195;
-static long const HEMZendeskCustomFieldIdAccountId = 24385185;
 
 @interface HEMZendeskService()
 
@@ -62,33 +59,14 @@ static long const HEMZendeskCustomFieldIdAccountId = 24385185;
         [zendesk initializeWithAppId:token zendeskUrl:url ClientId:clientId onSuccess:^{
             // singleton, no need to weak / strong self
             [self setZendeskIdentity];
-            [self configureRequests:^(NSError *requestConfigError) {
+            [self configureRequests:^(void) {
                 [self setConfigured:YES];
                 if (completion) {
-                    completion (requestConfigError);
+                    completion (nil);
                 }
             }];
         } onError:completion];
     }
-}
-
-- (void)setCustomFields {
-    UIDevice* device = [UIDevice currentDevice];
-    NSNumber* osVersionId = @(HEMZendeskCustomFieldIdOSVersion);
-    ZDKCustomField* osVersionField = [[ZDKCustomField alloc] initWithFieldId:osVersionId
-                                                                    andValue:[device systemVersion]];
-    
-    NSNumber* deviceModelId = @(HEMZendeskCustomFieldIdDeviceModel);
-    NSString* deviceModel = [HEMSupportUtil deviceModel];
-    ZDKCustomField* deviceModelField = [[ZDKCustomField alloc] initWithFieldId:deviceModelId
-                                                                      andValue:deviceModel];
-    
-    NSNumber* accountIdFieldId = @(HEMZendeskCustomFieldIdAccountId);
-    NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
-    ZDKCustomField* accountIdField = [[ZDKCustomField alloc] initWithFieldId:accountIdFieldId
-                                                                    andValue:accountId];
-    
-    [[ZDKConfig instance] setCustomTicketFields:@[osVersionField, deviceModelField, accountIdField]];
 }
 
 - (void)setZendeskIdentity {
@@ -123,12 +101,37 @@ static long const HEMZendeskCustomFieldIdAccountId = 24385185;
 
 }
 
-- (void)configureRequests:(void(^)(NSError* requestConfigError))completion {
+- (void)configureRequests:(void(^)(void))completion {
     [ZDKRequests configure:^(ZDKAccount *account, ZDKRequestCreationConfig *requestCreationConfig) {
-        [self setCustomFields];
         NSBundle* bundle = [NSBundle mainBundle];
+        UIDevice* device = [UIDevice currentDevice];
+        NSString* osVersion = [device systemVersion];
+        NSString* deviceModel = [HEMSupportUtil deviceModel];
+        NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
+        NSString* fwVersion = [[[SENServiceDevice sharedService] senseInfo] firmwareVersion];
         NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
+        NSString* senseId = [[[SENServiceDevice sharedService] senseInfo] deviceId];
+
+        NSMutableArray* tags = [@[deviceModel, osVersion] mutableCopy];
+        if (accountId) {
+            [tags addObject:accountId];
+        }
+        if (fwVersion) {
+            [tags addObject:fwVersion];
+        }
+        if (appVersion) {
+            [tags addObject:appVersion];
+        }
+
+        [requestCreationConfig setTags:tags];
+        
+        NSMutableString* additionalInfo = [[NSMutableString alloc] initWithString:@"\n\n\n\n-----\n"];
+        [additionalInfo appendFormat:@"Id: %@", accountId ?: @""];
+        [additionalInfo appendFormat:@"\nSense Id: %@", senseId ?: @""];
+        
+        [requestCreationConfig setAdditionalRequestInfo:additionalInfo];
         [requestCreationConfig setSubject:[NSString stringWithFormat:@"iOS Ticket for Sense %@", appVersion]];
+        
     }];
 }
 

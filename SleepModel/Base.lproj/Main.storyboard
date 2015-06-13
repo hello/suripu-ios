@@ -2705,12 +2705,18 @@
                                         <state key="normal" image="Menu.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="drawerButtonTapped:" destination="LIj-Uz-9Ss" eventType="touchUpInside" id="3sf-ek-kEt"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fYg-XE-Lf6">
                                         <rect key="frame" x="563" y="22" width="17" height="22"/>
                                         <state key="normal" image="Share.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="shareButtonTapped:" destination="LIj-Uz-9Ss" eventType="touchUpInside" id="9JT-4R-AVs"/>
+                                        </connections>
                                     </button>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Down Caret.png" translatesAutoresizingMaskIntoConstraints="NO" id="UWI-ZF-kNz">
                                         <rect key="frame" x="352" y="34" width="9" height="6"/>

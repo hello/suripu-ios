@@ -9,6 +9,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
 @property (weak, nonatomic) IBOutlet UIView *summaryContainerView;
+@property (weak, nonatomic) IBOutlet UIView *messageContainerView;
 @property (nonatomic, strong) NSAttributedString *sleepScoreLabelText;
 @property (nonatomic, strong) CAGradientLayer *gradientLayer;
 @end
@@ -27,25 +28,23 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 }
 
 - (void)awakeFromNib {
-    [self configureSpinner];
     [self configureGradientViews];
     self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
 }
 
-- (void)configureSpinner {
-    self.spinnerView.color = [UIColor colorWithWhite:0.1 alpha:0.2];
-    self.spinnerView.spinnerSize = CGRectGetWidth(self.spinnerView.bounds);
-    self.spinnerView.style = RTSpinKitViewStyleArc;
-    self.spinnerView.hidesWhenStopped = YES;
-    self.spinnerView.backgroundColor = [UIColor clearColor];
+- (void)prepareForReuse {
+    self.messageContainerView.alpha = 0;
 }
 
 - (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated {
     BOOL scoreIsEmpty = sleepScore == 0;
     self.sleepScoreTextLabel.hidden = scoreIsEmpty;
-    if (!scoreIsEmpty)
-        [self.spinnerView stopAnimating];
     [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];
+    if (self.messageContainerView.alpha != 1) {
+        [UIView animateWithDuration:0.25f delay:1.25f options:0 animations:^{
+            self.messageContainerView.alpha = 1;
+        } completion:NULL];
+    }
 }
 
 - (void)setSummaryViewsVisible:(BOOL)visible {

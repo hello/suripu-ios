@@ -120,8 +120,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
         self.beLoading = NO;
         [self hideLoadingViewAnimated:NO];
     }
-    if ([self isTitleOutOfSync])
-        [self.collectionView reloadData];
 
     if (self.dateForNightOfSleep) {
         [SENAnalytics track:HEMAnalyticsEventTimelineDataRequest
@@ -148,15 +146,10 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     NSDictionary *timeline = [timelines firstObject];
     BOOL didChange = [self.sleepResult updateWithDictionary:timeline];
     [self hideLoadingViewAnimated:YES];
-    if (didChange || [self isTitleOutOfSync]) {
+    if (didChange) {
         [self.sleepResult save];
         [self.collectionView reloadData];
     }
-}
-
-- (BOOL)isTitleOutOfSync {
-    NSString *currentTitleText = [self.sleepSummaryCell.dateButton titleForState:UIControlStateNormal];
-    return ![currentTitleText isEqualToString:[self titleTextForDate]];
 }
 
 - (void)configureCollectionView {
@@ -199,33 +192,16 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
 
 #pragma mark - Loading
 
-- (RTSpinKitView *)loadingView {
-    return self.sleepSummaryCell.spinnerView;
-}
-
 - (BOOL)shouldShowLoadingView {
     return [self numberOfSleepSegments] == 0;
 }
 
 - (void)showLoadingView {
-    if (![self shouldBeLoading])
-        return;
 
-    if (self.loadingView) {
-        [NSObject cancelPreviousPerformRequestsWithTarget:self];
-        [self.loadingView startAnimating];
-    } else { self.beLoading = YES; }
 }
 
 - (void)hideLoadingViewAnimated:(BOOL)animated {
-    self.beLoading = NO;
-    CGFloat duration = animated ? 0.25f : 0;
-    [UIView animateWithDuration:duration
-        animations:^{ self.loadingView.alpha = 0; }
-        completion:^(BOOL finished) {
-          [self.loadingView stopAnimating];
-          self.loadingView.alpha = 1;
-        }];
+
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -279,8 +255,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     if (cell.layer.zPosition != zPosition)
         [cell.layer setZPosition:zPosition];
 
-    if ([collectionView.delegate respondsToSelector:@selector(didLoadCell:atIndexPath:)])
-        [(id<HEMSleepGraphActionDelegate>)collectionView.delegate didLoadCell:cell atIndexPath:indexPath];
     return cell;
 }
 
@@ -310,39 +284,10 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     HEMSleepSummaryCollectionViewCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:sleepSummaryReuseIdentifier forIndexPath:indexPath];
     NSInteger score = [self.sleepResult.score integerValue];
-    [cell setSleepScore:score animated:YES];
-    cell.messageLabel.textAlignment = NSTextAlignmentCenter;
     NSDictionary *attributes = [HEMMarkdown attributesForTimelineMessageText];
     cell.messageLabel.attributedText = [markdown_to_attr_string(self.sleepResult.message, 0, attributes) trim];
-    [self configurePresleepSummaryForCell:cell];
-    [self configureActionsForSleepSummaryCell:cell];
-    [cell.dateButton setTitle:[self titleTextForDate] forState:UIControlStateNormal];
-    if ([self shouldBeLoading])
-        [self performSelector:@selector(showLoadingView) withObject:nil afterDelay:0.5];
-    else
-        [cell.spinnerView stopAnimating];
+    [cell setSleepScore:score animated:YES];
     return cell;
-}
-
-- (void)configureActionsForSleepSummaryCell:(HEMSleepSummaryCollectionViewCell *)cell {
-    if ([self.collectionView.delegate respondsToSelector:@selector(drawerButtonTapped:)])
-        [cell.drawerButton addTarget:self.collectionView.delegate
-                              action:@selector(drawerButtonTapped:)
-                    forControlEvents:UIControlEventTouchUpInside];
-    if ([self.collectionView.delegate respondsToSelector:@selector(shouldHideShareButton)])
-        cell.shareButton.alpha =
-            [(id<HEMSleepGraphActionDelegate>)self.collectionView.delegate shouldHideShareButton] ? 0 : 1.f;
-    if ([self.collectionView.delegate respondsToSelector:@selector(shouldEnableZoomButton)])
-        cell.dateButton.enabled =
-            [(id<HEMSleepGraphActionDelegate>)self.collectionView.delegate shouldEnableZoomButton];
-    if ([self.collectionView.delegate respondsToSelector:@selector(shareButtonTapped:)])
-        [cell.shareButton addTarget:self.collectionView.delegate
-                             action:@selector(shareButtonTapped:)
-                   forControlEvents:UIControlEventTouchUpInside];
-    if ([self.collectionView.delegate respondsToSelector:@selector(zoomButtonTapped:)])
-        [cell.dateButton addTarget:self.collectionView.delegate
-                            action:@selector(zoomButtonTapped:)
-                  forControlEvents:UIControlEventTouchUpInside];
 }
 
 - (NSString *)shortValueForMinuteValue:(NSNumber *)minuteValue {
@@ -358,61 +303,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
         format = NSLocalizedString(@"sleep-stat.hour.format", nil);
         return [NSString stringWithFormat:format, minutes / 60];
     }
-}
-
-- (void)configurePresleepSummaryForCell:(HEMSleepSummaryCollectionViewCell *)cell {
-    NSDictionary *attributes = [HEMMarkdown attributesForTimelineMessageText];
-    if (self.sleepResult.sensorInsights.count > 4) {
-        SENSleepResultSensorInsight *insight = self.sleepResult.sensorInsights[4];
-        cell.presleepInsightLabel5.attributedText = [markdown_to_attr_string(insight.message, 0, attributes) trim];
-        cell.presleepImageView5.image = [self imageForPresleepInsight:insight];
-        cell.presleepImageView5.tintColor = [UIColor colorForSensorWithCondition:insight.condition];
-    }
-
-    if (self.sleepResult.sensorInsights.count > 3) {
-        SENSleepResultSensorInsight *insight = self.sleepResult.sensorInsights[3];
-        cell.presleepInsightLabel4.attributedText = [markdown_to_attr_string(insight.message, 0, attributes) trim];
-        cell.presleepImageView4.image = [self imageForPresleepInsight:insight];
-        cell.presleepImageView4.tintColor = [UIColor colorForSensorWithCondition:insight.condition];
-    }
-
-    if (self.sleepResult.sensorInsights.count > 2) {
-        SENSleepResultSensorInsight *insight = self.sleepResult.sensorInsights[2];
-        cell.presleepInsightLabel3.attributedText = [markdown_to_attr_string(insight.message, 0, attributes) trim];
-        cell.presleepImageView3.image = [self imageForPresleepInsight:insight];
-        cell.presleepImageView3.tintColor = [UIColor colorForSensorWithCondition:insight.condition];
-    }
-
-    if (self.sleepResult.sensorInsights.count > 1) {
-        SENSleepResultSensorInsight *insight = self.sleepResult.sensorInsights[1];
-        cell.presleepInsightLabel2.attributedText = [markdown_to_attr_string(insight.message, 0, attributes) trim];
-        cell.presleepImageView2.image = [self imageForPresleepInsight:insight];
-        cell.presleepImageView2.tintColor = [UIColor colorForSensorWithCondition:insight.condition];
-    }
-
-    if (self.sleepResult.sensorInsights.count > 0) {
-        SENSleepResultSensorInsight *insight = self.sleepResult.sensorInsights[0];
-        cell.presleepInsightLabel1.attributedText = [markdown_to_attr_string(insight.message, 0, attributes) trim];
-        cell.presleepImageView1.image = [self imageForPresleepInsight:insight];
-        cell.presleepImageView1.tintColor = [UIColor colorForSensorWithCondition:insight.condition];
-    }
-}
-
-- (UIImage *)imageForPresleepInsight:(SENSleepResultSensorInsight *)insight {
-    UIImage *image = nil;
-    if ([insight.name isEqualToString:sensorTypeTemperature]) {
-        image = [HelloStyleKit presleepInsightTemperature];
-    } else if ([insight.name isEqualToString:sensorTypeHumidity]) {
-        image = [HelloStyleKit presleepInsightHumidity];
-    } else if ([insight.name isEqualToString:sensorTypeParticulates]) {
-        image = [HelloStyleKit presleepInsightParticulates];
-    } else if ([insight.name isEqualToString:sensorTypeLight]) {
-        image = [HelloStyleKit presleepInsightLight];
-    } else if ([insight.name isEqualToString:sensorTypeSound]) { image = [HelloStyleKit presleepInsightSound]; } else {
-        image = [HelloStyleKit presleepInsightUnknown];
-    }
-
-    return [image imageWithRenderingMode:UIImageRenderingModeAlwaysTemplate];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView

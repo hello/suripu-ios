@@ -13,5 +13,7 @@
 - (void)showBlurWithHeight:(CGFloat)blurHeight;
 - (void)showBorder:(BOOL)isVisible;
 - (void)showAlarmButton:(BOOL)isVisible;
+- (NSString*)centerTitle;
+- (void)setCenterTitle:(NSString*)title;
 
 @end

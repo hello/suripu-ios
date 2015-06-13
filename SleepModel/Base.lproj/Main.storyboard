@@ -2199,7 +2199,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="568.5" height="96"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="569" height="96"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="9:30" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RM9-XI-qde">
@@ -2252,7 +2252,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="568.5" height="178"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="569" height="178"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SMART ALARMS" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GlN-SR-oNV">
@@ -2289,7 +2289,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                            <rect key="frame" x="0.0" y="0.0" width="568.5" height="80"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="569" height="80"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Alarms are currently unavailable" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QuX-2N-W4J">
@@ -2695,32 +2695,47 @@
                                 <rect key="frame" x="0.0" y="20" width="600" height="60"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLX-Nj-aVW">
-                                        <rect key="frame" x="256.5" y="20" width="87" height="27.5"/>
+                                        <rect key="frame" x="257" y="20" width="87" height="30"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="20"/>
-                                        <color key="textColor" red="0.23404696580000001" green="0.23403996229999999" blue="0.23404392600000001" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.063956059519999997" green="0.53325003390000003" blue="0.99848216769999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2h-OZ-S7g">
-                                        <rect key="frame" x="20" y="20" width="18" height="22"/>
+                                        <rect key="frame" x="20" y="26" width="20" height="22"/>
                                         <state key="normal" image="Menu.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fYg-XE-Lf6">
-                                        <rect key="frame" x="563" y="19" width="17" height="23"/>
+                                        <rect key="frame" x="563" y="22" width="17" height="22"/>
                                         <state key="normal" image="Share.png">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Down Caret.png" translatesAutoresizingMaskIntoConstraints="NO" id="UWI-ZF-kNz">
+                                        <rect key="frame" x="352" y="34" width="9" height="6"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JQb-8q-AeR">
+                                        <rect key="frame" x="247" y="20" width="124" height="30"/>
+                                        <state key="normal">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="0.95000000000000007" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="fYg-XE-Lf6" firstAttribute="centerY" secondItem="LLX-Nj-aVW" secondAttribute="centerY" constant="-2" id="0h8-Kw-S8X"/>
+                                    <constraint firstItem="JQb-8q-AeR" firstAttribute="top" secondItem="LLX-Nj-aVW" secondAttribute="top" id="2Pl-EE-NFB"/>
                                     <constraint firstAttribute="centerX" secondItem="LLX-Nj-aVW" secondAttribute="centerX" id="8qG-fn-tkG"/>
+                                    <constraint firstItem="w2h-OZ-S7g" firstAttribute="centerY" secondItem="LLX-Nj-aVW" secondAttribute="centerY" constant="2" id="9fm-TX-LlB"/>
                                     <constraint firstAttribute="height" constant="60" id="Cxe-XY-H09"/>
                                     <constraint firstAttribute="trailing" secondItem="fYg-XE-Lf6" secondAttribute="trailing" constant="20" id="Nv5-Tp-WBL"/>
-                                    <constraint firstItem="w2h-OZ-S7g" firstAttribute="top" secondItem="hRZ-rK-9xy" secondAttribute="top" constant="20" id="Pdu-z0-LeX"/>
-                                    <constraint firstItem="fYg-XE-Lf6" firstAttribute="top" secondItem="hRZ-rK-9xy" secondAttribute="top" constant="19" id="T88-4y-3WV"/>
+                                    <constraint firstItem="UWI-ZF-kNz" firstAttribute="leading" secondItem="LLX-Nj-aVW" secondAttribute="trailing" constant="8" id="fBS-4h-Dp4"/>
+                                    <constraint firstItem="UWI-ZF-kNz" firstAttribute="trailing" secondItem="JQb-8q-AeR" secondAttribute="trailing" constant="-10" id="ff5-j9-NPg"/>
+                                    <constraint firstItem="JQb-8q-AeR" firstAttribute="bottom" secondItem="LLX-Nj-aVW" secondAttribute="bottom" id="k9z-GP-PgI"/>
                                     <constraint firstItem="w2h-OZ-S7g" firstAttribute="leading" secondItem="hRZ-rK-9xy" secondAttribute="leading" constant="20" id="lQu-LB-Lue"/>
+                                    <constraint firstItem="UWI-ZF-kNz" firstAttribute="centerY" secondItem="LLX-Nj-aVW" secondAttribute="centerY" constant="2" id="meZ-Ds-SeE"/>
+                                    <constraint firstItem="JQb-8q-AeR" firstAttribute="leading" secondItem="LLX-Nj-aVW" secondAttribute="leading" constant="-10" id="nig-Bq-BcC"/>
                                     <constraint firstItem="LLX-Nj-aVW" firstAttribute="top" secondItem="hRZ-rK-9xy" secondAttribute="top" constant="20" id="u0C-bj-iRD"/>
                                 </constraints>
                             </view>
@@ -2737,6 +2752,8 @@
                     <connections>
                         <outlet property="alarmButton" destination="3YU-EY-ydB" id="uRr-qh-1KG"/>
                         <outlet property="alarmButtonTrailing" destination="j28-RF-EWa" id="DYv-og-D4b"/>
+                        <outlet property="centerTitleButton" destination="JQb-8q-AeR" id="N1D-23-1MQ"/>
+                        <outlet property="centerTitleLabel" destination="LLX-Nj-aVW" id="abd-Oq-hm6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rha-QF-LXJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -2746,7 +2763,7 @@
         <!--Sleep Graph View Controller-->
         <scene sceneID="vtT-8Q-HGb">
             <objects>
-                <viewController storyboardIdentifier="sleepGraphController" automaticallyAdjustsScrollViewInsets="NO" id="eDW-dk-QbK" customClass="HEMSleepGraphViewController" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="sleepGraphController" extendedLayoutIncludesOpaqueBars="YES" automaticallyAdjustsScrollViewInsets="NO" id="eDW-dk-QbK" customClass="HEMSleepGraphViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="5La-k9-o5B"/>
                         <viewControllerLayoutGuide type="bottom" id="8aV-gM-TJw"/>
@@ -2812,7 +2829,7 @@
                             <constraint firstItem="F5X-iN-TNU" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" id="bjl-nO-FCi"/>
                             <constraint firstItem="NKd-k3-vSA" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="bottom" constant="130" id="j8o-9s-BY7"/>
                             <constraint firstAttribute="centerX" secondItem="NKd-k3-vSA" secondAttribute="centerX" id="oXU-9G-nCY"/>
-                            <constraint firstItem="F5X-iN-TNU" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="bottom" id="p0T-F4-LPw"/>
+                            <constraint firstItem="F5X-iN-TNU" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="top" id="p0T-F4-LPw"/>
                             <constraint firstItem="8aV-gM-TJw" firstAttribute="top" secondItem="F5X-iN-TNU" secondAttribute="bottom" constant="-2" id="pSj-xK-Vd1"/>
                         </constraints>
                     </view>
@@ -3884,8 +3901,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Menu.png" width="18" height="12"/>
-        <image name="Share.png" width="17" height="23"/>
+        <image name="Down Caret.png" width="9" height="6"/>
+        <image name="Menu.png" width="20" height="11"/>
+        <image name="Share.png" width="17" height="20"/>
         <image name="accessory.png" width="8" height="15"/>
         <image name="alarmRepeatIcon.png" width="25" height="25"/>
         <image name="alarmShortcut.png" width="54" height="54"/>

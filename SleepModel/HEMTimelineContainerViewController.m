@@ -7,16 +7,59 @@
 //
 
 #import "HEMTimelineContainerViewController.h"
+#import "HEMSleepHistoryViewController.h"
+#import "HEMZoomAnimationTransitionDelegate.h"
+#import "HEMRootViewController.h"
+#import "HEMMainStoryboard.h"
 
 @interface HEMTimelineContainerViewController ()
 @property (nonatomic, weak) IBOutlet UIButton *alarmButton;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *alarmButtonTrailing;
+@property (nonatomic, weak) IBOutlet UIButton* centerTitleButton;
+@property (nonatomic, weak) IBOutlet UILabel* centerTitleLabel;
+
+@property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
+@property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *animationDelegate;
 @end
 
 @implementation HEMTimelineContainerViewController
 
 static CGFloat const HEMAlarmShortcutDefaultTrailing = 8.f;
-static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
+static CGFloat const HEMAlarmShortcutHiddenTrailing = 70.f;
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    self.animationDelegate = [HEMZoomAnimationTransitionDelegate new];
+    self.transitioningDelegate = self.animationDelegate;;
+}
+
+- (void)registerForNotifications {
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidOpen)
+                                                 name:HEMRootDrawerMayOpenNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidClose)
+                                                 name:HEMRootDrawerMayCloseNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidOpen)
+                                                 name:HEMRootDrawerDidOpenNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidClose)
+                                                 name:HEMRootDrawerDidCloseNotification
+                                               object:nil];
+}
+
+
+- (NSString *)centerTitle {
+    return self.centerTitleLabel.text;
+}
+
+- (void)setCenterTitle:(NSString *)title {
+    self.centerTitleLabel.text = title;
+}
 
 - (void)showBorder:(BOOL)isVisible {
 }
@@ -36,12 +79,75 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
         self.alarmButtonTrailing.constant = constant;
         [self.view setNeedsUpdateConstraints];
         [UIView animateWithDuration:0.2f
-            animations:^{ [self.view layoutIfNeeded]; }
-            completion:^(BOOL finished) {
-              if (constant < 0)
-                  self.alarmButton.hidden = YES;
-            }];
+                         animations:^{ [self.view layoutIfNeeded]; }
+                         completion:^(BOOL finished) {
+                             if (constant < 0)
+                                 self.alarmButton.hidden = YES;
+                         }];
     }
+}
+
+#pragma mark Drawer
+
+- (void)drawerDidOpen {
+//    [UIView animateWithDuration:0.5f animations:^{ [self updateTopBarActionsWithState:NO]; }];
+}
+
+- (void)drawerDidClose {
+//    [UIView animateWithDuration:0.5f animations:^{ [self updateTopBarActionsWithState:YES]; }];
+}
+
+
+
+#pragma mark Top bar actions
+
+- (void)toggleDrawer {
+    HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
+    [root toggleSettingsDrawer];
+}
+
+- (IBAction)drawerButtonTapped:(UIButton *)button {
+    [self toggleDrawer];
+}
+
+- (IBAction)shareButtonTapped:(UIButton *)button {
+//    long score = [self.dataSource.sleepResult.score longValue];
+//    if (score > 0) {
+//        NSString *message;
+//        if (self.lastNight) {
+//            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.last-night.format", nil), score];
+//        } else {
+//            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.other-days.format", nil), score,
+//                       [self.dataSource titleTextForDate]];
+//        }
+//        UIActivityViewController *activityController =
+//        [[UIActivityViewController alloc] initWithActivityItems:@[ message ] applicationActivities:nil];
+//        [self presentViewController:activityController animated:YES completion:nil];
+//    }
+}
+
+- (void)zoomButtonTapped:(UIButton *)sender {
+    self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
+//    self.historyViewController.selectedDate = self.dateForNightOfSleep;
+    self.historyViewController.transitioningDelegate = self.animationDelegate;
+    [self presentViewController:self.historyViewController animated:YES completion:NULL];
+}
+
+- (void)checkForDateChanges {
+    if (self.historyViewController.selectedDate) {
+        HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
+        [root reloadTimelineSlideViewControllerWithDate:self.historyViewController.selectedDate];
+    }
+
+    self.historyViewController = nil;
+}
+
+- (void)loadDataSourceForDate:(NSDate *)date {
+//    self.dateForNightOfSleep = date;
+//    self.presleepExpanded = NO;
+//    self.dataSource =
+//    [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
+//    self.collectionView.dataSource = self.dataSource;
 }
 
 @end

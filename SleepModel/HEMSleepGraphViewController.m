@@ -22,6 +22,7 @@
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
+#import "HEMTimelineContainerViewController.h"
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
@@ -32,44 +33,34 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
 
 @property (nonatomic, retain) HEMSleepGraphView *view;
-@property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
-@property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *animationDelegate;
-@property (nonatomic, getter=presleepSectionIsExpanded) BOOL presleepExpanded;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic, strong) HEMBounceModalTransition *dataVerifyTransitionDelegate;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *shortcutButtonTrailing;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *shortcutButtonBottom;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
-@property (nonatomic, weak) IBOutlet UIButton *shortcutButton;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
 @property (nonatomic, assign, getter=isLastNight) BOOL lastNight;
 @end
 
 @implementation HEMSleepGraphViewController
 
-static CGFloat const HEMSleepSummaryCellHeight = 304.f;
+static CGFloat const HEMSleepSummaryCellHeight = 364.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 static CGFloat const HEMTopItemsConstraintConstant = 4.f;
 static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
-static CGFloat const HEMAlarmShortcutBottomOffset = 20.f;
-static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureCollectionView];
     [self reloadData];
-    self.animationDelegate = [HEMZoomAnimationTransitionDelegate new];
+
     self.dataVerifyTransitionDelegate = [HEMBounceModalTransition new];
     self.dataVerifyTransitionDelegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
-    self.transitioningDelegate = self.animationDelegate;
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan)];
     self.panGestureRecognizer.delegate = self;
     [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:self.panGestureRecognizer];
     [self.view addGestureRecognizer:self.panGestureRecognizer];
     [self registerForNotifications];
-    [self adjustHeight];
 
     [SENAnalytics track:kHEMAnalyticsEventTimeline
              properties:@{
@@ -90,21 +81,11 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     self.view.backgroundColor = [UIColor whiteColor];
-    [self checkForDateChanges];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     [self showTutorial];
-}
-
-- (void)drawerDidOpen {
-    [UIView animateWithDuration:0.5f animations:^{ [self updateTopBarActionsWithState:NO]; }];
-}
-
-- (void)drawerDidClose {
-    [self showTutorial];
-    [UIView animateWithDuration:0.5f animations:^{ [self updateTopBarActionsWithState:YES]; }];
 }
 
 - (void)registerForNotifications {
@@ -124,35 +105,6 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
                                              selector:@selector(handleAuthorization)
                                                  name:SENAuthorizationServiceDidAuthorizeNotification
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidOpen)
-                                                 name:HEMRootDrawerMayOpenNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidClose)
-                                                 name:HEMRootDrawerMayCloseNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidOpen)
-                                                 name:HEMRootDrawerDidOpenNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(drawerDidClose)
-                                                 name:HEMRootDrawerDidCloseNotification
-                                               object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(adjustHeight)
-                                                 name:UIApplicationDidChangeStatusBarFrameNotification
-                                               object:nil];
-}
-
-- (void)adjustHeight {
-    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    CGFloat statusBarHeight = MIN(CGRectGetHeight(statusBarFrame), CGRectGetWidth(statusBarFrame));
-    CGFloat bottomOffset = HEMAlarmShortcutDefaultBottom + (statusBarHeight - HEMAlarmShortcutBottomOffset);
-    self.shortcutButtonBottom.constant = bottomOffset;
-    [self.view setNeedsUpdateConstraints];
-    [self.shortcutButton layoutIfNeeded];
 }
 
 - (void)handleAuthorization {
@@ -162,17 +114,11 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 }
 
 - (void)dealloc {
-    _historyViewController = nil;
     _dataSource = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark HEMSleepGraphActionDelegate
-
-- (void)toggleDrawer {
-    HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root toggleSettingsDrawer];
-}
 
 - (BOOL)shouldEnableZoomButton {
     return [self isViewFullyVisible];
@@ -180,86 +126,6 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
 - (BOOL)shouldHideShareButton {
     return ![self isViewFullyVisible] || [self.dataSource.sleepResult.score integerValue] == 0;
-}
-
-- (void)didLoadCell:(UICollectionViewCell *)cell atIndexPath:(NSIndexPath *)indexPath {
-    if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
-        HEMSleepSummaryCollectionViewCell *summaryCell = (id)cell;
-        if (![self isViewFullyVisible])
-            [self updateTopBarActionsInCell:summaryCell withState:NO];
-    }
-}
-
-#pragma mark Top cell actions
-
-- (void)updateTopBarActionsWithState:(BOOL)pushed {
-    HEMSleepSummaryCollectionViewCell *cell = self.dataSource.sleepSummaryCell;
-    [self updateTopBarActionsInCell:cell withState:pushed];
-}
-
-- (void)updateTopBarActionsInCell:(HEMSleepSummaryCollectionViewCell *)cell withState:(BOOL)pushed {
-    if (!pushed)
-        self.collectionView.contentOffset = CGPointMake(0, 0);
-    self.collectionView.scrollEnabled = pushed;
-    UIImage *drawerIcon = pushed ? [UIImage imageNamed:@"Menu"] : [UIImage imageNamed:@"caret up"];
-    CGFloat constant = pushed ? HEMTopItemsConstraintConstant : HEMTopItemsMinimumConstraintConstant;
-    [cell.dateButton setEnabled:pushed];
-    [cell.drawerButton setImage:drawerIcon forState:UIControlStateNormal];
-    cell.topItemsVerticalConstraint.constant = constant;
-    [cell setNeedsUpdateConstraints];
-    BOOL shouldHideShareButton = !pushed || self.dataSource.numberOfSleepSegments == 0;
-    [UIView animateWithDuration:0.25f
-                     animations:^{
-                       [cell.shareButton setAlpha:shouldHideShareButton ? 0 : 1.f];
-                       [cell.dateButton setAlpha:pushed ? 1.f : 0.5f];
-                       [cell layoutIfNeeded];
-                     }];
-}
-
-- (void)drawerButtonTapped:(UIButton *)button {
-    [self toggleDrawer];
-}
-
-- (void)shareButtonTapped:(UIButton *)button {
-    long score = [self.dataSource.sleepResult.score longValue];
-    if (score > 0) {
-        NSString *message;
-        if (self.lastNight) {
-            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.last-night.format", nil), score];
-        } else {
-            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.other-days.format", nil), score,
-                                                 [self.dataSource titleTextForDate]];
-        }
-        UIActivityViewController *activityController =
-            [[UIActivityViewController alloc] initWithActivityItems:@[ message ] applicationActivities:nil];
-        [self presentViewController:activityController animated:YES completion:nil];
-    }
-}
-
-- (void)zoomButtonTapped:(UIButton *)sender {
-    if (![self isViewFullyVisible])
-        return;
-    self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
-    self.historyViewController.selectedDate = self.dateForNightOfSleep;
-    self.historyViewController.transitioningDelegate = self.animationDelegate;
-    [self presentViewController:self.historyViewController animated:YES completion:NULL];
-}
-
-- (void)checkForDateChanges {
-    if (self.historyViewController.selectedDate) {
-        HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
-        [root reloadTimelineSlideViewControllerWithDate:self.historyViewController.selectedDate];
-    }
-
-    self.historyViewController = nil;
-}
-
-- (void)loadDataSourceForDate:(NSDate *)date {
-    self.dateForNightOfSleep = date;
-    self.presleepExpanded = NO;
-    self.dataSource =
-        [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
-    self.collectionView.dataSource = self.dataSource;
 }
 
 #pragma mark Event Info
@@ -443,35 +309,21 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
 #pragma mark UIScrollViewDelegate
 
+- (HEMTimelineContainerViewController*)containerViewController {
+    return (id)self.parentViewController.parentViewController;
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint offset = scrollView.contentOffset;
-    CGFloat constant = offset.y > 0 ? HEMAlarmShortcutHiddenTrailing : HEMAlarmShortcutDefaultTrailing;
-    [self moveShortcutButtonWithOffset:constant];
+    [self.containerViewController showAlarmButton:offset.y == 0];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    if (!decelerate) {
-        [self moveShortcutButtonWithOffset:HEMAlarmShortcutDefaultTrailing];
-    }
+    [self.containerViewController showAlarmButton:!decelerate];
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    [self moveShortcutButtonWithOffset:HEMAlarmShortcutDefaultTrailing];
-}
-
-- (void)moveShortcutButtonWithOffset:(CGFloat)constant {
-    if (self.shortcutButtonTrailing.constant != constant) {
-        if (constant > 0)
-            self.shortcutButton.hidden = NO;
-        self.shortcutButtonTrailing.constant = constant;
-        [self.view setNeedsUpdateConstraints];
-        [UIView animateWithDuration:0.2f
-            animations:^{ [self.view layoutIfNeeded]; }
-            completion:^(BOOL finished) {
-              if (constant < 0)
-                  self.shortcutButton.hidden = YES;
-            }];
-    }
+    [self.containerViewController showAlarmButton:YES];
 }
 
 #pragma mark UICollectionViewDelegate
@@ -482,6 +334,13 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
 
     [self loadDataSourceForDate:self.dateForNightOfSleep];
     self.lastNight = [self.dataSource dateIsLastNight];
+}
+
+- (void)loadDataSourceForDate:(NSDate *)date {
+    self.dateForNightOfSleep = date;
+    self.dataSource =
+    [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
+    self.collectionView.dataSource = self.dataSource;
 }
 
 - (void)configureCollectionView {

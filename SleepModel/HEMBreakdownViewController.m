@@ -23,6 +23,7 @@
 @property (nonatomic, strong) HEMSplitTextFormatter *valueFormatter;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *buttonBottom;
 @property (nonatomic, weak) IBOutlet UIImageView *backgroundImageView;
+@property (nonatomic, strong) UIImage* backgroundImage;
 @end
 
 @implementation HEMBreakdownViewController
@@ -31,12 +32,17 @@ const CGFloat BreakdownCellItemHeight = 96.f;
 const CGFloat BreakdownCellSummaryHeight = 114.f;
 const CGFloat BreakdownDismissButtonBottom = 26.f;
 
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        _backgroundImage = [[HEMRootViewController rootViewControllerForKeyWindow].view snapshotWithTint:[UIColor colorWithWhite:0 alpha:0.7f]];
+    }
+    return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.valueFormatter = [HEMSplitTextFormatter new];
-    UIImage *background =
-        [self.parentViewController.view blurredSnapshotWithTint:[UIColor colorWithWhite:0.3f alpha:0.5f]];
-    self.backgroundImageView.image = background;
+    self.backgroundImageView.image = self.backgroundImage;
 }
 
 - (void)viewDidAppear:(BOOL)animated {

@@ -138,6 +138,12 @@
 + (UIFont*)timelineBreakdownTitleFont;
 
 /**
+ *  Font for timeline statistics message summary
+ */
++ (UIFont*)timelineBreakdownMessageFont;
++ (UIFont*)timelineBreakdownMessageBoldFont;
+
+/**
  *  Font for timeline statistics values
  */
 + (UIFont*)timelineBreakdownValueFont;

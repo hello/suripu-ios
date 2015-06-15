@@ -7,8 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SenseKit/SenseKit.h>
 
+@class SENSleepResult;
 @interface HEMBreakdownViewController : UIViewController
 
 @property (nonatomic, strong) SENSleepResult* result;

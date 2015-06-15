@@ -295,21 +295,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     return cell;
 }
 
-- (NSString *)shortValueForMinuteValue:(NSNumber *)minuteValue {
-    if (!minuteValue)
-        return NSLocalizedString(@"empty-data", nil);
-
-    CGFloat minutes = [minuteValue floatValue];
-    NSString *format;
-    if (minutes < 60) {
-        format = NSLocalizedString(@"sleep-stat.minute.format", nil);
-        return [NSString stringWithFormat:format, minutes];
-    } else {
-        format = NSLocalizedString(@"sleep-stat.hour.format", nil);
-        return [NSString stringWithFormat:format, minutes / 60];
-    }
-}
-
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
       sleepSegmentCellForItemAtIndexPath:(NSIndexPath *)indexPath {
     SENSleepResultSegment *segment = [self sleepSegmentForIndexPath:indexPath];

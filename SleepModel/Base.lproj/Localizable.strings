@@ -407,8 +407,10 @@
 "sleep-stat.times_awake" = "Times awake";
 "sleep-stat.total_sleep" = "Total sleep";
 "sleep-stat.sound_sleep" = "Deep sleep";
-"sleep-stat.minute.format" = "%.0fm";
-"sleep-stat.hour.format" = "%.1fh";
+"sleep-stat.minute.format" = "%.0f";
+"sleep-stat.minute.unit" = "m";
+"sleep-stat.hour.format" = "%.1f";
+"sleep-stat.hour.unit" = "h";
 
 "sleep-stat.sleep-duration.medium.plural.format" = "You were in **Medium Sleep** for %ld minutes.";
 "sleep-stat.sleep-duration.medium.single.format" = "You were in **Medium Sleep** for one minute.";

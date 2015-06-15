@@ -110,6 +110,7 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     CGFloat leading = MIN(minContainerViewLeading + diff, maxContainerViewLeading);
     CGFloat trailing = MIN(minContainerViewTrailing + diff, maxContainerViewTrailing);
     CGFloat top = MAX(minContainerViewTop, maxContainerViewTop * attributes.ratioFromCenter);
+    CGFloat alphaRatio = ratio < 0 ? MAX(0.8, MIN(1, fabs(ratio))) : 1;
     if (fabs(self.contentContainerViewTop.constant - top) > motionDelta
         || fabs(self.contentContainerViewTrailing.constant - trailing) > motionDelta
         || fabs(self.contentContainerViewLeading.constant - leading) > motionDelta) {
@@ -123,8 +124,8 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
                          animations:^{ [self.contentContainerView layoutIfNeeded]; }
                          completion:NULL];
     }
-    CGFloat alphaRatio = ratio < 0 ? MAX(0.4, MIN(1, fabs(ratio))) : 1;
-    self.contentContainerView.alpha = alphaRatio;
+
+    [UIView animateWithDuration:0.05f animations:^{ self.contentContainerView.alpha = alphaRatio; }];
 }
 
 - (void)layoutSubviews {

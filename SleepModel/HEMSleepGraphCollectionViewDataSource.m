@@ -366,10 +366,10 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     NSString *timeText = [formatter stringFromDate:date];
     NSString *unit = nil;
     if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
-        if (computed.hour > 11) {
+        if (computed.hour < 12) {
             unit = [formatter AMSymbol];
         } else { unit = [formatter PMSymbol]; }
-    } else if (shouldUseUnit) { unit = @":00"; }
+    } else if (shouldUseUnit) { unit = NSLocalizedString(@"sleep-event.time.24-hour.suffix", nil); }
     HEMSplitTextObject *obj = [[HEMSplitTextObject alloc] initWithValue:timeText unit:unit];
     NSDictionary *attrs = [HEMMarkdown attributesForTimelineTimeLabelsText][@(PARA)];
     return [self.inlineNumberFormatter attributedStringForObjectValue:obj withDefaultAttributes:attrs];

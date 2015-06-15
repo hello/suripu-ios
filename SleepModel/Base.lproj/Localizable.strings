@@ -402,6 +402,7 @@
 "sleep-event.action.adjust.message" = "Change the recorded time of this event.";
 "sleep-event.action.delete.title" = "Remove this event — Coming soon";
 "sleep-event.action.delete.message" = "Remove this event from your timeline.";
+"sleep-event.time.24-hour.suffix" = ":00";
 
 "sleep-stat.time_to_sleep" = "Time to sleep";
 "sleep-stat.times_awake" = "Times awake";

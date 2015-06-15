@@ -12,6 +12,13 @@
 #import "HEMSettingsTableViewCell.h"
 #import "HEMMainStoryboard.h"
 #import "HEMZendeskService.h"
+#import "HEMActivityCoverView.h"
+
+// the offset is needed because ZDK native UI is not laid out correctly, causing
+// it to be exactly 5 pixels behind the navigation bar
+static CGFloat const HEMSupportZDKUIOffset = 5.0f;
+
+static CGFloat const HEMSupportZDKUIHeightDiff = -50.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     HEMSupportRowIndexUserGuide = 0,
@@ -31,6 +38,7 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 
 + (void)initialize {
     [[ZDKCreateRequestView appearance] setTextEntryFont:[UIFont supportTicketDescriptionFont]];
+    [[ZDKSupportTableViewCell appearance] setTitleLabelFont:[UIFont settingsTableCellFont]];
 }
 
 - (void)viewDidLoad {
@@ -116,10 +124,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch ([indexPath row]) {
-        case HEMSupportRowIndexUserGuide:
+        case HEMSupportRowIndexUserGuide: {
             [[self navigationController] setDelegate:self];
-            [ZDKHelpCenter showHelpCenterWithNavController:[self navigationController]];
+            [ZDKHelpCenter showHelpCenterWithNavController:[self navigationController]
+                                               layoutGuide:ZDKLayoutRespectNone];
             break;
+        }
         case HEMSupportRowIndexContactUs:
             [self performSegueWithIdentifier:[HEMMainStoryboard topicsSegueIdentifier] sender:self];
             break;
@@ -138,6 +148,15 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
       willShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
     [[viewController navigationItem] setRightBarButtonItems:nil];
+}
+
+- (void)navigationController:(UINavigationController *)navigationController
+       didShowViewController:(UIViewController *)viewController
+                    animated:(BOOL)animated {
+    CGRect viewFrame = [[viewController view] frame];
+    viewFrame.origin.y += HEMSupportZDKUIOffset;
+    viewFrame.size.height += HEMSupportZDKUIHeightDiff;
+    [[viewController view] setFrame:viewFrame];
 }
 
 #pragma mark - Clean up

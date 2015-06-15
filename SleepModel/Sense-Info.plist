@@ -49,6 +49,12 @@
 	<string>${SENSE_CLIENT_ID}</string>
 	<key>SenseCrashReportsToken</key>
 	<string>${SENSE_CRASH_REPORTS_TOKEN}</string>
+	<key>SenseZendeskToken</key>
+	<string>${SENSE_ZENDESK_TOKEN}</string>
+	<key>SenseZendeskURL</key>
+	<string>${SENSE_ZENDESK_URL}</string>
+	<key>SenseZendeskClientId</key>
+	<string>${SENSE_ZENDESK_CLIENT_ID}</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

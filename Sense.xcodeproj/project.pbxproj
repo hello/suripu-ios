@@ -430,6 +430,8 @@
 		BF78E9A21B266C310015949F /* HEMTutorialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF78E9A11B266C310015949F /* HEMTutorialViewController.m */; };
 		BF78E9A61B2762060015949F /* HEMTutorialContent.m in Sources */ = {isa = PBXBuildFile; fileRef = BF78E9A51B2762060015949F /* HEMTutorialContent.m */; };
 		BF78E9A91B2763CA0015949F /* HEMTutorialDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF78E9A81B2763CA0015949F /* HEMTutorialDataSource.m */; };		BF7F1BCA19E304050028F799 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF7F1BC919E304050028F799 /* NotificationCenter.framework */; };
+
+		BF7F1BCA19E304050028F799 /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF7F1BC919E304050028F799 /* NotificationCenter.framework */; };
 		BF7F1BD019E304050028F799 /* HEMTodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF7F1BCF19E304050028F799 /* HEMTodayViewController.m */; };
 		BF7F1BD219E304050028F799 /* Widget.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BF7F1BD119E304050028F799 /* Widget.storyboard */; };
 		BF7F1BD519E304050028F799 /* Sense.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BF7F1BC819E304050028F799 /* Sense.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };

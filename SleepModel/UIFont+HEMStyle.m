@@ -463,5 +463,4 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 + (UIFont*)supportTicketDescriptionFont {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
-
 @end

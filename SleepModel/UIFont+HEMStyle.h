@@ -433,5 +433,4 @@
  * Font used for the description input in a support ticket form
  */
 + (UIFont*)supportTicketDescriptionFont;
-
 @end

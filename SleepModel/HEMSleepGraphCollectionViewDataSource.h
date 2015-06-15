@@ -69,8 +69,6 @@ extern NSString* const HEMSleepEventTypeSleeping;
 
 - (NSUInteger)numberOfSleepSegments;
 
-- (NSString*)titleTextForDate;
-
 - (HEMSleepSummaryCollectionViewCell*)sleepSummaryCell;
 
 - (BOOL)dateIsLastNight;

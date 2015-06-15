@@ -46,8 +46,6 @@ NSString *const HEMSleepEventTypeSleeping = @"SLEEPING";
 @property (nonatomic, weak) UICollectionView *collectionView;
 @property (nonatomic, strong) NSDateFormatter *hourDateFormatter;
 @property (nonatomic, strong) NSDateFormatter *timeDateFormatter;
-@property (nonatomic, strong) NSDateFormatter *rangeDateFormatter;
-@property (nonatomic, strong) NSDateFormatter *weekdayDateFormatter;
 @property (nonatomic, strong) NSDate *dateForNightOfSleep;
 @property (nonatomic, strong, readwrite) SENSleepResult *sleepResult;
 @property (nonatomic, strong) NSArray *aggregateDataSources;
@@ -99,10 +97,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
             _timeDateFormatter.dateFormat = @"H:mm";
             _hourDateFormatter.dateFormat = @"H";
         }
-        _rangeDateFormatter = [NSDateFormatter new];
-        _rangeDateFormatter.dateFormat = @"MMMM d";
-        _weekdayDateFormatter = [NSDateFormatter new];
-        _weekdayDateFormatter.dateFormat = @"EEEE";
         _calendar = [NSCalendar currentCalendar];
         [self configureCollectionView];
         [self reloadData];
@@ -265,19 +259,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
                                                 toDate:[[NSDate date] previousDay]
                                                options:0];
     return diff.day == 0;
-}
-
-- (NSString *)titleTextForDate {
-    NSDateComponents *diff = [self.calendar components:NSDayCalendarUnit
-                                              fromDate:self.dateForNightOfSleep
-                                                toDate:[[NSDate date] previousDay]
-                                               options:0];
-    if (diff.day == 0)
-        return NSLocalizedString(@"sleep-history.last-night", nil);
-    else if (diff.day < 7)
-        return [self.weekdayDateFormatter stringFromDate:self.dateForNightOfSleep];
-    else
-        return [self.rangeDateFormatter stringFromDate:self.dateForNightOfSleep];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView

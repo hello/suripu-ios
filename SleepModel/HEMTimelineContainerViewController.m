@@ -12,6 +12,7 @@
 #import "HEMRootViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
+#import "NSDate+HEMRelative.h"
 
 @interface HEMTimelineContainerViewController ()
 @property (nonatomic, weak) IBOutlet UIButton *drawerButton;
@@ -23,6 +24,9 @@
 @property (nonatomic, weak) IBOutlet UILabel *centerTitleLabel;
 @property (nonatomic, weak) IBOutlet UIImageView *centerTitleCaretView;
 
+@property (nonatomic, strong) NSCalendar *calendar;
+@property (nonatomic, strong) NSDateFormatter *weekdayDateFormatter;
+@property (nonatomic, strong) NSDateFormatter *rangeDateFormatter;
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *animationDelegate;
 @end
@@ -38,6 +42,11 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
     [super viewDidLoad];
     self.animationDelegate = [HEMZoomAnimationTransitionDelegate new];
     self.transitioningDelegate = self.animationDelegate;
+    self.rangeDateFormatter = [NSDateFormatter new];
+    self.rangeDateFormatter.dateFormat = @"MMMM d";
+    self.weekdayDateFormatter = [NSDateFormatter new];
+    self.weekdayDateFormatter.dateFormat = @"EEEE";
+    self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     [self registerForNotifications];
 }
 
@@ -69,8 +78,40 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
     return self.centerTitleLabel.text;
 }
 
-- (void)setCenterTitle:(NSString *)title {
-    self.centerTitleLabel.text = title;
+- (void)setCenterTitleFromDate:(NSDate *)date {
+    self.centerTitleLabel.text = [self titleTextForDate:date];
+    [UIView animateWithDuration:0.2f
+                     animations:^{
+                       self.centerTitleLabel.alpha = 1;
+                       self.centerTitleCaretView.alpha = 1;
+                     }];
+}
+
+- (void)prepareForCenterTitleChange {
+    [UIView animateWithDuration:0.2f
+                     animations:^{
+                       self.centerTitleLabel.alpha = 0;
+                       self.centerTitleCaretView.alpha = 0;
+                     }];
+}
+
+- (void)cancelCenterTitleChange {
+    [UIView animateWithDuration:0.2f
+                     animations:^{
+                         self.centerTitleLabel.alpha = 1;
+                         self.centerTitleCaretView.alpha = 1;
+                     }];
+}
+
+- (NSString *)titleTextForDate:(NSDate *)date {
+    NSDateComponents *diff =
+        [self.calendar components:NSDayCalendarUnit fromDate:date toDate:[[NSDate date] previousDay] options:0];
+    if (diff.day == 0)
+        return NSLocalizedString(@"sleep-history.last-night", nil);
+    else if (diff.day < 7)
+        return [self.weekdayDateFormatter stringFromDate:date];
+    else
+        return [self.rangeDateFormatter stringFromDate:date];
 }
 
 - (void)showBorder:(BOOL)isVisible {

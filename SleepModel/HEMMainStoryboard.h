@@ -14,6 +14,7 @@
 +(NSString *)alarmSoundCellReuseIdentifier;
 +(NSString *)alarmRepeatCellReuseIdentifier;
 +(NSString *)alarmDeleteCellReuseIdentifier;
++(NSString *)breakdownLineCellReuseIdentifier;
 +(NSString *)singleReuseIdentifier;
 +(NSString *)multipleReuseIdentifier;
 +(NSString *)preferenceReuseIdentifier;
@@ -36,6 +37,7 @@
 +(NSString *)alarmListStatusCellReuseIdentifier;
 +(NSString *)alarmChoiceCellReuseIdentifier;
 +(NSString *)sensorGraphCellReuseIdentifier;
++(NSString *)summaryViewCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)overTimeReuseIdentifier;
 +(NSString *)trendGraphReuseIdentifier;
@@ -64,6 +66,7 @@
 +(id)instantiateAlarmNavController;
 +(id)instantiateAlarmRepeatTableViewController;
 +(id)instantiateAlarmViewController;
++(id)instantiateBreakdownViewController;
 +(id)instantiateCurrentNavController;
 +(id)instantiateInsightFeedViewController;
 +(id)instantiateSensorViewController;

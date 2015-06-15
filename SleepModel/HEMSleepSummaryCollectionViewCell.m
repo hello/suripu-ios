@@ -32,10 +32,6 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
     self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
 }
 
-- (void)prepareForReuse {
-    self.messageContainerView.alpha = 0;
-}
-
 - (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated {
     BOOL scoreIsEmpty = sleepScore == 0;
     self.sleepScoreTextLabel.hidden = scoreIsEmpty;

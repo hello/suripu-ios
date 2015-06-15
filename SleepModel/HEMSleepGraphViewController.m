@@ -19,6 +19,7 @@
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepSummarySlideViewController.h"
+#import "HEMBreakdownViewController.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
@@ -193,6 +194,12 @@ static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
             return [self indexPathForEventCellWithSubview:superview];
     }
     return nil;
+}
+
+- (void)didTapSummaryButton:(UIButton *)sender {
+    HEMBreakdownViewController* controller = [HEMMainStoryboard instantiateBreakdownViewController];
+    controller.result = self.dataSource.sleepResult;
+    [self presentViewController:controller animated:YES completion:NULL];
 }
 
 #pragma mark UIGestureRecognizerDelegate

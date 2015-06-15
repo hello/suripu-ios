@@ -62,19 +62,29 @@
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeline right caret.png" translatesAutoresizingMaskIntoConstraints="NO" id="JKF-id-cB1">
                                         <rect key="frame" x="281" y="16" width="7" height="12"/>
                                     </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oNi-GL-i0h">
+                                        <rect key="frame" x="0.0" y="0.0" width="304" height="120"/>
+                                        <state key="normal">
+                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="oNi-GL-i0h" secondAttribute="bottom" id="5hL-Pw-icl"/>
                                     <constraint firstItem="3zN-gk-dwk" firstAttribute="leading" secondItem="XD9-Mv-4Jf" secondAttribute="leading" constant="20" id="BfH-74-NtY"/>
                                     <constraint firstAttribute="trailing" secondItem="tNt-4l-gcx" secondAttribute="trailing" id="D7j-TJ-W8i"/>
                                     <constraint firstAttribute="trailing" secondItem="buK-Of-ZfH" secondAttribute="trailing" constant="7" id="Kja-eR-b3l"/>
+                                    <constraint firstAttribute="trailing" secondItem="oNi-GL-i0h" secondAttribute="trailing" id="MAv-MZ-Ryd"/>
                                     <constraint firstAttribute="height" constant="120" id="UPf-fi-yZI"/>
                                     <constraint firstItem="tNt-4l-gcx" firstAttribute="top" secondItem="XD9-Mv-4Jf" secondAttribute="top" constant="41" id="VMz-Zy-D79"/>
+                                    <constraint firstItem="oNi-GL-i0h" firstAttribute="top" secondItem="XD9-Mv-4Jf" secondAttribute="top" id="Vpj-In-CAO"/>
                                     <constraint firstAttribute="trailing" secondItem="JKF-id-cB1" secondAttribute="trailing" constant="16" id="W1p-lM-9rc"/>
                                     <constraint firstItem="3zN-gk-dwk" firstAttribute="centerY" secondItem="JKF-id-cB1" secondAttribute="centerY" constant="2" id="kuk-m8-MiQ"/>
                                     <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="3zN-gk-dwk" secondAttribute="bottom" constant="22" id="p69-g3-LwV"/>
                                     <constraint firstAttribute="bottom" secondItem="buK-Of-ZfH" secondAttribute="bottom" constant="2" id="poH-yl-F5A"/>
                                     <constraint firstItem="tNt-4l-gcx" firstAttribute="top" secondItem="3zN-gk-dwk" secondAttribute="bottom" constant="10" id="rEV-ru-WEc"/>
+                                    <constraint firstItem="oNi-GL-i0h" firstAttribute="leading" secondItem="XD9-Mv-4Jf" secondAttribute="leading" id="yJG-8D-8qp"/>
                                     <constraint firstItem="tNt-4l-gcx" firstAttribute="leading" secondItem="XD9-Mv-4Jf" secondAttribute="leading" id="z3w-od-9Ps"/>
                                     <constraint firstItem="buK-Of-ZfH" firstAttribute="leading" secondItem="XD9-Mv-4Jf" secondAttribute="leading" constant="16" id="zyI-7R-HHa"/>
                                 </constraints>
@@ -110,9 +120,10 @@
                 <outlet property="messageLabel" destination="buK-Of-ZfH" id="wIT-cG-avW"/>
                 <outlet property="sleepScoreGraphView" destination="T3i-WO-VZQ" id="nPx-1C-bLv"/>
                 <outlet property="sleepScoreTextLabel" destination="FN0-1v-Tup" id="Q0G-ar-mOf"/>
+                <outlet property="summaryButton" destination="oNi-GL-i0h" id="Whp-Gu-7oO"/>
                 <outlet property="summaryContainerView" destination="1cj-i9-Ywi" id="CId-WX-VYi"/>
             </connections>
-            <point key="canvasLocation" x="231" y="292.5"/>
+            <point key="canvasLocation" x="231" y="292"/>
         </collectionViewCell>
     </objects>
     <resources>

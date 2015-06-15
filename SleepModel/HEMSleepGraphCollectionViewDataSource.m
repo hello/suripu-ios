@@ -287,6 +287,11 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     NSDictionary *attributes = [HEMMarkdown attributesForTimelineMessageText];
     cell.messageLabel.attributedText = [markdown_to_attr_string(self.sleepResult.message, 0, attributes) trim];
     [cell setSleepScore:score animated:YES];
+    if ([collectionView.delegate respondsToSelector:@selector(didTapSummaryButton:)]) {
+        [cell.summaryButton addTarget:collectionView.delegate
+                               action:@selector(didTapSummaryButton:)
+                     forControlEvents:UIControlEventTouchUpInside];
+    }
     return cell;
 }
 

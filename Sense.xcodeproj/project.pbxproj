@@ -45,6 +45,10 @@
 		8A1743C419A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8A1743C219A7BB47001E3C15 /* HEMNoSleepEventCollectionViewCell.xib */; };
 		8A1743CA19A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1743C919A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m */; };
 		8A19BF1A1B20D1880025DFA7 /* HEMTimelineLayoutAttributes.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A19BF191B20D1880025DFA7 /* HEMTimelineLayoutAttributes.m */; };
+		8A1C7B691B2F261B000268B2 /* escape button.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1C7B661B2F261B000268B2 /* escape button.png */; };
+		8A1C7B6A1B2F261B000268B2 /* escape button@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1C7B671B2F261B000268B2 /* escape button@2x.png */; };
+		8A1C7B6B1B2F261B000268B2 /* escape button@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1C7B681B2F261B000268B2 /* escape button@3x.png */; };
+		8A1C7B6E1B2F2BF8000268B2 /* HEMBreakdownViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C7B6D1B2F2BF8000268B2 /* HEMBreakdownViewController.m */; };
 		8A1C94B81A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C94B71A08178A006E3A31 /* UIFont+HEMStyle.m */; };
 		8A1C94B91A08178A006E3A31 /* UIFont+HEMStyle.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A1C94B71A08178A006E3A31 /* UIFont+HEMStyle.m */; };
 		8A1E723419D62C26007475D3 /* alarmRepeatIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 8A1E722C19D62C26007475D3 /* alarmRepeatIcon.png */; };
@@ -790,6 +794,11 @@
 		8A1743C919A8170C001E3C15 /* HEMSleepSegmentCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepSegmentCollectionViewCell.m; sourceTree = "<group>"; };
 		8A19BF181B20D1880025DFA7 /* HEMTimelineLayoutAttributes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimelineLayoutAttributes.h; sourceTree = "<group>"; };
 		8A19BF191B20D1880025DFA7 /* HEMTimelineLayoutAttributes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineLayoutAttributes.m; sourceTree = "<group>"; };
+		8A1C7B661B2F261B000268B2 /* escape button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "escape button.png"; path = "images/escape button.png"; sourceTree = "<group>"; };
+		8A1C7B671B2F261B000268B2 /* escape button@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "escape button@2x.png"; path = "images/escape button@2x.png"; sourceTree = "<group>"; };
+		8A1C7B681B2F261B000268B2 /* escape button@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "escape button@3x.png"; path = "images/escape button@3x.png"; sourceTree = "<group>"; };
+		8A1C7B6C1B2F2BF8000268B2 /* HEMBreakdownViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMBreakdownViewController.h; sourceTree = "<group>"; };
+		8A1C7B6D1B2F2BF8000268B2 /* HEMBreakdownViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBreakdownViewController.m; sourceTree = "<group>"; };
 		8A1C94B61A08178A006E3A31 /* UIFont+HEMStyle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIFont+HEMStyle.h"; sourceTree = "<group>"; };
 		8A1C94B71A08178A006E3A31 /* UIFont+HEMStyle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIFont+HEMStyle.m"; sourceTree = "<group>"; };
 		8A1E722C19D62C26007475D3 /* alarmRepeatIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = alarmRepeatIcon.png; path = images/alarmRepeatIcon.png; sourceTree = "<group>"; };
@@ -2257,6 +2266,8 @@
 				8AA1E62E1A899C0100590EB6 /* HEMTimelineFeedbackViewController.m */,
 				8ADE06051B2A4DE100976654 /* HEMTimelineContainerViewController.h */,
 				8ADE06061B2A4DE100976654 /* HEMTimelineContainerViewController.m */,
+				8A1C7B6C1B2F2BF8000268B2 /* HEMBreakdownViewController.h */,
+				8A1C7B6D1B2F2BF8000268B2 /* HEMBreakdownViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -2264,6 +2275,9 @@
 		8A660131199EBDFE007E6167 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				8A1C7B661B2F261B000268B2 /* escape button.png */,
+				8A1C7B671B2F261B000268B2 /* escape button@2x.png */,
+				8A1C7B681B2F261B000268B2 /* escape button@3x.png */,
 				8A0350FE1B2CACFD0077E6E6 /* Down Caret.png */,
 				8A0350FF1B2CACFD0077E6E6 /* Down Caret@2x.png */,
 				8A0351001B2CACFD0077E6E6 /* Down Caret@3x.png */,
@@ -3393,6 +3407,7 @@
 				8A8288AE1A76CF1E0043B1D1 /* presleepInsightSound.png in Resources */,
 				8A8288CE1A7800820043B1D1 /* presleepInsightUnknown@3x.png in Resources */,
 				BFC3FE141AE7283A0061D6A1 /* sensorLoaderRed.png in Resources */,
+				8A1C7B691B2F261B000268B2 /* escape button.png in Resources */,
 				BF5703DA1A8185F200B613F0 /* sleepPill.png in Resources */,
 				BFAB23111AD4B0B200CCBF8A /* particulatesIconGray@2x.png in Resources */,
 				BFBA2B821A64A3F400C3AB80 /* pairOfPills@3x.png in Resources */,
@@ -3459,6 +3474,7 @@
 				8A8288AF1A76CF1E0043B1D1 /* presleepInsightSound@2x.png in Resources */,
 				8A45798F1A805603009A7863 /* welcome_dialog_temperature@2x.png in Resources */,
 				BF7417B21A7B005200399C0E /* loading.png in Resources */,
+				8A1C7B6B1B2F261B000268B2 /* escape button@3x.png in Resources */,
 				8AC800961A7B029300895ED3 /* miniPlayButton.png in Resources */,
 				BFDCC7BA19D9C741007A922B /* sense.png in Resources */,
 				BFAB23871AD5D2AA00CCBF8A /* soundIconRed@3x.png in Resources */,
@@ -3696,6 +3712,7 @@
 				BFBA2B751A647E7C00C3AB80 /* settingsAppIcon@2x.png in Resources */,
 				BFAB23121AD4B0B200CCBF8A /* particulatesIconGray@3x.png in Resources */,
 				BFAB23501AD5D15E00CCBF8A /* lightIconRed@2x.png in Resources */,
+				8A1C7B6A1B2F261B000268B2 /* escape button@2x.png in Resources */,
 				8AA158061A5EFD6B00BF1D4A /* sunsetEventIcon@2x.png in Resources */,
 				BF14E3BB19EF3BD10006EFEA /* map@2x.png in Resources */,
 				BF005C7D19FED57E00E68E87 /* wifiIconHigh.png in Resources */,
@@ -4006,6 +4023,7 @@
 				8AB2684719CCFF8800017818 /* HEMAlarmUtils.m in Sources */,
 				BF98FC391A9BB29D00AEC04C /* HEMConfig.m in Sources */,
 				8A37764F1ACA26A80074D5C8 /* HEMSwitchControl.m in Sources */,
+				8A1C7B6E1B2F2BF8000268B2 /* HEMBreakdownViewController.m in Sources */,
 				8A03FF9E1ACCB4AF009F4CB7 /* HEMHelpFooterTableViewCell.m in Sources */,
 				BFC3BE9F1A722BEB0022C6C2 /* HEMHelpFooterView.m in Sources */,
 				BFB0FBE019D3463E0056FFEC /* HEMPillViewController.m in Sources */,

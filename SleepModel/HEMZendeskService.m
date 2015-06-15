@@ -115,7 +115,7 @@
 
 - (NSString*)tagMinusZDKTagTokens:(NSString*)tag {
     NSCharacterSet *zdkTagTokens = [NSCharacterSet characterSetWithCharactersInString:@" -,"];
-    return [[tag componentsSeparatedByCharactersInSet:zdkTagTokens] componentsJoinedByString:@"-"];
+    return [[tag componentsSeparatedByCharactersInSet:zdkTagTokens] componentsJoinedByString:@"_"];
 }
 
 - (void)configureRequests:(void(^)(void))completion {
@@ -124,7 +124,7 @@
         // underscore if multiple words are needed
         NSBundle* bundle = [NSBundle mainBundle];
         UIDevice* device = [UIDevice currentDevice];
-        NSString* osVersion = [device systemVersion];
+        NSString* osVersion = [self tagMinusZDKTagTokens:[device systemVersion]];
         NSString* deviceModel = [self tagMinusZDKTagTokens:[HEMSupportUtil deviceModel]];
         NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
         NSString* fwVersion = [[[SENServiceDevice sharedService] senseInfo] firmwareVersion];
@@ -132,9 +132,6 @@
         NSString* senseId = [[[SENServiceDevice sharedService] senseInfo] deviceId];
 
         NSMutableArray* tags = [@[deviceModel, osVersion] mutableCopy];
-        if (accountId) {
-            [tags addObject:accountId];
-        }
         if (fwVersion) {
             [tags addObject:fwVersion];
         }

@@ -28,6 +28,7 @@
 +(NSString *)pairReuseIdentifier;
 +(NSString *)deviceReuseIdentifier;
 +(NSString *)supportCellReuseIdentifier;
++(NSString *)topicCellReuseIdentifier;
 +(NSString *)warningReuseIdentifier;
 +(NSString *)actionsReuseIdentifier;
 +(NSString *)timezoneReuseIdentifier;
@@ -55,6 +56,7 @@
 +(NSString *)senseSegueIdentifier;
 +(NSString *)settingsToSupportSegueIdentifier;
 +(NSString *)timezoneSegueIdentifier;
++(NSString *)topicsSegueIdentifier;
 +(NSString *)unitsSettingsSegueIdentifier;
 +(NSString *)updateAccountInfoSegueIdentifier;
 
@@ -76,6 +78,7 @@
 +(id)instantiateSleepHistoryController;
 +(id)instantiateSleepInsightViewController;
 +(id)instantiateSleepQuestionsViewController;
++(id)instantiateSupportTopicsViewController;
 +(id)instantiateTimeZoneNavViewController;
 +(id)instantiateTimeZoneViewController;
 +(id)instantiateTimelineFeedbackViewController;

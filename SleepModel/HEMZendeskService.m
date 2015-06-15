@@ -12,6 +12,7 @@
 #import <SenseKit/SENDevice.h>
 
 #import <ZendeskSDK/ZendeskSDK.h>
+#import <SenseKit/SENService+Protected.h>
 
 #import "HEMZendeskService.h"
 #import "HEMSupportUtil.h"
@@ -23,6 +24,9 @@
 @interface HEMZendeskService()
 
 @property (nonatomic, assign) BOOL configured;
+@property (nonatomic, strong) NSArray* defaultTicketTags;
+@property (nonatomic, copy)   NSString* defaultTicketSubject;
+@property (nonatomic, copy)   NSString* defaultTicketAdditonalText;
 
 @end
 
@@ -40,6 +44,14 @@
 + (id)allocWithZone:(struct _NSZone *)zone {
     return [self sharedService];
 }
+
+#pragma mark - Service Overrides
+
+- (void)serviceReceivedMemoryWarning {
+    [super serviceWillBecomeInactive];
+}
+
+#pragma mark - Zendesk methods
 
 - (void)configure:(void(^)(NSError* error))completion {
     if ([self configured]) {
@@ -103,10 +115,12 @@
 
 - (void)configureRequests:(void(^)(void))completion {
     [ZDKRequests configure:^(ZDKAccount *account, ZDKRequestCreationConfig *requestCreationConfig) {
+        // NOTE: Zendesk tags will automatically split words in your strings by spaces and dashes.  Use
+        // underscore if multiple words are needed
         NSBundle* bundle = [NSBundle mainBundle];
         UIDevice* device = [UIDevice currentDevice];
         NSString* osVersion = [device systemVersion];
-        NSString* deviceModel = [HEMSupportUtil deviceModel];
+        NSString* deviceModel = [[HEMSupportUtil deviceModel] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
         NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
         NSString* fwVersion = [[[SENServiceDevice sharedService] senseInfo] firmwareVersion];
         NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
@@ -122,16 +136,35 @@
         if (appVersion) {
             [tags addObject:appVersion];
         }
-
-        [requestCreationConfig setTags:tags];
         
         NSMutableString* additionalInfo = [[NSMutableString alloc] initWithString:@"\n\n\n\n-----\n"];
         [additionalInfo appendFormat:@"Id: %@", accountId ?: @""];
         [additionalInfo appendFormat:@"\nSense Id: %@", senseId ?: @""];
         
-        [requestCreationConfig setAdditionalRequestInfo:additionalInfo];
-        [requestCreationConfig setSubject:[NSString stringWithFormat:@"iOS Ticket for Sense %@", appVersion]];
+        [self setDefaultTicketTags:tags];
+        [self setDefaultTicketAdditonalText:additionalInfo];
+        [self setDefaultTicketSubject:[NSString stringWithFormat:@"iOS Ticket for Sense %@", appVersion]];
+        [requestCreationConfig setTags:tags];
+        [requestCreationConfig setSubject:[self defaultTicketSubject]];
+        [requestCreationConfig setAdditionalRequestInfo:[self defaultTicketAdditonalText]];
         
+        if (completion) {
+            completion ();
+        }
+    }];
+}
+
+- (void)configureRequestWithTopic:(NSString*)topic completion:(void(^)(void))completion {
+    [ZDKRequests configure:^(ZDKAccount *account, ZDKRequestCreationConfig *requestCreationConfig) {
+        if (topic) {
+            NSMutableArray* tagsWithTopic = [[self defaultTicketTags] mutableCopy];
+            [tagsWithTopic addObject:topic];
+            [requestCreationConfig setTags:tagsWithTopic];
+        }
+        
+        if (completion) {
+            completion ();
+        }
     }];
 }
 

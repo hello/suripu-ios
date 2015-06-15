@@ -201,6 +201,20 @@
 "debug.option.reset-tutorials" = "Reset tutorials";
 "settings.support.fail.title" = "No email address configured";
 "settings.support.fail.message" = "There is no email address configured in the Mail app.";
+// topics must match what is in Zendesk or else tickets will not be properly reported
+"settings.support.topic.sense-pairing" = "Pairing Your Sense";
+"settings.support.topic.pill-pairing" = "Pairing a Sleep Pill";
+"settings.support.topic.wifi" = "Connect to WiFi";
+"settings.support.topic.timeline" = "Sleep Timeline";
+"settings.support.topic.room-conditions" = "Room Conditions";
+"settings.support.topic.sleep-score" = "Sleep Score";
+"settings.support.topic.smart-alarm" = "Smart Alarm";
+"settings.support.topic.hardware" = "Damaged Hardware";
+"settings.support.topic.order" = "My Order";
+"settings.support.topic.return" = "Return";
+"settings.support.topic.payment" = "Payment";
+"settings.support.topic.business-enquiry" = "Business Enquiry";
+"settings.support.topic.other" = "Other";
 
 // colors
 "color.blue" = "Blue";

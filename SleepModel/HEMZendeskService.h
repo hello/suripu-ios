@@ -16,5 +16,6 @@
 
 + (id)sharedService;
 - (void)configure:(void(^)(NSError* error))completion;
+- (void)configureRequestWithTopic:(NSString*)topic completion:(void(^)(void))completion;
 
 @end

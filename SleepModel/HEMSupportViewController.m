@@ -121,7 +121,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             [ZDKHelpCenter showHelpCenterWithNavController:[self navigationController]];
             break;
         case HEMSupportRowIndexContactUs:
-            [ZDKRequests showRequestCreationWithNavController:[self navigationController]];
+            [self performSegueWithIdentifier:[HEMMainStoryboard topicsSegueIdentifier] sender:self];
             break;
         case HEMSupportRowIndexTickets:
             [ZDKRequests showRequestListWithNavController:[self navigationController]];

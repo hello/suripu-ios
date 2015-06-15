@@ -113,6 +113,11 @@
 
 }
 
+- (NSString*)tagMinusZDKTagTokens:(NSString*)tag {
+    NSCharacterSet *zdkTagTokens = [NSCharacterSet characterSetWithCharactersInString:@" -,"];
+    return [[tag componentsSeparatedByCharactersInSet:zdkTagTokens] componentsJoinedByString:@"-"];
+}
+
 - (void)configureRequests:(void(^)(void))completion {
     [ZDKRequests configure:^(ZDKAccount *account, ZDKRequestCreationConfig *requestCreationConfig) {
         // NOTE: Zendesk tags will automatically split words in your strings by spaces and dashes.  Use
@@ -120,7 +125,7 @@
         NSBundle* bundle = [NSBundle mainBundle];
         UIDevice* device = [UIDevice currentDevice];
         NSString* osVersion = [device systemVersion];
-        NSString* deviceModel = [[HEMSupportUtil deviceModel] stringByReplacingOccurrencesOfString:@" " withString:@"_"];
+        NSString* deviceModel = [self tagMinusZDKTagTokens:[HEMSupportUtil deviceModel]];
         NSString* accountId = [SENAuthorizationService accountIdOfAuthorizedUser];
         NSString* fwVersion = [[[SENServiceDevice sharedService] senseInfo] firmwareVersion];
         NSString* appVersion = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];

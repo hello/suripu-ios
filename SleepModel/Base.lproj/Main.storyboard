@@ -2700,7 +2700,7 @@
                                         <color key="textColor" red="0.063956059519999997" green="0.53325003390000003" blue="0.99848216769999998" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2h-OZ-S7g">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2h-OZ-S7g" userLabel="drawer button">
                                         <rect key="frame" x="20" y="26" width="20" height="22"/>
                                         <state key="normal" image="Menu.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2709,7 +2709,7 @@
                                             <action selector="drawerButtonTapped:" destination="LIj-Uz-9Ss" eventType="touchUpInside" id="3sf-ek-kEt"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fYg-XE-Lf6">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fYg-XE-Lf6" userLabel="share button">
                                         <rect key="frame" x="563" y="22" width="17" height="22"/>
                                         <state key="normal" image="Share.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
@@ -2759,7 +2759,11 @@
                         <outlet property="alarmButton" destination="3YU-EY-ydB" id="uRr-qh-1KG"/>
                         <outlet property="alarmButtonTrailing" destination="j28-RF-EWa" id="DYv-og-D4b"/>
                         <outlet property="centerTitleButton" destination="JQb-8q-AeR" id="N1D-23-1MQ"/>
+                        <outlet property="centerTitleCaretView" destination="UWI-ZF-kNz" id="jhQ-hF-DYP"/>
                         <outlet property="centerTitleLabel" destination="LLX-Nj-aVW" id="abd-Oq-hm6"/>
+                        <outlet property="centerTitleTop" destination="u0C-bj-iRD" id="RGr-ZW-b5w"/>
+                        <outlet property="drawerButton" destination="w2h-OZ-S7g" id="qeS-Ry-Qdc"/>
+                        <outlet property="shareButton" destination="fYg-XE-Lf6" id="x8e-Xy-dMp"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rha-QF-LXJ" userLabel="First Responder" sceneMemberID="firstResponder"/>

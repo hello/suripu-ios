@@ -24,6 +24,7 @@
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMMarkdown.h"
 #import "NSDate+HEMRelative.h"
+#import "HEMSplitTextFormatter.h"
 
 NSString *const HEMSleepEventTypeWakeUp = @"WAKE_UP";
 NSString *const HEMSleepEventTypeLight = @"LIGHT";
@@ -52,6 +53,7 @@ NSString *const HEMSleepEventTypeSleeping = @"SLEEPING";
 @property (nonatomic, strong) NSArray *aggregateDataSources;
 @property (nonatomic, getter=shouldBeLoading) BOOL beLoading;
 @property (nonatomic, strong) NSCalendar *calendar;
+@property (nonatomic, strong) HEMSplitTextFormatter *inlineNumberFormatter;
 @end
 
 @implementation HEMSleepGraphCollectionViewDataSource
@@ -89,12 +91,13 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
         _dateForNightOfSleep = date;
         _timeDateFormatter = [NSDateFormatter new];
         _hourDateFormatter = [NSDateFormatter new];
+        _inlineNumberFormatter = [HEMSplitTextFormatter new];
         if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
-            _timeDateFormatter.dateFormat = @"h:mm a";
-            _hourDateFormatter.dateFormat = @"h a";
+            _timeDateFormatter.dateFormat = @"h:mm";
+            _hourDateFormatter.dateFormat = @"h";
         } else {
             _timeDateFormatter.dateFormat = @"H:mm";
-            _hourDateFormatter.dateFormat = @"H:00";
+            _hourDateFormatter.dateFormat = @"H";
         }
         _rangeDateFormatter = [NSDateFormatter new];
         _rangeDateFormatter.dateFormat = @"MMMM d";
@@ -197,11 +200,9 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
 }
 
 - (void)showLoadingView {
-
 }
 
 - (void)hideLoadingViewAnimated:(BOOL)animated {
-
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -328,7 +329,9 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     self.hourDateFormatter.timeZone = segment.timezone;
     self.timeDateFormatter.timeZone = segment.timezone;
     if (components.minute == 0 && components.second == 0) {
-        [cell addTimeLabelWithText:[self.hourDateFormatter stringFromDate:segment.date] atHeightRatio:0];
+        NSAttributedString *text =
+            [self formattedTextForInlineTimestamp:segment.date withFormatter:self.hourDateFormatter useUnit:YES];
+        [cell addTimeLabelWithText:text atHeightRatio:0];
         if (cell.layer.zPosition != zPosition)
             cell.layer.zPosition = zPosition;
     }
@@ -346,13 +349,30 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
         hourInterval = [hourDate timeIntervalSince1970];
         if (hourInterval < endInterval) {
             CGFloat ratio = ([hourDate timeIntervalSince1970] - segmentInterval) / (endInterval - segmentInterval);
-            NSString *timeText = [self.hourDateFormatter stringFromDate:hourDate];
-            [cell addTimeLabelWithText:timeText atHeightRatio:ratio];
+            NSAttributedString *text =
+                [self formattedTextForInlineTimestamp:hourDate withFormatter:self.hourDateFormatter useUnit:YES];
+            [cell addTimeLabelWithText:text atHeightRatio:ratio];
             if (cell.layer.zPosition != zPosition)
                 cell.layer.zPosition = zPosition;
         }
         i++;
     }
+}
+
+- (NSAttributedString *)formattedTextForInlineTimestamp:(NSDate *)date
+                                          withFormatter:(NSDateFormatter *)formatter
+                                                useUnit:(BOOL)shouldUseUnit {
+    NSDateComponents *computed = [self.calendar components:NSCalendarUnitHour fromDate:date];
+    NSString *timeText = [formatter stringFromDate:date];
+    NSString *unit = nil;
+    if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
+        if (computed.hour > 11) {
+            unit = [formatter AMSymbol];
+        } else { unit = [formatter PMSymbol]; }
+    } else if (shouldUseUnit) { unit = @":00"; }
+    HEMSplitTextObject *obj = [[HEMSplitTextObject alloc] initWithValue:timeText unit:unit];
+    NSDictionary *attrs = [HEMMarkdown attributesForTimelineTimeLabelsText][@(PARA)];
+    return [self.inlineNumberFormatter attributedStringForObjectValue:obj withDefaultAttributes:attrs];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -372,8 +392,8 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     }
 
     [cell.eventTypeImageView setImage:[self imageForEventType:segment.eventType]];
-    NSString *timeText = [self timeTextForSegment:segment];
-    cell.eventTimeLabel.text = timeText;
+    cell.eventTimeLabel.attributedText =
+        [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter useUnit:NO];
     cell.eventMessageLabel.attributedText = [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
@@ -422,11 +442,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
         return [HelloStyleKit alarmEventIcon];
 
     return [HelloStyleKit unknownEventIcon];
-}
-
-- (NSString *)timeTextForSegment:(SENSleepResultSegment *)segment {
-    self.timeDateFormatter.timeZone = segment.timezone;
-    return [self.timeDateFormatter stringFromDate:segment.date];
 }
 
 - (BOOL)segmentForSleepExistsAtIndexPath:(NSIndexPath *)indexPath {

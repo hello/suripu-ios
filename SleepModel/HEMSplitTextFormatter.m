@@ -51,11 +51,13 @@ CGFloat const smallTextRatio = 0.67f;
     if ([languageCode isEqualToString:@"en"] && splitText.unit.length > 0) {
         NSMutableDictionary *unitAttrs = [attrs mutableCopy];
         UIFont *selectedFont = attrs[NSFontAttributeName];
+        NSString* unitText = [NSString stringWithFormat:@" %@", splitText.unit];
         if (selectedFont) {
-            unitAttrs[NSFontAttributeName] = [selectedFont fontWithSize:ceilf(selectedFont.pointSize * smallTextRatio)];
+            CGFloat pointSize = ceilf(selectedFont.pointSize * smallTextRatio);
+            unitAttrs[NSFontAttributeName] = [selectedFont fontWithSize:pointSize];
         }
         NSAttributedString *unitString =
-            [[NSAttributedString alloc] initWithString:splitText.unit attributes:unitAttrs];
+            [[NSAttributedString alloc] initWithString:unitText attributes:unitAttrs];
         [result appendAttributedString:unitString];
     } else if (splitText.unit.length > 0) {
         NSAttributedString *unitString = [[NSAttributedString alloc] initWithString:splitText.unit attributes:attrs];

@@ -16,6 +16,7 @@
 + (NSDictionary*)attributesForInsightTitleViewText;
 + (NSDictionary*)attributesForInsightPreviewText;
 + (NSDictionary*)attributesForEventMessageText;
++ (NSDictionary*)attributesForTimelineTimeLabelsText;
 + (NSDictionary*)attributesForTimelineMessageText;
 + (NSDictionary*)attributesForTimelineBreakdownTitle;
 + (NSDictionary*)attributesForTimelineBreakdownMessage;

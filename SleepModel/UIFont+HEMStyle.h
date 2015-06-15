@@ -149,6 +149,11 @@
 + (UIFont*)timelineBreakdownValueFont;
 
 /**
+ *  Font for inline labels indicating event time
+ */
++ (UIFont*)timelineTimeLabelFont;
+
+/**
  *  Font for tips at the bottom of event expansion
  */
 + (UIFont*)timelineEventTipFont;
@@ -167,11 +172,6 @@
  *  Bold font for summary text above the timeline
  */
 + (UIFont*)timelineMessageBoldFont;
-
-/**
- *  Font for timestamps on events in the timeline
- */
-+ (UIFont*)timelineEventTimestampFont;
 
 /**
  *  Font for time scopes in trends view

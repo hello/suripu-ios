@@ -15,8 +15,8 @@
 @interface HEMTimelineContainerViewController ()
 @property (nonatomic, weak) IBOutlet UIButton *alarmButton;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *alarmButtonTrailing;
-@property (nonatomic, weak) IBOutlet UIButton* centerTitleButton;
-@property (nonatomic, weak) IBOutlet UILabel* centerTitleLabel;
+@property (nonatomic, weak) IBOutlet UIButton *centerTitleButton;
+@property (nonatomic, weak) IBOutlet UILabel *centerTitleLabel;
 
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *animationDelegate;
@@ -24,13 +24,14 @@
 
 @implementation HEMTimelineContainerViewController
 
-static CGFloat const HEMAlarmShortcutDefaultTrailing = 8.f;
-static CGFloat const HEMAlarmShortcutHiddenTrailing = 70.f;
+static CGFloat const HEMAlarmShortcutDefaultTrailing = -16.f;
+static CGFloat const HEMAlarmShortcutHiddenTrailing = 60.f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.animationDelegate = [HEMZoomAnimationTransitionDelegate new];
-    self.transitioningDelegate = self.animationDelegate;;
+    self.transitioningDelegate = self.animationDelegate;
+    ;
 }
 
 - (void)registerForNotifications {
@@ -51,7 +52,6 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = 70.f;
                                                  name:HEMRootDrawerDidCloseNotification
                                                object:nil];
 }
-
 
 - (NSString *)centerTitle {
     return self.centerTitleLabel.text;
@@ -74,30 +74,32 @@ static CGFloat const HEMAlarmShortcutHiddenTrailing = 70.f;
 
 - (void)moveAlarmButtonWithOffset:(CGFloat)constant {
     if (self.alarmButtonTrailing.constant != constant) {
-        if (constant > 0)
+        if (constant < 0)
             self.alarmButton.hidden = NO;
         self.alarmButtonTrailing.constant = constant;
         [self.view setNeedsUpdateConstraints];
-        [UIView animateWithDuration:0.2f
-                         animations:^{ [self.view layoutIfNeeded]; }
-                         completion:^(BOOL finished) {
-                             if (constant < 0)
-                                 self.alarmButton.hidden = YES;
-                         }];
+        [UIView animateWithDuration:0.3f
+            delay:0
+            usingSpringWithDamping:0.8
+            initialSpringVelocity:0
+            options:0
+            animations:^{ [self.view layoutIfNeeded]; }
+            completion:^(BOOL finished) {
+              if (constant > 0)
+                  self.alarmButton.hidden = YES;
+            }];
     }
 }
 
 #pragma mark Drawer
 
 - (void)drawerDidOpen {
-//    [UIView animateWithDuration:0.5f animations:^{ [self updateTopBarActionsWithState:NO]; }];
+    //    [UIView animateWithDuration:0.5f animations:^{ [self updateTopBarActionsWithState:NO]; }];
 }
 
 - (void)drawerDidClose {
-//    [UIView animateWithDuration:0.5f animations:^{ [self updateTopBarActionsWithState:YES]; }];
+    //    [UIView animateWithDuration:0.5f animations:^{ [self updateTopBarActionsWithState:YES]; }];
 }
-
-
 
 #pragma mark Top bar actions
 

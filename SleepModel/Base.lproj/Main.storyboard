@@ -2750,7 +2750,7 @@
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="hRZ-rK-9xy" secondAttribute="trailing" id="AA3-KG-xBe"/>
                             <constraint firstItem="hRZ-rK-9xy" firstAttribute="leading" secondItem="kbB-uz-lbI" secondAttribute="leading" id="dtc-SX-ec7"/>
-                            <constraint firstItem="3YU-EY-ydB" firstAttribute="trailing" secondItem="kbB-uz-lbI" secondAttribute="trailingMargin" id="j28-RF-EWa"/>
+                            <constraint firstItem="3YU-EY-ydB" firstAttribute="trailing" secondItem="kbB-uz-lbI" secondAttribute="trailing" constant="-16" id="j28-RF-EWa"/>
                             <constraint firstItem="x0F-jb-URM" firstAttribute="top" secondItem="3YU-EY-ydB" secondAttribute="bottom" constant="8" id="m4I-ja-HoW"/>
                             <constraint firstItem="hRZ-rK-9xy" firstAttribute="top" secondItem="H95-mD-yJh" secondAttribute="top" id="oq2-kL-3CB"/>
                         </constraints>

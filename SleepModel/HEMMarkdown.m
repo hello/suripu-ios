@@ -71,6 +71,14 @@
     };
 }
 
++ (NSDictionary *)attributesForTimelineTimeLabelsText {
+    NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
+    style.alignment = NSTextAlignmentCenter;
+    return @{
+        @(PARA) : @{ NSFontAttributeName : [UIFont timelineTimeLabelFont], NSParagraphStyleAttributeName : style }
+    };
+}
+
 + (NSDictionary *)attributesForBackViewTitle {
     return @{ @(PARA) : @{ NSKernAttributeName : @(0.6), NSFontAttributeName : [UIFont backViewTitleFont] } };
 }

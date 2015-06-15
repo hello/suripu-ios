@@ -40,12 +40,6 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     return [markdown_to_attr_string(text, 0, [HEMMarkdown attributesForEventMessageText]) trim];
 }
 
-- (void)addTimeLabelWithText:(NSString *)text atHeightRatio:(CGFloat)heightRatio {
-    static CGFloat const HEMEventTimeLabelOffsetRatio = 0.5;
-    CGFloat ratio = (heightRatio * HEMEventTimeLabelOffsetRatio) + HEMEventTimeLabelOffsetRatio;
-    [super addTimeLabelWithText:text atHeightRatio:ratio];
-}
-
 - (void)applyLayoutAttributes:(HEMTimelineLayoutAttributes *)layoutAttributes {
     [self animateContentViewWithAttributes:layoutAttributes];
 }

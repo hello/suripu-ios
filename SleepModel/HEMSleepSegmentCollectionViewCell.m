@@ -50,7 +50,7 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
     return self.timeViews.count;
 }
 
-- (void)addTimeLabelWithText:(NSString *)text atHeightRatio:(CGFloat)heightRatio {
+- (void)addTimeLabelWithText:(NSAttributedString *)text atHeightRatio:(CGFloat)heightRatio {
     static CGFloat const HEMTimeLabelLineOffset = 8.f;
     static CGFloat const HEMTimeLabelWidth = 30.f;
     self.clipsToBounds = NO;
@@ -62,8 +62,7 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
     CGRect labelRect = CGRectMake(CGRectGetWidth(self.bounds) - HEMTimeLabelWidth - HEMTimeLabelLineOffset,
                                   labelYOffset, HEMTimeLabelWidth, HEMSegmentTimeLabelHeight);
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:labelRect];
-    timeLabel.text = text;
-    timeLabel.font = [UIFont timelineEventTimestampFont];
+    timeLabel.attributedText = text;
     timeLabel.textColor = [HelloStyleKit tintColor];
     [timeLabel sizeToFit];
     [self insertSubview:timeLabel atIndex:0];

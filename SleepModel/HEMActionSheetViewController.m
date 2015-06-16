@@ -14,6 +14,7 @@
 #import "HEMMainStoryboard.h"
 
 static NSString* const HEMActionSheetOptionColor = @"color";
+static NSString* const HEMActionSheetOptionImage = @"image";
 static NSString* const HEMActionSheetOptionDescription = @"description";
 static NSString* const HEMActionSheetOptionActionBlock = @"action";
 
@@ -31,7 +32,6 @@ static CGFloat const HEMActionSheetOptionAnimDuration = 0.3f;
 
 @property (strong, nonatomic) NSMutableArray* orderedOptions;
 @property (strong, nonatomic) NSMutableDictionary* options;
-@property (assign, nonatomic, getter=isOptionsLaidOut) BOOL optionsLaidOut;
 @property (copy,   nonatomic) HEMActionSheetCallback dismissAction;
 
 @end
@@ -64,12 +64,13 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 }
 
 - (void)addOptionWithTitle:(NSString*)optionTitle action:(HEMActionSheetCallback)action {
-    [self addOptionWithTitle:optionTitle titleColor:nil description:nil action:action];
+    [self addOptionWithTitle:optionTitle titleColor:nil description:nil imageName:nil action:action];
 }
 
 - (void)addOptionWithTitle:(NSString *)optionTitle
                 titleColor:(UIColor *)color
                description:(NSString *)description
+                 imageName:(NSString *)imageName
                     action:(HEMActionSheetCallback)action {
 
     if (!optionTitle) {
@@ -97,7 +98,8 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     
     [[self options] setValue:@{HEMActionSheetOptionColor : color ?: [HelloStyleKit senseBlueColor],
                                HEMActionSheetOptionDescription : description ?: @"",
-                               HEMActionSheetOptionActionBlock : actionBlock}
+                               HEMActionSheetOptionActionBlock : actionBlock,
+                               HEMActionSheetOptionImage : imageName ?: @"" }
                       forKey:optionTitle];
 }
 
@@ -107,56 +109,49 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self configureTableViewHeader];
     [[self view] setBackgroundColor:[UIColor clearColor]];
 }
 
-- (void)updateViewConstraints {
-    [super updateViewConstraints];
-    CGSize optionsContentSize = [[self optionTableView] contentSize];
-    [[self oTVHeightConstraint] setConstant:optionsContentSize.height];
-    [[self oTVBottomConstraint] setConstant:-optionsContentSize.height];
-    
-    if (optionsContentSize.height > 0 && [[self optionTableView] tableHeaderView]) {
-        [self show];
-    }
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    if (![self isOptionsLaidOut]) {
-        [self configureTableViewHeader];
-        [[self view] setNeedsUpdateConstraints];
-        [self setOptionsLaidOut:YES];
-    }
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self show];
 }
 
 - (void)show {
+    CGSize optionsContentSize = [[self optionTableView] contentSize];
+    CGFloat height = optionsContentSize.height;
+    BOOL needsUpdateConstraints = self.oTVBottomConstraint.constant != height
+        || self.oTVHeightConstraint.constant != height;
+    BOOL needsUpdateAlpha = self.shadedOverlayView.alpha != 1.f;
+    if (needsUpdateConstraints) {
+        [[self oTVHeightConstraint] setConstant:height];
+        [[self oTVBottomConstraint] setConstant:height];
+        [[self view] setNeedsUpdateConstraints];
+    }
     [UIView animateWithDuration:HEMActionSheetOptionAnimDuration
-                          delay:0.0f
+                          delay:0
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         [[self shadedOverlayView] setAlpha:1.0f];
-                         [[self oTVBottomConstraint] setConstant:0];
-                         [[self view] layoutIfNeeded];
+                         if (needsUpdateAlpha)
+                             [[self shadedOverlayView] setAlpha:1.0f];
+                         if (needsUpdateConstraints)
+                             [[self view] layoutIfNeeded];
                      }
                      completion:nil];
 }
 
 - (void)hide:(void(^)(BOOL finished))completion {
+    [[self oTVBottomConstraint] setConstant:0];
+    [[self view] setNeedsUpdateConstraints];
     [UIView animateWithDuration:HEMActionSheetOptionAnimDuration
                           delay:0.0f
                         options:UIViewAnimationOptionCurveEaseOut
                      animations:^{
-                         CGFloat height = [[self oTVHeightConstraint] constant];
                          [[self shadedOverlayView] setAlpha:0.0f];
-                         [[self oTVBottomConstraint] setConstant:-height];
                          [[self view] layoutIfNeeded];
                      }
-                     completion:^(BOOL finished) {
-                         [[self optionTableView] removeFromSuperview];
-                         [self setOptionTableView:nil];
-                         if (completion) completion (finished);
-                     }];
+                     completion:completion];
 }
 
 - (void)configureTableViewHeader {
@@ -181,6 +176,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     [label setFont:[UIFont actionSheetTitleFont]];
     [label setTextColor:[UIColor colorWithWhite:0.0f alpha:0.4f]];
     [label setText:[[self title] uppercaseString]];
+    [label setNumberOfLines:0];
     
     CGRect frame = CGRectZero;
     frame.size.width = boundedWidth;
@@ -214,20 +210,21 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 }
 
 - (void)tableView:(UITableView *)tableView
-  willDisplayCell:(UITableViewCell *)cell
+  willDisplayCell:(HEMActionSheetOptionCell *)optionCell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
-    
     NSString* optionTitle = [self orderedOptions][[indexPath row]];
     NSDictionary* optionAttributes = [[self options] objectForKey:optionTitle];
-    HEMActionSheetOptionCell* optionCell = (id)cell;
     [[optionCell titleLabel] setText:optionTitle];
     [[optionCell titleLabel] setTextColor:[optionAttributes objectForKey:HEMActionSheetOptionColor]];
-    
+
     NSString* desc = [optionAttributes objectForKey:HEMActionSheetOptionDescription];
     if (desc) {
         [optionCell setDescription:desc];
         [[optionCell descriptionLabel] setTextColor:[UIColor colorWithWhite:0.0f alpha:0.4f]];
     }
+    NSString* imageName = optionAttributes[HEMActionSheetOptionImage];
+    optionCell.iconImageView.image = imageName.length > 0 ? [UIImage imageNamed:imageName] : nil;
+    optionCell.imageViewWidth.constant = optionCell.iconImageView.image.size.width;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -236,7 +233,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     __block HEMActionSheetCallback action = [optionAttributes objectForKey:HEMActionSheetOptionActionBlock];
     
     [self hide:^(BOOL finished) {
-        [self dismissViewControllerAnimated:YES completion:^{
+        [self dismissViewControllerAnimated:NO completion:^{
             if (action) {
                 action();
             }
@@ -249,7 +246,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)dismiss {
     [self hide:^(BOOL finished) {
         __block HEMActionSheetCallback dismissBlock = [self dismissAction];
-        [self dismissViewControllerAnimated:YES completion:^{
+        [self dismissViewControllerAnimated:NO completion:^{
             if (dismissBlock) {
                 dismissBlock();
             }

@@ -16,8 +16,10 @@
 + (NSDictionary*)attributesForInsightTitleViewText;
 + (NSDictionary*)attributesForInsightPreviewText;
 + (NSDictionary*)attributesForEventMessageText;
++ (NSDictionary*)attributesForTimelineTimeLabelsText;
 + (NSDictionary*)attributesForTimelineMessageText;
 + (NSDictionary*)attributesForTimelineBreakdownTitle;
++ (NSDictionary*)attributesForTimelineBreakdownMessage;
 + (NSDictionary*)attributesForTimelineBreakdownValueWithColor:(UIColor*)color;
 + (NSDictionary*)attributesForTimelineSegmentPopup;
 + (NSDictionary*)attributesForRoomCheckSensorMessage;

@@ -63,12 +63,10 @@ static CGFloat const HEMActionSheetOptionHorzMargin = 24.0f;
 - (void)prepareForReuse {
     [[self titleLabel] setText:nil];
     [[self descriptionLabel] setText:nil];
-    [[self descriptionLabel] sizeToFit];
 }
 
 - (void)setDescription:(NSString*)description {
     [[self descriptionLabel] setText:description];
-    [[self descriptionLabel] sizeToFit];
 }
 
 @end

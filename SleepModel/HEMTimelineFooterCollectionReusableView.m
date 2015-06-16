@@ -12,7 +12,7 @@
 
 - (void)awakeFromNib
 {
-    self.backgroundColor = [UIColor whiteColor];
+    self.backgroundColor = [UIColor clearColor];
 }
 
 @end

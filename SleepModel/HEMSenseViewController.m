@@ -331,6 +331,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     [sheet addOptionWithTitle:NSLocalizedString(@"settings.sense.advanced.option.replace-sense", nil)
                    titleColor:nil
                   description:NSLocalizedString(@"settings.sense.advanced.option.replace-sense.desc", nil)
+                    imageName:nil
                        action:^{
                            [weakSelf replaceSense];
                        }];
@@ -339,6 +340,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         [sheet addOptionWithTitle:NSLocalizedString(@"settings.sense.advanced.option.factory-reset", nil)
                        titleColor:[UIColor redColor]
                       description:NSLocalizedString(@"settings.sense.advanced.option.factory-reset.desc", nil)
+                        imageName:nil
                            action:^{
                                [weakSelf factoryReset];
                            }];

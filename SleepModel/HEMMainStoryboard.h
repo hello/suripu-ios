@@ -14,6 +14,7 @@
 +(NSString *)alarmSoundCellReuseIdentifier;
 +(NSString *)alarmRepeatCellReuseIdentifier;
 +(NSString *)alarmDeleteCellReuseIdentifier;
++(NSString *)breakdownLineCellReuseIdentifier;
 +(NSString *)singleReuseIdentifier;
 +(NSString *)multipleReuseIdentifier;
 +(NSString *)preferenceReuseIdentifier;
@@ -38,6 +39,7 @@
 +(NSString *)alarmListStatusCellReuseIdentifier;
 +(NSString *)alarmChoiceCellReuseIdentifier;
 +(NSString *)sensorGraphCellReuseIdentifier;
++(NSString *)summaryViewCellReuseIdentifier;
 +(NSString *)timeSliceCellReuseIdentifier;
 +(NSString *)overTimeReuseIdentifier;
 +(NSString *)trendGraphReuseIdentifier;
@@ -68,19 +70,20 @@
 +(id)instantiateAlarmNavController;
 +(id)instantiateAlarmRepeatTableViewController;
 +(id)instantiateAlarmViewController;
++(id)instantiateBreakdownViewController;
 +(id)instantiateCurrentNavController;
 +(id)instantiateInsightFeedViewController;
 +(id)instantiateSensorViewController;
 +(id)instantiateSettingsController;
 +(id)instantiateSettingsNavController;
 +(id)instantiateSleepGraphController;
-+(id)instantiateSleepGraphNavController;
 +(id)instantiateSleepHistoryController;
 +(id)instantiateSleepInsightViewController;
 +(id)instantiateSleepQuestionsViewController;
 +(id)instantiateSupportTopicsViewController;
 +(id)instantiateTimeZoneNavViewController;
 +(id)instantiateTimeZoneViewController;
++(id)instantiateTimelineContainerController;
 +(id)instantiateTimelineFeedbackViewController;
 +(id)instantiateTrendsViewController;
 +(id)instantiateTutorialViewController;

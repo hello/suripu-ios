@@ -31,6 +31,7 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAppDelegate.h"
 #import "HEMConfig.h"
+#import "HEMTimelineContainerViewController.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -90,7 +91,13 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
     [slideController setDelegate:self];
     [slideController.view add3DEffectWithBorder:HEMRootTopPaneParallaxDepth
                                       direction:HEMMotionEffectsDirectionVertical];
-    return slideController;
+    UIViewController* container = [HEMMainStoryboard instantiateTimelineContainerController];
+    [slideController willMoveToParentViewController:nil];
+    [slideController removeFromParentViewController];
+    [container.view insertSubview:slideController.view atIndex:0];
+    [container addChildViewController:slideController];
+    [slideController didMoveToParentViewController:container];
+    return container;
 }
 
 - (void)viewDidBecomeActive
@@ -374,14 +381,24 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 #pragma mark - UIPageViewControllerDelegate for Timeline events
 
-- (void)pageViewController:(UIPageViewController*)pageViewController
-         didFinishAnimating:(BOOL)finished
-    previousViewControllers:(NSArray*)previousViewControllers
-        transitionCompleted:(BOOL)completed
-{
+- (void)pageViewController:(UIPageViewController *)pageViewController
+        didFinishAnimating:(BOOL)finished
+   previousViewControllers:(NSArray *)previousViewControllers
+       transitionCompleted:(BOOL)completed {
+    HEMTimelineContainerViewController *controller = (id)self.drawerViewController.paneViewController;
     if (completed) {
         [SENAnalytics track:kHEMAnalyticsEventTimelineChanged];
+        HEMSleepGraphViewController *page = [pageViewController.viewControllers firstObject];
+        [controller setCenterTitleFromDate:page.dateForNightOfSleep];
+    } else {
+        [controller cancelCenterTitleChange];
     }
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController
+willTransitionToViewControllers:(NSArray *)pendingViewControllers {
+    HEMTimelineContainerViewController *controller = (id)self.drawerViewController.paneViewController;
+    [controller prepareForCenterTitleChange];
 }
 
 #pragma mark - Drawer

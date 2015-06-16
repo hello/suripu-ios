@@ -35,6 +35,13 @@ static CGFloat const kHEMSnapshotSaturationFactor = 1.5f;
     return image;
 }
 
+- (UIImage*)snapshotWithTint:(UIColor*)color {
+    return [[self snapshot] applyBlurWithRadius:0
+                                      tintColor:color
+                          saturationDeltaFactor:kHEMSnapshotSaturationFactor
+                                      maskImage:nil];
+}
+
 - (UIImage*)blurredSnapshotWithTint:(UIColor*)color {
     return [[self snapshot] applyBlurWithRadius:kHEMSnapshotBlurRadius
                                       tintColor:color

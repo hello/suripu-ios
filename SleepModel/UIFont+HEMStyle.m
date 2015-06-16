@@ -150,34 +150,39 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMNumberFontFamilyNameMedium size:11.f];
 }
 
++ (UIFont*)timelineBreakdownMessageFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
+}
+
++ (UIFont*)timelineBreakdownMessageBoldFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
+}
+
 + (UIFont*)timelineBreakdownValueFont
 {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:28.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:24.f];
+}
+
++ (UIFont*)timelineTimeLabelFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameBook size:11.f];
 }
 
 + (UIFont*)timelineEventMessageFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
 }
 
 + (UIFont*)timelineEventMessageItalicFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLightOblique size:13.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLightOblique size:14.f];
 }
 
 + (UIFont*)timelineEventMessageBoldFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
-}
-
-+ (UIFont*)timelineEventTimestampFont
-{
-    return [UIFont fontWithName:HEMNumberFontFamilyNameMedium size:11.f];
-}
-
-+ (UIFont*)timelineEventTimestampBoldFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
 }
 
 + (UIFont*)timelineEventTipFont
@@ -223,11 +228,6 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 + (UIFont*)thankyouFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
-}
-
-+ (UIFont*)infoToastFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:20.0f];
 }
 
 + (UIFont*)inAppBrowserTitleFont

@@ -170,6 +170,10 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 - (void)dealloc {
     [_tableView setDelegate:nil];
     [_tableView setDataSource:nil];
+    
+    if (_origNavDelegate) {
+        [[self navigationController] setDelegate:_origNavDelegate];
+    }
 }
 
 @end

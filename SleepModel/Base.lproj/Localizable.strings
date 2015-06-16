@@ -397,11 +397,8 @@
 "sleep-event.type.smart_alarm.name" = "Smart Alarm";
 "sleep-event.title.format" = "%@ – %@";
 "sleep-event.action.approve.title" = "Mark as correct — Coming soon";
-"sleep-event.action.approve.message" = "Mark this event as being recorded at the correct time.";
 "sleep-event.action.adjust.title" = "Adjust Time";
-"sleep-event.action.adjust.message" = "Change the recorded time of this event.";
 "sleep-event.action.delete.title" = "Remove this event — Coming soon";
-"sleep-event.action.delete.message" = "Remove this event from your timeline.";
 "sleep-event.time.24-hour.suffix" = ":00";
 
 "sleep-stat.time_to_sleep" = "Time to sleep";

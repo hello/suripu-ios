@@ -146,16 +146,19 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [sheet setTitle:[segment.message stringByReplacingOccurrencesOfString:@"*" withString:@""]];
     [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.approve.title", nil)
-                   titleColor:[HelloStyleKit idealSensorColor]
-                  description:NSLocalizedString(@"sleep-event.action.approve.message", nil)
+                   titleColor:[UIColor darkGrayColor]
+                  description:nil
+                    imageName:@"timeline_action_approve"
                        action:^{}];
     [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
-                   titleColor:[HelloStyleKit warningSensorColor]
-                  description:NSLocalizedString(@"sleep-event.action.adjust.message", nil)
+                   titleColor:[UIColor darkGrayColor]
+                  description:nil
+                    imageName:@"timeline_action_adjust"
                        action:^{ [self updateTimeOfEventOnSegment:segment]; }];
     [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.delete.title", nil)
-                   titleColor:[HelloStyleKit alertSensorColor]
-                  description:NSLocalizedString(@"sleep-event.action.delete.message", nil)
+                   titleColor:[UIColor darkGrayColor]
+                  description:nil
+                    imageName:@"timeline_action_delete"
                        action:^{}];
 
     UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
@@ -195,7 +198,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 }
 
 - (void)didTapSummaryButton:(UIButton *)sender {
-    HEMBreakdownViewController* controller = [HEMMainStoryboard instantiateBreakdownViewController];
+    HEMBreakdownViewController *controller = [HEMMainStoryboard instantiateBreakdownViewController];
     controller.result = self.dataSource.sleepResult;
     [self presentViewController:controller animated:YES completion:NULL];
 }
@@ -314,7 +317,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 #pragma mark UIScrollViewDelegate
 
-- (HEMTimelineContainerViewController*)containerViewController {
+- (HEMTimelineContainerViewController *)containerViewController {
     return (id)self.parentViewController.parentViewController;
 }
 
@@ -344,7 +347,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 - (void)loadDataSourceForDate:(NSDate *)date {
     self.dateForNightOfSleep = date;
     self.dataSource =
-    [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
+        [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
     self.collectionView.dataSource = self.dataSource;
 }
 

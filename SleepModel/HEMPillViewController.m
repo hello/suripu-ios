@@ -200,6 +200,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
     [sheet addOptionWithTitle:NSLocalizedString(@"settings.pill.advanced.option.replace-pill", nil)
                    titleColor:nil
                   description:NSLocalizedString(@"settings.pill.advanced.option.replace-pill.desc", nil)
+                    imageName:nil
                        action:^{
                            [weakSelf replacePill];
                        }];

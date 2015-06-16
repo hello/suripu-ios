@@ -3897,7 +3897,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.4h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xy9-b3-hMj">
-                                                    <rect key="frame" x="20" y="53" width="45" height="33"/>
+                                                    <rect key="frame" x="20" y="54" width="45" height="33"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -3909,7 +3909,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.4h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sR-S5-gJr">
-                                                    <rect key="frame" x="303" y="53" width="45" height="33"/>
+                                                    <rect key="frame" x="303" y="54" width="45" height="33"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
@@ -3922,7 +3922,7 @@
                                                     </constraints>
                                                 </view>
                                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mdH-wI-kLQ" userLabel="border">
-                                                    <rect key="frame" x="282" y="30" width="1" height="74"/>
+                                                    <rect key="frame" x="282" y="30" width="1" height="78"/>
                                                     <color key="backgroundColor" red="0.87566179040000003" green="0.8756355643" blue="0.87565040589999998" alpha="0.29999999999999999" colorSpace="calibratedRGB"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="1" id="yLk-hM-7LI"/>
@@ -3939,7 +3939,7 @@
                                         </view>
                                         <constraints>
                                             <constraint firstItem="ox5-lV-0kG" firstAttribute="leading" secondItem="mdH-wI-kLQ" secondAttribute="trailing" constant="20" id="0V6-pR-la4"/>
-                                            <constraint firstItem="mdH-wI-kLQ" firstAttribute="top" secondItem="5Yf-yd-oc8" secondAttribute="topMargin" constant="22" id="HTB-H3-cyO"/>
+                                            <constraint firstItem="mdH-wI-kLQ" firstAttribute="top" secondItem="5Yf-yd-oc8" secondAttribute="top" constant="30" id="HTB-H3-cyO"/>
                                             <constraint firstItem="ox5-lV-0kG" firstAttribute="top" secondItem="BHP-yD-PgE" secondAttribute="top" id="Iqd-u6-b2w"/>
                                             <constraint firstAttribute="centerX" secondItem="mdH-wI-kLQ" secondAttribute="centerX" id="R9X-gc-Z9h"/>
                                             <constraint firstAttribute="trailing" secondItem="jwh-Q4-Xg8" secondAttribute="trailing" id="XkF-1Q-G5R"/>
@@ -3947,7 +3947,7 @@
                                             <constraint firstItem="BHP-yD-PgE" firstAttribute="leading" secondItem="5Yf-yd-oc8" secondAttribute="leading" constant="20" id="mbA-N2-fwE"/>
                                             <constraint firstItem="jwh-Q4-Xg8" firstAttribute="top" secondItem="5Yf-yd-oc8" secondAttribute="top" id="mtF-n3-7R9"/>
                                             <constraint firstItem="1sR-S5-gJr" firstAttribute="leading" secondItem="ox5-lV-0kG" secondAttribute="leading" id="nNu-cW-aTT"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="mdH-wI-kLQ" secondAttribute="bottom" constant="16" id="uFy-ob-1E1"/>
+                                            <constraint firstAttribute="bottom" secondItem="mdH-wI-kLQ" secondAttribute="bottom" constant="20" id="uFy-ob-1E1"/>
                                             <constraint firstItem="jwh-Q4-Xg8" firstAttribute="leading" secondItem="5Yf-yd-oc8" secondAttribute="leading" id="uaC-X9-a7k"/>
                                             <constraint firstItem="Xy9-b3-hMj" firstAttribute="leading" secondItem="BHP-yD-PgE" secondAttribute="leading" id="vZj-Cz-n7L"/>
                                             <constraint firstItem="Xy9-b3-hMj" firstAttribute="top" secondItem="BHP-yD-PgE" secondAttribute="bottom" constant="8" id="xXj-1p-ISg"/>

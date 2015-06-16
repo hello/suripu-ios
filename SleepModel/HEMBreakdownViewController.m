@@ -125,7 +125,7 @@ const CGFloat BreakdownDismissButtonBottom = 26.f;
 
 - (SENSleepResultStatistic *)statisticForIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
     SENSleepResultStatistic *stat = nil;
-    NSUInteger index = indexPath.row / 2 + position;
+    NSUInteger index = ((indexPath.row - 1) * 2) + position;
     if ([self.result.statistics count] > index)
         stat = [self.result statistics][index];
     return stat;

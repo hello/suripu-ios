@@ -207,8 +207,9 @@ static NSUInteger const HEMClock24HourCount = 24;
       [strongSelf updateHour:strongSelf.hour];
       [strongSelf.delegate didUpdateTimeToHour:strongSelf.hour minute:strongSelf.minute];
     };
-    _meridiemPickerView.unhighlightBlock
-        = ^(NALabelCell *cell) { cell.textView.textColor = [HelloStyleKit backViewTextColor]; };
+    _meridiemPickerView.unhighlightBlock = ^(NALabelCell *cell) {
+      cell.textView.textColor = [HelloStyleKit backViewTextColor];
+    };
     [_meridiemPickerView setIndex:0];
     [self addSubview:_meridiemPickerView];
 }
@@ -231,9 +232,13 @@ static NSUInteger const HEMClock24HourCount = 24;
     self.gradientLayer = vLayer;
     [self.gradientView.layer insertSublayer:vLayer atIndex:0];
     self.alpha = 0;
-    [UIView animateWithDuration:0.25f delay:0.3f options:0 animations:^{
-        self.alpha = 1;
-    } completion:NULL];
+    [UIView animateWithDuration:0.25f
+                          delay:0.3f
+                        options:0
+                     animations:^{
+                       self.alpha = 1;
+                     }
+                     completion:NULL];
 }
 
 - (void)layoutSubviews {
@@ -271,7 +276,9 @@ static NSUInteger const HEMClock24HourCount = 24;
             hourRow -= HEMClock12HourCount;
         hourRow--;
         hourRowCount = HEMClock12HourCount;
-    } else { hourRowCount = HEMClock24HourCount; }
+    } else {
+        hourRowCount = HEMClock24HourCount;
+    }
     [self.hourPickerView setIndex:hourRow];
     [self.minutePickerView setIndex:minuteRow];
     if ([self shouldUse12Hour]) {

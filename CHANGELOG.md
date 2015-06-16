@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.8.0
+
+Updated timeline appearance
+
+Known issues:
+
+* share button does not work
+* "times awake" in breakdown uses "m" as the unit
+* "Zoom"/history view is unavailable
+* Overlap between cells
+* Various tweaks missing
+
 ## 1.0.7.5
 
 Fixes:

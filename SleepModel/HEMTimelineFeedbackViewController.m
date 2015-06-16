@@ -58,7 +58,11 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
                                                     fromDate:self.segment.date];
     [self.clockView updateTimeToHour:components.hour minute:components.minute];
     NSString* key = [NSString stringWithFormat:HEMTimelineFeedbackTitleFormat, [self.segment.eventType lowercaseString]];
-    self.titleLabel.text = NSLocalizedString(key, nil);
+    NSString* title = NSLocalizedString(key, nil);
+    if ([title isEqualToString:key]) {
+        title = NSLocalizedString(@"sleep-event.feedback.title.generic", nil);
+    }
+    self.titleLabel.text = title;
     self.tinyLineHeight.constant = 0.5f;
     self.tinySeparatorHeight.constant = 0.5f;
 }

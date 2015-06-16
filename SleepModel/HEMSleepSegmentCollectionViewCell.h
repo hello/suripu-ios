@@ -21,7 +21,7 @@ extern CGFloat const HEMSleepLineWidth;
  */
 - (void)setSegmentRatio:(CGFloat)ratio withFillColor:(UIColor*)color lineColor:(UIColor*)lineColor;
 
-- (void)addTimeLabelWithText:(NSString*)text atHeightRatio:(CGFloat)heightRatio;
+- (void)addTimeLabelWithText:(NSAttributedString*)text atHeightRatio:(CGFloat)heightRatio;
 
 - (NSUInteger)numberOfTimeLabels;
 

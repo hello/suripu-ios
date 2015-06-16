@@ -373,6 +373,7 @@
 "measurement.lx.format" = "%ldlx";
 
 // feedback
+"sleep-event.feedback.title.generic" = "What time did this event occur?";
 "sleep-event.feedback.title.in_bed" = "What time did you get into bed?";
 "sleep-event.feedback.title.out_of_bed" = "What time did you get out of bed?";
 "sleep-event.feedback.title.wake_up" = "What time did you wake up?";
@@ -395,13 +396,19 @@
 "sleep-event.type.alarm.name" = "Alarm";
 "sleep-event.type.smart_alarm.name" = "Smart Alarm";
 "sleep-event.title.format" = "%@ – %@";
+"sleep-event.action.approve.title" = "Mark as correct — Coming soon";
+"sleep-event.action.adjust.title" = "Adjust Time";
+"sleep-event.action.delete.title" = "Remove this event — Coming soon";
+"sleep-event.time.24-hour.suffix" = ":00";
 
 "sleep-stat.time_to_sleep" = "Time to sleep";
 "sleep-stat.times_awake" = "Times awake";
 "sleep-stat.total_sleep" = "Total sleep";
 "sleep-stat.sound_sleep" = "Deep sleep";
-"sleep-stat.minute.format" = "%.0fm";
-"sleep-stat.hour.format" = "%.1fh";
+"sleep-stat.minute.format" = "%.0f";
+"sleep-stat.minute.unit" = "m";
+"sleep-stat.hour.format" = "%.1f";
+"sleep-stat.hour.unit" = "h";
 
 "sleep-stat.sleep-duration.medium.plural.format" = "You were in **Medium Sleep** for %ld minutes.";
 "sleep-stat.sleep-duration.medium.single.format" = "You were in **Medium Sleep** for one minute.";

@@ -138,9 +138,20 @@
 + (UIFont*)timelineBreakdownTitleFont;
 
 /**
+ *  Font for timeline statistics message summary
+ */
++ (UIFont*)timelineBreakdownMessageFont;
++ (UIFont*)timelineBreakdownMessageBoldFont;
+
+/**
  *  Font for timeline statistics values
  */
 + (UIFont*)timelineBreakdownValueFont;
+
+/**
+ *  Font for inline labels indicating event time
+ */
++ (UIFont*)timelineTimeLabelFont;
 
 /**
  *  Font for tips at the bottom of event expansion
@@ -161,16 +172,6 @@
  *  Bold font for summary text above the timeline
  */
 + (UIFont*)timelineMessageBoldFont;
-
-/**
- *  Font for timestamps on events in the timeline
- */
-+ (UIFont*)timelineEventTimestampFont;
-
-/**
- *  Bold font for timestamps on important events in the timeline
- */
-+ (UIFont*)timelineEventTimestampBoldFont;
 
 /**
  *  Font for time scopes in trends view
@@ -196,11 +197,6 @@
  *  Font for display any Thank You text
  */
 + (UIFont*)thankyouFont;
-
-/**
- *  Font used to display the blue toast that appears at the bottom of screen
- */
-+ (UIFont*)infoToastFont;
 
 /**
  * Font to be used in a UIPIckerView that has 1 component

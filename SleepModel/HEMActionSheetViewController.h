@@ -32,14 +32,16 @@ typedef void(^HEMActionSheetCallback)(void);
 /**
  * @method addOptionWithTitle:titleColor:description:action
  *
- * @param optionTitle: title to be displayed for the option
- * @param color:       optional color to be used for the title
- * @param description: optional description to be displayed below the title
- * @param action:      block to be invoked when the option is selected
+ * @param optionTitle title to be displayed for the option
+ * @param color       optional color to be used for the title
+ * @param description optional description to be displayed below the title
+ * @param imageName   optional image to display leading the discription
+ * @param action      block to be invoked when the option is selected
  */
 - (void)addOptionWithTitle:(NSString*)optionTitle
                 titleColor:(UIColor*)color
                description:(NSString*)description
+                 imageName:(NSString*)imageName
                     action:(HEMActionSheetCallback)action;
 
 /**

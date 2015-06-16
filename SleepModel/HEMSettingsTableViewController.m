@@ -9,8 +9,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMLogUtils.h"
 #import "HelloStyleKit.h"
-#import "HEMSupportUtil.h"
-#import "HEMHelpFooterView.h"
 
 static CGFloat const HEMSettingsBottomMargin = 10.0f;
 
@@ -22,10 +20,9 @@ typedef NS_ENUM(NSUInteger, HEMSettingsAccountRow) {
     HEMSettingsAccountRows = 4,
 };
 
-typedef NS_ENUM(NSUInteger, HEMSettingsFeedbackRow) {
-    HEMSettingsFeedbackRowIndex = 0,
-    HEMSettingsUserGuideRowIndex = 1,
-    HEMSettingsFeedbackRows = 2
+typedef NS_ENUM(NSUInteger, HEMSettingsSupportRow) {
+    HEMSettingsSupportRowIndex = 0,
+    HEMSettingsSupportRows = 1
 };
 
 typedef NS_ENUM(NSUInteger, HEMSettingsTableViewSection) {
@@ -65,12 +62,15 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
     [[self settingsTableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
     
     // footer
-    HEMHelpFooterView *footer = [[HEMHelpFooterView alloc] initWithWidth:width andContainingController:self];
-    [self addVersionLabelToFooter:footer];
-    [[self settingsTableView] setTableFooterView:footer];
+    [[self settingsTableView] setTableFooterView:[self versionFooterView]];
 }
 
-- (void)addVersionLabelToFooter:(UIView *)footer {
+- (UIView*)versionFooterView {
+    CGRect footerFrame = CGRectZero;
+    footerFrame.size.width = CGRectGetWidth([[self settingsTableView] bounds]);
+    
+    UIView* footer = [[UIView alloc] initWithFrame:footerFrame];
+    
     NSBundle *bundle = [NSBundle mainBundle];
     NSString *name = [bundle objectForInfoDictionaryKey:@"CFBundleDisplayName"];
     NSString *vers = [bundle objectForInfoDictionaryKey:@"CFBundleVersion"];
@@ -106,11 +106,12 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
     [footer addSubview:versionLabel];
 
     // adjust the footer
-    CGRect footerFrame = [footer frame];
     footerFrame.size.height = CGRectGetMaxY([versionLabel frame]) + HEMSettingsBottomMargin;
     [footer setFrame:footerFrame];
 
     [self setVersionLabel:versionLabel];
+    
+    return footer;
 }
 
 - (void)viewDidLayoutSubviews {
@@ -136,7 +137,7 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
         case HEMSettingsAccountSection:
             return HEMSettingsAccountRows;
         case HEMSettingsSupportSection:
-            return HEMSettingsFeedbackRows;
+            return HEMSettingsSupportRows;
         default:
             return 0;
     }
@@ -185,14 +186,15 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
+    NSString* nextSegueId = nil;
     if ([indexPath section] == HEMSettingsAccountSection) {
-        NSString *nextSegueId = [self segueIdentifierForRow:indexPath.row];
-
-        if (nextSegueId != nil) {
-            [self performSegueWithIdentifier:nextSegueId sender:self];
-        }
+        nextSegueId = [self segueIdentifierForRow:indexPath.row];
     } else if ([indexPath section] == HEMSettingsSupportSection) {
-        [self handleSupportActionAtRow:[indexPath row]];
+        nextSegueId = [HEMMainStoryboard settingsToSupportSegueIdentifier];
+    }
+    
+    if (nextSegueId != nil) {
+        [self performSegueWithIdentifier:nextSegueId sender:self];
     }
 }
 
@@ -236,11 +238,8 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
         }
     } else if (section == HEMSettingsSupportSection) {
         switch (row) {
-            case HEMSettingsFeedbackRowIndex:
-                title = NSLocalizedString(@"settings.feedback", nil);
-                break;
-            case HEMSettingsUserGuideRowIndex:
-                title = NSLocalizedString(@"settings.user-guide", nil);
+            case HEMSettingsSupportRowIndex:
+                title = NSLocalizedString(@"settings.support", nil);
                 break;
             default:
                 break;
@@ -248,33 +247,6 @@ static CGFloat const HEMSettingsSectionHeaderHeight = 20.0f;
     }
 
     return title;
-}
-
-#pragma mark - Support Actions
-
-- (void)handleSupportActionAtRow:(NSUInteger)row {
-    switch (row) {
-        case HEMSettingsFeedbackRowIndex:
-            [self draftFeedbackEmail];
-            break;
-        case HEMSettingsUserGuideRowIndex:
-            [self openUserGuide];
-            break;
-        default:
-            break;
-    }
-}
-
-- (void)openUserGuide {
-    [HEMSupportUtil openHelpFrom:self];
-}
-
-- (void)draftFeedbackEmail {
-    [HEMSupportUtil sendEmailTo:NSLocalizedString(@"feedback.email.address", nil)
-                    withSubject:NSLocalizedString(@"feedback.email.subject", nil)
-                      attachLog:NO
-                           from:self
-                   mailDelegate:self];
 }
 
 #pragma mark - Mail Delegate

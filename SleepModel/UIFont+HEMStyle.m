@@ -464,4 +464,8 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
 }
 
++ (UIFont*)supportHelpCenterFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
+}
+
 @end

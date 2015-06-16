@@ -433,4 +433,10 @@
  * Font used for the description input in a support ticket form
  */
 + (UIFont*)supportTicketDescriptionFont;
+
+/**
+ * Font used to display the Help Center font, minus the actual article
+ */
++ (UIFont*)supportHelpCenterFont;
+
 @end

@@ -37,8 +37,8 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 @implementation HEMSupportViewController
 
 + (void)initialize {
-    [[ZDKCreateRequestView appearance] setTextEntryFont:[UIFont supportTicketDescriptionFont]];
-    [[ZDKSupportTableViewCell appearance] setTitleLabelFont:[UIFont settingsTableCellFont]];
+    [[ZDKSupportTableViewCell appearance] setTitleLabelFont:[UIFont supportHelpCenterFont]];
+    [[ZDKSupportArticleTableViewCell appearance] setTitleLabelFont:[UIFont supportHelpCenterFont]];
 }
 
 - (void)viewDidLoad {
@@ -55,14 +55,11 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (![self origNavDelegate]) {
-        if ([[self navigationController] delegate] != self) {
-            [self setOrigNavDelegate:[[self navigationController] delegate]];
-        }
-    } else {
+    if ([self origNavDelegate]) {
         [[self navigationController] setDelegate:[self origNavDelegate]];
         [self setOrigNavDelegate:nil];
     }
+
 }
 
 - (void)configureTableView {
@@ -125,6 +122,14 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch ([indexPath row]) {
         case HEMSupportRowIndexUserGuide: {
+            // FIXME jimmy: setting the navigationController is a total hack, but
+            // because ZDK does not provide direct access to the view controller
+            // and their layout is a total mess, we need to hack around the mistakes.
+            //
+            // A ticket has been filed and an email has been sent to their team.
+            // If they provide a solution to this problem, we will remove this, but
+            // for now, this is required per design for this to be release-able
+            [self setOrigNavDelegate:[[self navigationController] delegate]];
             [[self navigationController] setDelegate:self];
             [ZDKHelpCenter showHelpCenterWithNavController:[self navigationController]
                                                layoutGuide:ZDKLayoutRespectNone];
@@ -157,6 +162,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     viewFrame.origin.y += HEMSupportZDKUIOffset;
     viewFrame.size.height += HEMSupportZDKUIHeightDiff;
     [[viewController view] setFrame:viewFrame];
+    [[navigationController interactivePopGestureRecognizer] setEnabled:YES];
 }
 
 #pragma mark - Clean up

@@ -6,25 +6,35 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
+#import "UIFont+HEMStyle.h"
+
 #import "HEMSupportTopicsViewController.h"
 #import "HEMSettingsTableViewCell.h"
 #import "HEMZendeskService.h"
 #import "HEMMainStoryboard.h"
+#import "HEMBaseController+Protected.h"
+#import "HEMAlertViewController.H"
 
 @interface HEMSupportTopicsViewController () <UITableViewDataSource, UITableViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UITableView *tableView;
 @property (strong, nonatomic) NSDictionary* topicValuesByName;
 @property (strong, nonatomic) NSArray* topicNames;
+@property (weak, nonatomic) id previousResponder;
 
 @end
 
 @implementation HEMSupportTopicsViewController
 
++ (void)initialize {
+    [[ZDKCreateRequestView appearance] setTextEntryFont:[UIFont supportTicketDescriptionFont]];
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureTableView];
     [self loadTopics];
+    [self listenToTicketCreationEvents];
 }
 
 - (void)configureTableView {
@@ -70,6 +80,20 @@
                                  NSLocalizedString(@"settings.support.topic.other", nil) : @"other"}];
 }
 
+#pragma mark - Notifications
+
+- (void)listenToTicketCreationEvents {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(didCreateTicket)
+                   name:ZDKAPI_RequestSubmissionSuccess
+                 object:nil];
+}
+
+- (void)didCreateTicket {
+    [[self navigationController] popViewControllerAnimated:NO];
+}
+
 #pragma mark - UITableViewDelegate / UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -110,6 +134,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Clean up
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     [_tableView setDelegate:nil];
     [_tableView setDataSource:nil];
 }

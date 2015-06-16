@@ -215,6 +215,8 @@
 "settings.support.topic.payment" = "Payment";
 "settings.support.topic.business-enquiry" = "Business Enquiry";
 "settings.support.topic.other" = "Other";
+"settings.support.ticket.failed.title" = "Could not create a ticket";
+"settings.support.ticket.failed.message" = "An error occurred while creating a ticket.  Please try again later.";
 
 // colors
 "color.blue" = "Blue";

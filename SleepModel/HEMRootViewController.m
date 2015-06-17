@@ -52,6 +52,7 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 static CGFloat const HEMRootDrawerRevealHeight = 46.f;
 static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
+static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
 
 + (instancetype)rootViewControllerForKeyWindow
 {
@@ -313,6 +314,12 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
             [self showStatusBar];
             [self removeDrawerViewController];
         }];
+    } else {
+        NSDictionary* errorInfo = @{NSLocalizedDescriptionKey : @"attempt to launch onboarding with no controller"};
+        [SENAnalytics trackError:[NSError errorWithDomain:HEMRootErrorDomain
+                                                     code:-1
+                                                 userInfo:errorInfo]
+                   withEventName:kHEMAnalyticsEventError];
     }
 }
 

@@ -11,7 +11,7 @@
 
 SPEC_BEGIN(NSDateHEMRelativeSpec)
 
-describe(@"NSDateHEMRelativeSpec", ^{
+describe(@"NSDateHEMRelative", ^{
     
     __block NSCalendar* calendar = nil;
     

@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.8.1
+
+New:
+
+* Zendesk integration
+  * Search the User Guide
+  * create tickets from inside the app
+  * view tickets from inside the app
+
+Fixes:
+
+* Insights date now properly displays correctly when it is 1 week ago
+
 ## 1.0.8.0
 
 Updated timeline appearance

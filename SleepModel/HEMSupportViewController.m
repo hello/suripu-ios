@@ -58,12 +58,6 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-    [super viewWillDisappear:animated];
-    [[[ZDKUIViewController activeController] navigationItem] setRightBarButtonItems:nil];
-
-}
-
 - (void)configureTableView {
     CGFloat width = CGRectGetWidth([[UIScreen mainScreen] bounds]);
     

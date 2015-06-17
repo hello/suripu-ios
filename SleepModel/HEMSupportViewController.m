@@ -14,10 +14,6 @@
 #import "HEMZendeskService.h"
 #import "HEMActivityCoverView.h"
 
-// the offset is needed because ZDK native UI is not laid out correctly, causing
-// it to be exactly 5 pixels behind the navigation bar
-static CGFloat const HEMSupportZDKUIOffset = 5.0f;
-
 static CGFloat const HEMSupportZDKUIHeightDiff = -50.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSupportRow) {
@@ -59,6 +55,12 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
         [[self navigationController] setDelegate:[self origNavDelegate]];
         [self setOrigNavDelegate:nil];
     }
+
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
+    [[[ZDKUIViewController activeController] navigationItem] setRightBarButtonItems:nil];
 
 }
 
@@ -130,7 +132,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
             // If they provide a solution to this problem, we will remove this, but
             // for now, this is required per design for this to be release-able
             [self setOrigNavDelegate:[[self navigationController] delegate]];
-            [[self navigationController] setDelegate:self];
+            
+            __weak typeof(self) weakSelf = self;
+            [[self navigationController] setDelegate:weakSelf];
             [ZDKHelpCenter showHelpCenterWithNavController:[self navigationController]
                                                layoutGuide:ZDKLayoutRespectNone];
             break;
@@ -159,7 +163,6 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
        didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
     CGRect viewFrame = [[viewController view] frame];
-    viewFrame.origin.y += HEMSupportZDKUIOffset;
     viewFrame.size.height += HEMSupportZDKUIHeightDiff;
     [[viewController view] setFrame:viewFrame];
     [[navigationController interactivePopGestureRecognizer] setEnabled:YES];

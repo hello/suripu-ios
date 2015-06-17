@@ -21,8 +21,6 @@
 
 @implementation HEMSettingsNavigationController
 
-static CGFloat HEMSettingNavBarBorderHeight = 1.f;
-
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -39,15 +37,6 @@ static CGFloat HEMSettingNavBarBorderHeight = 1.f;
     [[self navigationBar] setTranslucent:NO];
     [[self navigationBar] setClipsToBounds:NO];
     [[self navigationBar] setShadowImage:nil];
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    CGSize statusBarSize = [[UIApplication sharedApplication] statusBarFrame].size;
-    CGFloat statusBarHeight = MIN(statusBarSize.width, statusBarSize.height);
-    CGRect frame = self.navigationBar.frame;
-    frame.size.height = HEMSnazzBarHeight - statusBarHeight - HEMSettingNavBarBorderHeight;
-    self.navigationBar.frame = frame;
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {

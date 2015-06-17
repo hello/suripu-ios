@@ -11,6 +11,7 @@ New:
 
 Fixes:
 
+* smooth out animation in clock picker
 * Insights date now properly displays correctly when it is 1 week ago
 
 ## 1.0.8.0

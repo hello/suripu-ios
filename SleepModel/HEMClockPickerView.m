@@ -89,7 +89,7 @@ static NSUInteger const HEMClock24HourCount = 24;
     _hourPickerView.backgroundColor = [UIColor clearColor];
     _hourPickerView.overlayColor = [UIColor clearColor];
     _hourPickerView.configureBlock = ^(NALabelCell *cell, NSString *item) {
-      cell.textView.font = [UIFont alarmNumberFont];
+      cell.textView.font = [UIFont alarmSelectedNumberFont];
       cell.textView.textColor = [HelloStyleKit backViewTextColor];
       cell.textView.textAlignment = NSTextAlignmentCenter;
       cell.textView.backgroundColor = [UIColor clearColor];
@@ -98,14 +98,26 @@ static NSUInteger const HEMClock24HourCount = 24;
     __weak typeof(self) weakSelf = self;
     _hourPickerView.highlightBlock = ^(NALabelCell *cell) {
       __strong typeof(weakSelf) strongSelf = weakSelf;
-      cell.textView.textColor = [HelloStyleKit tintColor];
-      cell.textView.font = [UIFont alarmSelectedNumberFont];
       [strongSelf updateHour:[cell.textView.text integerValue]];
       [strongSelf.delegate didUpdateTimeToHour:strongSelf.hour minute:strongSelf.minute];
+      cell.textView.transform = CGAffineTransformMakeScale(0.5, 0.5);
+      cell.textView.font = [UIFont alarmSelectedNumberFont];
+      [UIView animateWithDuration:0.2f
+                       animations:^{
+                         cell.textView.textColor = [HelloStyleKit tintColor];
+                         cell.textView.transform = CGAffineTransformIdentity;
+                       }];
     };
     _hourPickerView.unhighlightBlock = ^(NALabelCell *cell) {
-      cell.textView.font = [UIFont alarmNumberFont];
-      cell.textView.textColor = [HelloStyleKit backViewTextColor];
+      if (cell.textView.font.pointSize != [UIFont alarmNumberFont].pointSize) {
+          cell.textView.font = [UIFont alarmNumberFont];
+          cell.textView.transform = CGAffineTransformMakeScale(2, 2);
+          [UIView animateWithDuration:0.2f
+                           animations:^{
+                             cell.textView.transform = CGAffineTransformIdentity;
+                             cell.textView.textColor = [HelloStyleKit backViewTextColor];
+                           }];
+      }
     };
     [_hourPickerView setIndex:0];
     [self addSubview:_hourPickerView];
@@ -134,7 +146,7 @@ static NSUInteger const HEMClock24HourCount = 24;
     _minutePickerView.backgroundColor = [UIColor clearColor];
     _minutePickerView.overlayColor = [UIColor clearColor];
     _minutePickerView.configureBlock = ^(NALabelCell *cell, NSString *item) {
-      cell.textView.font = [UIFont alarmNumberFont];
+      cell.textView.font = [UIFont alarmSelectedNumberFont];
       cell.textView.textColor = [HelloStyleKit backViewTextColor];
       cell.textView.textAlignment = NSTextAlignmentCenter;
       cell.textView.backgroundColor = [UIColor clearColor];
@@ -143,14 +155,26 @@ static NSUInteger const HEMClock24HourCount = 24;
     __weak typeof(self) weakSelf = self;
     _minutePickerView.highlightBlock = ^(NALabelCell *cell) {
       __strong typeof(weakSelf) strongSelf = weakSelf;
-      cell.textView.textColor = [HelloStyleKit tintColor];
-      cell.textView.font = [UIFont alarmSelectedNumberFont];
       strongSelf.minute = [cell.textView.text integerValue];
       [strongSelf.delegate didUpdateTimeToHour:strongSelf.hour minute:strongSelf.minute];
+      cell.textView.transform = CGAffineTransformMakeScale(0.5, 0.5);
+      cell.textView.font = [UIFont alarmSelectedNumberFont];
+      [UIView animateWithDuration:0.2f
+                       animations:^{
+                         cell.textView.textColor = [HelloStyleKit tintColor];
+                         cell.textView.transform = CGAffineTransformIdentity;
+                       }];
     };
     _minutePickerView.unhighlightBlock = ^(NALabelCell *cell) {
-      cell.textView.font = [UIFont alarmNumberFont];
-      cell.textView.textColor = [HelloStyleKit backViewTextColor];
+      if (cell.textView.font.pointSize != [UIFont alarmNumberFont].pointSize) {
+          cell.textView.font = [UIFont alarmNumberFont];
+          cell.textView.transform = CGAffineTransformMakeScale(2, 2);
+          [UIView animateWithDuration:0.2f
+                           animations:^{
+                             cell.textView.transform = CGAffineTransformIdentity;
+                             cell.textView.textColor = [HelloStyleKit backViewTextColor];
+                           }];
+      }
     };
     [_minutePickerView setIndex:0];
     [self insertSubview:_minutePickerView atIndex:0];
@@ -183,8 +207,9 @@ static NSUInteger const HEMClock24HourCount = 24;
       [strongSelf updateHour:strongSelf.hour];
       [strongSelf.delegate didUpdateTimeToHour:strongSelf.hour minute:strongSelf.minute];
     };
-    _meridiemPickerView.unhighlightBlock
-        = ^(NALabelCell *cell) { cell.textView.textColor = [HelloStyleKit backViewTextColor]; };
+    _meridiemPickerView.unhighlightBlock = ^(NALabelCell *cell) {
+      cell.textView.textColor = [HelloStyleKit backViewTextColor];
+    };
     [_meridiemPickerView setIndex:0];
     [self addSubview:_meridiemPickerView];
 }
@@ -207,9 +232,13 @@ static NSUInteger const HEMClock24HourCount = 24;
     self.gradientLayer = vLayer;
     [self.gradientView.layer insertSublayer:vLayer atIndex:0];
     self.alpha = 0;
-    [UIView animateWithDuration:0.25f delay:0.3f options:0 animations:^{
-        self.alpha = 1;
-    } completion:NULL];
+    [UIView animateWithDuration:0.25f
+                          delay:0.3f
+                        options:0
+                     animations:^{
+                       self.alpha = 1;
+                     }
+                     completion:NULL];
 }
 
 - (void)layoutSubviews {
@@ -247,7 +276,9 @@ static NSUInteger const HEMClock24HourCount = 24;
             hourRow -= HEMClock12HourCount;
         hourRow--;
         hourRowCount = HEMClock12HourCount;
-    } else { hourRowCount = HEMClock24HourCount; }
+    } else {
+        hourRowCount = HEMClock24HourCount;
+    }
     [self.hourPickerView setIndex:hourRow];
     [self.minutePickerView setIndex:minuteRow];
     if ([self shouldUse12Hour]) {

@@ -872,7 +872,7 @@
                                     <constraint firstAttribute="width" constant="32" id="V5U-tW-VKf"/>
                                     <constraint firstAttribute="height" constant="32" id="xBy-cy-DE3"/>
                                 </constraints>
-                                <state key="normal" image="x.png">
+                                <state key="normal" image="escape button.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -4275,6 +4275,5 @@
         <image name="settingsCheck.png" width="16" height="13"/>
         <image name="timeline_action_adjust.png" width="32" height="32"/>
         <image name="warning.png" width="24" height="22"/>
-        <image name="x.png" width="24" height="24"/>
     </resources>
 </document>

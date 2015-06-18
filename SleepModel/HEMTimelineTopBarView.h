@@ -10,4 +10,6 @@
 
 @interface HEMTimelineTopBarView : UIView
 
+- (void)showShadow:(BOOL)isVisible animated:(BOOL)animated;
+
 @end

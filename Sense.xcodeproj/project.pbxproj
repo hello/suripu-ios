@@ -1805,6 +1805,9 @@
 		8A1207721A80A57000758DC2 /* Alarm */ = {
 			isa = PBXGroup;
 			children = (
+				8AA1E61B1A89785000590EB6 /* smart_alarm_dialog.png */,
+				8AA1E61C1A89785000590EB6 /* smart_alarm_dialog@2x.png */,
+				8AA1E61D1A89785000590EB6 /* smart_alarm_dialog@3x.png */,
 				8A1207731A80A58E00758DC2 /* welcome_dialog_alarm.png */,
 				8A1207741A80A58E00758DC2 /* welcome_dialog_alarm@2x.png */,
 				8A1207751A80A58E00758DC2 /* welcome_dialog_alarm@3x.png */,
@@ -2214,9 +2217,6 @@
 				8AC800931A7B029300895ED3 /* miniStopButton@3x.png */,
 				8AC800941A7B029300895ED3 /* senseBarIconActive@2x@2x.png */,
 				8AC800951A7B029300895ED3 /* senseBarIconActive@3x@2x.png */,
-				8AA1E61B1A89785000590EB6 /* smart_alarm_dialog.png */,
-				8AA1E61C1A89785000590EB6 /* smart_alarm_dialog@2x.png */,
-				8AA1E61D1A89785000590EB6 /* smart_alarm_dialog@3x.png */,
 			);
 			name = Assets;
 			sourceTree = "<group>";

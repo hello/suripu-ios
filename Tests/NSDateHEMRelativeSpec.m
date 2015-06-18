@@ -11,7 +11,7 @@
 
 SPEC_BEGIN(NSDateHEMRelativeSpec)
 
-describe(@"HEMSystemAlertController", ^{
+describe(@"NSDateHEMRelative", ^{
     
     __block NSCalendar* calendar = nil;
     

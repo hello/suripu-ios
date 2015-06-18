@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.8.2
+
+Fixes:
+
+* Fixes issue where it can launch into a black screen after restoring from a backup
+* Fixes jumpiness inside User guide within support
+* Fixes issue where some tutorial images were cropped when displayed,
+* Fixes issue where february 29 cannot be set, depending on current year
+
 ## 1.0.8.1
 
 New:

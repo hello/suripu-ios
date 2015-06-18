@@ -39,54 +39,48 @@
     [self updateConstraint:[self mapHeightConstraint] withDiff:-90.0f];
 }
 
-#pragma - Activity
-
-- (void)showActivity {
-    [[self skipButton] setEnabled:NO];
-    [[self locationButton] setEnabled:NO];
-}
-
-- (void)stopActivity {
-    [[self skipButton] setEnabled:YES];
-    [[self locationButton] setEnabled:YES];
+- (void)viewDidBecomeActive {
+    [super viewDidBecomeActive];
+    if ([self locationTxId]) {
+        [[HEMLocationCenter sharedCenter] stopLocatingFor:[self locationTxId]];
+        [[self locationButton] setEnabled:YES];
+    }
 }
 
 #pragma mark - Actions
 
 - (IBAction)requestLocation:(id)sender {
-    [self showActivity];
+    [[self locationButton] setEnabled:NO];
     
     NSError* error = nil;
     __weak typeof(self) weakSelf = self;
     self.locationTxId =
         [[HEMLocationCenter sharedCenter] locate:&error success:^BOOL(double lat, double lon, double accuracy) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                SENAccount* account = [[HEMOnboardingCache sharedCache] account];
-                [account setLatitude:@(lat)];
-                [account setLongitude:@(lon)];
-                
-                [strongSelf stopActivity];
-                [strongSelf setLocationTxId:nil];
-                [strongSelf uploadCollectedData:YES];
-                [strongSelf trackPermission:NO error:nil];
-                [strongSelf next];
-            }
+            SENAccount* account = [[HEMOnboardingCache sharedCache] account];
+            [account setLatitude:@(lat)];
+            [account setLongitude:@(lon)];
+            
+            [[strongSelf locationButton] setEnabled:YES];
+            [strongSelf setLocationTxId:nil];
+            [strongSelf uploadCollectedData:YES];
+            [strongSelf trackPermission:NO error:nil];
+            [strongSelf next];
             return NO;
         } failure:^BOOL(NSError *error) {
             __strong typeof(weakSelf) strongSelf = weakSelf;
-            if (strongSelf) {
-                [strongSelf stopActivity];
-                [strongSelf showLocationError:error];
-                [strongSelf setLocationTxId:nil];
-                [strongSelf trackPermission:NO error:error];
-            }
+            [[strongSelf locationButton] setEnabled:YES];
+            [strongSelf showLocationError:error];
+            [strongSelf setLocationTxId:nil];
+            [strongSelf trackPermission:NO error:error];
+            [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
             return NO;
         }];
     
     if (error != nil) {
-        [self stopActivity];
+        [[self locationButton] setEnabled:YES];
         [self showLocationError:error];
+        [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
     }
 }
 
@@ -163,8 +157,8 @@
 #pragma mark - Clean Up
 
 - (void)dealloc {
-    if ([self locationTxId] != nil) {
-        [[HEMLocationCenter sharedCenter] stopLocatingFor:[self locationTxId]];
+    if (_locationTxId) {
+        [[HEMLocationCenter sharedCenter] stopLocatingFor:_locationTxId];
     }
 }
 

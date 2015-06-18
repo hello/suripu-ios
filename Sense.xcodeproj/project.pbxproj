@@ -383,6 +383,7 @@
 		BF2AB9391B1938CC0092E9C4 /* HEMFieldTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2AB9381B1938CC0092E9C4 /* HEMFieldTableViewCell.m */; };
 		BF2AB93C1B1940610092E9C4 /* HEMFormViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2AB93B1B1940610092E9C4 /* HEMFormViewController.m */; };
 		BF2EAD211B2F520400C3A6E3 /* HEMSupportTopicsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2EAD201B2F520400C3A6E3 /* HEMSupportTopicsViewController.m */; };
+		BF2EAD241B31F88800C3A6E3 /* HEMOnboardingUtilsSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF2EAD231B31F88800C3A6E3 /* HEMOnboardingUtilsSpec.m */; };
 		BF414CE11A770A6D006204DE /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF414CE01A770A6D006204DE /* HealthKit.framework */; };
 		BF4473501A6341F600389ECE /* HEMOnboardingController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF44734F1A6341F600389ECE /* HEMOnboardingController.m */; };
 		BF4473571A63535F00389ECE /* female.png in Resources */ = {isa = PBXBuildFile; fileRef = BF4473511A63535F00389ECE /* female.png */; };
@@ -1245,6 +1246,7 @@
 		BF2AB93B1B1940610092E9C4 /* HEMFormViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMFormViewController.m; sourceTree = "<group>"; };
 		BF2EAD1F1B2F520400C3A6E3 /* HEMSupportTopicsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSupportTopicsViewController.h; sourceTree = "<group>"; };
 		BF2EAD201B2F520400C3A6E3 /* HEMSupportTopicsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSupportTopicsViewController.m; sourceTree = "<group>"; };
+		BF2EAD231B31F88800C3A6E3 /* HEMOnboardingUtilsSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingUtilsSpec.m; sourceTree = "<group>"; };
 		BF414CE01A770A6D006204DE /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		BF44734E1A6341F600389ECE /* HEMOnboardingController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMOnboardingController.h; sourceTree = "<group>"; };
 		BF44734F1A6341F600389ECE /* HEMOnboardingController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMOnboardingController.m; sourceTree = "<group>"; };
@@ -1775,6 +1777,7 @@
 			isa = PBXGroup;
 			children = (
 				BF78E98D1B20D1660015949F /* Common */,
+				BF2EAD221B31F85E00C3A6E3 /* Onboarding */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 				8AC3C2E71A3CB8130074A87F /* Back Attic */,
 				BF664A951ACC60FD003355D2 /* System Alerts */,
@@ -2969,6 +2972,14 @@
 				BF28856B1A4361DE001F9AA5 /* HEMInsightsFeedDataSource.m */,
 			);
 			name = Insights;
+			sourceTree = "<group>";
+		};
+		BF2EAD221B31F85E00C3A6E3 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				BF2EAD231B31F88800C3A6E3 /* HEMOnboardingUtilsSpec.m */,
+			);
+			name = Onboarding;
 			sourceTree = "<group>";
 		};
 		BF3D2E4919C37A54001DEEBA /* Assets */ = {
@@ -4215,6 +4226,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BF2EAD241B31F88800C3A6E3 /* HEMOnboardingUtilsSpec.m in Sources */,
 				8AC3C2E61A3CB7F40074A87F /* HEMSnazzBarControllerSpec.m in Sources */,
 				BF664A971ACC61AF003355D2 /* HEMSystemAlertControllerSpec.m in Sources */,
 				BF78E9911B20D1C60015949F /* NSDateHEMRelativeSpec.m in Sources */,

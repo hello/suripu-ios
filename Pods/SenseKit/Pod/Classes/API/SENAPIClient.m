@@ -132,11 +132,13 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
 {
     AFNetworkReachabilityStatus status = [note.userInfo[AFNetworkingReachabilityNotificationStatusItem] integerValue];
     switch (status) {
+        case AFNetworkReachabilityStatusUnknown:
+            // do nothing since this simply means it has not checked
+            break;
         case AFNetworkReachabilityStatusReachableViaWWAN:
         case AFNetworkReachabilityStatusReachableViaWiFi:
             [[NSNotificationCenter defaultCenter] postNotificationName:SENAPIReachableNotification object:nil];
             break;
-        case AFNetworkReachabilityStatusUnknown:
         case AFNetworkReachabilityStatusNotReachable:
         default:
             [[NSNotificationCenter defaultCenter] postNotificationName:SENAPIUnreachableNotification object:nil];

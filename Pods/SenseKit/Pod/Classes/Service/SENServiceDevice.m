@@ -76,7 +76,9 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         }];
     } else {
         [self setCheckingStates:NO];
-        completion (SENServiceDeviceStateUnknown);
+        if (completion) {
+            completion (SENServiceDeviceStateUnknown);
+        }
     }
 }
 

@@ -132,7 +132,7 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
     HEMImageCollectionViewCell* imageCell =
         (id)[collectionView dequeueReusableCellWithReuseIdentifier:HEMTutorialCellReuseIdImage forIndexPath:indexPath];
     [[imageCell urlImageView] setImage:[[self content] image]];
-    [[imageCell urlImageView] setContentMode:UIViewContentModeScaleAspectFit];
+    [[imageCell urlImageView] setContentMode:UIViewContentModeScaleAspectFill];
     return imageCell;
 }
 

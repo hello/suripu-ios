@@ -15,7 +15,7 @@ static CGFloat const HEMTutorialContentMinScale = 0.9f;
 static CGFloat const HEMTutorialContentCornerRadius = 3.0f;
 static CGFloat const HEMTutorialContentNextScreenOpacity = 0.7f;
 static CGFloat const HEMTutorialParallaxCoefficientBase = 3.0f;
-static CGFloat const HEMTutorialParallaxOffscreenCoefficient = 0.06f;
+static CGFloat const HEMTutorialParallaxOffscreenCoefficient = 0.07f;
 static CGFloat const HEMTutorialContentDisplayDelay = 0.2f;
 static CGFloat const HEMTutorialContentAnimDuration = 0.5f;
 static CGFloat const HEMTutorialAnimDamping = 0.6f;
@@ -205,9 +205,7 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
         return;
     }
 
-    BOOL toTheRight = offsetX > [self previousScrollOffsetX];
     CGFloat padding = HEMTutorialContentHorzPadding;
-    CGFloat directionOffset = toTheRight ? -padding : padding;
     CGFloat scrollWidth = CGRectGetWidth([scrollView bounds]);
     CGFloat fullTutorialScreenWidth = scrollWidth - (2 * padding);
     CGFloat previousMaxX = 0.0f;
@@ -219,7 +217,7 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
         if (CGRectIntersectsRect([scrollView bounds], [screen frame])) { // onscreen tutorials
 
             if (diff < fullTutorialScreenWidth && diff > padding) {
-                CGFloat distanceToFull = MIN(diff + directionOffset, fullTutorialScreenWidth);
+                CGFloat distanceToFull = MIN(diff - padding, fullTutorialScreenWidth);
                 CGFloat fullnessPercentage = fabs(1 - (distanceToFull / fullTutorialScreenWidth));
                 
                 CGFloat scaleToAdd = (1 - HEMTutorialContentMinScale) * fullnessPercentage;

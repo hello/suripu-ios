@@ -229,23 +229,36 @@ typedef NS_ENUM(NSUInteger, HEMSystemAlertType) {
 
 - (void)checkSystemIfEnabled {
     if ([self enableSystemMonitoring]) {
-        if ([SENAPIClient isAPIReachable]) {
-            [self dismissNoInternetAlert];
-            
-            __weak typeof(self) weakSelf = self;
-            [[SENServiceDevice sharedService] checkDevicesState:^(SENServiceDeviceState state) {
-                __strong typeof(weakSelf) strongSelf = weakSelf;
-                if (state != SENServiceDeviceStateUnknown && state != SENServiceDeviceStateNormal) {
-                    [strongSelf showDeviceWarning];
-                } else {
-                    [strongSelf checkTimeZone];
-                }
-            }];
-        } else {
-            [self showNoInternetAlert];
-        }
+        [self checkConnectionState];
+        [self checkDevicesState];
         [self listenForInternetConnectivityChanges];
     }
+}
+
+- (void)checkDevicesState {
+    __weak typeof(self) weakSelf = self;
+    [[SENServiceDevice sharedService] checkDevicesState:^(SENServiceDeviceState state) {
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if (state != SENServiceDeviceStateUnknown && state != SENServiceDeviceStateNormal) {
+            [strongSelf showDeviceWarning];
+        } else {
+            [strongSelf checkTimeZone];
+        }
+    }];
+}
+
+- (void)checkConnectionState {
+    // need to wait a short delay since at first, the state is unknown
+    __weak typeof(self) weakSelf = self;
+    dispatch_time_t time = dispatch_time(DISPATCH_TIME_NOW, 0.5f*NSEC_PER_SEC);
+    dispatch_after(time, dispatch_get_main_queue(), ^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        if ([SENAPIClient isAPIReachable]) {
+            [strongSelf dismissNoInternetAlert];
+        } else {
+            [strongSelf showNoInternetAlert];
+        }
+    });
 }
 
 - (void)showDeviceWarning {

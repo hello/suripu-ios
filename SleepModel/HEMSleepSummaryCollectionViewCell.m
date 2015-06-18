@@ -1,5 +1,4 @@
 
-#import <SpinKit/RTSpinKitView.h>
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HEMSleepSummaryPointerGradientView.h"

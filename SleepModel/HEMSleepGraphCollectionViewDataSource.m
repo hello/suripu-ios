@@ -4,7 +4,6 @@
 #import <SenseKit/SENSleepResult.h>
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import <SpinKit/RTSpinKitView.h>
 #import <FDWaveformView/FDWaveformView.h>
 #import <markdown_peg.h>
 

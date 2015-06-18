@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "HEMSleepSegmentCollectionViewCell.h"
 
-@class FDWaveformView, RTSpinKitView, HEMSleepEventButton;
+@class FDWaveformView, HEMSleepEventButton;
 
 @interface HEMSleepEventCollectionViewCell : HEMSleepSegmentCollectionViewCell
 

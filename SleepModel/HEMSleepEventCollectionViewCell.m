@@ -1,6 +1,5 @@
 
 #import <FDWaveformView/FDWaveformView.h>
-#import <SpinKit/RTSpinKitView.h>
 #import <AttributedMarkdown/markdown_peg.h>
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepEventButton.h"
@@ -14,7 +13,6 @@
 @property (nonatomic, weak) IBOutlet UIView *contentContainerView;
 @property (weak, nonatomic) IBOutlet UIButton *playSoundButton;
 @property (weak, nonatomic) IBOutlet FDWaveformView *waveformView;
-@property (weak, nonatomic) IBOutlet RTSpinKitView *spinnerView;
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewTop;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewLeading;
@@ -57,12 +55,6 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     self.waveformView.progressColor = [HelloStyleKit tintColor];
     self.waveformView.wavesColor = [HelloStyleKit lightSleepColor];
     self.waveformView.delegate = self;
-    self.spinnerView.color = self.waveformView.progressColor;
-    self.spinnerView.spinnerSize = CGRectGetHeight(self.playSoundButton.bounds);
-    self.spinnerView.style = RTSpinKitViewStyleArc;
-    self.spinnerView.hidesWhenStopped = YES;
-    self.spinnerView.backgroundColor = [UIColor clearColor];
-    [self.spinnerView startAnimating];
 }
 
 - (void)configureGradientViews {
@@ -147,10 +139,6 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 }
 
 - (void)setLoading:(BOOL)isLoading {
-    if (isLoading)
-        [self.spinnerView startAnimating];
-    else
-        [self.spinnerView stopAnimating];
     self.playSoundButton.enabled = !isLoading;
 }
 
@@ -158,10 +146,6 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 
 - (void)showAudioPlayer:(BOOL)isVisible {
     self.playSoundButton.enabled = NO;
-    if (isVisible)
-        [self.spinnerView startAnimating];
-    else
-        [self.spinnerView stopAnimating];
 }
 
 - (void)setAudioURL:(NSURL *)audioURL {
@@ -278,20 +262,14 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 }
 
 - (void)handleLoadingStart {
-    if ([self.spinnerView isAnimating])
-        return;
-    [self.spinnerView startAnimating];
     self.playSoundButton.enabled = NO;
 }
 
 - (void)handleLoadingFailure {
-    [self.spinnerView stopAnimating];
     self.playSoundButton.enabled = NO;
 }
 
 - (void)handleLoadingSuccess {
-    if ([self.spinnerView isAnimating])
-        [self.spinnerView stopAnimating];
     self.playSoundButton.enabled = YES;
 }
 

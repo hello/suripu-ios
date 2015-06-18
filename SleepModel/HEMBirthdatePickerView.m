@@ -197,7 +197,13 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
         NSRange range = [calendar rangeOfUnit:NSDayCalendarUnit
                                        inUnit:NSMonthCalendarUnit
                                       forDate:[calendar dateFromComponents:components]];
+        
+        if (month == 2 && range.length < 29) {
+            range.length = 29;
+        }
+        
         days = @(range.length);
+        
         [[self daysInMonth] setObject:days forKey:monthObject];
     }
     return [days integerValue];

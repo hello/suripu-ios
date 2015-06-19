@@ -13,7 +13,7 @@
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="210"/>
                 <subviews>
-                    <view opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="276" placeholderIntrinsicHeight="48" translatesAutoresizingMaskIntoConstraints="NO" id="fHd-pv-egS" userLabel="contentContainerView" customClass="HEMEventBubbleView">
+                    <view opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" placeholderIntrinsicWidth="276" placeholderIntrinsicHeight="48" translatesAutoresizingMaskIntoConstraints="NO" id="fHd-pv-egS" userLabel="contentContainerView" customClass="HEMEventBubbleView">
                         <rect key="frame" x="10" y="0.0" width="270" height="48"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TNn-do-Y9M" userLabel="actionSheetButton">
@@ -63,6 +63,7 @@
                         </constraints>
                         <connections>
                             <outlet property="textLabel" destination="7kh-Q1-akT" id="14s-kN-c5k"/>
+                            <outlet property="timeLabel" destination="JFc-fa-7rh" id="YhR-bf-sFS"/>
                         </connections>
                     </view>
                 </subviews>

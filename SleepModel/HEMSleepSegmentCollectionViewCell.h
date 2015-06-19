@@ -17,21 +17,25 @@ extern CGFloat const HEMSleepLineWidth;
  *
  *  @param ratio     the fill ratio
  *  @param color     the color to fill
- *  @param lineColor the color to draw down the center
+ *  @param previousRatio the top area fill ratio
+ *  @param previousColor the top area color
  */
-- (void)setSegmentRatio:(CGFloat)ratio withFillColor:(UIColor*)color lineColor:(UIColor*)lineColor;
+- (void)setSegmentRatio:(CGFloat)ratio
+          withFillColor:(UIColor *)color
+          previousRatio:(CGFloat)previousRatio
+          previousColor:(UIColor *)previousColor;
 
-- (void)addTimeLabelWithText:(NSAttributedString*)text atHeightRatio:(CGFloat)heightRatio;
+- (void)addTimeLabelWithText:(NSAttributedString *)text atHeightRatio:(CGFloat)heightRatio;
 
 - (NSUInteger)numberOfTimeLabels;
 
 - (void)removeAllTimeLabels;
 
-- (UIImage*)lineBorderImageWithColor:(UIColor*)color;
+- (UIImage *)lineBorderImageWithColor:(UIColor *)color;
 
 @property (nonatomic, getter=isFirstSegment) BOOL firstSegment;
 @property (nonatomic, getter=isLastSegment) BOOL lastSegment;
 @property (nonatomic, readonly) CGFloat fillRatio;
-@property (nonatomic, strong, readonly) UIColor* fillColor;
-@property (nonatomic, strong, readonly) UIColor* lineColor;
+@property (nonatomic, strong, readonly) UIColor *previousFillColor;
+@property (nonatomic, strong, readonly) UIColor *fillColor;
 @end

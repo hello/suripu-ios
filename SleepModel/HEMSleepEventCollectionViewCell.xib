@@ -14,7 +14,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="210"/>
                 <subviews>
                     <view opaque="NO" contentMode="scaleToFill" placeholderIntrinsicWidth="276" placeholderIntrinsicHeight="48" translatesAutoresizingMaskIntoConstraints="NO" id="fHd-pv-egS" userLabel="contentContainerView" customClass="HEMEventBubbleView">
-                        <rect key="frame" x="-10" y="0.0" width="270" height="48"/>
+                        <rect key="frame" x="10" y="0.0" width="270" height="48"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TNn-do-Y9M" userLabel="actionSheetButton">
                                 <rect key="frame" x="0.0" y="0.0" width="270" height="48"/>
@@ -71,16 +71,14 @@
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="top" secondItem="fHd-pv-egS" secondAttribute="top" id="1O9-6n-eyx"/>
-                <constraint firstItem="fHd-pv-egS" firstAttribute="trailing" secondItem="gTV-IL-0wX" secondAttribute="trailing" constant="-60" id="TZa-qP-SAL"/>
-                <constraint firstItem="fHd-pv-egS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="-10" id="y5u-Ny-B9E"/>
+                <constraint firstItem="fHd-pv-egS" firstAttribute="trailing" secondItem="gTV-IL-0wX" secondAttribute="trailing" constant="-40" id="TZa-qP-SAL"/>
+                <constraint firstItem="fHd-pv-egS" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="10" id="y5u-Ny-B9E"/>
             </constraints>
             <size key="customSize" width="293" height="209"/>
             <connections>
                 <outlet property="actionButton" destination="TNn-do-Y9M" id="vgi-6R-Ufg"/>
                 <outlet property="contentContainerView" destination="fHd-pv-egS" id="cr1-ad-yQ3"/>
-                <outlet property="contentContainerViewLeading" destination="y5u-Ny-B9E" id="imO-cl-yWX"/>
                 <outlet property="contentContainerViewTop" destination="1O9-6n-eyx" id="AIP-iT-UCq"/>
-                <outlet property="contentContainerViewTrailing" destination="TZa-qP-SAL" id="AIJ-sO-jud"/>
                 <outlet property="eventMessageLabel" destination="7kh-Q1-akT" id="jcu-S5-esD"/>
                 <outlet property="eventTimeLabel" destination="JFc-fa-7rh" id="T6n-yv-ZhQ"/>
                 <outlet property="eventTypeImageView" destination="UZO-fd-oeR" id="2XT-te-cZd"/>

@@ -15,8 +15,6 @@
 @property (weak, nonatomic) IBOutlet FDWaveformView *waveformView;
 
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewTop;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewLeading;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewTrailing;
 
 @property (nonatomic, strong) AVAudioPlayer *player;
 @property (nonatomic, strong) NSTimer *playerUpdateTimer;
@@ -89,25 +87,13 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 }
 
 - (void)animateContentViewWithAttributes:(HEMTimelineLayoutAttributes *)attributes {
-    CGFloat const minContainerViewLeading = -10.f;
-    CGFloat const maxContainerViewLeading = 8.f;
-    CGFloat const minContainerViewTrailing = -60.f;
-    CGFloat const maxContainerViewTrailing = -42.f;
     CGFloat const maxContainerViewTop = 10.f;
     CGFloat const minContainerViewTop = 0;
     CGFloat const motionDelta = 1.f;
     CGFloat ratio = 1 - fabs(attributes.ratioFromCenter);
-    CGFloat adjustedRatio = MIN(1, ratio * 5);
-    CGFloat diff = (maxContainerViewLeading - minContainerViewLeading) * adjustedRatio;
-    CGFloat leading = MIN(minContainerViewLeading + diff, maxContainerViewLeading);
-    CGFloat trailing = MIN(minContainerViewTrailing + diff, maxContainerViewTrailing);
     CGFloat top = MAX(minContainerViewTop, maxContainerViewTop * attributes.ratioFromCenter);
     CGFloat alphaRatio = ratio < 0 ? MAX(0.8, MIN(1, fabs(ratio))) : 1;
-    if (fabs(self.contentContainerViewTop.constant - top) > motionDelta
-        || fabs(self.contentContainerViewTrailing.constant - trailing) > motionDelta
-        || fabs(self.contentContainerViewLeading.constant - leading) > motionDelta) {
-        self.contentContainerViewLeading.constant = leading;
-        self.contentContainerViewTrailing.constant = trailing;
+    if (fabs(self.contentContainerViewTop.constant - top) > motionDelta) {
         self.contentContainerViewTop.constant = top;
         [self setNeedsUpdateConstraints];
         [UIView animateWithDuration:0.05f

@@ -64,6 +64,8 @@ static CGFloat const HEMGestureAnimationDuration = 0.75f;
         return;
     }
     [UIView animateWithDuration:HEMGestureAnimationDuration
+                          delay:0.0f
+                        options:UIViewAnimationOptionBeginFromCurrentState
                      animations:animation
                      completion:completion];
 }
@@ -95,9 +97,10 @@ static CGFloat const HEMGestureAnimationDuration = 0.75f;
 }
 
 - (void)endAnimation {
-    [self setStopAnimation:YES];
-    [self setHidden:YES];
-    [self setAlpha:0.0f];
+    [self fade:0.0f then:^(BOOL finished) {
+        [self setStopAnimation:YES];
+        [self setHidden:YES];
+    }];
 }
 
 @end

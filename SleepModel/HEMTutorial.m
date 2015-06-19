@@ -62,7 +62,8 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 
 + (BOOL)shouldShowHandholdingForTimelineDaySwitch {
     SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
-    if (![self shouldShowTutorialForKey:HEMTutorialHHTimelineDaySwitch]) {
+    if (![self shouldShowTutorialForKey:HEMTutorialHHTimelineDaySwitch]
+        || [self shouldShowTutorialForTimeline]) {
         return NO;
     }
     

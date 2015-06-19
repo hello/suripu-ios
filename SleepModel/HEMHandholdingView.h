@@ -15,11 +15,41 @@ typedef NS_ENUM(NSUInteger, HEMHHDialogAnchor) {
 
 @interface HEMHandholdingView : UIView
 
+/**
+ * @property gestureStartCenter
+ *
+ * Set the starting center point for the handholding gesture
+ */
 @property (nonatomic, assign) CGPoint gestureStartCenter;
+
+/**
+ * @property gestureEndCenter
+ *
+ * Set the end center point for the handholding gesture
+ */
 @property (nonatomic, assign) CGPoint gestureEndCenter;
+
+/**
+ * @property anchor
+ *
+ * Specifiy the anchor in which the message will be displayed at within the
+ * view.  It defaults to HEMHHDialogAnchorTop
+ */
 @property (nonatomic, assign) HEMHHDialogAnchor anchor;
+
+/**
+ * @property message
+ *
+ * The message to be displayed while the gesture animation is happening.  If
+ * not set, the message dialog / view will not be displayed
+ */
 @property (nonatomic, copy)   NSString* message;
 
+/**
+ * @method showInView:
+ *
+ * Show this handholding view inside the view specified.
+ */
 - (void)showInView:(UIView*)view;
 
 @end

@@ -75,7 +75,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         if (![self isViewFullyVisible] || self.dataSource.numberOfSleepSegments == 0) {
-            [self showHandholding];
             return;
         }
         [HEMTutorial showTutorialForTimelineIfNeeded];

@@ -13,11 +13,11 @@
 static CGFloat const HEMHandholdingGestureSize = 50.0f;
 static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
 
-@interface HEMHandholdingView()
+@interface HEMHandholdingView() <UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) HEMHintGestureView* gestureView;
 @property (nonatomic, strong) HEMHintMessageView* messageView;
-@property (nonatomic, weak)   UIView* viewUnderneath;
+@property (nonatomic, assign, getter=isDismissing) BOOL dismissing;
 
 @end
 
@@ -31,15 +31,17 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
     return self;
 }
 
-- (UIView*)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-    if (CGRectContainsPoint([[self messageView] frame], point)) {
-        return [super hitTest:point withEvent:event];
-    } else {
-        UIView* view = [[self viewUnderneath] hitTest:point withEvent:event];
-        [self removeFromSuperview];
-        return view;
+- (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent *)event {
+    // TODO (jimmy): somehow only allow certain gestures to go through to the
+    // view below (not subviews of this view) and block everything else.
+    BOOL onMessage = CGRectContainsPoint([[self messageView] frame], point);
+    if (!onMessage) {
+        [self animateOut];
     }
+    return onMessage;
 }
+
+#pragma mark - View set up and display
 
 - (void)showInView:(UIView*)view {
     CGFloat halfGestureSize = HEMHandholdingGestureSize / 2;
@@ -51,10 +53,21 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
     [self setGestureView:[[HEMHintGestureView alloc] initWithFrame:gestureFrame
                                                      withEndCenter:[self gestureEndCenter]]];
     
+    [self setFrame:[view bounds]];
+    [self addSubview:[self gestureView]];
     
+    if ([self message]) {
+        [self addMessageHintWithText:[self message] withBounds:[view bounds]];
+    }
     
+    [view addSubview:self];
+    [self animateIn];
+}
+
+- (void)addMessageHintWithText:(NSString*)text withBounds:(CGRect)bounds {
     [self setMessageView:[[HEMHintMessageView alloc] initWithMessage:[self message]
-                                                  constrainedToWidth:CGRectGetWidth([view bounds])]];
+                                                  constrainedToWidth:CGRectGetWidth(bounds)]];
+    
     [[[self messageView] dismissButton] addTarget:self
                                            action:@selector(animateOut)
                                  forControlEvents:UIControlEventTouchUpInside];
@@ -63,22 +76,26 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
     CGFloat messageHeight = CGRectGetHeight([[self messageView] bounds]);
     
     if ([self anchor] == HEMHHDialogAnchorBottom) {
-        messageViewFrame.origin.y = CGRectGetHeight([view bounds]) + messageHeight;
+        messageViewFrame.origin.y = CGRectGetHeight(bounds) + messageHeight;
     } else {
         messageViewFrame.origin.y -= messageHeight;
     }
-
+    
     [[self messageView] setFrame:messageViewFrame];
-     
-    [self setFrame:[view bounds]];
-    [self addSubview:[self gestureView]];
+    
     [self addSubview:[self messageView]];
-    [self setViewUnderneath:[[view subviews] lastObject]];
-    [view addSubview:self];
-    [self animateIn];
 }
 
+#pragma mark - Animations
+
 - (void)animateIn {
+    [self setDismissing:NO];
+    
+    if (![self messageView]) {
+        [[self gestureView] startAnimation];
+        return;
+    }
+    
     __block CGRect messageViewFrame = [[self messageView] frame];
     
     CGFloat y = 0.0f;
@@ -97,7 +114,16 @@ static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
 }
 
 - (void)animateOut {
+    if ([self isDismissing]) {
+        return;
+    }
+    
+    [self setDismissing:YES];
     [[self gestureView] endAnimation];
+    
+    if (![self messageView]) {
+        return;
+    }
     
     __block CGRect messageViewFrame = [[self messageView] frame];
     

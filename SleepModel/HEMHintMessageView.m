@@ -50,7 +50,8 @@ static CGFloat const HEMHintMessagePadding = 18.0f;
     CGSize labelSize = CGSizeMake(labelWidth, viewHeight);
     UILabel* messageLabel = [self messageLabelWithText:[self message] size:labelSize];
     
-    CGRect buttonFrame = CGRectMake(labelWidth + HEMHintMessagePadding, 0.0f, buttonWidth, viewHeight);
+    CGFloat buttonLeftMargin = labelWidth + ( 2 * HEMHintMessagePadding);
+    CGRect buttonFrame = CGRectMake(buttonLeftMargin, 0.0f, buttonWidth, viewHeight);
     UIButton* dismissButton = [self dismissButtonWithImage:closeImage withFrame:buttonFrame];
     
     CGRect frame = CGRectZero;

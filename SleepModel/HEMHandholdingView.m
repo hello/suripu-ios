@@ -13,7 +13,7 @@
 static CGFloat const HEMHandholdingGestureSize = 50.0f;
 static CGFloat const HEMHandholdingMessageAnimDuration = 0.5f;
 
-@interface HEMHandholdingView() <UIGestureRecognizerDelegate>
+@interface HEMHandholdingView()
 
 @property (nonatomic, strong) HEMHintGestureView* gestureView;
 @property (nonatomic, strong) HEMHintMessageView* messageView;

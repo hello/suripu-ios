@@ -69,13 +69,24 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 }
 
 - (void)showTutorial {
-    if (![HEMTutorial shouldShowTutorialForTimeline])
+    if (![HEMTutorial shouldShowTutorialForTimeline]) {
+        [self showHandholding];
         return;
+    }
+    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-      if (![self isViewFullyVisible] || self.dataSource.numberOfSleepSegments == 0)
-          return;
-      [HEMTutorial showTutorialForTimelineIfNeeded];
+        if (![self isViewFullyVisible] || self.dataSource.numberOfSleepSegments == 0) {
+            return;
+        }
+        [HEMTutorial showTutorialForTimelineIfNeeded];
     });
+}
+
+- (void)showHandholding {
+    if ([self isViewFullyVisible]) {
+        UIView* view = [[self containerViewController] view];
+        [HEMTutorial showHandholdingForTimelineDaySwitchIfNeededIn:view];
+    }
 }
 
 - (void)viewWillAppear:(BOOL)animated {

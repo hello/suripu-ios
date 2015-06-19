@@ -699,6 +699,12 @@
 		BFF3B4581A5F008A00B11643 /* warning@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF3B4551A5F008A00B11643 /* warning@2x.png */; };
 		BFF3B4591A5F008A00B11643 /* warning@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF3B4561A5F008A00B11643 /* warning@3x.png */; };
 		BFF3B45C1A5F03AD00B11643 /* HEMWarningCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF3B45B1A5F03AD00B11643 /* HEMWarningCollectionViewCell.m */; };
+		BFF6A5B61B335A3300A30429 /* HEMHintGestureView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF6A5B51B335A3300A30429 /* HEMHintGestureView.m */; };
+		BFF6A5BA1B33790800A30429 /* HEMHandholdingView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF6A5B91B33790800A30429 /* HEMHandholdingView.m */; };
+		BFF6A5BD1B339CA400A30429 /* HEMHintMessageView.m in Sources */ = {isa = PBXBuildFile; fileRef = BFF6A5BC1B339CA400A30429 /* HEMHintMessageView.m */; };
+		BFF6A5C21B33A5AF00A30429 /* closeX.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF6A5BF1B33A5AF00A30429 /* closeX.png */; };
+		BFF6A5C31B33A5AF00A30429 /* closeX@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF6A5C01B33A5AF00A30429 /* closeX@2x.png */; };
+		BFF6A5C41B33A5AF00A30429 /* closeX@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFF6A5C11B33A5AF00A30429 /* closeX@3x.png */; };
 		D12BBDB2950F47EDA9F85F68 /* libPods-Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B9DBEF4FBC84480A9E1CA48 /* libPods-Tests.a */; };
 /* End PBXBuildFile section */
 
@@ -1635,6 +1641,15 @@
 		BFF3B45A1A5F03AD00B11643 /* HEMWarningCollectionViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMWarningCollectionViewCell.h; sourceTree = "<group>"; };
 		BFF3B45B1A5F03AD00B11643 /* HEMWarningCollectionViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMWarningCollectionViewCell.m; sourceTree = "<group>"; };
 		BFF3B45D1A5F569B00B11643 /* HEMSensePairDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HEMSensePairDelegate.h; sourceTree = "<group>"; };
+		BFF6A5B41B335A3300A30429 /* HEMHintGestureView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHintGestureView.h; sourceTree = "<group>"; };
+		BFF6A5B51B335A3300A30429 /* HEMHintGestureView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHintGestureView.m; sourceTree = "<group>"; };
+		BFF6A5B81B33790800A30429 /* HEMHandholdingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHandholdingView.h; sourceTree = "<group>"; };
+		BFF6A5B91B33790800A30429 /* HEMHandholdingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHandholdingView.m; sourceTree = "<group>"; };
+		BFF6A5BB1B339CA400A30429 /* HEMHintMessageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMHintMessageView.h; sourceTree = "<group>"; };
+		BFF6A5BC1B339CA400A30429 /* HEMHintMessageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMHintMessageView.m; sourceTree = "<group>"; };
+		BFF6A5BF1B33A5AF00A30429 /* closeX.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = closeX.png; path = images/closeX.png; sourceTree = "<group>"; };
+		BFF6A5C01B33A5AF00A30429 /* closeX@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "closeX@2x.png"; path = "images/closeX@2x.png"; sourceTree = "<group>"; };
+		BFF6A5C11B33A5AF00A30429 /* closeX@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "closeX@3x.png"; path = "images/closeX@3x.png"; sourceTree = "<group>"; };
 		ED068BEFEEBEC0C48801356C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
 		FD539145AF784DC3AA0DAF13 /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -1825,6 +1840,7 @@
 			isa = PBXGroup;
 			children = (
 				8A1207721A80A57000758DC2 /* Alarm */,
+				BFF6A5BE1B33A59E00A30429 /* Handholding */,
 				8A45796C1A8052E5009A7863 /* Sensors */,
 				8AD142561A78675F00A83AD8 /* Timeline */,
 				8A1207711A80A56B00758DC2 /* Trends */,
@@ -1903,6 +1919,7 @@
 			children = (
 				8A45796B1A8052D2009A7863 /* Assets */,
 				BF78E9A31B2761E20015949F /* Models */,
+				BFF6A5B71B33773400A30429 /* Views */,
 				BF78E99F1B266C220015949F /* View Controllers */,
 				8A576F101A79B12200287398 /* HEMTutorial.h */,
 				8A576F111A79B12200287398 /* HEMTutorial.m */,
@@ -3307,6 +3324,29 @@
 			name = "System Alerts";
 			sourceTree = "<group>";
 		};
+		BFF6A5B71B33773400A30429 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				BFF6A5B41B335A3300A30429 /* HEMHintGestureView.h */,
+				BFF6A5B51B335A3300A30429 /* HEMHintGestureView.m */,
+				BFF6A5B81B33790800A30429 /* HEMHandholdingView.h */,
+				BFF6A5B91B33790800A30429 /* HEMHandholdingView.m */,
+				BFF6A5BB1B339CA400A30429 /* HEMHintMessageView.h */,
+				BFF6A5BC1B339CA400A30429 /* HEMHintMessageView.m */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		BFF6A5BE1B33A59E00A30429 /* Handholding */ = {
+			isa = PBXGroup;
+			children = (
+				BFF6A5BF1B33A5AF00A30429 /* closeX.png */,
+				BFF6A5C01B33A5AF00A30429 /* closeX@2x.png */,
+				BFF6A5C11B33A5AF00A30429 /* closeX@3x.png */,
+			);
+			name = Handholding;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -3526,6 +3566,7 @@
 				BF05C8ED1A3A6AD6002A1307 /* questions_circle@3x.png in Resources */,
 				8AA1E61F1A89785000590EB6 /* infoButtonIconSmall@2x.png in Resources */,
 				BFAB23831AD5D2AA00CCBF8A /* soundIconGreen@2x.png in Resources */,
+				BFF6A5C31B33A5AF00A30429 /* closeX@2x.png in Resources */,
 				BF7105D01ADF2D650066885B /* sensorLoaderGray@3x.png in Resources */,
 				BFC3FE621AE7321D0061D6A1 /* soundIconNoBorderGreen.png in Resources */,
 				8ADE064A1B2FA0BB00976654 /* timeline_action_delete.png in Resources */,
@@ -3757,6 +3798,7 @@
 				BFC3FE151AE7283A0061D6A1 /* sensorLoaderRed@2x.png in Resources */,
 				8A1E723419D62C26007475D3 /* alarmRepeatIcon.png in Resources */,
 				BFAB23441AD5D15E00CCBF8A /* humidityIconRed@2x.png in Resources */,
+				BFF6A5C21B33A5AF00A30429 /* closeX.png in Resources */,
 				BF4473581A63535F00389ECE /* female@2x.png in Resources */,
 				BFAB23961AD5D2AA00CCBF8A /* temperatureIconYellow@3x.png in Resources */,
 				8AC800981A7B029300895ED3 /* miniPlayButton@3x.png in Resources */,
@@ -3794,6 +3836,7 @@
 				8ACAF40E1A69B7980054885A /* outOfBedEventIcon@2x.png in Resources */,
 				BFAB22F01AD3675300CCBF8A /* roomcheckSenseGray@2x.png in Resources */,
 				8A8288D71A7800820043B1D1 /* settingsBarIconActive@3x.png in Resources */,
+				BFF6A5C41B33A5AF00A30429 /* closeX@3x.png in Resources */,
 				8AD142641A78679800A83AD8 /* timeline_explain_before@2x.png in Resources */,
 				BFBEDB721A8BF9B6006C4546 /* senseColors2.png in Resources */,
 				BFC3FE6F1AE7321D0061D6A1 /* temperatureIconNoBorderRed@2x.png in Resources */,
@@ -4079,6 +4122,8 @@
 				8AB833A21B0D3D7E005F2BFB /* HEMGradientCollectionView.m in Sources */,
 				8A4B3D5E199534F000856BDE /* HEMMainStoryboard.m in Sources */,
 				BF257EEA1A1D269300DAF923 /* HEMAlertView.m in Sources */,
+				BFF6A5BA1B33790800A30429 /* HEMHandholdingView.m in Sources */,
+				BFF6A5BD1B339CA400A30429 /* HEMHintMessageView.m in Sources */,
 				BFEAA0A819A51DCF002FBD44 /* HEMWelcomeViewController.m in Sources */,
 				8AA8D94019AD31E900349FD0 /* HEMMiniGraphCollectionViewCell.m in Sources */,
 				8A66FC8E199D17C000922ED5 /* HEMHeightPickerViewController.m in Sources */,
@@ -4125,6 +4170,7 @@
 				BFEAA0B519A55E01002FBD44 /* UIViewController+Keyboard.m in Sources */,
 				BF6215101AB8CF730047A518 /* HEMTimeZoneViewController.m in Sources */,
 				BF2EAD211B2F520400C3A6E3 /* HEMSupportTopicsViewController.m in Sources */,
+				BFF6A5B61B335A3300A30429 /* HEMHintGestureView.m in Sources */,
 				BF98E4461A42378900E3CDEB /* HEMSinkModalTransition.m in Sources */,
 				8A4D49121A67532800DD6ECE /* HEMScopePickerView.m in Sources */,
 				8A7D80201A40DCA400B0BFD7 /* HEMCardFlowLayout.m in Sources */,

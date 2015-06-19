@@ -212,8 +212,10 @@
 #pragma mark Tutorials
 
 - (void)addResetTutorialsOptionTo:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
     [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset-tutorials", nil) action:^{
         [HEMTutorial resetTutorials];
+        [weakSelf setSupportOptionController:nil];
     }];
 }
 

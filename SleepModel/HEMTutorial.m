@@ -8,14 +8,25 @@
 
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENLocalPreferences.h>
+#import <SenseKit/SENSleepResult.h>
+
+#import "NSDate+HEMRelative.h"
+
 #import "HEMTutorial.h"
 #import "HEMTutorialContent.h"
 #import "HEMTutorialViewController.h"
 #import "HEMMainStoryboard.h"
 #import "UIView+HEMSnapshot.h"
 #import "HelloStyleKit.h"
+#import "HEMHandholdingView.h"
 
 @implementation HEMTutorial
+
+static NSString* const HEMTutorialHHTimelineDaySwitchCounter = @"HandholdingTimelineDaySwitchCounter";
+static NSString* const HEMTutorialHHTimelineDaySwitch = @"HandholdingTimelineDaySwitch";
+static CGFloat const HEMTutorialHHTimelineDaysGestureY = 205.0f;
+static CGFloat const HEMTutorialHHTimelineDaysGestureXStart = 45.0f;
+static NSInteger const HEMTutorialHHTimelineDaysMinDaysChecked = 3;
 
 static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
 static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
@@ -23,6 +34,52 @@ static NSString* const HEMTutorialSensorsKey = @"HEMTutorialSensors";
 static NSString* const HEMTutorialAlarmsKey = @"HEMTutorialAlarms";
 static NSString* const HEMTutorialTrendsKey = @"HEMTutorialTrends";
 static CGFloat const HEMTutorialDelay = 0.5f;
+
+#pragma mark - Handholding
+
++ (BOOL)showHandholdingForTimelineDaySwitchIfNeededIn:(UIView*)view {
+    if ([self shouldShowHandholdingForTimelineDaySwitch]) {
+        [self showHandholdingForTimelineDaySwitchIn:view];
+        [self markTutorialViewed:HEMTutorialHHTimelineDaySwitch];
+        return YES;
+    }
+    [self setHandholdingFirstChecked:HEMTutorialHHTimelineDaySwitchCounter];
+    return NO;
+}
+
++ (void)showHandholdingForTimelineDaySwitchIn:(UIView*)view {
+    CGFloat constraint = CGRectGetWidth([view bounds]);
+    HEMHandholdingView* handholdingView = [[HEMHandholdingView alloc] init];
+    [handholdingView setGestureStartCenter:CGPointMake(HEMTutorialHHTimelineDaysGestureXStart,
+                                                       HEMTutorialHHTimelineDaysGestureY)];
+    [handholdingView setGestureEndCenter:CGPointMake(constraint - HEMTutorialHHTimelineDaysGestureXStart,
+                                                     HEMTutorialHHTimelineDaysGestureY)];
+    [handholdingView setMessage:NSLocalizedString(@"handholding.message.timeline-switch-days", nil)];
+    [handholdingView setAnchor:HEMHHDialogAnchorBottom];
+    
+    [handholdingView showInView:view];
+}
+
++ (BOOL)shouldShowHandholdingForTimelineDaySwitch {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    if (![self shouldShowTutorialForKey:HEMTutorialHHTimelineDaySwitch]
+        || [self shouldShowTutorialForTimeline]) {
+        return NO;
+    }
+    
+    NSDate* firstCheckedDate = [preferences sessionPreferenceForKey:HEMTutorialHHTimelineDaySwitchCounter];
+    return [firstCheckedDate daysElapsed] >= HEMTutorialHHTimelineDaysMinDaysChecked;
+}
+
++ (void)setHandholdingFirstChecked:(NSString*)key {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    NSDate* date = [preferences sessionPreferenceForKey:key];
+    if (!date) {
+        [preferences setSessionPreference:[NSDate date] forKey:key];
+    }
+}
+
+#pragma mark - Dialogs
 
 + (void)showTutorialForTimelineIfNeeded
 {
@@ -182,6 +239,8 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [self showTutorialWithContent:@[tutorial]];
 }
 
+#pragma mark - Session Preferences
+
 + (BOOL)shouldShowTutorialForKey:(NSString*)key
 {
     return ![[[SENLocalPreferences sharedPreferences] sessionPreferenceForKey:key] boolValue];
@@ -197,6 +256,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialSensorsKey];
     [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialAlarmsKey];
     [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialTrendsKey];
+    [[SENLocalPreferences sharedPreferences] setSessionPreference:@NO forKey:HEMTutorialHHTimelineDaySwitch];
 }
 
 @end

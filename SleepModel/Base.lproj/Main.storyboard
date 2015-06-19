@@ -4039,16 +4039,16 @@
                                             <rect key="frame" x="0.0" y="0.0" width="565" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1U6-Tw-owC">
-                                                    <rect key="frame" x="20" y="60" width="34" height="20"/>
-                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
-                                                    <color key="textColor" red="0.21765305099999999" green="0.2591488361" blue="0.32559084890000001" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sleep Summary" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jTH-Va-4ZD">
                                                     <rect key="frame" x="20" y="22" width="153" height="31"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="22"/>
                                                     <color key="textColor" red="0.2176530510187149" green="0.25914883613586426" blue="0.32559084892272949" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1U6-Tw-owC">
+                                                    <rect key="frame" x="20" y="60" width="34" height="20"/>
+                                                    <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
+                                                    <color key="textColor" red="0.21765305099999999" green="0.2591488361" blue="0.32559084890000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -4056,7 +4056,7 @@
                                         </view>
                                         <constraints>
                                             <constraint firstItem="jTH-Va-4ZD" firstAttribute="leading" secondItem="1U6-Tw-owC" secondAttribute="leading" id="9DS-WK-iN2"/>
-                                            <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="1U6-Tw-owC" secondAttribute="trailing" id="PCb-sY-wWD"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1U6-Tw-owC" secondAttribute="trailing" constant="20" id="PCb-sY-wWD"/>
                                             <constraint firstItem="jTH-Va-4ZD" firstAttribute="leading" secondItem="zeC-Bo-0He" secondAttribute="leading" constant="20" id="fh4-d4-Xpy"/>
                                             <constraint firstItem="jTH-Va-4ZD" firstAttribute="top" secondItem="zeC-Bo-0He" secondAttribute="top" constant="22" id="nBL-Vs-Mis"/>
                                             <constraint firstItem="1U6-Tw-owC" firstAttribute="top" secondItem="jTH-Va-4ZD" secondAttribute="bottom" constant="8" id="naR-gh-JST"/>

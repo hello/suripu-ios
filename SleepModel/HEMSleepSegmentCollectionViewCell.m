@@ -10,8 +10,9 @@ CGFloat const HEMSleepLineWidth = 1.f;
 @interface HEMSleepSegmentCollectionViewCell ()
 
 @property (nonatomic, readwrite) CGFloat fillRatio;
+@property (nonatomic, readwrite) CGFloat previousFillRatio;
+@property (nonatomic, strong, readwrite) UIColor *previousFillColor;
 @property (nonatomic, strong, readwrite) UIColor *fillColor;
-@property (nonatomic, strong, readwrite) UIColor *lineColor;
 @property (nonatomic, strong) NSMutableArray *timeViews;
 @property (nonatomic) BOOL shouldEmphasize;
 @end
@@ -23,12 +24,14 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
 
 - (void)awakeFromNib {
     self.backgroundColor = [UIColor clearColor];
+    self.previousFillColor = [UIColor clearColor];
     self.timeViews = [NSMutableArray new];
 }
 
 - (void)prepareForReuse {
     [super prepareForReuse];
     self.shouldEmphasize = NO;
+    self.clipsToBounds = YES;
 }
 
 - (void)emphasizeAppearance {
@@ -53,14 +56,14 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
 - (void)addTimeLabelWithText:(NSAttributedString *)text atHeightRatio:(CGFloat)heightRatio {
     static CGFloat const HEMTimeLabelLineOffset = 8.f;
     static CGFloat const HEMTimeLabelWidth = 30.f;
-    self.clipsToBounds = NO;
     CGFloat textInset = HEMTimeLabelLineOffset * 2 + HEMTimeLabelWidth;
+    self.clipsToBounds = NO;
     CGFloat lineYOffset = MIN(CGRectGetHeight(self.bounds) * heightRatio,
-                              CGRectGetHeight(self.frame) - ceilf(HEMSegmentTimeLabelHeight / 2));
+                              MAX(0, CGRectGetHeight(self.frame) - HEMSegmentTimeLabelHeight));
     CGFloat labelYOffset = lineYOffset - floorf(HEMSegmentTimeLabelHeight / 2);
     CGFloat width = CGRectGetWidth(self.bounds) - textInset;
-    CGRect labelRect = CGRectMake(CGRectGetWidth(self.bounds) - HEMTimeLabelWidth - HEMTimeLabelLineOffset,
-                                  labelYOffset, HEMTimeLabelWidth, HEMSegmentTimeLabelHeight);
+    CGRect labelRect = CGRectMake(CGRectGetWidth(self.bounds) - HEMTimeLabelWidth, labelYOffset, HEMTimeLabelWidth,
+                                  HEMSegmentTimeLabelHeight);
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:labelRect];
     timeLabel.attributedText = text;
     timeLabel.textColor = [HelloStyleKit tintColor];
@@ -89,21 +92,31 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
     return image;
 }
 
-- (void)setSegmentRatio:(CGFloat)ratio withFillColor:(UIColor *)color lineColor:(UIColor *)lineColor {
+- (void)setSegmentRatio:(CGFloat)ratio
+          withFillColor:(UIColor *)color
+          previousRatio:(CGFloat)previousRatio
+          previousColor:(UIColor *)previousColor {
     self.fillRatio = MIN(ratio, 1.0);
     self.fillColor = color;
-    self.lineColor = lineColor;
+    self.previousFillColor = previousColor;
+    self.previousFillRatio = previousRatio;
     [self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect {
-    static CGFloat const HEMSegmentMinimumWidth = 32.f;
-    static CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
+    CGFloat const HEMSegmentTimeInset = 12.f;
+    CGFloat const HEMSegmentMinimumWidth = 32.f;
+    CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     [super drawRect:rect];
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGFloat maximumFillWidth = CGRectGetWidth(rect) * HEMSegmentMaximumWidthRatio;
+    CGFloat preWidth = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.previousFillRatio);
     CGFloat width = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.fillRatio);
-    CGRect fillRect = CGRectMake(0, CGRectGetMinY(rect), width, CGRectGetHeight(rect));
+    CGRect preRect = CGRectMake(0, CGRectGetMinY(rect), preWidth, HEMSegmentTimeInset);
+    CGRect fillRect
+        = CGRectMake(0, CGRectGetMinY(rect) + HEMSegmentTimeInset, width, CGRectGetHeight(rect) - HEMSegmentTimeInset);
+    CGContextSetFillColorWithColor(ctx, self.previousFillColor.CGColor);
+    CGContextFillRect(ctx, preRect);
     CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
     CGContextFillRect(ctx, fillRect);
     if ([self shouldEmphasize]) {

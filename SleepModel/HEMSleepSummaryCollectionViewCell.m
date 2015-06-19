@@ -1,5 +1,4 @@
 
-#import <SpinKit/RTSpinKitView.h>
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HEMSleepSummaryPointerGradientView.h"
@@ -37,15 +36,22 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
     self.sleepScoreTextLabel.hidden = scoreIsEmpty;
     [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];
     if (self.messageContainerView.alpha != 1) {
-        [UIView animateWithDuration:0.25f delay:1.25f options:0 animations:^{
-            self.messageContainerView.alpha = 1;
-        } completion:NULL];
+        [UIView animateWithDuration:0.25f
+                              delay:1.25f
+                            options:0
+                         animations:^{
+                           self.messageContainerView.alpha = 1;
+                         }
+                         completion:NULL];
     }
 }
 
 - (void)setSummaryViewsVisible:(BOOL)visible {
     CGFloat summaryAlpha = visible ? 1.f : 0;
-    [UIView animateWithDuration:0.25 animations:^{ self.summaryContainerView.alpha = summaryAlpha; }];
+    [UIView animateWithDuration:0.25
+                     animations:^{
+                       self.summaryContainerView.alpha = summaryAlpha;
+                     }];
 }
 
 - (void)setTintColor:(UIColor *)tintColor onButton:(UIButton *)button {

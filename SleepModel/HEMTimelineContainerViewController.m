@@ -22,13 +22,14 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *centerTitleTop;
 @property (nonatomic, weak) IBOutlet UIButton *centerTitleButton;
 @property (nonatomic, weak) IBOutlet UILabel *centerTitleLabel;
-@property (nonatomic, weak) IBOutlet UIImageView *centerTitleCaretView;
+@property (nonatomic, weak) IBOutlet UIView *topBarView;
 
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) NSDateFormatter *weekdayDateFormatter;
 @property (nonatomic, strong) NSDateFormatter *rangeDateFormatter;
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *animationDelegate;
+@property (nonatomic, strong) CAGradientLayer *topGradientLayer;
 @end
 
 @implementation HEMTimelineContainerViewController
@@ -48,6 +49,7 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
     self.weekdayDateFormatter.dateFormat = @"EEEE";
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     [self registerForNotifications];
+    [self configureGradientLayer];
 }
 
 - (void)registerForNotifications {
@@ -69,6 +71,17 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
                                                object:nil];
 }
 
+- (void)configureGradientLayer {
+    self.topGradientLayer = [CAGradientLayer layer];
+    self.topGradientLayer.colors =
+        @[ (id)[UIColor whiteColor].CGColor, (id)[UIColor colorWithWhite:1.f alpha:0].CGColor ];
+    self.topGradientLayer.startPoint = CGPointZero;
+    self.topGradientLayer.endPoint = CGPointMake(0, 1);
+    self.topGradientLayer.locations = @[ @0, @(0.8) ];
+    self.topGradientLayer.bounds = CGRectZero;
+    [self.view.layer insertSublayer:self.topGradientLayer below:self.topBarView.layer];
+}
+
 - (IBAction)alarmButtonTapped:(id)sender {
     HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
     [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
@@ -83,7 +96,6 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
     [UIView animateWithDuration:0.2f
                      animations:^{
                        self.centerTitleLabel.alpha = 1;
-                       self.centerTitleCaretView.alpha = 1;
                      }];
 }
 
@@ -91,15 +103,13 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
     [UIView animateWithDuration:0.2f
                      animations:^{
                        self.centerTitleLabel.alpha = 0;
-                       self.centerTitleCaretView.alpha = 0;
                      }];
 }
 
 - (void)cancelCenterTitleChange {
     [UIView animateWithDuration:0.2f
                      animations:^{
-                         self.centerTitleLabel.alpha = 1;
-                         self.centerTitleCaretView.alpha = 1;
+                       self.centerTitleLabel.alpha = 1;
                      }];
 }
 
@@ -114,10 +124,9 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
         return [self.rangeDateFormatter stringFromDate:date];
 }
 
-- (void)showBorder:(BOOL)isVisible {
-}
-
 - (void)showBlurWithHeight:(CGFloat)blurHeight {
+    self.topGradientLayer.frame
+        = CGRectMake(0, CGRectGetHeight(self.topBarView.bounds), CGRectGetWidth(self.topBarView.bounds), blurHeight);
 }
 
 - (void)showAlarmButton:(BOOL)isVisible {
@@ -136,7 +145,9 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
             usingSpringWithDamping:0.8
             initialSpringVelocity:0
             options:0
-            animations:^{ [self.view layoutIfNeeded]; }
+            animations:^{
+              [self.view layoutIfNeeded];
+            }
             completion:^(BOOL finished) {
               if (constant > 0)
                   self.alarmButton.hidden = YES;
@@ -147,11 +158,17 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
 #pragma mark Drawer
 
 - (void)drawerDidOpen {
-    [UIView animateWithDuration:0.5f animations:^{ [self updateTopBarWithDrawerOpenState:YES]; }];
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                       [self updateTopBarWithDrawerOpenState:YES];
+                     }];
 }
 
 - (void)drawerDidClose {
-    [UIView animateWithDuration:0.5f animations:^{ [self updateTopBarWithDrawerOpenState:NO]; }];
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                       [self updateTopBarWithDrawerOpenState:NO];
+                     }];
 }
 
 - (void)updateTopBarWithDrawerOpenState:(BOOL)isOpen {
@@ -166,7 +183,6 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
                        self.centerTitleLabel.textColor = isOpen ? [HelloStyleKit barButtonDisabledColor]
                                                                 : [HelloStyleKit tintColor];
                        self.shareButton.alpha = auxButtonAlpha;
-                       self.centerTitleCaretView.alpha = auxButtonAlpha;
                        [self.view layoutIfNeeded];
                      }];
 }

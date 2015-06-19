@@ -4,7 +4,6 @@
 #import <SenseKit/SENSleepResult.h>
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import <SpinKit/RTSpinKitView.h>
 #import <FDWaveformView/FDWaveformView.h>
 #import <markdown_peg.h>
 
@@ -20,11 +19,11 @@
 #import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 #import "UIColor+HEMStyle.h"
-#import "HEMSleepEventButton.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMMarkdown.h"
 #import "NSDate+HEMRelative.h"
 #import "HEMSplitTextFormatter.h"
+#import "HEMEventBubbleView.h"
 
 NSString *const HEMSleepEventTypeWakeUp = @"WAKE_UP";
 NSString *const HEMSleepEventTypeLight = @"LIGHT";
@@ -46,6 +45,7 @@ NSString *const HEMSleepEventTypeSleeping = @"SLEEPING";
 @property (nonatomic, weak) UICollectionView *collectionView;
 @property (nonatomic, strong) NSDateFormatter *hourDateFormatter;
 @property (nonatomic, strong) NSDateFormatter *timeDateFormatter;
+@property (nonatomic, strong) NSDateFormatter *meridiemFormatter;
 @property (nonatomic, strong) NSDate *dateForNightOfSleep;
 @property (nonatomic, strong, readwrite) SENSleepResult *sleepResult;
 @property (nonatomic, strong) NSArray *aggregateDataSources;
@@ -89,15 +89,8 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
         _dateForNightOfSleep = date;
         _timeDateFormatter = [NSDateFormatter new];
         _hourDateFormatter = [NSDateFormatter new];
+        _meridiemFormatter = [NSDateFormatter new];
         _inlineNumberFormatter = [HEMSplitTextFormatter new];
-        if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
-            _timeDateFormatter.dateFormat = @"h:mm";
-            _hourDateFormatter.dateFormat = @"h";
-        } else {
-            _timeDateFormatter.dateFormat = @"H:mm";
-            _hourDateFormatter.dateFormat = @"H";
-        }
-        _calendar = [NSCalendar currentCalendar];
         [self configureCollectionView];
         [self reloadData];
         [[NSNotificationCenter defaultCenter] addObserver:self
@@ -108,7 +101,20 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     return self;
 }
 
+- (void)reloadDateFormatters {
+    _meridiemFormatter.dateFormat = @"a";
+    if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
+        _timeDateFormatter.dateFormat = @"h:mm";
+        _hourDateFormatter.dateFormat = @"h";
+    } else {
+        _timeDateFormatter.dateFormat = @"H:mm";
+        _hourDateFormatter.dateFormat = @"H";
+    }
+    _calendar = [NSCalendar currentCalendar];
+}
+
 - (void)reloadData {
+    [self reloadDateFormatters];
     self.sleepResult = [SENSleepResult sleepResultForDate:self.dateForNightOfSleep];
     if ([self shouldShowLoadingView]) {
         self.beLoading = YES;
@@ -283,16 +289,19 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMNoSleepEventCollectionViewCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
-    UIColor *color = nil, *lineColor = nil;
+    UIColor *color = nil, *previousColor = nil;
     CGFloat fillRatio = sleepDepth / (float)SENSleepResultSegmentDepthDeep;
-    if ([segment.eventType isEqualToString:HEMSleepEventTypeSleeping]) {
-        color = [UIColor colorForSleepDepth:sleepDepth];
-        lineColor = [HelloStyleKit timelineLineColor];
+    CGFloat previousFillRatio = 0;
+    color = [UIColor colorForSleepDepth:sleepDepth];
+    if (indexPath.row > 0) {
+        NSIndexPath *previousIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        SENSleepResultSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
+        previousColor = [UIColor colorForSleepDepth:previousSegment.sleepDepth];
+        previousFillRatio = previousSegment.sleepDepth / (float)SENSleepResultSegmentDepthDeep;
     } else {
-        color = [UIColor colorForGenericMotionDepth:sleepDepth];
-        lineColor = [UIColor clearColor];
+        previousColor = [UIColor clearColor];
     }
-    [cell setSegmentRatio:fillRatio withFillColor:color lineColor:lineColor];
+    [cell setSegmentRatio:fillRatio withFillColor:color previousRatio:previousFillRatio previousColor:previousColor];
     [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
     return cell;
 }
@@ -340,18 +349,18 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     }
 }
 
+- (NSAttributedString *)formattedTextForInlineTimestamp:(NSDate *)date {
+    return [self formattedTextForInlineTimestamp:date withFormatter:self.timeDateFormatter useUnit:NO];
+}
+
 - (NSAttributedString *)formattedTextForInlineTimestamp:(NSDate *)date
                                           withFormatter:(NSDateFormatter *)formatter
                                                 useUnit:(BOOL)shouldUseUnit {
-    NSDateComponents *computed = [self.calendar components:NSCalendarUnitHour fromDate:date];
     NSString *timeText = [formatter stringFromDate:date];
     NSString *unit = nil;
     if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
-        if (computed.hour < 12) {
-            unit = [formatter AMSymbol];
-        } else {
-            unit = [formatter PMSymbol];
-        }
+        self.meridiemFormatter.timeZone = formatter.timeZone;
+        unit = [self.meridiemFormatter stringFromDate:date];
     } else if (shouldUseUnit) {
         unit = NSLocalizedString(@"sleep-event.time.24-hour.suffix", nil);
     }
@@ -377,14 +386,26 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     }
 
     [cell.eventTypeImageView setImage:[self imageForEventType:segment.eventType]];
-    cell.eventTimeLabel.attributedText =
-        [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter useUnit:NO];
-    cell.eventMessageLabel.attributedText = [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
+    [cell.contentContainerView
+        setMessageText:[HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message]
+              timeText:
+                  [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter useUnit:NO]];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
+    UIColor *previousColor = nil;
+    CGFloat previousRatio = 0;
+    if (indexPath.row > 0) {
+        NSIndexPath *previousIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        SENSleepResultSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
+        previousColor = [UIColor colorForSleepDepth:previousSegment.sleepDepth];
+        previousRatio = previousSegment.sleepDepth / (float)SENSleepResultSegmentDepthDeep;
+    } else {
+        previousColor = [UIColor clearColor];
+    }
     [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep
             withFillColor:[UIColor colorForSleepDepth:sleepDepth]
-                lineColor:[HelloStyleKit timelineLineColor]];
+            previousRatio:previousRatio
+            previousColor:previousColor];
     [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
     cell.layer.masksToBounds = NO;
     return cell;
@@ -394,7 +415,8 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
 
 - (SENSleepResultSegment *)sleepSegmentForIndexPath:(NSIndexPath *)indexPath {
     NSArray *segments = self.sleepResult.segments;
-    if (indexPath.row >= segments.count || indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
+    if (indexPath.row < 0 || indexPath.row >= segments.count
+        || indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
         return nil;
     return segments[indexPath.row];
 }

@@ -2,7 +2,7 @@
 #import <UIKit/UIKit.h>
 #import "HEMSleepSegmentCollectionViewCell.h"
 
-@class FDWaveformView, RTSpinKitView, HEMSleepEventButton;
+@class FDWaveformView, HEMEventBubbleView;
 
 @interface HEMSleepEventCollectionViewCell : HEMSleepSegmentCollectionViewCell
 
@@ -10,6 +10,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *eventMessageLabel;
 @property (weak, nonatomic) IBOutlet UILabel *eventTimeLabel;
 @property (weak, nonatomic) IBOutlet UIButton *actionButton;
+@property (nonatomic, weak) IBOutlet HEMEventBubbleView *contentContainerView;
 
 + (NSAttributedString *)attributedMessageFromText:(NSString *)text;
 

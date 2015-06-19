@@ -2,16 +2,18 @@
 #import <SenseKit/SenseKit.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
+#import "HelloStyleKit.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMAudioCache.h"
 #import "HEMBounceModalTransition.h"
+#import "HEMBreakdownViewController.h"
+#import "HEMEventBubbleView.h"
 #import "HEMFadingParallaxLayout.h"
 #import "HEMMainStoryboard.h"
 #import "HEMNoSleepEventCollectionViewCell.h"
 #import "HEMPopupView.h"
 #import "HEMRootViewController.h"
-#import "HEMSleepEventButton.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMSleepGraphView.h"
@@ -19,12 +21,10 @@
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepSummarySlideViewController.h"
-#import "HEMBreakdownViewController.h"
+#import "HEMTimelineContainerViewController.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
-#import "HEMTimelineContainerViewController.h"
-#import "HelloStyleKit.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 
@@ -46,6 +46,7 @@ CGFloat const HEMTimelineFooterCellHeight = 50.f;
 
 static CGFloat const HEMSleepSummaryCellHeight = 364.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
+static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 - (void)viewDidLoad {
@@ -149,23 +150,29 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
                    titleColor:[UIColor darkGrayColor]
                   description:nil
                     imageName:@"timeline_action_approve"
-                       action:^{}];
+                       action:^{
+                       }];
     [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
                    titleColor:[UIColor darkGrayColor]
                   description:nil
                     imageName:@"timeline_action_adjust"
-                       action:^{ [self updateTimeOfEventOnSegment:segment]; }];
+                       action:^{
+                         [self updateTimeOfEventOnSegment:segment];
+                       }];
     [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.delete.title", nil)
                    titleColor:[UIColor darkGrayColor]
                   description:nil
                     imageName:@"timeline_action_delete"
-                       action:^{}];
+                       action:^{
+                       }];
 
     UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     if (![root respondsToSelector:@selector(presentationController)]) {
         UIModalPresentationStyle origStyle = [root modalPresentationStyle];
         [root setModalPresentationStyle:UIModalPresentationCurrentContext];
-        [sheet addDismissAction:^{ [root setModalPresentationStyle:origStyle]; }];
+        [sheet addDismissAction:^{
+          [root setModalPresentationStyle:origStyle];
+        }];
     }
 
     [root presentViewController:sheet animated:YES completion:nil];
@@ -234,38 +241,16 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
                              }];
         }
     } else if (sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled) {
-        [UIView animateWithDuration:0.15f animations:^{ self.popupView.alpha = 0; }];
+        [UIView animateWithDuration:0.15f
+                         animations:^{
+                           self.popupView.alpha = 0;
+                         }];
         for (HEMSleepSegmentCollectionViewCell *cell in self.collectionView.visibleCells) {
             if ([cell respondsToSelector:@selector(deemphasizeAppearance)])
                 [cell deemphasizeAppearance];
         }
     }
 }
-
-// TODO (jimmy): commenting this out until we want to display duration again.
-// In which case, we should also update the localizable.strings files too to
-// remove unnecessary strings
-
-//- (NSString*)summaryPopupTextForSegment:(SENSleepResultSegment*)segment
-//{
-//    static NSString* const HEMPopupTextFormat = @"sleep-stat.%@-duration.%@.%@.format";
-//    long minutes = (long)([segment.duration floatValue]/60);
-//    NSString* pluralize = minutes == 1 ? @"single" : @"plural";
-//    NSString* segmentType = segment.eventType.length == 0 ? @"motion" : @"sleep";
-//    NSString* depth;
-//    if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
-//        depth = @"awake";
-//    else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
-//        depth = @"deep";
-//    else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
-//        depth = @"medium";
-//    else
-//        depth = @"light";
-//
-//    NSString* format = [NSString stringWithFormat:HEMPopupTextFormat, segmentType, depth, pluralize];
-//    NSString* localizedFormat = NSLocalizedString(format, nil);
-//    return minutes == 1 ? localizedFormat : [NSString stringWithFormat:localizedFormat, minutes];
-//}
 
 - (NSString *)summaryPopupTextForSegment:(SENSleepResultSegment *)segment {
     static NSString *const HEMPopupTextFormat = @"sleep-stat.%@-duration.%@";
@@ -324,14 +309,30 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint offset = scrollView.contentOffset;
     [self.containerViewController showAlarmButton:offset.y == 0];
+    [self adjustLayoutWithScrollOffset:offset.y];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [self.containerViewController showAlarmButton:!decelerate];
+    if (!decelerate) {
+        [self adjustLayoutWithScrollOffset:scrollView.contentOffset.y];
+    }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     [self.containerViewController showAlarmButton:YES];
+    [self adjustLayoutWithScrollOffset:scrollView.contentOffset.y];
+}
+
+- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
+                     withVelocity:(CGPoint)velocity
+              targetContentOffset:(inout CGPoint *)targetContentOffset {
+    [self adjustLayoutWithScrollOffset:targetContentOffset->y];
+}
+
+- (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
+    [self.view showShadow:yOffset > 0 animated:YES];
+    self.collectionView.bounces = yOffset > 0;
 }
 
 #pragma mark UICollectionViewDelegate
@@ -370,6 +371,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat const HEMMinimumEventSpacing = 6.f;
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     switch (indexPath.section) {
@@ -380,8 +382,16 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
             SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
             CGFloat durationHeight = [self heightForCellWithSegment:segment];
             if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
-                return CGSizeMake(width, MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight));
-            } else { return CGSizeMake(width, ceilf(durationHeight)); }
+                NSAttributedString *message =
+                    [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
+                NSAttributedString *time = [self.dataSource formattedTextForInlineTimestamp:segment.date];
+                CGSize minSize = [HEMEventBubbleView sizeWithAttributedText:message timeText:time];
+                CGFloat height = MAX(MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight),
+                                     minSize.height + HEMMinimumEventSpacing);
+                return CGSizeMake(width, height);
+            } else {
+                return CGSizeMake(width, MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewMinimumHeight));
+            }
         }
 
         default:

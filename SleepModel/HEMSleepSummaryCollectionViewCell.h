@@ -2,7 +2,6 @@
 #import <UIKit/UIKit.h>
 
 @class HEMSleepScoreGraphView;
-@class RTSpinKitView;
 @interface HEMSleepSummaryCollectionViewCell : UICollectionViewCell
 
 @property (weak, nonatomic) IBOutlet UILabel* messageLabel;

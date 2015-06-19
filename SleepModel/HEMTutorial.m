@@ -26,7 +26,7 @@ static NSString* const HEMTutorialHHTimelineDaySwitchCounter = @"HandholdingTime
 static NSString* const HEMTutorialHHTimelineDaySwitch = @"HandholdingTimelineDaySwitch";
 static CGFloat const HEMTutorialHHTimelineDaysGestureY = 205.0f;
 static CGFloat const HEMTutorialHHTimelineDaysGestureXStart = 45.0f;
-static NSInteger const HEMTutorialHHTimelineDaysMinDaysChecked = 0;
+static NSInteger const HEMTutorialHHTimelineDaysMinDaysChecked = 3;
 
 static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
 static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";
@@ -55,6 +55,7 @@ static CGFloat const HEMTutorialDelay = 0.5f;
     [handholdingView setGestureEndCenter:CGPointMake(constraint - HEMTutorialHHTimelineDaysGestureXStart,
                                                      HEMTutorialHHTimelineDaysGestureY)];
     [handholdingView setMessage:NSLocalizedString(@"handholding.message.timeline-switch-days", nil)];
+    [handholdingView setAnchor:HEMHHDialogAnchorBottom];
     
     [handholdingView showInView:view];
 }

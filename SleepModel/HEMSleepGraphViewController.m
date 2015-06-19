@@ -331,14 +331,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 }
 
 - (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
-    const CGFloat HEMContainerBlurMaxHeight = 32.f;
-    HEMTimelineContainerViewController *controller = [self containerViewController];
-    CGFloat blurHeight
-        = yOffset == 0
-              ? 0
-              : MAX(MIN(HEMSleepSummaryCellHeight - yOffset - HEMContainerBlurMaxHeight, HEMContainerBlurMaxHeight), 0);
-    [controller showBorder:yOffset >= HEMSleepSummaryCellHeight];
-    [controller showBlurWithHeight:blurHeight];
+    [self.view showShadow:yOffset > 0 animated:YES];
     self.collectionView.bounces = yOffset > 0;
 }
 

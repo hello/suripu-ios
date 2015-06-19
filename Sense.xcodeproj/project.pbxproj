@@ -304,7 +304,6 @@
 		8AD88C3A1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8AD88C381A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.m */; };
 		8AD88C3B1A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8AD88C391A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib */; };
 		8ADE06071B2A4DE100976654 /* HEMTimelineContainerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADE06061B2A4DE100976654 /* HEMTimelineContainerViewController.m */; };
-		8ADE060A1B2A58F800976654 /* HEMTimelineTopBarView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADE06091B2A58F800976654 /* HEMTimelineTopBarView.m */; };
 		8ADE06391B2F521B00976654 /* HEMSplitTextFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 8ADE06381B2F521B00976654 /* HEMSplitTextFormatter.m */; };
 		8ADE06441B2FA0BB00976654 /* timeline_action_adjust.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ADE063B1B2FA0BB00976654 /* timeline_action_adjust.png */; };
 		8ADE06451B2FA0BB00976654 /* timeline_action_adjust@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 8ADE063C1B2FA0BB00976654 /* timeline_action_adjust@2x.png */; };
@@ -1133,8 +1132,6 @@
 		8AD88C391A087DD000B4F803 /* HEMTimelineHeaderCollectionReusableView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HEMTimelineHeaderCollectionReusableView.xib; sourceTree = "<group>"; };
 		8ADE06051B2A4DE100976654 /* HEMTimelineContainerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimelineContainerViewController.h; sourceTree = "<group>"; };
 		8ADE06061B2A4DE100976654 /* HEMTimelineContainerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineContainerViewController.m; sourceTree = "<group>"; };
-		8ADE06081B2A58F800976654 /* HEMTimelineTopBarView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimelineTopBarView.h; sourceTree = "<group>"; };
-		8ADE06091B2A58F800976654 /* HEMTimelineTopBarView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimelineTopBarView.m; sourceTree = "<group>"; };
 		8ADE06371B2F521B00976654 /* HEMSplitTextFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSplitTextFormatter.h; sourceTree = "<group>"; };
 		8ADE06381B2F521B00976654 /* HEMSplitTextFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSplitTextFormatter.m; sourceTree = "<group>"; };
 		8ADE063B1B2FA0BB00976654 /* timeline_action_adjust.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = timeline_action_adjust.png; sourceTree = "<group>"; };
@@ -2382,8 +2379,6 @@
 				8AB82DE01B2BFB7B002D769D /* HEMTimelineMessageContainerView.m */,
 				8A0350FB1B2CAAD60077E6E6 /* HEMTimelineSummaryTitleLabel.h */,
 				8A0350FC1B2CAAD60077E6E6 /* HEMTimelineSummaryTitleLabel.m */,
-				8ADE06081B2A58F800976654 /* HEMTimelineTopBarView.h */,
-				8ADE06091B2A58F800976654 /* HEMTimelineTopBarView.m */,
 				8A7214391A1E6CEC008B59C4 /* HEMTimelineTopButton.h */,
 				8A72143A1A1E6CEC008B59C4 /* HEMTimelineTopButton.m */,
 			);
@@ -4154,7 +4149,6 @@
 				8A4B3D491992CB4500856BDE /* HEMSimpleLineTextField.m in Sources */,
 				BFF03ECA1A536D8C00BD65D4 /* HEMSystemAlertController.m in Sources */,
 				BFC3BE7C1A7087430022C6C2 /* HEMSettingsAccountDataSource.m in Sources */,
-				8ADE060A1B2A58F800976654 /* HEMTimelineTopBarView.m in Sources */,
 				8AFD8A1E1A649F9B00124CCE /* HEMAlarmPropertyTableViewCell.m in Sources */,
 				8AA1E6171A895EF200590EB6 /* HEMNotificationSettingsViewController.m in Sources */,
 				8A1743BB19A7B896001E3C15 /* HEMSleepEventCollectionViewCell.m in Sources */,

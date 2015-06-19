@@ -12,7 +12,6 @@
 #import "HEMRootViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
-#import "HEMTimelineTopBarView.h"
 #import "NSDate+HEMRelative.h"
 
 @interface HEMTimelineContainerViewController ()
@@ -23,13 +22,14 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *centerTitleTop;
 @property (nonatomic, weak) IBOutlet UIButton *centerTitleButton;
 @property (nonatomic, weak) IBOutlet UILabel *centerTitleLabel;
-@property (nonatomic, weak) IBOutlet HEMTimelineTopBarView *topBarView;
+@property (nonatomic, weak) IBOutlet UIView *topBarView;
 
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) NSDateFormatter *weekdayDateFormatter;
 @property (nonatomic, strong) NSDateFormatter *rangeDateFormatter;
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *animationDelegate;
+@property (nonatomic, strong) CAGradientLayer *topGradientLayer;
 @end
 
 @implementation HEMTimelineContainerViewController
@@ -49,6 +49,7 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
     self.weekdayDateFormatter.dateFormat = @"EEEE";
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     [self registerForNotifications];
+    [self configureGradientLayer];
 }
 
 - (void)registerForNotifications {
@@ -68,6 +69,17 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
                                              selector:@selector(drawerDidClose)
                                                  name:HEMRootDrawerDidCloseNotification
                                                object:nil];
+}
+
+- (void)configureGradientLayer {
+    self.topGradientLayer = [CAGradientLayer layer];
+    self.topGradientLayer.colors =
+        @[ (id)[UIColor whiteColor].CGColor, (id)[UIColor colorWithWhite:1.f alpha:0].CGColor ];
+    self.topGradientLayer.startPoint = CGPointZero;
+    self.topGradientLayer.endPoint = CGPointMake(0, 1);
+    self.topGradientLayer.locations = @[ @0, @(0.8) ];
+    self.topGradientLayer.bounds = CGRectZero;
+    [self.view.layer insertSublayer:self.topGradientLayer below:self.topBarView.layer];
 }
 
 - (IBAction)alarmButtonTapped:(id)sender {
@@ -112,11 +124,9 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
         return [self.rangeDateFormatter stringFromDate:date];
 }
 
-- (void)showBorder:(BOOL)isVisible {
-    [self.topBarView showShadow:isVisible animated:YES];
-}
-
 - (void)showBlurWithHeight:(CGFloat)blurHeight {
+    self.topGradientLayer.frame
+        = CGRectMake(0, CGRectGetHeight(self.topBarView.bounds), CGRectGetWidth(self.topBarView.bounds), blurHeight);
 }
 
 - (void)showAlarmButton:(BOOL)isVisible {

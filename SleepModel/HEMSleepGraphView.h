@@ -10,4 +10,6 @@
 
 @interface HEMSleepGraphView : UIView
 
+- (void)showShadow:(BOOL)isVisible animated:(BOOL)animated;
+
 @end

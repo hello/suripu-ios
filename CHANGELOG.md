@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.8.3
+
+New:
+
+* Tutorial demonstrating how to swipe between dates in the timeline view
+* Update timeline layout, additional tweaks
+
+Fixes:
+
+* Fix issues which occur when putting the phone to sleep on the "Allow Location" prompt
+* Fix "No internet" prompt briefly appearing on app launch
+
+
 ## 1.0.8.2
 
 Fixes:

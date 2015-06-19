@@ -332,31 +332,36 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint offset = scrollView.contentOffset;
-    HEMTimelineContainerViewController *controller = [self containerViewController];
-    [controller showAlarmButton:offset.y == 0];
-    [controller showBorder:offset.y >= HEMSleepSummaryCellHeight];
+    [self.containerViewController showAlarmButton:offset.y == 0];
+    [self adjustLayoutWithScrollOffset:offset.y];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     [self.containerViewController showAlarmButton:!decelerate];
     if (!decelerate) {
-        CGPoint offset = scrollView.contentOffset;
-        [self.containerViewController showBorder:offset.y >= HEMSleepSummaryCellHeight];
+        [self adjustLayoutWithScrollOffset:scrollView.contentOffset.y];
     }
 }
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    HEMTimelineContainerViewController *controller = [self containerViewController];
-    [controller showAlarmButton:YES];
-    CGPoint offset = scrollView.contentOffset;
-    [controller showBorder:offset.y >= HEMSleepSummaryCellHeight];
+    [self.containerViewController showAlarmButton:YES];
+    [self adjustLayoutWithScrollOffset:scrollView.contentOffset.y];
 }
 
 - (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
                      withVelocity:(CGPoint)velocity
               targetContentOffset:(inout CGPoint *)targetContentOffset {
+    [self adjustLayoutWithScrollOffset:targetContentOffset->y];
+}
+
+- (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
+    const CGFloat HEMContainerBlurMaxHeight = 32.f;
     HEMTimelineContainerViewController *controller = [self containerViewController];
-    [controller showBorder:targetContentOffset->y >= HEMSleepSummaryCellHeight];
+    CGFloat blurHeight = yOffset == 0 ? 0
+                                      : MAX(MIN(HEMSleepSummaryCellHeight - yOffset - HEMContainerBlurMaxHeight, HEMContainerBlurMaxHeight), 0);
+    [controller showBorder:yOffset >= HEMSleepSummaryCellHeight];
+    [controller showBlurWithHeight:blurHeight];
+    self.collectionView.bounces = yOffset > 0;
 }
 
 #pragma mark UICollectionViewDelegate

@@ -10,14 +10,18 @@
 
 @implementation NSDate (HEMRelative)
 
-- (NSString*)elapsed {
+- (NSInteger)daysElapsed {
     NSDate *now = [NSDate date];
     NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
     NSDateComponents* components = [calendar components:NSDayCalendarUnit
                                                fromDate:self
                                                  toDate:now
                                                 options:NSCalendarMatchStrictly];
-    long days = components.day;
+    return [components day];
+}
+
+- (NSString*)elapsed {
+    long days = [self daysElapsed];
     NSString* elapsed = nil;
     
     if (days < 1) {

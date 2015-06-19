@@ -11,6 +11,11 @@
 @interface NSDate (HEMRelative)
 
 /**
+ * @return number of days that from today
+ */
+- (NSInteger)daysElapsed;
+
+/**
  * @return NSString representation of the time that have elapsed since now 
  *         in the form:
  *              Today

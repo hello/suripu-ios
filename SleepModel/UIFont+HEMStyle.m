@@ -458,6 +458,10 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 
 }
 
++ (UIFont*)handholdingMessageFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.0f];
+}
+
 #pragma mark - Support
 
 + (UIFont*)supportTicketDescriptionFont {

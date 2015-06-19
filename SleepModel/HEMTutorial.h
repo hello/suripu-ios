@@ -10,6 +10,19 @@
 
 @interface HEMTutorial : NSObject
 
+#pragma mark - Handholding
+
+/**
+ * Present the handholding UI to illustrate how to switch days in the Timeline,
+ * if not previously shown and meets requirements
+ *
+ * @param view: the view to show the tutorial in
+ * @return YES if shown / needed, NO otherwise
+ */
++ (BOOL)showHandholdingForTimelineDaySwitchIfNeededIn:(UIView*)view;
+
+#pragma mark - Dialogs
+
 /**
  *  Present the timeline tutorial if not previously viewed
  */

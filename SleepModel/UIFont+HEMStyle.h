@@ -423,6 +423,11 @@
  */
 + (UIFont*)tutorialDescriptionFont;
 
+/**
+ * Font used to display a handholding message
+ */
++ (UIFont*)handholdingMessageFont;
+
 #pragma mark - Support
 
 /**

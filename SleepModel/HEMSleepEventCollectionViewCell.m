@@ -30,7 +30,8 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 }
 
 - (void)applyLayoutAttributes:(HEMTimelineLayoutAttributes *)layoutAttributes {
-    [self animateContentViewWithAttributes:layoutAttributes];
+    [self layoutContainerViewWithAttributes:layoutAttributes];
+    [self animateContentsWithAttributes:layoutAttributes];
 }
 
 - (void)awakeFromNib {
@@ -52,46 +53,82 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     self.waveformView.delegate = self;
 }
 
-- (void)animateContentViewWithAttributes:(HEMTimelineLayoutAttributes *)attributes {
-    CGFloat const maxContainerViewTop = 0.f;
-    CGFloat const minContainerViewTop = -10;
+- (void)animateContentsWithAttributes:(HEMTimelineLayoutAttributes *)attributes {
     CGFloat const minContainerViewScale = 0.9;
-    CGFloat const motionDelta = 1.f;
-    CGFloat const alphaDelta = 0.05f;
-    CGFloat ratio = 1 - fabs(attributes.ratioFromCenter);
-    CGFloat top = MIN(maxContainerViewTop, fabs(minContainerViewTop) * attributes.ratioFromCenter * -1);
     CGFloat scaleDiff = 1 - minContainerViewScale;
+    CGFloat ratio = 1 - fabs(attributes.ratioFromCenter);
     CGFloat scale = attributes.ratioFromCenter < 0 ? MIN(1, (scaleDiff * ratio * 4) + minContainerViewScale) : 1;
     CGFloat alphaRatio = attributes.ratioFromCenter < 0 ? MIN(1, ratio * 4) : 1;
     CGAffineTransform scaleTransform = CGAffineTransformMakeScale(scale, scale);
     CGFloat width = CGRectGetWidth(self.contentContainerView.bounds);
-    CGFloat inset = -(width - (width * scale)) / 2;
-    CGAffineTransform combinedTransform;
-    if (scale == 1 && fabs(inset) < 1) {
-        combinedTransform = CGAffineTransformIdentity;
-    } else {
-        combinedTransform = CGAffineTransformTranslate(scaleTransform, inset, 0);
-    }
+    CGFloat inset = floorf(-(width - (width * scale)) / 2);
+    BOOL isIdentity = scale == 1 && fabs(inset) < 1;
+    CGAffineTransform combinedTransform = isIdentity ? CGAffineTransformIdentity
+                                                     : CGAffineTransformTranslate(scaleTransform, inset, inset);
 
-    if (fabs(self.contentContainerView.alpha - alphaRatio) > alphaDelta) {
-        self.contentContainerView.alpha = alphaRatio;
-    }
+    self.contentContainerView.alpha = alphaRatio;
     if (!CGAffineTransformEqualToTransform(self.contentContainerView.transform, combinedTransform)) {
         self.contentContainerView.transform = combinedTransform;
     }
-    if (fabs(self.contentContainerViewTop.constant - top) > motionDelta) {
-        self.contentContainerViewTop.constant = top;
-        [self.contentContainerView setNeedsUpdateConstraints];
-        [UIView animateWithDuration:0.05f
-                         animations:^{
-                             [self.contentContainerView layoutIfNeeded];
-                         }];
+}
+
+- (void)layoutContainerViewWithAttributes:(HEMTimelineLayoutAttributes *)attributes {
+    CGFloat const containerViewLeft = 10.f;
+    CGFloat const maxContainerViewTop = 10.f;
+    CGFloat const minContainerViewTop = 0.f;
+    CGFloat base;
+    if (attributes != nil) {
+        base = maxContainerViewTop * attributes.ratioFromCenter * -1;
+    } else {
+        base = CGRectGetMinY(self.contentContainerView.frame);
     }
+    CGFloat top = floorf(MAX(MIN(maxContainerViewTop, base), minContainerViewTop));
+    CGSize size = [self.contentContainerView intrinsicContentSize];
+    CGRect frame = CGRectMake(containerViewLeft, top, size.width, size.height);
+    self.contentContainerView.frame = frame;
+}
+
+- (void)layoutIconImageView {
+    CGFloat const iconImageLeft = 4.f;
+    CGFloat const iconImageTop = 4.f;
+    CGFloat const iconImageDiameter = 40.f;
+    CGRect frame = CGRectMake(iconImageLeft, iconImageTop, iconImageDiameter, iconImageDiameter);
+    self.eventTypeImageView.frame = frame;
+}
+
+- (void)layoutTimeLabel {
+    CGFloat const timeLabelRight = 8.f;
+    CGFloat containerWidth = CGRectGetWidth(self.contentContainerView.bounds);
+    [self.eventTimeLabel sizeToFit];
+    CGFloat left = containerWidth - CGRectGetWidth(self.eventTimeLabel.bounds) - timeLabelRight;
+    CGFloat top = CGRectGetMidY(self.eventTypeImageView.frame);
+    CGRect frame = self.eventTimeLabel.frame;
+    frame.origin = CGPointMake(left, top);
+    self.eventTimeLabel.frame = frame;
+}
+
+- (void)layoutMessageLabel {
+    CGFloat const messageLabelLeft = 52.f;
+    CGFloat const messageLabelTop = 13.f;
+    CGFloat const messageLabelRight = 8.f;
+    CGFloat containerWidth = CGRectGetWidth(self.contentContainerView.bounds);
+    CGFloat width = containerWidth - messageLabelLeft - CGRectGetWidth(self.eventTimeLabel.bounds) - messageLabelRight;
+    CGRect frame = CGRectMake(messageLabelLeft, messageLabelTop, width,
+                              [self.eventMessageLabel.attributedText sizeWithWidth:width].height);
+    self.eventMessageLabel.frame = frame;
 }
 
 - (void)setNeedsLayout {
     [self setNeedsDisplay];
     [super setNeedsLayout];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [self layoutContainerViewWithAttributes:nil];
+    [self layoutIconImageView];
+    [self layoutTimeLabel];
+    [self layoutMessageLabel];
 }
 
 - (void)setLoading:(BOOL)isLoading {

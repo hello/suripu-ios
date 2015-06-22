@@ -341,7 +341,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 }
 
 - (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
-    [self.view showShadow:yOffset > 0 animated:YES];
+    CGFloat const actionableOffset = 5.f;
+    [self.view showShadow:yOffset > actionableOffset animated:YES];
     self.collectionView.bounces = yOffset > 0;
 }
 

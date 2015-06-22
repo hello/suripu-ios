@@ -11,7 +11,6 @@
 #import "HEMEventBubbleView.h"
 #import "HEMFadingParallaxLayout.h"
 #import "HEMMainStoryboard.h"
-#import "HEMNoSleepEventCollectionViewCell.h"
 #import "HEMPopupView.h"
 #import "HEMRootViewController.h"
 #import "HEMSleepEventCollectionViewCell.h"

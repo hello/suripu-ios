@@ -22,10 +22,14 @@ CGFloat const HEMSleepLineWidth = 1.f;
 static CGFloat const HEMSegmentTimeLabelHeight = 16.f;
 static CGFloat const HEMSegmentBorderWidth = 1.f;
 
-- (void)awakeFromNib {
-    self.backgroundColor = [UIColor clearColor];
-    self.previousFillColor = [UIColor clearColor];
-    self.timeViews = [NSMutableArray new];
+- (id)initWithCoder:(NSCoder *)aDecoder {
+    if (self = [super initWithCoder:aDecoder]) {
+        self.backgroundColor = [UIColor clearColor];
+        self.previousFillColor = [UIColor clearColor];
+        self.opaque = NO;
+        self.timeViews = [NSMutableArray new];
+    }
+    return self;
 }
 
 - (void)prepareForReuse {

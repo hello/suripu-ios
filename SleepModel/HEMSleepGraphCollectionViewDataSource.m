@@ -11,7 +11,6 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepEventCollectionViewCell.h"
-#import "HEMNoSleepEventCollectionViewCell.h"
 #import "HEMTimelineHeaderCollectionReusableView.h"
 #import "HEMTimelineFooterCollectionReusableView.h"
 #import "HEMSleepScoreGraphView.h"
@@ -157,7 +156,7 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
 
 - (void)configureCollectionView {
     NSBundle *bundle = [NSBundle mainBundle];
-    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMNoSleepEventCollectionViewCell class])
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSleepSegmentCollectionViewCell class])
                                                     bundle:bundle]
           forCellWithReuseIdentifier:sleepSegmentReuseIdentifier];
     [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMSleepSummaryCollectionViewCell class])
@@ -287,7 +286,7 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
       sleepSegmentCellForItemAtIndexPath:(NSIndexPath *)indexPath {
     SENSleepResultSegment *segment = [self sleepSegmentForIndexPath:indexPath];
     NSUInteger sleepDepth = segment.sleepDepth;
-    HEMNoSleepEventCollectionViewCell *cell =
+    HEMSleepSegmentCollectionViewCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
     UIColor *color = nil, *previousColor = nil;
     CGFloat fillRatio = sleepDepth / (float)SENSleepResultSegmentDepthDeep;

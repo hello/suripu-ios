@@ -17,9 +17,9 @@
 
 @implementation HEMEventBubbleView
 
-CGFloat const HEMEventBubbleTextWidthOffset = 119.f;
+CGFloat const HEMEventBubbleTextWidthOffset = 121.f;
 CGFloat const HEMEventBubbleWidthOffset = 50.f;
-CGFloat const HEMEventBubbleTextHeightOffset = 28.f;
+CGFloat const HEMEventBubbleTextHeightOffset = 26.f;
 CGFloat const HEMEventBubbleMinimumHeight = 48.f;
 CGFloat const HEMEventTimeLabelWidth = 40.f;
 
@@ -43,7 +43,7 @@ CGFloat const HEMEventTimeLabelWidth = 40.f;
 }
 
 - (CGSize)intrinsicContentSize {
-    return [[self class] sizeWithAttributedText:self.timeLabel.attributedText timeText:self.timeLabel.attributedText];
+    return [[self class] sizeWithAttributedText:self.textLabel.attributedText timeText:self.timeLabel.attributedText];
 }
 
 - (void)setMessageText:(NSAttributedString *)message timeText:(NSAttributedString *)time {

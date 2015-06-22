@@ -385,10 +385,14 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
     }
 
     [cell.eventTypeImageView setImage:[self imageForEventType:segment.eventType]];
+    NSAttributedString *timeText = nil;
+    if (![segment.eventType isEqualToString:HEMSleepEventTypeSmartAlarm]
+        && ![segment.eventType isEqualToString:HEMSleepEventTypeAlarm]) {
+        timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter useUnit:NO];
+    }
     [cell.contentContainerView
         setMessageText:[HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message]
-              timeText:
-                  [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter useUnit:NO]];
+              timeText:timeText];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
     UIColor *previousColor = nil;

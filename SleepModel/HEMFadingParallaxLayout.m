@@ -48,7 +48,6 @@
 - (void)updateAttributes:(HEMTimelineLayoutAttributes *)attrs {
     CGPoint offset = [self offsetFromCenterWithAttributes:attrs];
     attrs.ratioFromCenter = [self ratioFromCenterWithOffsetFromCenter:offset];
-    attrs.ratioFromTop = [self ratioFromTopWithAttributes:attrs];
 }
 
 - (CGPoint)offsetFromCenterWithAttributes:(HEMTimelineLayoutAttributes *)attrs {
@@ -56,13 +55,6 @@
     CGPoint boundsCenter = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
     CGPoint cellCenter = attrs.center;
     return CGPointMake(boundsCenter.x - cellCenter.x, boundsCenter.y - cellCenter.y);
-}
-
-- (CGFloat)ratioFromTopWithAttributes:(HEMTimelineLayoutAttributes *)attrs {
-    CGRect bounds = self.collectionView.bounds;
-    CGPoint cellCenter = attrs.center;
-    CGFloat ratio = cellCenter.y / CGRectGetMaxY(bounds);
-    return ratio;
 }
 
 - (CGFloat)ratioFromCenterWithOffsetFromCenter:(CGPoint)offsetFromCenter {

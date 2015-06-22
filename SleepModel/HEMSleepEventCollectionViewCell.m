@@ -55,26 +55,38 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 - (void)animateContentViewWithAttributes:(HEMTimelineLayoutAttributes *)attributes {
     CGFloat const maxContainerViewTop = 0.f;
     CGFloat const minContainerViewTop = -10;
+    CGFloat const minContainerViewScale = 0.9;
     CGFloat const motionDelta = 1.f;
+    CGFloat const alphaDelta = 0.05f;
     CGFloat ratio = 1 - fabs(attributes.ratioFromCenter);
     CGFloat top = MIN(maxContainerViewTop, fabs(minContainerViewTop) * attributes.ratioFromCenter * -1);
+    CGFloat scaleDiff = 1 - minContainerViewScale;
+    CGFloat scale = attributes.ratioFromCenter < 0 ? MIN(1, (scaleDiff * ratio * 4) + minContainerViewScale) : 1;
     CGFloat alphaRatio = attributes.ratioFromCenter < 0 ? MIN(1, ratio * 4) : 1;
-    if (fabs(self.contentContainerViewTop.constant - top) > motionDelta) {
-        self.contentContainerViewTop.constant = top;
-        [self setNeedsUpdateConstraints];
-        [UIView animateWithDuration:0.05f
-                              delay:0
-                            options:0
-                         animations:^{
-                           [self.contentContainerView layoutIfNeeded];
-                         }
-                         completion:NULL];
+    CGAffineTransform scaleTransform = CGAffineTransformMakeScale(scale, scale);
+    CGFloat width = CGRectGetWidth(self.contentContainerView.bounds);
+    CGFloat inset = -(width - (width * scale)) / 2;
+    CGAffineTransform combinedTransform;
+    if (scale == 1 && fabs(inset) < 1) {
+        combinedTransform = CGAffineTransformIdentity;
+    } else {
+        combinedTransform = CGAffineTransformTranslate(scaleTransform, inset, 0);
     }
 
-    [UIView animateWithDuration:0.05f
-                     animations:^{
-                       self.contentContainerView.alpha = alphaRatio;
-                     }];
+    if (fabs(self.contentContainerView.alpha - alphaRatio) > alphaDelta) {
+        self.contentContainerView.alpha = alphaRatio;
+    }
+    if (!CGAffineTransformEqualToTransform(self.contentContainerView.transform, combinedTransform)) {
+        self.contentContainerView.transform = combinedTransform;
+    }
+    if (fabs(self.contentContainerViewTop.constant - top) > motionDelta) {
+        self.contentContainerViewTop.constant = top;
+        [self.contentContainerView setNeedsUpdateConstraints];
+        [UIView animateWithDuration:0.05f
+                         animations:^{
+                             [self.contentContainerView layoutIfNeeded];
+                         }];
+    }
 }
 
 - (void)setNeedsLayout {

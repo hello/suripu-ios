@@ -76,6 +76,18 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     CGFloat const containerViewLeft = 10.f;
     CGFloat const maxContainerViewTop = 10.f;
     CGFloat const minContainerViewTop = 0.f;
+    CGFloat const iconImageLeft = 4.f;
+    CGFloat const iconImageTop = 4.f;
+    CGFloat const iconImageDiameter = 40.f;
+    CGFloat const timeLabelRight = 8.f;
+    CGFloat const timeLabelLeft = 10.f;
+    CGFloat const timeLabelTop = 16.f;
+    CGFloat const messageLabelLeft = 52.f;
+    CGFloat const messageLabelTop = 13.f;
+    CGFloat const messageLabelRight = 8.f;
+    CGFloat const messageLabelHeightOffset = 26.f;
+    CGFloat const timeLabelMaxWidth = 40.f;
+    CGFloat const timeLabelMaxHeight = 24.f;
     CGFloat base;
     if (attributes != nil) {
         base = maxContainerViewTop * attributes.ratioFromCenter * -1;
@@ -84,38 +96,22 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     }
     CGFloat top = floorf(MAX(MIN(maxContainerViewTop, base), minContainerViewTop));
     CGSize size = [self.contentContainerView intrinsicContentSize];
-    CGRect frame = CGRectMake(containerViewLeft, top, size.width, size.height);
-    self.contentContainerView.frame = frame;
-}
+    CGRect containerFrame = CGRectMake(containerViewLeft, top, size.width, size.height);
+    self.contentContainerView.frame = containerFrame;
 
-- (void)layoutIconImageView {
-    CGFloat const iconImageLeft = 4.f;
-    CGFloat const iconImageTop = 4.f;
-    CGFloat const iconImageDiameter = 40.f;
-    CGRect frame = CGRectMake(iconImageLeft, iconImageTop, iconImageDiameter, iconImageDiameter);
-    self.eventTypeImageView.frame = frame;
-}
+    CGRect eventImageFrame = CGRectMake(iconImageLeft, iconImageTop, iconImageDiameter, iconImageDiameter);
+    self.eventTypeImageView.frame = eventImageFrame;
 
-- (void)layoutTimeLabel {
-    CGFloat const timeLabelRight = 8.f;
-    CGFloat containerWidth = CGRectGetWidth(self.contentContainerView.bounds);
-    [self.eventTimeLabel sizeToFit];
-    CGFloat left = containerWidth - CGRectGetWidth(self.eventTimeLabel.bounds) - timeLabelRight;
-    CGFloat top = CGRectGetMidY(self.eventTypeImageView.frame);
-    CGRect frame = self.eventTimeLabel.frame;
-    frame.origin = CGPointMake(left, top);
-    self.eventTimeLabel.frame = frame;
-}
+    CGSize timeLabelSize = [self.eventTimeLabel sizeThatFits:CGSizeMake(timeLabelMaxWidth, timeLabelMaxHeight)];
+    CGFloat left = CGRectGetWidth(containerFrame) - timeLabelSize.width - timeLabelRight - timeLabelLeft;
+    CGRect eventTimeLabelFrame = CGRectMake(left, timeLabelTop, timeLabelSize.width, timeLabelSize.height);
+    self.eventTimeLabel.frame = eventTimeLabelFrame;
 
-- (void)layoutMessageLabel {
-    CGFloat const messageLabelLeft = 52.f;
-    CGFloat const messageLabelTop = 13.f;
-    CGFloat const messageLabelRight = 8.f;
-    CGFloat containerWidth = CGRectGetWidth(self.contentContainerView.bounds);
-    CGFloat width = containerWidth - messageLabelLeft - CGRectGetWidth(self.eventTimeLabel.bounds) - messageLabelRight;
-    CGRect frame = CGRectMake(messageLabelLeft, messageLabelTop, width,
-                              [self.eventMessageLabel.attributedText sizeWithWidth:width].height);
-    self.eventMessageLabel.frame = frame;
+    CGFloat containerWidth = CGRectGetWidth(containerFrame);
+    CGFloat messageWidth = containerWidth - messageLabelLeft - CGRectGetWidth(eventTimeLabelFrame) - messageLabelRight - timeLabelRight;
+    CGRect eventMesageLabelFrame = CGRectMake(messageLabelLeft, messageLabelTop, messageWidth,
+                              CGRectGetHeight(containerFrame) - messageLabelHeightOffset);
+    self.eventMessageLabel.frame = eventMesageLabelFrame;
 }
 
 - (void)setNeedsLayout {
@@ -126,9 +122,6 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 - (void)layoutSubviews {
     [super layoutSubviews];
     [self layoutContainerViewWithAttributes:nil];
-    [self layoutIconImageView];
-    [self layoutTimeLabel];
-    [self layoutMessageLabel];
 }
 
 - (void)setLoading:(BOOL)isLoading {

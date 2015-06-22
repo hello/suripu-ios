@@ -368,10 +368,6 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSUInteger sleepDepth = segment.sleepDepth;
     if (segment.sound) {
         [cell setAudioURL:[NSURL URLWithString:segment.sound.URLPath]];
-    } else if ([collectionView.delegate respondsToSelector:@selector(didTapActionSheetButton:)]) {
-        [cell.actionButton addTarget:collectionView.delegate
-                              action:@selector(didTapActionSheetButton:)
-                    forControlEvents:UIControlEventTouchUpInside];
     }
 
     [cell.eventTypeImageView setImage:[self imageForEventType:segment.eventType]];

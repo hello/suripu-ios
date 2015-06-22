@@ -181,13 +181,19 @@ static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
     return stats;
 }
 
-- (NSArray*)parseSegmentsFromArray:(NSArray*)segmentsData
-{
-    NSMutableArray* segments = [[NSMutableArray alloc] initWithCapacity:[segmentsData count]];
-    for (NSDictionary* segmentData in segmentsData) {
-        SENSleepResultSegment* segment = [[SENSleepResultSegment alloc] initWithDictionary:segmentData];
-        if (segment)
+- (NSArray *)parseSegmentsFromArray:(NSArray *)segmentsData {
+    NSMutableArray *segments = [[NSMutableArray alloc] initWithCapacity:[segmentsData count]];
+    SENSleepResultSegment *previousSegment = nil;
+    for (NSDictionary *segmentData in segmentsData) {
+        SENSleepResultSegment *segment = [[SENSleepResultSegment alloc] initWithDictionary:segmentData];
+        if ([previousSegment.message isEqual:segment.message] && [previousSegment.eventType isEqual:segment.eventType]
+            && previousSegment.sleepDepth == segment.sleepDepth) {
+            previousSegment.duration =
+                [NSNumber numberWithDouble:[segment.duration doubleValue] + [previousSegment.duration doubleValue]];
+        } else if (segment != nil) {
+            previousSegment = segment;
             [segments addObject:segment];
+        }
     }
     return segments;
 }

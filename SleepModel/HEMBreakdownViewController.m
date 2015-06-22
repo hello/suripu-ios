@@ -132,14 +132,18 @@ const CGFloat BreakdownDismissButtonBottom = 26.f;
 }
 
 - (HEMSplitTextObject *)splitTextForStatistic:(SENSleepResultStatistic *)stat {
+    NSString *const timesAwakeKey = @"times_awake";
     CGFloat minutes = [stat.value floatValue];
-    NSString *format, *value, *unit;
-    if (minutes < 60) {
-        format = NSLocalizedString(@"sleep-stat.minute.format", nil);
+    NSString *value, *unit;
+    if ([stat.name isEqualToString:timesAwakeKey]) {
+        unit = nil;
+        value = [NSString stringWithFormat:@"%d", [stat.value integerValue]];
+    } else if (minutes < 60) {
+        NSString *format = NSLocalizedString(@"sleep-stat.minute.format", nil);
         value = [NSString stringWithFormat:format, minutes];
         unit = NSLocalizedString(@"sleep-stat.minute.unit", nil);
     } else {
-        format = NSLocalizedString(@"sleep-stat.hour.format", nil);
+        NSString *format = NSLocalizedString(@"sleep-stat.hour.format", nil);
         value = [NSString stringWithFormat:format, minutes / 60];
         unit = NSLocalizedString(@"sleep-stat.hour.unit", nil);
     }

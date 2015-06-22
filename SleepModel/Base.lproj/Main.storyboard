@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -1602,7 +1602,7 @@
             </objects>
             <point key="canvasLocation" x="2002" y="4570"/>
         </scene>
-        <!--Topic-->
+        <!--Select a topic-->
         <scene sceneID="dsT-KG-2zA">
             <objects>
                 <viewController storyboardIdentifier="supportTopicsViewController" id="QUF-LK-JnK" customClass="HEMSupportTopicsViewController" sceneMemberID="viewController">
@@ -1668,7 +1668,7 @@
                         </constraints>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
-                    <navigationItem key="navigationItem" title="Topic" id="bBT-Lv-5fT"/>
+                    <navigationItem key="navigationItem" title="Select a topic" id="bBT-Lv-5fT"/>
                     <connections>
                         <outlet property="tableView" destination="g0r-no-kjY" id="WGN-xF-Y9U"/>
                         <outlet property="view" destination="rbR-dZ-Gsb" id="RdW-nt-MAj"/>

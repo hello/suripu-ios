@@ -8,9 +8,6 @@ extern CGFloat const HEMSleepLineWidth;
 
 @interface HEMSleepSegmentCollectionViewCell : UICollectionViewCell
 
-- (void)emphasizeAppearance;
-- (void)deemphasizeAppearance;
-
 /**
  *  Set the the amount of the bar that is filled with color, based on
  *  a value between 0 and 1

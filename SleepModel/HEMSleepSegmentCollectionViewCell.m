@@ -14,7 +14,6 @@ CGFloat const HEMSleepLineWidth = 1.f;
 @property (nonatomic, strong, readwrite) UIColor *previousFillColor;
 @property (nonatomic, strong, readwrite) UIColor *fillColor;
 @property (nonatomic, strong) NSMutableArray *timeViews;
-@property (nonatomic) BOOL shouldEmphasize;
 @end
 
 @implementation HEMSleepSegmentCollectionViewCell
@@ -30,18 +29,7 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
 
 - (void)prepareForReuse {
     [super prepareForReuse];
-    self.shouldEmphasize = NO;
     self.clipsToBounds = YES;
-}
-
-- (void)emphasizeAppearance {
-    self.shouldEmphasize = YES;
-    [self setNeedsDisplay];
-}
-
-- (void)deemphasizeAppearance {
-    self.shouldEmphasize = NO;
-    [self setNeedsDisplay];
 }
 
 - (void)removeAllTimeLabels {
@@ -109,7 +97,8 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
     CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     [super drawRect:rect];
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextDrawLinearGradient(ctx, [HelloStyleKit timelineGradient].CGGradient, CGPointMake(CGRectGetMaxX(rect), 0), CGPointZero, 0);
+    CGContextDrawLinearGradient(ctx, [HelloStyleKit timelineGradient].CGGradient, CGPointMake(CGRectGetMaxX(rect), 0),
+                                CGPointZero, 0);
     CGFloat maximumFillWidth = CGRectGetWidth(rect) * HEMSegmentMaximumWidthRatio;
     CGFloat preWidth = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.previousFillRatio);
     CGFloat width = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.fillRatio);
@@ -120,11 +109,6 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
     CGContextFillRect(ctx, preRect);
     CGContextSetFillColorWithColor(ctx, self.fillColor.CGColor);
     CGContextFillRect(ctx, fillRect);
-    if ([self shouldEmphasize]) {
-        CGContextSetStrokeColorWithColor(ctx, [HelloStyleKit tintColor].CGColor);
-        CGContextSetLineWidth(ctx, HEMSegmentBorderWidth);
-        CGContextStrokeRect(ctx, fillRect);
-    }
 }
 
 @end

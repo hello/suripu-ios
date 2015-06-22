@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="sleepSummaryCell" id="gTV-IL-0wX" customClass="HEMSleepSummaryCollectionViewCell">
+        <collectionViewCell clipsSubviews="YES" contentMode="center" reuseIdentifier="sleepSummaryCell" id="gTV-IL-0wX" customClass="HEMSleepSummaryCollectionViewCell">
             <rect key="frame" x="0.0" y="0.0" width="320" height="384"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -37,7 +37,7 @@
                                 <color key="textColor" red="0.58423030376434326" green="0.5842127799987793" blue="0.58422267436981201" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XD9-Mv-4Jf" userLabel="message view" customClass="HEMTimelineMessageContainerView">
+                            <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XD9-Mv-4Jf" userLabel="message view" customClass="HEMTimelineMessageContainerView">
                                 <rect key="frame" x="8" y="181" width="304" height="120"/>
                                 <subviews>
                                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tNt-4l-gcx" userLabel="border view">

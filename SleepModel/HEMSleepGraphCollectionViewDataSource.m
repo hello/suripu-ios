@@ -70,7 +70,6 @@ static NSString *const sensorTypeSound = @"sound";
 static NSString *const sleepEventNameFindCharacter = @"_";
 static NSString *const sleepEventNameReplaceCharacter = @" ";
 static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
-static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
 
 + (NSString *)localizedNameForSleepEventType:(NSString *)eventType {
     NSString *localizedFormat = [NSString stringWithFormat:sleepEventNameFormat, [eventType lowercaseString]];
@@ -236,7 +235,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = nil;
-    CGFloat zPosition = indexPath.row + 1;
     switch (indexPath.section) {
         case HEMSleepGraphCollectionViewSummarySection:
             cell = [self collectionView:collectionView sleepSummaryCellForItemAtIndexPath:indexPath];
@@ -246,15 +244,13 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
                 cell = [self collectionView:collectionView sleepSegmentCellForItemAtIndexPath:indexPath];
             } else {
                 cell = [self collectionView:collectionView sleepEventCellForItemAtIndexPath:indexPath];
-                zPosition += HEMSleepGraphEventZPositionOffset;
             }
             break;
         }
     }
 
-    if (cell.layer.zPosition != zPosition)
-        [cell.layer setZPosition:zPosition];
-
+    cell.layer.shouldRasterize = YES;
+    cell.layer.rasterizationScale = [UIScreen mainScreen].scale;
     return cell;
 }
 
@@ -308,8 +304,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
 - (void)configureTimeLabelsForCell:(HEMSleepSegmentCollectionViewCell *)cell
                        withSegment:(SENSleepResultSegment *)segment
                          indexPath:(NSIndexPath *)indexPath {
-    static CGFloat const HEMTimeLabelZPositionOffset = 2;
-    NSInteger zPosition = indexPath.row + HEMTimeLabelZPositionOffset;
     [cell removeAllTimeLabels];
     if (!segment)
         return;
@@ -321,8 +315,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
         NSAttributedString *text =
             [self formattedTextForInlineTimestamp:segment.date withFormatter:self.hourDateFormatter useUnit:YES];
         [cell addTimeLabelWithText:text atHeightRatio:0];
-        if (cell.layer.zPosition != zPosition)
-            cell.layer.zPosition = zPosition;
     }
     NSTimeInterval segmentInterval = [segment.date timeIntervalSince1970];
     NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:segmentInterval + [segment.duration doubleValue]];
@@ -341,8 +333,6 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
             NSAttributedString *text =
                 [self formattedTextForInlineTimestamp:hourDate withFormatter:self.hourDateFormatter useUnit:YES];
             [cell addTimeLabelWithText:text atHeightRatio:ratio];
-            if (cell.layer.zPosition != zPosition)
-                cell.layer.zPosition = zPosition;
         }
         i++;
     }
@@ -410,7 +400,7 @@ static CGFloat const HEMSleepGraphEventZPositionOffset = 3;
             previousRatio:previousRatio
             previousColor:previousColor];
     [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
-    cell.layer.masksToBounds = NO;
+    [cell setNeedsLayout];
     return cell;
 }
 

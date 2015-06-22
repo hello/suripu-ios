@@ -231,7 +231,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
         NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:cellLocation];
         UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
         if ([cell isKindOfClass:[HEMSleepSegmentCollectionViewCell class]]) {
-            [(HEMSleepSegmentCollectionViewCell *)cell emphasizeAppearance];
             SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
             [self.popupView setText:[self summaryPopupTextForSegment:segment]];
             UICollectionViewLayoutAttributes *attributes =
@@ -255,10 +254,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
                          animations:^{
                            self.popupView.alpha = 0;
                          }];
-        for (HEMSleepSegmentCollectionViewCell *cell in self.collectionView.visibleCells) {
-            if ([cell respondsToSelector:@selector(deemphasizeAppearance)])
-                [cell deemphasizeAppearance];
-        }
     }
 }
 

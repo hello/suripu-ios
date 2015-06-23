@@ -90,7 +90,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (void)loadData
 {
-    static NSInteger const sleepDataCapacity = 120;
+    static NSInteger const sleepDataCapacity = 200;
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:sleepDataCapacity];
     NSDateComponents* components = [NSDateComponents new];
     NSDate* today = [[NSDate date] dateAtMidnight];

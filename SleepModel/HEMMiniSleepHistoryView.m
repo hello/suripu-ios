@@ -12,8 +12,6 @@
 
 @implementation HEMMiniSleepHistoryView
 
-static CGFloat const HEMMiniSleepBandWidth = 1.f;
-
 - (void)awakeFromNib
 {
     self.backgroundColor = [UIColor clearColor];
@@ -52,17 +50,9 @@ static CGFloat const HEMMiniSleepBandWidth = 1.f;
         CGFloat endYOffset = startYOffset + (duration/self.secondsPerPoint);
         CGFloat endXOffset = [self xOffsetForSleepDepth:segment.sleepDepth];
         CGFloat height = endYOffset - startYOffset;
-        CGFloat startXOffset = CGRectGetMinX(rect) + (CGRectGetWidth(rect) - endXOffset)/2;
         CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);
-        CGRect fillRect = CGRectMake(startXOffset, startYOffset, endXOffset, height);
+        CGRect fillRect = CGRectMake(0, startYOffset, endXOffset, height);
         CGContextFillRect(ctx, fillRect);
-
-        CGRect bandRect = fillRect;
-        bandRect.size.width = HEMMiniSleepBandWidth;
-        bandRect.origin.x = CGRectGetMidX(rect) - HEMMiniSleepBandWidth/2;
-        CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
-        CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);
-        CGContextFillRect(ctx, bandRect);
         startYOffset = endYOffset;
     }
 }

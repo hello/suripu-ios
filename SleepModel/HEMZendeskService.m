@@ -20,6 +20,7 @@
 
 // the following are values found in the Zendesk admin interface that maps
 // to the custom fields created
+static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
 
 @interface HEMZendeskService()
 
@@ -157,16 +158,22 @@
 }
 
 - (void)configureRequestWithTopic:(NSString*)topic completion:(void(^)(void))completion {
-    [ZDKRequests configure:^(ZDKAccount *account, ZDKRequestCreationConfig *requestCreationConfig) {
-        if (topic) {
-            NSMutableArray* tagsWithTopic = [[self defaultTicketTags] mutableCopy];
-            [tagsWithTopic addObject:topic];
-            [requestCreationConfig setTags:tagsWithTopic];
+    if (!topic) {
+        if (completion) {
+            completion ();
         }
+        return;
+    }
+    
+    [ZDKRequests configure:^(ZDKAccount *account, ZDKRequestCreationConfig *requestCreationConfig) {
+        NSNumber* topicId = @(HEMZendeskServiceCustomFieldIdTopic);
+        ZDKCustomField* topicField = [[ZDKCustomField alloc] initWithFieldId:topicId andValue:topic];
+        [[ZDKConfig instance] setCustomTicketFields:@[topicField]];
         
         if (completion) {
             completion ();
         }
+        
     }];
 }
 

@@ -13,10 +13,4 @@
 
 + (NSAttributedString *)attributedMessageFromText:(NSString *)text;
 
-- (void)showAudioPlayer:(BOOL)isVisible;
-- (void)setAudioURL:(NSURL *)audioURL;
-- (IBAction)toggleAudio;
-- (void)stopAudio;
-- (void)playAudio;
-
 @end

@@ -366,9 +366,6 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     if (!segment)
         return cell;
     NSUInteger sleepDepth = segment.sleepDepth;
-    if (segment.sound) {
-        [cell setAudioURL:[NSURL URLWithString:segment.sound.URLPath]];
-    }
 
     [cell.eventTypeImageView setImage:[self imageForEventType:segment.eventType]];
     NSAttributedString *timeText = nil;

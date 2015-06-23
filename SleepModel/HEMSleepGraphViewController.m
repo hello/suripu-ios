@@ -222,7 +222,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 }
 
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
-    static CGFloat const HEMPopupDismissDelay = 2.25f;
+    static CGFloat const HEMPopupDismissDelay = 1.75f;
     SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];

@@ -24,7 +24,7 @@
     CGFloat duration = [self durationWithStartingSegment:earliestSegment endingSegment:latestSegment];
     if (duration < 0)
         duration = [self durationWithStartingSegment:latestSegment endingSegment:earliestSegment];
-    self.secondsPerPoint = duration / CGRectGetHeight(self.bounds);
+    self.secondsPerPoint = duration / (CGRectGetHeight(self.bounds)*1.5);
     [self setNeedsDisplay];
 }
 
@@ -43,11 +43,12 @@
 
 - (void)drawSleepDepthInRect:(CGRect)rect
 {
+    CGFloat const minMiniSleepHeight = 4.f;
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGFloat startYOffset = CGRectGetMinY(rect);
     for (SENSleepResultSegment* segment in self.sleepDataSegments) {
         NSTimeInterval duration = [self durationForSegment:segment];
-        CGFloat endYOffset = startYOffset + (duration/self.secondsPerPoint);
+        CGFloat endYOffset = startYOffset + MAX(duration/self.secondsPerPoint, minMiniSleepHeight);
         CGFloat endXOffset = [self xOffsetForSleepDepth:segment.sleepDepth];
         CGFloat height = endYOffset - startYOffset;
         CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);

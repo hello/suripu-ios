@@ -59,8 +59,7 @@
                   transition:(id<UIViewControllerContextTransitioning>)transitionContext
 {
     [self animateView:fromViewController.view
-       verticalOffset:68.f
-     horizontalOffset:6.f
+       verticalOffset:10
             transform:CATransform3DMakeScale(2.f, 2.f, 1.f)
       otherAnimations:NULL
            completion:^{
@@ -80,9 +79,8 @@
     imageView.layer.transform = CATransform3DMakeScale(0.7142f, 0.7142f, 1.f);
     [transitionContext completeTransition:YES];
     [self animateView:imageView
-       verticalOffset:-10.f
-     horizontalOffset:10.f
-            transform:CATransform3DMakeScale(0.5f, 0.5f, 1.f)
+       verticalOffset:0
+            transform:CATransform3DMakeScale(0.4f, 0.4f, 1.f)
       otherAnimations:^{
           toViewController.view.layer.transform = CATransform3DIdentity;
       }
@@ -91,7 +89,7 @@
            }];
 }
 
-- (void)animateView:(UIView*)view verticalOffset:(CGFloat)verticalOffset horizontalOffset:(CGFloat)horizontalOffset
+- (void)animateView:(UIView*)view verticalOffset:(CGFloat)verticalOffset
           transform:(CATransform3D)transform otherAnimations:(void(^)())animations completion:(void(^)())completion
 {
     [UIView animateWithDuration:[self transitionDuration:nil] animations:^{
@@ -100,7 +98,6 @@
         view.layer.transform = transform;
         CGRect frame = view.frame;
         frame.origin.y += verticalOffset;
-        frame.origin.x += horizontalOffset;
         view.frame = frame;
         view.alpha = 0;
     } completion:^(BOOL finished) {

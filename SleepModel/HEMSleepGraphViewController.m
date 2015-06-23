@@ -19,7 +19,6 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
-#import "HEMSleepSummarySlideViewController.h"
 #import "HEMTimelineContainerViewController.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"

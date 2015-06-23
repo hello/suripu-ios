@@ -2981,9 +2981,6 @@
                                         </view>
                                     </collectionViewCell>
                                 </cells>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="YyZ-ZS-ld4" appends="YES" id="yhy-c5-zAK"/>
-                                </connections>
                             </collectionView>
                             <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="NKd-k3-vSA" customClass="HEMPopupView">
                                 <rect key="frame" x="190" y="150" width="220" height="100"/>
@@ -3041,11 +3038,6 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="xwK-bi-1s7" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="YyZ-ZS-ld4">
-                    <connections>
-                        <action selector="didLongPress:" destination="eDW-dk-QbK" id="kep-ou-Jpt"/>
-                    </connections>
-                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="1219" y="-728"/>
         </scene>

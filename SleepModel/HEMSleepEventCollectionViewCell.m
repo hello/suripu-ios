@@ -34,15 +34,9 @@
     CGFloat scale = attributes.ratioFromCenter < 0 ? MIN(1, (scaleDiff * ratio * 4) + minContainerViewScale) : 1;
     CGFloat alphaRatio = attributes.ratioFromCenter < 0 ? MIN(1, ratio * 4) : 1;
     CGAffineTransform scaleTransform = CGAffineTransformMakeScale(scale, scale);
-    CGFloat width = CGRectGetWidth(self.contentContainerView.bounds);
-    CGFloat inset = floorf(-(width - (width * scale)) / 2);
-    BOOL isIdentity = scale == 1 && fabs(inset) < 1;
-    CGAffineTransform combinedTransform = isIdentity ? CGAffineTransformIdentity
-                                                     : CGAffineTransformTranslate(scaleTransform, inset, inset);
-
     self.contentContainerView.alpha = alphaRatio;
-    if (!CGAffineTransformEqualToTransform(self.contentContainerView.transform, combinedTransform)) {
-        self.contentContainerView.transform = combinedTransform;
+    if (!CGAffineTransformEqualToTransform(self.contentContainerView.transform, scaleTransform)) {
+        self.contentContainerView.transform = scaleTransform;
     }
 }
 

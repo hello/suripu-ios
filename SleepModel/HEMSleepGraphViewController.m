@@ -11,7 +11,6 @@
 #import "HEMEventBubbleView.h"
 #import "HEMFadingParallaxLayout.h"
 #import "HEMMainStoryboard.h"
-#import "HEMNoSleepEventCollectionViewCell.h"
 #import "HEMPopupView.h"
 #import "HEMRootViewController.h"
 #import "HEMSleepEventCollectionViewCell.h"
@@ -73,18 +72,18 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
         [self showHandholding];
         return;
     }
-    
+
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (![self isViewFullyVisible] || self.dataSource.numberOfSleepSegments == 0) {
-            return;
-        }
-        [HEMTutorial showTutorialForTimelineIfNeeded];
+      if (![self isViewFullyVisible] || self.dataSource.numberOfSleepSegments == 0) {
+          return;
+      }
+      [HEMTutorial showTutorialForTimelineIfNeeded];
     });
 }
 
 - (void)showHandholding {
     if ([self isViewFullyVisible]) {
-        UIView* view = [[self containerViewController] view];
+        UIView *view = [[self containerViewController] view];
         [HEMTutorial showHandholdingForTimelineDaySwitchIfNeededIn:view];
     }
 }
@@ -151,8 +150,7 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     [self presentViewController:navController animated:YES completion:NULL];
 }
 
-- (void)didTapActionSheetButton:(UIButton *)sender {
-    NSIndexPath *indexPath = [self indexPathForEventCellWithSubview:sender];
+- (void)activateActionSheetAtIndexPath:(NSIndexPath *)indexPath {
     SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
     [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
@@ -221,46 +219,30 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     [self presentViewController:controller animated:YES completion:NULL];
 }
 
-#pragma mark UIGestureRecognizerDelegate
-
-- (IBAction)didLongPress:(UILongPressGestureRecognizer *)sender {
-    static CGFloat const HEMPopupAnimationDistance = 8.f;
-    static CGFloat const HEMPopupSpacingDistance = 20.f;
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        [SENAnalytics track:HEMAnalyticsEventTimelineBarLongPress];
-        CGPoint cellLocation = [sender locationInView:self.collectionView];
-        NSIndexPath *indexPath = [self.collectionView indexPathForItemAtPoint:cellLocation];
-        UICollectionViewCell *cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-        if ([cell isKindOfClass:[HEMSleepSegmentCollectionViewCell class]]) {
-            [(HEMSleepSegmentCollectionViewCell *)cell emphasizeAppearance];
-            SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-            [self.popupView setText:[self summaryPopupTextForSegment:segment]];
-            UICollectionViewLayoutAttributes *attributes =
-                [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
-            CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
-            CGFloat top = CGRectGetMinY(cellLocation) - [self.popupView intrinsicContentSize].height
-                          - HEMPopupSpacingDistance;
-            self.popupViewTop.constant = top - HEMPopupAnimationDistance;
-            [self.popupView setNeedsUpdateConstraints];
-            [self.popupView layoutIfNeeded];
-            self.popupViewTop.constant = top;
-            [self.popupView setNeedsUpdateConstraints];
-            [UIView animateWithDuration:0.2f
-                             animations:^{
-                               [self.popupView layoutIfNeeded];
-                               self.popupView.alpha = 1;
-                             }];
-        }
-    } else if (sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled) {
-        [UIView animateWithDuration:0.15f
-                         animations:^{
-                           self.popupView.alpha = 0;
-                         }];
-        for (HEMSleepSegmentCollectionViewCell *cell in self.collectionView.visibleCells) {
-            if ([cell respondsToSelector:@selector(deemphasizeAppearance)])
-                [cell deemphasizeAppearance];
-        }
-    }
+- (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
+    static CGFloat const HEMPopupDismissDelay = 2.25f;
+    SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    [self.popupView setText:[self summaryPopupTextForSegment:segment]];
+    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+    CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
+    CGFloat top = CGRectGetMidY(cellLocation) - floorf([self.popupView intrinsicContentSize].height/2);
+    self.popupViewTop.constant = top;
+    [self.popupView setNeedsUpdateConstraints];
+    [self.popupView layoutIfNeeded];
+    self.popupViewTop.constant = top;
+    [self.popupView setNeedsUpdateConstraints];
+    [UIView animateWithDuration:0.3f
+                     animations:^{
+                       [self.popupView layoutIfNeeded];
+                       self.popupView.alpha = 1;
+                       [UIView animateWithDuration:0.15f
+                                             delay:HEMPopupDismissDelay
+                                           options:0
+                                        animations:^{
+                                          self.popupView.alpha = 0;
+                                        }
+                                        completion:NULL];
+                     }];
 }
 
 - (NSString *)summaryPopupTextForSegment:(SENSleepResultSegment *)segment {
@@ -279,6 +261,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     NSString *format = [NSString stringWithFormat:HEMPopupTextFormat, segmentType, depth];
     return NSLocalizedString(format, nil);
 }
+
+#pragma mark UIGestureRecognizerDelegate
 
 - (void)didPan {
 }
@@ -342,8 +326,12 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 }
 
 - (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
-    [self.view showShadow:yOffset > 0 animated:YES];
+    CGFloat const actionableOffset = 5.f;
+    [self.view showShadow:yOffset > actionableOffset animated:YES];
     self.collectionView.bounces = yOffset > 0;
+    if (self.popupView.alpha > 0) {
+        self.popupView.alpha = 0;
+    }
 }
 
 #pragma mark UICollectionViewDelegate
@@ -370,11 +358,19 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
+    return indexPath.section == HEMSleepGraphCollectionViewSegmentSection;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return NO;
+    return indexPath.section == HEMSleepGraphCollectionViewSegmentSection;
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
+        [self activateActionSheetAtIndexPath:indexPath];
+    } else if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection) {
+        [self showSleepDepthPopupForIndexPath:indexPath];
+    }
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout

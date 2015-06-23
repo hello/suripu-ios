@@ -23,18 +23,19 @@
 @property (nonatomic, strong) HEMSplitTextFormatter *valueFormatter;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *buttonBottom;
 @property (nonatomic, weak) IBOutlet UIImageView *backgroundImageView;
-@property (nonatomic, strong) UIImage* backgroundImage;
+@property (nonatomic, strong) UIImage *backgroundImage;
 @end
 
 @implementation HEMBreakdownViewController
 
 const CGFloat BreakdownCellItemHeight = 96.f;
-const CGFloat BreakdownCellSummaryHeight = 114.f;
+const CGFloat BreakdownCellSummaryHeight = 120.f;
 const CGFloat BreakdownDismissButtonBottom = 26.f;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        _backgroundImage = [[HEMRootViewController rootViewControllerForKeyWindow].view snapshotWithTint:[UIColor colorWithWhite:0 alpha:0.7f]];
+        _backgroundImage = [[HEMRootViewController rootViewControllerForKeyWindow]
+                                .view snapshotWithTint:[UIColor colorWithWhite:0 alpha:0.7f]];
     }
     return self;
 }
@@ -63,7 +64,9 @@ const CGFloat BreakdownDismissButtonBottom = 26.f;
              usingSpringWithDamping:0.75f
               initialSpringVelocity:0
                             options:0
-                         animations:^{ [self.view layoutIfNeeded]; }
+                         animations:^{
+                           [self.view layoutIfNeeded];
+                         }
                          completion:NULL];
     }
 }
@@ -71,7 +74,7 @@ const CGFloat BreakdownDismissButtonBottom = 26.f;
 #pragma mark UICollectionView
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 3;
+    return self.result.statistics.count > 0 ? 3 : 1;
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
@@ -132,14 +135,18 @@ const CGFloat BreakdownDismissButtonBottom = 26.f;
 }
 
 - (HEMSplitTextObject *)splitTextForStatistic:(SENSleepResultStatistic *)stat {
+    NSString *const timesAwakeKey = @"times_awake";
     CGFloat minutes = [stat.value floatValue];
-    NSString *format, *value, *unit;
-    if (minutes < 60) {
-        format = NSLocalizedString(@"sleep-stat.minute.format", nil);
+    NSString *value, *unit;
+    if ([stat.name isEqualToString:timesAwakeKey]) {
+        unit = nil;
+        value = [NSString stringWithFormat:@"%d", [stat.value integerValue]];
+    } else if (minutes < 60) {
+        NSString *format = NSLocalizedString(@"sleep-stat.minute.format", nil);
         value = [NSString stringWithFormat:format, minutes];
         unit = NSLocalizedString(@"sleep-stat.minute.unit", nil);
     } else {
-        format = NSLocalizedString(@"sleep-stat.hour.format", nil);
+        NSString *format = NSLocalizedString(@"sleep-stat.hour.format", nil);
         value = [NSString stringWithFormat:format, minutes / 60];
         unit = NSLocalizedString(@"sleep-stat.hour.unit", nil);
     }

@@ -47,11 +47,13 @@ static CGFloat const HEMPopupMargin = 20.f;
 
 - (void)drawRect:(CGRect)rect {
     [[UIColor whiteColor] setFill];
+    [[UIColor colorWithWhite:0.4f alpha:0.3f] setStroke];
     CGFloat minX = CGRectGetMinX(rect);
     CGFloat minY = CGRectGetMinY(rect);
     CGFloat boxHeight = CGRectGetHeight(rect) - HEMPopupPointerHeight;
     CGRect containerRect = CGRectMake(minX, minY, CGRectGetWidth(rect), boxHeight);
     UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRoundedRect:containerRect cornerRadius:4];
+    [rectanglePath stroke];
     [rectanglePath fill];
 }
 

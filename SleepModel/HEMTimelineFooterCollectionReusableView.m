@@ -7,12 +7,14 @@
 //
 
 #import "HEMTimelineFooterCollectionReusableView.h"
+#import "HelloStyleKit.h"
 
 @implementation HEMTimelineFooterCollectionReusableView
 
-- (void)awakeFromNib
-{
-    self.backgroundColor = [UIColor clearColor];
+- (void)drawRect:(CGRect)rect {
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextDrawLinearGradient(ctx, [HelloStyleKit timelineGradient].CGGradient, CGPointMake(CGRectGetMaxX(rect), 0),
+                                CGPointZero, 0);
 }
 
 @end

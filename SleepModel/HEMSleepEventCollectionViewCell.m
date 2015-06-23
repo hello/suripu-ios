@@ -1,5 +1,4 @@
 
-#import <FDWaveformView/FDWaveformView.h>
 #import <AttributedMarkdown/markdown_peg.h>
 #import "HEMSleepEventCollectionViewCell.h"
 #import "NSAttributedString+HEMUtils.h"
@@ -8,36 +7,19 @@
 #import "HEMMarkdown.h"
 #import "HEMEventBubbleView.h"
 
-@interface HEMSleepEventCollectionViewCell () <AVAudioPlayerDelegate, FDWaveformViewDelegate>
+@interface HEMSleepEventCollectionViewCell ()
 
-@property (weak, nonatomic) IBOutlet UIButton *playSoundButton;
-@property (weak, nonatomic) IBOutlet FDWaveformView *waveformView;
-
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentContainerViewTop;
-
-@property (nonatomic, strong) AVAudioPlayer *player;
-@property (nonatomic, strong) NSTimer *playerUpdateTimer;
-@property (nonatomic, strong) NSOperationQueue *loadingQueue;
 @end
 
 @implementation HEMSleepEventCollectionViewCell
-
-static NSTimeInterval const HEMEventPlayerUpdateInterval = 0.15f;
-static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
 
 + (NSAttributedString *)attributedMessageFromText:(NSString *)text {
     return [markdown_to_attr_string(text, 0, [HEMMarkdown attributesForEventMessageText]) trim];
 }
 
 - (void)applyLayoutAttributes:(HEMTimelineLayoutAttributes *)layoutAttributes {
-    [self animateContentViewWithAttributes:layoutAttributes];
-}
-
-- (void)awakeFromNib {
-    [super awakeFromNib];
-    self.loadingQueue = [NSOperationQueue new];
-    self.loadingQueue.maxConcurrentOperationCount = 1;
-    [self configureAudioPlayer];
+    [self layoutContainerViewWithAttributes:layoutAttributes];
+    [self animateContentsWithAttributes:layoutAttributes];
 }
 
 - (void)prepareForReuse {
@@ -45,36 +27,60 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     [self.contentContainerView setMessageText:nil timeText:nil];
 }
 
-- (void)configureAudioPlayer {
-    self.playSoundButton.enabled = NO;
-    self.waveformView.progressColor = [HelloStyleKit tintColor];
-    self.waveformView.wavesColor = [HelloStyleKit lightSleepColor];
-    self.waveformView.delegate = self;
+- (void)animateContentsWithAttributes:(HEMTimelineLayoutAttributes *)attributes {
+    CGFloat const minContainerViewScale = 0.9;
+    CGFloat scaleDiff = 1 - minContainerViewScale;
+    CGFloat ratio = 1 - fabs(attributes.ratioFromCenter);
+    CGFloat scale = attributes.ratioFromCenter < 0 ? MIN(1, (scaleDiff * ratio * 4) + minContainerViewScale) : 1;
+    CGFloat alphaRatio = attributes.ratioFromCenter < 0 ? MIN(1, ratio * 4) : 1;
+    CGAffineTransform scaleTransform = CGAffineTransformMakeScale(scale, scale);
+    self.contentContainerView.alpha = alphaRatio;
+    if (!CGAffineTransformEqualToTransform(self.contentContainerView.transform, scaleTransform)) {
+        self.contentContainerView.transform = scaleTransform;
+    }
 }
 
-- (void)animateContentViewWithAttributes:(HEMTimelineLayoutAttributes *)attributes {
-    CGFloat const maxContainerViewTop = 0.f;
-    CGFloat const minContainerViewTop = -10;
-    CGFloat const motionDelta = 1.f;
-    CGFloat ratio = 1 - fabs(attributes.ratioFromCenter);
-    CGFloat top = MIN(maxContainerViewTop, fabs(minContainerViewTop) * attributes.ratioFromCenter * -1);
-    CGFloat alphaRatio = attributes.ratioFromCenter < 0 ? MIN(1, ratio * 4) : 1;
-    if (fabs(self.contentContainerViewTop.constant - top) > motionDelta) {
-        self.contentContainerViewTop.constant = top;
-        [self setNeedsUpdateConstraints];
-        [UIView animateWithDuration:0.05f
-                              delay:0
-                            options:0
-                         animations:^{
-                           [self.contentContainerView layoutIfNeeded];
-                         }
-                         completion:NULL];
+- (void)layoutContainerViewWithAttributes:(HEMTimelineLayoutAttributes *)attributes {
+    CGFloat const containerViewLeft = 10.f;
+    CGFloat const maxContainerViewTop = 10.f;
+    CGFloat const minContainerViewTop = 0.f;
+    CGFloat const iconImageLeft = 4.f;
+    CGFloat const iconImageTop = 4.f;
+    CGFloat const iconImageDiameter = 40.f;
+    CGFloat const timeLabelRight = 8.f;
+    CGFloat const timeLabelLeft = 10.f;
+    CGFloat const timeLabelTop = 16.f;
+    CGFloat const messageLabelLeft = 52.f;
+    CGFloat const messageLabelTop = 13.f;
+    CGFloat const messageLabelRight = 8.f;
+    CGFloat const messageLabelHeightOffset = 26.f;
+    CGFloat const timeLabelMaxWidth = 40.f;
+    CGFloat const timeLabelMaxHeight = 24.f;
+    CGFloat base;
+    if (attributes != nil) {
+        base = maxContainerViewTop * attributes.ratioFromCenter * -1;
+    } else {
+        base = CGRectGetMinY(self.contentContainerView.frame);
     }
+    CGFloat top = floorf(MAX(MIN(maxContainerViewTop, base), minContainerViewTop));
+    CGSize size = [self.contentContainerView intrinsicContentSize];
+    CGRect containerFrame = CGRectMake(containerViewLeft, top, size.width, size.height);
+    self.contentContainerView.frame = containerFrame;
 
-    [UIView animateWithDuration:0.05f
-                     animations:^{
-                       self.contentContainerView.alpha = alphaRatio;
-                     }];
+    CGRect eventImageFrame = CGRectMake(iconImageLeft, iconImageTop, iconImageDiameter, iconImageDiameter);
+    self.eventTypeImageView.frame = eventImageFrame;
+
+    CGSize timeLabelSize = [self.eventTimeLabel sizeThatFits:CGSizeMake(timeLabelMaxWidth, timeLabelMaxHeight)];
+    CGFloat left = CGRectGetWidth(containerFrame) - timeLabelSize.width - timeLabelRight - timeLabelLeft;
+    CGRect eventTimeLabelFrame = CGRectMake(left, timeLabelTop, timeLabelSize.width, timeLabelSize.height);
+    self.eventTimeLabel.frame = eventTimeLabelFrame;
+
+    CGFloat containerWidth = CGRectGetWidth(containerFrame);
+    CGFloat messageWidth = containerWidth - messageLabelLeft - CGRectGetWidth(eventTimeLabelFrame) - messageLabelRight
+                           - timeLabelRight;
+    CGRect eventMesageLabelFrame = CGRectMake(messageLabelLeft, messageLabelTop, messageWidth,
+                                              CGRectGetHeight(containerFrame) - messageLabelHeightOffset);
+    self.eventMessageLabel.frame = eventMesageLabelFrame;
 }
 
 - (void)setNeedsLayout {
@@ -82,140 +88,9 @@ static NSString *const HEMEventPlayerFileName = @"cache_audio%ld.mp3";
     [super setNeedsLayout];
 }
 
-- (void)setLoading:(BOOL)isLoading {
-    self.playSoundButton.enabled = !isLoading;
-}
-
-#pragma mark - Audio
-
-- (void)showAudioPlayer:(BOOL)isVisible {
-    self.playSoundButton.enabled = NO;
-}
-
-- (void)setAudioURL:(NSURL *)audioURL {
-    [self stopAudio];
-    [self.loadingQueue cancelAllOperations];
-    if ([audioURL isEqual:self.waveformView.audioURL]) {
-        self.playSoundButton.enabled = YES;
-        return;
-    }
-    __weak typeof(self) weakSelf = self;
-    [self.loadingQueue addOperation:[NSBlockOperation blockOperationWithBlock:^{
-                         __strong typeof(weakSelf) strongSelf = weakSelf;
-                         NSData *urlData = [NSData dataWithContentsOfURL:audioURL];
-                         if (!urlData) {
-                             [strongSelf cancelLoading];
-                             return;
-                         }
-                         NSFileManager *fileManager = [NSFileManager defaultManager];
-                         NSURL *cache =
-                             [[fileManager URLsForDirectory:NSCachesDirectory inDomains:NSUserDomainMask] firstObject];
-                         NSString *fileName = [NSString stringWithFormat:HEMEventPlayerFileName, (long)[audioURL hash]];
-                         NSURL *localFile = [cache URLByAppendingPathComponent:fileName];
-                         BOOL success = [urlData writeToURL:localFile atomically:YES];
-                         if (!success) {
-                             [strongSelf cancelLoading];
-                             return;
-                         }
-                         [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
-                                                         strongSelf.waveformView.audioURL = localFile;
-                                                         strongSelf.waveformView.completion
-                                                             = ^(NSURL *processedURL, BOOL success) {
-                                                               if (success)
-                                                                   [strongSelf handleLoadingSuccess];
-                                                             };
-                                                       }]];
-                       }]];
-}
-
-- (void)cancelLoading {
-    __weak typeof(self) weakSelf = self;
-    [[NSOperationQueue mainQueue] addOperation:[NSBlockOperation blockOperationWithBlock:^{
-                                    [weakSelf handleLoadingFailure];
-                                  }]];
-}
-
-- (IBAction)toggleAudio {
-    if ([self.player isPlaying])
-        [self stopAudio];
-    else
-        [self playAudio];
-}
-
-- (void)playAudio {
-    NSURL *url = self.waveformView.audioURL;
-    if (!url)
-        return;
-    if ([self.player isPlaying])
-        [self.player stop];
-    [self.playerUpdateTimer invalidate];
-    NSError *error = nil;
-    self.player = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:&error];
-    self.player.delegate = self;
-    if (error) {
-        [self stopAudio];
-    } else {
-        [self.waveformView setProgressRatio:0];
-        [self.player play];
-        [self.playSoundButton setImage:[UIImage imageNamed:@"stopSound"] forState:UIControlStateNormal];
-        self.playerUpdateTimer = [NSTimer scheduledTimerWithTimeInterval:HEMEventPlayerUpdateInterval
-                                                                  target:self
-                                                                selector:@selector(updateAudioProgress)
-                                                                userInfo:nil
-                                                                 repeats:YES];
-    }
-}
-
-- (void)stopAudio {
-    [self.playerUpdateTimer invalidate];
-    [self.waveformView setProgressRatio:1];
-    [self.playSoundButton setImage:[UIImage imageNamed:@"playSound"] forState:UIControlStateNormal];
-    [self.player stop];
-    self.player = nil;
-}
-
-- (void)updateAudioProgress {
-    [self.waveformView setProgressRatio:self.player.currentTime / self.player.duration];
-}
-
-#pragma mark AVAudioPlayerDelegate
-
-- (void)audioPlayerBeginInterruption:(AVAudioPlayer *)player {
-    [self stopAudio];
-}
-
-- (void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag {
-    [self stopAudio];
-}
-
-- (void)audioPlayerEndInterruption:(AVAudioPlayer *)player withOptions:(NSUInteger)flags {
-    [self stopAudio];
-}
-
-#pragma mark FDWaveformView
-
-- (void)waveformViewWillLoad:(FDWaveformView *)waveformView {
-    [self performSelectorOnMainThread:@selector(handleLoadingStart) withObject:nil waitUntilDone:NO];
-}
-
-- (void)waveformViewDidRender:(FDWaveformView *)waveformView {
-    [self performSelectorOnMainThread:@selector(handleLoadingSuccess) withObject:nil waitUntilDone:NO];
-}
-
-- (void)waveformViewDidFail:(FDWaveformView *)waveformView error:(NSError *)error {
-    [self performSelectorOnMainThread:@selector(handleLoadingFailure) withObject:nil waitUntilDone:NO];
-}
-
-- (void)handleLoadingStart {
-    self.playSoundButton.enabled = NO;
-}
-
-- (void)handleLoadingFailure {
-    self.playSoundButton.enabled = NO;
-}
-
-- (void)handleLoadingSuccess {
-    self.playSoundButton.enabled = YES;
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    [self layoutContainerViewWithAttributes:nil];
 }
 
 @end

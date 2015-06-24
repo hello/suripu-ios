@@ -6,6 +6,16 @@
 @interface HEMAlarmUtils : NSObject
 
 /**
+ *  Check for whether a time is too soon for setting an alarm
+ *
+ *  @param hour   hour to validate
+ *  @param minute minute to validate
+ *
+ *  @return YES if the time is too soon
+ */
++ (BOOL)timeIsTooSoonByHour:(NSUInteger)hour minute:(NSUInteger)minute;
+
+/**
  *  Text representing the repeat settings of an alarm
  *
  *  @param alarmRepeatFlags repeat flags property of an alarm
@@ -34,4 +44,5 @@
 
 + (BOOL)areRepeatDaysValid:(SENAlarmRepeatDays)repeatDays
              forSmartAlarm:(SENAlarm*)alarm presentingControllerForErrors:(UIViewController*)controller;
+
 @end

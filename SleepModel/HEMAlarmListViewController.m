@@ -18,6 +18,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMNoDeviceCollectionViewCell.h"
+#import "HEMAlertViewController.h"
 #import "HEMActionButton.h"
 
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
@@ -272,6 +273,13 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (IBAction)flippedEnabledSwitch:(UISwitch *)sender {
     __block SENAlarm *alarm = [self.alarms objectAtIndex:sender.tag];
     BOOL on = [sender isOn];
+    if (on && [HEMAlarmUtils timeIsTooSoonByHour:alarm.hour minute:alarm.minute]) {
+        [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"alarm.save-error.too-soon.title", nil)
+                                                message:NSLocalizedString(@"alarm.save-error.too-soon.message", nil)
+                                             controller:self];
+        sender.on = NO;
+        return;
+    }
     alarm.on = on;
     [HEMAlarmUtils updateAlarmsFromPresentingController:self
                                              completion:^(NSError *error) {

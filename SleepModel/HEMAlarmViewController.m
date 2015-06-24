@@ -134,8 +134,14 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 }
 
 - (IBAction)saveAndDismissFromView:(id)sender {
-    self.alarmCache.on = YES;
+    if ([HEMAlarmUtils timeIsTooSoonByHour:self.alarmCache.hour minute:self.alarmCache.minute]) {
+        [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"alarm.save-error.too-soon.title", nil)
+                                                message:NSLocalizedString(@"alarm.save-error.too-soon.message", nil)
+                                             controller:self];
+        return;
+    }
 
+    self.alarmCache.on = YES;
     [self updateAlarmFromCache:self.alarmCache];
     __weak typeof(self) weakSelf = self;
     [HEMAlarmUtils

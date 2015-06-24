@@ -4044,8 +4044,8 @@
                                                     <color key="textColor" red="0.2176530510187149" green="0.25914883613586426" blue="0.32559084892272949" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1U6-Tw-owC">
-                                                    <rect key="frame" x="20" y="60" width="34" height="20"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.40000000000000002" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1U6-Tw-owC">
+                                                    <rect key="frame" x="16" y="65" width="34" height="20"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                                     <color key="textColor" red="0.21765305099999999" green="0.2591488361" blue="0.32559084890000001" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -4073,7 +4073,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="565" height="128"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.4h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xy9-b3-hMj">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.4h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="Xy9-b3-hMj">
                                                     <rect key="frame" x="20" y="54" width="45" height="33"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -4085,7 +4085,7 @@
                                                     <color key="textColor" red="0.64011973142623901" green="0.64010053873062134" blue="0.64011138677597046" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.4h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1sR-S5-gJr">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1.4h" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="1sR-S5-gJr">
                                                     <rect key="frame" x="303" y="54" width="45" height="33"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="24"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -4116,11 +4116,13 @@
                                         </view>
                                         <constraints>
                                             <constraint firstItem="ox5-lV-0kG" firstAttribute="leading" secondItem="mdH-wI-kLQ" secondAttribute="trailing" constant="20" id="0V6-pR-la4"/>
+                                            <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="1sR-S5-gJr" secondAttribute="trailing" constant="12" id="Gts-Vc-X2a"/>
                                             <constraint firstItem="mdH-wI-kLQ" firstAttribute="top" secondItem="5Yf-yd-oc8" secondAttribute="top" constant="30" id="HTB-H3-cyO"/>
                                             <constraint firstItem="ox5-lV-0kG" firstAttribute="top" secondItem="BHP-yD-PgE" secondAttribute="top" id="Iqd-u6-b2w"/>
                                             <constraint firstAttribute="centerX" secondItem="mdH-wI-kLQ" secondAttribute="centerX" id="R9X-gc-Z9h"/>
                                             <constraint firstAttribute="trailing" secondItem="jwh-Q4-Xg8" secondAttribute="trailing" id="XkF-1Q-G5R"/>
                                             <constraint firstItem="1sR-S5-gJr" firstAttribute="top" secondItem="ox5-lV-0kG" secondAttribute="bottom" constant="8" id="gSi-uW-P5l"/>
+                                            <constraint firstItem="mdH-wI-kLQ" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Xy9-b3-hMj" secondAttribute="trailing" constant="12" id="hau-NI-dGM"/>
                                             <constraint firstItem="BHP-yD-PgE" firstAttribute="leading" secondItem="5Yf-yd-oc8" secondAttribute="leading" constant="20" id="mbA-N2-fwE"/>
                                             <constraint firstItem="jwh-Q4-Xg8" firstAttribute="top" secondItem="5Yf-yd-oc8" secondAttribute="top" id="mtF-n3-7R9"/>
                                             <constraint firstItem="1sR-S5-gJr" firstAttribute="leading" secondItem="ox5-lV-0kG" secondAttribute="leading" id="nNu-cW-aTT"/>

@@ -161,7 +161,7 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
  * @return NSDate without time to represent the previous day
  */
 - (NSDate*)lastNight {
-    NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     
     NSCalendarUnit unitsWeWant = NSYearCalendarUnit|NSMonthCalendarUnit|NSDayCalendarUnit;
     NSDateComponents* todayComponents = [calendar components:unitsWeWant fromDate:[NSDate date]];

@@ -57,7 +57,7 @@ static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
     if (!date)
         return nil;
 
-    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents* components = [calendar components:(NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit)
                                                fromDate:date];
     return [NSString stringWithFormat:SENSleepResultRetrievalKeyFormat, (long)components.day, (long)components.month, (long)components.year];
@@ -189,7 +189,7 @@ static NSString* const SENSleepResultDateFormat = @"yyyy-MM-dd";
         if ([previousSegment.message isEqual:segment.message] && [previousSegment.eventType isEqual:segment.eventType]
             && previousSegment.sleepDepth == segment.sleepDepth) {
             previousSegment.duration =
-                [NSNumber numberWithDouble:[segment.duration doubleValue] + [previousSegment.duration doubleValue]];
+            [NSNumber numberWithDouble:[segment.duration doubleValue] + [previousSegment.duration doubleValue]];
         } else if (segment != nil) {
             if (previousSegment)
                 [segments addObject:previousSegment];

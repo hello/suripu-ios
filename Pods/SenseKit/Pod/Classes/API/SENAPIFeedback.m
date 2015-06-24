@@ -17,6 +17,7 @@
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         formatter = [NSDateFormatter new];
+        [formatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian]];
         formatter.dateFormat = @"yyyy-MM-dd";
     });
     return formatter;
@@ -35,7 +36,7 @@
     if (segment.eventType.length > 0)
         params[@"event_type"] = segment.eventType;
     params[@"new_time_of_event"] = [self parameterStringForHour:hour minute:minute];
-    NSCalendar* calendar = [NSCalendar currentCalendar];
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     calendar.timeZone = segment.timezone;
     NSDateComponents* components = [calendar components:(NSHourCalendarUnit|NSMinuteCalendarUnit) fromDate:segment.date];
     params[@"old_time_of_event"] = [self parameterStringForHour:components.hour minute:components.minute];

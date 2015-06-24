@@ -98,7 +98,9 @@ typedef NS_ENUM(NSUInteger, SENAccountGender) {
                      lastModified:(NSNumber*)isoLastModDate;
 
 /**
- * Set the birth date with individual components
+ * Set the birth date with individual components that are based on the user's
+ * current calendar ... gregorian, buddhist, japan or whichever calendar is set
+ *
  * @param month: month of the birth month where 1 = january
  * @param day:   day of the birthdate (1 - 31)
  * @param year:  year of birth (yyyy)

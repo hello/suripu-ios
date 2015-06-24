@@ -76,11 +76,11 @@ static NSString* const SENServiceQuestionsErrorDomain = @"is.hello.service.quest
 - (NSDate*)todayWithoutTime {
     // since this method can be called multiple times during the lifecycle and on
     // restore, we should cache the instance so it does not take long to simply
-    // go in to foreground since [NSCalendar currentCalendar] is a little slow
+    // go in to foreground since [NSCalendar calendarWithIdentifier:] is a little slow
     static NSCalendar* calendar = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        calendar = [NSCalendar currentCalendar];
+        calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     });
     unsigned flags = NSDayCalendarUnit | NSMonthCalendarUnit | NSYearCalendarUnit;
     NSDateComponents* now = [calendar components:flags fromDate:[NSDate date]];

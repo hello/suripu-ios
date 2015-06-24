@@ -2187,7 +2187,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7jx-0o-9M6">
-                                <rect key="frame" x="20" y="8" width="560" height="1"/>
+                                <rect key="frame" x="20" y="1" width="560" height="1"/>
                                 <color key="backgroundColor" red="0.87566179037094116" green="0.87563556432723999" blue="0.87565040588378906" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="1" id="EE0-td-upl"/>
@@ -2212,7 +2212,7 @@
                             <constraint firstAttribute="trailing" secondItem="7jx-0o-9M6" secondAttribute="trailing" constant="20" id="NLt-sp-HdV"/>
                             <constraint firstItem="jXq-nN-8Qt" firstAttribute="height" secondItem="Sdp-en-Umr" secondAttribute="height" multiplier="0.3" constant="-0.29999999999999999" id="TCR-Nd-tGn"/>
                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="dQu-Hf-dor" secondAttribute="trailing" id="VqN-fn-5XQ"/>
-                            <constraint firstItem="7jx-0o-9M6" firstAttribute="top" secondItem="JyQ-Kh-wms" secondAttribute="bottom" constant="8" id="cLo-Zm-5kn"/>
+                            <constraint firstItem="7jx-0o-9M6" firstAttribute="top" secondItem="JyQ-Kh-wms" secondAttribute="bottom" constant="1" id="cLo-Zm-5kn"/>
                             <constraint firstItem="d9H-QV-uE8" firstAttribute="centerY" secondItem="U6O-Dc-1qK" secondAttribute="centerY" id="fFW-dI-gz5"/>
                             <constraint firstAttribute="trailing" secondItem="U6O-Dc-1qK" secondAttribute="trailing" constant="20" id="hLy-1N-Xka"/>
                             <constraint firstItem="Zkp-GN-ZQu" firstAttribute="leading" secondItem="Sdp-en-Umr" secondAttribute="leading" constant="20" id="hXg-If-468"/>

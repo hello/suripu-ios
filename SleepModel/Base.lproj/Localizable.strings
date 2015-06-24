@@ -499,6 +499,7 @@
 "actions.fix-now" = "Fix now";
 "actions.next" = "Next";
 "actions.done" = "Done";
+"actions.saved" = "Saved";
 "actions.troubleshoot" = "troubleshoot";
 "actions.edit.wifi" = "Edit WiFi";
 "status.success" = "Done";

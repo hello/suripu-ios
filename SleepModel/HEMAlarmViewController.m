@@ -122,11 +122,17 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 #pragma mark - Actions
 
 - (void)dismiss:(BOOL)saved {
+    if (!saved) {
+        self.navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+        self.navigationController.transitioningDelegate = nil;
+    }
     if (self.delegate) {
         if (saved) {
             [self.delegate didSaveAlarm:self.alarm from:self];
         } else { [self.delegate didCancelAlarmFrom:self]; }
-    } else { [self.navigationController dismissViewControllerAnimated:YES completion:NULL]; }
+    } else {
+        [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+    }
 }
 
 - (IBAction)dismissFromView:(id)sender {

@@ -18,6 +18,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMNoDeviceCollectionViewCell.h"
+#import "HEMBounceModalTransition.h"
 #import "HEMAlertViewController.h"
 #import "HEMActionButton.h"
 
@@ -35,6 +36,7 @@
 @property (strong, nonatomic) NSDateFormatter *meridiemFormatter;
 @property (nonatomic, getter=isLoading) BOOL loading;
 @property (nonatomic, getter=hasLoadingFailed) BOOL loadingFailed;
+@property (nonatomic, strong) HEMBounceModalTransition *alarmSaveTransitionDelegate;
 @property (nonatomic, getter=hasNoSense) BOOL noSense;
 @end
 
@@ -60,6 +62,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.alarmSaveTransitionDelegate = [HEMBounceModalTransition new];
+    self.alarmSaveTransitionDelegate.message = NSLocalizedString(@"actions.saved", nil);
     [self configureCollectionView];
     [self configureAddButton];
     [self configureSpinnerView];
@@ -292,6 +296,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)presentViewControllerForAlarm:(SENAlarm *)alarm {
     UINavigationController *controller = (UINavigationController *)[HEMMainStoryboard instantiateAlarmNavController];
+    controller.transitioningDelegate = self.alarmSaveTransitionDelegate;
+    controller.modalPresentationStyle = UIModalPresentationCustom;
     HEMAlarmViewController *alarmController = (HEMAlarmViewController *)controller.topViewController;
     alarmController.alarm = alarm;
     alarmController.delegate = self;

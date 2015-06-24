@@ -251,7 +251,8 @@ static CGFloat const HEMAccountTableAudioExplanationRowHeight = 70.0f;
 
     NSDateComponents *components = [[self dataSource] birthdateComponents];
     if (components != nil) {
-        NSCalendar *calendar = [NSCalendar currentCalendar];
+        NSCalendar *calendar
+            = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
         NSInteger year = [[calendar components:NSCalendarUnitYear fromDate:[NSDate date]] year];
         [dobViewController setInitialMonth:[components month]];
         [dobViewController setInitialDay:[components day]];

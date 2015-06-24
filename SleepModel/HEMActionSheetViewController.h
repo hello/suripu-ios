@@ -13,15 +13,6 @@ typedef void(^HEMActionSheetCallback)(void);
 @interface HEMActionSheetViewController : UIViewController
 
 /**
- * @property title
- *
- * @discussion
- * Optional text to be displayed above all the options that are added when the
- * controller is presented.
- */
-@property (nonatomic, copy) NSString* title;
-
-/**
  * @method addOptionWithTitle:action:
  *
  * @param optionTitle: title to be displayed for the option

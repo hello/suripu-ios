@@ -61,6 +61,8 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     if ([self respondsToSelector:@selector(presentationController)]) {
         [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     }
+    [[self optionTableView] setSeparatorColor:[HelloStyleKit actionSheetSeparatorColor]];
+    [[self optionTableView] setTableFooterView:[[UIView alloc] init]];
 }
 
 - (void)addOptionWithTitle:(NSString*)optionTitle action:(HEMActionSheetCallback)action {
@@ -119,8 +121,9 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 }
 
 - (void)show {
-    CGSize optionsContentSize = [[self optionTableView] contentSize];
-    CGFloat height = optionsContentSize.height;
+    [[self optionTableView] reloadData];
+    
+    CGFloat height = [[self optionTableView] contentSize].height;
     BOOL needsUpdateConstraints = self.oTVBottomConstraint.constant != height
         || self.oTVHeightConstraint.constant != height;
     BOOL needsUpdateAlpha = self.shadedOverlayView.alpha != 1.f;
@@ -214,17 +217,15 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* optionTitle = [self orderedOptions][[indexPath row]];
     NSDictionary* optionAttributes = [[self options] objectForKey:optionTitle];
-    [[optionCell titleLabel] setText:optionTitle];
-    [[optionCell titleLabel] setTextColor:[optionAttributes objectForKey:HEMActionSheetOptionColor]];
-
     NSString* desc = [optionAttributes objectForKey:HEMActionSheetOptionDescription];
-    if (desc) {
-        [optionCell setDescription:desc];
-        [[optionCell descriptionLabel] setTextColor:[UIColor colorWithWhite:0.0f alpha:0.4f]];
-    }
+    UIColor* titleColor = [optionAttributes objectForKey:HEMActionSheetOptionColor];
     NSString* imageName = optionAttributes[HEMActionSheetOptionImage];
-    optionCell.iconImageView.image = imageName.length > 0 ? [UIImage imageNamed:imageName] : nil;
-    optionCell.imageViewWidth.constant = optionCell.iconImageView.image.size.width;
+    UIImage* iconImage = imageName ? [UIImage imageNamed:imageName] : nil;
+    
+    [optionCell setOptionTitle:optionTitle
+                     withColor:titleColor
+                          icon:iconImage
+                   description:desc];
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {

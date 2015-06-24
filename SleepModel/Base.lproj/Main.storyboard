@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -111,7 +111,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmSmartIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="JfE-LJ-HjM">
-                                                    <rect key="frame" x="16" y="16" width="32" height="25"/>
+                                                    <rect key="frame" x="16" y="14" width="32" height="29"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="Yil-Ys-fIp"/>
                                                     </constraints>
@@ -763,13 +763,15 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="552" placeholderIntrinsicHeight="21" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nAK-rd-1sW">
-                                                    <rect key="frame" x="32" y="20" width="544" height="21"/>
+                                                    <rect key="frame" x="4" y="20" width="572" height="21"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="552" placeholderIntrinsicHeight="21" text="Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2u-YN-8VF">
-                                                    <rect key="frame" x="32" y="45" width="544" height="21"/>
+                                                    <rect key="frame" x="4" y="45" width="572" height="21"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -782,23 +784,23 @@
                                                 </imageView>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="nAK-rd-1sW" firstAttribute="leading" secondItem="dQg-tB-zFC" secondAttribute="trailing" constant="8" id="9JC-iT-lRm"/>
                                                 <constraint firstAttribute="centerY" secondItem="dQg-tB-zFC" secondAttribute="centerY" id="Du6-iL-qHm"/>
-                                                <constraint firstItem="C2u-YN-8VF" firstAttribute="top" secondItem="nAK-rd-1sW" secondAttribute="bottom" constant="4" id="GP3-VZ-2oF"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="nAK-rd-1sW" secondAttribute="trailing" constant="16" id="Gs7-Bb-tcB"/>
+                                                <constraint firstItem="C2u-YN-8VF" firstAttribute="top" secondItem="nAK-rd-1sW" secondAttribute="bottom" constant="4" id="TcU-DD-ySn"/>
                                                 <constraint firstItem="dQg-tB-zFC" firstAttribute="leading" secondItem="JsL-x8-oq0" secondAttribute="leading" constant="24" id="Ts2-kx-Ka7"/>
-                                                <constraint firstItem="C2u-YN-8VF" firstAttribute="leading" secondItem="dQg-tB-zFC" secondAttribute="trailing" constant="8" id="feF-c0-ilq"/>
+                                                <constraint firstItem="C2u-YN-8VF" firstAttribute="leading" secondItem="nAK-rd-1sW" secondAttribute="leading" id="XNY-iA-uhi"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="C2u-YN-8VF" secondAttribute="trailing" constant="16" id="auc-RY-fG1"/>
+                                                <constraint firstItem="nAK-rd-1sW" firstAttribute="leading" secondItem="dQg-tB-zFC" secondAttribute="trailing" constant="-20" id="gUa-6Q-LP4"/>
                                                 <constraint firstItem="nAK-rd-1sW" firstAttribute="top" secondItem="JsL-x8-oq0" secondAttribute="topMargin" constant="12" id="ojI-n2-A8g"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="C2u-YN-8VF" secondAttribute="trailing" constant="16" id="rqq-fV-PU6"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>
                                         <connections>
-                                            <outlet property="descriptionLabel" destination="C2u-YN-8VF" id="zCq-Sl-4cg"/>
-                                            <outlet property="descriptionTopConstraint" destination="GP3-VZ-2oF" id="Caj-a7-w5p"/>
                                             <outlet property="iconImageView" destination="dQg-tB-zFC" id="PFG-Hg-UaJ"/>
                                             <outlet property="imageViewWidth" destination="lFS-Wd-gLw" id="LfA-sN-tsd"/>
-                                            <outlet property="titleLabel" destination="nAK-rd-1sW" id="5y3-gK-Q5a"/>
+                                            <outlet property="optionDescriptionLabel" destination="C2u-YN-8VF" id="0gY-GX-lYp"/>
+                                            <outlet property="optionTitleLabel" destination="nAK-rd-1sW" id="brK-rI-QeA"/>
+                                            <outlet property="titleLeadingConstraint" destination="gUa-6Q-LP4" id="tSs-WF-39T"/>
                                             <outlet property="titleTopConstraint" destination="ojI-n2-A8g" id="ydr-Aw-JcG"/>
                                         </connections>
                                     </tableViewCell>
@@ -4274,10 +4276,10 @@
         <image name="Menu.png" width="20" height="11"/>
         <image name="Share.png" width="17" height="20"/>
         <image name="accessory.png" width="8" height="15"/>
-        <image name="alarmRepeatIcon.png" width="25" height="25"/>
+        <image name="alarmRepeatIcon.png" width="22" height="28"/>
         <image name="alarmShortcut.png" width="54" height="54"/>
-        <image name="alarmSmartIcon.png" width="25" height="25"/>
-        <image name="alarmSoundIcon.png" width="25" height="25"/>
+        <image name="alarmSmartIcon.png" width="34" height="29"/>
+        <image name="alarmSoundIcon.png" width="17" height="28"/>
         <image name="backIcon.png" width="10" height="18"/>
         <image name="checkmark.png" width="20" height="15"/>
         <image name="escape button.png" width="32" height="32"/>
@@ -4285,7 +4287,7 @@
         <image name="miniPlayButton.png" width="25" height="25"/>
         <image name="questions_check.png" width="20" height="15"/>
         <image name="questions_circle.png" width="21" height="21"/>
-        <image name="senseIcon.png" width="40" height="40"/>
+        <image name="senseIcon.png" width="37" height="36"/>
         <image name="settingsCheck.png" width="16" height="13"/>
         <image name="timeline_action_adjust.png" width="32" height="32"/>
         <image name="warning.png" width="24" height="22"/>

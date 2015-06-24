@@ -153,7 +153,6 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
     [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    [sheet setTitle:[segment.message stringByReplacingOccurrencesOfString:@"*" withString:@""]];
     if ([self canAdjustEventWithType:segment.eventType]) {
         [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
                        titleColor:[UIColor darkGrayColor]

@@ -12,8 +12,6 @@
 
 @implementation HEMMiniSleepHistoryView
 
-static CGFloat const HEMMiniSleepBandWidth = 1.f;
-
 - (void)awakeFromNib
 {
     self.backgroundColor = [UIColor clearColor];
@@ -26,7 +24,7 @@ static CGFloat const HEMMiniSleepBandWidth = 1.f;
     CGFloat duration = [self durationWithStartingSegment:earliestSegment endingSegment:latestSegment];
     if (duration < 0)
         duration = [self durationWithStartingSegment:latestSegment endingSegment:earliestSegment];
-    self.secondsPerPoint = duration / CGRectGetHeight(self.bounds);
+    self.secondsPerPoint = duration / (CGRectGetHeight(self.bounds)*1.5);
     [self setNeedsDisplay];
 }
 
@@ -45,24 +43,17 @@ static CGFloat const HEMMiniSleepBandWidth = 1.f;
 
 - (void)drawSleepDepthInRect:(CGRect)rect
 {
+    CGFloat const minMiniSleepHeight = 4.f;
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGFloat startYOffset = CGRectGetMinY(rect);
     for (SENSleepResultSegment* segment in self.sleepDataSegments) {
         NSTimeInterval duration = [self durationForSegment:segment];
-        CGFloat endYOffset = startYOffset + (duration/self.secondsPerPoint);
+        CGFloat endYOffset = startYOffset + MAX(duration/self.secondsPerPoint, minMiniSleepHeight);
         CGFloat endXOffset = [self xOffsetForSleepDepth:segment.sleepDepth];
         CGFloat height = endYOffset - startYOffset;
-        CGFloat startXOffset = CGRectGetMinX(rect) + (CGRectGetWidth(rect) - endXOffset)/2;
         CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);
-        CGRect fillRect = CGRectMake(startXOffset, startYOffset, endXOffset, height);
+        CGRect fillRect = CGRectMake(0, startYOffset, endXOffset, height);
         CGContextFillRect(ctx, fillRect);
-
-        CGRect bandRect = fillRect;
-        bandRect.size.width = HEMMiniSleepBandWidth;
-        bandRect.origin.x = CGRectGetMidX(rect) - HEMMiniSleepBandWidth/2;
-        CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
-        CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);
-        CGContextFillRect(ctx, bandRect);
         startYOffset = endYOffset;
     }
 }

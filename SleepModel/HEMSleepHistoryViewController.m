@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel* timeFrameLabel;
 @property (strong, nonatomic) NSDateFormatter* dayOfWeekFormatter;
 @property (strong, nonatomic) NSDateFormatter* dayFormatter;
+@property (strong, nonatomic) NSDateFormatter* monthFormatter;
 @property (strong, nonatomic) NSDateFormatter* monthYearFormatter;
 @property (strong, nonatomic) NSMutableArray* sleepDataSummaries;
 @property (strong, nonatomic) NSDate* startDate;
@@ -75,8 +76,10 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     self.dayFormatter.dateFormat = @"d";
     self.dayOfWeekFormatter = [NSDateFormatter new];
     self.dayOfWeekFormatter.dateFormat = @"EEEE";
+    self.monthFormatter = [NSDateFormatter new];
+    self.monthFormatter.dateFormat = @"MMMM";
     self.monthYearFormatter = [NSDateFormatter new];
-    self.monthYearFormatter.dateFormat = @"MMMM";
+    self.monthYearFormatter.dateFormat = @"MMMM yyyy";
 }
 
 - (void)configureBackgroundColors
@@ -90,7 +93,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (void)loadData
 {
-    static NSInteger const sleepDataCapacity = 120;
+    static NSInteger const sleepDataCapacity = 200;
     self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:sleepDataCapacity];
     NSDateComponents* components = [NSDateComponents new];
     NSDate* today = [[NSDate date] dateAtMidnight];
@@ -122,16 +125,33 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 {
     if (self.selectedDate) {
         [self scrollToSelectedDateAnimated:NO];
-        self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:self.selectedDate];
+        [self updateTimeFrameLabelWithDate:self.selectedDate];
     } else {
         NSDate* date = [(SENSleepResult*)[self.sleepDataSummaries firstObject] date];
-        self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:date];
+        [self updateTimeFrameLabelWithDate:date];
     }
+}
+
+- (BOOL)currentDateHasSameYearAsDate:(NSDate*)date
+{
+    NSCalendarUnit units = NSYearCalendarUnit;
+    NSDateComponents* dateComponents = [self.calendar components:units fromDate:date];
+    NSDateComponents* currentDateComponents = [self.calendar components:units fromDate:[NSDate date]];
+    return dateComponents.year == currentDateComponents.year;
 }
 
 - (IBAction)scrollToLastNight:(id)sender {
     self.selectedDate = [NSDate date];
     [self scrollToSelectedDateAnimated:YES];
+}
+
+- (void)updateTimeFrameLabelWithDate:(NSDate*)date
+{
+    if ([self currentDateHasSameYearAsDate:date]) {
+        self.timeFrameLabel.text = [self.monthFormatter stringFromDate:date];
+    } else {
+        self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:date];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -199,7 +219,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     NSIndexPath* indexPath = [self indexPathAtCenter];
     if (indexPath) {
         SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
-        self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:sleepResult.date];
+        [self updateTimeFrameLabelWithDate:sleepResult.date];
     }
 }
 

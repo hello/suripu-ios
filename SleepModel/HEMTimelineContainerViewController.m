@@ -6,6 +6,7 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
+#import <SenseKit/SENSleepResult.h>
 #import "HEMTimelineContainerViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
@@ -30,6 +31,7 @@
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *animationDelegate;
 @property (nonatomic, strong) CAGradientLayer *topGradientLayer;
+@property (nonatomic, strong) NSDate *currentlyDisplayedDate;
 @end
 
 @implementation HEMTimelineContainerViewController
@@ -50,6 +52,14 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     [self registerForNotifications];
     [self configureGradientLayer];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self checkForDateChanges];
+    if (self.currentlyDisplayedDate) {
+        [self setCenterTitleFromDate:self.currentlyDisplayedDate];
+    }
 }
 
 - (void)registerForNotifications {
@@ -92,6 +102,7 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
 }
 
 - (void)setCenterTitleFromDate:(NSDate *)date {
+    self.currentlyDisplayedDate = date;
     self.centerTitleLabel.text = [self titleTextForDate:date];
     [UIView animateWithDuration:0.2f
                      animations:^{
@@ -195,26 +206,33 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
 }
 
 - (IBAction)shareButtonTapped:(UIButton *)button {
-    //    long score = [self.dataSource.sleepResult.score longValue];
-    //    if (score > 0) {
-    //        NSString *message;
-    //        if (self.lastNight) {
-    //            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.last-night.format", nil),
-    //            score];
-    //        } else {
-    //            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.other-days.format", nil),
-    //            score,
-    //                       [self.dataSource titleTextForDate]];
-    //        }
-    //        UIActivityViewController *activityController =
-    //        [[UIActivityViewController alloc] initWithActivityItems:@[ message ] applicationActivities:nil];
-    //        [self presentViewController:activityController animated:YES completion:nil];
-    //    }
+    SENSleepResult *result = [SENSleepResult sleepResultForDate:self.currentlyDisplayedDate];
+    long score = [result.score longValue];
+    if (score > 0) {
+        NSString *message;
+        if ([self dateIsLastNight]) {
+            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.last-night.format", nil), score];
+        } else {
+            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.other-days.format", nil), score,
+                                                 [self titleTextForDate:self.currentlyDisplayedDate]];
+        }
+        UIActivityViewController *activityController =
+            [[UIActivityViewController alloc] initWithActivityItems:@[ message ] applicationActivities:nil];
+        [self presentViewController:activityController animated:YES completion:nil];
+    }
 }
 
-- (void)zoomButtonTapped:(UIButton *)sender {
+- (BOOL)dateIsLastNight {
+    NSDateComponents *diff = [self.calendar components:NSDayCalendarUnit
+                                              fromDate:self.currentlyDisplayedDate
+                                                toDate:[[NSDate date] previousDay]
+                                               options:0];
+    return diff.day == 0;
+}
+
+- (IBAction)zoomButtonTapped:(UIButton *)sender {
     self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
-    //    self.historyViewController.selectedDate = self.dateForNightOfSleep;
+    self.historyViewController.selectedDate = self.currentlyDisplayedDate;
     self.historyViewController.transitioningDelegate = self.animationDelegate;
     [self presentViewController:self.historyViewController animated:YES completion:NULL];
 }
@@ -223,17 +241,10 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
     if (self.historyViewController.selectedDate) {
         HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
         [root reloadTimelineSlideViewControllerWithDate:self.historyViewController.selectedDate];
+        [self setCenterTitleFromDate:self.historyViewController.selectedDate];
     }
 
     self.historyViewController = nil;
-}
-
-- (void)loadDataSourceForDate:(NSDate *)date {
-    //    self.dateForNightOfSleep = date;
-    //    self.presleepExpanded = NO;
-    //    self.dataSource =
-    //    [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
-    //    self.collectionView.dataSource = self.dataSource;
 }
 
 @end

@@ -416,6 +416,7 @@
 "sleep-event.title.format" = "%@ – %@";
 "sleep-event.action.approve.title" = "Mark as correct — Coming soon";
 "sleep-event.action.adjust.title" = "Adjust Time";
+"sleep-event.action.none.title" = "No actions available";
 "sleep-event.action.delete.title" = "Remove this event — Coming soon";
 "sleep-event.time.24-hour.suffix" = ":00";
 
@@ -427,6 +428,9 @@
 "sleep-stat.minute.unit" = "m";
 "sleep-stat.hour.format" = "%.1f";
 "sleep-stat.hour.unit" = "h";
+"sleep-stat.condition.ideal" = "ideal";
+"sleep-stat.condition.alert" = "not ideal";
+"sleep-stat.condition.warning" = "uncomfortable";
 
 "sleep-stat.sleep-duration.medium.plural.format" = "You were in **Medium Sleep** for %ld minutes.";
 "sleep-stat.sleep-duration.medium.single.format" = "You were in **Medium Sleep** for one minute.";

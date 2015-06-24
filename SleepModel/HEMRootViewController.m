@@ -11,6 +11,7 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENServiceDevice.h>
 
+#import "NSDate+HEMRelative.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 #import "UIView+HEMMotionEffects.h"
@@ -75,7 +76,8 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
 }
 
 /**
- *  Creates a new pane controller
+ *  Creates a new pane controller. If `startDate` is nil, defaults to the
+ *  previous day.
  *
  *  @param startDate the presented date of the controller. May be nil.
  *
@@ -83,20 +85,19 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
  */
 - (UIViewController*)instantiatePaneViewControllerWithDate:(NSDate*)startDate
 {
-    HEMSleepSummarySlideViewController* slideController;
-    if (startDate)
-        slideController = [[HEMSleepSummarySlideViewController alloc] initWithDate:startDate];
-    else
-        slideController = [HEMSleepSummarySlideViewController new];
+    if (!startDate)
+        startDate = [[NSDate date] previousDay];
+    HEMSleepSummarySlideViewController* slideController = [[HEMSleepSummarySlideViewController alloc] initWithDate:startDate];
 
     [slideController setDelegate:self];
     [slideController.view add3DEffectWithBorder:HEMRootTopPaneParallaxDepth
                                       direction:HEMMotionEffectsDirectionVertical];
-    UIViewController* container = [HEMMainStoryboard instantiateTimelineContainerController];
+    HEMTimelineContainerViewController* container = [HEMMainStoryboard instantiateTimelineContainerController];
     [slideController willMoveToParentViewController:nil];
     [slideController removeFromParentViewController];
     [container.view insertSubview:slideController.view atIndex:0];
     [container addChildViewController:slideController];
+    [container setCenterTitleFromDate:startDate];
     [slideController didMoveToParentViewController:container];
     return container;
 }

@@ -19,7 +19,6 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
-#import "HEMSleepSummarySlideViewController.h"
 #import "HEMTimelineContainerViewController.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"
@@ -155,25 +154,22 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
     [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [sheet setTitle:[segment.message stringByReplacingOccurrencesOfString:@"*" withString:@""]];
-    [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.approve.title", nil)
-                   titleColor:[UIColor darkGrayColor]
-                  description:nil
-                    imageName:@"timeline_action_approve"
-                       action:^{
-                       }];
-    [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
-                   titleColor:[UIColor darkGrayColor]
-                  description:nil
-                    imageName:@"timeline_action_adjust"
-                       action:^{
-                         [self updateTimeOfEventOnSegment:segment];
-                       }];
-    [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.delete.title", nil)
-                   titleColor:[UIColor darkGrayColor]
-                  description:nil
-                    imageName:@"timeline_action_delete"
-                       action:^{
-                       }];
+    if ([self canAdjustEventWithType:segment.eventType]) {
+        [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
+                       titleColor:[UIColor darkGrayColor]
+                      description:nil
+                        imageName:@"timeline_action_adjust"
+                           action:^{
+                             [self updateTimeOfEventOnSegment:segment];
+                           }];
+    } else {
+        [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.none.title", nil)
+                       titleColor:[UIColor grayColor]
+                      description:nil
+                        imageName:nil
+                           action:^{
+                           }];
+    }
 
     UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     if (![root respondsToSelector:@selector(presentationController)]) {
@@ -185,6 +181,12 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     }
 
     [root presentViewController:sheet animated:YES completion:nil];
+}
+
+- (BOOL)canAdjustEventWithType:(NSString *)eventType {
+    NSArray *adjustableTypes =
+        @[ HEMSleepEventTypeWakeUp, HEMSleepEventTypeFallAsleep, HEMSleepEventTypeInBed, HEMSleepEventTypeOutOfBed ];
+    return [adjustableTypes containsObject:eventType];
 }
 
 - (void)feedbackFailedToSend:(NSNotification *)note {
@@ -220,12 +222,12 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 }
 
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
-    static CGFloat const HEMPopupDismissDelay = 2.25f;
+    static CGFloat const HEMPopupDismissDelay = 1.75f;
     SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
     CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
-    CGFloat top = CGRectGetMidY(cellLocation) - floorf([self.popupView intrinsicContentSize].height/2);
+    CGFloat top = CGRectGetMidY(cellLocation) - floorf([self.popupView intrinsicContentSize].height / 2);
     self.popupViewTop.constant = top;
     [self.popupView setNeedsUpdateConstraints];
     [self.popupView layoutIfNeeded];

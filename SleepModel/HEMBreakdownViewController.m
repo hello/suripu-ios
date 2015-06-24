@@ -73,64 +73,134 @@ const CGFloat BreakdownDismissButtonBottom = 26.f;
 
 #pragma mark UICollectionView
 
+- (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
+    return 3;
+}
+
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return self.result.statistics.count > 0 ? 3 : 1;
+    switch (section) {
+        case 0:
+            return 1;
+        case 1:
+            return self.result.statistics.count / 2 + self.result.statistics.count % 2;
+
+        case 2:
+            return self.result.sensorInsights.count / 2 + self.result.sensorInsights.count % 2;
+        default:
+            return 0;
+    }
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    if (indexPath.row == 0) {
-        HEMBreakdownSummaryCell *cell =
-            [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard summaryViewCellReuseIdentifier]
-                                                      forIndexPath:indexPath];
-        NSDictionary *attrs = [HEMMarkdown attributesForTimelineBreakdownMessage];
-        cell.detailLabel.attributedText = [markdown_to_attr_string(self.result.message, 0, attrs) trim];
-        return cell;
-    } else {
-        HEMBreakdownLineCell *cell =
-            [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard breakdownLineCellReuseIdentifier]
-                                                      forIndexPath:indexPath];
-        cell.itemTitle1.attributedText = [self titleForItemAtIndexPath:indexPath position:0];
-        cell.itemTitle2.attributedText = [self titleForItemAtIndexPath:indexPath position:1];
-        cell.itemValue1.attributedText = [self valueForItemAtIndexPath:indexPath position:0];
-        cell.itemValue2.attributedText = [self valueForItemAtIndexPath:indexPath position:1];
-        return cell;
+    switch (indexPath.section) {
+        case 0:
+            return [self titleCellInCollectionView:collectionView forIndexPath:indexPath];
+
+        default:
+            return [self statCellInCollectionView:collectionView forIndexPath:indexPath];
     }
 }
 
+- (UICollectionViewCell *)titleCellInCollectionView:(UICollectionView *)collectionView
+                                       forIndexPath:(NSIndexPath *)indexPath {
+    HEMBreakdownSummaryCell *cell =
+        [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard summaryViewCellReuseIdentifier]
+                                                  forIndexPath:indexPath];
+    NSDictionary *attrs = [HEMMarkdown attributesForTimelineBreakdownMessage];
+    cell.detailLabel.attributedText = [markdown_to_attr_string(self.result.message, 0, attrs) trim];
+    return cell;
+}
+
+- (UICollectionViewCell *)statCellInCollectionView:(UICollectionView *)collectionView
+                                      forIndexPath:(NSIndexPath *)indexPath {
+    HEMBreakdownLineCell *cell =
+        [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard breakdownLineCellReuseIdentifier]
+                                                  forIndexPath:indexPath];
+    cell.itemTitle1.attributedText = [self titleForItemAtIndexPath:indexPath position:0];
+    cell.itemTitle2.attributedText = [self titleForItemAtIndexPath:indexPath position:1];
+    cell.itemValue1.attributedText = [self valueForItemAtIndexPath:indexPath position:0];
+    cell.itemValue2.attributedText = [self valueForItemAtIndexPath:indexPath position:1];
+    return cell;
+}
+
 - (NSAttributedString *)titleForItemAtIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
-    SENSleepResultStatistic *stat = [self statisticForIndexPath:indexPath position:position];
     NSString *const statTitleLocalizedFormat = @"sleep-stat.%@";
-    if (stat) {
-        NSString *format = [NSString stringWithFormat:statTitleLocalizedFormat, stat.name];
-        return [[NSAttributedString alloc] initWithString:[NSLocalizedString(format, nil) uppercaseString]
+    NSString *rawTitle = nil;
+    switch (indexPath.section) {
+        case 1: {
+            SENSleepResultStatistic *stat = [self statisticForIndexPath:indexPath position:position];
+            if (stat) {
+                NSString *format = [NSString stringWithFormat:statTitleLocalizedFormat, stat.name];
+                rawTitle = NSLocalizedString(format, nil);
+            }
+            break;
+        }
+
+        case 2: {
+            SENSleepResultSensorInsight *stat = [self insightForIndexPath:indexPath position:position];
+            if (stat) {
+                NSString *const sensorKeyFormat = @"sensor.%@";
+                NSString *sensorKey = [NSString stringWithFormat:sensorKeyFormat, stat.name];
+                NSString *name = NSLocalizedString(sensorKey, nil);
+                if ([name isEqualToString:sensorKey]) {
+                    name = stat.name;
+                }
+                rawTitle = name;
+            }
+        }
+        default:
+            break;
+    }
+    if (rawTitle) {
+        return [[NSAttributedString alloc] initWithString:[rawTitle uppercaseString]
                                                attributes:[HEMMarkdown attributesForTimelineBreakdownTitle][@(PARA)]];
     }
     return nil;
 }
 
 - (NSAttributedString *)valueForItemAtIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
-    SENSleepResultStatistic *stat = [self statisticForIndexPath:indexPath position:position];
-    if (stat) {
-        if (!stat.value) {
-            NSDictionary *attributes =
-                [HEMMarkdown attributesForTimelineBreakdownValueWithColor:[UIColor lightGrayColor]][@(PARA)];
-            return
-                [[NSAttributedString alloc] initWithString:NSLocalizedString(@"empty-data", nil) attributes:attributes];
+    switch (indexPath.section) {
+        case 1: {
+            SENSleepResultStatistic *stat = [self statisticForIndexPath:indexPath position:position];
+            return [self valueTextWithValue:[self splitTextForStatistic:stat] condition:SENSensorConditionIdeal];
         }
-        NSDictionary *attributes =
-            [HEMMarkdown attributesForTimelineBreakdownValueWithColor:[HelloStyleKit idealSensorColor]][@(PARA)];
-        return [self.valueFormatter attributedStringForObjectValue:[self splitTextForStatistic:stat]
-                                             withDefaultAttributes:attributes];
+        case 2: {
+            SENSleepResultSensorInsight *stat = [self insightForIndexPath:indexPath position:position];
+            if (stat) {
+                return [self valueTextWithValue:[self splitTextForInsight:stat] condition:stat.condition];
+            }
+        }
+        default:
+            return nil;
     }
-    return nil;
+}
+
+- (NSAttributedString *)valueTextWithValue:(HEMSplitTextObject *)value condition:(SENSensorCondition)condition {
+    if (!value) {
+        NSDictionary *attributes =
+            [HEMMarkdown attributesForTimelineBreakdownValueWithColor:
+                             [UIColor colorForSensorWithCondition:SENSensorConditionUnknown]][@(PARA)];
+        return [[NSAttributedString alloc] initWithString:NSLocalizedString(@"empty-data", nil) attributes:attributes];
+    }
+    NSDictionary *attributes = [HEMMarkdown
+        attributesForTimelineBreakdownValueWithColor:[UIColor colorForSensorWithCondition:condition]][@(PARA)];
+    return [self.valueFormatter attributedStringForObjectValue:value withDefaultAttributes:attributes];
 }
 
 - (SENSleepResultStatistic *)statisticForIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
     SENSleepResultStatistic *stat = nil;
-    NSUInteger index = ((indexPath.row - 1) * 2) + position;
+    NSUInteger index = (indexPath.row * 2) + position;
     if ([self.result.statistics count] > index)
         stat = [self.result statistics][index];
+    return stat;
+}
+
+- (SENSleepResultSensorInsight *)insightForIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
+    SENSleepResultSensorInsight *stat = nil;
+    NSUInteger index = (indexPath.row * 2) + position;
+    if ([self.result.sensorInsights count] > index)
+        stat = [self.result sensorInsights][index];
     return stat;
 }
 
@@ -151,6 +221,25 @@ const CGFloat BreakdownDismissButtonBottom = 26.f;
         unit = NSLocalizedString(@"sleep-stat.hour.unit", nil);
     }
     return [[HEMSplitTextObject alloc] initWithValue:value unit:unit];
+}
+
+- (HEMSplitTextObject *)splitTextForInsight:(SENSleepResultSensorInsight *)stat {
+    return [[HEMSplitTextObject alloc] initWithValue:[self valueTextForInsight:stat] unit:nil];
+}
+
+- (NSString *)valueTextForInsight:(SENSleepResultSensorInsight *)insight {
+    switch (insight.condition) {
+        case SENSensorConditionUnknown:
+            return NSLocalizedString(@"empty-data", nil);
+        case SENSensorConditionAlert:
+            return NSLocalizedString(@"sleep-stat.condition.alert", nil);
+        case SENSensorConditionWarning:
+            return NSLocalizedString(@"sleep-stat.condition.warning", nil);
+        case SENSensorConditionIdeal:
+            return NSLocalizedString(@"sleep-stat.condition.ideal", nil);
+        default:
+            return nil;
+    }
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

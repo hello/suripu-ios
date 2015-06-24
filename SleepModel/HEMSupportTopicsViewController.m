@@ -65,7 +65,7 @@
                           NSLocalizedString(@"settings.support.topic.business-enquiry", nil),
                           NSLocalizedString(@"settings.support.topic.other", nil)]];
     
-    [self setTopicValuesByName:@{NSLocalizedString(@"settings.support.topic.sense-pairing", nil) : @"pairing_your_sense",
+    [self setTopicValuesByName:@{NSLocalizedString(@"settings.support.topic.sense-pairing", nil) : @"pairing_sense",
                                  NSLocalizedString(@"settings.support.topic.pill-pairing", nil) : @"pairing_a_sleep_pill",
                                  NSLocalizedString(@"settings.support.topic.wifi", nil) : @"connect_to_wifi",
                                  NSLocalizedString(@"settings.support.topic.timeline", nil) : @"sleep_timeline",

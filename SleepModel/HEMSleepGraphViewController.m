@@ -19,6 +19,7 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
+#import "HEMSleepSummarySlideViewController.h"
 #import "HEMTimelineContainerViewController.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"
@@ -29,7 +30,7 @@
 CGFloat const HEMTimelineHeaderCellHeight = 24.f;
 CGFloat const HEMTimelineFooterCellHeight = 50.f;
 
-@interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
+@interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate, HEMSleepGraphActionDelegate>
 
 @property (nonatomic, retain) HEMSleepGraphView *view;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
@@ -46,6 +47,7 @@ static CGFloat const HEMSleepSummaryCellHeight = 364.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
+static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -64,6 +66,9 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
              properties:@{
                  kHEMAnalyticsEventPropDate : [self dateForNightOfSleep] ?: @"undefined"
              }];
+    if (!hasLoadedBefore) {
+        [self prepareForInitialAnimation];
+    }
 }
 
 - (void)showTutorial {
@@ -85,6 +90,44 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
         UIView *view = [[self containerViewController] view];
         [HEMTutorial showHandholdingForTimelineDaySwitchIfNeededIn:view];
     }
+}
+
+- (void)prepareForInitialAnimation {
+    HEMSleepSummarySlideViewController* controller = (id)self.parentViewController;
+    [controller setSwipingEnabled:NO];
+    self.collectionView.scrollEnabled = NO;
+}
+
+- (void)performInitialAnimation {
+    CGFloat const initialAnimationDelay = 1.f;
+    CGFloat const eventAnimationDuration = 0.45f;
+    CGFloat const eventAnimationCrossfadeRatio = 0.9f;
+    hasLoadedBefore = YES;
+    NSArray *indexPaths = [self.collectionView indexPathsForVisibleItems];
+    NSIndexSet *eventIndexPaths =
+        [indexPaths indexesOfObjectsPassingTest:^BOOL(NSIndexPath *indexPath, NSUInteger idx, BOOL *stop) {
+          return [self.dataSource segmentForEventExistsAtIndexPath:indexPath];
+        }];
+    indexPaths = [[indexPaths objectsAtIndexes:eventIndexPaths] sortedArrayUsingSelector:@selector(compare:)];
+    for (int i = 0; i < indexPaths.count; i++) {
+        NSIndexPath *indexPath = indexPaths[i];
+        __weak HEMSleepEventCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+
+        [UIView animateWithDuration:eventAnimationDuration
+            delay:initialAnimationDelay + (eventAnimationDuration * i * eventAnimationCrossfadeRatio)
+            options:0
+            animations:^{
+              cell.contentContainerView.alpha = 1.f;
+            }
+            completion:NULL];
+    }
+    int64_t delay = eventAnimationDuration * indexPaths.count * NSEC_PER_SEC;
+    __weak HEMSleepSummarySlideViewController* controller = (id)self.parentViewController;
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+      weakSelf.collectionView.scrollEnabled = YES;
+        [controller setSwipingEnabled:YES];
+    });
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -129,12 +172,8 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 #pragma mark HEMSleepGraphActionDelegate
 
-- (BOOL)shouldEnableZoomButton {
-    return [self isViewFullyVisible];
-}
-
-- (BOOL)shouldHideShareButton {
-    return ![self isViewFullyVisible] || [self.dataSource.sleepResult.score integerValue] == 0;
+- (BOOL)shouldHideEventCellContents {
+    return !hasLoadedBefore;
 }
 
 #pragma mark Event Info
@@ -343,6 +382,12 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
     [self loadDataSourceForDate:self.dateForNightOfSleep];
     self.lastNight = [self.dataSource dateIsLastNight];
+    if (!hasLoadedBefore && self.dataSource.sleepResult.message.length > 0) {
+        __weak typeof(self) weakSelf = self;
+        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+            [weakSelf performInitialAnimation];
+        });
+    }
 }
 
 - (void)loadDataSourceForDate:(NSDate *)date {

@@ -8,15 +8,7 @@ typedef NS_ENUM(NSUInteger, HEMSleepGraphCollectionViewSection) {
 
 extern CGFloat const HEMTimelineHeaderCellHeight;
 
-@class HEMSleepGraphView;
-
-@protocol HEMSleepEventActionDelegate <NSObject>
-
-- (void)didTapSummaryButton:(UIButton *)sender;
-
-@end
-
-@interface HEMSleepGraphViewController : UIViewController <HEMSleepEventActionDelegate>
+@interface HEMSleepGraphViewController : UIViewController
 
 /**
  *  The date which is represented by this controller

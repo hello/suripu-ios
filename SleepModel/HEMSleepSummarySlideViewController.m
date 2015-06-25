@@ -102,6 +102,10 @@
                   completion:nil];
 }
 
+- (void)setSwipingEnabled:(BOOL)enabled {
+    self.dataSource = enabled ? self.data : nil;
+}
+
 #pragma mark - Drawer Events
 
 - (void)drawerDidOpen {

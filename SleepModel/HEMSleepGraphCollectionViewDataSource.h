@@ -20,12 +20,10 @@ extern NSString *const HEMSleepEventTypeSleeping;
 
 @protocol HEMSleepGraphActionDelegate <NSObject>
 
-@optional
+@required
 
-- (void)shareButtonTapped:(UIButton *)button;
-- (void)zoomButtonTapped:(UIButton *)sender;
-- (BOOL)shouldHideShareButton;
-- (BOOL)shouldEnableZoomButton;
+- (void)didTapSummaryButton:(UIButton *)button;
+- (BOOL)shouldHideEventCellContents;
 @end
 
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>
@@ -67,8 +65,6 @@ extern NSString *const HEMSleepEventTypeSleeping;
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath *)indexPath;
 
 - (NSUInteger)numberOfSleepSegments;
-
-- (HEMSleepSummaryCollectionViewCell *)sleepSummaryCell;
 
 - (BOOL)dateIsLastNight;
 

@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.0.8.4
+
+New:
+
+* Visual tweaks to the Timeline
+* Re-insert zoomed out view
+* Re-enable share button for Timeline
+* Added the year in the zoomed out view when applicable
+* Shorten the back view bar to match standard navigation bar
+* Zendesk topic is now sent as a custom field rather than a tag
+
+Fixes:
+
+* Copy change from Topic to Select a topic
+* Fixes failure to pull Timeline data when system calendar is set to a non Gregorian calendar
+* Fixes issue setting a user birthdate when system calendar is set to a non Gregorian calendar
+* Fixes issue saving alarms when system calendar is set to a non Gregorian calendar
+* Fixes issue with HealthKit trying to sync when system calendar is set to a non Gregorian calendar
+* Fixes issue requesting new Sleep Questons to display when system calendar is set to a non Gregorian calendar
+
 ## 1.0.8.3
 
 New:

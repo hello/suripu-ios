@@ -30,7 +30,7 @@
 
 const CGFloat BreakdownCellItemHeight = 96.f;
 const CGFloat BreakdownCellSummaryHeight = 120.f;
-const CGFloat BreakdownDismissButtonBottom = 26.f;
+const CGFloat BreakdownDismissButtonBottom = 18.f;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {

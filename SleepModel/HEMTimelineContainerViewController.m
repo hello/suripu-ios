@@ -104,9 +104,12 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
 - (void)setCenterTitleFromDate:(NSDate *)date {
     self.currentlyDisplayedDate = date;
     self.centerTitleLabel.text = [self titleTextForDate:date];
+    SENSleepResult *result = [SENSleepResult sleepResultForDate:self.currentlyDisplayedDate];
+    long score = [result.score longValue];
     [UIView animateWithDuration:0.2f
                      animations:^{
                        self.centerTitleLabel.alpha = 1;
+                       self.shareButton.alpha = score > 0;
                      }];
 }
 

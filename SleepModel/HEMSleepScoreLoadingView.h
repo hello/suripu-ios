@@ -10,5 +10,6 @@
 
 @interface HEMSleepScoreLoadingView : UIView
 
+- (BOOL)isLoading;
 - (void)setLoading:(BOOL)loading;
 @end

@@ -11,12 +11,17 @@
 
 @implementation HEMSleepScoreLoadingView
 
+NSString *const scoreLoadingAnimation = @"scoreLoadingAnimation";
+
 - (void)awakeFromNib {
     self.layer.opacity = 0;
 }
 
+- (BOOL)isLoading {
+    return [self.layer animationForKey:scoreLoadingAnimation] != nil;
+}
+
 - (void)setLoading:(BOOL)loading {
-    NSString *const scoreLoadingAnimation = @"scoreLoadingAnimation";
     if (loading) {
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:NSStringFromSelector(@selector(opacity))];
         animation.autoreverses = YES;

@@ -18,6 +18,8 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMNoDeviceCollectionViewCell.h"
+#import "HEMBounceModalTransition.h"
+#import "HEMAlertViewController.h"
 #import "HEMActionButton.h"
 
 @interface HEMAlarmListViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
@@ -34,6 +36,7 @@
 @property (strong, nonatomic) NSDateFormatter *meridiemFormatter;
 @property (nonatomic, getter=isLoading) BOOL loading;
 @property (nonatomic, getter=hasLoadingFailed) BOOL loadingFailed;
+@property (nonatomic, strong) HEMBounceModalTransition *alarmSaveTransitionDelegate;
 @property (nonatomic, getter=hasNoSense) BOOL noSense;
 @end
 
@@ -59,6 +62,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.alarmSaveTransitionDelegate = [HEMBounceModalTransition new];
+    self.alarmSaveTransitionDelegate.message = NSLocalizedString(@"actions.saved", nil);
     [self configureCollectionView];
     [self configureAddButton];
     [self configureSpinnerView];
@@ -272,6 +277,13 @@ static NSUInteger const HEMAlarmListLimit = 8;
 - (IBAction)flippedEnabledSwitch:(UISwitch *)sender {
     __block SENAlarm *alarm = [self.alarms objectAtIndex:sender.tag];
     BOOL on = [sender isOn];
+    if (on && [HEMAlarmUtils timeIsTooSoonByHour:alarm.hour minute:alarm.minute]) {
+        [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"alarm.save-error.too-soon.title", nil)
+                                                message:NSLocalizedString(@"alarm.save-error.too-soon.message", nil)
+                                             controller:self];
+        sender.on = NO;
+        return;
+    }
     alarm.on = on;
     [HEMAlarmUtils updateAlarmsFromPresentingController:self
                                              completion:^(NSError *error) {
@@ -284,6 +296,8 @@ static NSUInteger const HEMAlarmListLimit = 8;
 
 - (void)presentViewControllerForAlarm:(SENAlarm *)alarm {
     UINavigationController *controller = (UINavigationController *)[HEMMainStoryboard instantiateAlarmNavController];
+    controller.transitioningDelegate = self.alarmSaveTransitionDelegate;
+    controller.modalPresentationStyle = UIModalPresentationCustom;
     HEMAlarmViewController *alarmController = (HEMAlarmViewController *)controller.topViewController;
     alarmController.alarm = alarm;
     alarmController.delegate = self;

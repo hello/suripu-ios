@@ -7,6 +7,20 @@
 
 @implementation HEMAlarmUtils
 
++ (BOOL)timeIsTooSoonByHour:(NSUInteger)alarmHour minute:(NSUInteger)alarmMinute {
+    NSUInteger const tooSoonMinuteLimit = 5;
+    NSDate *now = [NSDate date];
+    NSCalendar *calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSCalendarUnit units = (NSHourCalendarUnit | NSMinuteCalendarUnit);
+    NSDateComponents *components = [calendar components:units fromDate:now];
+    NSUInteger minuteCutOff = components.minute + tooSoonMinuteLimit;
+    BOOL alarmIsInNextHour = (alarmHour == components.hour + 1 || (alarmHour == 0 && components.hour == 23));
+    BOOL tooSoonInSameHour = alarmHour == components.hour && alarmMinute >= components.minute && alarmMinute <= minuteCutOff;
+    BOOL tooSoonInNextHour = alarmIsInNextHour && components.minute > 60 - tooSoonMinuteLimit && alarmMinute < tooSoonMinuteLimit - (60 - components.minute);
+
+    return tooSoonInSameHour || tooSoonInNextHour;
+}
+
 + (NSString*)repeatTextForUnitFlags:(NSUInteger)alarmRepeatFlags
 {
     switch (alarmRepeatFlags) {

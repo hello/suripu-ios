@@ -13,3 +13,4 @@
 #import "SENAPITimeZone.h"
 #import "SENAPITrends.h"
 #import "SENAuthorizationService.h"
+#import "SENAPISupport.h"

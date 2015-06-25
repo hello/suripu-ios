@@ -17,6 +17,11 @@
                         <rect key="frame" x="10" y="0.0" width="270" height="48"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" id="Beb-Om-rjH">
+                                <rect key="frame" x="0.0" y="0.0" width="135" height="24"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="751" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="7kh-Q1-akT">
                                 <rect key="frame" x="52" y="13" width="152" height="22"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -39,6 +44,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <connections>
+                            <outlet property="cornerView" destination="Beb-Om-rjH" id="3jU-Dt-xnM"/>
                             <outlet property="textLabel" destination="7kh-Q1-akT" id="14s-kN-c5k"/>
                             <outlet property="timeLabel" destination="JFc-fa-7rh" id="YhR-bf-sFS"/>
                         </connections>

@@ -10,13 +10,13 @@
 
 @interface HEMActionSheetOptionCell : UITableViewCell
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet UILabel *descriptionLabel;
-@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewWidth;
++ (CGFloat)heightWithTitle:(NSString *)title
+               description:(NSString *)description
+                  maxWidth:(CGFloat)width;
 
-+ (CGFloat)heightWithTitle:(NSString *)title description:(NSString *)description maxWidth:(CGFloat)width;
-
-- (void)setDescription:(NSString *)description;
+- (void)setOptionTitle:(NSString*)title
+             withColor:(UIColor*)titleColor
+                  icon:(UIImage*)icon
+           description:(NSString*)description;
 
 @end

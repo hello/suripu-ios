@@ -28,7 +28,7 @@
 
 @implementation HEMBreakdownViewController
 
-const CGFloat BreakdownCellItemHeight = 96.f;
+const CGFloat BreakdownCellItemHeight = 116.f;
 const CGFloat BreakdownCellSummaryHeight = 120.f;
 const CGFloat BreakdownDismissButtonBottom = 18.f;
 
@@ -245,7 +245,7 @@ const CGFloat BreakdownDismissButtonBottom = 18.f;
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat height = indexPath.row == 0 ? BreakdownCellSummaryHeight : BreakdownCellItemHeight;
+    CGFloat height = indexPath.section == 0 ? BreakdownCellSummaryHeight : BreakdownCellItemHeight;
     return CGSizeMake(CGRectGetWidth(self.view.bounds), height);
 }
 

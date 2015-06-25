@@ -98,8 +98,15 @@ static BOOL hasLoadedBefore = NO;
     self.collectionView.scrollEnabled = NO;
 }
 
+- (void)finishInitialAnimation {
+    hasLoadedBefore = YES;
+    HEMSleepSummarySlideViewController* controller = (id)self.parentViewController;
+    [controller setSwipingEnabled:YES];
+    self.collectionView.scrollEnabled = YES;
+}
+
 - (void)performInitialAnimation {
-    CGFloat const initialAnimationDelay = 1.f;
+    CGFloat const initialAnimationDelay = 0.75f;
     CGFloat const eventAnimationDuration = 0.45f;
     CGFloat const eventAnimationCrossfadeRatio = 0.9f;
     hasLoadedBefore = YES;
@@ -122,11 +129,9 @@ static BOOL hasLoadedBefore = NO;
             completion:NULL];
     }
     int64_t delay = eventAnimationDuration * indexPaths.count * NSEC_PER_SEC;
-    __weak HEMSleepSummarySlideViewController* controller = (id)self.parentViewController;
     __weak typeof(self) weakSelf = self;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
-      weakSelf.collectionView.scrollEnabled = YES;
-        [controller setSwipingEnabled:YES];
+        [weakSelf finishInitialAnimation];
     });
 }
 
@@ -382,11 +387,15 @@ static BOOL hasLoadedBefore = NO;
 
     [self loadDataSourceForDate:self.dateForNightOfSleep];
     self.lastNight = [self.dataSource dateIsLastNight];
-    if (!hasLoadedBefore && self.dataSource.sleepResult.message.length > 0) {
-        __weak typeof(self) weakSelf = self;
-        dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-            [weakSelf performInitialAnimation];
-        });
+    if (!hasLoadedBefore) {
+        if (self.dataSource.sleepResult.score > 0) {
+            __weak typeof(self) weakSelf = self;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.35 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [weakSelf performInitialAnimation];
+            });
+        } else {
+            [self finishInitialAnimation];
+        }
     }
 }
 

@@ -2,6 +2,7 @@
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HEMSleepSummaryPointerGradientView.h"
+#import "HEMSleepScoreLoadingView.h"
 #import "HelloStyleKit.h"
 
 @interface HEMSleepSummaryCollectionViewCell ()
@@ -9,6 +10,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
 @property (weak, nonatomic) IBOutlet UIView *summaryContainerView;
 @property (weak, nonatomic) IBOutlet UIView *messageContainerView;
+@property (weak, nonatomic) IBOutlet HEMSleepScoreLoadingView *loadingView;
 @property (nonatomic, strong) NSAttributedString *sleepScoreLabelText;
 @property (nonatomic, strong) CAGradientLayer *gradientLayer;
 @end
@@ -29,6 +31,15 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 - (void)awakeFromNib {
     [self configureGradientViews];
     self.sleepScoreTextLabel.attributedText = self.sleepScoreLabelText;
+}
+
+- (void)prepareForReuse {
+    [super prepareForReuse];
+    [self.loadingView setLoading:NO];
+}
+
+- (void)setLoading:(BOOL)loading {
+    [self.loadingView setLoading:loading];
 }
 
 - (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated {

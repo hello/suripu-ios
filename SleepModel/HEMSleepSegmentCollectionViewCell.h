@@ -30,9 +30,23 @@ extern CGFloat const HEMSleepLineWidth;
 
 - (UIImage *)lineBorderImageWithColor:(UIColor *)color;
 
+- (void)prepareForEntryAnimation;
+
+- (void)cancelEntryAnimation;
+
+/**
+ *  Animate the appearance of the segment bar
+ *
+ *  @param duration   duration of the animation
+ *  @param delay      time to wait before beginning the animation
+ *  @param completion block invoked at completion
+ */
+- (void)performEntryAnimationWithDuration:(NSTimeInterval)duration
+                                    delay:(NSTimeInterval)delay
+                               completion:(void (^)(BOOL))completion;
+
 @property (nonatomic, getter=isFirstSegment) BOOL firstSegment;
 @property (nonatomic, getter=isLastSegment) BOOL lastSegment;
 @property (nonatomic, readonly) CGFloat fillRatio;
-@property (nonatomic, strong, readonly) UIColor *previousFillColor;
-@property (nonatomic, strong, readonly) UIColor *fillColor;
+@property (nonatomic, getter=isWaitingForAnimation, readonly) BOOL waitingForAnimation;
 @end

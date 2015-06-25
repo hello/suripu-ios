@@ -23,7 +23,7 @@ extern NSString *const HEMSleepEventTypeSleeping;
 @required
 
 - (void)didTapSummaryButton:(UIButton *)button;
-- (BOOL)shouldHideEventCellContents;
+- (BOOL)shouldHideSegmentCellContents;
 @end
 
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>

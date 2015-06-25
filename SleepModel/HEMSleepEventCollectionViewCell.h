@@ -13,4 +13,5 @@
 
 + (NSAttributedString *)attributedMessageFromText:(NSString *)text;
 
+- (void)layoutWithImage:(UIImage *)image message:(NSString *)text time:(NSAttributedString *)timeText;
 @end

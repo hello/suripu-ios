@@ -280,6 +280,11 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMSleepSegmentCollectionViewCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
+    if ([collectionView.delegate respondsToSelector:@selector(shouldHideSegmentCellContents)]) {
+        id<HEMSleepGraphActionDelegate> delegate = (id)collectionView.delegate;
+        if ([delegate shouldHideSegmentCellContents])
+            [cell prepareForEntryAnimation];
+    }
     UIColor *color = nil, *previousColor = nil;
     CGFloat fillRatio = sleepDepth / (float)SENSleepResultSegmentDepthDeep;
     CGFloat previousFillRatio = 0;
@@ -300,14 +305,15 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
         sleepEventCellForItemAtIndexPath:(NSIndexPath *)indexPath {
     HEMSleepEventCollectionViewCell *cell =
-    [collectionView dequeueReusableCellWithReuseIdentifier:sleepEventReuseIdentifier forIndexPath:indexPath];
+        [collectionView dequeueReusableCellWithReuseIdentifier:sleepEventReuseIdentifier forIndexPath:indexPath];
     SENSleepResultSegment *segment = [self sleepSegmentForIndexPath:indexPath];
     if (!segment)
         return cell;
     NSUInteger sleepDepth = segment.sleepDepth;
-    if ([collectionView.delegate respondsToSelector:@selector(shouldHideEventCellContents)]) {
+    if ([collectionView.delegate respondsToSelector:@selector(shouldHideSegmentCellContents)]) {
         id<HEMSleepGraphActionDelegate> delegate = (id)collectionView.delegate;
-        cell.contentContainerView.alpha = [delegate shouldHideEventCellContents] ? 0 : 1;
+        if ([delegate shouldHideSegmentCellContents])
+            [cell prepareForEntryAnimation];
     }
     [cell.eventTypeImageView setImage:[self imageForEventType:segment.eventType]];
     NSAttributedString *timeText = nil;
@@ -315,9 +321,9 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
         && ![segment.eventType isEqualToString:HEMSleepEventTypeAlarm]) {
         timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter useUnit:NO];
     }
-    [cell.contentContainerView
-     setMessageText:[HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message]
-     timeText:timeText];
+    [cell layoutWithImage:[self imageForEventType:segment.eventType]
+                  message:segment.message
+                     time:timeText];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
     cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
     UIColor *previousColor = nil;

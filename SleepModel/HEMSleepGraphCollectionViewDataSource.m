@@ -297,8 +297,8 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     } else {
         previousColor = [UIColor clearColor];
     }
-    [cell setSegmentRatio:fillRatio withFillColor:color previousRatio:previousFillRatio previousColor:previousColor];
     [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
+    [cell setSegmentRatio:fillRatio withFillColor:color previousRatio:previousFillRatio previousColor:previousColor];
     return cell;
 }
 
@@ -336,12 +336,11 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     } else {
         previousColor = [UIColor clearColor];
     }
+    [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
     [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep
             withFillColor:[UIColor colorForSleepDepth:sleepDepth]
             previousRatio:previousRatio
             previousColor:previousColor];
-    [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
-    [cell setNeedsLayout];
     return cell;
 }
 

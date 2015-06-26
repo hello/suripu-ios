@@ -84,7 +84,6 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
     static CGFloat const HEMTimeLabelLineOffset = 8.f;
     static CGFloat const HEMTimeLabelWidth = 30.f;
     CGFloat textInset = HEMTimeLabelLineOffset * 2 + HEMTimeLabelWidth;
-    self.clipsToBounds = NO;
     CGFloat lineYOffset = MIN(CGRectGetHeight(self.bounds) * heightRatio,
                               MAX(0, CGRectGetHeight(self.frame) - HEMSegmentTimeLabelHeight));
     CGFloat labelYOffset = lineYOffset - floorf(HEMSegmentTimeLabelHeight / 2);
@@ -141,9 +140,9 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
         preWidth = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.previousFillRatio);
         width = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.fillRatio);
     }
-    CGRect preRect = CGRectMake(0, CGRectGetMinY(rect), preWidth, HEMSegmentTimeInset);
+    CGRect preRect = CGRectMake(0, 0, preWidth, HEMSegmentTimeInset);
     CGRect fillRect
-        = CGRectMake(0, CGRectGetMinY(rect) + HEMSegmentTimeInset, width, CGRectGetHeight(rect) - HEMSegmentTimeInset);
+        = CGRectMake(0, HEMSegmentTimeInset, width, CGRectGetHeight(rect) - HEMSegmentTimeInset);
     self.fillLayer.frame = fillRect;
     self.preFillLayer.frame = preRect;
 }

@@ -17,11 +17,16 @@ static NSString* const HEMActionSheetOptionColor = @"color";
 static NSString* const HEMActionSheetOptionImage = @"image";
 static NSString* const HEMActionSheetOptionDescription = @"description";
 static NSString* const HEMActionSheetOptionActionBlock = @"action";
+static NSString* const HEMActionSheetOptionConfirmView = @"confirmation";
+static NSString* const HEMActionSheetOptionConfirmDisplayInterval = @"confirm_time";
 
 static CGFloat const HEMActionSheetTitleHorzMargin = 24.0f;
 static CGFloat const HEMActionSheetTitleTopMargin = 28.0f;
 static CGFloat const HEMActionSheetTitleBottomMargin = 4.0f;
 static CGFloat const HEMActionSheetOptionAnimDuration = 0.3f;
+static CGFloat const HEMActionSheetConfirmAnimDuration = 1.0f;
+
+CGFloat const HEMActionSheetDefaultCellHeight = 72.0f;
 
 @interface HEMActionSheetViewController () <UITableViewDataSource, UITableViewDelegate>
 
@@ -63,6 +68,10 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     }
     [[self optionTableView] setSeparatorColor:[HelloStyleKit actionSheetSeparatorColor]];
     [[self optionTableView] setTableFooterView:[[UIView alloc] init]];
+}
+
+- (NSUInteger)numberOfOptions {
+    return [[self orderedOptions] count];
 }
 
 - (void)addOptionWithTitle:(NSString*)optionTitle action:(HEMActionSheetCallback)action {
@@ -107,6 +116,26 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 
 - (void)addDismissAction:(HEMActionSheetCallback)action {
     [self setDismissAction:action];
+}
+
+- (void)addConfirmationView:(UIView*)confirmationView
+                 displayFor:(CGFloat)displayTime
+         forOptionWithTitle:(NSString*)title {
+    
+    if (!title) {
+        return;
+    }
+
+    NSDictionary* existingConfig = [self options][title];
+    NSMutableDictionary* optionsConfig = [existingConfig mutableCopy];
+    
+    if (!optionsConfig) {
+        optionsConfig = [NSMutableDictionary dictionaryWithCapacity:2];
+    }
+    
+    [optionsConfig setValue:confirmationView forKey:HEMActionSheetOptionConfirmView];
+    [optionsConfig setValue:@(displayTime) forKey:HEMActionSheetOptionConfirmDisplayInterval];
+    [[self options] setValue:optionsConfig forKey:title];
 }
 
 - (void)viewDidLoad {
@@ -192,6 +221,48 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     [[self optionTableView] setTableHeaderView:labelContainer];
 }
 
+- (void)fadeOut:(UIView*)outView thenInComes:(UIView*)inView completion:(void(^)(BOOL finished))completion {
+    CGFloat halfDuration = HEMActionSheetConfirmAnimDuration / 2;
+    [UIView animateWithDuration:halfDuration animations:^{
+        [outView setAlpha:0.0f];
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:halfDuration animations:^{
+            [inView setAlpha:1.0f];
+        } completion:completion];
+    }];
+}
+
+- (void)showConfirmation:(UIView*)confirmationView
+             forDuration:(CGFloat)duration
+              withAction:(HEMActionSheetCallback)action {
+    
+    [confirmationView setAlpha:0.0f];
+    
+    UIView* bgView = [[UIView alloc] initWithFrame:[[self optionTableView] frame]];
+    [bgView setBackgroundColor:[UIColor whiteColor]];
+    [bgView addSubview:confirmationView];
+    
+    [[self view] insertSubview:bgView belowSubview:[self optionTableView]];
+    
+    if (action) {
+        action();
+    }
+    
+    [self fadeOut:[self optionTableView] thenInComes:confirmationView completion:^(BOOL finished) {
+        [UIView animateWithDuration:HEMActionSheetOptionAnimDuration
+                              delay:duration
+                            options:UIViewAnimationOptionCurveEaseInOut
+                         animations:^{
+                             CGRect frame = [bgView frame];
+                             frame.origin.y += CGRectGetHeight(frame);
+                             [bgView setFrame:frame];
+                         }
+                         completion:^(BOOL finished) {
+                             [self dismissViewControllerAnimated:NO completion:nil];
+                         }];
+    }];
+}
+
 #pragma mark - UITableViewDelegate / UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -230,16 +301,24 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
     NSString* optionTitle = [self orderedOptions][[indexPath row]];
-    NSDictionary* optionAttributes = [[self options] objectForKey:optionTitle];
+    NSDictionary* optionAttributes = [self options][optionTitle];
+    UIView* confirmationView = optionAttributes[HEMActionSheetOptionConfirmView];
+    
     __block HEMActionSheetCallback action = [optionAttributes objectForKey:HEMActionSheetOptionActionBlock];
     
-    [self hide:^(BOOL finished) {
-        [self dismissViewControllerAnimated:NO completion:^{
-            if (action) {
-                action();
-            }
+    if (confirmationView) {
+        NSNumber* displayTime = optionAttributes[HEMActionSheetOptionConfirmDisplayInterval];
+        [self showConfirmation:confirmationView forDuration:[displayTime floatValue] withAction:action];
+    } else {
+        [self hide:^(BOOL finished) {
+            [self dismissViewControllerAnimated:NO completion:^{
+                if (action) {
+                    action();
+                }
+            }];
         }];
-    }];
+    }
+
 }
 
 #pragma mark - Gestures

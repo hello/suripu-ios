@@ -412,6 +412,7 @@
 		BF645D941A9FB0E90051C120 /* HEMBounceModalTransition.m in Sources */ = {isa = PBXBuildFile; fileRef = BF645D931A9FB0E90051C120 /* HEMBounceModalTransition.m */; };
 		BF645D971A9FB3A70051C120 /* HEMTransitionDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = BF645D961A9FB3A70051C120 /* HEMTransitionDelegate.m */; };
 		BF658A491B3C9AAC003DDF0F /* HEMSupportTopicDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF658A481B3C9AAC003DDF0F /* HEMSupportTopicDataSource.m */; };
+		BF658A4C1B3DEF02003DDF0F /* HEMEventAdjustConfirmationView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF658A4B1B3DEF02003DDF0F /* HEMEventAdjustConfirmationView.m */; };
 		BF664A971ACC61AF003355D2 /* HEMSystemAlertControllerSpec.m in Sources */ = {isa = PBXBuildFile; fileRef = BF664A961ACC61AF003355D2 /* HEMSystemAlertControllerSpec.m */; };
 		BF6E3A9A1A2D27450019C110 /* HEMActionView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A991A2D27450019C110 /* HEMActionView.m */; };
 		BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6E3A9C1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m */; };
@@ -1287,6 +1288,8 @@
 		BF645D961A9FB3A70051C120 /* HEMTransitionDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTransitionDelegate.m; sourceTree = "<group>"; };
 		BF658A471B3C9AAC003DDF0F /* HEMSupportTopicDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSupportTopicDataSource.h; sourceTree = "<group>"; };
 		BF658A481B3C9AAC003DDF0F /* HEMSupportTopicDataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSupportTopicDataSource.m; sourceTree = "<group>"; };
+		BF658A4A1B3DEF02003DDF0F /* HEMEventAdjustConfirmationView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMEventAdjustConfirmationView.h; sourceTree = "<group>"; };
+		BF658A4B1B3DEF02003DDF0F /* HEMEventAdjustConfirmationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMEventAdjustConfirmationView.m; sourceTree = "<group>"; };
 		BF664A961ACC61AF003355D2 /* HEMSystemAlertControllerSpec.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSystemAlertControllerSpec.m; sourceTree = "<group>"; };
 		BF6E3A981A2D27450019C110 /* HEMActionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMActionView.h; sourceTree = "<group>"; };
 		BF6E3A991A2D27450019C110 /* HEMActionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMActionView.m; sourceTree = "<group>"; };
@@ -2400,6 +2403,8 @@
 				8A0350FC1B2CAAD60077E6E6 /* HEMTimelineSummaryTitleLabel.m */,
 				8A7214391A1E6CEC008B59C4 /* HEMTimelineTopButton.h */,
 				8A72143A1A1E6CEC008B59C4 /* HEMTimelineTopButton.m */,
+				BF658A4A1B3DEF02003DDF0F /* HEMEventAdjustConfirmationView.h */,
+				BF658A4B1B3DEF02003DDF0F /* HEMEventAdjustConfirmationView.m */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -4092,6 +4097,7 @@
 				8A7D80231A40EADE00B0BFD7 /* NSString+HEMUtils.m in Sources */,
 				BF5D532B1A26749F0090DD6A /* HEMActivityIndicatorView.m in Sources */,
 				8AC276AD1A3CE73E00B082D9 /* HEMInsightFeedViewController.m in Sources */,
+				BF658A4C1B3DEF02003DDF0F /* HEMEventAdjustConfirmationView.m in Sources */,
 				8A9D380B1A0B0B0900150FAB /* HEMGraphSectionOverlayView.m in Sources */,
 				8AA1E6351A8E6D0E00590EB6 /* HEMPopupView.m in Sources */,
 				8A8288B61A76DDE60043B1D1 /* HEMSleepSummaryPointerGradientView.m in Sources */,
@@ -4468,6 +4474,8 @@
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PROVISIONING_PROFILE = "";
+				SENSE_API_URL = "https://dev-api.hello.is/v1";
+				SENSE_CLIENT_ID = iphone_pill;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

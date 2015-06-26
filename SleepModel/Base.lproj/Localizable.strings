@@ -386,6 +386,8 @@
 "sleep-event.feedback.failed.title" = "Unable to send feedback";
 "sleep-event.feedback.failed.message" = "Please try again later";
 "sleep-event.feedback.success.message" = "Thank you";
+"sleep-event.adjust.confirm.title.sense-learns" = "Sense learns.";
+"sleep-event.adjust.confirm.subtitle.sense-learns" = "Making connections to your timeline helps to improve the algorithsm Sense uses to detect and analyze your sleep.";
 
 // sleep events
 "sleep-event.type.wake_up.name" = "Woke up";

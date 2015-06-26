@@ -8,9 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+extern CGFloat const HEMActionSheetDefaultCellHeight;
+
 typedef void(^HEMActionSheetCallback)(void);
 
 @interface HEMActionSheetViewController : UIViewController
+
+@property (nonatomic, assign, readonly) NSUInteger numberOfOptions;
 
 /**
  * @method addOptionWithTitle:action:
@@ -44,6 +48,23 @@ typedef void(^HEMActionSheetCallback)(void);
  * the background.
  */
 - (void)addDismissAction:(HEMActionSheetCallback)action;
+
+/**
+ * @method addConfirmationView:displayFor:forOptionWithTitle:
+ *
+ * @discussion
+ * Add a confirmation message to be displayed upon selection an option.  The
+ * confirmation will be shown for the display time specified, but only after
+ * the action block for the option is fired.  This is optional
+ *
+ * @param confirmationView: the view to be displayed.  The view will be adjusted
+ *                          at run time to the size of the actionsheet itself.
+ * @param displayTime:      the duration to display the view for
+ * @param title:            the option title this confirmation is meant for
+ */
+- (void)addConfirmationView:(UIView*)confirmationView
+                 displayFor:(CGFloat)displayTime
+         forOptionWithTitle:(NSString*)title;
 
 /**
  * @method show

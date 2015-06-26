@@ -26,6 +26,7 @@
 #import "HEMZoomAnimationTransitionDelegate.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
+#import "HEMEventAdjustConfirmationView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 60.f;
@@ -44,6 +45,9 @@ CGFloat const HEMTimelineFooterCellHeight = 60.f;
 
 @implementation HEMSleepGraphViewController
 
+static NSString* const HEMSleepGraphSenseLearnsSeenPreference = @"pref_sense_learns";
+static CGFloat const HEMSleepGraphActionSheetConfirmDurationSenseLearns = 3.0f;
+static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 1.0f;
 static CGFloat const HEMSleepSummaryCellHeight = 364.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
@@ -207,26 +211,88 @@ static BOOL hasLoadedBefore = NO;
     [self presentViewController:navController animated:YES completion:NULL];
 }
 
+- (UIView*)confirmationViewForActionSheetWithOptions:(NSInteger)numberOfOptions
+                                   hasAdjustedBefore:(BOOL)adjustedBefore {
+    
+    NSString* title = nil, *subtitle = nil;
+    CGRect confirmFrame = CGRectZero;
+    confirmFrame.size.height = numberOfOptions * HEMActionSheetDefaultCellHeight;
+    confirmFrame.size.width = CGRectGetWidth([[self view] bounds]);
+    
+    if (!adjustedBefore) {
+        title = NSLocalizedString(@"sleep-event.adjust.confirm.title.sense-learns", nil);
+        subtitle = NSLocalizedString(@"sleep-event.adjust.confirm.subtitle.sense-learns", nil);
+    } else {
+        title = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
+    }
+    
+    HEMEventAdjustConfirmationView* confirmView
+        = [[HEMEventAdjustConfirmationView alloc] initWithTitle:title
+                                                       subtitle:subtitle
+                                                          frame:confirmFrame];
+    return confirmView;
+}
+
+- (BOOL)hasSeenSenseLearnsConfirmation {
+    SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+    return [[prefs sessionPreferenceForKey:HEMSleepGraphSenseLearnsSeenPreference] boolValue];
+}
+
+- (void)markSenseLearnsSeen {
+    if (![self hasSeenSenseLearnsConfirmation]) {
+        SENLocalPreferences* prefs = [SENLocalPreferences sharedPreferences];
+        [prefs setSessionPreference:@(YES) forKey:HEMSleepGraphSenseLearnsSeenPreference];
+    }
+}
+
 - (void)activateActionSheetAtIndexPath:(NSIndexPath *)indexPath {
     SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    if (![self canAdjustEventWithType:segment.eventType]) {
+        return; // don't show, per design
+    }
+    
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
     [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    if ([self canAdjustEventWithType:segment.eventType]) {
-        [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
-                       titleColor:[UIColor darkGrayColor]
-                      description:nil
-                        imageName:@"timeline_action_adjust"
-                           action:^{
-                             [self updateTimeOfEventOnSegment:segment];
-                           }];
-    } else {
-        [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.none.title", nil)
-                       titleColor:[UIColor grayColor]
-                      description:nil
-                        imageName:nil
-                           action:^{
-                           }];
-    }
+    
+    NSString* approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
+    [sheet addOptionWithTitle:approveTitle
+                   titleColor:[UIColor darkGrayColor]
+                  description:nil
+                    imageName:@"timeline_action_approve"
+                       action:^{
+                           [self markSenseLearnsSeen];
+                           // TODO (jimmy): not yet implemented, but we want to show it for now
+                       }];
+
+    [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
+                   titleColor:[UIColor darkGrayColor]
+                  description:nil
+                    imageName:@"timeline_action_adjust"
+                       action:^{
+                           [self updateTimeOfEventOnSegment:segment];
+                       }];
+    
+    NSString* deleteTitle = NSLocalizedString(@"sleep-event.action.delete.title", nil);
+    [sheet addOptionWithTitle:deleteTitle
+                   titleColor:[UIColor darkGrayColor]
+                  description:nil
+                    imageName:@"timeline_action_delete"
+                       action:^{
+                           [self markSenseLearnsSeen];
+                           // TODO (jimmy): not yet implemented, but we want to show it for now
+                       }];
+    
+    // confirmations
+    BOOL seenSenseLearns = [self hasSeenSenseLearnsConfirmation];
+    CGFloat confirmDuration
+        = !seenSenseLearns
+        ? HEMSleepGraphActionSheetConfirmDurationSenseLearns
+        : HEMSleepGraphActionSheetConfirmDuration;
+    
+    UIView* confirmationView = [self confirmationViewForActionSheetWithOptions:[sheet numberOfOptions]
+                                                             hasAdjustedBefore:seenSenseLearns];
+    [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:approveTitle];
+    [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:deleteTitle];
 
     UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     if (![root respondsToSelector:@selector(presentationController)]) {

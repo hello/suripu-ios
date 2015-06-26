@@ -104,6 +104,22 @@ static CGFloat const HEMAdjustConfirmTextSpacing = 10.0f;
     }
 }
 
+- (void)setAlpha:(CGFloat)alpha {
+    if (alpha == 0.0f) {
+        [[self iconView] setTransform:CGAffineTransformMakeScale(0.1f, 0.1f)];
+    } else if (alpha < 1.0f) {
+        [[self iconView] setTransform:CGAffineTransformMakeScale(alpha, alpha)];
+    } else {
+        UIViewAnimationOptions options = UIViewAnimationOptionOverrideInheritedDuration|UIViewAnimationOptionOverrideInheritedCurve;
+        [UIView animateWithDuration:0.6f delay:0.0f usingSpringWithDamping:0.6f initialSpringVelocity:0.0f options:options animations:^{
+            [[self iconView] setTransform:CGAffineTransformIdentity];
+        } completion:nil];
+    }
+    [[self iconView] setAlpha:alpha];
+    [[self titleLabel] setAlpha:alpha];
+    [[self subtitleLabel] setAlpha:alpha];
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
     

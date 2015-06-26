@@ -16,4 +16,6 @@
 
 - (void)reloadDataWithController:(UIViewController*)controller;
 
+- (void)setSwipingEnabled:(BOOL)enabled;
+
 @end

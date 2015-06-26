@@ -25,10 +25,10 @@ CGFloat const HEMEventTimeLabelWidth = 40.f;
 
 + (CGSize)sizeWithAttributedText:(NSAttributedString *)text timeText:(NSAttributedString *)time {
     CGRect screenSize = [[UIScreen mainScreen] bounds];
-    CGFloat textWidth = CGRectGetWidth(screenSize) - HEMEventBubbleTextWidthOffset
-                        - [time sizeWithWidth:HEMEventTimeLabelWidth].width;
+    CGFloat screenWidth = CGRectGetWidth(screenSize);
+    CGFloat textWidth = screenWidth - HEMEventBubbleTextWidthOffset - [time sizeWithWidth:HEMEventTimeLabelWidth].width;
     CGSize textSize = [text sizeWithWidth:textWidth];
-    CGFloat width = CGRectGetWidth(screenSize) - HEMEventBubbleWidthOffset;
+    CGFloat width = screenWidth - HEMEventBubbleWidthOffset;
     CGFloat height = MAX(textSize.height + HEMEventBubbleTextHeightOffset, HEMEventBubbleMinimumHeight);
     return CGSizeMake(width, height);
 }
@@ -50,7 +50,6 @@ CGFloat const HEMEventTimeLabelWidth = 40.f;
     self.textLabel.attributedText = message;
     self.timeLabel.attributedText = time;
     [self invalidateIntrinsicContentSize];
-    [self setNeedsLayout];
 }
 
 @end

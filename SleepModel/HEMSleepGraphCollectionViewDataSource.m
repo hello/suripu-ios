@@ -186,11 +186,6 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     return self.sleepResult.segments.count;
 }
 
-- (HEMSleepSummaryCollectionViewCell *)sleepSummaryCell {
-    NSIndexPath *indexPath = [NSIndexPath indexPathForItem:0 inSection:HEMSleepGraphCollectionViewSummarySection];
-    return (id)[self.collectionView cellForItemAtIndexPath:indexPath];
-}
-
 #pragma mark - Loading
 
 - (BOOL)shouldShowLoadingView {
@@ -269,6 +264,7 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSInteger score = [self.sleepResult.score integerValue];
     NSDictionary *attributes = [HEMMarkdown attributesForTimelineMessageText];
     cell.messageLabel.attributedText = [markdown_to_attr_string(self.sleepResult.message, 0, attributes) trim];
+    [cell setLoading:self.sleepResult.message.length == 0];
     [cell setSleepScore:score animated:YES];
     if ([collectionView.delegate respondsToSelector:@selector(didTapSummaryButton:)]) {
         [cell.summaryButton addTarget:collectionView.delegate
@@ -284,6 +280,11 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMSleepSegmentCollectionViewCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
+    if ([collectionView.delegate respondsToSelector:@selector(shouldHideSegmentCellContents)]) {
+        id<HEMSleepGraphActionDelegate> delegate = (id)collectionView.delegate;
+        if ([delegate shouldHideSegmentCellContents])
+            [cell prepareForEntryAnimation];
+    }
     UIColor *color = nil, *previousColor = nil;
     CGFloat fillRatio = sleepDepth / (float)SENSleepResultSegmentDepthDeep;
     CGFloat previousFillRatio = 0;
@@ -298,6 +299,49 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     }
     [cell setSegmentRatio:fillRatio withFillColor:color previousRatio:previousFillRatio previousColor:previousColor];
     [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
+    return cell;
+}
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
+        sleepEventCellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    HEMSleepEventCollectionViewCell *cell =
+        [collectionView dequeueReusableCellWithReuseIdentifier:sleepEventReuseIdentifier forIndexPath:indexPath];
+    SENSleepResultSegment *segment = [self sleepSegmentForIndexPath:indexPath];
+    if (!segment)
+        return cell;
+    NSUInteger sleepDepth = segment.sleepDepth;
+    if ([collectionView.delegate respondsToSelector:@selector(shouldHideSegmentCellContents)]) {
+        id<HEMSleepGraphActionDelegate> delegate = (id)collectionView.delegate;
+        if ([delegate shouldHideSegmentCellContents])
+            [cell prepareForEntryAnimation];
+    }
+    [cell.eventTypeImageView setImage:[self imageForEventType:segment.eventType]];
+    NSAttributedString *timeText = nil;
+    if (![segment.eventType isEqualToString:HEMSleepEventTypeSmartAlarm]
+        && ![segment.eventType isEqualToString:HEMSleepEventTypeAlarm]) {
+        timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter useUnit:NO];
+    }
+    [cell layoutWithImage:[self imageForEventType:segment.eventType]
+                  message:segment.message
+                     time:timeText];
+    cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
+    cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
+    UIColor *previousColor = nil;
+    CGFloat previousRatio = 0;
+    if (indexPath.row > 0) {
+        NSIndexPath *previousIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
+        SENSleepResultSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
+        previousColor = [UIColor colorForSleepDepth:previousSegment.sleepDepth];
+        previousRatio = previousSegment.sleepDepth / (float)SENSleepResultSegmentDepthDeep;
+    } else {
+        previousColor = [UIColor clearColor];
+    }
+    [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep
+            withFillColor:[UIColor colorForSleepDepth:sleepDepth]
+            previousRatio:previousRatio
+            previousColor:previousColor];
+    [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
+    [cell setNeedsLayout];
     return cell;
 }
 
@@ -356,45 +400,6 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     HEMSplitTextObject *obj = [[HEMSplitTextObject alloc] initWithValue:timeText unit:unit];
     NSDictionary *attrs = [HEMMarkdown attributesForTimelineTimeLabelsText][@(PARA)];
     return [self.inlineNumberFormatter attributedStringForObjectValue:obj withDefaultAttributes:attrs];
-}
-
-- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
-        sleepEventCellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    HEMSleepEventCollectionViewCell *cell =
-        [collectionView dequeueReusableCellWithReuseIdentifier:sleepEventReuseIdentifier forIndexPath:indexPath];
-    SENSleepResultSegment *segment = [self sleepSegmentForIndexPath:indexPath];
-    if (!segment)
-        return cell;
-    NSUInteger sleepDepth = segment.sleepDepth;
-
-    [cell.eventTypeImageView setImage:[self imageForEventType:segment.eventType]];
-    NSAttributedString *timeText = nil;
-    if (![segment.eventType isEqualToString:HEMSleepEventTypeSmartAlarm]
-        && ![segment.eventType isEqualToString:HEMSleepEventTypeAlarm]) {
-        timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter useUnit:NO];
-    }
-    [cell.contentContainerView
-        setMessageText:[HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message]
-              timeText:timeText];
-    cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
-    cell.lastSegment = [self.sleepResult.segments indexOfObject:segment] == self.sleepResult.segments.count - 1;
-    UIColor *previousColor = nil;
-    CGFloat previousRatio = 0;
-    if (indexPath.row > 0) {
-        NSIndexPath *previousIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
-        SENSleepResultSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
-        previousColor = [UIColor colorForSleepDepth:previousSegment.sleepDepth];
-        previousRatio = previousSegment.sleepDepth / (float)SENSleepResultSegmentDepthDeep;
-    } else {
-        previousColor = [UIColor clearColor];
-    }
-    [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep
-            withFillColor:[UIColor colorForSleepDepth:sleepDepth]
-            previousRatio:previousRatio
-            previousColor:previousColor];
-    [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
-    [cell setNeedsLayout];
-    return cell;
 }
 
 #pragma mark - Data Parsing

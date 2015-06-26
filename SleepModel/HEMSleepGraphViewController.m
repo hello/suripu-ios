@@ -19,6 +19,7 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
+#import "HEMSleepSummarySlideViewController.h"
 #import "HEMTimelineContainerViewController.h"
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"
@@ -26,10 +27,11 @@
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 
-CGFloat const HEMTimelineHeaderCellHeight = 24.f;
-CGFloat const HEMTimelineFooterCellHeight = 50.f;
+CGFloat const HEMTimelineHeaderCellHeight = 8.f;
+CGFloat const HEMTimelineFooterCellHeight = 60.f;
 
-@interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
+@interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate,
+                                           HEMSleepGraphActionDelegate>
 
 @property (nonatomic, retain) HEMSleepGraphView *view;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
@@ -46,11 +48,12 @@ static CGFloat const HEMSleepSummaryCellHeight = 364.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
+static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureCollectionView];
-    [self reloadData];
+    [self loadData];
 
     self.dataVerifyTransitionDelegate = [HEMBounceModalTransition new];
     self.dataVerifyTransitionDelegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
@@ -64,6 +67,9 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
              properties:@{
                  kHEMAnalyticsEventPropDate : [self dateForNightOfSleep] ?: @"undefined"
              }];
+    if (!hasLoadedBefore) {
+        [self prepareForInitialAnimation];
+    }
 }
 
 - (void)showTutorial {
@@ -127,14 +133,65 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-#pragma mark HEMSleepGraphActionDelegate
+#pragma mark Initial load animation
 
-- (BOOL)shouldEnableZoomButton {
-    return [self isViewFullyVisible];
+- (void)prepareForInitialAnimation {
+    HEMSleepSummarySlideViewController *controller = (id)self.parentViewController;
+    [controller setSwipingEnabled:NO];
+    self.collectionView.scrollEnabled = NO;
 }
 
-- (BOOL)shouldHideShareButton {
-    return ![self isViewFullyVisible] || [self.dataSource.sleepResult.score integerValue] == 0;
+- (void)finishInitialAnimation {
+    hasLoadedBefore = YES;
+    HEMSleepSummarySlideViewController *controller = (id)self.parentViewController;
+    [controller setSwipingEnabled:YES];
+    self.collectionView.scrollEnabled = YES;
+}
+
+- (void)performInitialAnimation {
+    CGFloat const initialAnimationDelay = 0.75f;
+    CGFloat const eventAnimationDuration = 0.45f;
+    CGFloat const barEntryAnimationDuration = 1.f;
+    CGFloat const eventAnimationCrossfadeRatio = 0.9f;
+    hasLoadedBefore = YES;
+    NSArray *indexPaths =
+        [[self.collectionView indexPathsForVisibleItems] sortedArrayUsingSelector:@selector(compare:)];
+
+    int eventsFound = 0;
+    for (int i = 0; i < indexPaths.count; i++) {
+        NSIndexPath *indexPath = indexPaths[i];
+        if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
+            continue;
+        HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+        void (^completion)(BOOL) = NULL;
+        if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
+            completion = ^(BOOL complete) {
+              HEMSleepEventCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+              [UIView
+                  animateWithDuration:eventAnimationDuration
+                                delay:initialAnimationDelay
+                                      + (eventAnimationDuration * eventsFound * eventAnimationCrossfadeRatio)
+                              options:(UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionCurveEaseInOut)
+                           animations:^{
+                             cell.contentContainerView.alpha = 1.f;
+                           }
+                           completion:NULL];
+            };
+            eventsFound++;
+        }
+        [cell performEntryAnimationWithDuration:barEntryAnimationDuration delay:0.5f completion:completion];
+    }
+    int64_t delay = eventAnimationDuration * MAX(0, eventsFound - 1) * NSEC_PER_SEC;
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+      [weakSelf finishInitialAnimation];
+    });
+}
+
+#pragma mark HEMSleepGraphActionDelegate
+
+- (BOOL)shouldHideSegmentCellContents {
+    return !hasLoadedBefore;
 }
 
 #pragma mark Event Info
@@ -337,12 +394,28 @@ static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
 
 #pragma mark UICollectionViewDelegate
 
-- (void)reloadData {
+- (void)loadData {
     if (![SENAuthorizationService isAuthorized])
         return;
 
     [self loadDataSourceForDate:self.dateForNightOfSleep];
     self.lastNight = [self.dataSource dateIsLastNight];
+}
+
+- (void)reloadData {
+    [self loadData];
+    if (!hasLoadedBefore) {
+        hasLoadedBefore = YES;
+        if (self.dataSource.sleepResult.score > 0) {
+            __weak typeof(self) weakSelf = self;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(),
+                           ^{
+                             [weakSelf performInitialAnimation];
+                           });
+        } else {
+            [self finishInitialAnimation];
+        }
+    }
 }
 
 - (void)loadDataSourceForDate:(NSDate *)date {

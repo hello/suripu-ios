@@ -9,4 +9,5 @@
 @property (weak, nonatomic) IBOutlet UIButton* summaryButton;
 
 - (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated;
+- (void)setLoading:(BOOL)loading;
 @end

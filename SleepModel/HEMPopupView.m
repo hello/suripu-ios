@@ -46,14 +46,16 @@ static CGFloat const HEMPopupMargin = 20.f;
 }
 
 - (void)drawRect:(CGRect)rect {
-    [[UIColor whiteColor] setFill];
-    [[UIColor colorWithWhite:0.4f alpha:0.3f] setStroke];
     CGFloat minX = CGRectGetMinX(rect);
     CGFloat minY = CGRectGetMinY(rect);
     CGFloat boxHeight = CGRectGetHeight(rect) - HEMPopupPointerHeight;
-    CGRect containerRect = CGRectMake(minX, minY, CGRectGetWidth(rect), boxHeight);
+    CGRect containerRect = CGRectInset(CGRectMake(minX, minY, CGRectGetWidth(rect), boxHeight), 2, 2);
+    CGRect outerRect = CGRectInset(containerRect, -1, -1);
     UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRoundedRect:containerRect cornerRadius:4];
-    [rectanglePath stroke];
+    UIBezierPath *outerPath = [UIBezierPath bezierPathWithRoundedRect:outerRect cornerRadius:4];
+    [[[HelloStyleKit tintColor] colorWithAlphaComponent:0.15f] setFill];
+    [outerPath fill];
+    [[UIColor whiteColor] setFill];
     [rectanglePath fill];
 }
 

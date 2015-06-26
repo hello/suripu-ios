@@ -13,8 +13,8 @@ CGFloat const HEMSleepLineWidth = 1.f;
 @property (nonatomic, readwrite) CGFloat fillRatio;
 @property (nonatomic, readwrite) CGFloat previousFillRatio;
 @property (nonatomic, strong) NSMutableArray *timeViews;
-@property (nonatomic, strong) UIColor* fillColor;
-@property (nonatomic, strong) UIColor* preFillColor;
+@property (nonatomic, strong) UIColor *fillColor;
+@property (nonatomic, strong) UIColor *preFillColor;
 @end
 
 @implementation HEMSleepSegmentCollectionViewCell
@@ -44,8 +44,7 @@ static CGFloat const HEMSegmentBorderWidth = 2.f;
 - (void)cancelEntryAnimation {
 }
 
-- (void)performEntryAnimationWithDuration:(NSTimeInterval)duration
-                                    delay:(NSTimeInterval)delay {
+- (void)performEntryAnimationWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay {
 }
 
 - (void)removeAllTimeLabels {
@@ -116,13 +115,24 @@ static CGFloat const HEMSegmentBorderWidth = 2.f;
     CGFloat preWidth = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.previousFillRatio);
     CGFloat width = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.fillRatio);
     CGRect preRect = CGRectMake(0, 0, preWidth, HEMSegmentTimeInset);
-    CGRect fillRect
-    = CGRectMake(0, HEMSegmentTimeInset, width, CGRectGetHeight(rect) - HEMSegmentTimeInset);
+    CGRect fillRect = CGRectMake(0, HEMSegmentTimeInset, width, CGRectGetHeight(rect) - HEMSegmentTimeInset);
     [self.fillColor setFill];
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextFillRect(ctx, fillRect);
     [self.preFillColor setFill];
     CGContextFillRect(ctx, preRect);
+
+    CGGradientRef gradient = [HelloStyleKit timelineBarGradient].CGGradient;
+    CGContextSaveGState(ctx);
+    CGContextAddRect(ctx, fillRect);
+    CGContextClip(ctx);
+    CGContextDrawLinearGradient(ctx, gradient, CGPointZero, CGPointMake(CGRectGetMaxX(fillRect), 0), 0);
+    CGContextRestoreGState(ctx);
+    CGContextSaveGState(ctx);
+    CGContextAddRect(ctx, preRect);
+    CGContextClip(ctx);
+    CGContextDrawLinearGradient(ctx, gradient, CGPointZero, CGPointMake(CGRectGetMaxX(preRect), 0), 0);
+    CGContextRestoreGState(ctx);
 }
 
 @end

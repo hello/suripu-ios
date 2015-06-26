@@ -408,7 +408,6 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)configureCollectionView {
     self.collectionView.collectionViewLayout = [HEMFadingParallaxLayout new];
-    self.collectionView.backgroundColor = [HelloStyleKit lightTintColor];
     self.collectionView.delegate = self;
 }
 

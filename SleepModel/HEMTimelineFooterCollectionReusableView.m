@@ -11,10 +11,8 @@
 
 @implementation HEMTimelineFooterCollectionReusableView
 
-- (void)drawRect:(CGRect)rect {
-    CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextDrawLinearGradient(ctx, [HelloStyleKit timelineGradient].CGGradient, CGPointMake(CGRectGetMaxX(rect), 0),
-                                CGPointZero, 0);
+- (void)awakeFromNib {
+    self.backgroundColor = [HelloStyleKit timelineGradientColor];
 }
 
 @end

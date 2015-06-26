@@ -39,6 +39,22 @@
     self.contentContainerView.alpha = 0;
 }
 
+- (void)cancelEntryAnimation {
+    [super cancelEntryAnimation];
+    self.contentContainerView.alpha = 1;
+}
+
+- (void)performEntryAnimationWithDuration:(NSTimeInterval)duration
+                                    delay:(NSTimeInterval)delay {
+    [UIView animateWithDuration:duration
+                          delay:delay
+                        options:0
+                     animations:^{
+                       self.contentContainerView.alpha = 1.f;
+                     }
+                     completion:NULL];
+}
+
 - (void)adjustContentsWithRatio:(CGFloat)ratioFromCenter {
     CGFloat const minContainerViewScale = 0.9;
     CGFloat const maxContainerViewTop = 10.f;

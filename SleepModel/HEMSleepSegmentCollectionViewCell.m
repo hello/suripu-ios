@@ -13,9 +13,8 @@ CGFloat const HEMSleepLineWidth = 1.f;
 @property (nonatomic, readwrite) CGFloat fillRatio;
 @property (nonatomic, readwrite) CGFloat previousFillRatio;
 @property (nonatomic, strong) NSMutableArray *timeViews;
-@property (nonatomic, getter=isWaitingForAnimation, readwrite) BOOL waitingForAnimation;
-@property (nonatomic, strong) CALayer *preFillLayer;
-@property (nonatomic, strong) CALayer *fillLayer;
+@property (nonatomic, strong) UIColor* fillColor;
+@property (nonatomic, strong) UIColor* preFillColor;
 @end
 
 @implementation HEMSleepSegmentCollectionViewCell
@@ -26,50 +25,27 @@ static CGFloat const HEMSegmentBorderWidth = 2.f;
 - (void)awakeFromNib {
     self.opaque = YES;
     self.timeViews = [NSMutableArray new];
-    self.fillLayer = [CALayer new];
-    self.fillLayer.backgroundColor = [UIColor clearColor].CGColor;
-    self.preFillLayer = [CALayer new];
-    self.preFillLayer.backgroundColor = [UIColor clearColor].CGColor;
-    [self.layer insertSublayer:self.fillLayer atIndex:0];
-    [self.layer insertSublayer:self.preFillLayer atIndex:0];
+    self.backgroundColor = [HelloStyleKit timelineGradientColor];
 }
 
 - (void)prepareForReuse {
     [super prepareForReuse];
     self.clipsToBounds = YES;
-    self.waitingForAnimation = NO;
-    self.fillLayer.backgroundColor = [UIColor clearColor].CGColor;
-    self.fillLayer.frame = CGRectZero;
-    self.preFillLayer.backgroundColor = [UIColor clearColor].CGColor;
-    self.preFillLayer.frame = CGRectZero;
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    [self updateFillFrames];
+- (void)setNeedsLayout {
+    [super setNeedsLayout];
+    [self setNeedsDisplay];
 }
 
 - (void)prepareForEntryAnimation {
-    self.waitingForAnimation = YES;
-    [self updateFillFrames];
 }
 
 - (void)cancelEntryAnimation {
-    self.waitingForAnimation = NO;
-    [self updateFillFrames];
 }
 
 - (void)performEntryAnimationWithDuration:(NSTimeInterval)duration
-                                    delay:(NSTimeInterval)delay
-                               completion:(void (^)(BOOL))completion {
-    self.waitingForAnimation = NO;
-    [UIView animateWithDuration:duration
-                          delay:delay
-                        options:(UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionCurveEaseInOut)
-                     animations:^{
-                       [self updateFillFrames];
-                     }
-                     completion:completion];
+                                    delay:(NSTimeInterval)delay {
 }
 
 - (void)removeAllTimeLabels {
@@ -126,35 +102,27 @@ static CGFloat const HEMSegmentBorderWidth = 2.f;
           previousRatio:(CGFloat)previousRatio
           previousColor:(UIColor *)previousColor {
     self.fillRatio = MIN(ratio, 1.0);
+    self.fillColor = color;
+    self.preFillColor = previousColor ?: [UIColor clearColor];
     self.previousFillRatio = previousRatio;
-    self.fillLayer.backgroundColor = color.CGColor;
-    self.preFillLayer.backgroundColor = previousColor.CGColor;
-    [self updateFillFrames];
-}
-
-- (void)updateFillFrames {
-    CGFloat const HEMSegmentTimeInset = 12.f;
-    CGFloat const HEMSegmentMinimumWidth = 32.f;
-    CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
-    CGRect rect = self.bounds;
-    CGFloat maximumFillWidth = CGRectGetWidth(rect) * HEMSegmentMaximumWidthRatio;
-    CGFloat preWidth = 0, width = 0;
-    if (![self isWaitingForAnimation]) {
-        preWidth = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.previousFillRatio);
-        width = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.fillRatio);
-    }
-    CGRect preRect = CGRectMake(0, 0, preWidth, HEMSegmentTimeInset);
-    CGRect fillRect
-        = CGRectMake(0, HEMSegmentTimeInset, width, CGRectGetHeight(rect) - HEMSegmentTimeInset);
-    self.fillLayer.frame = fillRect;
-    self.preFillLayer.frame = preRect;
+    [self setNeedsDisplay];
 }
 
 - (void)drawRect:(CGRect)rect {
-    [super drawRect:rect];
+    CGFloat const HEMSegmentTimeInset = 12.f;
+    CGFloat const HEMSegmentMinimumWidth = 32.f;
+    CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
+    CGFloat maximumFillWidth = CGRectGetWidth(rect) * HEMSegmentMaximumWidthRatio;
+    CGFloat preWidth = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.previousFillRatio);
+    CGFloat width = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.fillRatio);
+    CGRect preRect = CGRectMake(0, 0, preWidth, HEMSegmentTimeInset);
+    CGRect fillRect
+    = CGRectMake(0, HEMSegmentTimeInset, width, CGRectGetHeight(rect) - HEMSegmentTimeInset);
+    [self.fillColor setFill];
     CGContextRef ctx = UIGraphicsGetCurrentContext();
-    CGContextDrawLinearGradient(ctx, [HelloStyleKit timelineGradient].CGGradient, CGPointMake(CGRectGetMaxX(rect), 0),
-                                CGPointZero, 0);
+    CGContextFillRect(ctx, fillRect);
+    [self.preFillColor setFill];
+    CGContextFillRect(ctx, preRect);
 }
 
 @end

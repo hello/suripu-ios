@@ -152,7 +152,6 @@ static BOOL hasLoadedBefore = NO;
 - (void)performInitialAnimation {
     CGFloat const initialAnimationDelay = 0.75f;
     CGFloat const eventAnimationDuration = 0.45f;
-    CGFloat const barEntryAnimationDuration = 1.f;
     CGFloat const eventAnimationCrossfadeRatio = 0.9f;
     hasLoadedBefore = YES;
     NSArray *indexPaths =
@@ -164,23 +163,11 @@ static BOOL hasLoadedBefore = NO;
         if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
             continue;
         HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
-        void (^completion)(BOOL) = NULL;
+        CGFloat delay = initialAnimationDelay + (eventAnimationDuration * eventsFound * eventAnimationCrossfadeRatio);
         if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
-            completion = ^(BOOL complete) {
-              HEMSleepEventCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
-              [UIView
-                  animateWithDuration:eventAnimationDuration
-                                delay:initialAnimationDelay
-                                      + (eventAnimationDuration * eventsFound * eventAnimationCrossfadeRatio)
-                              options:(UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionCurveEaseInOut)
-                           animations:^{
-                             cell.contentContainerView.alpha = 1.f;
-                           }
-                           completion:NULL];
-            };
             eventsFound++;
         }
-        [cell performEntryAnimationWithDuration:barEntryAnimationDuration delay:0.5f completion:completion];
+        [cell performEntryAnimationWithDuration:eventAnimationDuration delay:delay];
     }
     int64_t delay = eventAnimationDuration * MAX(0, eventsFound - 1) * NSEC_PER_SEC;
     __weak typeof(self) weakSelf = self;
@@ -411,7 +398,7 @@ static BOOL hasLoadedBefore = NO;
             __weak typeof(self) weakSelf = self;
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(),
                            ^{
-                               [weakSelf performInitialAnimation];
+                             [weakSelf performInitialAnimation];
                            });
         } else {
             [self finishInitialAnimation];

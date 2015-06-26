@@ -94,13 +94,12 @@
     self.eventTypeImageView.frame = eventImageFrame;
 
     CGSize timeLabelSize = [self.eventTimeLabel sizeThatFits:CGSizeMake(timeLabelMaxWidth, timeLabelMaxHeight)];
-    CGFloat left = CGRectGetWidth(containerFrame) - timeLabelSize.width - timeLabelRight - timeLabelLeft;
-    CGRect eventTimeLabelFrame = CGRectMake(left, timeLabelTop, timeLabelSize.width, timeLabelSize.height);
+    CGFloat eventTimeLeft = CGRectGetWidth(containerFrame) - (timeLabelSize.width + timeLabelRight);
+    CGRect eventTimeLabelFrame = CGRectMake(eventTimeLeft, timeLabelTop, timeLabelSize.width, timeLabelSize.height);
     self.eventTimeLabel.frame = eventTimeLabelFrame;
 
     CGFloat containerWidth = CGRectGetWidth(containerFrame);
-    CGFloat messageWidth = containerWidth - messageLabelLeft - CGRectGetWidth(eventTimeLabelFrame) - messageLabelRight
-                           - timeLabelRight;
+    CGFloat messageWidth = containerWidth - messageLabelLeft - CGRectGetWidth(eventTimeLabelFrame) - messageLabelRight - timeLabelRight - timeLabelLeft;
     CGRect eventMesageLabelFrame = CGRectMake(messageLabelLeft, messageLabelTop, messageWidth,
                                               CGRectGetHeight(containerFrame) - messageLabelHeightOffset);
     self.eventMessageLabel.frame = eventMesageLabelFrame;

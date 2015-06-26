@@ -39,6 +39,7 @@ CGFloat const HEMEventTimeLabelWidth = 40.f;
     self.layer.shadowRadius = 4.f;
     self.layer.shadowColor = [HelloStyleKit tintColor].CGColor;
     self.layer.shadowOpacity = 0.25f;
+    self.layer.shadowOffset = CGSizeMake(1.f, 3.f);
     self.cornerView.layer.cornerRadius = 3.f;
     self.cornerView.layer.masksToBounds = YES;
     self.layer.masksToBounds = NO;

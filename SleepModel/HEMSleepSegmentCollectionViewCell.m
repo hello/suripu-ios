@@ -58,6 +58,7 @@ static CGFloat const HEMSegmentBorderWidth = 2.f;
 
 - (void)addTimeLabelWithText:(NSAttributedString *)text atHeightRatio:(CGFloat)heightRatio {
     static CGFloat const HEMTimeLabelLineOffset = 6.f;
+    static CGFloat const HEMTimeLabelLineTrailing = 8.f;
     static CGFloat const HEMTimeLabelWidth = 30.f;
     self.clipsToBounds = NO;
     CGFloat lineYOffset = MAX(ceilf(HEMSegmentTimeLabelHeight / 2),
@@ -65,14 +66,13 @@ static CGFloat const HEMSegmentBorderWidth = 2.f;
                                   MAX(0, CGRectGetHeight(self.frame) - HEMSegmentTimeLabelHeight)));
     CGFloat labelYOffset = lineYOffset - floorf(HEMSegmentTimeLabelHeight / 2);
     CGSize size = [text sizeWithWidth:HEMTimeLabelWidth];
-    CGRect labelRect = CGRectMake(CGRectGetWidth(self.bounds) - HEMTimeLabelWidth, labelYOffset, HEMTimeLabelWidth,
-                                  HEMSegmentTimeLabelHeight);
+    CGRect labelRect = CGRectMake(CGRectGetWidth(self.bounds) - size.width - HEMTimeLabelLineTrailing, labelYOffset,
+                                  size.width, HEMSegmentTimeLabelHeight);
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:labelRect];
     timeLabel.attributedText = text;
     timeLabel.textColor = [HelloStyleKit tintColor];
     [self addSubview:timeLabel];
-    CGRect lineRect = CGRectMake(0, lineYOffset, CGRectGetMinX(labelRect) + floorf((HEMTimeLabelWidth - size.width) / 2)
-                                                     - HEMTimeLabelLineOffset,
+    CGRect lineRect = CGRectMake(0, lineYOffset, CGRectGetMinX(labelRect) - HEMTimeLabelLineOffset,
                                  HEMSegmentBorderWidth);
     UIImageView *lineView = [[UIImageView alloc] initWithFrame:lineRect];
     lineView.image = [self lineBorderImageWithColor:[[HelloStyleKit tintColor] colorWithAlphaComponent:0.25f]];

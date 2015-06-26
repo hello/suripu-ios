@@ -256,12 +256,13 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
-    static CGFloat const HEMPopupDismissDelay = 1.75f;
+    CGFloat const HEMPopupDismissDelay = 1.75f;
+    CGFloat const HEMPopupVerticalOffset = 8.f;
     SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
     CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
-    CGFloat top = CGRectGetMidY(cellLocation) - floorf([self.popupView intrinsicContentSize].height / 2);
+    CGFloat top = CGRectGetMidY(cellLocation) - floorf([self.popupView intrinsicContentSize].height / 2) - HEMPopupVerticalOffset;
     self.popupViewTop.constant = top;
     [self.popupView setNeedsUpdateConstraints];
     [self.popupView layoutIfNeeded];

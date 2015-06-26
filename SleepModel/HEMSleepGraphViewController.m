@@ -72,6 +72,17 @@ static BOOL hasLoadedBefore = NO;
     }
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    self.view.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    [self showTutorial];
+    [self checkIfInitialAnimationNeeded];
+}
+
 - (void)showTutorial {
     if (![HEMTutorial shouldShowTutorialForTimeline]) {
         [self showHandholding];
@@ -91,16 +102,6 @@ static BOOL hasLoadedBefore = NO;
         UIView *view = [[self containerViewController] view];
         [HEMTutorial showHandholdingForTimelineDaySwitchIfNeededIn:view];
     }
-}
-
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
-    self.view.backgroundColor = [UIColor whiteColor];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    [super viewDidAppear:animated];
-    [self showTutorial];
 }
 
 - (void)registerForNotifications {
@@ -404,18 +405,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)reloadData {
     [self loadData];
-    if (!hasLoadedBefore) {
-        hasLoadedBefore = YES;
-        if (self.dataSource.sleepResult.score > 0) {
-            __weak typeof(self) weakSelf = self;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(),
-                           ^{
-                             [weakSelf performInitialAnimation];
-                           });
-        } else {
-            [self finishInitialAnimation];
-        }
-    }
+    [self checkIfInitialAnimationNeeded];
 }
 
 - (void)loadDataSourceForDate:(NSDate *)date {
@@ -423,6 +413,21 @@ static BOOL hasLoadedBefore = NO;
     self.dataSource =
         [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
     self.collectionView.dataSource = self.dataSource;
+}
+
+- (void)checkIfInitialAnimationNeeded {
+    if (!hasLoadedBefore) {
+        hasLoadedBefore = YES;
+        if (self.dataSource.sleepResult.score > 0) {
+            __weak typeof(self) weakSelf = self;
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(),
+                           ^{
+                               [weakSelf performInitialAnimation];
+                           });
+        } else {
+            [self finishInitialAnimation];
+        }
+    }
 }
 
 - (void)configureCollectionView {

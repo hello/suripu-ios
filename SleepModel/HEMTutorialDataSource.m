@@ -19,6 +19,7 @@ static NSString* const HEMTutorialCellReuseIdDesc = @"description";
 
 static CGFloat const HEMTutorialTextVerticalInset = 24.0f;
 static CGFloat const HEMTutorialTextSpacing = 16.0f;
+static CGFloat const HEMTutorialImageHeight = 160.0f;
 
 typedef NS_ENUM(NSUInteger, HEMTutorialCellSection) {
     HEMTutorialCellSectionImage = 0,
@@ -66,7 +67,9 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
     size.width = CGRectGetWidth([[self collectionView] bounds]);
     
     if ([indexPath section] == HEMTutorialCellSectionImage) {
-        size.height = [[self content] image].size.height;
+        CGFloat imageWidth = [[self content] image].size.width;
+        CGFloat scaledFactor = size.width / imageWidth;
+        size.height = [[self content] image].size.height * scaledFactor;
     } else if ([indexPath section] == HEMTutorialCellSectionText) {
         if ([indexPath row] == HEMTutorialCellTextRowTitle) {
             size.height = [HEMTextCollectionViewCell heightWithText:[[self content] title]
@@ -132,7 +135,7 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
     HEMImageCollectionViewCell* imageCell =
         (id)[collectionView dequeueReusableCellWithReuseIdentifier:HEMTutorialCellReuseIdImage forIndexPath:indexPath];
     [[imageCell urlImageView] setImage:[[self content] image]];
-    [[imageCell urlImageView] setContentMode:UIViewContentModeScaleAspectFill];
+    [[imageCell urlImageView] setContentMode:UIViewContentModeScaleAspectFit];
     return imageCell;
 }
 

@@ -1,5 +1,19 @@
 # Changelog
 
+## 1.0.8.5
+
+New:
+
+* Timeline loading indicator
+* Tweaked timeline animations and visual styling a bit
+* Alerting user that alarm is set too early
+* Added confirmation when saving an alarm
+
+Fixes:
+
+* Adjusted layout for action sheet to accommodate for the timeline
+* copy changes
+
 ## 1.0.8.4
 
 New:

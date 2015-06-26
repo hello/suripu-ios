@@ -9,6 +9,7 @@
 
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENLocalPreferences.h>
 
 #import "HEMDebugController.h"
 #import "HEMActionSheetViewController.h"
@@ -215,6 +216,7 @@
     __weak typeof(self) weakSelf = self;
     [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset-tutorials", nil) action:^{
         [HEMTutorial resetTutorials];
+        [[SENLocalPreferences sharedPreferences] setSessionPreference:nil forKey:@"pref_sense_learns"];
         [weakSelf setSupportOptionController:nil];
     }];
 }

@@ -12,9 +12,10 @@
 #import "HEMEventAdjustConfirmationView.h"
 #import "HelloStyleKit.h"
 
-static CGFloat const HEMAdjustConfirmIconSize = 35.0f;
+static CGFloat const HEMAdjustConfirmIconSize = 40.0f;
 static CGFloat const HEMAdjustConfirmVertPadding = 25.0f;
 static CGFloat const HEMAdjustConfirmHorzPadding = 20.0f;
+static CGFloat const HEMAdjustConfirmImageSpacing = 17.0f;
 static CGFloat const HEMAdjustConfirmTextSpacing = 10.0f;
 
 @interface HEMEventAdjustConfirmationView()
@@ -86,7 +87,7 @@ static CGFloat const HEMAdjustConfirmTextSpacing = 10.0f;
 }
 
 - (void)addTitleLabel {
-    CGFloat y = CGRectGetMaxY([[self iconView] frame]) + HEMAdjustConfirmVertPadding;
+    CGFloat y = CGRectGetMaxY([[self iconView] frame]) + HEMAdjustConfirmImageSpacing;
     UIFont* titleFont = [UIFont timelineActionConfirmationTitleFont];
     UILabel* titleLabel = [self textLabelWithYOrigin:y andText:[self title] withFont:titleFont];
     [self setTitleLabel:titleLabel];
@@ -129,7 +130,7 @@ static CGFloat const HEMAdjustConfirmTextSpacing = 10.0f;
     CGFloat subtitleHeight = CGRectGetHeight([[self subtitleLabel] bounds]);
     CGFloat contentHeight
         = iconHeight
-        + HEMAdjustConfirmVertPadding
+        + HEMAdjustConfirmImageSpacing
         + titleHeight
         + HEMAdjustConfirmTextSpacing
         + subtitleHeight;
@@ -140,7 +141,7 @@ static CGFloat const HEMAdjustConfirmTextSpacing = 10.0f;
     [[self iconView] setFrame:iconFrame];
     
     CGRect titleFrame = [[self titleLabel] frame];
-    titleFrame.origin.y = CGRectGetMaxY(iconFrame) + HEMAdjustConfirmVertPadding;
+    titleFrame.origin.y = CGRectGetMaxY(iconFrame) + HEMAdjustConfirmImageSpacing;
     [[self titleLabel] setFrame:titleFrame];
     
     if ([self subtitleLabel]) {

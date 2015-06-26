@@ -261,17 +261,6 @@ static BOOL hasLoadedBefore = NO;
     [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
 }
 
-- (NSIndexPath *)indexPathForEventCellWithSubview:(UIView *)view {
-    UIView *superview = view.superview;
-    if (superview) {
-        if ([superview isKindOfClass:[HEMSleepEventCollectionViewCell class]])
-            return [self.collectionView indexPathForCell:(UICollectionViewCell *)superview];
-        else
-            return [self indexPathForEventCellWithSubview:superview];
-    }
-    return nil;
-}
-
 - (void)didTapSummaryButton:(UIButton *)sender {
     HEMBreakdownViewController *controller = [HEMMainStoryboard instantiateBreakdownViewController];
     controller.result = self.dataSource.sleepResult;

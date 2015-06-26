@@ -147,6 +147,11 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
     return [UIApplication sharedApplication].keyWindow ?: [[[UIApplication sharedApplication] windows] firstObject];
 }
 
+- (BOOL)isStatusBarHidden {
+    UIWindow* window = [self keyWindow];
+    return window.windowLevel == UIWindowLevelStatusBar + 1;
+}
+
 - (void)hideStatusBar
 {
     UIWindow* window = [self keyWindow];

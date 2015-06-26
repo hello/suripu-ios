@@ -94,7 +94,6 @@ extern NSString* const HEMAnalyticsEventPairPillRetry;
 extern NSString* const kHEMAnalyticsEventAppLaunched;
 extern NSString* const kHEMAnalyticsEventAppClosed;
 extern NSString* const kHEMAnalyticsEventPropEvent;
-extern NSString* const kHEMAnalyticsEventEmailSupport;
 extern NSString* const kHEMAnalyticsEventSettings;
 extern NSString* const kHEMAnalyticsEventTrends;
 extern NSString* const kHEMAnalyticsEventCurrentConditions;
@@ -109,6 +108,11 @@ extern NSString* const kHEMAnalyticsEventPropSensorName;
 extern NSString* const kHEMAnalyticsEventSense;
 extern NSString* const kHEMAnalyticsEventPill;
 extern NSString* const HEMAnalyticsEventHealthSync;
+
+// support
+extern NSString* const HEMAnalyticsEventSupport;
+extern NSString* const HEMAnalyticsEventSupportContactUs;
+extern NSString* const HEMAnalyticsEventSupportTickets;
 
 // authentication
 extern NSString* const kHEMAnalyticsEventSignInStart;

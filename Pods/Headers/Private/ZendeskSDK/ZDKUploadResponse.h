@@ -1,1 +1,0 @@
-../../../ZendeskSDK/ZendeskSDK.framework/Headers/ZDKUploadResponse.h

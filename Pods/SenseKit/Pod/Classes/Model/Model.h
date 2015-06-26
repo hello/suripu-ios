@@ -13,5 +13,6 @@
 #import "SENTrend.h"
 #import "SENPreference.h"
 #import "SENLocalPreferences.h"
+#import "SENSupportTopic.h"
 
 void SENClearModel();

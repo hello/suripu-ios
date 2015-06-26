@@ -31,6 +31,7 @@
 - (void)prepareForReuse {
     [super prepareForReuse];
     self.transform = CGAffineTransformIdentity;
+    self.contentContainerView.alpha = 1;
     [self.contentContainerView setMessageText:nil timeText:nil];
 }
 
@@ -46,6 +47,7 @@
 
 - (void)performEntryAnimationWithDuration:(NSTimeInterval)duration
                                     delay:(NSTimeInterval)delay {
+    [super performEntryAnimationWithDuration:duration delay:delay];
     [UIView animateWithDuration:duration
                           delay:delay
                         options:0
@@ -65,7 +67,7 @@
     CGFloat scaleDiff = 1 - minContainerViewScale;
     CGFloat ratio = 1 - fabs(ratioFromCenter);
     CGFloat scale = ratioFromCenter < 0 ? MIN(1, (scaleDiff * ratio * 4) + minContainerViewScale) : 1;
-    CGFloat alphaRatio = ratioFromCenter < 0 ? MIN(1, ratio * 4) : 1;
+    CGFloat alphaRatio = MIN(1, ABS(ratio * 3));
     CGFloat scaleOffset = nearbyintf(-(width - (width * scale)) / 2);
     CGAffineTransform scaling = CGAffineTransformMakeScale(scale, scale);
     CGAffineTransform transform = CGAffineTransformTranslate(scaling, scaleOffset / 2, scaleOffset);

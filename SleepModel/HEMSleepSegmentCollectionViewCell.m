@@ -15,6 +15,7 @@ CGFloat const HEMSleepLineWidth = 1.f;
 @property (nonatomic, strong) NSMutableArray *timeViews;
 @property (nonatomic, strong) UIColor *fillColor;
 @property (nonatomic, strong) UIColor *preFillColor;
+@property (nonatomic, getter=isWaitingForAnimation, readwrite) BOOL waitingForAnimation;
 @end
 
 @implementation HEMSleepSegmentCollectionViewCell
@@ -31,6 +32,7 @@ static CGFloat const HEMSegmentBorderWidth = 2.f;
 - (void)prepareForReuse {
     [super prepareForReuse];
     self.clipsToBounds = YES;
+    self.waitingForAnimation = NO;
 }
 
 - (void)setNeedsLayout {
@@ -39,12 +41,15 @@ static CGFloat const HEMSegmentBorderWidth = 2.f;
 }
 
 - (void)prepareForEntryAnimation {
+    self.waitingForAnimation = YES;
 }
 
 - (void)cancelEntryAnimation {
+    self.waitingForAnimation = NO;
 }
 
 - (void)performEntryAnimationWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay {
+    self.waitingForAnimation = NO;
 }
 
 - (void)removeAllTimeLabels {

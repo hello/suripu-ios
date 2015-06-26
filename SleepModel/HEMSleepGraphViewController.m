@@ -143,7 +143,6 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)finishInitialAnimation {
-    hasLoadedBefore = YES;
     HEMSleepSummarySlideViewController *controller = (id)self.parentViewController;
     [controller setSwipingEnabled:YES];
     self.collectionView.scrollEnabled = YES;
@@ -154,8 +153,10 @@ static BOOL hasLoadedBefore = NO;
     CGFloat const eventAnimationDuration = 0.45f;
     CGFloat const eventAnimationCrossfadeRatio = 0.9f;
     hasLoadedBefore = YES;
-    NSArray *indexPaths =
-        [[self.collectionView indexPathsForVisibleItems] sortedArrayUsingSelector:@selector(compare:)];
+    NSArray *indexPaths = [[self.collectionView indexPathsForVisibleItems]
+        sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath *obj1, NSIndexPath *obj2) {
+          return [@(obj1.item) compare:@(obj2.item)];
+        }];
 
     int eventsFound = 0;
     for (int i = 0; i < indexPaths.count; i++) {
@@ -393,13 +394,15 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)checkIfInitialAnimationNeeded {
     if (!hasLoadedBefore) {
-        hasLoadedBefore = YES;
         if (self.dataSource.sleepResult.score > 0) {
-            __weak typeof(self) weakSelf = self;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(),
-                           ^{
-                             [weakSelf performInitialAnimation];
-                           });
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+              __weak typeof(self) weakSelf = self;
+              int64_t delay = (int64_t)(1.5 * NSEC_PER_SEC);
+              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+                [weakSelf performInitialAnimation];
+              });
+            });
         } else {
             [self finishInitialAnimation];
         }

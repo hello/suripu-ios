@@ -26,6 +26,7 @@
 #import "HEMZoomAnimationTransitionDelegate.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
+#import "HEMEventAdjustConfirmationView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 60.f;
@@ -44,6 +45,7 @@ CGFloat const HEMTimelineFooterCellHeight = 60.f;
 
 @implementation HEMSleepGraphViewController
 
+static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 1.0f;
 static CGFloat const HEMSleepSummaryCellHeight = 364.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
@@ -195,26 +197,60 @@ static BOOL hasLoadedBefore = NO;
     [self presentViewController:navController animated:YES completion:NULL];
 }
 
+- (UIView*)confirmationViewForActionSheetWithOptions:(NSInteger)numberOfOptions {
+    
+    NSString* title = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
+    
+    CGRect confirmFrame = CGRectZero;
+    confirmFrame.size.height = numberOfOptions * HEMActionSheetDefaultCellHeight;
+    confirmFrame.size.width = CGRectGetWidth([[self view] bounds]);
+    
+    HEMEventAdjustConfirmationView* confirmView
+        = [[HEMEventAdjustConfirmationView alloc] initWithTitle:title
+                                                       subtitle:nil
+                                                          frame:confirmFrame];
+    return confirmView;
+}
+
 - (void)activateActionSheetAtIndexPath:(NSIndexPath *)indexPath {
     SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
     [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    
+    NSString* approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
+    [sheet addOptionWithTitle:approveTitle
+                   titleColor:[UIColor darkGrayColor]
+                  description:nil
+                    imageName:@"timeline_action_approve"
+                       action:^{
+                           // TODO (jimmy): not yet implemented, but we want to show it for now
+                       }];
+
     if ([self canAdjustEventWithType:segment.eventType]) {
         [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
                        titleColor:[UIColor darkGrayColor]
                       description:nil
                         imageName:@"timeline_action_adjust"
                            action:^{
-                             [self updateTimeOfEventOnSegment:segment];
-                           }];
-    } else {
-        [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.none.title", nil)
-                       titleColor:[UIColor grayColor]
-                      description:nil
-                        imageName:nil
-                           action:^{
+                               [self updateTimeOfEventOnSegment:segment];
                            }];
     }
+    
+    NSString* deleteTitle = NSLocalizedString(@"sleep-event.action.delete.title", nil);
+    [sheet addOptionWithTitle:deleteTitle
+                   titleColor:[UIColor darkGrayColor]
+                  description:nil
+                    imageName:@"timeline_action_delete"
+                       action:^{
+                           // TODO (jimmy): not yet implemented, but we want to show it for now
+                       }];
+    
+    // confirmations
+    CGFloat confirmDuration = HEMSleepGraphActionSheetConfirmDuration;
+    UIView* confirmationView = [self confirmationViewForActionSheetWithOptions:[sheet numberOfOptions]];
+    [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:approveTitle];
+    [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:deleteTitle];
 
     UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     if (![root respondsToSelector:@selector(presentationController)]) {

@@ -440,4 +440,18 @@
  */
 + (UIFont*)supportHelpCenterFont;
 
+#pragma mark - Timeline action sheet confirmation
+
+/**
+ * Font used to display the timeline event adjustment confirmation title
+ * within an action sheet
+ */
++ (UIFont*)timelineActionConfirmationTitleFont;
+
+/**
+ * Font used to display the timeline event adjustment confirmation subtitle
+ * within an action sheet
+ */
++ (UIFont*)timelineActionConfirmationSubtitleFont;
+
 @end

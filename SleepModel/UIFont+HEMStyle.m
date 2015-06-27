@@ -472,4 +472,14 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
 }
 
+#pragma mark - Timeline action sheet confirmation
+
++ (UIFont*)timelineActionConfirmationTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];
+}
+
++ (UIFont*)timelineActionConfirmationSubtitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
+}
+
 @end

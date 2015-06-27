@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.0.8.6
+
+New:
+
+* Support topics now served from server
+* Added confirmation views for one tap actions (actions coming soon)
+
+Fixes:
+
+* Fixed images being cut off in tutorial dialogs
+* Fixed various Timeline issues with animations and visual styling
+
 ## 1.0.8.5
 
 New:

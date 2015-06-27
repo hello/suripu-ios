@@ -192,6 +192,12 @@
 #define COCOAPODS_VERSION_MINOR_SpinKit 2
 #define COCOAPODS_VERSION_PATCH_SpinKit 0
 
+// UICountingLabel
+#define COCOAPODS_POD_AVAILABLE_UICountingLabel
+#define COCOAPODS_VERSION_MAJOR_UICountingLabel 1
+#define COCOAPODS_VERSION_MINOR_UICountingLabel 2
+#define COCOAPODS_VERSION_PATCH_UICountingLabel 0
+
 // UIImageEffects
 #define COCOAPODS_POD_AVAILABLE_UIImageEffects
 #define COCOAPODS_VERSION_MAJOR_UIImageEffects 0

@@ -143,7 +143,6 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)finishInitialAnimation {
-    hasLoadedBefore = YES;
     HEMSleepSummarySlideViewController *controller = (id)self.parentViewController;
     [controller setSwipingEnabled:YES];
     self.collectionView.scrollEnabled = YES;
@@ -152,11 +151,12 @@ static BOOL hasLoadedBefore = NO;
 - (void)performInitialAnimation {
     CGFloat const initialAnimationDelay = 0.75f;
     CGFloat const eventAnimationDuration = 0.45f;
-    CGFloat const barEntryAnimationDuration = 1.f;
     CGFloat const eventAnimationCrossfadeRatio = 0.9f;
     hasLoadedBefore = YES;
-    NSArray *indexPaths =
-        [[self.collectionView indexPathsForVisibleItems] sortedArrayUsingSelector:@selector(compare:)];
+    NSArray *indexPaths = [[self.collectionView indexPathsForVisibleItems]
+        sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath *obj1, NSIndexPath *obj2) {
+          return [@(obj1.item) compare:@(obj2.item)];
+        }];
 
     int eventsFound = 0;
     for (int i = 0; i < indexPaths.count; i++) {
@@ -164,23 +164,11 @@ static BOOL hasLoadedBefore = NO;
         if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
             continue;
         HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
-        void (^completion)(BOOL) = NULL;
+        CGFloat delay = initialAnimationDelay + (eventAnimationDuration * eventsFound * eventAnimationCrossfadeRatio);
         if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
-            completion = ^(BOOL complete) {
-              HEMSleepEventCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
-              [UIView
-                  animateWithDuration:eventAnimationDuration
-                                delay:initialAnimationDelay
-                                      + (eventAnimationDuration * eventsFound * eventAnimationCrossfadeRatio)
-                              options:(UIViewAnimationOptionAllowAnimatedContent | UIViewAnimationOptionCurveEaseInOut)
-                           animations:^{
-                             cell.contentContainerView.alpha = 1.f;
-                           }
-                           completion:NULL];
-            };
             eventsFound++;
         }
-        [cell performEntryAnimationWithDuration:barEntryAnimationDuration delay:0.5f completion:completion];
+        [cell performEntryAnimationWithDuration:eventAnimationDuration delay:delay];
     }
     int64_t delay = eventAnimationDuration * MAX(0, eventsFound - 1) * NSEC_PER_SEC;
     __weak typeof(self) weakSelf = self;
@@ -268,12 +256,13 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
-    static CGFloat const HEMPopupDismissDelay = 1.75f;
+    CGFloat const HEMPopupDismissDelay = 1.75f;
+    CGFloat const HEMPopupVerticalOffset = 8.f;
     SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
     CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
-    CGFloat top = CGRectGetMidY(cellLocation) - floorf([self.popupView intrinsicContentSize].height / 2);
+    CGFloat top = CGRectGetMidY(cellLocation) - floorf([self.popupView intrinsicContentSize].height / 2) - HEMPopupVerticalOffset;
     self.popupViewTop.constant = top;
     [self.popupView setNeedsUpdateConstraints];
     [self.popupView layoutIfNeeded];
@@ -406,13 +395,15 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)checkIfInitialAnimationNeeded {
     if (!hasLoadedBefore) {
-        hasLoadedBefore = YES;
         if (self.dataSource.sleepResult.score > 0) {
-            __weak typeof(self) weakSelf = self;
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(),
-                           ^{
-                               [weakSelf performInitialAnimation];
-                           });
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+              __weak typeof(self) weakSelf = self;
+              int64_t delay = (int64_t)(1.5 * NSEC_PER_SEC);
+              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+                [weakSelf performInitialAnimation];
+              });
+            });
         } else {
             [self finishInitialAnimation];
         }
@@ -421,7 +412,6 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)configureCollectionView {
     self.collectionView.collectionViewLayout = [HEMFadingParallaxLayout new];
-    self.collectionView.backgroundColor = [HelloStyleKit lightTintColor];
     self.collectionView.delegate = self;
 }
 

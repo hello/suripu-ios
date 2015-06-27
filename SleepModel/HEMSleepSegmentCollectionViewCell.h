@@ -39,11 +39,9 @@ extern CGFloat const HEMSleepLineWidth;
  *
  *  @param duration   duration of the animation
  *  @param delay      time to wait before beginning the animation
- *  @param completion block invoked at completion
  */
 - (void)performEntryAnimationWithDuration:(NSTimeInterval)duration
-                                    delay:(NSTimeInterval)delay
-                               completion:(void (^)(BOOL))completion;
+                                    delay:(NSTimeInterval)delay;
 
 @property (nonatomic, getter=isFirstSegment) BOOL firstSegment;
 @property (nonatomic, getter=isLastSegment) BOOL lastSegment;

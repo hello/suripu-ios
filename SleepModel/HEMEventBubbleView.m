@@ -13,6 +13,7 @@
 @interface HEMEventBubbleView ()
 @property (nonatomic, weak) IBOutlet UILabel *textLabel;
 @property (nonatomic, weak) IBOutlet UILabel *timeLabel;
+@property (nonatomic, weak) IBOutlet UIView *cornerView;
 @end
 
 @implementation HEMEventBubbleView
@@ -35,11 +36,20 @@ CGFloat const HEMEventTimeLabelWidth = 40.f;
 
 - (void)awakeFromNib {
     self.layer.shadowOffset = CGSizeZero;
-    self.layer.shadowRadius = 1.5f;
+    self.layer.shadowRadius = 4.f;
     self.layer.shadowColor = [HelloStyleKit tintColor].CGColor;
-    self.layer.shadowOpacity = 0.2f;
-    self.layer.cornerRadius = 3.f;
-    self.backgroundColor = [UIColor whiteColor];
+    self.layer.shadowOpacity = 0.25f;
+    self.layer.shadowOffset = CGSizeMake(1.f, 3.f);
+    self.cornerView.layer.cornerRadius = 3.f;
+    self.cornerView.layer.masksToBounds = YES;
+    self.layer.masksToBounds = NO;
+    self.backgroundColor = [UIColor clearColor];
+    self.cornerView.backgroundColor = [UIColor whiteColor];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.cornerView.frame = self.bounds;
 }
 
 - (CGSize)intrinsicContentSize {
@@ -50,6 +60,7 @@ CGFloat const HEMEventTimeLabelWidth = 40.f;
     self.textLabel.attributedText = message;
     self.timeLabel.attributedText = time;
     [self invalidateIntrinsicContentSize];
+    [self setNeedsLayout];
 }
 
 @end

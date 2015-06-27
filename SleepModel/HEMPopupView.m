@@ -24,6 +24,7 @@ static CGFloat const HEMPopupMargin = 20.f;
 
 - (void)awakeFromNib {
     self.backgroundColor = [UIColor clearColor];
+    self.clipsToBounds = NO;
 }
 
 - (CGSize)intrinsicContentSize {
@@ -46,17 +47,53 @@ static CGFloat const HEMPopupMargin = 20.f;
 }
 
 - (void)drawRect:(CGRect)rect {
-    CGFloat minX = CGRectGetMinX(rect);
-    CGFloat minY = CGRectGetMinY(rect);
-    CGFloat boxHeight = CGRectGetHeight(rect) - HEMPopupPointerHeight;
-    CGRect containerRect = CGRectInset(CGRectMake(minX, minY, CGRectGetWidth(rect), boxHeight), 2, 2);
-    CGRect outerRect = CGRectInset(containerRect, -1, -1);
-    UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRoundedRect:containerRect cornerRadius:4];
-    UIBezierPath *outerPath = [UIBezierPath bezierPathWithRoundedRect:outerRect cornerRadius:4];
-    [[[HelloStyleKit tintColor] colorWithAlphaComponent:0.15f] setFill];
-    [outerPath fill];
-    [[UIColor whiteColor] setFill];
-    [rectanglePath fill];
+    //// General Declarations
+    CGContextRef context = UIGraphicsGetCurrentContext();
+
+    //// Shadow Declarations
+    CGFloat blurRadius = 6;
+    NSShadow *sleepDepthPointerShadow = [NSShadow shadowWithColor:[HelloStyleKit.tintColor colorWithAlphaComponent:0.19]
+                                                           offset:CGSizeMake(4.1, 4.1)
+                                                       blurRadius:blurRadius];
+
+    //// Group
+    {
+        CGContextSaveGState(context);
+        CGContextSetShadowWithColor(context, sleepDepthPointerShadow.shadowOffset,
+                                    sleepDepthPointerShadow.shadowBlurRadius,
+                                    [sleepDepthPointerShadow.shadowColor CGColor]);
+        CGContextBeginTransparencyLayer(context, NULL);
+
+        //// Rectangle Drawing
+        CGFloat inset = 20.63;
+        CGRect fill
+            = CGRectMake(inset, 0.73, CGRectGetWidth(rect) - inset - blurRadius, CGRectGetHeight(rect) - blurRadius);
+        UIBezierPath *rectanglePath =
+            [UIBezierPath bezierPathWithRoundedRect:fill
+                                  byRoundingCorners:UIRectCornerTopRight | UIRectCornerBottomRight
+                                        cornerRadii:CGSizeMake(7, 7)];
+        [rectanglePath closePath];
+        [UIColor.whiteColor setFill];
+        [rectanglePath fill];
+
+        //// Rectangle 2 Drawing
+        CGContextSaveGState(context);
+        CGContextTranslateCTM(context, 0, 20.23);
+        CGContextRotateCTM(context, -45 * M_PI / 180);
+
+        UIBezierPath *rectangle2Path = [UIBezierPath
+            bezierPathWithRoundedRect:CGRectMake(0, 0, 29.61, 30)
+                    byRoundingCorners:UIRectCornerTopRight | UIRectCornerBottomLeft | UIRectCornerBottomRight
+                          cornerRadii:CGSizeMake(4, 4)];
+        [rectangle2Path closePath];
+        [UIColor.whiteColor setFill];
+        [rectangle2Path fill];
+
+        CGContextRestoreGState(context);
+
+        CGContextEndTransparencyLayer(context);
+        CGContextRestoreGState(context);
+    }
 }
 
 @end

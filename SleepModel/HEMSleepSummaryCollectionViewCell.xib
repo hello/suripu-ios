@@ -15,7 +15,7 @@
                 <subviews>
                     <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gDL-0C-m7y" userLabel="border view">
                         <rect key="frame" x="0.0" y="383" width="320" height="1"/>
-                        <color key="backgroundColor" red="0.74747553649208343" green="0.903644060681283" blue="0.98823535439999999" alpha="1" colorSpace="deviceRGB"/>
+                        <color key="backgroundColor" red="0.85139999999999993" green="0.94148999999999994" blue="0.98999999999999999" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="1" id="GuY-Cl-e9q"/>
                         </constraints>

@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.0.8.8
+
+Fixes:
+
+* Fixes issue where you cannot swipe left when there no data 
+
 ## 1.0.8.7
 
 Fixes:

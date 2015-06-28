@@ -21,7 +21,7 @@ CGFloat const HEMSleepLineWidth = 1.f;
 @implementation HEMSleepSegmentCollectionViewCell
 
 static CGFloat const HEMSegmentTimeLabelHeight = 16.f;
-static CGFloat const HEMSegmentBorderWidth = 2.f;
+static CGFloat const HEMSegmentBorderWidth = 1.f;
 
 - (void)awakeFromNib {
     self.opaque = YES;

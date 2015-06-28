@@ -76,7 +76,7 @@ static CGFloat const HEMSegmentBorderWidth = 2.f;
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:labelRect];
     timeLabel.attributedText = text;
     timeLabel.textColor = [HelloStyleKit tintColor];
-    [self addSubview:timeLabel];
+    [[self contentView] addSubview:timeLabel];
     CGRect lineRect = CGRectMake(0, lineYOffset, CGRectGetMinX(labelRect) - HEMTimeLabelLineOffset,
                                  HEMSegmentBorderWidth);
     UIImageView *lineView = [[UIImageView alloc] initWithFrame:lineRect];

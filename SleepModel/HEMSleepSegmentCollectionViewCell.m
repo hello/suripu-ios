@@ -92,7 +92,7 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetStrokeColorWithColor(ctx, color.CGColor);
     CGContextSetLineWidth(ctx, HEMSegmentBorderWidth);
-    CGFloat y = size.height - HEMSegmentBorderWidth;
+    CGFloat y = size.height - (HEMSegmentBorderWidth/2);
     CGContextMoveToPoint(ctx, 0, y);
     CGContextAddLineToPoint(ctx, size.width, y);
     CGContextStrokePath(ctx);

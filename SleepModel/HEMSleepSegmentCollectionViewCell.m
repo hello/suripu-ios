@@ -81,7 +81,7 @@ static CGFloat const HEMSegmentBorderWidth = 2.f;
                                  HEMSegmentBorderWidth);
     UIImageView *lineView = [[UIImageView alloc] initWithFrame:lineRect];
     lineView.image = [self lineBorderImageWithColor:[[HelloStyleKit tintColor] colorWithAlphaComponent:0.25f]];
-    [self addSubview:lineView];
+    [[self contentView] insertSubview:lineView atIndex:0];
     [self.timeViews addObject:lineView];
     [self.timeViews addObject:timeLabel];
 }

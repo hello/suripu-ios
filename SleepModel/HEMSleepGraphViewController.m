@@ -151,8 +151,7 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)performInitialAnimation {
-    CGFloat const initialAnimationDelay = 0.75f;
-    CGFloat const eventAnimationDuration = 0.45f;
+    CGFloat const eventAnimationDuration = 0.25f;
     CGFloat const eventAnimationCrossfadeRatio = 0.9f;
     hasLoadedBefore = YES;
     NSArray *indexPaths = [[self.collectionView indexPathsForVisibleItems]
@@ -166,7 +165,7 @@ static BOOL hasLoadedBefore = NO;
         if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
             continue;
         HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
-        CGFloat delay = initialAnimationDelay + (eventAnimationDuration * eventsFound * eventAnimationCrossfadeRatio);
+        CGFloat delay = (eventAnimationDuration * eventsFound * eventAnimationCrossfadeRatio);
         if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
             eventsFound++;
         }
@@ -432,13 +431,10 @@ static BOOL hasLoadedBefore = NO;
 - (void)checkIfInitialAnimationNeeded {
     if (!hasLoadedBefore) {
         if (self.dataSource.sleepResult.score > 0) {
-            static dispatch_once_t onceToken;
-            dispatch_once(&onceToken, ^{
-              __weak typeof(self) weakSelf = self;
-              int64_t delay = (int64_t)(1.5 * NSEC_PER_SEC);
-              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+            __weak typeof(self) weakSelf = self;
+            int64_t delay = (int64_t)(1.5 * NSEC_PER_SEC);
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
                 [weakSelf performInitialAnimation];
-              });
             });
         } else {
             [self finishInitialAnimation];

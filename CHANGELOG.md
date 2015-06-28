@@ -1,5 +1,14 @@
 # Changelog
 
+## 1.0.8.9
+
+Fixes:
+
+* Fixes issue with timeline events not showing when data not retrieved in time
+* Reduced line width on timeline timestamp markers
+* Adjusted timeline event shadow to better match design
+* Make border between segments and summary more prominent
+
 ## 1.0.8.8
 
 Fixes:
@@ -10,7 +19,6 @@ Fixes:
 
 Fixes:
 
-* Fixes issue where timeline may not load events on initial load
 * Fixes issue where timestamp line is drawn over the event card in timeline
 
 ## 1.0.8.6

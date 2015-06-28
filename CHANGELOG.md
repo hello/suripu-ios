@@ -1,5 +1,12 @@
 # Changelog
 
+## 1.0.8.7
+
+Fixes:
+
+* Fixes issue where timeline may not load events on initial load
+* Fixes issue where timestamp line is drawn over the event card in timeline
+
 ## 1.0.8.6
 
 New:

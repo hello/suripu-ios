@@ -139,14 +139,10 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark Initial load animation
 
 - (void)prepareForInitialAnimation {
-    HEMSleepSummarySlideViewController *controller = (id)self.parentViewController;
-    [controller setSwipingEnabled:NO];
     self.collectionView.scrollEnabled = NO;
 }
 
 - (void)finishInitialAnimation {
-    HEMSleepSummarySlideViewController *controller = (id)self.parentViewController;
-    [controller setSwipingEnabled:YES];
     self.collectionView.scrollEnabled = YES;
 }
 

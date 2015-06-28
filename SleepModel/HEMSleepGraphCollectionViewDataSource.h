@@ -35,7 +35,7 @@ extern NSString *const HEMSleepEventTypeSleeping;
 /**
  *  Updates and reloads data
  */
-- (void)reloadData;
+- (void)reloadData:(void(^)(void))completion;
 
 /**
  *  Fetch the sleep data corresponding to a given index path

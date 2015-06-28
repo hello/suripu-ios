@@ -41,6 +41,8 @@ CGFloat const HEMTimelineFooterCellHeight = 60.f;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
 @property (nonatomic, assign, getter=isLastNight) BOOL lastNight;
+@property (nonatomic, assign, getter=isLoadingData) BOOL loadingData;
+@property (nonatomic, assign, getter=isVisible) BOOL visible;
 @end
 
 @implementation HEMSleepGraphViewController
@@ -81,8 +83,14 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self setVisible:YES];
     [self showTutorial];
     [self checkIfInitialAnimationNeeded];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self setVisible:NO];
 }
 
 - (void)showTutorial {
@@ -413,15 +421,27 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)reloadData {
-    [self loadData];
-    [self checkIfInitialAnimationNeeded];
+    if (![self isLoadingData]) {
+        [self loadData];
+    }
 }
 
 - (void)loadDataSourceForDate:(NSDate *)date {
+    self.loadingData = YES;
+    
     self.dateForNightOfSleep = date;
     self.dataSource =
         [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
     self.collectionView.dataSource = self.dataSource;
+    
+    __weak typeof(self) weakSelf = self;
+    [self.dataSource reloadData:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.loadingData = NO;
+        if ([strongSelf isVisible]) {
+            [strongSelf checkIfInitialAnimationNeeded];
+        }
+    }];
 }
 
 - (void)checkIfInitialAnimationNeeded {

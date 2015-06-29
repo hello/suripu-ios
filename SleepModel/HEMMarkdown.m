@@ -142,7 +142,7 @@
 
 + (NSDictionary *)attributesForTimelineSegmentPopup {
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
-    style.alignment = NSTextAlignmentCenter;
+    style.alignment = NSTextAlignmentLeft;
     return @{
         @(STRONG) : @{ NSFontAttributeName : [UIFont timelinePopupBoldFont], NSParagraphStyleAttributeName : style },
         @(PARA) : @{ NSFontAttributeName : [UIFont timelinePopupFont], NSParagraphStyleAttributeName : style }

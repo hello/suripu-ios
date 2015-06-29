@@ -2983,14 +2983,11 @@
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" placeholderIntrinsicWidth="infinite" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="NKd-k3-vSA" customClass="HEMPopupView">
-                                <rect key="frame" x="190" y="150" width="220" height="100"/>
+                            <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" placeholderIntrinsicWidth="220" placeholderIntrinsicHeight="65" translatesAutoresizingMaskIntoConstraints="NO" id="NKd-k3-vSA" customClass="HEMPopupView">
+                                <rect key="frame" x="10" y="150" width="280" height="65"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You were in Medium Sleep for 14 minutes." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBx-ft-eT4">
-                                        <rect key="frame" x="10" y="4" width="200" height="88"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="PnR-6W-CMk"/>
-                                        </constraints>
+                                        <rect key="frame" x="8" y="4" width="262" height="53"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                         <color key="textColor" red="0.29999999999999999" green="0.29999999999999999" blue="0.29999999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -2998,9 +2995,9 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="centerX" secondItem="rBx-ft-eT4" secondAttribute="centerX" id="h8f-ax-Bgr"/>
+                                    <constraint firstAttribute="trailing" secondItem="rBx-ft-eT4" secondAttribute="trailing" constant="10" id="3AT-vT-LtV"/>
+                                    <constraint firstItem="rBx-ft-eT4" firstAttribute="leading" secondItem="NKd-k3-vSA" secondAttribute="leading" constant="8" id="eU8-4Y-dTo"/>
                                     <constraint firstAttribute="bottom" secondItem="rBx-ft-eT4" secondAttribute="bottom" constant="8" id="kEv-Yb-3PH"/>
-                                    <constraint firstAttribute="width" constant="220" id="n7C-M0-KkO"/>
                                     <constraint firstItem="rBx-ft-eT4" firstAttribute="top" secondItem="NKd-k3-vSA" secondAttribute="top" constant="4" id="obv-3Z-ZJL"/>
                                 </constraints>
                                 <connections>
@@ -3019,10 +3016,10 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="ede-qs-tjY" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" id="DYs-yH-1Oj"/>
+                            <constraint firstItem="NKd-k3-vSA" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" constant="10" id="K43-iI-K7h"/>
                             <constraint firstAttribute="trailing" secondItem="F5X-iN-TNU" secondAttribute="trailing" id="UIu-hX-yxk"/>
                             <constraint firstItem="F5X-iN-TNU" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" id="bjl-nO-FCi"/>
                             <constraint firstItem="NKd-k3-vSA" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="bottom" constant="130" id="j8o-9s-BY7"/>
-                            <constraint firstAttribute="centerX" secondItem="NKd-k3-vSA" secondAttribute="centerX" id="oXU-9G-nCY"/>
                             <constraint firstItem="F5X-iN-TNU" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="top" id="p0T-F4-LPw"/>
                             <constraint firstItem="8aV-gM-TJw" firstAttribute="top" secondItem="F5X-iN-TNU" secondAttribute="bottom" constant="-2" id="pSj-xK-Vd1"/>
                             <constraint firstAttribute="trailing" secondItem="ede-qs-tjY" secondAttribute="trailing" id="u4M-7D-fGK"/>

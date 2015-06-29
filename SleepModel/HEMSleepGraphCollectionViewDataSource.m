@@ -90,7 +90,6 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
         _meridiemFormatter = [NSDateFormatter new];
         _inlineNumberFormatter = [HEMSplitTextFormatter new];
         [self configureCollectionView];
-        [self reloadData];
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(reloadData)
                                                      name:SENAuthorizationServiceDidAuthorizeNotification
@@ -111,7 +110,7 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     _calendar = [NSCalendar currentCalendar];
 }
 
-- (void)reloadData {
+- (void)reloadData:(void(^)(void))completion {
     [self reloadDateFormatters];
     self.sleepResult = [SENSleepResult sleepResultForDate:self.dateForNightOfSleep];
     if ([self shouldShowLoadingView]) {
@@ -130,14 +129,17 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline timelineForDate:self.dateForNightOfSleep
                          completion:^(NSArray *timelines, NSError *error) {
-                           __strong HEMSleepGraphCollectionViewDataSource *strongSelf = weakSelf;
-                           if (error) {
-                               [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                               DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
-                               [strongSelf hideLoadingViewAnimated:YES];
-                               return;
-                           }
-                           [strongSelf refreshWithTimelines:timelines];
+                             __strong HEMSleepGraphCollectionViewDataSource *strongSelf = weakSelf;
+                             if (error) {
+                                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                                DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
+                                [strongSelf hideLoadingViewAnimated:YES];
+                                return;
+                            }
+                             [strongSelf refreshWithTimelines:timelines];
+                             if (completion) {
+                                 completion();
+                             }
                          }];
 }
 

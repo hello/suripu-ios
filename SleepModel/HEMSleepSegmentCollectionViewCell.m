@@ -21,7 +21,7 @@ CGFloat const HEMSleepLineWidth = 1.f;
 @implementation HEMSleepSegmentCollectionViewCell
 
 static CGFloat const HEMSegmentTimeLabelHeight = 16.f;
-static CGFloat const HEMSegmentBorderWidth = 2.f;
+static CGFloat const HEMSegmentBorderWidth = 1.f;
 
 - (void)awakeFromNib {
     self.opaque = YES;
@@ -76,12 +76,12 @@ static CGFloat const HEMSegmentBorderWidth = 2.f;
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:labelRect];
     timeLabel.attributedText = text;
     timeLabel.textColor = [HelloStyleKit tintColor];
-    [self addSubview:timeLabel];
+    [[self contentView] addSubview:timeLabel];
     CGRect lineRect = CGRectMake(0, lineYOffset, CGRectGetMinX(labelRect) - HEMTimeLabelLineOffset,
                                  HEMSegmentBorderWidth);
     UIImageView *lineView = [[UIImageView alloc] initWithFrame:lineRect];
     lineView.image = [self lineBorderImageWithColor:[[HelloStyleKit tintColor] colorWithAlphaComponent:0.25f]];
-    [self addSubview:lineView];
+    [[self contentView] insertSubview:lineView atIndex:0];
     [self.timeViews addObject:lineView];
     [self.timeViews addObject:timeLabel];
 }
@@ -92,7 +92,7 @@ static CGFloat const HEMSegmentBorderWidth = 2.f;
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSetStrokeColorWithColor(ctx, color.CGColor);
     CGContextSetLineWidth(ctx, HEMSegmentBorderWidth);
-    CGFloat y = size.height - HEMSegmentBorderWidth;
+    CGFloat y = size.height - (HEMSegmentBorderWidth/2);
     CGContextMoveToPoint(ctx, 0, y);
     CGContextAddLineToPoint(ctx, size.width, y);
     CGContextStrokePath(ctx);

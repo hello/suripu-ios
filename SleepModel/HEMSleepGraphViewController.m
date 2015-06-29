@@ -41,6 +41,8 @@ CGFloat const HEMTimelineFooterCellHeight = 60.f;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
 @property (nonatomic, assign, getter=isLastNight) BOOL lastNight;
+@property (nonatomic, assign, getter=isLoadingData) BOOL loadingData;
+@property (nonatomic, assign, getter=isVisible) BOOL visible;
 @end
 
 @implementation HEMSleepGraphViewController
@@ -81,8 +83,14 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self setVisible:YES];
     [self showTutorial];
     [self checkIfInitialAnimationNeeded];
+}
+
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self setVisible:NO];
 }
 
 - (void)showTutorial {
@@ -139,20 +147,15 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark Initial load animation
 
 - (void)prepareForInitialAnimation {
-    HEMSleepSummarySlideViewController *controller = (id)self.parentViewController;
-    [controller setSwipingEnabled:NO];
     self.collectionView.scrollEnabled = NO;
 }
 
 - (void)finishInitialAnimation {
-    HEMSleepSummarySlideViewController *controller = (id)self.parentViewController;
-    [controller setSwipingEnabled:YES];
     self.collectionView.scrollEnabled = YES;
 }
 
 - (void)performInitialAnimation {
-    CGFloat const initialAnimationDelay = 0.75f;
-    CGFloat const eventAnimationDuration = 0.45f;
+    CGFloat const eventAnimationDuration = 0.25f;
     CGFloat const eventAnimationCrossfadeRatio = 0.9f;
     hasLoadedBefore = YES;
     NSArray *indexPaths = [[self.collectionView indexPathsForVisibleItems]
@@ -166,7 +169,7 @@ static BOOL hasLoadedBefore = NO;
         if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
             continue;
         HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
-        CGFloat delay = initialAnimationDelay + (eventAnimationDuration * eventsFound * eventAnimationCrossfadeRatio);
+        CGFloat delay = (eventAnimationDuration * eventsFound * eventAnimationCrossfadeRatio);
         if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
             eventsFound++;
         }
@@ -418,15 +421,27 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)reloadData {
-    [self loadData];
-    [self checkIfInitialAnimationNeeded];
+    if (![self isLoadingData]) {
+        [self loadData];
+    }
 }
 
 - (void)loadDataSourceForDate:(NSDate *)date {
+    self.loadingData = YES;
+    
     self.dateForNightOfSleep = date;
     self.dataSource =
         [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
     self.collectionView.dataSource = self.dataSource;
+    
+    __weak typeof(self) weakSelf = self;
+    [self.dataSource reloadData:^{
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        strongSelf.loadingData = NO;
+        if ([strongSelf isVisible]) {
+            [strongSelf checkIfInitialAnimationNeeded];
+        }
+    }];
 }
 
 - (void)checkIfInitialAnimationNeeded {
@@ -434,11 +449,11 @@ static BOOL hasLoadedBefore = NO;
         if (self.dataSource.sleepResult.score > 0) {
             static dispatch_once_t onceToken;
             dispatch_once(&onceToken, ^{
-              __weak typeof(self) weakSelf = self;
-              int64_t delay = (int64_t)(1.5 * NSEC_PER_SEC);
-              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
-                [weakSelf performInitialAnimation];
-              });
+                __weak typeof(self) weakSelf = self;
+                int64_t delay = (int64_t)(1.5 * NSEC_PER_SEC);
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+                    [weakSelf performInitialAnimation];
+                });
             });
         } else {
             [self finishInitialAnimation];

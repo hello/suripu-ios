@@ -70,7 +70,7 @@
     CGFloat alphaRatio = MIN(1, ABS(ratio * 3));
     CGFloat scaleOffset = nearbyintf(-(width - (width * scale)) / 2);
     CGAffineTransform scaling = CGAffineTransformMakeScale(scale, scale);
-    CGAffineTransform transform = CGAffineTransformTranslate(scaling, scaleOffset / 2, scaleOffset);
+    CGAffineTransform transform = CGAffineTransformTranslate(scaling, scaleOffset / 2, 0);
     transform = CGAffineTransformTranslate(transform, 0, parallaxVerticalOffset);
     self.contentContainerView.alpha = [self isWaitingForAnimation] ? 0 : alphaRatio;
     self.contentContainerView.transform = scale < 1 ? scaling : CGAffineTransformIdentity;

@@ -2,7 +2,6 @@
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepScoreGraphView.h"
 #import "HEMSleepSummaryPointerGradientView.h"
-#import "HEMSleepScoreLoadingView.h"
 #import "HelloStyleKit.h"
 
 @interface HEMSleepSummaryCollectionViewCell ()
@@ -10,7 +9,6 @@
 @property (weak, nonatomic) IBOutlet UILabel *sleepScoreTextLabel;
 @property (weak, nonatomic) IBOutlet UIView *summaryContainerView;
 @property (weak, nonatomic) IBOutlet UIView *messageContainerView;
-@property (weak, nonatomic) IBOutlet HEMSleepScoreLoadingView *loadingView;
 @property (nonatomic, strong) NSAttributedString *sleepScoreLabelText;
 @property (nonatomic, strong) CAGradientLayer *gradientLayer;
 @end
@@ -35,11 +33,11 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 
 - (void)prepareForReuse {
     [super prepareForReuse];
-    [self.loadingView setLoading:NO];
+    [self.sleepScoreGraphView setLoading:NO];
 }
 
 - (void)setLoading:(BOOL)loading {
-    [self.loadingView setLoading:loading];
+    [self.sleepScoreGraphView setLoading:loading];
 }
 
 - (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated {
@@ -47,7 +45,7 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
     BOOL scoreIsEmpty = sleepScore == 0;
     self.sleepScoreTextLabel.hidden = scoreIsEmpty;
     [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];
-    if (self.messageContainerView.alpha != 1 && ![self.loadingView isLoading]) {
+    if (self.messageContainerView.alpha != 1 && ![self.sleepScoreGraphView isLoading]) {
         [UIView animateWithDuration:0.25f
                               delay:scoreIsEmpty ? 0 : fullScoreDelay
                             options:0

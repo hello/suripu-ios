@@ -24,12 +24,25 @@
                         <rect key="frame" x="0.0" y="53" width="320" height="331"/>
                         <subviews>
                             <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T3i-WO-VZQ" customClass="HEMSleepScoreGraphView">
-                                <rect key="frame" x="82" y="16" width="157" height="157"/>
+                                <rect key="frame" x="82" y="16" width="157" height="127"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="87" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eK-rK-hbH" customClass="UICountingLabel">
+                                        <rect key="frame" x="42" y="34" width="72" height="88"/>
+                                        <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="64"/>
+                                        <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="7eK-rK-hbH" firstAttribute="top" secondItem="T3i-WO-VZQ" secondAttribute="top" constant="34" id="Lqn-tc-ZiY"/>
                                     <constraint firstAttribute="width" constant="157" id="LxA-Wd-Yac"/>
-                                    <constraint firstAttribute="height" constant="157" id="Tcm-aA-44U"/>
+                                    <constraint firstAttribute="centerX" secondItem="7eK-rK-hbH" secondAttribute="centerX" id="Niu-mJ-3Vb"/>
+                                    <constraint firstAttribute="height" constant="127" id="Tcm-aA-44U"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="scoreValueLabel" destination="7eK-rK-hbH" id="MsB-3V-IlP"/>
+                                </connections>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SLEEP SCORE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FN0-1v-Tup">
                                 <rect key="frame" x="128" y="139" width="64" height="14"/>
@@ -85,10 +98,6 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AZX-U2-iId" customClass="HEMSleepScoreLoadingView">
-                                <rect key="frame" x="82" y="16" width="157" height="157"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -97,15 +106,11 @@
                             <constraint firstAttribute="trailing" secondItem="XD9-Mv-4Jf" secondAttribute="trailing" constant="8" id="DgO-Em-V2T"/>
                             <constraint firstAttribute="bottom" secondItem="oNi-GL-i0h" secondAttribute="bottom" constant="8" id="Jnl-6V-dqW"/>
                             <constraint firstAttribute="centerX" secondItem="T3i-WO-VZQ" secondAttribute="centerX" id="KOh-Fc-vJ8"/>
-                            <constraint firstItem="AZX-U2-iId" firstAttribute="trailing" secondItem="T3i-WO-VZQ" secondAttribute="trailing" id="NN9-HW-T1U"/>
                             <constraint firstAttribute="centerX" secondItem="FN0-1v-Tup" secondAttribute="centerX" constant="0.5" id="V8J-MZ-6qm"/>
-                            <constraint firstItem="AZX-U2-iId" firstAttribute="leading" secondItem="T3i-WO-VZQ" secondAttribute="leading" id="Vof-7b-WR8"/>
                             <constraint firstItem="oNi-GL-i0h" firstAttribute="top" secondItem="1cj-i9-Ywi" secondAttribute="top" id="ZSM-1b-JXF"/>
-                            <constraint firstItem="AZX-U2-iId" firstAttribute="top" secondItem="T3i-WO-VZQ" secondAttribute="top" id="Zwm-oG-kE5"/>
                             <constraint firstItem="oNi-GL-i0h" firstAttribute="leading" secondItem="1cj-i9-Ywi" secondAttribute="leading" constant="8" id="ggp-Ph-UY2"/>
-                            <constraint firstItem="FN0-1v-Tup" firstAttribute="bottom" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="-20" id="nhZ-cg-khh"/>
-                            <constraint firstItem="XD9-Mv-4Jf" firstAttribute="top" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="8" id="taB-6D-UjW"/>
-                            <constraint firstItem="AZX-U2-iId" firstAttribute="bottom" secondItem="T3i-WO-VZQ" secondAttribute="bottom" id="uc1-Ml-Cak"/>
+                            <constraint firstItem="FN0-1v-Tup" firstAttribute="bottom" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="10" id="nhZ-cg-khh"/>
+                            <constraint firstItem="XD9-Mv-4Jf" firstAttribute="top" secondItem="T3i-WO-VZQ" secondAttribute="bottom" constant="38" id="taB-6D-UjW"/>
                             <constraint firstItem="XD9-Mv-4Jf" firstAttribute="leading" secondItem="1cj-i9-Ywi" secondAttribute="leading" constant="8" id="xpo-dy-oFO"/>
                         </constraints>
                     </view>
@@ -124,7 +129,6 @@
             </constraints>
             <size key="customSize" width="314" height="364"/>
             <connections>
-                <outlet property="loadingView" destination="AZX-U2-iId" id="Pzg-eR-URM"/>
                 <outlet property="messageContainerView" destination="XD9-Mv-4Jf" id="dPA-O9-CIu"/>
                 <outlet property="messageLabel" destination="buK-Of-ZfH" id="wIT-cG-avW"/>
                 <outlet property="sleepScoreGraphView" destination="T3i-WO-VZQ" id="nPx-1C-bLv"/>

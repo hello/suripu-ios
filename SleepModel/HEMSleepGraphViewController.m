@@ -282,12 +282,6 @@ static BOOL hasLoadedBefore = NO;
     });
 }
 
-- (IBAction)didTapAlarmShortcut:(id)sender {
-    [SENAnalytics track:HEMAnalyticsEventTimelineAlarmShortcut properties:nil];
-    HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
-}
-
 - (void)didTapSummaryButton:(UIButton *)sender {
     HEMBreakdownViewController *controller = [HEMMainStoryboard instantiateBreakdownViewController];
     controller.result = self.dataSource.sleepResult;

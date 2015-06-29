@@ -32,11 +32,9 @@ CGFloat const arcOffsetY = 80.f;
     self.scoreLayer = [CAShapeLayer layer];
     self.backgroundLayer = [CAShapeLayer layer];
     self.loadingLayer = [CAShapeLayer layer];
-    self.scoreLayer.opacity = 0;
     self.backgroundLayer.opacity = 0;
     self.loadingLayer.opacity = 0;
     [self.layer addSublayer:self.backgroundLayer];
-    [self.layer addSublayer:self.scoreLayer];
     [self.layer addSublayer:self.loadingLayer];
     NSInteger radius = floorf(CGRectGetWidth(self.bounds) / 2);
     UIColor *fillColor = [UIColor clearColor];
@@ -56,7 +54,6 @@ CGFloat const arcOffsetY = 80.f;
     self.loadingLayer.lineWidth = 1.f;
     self.loadingLayer.frame = self.bounds;
     self.backgroundLayer.opacity = 1;
-    self.scoreLayer.opacity = 1;
 }
 
 - (void)configureScoreValueLabel {
@@ -72,7 +69,7 @@ CGFloat const arcOffsetY = 80.f;
     NSString *const arcAnimationKey = @"drawCircleAnimation";
     NSString *const colorAnimationKey = @"colorCircleAnimation";
     self.scoreValueLabel.alpha = 0;
-    self.scoreLayer.opacity = 0;
+    [self.scoreLayer removeFromSuperlayer];
     if (value <= 0)
         return;
 
@@ -90,11 +87,11 @@ CGFloat const arcOffsetY = 80.f;
     circle.fillColor = [UIColor clearColor].CGColor;
     circle.strokeColor = [UIColor colorForSleepScore:value].CGColor;
     circle.lineWidth = 1;
-    circle.opacity = 1.f;
     CAAnimation *drawAnimation = [self strokePathAnimationWithScoreEndValue:value];
     CAAnimation *colorAnimation = [self strokeColorAnimationWithScoreEndValue:value];
     [circle addAnimation:drawAnimation forKey:arcAnimationKey];
     [circle addAnimation:colorAnimation forKey:colorAnimationKey];
+    [self.layer addSublayer:circle];
     [self animateScoreLabelTo:value];
 }
 

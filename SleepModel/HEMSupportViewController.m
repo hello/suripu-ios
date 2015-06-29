@@ -14,7 +14,7 @@
 #import "HEMZendeskService.h"
 #import "HEMActivityCoverView.h"
 
-static CGFloat const HEMSupportZDKUIHeightDiff = -50.0f;
+static CGFloat const HEMSupportZDKUIHeightDiff = 50.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     HEMSupportRowIndexUserGuide = 0,
@@ -50,6 +50,7 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
+    [self stopListeningToKeyboardChanges];
     
     if ([self origNavDelegate]) {
         [[self navigationController] setDelegate:[self origNavDelegate]];
@@ -66,6 +67,40 @@ typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     frame.size.height = HEMSettingsCellTableMargin;
     frame.size.width = width;
     [[self tableView] setTableHeaderView:[[UIView alloc] initWithFrame:frame]];
+}
+
+- (void)overrideNavigationDelegate {
+    // FIXME jimmy: setting the navigationController is a total hack.  Until we
+    // begin giving child controllers of the back view full height or ZDK gives
+    // us more control over their UI.
+    [self setOrigNavDelegate:[[self navigationController] delegate]];
+    
+    __weak typeof(self) weakSelf = self;
+    [[self navigationController] setDelegate:weakSelf];
+}
+
+#pragma mark - Keyboard
+
+- (void)listenForKeyboardChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center addObserver:self
+               selector:@selector(keyboardWillShow:)
+                   name:UIKeyboardWillShowNotification
+                 object:nil];
+}
+
+- (void)stopListeningToKeyboardChanges {
+    NSNotificationCenter* center = [NSNotificationCenter defaultCenter];
+    [center removeObserver:self name:UIKeyboardWillShowNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification*)note {
+    UIViewController* zdkController = [ZDKUIViewController activeController];
+    if ([zdkController isKindOfClass:[ZDKCommentsViewController class]]) {
+        CGRect viewFrame = [[zdkController view] frame];
+        viewFrame.size.height += HEMSupportZDKUIHeightDiff;
+        [[zdkController view] setFrame:viewFrame];
+    }
 }
 
 #pragma mark - UITableViewDataSource / Delegate
@@ -118,17 +153,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
     
     switch ([indexPath row]) {
         case HEMSupportRowIndexUserGuide: {
-            // FIXME jimmy: setting the navigationController is a total hack, but
-            // because ZDK does not provide direct access to the view controller
-            // and their layout is a total mess, we need to hack around the mistakes.
-            //
-            // A ticket has been filed and an email has been sent to their team.
-            // If they provide a solution to this problem, we will remove this, but
-            // for now, this is required per design for this to be release-able
-            [self setOrigNavDelegate:[[self navigationController] delegate]];
-            
-            __weak typeof(self) weakSelf = self;
-            [[self navigationController] setDelegate:weakSelf];
+            [self overrideNavigationDelegate];
             [ZDKHelpCenter showHelpCenterWithNavController:[self navigationController]
                                                layoutGuide:ZDKLayoutRespectNone];
             break;
@@ -136,9 +161,12 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         case HEMSupportRowIndexContactUs:
             [self performSegueWithIdentifier:[HEMMainStoryboard topicsSegueIdentifier] sender:self];
             break;
-        case HEMSupportRowIndexTickets:
+        case HEMSupportRowIndexTickets: {
+            [self overrideNavigationDelegate];
+            [self listenForKeyboardChanges];
             [ZDKRequests showRequestListWithNavController:[self navigationController]];
             break;
+        }
         default:
             break;
     }
@@ -157,7 +185,7 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
        didShowViewController:(UIViewController *)viewController
                     animated:(BOOL)animated {
     CGRect viewFrame = [[viewController view] frame];
-    viewFrame.size.height += HEMSupportZDKUIHeightDiff;
+    viewFrame.size.height -= HEMSupportZDKUIHeightDiff;
     [[viewController view] setFrame:viewFrame];
     [[navigationController interactivePopGestureRecognizer] setEnabled:YES];
 }
@@ -165,6 +193,8 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
 #pragma mark - Clean up
 
 - (void)dealloc {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [_tableView setDelegate:nil];
     [_tableView setDataSource:nil];
     

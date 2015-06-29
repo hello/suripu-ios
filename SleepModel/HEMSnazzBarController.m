@@ -15,6 +15,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 @interface HEMSnazzBarController ()<HEMSnazzBarDelegate, UIGestureRecognizerDelegate>
 
 @property (nonatomic, strong) HEMSnazzBar* buttonsBar;
+@property (nonatomic, getter=isChangingTabs) BOOL changingTabs;
 @property (nonatomic, strong) UIView* contentView;
 @property (nonatomic, strong) UISwipeGestureRecognizer* swipeToNextGestureRecognizer;
 @property (nonatomic, strong) UISwipeGestureRecognizer* swipeToPreviousGestureRecognizer;
@@ -120,7 +121,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
 
 - (void)setSelectedIndex:(NSUInteger)index animated:(BOOL)animated
 {
-    if (index >= self.viewControllers.count)
+    if (index >= self.viewControllers.count || [self isChangingTabs])
         return;
 
     BOOL shouldSelectIndex = YES;
@@ -129,6 +130,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
     if (!shouldSelectIndex)
         return;
 
+    self.changingTabs = YES;
     if ([self.delegate respondsToSelector:@selector(barController:willSelectIndex:)])
         [self.delegate barController:self willSelectIndex:index];
 
@@ -138,8 +140,11 @@ CGFloat const HEMSnazzBarHeight = 65.f;
             UINavigationController* navController = (id)selectedController;
             [navController popToRootViewControllerAnimated:animated];
         }
+        self.changingTabs = NO;
     } else if ([self isViewLoaded]) {
         [self showControllerAtIndex:index animated:animated];
+    } else {
+        self.changingTabs = NO;
     }
 
     _selectedIndex = index;
@@ -168,6 +173,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
             [fromController.view removeFromSuperview];
             self.contentView.userInteractionEnabled = YES;
             [self addGestureRecognizersToView:toController.view];
+            self.changingTabs = NO;
         };
         void (^animations)() = ^{
             toController.view.frame = self.contentView.bounds;
@@ -182,6 +188,7 @@ CGFloat const HEMSnazzBarHeight = 65.f;
         toController.view.frame = self.contentView.bounds;
         [self addGestureRecognizersToView:toController.view];
         [self.contentView addSubview:toController.view];
+        self.changingTabs = NO;
     }
 
     [self.buttonsBar selectButtonAtIndex:index animated:animated];

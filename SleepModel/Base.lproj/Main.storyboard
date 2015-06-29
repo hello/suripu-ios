@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
     </dependencies>
@@ -111,7 +111,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmSmartIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="JfE-LJ-HjM">
-                                                    <rect key="frame" x="16" y="14" width="32" height="29"/>
+                                                    <rect key="frame" x="16" y="16" width="32" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="Yil-Ys-fIp"/>
                                                     </constraints>
@@ -161,10 +161,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sound" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ycu-Zi-bjJ">
-                                                    <rect key="frame" x="61" y="17" width="187" height="22"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="187" id="7vd-Bk-iS5"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="61" y="17" width="46" height="22"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                                     <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -175,13 +172,13 @@
                                                     <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="alarmSoundIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="8dY-0j-fHj">
-                                                    <rect key="frame" x="16" y="16" width="32" height="28"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmSoundIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="8dY-0j-fHj">
+                                                    <rect key="frame" x="16" y="17" width="32" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="xAz-Af-V7B"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="gFg-NX-sGf">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="gFg-NX-sGf">
                                                     <rect key="frame" x="572" y="21" width="8" height="15"/>
                                                 </imageView>
                                             </subviews>
@@ -191,6 +188,7 @@
                                                 <constraint firstItem="gFg-NX-sGf" firstAttribute="leading" secondItem="7vq-dr-gEC" secondAttribute="trailing" constant="13" id="SdT-6q-Po4"/>
                                                 <constraint firstAttribute="centerY" secondItem="7vq-dr-gEC" secondAttribute="centerY" constant="0.5" id="URa-2J-rvh"/>
                                                 <constraint firstItem="8dY-0j-fHj" firstAttribute="leading" secondItem="LgC-Om-gYt" secondAttribute="leading" constant="16" id="YDD-OF-bmX"/>
+                                                <constraint firstItem="7vq-dr-gEC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ycu-Zi-bjJ" secondAttribute="trailing" constant="10" id="YYp-xT-JYh"/>
                                                 <constraint firstAttribute="centerY" secondItem="8dY-0j-fHj" secondAttribute="centerY" constant="-0.5" id="Yb8-kF-hWg"/>
                                                 <constraint firstItem="ycu-Zi-bjJ" firstAttribute="leading" secondItem="8dY-0j-fHj" secondAttribute="trailing" constant="13" id="cKo-TW-VEv"/>
                                                 <constraint firstAttribute="trailing" secondItem="gFg-NX-sGf" secondAttribute="trailing" constant="20" id="v3p-1z-RA2"/>
@@ -211,10 +209,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Repeat" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VeZ-HT-TUJ">
-                                                    <rect key="frame" x="61" y="17" width="187" height="22"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="187" id="2c7-3C-Gwz"/>
-                                                    </constraints>
+                                                    <rect key="frame" x="61" y="17" width="51" height="22"/>
                                                     <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="16"/>
                                                     <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
@@ -225,17 +220,18 @@
                                                     <color key="textColor" white="0.29999999999999999" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="alarmRepeatIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="cat-rB-3EA">
-                                                    <rect key="frame" x="16" y="16" width="32" height="28"/>
+                                                <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="alarmRepeatIcon.png" translatesAutoresizingMaskIntoConstraints="NO" id="cat-rB-3EA">
+                                                    <rect key="frame" x="16" y="17" width="32" height="25"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="32" id="9fF-oU-aFA"/>
                                                     </constraints>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="sVq-mc-4Ub">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="1000" image="accessory.png" translatesAutoresizingMaskIntoConstraints="NO" id="sVq-mc-4Ub">
                                                     <rect key="frame" x="572" y="21" width="8" height="15"/>
                                                 </imageView>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="wIf-FK-vch" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="VeZ-HT-TUJ" secondAttribute="trailing" constant="10" id="2JY-0Q-JUW"/>
                                                 <constraint firstAttribute="centerY" secondItem="wIf-FK-vch" secondAttribute="centerY" constant="0.5" id="65f-OO-1dh"/>
                                                 <constraint firstItem="cat-rB-3EA" firstAttribute="leading" secondItem="hSX-Cr-ZXm" secondAttribute="leading" constant="16" id="AHR-tb-1Lp"/>
                                                 <constraint firstAttribute="centerY" secondItem="cat-rB-3EA" secondAttribute="centerY" constant="-0.5" id="BQB-kf-Ez4"/>
@@ -4278,10 +4274,10 @@
         <image name="Menu.png" width="20" height="11"/>
         <image name="Share.png" width="17" height="20"/>
         <image name="accessory.png" width="8" height="15"/>
-        <image name="alarmRepeatIcon.png" width="22" height="28"/>
+        <image name="alarmRepeatIcon.png" width="25" height="25"/>
         <image name="alarmShortcut.png" width="54" height="54"/>
-        <image name="alarmSmartIcon.png" width="34" height="29"/>
-        <image name="alarmSoundIcon.png" width="17" height="28"/>
+        <image name="alarmSmartIcon.png" width="25" height="25"/>
+        <image name="alarmSoundIcon.png" width="25" height="25"/>
         <image name="backIcon.png" width="10" height="18"/>
         <image name="checkmark.png" width="20" height="15"/>
         <image name="escape button.png" width="32" height="32"/>
@@ -4289,7 +4285,7 @@
         <image name="miniPlayButton.png" width="25" height="25"/>
         <image name="questions_check.png" width="20" height="15"/>
         <image name="questions_circle.png" width="21" height="21"/>
-        <image name="senseIcon.png" width="37" height="36"/>
+        <image name="senseIcon.png" width="40" height="40"/>
         <image name="settingsCheck.png" width="16" height="13"/>
         <image name="timeline_action_adjust.png" width="32" height="32"/>
         <image name="warning.png" width="24" height="22"/>

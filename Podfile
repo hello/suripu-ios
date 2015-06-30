@@ -15,6 +15,7 @@ pod 'FDWaveformView', :git => 'git@github.com:hello/FDWaveformView.git'
 pod 'SVWebViewController', :git => 'https://github.com/TransitApp/SVWebViewController.git'
 pod 'MSDynamicsDrawerViewController', '1.5.1'
 pod 'ZendeskSDK', :git => 'https://github.com/zendesk/zendesk_sdk_ios.git'
+pod 'UICountingLabel', '~> 1.2.0'
 
 # Private
 pod 'SHSProtoBuf', :git => 'git@github.com:hello/protobuf-objc.git'

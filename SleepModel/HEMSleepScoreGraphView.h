@@ -3,7 +3,7 @@
 
 @interface HEMSleepScoreGraphView : UIView
 
-- (void)setSleepScore:(NSInteger)sleepScore;
 - (void)setSleepScore:(NSInteger)sleepScore animated:(BOOL)animated;
-- (void)setSleepScoreDateText:(NSString*)sleepScoreDateText;
+- (BOOL)isLoading;
+- (void)setLoading:(BOOL)loading;
 @end

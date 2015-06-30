@@ -66,6 +66,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     if ([self respondsToSelector:@selector(presentationController)]) {
         [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     }
+    [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [[self optionTableView] setSeparatorColor:[HelloStyleKit actionSheetSeparatorColor]];
     [[self optionTableView] setTableFooterView:[[UIView alloc] init]];
 }

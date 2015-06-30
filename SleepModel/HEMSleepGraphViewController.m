@@ -191,13 +191,10 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark Event Info
 
 - (void)updateTimeOfEventOnSegment:(SENSleepResultSegment *)segment {
-    UINavigationController *navController = [HEMMainStoryboard instantiateTimelineFeedbackViewController];
-    navController.transitioningDelegate = self.dataVerifyTransitionDelegate;
-    navController.modalPresentationStyle = UIModalPresentationCustom;
-    HEMTimelineFeedbackViewController *feedbackController = (id)navController.topViewController;
+    HEMTimelineFeedbackViewController *feedbackController = [HEMMainStoryboard instantiateTimelineFeedbackViewController];
     feedbackController.dateForNightOfSleep = self.dateForNightOfSleep;
     feedbackController.segment = segment;
-    [self presentViewController:navController animated:YES completion:NULL];
+    [self presentViewController:feedbackController animated:YES completion:NULL];
 }
 
 - (UIView*)confirmationViewForActionSheetWithOptions:(NSInteger)numberOfOptions {

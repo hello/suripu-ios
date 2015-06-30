@@ -14,15 +14,18 @@
 #import "HEMAlertViewController.h"
 #import "HEMBounceModalTransition.h"
 #import "HelloStyleKit.h"
+#import "HEMActivityCoverView.h"
 
 NSString* const HEMTimelineFeedbackSuccessNotification = @"HEMTimelineFeedbackSuccessNotification";
 
 @interface HEMTimelineFeedbackViewController ()
 @property (nonatomic, weak) IBOutlet HEMClockPickerView* clockView;
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* tinyLineHeight;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* tinySeparatorHeight;
 @property (nonatomic, weak) IBOutlet UIView* titleContainerView;
+@property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
+@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
+@property (weak, nonatomic) IBOutlet UIButton *saveButton;
 @property (nonatomic, strong) NSCalendar* calendar;
 @end
 
@@ -44,9 +47,15 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
     [super viewDidLoad];
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     [self configureSegmentViews];
-    [self configureBarButtonItems];
-    
+    [self configureButtonContainer];
     [SENAnalytics track:HEMAnalyticsEventTimelineAdjustTime];
+}
+
+- (void)configureButtonContainer {
+    CALayer *layer = self.buttonContainerView.layer;
+    layer.shadowRadius = 2.f;
+    layer.shadowOffset = CGSizeMake(0, -2.f);
+    layer.shadowOpacity = 0.05f;
 }
 
 - (void)configureSegmentViews
@@ -63,65 +72,63 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
         title = NSLocalizedString(@"sleep-event.feedback.title.generic", nil);
     }
     self.titleLabel.text = title;
-    self.tinyLineHeight.constant = 0.5f;
     self.tinySeparatorHeight.constant = 0.5f;
 }
 
-- (void)configureBarButtonItems
-{
-    static CGFloat const HEMFeedbackBarButtonSpace = 12.f;
-    UIBarButtonItem *leftFixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                                                                    target:nil
-                                                                                    action:nil];
-    leftFixedSpace.width = HEMFeedbackBarButtonSpace;
-    UIBarButtonItem *rightFixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem:UIBarButtonSystemItemFixedSpace
-                                                                                     target:nil
-                                                                                     action:nil];
-    rightFixedSpace.width = HEMFeedbackBarButtonSpace;
-    UIBarButtonItem* leftItem = self.navigationItem.leftBarButtonItem;
-    self.navigationItem.leftBarButtonItems = @[leftFixedSpace, leftItem];
-    UIBarButtonItem* rightItem = self.navigationItem.rightBarButtonItem;
-    self.navigationItem.rightBarButtonItems = @[rightFixedSpace, rightItem];
-}
-
-- (IBAction)sendUpdatedTime:(UIBarButtonItem*)sender
+- (IBAction)sendUpdatedTime:(UIButton*)sender
 {
     sender.enabled = NO;
-    UIBarButtonItem* leftItem = [self.navigationItem.leftBarButtonItems lastObject];
-    leftItem.enabled = NO;
-    NSArray* items = self.navigationItem.rightBarButtonItems;
-    UIActivityIndicatorView* indicator = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    indicator.color = [HelloStyleKit tintColor];
-    UIBarButtonItem* indicatorItem = [[UIBarButtonItem alloc] initWithCustomView:indicator];
-    self.navigationItem.rightBarButtonItems = @[ [items firstObject], indicatorItem ];
-    [indicator startAnimating];
+    
+    [[self cancelButton] setEnabled:NO];
+
+    NSString* activityText = NSLocalizedString(@"activity.saving.changes", nil);
+    HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
+    
+    __weak typeof(self) weakSelf = self;
     void (^completion)(NSError *) = ^(NSError *error) {
-      [indicator stopAnimating];
-      if (error) {
-          self.navigationItem.rightBarButtonItems = items;
-          leftItem.enabled = YES;
-          sender.enabled = YES;
-          [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
-                                                  message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
-                                               controller:self];
-          [SENAnalytics trackError:error
-                     withEventName:HEMAnalyticsEventTimelineAdjustTimeFailed];
-      } else {
-          [self dismissViewControllerAnimated:YES completion:NULL];
-          [[NSNotificationCenter defaultCenter] postNotificationName:HEMTimelineFeedbackSuccessNotification object:nil];
-      }
+        __strong typeof(weakSelf) strongSelf = weakSelf;
+        
+        if (error) {
+            [activityView dismissWithResultText:nil showSuccessMark:NO remove:YES completion:^{
+                [[strongSelf cancelButton] setEnabled:YES];
+                [sender setEnabled:YES];
+                [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
+                                                        message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
+                                                     controller:strongSelf];
+                [SENAnalytics trackError:error
+                           withEventName:HEMAnalyticsEventTimelineAdjustTimeFailed];
+            }];
+
+        } else {
+            [[NSNotificationCenter defaultCenter] postNotificationName:HEMTimelineFeedbackSuccessNotification object:strongSelf];
+            
+            NSString* message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
+            UIImage* icon = [HelloStyleKit check];
+            [activityView updateText:message successIcon:icon hideActivity:YES completion:^(BOOL finished) {
+                [activityView showSuccessMarkAnimated:YES completion:^(BOOL finished) {
+                    NSTimeInterval delayInSeconds = 0.5f;
+                    dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                    dispatch_after(delay, dispatch_get_main_queue(), ^(void) {
+                        [strongSelf dismissViewControllerAnimated:YES completion:NULL];
+                    });
+                }];
+            }];
+        }
+        
     };
-    [SENAPIFeedback updateSegment:self.segment
-                         withHour:self.clockView.hour
-                           minute:self.clockView.minute
-                  forNightOfSleep:self.dateForNightOfSleep
-                       completion:completion];
+    
+    [activityView showInView:[self view] withText:activityText activity:YES completion:^{
+        [SENAPIFeedback updateSegment:self.segment
+                             withHour:self.clockView.hour
+                               minute:self.clockView.minute
+                      forNightOfSleep:self.dateForNightOfSleep
+                           completion:completion];
+    }];
+
 }
 
 - (IBAction)cancelAndDismiss:(id)sender
 {
-    self.navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
-    self.navigationController.transitioningDelegate = nil;
     [self dismissViewControllerAnimated:YES completion:NULL];
 }
 

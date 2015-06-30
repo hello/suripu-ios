@@ -2805,7 +2805,6 @@
                                         </state>
                                         <connections>
                                             <action selector="cancelAndDismiss:" destination="dmd-i6-J7b" eventType="touchUpInside" id="hlZ-9b-l1M"/>
-                                            <action selector="dismissFromView:" destination="62Z-aY-sbu" eventType="touchUpInside" id="H0d-WE-BLl"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4td-BL-jA2">
@@ -2816,7 +2815,6 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="saveAndDismissFromView:" destination="62Z-aY-sbu" eventType="touchUpInside" id="CtI-6g-YqA"/>
                                             <action selector="sendUpdatedTime:" destination="dmd-i6-J7b" eventType="touchUpInside" id="wKq-C2-fZR"/>
                                         </connections>
                                     </button>

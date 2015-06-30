@@ -39,10 +39,12 @@
     [self updateConstraint:[self mapHeightConstraint] withDiff:-90.0f];
 }
 
-- (void)viewDidBecomeActive {
-    [super viewDidBecomeActive];
+- (void)viewDidEnterBackground {
+    [super viewDidEnterBackground];
+    DDLogVerbose(@"did enter background");
     if ([self locationTxId]) {
         [[HEMLocationCenter sharedCenter] stopLocatingFor:[self locationTxId]];
+        [self setLocationTxId:nil];
         [[self locationButton] setEnabled:YES];
     }
 }
@@ -51,6 +53,10 @@
 
 - (IBAction)requestLocation:(id)sender {
     [[self locationButton] setEnabled:NO];
+    
+    if ([self locationTxId]) {
+        [[HEMLocationCenter sharedCenter] stopLocatingFor:[self locationTxId]];
+    }
     
     NSError* error = nil;
     __weak typeof(self) weakSelf = self;

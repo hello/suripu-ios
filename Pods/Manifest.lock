@@ -67,9 +67,9 @@ PODS:
   - SVWebViewController (1.0)
   - UICountingLabel (1.2.0)
   - UIImageEffects (0.0.1)
-  - YapDatabase (2.6.4):
-    - YapDatabase/standard (= 2.6.4)
-  - YapDatabase/standard (2.6.4):
+  - YapDatabase (2.6.5):
+    - YapDatabase/standard (= 2.6.5)
+  - YapDatabase/standard (2.6.5):
     - CocoaLumberjack (~> 1)
   - ZendeskSDK (1.3.0.1):
     - ZendeskSDK/Core (= 1.3.0.1)
@@ -136,7 +136,7 @@ CHECKOUT OPTIONS:
     :commit: 717c233c241d2d2b407f3c3dd555517bd2e82e29
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 00a91a1174b42e1fed675efa8dd6f4a9a90407ec
+    :commit: 1c7a34fb2ddedf88759b304e01a86e4f91cb56bf
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: e44003540c7b52b8fa29a05a059e43751e25d0d4
@@ -168,7 +168,7 @@ SPEC CHECKSUMS:
   SVWebViewController: aa2e18a41ff5f45be7aeec8e92ca5bcc50b5ebb1
   UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
   UIImageEffects: 37b99fa461e4965f332ca82e92f2c22a1075ee84
-  YapDatabase: f9051e178a38f48d0f3a78562423a5bc969f1ca3
+  YapDatabase: 814f9ff862a95c1e581d93335a4020482b69155b
   ZendeskSDK: cef22a5d22cc35c14ea8b2495c980de38b9036e9
 
 COCOAPODS: 0.37.2

@@ -1,5 +1,23 @@
 # Changelog
 
+## 1.0.8.10
+
+Fixes:
+
+* On load, Timeline event cards and summary detail in as sleep score animates in
+* Timeline event animation upon scroll is now anchored from bottom left
+* The tooltip for sleep segments are shown above the bar with arrow pointing downwards
+* Timeline date is now back to the gray color
+* Fixed issue where last event in the timeline might not be at full opacity
+* Smart alarm shortcut button position adjusted to have equal spacing from edge
+* Adjusted event text in the card to have equal padding
+* Support tickets in settings will now show a comment field
+* Putting the phone to sleep when location permission dialog appears will no longer block the user (or previously cause user to tap twice again to proceed)
+* switching tabs fast in the backview will not cause empty content
+* connecting sense to wifi title on iphone 4s has proper padding
+* backview top bar is shortened to match standard navigation bar
+* fixed issue in the alarm screen where multiple repeat days (minus 1) would overlap with the label text
+
 ## 1.0.8.9
 
 Fixes:

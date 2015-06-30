@@ -29,7 +29,7 @@
 @implementation HEMBreakdownViewController
 
 const CGFloat BreakdownCellItemHeight = 116.f;
-const CGFloat BreakdownCellSummaryHeight = 120.f;
+const CGFloat BreakdownCellSummaryBaseHeight = 90.f;
 const CGFloat BreakdownDismissButtonBottom = 18.f;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
@@ -245,7 +245,17 @@ const CGFloat BreakdownDismissButtonBottom = 18.f;
 - (CGSize)collectionView:(UICollectionView *)collectionView
                   layout:(UICollectionViewLayout *)collectionViewLayout
   sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
-    CGFloat height = indexPath.section == 0 ? BreakdownCellSummaryHeight : BreakdownCellItemHeight;
+    CGFloat height = 0;
+    if (indexPath.section == 0) {
+        CGFloat const BreakdownSummaryHInset = 40.f;
+        CGRect screenBounds = [[UIScreen mainScreen] bounds];
+        NSDictionary *attrs = [HEMMarkdown attributesForTimelineBreakdownMessage];
+        NSAttributedString *text = [markdown_to_attr_string(self.result.message, 0, attrs) trim];
+        height = [text sizeWithWidth:CGRectGetWidth(screenBounds) - BreakdownSummaryHInset].height
+                 + BreakdownCellSummaryBaseHeight;
+    } else {
+        height = BreakdownCellItemHeight;
+    }
     return CGSizeMake(CGRectGetWidth(self.view.bounds), height);
 }
 

@@ -29,7 +29,7 @@
 #import "HEMEventAdjustConfirmationView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
-CGFloat const HEMTimelineFooterCellHeight = 60.f;
+CGFloat const HEMTimelineFooterCellHeight = 74.f;
 
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate,
                                            HEMSleepGraphActionDelegate>
@@ -295,8 +295,8 @@ static BOOL hasLoadedBefore = NO;
     [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
     CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
-    CGFloat top = CGRectGetMidY(cellLocation) - floorf([self.popupView intrinsicContentSize].height / 2) - HEMPopupVerticalOffset;
-    self.popupViewTop.constant = top;
+    CGFloat top = CGRectGetMinY(cellLocation) - floorf([self.popupView intrinsicContentSize].height);
+    self.popupViewTop.constant = top - HEMPopupVerticalOffset;
     [self.popupView setNeedsUpdateConstraints];
     [self.popupView layoutIfNeeded];
     self.popupViewTop.constant = top;
@@ -444,7 +444,7 @@ static BOOL hasLoadedBefore = NO;
             static dispatch_once_t onceToken;
             dispatch_once(&onceToken, ^{
                 __weak typeof(self) weakSelf = self;
-                int64_t delay = (int64_t)(1.5 * NSEC_PER_SEC);
+                int64_t delay = (int64_t)(0.6f * NSEC_PER_SEC);
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
                     [weakSelf performInitialAnimation];
                 });
@@ -452,6 +452,8 @@ static BOOL hasLoadedBefore = NO;
         } else {
             [self finishInitialAnimation];
         }
+    } else {
+        [self finishInitialAnimation];
     }
 }
 

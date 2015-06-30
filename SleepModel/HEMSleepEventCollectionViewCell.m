@@ -8,7 +8,7 @@
 #import "HEMEventBubbleView.h"
 
 @interface HEMSleepEventCollectionViewCell ()
-
+@property (nonatomic) CGFloat cachedRatioFromCenter;
 @end
 
 @implementation HEMSleepEventCollectionViewCell
@@ -25,7 +25,9 @@
 }
 
 - (void)applyLayoutAttributes:(HEMTimelineLayoutAttributes *)layoutAttributes {
-    [self adjustContentsWithRatio:layoutAttributes.ratioFromCenter];
+    CGFloat ratio = layoutAttributes.ratioFromCenter;
+    self.cachedRatioFromCenter = ratio;
+    [self adjustContentsWithRatio:ratio];
 }
 
 - (void)prepareForReuse {
@@ -45,14 +47,15 @@
     self.contentContainerView.alpha = 1;
 }
 
-- (void)performEntryAnimationWithDuration:(NSTimeInterval)duration
-                                    delay:(NSTimeInterval)delay {
+- (void)performEntryAnimationWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay {
     [super performEntryAnimationWithDuration:duration delay:delay];
+    CGFloat cachedAlpha = [self alphaWithRatioFromCenter:self.cachedRatioFromCenter];
+    CGFloat alpha = cachedAlpha > 0 ? cachedAlpha : 1.f;
     [UIView animateWithDuration:duration
                           delay:delay
                         options:0
                      animations:^{
-                       self.contentContainerView.alpha = 1.f;
+                       self.contentContainerView.alpha = alpha;
                      }
                      completion:NULL];
 }
@@ -67,21 +70,26 @@
     CGFloat scaleDiff = 1 - minContainerViewScale;
     CGFloat ratio = 1 - fabs(ratioFromCenter);
     CGFloat scale = ratioFromCenter < 0 ? MIN(1, (scaleDiff * ratio * 4) + minContainerViewScale) : 1;
-    CGFloat alphaRatio = MIN(1, ABS(ratio * 3));
     CGFloat scaleOffset = nearbyintf(-(width - (width * scale)) / 2);
     CGAffineTransform scaling = CGAffineTransformMakeScale(scale, scale);
-    CGAffineTransform transform = CGAffineTransformTranslate(scaling, scaleOffset / 2, scaleOffset);
+    CGAffineTransform transform = CGAffineTransformTranslate(scaling, scaleOffset / 2, 0);
     transform = CGAffineTransformTranslate(transform, 0, parallaxVerticalOffset);
-    self.contentContainerView.alpha = [self isWaitingForAnimation] ? 0 : alphaRatio;
+    self.contentContainerView.alpha =
+        [self isWaitingForAnimation] ? 0 : [self alphaWithRatioFromCenter:ratioFromCenter];
     self.contentContainerView.transform = scale < 1 ? scaling : CGAffineTransformIdentity;
     self.contentContainerView.frame = CGRectApplyAffineTransform([self containerFrame], transform);
+}
+
+- (CGFloat)alphaWithRatioFromCenter:(CGFloat)ratioFromCenter {
+    CGFloat ratio = 1 - fabs(ratioFromCenter);
+    return MIN(1, ABS(ratio * 3));
 }
 
 - (void)layoutContainerViews {
     CGFloat const iconImageLeft = 4.f;
     CGFloat const iconImageTop = 4.f;
     CGFloat const iconImageDiameter = 40.f;
-    CGFloat const timeLabelRight = 8.f;
+    CGFloat const timeLabelRight = 12.f;
     CGFloat const timeLabelLeft = 10.f;
     CGFloat const timeLabelTop = 16.f;
     CGFloat const messageLabelLeft = 52.f;
@@ -101,7 +109,8 @@
     self.eventTimeLabel.frame = eventTimeLabelFrame;
 
     CGFloat containerWidth = CGRectGetWidth(containerFrame);
-    CGFloat messageWidth = containerWidth - messageLabelLeft - CGRectGetWidth(eventTimeLabelFrame) - messageLabelRight - timeLabelRight - timeLabelLeft;
+    CGFloat messageWidth = containerWidth - messageLabelLeft - CGRectGetWidth(eventTimeLabelFrame) - messageLabelRight
+                           - timeLabelRight - timeLabelLeft;
     CGRect eventMesageLabelFrame = CGRectMake(messageLabelLeft, messageLabelTop, messageWidth,
                                               CGRectGetHeight(containerFrame) - messageLabelHeightOffset);
     self.eventMessageLabel.frame = eventMesageLabelFrame;

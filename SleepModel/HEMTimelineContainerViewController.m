@@ -195,7 +195,7 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
     [UIView animateWithDuration:0.2f
                      animations:^{
                        self.centerTitleLabel.textColor = isOpen ? [HelloStyleKit barButtonDisabledColor]
-                                                                : [HelloStyleKit tintColor];
+                                                                : [UIColor colorWithWhite:0 alpha:0.7f];
                        self.shareButton.alpha = auxButtonAlpha;
                        [self.view layoutIfNeeded];
                      }];

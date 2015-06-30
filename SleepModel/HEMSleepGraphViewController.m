@@ -29,7 +29,7 @@
 #import "HEMEventAdjustConfirmationView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
-CGFloat const HEMTimelineFooterCellHeight = 60.f;
+CGFloat const HEMTimelineFooterCellHeight = 74.f;
 
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate,
                                            HEMSleepGraphActionDelegate>

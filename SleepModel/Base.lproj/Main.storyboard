@@ -2856,7 +2856,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3YU-EY-ydB" userLabel="alarm button">
-                                <rect key="frame" x="530" y="538" width="54" height="54"/>
+                                <rect key="frame" x="530" y="530" width="54" height="54"/>
                                 <state key="normal" image="alarmShortcut.png">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -2870,7 +2870,7 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLX-Nj-aVW">
                                         <rect key="frame" x="261" y="20" width="79" height="25"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
-                                        <color key="textColor" red="0.063956059519999997" green="0.53325003390000003" blue="0.99848216769999998" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2h-OZ-S7g" userLabel="drawer button">
@@ -2902,6 +2902,7 @@
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JQb-8q-AeR">
                                         <rect key="frame" x="251" y="10" width="99" height="45"/>
                                         <state key="normal">
+                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -2930,7 +2931,7 @@
                             <constraint firstAttribute="trailing" secondItem="hRZ-rK-9xy" secondAttribute="trailing" id="AA3-KG-xBe"/>
                             <constraint firstItem="hRZ-rK-9xy" firstAttribute="leading" secondItem="kbB-uz-lbI" secondAttribute="leading" id="dtc-SX-ec7"/>
                             <constraint firstItem="3YU-EY-ydB" firstAttribute="trailing" secondItem="kbB-uz-lbI" secondAttribute="trailing" constant="-16" id="j28-RF-EWa"/>
-                            <constraint firstItem="x0F-jb-URM" firstAttribute="top" secondItem="3YU-EY-ydB" secondAttribute="bottom" constant="8" id="m4I-ja-HoW"/>
+                            <constraint firstItem="x0F-jb-URM" firstAttribute="top" secondItem="3YU-EY-ydB" secondAttribute="bottom" constant="16" id="m4I-ja-HoW"/>
                             <constraint firstItem="hRZ-rK-9xy" firstAttribute="top" secondItem="H95-mD-yJh" secondAttribute="top" id="oq2-kL-3CB"/>
                         </constraints>
                     </view>

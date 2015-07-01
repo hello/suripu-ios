@@ -41,7 +41,7 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
 }
 
 - (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated {
-    CGFloat const fullScoreDelay = 1.25f;
+    CGFloat const fullScoreDelay = 0.05f;
     BOOL scoreIsEmpty = sleepScore == 0;
     self.sleepScoreTextLabel.hidden = scoreIsEmpty;
     [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];

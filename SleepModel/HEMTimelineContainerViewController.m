@@ -14,6 +14,7 @@
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
 #import "NSDate+HEMRelative.h"
+#import "HEMTimelineTopBarView.h"
 
 @interface HEMTimelineContainerViewController ()
 @property (nonatomic, weak) IBOutlet UIButton *drawerButton;
@@ -23,7 +24,7 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *centerTitleTop;
 @property (nonatomic, weak) IBOutlet UIButton *centerTitleButton;
 @property (nonatomic, weak) IBOutlet UILabel *centerTitleLabel;
-@property (nonatomic, weak) IBOutlet UIView *topBarView;
+@property (nonatomic, weak) IBOutlet HEMTimelineTopBarView *topBarView;
 
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) NSDateFormatter *weekdayDateFormatter;
@@ -138,9 +139,8 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
         return [self.rangeDateFormatter stringFromDate:date];
 }
 
-- (void)showBlurWithHeight:(CGFloat)blurHeight {
-    self.topGradientLayer.frame
-        = CGRectMake(0, CGRectGetHeight(self.topBarView.bounds), CGRectGetWidth(self.topBarView.bounds), blurHeight);
+- (void)setBlurEnabled:(BOOL)enabled {
+    [self.topBarView setVisualEffectsEnabled:enabled];
 }
 
 - (void)showAlarmButton:(BOOL)isVisible {

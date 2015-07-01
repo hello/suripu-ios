@@ -25,6 +25,7 @@
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
+#import "HEMTimelineTopBarView.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 #import "HEMActionSheetTitleView.h"
@@ -216,7 +217,7 @@ static BOOL hasLoadedBefore = NO;
     CGRect confirmFrame = CGRectZero;
     confirmFrame.size.height = numberOfOptions * HEMActionSheetDefaultCellHeight;
     confirmFrame.size.width = CGRectGetWidth([[self view] bounds]);
-    
+
     HEMEventAdjustConfirmationView* confirmView
         = [[HEMEventAdjustConfirmationView alloc] initWithTitle:title
                                                        subtitle:nil
@@ -232,10 +233,10 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)activateActionSheetAtIndexPath:(NSIndexPath *)indexPath {
     SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-    
+
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
     [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    
+
     NSString* approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
     [sheet addOptionWithTitle:approveTitle
                    titleColor:[UIColor darkGrayColor]
@@ -256,7 +257,7 @@ static BOOL hasLoadedBefore = NO;
                              [self markSenseLearnsAsShown];
                            }];
     }
-    
+
     NSString* deleteTitle = NSLocalizedString(@"sleep-event.action.delete.title", nil);
     [sheet addOptionWithTitle:deleteTitle
                    titleColor:[UIColor darkGrayColor]
@@ -416,15 +417,10 @@ static BOOL hasLoadedBefore = NO;
     [self adjustLayoutWithScrollOffset:scrollView.contentOffset.y];
 }
 
-- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView
-                     withVelocity:(CGPoint)velocity
-              targetContentOffset:(inout CGPoint *)targetContentOffset {
-    [self adjustLayoutWithScrollOffset:targetContentOffset->y];
-}
-
 - (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
     CGFloat const actionableOffset = 5.f;
     [self.view showShadow:yOffset > actionableOffset animated:YES];
+    [self.containerViewController setBlurEnabled:yOffset > actionableOffset];
     self.collectionView.bounces = yOffset > 0;
     if (self.popupView.alpha > 0) {
         self.popupView.alpha = 0;
@@ -449,12 +445,12 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)loadDataSourceForDate:(NSDate *)date {
     self.loadingData = YES;
-    
+
     self.dateForNightOfSleep = date;
     self.dataSource =
         [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
     self.collectionView.dataSource = self.dataSource;
-    
+
     __weak typeof(self) weakSelf = self;
     [self.dataSource reloadData:^{
         __strong typeof(weakSelf) strongSelf = weakSelf;

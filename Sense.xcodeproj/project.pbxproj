@@ -2269,22 +2269,22 @@
 		8A660130199EBDDE007E6167 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				8A1C7B6C1B2F2BF8000268B2 /* HEMBreakdownViewController.h */,
-				8A1C7B6D1B2F2BF8000268B2 /* HEMBreakdownViewController.m */,
-				8AA8D93819AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.h */,
-				8AA8D93919AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m */,
 				8A1743B519A7B471001E3C15 /* HEMSleepGraphViewController.h */,
 				8A1743B619A7B471001E3C15 /* HEMSleepGraphViewController.m */,
+				8AA8D93819AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.h */,
+				8AA8D93919AC0DC400349FD0 /* HEMSleepGraphCollectionViewDataSource.m */,
 				8AC49F881981A89D00C2BD63 /* HEMSleepHistoryViewController.h */,
 				8AC49F891981A89D00C2BD63 /* HEMSleepHistoryViewController.m */,
 				8A66FC7A199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.h */,
 				8A66FC7B199BE19500922ED5 /* HEMSleepSummaryPagingDataSource.m */,
 				BFAE0B1219AE57FA0021EC0D /* HEMSleepSummarySlideViewController.h */,
 				BFAE0B1319AE57FA0021EC0D /* HEMSleepSummarySlideViewController.m */,
-				8ADE06051B2A4DE100976654 /* HEMTimelineContainerViewController.h */,
-				8ADE06061B2A4DE100976654 /* HEMTimelineContainerViewController.m */,
 				8AA1E62D1A899C0100590EB6 /* HEMTimelineFeedbackViewController.h */,
 				8AA1E62E1A899C0100590EB6 /* HEMTimelineFeedbackViewController.m */,
+				8ADE06051B2A4DE100976654 /* HEMTimelineContainerViewController.h */,
+				8ADE06061B2A4DE100976654 /* HEMTimelineContainerViewController.m */,
+				8A1C7B6C1B2F2BF8000268B2 /* HEMBreakdownViewController.h */,
+				8A1C7B6D1B2F2BF8000268B2 /* HEMBreakdownViewController.m */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";

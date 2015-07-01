@@ -2970,13 +2970,6 @@
                                     <outlet property="label" destination="rBx-ft-eT4" id="pKY-5A-6eX"/>
                                 </connections>
                             </view>
-                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ede-qs-tjY">
-                                <rect key="frame" x="0.0" y="20" width="600" height="64"/>
-                                <color key="backgroundColor" white="1" alpha="0.29999999999999999" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="64" id="xrL-BQ-391"/>
-                                </constraints>
-                            </view>
                             <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fXo-Wr-kqn">
                                 <rect key="frame" x="0.0" y="20" width="600" height="64"/>
                                 <subviews>
@@ -3042,7 +3035,6 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="ede-qs-tjY" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" id="DYs-yH-1Oj"/>
                             <constraint firstItem="NKd-k3-vSA" firstAttribute="leading" secondItem="Srd-J7-T36" secondAttribute="leading" constant="10" id="K43-iI-K7h"/>
                             <constraint firstAttribute="trailing" secondItem="fXo-Wr-kqn" secondAttribute="trailing" id="PgP-2H-U9M"/>
                             <constraint firstAttribute="trailing" secondItem="F5X-iN-TNU" secondAttribute="trailing" id="UIu-hX-yxk"/>
@@ -3052,11 +3044,9 @@
                             <constraint firstItem="fXo-Wr-kqn" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="top" id="koA-Qx-hxm"/>
                             <constraint firstItem="F5X-iN-TNU" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="top" id="p0T-F4-LPw"/>
                             <constraint firstItem="8aV-gM-TJw" firstAttribute="top" secondItem="F5X-iN-TNU" secondAttribute="bottom" constant="-2" id="pSj-xK-Vd1"/>
-                            <constraint firstAttribute="trailing" secondItem="ede-qs-tjY" secondAttribute="trailing" id="u4M-7D-fGK"/>
-                            <constraint firstItem="ede-qs-tjY" firstAttribute="top" secondItem="5La-k9-o5B" secondAttribute="top" id="xQ3-8r-d2K"/>
                         </constraints>
                         <connections>
-                            <outlet property="shadowView" destination="ede-qs-tjY" id="2Ee-wC-4oY"/>
+                            <outlet property="shadowView" destination="fXo-Wr-kqn" id="45q-u2-tOl"/>
                         </connections>
                     </view>
                     <connections>

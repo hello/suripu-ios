@@ -97,6 +97,7 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
     [slideController removeFromParentViewController];
     [container.view insertSubview:slideController.view atIndex:0];
     [container addChildViewController:slideController];
+    [container setCenterTitleFromDate:startDate];
     [slideController didMoveToParentViewController:container];
     return container;
 }
@@ -397,9 +398,20 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
         didFinishAnimating:(BOOL)finished
    previousViewControllers:(NSArray *)previousViewControllers
        transitionCompleted:(BOOL)completed {
+    HEMTimelineContainerViewController *controller = (id)self.drawerViewController.paneViewController;
     if (completed) {
         [SENAnalytics track:kHEMAnalyticsEventTimelineChanged];
+        HEMSleepGraphViewController *page = [pageViewController.viewControllers firstObject];
+        [controller setCenterTitleFromDate:page.dateForNightOfSleep];
+    } else {
+        [controller cancelCenterTitleChange];
     }
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController
+willTransitionToViewControllers:(NSArray *)pendingViewControllers {
+    HEMTimelineContainerViewController *controller = (id)self.drawerViewController.paneViewController;
+    [controller prepareForCenterTitleChange];
 }
 
 #pragma mark - Drawer

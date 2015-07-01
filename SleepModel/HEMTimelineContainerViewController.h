@@ -10,5 +10,10 @@
 
 @interface HEMTimelineContainerViewController : UIViewController
 
+- (void)showBlurWithHeight:(CGFloat)blurHeight;
 - (void)showAlarmButton:(BOOL)isVisible;
+- (NSString *)centerTitle;
+- (void)setCenterTitleFromDate:(NSDate *)date;
+- (void)prepareForCenterTitleChange;
+- (void)cancelCenterTitleChange;
 @end

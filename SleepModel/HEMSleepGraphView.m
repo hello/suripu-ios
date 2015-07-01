@@ -19,7 +19,7 @@
 
 - (void)awakeFromNib {
     self.shadowView.layer.shadowOpacity = 0;
-    self.shadowView.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.9f].CGColor;
+    self.shadowView.layer.shadowColor = [UIColor colorWithWhite:0 alpha:0.3f].CGColor;
     self.shadowView.layer.shadowOffset = CGSizeZero;
     self.shadowView.layer.masksToBounds = NO;
 }

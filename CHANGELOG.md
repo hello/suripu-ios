@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.0.8.11
+
+New:
+
+* Timeline top bar now scrolls with timeline as you change dates
+* Timeline feedback UI updated to match alarm UI for cancel and save
+
+Fixes:
+
+* Custom action sheet now fades out rather than simply being dismissed
+
 ## 1.0.8.10
 
 Fixes:

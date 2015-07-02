@@ -268,11 +268,12 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     cell.messageLabel.attributedText = [markdown_to_attr_string(self.sleepResult.message, 0, attributes) trim];
     [cell setLoading:self.sleepResult.message.length == 0];
     [cell setSleepScore:score animated:YES];
-    if ([collectionView.delegate respondsToSelector:@selector(didTapSummaryButton:)]) {
+    if (score > 0 && [collectionView.delegate respondsToSelector:@selector(didTapSummaryButton:)]) {
         [cell.summaryButton addTarget:collectionView.delegate
                                action:@selector(didTapSummaryButton:)
                      forControlEvents:UIControlEventTouchUpInside];
     }
+    cell.messageChevronView.hidden = score == 0 && self.sleepResult.segments.count == 0;
     return cell;
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "UIFont+HEMStyle.h"
+#import "NSString+HEMUtils.h"
 
 #import "HEMActionSheetViewController.h"
 #import "HEMActionSheetOptionCell.h"
@@ -38,6 +39,7 @@ CGFloat const HEMActionSheetDefaultCellHeight = 72.0f;
 @property (strong, nonatomic) NSMutableArray* orderedOptions;
 @property (strong, nonatomic) NSMutableDictionary* options;
 @property (copy,   nonatomic) HEMActionSheetCallback dismissAction;
+@property (strong, nonatomic) UIView* customTitleView;
 
 @end
 
@@ -133,7 +135,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     if (!optionsConfig) {
         optionsConfig = [NSMutableDictionary dictionaryWithCapacity:2];
     }
-    
+
     [optionsConfig setValue:confirmationView forKey:HEMActionSheetOptionConfirmView];
     [optionsConfig setValue:@(displayTime) forKey:HEMActionSheetOptionConfirmDisplayInterval];
     [[self options] setValue:optionsConfig forKey:title];
@@ -187,20 +189,15 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
                      completion:completion];
 }
 
-- (void)configureTableViewHeader {
-    if ([[self title] length] == 0) {
-        return;
-    }
-    
+#pragma mark - Title
+
+- (UIView*)titleViewWithText:(NSString*)text {
     CGFloat boundedWidth = CGRectGetWidth([[self optionTableView] bounds]);
-    
-    CGSize labelConstraint = CGSizeMake(boundedWidth - (2*HEMActionSheetTitleHorzMargin), MAXFLOAT);
-    CGFloat labelHeight = [[self title] boundingRectWithSize:labelConstraint
-                                                     options:NSStringDrawingUsesFontLeading|NSStringDrawingUsesLineFragmentOrigin
-                                                  attributes:@{NSFontAttributeName : [UIFont actionSheetTitleFont]}
-                                                     context:nil].size.height;
+    CGFloat constraint = boundedWidth - (2*HEMActionSheetTitleHorzMargin);
+    CGFloat labelHeight = [text heightBoundedByWidth:constraint usingFont:[UIFont actionSheetTitleFont]];
+
     CGRect labelFrame = CGRectZero;
-    labelFrame.size.width = labelConstraint.width;
+    labelFrame.size.width = constraint;
     labelFrame.size.height = labelHeight;
     labelFrame.origin.y = HEMActionSheetTitleTopMargin;
     labelFrame.origin.x = HEMActionSheetTitleHorzMargin;
@@ -208,7 +205,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
     [label setFont:[UIFont actionSheetTitleFont]];
     [label setTextColor:[UIColor colorWithWhite:0.0f alpha:0.4f]];
-    [label setText:[[self title] uppercaseString]];
+    [label setText:text];
     [label setNumberOfLines:0];
     
     CGRect frame = CGRectZero;
@@ -219,8 +216,27 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     
     [labelContainer addSubview:label];
     
-    [[self optionTableView] setTableHeaderView:labelContainer];
+    return labelContainer;
 }
+
+- (void)configureTableViewHeader {
+    if ([[self title] length] == 0 && ![self customTitleView]) {
+        return;
+    }
+    
+    UIView* titleView = [self customTitleView];
+    if (!titleView) {
+        titleView = [self titleViewWithText:[self title]];
+    }
+    
+    [[self optionTableView] setTableHeaderView:titleView];
+}
+
+- (void)setCustomTitleView:(UIView*)view {
+    _customTitleView = view;
+}
+
+#pragma mark - Confirmation
 
 - (void)fadeOut:(UIView*)outView thenInComes:(UIView*)inView completion:(void(^)(BOOL finished))completion {
     CGFloat halfDuration = HEMActionSheetConfirmAnimDuration / 2;
@@ -240,6 +256,9 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     [confirmationView setAlpha:0.0f];
     
     UIView* bgView = [[UIView alloc] initWithFrame:[[self optionTableView] frame]];
+    
+    [confirmationView setFrame:[bgView bounds]];
+    
     [bgView setBackgroundColor:[UIColor whiteColor]];
     [bgView addSubview:confirmationView];
     

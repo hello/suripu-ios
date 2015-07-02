@@ -67,6 +67,18 @@ typedef void(^HEMActionSheetCallback)(void);
          forOptionWithTitle:(NSString*)title;
 
 /**
+ * @method setCustomTitleView:
+ *
+ * @discussion
+ * Instead of using setTitle:, which would display a title above the options that
+ * can't be interacted with, you can optionally set a custom view.
+ *
+ * @param view: the custom view to set / display above the options.  The view will
+ *              be automatically resized to fit the controller
+ */
+- (void)setCustomTitleView:(UIView*)view;
+
+/**
  * @method show
  *
  * @discussion

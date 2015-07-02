@@ -266,6 +266,11 @@ static BOOL hasLoadedBefore = NO;
                           // TODO (jimmy): not yet implemented, but we want to show it for now
                           [self markSenseLearnsAsShown];
                        }];
+    
+    // add title, if needed
+    if ([self shouldShowSenseLearnsInActionSheet]) {
+        [sheet setCustomTitleView:[self senseLearnsTitleView]];
+    }
 
     // add title, if needed
     if ([self shouldShowSenseLearnsInActionSheet]) {

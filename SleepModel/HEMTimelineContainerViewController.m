@@ -33,6 +33,7 @@
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *animationDelegate;
 @property (nonatomic, strong) CAGradientLayer *topGradientLayer;
 @property (nonatomic, strong) NSDate *currentlyDisplayedDate;
+@property (nonatomic, getter=wereEffectsEnabled) BOOL effectsEnabled;
 @end
 
 @implementation HEMTimelineContainerViewController
@@ -103,10 +104,15 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
 }
 
 - (void)setCenterTitleFromDate:(NSDate *)date {
+    [self setCenterTitleFromDate:date scrolledToTop:YES];
+}
+
+- (void)setCenterTitleFromDate:(NSDate *)date scrolledToTop:(BOOL)atTop {
     self.currentlyDisplayedDate = date;
     self.centerTitleLabel.text = [self titleTextForDate:date];
     SENSleepResult *result = [SENSleepResult sleepResultForDate:self.currentlyDisplayedDate];
     long score = [result.score longValue];
+    [self setBlurEnabled:!atTop];
     [UIView animateWithDuration:0.2f
                      animations:^{
                        self.centerTitleLabel.alpha = 1;
@@ -115,6 +121,8 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
 }
 
 - (void)prepareForCenterTitleChange {
+    self.effectsEnabled = [self.topBarView areVisualEffectsEnabled];
+    [self setBlurEnabled:YES];
     [UIView animateWithDuration:0.2f
                      animations:^{
                        self.centerTitleLabel.alpha = 0;
@@ -122,6 +130,7 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
 }
 
 - (void)cancelCenterTitleChange {
+    [self setBlurEnabled:[self wereEffectsEnabled]];
     [UIView animateWithDuration:0.2f
                      animations:^{
                        self.centerTitleLabel.alpha = 1;

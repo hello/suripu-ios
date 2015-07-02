@@ -13,6 +13,7 @@
 - (void)showAlarmButton:(BOOL)isVisible;
 - (NSString *)centerTitle;
 - (void)setCenterTitleFromDate:(NSDate *)date;
+- (void)setCenterTitleFromDate:(NSDate *)date scrolledToTop:(BOOL)atTop;
 - (void)prepareForCenterTitleChange;
 - (void)cancelCenterTitleChange;
 - (void)setBlurEnabled:(BOOL)enabled;

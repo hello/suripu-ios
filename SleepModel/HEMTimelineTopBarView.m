@@ -44,4 +44,11 @@
     }
 }
 
+- (BOOL)areVisualEffectsEnabled {
+    if (NSClassFromString(@"UIVisualEffectView") != nil) {
+        return self.blurView.alpha > 0;
+    }
+    return NO;
+}
+
 @end

@@ -16,7 +16,6 @@
 #import "HEMRootViewController.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
-#import "HEMSleepGraphView.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
@@ -36,7 +35,6 @@ CGFloat const HEMTimelineFooterCellHeight = 74.f;
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate,
                                            HEMSleepGraphActionDelegate>
 
-@property (nonatomic, retain) HEMSleepGraphView *view;
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
 @property (nonatomic, strong) HEMBounceModalTransition *dataVerifyTransitionDelegate;
@@ -399,6 +397,12 @@ static BOOL hasLoadedBefore = NO;
     return (id)self.parentViewController.parentViewController;
 }
 
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    if (self.popupView.alpha > 0) {
+        self.popupView.alpha = 0;
+    }
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint offset = scrollView.contentOffset;
     [self.containerViewController showAlarmButton:offset.y == 0];
@@ -419,12 +423,8 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
     CGFloat const actionableOffset = 5.f;
-    [self.view showShadow:yOffset > actionableOffset animated:YES];
     [self.containerViewController setBlurEnabled:yOffset > actionableOffset];
     self.collectionView.bounces = yOffset > 0;
-    if (self.popupView.alpha > 0) {
-        self.popupView.alpha = 0;
-    }
 }
 
 #pragma mark UICollectionViewDelegate

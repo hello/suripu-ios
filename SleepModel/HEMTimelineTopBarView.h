@@ -11,4 +11,6 @@
 @interface HEMTimelineTopBarView : UIView
 
 - (void)setVisualEffectsEnabled:(BOOL)enabled;
+
+- (BOOL)areVisualEffectsEnabled;
 @end

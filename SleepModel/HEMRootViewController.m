@@ -402,7 +402,7 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
     if (completed) {
         [SENAnalytics track:kHEMAnalyticsEventTimelineChanged];
         HEMSleepGraphViewController *page = [pageViewController.viewControllers firstObject];
-        [controller setCenterTitleFromDate:page.dateForNightOfSleep];
+        [controller setCenterTitleFromDate:page.dateForNightOfSleep scrolledToTop:page.collectionView.contentOffset.y < 1];
     } else {
         [controller cancelCenterTitleChange];
     }

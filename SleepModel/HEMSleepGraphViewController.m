@@ -8,6 +8,7 @@
 #import "HEMAudioCache.h"
 #import "HEMBounceModalTransition.h"
 #import "HEMBreakdownViewController.h"
+#import "HEMEventAdjustConfirmationView.h"
 #import "HEMEventBubbleView.h"
 #import "HEMFadingParallaxLayout.h"
 #import "HEMMainStoryboard.h"
@@ -26,7 +27,7 @@
 #import "HEMZoomAnimationTransitionDelegate.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
-#import "HEMEventAdjustConfirmationView.h"
+#import "HEMActionSheetTitleView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
@@ -47,6 +48,7 @@ CGFloat const HEMTimelineFooterCellHeight = 74.f;
 
 @implementation HEMSleepGraphViewController
 
+static NSString* const HEMSleepGraphSenseLearnsPref = @"one.time.senselearns";
 static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 1.0f;
 static CGFloat const HEMSleepSummaryCellHeight = 364.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
@@ -197,10 +199,20 @@ static BOOL hasLoadedBefore = NO;
     [self presentViewController:feedbackController animated:YES completion:NULL];
 }
 
-- (UIView*)confirmationViewForActionSheetWithOptions:(NSInteger)numberOfOptions {
-    
-    NSString* title = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
-    
+- (BOOL)shouldShowSenseLearnsInActionSheet {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    return ![[preferences sessionPreferenceForKey:HEMSleepGraphSenseLearnsPref] boolValue];
+}
+
+- (void)markSenseLearnsAsShown {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    [preferences setSessionPreference:@(YES) forKey:HEMSleepGraphSenseLearnsPref];
+}
+
+- (UIView *)confirmationViewForActionSheetWithOptions:(NSInteger)numberOfOptions {
+
+    NSString *title = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
+
     CGRect confirmFrame = CGRectZero;
     confirmFrame.size.height = numberOfOptions * HEMActionSheetDefaultCellHeight;
     confirmFrame.size.width = CGRectGetWidth([[self view] bounds]);
@@ -210,6 +222,12 @@ static BOOL hasLoadedBefore = NO;
                                                        subtitle:nil
                                                           frame:confirmFrame];
     return confirmView;
+}
+
+- (UIView*)senseLearnsTitleView {
+    NSString* title = NSLocalizedString(@"sleep-event.feedback.action-sheet.title", nil);
+    NSString* desc = NSLocalizedString(@"sleep-event.feedback.action-sheet.description", nil);
+    return [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:desc];
 }
 
 - (void)activateActionSheetAtIndexPath:(NSIndexPath *)indexPath {
@@ -224,7 +242,8 @@ static BOOL hasLoadedBefore = NO;
                   description:nil
                     imageName:@"timeline_action_approve"
                        action:^{
-                           // TODO (jimmy): not yet implemented, but we want to show it for now
+                         // TODO (jimmy): not yet implemented, but we want to show it for now
+                         [self markSenseLearnsAsShown];
                        }];
 
     if ([self canAdjustEventWithType:segment.eventType]) {
@@ -233,7 +252,8 @@ static BOOL hasLoadedBefore = NO;
                       description:nil
                         imageName:@"timeline_action_adjust"
                            action:^{
-                               [self updateTimeOfEventOnSegment:segment];
+                             [self updateTimeOfEventOnSegment:segment];
+                             [self markSenseLearnsAsShown];
                            }];
     }
     
@@ -243,9 +263,14 @@ static BOOL hasLoadedBefore = NO;
                   description:nil
                     imageName:@"timeline_action_delete"
                        action:^{
-                           // TODO (jimmy): not yet implemented, but we want to show it for now
+                          // TODO (jimmy): not yet implemented, but we want to show it for now
+                          [self markSenseLearnsAsShown];
                        }];
-    
+
+    // add title, if needed
+    if ([self shouldShowSenseLearnsInActionSheet]) {
+        [sheet setCustomTitleView:[self senseLearnsTitleView]];
+    }
     // confirmations
     CGFloat confirmDuration = HEMSleepGraphActionSheetConfirmDuration;
     UIView* confirmationView = [self confirmationViewForActionSheetWithOptions:[sheet numberOfOptions]];

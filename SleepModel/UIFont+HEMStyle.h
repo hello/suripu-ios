@@ -411,6 +411,18 @@
  */
 + (UIFont*)actionSheetOptionDescriptionFont;
 
+/**
+ * Font used for the basic custom title view's title, intended to be used with the
+ * action sheet
+ */
++ (UIFont*)actionSheetTitleViewTitleFont;
+
+/**
+ * Font used for the basic custom title view's description, intended to be used 
+ * with the action sheet
+ */
++ (UIFont*)actionSheetTitleViewDescriptionFont;
+
 #pragma mark - Tutorial Dialogs
 
 /**

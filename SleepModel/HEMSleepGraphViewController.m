@@ -327,6 +327,8 @@ static BOOL hasLoadedBefore = NO;
     [self.popupView layoutIfNeeded];
     self.popupViewTop.constant = top;
     [self.popupView setNeedsUpdateConstraints];
+    self.popupView.alpha = 0;
+    self.popupView.hidden = NO;
     [UIView animateWithDuration:0.3f
                      animations:^{
                        [self.popupView layoutIfNeeded];
@@ -398,8 +400,8 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
-    if (self.popupView.alpha > 0) {
-        self.popupView.alpha = 0;
+    if (![self.popupView isHidden]) {
+        self.popupView.hidden = YES;
     }
 }
 

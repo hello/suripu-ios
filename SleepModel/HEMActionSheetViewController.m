@@ -257,6 +257,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
                              CGRect frame = [bgView frame];
                              frame.origin.y += CGRectGetHeight(frame);
                              [bgView setFrame:frame];
+                             [[self shadedOverlayView] setAlpha:0.0f];
                          }
                          completion:^(BOOL finished) {
                              [self dismissViewControllerAnimated:NO completion:nil];

@@ -31,7 +31,6 @@
 @property (nonatomic, strong) NSDateFormatter *rangeDateFormatter;
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *animationDelegate;
-@property (nonatomic, strong) CAGradientLayer *topGradientLayer;
 @property (nonatomic, strong) NSDate *currentlyDisplayedDate;
 @property (nonatomic, getter=wereEffectsEnabled) BOOL effectsEnabled;
 @end
@@ -53,14 +52,13 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
     self.weekdayDateFormatter.dateFormat = @"EEEE";
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     [self registerForNotifications];
-    [self configureGradientLayer];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self checkForDateChanges];
     if (self.currentlyDisplayedDate) {
-        [self setCenterTitleFromDate:self.currentlyDisplayedDate];
+        [self setCenterTitleFromDate:self.currentlyDisplayedDate scrolledToTop:![self wereEffectsEnabled]];
     }
 }
 
@@ -81,17 +79,6 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
                                              selector:@selector(drawerDidClose)
                                                  name:HEMRootDrawerDidCloseNotification
                                                object:nil];
-}
-
-- (void)configureGradientLayer {
-    self.topGradientLayer = [CAGradientLayer layer];
-    self.topGradientLayer.colors =
-        @[ (id)[UIColor whiteColor].CGColor, (id)[UIColor colorWithWhite:1.f alpha:0].CGColor ];
-    self.topGradientLayer.startPoint = CGPointZero;
-    self.topGradientLayer.endPoint = CGPointMake(0, 1);
-    self.topGradientLayer.locations = @[ @0, @(0.8) ];
-    self.topGradientLayer.bounds = CGRectZero;
-    [self.view.layer insertSublayer:self.topGradientLayer below:self.topBarView.layer];
 }
 
 - (IBAction)alarmButtonTapped:(id)sender {
@@ -149,6 +136,7 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
 }
 
 - (void)setBlurEnabled:(BOOL)enabled {
+    self.effectsEnabled = enabled;
     [self.topBarView setVisualEffectsEnabled:enabled];
 }
 

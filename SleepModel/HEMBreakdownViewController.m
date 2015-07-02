@@ -21,9 +21,15 @@
 @interface HEMBreakdownViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
                                           UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) HEMSplitTextFormatter *valueFormatter;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint *buttonBottom;
+@property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet UIImageView *backgroundImageView;
+@property (nonatomic, weak) IBOutlet UIButton *dismissButton;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *buttonBottom;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewTop;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewHeight;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *contentViewWidth;
 @property (nonatomic, strong) UIImage *backgroundImage;
+@property (nonatomic, getter=hasLoadedContent) BOOL loadedContent;
 @end
 
 @implementation HEMBreakdownViewController
@@ -31,11 +37,13 @@
 const CGFloat BreakdownCellItemHeight = 116.f;
 const CGFloat BreakdownCellSummaryBaseHeight = 90.f;
 const CGFloat BreakdownDismissButtonBottom = 18.f;
+const CGFloat BreakdownDismissButtonHide = -40.f;
+const CGFloat BreakdownButtonAreaHeight = 80.f;
 
 - (id)initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         _backgroundImage = [[HEMRootViewController rootViewControllerForKeyWindow]
-                                .view snapshotWithTint:[UIColor colorWithWhite:0 alpha:0.7f]];
+                                .view snapshotWithTint:[UIColor colorWithWhite:0 alpha:0.3f]];
     }
     return self;
 }
@@ -44,31 +52,68 @@ const CGFloat BreakdownDismissButtonBottom = 18.f;
     [super viewDidLoad];
     self.valueFormatter = [HEMSplitTextFormatter new];
     self.backgroundImageView.image = self.backgroundImage;
+    self.contentViewTop.constant = floorf(CGRectGetHeight([[UIScreen mainScreen] bounds])/2);
+    self.contentViewWidth.constant = CGRectGetWidth([[UIScreen mainScreen] bounds]);
+    self.collectionView.alpha = 0;
+    self.collectionView.scrollEnabled = NO;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    [self animateExpandContent];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [self animateBottomButton];
+
 }
 
 - (IBAction)dismissFromView:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:NULL];
+    [self animateHideContentWithCompletion:^(BOOL done) {
+        [self dismissViewControllerAnimated:YES completion:NULL];
+    }];
 }
 
-- (void)animateBottomButton {
-    if (self.buttonBottom.constant != BreakdownDismissButtonBottom) {
+- (void)animateExpandContent {
+    CGFloat height = CGRectGetHeight([[UIScreen mainScreen] bounds]) - BreakdownButtonAreaHeight;
+    if (self.contentViewHeight.constant != height || self.collectionView.alpha < 1) {
+        [self.dismissButton layoutIfNeeded];
+        self.contentViewHeight.constant = height;
+        self.contentViewTop.constant = 0;
         self.buttonBottom.constant = BreakdownDismissButtonBottom;
-        [self.view setNeedsUpdateConstraints];
-        [UIView animateWithDuration:0.5f
-                              delay:0.05f
-             usingSpringWithDamping:0.75f
-              initialSpringVelocity:0
-                            options:0
-                         animations:^{
-                           [self.view layoutIfNeeded];
-                         }
-                         completion:NULL];
+        [self.collectionView setNeedsUpdateConstraints];
+        [self.dismissButton setNeedsUpdateConstraints];
+        [UIView animateWithDuration:0.4f delay:0.1f usingSpringWithDamping:0.75f initialSpringVelocity:0 options:0 animations:^{
+            self.collectionView.alpha = 1;
+            [self.collectionView layoutIfNeeded];
+            [self.dismissButton layoutIfNeeded];
+        } completion:^(BOOL finished) {
+            self.loadedContent = YES;
+            self.collectionView.scrollEnabled = YES;
+            [UIView animateWithDuration:0.2f animations:^{
+                for (UICollectionViewCell* cell in self.collectionView.visibleCells) {
+                    cell.alpha = 1;
+                }
+            } completion:NULL];
+        }];
     }
+}
+
+- (void)animateHideContentWithCompletion:(void(^)(BOOL))completion {
+    [UIView animateWithDuration:0.2f animations:^{
+        for (UICollectionViewCell* cell in self.collectionView.visibleCells) {
+            cell.alpha = 0;
+        }
+    } completion:^(BOOL done) {
+        self.contentViewHeight.constant = 0;
+        self.contentViewTop.constant = floorf(CGRectGetHeight([[UIScreen mainScreen] bounds])/2);
+        self.buttonBottom.constant = BreakdownDismissButtonHide;
+        [self.view setNeedsUpdateConstraints];
+        [UIView animateWithDuration:0.3f animations:^{
+            self.collectionView.alpha = 0;
+            [self.view layoutIfNeeded];
+        } completion:completion];
+    }];
 }
 
 #pragma mark UICollectionView
@@ -93,13 +138,18 @@ const CGFloat BreakdownDismissButtonBottom = 18.f;
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    UICollectionViewCell* cell;
     switch (indexPath.section) {
         case 0:
-            return [self titleCellInCollectionView:collectionView forIndexPath:indexPath];
+            cell = [self titleCellInCollectionView:collectionView forIndexPath:indexPath];
+            break;
 
         default:
-            return [self statCellInCollectionView:collectionView forIndexPath:indexPath];
+            cell = [self statCellInCollectionView:collectionView forIndexPath:indexPath];
     }
+    if (![self hasLoadedContent])
+        cell.alpha = 0;
+    return cell;
 }
 
 - (UICollectionViewCell *)titleCellInCollectionView:(UICollectionView *)collectionView

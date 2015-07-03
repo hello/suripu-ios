@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.0.8.12
+
+New:
+
+* Added new transition for the timeline breakdown
+* Prevent breakdown view from being shown if no data
+* Displaying a one-time only message about Sense learns when action sheet for timeline events is shown
+
+Fixes:
+
+* Visual tweaks to tooltip for timeline sleep segments
+* Fixed issue where 'lights out' text is cut off
+
 ## 1.0.8.11
 
 New:

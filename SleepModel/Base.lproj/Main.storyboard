@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -3020,10 +3020,10 @@
                                 </cells>
                             </collectionView>
                             <view userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" placeholderIntrinsicWidth="220" placeholderIntrinsicHeight="65" translatesAutoresizingMaskIntoConstraints="NO" id="NKd-k3-vSA" customClass="HEMPopupView">
-                                <rect key="frame" x="10" y="150" width="280" height="65"/>
+                                <rect key="frame" x="10" y="150" width="292" height="65"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You were in Medium Sleep for 14 minutes." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rBx-ft-eT4">
-                                        <rect key="frame" x="8" y="4" width="262" height="53"/>
+                                        <rect key="frame" x="16" y="4" width="262" height="53"/>
                                         <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="14"/>
                                         <color key="textColor" red="0.29999999999999999" green="0.29999999999999999" blue="0.29999999999999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
@@ -3031,8 +3031,8 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="rBx-ft-eT4" secondAttribute="trailing" constant="10" id="3AT-vT-LtV"/>
-                                    <constraint firstItem="rBx-ft-eT4" firstAttribute="leading" secondItem="NKd-k3-vSA" secondAttribute="leading" constant="8" id="eU8-4Y-dTo"/>
+                                    <constraint firstAttribute="trailing" secondItem="rBx-ft-eT4" secondAttribute="trailing" constant="14" id="3AT-vT-LtV"/>
+                                    <constraint firstItem="rBx-ft-eT4" firstAttribute="leading" secondItem="NKd-k3-vSA" secondAttribute="leading" constant="16" id="eU8-4Y-dTo"/>
                                     <constraint firstAttribute="bottom" secondItem="rBx-ft-eT4" secondAttribute="bottom" constant="8" id="kEv-Yb-3PH"/>
                                     <constraint firstItem="rBx-ft-eT4" firstAttribute="top" secondItem="NKd-k3-vSA" secondAttribute="top" constant="4" id="obv-3Z-ZJL"/>
                                 </constraints>

@@ -32,7 +32,7 @@ static CGFloat const HEMPopupShadowBlur = 2.f;
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     CGSize size = [self.label.attributedText sizeWithWidth:CGRectGetWidth(screenBounds) - HEMPopupMargin];
     size.height += HEMPopupPointerHeight + HEMPopupMargin;
-    size.width += HEMPopupMargin/2;
+    size.width += HEMPopupMargin;
     return size;
 }
 

@@ -14,6 +14,7 @@
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
 #import "NSDate+HEMRelative.h"
+#import "HEMTimelineTopBarView.h"
 
 @interface HEMTimelineContainerViewController ()
 @property (nonatomic, weak) IBOutlet UIButton *drawerButton;
@@ -23,15 +24,15 @@
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *centerTitleTop;
 @property (nonatomic, weak) IBOutlet UIButton *centerTitleButton;
 @property (nonatomic, weak) IBOutlet UILabel *centerTitleLabel;
-@property (nonatomic, weak) IBOutlet UIView *topBarView;
+@property (nonatomic, weak) IBOutlet HEMTimelineTopBarView *topBarView;
 
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) NSDateFormatter *weekdayDateFormatter;
 @property (nonatomic, strong) NSDateFormatter *rangeDateFormatter;
 @property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
 @property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *animationDelegate;
-@property (nonatomic, strong) CAGradientLayer *topGradientLayer;
 @property (nonatomic, strong) NSDate *currentlyDisplayedDate;
+@property (nonatomic, getter=wereEffectsEnabled) BOOL effectsEnabled;
 @end
 
 @implementation HEMTimelineContainerViewController
@@ -51,14 +52,13 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
     self.weekdayDateFormatter.dateFormat = @"EEEE";
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
     [self registerForNotifications];
-    [self configureGradientLayer];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     [self checkForDateChanges];
     if (self.currentlyDisplayedDate) {
-        [self setCenterTitleFromDate:self.currentlyDisplayedDate];
+        [self setCenterTitleFromDate:self.currentlyDisplayedDate scrolledToTop:![self wereEffectsEnabled]];
     }
 }
 
@@ -81,17 +81,6 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
                                                object:nil];
 }
 
-- (void)configureGradientLayer {
-    self.topGradientLayer = [CAGradientLayer layer];
-    self.topGradientLayer.colors =
-        @[ (id)[UIColor whiteColor].CGColor, (id)[UIColor colorWithWhite:1.f alpha:0].CGColor ];
-    self.topGradientLayer.startPoint = CGPointZero;
-    self.topGradientLayer.endPoint = CGPointMake(0, 1);
-    self.topGradientLayer.locations = @[ @0, @(0.8) ];
-    self.topGradientLayer.bounds = CGRectZero;
-    [self.view.layer insertSublayer:self.topGradientLayer below:self.topBarView.layer];
-}
-
 - (IBAction)alarmButtonTapped:(id)sender {
     HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
     [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
@@ -102,10 +91,15 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
 }
 
 - (void)setCenterTitleFromDate:(NSDate *)date {
+    [self setCenterTitleFromDate:date scrolledToTop:YES];
+}
+
+- (void)setCenterTitleFromDate:(NSDate *)date scrolledToTop:(BOOL)atTop {
     self.currentlyDisplayedDate = date;
     self.centerTitleLabel.text = [self titleTextForDate:date];
     SENSleepResult *result = [SENSleepResult sleepResultForDate:self.currentlyDisplayedDate];
     long score = [result.score longValue];
+    [self setBlurEnabled:!atTop];
     [UIView animateWithDuration:0.2f
                      animations:^{
                        self.centerTitleLabel.alpha = 1;
@@ -114,6 +108,8 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
 }
 
 - (void)prepareForCenterTitleChange {
+    self.effectsEnabled = [self.topBarView areVisualEffectsEnabled];
+    [self setBlurEnabled:YES];
     [UIView animateWithDuration:0.2f
                      animations:^{
                        self.centerTitleLabel.alpha = 0;
@@ -121,6 +117,7 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
 }
 
 - (void)cancelCenterTitleChange {
+    [self setBlurEnabled:[self wereEffectsEnabled]];
     [UIView animateWithDuration:0.2f
                      animations:^{
                        self.centerTitleLabel.alpha = 1;
@@ -138,9 +135,9 @@ CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
         return [self.rangeDateFormatter stringFromDate:date];
 }
 
-- (void)showBlurWithHeight:(CGFloat)blurHeight {
-    self.topGradientLayer.frame
-        = CGRectMake(0, CGRectGetHeight(self.topBarView.bounds), CGRectGetWidth(self.topBarView.bounds), blurHeight);
+- (void)setBlurEnabled:(BOOL)enabled {
+    self.effectsEnabled = enabled;
+    [self.topBarView setVisualEffectsEnabled:enabled];
 }
 
 - (void)showAlarmButton:(BOOL)isVisible {

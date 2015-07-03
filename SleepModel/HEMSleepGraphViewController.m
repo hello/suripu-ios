@@ -223,6 +223,28 @@ static BOOL hasLoadedBefore = NO;
 
 #pragma mark Event Info
 
+- (void)verifySegment:(SENSleepResultSegment*)segment {
+    [SENAPITimeline verifySleepEvent:segment
+                      forDateOfSleep:self.dateForNightOfSleep
+                          completion:^(NSError *error) {
+                              if (error) {
+                                  [SENAnalytics trackError:error
+                                             withEventName:kHEMAnalyticsEventError];
+                              }
+                          }];
+}
+
+- (void)removeSegment:(SENSleepResultSegment*)segment {
+    [SENAPITimeline removeSleepEvent:segment
+                      forDateOfSleep:self.dateForNightOfSleep
+                          completion:^(NSError *error) {
+                              if (error) {
+                                  [SENAnalytics trackError:error
+                                             withEventName:kHEMAnalyticsEventError];
+                              }
+                          }];
+}
+
 - (void)updateTimeOfEventOnSegment:(SENSleepResultSegment *)segment {
     HEMTimelineFeedbackViewController *feedbackController =
         [HEMMainStoryboard instantiateTimelineFeedbackViewController];
@@ -274,7 +296,7 @@ static BOOL hasLoadedBefore = NO;
                   description:nil
                     imageName:@"timeline_action_approve"
                        action:^{
-                         // TODO (jimmy): not yet implemented, but we want to show it for now
+                         [self verifySegment:segment];
                          [self markSenseLearnsAsShown];
                        }];
 
@@ -295,7 +317,7 @@ static BOOL hasLoadedBefore = NO;
                   description:nil
                     imageName:@"timeline_action_delete"
                        action:^{
-                          // TODO (jimmy): not yet implemented, but we want to show it for now
+                          [self removeSegment:segment];
                           [self markSenseLearnsAsShown];
                        }];
     

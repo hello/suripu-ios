@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Hello, Inc. All rights reserved.
 //
 #import <SenseKit/SENSleepResult.h>
-#import <SenseKit/SENAPIFeedback.h>
+#import <SenseKit/SENAPITimeline.h>
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
 #import "HEMClockPickerView.h"
@@ -118,11 +118,11 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
     };
     
     [activityView showInView:[self view] withText:activityText activity:YES completion:^{
-        [SENAPIFeedback updateSegment:self.segment
-                             withHour:self.clockView.hour
-                               minute:self.clockView.minute
-                      forNightOfSleep:self.dateForNightOfSleep
-                           completion:completion];
+        [SENAPITimeline amendSleepEvent:self.segment
+                         forDateOfSleep:self.dateForNightOfSleep
+                               withHour:@(self.clockView.hour)
+                             andMinutes:@(self.clockView.minute)
+                             completion:completion];
     }];
 
 }

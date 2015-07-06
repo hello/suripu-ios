@@ -3661,9 +3661,21 @@
                                                         <constraint firstAttribute="height" relation="lessThanOrEqual" constant="135" id="ngO-Wr-g4F"/>
                                                     </constraints>
                                                 </view>
-                                                <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mz2-Dc-hJA" userLabel="line graph view" customClass="BEMSimpleLineGraphView">
+                                                <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mz2-Dc-hJA" userLabel="line graph container">
                                                     <rect key="frame" x="0.0" y="134" width="540" height="121"/>
+                                                    <subviews>
+                                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NlD-7X-U68" customClass="BEMSimpleLineGraphView">
+                                                            <rect key="frame" x="0.0" y="0.0" width="540" height="121"/>
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </view>
+                                                    </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="NlD-7X-U68" firstAttribute="top" secondItem="Mz2-Dc-hJA" secondAttribute="top" id="Gbh-mL-Kw3"/>
+                                                        <constraint firstAttribute="leading" secondItem="NlD-7X-U68" secondAttribute="leading" id="b9t-G1-odI"/>
+                                                        <constraint firstItem="NlD-7X-U68" firstAttribute="trailing" secondItem="Mz2-Dc-hJA" secondAttribute="trailing" id="dnc-OE-Hrb"/>
+                                                        <constraint firstAttribute="bottom" secondItem="NlD-7X-U68" secondAttribute="bottom" id="vxb-F9-hbT"/>
+                                                    </constraints>
                                                 </view>
                                                 <view clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bHF-JM-qCz" userLabel="overlay view" customClass="HEMGraphSectionOverlayView">
                                                     <rect key="frame" x="0.0" y="120" width="540" height="135"/>
@@ -3722,7 +3734,9 @@
                                         <size key="customSize" width="540" height="255"/>
                                         <connections>
                                             <outlet property="barGraphView" destination="jl4-Bk-rKU" id="2MK-jd-uFw"/>
-                                            <outlet property="lineGraphView" destination="Mz2-Dc-hJA" id="RGM-ad-0c8"/>
+                                            <outlet property="graphLeftConstraint" destination="b9t-G1-odI" id="Icb-k2-5lt"/>
+                                            <outlet property="graphRightConstraint" destination="dnc-OE-Hrb" id="Mgg-7L-20e"/>
+                                            <outlet property="lineGraphView" destination="NlD-7X-U68" id="dxM-VN-tb9"/>
                                             <outlet property="overlayView" destination="bHF-JM-qCz" id="01l-3r-F8F"/>
                                             <outlet property="scopePickerView" destination="GkP-h4-wTp" id="Dlw-jg-Nfa"/>
                                             <outlet property="statusLabel" destination="RQ0-ZL-kDz" id="NpJ-tA-VbU"/>

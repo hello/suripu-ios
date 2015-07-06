@@ -32,7 +32,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 1.0f;
                 atYOrigin:(CGFloat)y {
     
     CGFloat screenWidth = CGRectGetWidth([[UIScreen mainScreen] bounds]);
-    CGFloat frameWidth = screenWidth - (2 * HEMActionSheetTitleHorzPadding);;
+    CGFloat frameWidth = screenWidth - (2 * HEMActionSheetTitleHorzPadding);
     CGFloat textHeight = [text heightBoundedByWidth:frameWidth usingFont:font];
     
     CGRect frame = CGRectZero;
@@ -51,7 +51,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 1.0f;
 }
 
 - (void)configureContentWithTitle:(NSString*)title andDescription:(NSString*)description {
-    CGFloat maxY = HEMActionSheetTextSpacing;
+    CGFloat maxY = HEMActionSheetTitleVertPadding;
     CGFloat spacing = 0.0f;
     
     if (title) {

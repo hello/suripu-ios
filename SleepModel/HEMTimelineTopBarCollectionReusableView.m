@@ -20,7 +20,7 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
 
 @property (weak,   nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint *centerTitleTopConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *drawerTopConstraint;
+@property (weak,   nonatomic) IBOutlet NSLayoutConstraint *drawerTopConstraint;
 @property (strong, nonatomic) NSCalendar *calendar;
 @property (strong, nonatomic) NSDateFormatter *weekdayDateFormatter;
 @property (strong, nonatomic) NSDateFormatter *rangeDateFormatter;

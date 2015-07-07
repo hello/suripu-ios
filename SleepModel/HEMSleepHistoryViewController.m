@@ -161,9 +161,10 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     return 1;
 }
 
+// offsets number of rows by one to fudge the first cell not being selectable
 - (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.sleepDataSummaries.count;
+    return self.sleepDataSummaries.count + 1;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView cellForItemAtIndexPath:(NSIndexPath*)indexPath
@@ -173,12 +174,15 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView sleepHistoryCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
     HEMMiniGraphCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeSliceCell" forIndexPath:indexPath];
-    [cell.sleepScoreView setSleepScore:[sleepResult.score integerValue]];
-    [cell.graphView setSleepDataSegments:sleepResult.segments];
-    cell.dayLabel.text = [self.dayFormatter stringFromDate:sleepResult.date];
-    cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:sleepResult.date] uppercaseString];
+    if (indexPath.row > 0) {
+        SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row - 1];
+        [cell.sleepScoreView setSleepScore:[sleepResult.score integerValue]];
+        [cell.graphView setSleepDataSegments:sleepResult.segments];
+        cell.dayLabel.text = [self.dayFormatter stringFromDate:sleepResult.date];
+        cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:sleepResult.date] uppercaseString];
+    }
+    cell.hidden = indexPath.row == 0;
     return cell;
 }
 

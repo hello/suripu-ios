@@ -92,6 +92,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
             self.collectionView.scrollEnabled = YES;
             [UIView animateWithDuration:0.2f animations:^{
                 for (UICollectionViewCell* cell in self.collectionView.visibleCells) {
+                    cell.hidden = NO;
                     cell.alpha = 1;
                 }
             } completion:NULL];
@@ -147,8 +148,10 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
         default:
             cell = [self statCellInCollectionView:collectionView forIndexPath:indexPath];
     }
-    if (![self hasLoadedContent])
+    if (![self hasLoadedContent]) {
         cell.alpha = 0;
+        cell.hidden = YES;
+    }
     return cell;
 }
 

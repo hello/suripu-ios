@@ -11,7 +11,7 @@
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
 #import "HEMSleepEventCollectionViewCell.h"
-#import "HEMTimelineHeaderCollectionReusableView.h"
+#import "HEMTimelineTopBarCollectionReusableView.h"
 #import "HEMTimelineFooterCollectionReusableView.h"
 #import "HEMSleepScoreGraphView.h"
 #import "NSAttributedString+HEMUtils.h"
@@ -51,6 +51,8 @@ NSString *const HEMSleepEventTypeSleeping = @"SLEEPING";
 @property (nonatomic, getter=shouldBeLoading) BOOL beLoading;
 @property (nonatomic, strong) NSCalendar *calendar;
 @property (nonatomic, strong) HEMSplitTextFormatter *inlineNumberFormatter;
+@property (nonatomic, weak) HEMTimelineTopBarCollectionReusableView* topBarView;
+
 @end
 
 @implementation HEMSleepGraphCollectionViewDataSource
@@ -58,8 +60,8 @@ NSString *const HEMSleepEventTypeSleeping = @"SLEEPING";
 static NSString *const sleepSegmentReuseIdentifier = @"sleepSegmentCell";
 static NSString *const sleepSummaryReuseIdentifier = @"sleepSummaryCell";
 static NSString *const presleepHeaderReuseIdentifier = @"presleepCell";
-static NSString *const timelineHeaderReuseIdentifier = @"timelineHeaderCell";
-static NSString *const timelineFooterReuseIdentifier = @"timelineHeaderCell";
+static NSString *const timelineTopBarReuseIdentifier = @"timelineTopBarCell";
+static NSString *const timelineFooterReuseIdentifier = @"timelineFooterCell";
 static NSString *const presleepItemReuseIdentifier = @"presleepItemCell";
 static NSString *const sleepEventReuseIdentifier = @"sleepEventCell";
 static NSString *const sensorTypeTemperature = @"temperature";
@@ -176,6 +178,10 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
                                                     bundle:bundle]
           forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
                  withReuseIdentifier:timelineFooterReuseIdentifier];
+    [self.collectionView registerNib:[UINib nibWithNibName:NSStringFromClass([HEMTimelineTopBarCollectionReusableView class])
+                                                    bundle:bundle]
+          forSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                 withReuseIdentifier:timelineTopBarReuseIdentifier];
 }
 
 - (void)dealloc {
@@ -186,6 +192,16 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 - (NSUInteger)numberOfSleepSegments {
     return self.sleepResult.segments.count;
+}
+
+#pragma mark - Top Bar
+
+- (NSString*)dateTitle {
+    return [[self topBarView] dateTitle];
+}
+
+- (void)updateTimelineState:(BOOL)isOpen {
+    [[self topBarView] setOpened:isOpen];
 }
 
 #pragma mark - Loading
@@ -217,15 +233,63 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     }
 }
 
+- (UICollectionReusableView*)collectionView:(UICollectionView*)collectionView
+               topBarHeaderViewForIndexPath:(NSIndexPath*)indexPath {
+    
+    HEMTimelineTopBarCollectionReusableView *view = nil;
+    view = [collectionView dequeueReusableSupplementaryViewOfKind:UICollectionElementKindSectionHeader
+                                              withReuseIdentifier:timelineTopBarReuseIdentifier
+                                                     forIndexPath:indexPath];
+    id delegate = [collectionView delegate];
+    
+    if ([delegate respondsToSelector:@selector(didTapDrawerButton:)]) {
+        [[view drawerButton] addTarget:delegate
+                                action:@selector(didTapDrawerButton:)
+                      forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    if ([delegate respondsToSelector:@selector(didTapShareButton:)]) {
+        [[view shareButton] addTarget:delegate
+                               action:@selector(didTapShareButton:)
+                     forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    if ([delegate respondsToSelector:@selector(didTapDateButton:)]) {
+        [[view dateButton] addTarget:delegate
+                              action:@selector(didTapDateButton:)
+                    forControlEvents:UIControlEventTouchUpInside];
+    }
+    
+    NSInteger score = [[[self sleepResult] score] integerValue];
+    [view setShareEnabled:score > 0 animated:YES];
+    
+    [view setDate:[self dateForNightOfSleep]];
+    
+    [self setTopBarView:view];
+    
+    return view;
+}
+
 - (UICollectionReusableView *)collectionView:(UICollectionView *)collectionView
            viewForSupplementaryElementOfKind:(NSString *)kind
                                  atIndexPath:(NSIndexPath *)indexPath {
-    UICollectionReusableView *view =
-        [collectionView dequeueReusableSupplementaryViewOfKind:kind
-                                           withReuseIdentifier:timelineFooterReuseIdentifier
-                                                  forIndexPath:indexPath];
-    view.hidden = !(indexPath.section == HEMSleepGraphCollectionViewSegmentSection
-                    && [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] > 0);
+    UICollectionReusableView *view = nil;
+    
+    if (indexPath.section == HEMSleepGraphCollectionViewSummarySection) {
+
+        if ([kind isEqualToString:UICollectionElementKindSectionHeader]) {
+            view = [self collectionView:collectionView topBarHeaderViewForIndexPath:indexPath];
+        }
+        
+    } else if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection) {
+        
+        view = [collectionView dequeueReusableSupplementaryViewOfKind:kind
+                                                  withReuseIdentifier:timelineFooterReuseIdentifier
+                                                         forIndexPath:indexPath];
+        view.hidden = [collectionView numberOfItemsInSection:HEMSleepGraphCollectionViewSegmentSection] == 0;
+        
+    }
+
     return view;
 }
 

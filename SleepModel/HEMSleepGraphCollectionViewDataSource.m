@@ -101,6 +101,11 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
 }
 
 - (void)reloadDateFormatters {
+    NSString* localeIdentifier = [[NSLocale currentLocale] localeIdentifier];
+    NSLocale* standardLocale = [NSLocale localeWithLocaleIdentifier:localeIdentifier];
+    _meridiemFormatter.locale = standardLocale;
+    _timeDateFormatter.locale = standardLocale;
+    _hourDateFormatter.locale = standardLocale;
     _meridiemFormatter.dateFormat = @"a";
     if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
         _timeDateFormatter.dateFormat = @"h:mm";

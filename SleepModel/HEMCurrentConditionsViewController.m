@@ -132,8 +132,10 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 #pragma mark - Data Loading
 
 - (void)refreshCachedSensors {
-    [self setLoading:YES];
-    [SENSensor refreshCachedSensors];
+    if ([[UIApplication sharedApplication] applicationState] == UIApplicationStateActive) {
+        [self setLoading:YES];
+        [SENSensor refreshCachedSensors];
+    }
 }
 
 - (void)refreshSensors {

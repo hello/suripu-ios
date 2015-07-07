@@ -265,7 +265,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
 - (void)refreshData
 {
-    if (![SENAuthorizationService isAuthorized])
+    if (![SENAuthorizationService isAuthorized] || [[UIApplication sharedApplication] applicationState] != UIApplicationStateActive)
         return;
     self.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
     [SENAPIRoom hourlyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {

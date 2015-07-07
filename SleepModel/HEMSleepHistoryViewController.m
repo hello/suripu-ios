@@ -176,7 +176,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 {
     HEMMiniGraphCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeSliceCell" forIndexPath:indexPath];
     if (indexPath.row > 0) {
-        SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row - 1];
+        SENSleepResult* sleepResult = [self resultAtIndexPath:indexPath];
         [cell.sleepScoreView setSleepScore:[sleepResult.score integerValue]];
         [cell.graphView setSleepDataSegments:sleepResult.segments];
         cell.dayLabel.text = [self.dayFormatter stringFromDate:sleepResult.date];
@@ -186,12 +186,18 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     return cell;
 }
 
+- (SENSleepResult*)resultAtIndexPath:(NSIndexPath*)indexPath {
+    if (indexPath.row == 0)
+        return nil;
+    return [self.sleepDataSummaries objectAtIndex:indexPath.row - 1];
+}
+
 #pragma mark - UICollectionViewDelegate
 
 - (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-    SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
+    SENSleepResult* sleepResult = [self resultAtIndexPath:indexPath];
     self.selectedDate = sleepResult.date;
     NSIndexPath* centeredIndexPath = [self indexPathAtCenter];
     if ([indexPath isEqual:centeredIndexPath]) {
@@ -222,7 +228,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 {
     NSIndexPath* indexPath = [self indexPathAtCenter];
     if (indexPath) {
-        SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
+        SENSleepResult* sleepResult = [self resultAtIndexPath:indexPath];
         [self updateTimeFrameLabelWithDate:sleepResult.date];
     }
 }
@@ -245,8 +251,9 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (void)fetchTimelineForResultAtRow:(NSUInteger)row
 {
-    SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:row];
-    if (sleepResult.segments.count > 0)
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    SENSleepResult* sleepResult = [self resultAtIndexPath:indexPath];
+    if (!sleepResult || sleepResult.segments.count > 0)
         return;
 
     __weak typeof(self) weakSelf = self;

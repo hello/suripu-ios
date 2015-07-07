@@ -488,6 +488,7 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.containerViewController showAlarmButton:NO];
     if (![self.popupView isHidden]) {
         self.popupView.hidden = YES;
     }
@@ -495,7 +496,6 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint offset = scrollView.contentOffset;
-    [self.containerViewController showAlarmButton:offset.y == 0];
     [self adjustLayoutWithScrollOffset:offset.y];
 }
 

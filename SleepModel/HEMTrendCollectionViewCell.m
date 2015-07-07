@@ -21,12 +21,15 @@
 @property (nonatomic, strong) NSArray* points;
 @property (nonatomic) CGFloat max;
 @property (nonatomic) CGFloat min;
+@property (nonatomic) HEMTrendCellGraphType graphType;
 @property (nonatomic, strong) NSMutableArray* labeledIndexes;
 @property (nonatomic, strong) NSDateFormatter* dateFormatter;
 @property (nonatomic, strong) NSDateFormatter* dayOfWeekFormatter;
 @property (nonatomic, strong) NSDateFormatter* monthFormatter;
 @property (nonatomic, getter=isMaxValueVisible) NSUInteger maxIndex;
 @property (nonatomic, getter=isMinValueVisible) NSUInteger minIndex;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* graphRightConstraint;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint* graphLeftConstraint;
 @end
 
 @implementation HEMTrendCollectionViewCell
@@ -57,6 +60,21 @@
 
 - (void)configureLineGraphView
 {
+    CGFloat leftConstant = 0, rightConstant = 0;
+    if (self.numberOfGraphSections > 0) {
+        CGFloat sectionWidth = CGRectGetWidth(self.bounds)/self.numberOfGraphSections;
+        rightConstant = sectionWidth/2;
+        leftConstant = sectionWidth/2;
+    } else {
+        rightConstant = 0;
+        leftConstant = 0;
+    }
+    if (self.graphRightConstraint.constant != rightConstant
+        || self.graphLeftConstraint.constant != leftConstant) {
+        self.graphLeftConstraint.constant = leftConstant;
+        self.graphRightConstraint.constant = rightConstant;
+        [self.lineGraphView setNeedsUpdateConstraints];
+    }
     CGFloat topRed, topGreen, topBlue, bottomRed, bottomGreen, bottomBlue, alpha;
     [[HelloStyleKit trendGraphTopColor] getRed:&topRed green:&topGreen blue:&topBlue alpha:&alpha];
     [[HelloStyleKit trendGraphBottomColor] getRed:&bottomRed green:&bottomGreen blue:&bottomBlue alpha:&alpha];
@@ -105,7 +123,10 @@
 
 - (void)showGraphOfType:(HEMTrendCellGraphType)type withData:(NSArray*)data
 {
+    BOOL showBarGraph = type == HEMTrendCellGraphTypeBar;
+    BOOL showLineGraph = type == HEMTrendCellGraphTypeLine;
     self.points = data;
+    self.graphType = type;
     NSArray* values = [data valueForKey:NSStringFromSelector(@selector(yValue))];
     NSArray* sortedValues = [values sortedArrayUsingSelector:@selector(compare:)];
     NSNumber* max = [sortedValues lastObject];
@@ -113,12 +134,16 @@
         NSNumber* number = sortedValues[i];
         if ([number floatValue] > 0) {
             self.minIndex = [values indexOfObject:number];
+            if (showLineGraph) {
+                self.minIndex += 1;
+            }
             break;
         }
     }
     self.maxIndex = [values indexOfObject:max];
-    BOOL showBarGraph = type == HEMTrendCellGraphTypeBar;
-    BOOL showLineGraph = type == HEMTrendCellGraphTypeLine;
+    if (showLineGraph) {
+        self.maxIndex += 1;
+    }
     if (showBarGraph) {
         [self layoutIfNeeded];
         [self.barGraphView setValues:data];
@@ -207,14 +232,36 @@
 
 #pragma mark BEMSimpleLineGraphDataSource
 
+// @discussion
+// Pads the line graph on the left and right with extra points to center
+// the actually relevant points inside each graphed section. Only relevant
+// because the graphs extend to the edges of the view, but the data is
+// presumed to be only from the middle centers of the end sections
 - (NSInteger)numberOfPointsInLineGraph:(BEMSimpleLineGraphView*)graph
 {
-    return self.points.count;
+    NSInteger const HEMTrendMinimumPoints = 3;
+    if (self.graphType == HEMTrendCellGraphTypeNone
+        || self.points.count < HEMTrendMinimumPoints) {
+        return 0;
+    } else if (self.graphType == HEMTrendCellGraphTypeBar) {
+        return self.points.count;
+    } else if (self.graphType == HEMTrendCellGraphTypeLine) {
+        return self.points.count + 2;
+    }
+    return 0;
 }
 
+// @discussion
+// Reuses the first and last data points as an indentation buffer.
+// Additional details available in discussion of `numberOfPointsInLineGraph:`
 - (CGFloat)lineGraph:(BEMSimpleLineGraphView*)graph valueForPointAtIndex:(NSInteger)index
 {
-    SENTrendDataPoint* point = self.points[index];
+    SENTrendDataPoint* point;
+    if (self.graphType == HEMTrendCellGraphTypeBar) {
+        point = self.points[index];
+    } else {
+        point = self.points[MIN(MAX(0, index - 1), self.points.count - 1)];
+    }
     return point.yValue;
 }
 
@@ -250,14 +297,23 @@
     }
 }
 
+// Calculates number of gaps necessary to create preferred number of graph sections
 - (NSInteger)numberOfGapsBetweenLabelsOnLineGraph:(BEMSimpleLineGraphView*)graph
 {
+    if (self.points.count == self.numberOfGraphSections) {
+        return 0;
+    }
     return self.points.count / (self.numberOfGraphSections + 1);
 }
 
+// @discussion
+// Bypasses the built-in line graph utility for assigning labels to columns, but uses the
+// labeled index calculation to cache which indexes to label. Skips line graph buffer points.
 - (NSString*)lineGraph:(BEMSimpleLineGraphView*)graph labelOnXAxisForIndex:(NSInteger)index
 {
-    [self.labeledIndexes addObject:@(index)];
+    if (self.graphType == HEMTrendCellGraphTypeBar || (index < self.points.count)) {
+        [self.labeledIndexes addObject:@(index)];
+    }
     return @"";
 }
 
@@ -268,7 +324,7 @@
 
 - (UIColor*)lineGraph:(BEMSimpleLineGraphView*)graph colorForDotAtIndex:(NSInteger)index
 {
-    if (index == self.maxIndex || index == self.minIndex) {
+    if ([self lineGraph:graph alwaysDisplayPopUpAtIndex:index]) {
         CGFloat value = [self lineGraph:graph valueForPointAtIndex:index];
         return [UIColor colorForSleepScore:(NSInteger)value];
     }
@@ -277,7 +333,7 @@
 
 - (BOOL)lineGraph:(BEMSimpleLineGraphView*)graph alwaysDisplayDotAtIndex:(NSInteger)index
 {
-    return index == self.maxIndex || index == self.minIndex;
+    return [self lineGraph:graph alwaysDisplayPopUpAtIndex:index];
 }
 
 - (UIColor*)lineGraph:(BEMSimpleLineGraphView*)graph colorForPopUpAtIndex:(NSInteger)index

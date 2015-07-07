@@ -24,13 +24,14 @@
 #import "HEMTimelineFeedbackViewController.h"
 #import "HEMTutorial.h"
 #import "HEMZoomAnimationTransitionDelegate.h"
-#import "HEMTimelineTopBarView.h"
+#import "NSDate+HEMRelative.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 #import "HEMActionSheetTitleView.h"
 
 CGFloat const HEMTimelineHeaderCellHeight = 8.f;
 CGFloat const HEMTimelineFooterCellHeight = 74.f;
+CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
 @interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate,
                                            HEMSleepGraphActionDelegate>
@@ -40,16 +41,19 @@ CGFloat const HEMTimelineFooterCellHeight = 74.f;
 @property (nonatomic, strong) HEMBounceModalTransition *dataVerifyTransitionDelegate;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
-@property (nonatomic, assign, getter=isLastNight) BOOL lastNight;
 @property (nonatomic, assign, getter=isLoadingData) BOOL loadingData;
 @property (nonatomic, assign, getter=isVisible) BOOL visible;
+
+@property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
+@property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *zoomAnimationDelegate;
+
 @end
 
 @implementation HEMSleepGraphViewController
 
 static NSString* const HEMSleepGraphSenseLearnsPref = @"one.time.senselearns";
 static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 1.0f;
-static CGFloat const HEMSleepSummaryCellHeight = 364.f;
+static CGFloat const HEMSleepSummaryCellHeight = 312.f;
 static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
 static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
@@ -58,6 +62,7 @@ static BOOL hasLoadedBefore = NO;
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self configureCollectionView];
+    [self configureTransitions];
     [self loadData];
 
     self.dataVerifyTransitionDelegate = [HEMBounceModalTransition new];
@@ -79,7 +84,7 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.view.backgroundColor = [UIColor whiteColor];
+    [self checkForDateChanges];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -132,6 +137,27 @@ static BOOL hasLoadedBefore = NO;
                                              selector:@selector(handleAuthorization)
                                                  name:SENAuthorizationServiceDidAuthorizeNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidOpen)
+                                                 name:HEMRootDrawerMayOpenNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidClose)
+                                                 name:HEMRootDrawerMayCloseNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidOpen)
+                                                 name:HEMRootDrawerDidOpenNotification
+                                               object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(drawerDidClose)
+                                                 name:HEMRootDrawerDidCloseNotification
+                                               object:nil];
+}
+
+- (void)configureTransitions {
+    self.zoomAnimationDelegate = [HEMZoomAnimationTransitionDelegate new];
+    self.transitioningDelegate = self.zoomAnimationDelegate;
 }
 
 - (void)handleAuthorization {
@@ -192,7 +218,8 @@ static BOOL hasLoadedBefore = NO;
 #pragma mark Event Info
 
 - (void)updateTimeOfEventOnSegment:(SENSleepResultSegment *)segment {
-    HEMTimelineFeedbackViewController *feedbackController = [HEMMainStoryboard instantiateTimelineFeedbackViewController];
+    HEMTimelineFeedbackViewController *feedbackController =
+        [HEMMainStoryboard instantiateTimelineFeedbackViewController];
     feedbackController.dateForNightOfSleep = self.dateForNightOfSleep;
     feedbackController.segment = segment;
     [self presentViewController:feedbackController animated:YES completion:NULL];
@@ -277,7 +304,7 @@ static BOOL hasLoadedBefore = NO;
     }
     // confirmations
     CGFloat confirmDuration = HEMSleepGraphActionSheetConfirmDuration;
-    UIView* confirmationView = [self confirmationViewForActionSheetWithOptions:[sheet numberOfOptions]];
+    UIView *confirmationView = [self confirmationViewForActionSheetWithOptions:[sheet numberOfOptions]];
     [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:approveTitle];
     [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:deleteTitle];
 
@@ -360,7 +387,62 @@ static BOOL hasLoadedBefore = NO;
     return NSLocalizedString(format, nil);
 }
 
-#pragma mark UIGestureRecognizerDelegate
+#pragma mark - Top Bar
+
+- (void)didTapDrawerButton:(UIButton *)button {
+    HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
+    [root toggleSettingsDrawer];
+}
+
+- (void)didTapShareButton:(UIButton *)button {
+    long score = [self.dataSource.sleepResult.score longValue];
+    if (score > 0) {
+        NSString *message;
+        if ([self.dataSource dateIsLastNight]) {
+            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.last-night.format", nil), score];
+        } else {
+            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.other-days.format", nil), score,
+                                                 [[self dataSource] dateTitle]];
+        }
+        UIActivityViewController *activityController =
+            [[UIActivityViewController alloc] initWithActivityItems:@[ message ] applicationActivities:nil];
+        [self presentViewController:activityController animated:YES completion:nil];
+    }
+}
+
+- (void)didTapDateButton:(UIButton *)sender {
+    self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
+    self.historyViewController.selectedDate = self.dateForNightOfSleep;
+    self.historyViewController.transitioningDelegate = self.zoomAnimationDelegate;
+    [self presentViewController:self.historyViewController animated:YES completion:NULL];
+}
+
+- (void)checkForDateChanges {
+    if (self.historyViewController.selectedDate) {
+        HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
+        [root reloadTimelineSlideViewControllerWithDate:self.historyViewController.selectedDate];
+    }
+
+    self.historyViewController = nil;
+}
+
+#pragma mark Drawer
+
+- (void)drawerDidOpen {
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         [[self dataSource] updateTimelineState:YES];
+                     }];
+}
+
+- (void)drawerDidClose {
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         [[self dataSource] updateTimelineState:NO];
+                     }];
+}
+
+#pragma mark - UIGestureRecognizerDelegate
 
 - (void)didPan {
 }
@@ -393,7 +475,7 @@ static BOOL hasLoadedBefore = NO;
     return [self shouldAllowRecognizerToReceiveTouch:gestureRecognizer];
 }
 
-#pragma mark UIScrollViewDelegate
+#pragma mark - UIScrollViewDelegate
 
 - (HEMTimelineContainerViewController *)containerViewController {
     return (id)self.parentViewController.parentViewController;
@@ -424,25 +506,26 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
-    CGFloat const actionableOffset = 5.f;
-    [self.containerViewController setBlurEnabled:yOffset > actionableOffset];
     self.collectionView.bounces = yOffset > 0;
 }
 
-#pragma mark UICollectionViewDelegate
+#pragma mark - UICollectionViewDelegate
 
 - (void)loadData {
     if (![SENAuthorizationService isAuthorized])
         return;
 
     [self loadDataSourceForDate:self.dateForNightOfSleep];
-    self.lastNight = [self.dataSource dateIsLastNight];
 }
 
 - (void)reloadData {
     if (![self isLoadingData]) {
         [self loadData];
     }
+}
+
+- (BOOL)isLastNight {
+    return [self.dataSource dateIsLastNight];
 }
 
 - (void)loadDataSourceForDate:(NSDate *)date {
@@ -455,11 +538,11 @@ static BOOL hasLoadedBefore = NO;
 
     __weak typeof(self) weakSelf = self;
     [self.dataSource reloadData:^{
-        __strong typeof(weakSelf) strongSelf = weakSelf;
-        strongSelf.loadingData = NO;
-        if ([strongSelf isVisible]) {
-            [strongSelf checkIfInitialAnimationNeeded];
-        }
+      __strong typeof(weakSelf) strongSelf = weakSelf;
+      strongSelf.loadingData = NO;
+      if ([strongSelf isVisible]) {
+          [strongSelf checkIfInitialAnimationNeeded];
+      }
     }];
 }
 
@@ -468,11 +551,11 @@ static BOOL hasLoadedBefore = NO;
         if (self.dataSource.sleepResult.score > 0) {
             static dispatch_once_t onceToken;
             dispatch_once(&onceToken, ^{
-                __weak typeof(self) weakSelf = self;
-                int64_t delay = (int64_t)(0.6f * NSEC_PER_SEC);
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
-                    [weakSelf performInitialAnimation];
-                });
+              __weak typeof(self) weakSelf = self;
+              int64_t delay = (int64_t)(0.6f * NSEC_PER_SEC);
+              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+                [weakSelf performInitialAnimation];
+              });
             });
         } else {
             [self finishInitialAnimation];
@@ -544,10 +627,18 @@ static BOOL hasLoadedBefore = NO;
 - (CGSize)collectionView:(UICollectionView *)collectionView
                              layout:(UICollectionViewLayout *)collectionViewLayout
     referenceSizeForHeaderInSection:(NSInteger)section {
-    BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
-    if (!hasSegments || section != HEMSleepGraphCollectionViewSegmentSection)
-        return CGSizeZero;
-    return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMTimelineHeaderCellHeight);
+    
+    CGFloat bWidth = CGRectGetWidth(collectionView.bounds);
+    
+    if (section == HEMSleepGraphCollectionViewSummarySection) {
+        return CGSizeMake(bWidth, HEMTimelineTopBarCellHeight);
+    } else if (section == HEMSleepGraphCollectionViewSegmentSection) {
+        if ([self.dataSource numberOfSleepSegments] > 0) {
+            return CGSizeMake(bWidth, HEMTimelineHeaderCellHeight);;
+        }
+    }
+    
+    return CGSizeZero;
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

@@ -23,7 +23,11 @@ extern NSString *const HEMSleepEventTypeSleeping;
 @required
 
 - (void)didTapSummaryButton:(UIButton *)button;
+- (void)didTapDrawerButton:(UIButton *)button;
+- (void)didTapShareButton:(UIButton *)button;
+- (void)didTapDateButton:(UIButton *)button;
 - (BOOL)shouldHideSegmentCellContents;
+
 @end
 
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>
@@ -76,6 +80,18 @@ extern NSString *const HEMSleepEventTypeSleeping;
  *  @return the text
  */
 - (NSAttributedString *)formattedTextForInlineTimestamp:(NSDate *)date;
+
+/**
+ *  @return the currently displayed text in the top bar for the date of sleep
+ */
+- (NSString*)dateTitle;
+
+/**
+ *  Set the top bar's state
+ *
+ *  @param isOpen: YES if the timeilne is currently opened. NO otherwise
+ */
+- (void)updateTimelineState:(BOOL)isOpen;
 
 @property (nonatomic, strong, readonly) SENSleepResult *sleepResult;
 @end

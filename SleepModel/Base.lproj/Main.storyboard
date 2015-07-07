@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7706" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PBf-9P-C9T">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -2899,86 +2899,16 @@
                                     <action selector="alarmButtonTapped:" destination="LIj-Uz-9Ss" eventType="touchUpInside" id="bBT-RE-28l"/>
                                 </connections>
                             </button>
-                            <view opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hRZ-rK-9xy" customClass="HEMTimelineTopBarView">
-                                <rect key="frame" x="0.0" y="20" width="600" height="64"/>
-                                <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Last night" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LLX-Nj-aVW">
-                                        <rect key="frame" x="261" y="20" width="79" height="25"/>
-                                        <fontDescription key="fontDescription" name="Avenir-Light" family="Avenir" pointSize="18"/>
-                                        <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="0.69999999999999996" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="w2h-OZ-S7g" userLabel="drawer button">
-                                        <rect key="frame" x="10" y="15" width="40" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="40" id="BdO-B7-iLN"/>
-                                            <constraint firstAttribute="height" constant="40" id="vp2-LB-hhk"/>
-                                        </constraints>
-                                        <state key="normal" image="Menu.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="drawerButtonTapped:" destination="LIj-Uz-9Ss" eventType="touchUpInside" id="3sf-ek-kEt"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fYg-XE-Lf6" userLabel="share button">
-                                        <rect key="frame" x="550" y="11" width="40" height="40"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="40" id="BTI-XZ-DGf"/>
-                                            <constraint firstAttribute="width" constant="40" id="gnm-RC-u5U"/>
-                                        </constraints>
-                                        <state key="normal" image="Share.png">
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="shareButtonTapped:" destination="LIj-Uz-9Ss" eventType="touchUpInside" id="9JT-4R-AVs"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JQb-8q-AeR">
-                                        <rect key="frame" x="251" y="10" width="99" height="45"/>
-                                        <state key="normal">
-                                            <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="0.70000000000000007" colorSpace="calibratedRGB"/>
-                                            <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="zoomButtonTapped:" destination="LIj-Uz-9Ss" eventType="touchUpInside" id="Att-s9-HbU"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" red="1" green="0.99997437000274658" blue="0.99999129772186279" alpha="0.96999999999999997" colorSpace="calibratedRGB"/>
-                                <constraints>
-                                    <constraint firstItem="fYg-XE-Lf6" firstAttribute="centerY" secondItem="LLX-Nj-aVW" secondAttribute="centerY" constant="-2" id="0h8-Kw-S8X"/>
-                                    <constraint firstItem="JQb-8q-AeR" firstAttribute="top" secondItem="LLX-Nj-aVW" secondAttribute="top" constant="-10" id="2Pl-EE-NFB"/>
-                                    <constraint firstAttribute="centerX" secondItem="LLX-Nj-aVW" secondAttribute="centerX" id="8qG-fn-tkG"/>
-                                    <constraint firstItem="w2h-OZ-S7g" firstAttribute="centerY" secondItem="LLX-Nj-aVW" secondAttribute="centerY" constant="2" id="9fm-TX-LlB"/>
-                                    <constraint firstAttribute="height" constant="64" id="Cxe-XY-H09"/>
-                                    <constraint firstAttribute="trailing" secondItem="fYg-XE-Lf6" secondAttribute="trailing" constant="10" id="Nv5-Tp-WBL"/>
-                                    <constraint firstItem="JQb-8q-AeR" firstAttribute="bottom" secondItem="LLX-Nj-aVW" secondAttribute="bottom" constant="10" id="k9z-GP-PgI"/>
-                                    <constraint firstItem="w2h-OZ-S7g" firstAttribute="leading" secondItem="hRZ-rK-9xy" secondAttribute="leading" constant="10" id="lQu-LB-Lue"/>
-                                    <constraint firstItem="JQb-8q-AeR" firstAttribute="leading" secondItem="LLX-Nj-aVW" secondAttribute="leading" constant="-10" id="nig-Bq-BcC"/>
-                                    <constraint firstItem="JQb-8q-AeR" firstAttribute="trailing" secondItem="LLX-Nj-aVW" secondAttribute="trailing" constant="10" id="rlA-dA-I8l"/>
-                                    <constraint firstItem="LLX-Nj-aVW" firstAttribute="top" secondItem="hRZ-rK-9xy" secondAttribute="top" constant="20" id="u0C-bj-iRD"/>
-                                </constraints>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="hRZ-rK-9xy" secondAttribute="trailing" id="AA3-KG-xBe"/>
-                            <constraint firstItem="hRZ-rK-9xy" firstAttribute="leading" secondItem="kbB-uz-lbI" secondAttribute="leading" id="dtc-SX-ec7"/>
                             <constraint firstItem="3YU-EY-ydB" firstAttribute="trailing" secondItem="kbB-uz-lbI" secondAttribute="trailing" constant="-16" id="j28-RF-EWa"/>
                             <constraint firstItem="x0F-jb-URM" firstAttribute="top" secondItem="3YU-EY-ydB" secondAttribute="bottom" constant="16" id="m4I-ja-HoW"/>
-                            <constraint firstItem="hRZ-rK-9xy" firstAttribute="top" secondItem="H95-mD-yJh" secondAttribute="top" id="oq2-kL-3CB"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="alarmButton" destination="3YU-EY-ydB" id="uRr-qh-1KG"/>
                         <outlet property="alarmButtonTrailing" destination="j28-RF-EWa" id="DYv-og-D4b"/>
-                        <outlet property="centerTitleButton" destination="JQb-8q-AeR" id="N1D-23-1MQ"/>
-                        <outlet property="centerTitleLabel" destination="LLX-Nj-aVW" id="abd-Oq-hm6"/>
-                        <outlet property="centerTitleTop" destination="u0C-bj-iRD" id="RGr-ZW-b5w"/>
-                        <outlet property="drawerButton" destination="w2h-OZ-S7g" id="qeS-Ry-Qdc"/>
-                        <outlet property="shareButton" destination="fYg-XE-Lf6" id="x8e-Xy-dMp"/>
-                        <outlet property="topBarView" destination="hRZ-rK-9xy" id="adM-MT-0Nw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rha-QF-LXJ" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -4298,8 +4228,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Menu.png" width="20" height="11"/>
-        <image name="Share.png" width="17" height="20"/>
         <image name="accessory.png" width="8" height="15"/>
         <image name="alarmRepeatIcon.png" width="25" height="25"/>
         <image name="alarmShortcut.png" width="54" height="54"/>

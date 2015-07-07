@@ -63,14 +63,10 @@ static BOOL hasLoadedBefore = NO;
     [super viewDidLoad];
     [self configureCollectionView];
     [self configureTransitions];
+
     [self loadData];
 
-    self.dataVerifyTransitionDelegate = [HEMBounceModalTransition new];
-    self.dataVerifyTransitionDelegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
-    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan)];
-    self.panGestureRecognizer.delegate = self;
-    [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:self.panGestureRecognizer];
-    [self.view addGestureRecognizer:self.panGestureRecognizer];
+    [self configureGestures];
     [self registerForNotifications];
 
     [SENAnalytics track:kHEMAnalyticsEventTimeline
@@ -155,9 +151,19 @@ static BOOL hasLoadedBefore = NO;
                                                object:nil];
 }
 
+- (void)configureGestures {
+    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan)];
+    self.panGestureRecognizer.delegate = self;
+    [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:self.panGestureRecognizer];
+    [self.view addGestureRecognizer:self.panGestureRecognizer];
+}
+
 - (void)configureTransitions {
     self.zoomAnimationDelegate = [HEMZoomAnimationTransitionDelegate new];
     self.transitioningDelegate = self.zoomAnimationDelegate;
+    
+    self.dataVerifyTransitionDelegate = [HEMBounceModalTransition new];
+    self.dataVerifyTransitionDelegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
 }
 
 - (void)handleAuthorization {

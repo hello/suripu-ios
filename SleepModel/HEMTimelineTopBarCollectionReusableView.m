@@ -13,11 +13,14 @@
 
 static CGFloat const HEMCenterTitleDrawerClosedTop = 20.f;
 static CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
+static CGFloat const HEMDrawerButtonOpenTop = 4.0f;
+static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
 
 @interface HEMTimelineTopBarCollectionReusableView ()
 
 @property (weak,   nonatomic) IBOutlet UILabel *dateLabel;
 @property (weak,   nonatomic) IBOutlet NSLayoutConstraint *centerTitleTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *drawerTopConstraint;
 @property (strong, nonatomic) NSCalendar *calendar;
 @property (strong, nonatomic) NSDateFormatter *weekdayDateFormatter;
 @property (strong, nonatomic) NSDateFormatter *rangeDateFormatter;
@@ -65,9 +68,19 @@ static CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
 - (void)setOpened:(BOOL)isOpen {
     UIImage *image = [UIImage imageNamed:isOpen ? @"caret up" : @"Menu"];
     [self.drawerButton setImage:image forState:UIControlStateNormal];
-    CGFloat auxButtonAlpha = isOpen ? 0 : 1;
-    CGFloat constant = isOpen ? HEMCenterTitleDrawerOpenTop : HEMCenterTitleDrawerClosedTop;
-    self.centerTitleTopConstraint.constant = constant;
+    
+    CGFloat shareButtonAlpha = 1.0f;
+    CGFloat titleConstant = HEMCenterTitleDrawerClosedTop;
+    CGFloat drawerConstant = HEMDrawerButtonClosedTop;
+    
+    if (isOpen) {
+        shareButtonAlpha = 0.0f;
+        titleConstant = HEMCenterTitleDrawerOpenTop;
+        drawerConstant = HEMDrawerButtonOpenTop;
+    }
+
+    [[self centerTitleTopConstraint] setConstant:titleConstant];
+    [[self drawerTopConstraint] setConstant:drawerConstant];
     [self setNeedsUpdateConstraints];
     
     UIColor* titleTextColor
@@ -78,7 +91,7 @@ static CGFloat const HEMCenterTitleDrawerOpenTop = 10.f;
     [UIView animateWithDuration:0.2f
                      animations:^{
                          [[self dateLabel] setTextColor:titleTextColor];
-                         self.shareButton.alpha = auxButtonAlpha;
+                         self.shareButton.alpha = shareButtonAlpha;
                          [self layoutIfNeeded];
                      }];
 }

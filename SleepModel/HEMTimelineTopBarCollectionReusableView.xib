@@ -54,25 +54,16 @@
                 <constraint firstItem="VMg-mK-NnC" firstAttribute="top" secondItem="U6b-Vx-4bR" secondAttribute="top" constant="12" id="Z3Z-po-6h6"/>
                 <constraint firstAttribute="trailing" secondItem="VMg-mK-NnC" secondAttribute="trailing" constant="10" id="fU7-Jq-bN8"/>
                 <constraint firstItem="7yi-Hy-Q0n" firstAttribute="bottom" secondItem="yUO-aI-NaL" secondAttribute="bottom" constant="-10" id="iOB-pc-e8Y"/>
-                <constraint firstAttribute="centerY" secondItem="7yi-Hy-Q0n" secondAttribute="centerY" id="lQv-aj-SFa"/>
                 <constraint firstItem="7yi-Hy-Q0n" firstAttribute="top" secondItem="yUO-aI-NaL" secondAttribute="top" constant="10" id="lby-Ty-bXM"/>
                 <constraint firstItem="CU2-Jf-IpR" firstAttribute="leading" secondItem="U6b-Vx-4bR" secondAttribute="leading" constant="10" id="p4s-lU-aIT"/>
-                <constraint firstAttribute="centerY" secondItem="VMg-mK-NnC" secondAttribute="centerY" id="vho-jO-CdU"/>
                 <constraint firstItem="yUO-aI-NaL" firstAttribute="leading" secondItem="7yi-Hy-Q0n" secondAttribute="leading" constant="-10" id="wDP-6p-0qN"/>
-                <constraint firstAttribute="centerY" secondItem="CU2-Jf-IpR" secondAttribute="centerY" constant="-1" id="yQ7-C8-3YM"/>
             </constraints>
-            <variation key="default">
-                <mask key="constraints">
-                    <exclude reference="yQ7-C8-3YM"/>
-                    <exclude reference="lQv-aj-SFa"/>
-                    <exclude reference="vho-jO-CdU"/>
-                </mask>
-            </variation>
             <connections>
-                <outlet property="centerTitleTopConstraint" destination="lby-Ty-bXM" id="xDw-ek-KgN"/>
+                <outlet property="centerTitleTopConstraint" destination="J0m-2e-NwK" id="pdV-Zn-RsZ"/>
                 <outlet property="dateButton" destination="yUO-aI-NaL" id="aoT-bH-Tia"/>
                 <outlet property="dateLabel" destination="7yi-Hy-Q0n" id="X3l-hP-IPw"/>
                 <outlet property="drawerButton" destination="CU2-Jf-IpR" id="pDB-eO-37m"/>
+                <outlet property="drawerTopConstraint" destination="MOh-5t-KIA" id="ULy-Yi-w6u"/>
                 <outlet property="shareButton" destination="VMg-mK-NnC" id="GRZ-QX-nod"/>
             </connections>
         </collectionReusableView>

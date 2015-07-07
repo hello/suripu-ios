@@ -134,15 +134,15 @@
         NSNumber* number = sortedValues[i];
         if ([number floatValue] > 0) {
             self.minIndex = [values indexOfObject:number];
-            if (self.minIndex == 0 && showLineGraph) {
-                self.minIndex = 1;
+            if (showLineGraph) {
+                self.minIndex += 1;
             }
             break;
         }
     }
     self.maxIndex = [values indexOfObject:max];
-    if (self.maxIndex == 0 && showLineGraph) {
-        self.maxIndex = 1;
+    if (showLineGraph) {
+        self.maxIndex += 1;
     }
     if (showBarGraph) {
         [self layoutIfNeeded];
@@ -324,7 +324,7 @@
 
 - (UIColor*)lineGraph:(BEMSimpleLineGraphView*)graph colorForDotAtIndex:(NSInteger)index
 {
-    if (index == self.maxIndex || index == self.minIndex) {
+    if ([self lineGraph:graph alwaysDisplayPopUpAtIndex:index]) {
         CGFloat value = [self lineGraph:graph valueForPointAtIndex:index];
         return [UIColor colorForSleepScore:(NSInteger)value];
     }
@@ -333,7 +333,7 @@
 
 - (BOOL)lineGraph:(BEMSimpleLineGraphView*)graph alwaysDisplayDotAtIndex:(NSInteger)index
 {
-    return index == self.maxIndex || index == self.minIndex;
+    return [self lineGraph:graph alwaysDisplayPopUpAtIndex:index];
 }
 
 - (UIColor*)lineGraph:(BEMSimpleLineGraphView*)graph colorForPopUpAtIndex:(NSInteger)index

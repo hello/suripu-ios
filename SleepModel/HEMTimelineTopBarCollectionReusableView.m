@@ -60,11 +60,6 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
     return [[self dateLabel] text];
 }
 
-- (void)layoutSubviews {
-    [super layoutSubviews];
-    DDLogVerbose(@"layout subview, height %f", CGRectGetHeight([self bounds]));
-}
-
 - (void)setOpened:(BOOL)isOpen {
     UIImage *image = [UIImage imageNamed:isOpen ? @"caret up" : @"Menu"];
     [self.drawerButton setImage:image forState:UIControlStateNormal];

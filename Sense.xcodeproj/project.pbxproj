@@ -4438,7 +4438,7 @@
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PROVISIONING_PROFILE = "";
-				SENSE_API_URL = "https://dev-api.hello.is/v1";
+				SENSE_API_URL = "https://dev-api.hello.is";
 				SENSE_CLIENT_ID = iphone_pill;
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
@@ -4463,6 +4463,7 @@
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PROVISIONING_PROFILE = "";
+				SENSE_API_URL = "https://api.hello.is";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -4588,7 +4589,7 @@
 				PROVISIONING_PROFILE = "5f30cfec-e3fa-4c25-8d7e-076b0a5e03a4";
 				SDKROOT = iphoneos;
 				SENSE_ANALYTICS_TOKEN = 43c61cc553f0ccf2b3e1f73bc30bbfb4;
-				SENSE_API_URL = "https://api.hello.is/v1";
+				SENSE_API_URL = "https://api.hello.is";
 				SENSE_APP_ID = is.hello.Sense;
 				SENSE_APP_NAME = Sense;
 				SENSE_CLIENT_ID = "cbaf8aaf-609a-46f8-98d9-292d5376a6b7";
@@ -4731,6 +4732,7 @@
 				INFOPLIST_FILE = "SleepModel/Sense-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				PROVISIONING_PROFILE = "";
+				SENSE_API_URL = "https://dev-api.hello.is";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};

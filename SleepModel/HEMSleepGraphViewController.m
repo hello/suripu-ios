@@ -161,7 +161,7 @@ static BOOL hasLoadedBefore = NO;
 - (void)configureTransitions {
     self.zoomAnimationDelegate = [HEMZoomAnimationTransitionDelegate new];
     self.transitioningDelegate = self.zoomAnimationDelegate;
-    
+
     self.dataVerifyTransitionDelegate = [HEMBounceModalTransition new];
     self.dataVerifyTransitionDelegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
 }
@@ -226,7 +226,7 @@ static BOOL hasLoadedBefore = NO;
 - (void)verifySegment:(SENSleepResultSegment*)segment {
     [SENAPITimeline verifySleepEvent:segment
                       forDateOfSleep:self.dateForNightOfSleep
-                          completion:^(NSError *error) {
+                          completion:^(id updatedTimeline, NSError *error) {
                               if (error) {
                                   [SENAnalytics trackError:error
                                              withEventName:kHEMAnalyticsEventError];
@@ -237,7 +237,7 @@ static BOOL hasLoadedBefore = NO;
 - (void)removeSegment:(SENSleepResultSegment*)segment {
     [SENAPITimeline removeSleepEvent:segment
                       forDateOfSleep:self.dateForNightOfSleep
-                          completion:^(NSError *error) {
+                          completion:^(id updatedTimeline, NSError *error) {
                               if (error) {
                                   [SENAnalytics trackError:error
                                              withEventName:kHEMAnalyticsEventError];
@@ -320,7 +320,7 @@ static BOOL hasLoadedBefore = NO;
                           [self removeSegment:segment];
                           [self markSenseLearnsAsShown];
                        }];
-    
+
     // add title, if needed
     if ([self shouldShowSenseLearnsInActionSheet]) {
         [sheet setCustomTitleView:[self senseLearnsTitleView]];
@@ -655,9 +655,9 @@ static BOOL hasLoadedBefore = NO;
 - (CGSize)collectionView:(UICollectionView *)collectionView
                              layout:(UICollectionViewLayout *)collectionViewLayout
     referenceSizeForHeaderInSection:(NSInteger)section {
-    
+
     CGFloat bWidth = CGRectGetWidth(collectionView.bounds);
-    
+
     if (section == HEMSleepGraphCollectionViewSummarySection) {
         return CGSizeMake(bWidth, HEMTimelineTopBarCellHeight);
     } else if (section == HEMSleepGraphCollectionViewSegmentSection) {
@@ -665,7 +665,7 @@ static BOOL hasLoadedBefore = NO;
             return CGSizeMake(bWidth, HEMTimelineHeaderCellHeight);;
         }
     }
-    
+
     return CGSizeZero;
 }
 

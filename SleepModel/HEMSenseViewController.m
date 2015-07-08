@@ -323,7 +323,6 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 - (void)showAdvancedOptions:(id)sender {
     HEMActionSheetViewController* sheet =
         [HEMMainStoryboard instantiateActionSheetViewController];
-    [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [sheet setTitle:NSLocalizedString(@"settings.sense.advanced.option.title", nil)];
     
     __weak typeof (self) weakSelf = self;
@@ -355,7 +354,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         }];
     }
     
-    [root presentViewController:sheet animated:YES completion:nil];
+    [root presentViewController:sheet animated:NO completion:nil];
 }
 
 #pragma mark Unpair Sense

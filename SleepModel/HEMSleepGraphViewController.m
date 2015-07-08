@@ -266,11 +266,11 @@ static BOOL hasLoadedBefore = NO;
     SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
 
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
-    [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
 
+    UIColor* optionTitleColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
     NSString* approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
     [sheet addOptionWithTitle:approveTitle
-                   titleColor:[UIColor darkGrayColor]
+                   titleColor:optionTitleColor
                   description:nil
                     imageName:@"timeline_action_approve"
                        action:^{
@@ -280,7 +280,7 @@ static BOOL hasLoadedBefore = NO;
 
     if ([self canAdjustEventWithType:segment.eventType]) {
         [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
-                       titleColor:[UIColor darkGrayColor]
+                       titleColor:optionTitleColor
                       description:nil
                         imageName:@"timeline_action_adjust"
                            action:^{
@@ -291,7 +291,7 @@ static BOOL hasLoadedBefore = NO;
 
     NSString* deleteTitle = NSLocalizedString(@"sleep-event.action.delete.title", nil);
     [sheet addOptionWithTitle:deleteTitle
-                   titleColor:[UIColor darkGrayColor]
+                   titleColor:optionTitleColor
                   description:nil
                     imageName:@"timeline_action_delete"
                        action:^{
@@ -323,7 +323,7 @@ static BOOL hasLoadedBefore = NO;
         }];
     }
 
-    [root presentViewController:sheet animated:YES completion:nil];
+    [root presentViewController:sheet animated:NO completion:nil];
 }
 
 - (BOOL)canAdjustEventWithType:(NSString *)eventType {

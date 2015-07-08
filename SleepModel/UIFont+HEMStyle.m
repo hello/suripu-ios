@@ -450,7 +450,7 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 }
 
 + (UIFont*)actionSheetTitleViewDescriptionFont {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameMedium size:15.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
 }
 
 #pragma mark - Tutorial Dialogs

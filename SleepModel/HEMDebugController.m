@@ -54,11 +54,10 @@
 }
 
 - (void)presentOptions:(HEMActionSheetViewController*)optionsVC {
-    [optionsVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     if (![[self presentingController] respondsToSelector:@selector(presentationController)]) {
         [[self presentingController] setModalPresentationStyle:UIModalPresentationCurrentContext];
     }
-    [[self presentingController] presentViewController:optionsVC animated:YES completion:nil];
+    [[self presentingController] presentViewController:optionsVC animated:NO completion:nil];
 }
 
 - (void)showSupportOptions {

@@ -193,7 +193,6 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 - (void)showAdvancedOptions:(id)sender {
     HEMActionSheetViewController* sheet =
         [HEMMainStoryboard instantiateActionSheetViewController];
-    [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [sheet setTitle:NSLocalizedString(@"settings.pill.advanced.option.title", nil)];
     
     __weak typeof (self) weakSelf = self;
@@ -213,7 +212,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
             [root setModalPresentationStyle:origStyle];
         }];
     }
-    [root presentViewController:sheet animated:YES completion:nil];
+    [root presentViewController:sheet animated:NO completion:nil];
 }
 
 - (void)replaceBattery:(id)sender {

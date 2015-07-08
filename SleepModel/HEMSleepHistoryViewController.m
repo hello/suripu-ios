@@ -113,7 +113,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
                                                     fromDate:initialDate
                                                       toDate:self.selectedDate
                                                      options:0];
-    NSInteger index = components.day;
+    NSInteger index = components.day + 1;
     NSInteger item = MIN(index, [self collectionView:self.historyCollectionView numberOfItemsInSection:0] - 1);
     NSIndexPath* indexPath = [NSIndexPath indexPathForItem:item inSection:0];
     [self.historyCollectionView scrollToItemAtIndexPath:indexPath

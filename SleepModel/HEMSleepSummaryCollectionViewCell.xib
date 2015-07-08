@@ -27,7 +27,7 @@
                                 <rect key="frame" x="82" y="16" width="157" height="127"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="87" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7eK-rK-hbH" customClass="UICountingLabel">
-                                        <rect key="frame" x="42" y="34" width="72" height="87.5"/>
+                                        <rect key="frame" x="42" y="34" width="72" height="88"/>
                                         <fontDescription key="fontDescription" name="AvenirNext-UltraLight" family="Avenir Next" pointSize="64"/>
                                         <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
@@ -69,10 +69,10 @@
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="252" verticalCompressionResistancePriority="1000" text="SLEEP SUMMARY" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3zN-gk-dwk" customClass="HEMTimelineSummaryTitleLabel">
                                         <rect key="frame" x="20" y="14" width="82" height="14"/>
                                         <fontDescription key="fontDescription" name="Avenir-Medium" family="Avenir" pointSize="10"/>
-                                        <color key="textColor" red="0.224406898021698" green="0.81716448068618774" blue="0.6100580096244812" alpha="1" colorSpace="calibratedRGB"/>
+                                        <color key="textColor" red="0.0" green="0.61176470588235299" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeline right caret.png" translatesAutoresizingMaskIntoConstraints="NO" id="JKF-id-cB1">
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeline_right_caret.png" translatesAutoresizingMaskIntoConstraints="NO" id="JKF-id-cB1">
                                         <rect key="frame" x="281" y="15" width="7" height="12"/>
                                     </imageView>
                                 </subviews>
@@ -141,6 +141,6 @@
         </collectionViewCell>
     </objects>
     <resources>
-        <image name="timeline right caret.png" width="7" height="12"/>
+        <image name="timeline_right_caret.png" width="7" height="12"/>
     </resources>
 </document>

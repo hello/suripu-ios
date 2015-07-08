@@ -7,6 +7,7 @@
 //
 
 #import "UIFont+HEMStyle.h"
+#import "NSString+HEMUtils.h"
 
 #import "HelloStyleKit.h"
 #import "HEMActionSheetOptionCell.h"
@@ -64,6 +65,7 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
 - (void)awakeFromNib {
     [[self optionTitleLabel] setFont:[UIFont actionSheetOptionTitleFont]];
     [[self optionDescriptionLabel] setFont:[UIFont actionSheetOptionDescriptionFont]];
+    [[self optionDescriptionLabel] setTextColor:[UIColor colorWithWhite:152.0f/255.0f alpha:1.0f]];
     [self configureSelectedBackground];
 }
 
@@ -83,10 +85,9 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
     }
     
     if ([[[self optionDescriptionLabel] text] length] == 0) {
+        CGFloat bHeight = CGRectGetHeight([self bounds]);
         CGFloat titleHeight = CGRectGetHeight([[self optionTitleLabel] bounds]);
-        CGFloat titleTopMargin
-            = ((CGRectGetHeight([self bounds]) - titleHeight)/2)
-            + [[[self optionTitleLabel] font] descender];
+        CGFloat titleTopMargin = (bHeight - titleHeight) / 2;
         [[self titleTopConstraint] setConstant:titleTopMargin];
     }
     
@@ -104,6 +105,13 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
     [[self optionTitleLabel] setTextColor:titleColor];
     [[self iconImageView] setImage:icon];
     [[self optionDescriptionLabel] setText:description];
+    
+    UIFont* titleFont = [[self optionTitleLabel] font];
+    CGRect titleFrame = [[self optionTitleLabel] frame];
+    CGFloat titleWidth = CGRectGetWidth(titleFrame);
+    titleFrame.size.height = [title heightBoundedByWidth:titleWidth usingFont:titleFont];
+    [[self optionTitleLabel] setFrame:titleFrame];
+    
     [self setNeedsUpdateConstraints];
 }
 

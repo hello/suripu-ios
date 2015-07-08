@@ -760,14 +760,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" placeholderIntrinsicWidth="552" placeholderIntrinsicHeight="21" text="Title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nAK-rd-1sW">
-                                                    <rect key="frame" x="4" y="20" width="572" height="21"/>
+                                                    <rect key="frame" x="4" y="12" width="572" height="21"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="552" placeholderIntrinsicHeight="21" text="Description" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C2u-YN-8VF">
-                                                    <rect key="frame" x="4" y="45" width="572" height="21"/>
+                                                    <rect key="frame" x="4" y="37" width="572" height="21"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -788,7 +788,7 @@
                                                 <constraint firstItem="C2u-YN-8VF" firstAttribute="leading" secondItem="nAK-rd-1sW" secondAttribute="leading" id="XNY-iA-uhi"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="C2u-YN-8VF" secondAttribute="trailing" constant="16" id="auc-RY-fG1"/>
                                                 <constraint firstItem="nAK-rd-1sW" firstAttribute="leading" secondItem="dQg-tB-zFC" secondAttribute="trailing" constant="-20" id="gUa-6Q-LP4"/>
-                                                <constraint firstItem="nAK-rd-1sW" firstAttribute="top" secondItem="JsL-x8-oq0" secondAttribute="topMargin" constant="12" id="ojI-n2-A8g"/>
+                                                <constraint firstItem="nAK-rd-1sW" firstAttribute="top" secondItem="JsL-x8-oq0" secondAttribute="top" constant="12" id="ojI-n2-A8g"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <inset key="separatorInset" minX="24" minY="0.0" maxX="0.0" maxY="0.0"/>

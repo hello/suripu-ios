@@ -11,7 +11,7 @@
 
 NSString* const SENAPIDeviceErrorDomain = @"is.hello.api.device";
 
-NSString* const SENAPIDeviceEndpoint = @"devices";
+NSString* const SENAPIDeviceEndpoint = @"v1/devices";
 NSString* const SENAPIDevicePathPill = @"pill";
 NSString* const SENAPIDevicePathSense = @"sense";
 NSString* const SENAPIDevicePathMetaData = @"info";

@@ -9,7 +9,7 @@
 #import "SENAPISupport.h"
 #import "SENSupportTopic.h"
 
-static NSString* const SENAPISupportEndpoint = @"support";
+static NSString* const SENAPISupportEndpoint = @"v1/support";
 static NSString* const SENAPISupportPathTopics = @"topics";
 
 @implementation SENAPISupport

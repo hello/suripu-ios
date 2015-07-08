@@ -9,7 +9,7 @@
 #import "SENAPIInsight.h"
 #import "SENInsight.h"
 
-static NSString* const kSENAPIInsightPath = @"insights";
+static NSString* const kSENAPIInsightPath = @"v1/insights";
 static NSString* const kSENAPIInsightErrorDomain = @"is.hello.api.insight";
 
 @implementation SENAPIInsight

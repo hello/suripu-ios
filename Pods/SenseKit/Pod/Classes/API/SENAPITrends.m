@@ -11,9 +11,9 @@
 
 @implementation SENAPITrends
 
-static NSString* const SENAPITrendsDefaultEndpoint = @"insights/trends/all";
-static NSString* const SENAPITrendsAllEndpoint = @"insights/trends/list";
-static NSString* const SENAPITrendsGraphEndpoint = @"insights/trends/graph";
+static NSString* const SENAPITrendsDefaultEndpoint = @"v1/insights/trends/all";
+static NSString* const SENAPITrendsAllEndpoint = @"v1/insights/trends/list";
+static NSString* const SENAPITrendsGraphEndpoint = @"v1/insights/trends/graph";
 static NSString* const SENAPITrendsTimePeriod = @"time_period";
 static NSString* const SENAPITrendsDataType = @"data_type";
 static NSString* const SENAPITrendsSleepScoreType = @"sleep_score";

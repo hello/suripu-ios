@@ -5,7 +5,7 @@
 
 @implementation SENAPINotification
 
-static NSString* const SENAPINotificationRegistrationEndpoint = @"notifications/registration";
+static NSString* const SENAPINotificationRegistrationEndpoint = @"v1/notifications/registration";
 static NSString* const SENAPINotificationOS = @"ios";
 
 + (void)registerForRemoteNotificationsWithTokenData:(NSData*)tokenData completion:(void (^)(NSError*))completion

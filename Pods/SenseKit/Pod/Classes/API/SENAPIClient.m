@@ -10,7 +10,7 @@
 NSString* const SENAPIReachableNotification = @"SENAPIReachableNotification";
 NSString* const SENAPIUnreachableNotification = @"SENAPIUnreachableNotification";
 
-static NSString* const SENDefaultBaseURLPath = @"https://dev-api.hello.is/v1";
+static NSString* const SENDefaultBaseURLPath = @"https://dev-api.hello.is";
 static NSString* const SENAPIClientBaseURLPathKey = @"SENAPIClientBaseURLPathKey";
 static NSString* const SENAPIErrorLocalizedMessageKey = @"message";
 static AFHTTPSessionManager* sessionManager = nil;

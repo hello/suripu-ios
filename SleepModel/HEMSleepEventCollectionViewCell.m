@@ -70,13 +70,19 @@
     CGFloat scaleDiff = 1 - minContainerViewScale;
     CGFloat ratio = 1 - fabs(ratioFromCenter);
     CGFloat scale = ratioFromCenter < 0 ? MIN(1, (scaleDiff * ratio * 4) + minContainerViewScale) : 1;
+    
     CGFloat scaleOffset = nearbyintf(-(width - (width * scale)) / 2);
-    CGAffineTransform scaling = CGAffineTransformMakeScale(scale, scale);
+    CGAffineTransform scaling = CGAffineTransformIdentity;
+    CGFloat alpha = 1.0f;
+    if (scale < 1) {
+        scaling = CGAffineTransformMakeScale(scale, scale);
+        alpha = [self alphaWithRatioFromCenter:ratioFromCenter];
+    }
+
     CGAffineTransform transform = CGAffineTransformTranslate(scaling, scaleOffset / 2, 0);
     transform = CGAffineTransformTranslate(transform, 0, parallaxVerticalOffset);
-    self.contentContainerView.alpha =
-        [self isWaitingForAnimation] ? 0 : [self alphaWithRatioFromCenter:ratioFromCenter];
-    self.contentContainerView.transform = scale < 1 ? scaling : CGAffineTransformIdentity;
+    self.contentContainerView.alpha = [self isWaitingForAnimation] ? 0 : alpha;
+    self.contentContainerView.transform = scaling;
     self.contentContainerView.frame = CGRectApplyAffineTransform([self containerFrame], transform);
 }
 

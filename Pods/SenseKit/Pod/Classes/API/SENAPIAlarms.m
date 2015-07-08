@@ -6,9 +6,9 @@
 
 @implementation SENAPIAlarms
 
-static NSString* const SENAPIAlarmsEndpoint = @"alarms";
-static NSString* const SENAPIAlarmSoundsEndpoint = @"alarms/sounds";
-static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"alarms/%.0f";
+static NSString* const SENAPIAlarmsEndpoint = @"v1/alarms";
+static NSString* const SENAPIAlarmSoundsEndpoint = @"v1/alarms/sounds";
+static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"v1/alarms/%.0f";
 
 static SENAPIDataBlock SENAPIAlarmDataBlock(SENAPIDataBlock completion) {
     return ^(NSArray* data, NSError* error) {

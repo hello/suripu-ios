@@ -9,7 +9,7 @@
 #import "SENAPITimeZone.h"
 
 static NSString* const kSENAPITimeZoneErrorDomain = @"is.hello.api.timezone";
-static NSString* const kSENAPITimeZoneResourceName = @"timezone";
+static NSString* const kSENAPITimeZoneResourceName = @"v1/timezone";
 static NSString* const kSENAPITimeZoneParamOffset = @"timezone_offset";
 static NSString* const kSENAPITimeZoneParamId = @"timezone_id";
 

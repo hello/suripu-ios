@@ -321,6 +321,11 @@ static NSString* const SENSleepResultSegmentSleepDepth = @"sleep_depth";
 static NSString* const SENSleepResultSegmentTimezoneOffset = @"offset_millis";
 static NSString* const SENSleepResultSegmentSound = @"sound";
 
+// v2
+static NSString* const SENSleepResultSegmentDate= @"event_timestamp";
+static NSString* const SENSleepResultSegmentType = @"event_type";
+static NSString* const SENSleepResultSegmentDateUpdate = @"new_event_time";
+
 - (instancetype)initWithDictionary:(NSDictionary*)segmentData
 {
     if (self = [super init]) {

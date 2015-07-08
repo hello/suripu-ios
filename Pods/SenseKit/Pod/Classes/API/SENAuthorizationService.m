@@ -17,7 +17,7 @@ NSString* const SENAuthorizationServiceDidReauthorizeNotification = @"SENAuthori
 @implementation SENAuthorizationService
 
 static NSString* SENAuthorizationServiceClientID = nil;
-static NSString* const SENAuthorizationServiceTokenPath = @"oauth2/token";
+static NSString* const SENAuthorizationServiceTokenPath = @"v1/oauth2/token";
 static NSString* const SENAuthorizationServiceCredentialsKey = @"credentials";
 static NSString* const SENAuthorizationServiceAccountIdKey = @"account_id";
 static NSString* const SENAuthorizationServiceAccessTokenKey = @"access_token";

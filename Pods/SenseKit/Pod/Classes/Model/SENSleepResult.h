@@ -76,6 +76,7 @@ extern NSString* const SENSleepResultSegmentEventTypeSleep;
 @property (strong) NSString* eventType;
 @property (strong) SENSleepResultSound* sound;
 @property NSInteger sleepDepth;
+
 @end
 
 @interface SENSleepResultStatistic : NSObject <NSCoding>

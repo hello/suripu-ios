@@ -14,7 +14,7 @@ static NSDateFormatter* dateFormatter;
 
 static NSString* const kSENAPIQuestionErrorDomain = @"is.hello.api.question";
 
-static NSString* const kSENAPIQuestionsPath = @"questions";
+static NSString* const kSENAPIQuestionsPath = @"v1/questions";
 static NSString* const kSENAPIQuestionPropId = @"id";
 static NSString* const kSENAPIQuestionPropQuestionAccountId = @"account_question_id";
 static NSString* const kSENAPIQuestionPropQuestionId = @"question_id";

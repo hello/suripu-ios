@@ -141,6 +141,9 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
                                 [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
                                 DDLogVerbose(@"Failed to fetch timeline: %@", error.localizedDescription);
                                 [strongSelf hideLoadingViewAnimated:YES];
+                                 if (completion) {
+                                     completion();
+                                 }
                                 return;
                             }
                              [strongSelf refreshWithTimelines:timelines];

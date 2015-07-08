@@ -14,7 +14,7 @@
 static CGFloat HEMActionSheetTitleHorzPadding = 24.0f;
 static CGFloat HEMActionSheetTitleVertPadding = 22.0f;
 static CGFloat HEMActionSheetTextSpacing = 12.0f;
-static CGFloat HEMActionSheetTitleSeparatorHeight = 1.0f;
+static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
 
 @implementation HEMActionSheetTitleView
 
@@ -98,7 +98,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 1.0f;
     CGContextSetStrokeColorWithColor(context, [lineColor CGColor]);
     CGContextSetLineWidth(context, HEMActionSheetTitleSeparatorHeight);
     
-    CGFloat y = CGRectGetHeight(rect) - HEMActionSheetTitleSeparatorHeight;
+    CGFloat y = CGRectGetHeight(rect) - (HEMActionSheetTitleSeparatorHeight / 2);
     CGContextMoveToPoint(context, 0.0f, y);
     CGContextAddLineToPoint(context, CGRectGetWidth(rect), y);
     CGContextStrokePath(context);

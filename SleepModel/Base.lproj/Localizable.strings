@@ -387,7 +387,7 @@
 "sleep-event.feedback.failed.message" = "Please try again later";
 "sleep-event.feedback.success.message" = "Thank you";
 "sleep-event.feedback.action-sheet.title" = "Sense learns";
-"sleep-event.feedback.action-sheet.description" = "Making corrections to your timeline helps improve the algorithms Sense uses to detect and analyze sleep.";
+"sleep-event.feedback.action-sheet.description" = "Making corrections to your timeline helps improve the algorithms Sense uses to detect and analyze your sleep.";
 
 // sleep events
 "sleep-event.type.wake_up.name" = "Woke up";

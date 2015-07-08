@@ -268,9 +268,10 @@ static BOOL hasLoadedBefore = NO;
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
     [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
 
+    UIColor* optionTitleColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
     NSString* approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
     [sheet addOptionWithTitle:approveTitle
-                   titleColor:[UIColor darkGrayColor]
+                   titleColor:optionTitleColor
                   description:nil
                     imageName:@"timeline_action_approve"
                        action:^{
@@ -280,7 +281,7 @@ static BOOL hasLoadedBefore = NO;
 
     if ([self canAdjustEventWithType:segment.eventType]) {
         [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
-                       titleColor:[UIColor darkGrayColor]
+                       titleColor:optionTitleColor
                       description:nil
                         imageName:@"timeline_action_adjust"
                            action:^{
@@ -291,7 +292,7 @@ static BOOL hasLoadedBefore = NO;
 
     NSString* deleteTitle = NSLocalizedString(@"sleep-event.action.delete.title", nil);
     [sheet addOptionWithTitle:deleteTitle
-                   titleColor:[UIColor darkGrayColor]
+                   titleColor:optionTitleColor
                   description:nil
                     imageName:@"timeline_action_delete"
                        action:^{

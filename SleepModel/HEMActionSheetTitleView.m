@@ -69,7 +69,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 1.0f;
     
     if (description) {
 
-        UIColor* descColor = [UIColor colorWithWhite:0.0f alpha:0.5f];
+        UIColor* descColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
         UIFont* descFont = [UIFont actionSheetTitleViewDescriptionFont];
         UILabel* descLabel = [self labelWithText:description
                                          andFont:descFont

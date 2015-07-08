@@ -266,7 +266,6 @@ static BOOL hasLoadedBefore = NO;
     SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
 
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
-    [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
 
     UIColor* optionTitleColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
     NSString* approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
@@ -324,7 +323,7 @@ static BOOL hasLoadedBefore = NO;
         }];
     }
 
-    [root presentViewController:sheet animated:YES completion:nil];
+    [root presentViewController:sheet animated:NO completion:nil];
 }
 
 - (BOOL)canAdjustEventWithType:(NSString *)eventType {

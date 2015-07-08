@@ -153,8 +153,6 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 }
 
 - (void)show {
-    [[self optionTableView] reloadData];
-    
     CGFloat height = [[self optionTableView] contentSize].height;
     BOOL needsUpdateConstraints = self.oTVBottomConstraint.constant != height
         || self.oTVHeightConstraint.constant != height;
@@ -162,7 +160,6 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     if (needsUpdateConstraints) {
         [[self oTVHeightConstraint] setConstant:height];
         [[self oTVBottomConstraint] setConstant:height];
-        [[self view] setNeedsUpdateConstraints];
     }
     [UIView animateWithDuration:HEMActionSheetOptionAnimDuration
                           delay:0

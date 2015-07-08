@@ -153,6 +153,8 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 }
 
 - (void)show {
+    [[self optionTableView] reloadData];
+    
     CGFloat height = [[self optionTableView] contentSize].height;
     BOOL needsUpdateConstraints = self.oTVBottomConstraint.constant != height
         || self.oTVHeightConstraint.constant != height;

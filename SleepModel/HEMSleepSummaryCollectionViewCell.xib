@@ -73,7 +73,7 @@
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="timeline_right_caret.png" translatesAutoresizingMaskIntoConstraints="NO" id="JKF-id-cB1">
-                                        <rect key="frame" x="281" y="16" width="7" height="12"/>
+                                        <rect key="frame" x="281" y="15" width="7" height="12"/>
                                     </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -84,7 +84,7 @@
                                     <constraint firstAttribute="height" constant="120" id="UPf-fi-yZI"/>
                                     <constraint firstItem="tNt-4l-gcx" firstAttribute="top" secondItem="XD9-Mv-4Jf" secondAttribute="top" constant="41" id="VMz-Zy-D79"/>
                                     <constraint firstAttribute="trailing" secondItem="JKF-id-cB1" secondAttribute="trailing" constant="16" id="W1p-lM-9rc"/>
-                                    <constraint firstItem="3zN-gk-dwk" firstAttribute="centerY" secondItem="JKF-id-cB1" secondAttribute="centerY" id="kuk-m8-MiQ"/>
+                                    <constraint firstItem="3zN-gk-dwk" firstAttribute="centerY" secondItem="JKF-id-cB1" secondAttribute="centerY" constant="1" id="kuk-m8-MiQ"/>
                                     <constraint firstItem="buK-Of-ZfH" firstAttribute="top" secondItem="3zN-gk-dwk" secondAttribute="bottom" constant="13" id="p69-g3-LwV"/>
                                     <constraint firstAttribute="bottom" secondItem="buK-Of-ZfH" secondAttribute="bottom" id="poH-yl-F5A"/>
                                     <constraint firstItem="tNt-4l-gcx" firstAttribute="top" secondItem="3zN-gk-dwk" secondAttribute="bottom" constant="12" id="rEV-ru-WEc"/>

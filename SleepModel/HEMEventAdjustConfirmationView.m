@@ -128,11 +128,12 @@ static CGFloat const HEMAdjustConfirmTextSpacing = 10.0f;
     CGFloat iconHeight = CGRectGetHeight([[self iconView] bounds]);
     CGFloat titleHeight = CGRectGetHeight([[self titleLabel] bounds]);
     CGFloat subtitleHeight = CGRectGetHeight([[self subtitleLabel] bounds]);
+    CGFloat textSpacing = subtitleHeight > 0 ? HEMAdjustConfirmTextSpacing : 0.0f;
     CGFloat contentHeight
         = iconHeight
         + HEMAdjustConfirmImageSpacing
         + titleHeight
-        + HEMAdjustConfirmTextSpacing
+        + textSpacing
         + subtitleHeight;
     CGFloat vertPadding = MAX(HEMAdjustConfirmVertPadding, ceilf((bHeight - contentHeight)/2));
     

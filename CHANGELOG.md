@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.1.0.0
+
+New:
+
+* Reverted timeline top bar back to being non-sticky
+
+Fixes:
+
+* Sleep score over time dots and label are centered for 1W display
+* Visual tweaks to action sheet of options for timeline feedback
+* Speed up the presentation of the action sheet
+* Fixed issue where scrolling back to the very first day would jump to next day
+* Increased timeline event string line spacing
+* Improvements in timeline breakdown animation
+* Fixed issue in regards to phone locale settings for time preference
+* Alarm shortcut button will no longer disappear when scrolled to the very top
+
 ## 1.0.8.12
 
 New:

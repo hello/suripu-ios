@@ -223,25 +223,42 @@ static BOOL hasLoadedBefore = NO;
 
 #pragma mark Event Info
 
+- (void)processFeedbackResponse:(id)updatedTimeline
+                          error:(NSError*)error
+                     forSegment:(SENSleepResultSegment*)segment
+                analyticsAction:(NSString*)analyticsAction {
+    
+    if (error) {
+        [SENAnalytics trackError:error
+                   withEventName:kHEMAnalyticsEventError];
+    } else {
+        NSString* segmentType = [segment eventType] ?: @"undefined";
+        NSDictionary* props = @{kHEMAnalyticsEventPropType : segmentType};
+        [SENAnalytics track:analyticsAction properties:props];
+    }
+}
+
 - (void)verifySegment:(SENSleepResultSegment*)segment {
+    __weak typeof(self) weakSelf = self;
     [SENAPITimeline verifySleepEvent:segment
                       forDateOfSleep:self.dateForNightOfSleep
                           completion:^(id updatedTimeline, NSError *error) {
-                              if (error) {
-                                  [SENAnalytics trackError:error
-                                             withEventName:kHEMAnalyticsEventError];
-                              }
+                              [weakSelf processFeedbackResponse:updatedTimeline
+                                                          error:error
+                                                     forSegment:segment
+                                                analyticsAction:HEMAnalyticsEventTimelineEventCorrect];
                           }];
 }
 
 - (void)removeSegment:(SENSleepResultSegment*)segment {
+    __weak typeof(self) weakSelf = self;
     [SENAPITimeline removeSleepEvent:segment
                       forDateOfSleep:self.dateForNightOfSleep
                           completion:^(id updatedTimeline, NSError *error) {
-                              if (error) {
-                                  [SENAnalytics trackError:error
-                                             withEventName:kHEMAnalyticsEventError];
-                              }
+                              [weakSelf processFeedbackResponse:updatedTimeline
+                                                          error:error
+                                                     forSegment:segment
+                                                analyticsAction:HEMAnalyticsEventTimelineEventIncorrect];
                           }];
 }
 

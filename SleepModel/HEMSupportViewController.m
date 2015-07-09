@@ -14,7 +14,7 @@
 #import "HEMZendeskService.h"
 #import "HEMActivityCoverView.h"
 
-static CGFloat const HEMSupportZDKUIHeightDiff = 50.0f;
+static CGFloat const HEMSupportZDKUIHeightDiff = 46.0f;
 
 typedef NS_ENUM(NSUInteger, HEMSupportRow) {
     HEMSupportRowIndexUserGuide = 0,

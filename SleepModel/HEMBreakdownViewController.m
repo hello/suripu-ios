@@ -84,7 +84,9 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
         self.buttonBottom.constant = BreakdownDismissButtonBottom;
         [self.collectionView setNeedsUpdateConstraints];
         [self.dismissButton setNeedsUpdateConstraints];
-        [UIView animateWithDuration:0.4f delay:0.1f usingSpringWithDamping:0.75f initialSpringVelocity:0 options:0 animations:^{
+        CGFloat damping = 0.75f;
+        CGFloat duration = 0.4f * (1 + damping);
+        [UIView animateWithDuration:duration delay:0.1f usingSpringWithDamping:damping initialSpringVelocity:0 options:0 animations:^{
             self.collectionView.alpha = 1;
             [self.collectionView layoutIfNeeded];
             [self.dismissButton layoutIfNeeded];

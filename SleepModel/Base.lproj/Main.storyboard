@@ -3272,10 +3272,10 @@
                                             <outlet property="dayOfWeekLabel" destination="dGv-oi-2yL" id="az8-s6-hav"/>
                                             <outlet property="graphView" destination="f73-P1-mzR" id="1i9-aB-YcM"/>
                                             <outlet property="heightConstraint" destination="2AG-iz-J3Q" id="dOF-F4-V20"/>
+                                            <outlet property="leftBorderView" destination="gDg-wQ-7uO" id="ul8-kh-2Ez"/>
+                                            <outlet property="rightBorderView" destination="EyJ-Aw-mg8" id="wYQ-fh-QTk"/>
                                             <outlet property="sleepScoreView" destination="kpY-SE-mCR" id="k3K-kL-0kJ"/>
                                             <outlet property="widthConstraint" destination="ffZ-Pd-ciL" id="PRe-zJ-ZKf"/>
-                                            <outletCollection property="borderViews" destination="EyJ-Aw-mg8" id="Smg-R4-bRX"/>
-                                            <outletCollection property="borderViews" destination="gDg-wQ-7uO" id="nEB-l7-AYX"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

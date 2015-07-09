@@ -111,7 +111,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     } completion:^(BOOL done) {
         self.contentViewHeight.constant = 0;
         self.contentViewTop.constant = floorf(CGRectGetHeight([[UIScreen mainScreen] bounds])/2);
-        self.buttonBottom.constant = 0.3f;
+        self.buttonBottom.constant = BreakdownDismissButtonHide;
         [self.view setNeedsUpdateConstraints];
         [UIView animateWithDuration:0.3f animations:^{
             self.collectionView.alpha = 0;

@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.1.0.1
+
+New:
+
+* Added analytics event for when timeline event time has been adjusted
+
+Fixes:
+
+* Breakdown presentation animation duration matches dismissal animation duration
+* Air quality index text now reduced to Air quality
+* Hide right border in zoomed out view mini graph for right most cell, similarly for left most cell
+* Do not fade timeline event cards when scrolling up
+* sleep summary text on timeline are now vertically centered
+* Thank you text in event adjustment confirmation view is now lighter and vertically centered
+* sleep summary text and chevron is now blue
+
 ## 1.1.0.0
 
 New:

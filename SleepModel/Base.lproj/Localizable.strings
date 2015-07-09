@@ -343,7 +343,7 @@
 // sensors
 "sensor.temperature" = "Temperature";
 "sensor.humidity" = "Humidity";
-"sensor.particulates" = "Air quality index";
+"sensor.particulates" = "Air quality";
 "sensor.sound" = "Sound";
 "sensor.light" = "Light";
 "sensor.data-unavailable" = "Sensor data is unavailable.";
@@ -578,7 +578,7 @@
 "tutorial.sensor.light.message" = "Sense measures light in lux (lx), which is the standard unit of illuminance. Here you’ll see detailed information on the light levels in your bedroom. The graphs will fill in as Sense collects more data.";
 "tutorial.sensor.sound.title" = "Sound";
 "tutorial.sensor.sound.message" = "Sense measures sound in decibels (dB). Here you’ll see detailed information on the sound levels in your bedroom. The graphs will fill in as Sense collects more data.";
-"tutorial.sensor.particulates.title" = "Air quality index";
+"tutorial.sensor.particulates.title" = "Air quality";
 "tutorial.sensor.particulates.message" = "AQI stands for Air Quality Index, and is measured on a scale from 0-500. The lower the value, the better the air quality. Here you’ll see detailed information on the AQI in your bedroom. The graphs will fill in as Sense collects more data.";
 
 // timezone

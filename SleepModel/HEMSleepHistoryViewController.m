@@ -25,6 +25,7 @@
 @implementation HEMSleepHistoryViewController
 
 static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
+static NSUInteger const HEMSleepDataCapacity = 200;
 
 - (void)viewDidLoad
 {
@@ -93,11 +94,10 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (void)loadData
 {
-    static NSInteger const sleepDataCapacity = 200;
-    self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:sleepDataCapacity];
+    self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:HEMSleepDataCapacity];
     NSDateComponents* components = [NSDateComponents new];
     NSDate* today = [[NSDate date] dateAtMidnight];
-    for (int i = sleepDataCapacity; i > 0; i--) {
+    for (int i = HEMSleepDataCapacity; i > 0; i--) {
         components.day = -i;
         NSDate* date = [self.calendar dateByAddingComponents:components
                                                       toDate:today
@@ -181,6 +181,8 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
         [cell.graphView setSleepDataSegments:sleepResult.segments];
         cell.dayLabel.text = [self.dayFormatter stringFromDate:sleepResult.date];
         cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:sleepResult.date] uppercaseString];
+        cell.rightBorderView.hidden = indexPath.row == HEMSleepDataCapacity;
+        cell.leftBorderView.hidden = indexPath.row == 1;
     }
     cell.hidden = indexPath.row == 0;
     return cell;

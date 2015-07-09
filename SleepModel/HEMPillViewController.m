@@ -225,7 +225,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 - (void)replacePill {
     NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-title", nil);
     NSString* messageFormat = NSLocalizedString(@"settings.pill.dialog.unpair-message.format", nil);
-    NSString* helpLink = NSLocalizedString(@"help.url.support", nil);
+    NSString* helpLink = NSLocalizedString(@"help.url.support.hyperlink-text", nil);
     
     NSArray* args = @[[[NSAttributedString alloc] initWithString:helpLink
                                                       attributes:[self dialogMessageAttributes:YES]]];

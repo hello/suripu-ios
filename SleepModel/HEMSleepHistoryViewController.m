@@ -229,7 +229,7 @@ static NSUInteger const HEMSleepDataCapacity = 200;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSIndexPath* indexPath = [self indexPathAtCenter];
-    if (indexPath) {
+    if (indexPath.row > 0) {
         SENSleepResult* sleepResult = [self resultAtIndexPath:indexPath];
         [self updateTimeFrameLabelWithDate:sleepResult.date];
     }

@@ -47,6 +47,13 @@ CGFloat const HEMZoomActiveDistance = 20.f;
 
 - (CGPoint)targetContentOffsetForProposedContentOffset:(CGPoint)proposedContentOffset withScrollingVelocity:(CGPoint)velocity
 {
+    CGFloat contentWidth = self.collectionView.contentSize.width;
+    CGFloat scrollWidth = CGRectGetWidth(self.collectionView.bounds);
+    CGFloat itemtWidth = self.itemSize.width;
+    if (proposedContentOffset.x == contentWidth - scrollWidth + itemtWidth){
+        return proposedContentOffset;
+    }
+    
     CGFloat offsetAdjustment = MAXFLOAT;
     CGFloat horizontalOffset = proposedContentOffset.x - 10;
 

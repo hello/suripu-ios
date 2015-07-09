@@ -26,7 +26,7 @@ static NSString* const HEMTutorialHHTimelineDaySwitchCounter = @"HandholdingTime
 static NSString* const HEMTutorialHHTimelineDaySwitch = @"HandholdingTimelineDaySwitch";
 static CGFloat const HEMTutorialHHTimelineDaysGestureY = 205.0f;
 static CGFloat const HEMTutorialHHTimelineDaysGestureXStart = 45.0f;
-static NSInteger const HEMTutorialHHTimelineDaysMinDaysChecked = 3;
+static NSInteger const HEMTutorialHHTimelineDaysMinDaysChecked = 2;
 
 static NSString* const HEMTutorialTimelineKey = @"HEMTutorialTimeline";
 static NSString* const HEMTutorialSensorKeyFormat = @"HEMTutorialSensor_%@";

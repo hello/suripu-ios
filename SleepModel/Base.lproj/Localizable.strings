@@ -50,28 +50,24 @@
 // help links
 "help.email.address" = "support@hello.is";
 "help.email.subject" = "Sense Help Request";
-"help.forgot-password" = "https://account.hello.is";
-
+"help.forgot-password" = "https://account.hello.is/reset/";
+"help.url.support.hyperlink-text" = "https://support.hello.is";
 "help.url.order-form" = "https://order.hello.is/";
-"help.url.support" = "http://guide.hello.is/";
-"help.url.slug.turn-on-ble" = "troubleshoot/turning-on-bluetooth";
-"help.url.slug.pill-pairing" = "troubleshoot/pairing-your-sleep-pill";
-"help.url.slug.pill-setup" = "troubleshoot/attaching-sleep-pill";
-"help.url.slug.enhanced-audio" = "app/enhanced-audio";
-"help.url.slug.sense-pairing-mode" = "troubleshoot/pairing-mode";
-"help.url.slug.sense-pairing" = "troubleshoot/pairing-sense-ble";
-"help.url.slug.sense-about" = "troubleshoot/setting-up-sense";
-"help.url.slug.wifi-scan" = "troubleshoot/connecting-sense-wifi";
-"help.url.slug.pill-setup-another" = "troubleshoot/setting-up-second-sleep-pill";
-"help.url.slug.pill-not-seen" = "troubleshoot/pill-not-seen-in-days";
-"help.url.slug.pill-battery" = "sleep-pill/battery-change";
-"help.url.slug.sense-not-seen" = "troubleshoot/sense-not-seen-in-days";
-"help.url.slug.sense-not-connected" = "troubleshoot/cannot-connect-sense-ble";
-"help.url.slug.sense-no-internet" = "troubleshoot/sense-cannot-connect-internet";
-
-// feedback
-"feedback.email.address" = "feedback@hello.is";
-"feedback.email.subject" = "Feedback for Sense";
+"help.url.support" = "http://support.hello.is/hc/en-us/";
+"help.url.slug.turn-on-ble" = "articles/205493335";
+"help.url.slug.pill-pairing" = "articles/204797129";
+"help.url.slug.pill-setup" = "articles/205493045";
+"help.url.slug.enhanced-audio" = "articles/204812619";
+"help.url.slug.sense-pairing-mode" = "articles/204797179";
+"help.url.slug.sense-pairing" = "articles/204797189";
+"help.url.slug.sense-about" = "articles/204797299-Setting-Up-Sense";
+"help.url.slug.wifi-scan" = "articles/205493095";
+"help.url.slug.pill-setup-another" = "articles/204797289";
+"help.url.slug.pill-not-seen" = "articles/204797159";
+"help.url.slug.pill-battery" = "articles/204496999-Battery-Change";
+"help.url.slug.sense-not-seen" = "articles/204797259";
+"help.url.slug.sense-not-connected" = "articles/205493075";
+"help.url.slug.sense-no-internet" = "articles/205493285";
 
 // video
 // urls are included here, b/c if we do roll-out with videos, they may need to be in different languages
@@ -382,12 +378,12 @@
 "sleep-event.feedback.title.out_of_bed" = "What time did you get out of bed?";
 "sleep-event.feedback.title.wake_up" = "What time did you wake up?";
 "sleep-event.feedback.title.sleep" = "What time did you fall asleep?";
-"sleep-event.verify.title" = "Adjust Time";
+"sleep-event.verify.title" = "Adjust time";
 "sleep-event.feedback.failed.title" = "Unable to send feedback";
 "sleep-event.feedback.failed.message" = "Please try again later";
 "sleep-event.feedback.success.message" = "Thank you";
 "sleep-event.feedback.action-sheet.title" = "Sense learns";
-"sleep-event.feedback.action-sheet.description" = "Making corrections to your timeline helps improve the algorithms Sense uses to detect and analyze your sleep.";
+"sleep-event.feedback.action-sheet.description" = "Making corrections to your timeline helps improve the algorithms that Sense uses to detect and analyze your sleep.";
 
 // sleep events
 "sleep-event.type.wake_up.name" = "Woke up";
@@ -403,9 +399,9 @@
 "sleep-event.type.smart_alarm.name" = "Smart Alarm";
 "sleep-event.title.format" = "%@ – %@";
 "sleep-event.action.approve.title" = "Mark as correct";
-"sleep-event.action.adjust.title" = "Adjust Time";
+"sleep-event.action.adjust.title" = "Adjust time";
 "sleep-event.action.none.title" = "No actions available";
-"sleep-event.action.delete.title" = "Remove this event";
+"sleep-event.action.delete.title" = "Mark as incorrect";
 "sleep-event.time.24-hour.suffix" = ":00";
 
 "sleep-stat.time_to_sleep" = "Time to sleep";

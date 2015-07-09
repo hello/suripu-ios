@@ -96,7 +96,7 @@
     CGFloat const iconImageTop = 4.f;
     CGFloat const iconImageDiameter = 40.f;
     CGFloat const timeLabelRight = 12.f;
-    CGFloat const timeLabelTop = 18.f;
+    CGFloat const timeLabelTop = 17.f;
     CGFloat const messageLabelLeft = 52.f;
     CGFloat const messageLabelTop = 13.f;
     CGFloat const messageLabelRight = 8.f;

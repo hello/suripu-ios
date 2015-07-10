@@ -76,7 +76,7 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
     
     __weak typeof(self) weakSelf = self;
-    void (^completion)(id, NSError *) = ^(__unused id updatedTimeline, NSError *error) {
+    void (^completion)(id, NSError *) = ^(SENTimeline* updatedTimeline, NSError *error) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
         if (error) {
@@ -96,7 +96,7 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
         } else {
             NSDictionary* properties = @{kHEMAnalyticsEventPropType : SENTimelineSegmentTypeNameFromType(self.segment.type) ?: @"undefined"};
             [SENAnalytics track:kHEMAnalyticsEventTimelineAdjustTimeSaved properties:properties];
-            
+            [updatedTimeline save];
             [[NSNotificationCenter defaultCenter] postNotificationName:HEMTimelineFeedbackSuccessNotification object:strongSelf];
             
             NSString* message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);

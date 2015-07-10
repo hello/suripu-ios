@@ -119,6 +119,11 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     _calendar = [NSCalendar currentCalendar];
 }
 
+- (void)refreshData {
+    self.sleepResult = [SENTimeline timelineForDate:self.dateForNightOfSleep];
+    [self.collectionView reloadData];
+}
+
 - (void)reloadData:(void(^)(void))completion {
     [self reloadDateFormatters];
     self.sleepResult = [SENTimeline timelineForDate:self.dateForNightOfSleep];

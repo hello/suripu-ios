@@ -37,6 +37,11 @@ extern NSString *const HEMSleepEventTypeSleeping;
 - (instancetype)initWithCollectionView:(UICollectionView *)collectionView sleepDate:(NSDate *)date;
 
 /**
+ * Refetches the data from disk
+ */
+- (void)refreshData;
+
+/**
  *  Updates and reloads data
  */
 - (void)reloadData:(void(^)(void))completion;

@@ -126,7 +126,7 @@ static BOOL hasLoadedBefore = NO;
                                                  name:SENAPIReachableNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reloadData)
+                                             selector:@selector(refreshData)
                                                  name:HEMTimelineFeedbackSuccessNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -578,6 +578,10 @@ static BOOL hasLoadedBefore = NO;
         return;
 
     [self loadDataSourceForDate:self.dateForNightOfSleep];
+}
+
+- (void)refreshData {
+    [self.dataSource refreshData];
 }
 
 - (void)reloadData {

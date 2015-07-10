@@ -393,12 +393,12 @@
 		BF5AE04D1B4DD31900646B6E /* timeline_right_caret.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5AE04A1B4DD31900646B6E /* timeline_right_caret.png */; };
 		BF5AE04E1B4DD31900646B6E /* timeline_right_caret@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5AE04B1B4DD31900646B6E /* timeline_right_caret@2x.png */; };
 		BF5AE04F1B4DD31900646B6E /* timeline_right_caret@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5AE04C1B4DD31900646B6E /* timeline_right_caret@3x.png */; };
+		BF5AE0511B4F551A00646B6E /* TimeZones.plist in Resources */ = {isa = PBXBuildFile; fileRef = BF5AE0501B4F551A00646B6E /* TimeZones.plist */; };
 		BF5D53261A266C6B0090DD6A /* check.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5D53231A266C6B0090DD6A /* check.png */; };
 		BF5D53271A266C6B0090DD6A /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5D53241A266C6B0090DD6A /* check@2x.png */; };
 		BF5D53281A266C6B0090DD6A /* check@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF5D53251A266C6B0090DD6A /* check@3x.png */; };
 		BF5D532B1A26749F0090DD6A /* HEMActivityIndicatorView.m in Sources */ = {isa = PBXBuildFile; fileRef = BF5D532A1A26749F0090DD6A /* HEMActivityIndicatorView.m */; };
 		BF6215101AB8CF730047A518 /* HEMTimeZoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BF62150F1AB8CF730047A518 /* HEMTimeZoneViewController.m */; };
-		BF6215131AB8E1AC0047A518 /* NSTimeZone+HEMUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = BF6215121AB8E1AC0047A518 /* NSTimeZone+HEMUtils.m */; };
 		BF628E941A8306A800C0CD2E /* pairingMode.png in Resources */ = {isa = PBXBuildFile; fileRef = BF628E911A8306A800C0CD2E /* pairingMode.png */; };
 		BF628E951A8306A800C0CD2E /* pairingMode@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF628E921A8306A800C0CD2E /* pairingMode@2x.png */; };
 		BF628E961A8306A800C0CD2E /* pairingMode@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BF628E931A8306A800C0CD2E /* pairingMode@3x.png */; };
@@ -1249,6 +1249,7 @@
 		BF5AE04A1B4DD31900646B6E /* timeline_right_caret.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = timeline_right_caret.png; path = images/timeline_right_caret.png; sourceTree = "<group>"; };
 		BF5AE04B1B4DD31900646B6E /* timeline_right_caret@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "timeline_right_caret@2x.png"; path = "images/timeline_right_caret@2x.png"; sourceTree = "<group>"; };
 		BF5AE04C1B4DD31900646B6E /* timeline_right_caret@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "timeline_right_caret@3x.png"; path = "images/timeline_right_caret@3x.png"; sourceTree = "<group>"; };
+		BF5AE0501B4F551A00646B6E /* TimeZones.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = TimeZones.plist; sourceTree = "<group>"; };
 		BF5D53231A266C6B0090DD6A /* check.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = check.png; path = images/check.png; sourceTree = "<group>"; };
 		BF5D53241A266C6B0090DD6A /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check@2x.png"; path = "images/check@2x.png"; sourceTree = "<group>"; };
 		BF5D53251A266C6B0090DD6A /* check@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "check@3x.png"; path = "images/check@3x.png"; sourceTree = "<group>"; };
@@ -1257,8 +1258,6 @@
 		BF62150C1AB8C1C80047A518 /* libicucore.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libicucore.dylib; path = usr/lib/libicucore.dylib; sourceTree = SDKROOT; };
 		BF62150E1AB8CF730047A518 /* HEMTimeZoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTimeZoneViewController.h; sourceTree = "<group>"; };
 		BF62150F1AB8CF730047A518 /* HEMTimeZoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMTimeZoneViewController.m; sourceTree = "<group>"; };
-		BF6215111AB8E1AC0047A518 /* NSTimeZone+HEMUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+HEMUtils.h"; sourceTree = "<group>"; };
-		BF6215121AB8E1AC0047A518 /* NSTimeZone+HEMUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+HEMUtils.m"; sourceTree = "<group>"; };
 		BF628E911A8306A800C0CD2E /* pairingMode.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pairingMode.png; path = images/pairingMode.png; sourceTree = "<group>"; };
 		BF628E921A8306A800C0CD2E /* pairingMode@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pairingMode@2x.png"; path = "images/pairingMode@2x.png"; sourceTree = "<group>"; };
 		BF628E931A8306A800C0CD2E /* pairingMode@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "pairingMode@3x.png"; path = "images/pairingMode@3x.png"; sourceTree = "<group>"; };
@@ -2551,6 +2550,7 @@
 				BF781E3019DC716F00B68EBC /* HEMUnitPreferenceViewController.m */,
 				BF62150E1AB8CF730047A518 /* HEMTimeZoneViewController.h */,
 				BF62150F1AB8CF730047A518 /* HEMTimeZoneViewController.m */,
+				BF5AE0501B4F551A00646B6E /* TimeZones.plist */,
 				BF2AB93A1B1940610092E9C4 /* HEMFormViewController.h */,
 				BF2AB93B1B1940610092E9C4 /* HEMFormViewController.m */,
 			);
@@ -3231,8 +3231,6 @@
 				8AB006301A48C382000CF62F /* HEMMarkdown.m */,
 				BF98FC371A9BB29D00AEC04C /* HEMConfig.h */,
 				BF98FC381A9BB29D00AEC04C /* HEMConfig.m */,
-				BF6215111AB8E1AC0047A518 /* NSTimeZone+HEMUtils.h */,
-				BF6215121AB8E1AC0047A518 /* NSTimeZone+HEMUtils.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -3842,6 +3840,7 @@
 				8AA158001A5EFD6B00BF1D4A /* sleepEventIcon@2x.png in Resources */,
 				BFC3FE191AE7283A0061D6A1 /* sensorLoaderYellow@3x.png in Resources */,
 				BFBEDB6F1A8BF9B6006C4546 /* senseColors1.png in Resources */,
+				BF5AE0511B4F551A00646B6E /* TimeZones.plist in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 				BFAB23901AD5D2AA00CCBF8A /* temperatureIconGreen@3x.png in Resources */,
 				BFBA2B801A64A3F400C3AB80 /* pairOfPills.png in Resources */,
@@ -4212,7 +4211,6 @@
 				8A7D801C1A40D71400B0BFD7 /* HEMCardCollectionViewCell.m in Sources */,
 				8AC49F8A1981A89D00C2BD63 /* HEMSleepHistoryViewController.m in Sources */,
 				8A78267719663BB1002882A1 /* HEMSensorViewController.m in Sources */,
-				BF6215131AB8E1AC0047A518 /* NSTimeZone+HEMUtils.m in Sources */,
 				BFEAA0BB19A578EE002FBD44 /* HEMLocationCenter.m in Sources */,
 				BFB0FBD619D243A60056FFEC /* HEMDevicesViewController.m in Sources */,
 				8A4D490C1A67462500DD6ECE /* HEMTrendCollectionViewCell.m in Sources */,

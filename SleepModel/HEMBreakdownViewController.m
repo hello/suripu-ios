@@ -21,6 +21,8 @@
 @interface HEMBreakdownViewController () <UICollectionViewDataSource, UICollectionViewDelegate,
                                           UICollectionViewDelegateFlowLayout>
 @property (nonatomic, strong) HEMSplitTextFormatter *valueFormatter;
+@property (nonatomic, strong) NSDateFormatter* timestampFormatter;
+@property (nonatomic, strong) NSDateFormatter* meridiemFormatter;
 @property (nonatomic, weak) IBOutlet UICollectionView *collectionView;
 @property (nonatomic, weak) IBOutlet UIImageView *backgroundImageView;
 @property (nonatomic, weak) IBOutlet UIButton *dismissButton;
@@ -51,6 +53,11 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.timestampFormatter = [NSDateFormatter new];
+    self.timestampFormatter.dateFormat = [SENPreference timeFormat] == SENTimeFormat12Hour
+        ? @"h:mm" : @"H:mm";
+    self.meridiemFormatter = [NSDateFormatter new];
+    self.meridiemFormatter.dateFormat = @"a";
     self.valueFormatter = [HEMSplitTextFormatter new];
     self.backgroundImageView.image = self.backgroundImage;
     self.contentViewTop.constant = floorf(CGRectGetHeight([[UIScreen mainScreen] bounds])/2);
@@ -194,8 +201,9 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 - (NSAttributedString *)valueForItemAtIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
     if (indexPath.section == 1) {
         SENTimelineMetric *metric = [self metricForIndexPath:indexPath position:position];
-        return [self valueTextWithValue:[self splitTextForMetric:metric]
-                              condition:metric.condition];
+        if (metric)
+            return [self valueTextWithValue:[self splitTextForMetric:metric]
+                                  condition:metric.condition];
     }
     return nil;
 }
@@ -236,6 +244,14 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
                 NSString *format = NSLocalizedString(@"sleep-stat.hour.format", nil);
                 value = [NSString stringWithFormat:format, minutes / 60];
                 unit = NSLocalizedString(@"sleep-stat.hour.unit", nil);
+            }
+            break;
+        }
+        case SENTimelineMetricUnitTimestamp: {
+            NSDate* date = [NSDate dateWithTimeIntervalSince1970:[metric.value doubleValue] / 1000];
+            value = [self.timestampFormatter stringFromDate:date];
+            if ([SENPreference timeFormat] == SENTimeFormat12Hour) {
+                unit = [[self.meridiemFormatter stringFromDate:date] lowercaseString];
             }
             break;
         }

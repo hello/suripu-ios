@@ -1,5 +1,6 @@
 
 #import <Foundation/Foundation.h>
+#import "SENCondition.h"
 
 /**
  *  Notification sent when a sensor value is saved
@@ -20,13 +21,6 @@ extern NSString* const SENSensorUpdateFailedNotification;
  *  Sensor value indicating invalid data
  */
 extern NSInteger const SENSensorSentinelValue;
-
-typedef NS_ENUM(NSUInteger, SENSensorCondition) {
-    SENSensorConditionUnknown = 0,
-    SENSensorConditionAlert = 1,
-    SENSensorConditionWarning = 2,
-    SENSensorConditionIdeal = 3
-};
 
 typedef NS_ENUM(NSUInteger, SENSensorUnit) {
     SENSensorUnitUnknown,
@@ -86,15 +80,6 @@ typedef NS_ENUM(NSUInteger, SENSensorUnit) {
  */
 + (SENSensorUnit)unitFromValue:(id)value;
 
-/**
- *  Identifies a matching sensor condition from a value
- * 
- *  @param value a condition format string, like 'ALERT'
- *
- *  @return the matching condition or SENSensorConditionUnknown
- */
-+ (SENSensorCondition)conditionFromValue:(id)value;
-
 - (instancetype)initWithDictionary:(NSDictionary*)dict;
 
 /**
@@ -135,7 +120,7 @@ typedef NS_ENUM(NSUInteger, SENSensorUnit) {
 @property (nonatomic, strong, readonly) NSString* idealConditionsMessage;
 @property (nonatomic, strong, readonly) NSDate* lastUpdated;
 @property (nonatomic, readonly) NSNumber* value;
-@property (nonatomic, readonly) SENSensorCondition condition;
+@property (nonatomic, readonly) SENCondition condition;
 @property (nonatomic, readonly) SENSensorUnit unit;
 @end
 

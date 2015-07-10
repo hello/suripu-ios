@@ -231,7 +231,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
     }
     
     for (SENSensor* sensor in sensors) {
-        if ([sensor condition] == SENSensorConditionUnknown) {
+        if ([sensor condition] == SENConditionUnknown) {
             return NO;
         }
     }

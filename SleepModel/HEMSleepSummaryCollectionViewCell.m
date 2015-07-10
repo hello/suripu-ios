@@ -39,11 +39,11 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
     [self.sleepScoreGraphView setLoading:loading];
 }
 
-- (void)setSleepScore:(NSUInteger)sleepScore animated:(BOOL)animated {
+- (void)setScore:(NSInteger)sleepScore condition:(SENCondition)condition animated:(BOOL)animated {
     CGFloat const fullScoreDelay = 0.05f;
     BOOL scoreIsEmpty = sleepScore == 0;
     self.sleepScoreTextLabel.hidden = scoreIsEmpty;
-    [self.sleepScoreGraphView setSleepScore:sleepScore animated:animated];
+    [self.sleepScoreGraphView setScore:sleepScore condition:condition animated:animated];
     if (self.messageContainerView.alpha != 1 && ![self.sleepScoreGraphView isLoading]) {
         [UIView animateWithDuration:0.25f
                               delay:scoreIsEmpty ? 0 : fullScoreDelay

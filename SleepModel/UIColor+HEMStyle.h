@@ -7,29 +7,18 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <SenseKit/SENSensor.h>
-
-extern NSUInteger const HEMSleepScoreUnknown;
-extern NSUInteger const HEMSleepScoreLow;
-extern NSUInteger const HEMSleepScoreMedium;
-extern NSUInteger const HEMSleepScoreHigh;
+#import <SenseKit/SENCondition.h>
+#import <SenseKit/SENTimelineSegment.h>
 
 @interface UIColor (HEMStyle)
 
++ (UIColor *)colorForCondition:(SENCondition)condition;
++ (UIColor *)colorForSleepState:(SENTimelineSegmentSleepState)state;
++ (UIColor *)colorForSleepDepth:(NSInteger)depth;
+
 /**
- *  Returns the corresponding color style for the depth of sleep between
- *  0 (awake) and 100 (deep sleep)
- *
- *  @param sleepDepth depth of sleep
- *
- *  @return color
+ * @deprecated
+ * Slated for deletion after trends v2
  */
-+ (UIColor*)colorForSleepDepth:(NSUInteger)sleepDepth;
-
-+ (UIColor*)colorForGenericMotionDepth:(NSUInteger)depth;
-
-+ (UIColor*)colorForSensorWithCondition:(SENSensorCondition)condition;
-
-+ (UIColor*)colorForSleepScore:(NSInteger)sleepScore;
-
++ (UIColor *)colorForSleepScore:(NSInteger)score;
 @end

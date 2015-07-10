@@ -73,7 +73,7 @@ static HEMOnboardingCache* sharedUserDataCache = nil;
                                 NSInteger sensorCount = [sensors count];
                                 DDLogVerbose(@"sensors returned %ld", (long)sensorCount);
                                 if (sensorCount == 0
-                                    || [((SENSensor*)sensors[0]) condition] == SENSensorConditionUnknown) {
+                                    || [((SENSensor*)sensors[0]) condition] == SENConditionUnknown) {
                                     int64_t delayInSec = (int64_t)(HEMOnboardingCacheSensorPollIntervalDelay * NSEC_PER_SEC);
                                     dispatch_time_t delay = dispatch_time(DISPATCH_TIME_NOW, delayInSec);
                                     dispatch_after(delay, dispatch_get_main_queue(), ^{

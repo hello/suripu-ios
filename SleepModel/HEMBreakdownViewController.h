@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
-@class SENSleepResult;
+@class SENTimeline;
 @interface HEMBreakdownViewController : UIViewController
 
-@property (nonatomic, strong) SENSleepResult* result;
+@property (nonatomic, strong) SENTimeline* result;
 @end
 
 @interface HEMBreakdownSummaryCell : UICollectionViewCell

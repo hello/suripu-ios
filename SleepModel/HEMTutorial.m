@@ -8,7 +8,7 @@
 
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENLocalPreferences.h>
-#import <SenseKit/SENSleepResult.h>
+#import <SenseKit/SENTimeline.h>
 
 #import "NSDate+HEMRelative.h"
 

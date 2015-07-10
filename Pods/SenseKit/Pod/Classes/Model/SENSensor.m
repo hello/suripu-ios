@@ -175,7 +175,7 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
         _value = [value floatValue] == SENSensorSentinelValue ? nil : value;
         _message = dict[SENSensorMessageKey];
         _idealConditionsMessage = dict[SENSensorIdealMessageKey];
-        _condition = [SENSensor conditionFromValue:dict[SENSensorConditionKey]];
+        _condition = SENConditionFromString(dict[SENSensorConditionKey]);
         _unit = [SENSensor unitFromValue:dict[SENSensorUnitKey]];
         _lastUpdated = [NSDate dateWithTimeIntervalSince1970:[dict[SENSensorLastUpdatedKey] doubleValue] / 1000];
     }
@@ -290,23 +290,6 @@ static NSString* const SENSensorConditionWarningSymbol = @"WARNING";
         return [value integerValue];
     }
     return SENSensorUnitUnknown;
-}
-
-+ (SENSensorCondition)conditionFromValue:(id)value
-{
-    if ([value isKindOfClass:[NSString class]]) {
-        NSString* normalizedValue = [(NSString*)value uppercaseString];
-        if ([normalizedValue isEqualToString:SENSensorConditionAlertSymbol])
-            return SENSensorConditionAlert;
-        else if ([normalizedValue isEqualToString:SENSensorConditionWarningSymbol])
-            return SENSensorConditionWarning;
-        else if ([normalizedValue isEqualToString:SENSensorConditionIdealSymbol])
-            return SENSensorConditionIdeal;
-    }
-    else if ([value respondsToSelector:@selector(integerValue)]) {
-        return [value integerValue];
-    }
-    return SENSensorConditionUnknown;
 }
 
 @end

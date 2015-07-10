@@ -19,6 +19,8 @@
 "sign-up.error.password-too-short" = "Your password is too short. Passwords must be at least six characters.";
 "sign-up.error.password-insecure" = "Your password is not secure enough.";
 "sign-up.error.name-too-short" = "Your name is too short.";
+"onboarding.sense.pairing-mode.format" = "Before you connect your phone, Sense needs to be put into Pairing Mode.\n\nPlace your hand %@ of Sense for seven seconds, and then remove it.\n\nSense will glow purple when it is in Pairing Mode.";
+"onboarding.sense.pairing-mode.directly-on-top" = "directly on top";
 "onboarding.account.not-loaded-title" = "Account update failed";
 "onboarding.account.dob-not-updated" = "There was a problem setting your birthday.";
 "onboarding.before-sleep.1.title" = "Sense Colors";

@@ -1,5 +1,5 @@
 
-#import <SenseKit/SENSleepResult.h>
+#import <SenseKit/SENTimeline.h>
 #import <SenseKit/SENAPITimeline.h>
 #import "HEMSleepHistoryViewController.h"
 #import "HEMMiniGraphCollectionViewCell.h"
@@ -102,13 +102,13 @@ static NSUInteger const HEMSleepDataCapacity = 200;
         NSDate* date = [self.calendar dateByAddingComponents:components
                                                       toDate:today
                                                      options:0];
-        [self.sleepDataSummaries addObject:[SENSleepResult sleepResultForDate:date]];
+        [self.sleepDataSummaries addObject:[SENTimeline timelineForDate:date]];
     }
 }
 
 - (void)scrollToSelectedDateAnimated:(BOOL)animated
 {
-    NSDate* initialDate = [(SENSleepResult*)[self.sleepDataSummaries firstObject] date];
+    NSDate* initialDate = [(SENTimeline*)[self.sleepDataSummaries firstObject] date];
     NSDateComponents *components = [self.calendar components:NSDayCalendarUnit
                                                     fromDate:initialDate
                                                       toDate:self.selectedDate
@@ -127,7 +127,7 @@ static NSUInteger const HEMSleepDataCapacity = 200;
         [self scrollToSelectedDateAnimated:NO];
         [self updateTimeFrameLabelWithDate:self.selectedDate];
     } else {
-        NSDate* date = [(SENSleepResult*)[self.sleepDataSummaries firstObject] date];
+        NSDate* date = [(SENTimeline*)[self.sleepDataSummaries firstObject] date];
         [self updateTimeFrameLabelWithDate:date];
     }
 }
@@ -176,7 +176,7 @@ static NSUInteger const HEMSleepDataCapacity = 200;
 {
     HEMMiniGraphCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeSliceCell" forIndexPath:indexPath];
     if (indexPath.row > 0) {
-        SENSleepResult* sleepResult = [self resultAtIndexPath:indexPath];
+        SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
         [cell.sleepScoreView setSleepScore:[sleepResult.score integerValue]];
         [cell.graphView setSleepDataSegments:sleepResult.segments];
         cell.dayLabel.text = [self.dayFormatter stringFromDate:sleepResult.date];
@@ -188,7 +188,7 @@ static NSUInteger const HEMSleepDataCapacity = 200;
     return cell;
 }
 
-- (SENSleepResult*)resultAtIndexPath:(NSIndexPath*)indexPath {
+- (SENTimeline*)resultAtIndexPath:(NSIndexPath*)indexPath {
     if (indexPath.row == 0)
         return nil;
     return [self.sleepDataSummaries objectAtIndex:indexPath.row - 1];
@@ -199,7 +199,7 @@ static NSUInteger const HEMSleepDataCapacity = 200;
 - (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-    SENSleepResult* sleepResult = [self resultAtIndexPath:indexPath];
+    SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
     self.selectedDate = sleepResult.date;
     NSIndexPath* centeredIndexPath = [self indexPathAtCenter];
     if ([indexPath isEqual:centeredIndexPath]) {
@@ -230,7 +230,7 @@ static NSUInteger const HEMSleepDataCapacity = 200;
 {
     NSIndexPath* indexPath = [self indexPathAtCenter];
     if (indexPath.row > 0) {
-        SENSleepResult* sleepResult = [self resultAtIndexPath:indexPath];
+        SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
         [self updateTimeFrameLabelWithDate:sleepResult.date];
     }
 }
@@ -254,7 +254,7 @@ static NSUInteger const HEMSleepDataCapacity = 200;
 - (void)fetchTimelineForResultAtRow:(NSUInteger)row
 {
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-    SENSleepResult* sleepResult = [self resultAtIndexPath:indexPath];
+    SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
     if (!sleepResult || sleepResult.segments.count > 0)
         return;
 

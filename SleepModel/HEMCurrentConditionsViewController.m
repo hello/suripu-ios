@@ -373,7 +373,7 @@ static NSUInteger const HEMConditionGraphPointLimit = 30;
 - (void)configureSensorCell:(HEMSensorGraphCollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath {
     SENSensor *sensor = self.sensors[indexPath.row];
     cell.sensorValueLabel.attributedText = [self valueTextForSensor:sensor];
-    cell.sensorValueLabel.textColor = [UIColor colorForSensorWithCondition:sensor.condition];
+    cell.sensorValueLabel.textColor = [UIColor colorForCondition:sensor.condition];
     cell.sensorValueLabel.hidden = NO;
     if (sensor.message.length > 0) {
         cell.sensorMessageLabel.hidden = NO;

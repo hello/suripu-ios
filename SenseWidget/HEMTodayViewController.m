@@ -8,7 +8,7 @@
 #import <SenseKit/SENSensor.h>
 #import <SenseKit/SENAPIRoom.h>
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENSleepResult.h>
+#import <SenseKit/SENTimeline.h>
 #import <SenseKit/SENAPITimeline.h>
 
 #import <NotificationCenter/NotificationCenter.h>
@@ -41,7 +41,7 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 @property (nonatomic, weak)   IBOutlet UILabel *noDataLabel;
 @property (nonatomic, strong) NSArray* sensors;
 @property (nonatomic, strong) NSDate* lastNight;
-@property (nonatomic, strong) SENSleepResult* sleepResult;
+@property (nonatomic, strong) SENTimeline* sleepResult;
 @property (nonatomic, copy)   HEMWidgeUpdateBlock updateBlock;
 @property (nonatomic, assign) BOOL sensorsChecked;
 @property (nonatomic, strong) NSError* sensorsError;
@@ -191,9 +191,9 @@ typedef void(^HEMWidgeUpdateBlock)(NCUpdateResult result);
 
 - (UIColor *)colorForSensor:(SENSensor *)sensor {
     switch ([sensor condition]) {
-        case SENSensorConditionAlert:
+        case SENConditionAlert:
             return [HelloStyleKit alertSensorColor];
-        case SENSensorConditionWarning:
+        case SENConditionWarning:
             return [HelloStyleKit warningSensorColor];
 
         default:

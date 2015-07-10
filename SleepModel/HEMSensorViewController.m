@@ -204,7 +204,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
 - (void)configureSensorValueViews
 {
-    UIColor* color = [UIColor colorForSensorWithCondition:self.sensor.condition];
+    UIColor* color = [UIColor colorForCondition:self.sensor.condition];
     NSDictionary* statusAttributes = [HEMMarkdown attributesForSensorMessage];
 
     self.valueLabel.textColor = color;

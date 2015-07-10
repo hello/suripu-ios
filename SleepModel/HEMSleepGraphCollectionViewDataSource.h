@@ -1,7 +1,7 @@
 
 #import <Foundation/Foundation.h>
 
-@class SENSleepResultSegment;
+@class SENTimelineSegment;
 @class HEMSleepSummaryCollectionViewCell;
 
 extern NSString *const HEMSleepEventTypeWakeUp;
@@ -48,7 +48,7 @@ extern NSString *const HEMSleepEventTypeSleeping;
  *
  *  @return sleep data or nil
  */
-- (SENSleepResultSegment *)sleepSegmentForIndexPath:(NSIndexPath *)indexPath;
+- (SENTimelineSegment *)sleepSegmentForIndexPath:(NSIndexPath *)indexPath;
 
 /**
  *  Detect whether a segment represents sleep time elapsed or an event
@@ -93,5 +93,5 @@ extern NSString *const HEMSleepEventTypeSleeping;
  */
 - (void)updateTimelineState:(BOOL)isOpen;
 
-@property (nonatomic, strong, readonly) SENSleepResult *sleepResult;
+@property (nonatomic, strong, readonly) SENTimeline *sleepResult;
 @end

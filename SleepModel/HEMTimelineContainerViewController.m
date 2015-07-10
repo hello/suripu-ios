@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
-#import <SenseKit/SENSleepResult.h>
+#import <SenseKit/SENTimeline.h>
 #import "HEMTimelineContainerViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMZoomAnimationTransitionDelegate.h"

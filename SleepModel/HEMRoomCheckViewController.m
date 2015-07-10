@@ -62,16 +62,16 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     [[self view] insertSubview:[self roomCheckView] atIndex:0];
 }
 
-- (NSString*)imageName:(NSString*)imageName withColorFromCondition:(SENSensorCondition)condition {
+- (NSString*)imageName:(NSString*)imageName withColorFromCondition:(SENCondition)condition {
     NSString* name = [imageName copy];
     switch (condition) {
-        case SENSensorConditionAlert:
+        case SENConditionAlert:
             name = [name stringByAppendingString:@"Red"];
             break;
-        case SENSensorConditionWarning:
+        case SENConditionWarning:
             name = [name stringByAppendingString:@"Yellow"];
             break;
-        case SENSensorConditionIdeal:
+        case SENConditionIdeal:
             name = [name stringByAppendingString:@"Green"];
             break;
         default:
@@ -86,12 +86,12 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     
     switch (state) {
         case HEMRoomCheckStateLoaded: {
-            SENSensorCondition condition = [sensor condition];
+            SENCondition condition = [sensor condition];
             iconImageName = [self imageName:iconImageName withColorFromCondition:condition];
             break;
         }
         case HEMRoomCheckStateLoading: {
-            SENSensorCondition condition = [sensor condition];
+            SENCondition condition = [sensor condition];
             NSString* baseName = [iconImageName stringByAppendingString:@"NoBorder"];
             iconImageName = [self imageName:baseName withColorFromCondition:condition];
             break;
@@ -105,19 +105,19 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     return [UIImage imageNamed:iconImageName];
 }
 
-- (UIImage*)senseImageForSensorCondition:(SENSensorCondition)condition  {
+- (UIImage*)senseImageForSensorCondition:(SENCondition)condition  {
     return [UIImage imageNamed:[self imageName:@"roomcheckSense"
                         withColorFromCondition:condition]];
 }
 
-- (UIImage*)sensorActivityImageForSensorCondition:(SENSensorCondition)condition {
+- (UIImage*)sensorActivityImageForSensorCondition:(SENCondition)condition {
     return [UIImage imageNamed:[self imageName:@"sensorLoader"
                         withColorFromCondition:condition]];
 }
 
-- (SENSensorCondition)averageConditionForAllSensors {
+- (SENCondition)averageConditionForAllSensors {
     if ([[self sensors] count] == 0) {
-        return SENSensorConditionUnknown;
+        return SENConditionUnknown;
     }
     
     NSUInteger averageConditionValue = 0;
@@ -126,7 +126,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
     }
     
     float average = ceilf((averageConditionValue / (float)[[self sensors] count]));
-    return [SENSensor conditionFromValue:@(MIN(SENSensorConditionWarning, (int)average))];
+    return MIN(SENConditionWarning, (int)average);
 }
 
 - (void)adjustConstraintsForIphone5 {
@@ -154,7 +154,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 - (UIImage*)senseImageForSensorAtIndex:(NSUInteger)sensorIndex
                               forState:(HEMRoomCheckState)state
                        inRoomCheckView:(HEMRoomCheckView *)roomCheckView {
-    SENSensorCondition condition = SENSensorConditionUnknown;
+    SENCondition condition = SENConditionUnknown;
     
     if (state != HEMRoomCheckStateWaiting) {
         if (sensorIndex == [[self sensors] count] - 1) {
@@ -190,7 +190,7 @@ static CGFloat const HEMRoomCheckAnimationDuration = 0.5f;
 
 - (UIColor*)sensorValueColorAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView*)roomCheckView {
     SENSensor* sensor = [self sensors][sensorIndex];
-    return [UIColor colorForSensorWithCondition:[sensor condition]];
+    return [UIColor colorForCondition:[sensor condition]];
 }
 
 - (UIImage*)sensorActivityImageForSensorAtIndex:(NSUInteger)sensorIndex inRoomCheckView:(HEMRoomCheckView *)roomCheckView {

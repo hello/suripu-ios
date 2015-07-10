@@ -7,6 +7,7 @@
 @interface HEMSleepScoreGraphView ()
 
 @property (nonatomic) NSInteger sleepScore;
+@property (nonatomic) SENCondition condition;
 @property (nonatomic, strong) CAShapeLayer *scoreLayer;
 @property (nonatomic, strong) CAShapeLayer *backgroundLayer;
 @property (nonatomic, strong) CAShapeLayer *loadingLayer;
@@ -85,7 +86,7 @@ CGFloat const arcOffsetY = 80.f;
                       .CGPath;
     circle.frame = self.bounds;
     circle.fillColor = [UIColor clearColor].CGColor;
-    circle.strokeColor = [UIColor colorForSleepScore:value].CGColor;
+    circle.strokeColor = [UIColor colorForCondition:self.condition].CGColor;
     circle.lineWidth = 1;
     CAAnimation *drawAnimation = [self strokePathAnimationWithScoreEndValue:value];
     CAAnimation *colorAnimation = [self strokeColorAnimationWithScoreEndValue:value];
@@ -112,7 +113,7 @@ CGFloat const arcOffsetY = 80.f;
     CGColorRef warningColor = [HelloStyleKit warningSensorColor].CGColor;
     CGColorRef idealColor = [HelloStyleKit idealSensorColor].CGColor;
     NSMutableArray *values = [NSMutableArray arrayWithObjects:(__bridge id)alertColor, nil];
-    CGColorRef targetColor = [UIColor colorForSleepScore:value].CGColor;
+    CGColorRef targetColor = [UIColor colorForCondition:self.condition].CGColor;
     if (!CGColorEqualToColor(targetColor, alertColor)) {
         [values addObject:(__bridge id)warningColor];
     }
@@ -133,7 +134,7 @@ CGFloat const arcOffsetY = 80.f;
 - (void)animateScoreLabelTo:(CGFloat)value {
     self.scoreValueLabel.textColor = [HelloStyleKit alertSensorColor];
     self.scoreValueLabel.alpha = 1.f;
-    UIColor *targetColor = [UIColor colorForSleepScore:value];
+    UIColor *targetColor = [UIColor colorForCondition:self.condition];
     UIColor *idealColor = [HelloStyleKit idealSensorColor];
     UIColor *warnColor = [HelloStyleKit warningSensorColor];
     if (![targetColor isEqual:self.scoreValueLabel.textColor]) {
@@ -152,10 +153,11 @@ CGFloat const arcOffsetY = 80.f;
     [self.scoreValueLabel countFrom:1 to:value];
 }
 
-- (void)setSleepScore:(NSInteger)sleepScore animated:(BOOL)animated {
+- (void)setScore:(NSInteger)sleepScore condition:(SENCondition)condition animated:(BOOL)animated {
     if (sleepScore == _sleepScore)
         return;
 
+    _condition = condition;
     _sleepScore = sleepScore;
     if (animated)
         [self animateScoreTo:sleepScore];

@@ -1,7 +1,7 @@
 
 #import <SenseKit/SENPreference.h>
 #import <SenseKit/SENSensor.h>
-#import <SenseKit/SENSleepResult.h>
+#import <SenseKit/SENTimeline.h>
 #import <SenseKit/SENAPITimeline.h>
 #import <SenseKit/SENAuthorizationService.h>
 #import <FDWaveformView/FDWaveformView.h>
@@ -46,7 +46,7 @@ NSString *const HEMSleepEventTypeSleeping = @"SLEEPING";
 @property (nonatomic, strong) NSDateFormatter *timeDateFormatter;
 @property (nonatomic, strong) NSDateFormatter *meridiemFormatter;
 @property (nonatomic, strong) NSDate *dateForNightOfSleep;
-@property (nonatomic, strong, readwrite) SENSleepResult *sleepResult;
+@property (nonatomic, strong, readwrite) SENTimeline *sleepResult;
 @property (nonatomic, strong) NSArray *aggregateDataSources;
 @property (nonatomic, getter=shouldBeLoading) BOOL beLoading;
 @property (nonatomic, strong) NSCalendar *calendar;
@@ -72,6 +72,8 @@ static NSString *const sensorTypeSound = @"sound";
 static NSString *const sleepEventNameFindCharacter = @"_";
 static NSString *const sleepEventNameReplaceCharacter = @" ";
 static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
+
+CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
 + (NSString *)localizedNameForSleepEventType:(NSString *)eventType {
     NSString *localizedFormat = [NSString stringWithFormat:sleepEventNameFormat, [eventType lowercaseString]];
@@ -119,7 +121,7 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 - (void)reloadData:(void(^)(void))completion {
     [self reloadDateFormatters];
-    self.sleepResult = [SENSleepResult sleepResultForDate:self.dateForNightOfSleep];
+    self.sleepResult = [SENTimeline timelineForDate:self.dateForNightOfSleep];
     if ([self shouldShowLoadingView]) {
         self.beLoading = YES;
         [self showLoadingView];
@@ -135,7 +137,7 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline timelineForDate:self.dateForNightOfSleep
-                         completion:^(NSArray *timelines, NSError *error) {
+                         completion:^(SENTimeline *timeline, NSError *error) {
                              __strong HEMSleepGraphCollectionViewDataSource *strongSelf = weakSelf;
                              if (error) {
                                 [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
@@ -146,20 +148,20 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
                                  }
                                 return;
                             }
-                             [strongSelf refreshWithTimelines:timelines];
+                             [strongSelf refreshWithTimeline:timeline];
                              if (completion) {
                                  completion();
                              }
                          }];
 }
 
-- (void)refreshWithTimelines:(NSArray *)timelines {
-    if (![timelines isKindOfClass:[NSArray class]])
+- (void)refreshWithTimeline:(SENTimeline *)timeline {
+    if (![timeline isKindOfClass:[SENTimeline class]])
         return;
-    NSDictionary *timeline = [timelines firstObject];
-    BOOL didChange = [self.sleepResult updateWithDictionary:timeline];
+    BOOL didChange = ![self.sleepResult isEqual:timeline];
     [self hideLoadingViewAnimated:YES];
     if (didChange) {
+        self.sleepResult = timeline;
         [self.sleepResult save];
         [self.collectionView reloadData];
     }
@@ -339,7 +341,7 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     NSDictionary *attributes = [HEMMarkdown attributesForTimelineMessageText];
     cell.messageLabel.attributedText = [markdown_to_attr_string(self.sleepResult.message, 0, attributes) trim];
     [cell setLoading:self.sleepResult.message.length == 0];
-    [cell setSleepScore:score animated:YES];
+    [cell setScore:score condition:self.sleepResult.scoreCondition animated:YES];
     if (score > 0 && [collectionView.delegate respondsToSelector:@selector(didTapSummaryButton:)]) {
         [cell.summaryButton addTarget:collectionView.delegate
                                action:@selector(didTapSummaryButton:)
@@ -351,7 +353,7 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
       sleepSegmentCellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    SENSleepResultSegment *segment = [self sleepSegmentForIndexPath:indexPath];
+    SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
     NSUInteger sleepDepth = segment.sleepDepth;
     HEMSleepSegmentCollectionViewCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:sleepSegmentReuseIdentifier forIndexPath:indexPath];
@@ -361,14 +363,14 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
             [cell prepareForEntryAnimation];
     }
     UIColor *color = nil, *previousColor = nil;
-    CGFloat fillRatio = sleepDepth / (float)SENSleepResultSegmentDepthDeep;
+    CGFloat fillRatio = sleepDepth / HEMTimelineMaxSleepDepth;
     CGFloat previousFillRatio = 0;
-    color = [UIColor colorForSleepDepth:sleepDepth];
+    color = [UIColor colorForSleepState:segment.sleepState];
     if (indexPath.row > 0) {
         NSIndexPath *previousIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
-        SENSleepResultSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
-        previousColor = [UIColor colorForSleepDepth:previousSegment.sleepDepth];
-        previousFillRatio = previousSegment.sleepDepth / (float)SENSleepResultSegmentDepthDeep;
+        SENTimelineSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
+        previousColor = [UIColor colorForSleepState:previousSegment.sleepState];
+        previousFillRatio = previousSegment.sleepDepth / HEMTimelineMaxSleepDepth;
     } else {
         previousColor = [UIColor clearColor];
     }
@@ -381,7 +383,7 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
         sleepEventCellForItemAtIndexPath:(NSIndexPath *)indexPath {
     HEMSleepEventCollectionViewCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:sleepEventReuseIdentifier forIndexPath:indexPath];
-    SENSleepResultSegment *segment = [self sleepSegmentForIndexPath:indexPath];
+    SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
     if (!segment)
         return cell;
     NSUInteger sleepDepth = segment.sleepDepth;
@@ -390,13 +392,12 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
         if ([delegate shouldHideSegmentCellContents])
             [cell prepareForEntryAnimation];
     }
-    [cell.eventTypeImageView setImage:[self imageForEventType:segment.eventType]];
+    [cell.eventTypeImageView setImage:[self imageForEventType:segment.type]];
     NSAttributedString *timeText = nil;
-    if (![segment.eventType isEqualToString:HEMSleepEventTypeSmartAlarm]
-        && ![segment.eventType isEqualToString:HEMSleepEventTypeAlarm]) {
+    if (segment.type != SENTimelineSegmentTypeAlarmRang) {
         timeText = [self formattedTextForInlineTimestamp:segment.date withFormatter:self.timeDateFormatter useUnit:NO];
     }
-    [cell layoutWithImage:[self imageForEventType:segment.eventType]
+    [cell layoutWithImage:[self imageForEventType:segment.type]
                   message:segment.message
                      time:timeText];
     cell.firstSegment = [self.sleepResult.segments indexOfObject:segment] == 0;
@@ -405,22 +406,22 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     CGFloat previousRatio = 0;
     if (indexPath.row > 0) {
         NSIndexPath *previousIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
-        SENSleepResultSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
-        previousColor = [UIColor colorForSleepDepth:previousSegment.sleepDepth];
-        previousRatio = previousSegment.sleepDepth / (float)SENSleepResultSegmentDepthDeep;
+        SENTimelineSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
+        previousColor = [UIColor colorForCondition:previousSegment.sleepState];
+        previousRatio = previousSegment.sleepDepth / HEMTimelineMaxSleepDepth;
     } else {
         previousColor = [UIColor clearColor];
     }
     [self configureTimeLabelsForCell:cell withSegment:segment indexPath:indexPath];
-    [cell setSegmentRatio:sleepDepth / (float)SENSleepResultSegmentDepthDeep
-            withFillColor:[UIColor colorForSleepDepth:sleepDepth]
+    [cell setSegmentRatio:sleepDepth / HEMTimelineMaxSleepDepth
+            withFillColor:[UIColor colorForSleepState:segment.sleepState]
             previousRatio:previousRatio
             previousColor:previousColor];
     return cell;
 }
 
 - (void)configureTimeLabelsForCell:(HEMSleepSegmentCollectionViewCell *)cell
-                       withSegment:(SENSleepResultSegment *)segment
+                       withSegment:(SENTimelineSegment *)segment
                          indexPath:(NSIndexPath *)indexPath {
     [cell removeAllTimeLabels];
     if (!segment)
@@ -435,7 +436,7 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
         [cell addTimeLabelWithText:text atHeightRatio:0];
     }
     NSTimeInterval segmentInterval = [segment.date timeIntervalSince1970];
-    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:segmentInterval + [segment.duration doubleValue]];
+    NSDate *endDate = [NSDate dateWithTimeIntervalSince1970:segmentInterval + segment.duration];
     NSTimeInterval endInterval = [endDate timeIntervalSince1970];
     int i = 1;
     NSTimeInterval hourInterval = 0;
@@ -478,7 +479,7 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
 
 #pragma mark - Data Parsing
 
-- (SENSleepResultSegment *)sleepSegmentForIndexPath:(NSIndexPath *)indexPath {
+- (SENTimelineSegment *)sleepSegmentForIndexPath:(NSIndexPath *)indexPath {
     NSArray *segments = self.sleepResult.segments;
     if (indexPath.row < 0 || indexPath.row >= segments.count
         || indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
@@ -486,34 +487,40 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     return segments[indexPath.row];
 }
 
-- (UIImage *)imageForEventType:(NSString *)eventType {
-    if ([eventType isEqualToString:HEMSleepEventTypeWakeUp])
-        return [HelloStyleKit wakeupEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypeFallAsleep])
-        return [HelloStyleKit sleepEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypeLight])
-        return [HelloStyleKit lightEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypeNoise])
-        return [HelloStyleKit noiseEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypeMotion])
-        return [HelloStyleKit motionEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypeSunrise])
-        return [HelloStyleKit sunriseEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypeSunset])
-        return [HelloStyleKit sunsetEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypeLightsOut])
-        return [HelloStyleKit lightsOutEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypePartnerMotion])
-        return [HelloStyleKit partnerEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypeInBed])
-        return [HelloStyleKit inBedEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypeOutOfBed])
-        return [HelloStyleKit outOfBedEventIcon];
-    else if ([eventType isEqualToString:HEMSleepEventTypeAlarm]
-             || [eventType isEqualToString:HEMSleepEventTypeSmartAlarm])
-        return [HelloStyleKit alarmEventIcon];
+- (UIImage *)imageForEventType:(SENTimelineSegmentType)eventType {
+    switch (eventType) {
+        case SENTimelineSegmentTypeAlarmRang:
+            return [HelloStyleKit alarmEventIcon];
+        case SENTimelineSegmentTypeFellAsleep:
+            return [HelloStyleKit sleepEventIcon];
+        case SENTimelineSegmentTypeGenericMotion:
+            return [HelloStyleKit motionEventIcon];
+        case SENTimelineSegmentTypeGotInBed:
+            return [HelloStyleKit inBedEventIcon];
+        case SENTimelineSegmentTypeGotOutOfBed:
+            return [HelloStyleKit outOfBedEventIcon];
+        case SENTimelineSegmentTypeLight:
+            return [HelloStyleKit lightEventIcon];
+        case SENTimelineSegmentTypeLightsOut:
+            return [HelloStyleKit lightsOutEventIcon];
+        case SENTimelineSegmentTypePartnerMotion:
+            return [HelloStyleKit partnerEventIcon];
+        case SENTimelineSegmentTypeSunrise:
+            return [HelloStyleKit sunriseEventIcon];
+        case SENTimelineSegmentTypeSunset:
+            return [HelloStyleKit sunsetEventIcon];
+        case SENTimelineSegmentTypeWokeUp:
+            return [HelloStyleKit wakeupEventIcon];
 
-    return [HelloStyleKit unknownEventIcon];
+        case SENTimelineSegmentTypeSleepTalked:
+        case SENTimelineSegmentTypeSnored:
+        case SENTimelineSegmentTypeGenericSound:
+            return [HelloStyleKit noiseEventIcon];
+        case SENTimelineSegmentTypeInBed:
+        case SENTimelineSegmentTypeUnknown:
+        default:
+            return [HelloStyleKit unknownEventIcon];
+    }
 }
 
 - (BOOL)segmentForSleepExistsAtIndexPath:(NSIndexPath *)indexPath {
@@ -522,9 +529,9 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
 }
 
 - (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath *)indexPath {
-    SENSleepResultSegment *segment = [self sleepSegmentForIndexPath:indexPath];
-    return ![segment.eventType isEqual:[NSNull null]] && segment.eventType.length > 0
-           && ![segment.eventType isEqualToString:HEMSleepEventTypeSleeping];
+    SENTimelineSegment *segment = [self sleepSegmentForIndexPath:indexPath];
+    return segment.type != SENTimelineSegmentTypeUnknown
+        && segment.type != SENTimelineSegmentTypeInBed;
 }
 
 @end

@@ -123,7 +123,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 #pragma mark UICollectionView
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-    return 3;
+    return 2;
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
@@ -131,10 +131,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
         case 0:
             return 1;
         case 1:
-            return self.result.statistics.count / 2 + self.result.statistics.count % 2;
-
-        case 2:
-            return self.result.sensorInsights.count / 2 + self.result.sensorInsights.count % 2;
+            return self.result.metrics.count / 2 + self.result.metrics.count % 2;
         default:
             return 0;
     }
@@ -143,13 +140,10 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView
                   cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell* cell;
-    switch (indexPath.section) {
-        case 0:
-            cell = [self titleCellInCollectionView:collectionView forIndexPath:indexPath];
-            break;
-
-        default:
-            cell = [self statCellInCollectionView:collectionView forIndexPath:indexPath];
+    if (indexPath.section == 0) {
+        cell = [self titleCellInCollectionView:collectionView forIndexPath:indexPath];
+    } else {
+        cell = [self metricCellInCollectionView:collectionView forIndexPath:indexPath];
     }
     if (![self hasLoadedContent]) {
         cell.alpha = 0;
@@ -168,7 +162,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     return cell;
 }
 
-- (UICollectionViewCell *)statCellInCollectionView:(UICollectionView *)collectionView
+- (UICollectionViewCell *)metricCellInCollectionView:(UICollectionView *)collectionView
                                       forIndexPath:(NSIndexPath *)indexPath {
     HEMBreakdownLineCell *cell =
         [collectionView dequeueReusableCellWithReuseIdentifier:[HEMMainStoryboard breakdownLineCellReuseIdentifier]
@@ -181,32 +175,14 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 }
 
 - (NSAttributedString *)titleForItemAtIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
-    NSString *const statTitleLocalizedFormat = @"sleep-stat.%@";
+    NSString *const metricTitleLocalizedFormat = @"sleep-stat.%@";
     NSString *rawTitle = nil;
-    switch (indexPath.section) {
-        case 1: {
-            SENSleepResultStatistic *stat = [self statisticForIndexPath:indexPath position:position];
-            if (stat) {
-                NSString *format = [NSString stringWithFormat:statTitleLocalizedFormat, stat.name];
-                rawTitle = NSLocalizedString(format, nil);
-            }
-            break;
+    if (indexPath.section == 1) {
+        SENTimelineMetric *metric = [self metricForIndexPath:indexPath position:position];
+        if (metric) {
+            NSString *format = [NSString stringWithFormat:metricTitleLocalizedFormat, metric.name];
+            rawTitle = NSLocalizedString(format, nil);
         }
-
-        case 2: {
-            SENSleepResultSensorInsight *stat = [self insightForIndexPath:indexPath position:position];
-            if (stat) {
-                NSString *const sensorKeyFormat = @"sensor.%@";
-                NSString *sensorKey = [NSString stringWithFormat:sensorKeyFormat, stat.name];
-                NSString *name = NSLocalizedString(sensorKey, nil);
-                if ([name isEqualToString:sensorKey]) {
-                    name = stat.name;
-                }
-                rawTitle = name;
-            }
-        }
-        default:
-            break;
     }
     if (rawTitle) {
         return [[NSAttributedString alloc] initWithString:[rawTitle uppercaseString]
@@ -216,82 +192,73 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 }
 
 - (NSAttributedString *)valueForItemAtIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
-    switch (indexPath.section) {
-        case 1: {
-            SENSleepResultStatistic *stat = [self statisticForIndexPath:indexPath position:position];
-            return [self valueTextWithValue:[self splitTextForStatistic:stat] condition:SENSensorConditionIdeal];
-        }
-        case 2: {
-            SENSleepResultSensorInsight *stat = [self insightForIndexPath:indexPath position:position];
-            if (stat) {
-                return [self valueTextWithValue:[self splitTextForInsight:stat] condition:stat.condition];
-            }
-        }
-        default:
-            return nil;
+    if (indexPath.section == 1) {
+        SENTimelineMetric *metric = [self metricForIndexPath:indexPath position:position];
+        return [self valueTextWithValue:[self splitTextForMetric:metric]
+                              condition:metric.condition];
     }
+    return nil;
 }
 
-- (NSAttributedString *)valueTextWithValue:(HEMSplitTextObject *)value condition:(SENSensorCondition)condition {
+- (NSAttributedString *)valueTextWithValue:(HEMSplitTextObject *)value condition:(SENCondition)condition {
     if (!value) {
         NSDictionary *attributes =
             [HEMMarkdown attributesForTimelineBreakdownValueWithColor:
-                             [UIColor colorForSensorWithCondition:SENSensorConditionUnknown]][@(PARA)];
+                             [UIColor colorForCondition:SENConditionUnknown]][@(PARA)];
         return [[NSAttributedString alloc] initWithString:NSLocalizedString(@"empty-data", nil) attributes:attributes];
     }
     NSDictionary *attributes = [HEMMarkdown
-        attributesForTimelineBreakdownValueWithColor:[UIColor colorForSensorWithCondition:condition]][@(PARA)];
+        attributesForTimelineBreakdownValueWithColor:[UIColor colorForCondition:condition]][@(PARA)];
     return [self.valueFormatter attributedStringForObjectValue:value withDefaultAttributes:attributes];
 }
 
-- (SENSleepResultStatistic *)statisticForIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
-    SENSleepResultStatistic *stat = nil;
+- (SENTimelineMetric *)metricForIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
+    SENTimelineMetric *metric = nil;
     NSUInteger index = (indexPath.row * 2) + position;
-    if ([self.result.statistics count] > index)
-        stat = [self.result statistics][index];
-    return stat;
+    if ([self.result.metrics count] > index)
+        metric = [self.result metrics][index];
+    return metric;
 }
 
-- (SENSleepResultSensorInsight *)insightForIndexPath:(NSIndexPath *)indexPath position:(NSUInteger)position {
-    SENSleepResultSensorInsight *stat = nil;
-    NSUInteger index = (indexPath.row * 2) + position;
-    if ([self.result.sensorInsights count] > index)
-        stat = [self.result sensorInsights][index];
-    return stat;
-}
-
-- (HEMSplitTextObject *)splitTextForStatistic:(SENSleepResultStatistic *)stat {
-    NSString *const timesAwakeKey = @"times_awake";
-    CGFloat minutes = [stat.value floatValue];
-    NSString *value, *unit;
-    if ([stat.name isEqualToString:timesAwakeKey]) {
-        unit = nil;
-        value = [NSString stringWithFormat:@"%d", [stat.value integerValue]];
-    } else if (minutes < 60) {
-        NSString *format = NSLocalizedString(@"sleep-stat.minute.format", nil);
-        value = [NSString stringWithFormat:format, minutes];
-        unit = NSLocalizedString(@"sleep-stat.minute.unit", nil);
-    } else {
-        NSString *format = NSLocalizedString(@"sleep-stat.hour.format", nil);
-        value = [NSString stringWithFormat:format, minutes / 60];
-        unit = NSLocalizedString(@"sleep-stat.hour.unit", nil);
+- (HEMSplitTextObject *)splitTextForMetric:(SENTimelineMetric *)metric {
+    NSString *value = nil, *unit = nil;
+    switch (metric.unit) {
+        case SENTimelineMetricUnitCondition:
+            value = [self valueTextForCondition:metric.condition];
+            break;
+        case SENTimelineMetricUnitMinute: {
+            CGFloat minutes = [metric.value floatValue];
+            if (minutes < 60) {
+                NSString *format = NSLocalizedString(@"sleep-stat.minute.format", nil);
+                value = [NSString stringWithFormat:format, minutes];
+                unit = NSLocalizedString(@"sleep-stat.minute.unit", nil);
+            } else {
+                NSString *format = NSLocalizedString(@"sleep-stat.hour.format", nil);
+                value = [NSString stringWithFormat:format, minutes / 60];
+                unit = NSLocalizedString(@"sleep-stat.hour.unit", nil);
+            }
+            break;
+        }
+        case SENTimelineMetricUnitQuantity:
+        case SENTimelineMetricUnitUnknown:
+            value = [NSString stringWithFormat:@"%d", [metric.value integerValue]];
+            break;
+        default:
+            value = NSLocalizedString(@"empty-data", nil);
+            break;
     }
     return [[HEMSplitTextObject alloc] initWithValue:value unit:unit];
 }
 
-- (HEMSplitTextObject *)splitTextForInsight:(SENSleepResultSensorInsight *)stat {
-    return [[HEMSplitTextObject alloc] initWithValue:[self valueTextForInsight:stat] unit:nil];
-}
-
-- (NSString *)valueTextForInsight:(SENSleepResultSensorInsight *)insight {
-    switch (insight.condition) {
-        case SENSensorConditionUnknown:
+- (NSString *)valueTextForCondition:(SENCondition)condition {
+    switch (condition) {
+        case SENConditionUnknown:
             return NSLocalizedString(@"empty-data", nil);
-        case SENSensorConditionAlert:
+        case SENConditionAlert:
             return NSLocalizedString(@"sleep-stat.condition.alert", nil);
-        case SENSensorConditionWarning:
+        case SENConditionWarning:
             return NSLocalizedString(@"sleep-stat.condition.warning", nil);
-        case SENSensorConditionIdeal:
+        case SENConditionIdeal:
             return NSLocalizedString(@"sleep-stat.condition.ideal", nil);
         default:
             return nil;

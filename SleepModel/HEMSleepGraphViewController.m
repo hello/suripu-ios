@@ -225,20 +225,20 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)processFeedbackResponse:(id)updatedTimeline
                           error:(NSError*)error
-                     forSegment:(SENSleepResultSegment*)segment
+                     forSegment:(SENTimelineSegment*)segment
                 analyticsAction:(NSString*)analyticsAction {
     
     if (error) {
         [SENAnalytics trackError:error
                    withEventName:kHEMAnalyticsEventError];
     } else {
-        NSString* segmentType = [segment eventType] ?: @"undefined";
-        NSDictionary* props = @{kHEMAnalyticsEventPropType : segmentType};
+        NSString* segmentType = SENTimelineSegmentTypeNameFromType(segment.type);
+        NSDictionary* props = @{kHEMAnalyticsEventPropType : segmentType ?: @"undefined"};
         [SENAnalytics track:analyticsAction properties:props];
     }
 }
 
-- (void)verifySegment:(SENSleepResultSegment*)segment {
+- (void)verifySegment:(SENTimelineSegment*)segment {
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline verifySleepEvent:segment
                       forDateOfSleep:self.dateForNightOfSleep
@@ -250,7 +250,7 @@ static BOOL hasLoadedBefore = NO;
                           }];
 }
 
-- (void)removeSegment:(SENSleepResultSegment*)segment {
+- (void)removeSegment:(SENTimelineSegment*)segment {
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline removeSleepEvent:segment
                       forDateOfSleep:self.dateForNightOfSleep
@@ -262,7 +262,7 @@ static BOOL hasLoadedBefore = NO;
                           }];
 }
 
-- (void)updateTimeOfEventOnSegment:(SENSleepResultSegment *)segment {
+- (void)updateTimeOfEventOnSegment:(SENTimelineSegment *)segment {
     HEMTimelineFeedbackViewController *feedbackController =
         [HEMMainStoryboard instantiateTimelineFeedbackViewController];
     feedbackController.dateForNightOfSleep = self.dateForNightOfSleep;
@@ -302,22 +302,24 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (void)activateActionSheetAtIndexPath:(NSIndexPath *)indexPath {
-    SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-
+    SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
-
     UIColor* optionTitleColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
     NSString* approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
-    [sheet addOptionWithTitle:approveTitle
-                   titleColor:optionTitleColor
-                  description:nil
-                    imageName:@"timeline_action_approve"
-                       action:^{
-                         [self verifySegment:segment];
-                         [self markSenseLearnsAsShown];
-                       }];
+    NSString* deleteTitle = NSLocalizedString(@"sleep-event.action.delete.title", nil);
 
-    if ([self canAdjustEventWithType:segment.eventType]) {
+    if ([segment canPerformAction:SENTimelineSegmentActionApprove]) {
+        [sheet addOptionWithTitle:approveTitle
+                       titleColor:optionTitleColor
+                      description:nil
+                        imageName:@"timeline_action_approve"
+                           action:^{
+                               [self verifySegment:segment];
+                               [self markSenseLearnsAsShown];
+                           }];
+    }
+
+    if ([segment canPerformAction:SENTimelineSegmentActionAdjustTime]) {
         [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
                        titleColor:optionTitleColor
                       description:nil
@@ -328,19 +330,23 @@ static BOOL hasLoadedBefore = NO;
                            }];
     }
 
-    NSString* deleteTitle = NSLocalizedString(@"sleep-event.action.delete.title", nil);
-    [sheet addOptionWithTitle:deleteTitle
-                   titleColor:optionTitleColor
-                  description:nil
-                    imageName:@"timeline_action_delete"
-                       action:^{
-                          [self removeSegment:segment];
-                          [self markSenseLearnsAsShown];
-                       }];
+    if ([segment canPerformAction:SENTimelineSegmentActionRemove]) {
+        [sheet addOptionWithTitle:deleteTitle
+                       titleColor:optionTitleColor
+                      description:nil
+                        imageName:@"timeline_action_delete"
+                           action:^{
+                               [self removeSegment:segment];
+                               [self markSenseLearnsAsShown];
+                           }];
+    }
 
-    // add title, if needed
-    if ([self shouldShowSenseLearnsInActionSheet]) {
-        [sheet setCustomTitleView:[self senseLearnsTitleView]];
+    if (segment.possibleActions == SENTimelineSegmentActionNone) {
+        [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.none.title", nil)
+                       titleColor:[UIColor grayColor]
+                      description:nil
+                        imageName:nil
+                           action:^{}];
     }
 
     // add title, if needed
@@ -350,8 +356,13 @@ static BOOL hasLoadedBefore = NO;
     // confirmations
     CGFloat confirmDuration = HEMSleepGraphActionSheetConfirmDuration;
     UIView *confirmationView = [self confirmationViewForActionSheetWithOptions:[sheet numberOfOptions]];
-    [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:approveTitle];
-    [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:deleteTitle];
+    if ([segment canPerformAction:SENTimelineSegmentActionRemove]) {
+        [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:deleteTitle];
+    }
+
+    if ([segment canPerformAction:SENTimelineSegmentActionApprove]) {
+        [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:approveTitle];
+    }
 
     UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
     if (![root respondsToSelector:@selector(presentationController)]) {
@@ -389,7 +400,7 @@ static BOOL hasLoadedBefore = NO;
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
     CGFloat const HEMPopupDismissDelay = 1.75f;
     CGFloat const HEMPopupVerticalOffset = 8.f;
-    SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
     CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
@@ -415,20 +426,26 @@ static BOOL hasLoadedBefore = NO;
                      }];
 }
 
-- (NSString *)summaryPopupTextForSegment:(SENSleepResultSegment *)segment {
-    static NSString *const HEMPopupTextFormat = @"sleep-stat.%@-duration.%@";
-    NSString *segmentType = segment.eventType.length == 0 ? @"motion" : @"sleep";
+- (NSString *)summaryPopupTextForSegment:(SENTimelineSegment *)segment {
+    static NSString *const HEMPopupTextFormat = @"sleep-stat.sleep-duration.%@";
     NSString *depth;
-    if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
-        depth = @"awake";
-    else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
-        depth = @"deep";
-    else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
-        depth = @"medium";
-    else
-        depth = @"light";
+    switch (segment.sleepState) {
+        case SENTimelineSegmentSleepStateSound:
+            depth = @"deep";
+            break;
+        case SENTimelineSegmentSleepStateMedium:
+            depth = @"medium";
+            break;
+        case SENTimelineSegmentSleepStateLight:
+            depth = @"light";
+            break;
+        case SENTimelineSegmentSleepStateAwake:
+        default:
+            depth = @"awake";
+            break;
+    }
 
-    NSString *format = [NSString stringWithFormat:HEMPopupTextFormat, segmentType, depth];
+    NSString *format = [NSString stringWithFormat:HEMPopupTextFormat, depth];
     return NSLocalizedString(format, nil);
 }
 
@@ -644,7 +661,7 @@ static BOOL hasLoadedBefore = NO;
             return CGSizeMake(width, hasSegments ? HEMSleepSummaryCellHeight : CGRectGetHeight(self.view.bounds));
 
         case HEMSleepGraphCollectionViewSegmentSection: {
-            SENSleepResultSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+            SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
             CGFloat durationHeight = [self heightForCellWithSegment:segment];
             if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
                 NSAttributedString *message =
@@ -664,8 +681,8 @@ static BOOL hasLoadedBefore = NO;
     }
 }
 
-- (CGFloat)heightForCellWithSegment:(SENSleepResultSegment *)segment {
-    return ([segment.duration doubleValue] / 3600)
+- (CGFloat)heightForCellWithSegment:(SENTimelineSegment *)segment {
+    return (segment.duration / 3.6)
            * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
 }
 

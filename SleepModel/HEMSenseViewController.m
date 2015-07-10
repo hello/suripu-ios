@@ -14,6 +14,7 @@
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSDate+HEMRelative.h"
+#import "NSTimeZone+HEMMapping.h"
 
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
@@ -421,14 +422,12 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     }];
 }
 
-#pragma mark Timezone
+#pragma mark Time Zone
 
 - (void)changeTimeZone:(id)sender {
     NSString* title = NSLocalizedString(@"alerts.timezone.title", nil);
     NSString* messageFormat = NSLocalizedString(@"timezone.alert.message.use-local.format", nil);
-    NSString* timeZoneName = [[NSTimeZone localTimeZone] name];
-    
-    NSArray* args = @[[[NSAttributedString alloc] initWithString:timeZoneName
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:[NSTimeZone localTimeZoneMappedName]
                                                       attributes:[self dialogMessageAttributes:YES]]];
     
     NSAttributedString* message =
@@ -440,16 +439,16 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"timezone.action.use-local", nil)];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"timezone.action.select-manually", nil)];
     [dialogVC setViewToShowThrough:self.view];
-    [dialogVC addAction:NSLocalizedString(@"timezone.action.select-manually", nil) primary:NO actionBlock:^{
+    [dialogVC addAction:NSLocalizedString(@"timezone.action.use-local", nil) primary:NO actionBlock:^{
         [self dismissViewControllerAnimated:YES completion:^{
-            [self performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:self];
+            [self updateToLocalTimeZone];
         }];
     }];
     [dialogVC showFrom:self onDefaultActionSelected:^{
         [self dismissViewControllerAnimated:YES completion:^{
-            [self updateToLocalTimeZone];
+            [self performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:self];
         }];
     }];
 }

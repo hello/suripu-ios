@@ -153,8 +153,10 @@ NSString* const HEMAnalyticsEventSleepScoreBreakdown = @"Sleep Score breakdown";
 NSString* const HEMAnalyticsEventTimelineZoomOut = @"Timeline zoomed out";
 NSString* const HEMAnalyticsEventTimelineZoomIn = @"Timeline zoomed in";
 NSString* const HEMAnalyticsEventTimelineAdjustTime = @"Timeline adjust time tapped";
-NSString* const kHEMAnalyticsEventTimelineAdjustTimeSaved = @"Timeline adjust time saved";
 NSString* const HEMAnalyticsEventTimelineAdjustTimeFailed = @"Timeline adjust time failed";
+NSString* const HEMAnalyticsEventTimelineEventCorrect = @"Timeline event correct";
+NSString* const kHEMAnalyticsEventTimelineAdjustTimeSaved = @"Timeline event time adjust";
+NSString* const HEMAnalyticsEventTimelineEventIncorrect = @"Timeline event incorrect";
 NSString* const HEMAnalyticsEventTimelineDataRequest = @"Timeline data request";
 NSString* const HEMAnalyticsEventTimelineAlarmShortcut = @"Timeline alarm shorcut";
 

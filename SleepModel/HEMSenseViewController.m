@@ -8,6 +8,7 @@
 #import <SenseKit/SENDevice.h>
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENAPITimeZone.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
@@ -318,6 +319,10 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     }];
 }
 
+- (void)dismissActivity:(void(^)(void))completion {
+    [[self activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:completion];
+}
+
 #pragma mark Advanced Options
 
 - (void)showAdvancedOptions:(id)sender {
@@ -419,7 +424,58 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
 #pragma mark Timezone
 
 - (void)changeTimeZone:(id)sender {
-    [self performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:self];
+    NSString* title = NSLocalizedString(@"alerts.timezone.title", nil);
+    NSString* messageFormat = NSLocalizedString(@"timezone.alert.message.use-local.format", nil);
+    NSString* timeZoneName = [[NSTimeZone localTimeZone] name];
+    
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:timeZoneName
+                                                      attributes:[self dialogMessageAttributes:YES]]];
+    
+    NSAttributedString* message =
+    [[NSMutableAttributedString alloc] initWithFormat:messageFormat
+                                                 args:args
+                                            baseColor:[UIColor blackColor]
+                                             baseFont:[UIFont dialogMessageFont]];
+    
+    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
+    [dialogVC setTitle:title];
+    [dialogVC setAttributedMessage:message];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"timezone.action.use-local", nil)];
+    [dialogVC setViewToShowThrough:self.view];
+    [dialogVC addAction:NSLocalizedString(@"timezone.action.select-manually", nil) primary:NO actionBlock:^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:self];
+        }];
+    }];
+    [dialogVC showFrom:self onDefaultActionSelected:^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self updateToLocalTimeZone];
+        }];
+    }];
+}
+
+- (void)updateToLocalTimeZone {
+    NSString* progressMessage = NSLocalizedString(@"timezone.activity.message", nil);
+    [self showActivityText:progressMessage completion:^{
+        __weak typeof(self) weakSelf = self;
+        NSTimeZone* timeZone = [NSTimeZone localTimeZone];
+        [SENAPITimeZone setTimeZone:timeZone completion:^(id data, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = self;
+            if (!error) {
+                NSString* tz = [timeZone name] ?: @"unknown";
+                [SENAnalytics track:HEMAnalyticsEventTimeZoneChanged
+                         properties:@{HEMAnalyticsEventPropTZ : tz}];
+
+                [strongSelf dismissActivityWithSuccess:nil];
+            } else {
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [strongSelf dismissActivity:^{
+                    [strongSelf showMessageDialog:NSLocalizedString(@"timezone.error.message", nil)
+                                            title:NSLocalizedString(@"timezone.error.title", nil)];
+                }];
+            }
+        }];
+    }];
 }
 
 #pragma mark Enable Pairing Mode

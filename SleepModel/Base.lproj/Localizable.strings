@@ -533,7 +533,7 @@
 // alerts
 "alerts.no-internet.title" = "No Connection";
 "alerts.no-internet.message" = "We're having trouble connecting to the internet. Please check your connection or try again in a few minutes.";
-"alerts.timezone.title" = "Time Zone";
+"alerts.timezone.title" = "Time zone";
 "alerts.timezone.message" = "Your account is currently not set up with a time zone required to calculate your sleep data.";
 "alerts.device.no-sense.title" = "Sense Not Paired";
 "alerts.device.no-sense.message" = "Your account does not have a Sense paired. Sense is required to track your sleep behavior.";
@@ -578,9 +578,13 @@
 "tutorial.sensor.particulates.message" = "AQI stands for Air Quality Index, and is measured on a scale from 0-500. The lower the value, the better the air quality. Here you’ll see detailed information on the AQI in your bedroom. The graphs will fill in as Sense collects more data.";
 
 // timezone
-"timezone.activity.message" = "Updating Time Zone";
+"timezone.alert.message.use-local.format" = "The time zone you set should correspond to your Sense's location.  Your current time zone is %@.";
+"timezone.suggestion.message" = "Your current time zone based on location of your iOS device.  Select the time zone that corresponds with Sense's location.";
+"timezone.activity.message" = "Updating time zone";
 "timezone.error.title" = "Update failed";
 "timezone.error.message" = "Could not update the time zone at this time. Make sure your device is connected to the internet and try again.";
+"timezone.action.use-local" = "Use my local time zone";
+"timezone.action.select-manually" = "select a different time zone";
 
 // handholding
 "handholding.message.timeline-switch-days" = "Swipe left or right to navigate between days";

@@ -189,9 +189,16 @@ static NSUInteger const HEMSleepDataCapacity = 200;
 }
 
 - (SENTimeline*)resultAtIndexPath:(NSIndexPath*)indexPath {
-    if (indexPath.row == 0)
+    NSInteger index = [self indexAtIndexPath:indexPath];
+    if (indexPath.row == NSNotFound)
         return nil;
-    return [self.sleepDataSummaries objectAtIndex:indexPath.row - 1];
+    return [self.sleepDataSummaries objectAtIndex:index];
+}
+
+- (NSInteger)indexAtIndexPath:(NSIndexPath*)indexPath {
+    if (indexPath.row == 0)
+        return NSNotFound;
+    return indexPath.row - 1;
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -259,20 +266,15 @@ static NSUInteger const HEMSleepDataCapacity = 200;
         return;
 
     __weak typeof(self) weakSelf = self;
-    [SENAPITimeline timelineForDate:sleepResult.date completion:^(NSArray* timelines, NSError* error) {
+    [SENAPITimeline timelineForDate:sleepResult.date completion:^(SENTimeline* timeline, NSError* error) {
         typeof(weakSelf) strongSelf = weakSelf;
         if (error)
             return;
 
-        NSDictionary* timeline = [timelines firstObject];
-        NSArray* segments = timeline[@"segments"];
-        if (segments.count == 0)
-            return;
-
-        BOOL didUpdate = [sleepResult updateWithDictionary:[timelines firstObject]];
+        BOOL didUpdate = ![sleepResult isEqual:timeline];
         if (didUpdate) {
-            [sleepResult save];
-            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+            [timeline save];
+            self.sleepDataSummaries[[self indexAtIndexPath:indexPath]] = timeline;
             [strongSelf.historyCollectionView reloadItemsAtIndexPaths:@[indexPath]];
         }
     }];

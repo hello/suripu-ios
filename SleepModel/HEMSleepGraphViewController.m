@@ -550,14 +550,18 @@ static BOOL hasLoadedBefore = NO;
     }
 }
 
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self.containerViewController showAlarmButton:YES];
+}
+
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint offset = scrollView.contentOffset;
     [self adjustLayoutWithScrollOffset:offset.y];
 }
 
 - (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
-    [self.containerViewController showAlarmButton:!decelerate];
     if (!decelerate) {
+        [self.containerViewController showAlarmButton:YES];
         [self adjustLayoutWithScrollOffset:scrollView.contentOffset.y];
     }
 }

@@ -177,8 +177,16 @@ static NSString* const SENTimelineDateFormat = @"yyyy-MM-dd";
 - (NSArray *)parseSegmentsFromArray:(NSArray *)segmentsData {
     NSMutableArray *segments = [[NSMutableArray alloc] initWithCapacity:[segmentsData count]];
     SENTimelineSegment *previousSegment = nil;
+    NSCalendar* calendar = [NSCalendar currentCalendar];
     for (NSDictionary *segmentData in segmentsData) {
         SENTimelineSegment *segment = [[SENTimelineSegment alloc] initWithDictionary:segmentData];
+        if (previousSegment) {
+            NSDate* previousSegmentEndTime = [NSDate dateWithTimeIntervalSince1970:[previousSegment.date timeIntervalSince1970] + previousSegment.duration];
+            NSDateComponents* components = [calendar components:NSSecondCalendarUnit
+                                                       fromDate:previousSegmentEndTime
+                                                         toDate:segment.date options:0];
+            previousSegment.duration += components.second;
+        }
         if ([previousSegment.message isEqual:segment.message]
             && previousSegment.type == segment.type
             && previousSegment.sleepDepth == segment.sleepDepth) {

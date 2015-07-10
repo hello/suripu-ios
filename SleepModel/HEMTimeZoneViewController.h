@@ -8,8 +8,6 @@
 
 #import "HEMBaseController.h"
 
-extern NSString* const HEMTimeZonesResourceName;
-
 @interface HEMTimeZoneViewController : HEMBaseController
 
 @end

@@ -22,6 +22,7 @@
 #import "HEMMarkdown.h"
 #import "NSDate+HEMRelative.h"
 #import "HEMSplitTextFormatter.h"
+#import "HEMRootViewController.h"
 #import "HEMEventBubbleView.h"
 
 NSString *const HEMSleepEventTypeWakeUp = @"WAKE_UP";
@@ -269,7 +270,8 @@ static NSString *const sleepEventNameFormat = @"sleep-event.type.%@.name";
     }
     
     NSInteger score = [[[self sleepResult] score] integerValue];
-    [view setShareEnabled:score > 0 animated:YES];
+    BOOL drawerClosed = ![[HEMRootViewController rootViewControllerForKeyWindow] drawerIsVisible];
+    [view setShareEnabled:score > 0 && drawerClosed animated:YES];
     
     [view setDate:[self dateForNightOfSleep]];
     

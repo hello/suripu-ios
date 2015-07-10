@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.1.0.2
+
+New:
+
+* Swapped out guide.hello.is urls for support.hello.is urls
+* Added analytics events for timeline adjustment actions
+
+Fixes:
+
+* Copy changes to Timeline
+* Fixed issue where history view of timeline abruptly bounces back from the right edge
+* Fixed issue where certain views are prematurely cut off behind the Timeline
+
+Fixes:
+
+* 
+
 ## 1.1.0.1
 
 New:

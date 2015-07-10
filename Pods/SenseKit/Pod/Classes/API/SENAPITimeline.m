@@ -5,7 +5,7 @@
 
 @implementation SENAPITimeline
 
-static NSString* const SENAPITimelineEndpointFormat = @"v2/timeline/%ld-%ld-%ld";
+static NSString* const SENAPITimelineEndpointFormat = @"v2/timeline/%ld-%02ld-%02ld";
 static NSString* const SENAPITimelineEndpoint = @"v2/timeline";
 static NSString* const SENAPITimelineErrorDomain = @"is.hello.api.timeline";
 static NSString* const SENAPITimelineFeedbackPath = @"events";
@@ -43,7 +43,7 @@ static NSString* const SENAPITimelineFeedbackParamNewTime = @"new_event_time";
         }
         return;
     }
-    
+
     NSString* path = [self feedbackPathForDateOfSleep:date withEvent:sleepEvent];
     [SENAPIClient PUT:path parameters:nil completion:block];
 }
@@ -60,7 +60,7 @@ static NSString* const SENAPITimelineFeedbackParamNewTime = @"new_event_time";
         }
         return;
     }
-    
+
     NSString* path = [self feedbackPathForDateOfSleep:date withEvent:sleepEvent];
     [SENAPIClient DELETE:path parameters:nil completion:block];
 }
@@ -71,7 +71,7 @@ static NSString* const SENAPITimelineFeedbackParamNewTime = @"new_event_time";
              andMinutes:(NSNumber*)minutes
              completion:(SENAPIDataBlock)block
 {
-    
+
     if (!sleepEvent || !hour || !minutes) {
         if (block) {
             block (nil, [NSError errorWithDomain:SENAPITimelineErrorDomain
@@ -80,12 +80,19 @@ static NSString* const SENAPITimelineFeedbackParamNewTime = @"new_event_time";
         }
         return;
     }
-    
+
     NSString* path = [self feedbackPathForDateOfSleep:date withEvent:sleepEvent];
     NSString* formattedTime = [self formattedValueWithHour:hour minutes:minutes];
     NSDictionary* parameters = @{SENAPITimelineFeedbackParamNewTime : formattedTime};
-    [SENAPIClient PATCH:path parameters:parameters completion:block];
-    
+    [SENAPIClient PATCH:path parameters:parameters completion:^(id data, NSError *error) {
+        SENTimeline* timeline = nil;
+        if (!error && [data isKindOfClass:[NSDictionary class]]) {
+            timeline = [[SENTimeline alloc] initWithDictionary:data];
+        }
+        if (block)
+            block(timeline, error);
+    }];
+
 }
 
 #pragma mark - Helpers
@@ -93,10 +100,10 @@ static NSString* const SENAPITimelineFeedbackParamNewTime = @"new_event_time";
 + (NSString*)formattedValueWithHour:(NSNumber*)hour minutes:(NSNumber*)minutes {
     NSString* timeChange = nil;
     if (hour && minutes) {
-        static NSString* const HEMClockParamFormat = @"%@:%@";
-        NSString* hourText = [self stringForNumber:[hour integerValue]];
-        NSString* minuteText = [self stringForNumber:[minutes integerValue]];
-        timeChange = [NSString stringWithFormat:HEMClockParamFormat, hourText, minuteText];
+        static NSString* const HEMClockParamFormat = @"%02ld:%02ld";
+        timeChange = [NSString stringWithFormat:HEMClockParamFormat,
+                      (long)[hour longValue],
+                      (long)[minutes longValue]];
     }
     return timeChange;
 }
@@ -127,13 +134,6 @@ static NSString* const SENAPITimelineFeedbackParamNewTime = @"new_event_time";
             SENAPITimelineFeedbackPath,
             SENTimelineSegmentTypeNameFromType([event type]),
             [self timestampForDate:[event date]]];
-}
-
-+ (NSString*)stringForNumber:(NSUInteger)number {
-    static NSString* const HEMNumberParamFormat = @"%ld";
-    static NSString* const HEMSmallNumberParamFormat = @"0%ld";
-    NSString* format = number <= 9 ? HEMSmallNumberParamFormat : HEMNumberParamFormat;
-    return [NSString stringWithFormat:format, (long)number];
 }
 
 + (NSString*)timelinePathForDate:(NSDate*)date

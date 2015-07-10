@@ -407,7 +407,7 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     if (indexPath.row > 0) {
         NSIndexPath *previousIndexPath = [NSIndexPath indexPathForRow:indexPath.row - 1 inSection:indexPath.section];
         SENTimelineSegment *previousSegment = [self sleepSegmentForIndexPath:previousIndexPath];
-        previousColor = [UIColor colorForCondition:previousSegment.sleepState];
+        previousColor = [UIColor colorForSleepState:previousSegment.sleepState];
         previousRatio = previousSegment.sleepDepth / HEMTimelineMaxSleepDepth;
     } else {
         previousColor = [UIColor clearColor];

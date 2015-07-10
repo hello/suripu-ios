@@ -2,7 +2,7 @@
 #import <Foundation/Foundation.h>
 #import "SENAPIClient.h"
 
-@class SENSleepResultSegment;
+@class SENTimelineSegment;
 
 @interface SENAPITimeline : NSObject
 
@@ -25,7 +25,7 @@
  * @param date:       the date of sleep
  * @param block:      the block to excecute upon completion
  */
-+ (void)verifySleepEvent:(SENSleepResultSegment*)sleepEvent
++ (void)verifySleepEvent:(SENTimelineSegment*)sleepEvent
           forDateOfSleep:(NSDate*)date
               completion:(SENAPIDataBlock)block;
 
@@ -39,7 +39,7 @@
  * @param date:       the date of sleep
  * @param block:      the block to excecute upon completion
  */
-+ (void)removeSleepEvent:(SENSleepResultSegment*)sleepEvent
++ (void)removeSleepEvent:(SENTimelineSegment*)sleepEvent
           forDateOfSleep:(NSDate*)date
               completion:(SENAPIDataBlock)block;
 
@@ -55,7 +55,7 @@
  * @param minutes:    the minutes to change to
  * @param completion: the block to excecute upon completion
  */
-+ (void)amendSleepEvent:(SENSleepResultSegment*)sleepEvent
++ (void)amendSleepEvent:(SENTimelineSegment*)sleepEvent
          forDateOfSleep:(NSDate*)date
                withHour:(NSNumber*)hour
              andMinutes:(NSNumber*)minutes

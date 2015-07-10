@@ -11,7 +11,7 @@
 
 #import "SENServiceHealthKit.h"
 #import "SENService+Protected.h"
-#import "SENSleepResult.h"
+#import "SENTimeline.h"
 #import "SENAPITimeline.h"
 #import "SENLocalPreferences.h"
 
@@ -173,7 +173,7 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
 }
 
 - (void)writeSleepAnalysisIfDataAvailableFor:(NSDate*)date completion:(void(^)(NSError* error))completion {
-    SENSleepResult* result = [SENSleepResult sleepResultForDate:date];
+    SENTimeline* result = [SENTimeline timelineForDate:date];
 
     if ([[result segments] count] > 0) {
         DDLogVerbose(@"adding sleep data point to health kit for date %@", [result date]);
@@ -182,9 +182,9 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
         DDLogVerbose(@"pulling from server since no data is in the cache");
         [SENAPITimeline timelineForDate:date completion:^(NSArray* timelines, NSError* error) {
             if (error == nil) {
-                SENSleepResult* freshResult = nil;
+                SENTimeline* freshResult = nil;
                 if ([timelines isKindOfClass:[NSArray class]] && [timelines count] > 0) {
-                    freshResult = [[SENSleepResult alloc] initWithDictionary:[timelines firstObject]];
+                    freshResult = [[SENTimeline alloc] initWithDictionary:[timelines firstObject]];
                 }
                 
                 if ([[freshResult segments] count] > 0) {
@@ -205,30 +205,20 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
     }
 }
 
-- (NSArray*)sleepDataPointsForSleepResult:(SENSleepResult*)sleepResult {
+- (NSArray*)sleepDataPointsForSleepResult:(SENTimeline*)sleepResult {
     NSMutableArray* dataPoints = [NSMutableArray arrayWithCapacity:1];
     HKCategoryType* hkSleepCategory = [HKObjectType categoryTypeForIdentifier:HKCategoryTypeIdentifierSleepAnalysis];
     NSDate* wakeUpDate = nil;
     NSDate* sleepDate = nil;
     NSArray* segments = [sleepResult segments];
-    
-    // first, find the sleep date from the front of the array
-    for (SENSleepResultSegment* segment in segments) {
-        if ([[segment eventType] isEqualToString:SENSleepResultSegmentEventTypeSleep]) {
+
+    for (SENTimelineSegment* segment in segments) {
+        if (!sleepDate && segment.type == SENTimelineSegmentTypeFellAsleep) {
             sleepDate = [segment date];
-            break;
         }
-    }
-    
-    if (sleepDate != nil) {
-        // look for wake up time from the back
-        SENSleepResultSegment* segment = nil;
-        for (NSInteger i = [segments count] - 1; i >= 0; i--) {
-            segment = segments[i];
-            if ([[segment eventType] isEqualToString:SENSleepResultSegmentEventTypeWakeUp]) {
-                wakeUpDate = [segment date];
-                break;
-            }
+
+        if (sleepDate != nil && segment.type == SENTimelineSegmentTypeWokeUp) {
+            wakeUpDate = [segment date];
         }
     }
     
@@ -247,7 +237,7 @@ static NSString* const SENSErviceHKEnable = @"is.hello.service.hk.enable";
     return dataPoints;
 }
 
-- (void)writeSleepDataPoints:(SENSleepResult*)sleepReult
+- (void)writeSleepDataPoints:(SENTimeline*)sleepReult
                      forDate:(NSDate*)date
                   completion:(void(^)(NSError* error))competion {
     

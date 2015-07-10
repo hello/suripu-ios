@@ -439,16 +439,17 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     HEMAlertViewController* dialogVC = [HEMAlertViewController new];
     [dialogVC setTitle:title];
     [dialogVC setAttributedMessage:message];
-    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"timezone.action.select-manually", nil)];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"timezone.action.use-local", nil)];
     [dialogVC setViewToShowThrough:self.view];
-    [dialogVC addAction:NSLocalizedString(@"timezone.action.use-local", nil) primary:NO actionBlock:^{
+    [dialogVC addAction:NSLocalizedString(@"timezone.action.select-manually", nil) primary:NO actionBlock:^{
         [self dismissViewControllerAnimated:YES completion:^{
-            [self updateToLocalTimeZone];
+            [self performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:self];
         }];
+
     }];
     [dialogVC showFrom:self onDefaultActionSelected:^{
         [self dismissViewControllerAnimated:YES completion:^{
-            [self performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:self];
+            [self updateToLocalTimeZone];
         }];
     }];
 }

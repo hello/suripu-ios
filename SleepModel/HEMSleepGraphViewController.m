@@ -682,7 +682,7 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (CGFloat)heightForCellWithSegment:(SENTimelineSegment *)segment {
-    return (segment.duration / 3.6)
+    return (segment.duration / 3600)
            * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
 }
 
@@ -696,7 +696,7 @@ static BOOL hasLoadedBefore = NO;
         return CGSizeMake(bWidth, HEMTimelineTopBarCellHeight);
     } else if (section == HEMSleepGraphCollectionViewSegmentSection) {
         if ([self.dataSource numberOfSleepSegments] > 0) {
-            return CGSizeMake(bWidth, HEMTimelineHeaderCellHeight);;
+            return CGSizeMake(bWidth, HEMTimelineHeaderCellHeight);
         }
     }
 

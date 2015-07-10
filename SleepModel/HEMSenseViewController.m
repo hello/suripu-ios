@@ -446,6 +446,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         [self dismissViewControllerAnimated:YES completion:^{
             [self performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:self];
         }];
+
     }];
     [dialogVC showFrom:self onDefaultActionSelected:^{
         [self dismissViewControllerAnimated:YES completion:^{

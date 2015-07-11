@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.0.3
+
+New:
+
+* Improved time zone list and ux
+* copy channges to timeline tutorial dialogs
+* copy changes to factory reset advanced option message
+* pairing mode onboarding screen font style change
+* Hooked up to Timeline v2 API (requires accounts to be feature flipped on)
+
+Fixes:
+
+* missing timestamp markers when no data is available
+* share icon will no longer reappear when timeline is opened upon coming back from background
+
 ## 1.1.0.2
 
 New:

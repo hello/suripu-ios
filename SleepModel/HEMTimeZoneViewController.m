@@ -7,6 +7,7 @@
 //
 
 #import "UIFont+HEMStyle.h"
+#import "NSTimeZone+HEMMapping.h"
 
 #import <SenseKit/SENAPITimeZone.h>
 
@@ -94,8 +95,7 @@ static NSString* const HEMTimeZonesResourceName = @"TimeZones";
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        NSString *path = [[NSBundle mainBundle] pathForResource:HEMTimeZonesResourceName ofType:@"plist"];
-        [strongSelf setTimeZonesByCities:[NSMutableDictionary dictionaryWithContentsOfFile:path]];
+        [strongSelf setTimeZonesByCities:[NSTimeZone timeZoneMapping]];
         
         NSArray* sortedArray = [[strongSelf timeZonesByCities] allKeys];
         sortedArray = [sortedArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {

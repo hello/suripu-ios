@@ -586,6 +586,7 @@
 		BFBEDB7B1A8BF9B6006C4546 /* senseColors5.png in Resources */ = {isa = PBXBuildFile; fileRef = BFBEDB6C1A8BF9B6006C4546 /* senseColors5.png */; };
 		BFBEDB7C1A8BF9B6006C4546 /* senseColors5@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFBEDB6D1A8BF9B6006C4546 /* senseColors5@2x.png */; };
 		BFBEDB7D1A8BF9B6006C4546 /* senseColors5@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = BFBEDB6E1A8BF9B6006C4546 /* senseColors5@3x.png */; };
+		BFC0994B1B507B46008B0104 /* NSTimeZone+HEMMapping.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC0994A1B507B46008B0104 /* NSTimeZone+HEMMapping.m */; };
 		BFC3AA1019C27A610055D308 /* HEMSleepQuestionsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3AA0F19C27A610055D308 /* HEMSleepQuestionsViewController.m */; };
 		BFC3BE7C1A7087430022C6C2 /* HEMSettingsAccountDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC3BE7B1A7087430022C6C2 /* HEMSettingsAccountDataSource.m */; };
 		BFC3BE971A7202700022C6C2 /* settingsCheck.png in Resources */ = {isa = PBXBuildFile; fileRef = BFC3BE941A7202700022C6C2 /* settingsCheck.png */; };
@@ -1493,6 +1494,8 @@
 		BFBEDB6C1A8BF9B6006C4546 /* senseColors5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = senseColors5.png; path = images/senseColors5.png; sourceTree = "<group>"; };
 		BFBEDB6D1A8BF9B6006C4546 /* senseColors5@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "senseColors5@2x.png"; path = "images/senseColors5@2x.png"; sourceTree = "<group>"; };
 		BFBEDB6E1A8BF9B6006C4546 /* senseColors5@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "senseColors5@3x.png"; path = "images/senseColors5@3x.png"; sourceTree = "<group>"; };
+		BFC099491B507B46008B0104 /* NSTimeZone+HEMMapping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTimeZone+HEMMapping.h"; sourceTree = "<group>"; };
+		BFC0994A1B507B46008B0104 /* NSTimeZone+HEMMapping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTimeZone+HEMMapping.m"; sourceTree = "<group>"; };
 		BFC3AA0E19C27A610055D308 /* HEMSleepQuestionsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSleepQuestionsViewController.h; sourceTree = "<group>"; };
 		BFC3AA0F19C27A610055D308 /* HEMSleepQuestionsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMSleepQuestionsViewController.m; sourceTree = "<group>"; };
 		BFC3BE7A1A7087430022C6C2 /* HEMSettingsAccountDataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMSettingsAccountDataSource.h; sourceTree = "<group>"; };
@@ -3231,6 +3234,8 @@
 				8AB006301A48C382000CF62F /* HEMMarkdown.m */,
 				BF98FC371A9BB29D00AEC04C /* HEMConfig.h */,
 				BF98FC381A9BB29D00AEC04C /* HEMConfig.m */,
+				BFC099491B507B46008B0104 /* NSTimeZone+HEMMapping.h */,
+				BFC0994A1B507B46008B0104 /* NSTimeZone+HEMMapping.m */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -4193,6 +4198,7 @@
 				8A90F9AC196350D200AFD110 /* HelloStyleKit.m in Sources */,
 				8AC49F931981DC8C00C2BD63 /* HEMZoomingFlowLayout.m in Sources */,
 				BF6E3A9D1A2E442F0019C110 /* HEMSleepQuestionsDataSource.m in Sources */,
+				BFC0994B1B507B46008B0104 /* NSTimeZone+HEMMapping.m in Sources */,
 				8AC49F961981E61C00C2BD63 /* HEMMiniSleepScoreGraphView.m in Sources */,
 				BFB6D47619BE16D1004CA11B /* HEMBirthdatePickerView.m in Sources */,
 				BFC3FE761AE863B80061D6A1 /* HEMActionSheetOptionCell.m in Sources */,

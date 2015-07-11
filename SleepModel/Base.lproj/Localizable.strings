@@ -587,13 +587,13 @@
 "tutorial.sensor.particulates.message" = "AQI stands for Air Quality Index, and is measured on a scale from 0-500. The lower the value, the better the air quality. Here you’ll see detailed information on the AQI in your bedroom. The graphs will fill in as Sense collects more data.";
 
 // timezone
-"timezone.alert.message.use-local.format" = "The time zone you set should correspond to your Sense's location.  Your current time zone is %@.";
+"timezone.alert.message.use-local.format" = "Sense's time zone should be set based on the physical location of your Sense. Usually, that's the same as your phone's time zone. Your phone's current time zone is:  %@.";
 "timezone.suggestion.message" = "Your current time zone based on location of your iOS device.  Select the time zone that corresponds with Sense's location.";
 "timezone.activity.message" = "Updating time zone";
 "timezone.error.title" = "Update failed";
 "timezone.error.message" = "Could not update the time zone at this time. Make sure your device is connected to the internet and try again.";
-"timezone.action.use-local" = "Use my local time zone";
-"timezone.action.select-manually" = "select a different time zone";
+"timezone.action.use-local" = "Use this time zone";
+"timezone.action.select-manually" = "Select from a list";
 
 // handholding
 "handholding.message.timeline-switch-days" = "Swipe left or right to navigate between days";

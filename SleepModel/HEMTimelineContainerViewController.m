@@ -38,8 +38,6 @@ CGFloat const HEMAlarmShortcutHiddenTrailing = 60.f;
 
 - (void)moveAlarmButtonWithOffset:(CGFloat)constant {
     if (self.alarmButtonTrailing.constant != constant) {
-        if (constant < 0)
-            self.alarmButton.hidden = NO;
         self.alarmButtonTrailing.constant = constant;
         [self.view setNeedsUpdateConstraints];
         [UIView animateWithDuration:0.3f
@@ -48,12 +46,9 @@ CGFloat const HEMAlarmShortcutHiddenTrailing = 60.f;
             initialSpringVelocity:0
             options:0
             animations:^{
-              [self.view layoutIfNeeded];
+              [self.alarmButton layoutIfNeeded];
             }
-            completion:^(BOOL finished) {
-              if (constant > 0)
-                  self.alarmButton.hidden = YES;
-            }];
+            completion:NULL];
     }
 }
 

@@ -70,6 +70,11 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
 }
 
++ (UIFont*)iPhone4SSettingsTitleFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.f];
+}
+
 + (UIFont*)signOutFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:16.f];

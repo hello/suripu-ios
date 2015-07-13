@@ -85,7 +85,8 @@
 		8A4D490C1A67462500DD6ECE /* HEMTrendCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4D490B1A67462500DD6ECE /* HEMTrendCollectionViewCell.m */; };
 		8A4D490F1A67480300DD6ECE /* HEMBarGraphView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4D490E1A67480300DD6ECE /* HEMBarGraphView.m */; };
 		8A4D49121A67532800DD6ECE /* HEMScopePickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4D49111A67532800DD6ECE /* HEMScopePickerView.m */; };
-		8A50A1841B545FE7007FDECC /* UIImage+HEMBlurTint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A50A1831B545FE7007FDECC /* UIImage+HEMBlurTint.m */; };
+		8A50A1841B545FE7007FDEC3 /* UIImage+HEMBlurTint.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A50A1831B545FE7007FDECC /* UIImage+HEMBlurTint.m */; };
+		8A50A1871B546AE2007FDECC /* HEMScreenUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A50A1861B546AE2007FDECC /* HEMScreenUtils.m */; };
 		8A54029F19AE299B00FC6085 /* Crashlytics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8A54029E19AE299B00FC6085 /* Crashlytics.framework */; };
 		8A576F121A79B12200287398 /* HEMTutorial.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A576F111A79B12200287398 /* HEMTutorial.m */; };
 		8A59F633198C16050005B000 /* HEMSignUpViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A59F632198C16050005B000 /* HEMSignUpViewController.m */; };
@@ -848,8 +849,10 @@
 		8A4D490E1A67480300DD6ECE /* HEMBarGraphView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMBarGraphView.m; sourceTree = "<group>"; };
 		8A4D49101A67532800DD6ECE /* HEMScopePickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMScopePickerView.h; sourceTree = "<group>"; };
 		8A4D49111A67532800DD6ECE /* HEMScopePickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMScopePickerView.m; sourceTree = "<group>"; };
-		8A50A1821B545FE7007FDECC /* UIImage+HEMBlurTint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+HEMBlurTint.h"; sourceTree = "<group>"; };
-		8A50A1831B545FE7007FDECC /* UIImage+HEMBlurTint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+HEMBlurTint.m"; sourceTree = "<group>"; };
+		8A50A1821B545FE7007FDEC3 /* UIImage+HEMBlurTint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+HEMBlurTint.h"; sourceTree = "<group>"; };
+		8A50A1831B545FE7007FDEC3 /* UIImage+HEMBlurTint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+HEMBlurTint.m"; sourceTree = "<group>"; };
+		8A50A1851B546AE2007FDECC /* HEMScreenUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMScreenUtils.h; sourceTree = "<group>"; };
+		8A50A1861B546AE2007FDECC /* HEMScreenUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HEMScreenUtils.m; sourceTree = "<group>"; };
 		8A54029E19AE299B00FC6085 /* Crashlytics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crashlytics.framework; sourceTree = "<group>"; };
 		8A5402A019AE72F300FC6085 /* Makefile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.make; path = Makefile; sourceTree = SOURCE_ROOT; };
 		8A576F101A79B12200287398 /* HEMTutorial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HEMTutorial.h; sourceTree = "<group>"; };
@@ -3219,6 +3222,8 @@
 				8AB006301A48C382000CF62F /* HEMMarkdown.m */,
 				BFB93C7719CB7F89005067D0 /* HEMMathUtil.h */,
 				BFB93C7819CB7F89005067D0 /* HEMMathUtil.m */,
+				8A50A1851B546AE2007FDECC /* HEMScreenUtils.h */,
+				8A50A1861B546AE2007FDECC /* HEMScreenUtils.m */,
 				BF14E3C219EF3C020006EFEA /* HEMWifiUtils.h */,
 				BF14E3C319EF3C020006EFEA /* HEMWifiUtils.m */,
 				8A7D80251A40ECDB00B0BFD7 /* NSAttributedString+HEMUtils.h */,
@@ -4125,6 +4130,7 @@
 				BF78E9A61B2762060015949F /* HEMTutorialContent.m in Sources */,
 				BF05C8E11A3A52CB002A1307 /* HEMMultipleResponseCell.m in Sources */,
 				BF1E2E5D1A00691000DDD0D0 /* HEMInsightCollectionViewCell.m in Sources */,
+				8A50A1871B546AE2007FDECC /* HEMScreenUtils.m in Sources */,
 				BF78E9991B2129AD0015949F /* HEMZendeskService.m in Sources */,
 				8A91F2A61A44DB3D00F211B4 /* HEMAlarmTableViewCell.m in Sources */,
 				8A50A1841B545FE7007FDECC /* UIImage+HEMBlurTint.m in Sources */,

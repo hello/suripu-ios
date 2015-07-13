@@ -92,20 +92,19 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
         [self.collectionView setNeedsUpdateConstraints];
         [self.dismissButton setNeedsUpdateConstraints];
         CGFloat damping = 0.75f;
-        CGFloat duration = 0.4f * (1 + damping);
+        CGFloat baseDuration = 0.4f;
+        CGFloat duration = baseDuration * (1 + damping);
         [UIView animateWithDuration:duration delay:0.1f usingSpringWithDamping:damping initialSpringVelocity:0 options:0 animations:^{
             self.collectionView.alpha = 1;
             [self.collectionView layoutIfNeeded];
             [self.dismissButton layoutIfNeeded];
+            for (UICollectionViewCell* cell in self.collectionView.visibleCells) {
+                cell.hidden = NO;
+                cell.alpha = 1;
+            }
         } completion:^(BOOL finished) {
             self.loadedContent = YES;
             self.collectionView.scrollEnabled = YES;
-            [UIView animateWithDuration:0.2f animations:^{
-                for (UICollectionViewCell* cell in self.collectionView.visibleCells) {
-                    cell.hidden = NO;
-                    cell.alpha = 1;
-                }
-            } completion:NULL];
         }];
     }
 }

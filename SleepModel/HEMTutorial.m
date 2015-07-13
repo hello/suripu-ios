@@ -10,6 +10,7 @@
 #import <SenseKit/SENLocalPreferences.h>
 #import <SenseKit/SENTimeline.h>
 
+#import "UIImage+HEMBlurTint.h"
 #import "NSDate+HEMRelative.h"
 
 #import "HEMTutorial.h"
@@ -143,14 +144,15 @@ static CGFloat const HEMTutorialDelay = 0.5f;
 }
 
 + (void)showTutorialWithContent:(NSArray*)content from:(UIViewController*)controller {
-    UIImage* snapshot = [[controller view] blurredSnapshotWithTint:[HelloStyleKit tutorialBackgroundColor]];
+    UIImage* snapshot = [[controller view] snapshot];
+    UIImage* blurredSnapshot = [snapshot blurredImageWithTint:[HelloStyleKit tutorialBackgroundColor]];
     
     HEMTutorialViewController* tutorialVC = [HEMMainStoryboard instantiateTutorialViewController];
-    [tutorialVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [tutorialVC setTutorials:content];
-    [tutorialVC setBackgroundImage:snapshot];
-    
-    [controller presentViewController:tutorialVC animated:YES completion:nil];
+    [tutorialVC setBackgroundImage:blurredSnapshot];
+    [tutorialVC setUnblurredBackgroundImage:snapshot];
+
+    [controller presentViewController:tutorialVC animated:NO completion:nil];
 }
 
 + (void)showTutorialWithContent:(NSArray*)content {

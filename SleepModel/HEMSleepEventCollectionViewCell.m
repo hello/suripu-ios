@@ -98,7 +98,7 @@
     CGFloat const timeLabelRight = 12.f;
     CGFloat const timeLabelTop = 17.f;
     CGFloat const messageLabelLeft = 52.f;
-    CGFloat const messageLabelTop = 13.f;
+    CGFloat const messageLabelTop = 14.f;
     CGFloat const messageLabelRight = 8.f;
     CGFloat const messageLabelHeightOffset = 26.f;
     CGFloat const timeLabelMaxWidth = 40.f;

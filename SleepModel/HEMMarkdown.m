@@ -114,7 +114,9 @@
 + (NSDictionary *)attributesForEventMessageText {
     NSMutableParagraphStyle *style = [NSMutableParagraphStyle new];
     style.alignment = NSTextAlignmentLeft;
-    style.lineSpacing = 4.f;
+    style.lineSpacing = 2.f;
+    style.maximumLineHeight = 18.f;
+    style.minimumLineHeight = 18.f;
     return @{
         @(STRONG) : @{
             NSFontAttributeName : [UIFont timelineEventMessageBoldFont],

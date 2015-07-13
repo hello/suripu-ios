@@ -20,7 +20,7 @@
 
 CGFloat const HEMEventBubbleTextWidthOffset = 121.f;
 CGFloat const HEMEventBubbleWidthOffset = 50.f;
-CGFloat const HEMEventBubbleTextHeightOffset = 26.f;
+CGFloat const HEMEventBubbleTextHeightOffset = 28.f;
 CGFloat const HEMEventBubbleMinimumHeight = 48.f;
 CGFloat const HEMEventTimeLabelWidth = 40.f;
 

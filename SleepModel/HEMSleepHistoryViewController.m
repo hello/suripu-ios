@@ -262,7 +262,7 @@ static NSUInteger const HEMSleepDataCapacity = 200;
 {
     NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
     SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
-    if (!sleepResult || sleepResult.segments.count > 0)
+    if (!sleepResult.date || sleepResult.segments.count > 0)
         return;
 
     __weak typeof(self) weakSelf = self;

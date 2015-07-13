@@ -23,10 +23,11 @@ NSString* const HEMTimelineFeedbackSuccessNotification = @"HEMTimelineFeedbackSu
 @property (nonatomic, weak) IBOutlet UILabel* titleLabel;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint* tinySeparatorHeight;
 @property (nonatomic, weak) IBOutlet UIView* titleContainerView;
-@property (weak, nonatomic) IBOutlet UIView *buttonContainerView;
-@property (weak, nonatomic) IBOutlet UIButton *cancelButton;
-@property (weak, nonatomic) IBOutlet UIButton *saveButton;
+@property (nonatomic, weak) IBOutlet UIView *buttonContainerView;
+@property (nonatomic, weak) IBOutlet UIButton *cancelButton;
+@property (nonatomic, weak) IBOutlet UIButton *saveButton;
 @property (nonatomic, strong) NSCalendar* calendar;
+@property (nonatomic, assign, getter=isConfigured) BOOL configured;
 @end
 
 @implementation HEMTimelineFeedbackViewController
@@ -36,9 +37,16 @@ static NSString* const HEMTimelineFeedbackTitleFormat = @"sleep-event.feedback.t
 - (void)viewDidLoad {
     [super viewDidLoad];
     self.calendar = [NSCalendar autoupdatingCurrentCalendar];
-    [self configureSegmentViews];
     [self configureButtonContainer];
     [SENAnalytics track:HEMAnalyticsEventTimelineAdjustTime];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    if (![self isConfigured]) {
+        [self configureSegmentViews];
+        [self setConfigured:YES];
+    }
 }
 
 - (void)configureButtonContainer {

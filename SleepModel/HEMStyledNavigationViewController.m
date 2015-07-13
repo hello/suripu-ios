@@ -8,6 +8,7 @@
 
 #import "HEMStyledNavigationViewController.h"
 #import "HelloStyleKit.h"
+#import "HEMScreenUtils.h"
 #import "UIFont+HEMStyle.h"
 
 @interface HEMStyledNavigationViewController ()<UIGestureRecognizerDelegate, UINavigationControllerDelegate>
@@ -19,9 +20,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [[self navigationBar] setTintColor:[HelloStyleKit backViewTintColor]];
+    UIFont* titleFont = HEMIsIPhone4Family()
+        ? [UIFont iPhone4SSettingsTitleFont]
+        : [UIFont settingsTitleFont];
     [[self navigationBar] setTitleTextAttributes:@{
         NSForegroundColorAttributeName : [HelloStyleKit backViewNavTitleColor],
-        NSFontAttributeName : [UIFont settingsTitleFont]
+        NSFontAttributeName : titleFont
     }];
     
     // required since we are adding custom back button

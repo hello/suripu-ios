@@ -17,6 +17,7 @@
 #import "HEMActivityCoverView.h"
 #import "HEMOnboardingCache.h"
 #import "HEMOnboardingUtils.h"
+#import "HEMScreenUtils.h"
 
 @interface HEMOnboardingController()
 
@@ -53,7 +54,7 @@
 }
 
 - (void)configureTitle {
-    if ([self isIPhone4Family]) {
+    if (HEMIsIPhone4Family()) {
         [self setTitle:[[self titleLabel] text]];
         [[self titleHeightConstraint] setConstant:0.0f];
         [[self titleLabel] setHidden:YES];
@@ -74,7 +75,7 @@
                                       NSForegroundColorAttributeName : color}
                               range:NSMakeRange(0, [attrDesc length])];
             
-            if ([self isIPhone4Family]) {
+            if (HEMIsIPhone4Family()) {
                 NSMutableParagraphStyle* style = [[NSMutableParagraphStyle defaultParagraphStyle] mutableCopy];
                 [style setAlignment:NSTextAlignmentCenter];
                 [attrDesc addAttribute:NSParagraphStyleAttributeName
@@ -87,7 +88,7 @@
             [[self descriptionLabel] setTextColor:color];
             [[self descriptionLabel] setFont:font];
             
-            if ([self isIPhone4Family]) {
+            if (HEMIsIPhone4Family()) {
                 [[self descriptionLabel] setTextAlignment:NSTextAlignmentCenter];
             }
         }

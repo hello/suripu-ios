@@ -6,9 +6,8 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
-#import "NSTimeZone+HEMUtils.h"
-
 #import "UIFont+HEMStyle.h"
+#import "NSTimeZone+HEMMapping.h"
 
 #import <SenseKit/SENAPITimeZone.h>
 
@@ -20,11 +19,13 @@
 #import "HEMActivityIndicatorView.h"
 #import "HEMSettingsTableViewCell.h"
 
+static NSString* const HEMTimeZonesResourceName = @"TimeZones";
+
 @interface HEMTimeZoneViewController() <UITableViewDelegate, UITableViewDataSource>
 
 @property (weak,   nonatomic) IBOutlet UITableView *tableView;
-@property (strong, nonatomic) NSDictionary* displayNamesToTimeZone;
-@property (strong, nonatomic) NSArray* sortedDisplayNames;
+@property (strong, nonatomic) NSDictionary* timeZonesByCities;
+@property (strong, nonatomic) NSArray* sortedCities;
 @property (copy,   nonatomic) NSString* selectedTimeZoneName;
 @property (copy,   nonatomic) NSString* configuredTimeZoneName;
 
@@ -82,8 +83,9 @@
     [SENAPITimeZone getConfiguredTimeZone:^(NSTimeZone* tz, NSError *error) {
         if (error) {
             [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+        } else {
+            [weakSelf setConfiguredTimeZoneName:[tz name]];
         }
-        [weakSelf setConfiguredTimeZoneName:[tz displayNameForCurrentLocale]];
         completion ();
     }];
 }
@@ -93,25 +95,25 @@
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         __strong typeof(weakSelf) strongSelf = weakSelf;
         
-        [strongSelf setDisplayNamesToTimeZone:[NSTimeZone supportedTimeZoneByDisplayNames]];
+        [strongSelf setTimeZonesByCities:[NSTimeZone timeZoneMapping]];
         
-        NSArray* sortedArray = [[strongSelf displayNamesToTimeZone] allKeys];
+        NSArray* sortedArray = [[strongSelf timeZonesByCities] allKeys];
         sortedArray = [sortedArray sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {
             return [obj1 compare:obj2];
         }];
-        [strongSelf setSortedDisplayNames:sortedArray];
+        [strongSelf setSortedCities:sortedArray];
         
         dispatch_async(dispatch_get_main_queue(), completion);
         
     });
 }
 
-- (void)updateTimeZoneTo:(NSTimeZone*)timeZone withName:(NSString*)displayName {
+- (void)updateTimeZoneTo:(NSTimeZone*)timeZone {
     HEMActivityCoverView* activityView = [[HEMActivityCoverView alloc] init];
     NSString* text = NSLocalizedString(@"timezone.activity.message", nil);
     
     NSString* previousConfiguredTzName = [[self configuredTimeZoneName] copy];
-    [self setConfiguredTimeZoneName:displayName];
+    [self setConfiguredTimeZoneName:[timeZone name]];
     
     [activityView showInView:[[self navigationController] view] withText:text activity:YES completion:^{
         __weak typeof(self) weakSelf = self;
@@ -154,7 +156,7 @@
 #pragma mark - UITableViewDataSource
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [[self sortedDisplayNames] count];
+    return [[self sortedCities] count];
 }
 
 - (UITableViewCell*)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -167,12 +169,13 @@
   willDisplayCell:(UITableViewCell *)cell
 forRowAtIndexPath:(NSIndexPath *)indexPath {
     
-    NSString* displayName = [self sortedDisplayNames][[indexPath row]];
-    BOOL isSelected = [displayName isEqualToString:[self configuredTimeZoneName]];
+    NSString* city = [self sortedCities][[indexPath row]];
+    NSString* timeZoneName = [self timeZonesByCities][city];
+    BOOL isSelected = [timeZoneName isEqualToString:[self configuredTimeZoneName]];
     
     HEMSettingsTableViewCell* settingsCell = (id)cell;
     [settingsCell setTag:[indexPath row]];
-    [[settingsCell titleLabel] setText:[self sortedDisplayNames][[indexPath row]]];
+    [[settingsCell titleLabel] setText:city];
     [[settingsCell accessory] setHidden:!isSelected];
 }
 
@@ -184,9 +187,9 @@ forRowAtIndexPath:(NSIndexPath *)indexPath {
         [[cell accessory] setHidden:[cell tag] != [indexPath row]];
     }
     
-    NSString* displayName = [self sortedDisplayNames][[indexPath row]];
-    NSTimeZone* timeZone = [self displayNamesToTimeZone][displayName];
-    [self updateTimeZoneTo:timeZone withName:displayName];
+    NSString* city = [self sortedCities][[indexPath row]];
+    NSString* timeZoneName = [self timeZonesByCities][city];
+    [self updateTimeZoneTo:[NSTimeZone timeZoneWithName:timeZoneName]];
 }
 
 #pragma mark - Actions

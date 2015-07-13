@@ -26,6 +26,7 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
 @property (weak, nonatomic) IBOutlet UIScrollView *contentContainerView;
 @property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
 @property (weak, nonatomic) IBOutlet UIImageView *backgroundView;
+@property (weak, nonatomic) IBOutlet UIImageView *fakeBackgroundView;
 @property (weak, nonatomic) IBOutlet UIButton *closeButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *closeButtonBottomConstraint;
 
@@ -43,6 +44,7 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [[self fakeBackgroundView] setImage:[self unblurredBackgroundImage]];
     [[self backgroundView] setImage:[self backgroundImage]];
     [self configureControls];
 }
@@ -71,6 +73,11 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [UIView animateWithDuration:0.25f animations:^{
+        self.fakeBackgroundView.alpha = 0;
+    } completion:^(BOOL finished) {
+        self.fakeBackgroundView.hidden = YES;
+    }];
     if ([[self tutorialScreens] count] == 0) {
         [self addAndDisplayContent];
     }
@@ -298,7 +305,14 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
 #pragma mark - Actions
 
 - (IBAction)close:(id)sender {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    [[self fakeBackgroundView] setHidden:NO];
+    [UIView animateWithDuration:0.25f animations:^{
+        [[self fakeBackgroundView] setAlpha:1.f];
+        [[self contentContainerView] setAlpha:0];
+        [[self closeButton] setAlpha:0];
+    } completion:^(BOOL finished) {
+        [self dismissViewControllerAnimated:NO completion:nil];
+    }];
 }
 
 @end

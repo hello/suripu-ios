@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "UIImage+ImageEffects.h"
+#import "UIImage+HEMBlurTint.h"
 #import "UIView+HEMSnapshot.h"
 
 @implementation UIView (HEMSnapshot)
@@ -36,17 +36,11 @@ static CGFloat const kHEMSnapshotSaturationFactor = 1.5f;
 }
 
 - (UIImage*)snapshotWithTint:(UIColor*)color {
-    return [[self snapshot] applyBlurWithRadius:0
-                                      tintColor:color
-                          saturationDeltaFactor:kHEMSnapshotSaturationFactor
-                                      maskImage:nil];
+    return [[self snapshot] imageWithTint:color];
 }
 
 - (UIImage*)blurredSnapshotWithTint:(UIColor*)color {
-    return [[self snapshot] applyBlurWithRadius:kHEMSnapshotBlurRadius
-                                      tintColor:color
-                          saturationDeltaFactor:kHEMSnapshotSaturationFactor
-                                      maskImage:nil];
+    return [[self snapshot] blurredImageWithTint:color];
 }
 
 @end

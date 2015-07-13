@@ -27,4 +27,9 @@
  */
 @property (nonatomic, strong) UIImage* backgroundImage;
 
+/**
+ * Background image without blurring
+ */
+@property (nonatomic, strong) UIImage* unblurredBackgroundImage;
+
 @end

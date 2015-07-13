@@ -190,7 +190,7 @@ static NSUInteger const HEMSleepDataCapacity = 200;
 
 - (SENTimeline*)resultAtIndexPath:(NSIndexPath*)indexPath {
     NSInteger index = [self indexAtIndexPath:indexPath];
-    if (indexPath.row == NSNotFound)
+    if (index == NSNotFound)
         return nil;
     return [self.sleepDataSummaries objectAtIndex:index];
 }
@@ -274,8 +274,11 @@ static NSUInteger const HEMSleepDataCapacity = 200;
         BOOL didUpdate = ![sleepResult isEqual:timeline];
         if (didUpdate) {
             [timeline save];
-            self.sleepDataSummaries[[self indexAtIndexPath:indexPath]] = timeline;
-            [strongSelf.historyCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+            NSInteger index = [self indexAtIndexPath:indexPath];
+            if (index != NSNotFound) {
+                self.sleepDataSummaries[[self indexAtIndexPath:indexPath]] = timeline;
+                [strongSelf.historyCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+            }
         }
     }];
 }

@@ -151,6 +151,7 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
 
 - (UICollectionView*)tutorialScreenWithFrame:(CGRect)frame tag:(NSInteger)tag {
     UICollectionViewFlowLayout* layout = [[UICollectionViewFlowLayout alloc] init];
+    [layout setItemSize:CGSizeMake(CGRectGetWidth(frame), 0.0f)];
     [layout setScrollDirection:UICollectionViewScrollDirectionVertical];
     
     UICollectionView* screen = [[UICollectionView alloc] initWithFrame:frame
@@ -285,6 +286,8 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
         }
         
         previousMaxX = CGRectGetMaxX([screen frame]);
+        
+        [[screen collectionViewLayout] invalidateLayout];
     }
 
 }

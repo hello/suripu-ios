@@ -191,9 +191,11 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
 #pragma mark - Title
 
 - (UIView*)titleViewWithText:(NSString*)text {
+    NSString* uppercaseTitle = [text uppercaseString];
     CGFloat boundedWidth = CGRectGetWidth([[self optionTableView] bounds]);
     CGFloat constraint = boundedWidth - (2*HEMActionSheetTitleHorzMargin);
-    CGFloat labelHeight = [text heightBoundedByWidth:constraint usingFont:[UIFont actionSheetTitleFont]];
+    CGFloat labelHeight = [uppercaseTitle heightBoundedByWidth:constraint
+                                                     usingFont:[UIFont actionSheetTitleFont]];
 
     CGRect labelFrame = CGRectZero;
     labelFrame.size.width = constraint;
@@ -204,7 +206,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
     UILabel* label = [[UILabel alloc] initWithFrame:labelFrame];
     [label setFont:[UIFont actionSheetTitleFont]];
     [label setTextColor:[UIColor colorWithWhite:0.0f alpha:0.4f]];
-    [label setText:text];
+    [label setText:uppercaseTitle];
     [label setNumberOfLines:0];
     
     CGRect frame = CGRectZero;

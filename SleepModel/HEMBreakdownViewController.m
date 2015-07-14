@@ -37,7 +37,7 @@
 @implementation HEMBreakdownViewController
 
 const CGFloat BreakdownCellItemHeight = 116.f;
-const CGFloat BreakdownCellSummaryBaseHeight = 90.f;
+const CGFloat BreakdownCellSummaryBaseHeight = 74.f; // 40 top + bottom margins + 30 title +  4 spacing
 const CGFloat BreakdownDismissButtonBottom = 18.f;
 const CGFloat BreakdownDismissButtonHide = -40.f;
 const CGFloat BreakdownButtonAreaHeight = 80.f;
@@ -97,15 +97,13 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
             self.collectionView.alpha = 1;
             [self.collectionView layoutIfNeeded];
             [self.dismissButton layoutIfNeeded];
+            for (UICollectionViewCell* cell in self.collectionView.visibleCells) {
+                cell.hidden = NO;
+                cell.alpha = 1;
+            }
         } completion:^(BOOL finished) {
             self.loadedContent = YES;
             self.collectionView.scrollEnabled = YES;
-            [UIView animateWithDuration:0.2f animations:^{
-                for (UICollectionViewCell* cell in self.collectionView.visibleCells) {
-                    cell.hidden = NO;
-                    cell.alpha = 1;
-                }
-            } completion:NULL];
         }];
     }
 }

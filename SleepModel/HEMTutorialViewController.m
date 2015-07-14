@@ -91,6 +91,11 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
     }
 }
 
+- (void)flashContentScrollBarOfFirstScreen {
+    UIScrollView* firstScreen = [[self tutorialScreens] firstObject];
+    [firstScreen flashScrollIndicators];
+}
+
 - (void)addAndDisplayContent {
     [self setTutorialScreens:[[NSMutableArray alloc] init]];
     [self setTutorialDataSources:[[NSMutableArray alloc] init]];
@@ -133,7 +138,11 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
             [UIView animateWithDuration:HEMTutorialContentAnimDuration animations:^{
                 [self swapPageControlAndCloseButtonWithPercentage:1.0f];
                 [[self closeButton] layoutIfNeeded];
+            } completion:^(BOOL finished) {
+                [self flashContentScrollBarOfFirstScreen];
             }];
+        } else {
+            [self flashContentScrollBarOfFirstScreen];
         }
     }];
 }

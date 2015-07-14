@@ -218,6 +218,8 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
 
 - (void)updateTimelineState:(BOOL)isOpen {
     [[self topBarView] setOpened:isOpen];
+    [[self topBarView] setShareEnabled:self.sleepResult.score > 0 && !isOpen
+                              animated:YES];
 }
 
 #pragma mark - Loading

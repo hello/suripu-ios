@@ -63,13 +63,11 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
 - (void)setOpened:(BOOL)isOpen {
     UIImage *image = [UIImage imageNamed:isOpen ? @"caret up" : @"Menu"];
     [self.drawerButton setImage:image forState:UIControlStateNormal];
-    
-    CGFloat shareButtonAlpha = 1.0f;
+
     CGFloat titleConstant = HEMCenterTitleDrawerClosedTop;
     CGFloat drawerConstant = HEMDrawerButtonClosedTop;
     
     if (isOpen) {
-        shareButtonAlpha = 0.0f;
         titleConstant = HEMCenterTitleDrawerOpenTop;
         drawerConstant = HEMDrawerButtonOpenTop;
     }
@@ -86,7 +84,6 @@ static CGFloat const HEMDrawerButtonClosedTop = 12.0f;
     [UIView animateWithDuration:0.2f
                      animations:^{
                          [[self dateLabel] setTextColor:titleTextColor];
-                         self.shareButton.alpha = shareButtonAlpha;
                          [self layoutIfNeeded];
                      }];
 }

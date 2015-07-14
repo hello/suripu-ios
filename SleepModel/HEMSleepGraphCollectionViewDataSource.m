@@ -220,11 +220,20 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [[self topBarView] setOpened:isOpen];
     [[self topBarView] setShareEnabled:self.sleepResult.score > 0 && !isOpen
                               animated:YES];
-    if (isOpen) {
-        NSIndexPath* indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+    if (isOpen)
+        [self scrollToTop];
+}
+
+- (void)scrollToTop {
+    if (!CGPointEqualToPoint(CGPointZero, self.collectionView.contentOffset)
+        && [self.collectionView numberOfSections] > 0
+        && [self.collectionView numberOfItemsInSection:0] > 0) {
+        NSIndexPath* indexPath = [NSIndexPath indexPathWithIndex:0];
         UICollectionViewLayoutAttributes* attrs = [self.collectionView
-                 layoutAttributesForSupplementaryElementOfKind:UICollectionElementKindSectionHeader
+                                                   layoutAttributesForSupplementaryElementOfKind:UICollectionElementKindSectionHeader
                                                    atIndexPath:indexPath];
+        if (!attrs)
+            return;
         [self.collectionView scrollRectToVisible:attrs.frame animated:YES];
     }
 }

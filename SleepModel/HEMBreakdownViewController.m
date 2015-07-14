@@ -299,6 +299,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
 @end
 
 @implementation HEMBreakdownSummaryCell
+
 @end
 
 @implementation HEMBreakdownLineCell

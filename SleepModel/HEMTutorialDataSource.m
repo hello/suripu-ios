@@ -63,8 +63,9 @@ typedef NS_ENUM(NSUInteger, HEMTutorialCellTextRow) {
 }
 
 - (CGSize)sizeForContentAtIndexPath:(NSIndexPath*)indexPath {
-    CGSize size = CGSizeZero;
-    size.width = CGRectGetWidth([[self collectionView] bounds]);
+    UIEdgeInsets insets = [[self collectionView] contentInset];
+    CGSize size = [[self collectionView] bounds].size;
+    size.width -= (insets.left + insets.right);
     
     if ([indexPath section] == HEMTutorialCellSectionImage) {
         CGFloat imageWidth = [[self content] image].size.width;

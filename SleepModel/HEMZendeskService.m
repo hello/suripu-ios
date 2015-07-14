@@ -46,12 +46,6 @@ static long const HEMZendeskServiceCustomFieldIdTopic = 24321669;
     return [self sharedService];
 }
 
-#pragma mark - Service Overrides
-
-- (void)serviceReceivedMemoryWarning {
-    [super serviceWillBecomeInactive];
-}
-
 #pragma mark - Zendesk methods
 
 - (void)configure:(void(^)(NSError* error))completion {

@@ -47,7 +47,7 @@ CGFloat const HEMSleepSummaryButtonKerning = 0.5f;
     if (self.messageContainerView.alpha != 1 && ![self.sleepScoreGraphView isLoading]) {
         [UIView animateWithDuration:0.25f
                               delay:scoreIsEmpty ? 0 : fullScoreDelay
-                            options:0
+                            options:UIViewAnimationOptionBeginFromCurrentState
                          animations:^{
                            self.messageContainerView.alpha = 1;
                          }

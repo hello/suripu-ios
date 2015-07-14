@@ -44,7 +44,7 @@ CGFloat const HEMAlarmShortcutHiddenTrailing = 60.f;
             delay:0
             usingSpringWithDamping:0.8
             initialSpringVelocity:0
-            options:0
+            options:UIViewAnimationOptionBeginFromCurrentState
             animations:^{
               [self.alarmButton layoutIfNeeded];
             }

@@ -79,7 +79,9 @@ static CGFloat const HEMTutorialAnimDamping = 0.6f;
         self.fakeBackgroundView.hidden = YES;
     }];
     if ([[self tutorialScreens] count] == 0) {
-        [self addAndDisplayContent];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self addAndDisplayContent];
+        });
     }
 }
 

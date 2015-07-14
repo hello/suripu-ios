@@ -51,10 +51,12 @@
 }
 
 - (CGPoint)offsetFromCenterWithAttributes:(HEMTimelineLayoutAttributes *)attrs {
+    CGFloat const layoutTopOffset = 15.f;
     CGRect bounds = self.collectionView.bounds;
     CGPoint boundsCenter = CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds));
-    CGPoint cellCenter = attrs.center;
-    return CGPointMake(boundsCenter.x - cellCenter.x, boundsCenter.y - cellCenter.y);
+    CGPoint cellPivot = attrs.frame.origin;
+    cellPivot.y += layoutTopOffset;
+    return CGPointMake(boundsCenter.x - cellPivot.x, boundsCenter.y - cellPivot.y);
 }
 
 - (CGFloat)ratioFromCenterWithOffsetFromCenter:(CGPoint)offsetFromCenter {

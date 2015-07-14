@@ -22,6 +22,7 @@
     [self.contentContainerView setMessageText:[[self class] attributedMessageFromText:text] timeText:timeText];
     self.contentContainerView.frame = [self containerFrame];
     [self layoutContainerViews];
+    [self adjustContentsWithRatio:self.cachedRatioFromCenter];
 }
 
 - (void)applyLayoutAttributes:(HEMTimelineLayoutAttributes *)layoutAttributes {
@@ -49,13 +50,13 @@
 
 - (void)performEntryAnimationWithDuration:(NSTimeInterval)duration delay:(NSTimeInterval)delay {
     [super performEntryAnimationWithDuration:duration delay:delay];
-    CGFloat cachedAlpha = [self alphaWithRatioFromCenter:self.cachedRatioFromCenter];
-    CGFloat alpha = cachedAlpha > 0 ? cachedAlpha : 1.f;
+    CGFloat alpha = [self alphaWithRatioFromCenter:self.cachedRatioFromCenter];
     [UIView animateWithDuration:duration
                           delay:delay
-                        options:0
+                        options:UIViewAnimationOptionBeginFromCurrentState
                      animations:^{
-                       self.contentContainerView.alpha = alpha;
+                         [self adjustContentsWithRatio:self.cachedRatioFromCenter];
+                         self.contentContainerView.alpha = alpha;
                      }
                      completion:NULL];
 }
@@ -88,7 +89,7 @@
 
 - (CGFloat)alphaWithRatioFromCenter:(CGFloat)ratioFromCenter {
     CGFloat ratio = 1 - fabs(ratioFromCenter);
-    return MIN(1, ABS(ratio * 3));
+    return MIN(1, ABS(ratio * 4));
 }
 
 - (void)layoutContainerViews {

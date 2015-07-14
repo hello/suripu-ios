@@ -147,6 +147,8 @@ static NSUInteger const HEMSleepDataCapacity = 200;
 
 - (void)updateTimeFrameLabelWithDate:(NSDate*)date
 {
+    if (!date)
+        return;
     if ([self currentDateHasSameYearAsDate:date]) {
         self.timeFrameLabel.text = [self.monthFormatter stringFromDate:date];
     } else {
@@ -268,7 +270,7 @@ static NSUInteger const HEMSleepDataCapacity = 200;
     __weak typeof(self) weakSelf = self;
     [SENAPITimeline timelineForDate:sleepResult.date completion:^(SENTimeline* timeline, NSError* error) {
         typeof(weakSelf) strongSelf = weakSelf;
-        if (error)
+        if (error || !timeline.date)
             return;
 
         BOOL didUpdate = ![sleepResult isEqual:timeline];

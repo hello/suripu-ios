@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.1.0.4
+
+Fixes:
+
+* Minor timeline visual tweaks
+* Fixed issue where tutorial content would not scroll on a 4s
+* Tutorial dialogs will now flash a scrollbar when content requires scrolling
+* Fade in breakdown metrics during initial animation
+* Updated copy on current conditions tutorial dialog
+* Timeline feedback UI numbers should no longer animate in place
+* iPhone 4s titles during onboarding have been reduced to leave padding
+* Tutorial dialogs will no longer show the screen beneath current when displayed
+* Better handling on alarm shortcut button so that it will show when timeline isscrolled to the top
+* Forgot password link should no longer show a 404
+* No longer forcing timestamps in Timeline if insufficient data was returned between hours
+* Zoomed out view will no longer crash when swiping all the way to the left due to changes in V2 API
+
 ## 1.1.0.3
 
 New:

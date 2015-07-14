@@ -22,6 +22,7 @@
     [self.contentContainerView setMessageText:[[self class] attributedMessageFromText:text] timeText:timeText];
     self.contentContainerView.frame = [self containerFrame];
     [self layoutContainerViews];
+    [self adjustContentsWithRatio:self.cachedRatioFromCenter];
 }
 
 - (void)applyLayoutAttributes:(HEMTimelineLayoutAttributes *)layoutAttributes {

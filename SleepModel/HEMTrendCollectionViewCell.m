@@ -61,13 +61,10 @@
 - (void)configureLineGraphView
 {
     CGFloat leftConstant = 0, rightConstant = 0;
-    if (self.numberOfGraphSections > 0) {
+    if (self.numberOfGraphSections > 0 && self.numberOfGraphSections >= self.points.count) {
         CGFloat sectionWidth = CGRectGetWidth(self.bounds)/self.numberOfGraphSections;
         rightConstant = sectionWidth/2;
         leftConstant = sectionWidth/2;
-    } else {
-        rightConstant = 0;
-        leftConstant = 0;
     }
     if (self.graphRightConstraint.constant != rightConstant
         || self.graphLeftConstraint.constant != leftConstant) {

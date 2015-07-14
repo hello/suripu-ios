@@ -11,9 +11,6 @@
 
 @implementation UIView (HEMSnapshot)
 
-static CGFloat const kHEMSnapshotBlurRadius = 3.0f;
-static CGFloat const kHEMSnapshotSaturationFactor = 1.5f;
-
 - (UIImage*)snapshot {
     UIGraphicsBeginImageContextWithOptions([self bounds].size, NO, 0);
     

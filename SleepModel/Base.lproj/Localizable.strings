@@ -592,7 +592,7 @@
 "timezone.activity.message" = "Updating time zone";
 "timezone.error.title" = "Update failed";
 "timezone.error.message" = "Could not update the time zone at this time. Make sure your device is connected to the internet and try again.";
-"timezone.action.use-local" = "Use this time zone";
+"timezone.action.use-local" = "Set this time zone";
 "timezone.action.select-manually" = "Select from a list";
 
 // handholding

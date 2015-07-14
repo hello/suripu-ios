@@ -376,10 +376,10 @@
 
 // feedback
 "sleep-event.feedback.title.generic" = "What time did this event occur?";
-"sleep-event.feedback.title.in_bed" = "What time did you get into bed?";
-"sleep-event.feedback.title.out_of_bed" = "What time did you get out of bed?";
-"sleep-event.feedback.title.wake_up" = "What time did you wake up?";
-"sleep-event.feedback.title.sleep" = "What time did you fall asleep?";
+"sleep-event.feedback.title.got_in_bed" = "What time did you get into bed?";
+"sleep-event.feedback.title.got_out_of_bed" = "What time did you get out of bed?";
+"sleep-event.feedback.title.woke_up" = "What time did you wake up?";
+"sleep-event.feedback.title.fell_asleep" = "What time did you fall asleep?";
 "sleep-event.verify.title" = "Adjust time";
 "sleep-event.feedback.failed.title" = "Unable to send feedback";
 "sleep-event.feedback.failed.message" = "Please try again later";

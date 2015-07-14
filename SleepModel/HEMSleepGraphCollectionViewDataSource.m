@@ -220,6 +220,13 @@ CGFloat const HEMTimelineMaxSleepDepth = 100.f;
     [[self topBarView] setOpened:isOpen];
     [[self topBarView] setShareEnabled:self.sleepResult.score > 0 && !isOpen
                               animated:YES];
+    if (isOpen) {
+        NSIndexPath* indexPath = [NSIndexPath indexPathForItem:0 inSection:0];
+        UICollectionViewLayoutAttributes* attrs = [self.collectionView
+                 layoutAttributesForSupplementaryElementOfKind:UICollectionElementKindSectionHeader
+                                                   atIndexPath:indexPath];
+        [self.collectionView scrollRectToVisible:attrs.frame animated:YES];
+    }
 }
 
 #pragma mark - Loading

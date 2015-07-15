@@ -235,7 +235,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     NSString *value = nil, *unit = nil;
     switch (metric.unit) {
         case SENTimelineMetricUnitCondition:
-            value = [self valueTextForCondition:metric.condition];
+            value = [self conditionTextForMetric:metric];
             break;
         case SENTimelineMetricUnitMinute: {
             CGFloat minutes = [metric.value floatValue];
@@ -269,19 +269,28 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     return [[HEMSplitTextObject alloc] initWithValue:value unit:unit];
 }
 
-- (NSString *)valueTextForCondition:(SENCondition)condition {
-    switch (condition) {
-        case SENConditionUnknown:
-            return NSLocalizedString(@"empty-data", nil);
+- (NSString *)conditionTextForMetric:(SENTimelineMetric *)metric {
+    NSString* format = @"sleep-stat.%@.condition.%@";
+    NSString* name = [[metric name] lowercaseString];
+    NSString* condition = nil;
+    
+    switch ([metric condition]) {
         case SENConditionAlert:
-            return NSLocalizedString(@"sleep-stat.condition.alert", nil);
+            condition = @"alert";
+            break;
         case SENConditionWarning:
-            return NSLocalizedString(@"sleep-stat.condition.warning", nil);
+            condition = @"warning";
+            break;
         case SENConditionIdeal:
-            return NSLocalizedString(@"sleep-stat.condition.ideal", nil);
+            condition = @"ideal";
+            break;
+        case SENConditionUnknown:
         default:
-            return nil;
+            condition = @"unknown";
     }
+    
+    NSString* key = [NSString stringWithFormat:format, name, condition];
+    return NSLocalizedString(key, nil);
 }
 
 - (CGSize)collectionView:(UICollectionView *)collectionView

@@ -97,6 +97,8 @@ SENTimelineSegmentAction SENTimelineSegmentActionFromStrings(NSArray* actions) {
             action |= SENTimelineSegmentActionApprove;
         if ([actions containsObject:@"REMOVE"])
             action |= SENTimelineSegmentActionRemove;
+        if ([actions containsObject:@"INCORRECT"])
+            action |= SENTimelineSegmentActionIncorrect;
     }
     return action;
 }

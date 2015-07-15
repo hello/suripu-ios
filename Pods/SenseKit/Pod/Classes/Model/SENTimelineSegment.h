@@ -41,6 +41,7 @@ typedef NS_ENUM(NSInteger, SENTimelineSegmentAction) {
     SENTimelineSegmentActionAdjustTime = 1 << 1,
     SENTimelineSegmentActionApprove    = 1 << 2,
     SENTimelineSegmentActionRemove     = 1 << 3,
+    SENTimelineSegmentActionIncorrect  = 1 << 4
 };
 
 SENTimelineSegmentSleepState SENTimelineSegmentSleepStateFromString(NSString *segmentType);

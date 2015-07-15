@@ -15,36 +15,17 @@
   "platforms": {
     "ios": "6.0"
   },
+  "source_files": "ZendeskSDK.framework/Headers/*.h",
   "requires_arc": true,
-  "default_subspecs": [
-    "Core",
-    "Localization"
-  ],
-  "subspecs": [
-    {
-      "name": "Core",
-      "public_header_files": "ZendeskSDK.framework/Headers/*.h",
-      "ios": {
-        "vendored_frameworks": "ZendeskSDK.framework"
-      },
-      "preserve_paths": "ZendeskSDK.framework",
-      "xcconfig": {
-        "FRAMEWORK_SEARCH_PATHS": "$(inherited)"
-      },
-      "resources": [
-        "ZendeskSDK.bundle"
-      ]
-    },
-    {
-      "name": "Localization",
-      "resources": [
-        "ZendeskSDKStrings.bundle"
-      ],
-      "dependencies": {
-        "ZendeskSDK/Core": [
-
-        ]
-      }
-    }
+  "ios": {
+    "vendored_frameworks": "ZendeskSDK.framework"
+  },
+  "xcconfig": {
+    "FRAMEWORK_SEARCH_PATHS": "$(inherited)"
+  },
+  "preserve_paths": "ZendeskSDK.framework",
+  "resources": [
+    "ZendeskSDK.bundle",
+    "ZendeskSDKStrings.bundle"
   ]
 }

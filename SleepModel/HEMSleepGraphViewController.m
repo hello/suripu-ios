@@ -306,7 +306,13 @@ static BOOL hasLoadedBefore = NO;
     HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
     UIColor* optionTitleColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
     NSString* approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
-    NSString* deleteTitle = NSLocalizedString(@"sleep-event.action.delete.title", nil);
+    NSString* negativeTitle = nil;
+    
+    if ([segment canPerformAction:SENTimelineSegmentActionRemove]) {
+        negativeTitle = NSLocalizedString(@"sleep-event.action.remove.title", nil);
+    } else if ([segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
+        negativeTitle = NSLocalizedString(@"sleep-event.action.incorrect.title", nil);
+    }
 
     if ([segment canPerformAction:SENTimelineSegmentActionApprove]) {
         [sheet addOptionWithTitle:approveTitle
@@ -330,8 +336,13 @@ static BOOL hasLoadedBefore = NO;
                            }];
     }
 
-    if ([segment canPerformAction:SENTimelineSegmentActionRemove]) {
-        [sheet addOptionWithTitle:deleteTitle
+    // only show 1 or the other, both calls removeSegment.  Incorrect will eventually
+    // go away once server implements the code to do so.  Once the server returns the
+    // remove capability, only the 'negativeTitle' will be changed to signify the more
+    // destructive action
+    if ([segment canPerformAction:SENTimelineSegmentActionRemove] ||
+        [segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
+        [sheet addOptionWithTitle:negativeTitle
                        titleColor:optionTitleColor
                       description:nil
                         imageName:@"timeline_action_delete"
@@ -356,8 +367,9 @@ static BOOL hasLoadedBefore = NO;
     // confirmations
     CGFloat confirmDuration = HEMSleepGraphActionSheetConfirmDuration;
     UIView *confirmationView = [self confirmationViewForActionSheetWithOptions:[sheet numberOfOptions]];
-    if ([segment canPerformAction:SENTimelineSegmentActionRemove]) {
-        [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:deleteTitle];
+    if ([segment canPerformAction:SENTimelineSegmentActionRemove]||
+        [segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
+        [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:negativeTitle];
     }
 
     if ([segment canPerformAction:SENTimelineSegmentActionApprove]) {

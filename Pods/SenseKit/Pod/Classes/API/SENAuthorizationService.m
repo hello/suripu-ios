@@ -82,11 +82,13 @@ static NSString* const SENAuthorizationServiceAuthorizationHeaderKey = @"Authori
 
 + (void)deauthorize
 {
-    [SENAPIClient DELETE:SENAuthorizationServiceTokenPath parameters:nil completion:NULL];
-    [[self keychain] removeObjectForKey:SENAuthorizationServiceCredentialsKey];
-    [self authorizeRequestsWithToken:nil];
-    [self setAccountIdOfAuthorizedUser:nil];
-    [self notify:SENAuthorizationServiceDidDeauthorizeNotification];
+    if ([self isAuthorized]) {
+        [SENAPIClient DELETE:SENAuthorizationServiceTokenPath parameters:nil completion:NULL];
+        [[self keychain] removeObjectForKey:SENAuthorizationServiceCredentialsKey];
+        [self authorizeRequestsWithToken:nil];
+        [self setAccountIdOfAuthorizedUser:nil];
+        [self notify:SENAuthorizationServiceDidDeauthorizeNotification];
+    }
 }
 
 + (BOOL)isAuthorized

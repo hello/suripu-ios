@@ -223,17 +223,3 @@
 // Please contact the author.
 // Version: 1.3.0.1.
 
-// ZendeskSDK/Core
-#define COCOAPODS_POD_AVAILABLE_ZendeskSDK_Core
-// This library does not follow semantic-versioning,
-// so we were not able to define version macros.
-// Please contact the author.
-// Version: 1.3.0.1.
-
-// ZendeskSDK/Localization
-#define COCOAPODS_POD_AVAILABLE_ZendeskSDK_Localization
-// This library does not follow semantic-versioning,
-// so we were not able to define version macros.
-// Please contact the author.
-// Version: 1.3.0.1.
-

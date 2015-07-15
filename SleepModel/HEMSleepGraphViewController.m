@@ -130,6 +130,10 @@ static BOOL hasLoadedBefore = NO;
                                                  name:HEMTimelineFeedbackSuccessNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshData)
+                                                 name:SENLocalPrefDidChangeNotification
+                                               object:[SENPreference nameFromType:SENPreferenceTypeTime24]];
+    [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleAuthorization)
                                                  name:SENAuthorizationServiceDidAuthorizeNotification
                                                object:nil];

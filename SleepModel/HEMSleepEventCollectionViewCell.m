@@ -122,7 +122,7 @@
 }
 
 - (CGRect)containerFrame {
-    CGFloat const containerViewLeft = 10.f;
+    CGFloat const containerViewLeft = 8.f;
     CGSize size = [self.contentContainerView intrinsicContentSize];
     return CGRectMake(containerViewLeft, 0, size.width, size.height);
 }

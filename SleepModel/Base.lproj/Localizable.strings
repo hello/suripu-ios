@@ -427,8 +427,8 @@
 "sleep-stat.sound.condition.alert" = "way too loud";
 "sleep-stat.sound.condition.unknown" = "--";
 "sleep-stat.particulates.condition.ideal" = "just right";
-"sleep-stat.particulates.condition.warning" = "a little high";
-"sleep-stat.particulates.condition.alert" = "way too high";
+"sleep-stat.particulates.condition.warning" = "okay";
+"sleep-stat.particulates.condition.alert" = "poor";
 "sleep-stat.particulates.condition.unknown" = "--";
 "sleep-stat.light.condition.ideal" = "just right";
 "sleep-stat.light.condition.warning" = "a little bright";

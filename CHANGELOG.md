@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.1.0.5
+
+Fixes:
+
+* Improved scrolling performance on Timeline
+* Fixed issue where share icon would be disabled upon returning from bg
+* Updated change time zone dialog button copy
+* Upper cased custom action sheet global title
+* Adjusted padding in various sleep summary / breakdown views
+* Fixed issue where timeline tutorial dialogs would see incorrect title margins, consequently causing it to be scrollable when it should not after swiping left and right a few times
+* Timeline feedback UI correctly labels the view based on the event being adjusted
+
 ## 1.1.0.4
 
 Fixes:

@@ -5,6 +5,7 @@ extern CGFloat const HEMLinedCollectionViewCellLineOffset;
 extern CGFloat const HEMLinedCollectionViewCellLineWidth;
 extern CGFloat const HEMSleepSegmentMinimumFillWidth;
 extern CGFloat const HEMSleepLineWidth;
+extern CGFloat const HEMSegmentPrefillTimeInset;
 
 @interface HEMSleepSegmentCollectionViewCell : UICollectionViewCell
 

@@ -7,6 +7,7 @@
 CGFloat const HEMLinedCollectionViewCellLineOffset = 65.f;
 CGFloat const HEMLinedCollectionViewCellLineWidth = 2.f;
 CGFloat const HEMSleepLineWidth = 1.f;
+CGFloat const HEMSegmentPrefillTimeInset = 12.f;
 
 @interface HEMSleepSegmentCollectionViewCell ()
 
@@ -113,14 +114,13 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
 }
 
 - (void)drawRect:(CGRect)rect {
-    CGFloat const HEMSegmentTimeInset = 12.f;
     CGFloat const HEMSegmentMinimumWidth = 32.f;
     CGFloat const HEMSegmentMaximumWidthRatio = 0.825f;
     CGFloat maximumFillWidth = CGRectGetWidth(rect) * HEMSegmentMaximumWidthRatio;
     CGFloat preWidth = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.previousFillRatio);
     CGFloat width = MAX(HEMSegmentMinimumWidth, maximumFillWidth * self.fillRatio);
-    CGRect preRect = CGRectMake(0, 0, preWidth, HEMSegmentTimeInset);
-    CGRect fillRect = CGRectMake(0, HEMSegmentTimeInset, width, CGRectGetHeight(rect) - HEMSegmentTimeInset);
+    CGRect preRect = CGRectMake(0, 0, preWidth, HEMSegmentPrefillTimeInset);
+    CGRect fillRect = CGRectMake(0, HEMSegmentPrefillTimeInset, width, CGRectGetHeight(rect) - HEMSegmentPrefillTimeInset);
     [self.fillColor setFill];
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextFillRect(ctx, fillRect);

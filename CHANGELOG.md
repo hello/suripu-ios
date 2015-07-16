@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.0.6
+
+New:
+
+* Reduced size of app by compressing images used
+
+Fixes:
+
+* Timeline tooltip correctly points to the segment tapped on
+* Updated copy for timeline breakdown
+* Fix issue with device preferences conflicting with in-app preferences for time format style
+* Pixel adjustments on timeline event cards
+
 ## 1.1.0.5
 
 Fixes:

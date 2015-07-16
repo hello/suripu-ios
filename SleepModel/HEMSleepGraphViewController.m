@@ -38,6 +38,7 @@ CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
 @property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
 @property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, strong) HEMBounceModalTransition *dataVerifyTransitionDelegate;
 @property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
 @property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
@@ -158,6 +159,9 @@ static BOOL hasLoadedBefore = NO;
 - (void)configureGestures {
     self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan)];
     self.panGestureRecognizer.delegate = self;
+    self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap)];
+    self.tapGestureRecognizer.delegate = self;
+    [self.view addGestureRecognizer:self.tapGestureRecognizer];
     [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:self.panGestureRecognizer];
     [self.view addGestureRecognizer:self.panGestureRecognizer];
 }
@@ -415,13 +419,13 @@ static BOOL hasLoadedBefore = NO;
 
 - (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
     CGFloat const HEMPopupDismissDelay = 1.75f;
-    CGFloat const HEMPopupVerticalOffset = 8.f;
+    CGFloat const HEMPopupAnimationDistance = 8.f;
     SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
     [self.popupView setText:[self summaryPopupTextForSegment:segment]];
     UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
     CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
-    CGFloat top = CGRectGetMinY(cellLocation) - floorf([self.popupView intrinsicContentSize].height);
-    self.popupViewTop.constant = top - HEMPopupVerticalOffset;
+    CGFloat top = MAX(0, CGRectGetMinY(cellLocation) - floorf([self.popupView intrinsicContentSize].height));
+    self.popupViewTop.constant = top - HEMPopupAnimationDistance;
     [self.popupView setNeedsUpdateConstraints];
     [self.popupView layoutIfNeeded];
     self.popupViewTop.constant = top;
@@ -525,32 +529,69 @@ static BOOL hasLoadedBefore = NO;
 - (void)didPan {
 }
 
+- (void)didTap {
+    CGPoint location = [self.tapGestureRecognizer locationInView:self.view];
+    CGPoint locationInCell = [self.view convertPoint:location toView:self.collectionView];
+    NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:locationInCell];
+    if ([self shouldAcceptTapAtLocation:location]) {
+        UICollectionViewLayoutAttributes *attrs = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+        if (locationInCell.y - CGRectGetMinY(attrs.frame) <= HEMSegmentPrefillTimeInset && indexPath.item > 0) {
+            NSIndexPath* previousItem = [NSIndexPath indexPathForItem:indexPath.item - 1
+                                                            inSection:HEMSleepGraphCollectionViewSegmentSection];
+            [self showSleepDepthPopupForIndexPath:previousItem];
+        } else {
+            [self showSleepDepthPopupForIndexPath:indexPath];
+        }
+    }
+}
+
+- (BOOL)shouldAcceptTapAtLocation:(CGPoint)location {
+    CGPoint locationInCell = [self.view convertPoint:location toView:self.collectionView];
+    NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:locationInCell];
+    return indexPath.section == HEMSleepGraphCollectionViewSegmentSection
+        && ![self.dataSource segmentForEventExistsAtIndexPath:indexPath];
+}
+
 - (BOOL)isViewFullyVisible {
     return ![[HEMRootViewController rootViewControllerForKeyWindow] drawerIsVisible];
 }
 
-- (BOOL)shouldAllowRecognizerToReceiveTouch:(UIPanGestureRecognizer *)recognizer {
-    CGPoint velocity = [recognizer velocityInView:self.view];
-    BOOL movingMostlyVertically = fabs(velocity.x) <= fabs(velocity.y);
-    BOOL movingUpwards = velocity.y > 0;
-    return [self isScrolledToTop] && movingUpwards && movingMostlyVertically;
+- (BOOL)shouldAllowRecognizerToReceiveTouch:(UIGestureRecognizer *)recognizer {
+    if ([recognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        CGPoint velocity = [(UIPanGestureRecognizer *)recognizer velocityInView:self.view];
+        BOOL movingMostlyVertically = fabs(velocity.x) <= fabs(velocity.y);
+        BOOL movingUpwards = velocity.y > 0;
+        return [self isScrolledToTop] && movingUpwards && movingMostlyVertically;
+    }
+    return YES;
 }
 
 - (BOOL)isScrolledToTop {
     return self.collectionView.contentOffset.y < 10;
 }
 
-- (BOOL)gestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
-    return [self isScrolledToTop];
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return [self isScrolledToTop];
+    }
+    return YES;
 }
 
-- (BOOL)gestureRecognizer:(UIPanGestureRecognizer *)gestureRecognizer
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
     shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    return ![otherGestureRecognizer isEqual:self.collectionView.panGestureRecognizer];
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return ![otherGestureRecognizer isEqual:self.collectionView.panGestureRecognizer];
+    }
+    return YES;
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer *)gestureRecognizer {
-    return [self shouldAllowRecognizerToReceiveTouch:gestureRecognizer];
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return [self shouldAllowRecognizerToReceiveTouch:gestureRecognizer];
+    } else if ([gestureRecognizer isEqual:self.tapGestureRecognizer]) {
+        return [self shouldAcceptTapAtLocation:[self.tapGestureRecognizer locationInView:self.view]];
+    }
+    return YES;
 }
 
 #pragma mark - UIScrollViewDelegate
@@ -657,18 +698,16 @@ static BOOL hasLoadedBefore = NO;
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.section == HEMSleepGraphCollectionViewSegmentSection;
+    return [self.dataSource segmentForEventExistsAtIndexPath:indexPath];
 }
 
 - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
-    return indexPath.section == HEMSleepGraphCollectionViewSegmentSection;
+    return [self.dataSource segmentForEventExistsAtIndexPath:indexPath];
 }
 
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
     if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
         [self activateActionSheetAtIndexPath:indexPath];
-    } else if (indexPath.section == HEMSleepGraphCollectionViewSegmentSection) {
-        [self showSleepDepthPopupForIndexPath:indexPath];
     }
 }
 

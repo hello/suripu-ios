@@ -11,6 +11,7 @@
 #import <SenseKit/SENAuthorizationService.h>
 #import <SenseKit/SENServiceDevice.h>
 
+#import "NSDate+HEMRelative.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 #import "UIView+HEMMotionEffects.h"
@@ -31,6 +32,7 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMAppDelegate.h"
 #import "HEMConfig.h"
+#import "HEMTimelineContainerViewController.h"
 
 NSString* const HEMRootDrawerMayOpenNotification = @"HEMRootDrawerMayOpenNotification";
 NSString* const HEMRootDrawerMayCloseNotification = @"HEMRootDrawerMayCloseNotification";
@@ -51,6 +53,7 @@ NSString* const HEMRootDrawerDidCloseNotification = @"HEMRootDrawerDidCloseNotif
 static CGFloat const HEMRootTopPaneParallaxDepth = 4.f;
 static CGFloat const HEMRootDrawerRevealHeight = 46.f;
 static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
+static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
 
 + (instancetype)rootViewControllerForKeyWindow
 {
@@ -73,7 +76,8 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 }
 
 /**
- *  Creates a new pane controller
+ *  Creates a new pane controller. If `startDate` is nil, defaults to the
+ *  previous day.
  *
  *  @param startDate the presented date of the controller. May be nil.
  *
@@ -81,16 +85,20 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
  */
 - (UIViewController*)instantiatePaneViewControllerWithDate:(NSDate*)startDate
 {
-    HEMSleepSummarySlideViewController* slideController;
-    if (startDate)
-        slideController = [[HEMSleepSummarySlideViewController alloc] initWithDate:startDate];
-    else
-        slideController = [HEMSleepSummarySlideViewController new];
+    if (!startDate)
+        startDate = [[NSDate date] previousDay];
+    HEMSleepSummarySlideViewController* slideController = [[HEMSleepSummarySlideViewController alloc] initWithDate:startDate];
 
     [slideController setDelegate:self];
     [slideController.view add3DEffectWithBorder:HEMRootTopPaneParallaxDepth
                                       direction:HEMMotionEffectsDirectionVertical];
-    return slideController;
+    HEMTimelineContainerViewController* container = [HEMMainStoryboard instantiateTimelineContainerController];
+    [slideController willMoveToParentViewController:nil];
+    [slideController removeFromParentViewController];
+    [container.view insertSubview:slideController.view atIndex:0];
+    [container addChildViewController:slideController];
+    [slideController didMoveToParentViewController:container];
+    return container;
 }
 
 - (void)viewDidBecomeActive
@@ -136,6 +144,11 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 - (UIWindow*)keyWindow
 {
     return [UIApplication sharedApplication].keyWindow ?: [[[UIApplication sharedApplication] windows] firstObject];
+}
+
+- (BOOL)isStatusBarHidden {
+    UIWindow* window = [self keyWindow];
+    return window.windowLevel == UIWindowLevelStatusBar + 1;
 }
 
 - (void)hideStatusBar
@@ -306,6 +319,12 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
             [self showStatusBar];
             [self removeDrawerViewController];
         }];
+    } else {
+        NSDictionary* errorInfo = @{NSLocalizedDescriptionKey : @"attempt to launch onboarding with no controller"};
+        [SENAnalytics trackError:[NSError errorWithDomain:HEMRootErrorDomain
+                                                     code:-1
+                                                 userInfo:errorInfo]
+                   withEventName:kHEMAnalyticsEventError];
     }
 }
 
@@ -374,11 +393,10 @@ static CGFloat const HEMRootDrawerStatusBarOffset = 20.f;
 
 #pragma mark - UIPageViewControllerDelegate for Timeline events
 
-- (void)pageViewController:(UIPageViewController*)pageViewController
-         didFinishAnimating:(BOOL)finished
-    previousViewControllers:(NSArray*)previousViewControllers
-        transitionCompleted:(BOOL)completed
-{
+- (void)pageViewController:(UIPageViewController *)pageViewController
+        didFinishAnimating:(BOOL)finished
+   previousViewControllers:(NSArray *)previousViewControllers
+       transitionCompleted:(BOOL)completed {
     if (completed) {
         [SENAnalytics track:kHEMAnalyticsEventTimelineChanged];
     }

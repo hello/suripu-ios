@@ -22,8 +22,6 @@
  */
 + (UIFont*)alarmMeridiemFont;
 
-+ (UIFont*)tutorialDialogFont;
-
 /**
  *  Font for section and insight headings
  */
@@ -59,6 +57,8 @@
  *  Navigation item title font
  */
 + (UIFont*)settingsTitleFont;
+
++ (UIFont*)iPhone4SSettingsTitleFont;
 
 /**
  *  Font used for 'sign out' text in account settings
@@ -140,9 +140,20 @@
 + (UIFont*)timelineBreakdownTitleFont;
 
 /**
+ *  Font for timeline statistics message summary
+ */
++ (UIFont*)timelineBreakdownMessageFont;
++ (UIFont*)timelineBreakdownMessageBoldFont;
+
+/**
  *  Font for timeline statistics values
  */
 + (UIFont*)timelineBreakdownValueFont;
+
+/**
+ *  Font for inline labels indicating event time
+ */
++ (UIFont*)timelineTimeLabelFont;
 
 /**
  *  Font for tips at the bottom of event expansion
@@ -163,16 +174,6 @@
  *  Bold font for summary text above the timeline
  */
 + (UIFont*)timelineMessageBoldFont;
-
-/**
- *  Font for timestamps on events in the timeline
- */
-+ (UIFont*)timelineEventTimestampFont;
-
-/**
- *  Bold font for timestamps on important events in the timeline
- */
-+ (UIFont*)timelineEventTimestampBoldFont;
 
 /**
  *  Font for time scopes in trends view
@@ -198,11 +199,6 @@
  *  Font for display any Thank You text
  */
 + (UIFont*)thankyouFont;
-
-/**
- *  Font used to display the blue toast that appears at the bottom of screen
- */
-+ (UIFont*)infoToastFont;
 
 /**
  * Font to be used in a UIPIckerView that has 1 component
@@ -416,5 +412,60 @@
  * Font used to display the option description in the custom action sheet
  */
 + (UIFont*)actionSheetOptionDescriptionFont;
+
+/**
+ * Font used for the basic custom title view's title, intended to be used with the
+ * action sheet
+ */
++ (UIFont*)actionSheetTitleViewTitleFont;
+
+/**
+ * Font used for the basic custom title view's description, intended to be used 
+ * with the action sheet
+ */
++ (UIFont*)actionSheetTitleViewDescriptionFont;
+
+#pragma mark - Tutorial Dialogs
+
+/**
+ * Font used to display a tutorial's title
+ */
++ (UIFont*)tutorialTitleFont;
+
+/**
+ * Font used to display a tutorial's content / description
+ */
++ (UIFont*)tutorialDescriptionFont;
+
+/**
+ * Font used to display a handholding message
+ */
++ (UIFont*)handholdingMessageFont;
+
+#pragma mark - Support
+
+/**
+ * Font used for the description input in a support ticket form
+ */
++ (UIFont*)supportTicketDescriptionFont;
+
+/**
+ * Font used to display the Help Center font, minus the actual article
+ */
++ (UIFont*)supportHelpCenterFont;
+
+#pragma mark - Timeline action sheet confirmation
+
+/**
+ * Font used to display the timeline event adjustment confirmation title
+ * within an action sheet
+ */
++ (UIFont*)timelineActionConfirmationTitleFont;
+
+/**
+ * Font used to display the timeline event adjustment confirmation subtitle
+ * within an action sheet
+ */
++ (UIFont*)timelineActionConfirmationSubtitleFont;
 
 @end

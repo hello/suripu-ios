@@ -32,4 +32,13 @@
  */
 - (UIImage*)blurredSnapshotWithTint:(UIColor*)color;
 
+/**
+ *  Tint a snapshot of this view
+ *
+ *  @param color the tint color to apply
+ *
+ *  @return snapshot
+ */
+- (UIImage*)snapshotWithTint:(UIColor*)color;
+
 @end

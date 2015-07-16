@@ -5,6 +5,9 @@
 
 NSString* const kSENAccountNotificationAccountCreated = @"SENAccountCreated";
 
+NSString* const SENAPIAccountEndpoint = @"v1/account";
+NSString* const SENAPIAccountErrorDomain = @"is.hello.account";
+
 NSString* const SENAPIAccountPropertyName = @"name";
 NSString* const SENAPIAccountPropertyEmailAddress = @"email";
 NSString* const SENAPIAccountPropertyPassword = @"password";
@@ -23,8 +26,7 @@ NSString* const SENAPIAccountPropertyValueLatitude = @"lat";
 NSString* const SENAPIAccountPropertyValueLongitude = @"lon";
 NSString* const SENAPIAccountPropertyCurrentPassword = @"current_password";
 NSString* const SENAPIAccountPropertyNewPassword = @"new_password";
-NSString* const SENAPIAccountEndpoint = @"account";
-NSString* const SENAPIAccountErrorDomain = @"is.hello.account";
+
 NSString* const SENAPIAccountErrorResponseMessageKey= @"message";
 NSString* const SENAPIAccountErrorMessagePasswordTooShort = @"PASSWORD_TOO_SHORT";
 NSString* const SENAPIAccountErrorMessagePasswordInsecure= @"PASSWORD_INSECURE";

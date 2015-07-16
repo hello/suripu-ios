@@ -8,10 +8,11 @@
 #import "SENQuestion.h"
 #import "SENSense.h"
 #import "SENSensor.h"
-#import "SENSleepResult.h"
+#import "SENTimeline.h"
 #import "SENSound.h"
 #import "SENTrend.h"
 #import "SENPreference.h"
 #import "SENLocalPreferences.h"
+#import "SENSupportTopic.h"
 
 void SENClearModel();

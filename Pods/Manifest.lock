@@ -65,11 +65,13 @@ PODS:
   - SORelativeDateTransformer (1.1.10)
   - SpinKit (1.2.0)
   - SVWebViewController (1.0)
+  - UICountingLabel (1.2.0)
   - UIImageEffects (0.0.1)
-  - YapDatabase (2.6.4):
-    - YapDatabase/standard (= 2.6.4)
-  - YapDatabase/standard (2.6.4):
+  - YapDatabase (2.6.5):
+    - YapDatabase/standard (= 2.6.5)
+  - YapDatabase/standard (2.6.5):
     - CocoaLumberjack (~> 1)
+  - ZendeskSDK (1.3.0.1)
 
 DEPENDENCIES:
   - AttributedMarkdown (from `https://github.com/dreamwieber/AttributedMarkdown.git`,
@@ -86,7 +88,9 @@ DEPENDENCIES:
   - SORelativeDateTransformer (~> 1.1.10)
   - SpinKit (~> 1.2.0)
   - SVWebViewController (from `https://github.com/TransitApp/SVWebViewController.git`)
+  - UICountingLabel (~> 1.2.0)
   - UIImageEffects (~> 0.0.1)
+  - ZendeskSDK (from `https://github.com/zendesk/zendesk_sdk_ios.git`, tag `1.3.0.1`)
 
 EXTERNAL SOURCES:
   AttributedMarkdown:
@@ -107,6 +111,9 @@ EXTERNAL SOURCES:
     :git: git@github.com:hello/protobuf-objc.git
   SVWebViewController:
     :git: https://github.com/TransitApp/SVWebViewController.git
+  ZendeskSDK:
+    :git: https://github.com/zendesk/zendesk_sdk_ios.git
+    :tag: 1.3.0.1
 
 CHECKOUT OPTIONS:
   AttributedMarkdown:
@@ -122,10 +129,10 @@ CHECKOUT OPTIONS:
     :commit: bb9399161f3231e3bb3dddc89aae99018c77cdad
     :git: git@github.com:hello/LGBluetooth.git
   NAPickerView:
-    :commit: 717c233c241d2d2b407f3c3dd555517bd2e82e29
+    :commit: 4155277fe96e5b7f32d6365d0adfa24c1ab037a6
     :git: git@github.com:hello/NAPickerView.git
   SenseKit:
-    :commit: 5f393d5826f855ff6bef345d66079fa07aa1cd09
+    :commit: d68ca5ce183756c36f30fbdf5ce08d648b121260
     :git: git@github.com:hello/SenseKit.git
   SHSProtoBuf:
     :commit: e44003540c7b52b8fa29a05a059e43751e25d0d4
@@ -133,6 +140,9 @@ CHECKOUT OPTIONS:
   SVWebViewController:
     :commit: 9abad6b852b6c2ad19bb3c28532cce53719e2a7f
     :git: https://github.com/TransitApp/SVWebViewController.git
+  ZendeskSDK:
+    :git: https://github.com/zendesk/zendesk_sdk_ios.git
+    :tag: 1.3.0.1
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
@@ -152,7 +162,9 @@ SPEC CHECKSUMS:
   SORelativeDateTransformer: 307489386df4697780902bc16e99881d69a629b3
   SpinKit: 65906a8b534a4e14cbfd3f8b0b6c329131faef4a
   SVWebViewController: aa2e18a41ff5f45be7aeec8e92ca5bcc50b5ebb1
+  UICountingLabel: 1db4e7d023e1762171eb226d6dff47a7a84f27aa
   UIImageEffects: 37b99fa461e4965f332ca82e92f2c22a1075ee84
-  YapDatabase: f9051e178a38f48d0f3a78562423a5bc969f1ca3
+  YapDatabase: 814f9ff862a95c1e581d93335a4020482b69155b
+  ZendeskSDK: c527fd6d474701b6241e92c0b9b7726071a84f22
 
 COCOAPODS: 0.37.2

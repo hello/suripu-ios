@@ -17,7 +17,7 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.7</string>
+	<string>1.1.0</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleURLTypes</key>
@@ -34,7 +34,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1.0.7.5</string>
+	<string>1.1.0.6</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -49,6 +49,12 @@
 	<string>${SENSE_CLIENT_ID}</string>
 	<key>SenseCrashReportsToken</key>
 	<string>${SENSE_CRASH_REPORTS_TOKEN}</string>
+	<key>SenseZendeskClientId</key>
+	<string>${SENSE_ZENDESK_CLIENT_ID}</string>
+	<key>SenseZendeskToken</key>
+	<string>${SENSE_ZENDESK_TOKEN}</string>
+	<key>SenseZendeskURL</key>
+	<string>${SENSE_ZENDESK_URL}</string>
 	<key>UIBackgroundModes</key>
 	<array>
 		<string>remote-notification</string>

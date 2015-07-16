@@ -14,56 +14,63 @@
 
 @interface HEMPopupView ()
 
-@property (nonatomic, strong) IBOutlet UILabel* label;
+@property (nonatomic, strong) IBOutlet UILabel *label;
 @end
 
 @implementation HEMPopupView
 
 static CGFloat const HEMPopupPointerHeight = 6.f;
-static CGFloat const HEMPopupPointerRadius = 8.f;
-static CGFloat const HEMPopupMargin = 20.f;
+static CGFloat const HEMPopupMargin = 30.f;
+static CGFloat const HEMPopupShadowBlur = 2.f;
 
-- (void)awakeFromNib
-{
+- (void)awakeFromNib {
     self.backgroundColor = [UIColor clearColor];
+    self.clipsToBounds = NO;
 }
 
-- (CGSize)intrinsicContentSize
-{
-    CGRect bounds = [self.label.attributedText boundingRectWithSize:CGSizeMake(CGRectGetWidth(self.bounds) - HEMPopupMargin, CGFLOAT_MAX)
-                                                            options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)
-                                                            context:nil];
-    CGSize size = bounds.size;
+- (CGSize)intrinsicContentSize {
+    CGRect screenBounds = [[UIScreen mainScreen] bounds];
+    CGSize size = [self.label.attributedText sizeWithWidth:CGRectGetWidth(screenBounds) - HEMPopupMargin];
     size.height += HEMPopupPointerHeight + HEMPopupMargin;
     size.width += HEMPopupMargin;
     return size;
 }
 
-- (void)setText:(NSString *)text
-{
-    NSAttributedString* labelText = [markdown_to_attr_string(text, 0, [HEMMarkdown attributesForTimelineSegmentPopup]) trim];
+- (void)setText:(NSString *)text {
+    NSAttributedString *labelText =
+        [markdown_to_attr_string(text, 0, [HEMMarkdown attributesForTimelineSegmentPopup]) trim];
     self.label.attributedText = labelText;
     [self invalidateIntrinsicContentSize];
     [self setNeedsDisplay];
 }
 
-- (void)drawRect:(CGRect)rect
-{
-    [[HelloStyleKit tintColor] setFill];
-    UIBezierPath* bezierPath = [UIBezierPath bezierPath];
-    CGFloat minX = CGRectGetMinX(rect);
-    CGFloat midX = CGRectGetMidX(rect);
-    CGFloat minY = CGRectGetMinY(rect);
-    CGFloat boxHeight = CGRectGetHeight(rect) - HEMPopupPointerHeight;
-    [bezierPath moveToPoint: CGPointMake(midX - HEMPopupPointerRadius, boxHeight)];
-    [bezierPath addLineToPoint: CGPointMake(midX, boxHeight + HEMPopupPointerHeight)];
-    [bezierPath addLineToPoint: CGPointMake(midX + HEMPopupPointerRadius, boxHeight)];
-    [bezierPath closePath];
-    [bezierPath fill];
-
-    CGRect containerRect = CGRectMake(minX, minY, CGRectGetWidth(rect), boxHeight);
-    UIBezierPath* rectanglePath = [UIBezierPath bezierPathWithRoundedRect:containerRect cornerRadius: 4];
+- (void)drawRect:(CGRect)rect {
+    CGContextRef ctx = UIGraphicsGetCurrentContext();
+    CGContextSaveGState(ctx);
+    CGContextSetShadowWithColor(ctx, CGSizeZero, HEMPopupShadowBlur,
+                                [[[HelloStyleKit tintColor] colorWithAlphaComponent:0.25f] CGColor]);
+    CGContextBeginTransparencyLayer(ctx, NULL);
+    CGFloat inset = floorf(HEMPopupMargin / 4);
+    CGRect fill = CGRectInset(rect, HEMPopupShadowBlur, inset);
+    fill.size.height -= HEMPopupPointerHeight;
+    UIBezierPath *rectanglePath = [UIBezierPath bezierPathWithRoundedRect:fill cornerRadius:3.f];
+    [rectanglePath closePath];
+    [UIColor.whiteColor setFill];
     [rectanglePath fill];
+
+    UIBezierPath *pointerPath = [UIBezierPath bezierPath];
+    CGFloat pointerLeftEdge = HEMPopupPointerHeight * 2;
+    CGFloat pointerTopEdge = CGRectGetMaxY(fill);
+    [pointerPath moveToPoint:CGPointMake(pointerLeftEdge, pointerTopEdge)];
+    [pointerPath
+        addLineToPoint:CGPointMake(pointerLeftEdge + HEMPopupPointerHeight, pointerTopEdge + HEMPopupPointerHeight)];
+    [pointerPath addLineToPoint:CGPointMake(pointerLeftEdge + HEMPopupPointerHeight * 2, pointerTopEdge)];
+    [pointerPath closePath];
+    [[UIColor whiteColor] setFill];
+    [pointerPath fill];
+
+    CGContextEndTransparencyLayer(ctx);
+    CGContextRestoreGState(ctx);
 }
 
 @end

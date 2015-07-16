@@ -21,7 +21,5 @@
              withHelpPage:(NSString*)helpPage;
 - (void)viewDidBecomeActive;
 - (void)viewDidEnterBackground;
-- (BOOL)isIPhone4Family;
-- (BOOL)isIPhone5Family;
 
 @end

@@ -76,7 +76,9 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
         }];
     } else {
         [self setCheckingStates:NO];
-        completion (SENServiceDeviceStateUnknown);
+        if (completion) {
+            completion (SENServiceDeviceStateUnknown);
+        }
     }
 }
 
@@ -293,7 +295,7 @@ NSString* const SENServiceDeviceErrorDomain = @"is.hello.service.device";
 - (BOOL)shouldWarnAboutLastSeenForDevice:(SENDevice*)device {
     if (device == nil) return NO;
     
-    NSCalendar* calendar = [NSCalendar autoupdatingCurrentCalendar];
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
     NSDateComponents* components = [NSDateComponents new];
     components.day = -1;
     

@@ -41,6 +41,7 @@ extern NSString* const HEMRootDrawerDidCloseNotification;
 
 - (BOOL)drawerIsVisible;
 
+- (BOOL)isStatusBarHidden;
 - (void)showStatusBar;
 - (void)hideStatusBar;
 

@@ -1,5 +1,269 @@
 # Changelog
 
+## 1.1.0.6
+
+New:
+
+* Reduced size of app by compressing images used
+
+Fixes:
+
+* Timeline tooltip correctly points to the segment tapped on
+* Updated copy for timeline breakdown
+* Fix issue with device preferences conflicting with in-app preferences for time format style
+* Pixel adjustments on timeline event cards
+
+## 1.1.0.5
+
+Fixes:
+
+* Improved scrolling performance on Timeline
+* Fixed issue where share icon would be disabled upon returning from bg
+* Updated change time zone dialog button copy
+* Upper cased custom action sheet global title
+* Adjusted padding in various sleep summary / breakdown views
+* Fixed issue where timeline tutorial dialogs would see incorrect title margins, consequently causing it to be scrollable when it should not after swiping left and right a few times
+* Timeline feedback UI correctly labels the view based on the event being adjusted
+
+## 1.1.0.4
+
+Fixes:
+
+* Minor timeline visual tweaks
+* Fixed issue where tutorial content would not scroll on a 4s
+* Tutorial dialogs will now flash a scrollbar when content requires scrolling
+* Fade in breakdown metrics during initial animation
+* Updated copy on current conditions tutorial dialog
+* Timeline feedback UI numbers should no longer animate in place
+* iPhone 4s titles during onboarding have been reduced to leave padding
+* Tutorial dialogs will no longer show the screen beneath current when displayed
+* Better handling on alarm shortcut button so that it will show when timeline isscrolled to the top
+* Forgot password link should no longer show a 404
+* No longer forcing timestamps in Timeline if insufficient data was returned between hours
+* Zoomed out view will no longer crash when swiping all the way to the left due to changes in V2 API
+
+## 1.1.0.3
+
+New:
+
+* Improved time zone list and ux
+* copy channges to timeline tutorial dialogs
+* copy changes to factory reset advanced option message
+* pairing mode onboarding screen font style change
+* Hooked up to Timeline v2 API (requires accounts to be feature flipped on)
+
+Fixes:
+
+* missing timestamp markers when no data is available
+* share icon will no longer reappear when timeline is opened upon coming back from background
+
+## 1.1.0.2
+
+New:
+
+* Swapped out guide.hello.is urls for support.hello.is urls
+* Added analytics events for timeline adjustment actions
+
+Fixes:
+
+* Copy changes to Timeline
+* Fixed issue where history view of timeline abruptly bounces back from the right edge
+* Fixed issue where certain views are prematurely cut off behind the Timeline
+
+Fixes:
+
+* 
+
+## 1.1.0.1
+
+New:
+
+* Added analytics event for when timeline event time has been adjusted
+
+Fixes:
+
+* Breakdown presentation animation duration matches dismissal animation duration
+* Air quality index text now reduced to Air quality
+* Hide right border in zoomed out view mini graph for right most cell, similarly for left most cell
+* Do not fade timeline event cards when scrolling up
+* sleep summary text on timeline are now vertically centered
+* Thank you text in event adjustment confirmation view is now lighter and vertically centered
+* sleep summary text and chevron is now blue
+
+## 1.1.0.0
+
+New:
+
+* Reverted timeline top bar back to being non-sticky
+
+Fixes:
+
+* Sleep score over time dots and label are centered for 1W display
+* Visual tweaks to action sheet of options for timeline feedback
+* Speed up the presentation of the action sheet
+* Fixed issue where scrolling back to the very first day would jump to next day
+* Increased timeline event string line spacing
+* Improvements in timeline breakdown animation
+* Fixed issue in regards to phone locale settings for time preference
+* Alarm shortcut button will no longer disappear when scrolled to the very top
+
+## 1.0.8.12
+
+New:
+
+* Added new transition for the timeline breakdown
+* Prevent breakdown view from being shown if no data
+* Displaying a one-time only message about Sense learns when action sheet for timeline events is shown
+
+Fixes:
+
+* Visual tweaks to tooltip for timeline sleep segments
+* Fixed issue where 'lights out' text is cut off
+
+## 1.0.8.11
+
+New:
+
+* Timeline top bar now scrolls with timeline as you change dates
+* Timeline feedback UI updated to match alarm UI for cancel and save
+
+Fixes:
+
+* Custom action sheet now fades out rather than simply being dismissed
+
+## 1.0.8.10
+
+Fixes:
+
+* On load, Timeline event cards and summary detail in as sleep score animates in
+* Timeline event animation upon scroll is now anchored from bottom left
+* The tooltip for sleep segments are shown above the bar with arrow pointing downwards
+* Timeline date is now back to the gray color
+* Fixed issue where last event in the timeline might not be at full opacity
+* Smart alarm shortcut button position adjusted to have equal spacing from edge
+* Adjusted event text in the card to have equal padding
+* Support tickets in settings will now show a comment field
+* Putting the phone to sleep when location permission dialog appears will no longer block the user (or previously cause user to tap twice again to proceed)
+* switching tabs fast in the backview will not cause empty content
+* connecting sense to wifi title on iphone 4s has proper padding
+* backview top bar is shortened to match standard navigation bar
+* fixed issue in the alarm screen where multiple repeat days (minus 1) would overlap with the label text
+
+## 1.0.8.9
+
+Fixes:
+
+* Fixes issue with timeline events not showing when data not retrieved in time
+* Reduced line width on timeline timestamp markers
+* Adjusted timeline event shadow to better match design
+* Make border between segments and summary more prominent
+
+## 1.0.8.8
+
+Fixes:
+
+* Fixes issue where you cannot swipe left when there no data 
+
+## 1.0.8.7
+
+Fixes:
+
+* Fixes issue where timestamp line is drawn over the event card in timeline
+
+## 1.0.8.6
+
+New:
+
+* Support topics now served from server
+* Added confirmation views for one tap actions (actions coming soon)
+
+Fixes:
+
+* Fixed images being cut off in tutorial dialogs
+* Fixed various Timeline issues with animations and visual styling
+
+## 1.0.8.5
+
+New:
+
+* Timeline loading indicator
+* Tweaked timeline animations and visual styling a bit
+* Alerting user that alarm is set too early
+* Added confirmation when saving an alarm
+
+Fixes:
+
+* Adjusted layout for action sheet to accommodate for the timeline
+* copy changes
+
+## 1.0.8.4
+
+New:
+
+* Visual tweaks to the Timeline
+* Re-insert zoomed out view
+* Re-enable share button for Timeline
+* Added the year in the zoomed out view when applicable
+* Shorten the back view bar to match standard navigation bar
+* Zendesk topic is now sent as a custom field rather than a tag
+
+Fixes:
+
+* Copy change from Topic to Select a topic
+* Fixes failure to pull Timeline data when system calendar is set to a non Gregorian calendar
+* Fixes issue setting a user birthdate when system calendar is set to a non Gregorian calendar
+* Fixes issue saving alarms when system calendar is set to a non Gregorian calendar
+* Fixes issue with HealthKit trying to sync when system calendar is set to a non Gregorian calendar
+* Fixes issue requesting new Sleep Questons to display when system calendar is set to a non Gregorian calendar
+
+## 1.0.8.3
+
+New:
+
+* Tutorial demonstrating how to swipe between dates in the timeline view
+* Update timeline layout, additional tweaks
+
+Fixes:
+
+* Fix issues which occur when putting the phone to sleep on the "Allow Location" prompt
+* Fix "No internet" prompt briefly appearing on app launch
+
+
+## 1.0.8.2
+
+Fixes:
+
+* Fixes issue where it can launch into a black screen after restoring from a backup
+* Fixes jumpiness inside User guide within support
+* Fixes issue where some tutorial images were cropped when displayed,
+* Fixes issue where february 29 cannot be set, depending on current year
+
+## 1.0.8.1
+
+New:
+
+* Zendesk integration
+  * Search the User Guide
+  * create tickets from inside the app
+  * view tickets from inside the app
+
+Fixes:
+
+* smooth out animation in clock picker
+* Insights date now properly displays correctly when it is 1 week ago
+
+## 1.0.8.0
+
+Updated timeline appearance
+
+Known issues:
+
+* share button does not work
+* "times awake" in breakdown uses "m" as the unit
+* "Zoom"/history view is unavailable
+* Overlap between cells
+* Various tweaks missing
+
 ## 1.0.7.5
 
 Fixes:
@@ -53,6 +317,18 @@ Fixes:
 * removed calls that are firing even if user is not authenticated
 * no longer removing the Sense Id in analytics profile when unpairing
 
+## 1.0.7.0
+
+New:
+
+* Timeline style, work in progress
+
+Known issues:
+
+* Overlap between close events
+* Incomplete implementation of design
+* Poor performance on lower-range devices
+
 ## 1.0.6.2
 
 Fixes:
@@ -93,7 +369,7 @@ New:
 
 Fixes:
 
-* removed an extra call to set the LED after setting wifi credentials 
+* removed an extra call to set the LED after setting wifi credentials
 
 ## 1.0.5.5
 
@@ -233,7 +509,7 @@ Fixes:
 Fixes:
 
 * processing available time zones in settings in background to speed up transition
-* fixed issue where 1 of the time zone option was covered by the navigation bar 
+* fixed issue where 1 of the time zone option was covered by the navigation bar
 
 ## 1.0.4.0
 
@@ -424,7 +700,7 @@ Fixes:
 * fix issue where password update would fail if email is updated right before
 * fix issue where account settings would show grams rather than kg for weight
 * fix insight summary alignment issue on iOS 7 and when app goes in to foreground from background, while insight full view is shown
-* fix issue where notification preferences were cut off prematurely if you scroll 
+* fix issue where notification preferences were cut off prematurely if you scroll
 
 ## 1.0.2.2
 
@@ -606,7 +882,7 @@ Fixes:
 * fixed issue where saving an alarm can sometimes cause it to fail on iphone 5 and 4s.
 * fixed issue where you cannot cancel out of Pill pairing from settings
 * fixed issue where insight summary was being truncated
-* fixed issue during onboarding where the no BLE screen does not properly detect fast state changes 
+* fixed issue during onboarding where the no BLE screen does not properly detect fast state changes
 * errors when creating an account are more descriptive
 * fixed issue where SSID shown initially in devices may not reflect what Sense is currently configured to at the moment.
 * when you sign in, your time and temperature preferences are now pulled down
@@ -903,7 +1179,7 @@ conflicting builds so that Ben Rose can install build.
 New:
 
 * Added a Before You Sleep screen to describe Sense colors.  This replaces the
-  previous well done screen. 
+  previous well done screen.
 * Hooked up illustration for clipping your Sleep Pill
 
 Fixes:

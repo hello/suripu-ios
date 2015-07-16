@@ -14,7 +14,7 @@ static NSDateFormatter* dateFormatter;
 
 static NSString* const kSENAPIQuestionErrorDomain = @"is.hello.api.question";
 
-static NSString* const kSENAPIQuestionsPath = @"questions";
+static NSString* const kSENAPIQuestionsPath = @"v1/questions";
 static NSString* const kSENAPIQuestionPropId = @"id";
 static NSString* const kSENAPIQuestionPropQuestionAccountId = @"account_question_id";
 static NSString* const kSENAPIQuestionPropQuestionId = @"question_id";
@@ -98,6 +98,7 @@ static NSString* const kSENAPIQuestionTypeCheckbox = @"CHECKBOX";
     static dispatch_once_t onceToken = 0;
     dispatch_once(&onceToken, ^{
         dateFormatter = [[NSDateFormatter alloc] init];
+        [dateFormatter setCalendar:[[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian]];
         [dateFormatter setTimeZone:[NSTimeZone timeZoneWithName:@"GMT"]];
         [dateFormatter setDateFormat:@"yyyy-MM-dd"];
     });

@@ -10,7 +10,7 @@
 NSString* const SENAPIReachableNotification = @"SENAPIReachableNotification";
 NSString* const SENAPIUnreachableNotification = @"SENAPIUnreachableNotification";
 
-static NSString* const SENDefaultBaseURLPath = @"https://dev-api.hello.is/v1";
+static NSString* const SENDefaultBaseURLPath = @"https://dev-api.hello.is";
 static NSString* const SENAPIClientBaseURLPathKey = @"SENAPIClientBaseURLPathKey";
 static NSString* const SENAPIErrorLocalizedMessageKey = @"message";
 static AFHTTPSessionManager* sessionManager = nil;
@@ -132,11 +132,13 @@ SENAFSuccessBlock (^SENAPIClientRequestSuccessBlock)(SENAPIDataBlock) = ^SENAFSu
 {
     AFNetworkReachabilityStatus status = [note.userInfo[AFNetworkingReachabilityNotificationStatusItem] integerValue];
     switch (status) {
+        case AFNetworkReachabilityStatusUnknown:
+            // do nothing since this simply means it has not checked
+            break;
         case AFNetworkReachabilityStatusReachableViaWWAN:
         case AFNetworkReachabilityStatusReachableViaWiFi:
             [[NSNotificationCenter defaultCenter] postNotificationName:SENAPIReachableNotification object:nil];
             break;
-        case AFNetworkReachabilityStatusUnknown:
         case AFNetworkReachabilityStatusNotReachable:
         default:
             [[NSNotificationCenter defaultCenter] postNotificationName:SENAPIUnreachableNotification object:nil];

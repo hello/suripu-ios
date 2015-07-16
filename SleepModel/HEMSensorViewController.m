@@ -204,7 +204,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
 - (void)configureSensorValueViews
 {
-    UIColor* color = [UIColor colorForSensorWithCondition:self.sensor.condition];
+    UIColor* color = [UIColor colorForCondition:self.sensor.condition];
     NSDictionary* statusAttributes = [HEMMarkdown attributesForSensorMessage];
 
     self.valueLabel.textColor = color;
@@ -265,7 +265,7 @@ static CGFloat const HEMSensorValueMinLabelHeight = 68.f;
 
 - (void)refreshData
 {
-    if (![SENAuthorizationService isAuthorized])
+    if (![SENAuthorizationService isAuthorized] || [[UIApplication sharedApplication] applicationState] != UIApplicationStateActive)
         return;
     self.statusLabel.text = NSLocalizedString(@"activity.loading", nil);
     [SENAPIRoom hourlyHistoricalDataForSensor:self.sensor completion:^(id data, NSError* error) {

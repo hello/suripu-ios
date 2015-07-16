@@ -1,45 +1,50 @@
 
 #import <Foundation/Foundation.h>
 
-@class SENSleepResultSegment;
+@class SENTimelineSegment;
 @class HEMSleepSummaryCollectionViewCell;
 
-extern NSString* const HEMSleepEventTypeWakeUp;
-extern NSString* const HEMSleepEventTypeLight;
-extern NSString* const HEMSleepEventTypeMotion;
-extern NSString* const HEMSleepEventTypeNoise;
-extern NSString* const HEMSleepEventTypeSunrise;
-extern NSString* const HEMSleepEventTypeSunset;
-extern NSString* const HEMSleepEventTypeFallAsleep;
-extern NSString* const HEMSleepEventTypePartnerMotion;
-extern NSString* const HEMSleepEventTypeLightsOut;
-extern NSString* const HEMSleepEventTypeInBed;
-extern NSString* const HEMSleepEventTypeOutOfBed;
-extern NSString* const HEMSleepEventTypeAlarm;
-extern NSString* const HEMSleepEventTypeSleeping;
+extern NSString *const HEMSleepEventTypeWakeUp;
+extern NSString *const HEMSleepEventTypeLight;
+extern NSString *const HEMSleepEventTypeMotion;
+extern NSString *const HEMSleepEventTypeNoise;
+extern NSString *const HEMSleepEventTypeSunrise;
+extern NSString *const HEMSleepEventTypeSunset;
+extern NSString *const HEMSleepEventTypeFallAsleep;
+extern NSString *const HEMSleepEventTypePartnerMotion;
+extern NSString *const HEMSleepEventTypeLightsOut;
+extern NSString *const HEMSleepEventTypeInBed;
+extern NSString *const HEMSleepEventTypeOutOfBed;
+extern NSString *const HEMSleepEventTypeAlarm;
+extern NSString *const HEMSleepEventTypeSleeping;
 
 @protocol HEMSleepGraphActionDelegate <NSObject>
 
-@optional
+@required
 
-- (void)drawerButtonTapped:(UIButton*)button;
-- (void)shareButtonTapped:(UIButton*)button;
-- (void)zoomButtonTapped:(UIButton*)sender;
-- (BOOL)shouldHideShareButton;
-- (BOOL)shouldEnableZoomButton;
-- (void)didLoadCell:(UICollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath;
+- (void)didTapSummaryButton:(UIButton *)button;
+- (void)didTapDrawerButton:(UIButton *)button;
+- (void)didTapShareButton:(UIButton *)button;
+- (void)didTapDateButton:(UIButton *)button;
+- (BOOL)shouldHideSegmentCellContents;
+
 @end
 
 @interface HEMSleepGraphCollectionViewDataSource : NSObject <UICollectionViewDataSource>
 
-+ (NSString*)localizedNameForSleepEventType:(NSString*)eventType;
++ (NSString *)localizedNameForSleepEventType:(NSString *)eventType;
 
-- (instancetype)initWithCollectionView:(UICollectionView*)collectionView sleepDate:(NSDate*)date;
+- (instancetype)initWithCollectionView:(UICollectionView *)collectionView sleepDate:(NSDate *)date;
+
+/**
+ * Refetches the data from disk
+ */
+- (void)refreshData;
 
 /**
  *  Updates and reloads data
  */
-- (void)reloadData;
+- (void)reloadData:(void(^)(void))completion;
 
 /**
  *  Fetch the sleep data corresponding to a given index path
@@ -48,7 +53,7 @@ extern NSString* const HEMSleepEventTypeSleeping;
  *
  *  @return sleep data or nil
  */
-- (SENSleepResultSegment*)sleepSegmentForIndexPath:(NSIndexPath*)indexPath;
+- (SENTimelineSegment *)sleepSegmentForIndexPath:(NSIndexPath *)indexPath;
 
 /**
  *  Detect whether a segment represents sleep time elapsed or an event
@@ -57,7 +62,7 @@ extern NSString* const HEMSleepEventTypeSleeping;
  *
  *  @return YES if there is no event present on the computed segment
  */
-- (BOOL)segmentForSleepExistsAtIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)segmentForSleepExistsAtIndexPath:(NSIndexPath *)indexPath;
 
 /**
  *  Detect whether a segment represents a sleep event
@@ -66,15 +71,32 @@ extern NSString* const HEMSleepEventTypeSleeping;
  *
  *  @return YES if there is an event present on the computed segment
  */
-- (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath*)indexPath;
+- (BOOL)segmentForEventExistsAtIndexPath:(NSIndexPath *)indexPath;
 
 - (NSUInteger)numberOfSleepSegments;
 
-- (NSString*)titleTextForDate;
-
-- (HEMSleepSummaryCollectionViewCell*)sleepSummaryCell;
-
 - (BOOL)dateIsLastNight;
 
-@property (nonatomic, strong, readonly) SENSleepResult* sleepResult;
+/**
+ *  Tiny text for timestamps
+ *
+ *  @param date the date to format
+ *
+ *  @return the text
+ */
+- (NSAttributedString *)formattedTextForInlineTimestamp:(NSDate *)date;
+
+/**
+ *  @return the currently displayed text in the top bar for the date of sleep
+ */
+- (NSString*)dateTitle;
+
+/**
+ *  Set the top bar's state
+ *
+ *  @param isOpen: YES if the timeilne is currently opened. NO otherwise
+ */
+- (void)updateTimelineState:(BOOL)isOpen;
+
+@property (nonatomic, strong, readonly) SENTimeline *sleepResult;
 @end

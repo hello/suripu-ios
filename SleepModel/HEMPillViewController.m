@@ -193,13 +193,13 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 - (void)showAdvancedOptions:(id)sender {
     HEMActionSheetViewController* sheet =
         [HEMMainStoryboard instantiateActionSheetViewController];
-    [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [sheet setTitle:NSLocalizedString(@"settings.pill.advanced.option.title", nil)];
     
     __weak typeof (self) weakSelf = self;
     [sheet addOptionWithTitle:NSLocalizedString(@"settings.pill.advanced.option.replace-pill", nil)
                    titleColor:nil
                   description:NSLocalizedString(@"settings.pill.advanced.option.replace-pill.desc", nil)
+                    imageName:nil
                        action:^{
                            [weakSelf replacePill];
                        }];
@@ -212,7 +212,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
             [root setModalPresentationStyle:origStyle];
         }];
     }
-    [root presentViewController:sheet animated:YES completion:nil];
+    [root presentViewController:sheet animated:NO completion:nil];
 }
 
 - (void)replaceBattery:(id)sender {
@@ -225,7 +225,7 @@ static NSInteger const HEMPillActionsCellHeight = 124.0f;
 - (void)replacePill {
     NSString* title = NSLocalizedString(@"settings.pill.dialog.unpair-title", nil);
     NSString* messageFormat = NSLocalizedString(@"settings.pill.dialog.unpair-message.format", nil);
-    NSString* helpLink = NSLocalizedString(@"help.url.support", nil);
+    NSString* helpLink = NSLocalizedString(@"help.url.support.hyperlink-text", nil);
     
     NSArray* args = @[[[NSAttributedString alloc] initWithString:helpLink
                                                       attributes:[self dialogMessageAttributes:YES]]];

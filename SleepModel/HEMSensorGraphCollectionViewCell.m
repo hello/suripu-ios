@@ -70,7 +70,7 @@
     }
     self.graphDataSource = [[HEMLineGraphDataSource alloc] initWithDataSeries:graphData unit:sensor.unit];
     self.graphView.dataSource = self.graphDataSource;
-    UIColor* conditionColor = [UIColor colorForSensorWithCondition:sensor.condition];
+    UIColor* conditionColor = [UIColor colorForCondition:sensor.condition];
     self.graphView.colorLine = conditionColor;
     self.graphView.gradientBottom = [self newGradientForColor:conditionColor];
     [self.graphView reloadGraph];

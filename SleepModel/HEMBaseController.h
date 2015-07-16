@@ -8,9 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-extern CGFloat const kHEMIPhone4Height;
-extern CGFloat const kHEMIPhone5Height;
-
 @interface HEMBaseController : UIViewController
 
 @end

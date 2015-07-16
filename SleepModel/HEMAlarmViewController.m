@@ -62,7 +62,7 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    [HEMTutorial showTutorialForAlarmsIfNeeded];
+    [HEMTutorial showTutorialForAlarmsIfNeededFrom:self];
 }
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
@@ -122,11 +122,17 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 #pragma mark - Actions
 
 - (void)dismiss:(BOOL)saved {
+    if (!saved) {
+        self.navigationController.modalPresentationStyle = UIModalPresentationFullScreen;
+        self.navigationController.transitioningDelegate = nil;
+    }
     if (self.delegate) {
         if (saved) {
             [self.delegate didSaveAlarm:self.alarm from:self];
         } else { [self.delegate didCancelAlarmFrom:self]; }
-    } else { [self.navigationController dismissViewControllerAnimated:YES completion:NULL]; }
+    } else {
+        [self.navigationController dismissViewControllerAnimated:YES completion:NULL];
+    }
 }
 
 - (IBAction)dismissFromView:(id)sender {
@@ -134,8 +140,14 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 }
 
 - (IBAction)saveAndDismissFromView:(id)sender {
-    self.alarmCache.on = YES;
+    if ([HEMAlarmUtils timeIsTooSoonByHour:self.alarmCache.hour minute:self.alarmCache.minute]) {
+        [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"alarm.save-error.too-soon.title", nil)
+                                                message:NSLocalizedString(@"alarm.save-error.too-soon.message", nil)
+                                             controller:self];
+        return;
+    }
 
+    self.alarmCache.on = YES;
     [self updateAlarmFromCache:self.alarmCache];
     __weak typeof(self) weakSelf = self;
     [HEMAlarmUtils
@@ -199,7 +211,7 @@ static NSUInteger const HEMClockMinuteIncrement = 5;
 }
 
 - (IBAction)showHelpfulDialogAboutSmartness:(id)sender {
-    [HEMTutorial showTutorialForAlarmSmartness];
+    [HEMTutorial showTutorialForAlarmSmartnessFrom:self];
 }
 
 - (void)updateAlarmFromCache:(HEMAlarmCache *)cache {

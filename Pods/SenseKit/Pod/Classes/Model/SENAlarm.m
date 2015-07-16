@@ -205,7 +205,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
 {
     NSDate* date = [NSDate date];
     NSCalendarUnit flags = (NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitDay);
-    NSDateComponents* currentDateComponents = [[NSCalendar currentCalendar] components:flags fromDate:date];
+    NSDateComponents* currentDateComponents = [[NSCalendar autoupdatingCurrentCalendar] components:flags fromDate:date];
     NSInteger minuteOfDay = (currentDateComponents.hour * 60) + currentDateComponents.minute;
     NSInteger alarmMinuteOfDay = (self.hour * 60) + self.minute;
     NSDateComponents* diff = [NSDateComponents new];
@@ -213,7 +213,7 @@ static BOOL const SENAlarmDefaultSmartAlarmState = YES;
     if (alarmMinuteOfDay < minuteOfDay)
         diff.day = 1;
 
-    return [[NSCalendar currentCalendar] dateByAddingComponents:diff toDate:date options:0];
+    return [[NSCalendar autoupdatingCurrentCalendar] dateByAddingComponents:diff toDate:date options:0];
 }
 
 #pragma mark - persistence

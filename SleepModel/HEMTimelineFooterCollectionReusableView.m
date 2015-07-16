@@ -7,12 +7,12 @@
 //
 
 #import "HEMTimelineFooterCollectionReusableView.h"
+#import "HelloStyleKit.h"
 
 @implementation HEMTimelineFooterCollectionReusableView
 
-- (void)awakeFromNib
-{
-    self.backgroundColor = [UIColor whiteColor];
+- (void)awakeFromNib {
+    self.backgroundColor = [HelloStyleKit timelineGradientColor];
 }
 
 @end

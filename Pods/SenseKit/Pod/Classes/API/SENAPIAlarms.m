@@ -6,9 +6,9 @@
 
 @implementation SENAPIAlarms
 
-static NSString* const SENAPIAlarmsEndpoint = @"alarms";
-static NSString* const SENAPIAlarmSoundsEndpoint = @"alarms/sounds";
-static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"alarms/%.0f";
+static NSString* const SENAPIAlarmsEndpoint = @"v1/alarms";
+static NSString* const SENAPIAlarmSoundsEndpoint = @"v1/alarms/sounds";
+static NSString* const SENAPIAlarmsUpdateEndpointFormat = @"v1/alarms/%.0f";
 
 static SENAPIDataBlock SENAPIAlarmDataBlock(SENAPIDataBlock completion) {
     return ^(NSArray* data, NSError* error) {
@@ -106,7 +106,8 @@ static SENAPIDataBlock SENAPIAlarmDataBlock(SENAPIDataBlock completion) {
 + (NSDateComponents*)dateComponentsForAlarm:(SENAlarm*)alarm
 {
     NSCalendarUnit flags = (NSCalendarUnitHour|NSCalendarUnitMinute|NSCalendarUnitMonth|NSCalendarUnitYear|NSCalendarUnitDay);
-    return [[NSCalendar currentCalendar] components:flags fromDate:[alarm nextRingDate]];
+    NSCalendar* calendar = [[NSCalendar alloc] initWithCalendarIdentifier:NSCalendarIdentifierGregorian];
+    return [calendar components:flags fromDate:[alarm nextRingDate]];
 }
 
 + (NSArray*)repeatDaysForAlarm:(SENAlarm*)alarm

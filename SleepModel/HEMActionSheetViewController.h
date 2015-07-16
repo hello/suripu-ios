@@ -8,18 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+extern CGFloat const HEMActionSheetDefaultCellHeight;
+
 typedef void(^HEMActionSheetCallback)(void);
 
 @interface HEMActionSheetViewController : UIViewController
 
-/**
- * @property title
- *
- * @discussion
- * Optional text to be displayed above all the options that are added when the
- * controller is presented.
- */
-@property (nonatomic, copy) NSString* title;
+@property (nonatomic, assign, readonly) NSUInteger numberOfOptions;
 
 /**
  * @method addOptionWithTitle:action:
@@ -32,14 +27,16 @@ typedef void(^HEMActionSheetCallback)(void);
 /**
  * @method addOptionWithTitle:titleColor:description:action
  *
- * @param optionTitle: title to be displayed for the option
- * @param color:       optional color to be used for the title
- * @param description: optional description to be displayed below the title
- * @param action:      block to be invoked when the option is selected
+ * @param optionTitle title to be displayed for the option
+ * @param color       optional color to be used for the title
+ * @param description optional description to be displayed below the title
+ * @param imageName   optional image to display leading the discription
+ * @param action      block to be invoked when the option is selected
  */
 - (void)addOptionWithTitle:(NSString*)optionTitle
                 titleColor:(UIColor*)color
                description:(NSString*)description
+                 imageName:(NSString*)imageName
                     action:(HEMActionSheetCallback)action;
 
 /**
@@ -51,6 +48,35 @@ typedef void(^HEMActionSheetCallback)(void);
  * the background.
  */
 - (void)addDismissAction:(HEMActionSheetCallback)action;
+
+/**
+ * @method addConfirmationView:displayFor:forOptionWithTitle:
+ *
+ * @discussion
+ * Add a confirmation message to be displayed upon selection an option.  The
+ * confirmation will be shown for the display time specified, but only after
+ * the action block for the option is fired.  This is optional
+ *
+ * @param confirmationView: the view to be displayed.  The view will be adjusted
+ *                          at run time to the size of the actionsheet itself.
+ * @param displayTime:      the duration to display the view for
+ * @param title:            the option title this confirmation is meant for
+ */
+- (void)addConfirmationView:(UIView*)confirmationView
+                 displayFor:(CGFloat)displayTime
+         forOptionWithTitle:(NSString*)title;
+
+/**
+ * @method setCustomTitleView:
+ *
+ * @discussion
+ * Instead of using setTitle:, which would display a title above the options that
+ * can't be interacted with, you can optionally set a custom view.
+ *
+ * @param view: the custom view to set / display above the options.  The view will
+ *              be automatically resized to fit the controller
+ */
+- (void)setCustomTitleView:(UIView*)view;
 
 /**
  * @method show

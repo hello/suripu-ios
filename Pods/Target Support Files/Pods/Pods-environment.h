@@ -192,6 +192,12 @@
 #define COCOAPODS_VERSION_MINOR_SpinKit 2
 #define COCOAPODS_VERSION_PATCH_SpinKit 0
 
+// UICountingLabel
+#define COCOAPODS_POD_AVAILABLE_UICountingLabel
+#define COCOAPODS_VERSION_MAJOR_UICountingLabel 1
+#define COCOAPODS_VERSION_MINOR_UICountingLabel 2
+#define COCOAPODS_VERSION_PATCH_UICountingLabel 0
+
 // UIImageEffects
 #define COCOAPODS_POD_AVAILABLE_UIImageEffects
 #define COCOAPODS_VERSION_MAJOR_UIImageEffects 0
@@ -202,11 +208,18 @@
 #define COCOAPODS_POD_AVAILABLE_YapDatabase
 #define COCOAPODS_VERSION_MAJOR_YapDatabase 2
 #define COCOAPODS_VERSION_MINOR_YapDatabase 6
-#define COCOAPODS_VERSION_PATCH_YapDatabase 4
+#define COCOAPODS_VERSION_PATCH_YapDatabase 5
 
 // YapDatabase/standard
 #define COCOAPODS_POD_AVAILABLE_YapDatabase_standard
 #define COCOAPODS_VERSION_MAJOR_YapDatabase_standard 2
 #define COCOAPODS_VERSION_MINOR_YapDatabase_standard 6
-#define COCOAPODS_VERSION_PATCH_YapDatabase_standard 4
+#define COCOAPODS_VERSION_PATCH_YapDatabase_standard 5
+
+// ZendeskSDK
+#define COCOAPODS_POD_AVAILABLE_ZendeskSDK
+// This library does not follow semantic-versioning,
+// so we were not able to define version macros.
+// Please contact the author.
+// Version: 1.3.0.1.
 

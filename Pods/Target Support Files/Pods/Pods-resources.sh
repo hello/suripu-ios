@@ -96,6 +96,8 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle"
   install_resource "SVWebViewController/SVWebViewController/zh-Hans.lproj"
   install_resource "SVWebViewController/SVWebViewController/zh-Hant.lproj"
+  install_resource "ZendeskSDK/ZendeskSDK.bundle"
+  install_resource "ZendeskSDK/ZendeskSDKStrings.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "Mixpanel/Mixpanel/Media.xcassets/MPArrowLeft.imageset/MPArrowLeft.png"
@@ -136,6 +138,8 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle"
   install_resource "SVWebViewController/SVWebViewController/zh-Hans.lproj"
   install_resource "SVWebViewController/SVWebViewController/zh-Hant.lproj"
+  install_resource "ZendeskSDK/ZendeskSDK.bundle"
+  install_resource "ZendeskSDK/ZendeskSDKStrings.bundle"
 fi
 if [[ "$CONFIGURATION" == "Beta" ]]; then
   install_resource "Mixpanel/Mixpanel/Media.xcassets/MPArrowLeft.imageset/MPArrowLeft.png"
@@ -176,6 +180,8 @@ if [[ "$CONFIGURATION" == "Beta" ]]; then
   install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle"
   install_resource "SVWebViewController/SVWebViewController/zh-Hans.lproj"
   install_resource "SVWebViewController/SVWebViewController/zh-Hant.lproj"
+  install_resource "ZendeskSDK/ZendeskSDK.bundle"
+  install_resource "ZendeskSDK/ZendeskSDKStrings.bundle"
 fi
 if [[ "$CONFIGURATION" == "Dev" ]]; then
   install_resource "Mixpanel/Mixpanel/Media.xcassets/MPArrowLeft.imageset/MPArrowLeft.png"
@@ -216,6 +222,8 @@ if [[ "$CONFIGURATION" == "Dev" ]]; then
   install_resource "SVWebViewController/SVWebViewController/SVWebViewController.bundle"
   install_resource "SVWebViewController/SVWebViewController/zh-Hans.lproj"
   install_resource "SVWebViewController/SVWebViewController/zh-Hant.lproj"
+  install_resource "ZendeskSDK/ZendeskSDK.bundle"
+  install_resource "ZendeskSDK/ZendeskSDKStrings.bundle"
 fi
 
 rsync -avr --copy-links --no-relative --exclude '*/.svn/*' --files-from="$RESOURCES_TO_COPY" / "${CONFIGURATION_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}"

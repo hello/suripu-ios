@@ -6,65 +6,49 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import <SenseKit/SENSleepResult.h>
+#import <SenseKit/SENTimeline.h>
 #import "UIColor+HEMStyle.h"
 #import "HelloStyleKit.h"
 
-NSUInteger const HEMSleepScoreUnknown = 0;
-NSUInteger const HEMSleepScoreLow = 50;
-NSUInteger const HEMSleepScoreMedium = 80;
-NSUInteger const HEMSleepScoreHigh = 100;
-
 @implementation UIColor (HEMStyle)
 
-+ (UIColor*)colorForGenericMotionDepth:(NSUInteger)depth
-{
-    if (depth == SENSleepResultSegmentDepthAwake)
-        return [UIColor whiteColor];
-    else if (depth == SENSleepResultSegmentDepthDeep)
-        return [UIColor colorWithWhite:0.94 alpha:1.f];
-    else if (depth < SENSleepResultSegmentDepthMedium)
-        return [UIColor colorWithWhite:0.99 alpha:1.f];
-    else
-        return [UIColor colorWithWhite:0.97 alpha:1.f];
-}
-
-+ (UIColor*)colorForSleepDepth:(NSUInteger)sleepDepth
-{
-    if (sleepDepth == SENSleepResultSegmentDepthAwake)
-        return [HelloStyleKit lightSleepColor];
-    else if (sleepDepth == SENSleepResultSegmentDepthDeep)
-        return [HelloStyleKit deepSleepColor];
-    else if (sleepDepth < SENSleepResultSegmentDepthMedium)
-        return [HelloStyleKit lightSleepColor];
-    else
-        return [HelloStyleKit intermediateSleepColor];
-}
-
-+ (UIColor *)colorForSensorWithCondition:(SENSensorCondition)condition
-{
++ (UIColor *)colorForCondition:(SENCondition)condition {
     switch (condition) {
-        case SENSensorConditionAlert:
+        case SENConditionAlert:
             return [HelloStyleKit alertSensorColor];
-        case SENSensorConditionWarning:
+        case SENConditionWarning:
             return [HelloStyleKit warningSensorColor];
-        case SENSensorConditionIdeal:
+        case SENConditionIdeal:
             return [HelloStyleKit idealSensorColor];
         default:
             return [HelloStyleKit unknownSensorColor];
     }
 }
 
-+ (UIColor *)colorForSleepScore:(NSInteger)sleepScore
-{
-    if (sleepScore == HEMSleepScoreUnknown)
++ (UIColor *)colorForSleepState:(SENTimelineSegmentSleepState)state {
+    switch (state) {
+        case SENTimelineSegmentSleepStateAwake:
+            return [HelloStyleKit awakeSleepColor];
+        case SENTimelineSegmentSleepStateLight:
+            return [HelloStyleKit lightSleepColor];
+        case SENTimelineSegmentSleepStateMedium:
+            return [HelloStyleKit intermediateSleepColor];
+        case SENTimelineSegmentSleepStateSound:
+            return [HelloStyleKit deepSleepColor];
+        default:
+            return [UIColor clearColor];
+    }
+}
+
++ (UIColor *)colorForSleepScore:(NSInteger)score {
+    if (score == 0)
         return [HelloStyleKit unknownSensorColor];
-    else if (sleepScore < HEMSleepScoreLow)
+    else if (score < 50)
         return [HelloStyleKit alertSensorColor];
-    else if (sleepScore < HEMSleepScoreMedium)
+    else if (score < 80)
         return [HelloStyleKit warningSensorColor];
-    else
-        return [HelloStyleKit idealSensorColor];
+
+    return [HelloStyleKit idealSensorColor];
 }
 
 @end

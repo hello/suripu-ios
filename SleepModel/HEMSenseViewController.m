@@ -8,11 +8,13 @@
 #import <SenseKit/SENDevice.h>
 #import <SenseKit/SENSenseManager.h>
 #import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENAPITimeZone.h>
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
 #import "NSMutableAttributedString+HEMFormat.h"
 #import "NSDate+HEMRelative.h"
+#import "NSTimeZone+HEMMapping.h"
 
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
@@ -318,12 +320,15 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     }];
 }
 
+- (void)dismissActivity:(void(^)(void))completion {
+    [[self activityView] dismissWithResultText:nil showSuccessMark:NO remove:YES completion:completion];
+}
+
 #pragma mark Advanced Options
 
 - (void)showAdvancedOptions:(id)sender {
     HEMActionSheetViewController* sheet =
         [HEMMainStoryboard instantiateActionSheetViewController];
-    [sheet setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     [sheet setTitle:NSLocalizedString(@"settings.sense.advanced.option.title", nil)];
     
     __weak typeof (self) weakSelf = self;
@@ -331,6 +336,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     [sheet addOptionWithTitle:NSLocalizedString(@"settings.sense.advanced.option.replace-sense", nil)
                    titleColor:nil
                   description:NSLocalizedString(@"settings.sense.advanced.option.replace-sense.desc", nil)
+                    imageName:nil
                        action:^{
                            [weakSelf replaceSense];
                        }];
@@ -339,6 +345,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         [sheet addOptionWithTitle:NSLocalizedString(@"settings.sense.advanced.option.factory-reset", nil)
                        titleColor:[UIColor redColor]
                       description:NSLocalizedString(@"settings.sense.advanced.option.factory-reset.desc", nil)
+                        imageName:nil
                            action:^{
                                [weakSelf factoryReset];
                            }];
@@ -353,7 +360,7 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
         }];
     }
     
-    [root presentViewController:sheet animated:YES completion:nil];
+    [root presentViewController:sheet animated:NO completion:nil];
 }
 
 #pragma mark Unpair Sense
@@ -415,10 +422,60 @@ static CGFloat const HEMSenseActionHeight = 62.0f;
     }];
 }
 
-#pragma mark Timezone
+#pragma mark Time Zone
 
 - (void)changeTimeZone:(id)sender {
-    [self performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:self];
+    NSString* title = NSLocalizedString(@"alerts.timezone.title", nil);
+    NSString* messageFormat = NSLocalizedString(@"timezone.alert.message.use-local.format", nil);
+    NSArray* args = @[[[NSAttributedString alloc] initWithString:[NSTimeZone localTimeZoneMappedName]
+                                                      attributes:[self dialogMessageAttributes:YES]]];
+    
+    NSAttributedString* message =
+    [[NSMutableAttributedString alloc] initWithFormat:messageFormat
+                                                 args:args
+                                            baseColor:[UIColor blackColor]
+                                             baseFont:[UIFont dialogMessageFont]];
+    
+    HEMAlertViewController* dialogVC = [HEMAlertViewController new];
+    [dialogVC setTitle:title];
+    [dialogVC setAttributedMessage:message];
+    [dialogVC setDefaultButtonTitle:NSLocalizedString(@"timezone.action.use-local", nil)];
+    [dialogVC setViewToShowThrough:self.view];
+    [dialogVC addAction:NSLocalizedString(@"timezone.action.select-manually", nil) primary:NO actionBlock:^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self performSegueWithIdentifier:[HEMMainStoryboard timezoneSegueIdentifier] sender:self];
+        }];
+
+    }];
+    [dialogVC showFrom:self onDefaultActionSelected:^{
+        [self dismissViewControllerAnimated:YES completion:^{
+            [self updateToLocalTimeZone];
+        }];
+    }];
+}
+
+- (void)updateToLocalTimeZone {
+    NSString* progressMessage = NSLocalizedString(@"timezone.activity.message", nil);
+    [self showActivityText:progressMessage completion:^{
+        __weak typeof(self) weakSelf = self;
+        NSTimeZone* timeZone = [NSTimeZone localTimeZone];
+        [SENAPITimeZone setTimeZone:timeZone completion:^(id data, NSError *error) {
+            __strong typeof(weakSelf) strongSelf = self;
+            if (!error) {
+                NSString* tz = [timeZone name] ?: @"unknown";
+                [SENAnalytics track:HEMAnalyticsEventTimeZoneChanged
+                         properties:@{HEMAnalyticsEventPropTZ : tz}];
+
+                [strongSelf dismissActivityWithSuccess:nil];
+            } else {
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [strongSelf dismissActivity:^{
+                    [strongSelf showMessageDialog:NSLocalizedString(@"timezone.error.message", nil)
+                                            title:NSLocalizedString(@"timezone.error.title", nil)];
+                }];
+            }
+        }];
+    }];
 }
 
 #pragma mark Enable Pairing Mode

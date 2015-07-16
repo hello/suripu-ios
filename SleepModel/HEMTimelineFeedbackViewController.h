@@ -10,12 +10,10 @@
 
 extern NSString* const HEMTimelineFeedbackSuccessNotification;
 
-@class SENSleepResultSegment;
+@class SENTimelineSegment;
 
 @interface HEMTimelineFeedbackViewController : UIViewController
 
-+ (BOOL)canAdjustTimeForSegment:(SENSleepResultSegment*)segment;
-
-@property (nonatomic, strong) SENSleepResultSegment* segment;
+@property (nonatomic, strong) SENTimelineSegment* segment;
 @property (nonatomic, strong) NSDate* dateForNightOfSleep;
 @end

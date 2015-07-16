@@ -1,5 +1,5 @@
 
-#import <SenseKit/SENSleepResult.h>
+#import <SenseKit/SENTimeline.h>
 
 #import "HEMMiniSleepHistoryView.h"
 #import "UIColor+HEMStyle.h"
@@ -12,8 +12,6 @@
 
 @implementation HEMMiniSleepHistoryView
 
-static CGFloat const HEMMiniSleepBandWidth = 1.f;
-
 - (void)awakeFromNib
 {
     self.backgroundColor = [UIColor clearColor];
@@ -21,12 +19,12 @@ static CGFloat const HEMMiniSleepBandWidth = 1.f;
 
 - (void)reloadData
 {
-    SENSleepResultSegment* earliestSegment = [self.sleepDataSegments firstObject];
-    SENSleepResultSegment* latestSegment = [self.sleepDataSegments lastObject];
+    SENTimelineSegment* earliestSegment = [self.sleepDataSegments firstObject];
+    SENTimelineSegment* latestSegment = [self.sleepDataSegments lastObject];
     CGFloat duration = [self durationWithStartingSegment:earliestSegment endingSegment:latestSegment];
     if (duration < 0)
         duration = [self durationWithStartingSegment:latestSegment endingSegment:earliestSegment];
-    self.secondsPerPoint = duration / CGRectGetHeight(self.bounds);
+    self.secondsPerPoint = duration / (CGRectGetHeight(self.bounds)*1.5);
     [self setNeedsDisplay];
 }
 
@@ -45,24 +43,17 @@ static CGFloat const HEMMiniSleepBandWidth = 1.f;
 
 - (void)drawSleepDepthInRect:(CGRect)rect
 {
+    CGFloat const minMiniSleepHeight = 4.f;
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGFloat startYOffset = CGRectGetMinY(rect);
-    for (SENSleepResultSegment* segment in self.sleepDataSegments) {
-        NSTimeInterval duration = [self durationForSegment:segment];
-        CGFloat endYOffset = startYOffset + (duration/self.secondsPerPoint);
+    for (SENTimelineSegment* segment in self.sleepDataSegments) {
+        NSTimeInterval duration = segment.duration;
+        CGFloat endYOffset = startYOffset + MAX(duration/self.secondsPerPoint, minMiniSleepHeight);
         CGFloat endXOffset = [self xOffsetForSleepDepth:segment.sleepDepth];
         CGFloat height = endYOffset - startYOffset;
-        CGFloat startXOffset = CGRectGetMinX(rect) + (CGRectGetWidth(rect) - endXOffset)/2;
-        CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);
-        CGRect fillRect = CGRectMake(startXOffset, startYOffset, endXOffset, height);
+        CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepState:segment.sleepState].CGColor);
+        CGRect fillRect = CGRectMake(0, startYOffset, endXOffset, height);
         CGContextFillRect(ctx, fillRect);
-
-        CGRect bandRect = fillRect;
-        bandRect.size.width = HEMMiniSleepBandWidth;
-        bandRect.origin.x = CGRectGetMidX(rect) - HEMMiniSleepBandWidth/2;
-        CGContextSetBlendMode(ctx, kCGBlendModeMultiply);
-        CGContextSetFillColorWithColor(ctx, [UIColor colorForSleepDepth:segment.sleepDepth].CGColor);
-        CGContextFillRect(ctx, bandRect);
         startYOffset = endYOffset;
     }
 }
@@ -74,22 +65,17 @@ static CGFloat const HEMMiniSleepBandWidth = 1.f;
 
 #pragma mark - Data Parsing
 
-- (CGFloat)durationWithStartingSegment:(SENSleepResultSegment*)earliestSegment
-                         endingSegment:(SENSleepResultSegment*)latestSegment
+- (CGFloat)durationWithStartingSegment:(SENTimelineSegment*)earliestSegment
+                         endingSegment:(SENTimelineSegment*)latestSegment
 {
     NSTimeInterval startInterval = [self timeIntervalForSegment:earliestSegment];
-    NSTimeInterval endInterval = [self timeIntervalForSegment:latestSegment] + [self durationForSegment:latestSegment];
+    NSTimeInterval endInterval = [self timeIntervalForSegment:latestSegment] + latestSegment.duration;
     return endInterval - startInterval;
 }
 
-- (NSTimeInterval)timeIntervalForSegment:(SENSleepResultSegment*)segment
+- (NSTimeInterval)timeIntervalForSegment:(SENTimelineSegment*)segment
 {
     return [segment.date timeIntervalSince1970];
-}
-
-- (NSTimeInterval)durationForSegment:(SENSleepResultSegment*)segment
-{
-    return [segment.duration doubleValue];
 }
 
 @end

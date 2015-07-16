@@ -1,5 +1,5 @@
 
-#import <SenseKit/SENSleepResult.h>
+#import <SenseKit/SENTimeline.h>
 #import <SenseKit/SENAPITimeline.h>
 #import "HEMSleepHistoryViewController.h"
 #import "HEMMiniGraphCollectionViewCell.h"
@@ -13,6 +13,7 @@
 @property (weak, nonatomic) IBOutlet UILabel* timeFrameLabel;
 @property (strong, nonatomic) NSDateFormatter* dayOfWeekFormatter;
 @property (strong, nonatomic) NSDateFormatter* dayFormatter;
+@property (strong, nonatomic) NSDateFormatter* monthFormatter;
 @property (strong, nonatomic) NSDateFormatter* monthYearFormatter;
 @property (strong, nonatomic) NSMutableArray* sleepDataSummaries;
 @property (strong, nonatomic) NSDate* startDate;
@@ -24,6 +25,7 @@
 @implementation HEMSleepHistoryViewController
 
 static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
+static NSUInteger const HEMSleepDataCapacity = 200;
 
 - (void)viewDidLoad
 {
@@ -75,8 +77,10 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     self.dayFormatter.dateFormat = @"d";
     self.dayOfWeekFormatter = [NSDateFormatter new];
     self.dayOfWeekFormatter.dateFormat = @"EEEE";
+    self.monthFormatter = [NSDateFormatter new];
+    self.monthFormatter.dateFormat = @"MMMM";
     self.monthYearFormatter = [NSDateFormatter new];
-    self.monthYearFormatter.dateFormat = @"MMMM";
+    self.monthYearFormatter.dateFormat = @"MMMM yyyy";
 }
 
 - (void)configureBackgroundColors
@@ -90,27 +94,26 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (void)loadData
 {
-    static NSInteger const sleepDataCapacity = 120;
-    self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:sleepDataCapacity];
+    self.sleepDataSummaries = [[NSMutableArray alloc] initWithCapacity:HEMSleepDataCapacity];
     NSDateComponents* components = [NSDateComponents new];
     NSDate* today = [[NSDate date] dateAtMidnight];
-    for (int i = sleepDataCapacity; i > 0; i--) {
+    for (int i = HEMSleepDataCapacity; i > 0; i--) {
         components.day = -i;
         NSDate* date = [self.calendar dateByAddingComponents:components
                                                       toDate:today
                                                      options:0];
-        [self.sleepDataSummaries addObject:[SENSleepResult sleepResultForDate:date]];
+        [self.sleepDataSummaries addObject:[SENTimeline timelineForDate:date]];
     }
 }
 
 - (void)scrollToSelectedDateAnimated:(BOOL)animated
 {
-    NSDate* initialDate = [(SENSleepResult*)[self.sleepDataSummaries firstObject] date];
+    NSDate* initialDate = [(SENTimeline*)[self.sleepDataSummaries firstObject] date];
     NSDateComponents *components = [self.calendar components:NSDayCalendarUnit
                                                     fromDate:initialDate
                                                       toDate:self.selectedDate
                                                      options:0];
-    NSInteger index = components.day;
+    NSInteger index = components.day + 1;
     NSInteger item = MIN(index, [self collectionView:self.historyCollectionView numberOfItemsInSection:0] - 1);
     NSIndexPath* indexPath = [NSIndexPath indexPathForItem:item inSection:0];
     [self.historyCollectionView scrollToItemAtIndexPath:indexPath
@@ -122,16 +125,35 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 {
     if (self.selectedDate) {
         [self scrollToSelectedDateAnimated:NO];
-        self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:self.selectedDate];
+        [self updateTimeFrameLabelWithDate:self.selectedDate];
     } else {
-        NSDate* date = [(SENSleepResult*)[self.sleepDataSummaries firstObject] date];
-        self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:date];
+        NSDate* date = [(SENTimeline*)[self.sleepDataSummaries firstObject] date];
+        [self updateTimeFrameLabelWithDate:date];
     }
+}
+
+- (BOOL)currentDateHasSameYearAsDate:(NSDate*)date
+{
+    NSCalendarUnit units = NSYearCalendarUnit;
+    NSDateComponents* dateComponents = [self.calendar components:units fromDate:date];
+    NSDateComponents* currentDateComponents = [self.calendar components:units fromDate:[NSDate date]];
+    return dateComponents.year == currentDateComponents.year;
 }
 
 - (IBAction)scrollToLastNight:(id)sender {
     self.selectedDate = [NSDate date];
     [self scrollToSelectedDateAnimated:YES];
+}
+
+- (void)updateTimeFrameLabelWithDate:(NSDate*)date
+{
+    if (!date)
+        return;
+    if ([self currentDateHasSameYearAsDate:date]) {
+        self.timeFrameLabel.text = [self.monthFormatter stringFromDate:date];
+    } else {
+        self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:date];
+    }
 }
 
 #pragma mark - UICollectionViewDataSource
@@ -141,9 +163,10 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
     return 1;
 }
 
+// offsets number of rows by one to fudge the first cell not being selectable
 - (NSInteger)collectionView:(UICollectionView*)collectionView numberOfItemsInSection:(NSInteger)section
 {
-    return self.sleepDataSummaries.count;
+    return self.sleepDataSummaries.count + 1;
 }
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView cellForItemAtIndexPath:(NSIndexPath*)indexPath
@@ -153,13 +176,31 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (UICollectionViewCell*)collectionView:(UICollectionView*)collectionView sleepHistoryCellForItemAtIndexPath:(NSIndexPath*)indexPath
 {
-    SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
     HEMMiniGraphCollectionViewCell* cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"timeSliceCell" forIndexPath:indexPath];
-    [cell.sleepScoreView setSleepScore:[sleepResult.score integerValue]];
-    [cell.graphView setSleepDataSegments:sleepResult.segments];
-    cell.dayLabel.text = [self.dayFormatter stringFromDate:sleepResult.date];
-    cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:sleepResult.date] uppercaseString];
+    if (indexPath.row > 0) {
+        SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
+        [cell.sleepScoreView setSleepScore:[sleepResult.score integerValue]];
+        [cell.graphView setSleepDataSegments:sleepResult.segments];
+        cell.dayLabel.text = [self.dayFormatter stringFromDate:sleepResult.date];
+        cell.dayOfWeekLabel.text = [[self.dayOfWeekFormatter stringFromDate:sleepResult.date] uppercaseString];
+        cell.rightBorderView.hidden = indexPath.row == HEMSleepDataCapacity;
+        cell.leftBorderView.hidden = indexPath.row == 1;
+    }
+    cell.hidden = indexPath.row == 0;
     return cell;
+}
+
+- (SENTimeline*)resultAtIndexPath:(NSIndexPath*)indexPath {
+    NSInteger index = [self indexAtIndexPath:indexPath];
+    if (index == NSNotFound)
+        return nil;
+    return [self.sleepDataSummaries objectAtIndex:index];
+}
+
+- (NSInteger)indexAtIndexPath:(NSIndexPath*)indexPath {
+    if (indexPath.row == 0)
+        return NSNotFound;
+    return indexPath.row - 1;
 }
 
 #pragma mark - UICollectionViewDelegate
@@ -167,7 +208,7 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 - (void)collectionView:(UICollectionView*)collectionView didSelectItemAtIndexPath:(NSIndexPath*)indexPath
 {
     [collectionView deselectItemAtIndexPath:indexPath animated:NO];
-    SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
+    SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
     self.selectedDate = sleepResult.date;
     NSIndexPath* centeredIndexPath = [self indexPathAtCenter];
     if ([indexPath isEqual:centeredIndexPath]) {
@@ -197,9 +238,9 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView
 {
     NSIndexPath* indexPath = [self indexPathAtCenter];
-    if (indexPath) {
-        SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:indexPath.row];
-        self.timeFrameLabel.text = [self.monthYearFormatter stringFromDate:sleepResult.date];
+    if (indexPath.row > 0) {
+        SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
+        [self updateTimeFrameLabelWithDate:sleepResult.date];
     }
 }
 
@@ -221,26 +262,25 @@ static CGFloat const HEMSleepHistoryCellWidthRatio = 0.359375f;
 
 - (void)fetchTimelineForResultAtRow:(NSUInteger)row
 {
-    SENSleepResult* sleepResult = [self.sleepDataSummaries objectAtIndex:row];
-    if (sleepResult.segments.count > 0)
+    NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
+    SENTimeline* sleepResult = [self resultAtIndexPath:indexPath];
+    if (!sleepResult.date || sleepResult.segments.count > 0)
         return;
 
     __weak typeof(self) weakSelf = self;
-    [SENAPITimeline timelineForDate:sleepResult.date completion:^(NSArray* timelines, NSError* error) {
+    [SENAPITimeline timelineForDate:sleepResult.date completion:^(SENTimeline* timeline, NSError* error) {
         typeof(weakSelf) strongSelf = weakSelf;
-        if (error)
+        if (error || !timeline.date)
             return;
 
-        NSDictionary* timeline = [timelines firstObject];
-        NSArray* segments = timeline[@"segments"];
-        if (segments.count == 0)
-            return;
-
-        BOOL didUpdate = [sleepResult updateWithDictionary:[timelines firstObject]];
+        BOOL didUpdate = ![sleepResult isEqual:timeline];
         if (didUpdate) {
-            [sleepResult save];
-            NSIndexPath* indexPath = [NSIndexPath indexPathForRow:row inSection:0];
-            [strongSelf.historyCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+            [timeline save];
+            NSInteger index = [self indexAtIndexPath:indexPath];
+            if (index != NSNotFound) {
+                self.sleepDataSummaries[[self indexAtIndexPath:indexPath]] = timeline;
+                [strongSelf.historyCollectionView reloadItemsAtIndexPaths:@[indexPath]];
+            }
         }
     }];
 }

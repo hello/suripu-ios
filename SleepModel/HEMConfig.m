@@ -21,6 +21,11 @@ static NSString* const HEMConfigCrashTokenPlistKey = @"SenseCrashReportsToken";
 // server, but until then, leave it here.
 static NSString* const HEMConfigAllowSupportOptions = @"SenseAllowSupportOptions";
 
+// Zendesk SDK configurations
+static NSString* const HEMConfigZendeskTokenPlistKey = @"SenseZendeskToken";
+static NSString* const HEMConfigZendeskURLPlistKey = @"SenseZendeskURL";
+static NSString* const HEMConfigZendeskClientIdPlistKey = @"SenseZendeskClientId";
+
 @implementation HEMConfig
 
 + (NSString*)stringForConfig:(HEMConf)config {
@@ -36,6 +41,12 @@ static NSString* const HEMConfigAllowSupportOptions = @"SenseAllowSupportOptions
             return [bundle objectForInfoDictionaryKey:HEMConfigAnalyticsTokenPlistKey];
         case HEMConfAllowDebugOptions:
             return [bundle objectForInfoDictionaryKey:HEMConfigAllowSupportOptions];
+        case HEMConfZendeskToken:
+            return [bundle objectForInfoDictionaryKey:HEMConfigZendeskTokenPlistKey];
+        case HEMConfZendeskURL:
+            return [bundle objectForInfoDictionaryKey:HEMConfigZendeskURLPlistKey];
+        case HEMConfZendeskClientId:
+            return [bundle objectForInfoDictionaryKey:HEMConfigZendeskClientIdPlistKey];
         default:
             return nil;
     }

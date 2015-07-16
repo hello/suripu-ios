@@ -19,6 +19,7 @@
 #import "HEMStyledNavigationViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HelloStyleKit.h"
+#import "HEMTutorial.h"
 
 @interface HEMDebugController()<MFMailComposeViewControllerDelegate>
 
@@ -53,11 +54,10 @@
 }
 
 - (void)presentOptions:(HEMActionSheetViewController*)optionsVC {
-    [optionsVC setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
     if (![[self presentingController] respondsToSelector:@selector(presentationController)]) {
         [[self presentingController] setModalPresentationStyle:UIModalPresentationCurrentContext];
     }
-    [[self presentingController] presentViewController:optionsVC animated:YES completion:nil];
+    [[self presentingController] presentViewController:optionsVC animated:NO completion:nil];
 }
 
 - (void)showSupportOptions {
@@ -71,6 +71,7 @@
     [self addResetCheckpointOptionTo:sheet];
     [self addLedOptionTo:sheet];
     [self addRoomCheckOptionTo:sheet];
+    [self addResetTutorialsOptionTo:sheet];
     [self addCancelOptionTo:sheet];
     
     [self setSupportOptionController:sheet];
@@ -205,6 +206,16 @@
         [self setRoomCheckViewController:nil];
     }
     [[NSNotificationCenter defaultCenter] removeObserver:self name:HEMOnboardingNotificationComplete object:nil];
+}
+
+#pragma mark Tutorials
+
+- (void)addResetTutorialsOptionTo:(HEMActionSheetViewController*)sheet {
+    __weak typeof(self) weakSelf = self;
+    [sheet addOptionWithTitle:NSLocalizedString(@"debug.option.reset-tutorials", nil) action:^{
+        [HEMTutorial resetTutorials];
+        [weakSelf setSupportOptionController:nil];
+    }];
 }
 
 #pragma mark Cancel

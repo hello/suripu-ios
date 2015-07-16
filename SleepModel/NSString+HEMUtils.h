@@ -23,4 +23,13 @@
  */
 - (NSString*)trim;
 
+/**
+ * Calculate the neccessary height to display the string given the width constraint
+ * and the font used for the text
+ * 
+ * @param width: the width constraint
+ * @param font: the font to be used for the text
+ */
+- (CGFloat)heightBoundedByWidth:(CGFloat)width usingFont:(UIFont*)font;
+
 @end

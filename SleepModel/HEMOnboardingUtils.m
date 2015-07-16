@@ -100,36 +100,31 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
     [self saveOnboardingCheckpoint:HEMOnboardingCheckpointStart];
 }
 
++ (UIViewController*)onboardingRootViewController {
+    UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
+                                                                   bundle:[NSBundle mainBundle]];
+    return [onboardingStoryboard instantiateInitialViewController];
+}
+
 + (UIViewController*)onboardingControllerForCheckpoint:(HEMOnboardingCheckpoint)checkpoint force:(BOOL)force {
-    
-    UIViewController* onboardingController = nil;
-    switch (checkpoint) {
-        case HEMOnboardingCheckpointStart: {
-            if (![SENAuthorizationService isAuthorized] || force) {
-                UIStoryboard* onboardingStoryboard = [UIStoryboard storyboardWithName:@"Onboarding"
-                                                                               bundle:[NSBundle mainBundle]];
-                onboardingController = [onboardingStoryboard instantiateInitialViewController];
-            }
-            break;
-        }
-        case HEMOnboardingCheckpointAccountCreated: {
-            onboardingController = [HEMOnboardingStoryboard instantiateDobViewController];
-            break;
-        }
-        case HEMOnboardingCheckpointAccountDone: {
-            onboardingController = [HEMOnboardingStoryboard instantiateSenseSetupViewController];
-            break;
-        }
-        case HEMOnboardingCheckpointSenseDone: {
-            onboardingController = [HEMOnboardingStoryboard instantiatePillDescriptionViewController];
-            break;
-        }
-        case HEMOnboardingCheckpointPillDone:
-        default: {
-            break;
-        }
+    if (![SENAuthorizationService isAuthorized] || force) {
+        [self resetOnboardingCheckpoint];
+        return [self onboardingRootViewController];
     }
-    return onboardingController;
+
+    switch (checkpoint) {
+        case HEMOnboardingCheckpointStart:
+            return [self onboardingRootViewController];
+        case HEMOnboardingCheckpointAccountCreated:
+            return [HEMOnboardingStoryboard instantiateDobViewController];
+        case HEMOnboardingCheckpointAccountDone:
+            return [HEMOnboardingStoryboard instantiateSenseSetupViewController];
+        case HEMOnboardingCheckpointSenseDone:
+            return [HEMOnboardingStoryboard instantiatePillDescriptionViewController];
+        case HEMOnboardingCheckpointPillDone:
+        default:
+            return nil;
+    }
 }
 
 #pragma mark - Errors

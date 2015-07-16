@@ -1,9 +1,10 @@
 
 #import <UIKit/UIKit.h>
+#import <SenseKit/SENCondition.h>
 
 @interface HEMSleepScoreGraphView : UIView
 
-- (void)setSleepScore:(NSInteger)sleepScore;
-- (void)setSleepScore:(NSInteger)sleepScore animated:(BOOL)animated;
-- (void)setSleepScoreDateText:(NSString*)sleepScoreDateText;
+- (void)setScore:(NSInteger)sleepScore condition:(SENCondition)condition animated:(BOOL)animated;
+- (BOOL)isLoading;
+- (void)setLoading:(BOOL)loading;
 @end

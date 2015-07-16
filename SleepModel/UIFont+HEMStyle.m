@@ -70,6 +70,11 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameLight size:20.f];
 }
 
++ (UIFont*)iPhone4SSettingsTitleFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.f];
+}
+
 + (UIFont*)signOutFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameMedium size:16.f];
@@ -150,34 +155,39 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMNumberFontFamilyNameMedium size:11.f];
 }
 
++ (UIFont*)timelineBreakdownMessageFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
+}
+
++ (UIFont*)timelineBreakdownMessageBoldFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.f];
+}
+
 + (UIFont*)timelineBreakdownValueFont
 {
-    return [UIFont fontWithName:HEMNumberFontFamilyNameUltraLight size:28.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:24.f];
+}
+
++ (UIFont*)timelineTimeLabelFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameBook size:11.f];
 }
 
 + (UIFont*)timelineEventMessageFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.f];
 }
 
 + (UIFont*)timelineEventMessageItalicFont
 {
-    return [UIFont fontWithName:HEMFontFamilyNameLightOblique size:13.f];
+    return [UIFont fontWithName:HEMFontFamilyNameLightOblique size:14.f];
 }
 
 + (UIFont*)timelineEventMessageBoldFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
-}
-
-+ (UIFont*)timelineEventTimestampFont
-{
-    return [UIFont fontWithName:HEMNumberFontFamilyNameMedium size:11.f];
-}
-
-+ (UIFont*)timelineEventTimestampBoldFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:13.f];
 }
 
 + (UIFont*)timelineEventTipFont
@@ -210,11 +220,6 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:14.f];
 }
 
-+ (UIFont*)tutorialDialogFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.f];
-}
-
 + (UIFont*)questionAnswerFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];
@@ -228,11 +233,6 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 + (UIFont*)thankyouFont
 {
     return [UIFont fontWithName:HEMFontFamilyNameLight size:24.0f];
-}
-
-+ (UIFont*)infoToastFont
-{
-    return [UIFont fontWithName:HEMFontFamilyNameMedium size:20.0f];
 }
 
 + (UIFont*)inAppBrowserTitleFont
@@ -443,11 +443,56 @@ static NSString* const HEMNumberFontFamilyNameMedium = @"AvenirNext-Medium";
 }
 
 + (UIFont*)actionSheetOptionTitleFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
 }
 
 + (UIFont*)actionSheetOptionDescriptionFont {
-    return [UIFont fontWithName:HEMFontFamilyNameLight size:14.0f];
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
+}
+
++ (UIFont*)actionSheetTitleViewTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];
+}
+
++ (UIFont*)actionSheetTitleViewDescriptionFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
+}
+
+#pragma mark - Tutorial Dialogs
+
++ (UIFont*)tutorialTitleFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameHeavy size:18.0f];
+}
+
++ (UIFont*)tutorialDescriptionFont
+{
+    return [UIFont fontWithName:HEMFontFamilyNameBook size:16.0f];
+
+}
+
++ (UIFont*)handholdingMessageFont {
+    return [UIFont fontWithName:HEMFontFamilyNameMedium size:14.0f];
+}
+
+#pragma mark - Support
+
++ (UIFont*)supportTicketDescriptionFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:16.0f];
+}
+
++ (UIFont*)supportHelpCenterFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
+}
+
+#pragma mark - Timeline action sheet confirmation
+
++ (UIFont*)timelineActionConfirmationTitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:18.0f];
+}
+
++ (UIFont*)timelineActionConfirmationSubtitleFont {
+    return [UIFont fontWithName:HEMFontFamilyNameLight size:15.0f];
 }
 
 @end

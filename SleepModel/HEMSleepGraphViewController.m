@@ -3,123 +3,121 @@
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
 #import "HelloStyleKit.h"
-#import "HEMRootViewController.h"
+#import "HEMActionSheetViewController.h"
+#import "HEMAlertViewController.h"
 #import "HEMAudioCache.h"
+#import "HEMBounceModalTransition.h"
+#import "HEMBreakdownViewController.h"
+#import "HEMEventAdjustConfirmationView.h"
+#import "HEMEventBubbleView.h"
+#import "HEMFadingParallaxLayout.h"
 #import "HEMMainStoryboard.h"
+#import "HEMPopupView.h"
+#import "HEMRootViewController.h"
 #import "HEMSleepEventCollectionViewCell.h"
 #import "HEMSleepGraphCollectionViewDataSource.h"
-#import "HEMSleepGraphView.h"
 #import "HEMSleepGraphViewController.h"
 #import "HEMSleepHistoryViewController.h"
 #import "HEMSleepSummaryCollectionViewCell.h"
-#import "HEMNoSleepEventCollectionViewCell.h"
 #import "HEMSleepSummarySlideViewController.h"
+#import "HEMTimelineContainerViewController.h"
+#import "HEMTimelineFeedbackViewController.h"
+#import "HEMTutorial.h"
+#import "HEMZoomAnimationTransitionDelegate.h"
+#import "NSDate+HEMRelative.h"
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
-#import "HEMSleepEventButton.h"
-#import "HEMZoomAnimationTransitionDelegate.h"
-#import "HEMBounceModalTransition.h"
-#import "HEMTimelineFeedbackViewController.h"
-#import "HEMAlertViewController.h"
-#import "HEMTutorial.h"
-#import "HEMPopupView.h"
+#import "HEMActionSheetTitleView.h"
 
-CGFloat const HEMTimelineHeaderCellHeight = 50.f;
-CGFloat const HEMTimelineFooterCellHeight = 50.f;
+CGFloat const HEMTimelineHeaderCellHeight = 8.f;
+CGFloat const HEMTimelineFooterCellHeight = 74.f;
+CGFloat const HEMTimelineTopBarCellHeight = 64.0f;
 
-@interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate>
+@interface HEMSleepGraphViewController () <UICollectionViewDelegateFlowLayout, UIGestureRecognizerDelegate,
+                                           HEMSleepGraphActionDelegate>
 
-@property (nonatomic, retain) HEMSleepGraphView* view;
-@property (nonatomic, strong) HEMSleepHistoryViewController* historyViewController;
-@property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource* dataSource;
-@property (nonatomic, strong) HEMZoomAnimationTransitionDelegate* animationDelegate;
-@property (nonatomic, strong) NSIndexPath* expandedIndexPath;
-@property (nonatomic, getter=presleepSectionIsExpanded) BOOL presleepExpanded;
-@property (nonatomic, strong) UIPanGestureRecognizer* panGestureRecognizer;
-@property (nonatomic, strong) HEMBounceModalTransition* dataVerifyTransitionDelegate;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* shortcutButtonTrailing;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* shortcutButtonBottom;
-@property (nonatomic, weak) IBOutlet NSLayoutConstraint* popupViewTop;
-@property (nonatomic, weak) IBOutlet UIButton* shortcutButton;
-@property (nonatomic, weak) IBOutlet HEMPopupView* popupView;
-@property (nonatomic, assign, getter=isLastNight) BOOL lastNight;
+@property (nonatomic, strong) HEMSleepGraphCollectionViewDataSource *dataSource;
+@property (nonatomic, strong) UIPanGestureRecognizer *panGestureRecognizer;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic, strong) HEMBounceModalTransition *dataVerifyTransitionDelegate;
+@property (nonatomic, weak) IBOutlet NSLayoutConstraint *popupViewTop;
+@property (nonatomic, weak) IBOutlet HEMPopupView *popupView;
+@property (nonatomic, assign, getter=isLoadingData) BOOL loadingData;
+@property (nonatomic, assign, getter=isVisible) BOOL visible;
+
+@property (nonatomic, strong) HEMSleepHistoryViewController *historyViewController;
+@property (nonatomic, strong) HEMZoomAnimationTransitionDelegate *zoomAnimationDelegate;
+
 @end
 
 @implementation HEMSleepGraphViewController
 
-static CGFloat const HEMSleepSummaryCellHeight = 384.f;
-static CGFloat const HEMSleepGraphCollectionViewEventTitleOnlyHeight = 86.f;
-static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 44.f;
+static NSString* const HEMSleepGraphSenseLearnsPref = @"one.time.senselearns";
+static CGFloat const HEMSleepGraphActionSheetConfirmDuration = 1.0f;
+static CGFloat const HEMSleepSummaryCellHeight = 298.f;
+static CGFloat const HEMSleepGraphCollectionViewEventMinimumHeight = 56.f;
+static CGFloat const HEMSleepGraphCollectionViewMinimumHeight = 18.f;
 static CGFloat const HEMSleepGraphCollectionViewNumberOfHoursOnscreen = 10.f;
-static CGFloat const HEMTopItemsConstraintConstant = 4.f;
-static CGFloat const HEMTopItemsMinimumConstraintConstant = -6.f;
-static CGFloat const HEMEventOverlayZPosition = 30.f;
-static CGFloat const HEMAlarmShortcutDefaultTrailing = 8.f;
-static CGFloat const HEMAlarmShortcutHiddenTrailing = -60.f;
-static CGFloat const HEMAlarmShortcutBottomOffset = 20.f;
-static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
+static BOOL hasLoadedBefore = NO;
 
-- (void)viewDidLoad
-{
+- (void)viewDidLoad {
     [super viewDidLoad];
     [self configureCollectionView];
-    [self reloadData];
-    self.animationDelegate = [HEMZoomAnimationTransitionDelegate new];
-    self.dataVerifyTransitionDelegate = [HEMBounceModalTransition new];
-    self.dataVerifyTransitionDelegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
-    self.transitioningDelegate = self.animationDelegate;
-    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan)];
-    self.panGestureRecognizer.delegate = self;
-    [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:self.panGestureRecognizer];
-    [self.view addGestureRecognizer:self.panGestureRecognizer];
+    [self configureTransitions];
+
+    [self loadData];
+
+    [self configureGestures];
     [self registerForNotifications];
-    [self adjustHeight];
 
     [SENAnalytics track:kHEMAnalyticsEventTimeline
-             properties:@{ kHEMAnalyticsEventPropDate : [self dateForNightOfSleep] ?: @"undefined" }];
+             properties:@{
+                 kHEMAnalyticsEventPropDate : [self dateForNightOfSleep] ?: @"undefined"
+             }];
+    if (!hasLoadedBefore) {
+        [self prepareForInitialAnimation];
+    }
 }
 
-- (void)showTutorial
-{
-    if (![HEMTutorial shouldShowTutorialForTimeline])
-        return;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        if (![self isViewFullyVisible] || self.dataSource.numberOfSleepSegments == 0)
-            return;
-        [HEMTutorial showTutorialForTimelineIfNeeded];
-    });
-}
-
-- (void)viewWillAppear:(BOOL)animated
-{
+- (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
-    self.view.backgroundColor = [UIColor whiteColor];
     [self checkForDateChanges];
 }
 
-- (void)viewDidAppear:(BOOL)animated
-{
+- (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
+    [self setVisible:YES];
     [self showTutorial];
+    [self checkIfInitialAnimationNeeded];
 }
 
-- (void)drawerDidOpen
-{
-    [UIView animateWithDuration:0.5f animations:^{
-        [self updateTopBarActionsWithState:NO];
-    }];
+- (void)viewDidDisappear:(BOOL)animated {
+    [super viewDidDisappear:animated];
+    [self setVisible:NO];
 }
 
-- (void)drawerDidClose
-{
-    [self showTutorial];
-    [UIView animateWithDuration:0.5f animations:^{
-        [self updateTopBarActionsWithState:YES];
-    }];
+- (void)showTutorial {
+    if (![HEMTutorial shouldShowTutorialForTimeline]) {
+        [self showHandholding];
+        return;
+    }
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.65f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      if (![self isViewFullyVisible] || self.dataSource.numberOfSleepSegments == 0) {
+          return;
+      }
+      [HEMTutorial showTutorialForTimelineIfNeeded];
+    });
 }
 
-- (void)registerForNotifications
-{
+- (void)showHandholding {
+    if ([self isViewFullyVisible]) {
+        UIView *view = [[self containerViewController] view];
+        [HEMTutorial showHandholdingForTimelineDaySwitchIfNeededIn:view];
+    }
+}
+
+- (void)registerForNotifications {
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(reloadData)
                                                  name:UIApplicationDidBecomeActiveNotification
@@ -129,9 +127,13 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
                                                  name:SENAPIReachableNotification
                                                object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(reloadData)
+                                             selector:@selector(refreshData)
                                                  name:HEMTimelineFeedbackSuccessNotification
                                                object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(refreshData)
+                                                 name:SENLocalPrefDidChangeNotification
+                                               object:[SENPreference nameFromType:SENPreferenceTypeTime24]];
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(handleAuthorization)
                                                  name:SENAuthorizationServiceDidAuthorizeNotification
@@ -152,513 +154,621 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
                                              selector:@selector(drawerDidClose)
                                                  name:HEMRootDrawerDidCloseNotification
                                                object:nil];
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(adjustHeight)
-                                                 name:UIApplicationDidChangeStatusBarFrameNotification
-                                               object:nil];
 }
 
-- (void)adjustHeight
-{
-    CGRect statusBarFrame = [[UIApplication sharedApplication] statusBarFrame];
-    CGFloat statusBarHeight = MIN(CGRectGetHeight(statusBarFrame), CGRectGetWidth(statusBarFrame));
-    CGFloat bottomOffset = HEMAlarmShortcutDefaultBottom + (statusBarHeight - HEMAlarmShortcutBottomOffset);
-    self.shortcutButtonBottom.constant = bottomOffset;
-    [self.view setNeedsUpdateConstraints];
-    [self.shortcutButton layoutIfNeeded];
+- (void)configureGestures {
+    self.panGestureRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(didPan)];
+    self.panGestureRecognizer.delegate = self;
+    self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(didTap)];
+    self.tapGestureRecognizer.delegate = self;
+    [self.view addGestureRecognizer:self.tapGestureRecognizer];
+    [self.collectionView.panGestureRecognizer requireGestureRecognizerToFail:self.panGestureRecognizer];
+    [self.view addGestureRecognizer:self.panGestureRecognizer];
 }
 
-- (void)handleAuthorization
-{
+- (void)configureTransitions {
+    self.zoomAnimationDelegate = [HEMZoomAnimationTransitionDelegate new];
+    self.transitioningDelegate = self.zoomAnimationDelegate;
+
+    self.dataVerifyTransitionDelegate = [HEMBounceModalTransition new];
+    self.dataVerifyTransitionDelegate.message = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
+}
+
+- (void)handleAuthorization {
     if (![self isViewLoaded])
         [self view];
     [self reloadData];
 }
 
-- (void)dealloc
-{
-    _historyViewController = nil;
+- (void)dealloc {
     _dataSource = nil;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark Initial load animation
+
+- (void)prepareForInitialAnimation {
+    self.collectionView.scrollEnabled = NO;
+}
+
+- (void)finishInitialAnimation {
+    self.collectionView.scrollEnabled = YES;
+}
+
+- (void)performInitialAnimation {
+    CGFloat const eventAnimationDuration = 0.25f;
+    CGFloat const eventAnimationCrossfadeRatio = 0.9f;
+    hasLoadedBefore = YES;
+    NSArray *indexPaths = [[self.collectionView indexPathsForVisibleItems]
+        sortedArrayUsingComparator:^NSComparisonResult(NSIndexPath *obj1, NSIndexPath *obj2) {
+          return [@(obj1.item) compare:@(obj2.item)];
+        }];
+
+    int eventsFound = 0;
+    for (int i = 0; i < indexPaths.count; i++) {
+        NSIndexPath *indexPath = indexPaths[i];
+        if (indexPath.section != HEMSleepGraphCollectionViewSegmentSection)
+            continue;
+        HEMSleepSegmentCollectionViewCell *cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
+        CGFloat delay = (eventAnimationDuration * eventsFound * eventAnimationCrossfadeRatio);
+        if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
+            eventsFound++;
+        }
+        [cell performEntryAnimationWithDuration:eventAnimationDuration delay:delay];
+    }
+    int64_t delay = eventAnimationDuration * MAX(0, eventsFound - 1) * NSEC_PER_SEC;
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+      [weakSelf finishInitialAnimation];
+    });
+}
+
 #pragma mark HEMSleepGraphActionDelegate
 
-- (void)toggleDrawer
-{
-    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
+- (BOOL)shouldHideSegmentCellContents {
+    return !hasLoadedBefore;
+}
+
+#pragma mark Event Info
+
+- (void)processFeedbackResponse:(id)updatedTimeline
+                          error:(NSError*)error
+                     forSegment:(SENTimelineSegment*)segment
+                analyticsAction:(NSString*)analyticsAction {
+    
+    if (error) {
+        [SENAnalytics trackError:error
+                   withEventName:kHEMAnalyticsEventError];
+    } else {
+        NSString* segmentType = SENTimelineSegmentTypeNameFromType(segment.type);
+        NSDictionary* props = @{kHEMAnalyticsEventPropType : segmentType ?: @"undefined"};
+        [SENAnalytics track:analyticsAction properties:props];
+    }
+}
+
+- (void)verifySegment:(SENTimelineSegment*)segment {
+    __weak typeof(self) weakSelf = self;
+    [SENAPITimeline verifySleepEvent:segment
+                      forDateOfSleep:self.dateForNightOfSleep
+                          completion:^(id updatedTimeline, NSError *error) {
+                              [weakSelf processFeedbackResponse:updatedTimeline
+                                                          error:error
+                                                     forSegment:segment
+                                                analyticsAction:HEMAnalyticsEventTimelineEventCorrect];
+                          }];
+}
+
+- (void)removeSegment:(SENTimelineSegment*)segment {
+    __weak typeof(self) weakSelf = self;
+    [SENAPITimeline removeSleepEvent:segment
+                      forDateOfSleep:self.dateForNightOfSleep
+                          completion:^(id updatedTimeline, NSError *error) {
+                              [weakSelf processFeedbackResponse:updatedTimeline
+                                                          error:error
+                                                     forSegment:segment
+                                                analyticsAction:HEMAnalyticsEventTimelineEventIncorrect];
+                          }];
+}
+
+- (void)updateTimeOfEventOnSegment:(SENTimelineSegment *)segment {
+    HEMTimelineFeedbackViewController *feedbackController =
+        [HEMMainStoryboard instantiateTimelineFeedbackViewController];
+    feedbackController.dateForNightOfSleep = self.dateForNightOfSleep;
+    feedbackController.segment = segment;
+    [self presentViewController:feedbackController animated:YES completion:NULL];
+}
+
+- (BOOL)shouldShowSenseLearnsInActionSheet {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    return ![[preferences sessionPreferenceForKey:HEMSleepGraphSenseLearnsPref] boolValue];
+}
+
+- (void)markSenseLearnsAsShown {
+    SENLocalPreferences* preferences = [SENLocalPreferences sharedPreferences];
+    [preferences setSessionPreference:@(YES) forKey:HEMSleepGraphSenseLearnsPref];
+}
+
+- (UIView *)confirmationViewForActionSheetWithOptions:(NSInteger)numberOfOptions {
+
+    NSString *title = NSLocalizedString(@"sleep-event.feedback.success.message", nil);
+
+    CGRect confirmFrame = CGRectZero;
+    confirmFrame.size.height = numberOfOptions * HEMActionSheetDefaultCellHeight;
+    confirmFrame.size.width = CGRectGetWidth([[self view] bounds]);
+
+    HEMEventAdjustConfirmationView* confirmView
+        = [[HEMEventAdjustConfirmationView alloc] initWithTitle:title
+                                                       subtitle:nil
+                                                          frame:confirmFrame];
+    return confirmView;
+}
+
+- (UIView*)senseLearnsTitleView {
+    NSString* title = NSLocalizedString(@"sleep-event.feedback.action-sheet.title", nil);
+    NSString* desc = NSLocalizedString(@"sleep-event.feedback.action-sheet.description", nil);
+    return [[HEMActionSheetTitleView alloc] initWithTitle:title andDescription:desc];
+}
+
+- (void)activateActionSheetAtIndexPath:(NSIndexPath *)indexPath {
+    SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    HEMActionSheetViewController *sheet = [HEMMainStoryboard instantiateActionSheetViewController];
+    UIColor* optionTitleColor = [UIColor colorWithWhite:0.0f alpha:0.4f];
+    NSString* approveTitle = NSLocalizedString(@"sleep-event.action.approve.title", nil);
+    NSString* negativeTitle = nil;
+    
+    if ([segment canPerformAction:SENTimelineSegmentActionRemove]) {
+        negativeTitle = NSLocalizedString(@"sleep-event.action.remove.title", nil);
+    } else if ([segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
+        negativeTitle = NSLocalizedString(@"sleep-event.action.incorrect.title", nil);
+    }
+
+    if ([segment canPerformAction:SENTimelineSegmentActionApprove]) {
+        [sheet addOptionWithTitle:approveTitle
+                       titleColor:optionTitleColor
+                      description:nil
+                        imageName:@"timeline_action_approve"
+                           action:^{
+                               [self verifySegment:segment];
+                               [self markSenseLearnsAsShown];
+                           }];
+    }
+
+    if ([segment canPerformAction:SENTimelineSegmentActionAdjustTime]) {
+        [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.adjust.title", nil)
+                       titleColor:optionTitleColor
+                      description:nil
+                        imageName:@"timeline_action_adjust"
+                           action:^{
+                             [self updateTimeOfEventOnSegment:segment];
+                             [self markSenseLearnsAsShown];
+                           }];
+    }
+
+    // only show 1 or the other, both calls removeSegment.  Incorrect will eventually
+    // go away once server implements the code to do so.  Once the server returns the
+    // remove capability, only the 'negativeTitle' will be changed to signify the more
+    // destructive action
+    if ([segment canPerformAction:SENTimelineSegmentActionRemove] ||
+        [segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
+        [sheet addOptionWithTitle:negativeTitle
+                       titleColor:optionTitleColor
+                      description:nil
+                        imageName:@"timeline_action_delete"
+                           action:^{
+                               [self removeSegment:segment];
+                               [self markSenseLearnsAsShown];
+                           }];
+    }
+
+    if (segment.possibleActions == SENTimelineSegmentActionNone) {
+        [sheet addOptionWithTitle:NSLocalizedString(@"sleep-event.action.none.title", nil)
+                       titleColor:[UIColor grayColor]
+                      description:nil
+                        imageName:nil
+                           action:^{}];
+    }
+
+    // add title, if needed
+    if ([self shouldShowSenseLearnsInActionSheet]) {
+        [sheet setCustomTitleView:[self senseLearnsTitleView]];
+    }
+    // confirmations
+    CGFloat confirmDuration = HEMSleepGraphActionSheetConfirmDuration;
+    UIView *confirmationView = [self confirmationViewForActionSheetWithOptions:[sheet numberOfOptions]];
+    if ([segment canPerformAction:SENTimelineSegmentActionRemove]||
+        [segment canPerformAction:SENTimelineSegmentActionIncorrect]) {
+        [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:negativeTitle];
+    }
+
+    if ([segment canPerformAction:SENTimelineSegmentActionApprove]) {
+        [sheet addConfirmationView:confirmationView displayFor:confirmDuration forOptionWithTitle:approveTitle];
+    }
+
+    UIViewController *root = [[[[UIApplication sharedApplication] delegate] window] rootViewController];
+    if (![root respondsToSelector:@selector(presentationController)]) {
+        UIModalPresentationStyle origStyle = [root modalPresentationStyle];
+        [root setModalPresentationStyle:UIModalPresentationCurrentContext];
+        [sheet addDismissAction:^{
+          [root setModalPresentationStyle:origStyle];
+        }];
+    }
+
+    [root presentViewController:sheet animated:NO completion:nil];
+}
+
+- (BOOL)canAdjustEventWithType:(NSString *)eventType {
+    NSArray *adjustableTypes =
+        @[ HEMSleepEventTypeWakeUp, HEMSleepEventTypeFallAsleep, HEMSleepEventTypeInBed, HEMSleepEventTypeOutOfBed ];
+    return [adjustableTypes containsObject:eventType];
+}
+
+- (void)feedbackFailedToSend:(NSNotification *)note {
+    __weak typeof(self) weakSelf = self;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+      [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
+                                              message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
+                                           controller:weakSelf];
+    });
+}
+
+- (void)didTapSummaryButton:(UIButton *)sender {
+    HEMBreakdownViewController *controller = [HEMMainStoryboard instantiateBreakdownViewController];
+    controller.result = self.dataSource.sleepResult;
+    [self presentViewController:controller animated:YES completion:NULL];
+}
+
+- (void)showSleepDepthPopupForIndexPath:(NSIndexPath *)indexPath {
+    CGFloat const HEMPopupDismissDelay = 1.75f;
+    CGFloat const HEMPopupAnimationDistance = 8.f;
+    SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+    [self.popupView setText:[self summaryPopupTextForSegment:segment]];
+    UICollectionViewLayoutAttributes *attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+    CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
+    CGFloat top = MAX(0, CGRectGetMinY(cellLocation) - floorf([self.popupView intrinsicContentSize].height));
+    self.popupViewTop.constant = top - HEMPopupAnimationDistance;
+    [self.popupView setNeedsUpdateConstraints];
+    [self.popupView layoutIfNeeded];
+    self.popupViewTop.constant = top;
+    [self.popupView setNeedsUpdateConstraints];
+    self.popupView.alpha = 0;
+    self.popupView.hidden = NO;
+    [UIView animateWithDuration:0.3f
+                     animations:^{
+                       [self.popupView layoutIfNeeded];
+                       self.popupView.alpha = 1;
+                       [UIView animateWithDuration:0.15f
+                                             delay:HEMPopupDismissDelay
+                                           options:0
+                                        animations:^{
+                                          self.popupView.alpha = 0;
+                                        }
+                                        completion:NULL];
+                     }];
+}
+
+- (NSString *)summaryPopupTextForSegment:(SENTimelineSegment *)segment {
+    static NSString *const HEMPopupTextFormat = @"sleep-stat.sleep-duration.%@";
+    NSString *depth;
+    switch (segment.sleepState) {
+        case SENTimelineSegmentSleepStateSound:
+            depth = @"deep";
+            break;
+        case SENTimelineSegmentSleepStateMedium:
+            depth = @"medium";
+            break;
+        case SENTimelineSegmentSleepStateLight:
+            depth = @"light";
+            break;
+        case SENTimelineSegmentSleepStateAwake:
+        default:
+            depth = @"awake";
+            break;
+    }
+
+    NSString *format = [NSString stringWithFormat:HEMPopupTextFormat, depth];
+    return NSLocalizedString(format, nil);
+}
+
+#pragma mark - Top Bar
+
+- (void)didTapDrawerButton:(UIButton *)button {
+    HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
     [root toggleSettingsDrawer];
 }
 
-- (BOOL)shouldEnableZoomButton
-{
-    return [self isViewFullyVisible];
-}
-
-- (BOOL)shouldHideShareButton
-{
-    return ![self isViewFullyVisible] || [self.dataSource.sleepResult.score integerValue] == 0;
-}
-
-- (void)willShowDetailsForInsight:(SENSleepResultSensorInsight*)insight
-{
-    if (![self presleepSectionIsExpanded]) {
-        self.presleepExpanded = YES;
-        [self animateAllCellHeightChanges];
-    }
-}
-
-- (void)willHideInsightDetails
-{
-    if ([self presleepSectionIsExpanded]) {
-        self.presleepExpanded = NO;
-        [self animateAllCellHeightChanges];
-    }
-}
-
-- (void)didLoadCell:(UICollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath
-{
-    if ([cell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
-        if (![self.expandedIndexPath isEqual:indexPath])
-            return;
-        HEMSleepEventCollectionViewCell* eventCell = (id)cell;
-        CGSize size = [self collectionView:self.collectionView
-                                    layout:self.collectionView.collectionViewLayout
-                    sizeForItemAtIndexPath:indexPath];
-        [eventCell useExpandedLayout:YES targetSize:size animated:NO];
-        eventCell.layer.zPosition = indexPath.row + HEMEventOverlayZPosition;
-    }
-    else if ([cell isKindOfClass:[HEMSleepSummaryCollectionViewCell class]]) {
-        HEMSleepSummaryCollectionViewCell* summaryCell = (id)cell;
-        if (![self isViewFullyVisible])
-            [self updateTopBarActionsInCell:summaryCell withState:NO];
-    }
-}
-
-#pragma mark Top cell actions
-
-- (void)updateTopBarActionsWithState:(BOOL)pushed
-{
-    HEMSleepSummaryCollectionViewCell* cell = self.dataSource.sleepSummaryCell;
-    [self updateTopBarActionsInCell:cell withState:pushed];
-}
-
-- (void)updateTopBarActionsInCell:(HEMSleepSummaryCollectionViewCell*)cell withState:(BOOL)pushed
-{
-    if (!pushed)
-        self.collectionView.contentOffset = CGPointMake(0, 0);
-    self.collectionView.scrollEnabled = pushed;
-    UIImage* drawerIcon = pushed ? [UIImage imageNamed:@"Menu"] : [UIImage imageNamed:@"caret up"];
-    CGFloat constant = pushed ? HEMTopItemsConstraintConstant : HEMTopItemsMinimumConstraintConstant;
-    [cell.dateButton setEnabled:pushed];
-    [cell.drawerButton setImage:drawerIcon forState:UIControlStateNormal];
-    cell.topItemsVerticalConstraint.constant = constant;
-    [cell setNeedsUpdateConstraints];
-    BOOL shouldHideShareButton = !pushed || self.dataSource.numberOfSleepSegments == 0;
-    [UIView animateWithDuration:0.25f animations:^{
-        [cell.shareButton setAlpha:shouldHideShareButton ? 0 : 1.f];
-        [cell.dateButton setAlpha:pushed ? 1.f : 0.5f];
-        [cell layoutIfNeeded];
-    }];
-}
-
-- (void)drawerButtonTapped:(UIButton*)button
-{
-    [self toggleDrawer];
-}
-
-- (void)shareButtonTapped:(UIButton*)button
-{
+- (void)didTapShareButton:(UIButton *)button {
     long score = [self.dataSource.sleepResult.score longValue];
     if (score > 0) {
-        NSString* message;
-        if (self.lastNight) {
+        NSString *message;
+        if ([self.dataSource dateIsLastNight]) {
             message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.last-night.format", nil), score];
+        } else {
+            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.other-days.format", nil), score,
+                                                 [[self dataSource] dateTitle]];
         }
-        else {
-            message = [NSString stringWithFormat:NSLocalizedString(@"activity.share.other-days.format", nil), score, [self.dataSource titleTextForDate]];
-        }
-        UIActivityViewController* activityController = [[UIActivityViewController alloc] initWithActivityItems:@[ message ]
-                                                                                         applicationActivities:nil];
+        UIActivityViewController *activityController =
+            [[UIActivityViewController alloc] initWithActivityItems:@[ message ] applicationActivities:nil];
         [self presentViewController:activityController animated:YES completion:nil];
     }
 }
 
-- (void)zoomButtonTapped:(UIButton*)sender
-{
-    if (![self isViewFullyVisible])
-        return;
+- (void)didTapDateButton:(UIButton *)sender {
     self.historyViewController = (id)[HEMMainStoryboard instantiateSleepHistoryController];
     self.historyViewController.selectedDate = self.dateForNightOfSleep;
-    self.historyViewController.transitioningDelegate = self.animationDelegate;
+    self.historyViewController.transitioningDelegate = self.zoomAnimationDelegate;
     [self presentViewController:self.historyViewController animated:YES completion:NULL];
 }
 
-- (void)checkForDateChanges
-{
+- (void)checkForDateChanges {
     if (self.historyViewController.selectedDate) {
-        HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
+        HEMRootViewController *root = [HEMRootViewController rootViewControllerForKeyWindow];
         [root reloadTimelineSlideViewControllerWithDate:self.historyViewController.selectedDate];
     }
 
     self.historyViewController = nil;
 }
 
-- (void)loadDataSourceForDate:(NSDate*)date
-{
-    self.dateForNightOfSleep = date;
-    self.expandedIndexPath = nil;
-    self.presleepExpanded = NO;
-    self.dataSource = [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView
-                                                                                  sleepDate:date];
-    self.collectionView.dataSource = self.dataSource;
+#pragma mark Drawer
+
+- (void)drawerDidOpen {
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         [[self dataSource] updateTimelineState:YES];
+                     }];
 }
 
-#pragma mark Event Info
-
-- (void)didTapEventButton:(UIButton*)sender
-{
-    NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
-    HEMSleepEventCollectionViewCell* cell = (id)[self.collectionView cellForItemAtIndexPath:indexPath];
-    BOOL shouldExpand = ![self.expandedIndexPath isEqual:indexPath];
-    if (shouldExpand) {
-        if (self.expandedIndexPath) {
-            HEMSleepEventCollectionViewCell* oldCell = (id)[self.collectionView cellForItemAtIndexPath:self.expandedIndexPath];
-            oldCell.layer.zPosition = indexPath.row + 1;
-            if ([oldCell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
-                [oldCell useExpandedLayout:NO targetSize:CGSizeZero animated:YES];
-            }
-        }
-        self.expandedIndexPath = indexPath;
-
-        NSMutableDictionary* properties
-            = [@{ kHEMAnalyticsEventPropAction : kHEMAnalyticsEventPropEvent } mutableCopy];
-        SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-        if ([segment eventType] != nil) {
-            properties[kHEMAnalyticsEventPropType] = [segment eventType];
-        }
-        [SENAnalytics track:kHEMAnalyticsEventTimelineAction properties:properties];
-    }
-    else {
-        self.expandedIndexPath = nil;
-    }
-    CGSize size = [self collectionView:self.collectionView
-                                layout:self.collectionView.collectionViewLayout
-                sizeForItemAtIndexPath:indexPath];
-
-    if ([cell isKindOfClass:[HEMSleepEventCollectionViewCell class]]) {
-        cell.layer.zPosition = indexPath.row + HEMEventOverlayZPosition;
-        [cell useExpandedLayout:shouldExpand targetSize:size animated:YES];
-    }
-    [self animateAllCellHeightChanges];
-    CGRect cellRect = [self.collectionView convertRect:cell.frame toView:self.collectionView.superview];
-    if (shouldExpand && !CGRectContainsRect(self.collectionView.frame, cellRect))
-        [self.collectionView scrollToItemAtIndexPath:indexPath
-                                    atScrollPosition:UICollectionViewScrollPositionCenteredVertically
-                                            animated:YES];
+- (void)drawerDidClose {
+    [UIView animateWithDuration:0.5f
+                     animations:^{
+                         [[self dataSource] updateTimelineState:NO];
+                     }];
 }
 
-- (void)didTapDataVerifyButton:(UIButton*)sender
-{
-    NSIndexPath* indexPath = [self indexPathForEventCellWithSubview:sender];
-    UINavigationController* navController = [HEMMainStoryboard instantiateTimelineFeedbackViewController];
-    navController.transitioningDelegate = self.dataVerifyTransitionDelegate;
-    navController.modalPresentationStyle = UIModalPresentationCustom;
-    HEMTimelineFeedbackViewController* feedbackController = (id)navController.topViewController;
-    feedbackController.dateForNightOfSleep = self.dateForNightOfSleep;
-    feedbackController.segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-    [self presentViewController:navController animated:YES completion:NULL];
+#pragma mark - UIGestureRecognizerDelegate
+
+- (void)didPan {
 }
 
-- (void)feedbackFailedToSend:(NSNotification*)note
-{
-    __weak typeof(self) weakSelf = self;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [HEMAlertViewController showInfoDialogWithTitle:NSLocalizedString(@"sleep-event.feedback.failed.title", nil)
-                                                message:NSLocalizedString(@"sleep-event.feedback.failed.message", nil)
-                                             controller:weakSelf];
-    });
-}
-
-- (IBAction)didTapAlarmShortcut:(id)sender
-{
-    [SENAnalytics track:HEMAnalyticsEventTimelineAlarmShortcut properties:nil];
-    HEMRootViewController* root = [HEMRootViewController rootViewControllerForKeyWindow];
-    [root showSettingsDrawerTabAtIndex:HEMRootDrawerTabAlarms animated:YES];
-}
-
-- (NSIndexPath*)indexPathForEventCellWithSubview:(UIView*)view
-{
-    UIView* superview = view.superview;
-    if (superview) {
-        if ([superview isKindOfClass:[HEMSleepEventCollectionViewCell class]])
-            return [self.collectionView indexPathForCell:(UICollectionViewCell*)superview];
-        else
-            return [self indexPathForEventCellWithSubview:superview];
-    }
-    return nil;
-}
-
-#pragma mark UIGestureRecognizerDelegate
-
-- (IBAction)didLongPress:(UILongPressGestureRecognizer*)sender
-{
-    static CGFloat const HEMPopupAnimationDistance = 8.f;
-    static CGFloat const HEMPopupSpacingDistance = 20.f;
-    if (sender.state == UIGestureRecognizerStateBegan) {
-        [SENAnalytics track:HEMAnalyticsEventTimelineBarLongPress];
-        CGPoint cellLocation = [sender locationInView:self.collectionView];
-        NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:cellLocation];
-        UICollectionViewCell* cell = [self.collectionView cellForItemAtIndexPath:indexPath];
-        if ([cell isKindOfClass:[HEMSleepSegmentCollectionViewCell class]] && ![indexPath isEqual:self.expandedIndexPath]) {
-            [(HEMSleepSegmentCollectionViewCell*)cell emphasizeAppearance];
-            SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-            [self.popupView setText:[self summaryPopupTextForSegment:segment]];
-            UICollectionViewLayoutAttributes* attributes = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
-            CGRect cellLocation = [self.collectionView convertRect:attributes.frame toView:self.view];
-            CGFloat top = CGRectGetMinY(cellLocation) - [self.popupView intrinsicContentSize].height - HEMPopupSpacingDistance;
-            self.popupViewTop.constant = top - HEMPopupAnimationDistance;
-            [self.popupView setNeedsUpdateConstraints];
-            [self.popupView layoutIfNeeded];
-            self.popupViewTop.constant = top;
-            [self.popupView setNeedsUpdateConstraints];
-            [UIView animateWithDuration:0.2f animations:^{
-                [self.popupView layoutIfNeeded];
-                self.popupView.alpha = 1;
-            }];
-        }
-    }
-    else if (sender.state == UIGestureRecognizerStateEnded || sender.state == UIGestureRecognizerStateCancelled) {
-        [UIView animateWithDuration:0.15f animations:^{
-            self.popupView.alpha = 0;
-        }];
-        for (HEMSleepSegmentCollectionViewCell* cell in self.collectionView.visibleCells) {
-            if ([cell respondsToSelector:@selector(deemphasizeAppearance)])
-                [cell deemphasizeAppearance];
+- (void)didTap {
+    CGPoint location = [self.tapGestureRecognizer locationInView:self.view];
+    CGPoint locationInCell = [self.view convertPoint:location toView:self.collectionView];
+    NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:locationInCell];
+    if ([self shouldAcceptTapAtLocation:location]) {
+        UICollectionViewLayoutAttributes *attrs = [self.collectionView layoutAttributesForItemAtIndexPath:indexPath];
+        if (locationInCell.y - CGRectGetMinY(attrs.frame) <= HEMSegmentPrefillTimeInset && indexPath.item > 0) {
+            NSIndexPath* previousItem = [NSIndexPath indexPathForItem:indexPath.item - 1
+                                                            inSection:HEMSleepGraphCollectionViewSegmentSection];
+            [self showSleepDepthPopupForIndexPath:previousItem];
+        } else {
+            [self showSleepDepthPopupForIndexPath:indexPath];
         }
     }
 }
 
-// TODO (jimmy): commenting this out until we want to display duration again.
-// In which case, we should also update the localizable.strings files too to
-// remove unnecessary strings
-
-//- (NSString*)summaryPopupTextForSegment:(SENSleepResultSegment*)segment
-//{
-//    static NSString* const HEMPopupTextFormat = @"sleep-stat.%@-duration.%@.%@.format";
-//    long minutes = (long)([segment.duration floatValue]/60);
-//    NSString* pluralize = minutes == 1 ? @"single" : @"plural";
-//    NSString* segmentType = segment.eventType.length == 0 ? @"motion" : @"sleep";
-//    NSString* depth;
-//    if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
-//        depth = @"awake";
-//    else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
-//        depth = @"deep";
-//    else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
-//        depth = @"medium";
-//    else
-//        depth = @"light";
-//
-//    NSString* format = [NSString stringWithFormat:HEMPopupTextFormat, segmentType, depth, pluralize];
-//    NSString* localizedFormat = NSLocalizedString(format, nil);
-//    return minutes == 1 ? localizedFormat : [NSString stringWithFormat:localizedFormat, minutes];
-//}
-
-- (NSString*)summaryPopupTextForSegment:(SENSleepResultSegment*)segment
-{
-    static NSString* const HEMPopupTextFormat = @"sleep-stat.%@-duration.%@";
-    NSString* segmentType = segment.eventType.length == 0 ? @"motion" : @"sleep";
-    NSString* depth;
-    if (segment.sleepDepth == SENSleepResultSegmentDepthAwake)
-        depth = @"awake";
-    else if (segment.sleepDepth >= SENSleepResultSegmentDepthDeep)
-        depth = @"deep";
-    else if (segment.sleepDepth >= SENSleepResultSegmentDepthMedium)
-        depth = @"medium";
-    else
-        depth = @"light";
-
-    NSString* format = [NSString stringWithFormat:HEMPopupTextFormat, segmentType, depth];
-    return NSLocalizedString(format, nil);
+- (BOOL)shouldAcceptTapAtLocation:(CGPoint)location {
+    CGPoint locationInCell = [self.view convertPoint:location toView:self.collectionView];
+    NSIndexPath* indexPath = [self.collectionView indexPathForItemAtPoint:locationInCell];
+    return indexPath.section == HEMSleepGraphCollectionViewSegmentSection
+        && ![self.dataSource segmentForEventExistsAtIndexPath:indexPath];
 }
 
-- (void)didPan
-{
-}
-
-- (BOOL)isViewFullyVisible
-{
+- (BOOL)isViewFullyVisible {
     return ![[HEMRootViewController rootViewControllerForKeyWindow] drawerIsVisible];
 }
 
-- (BOOL)shouldAllowRecognizerToReceiveTouch:(UIPanGestureRecognizer*)recognizer
-{
-    CGPoint velocity = [recognizer velocityInView:self.view];
-    BOOL movingMostlyVertically = fabsf(velocity.x) <= fabsf(velocity.y);
-    BOOL movingUpwards = velocity.y > 0;
-    return [self isScrolledToTop] && movingUpwards && movingMostlyVertically;
+- (BOOL)shouldAllowRecognizerToReceiveTouch:(UIGestureRecognizer *)recognizer {
+    if ([recognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        CGPoint velocity = [(UIPanGestureRecognizer *)recognizer velocityInView:self.view];
+        BOOL movingMostlyVertically = fabs(velocity.x) <= fabs(velocity.y);
+        BOOL movingUpwards = velocity.y > 0;
+        return [self isScrolledToTop] && movingUpwards && movingMostlyVertically;
+    }
+    return YES;
 }
 
-- (BOOL)isScrolledToTop
-{
+- (BOOL)isScrolledToTop {
     return self.collectionView.contentOffset.y < 10;
 }
 
-- (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer shouldReceiveTouch:(UITouch*)touch
-{
-    return [self isScrolledToTop];
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return [self isScrolledToTop];
+    }
+    return YES;
 }
 
-- (BOOL)gestureRecognizer:(UIPanGestureRecognizer*)gestureRecognizer
-    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer*)otherGestureRecognizer
-{
-    return ![otherGestureRecognizer isEqual:self.collectionView.panGestureRecognizer];
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
+    shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return ![otherGestureRecognizer isEqual:self.collectionView.panGestureRecognizer];
+    }
+    return YES;
 }
 
-- (BOOL)gestureRecognizerShouldBegin:(UIPanGestureRecognizer*)gestureRecognizer
-{
-    return [self shouldAllowRecognizerToReceiveTouch:gestureRecognizer];
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer {
+    if ([gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return [self shouldAllowRecognizerToReceiveTouch:gestureRecognizer];
+    } else if ([gestureRecognizer isEqual:self.tapGestureRecognizer]) {
+        return [self shouldAcceptTapAtLocation:[self.tapGestureRecognizer locationInView:self.view]];
+    }
+    return YES;
 }
 
-#pragma mark UIScrollViewDelegate
+#pragma mark - UIScrollViewDelegate
 
-- (void)scrollViewDidScroll:(UIScrollView*)scrollView
-{
+- (HEMTimelineContainerViewController *)containerViewController {
+    return (id)self.parentViewController.parentViewController;
+}
+
+- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView {
+    [self.containerViewController showAlarmButton:NO];
+    if (![self.popupView isHidden]) {
+        self.popupView.hidden = YES;
+    }
+}
+
+- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
+    [self.containerViewController showAlarmButton:YES];
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     CGPoint offset = scrollView.contentOffset;
-    CGFloat constant = offset.y > 0 ? HEMAlarmShortcutHiddenTrailing : HEMAlarmShortcutDefaultTrailing;
-    [self moveShortcutButtonWithOffset:constant];
+    [self adjustLayoutWithScrollOffset:offset.y];
 }
 
-- (void)scrollViewDidEndDragging:(UIScrollView*)scrollView willDecelerate:(BOOL)decelerate
-{
+- (void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate {
     if (!decelerate) {
-        [self moveShortcutButtonWithOffset:HEMAlarmShortcutDefaultTrailing];
+        [self.containerViewController showAlarmButton:YES];
+        [self adjustLayoutWithScrollOffset:scrollView.contentOffset.y];
     }
 }
 
-- (void)scrollViewDidEndDecelerating:(UIScrollView*)scrollView
-{
-    [self moveShortcutButtonWithOffset:HEMAlarmShortcutDefaultTrailing];
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    [self.containerViewController showAlarmButton:YES];
+    [self adjustLayoutWithScrollOffset:scrollView.contentOffset.y];
 }
 
-- (void)moveShortcutButtonWithOffset:(CGFloat)constant
-{
-    if (self.shortcutButtonTrailing.constant != constant) {
-        if (constant > 0)
-            self.shortcutButton.hidden = NO;
-        self.shortcutButtonTrailing.constant = constant;
-        [self.view setNeedsUpdateConstraints];
-        [UIView animateWithDuration:0.2f animations:^{
-            [self.view layoutIfNeeded];
-        } completion:^(BOOL finished) {
-            if (constant < 0)
-                self.shortcutButton.hidden = YES;
-        }];
-    }
+- (void)adjustLayoutWithScrollOffset:(CGFloat)yOffset {
+    self.collectionView.bounces = yOffset > 0;
 }
 
-#pragma mark UICollectionViewDelegate
+#pragma mark - UICollectionViewDelegate
 
-- (void)reloadData
-{
+- (void)loadData {
     if (![SENAuthorizationService isAuthorized])
         return;
 
     [self loadDataSourceForDate:self.dateForNightOfSleep];
-    self.lastNight = [self.dataSource dateIsLastNight];
 }
 
-- (void)configureCollectionView
-{
-    self.collectionView.backgroundColor = [UIColor whiteColor];
+- (void)refreshData {
+    [self.dataSource refreshData];
+}
+
+- (void)reloadData {
+    if (![self isLoadingData]) {
+        [self loadData];
+    }
+}
+
+- (BOOL)isLastNight {
+    return [self.dataSource dateIsLastNight];
+}
+
+- (void)loadDataSourceForDate:(NSDate *)date {
+    self.loadingData = YES;
+
+    self.dateForNightOfSleep = date;
+    self.dataSource =
+        [[HEMSleepGraphCollectionViewDataSource alloc] initWithCollectionView:self.collectionView sleepDate:date];
+    self.collectionView.dataSource = self.dataSource;
+
+    __weak typeof(self) weakSelf = self;
+    [self.dataSource reloadData:^{
+      __strong typeof(weakSelf) strongSelf = weakSelf;
+      strongSelf.loadingData = NO;
+      if ([strongSelf isVisible]) {
+          [strongSelf checkIfInitialAnimationNeeded];
+      }
+    }];
+}
+
+- (void)checkIfInitialAnimationNeeded {
+    if (!hasLoadedBefore) {
+        if (self.dataSource.sleepResult.score > 0) {
+            static dispatch_once_t onceToken;
+            dispatch_once(&onceToken, ^{
+              __weak typeof(self) weakSelf = self;
+              int64_t delay = (int64_t)(0.6f * NSEC_PER_SEC);
+              dispatch_after(dispatch_time(DISPATCH_TIME_NOW, delay), dispatch_get_main_queue(), ^{
+                [weakSelf performInitialAnimation];
+              });
+            });
+        } else {
+            [self finishInitialAnimation];
+        }
+    } else {
+        [self finishInitialAnimation];
+    }
+}
+
+- (void)configureCollectionView {
+    self.collectionView.collectionViewLayout = [HEMFadingParallaxLayout new];
     self.collectionView.delegate = self;
 }
 
-- (BOOL)collectionView:(UICollectionView*)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath*)indexPath
-{
-    return NO;
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.dataSource segmentForEventExistsAtIndexPath:indexPath];
 }
 
-- (BOOL)collectionView:(UICollectionView*)collectionView shouldSelectItemAtIndexPath:(NSIndexPath*)indexPath
-{
-    return NO;
+- (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    return [self.dataSource segmentForEventExistsAtIndexPath:indexPath];
+}
+
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
+        [self activateActionSheetAtIndexPath:indexPath];
+    }
 }
 
 #pragma mark UICollectionViewDelegateFlowLayout
 
-- (void)animateAllCellHeightChanges
-{
-    [self.collectionView setCollectionViewLayout:[UICollectionViewFlowLayout new] animated:YES];
-}
-
-- (CGSize)collectionView:(UICollectionView*)collectionView
-                    layout:(UICollectionViewLayout*)collectionViewLayout
-    sizeForItemAtIndexPath:(NSIndexPath*)indexPath
-{
-    static CGFloat const HEMEventSoundPlayerHeight = 48.f;
-    static CGFloat const HEMEventAdjustTimeHeight = 48.f;
-    static CGFloat const HEMEventMessageInset = 64.f;
-    static CGFloat const HEMEventBottomPadding = 38.f;
-    static CGFloat const HEMEventItemSpacing = 10.f;
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                  layout:(UICollectionViewLayout *)collectionViewLayout
+  sizeForItemAtIndexPath:(NSIndexPath *)indexPath {
+    CGFloat const HEMMinimumEventSpacing = 6.f;
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     CGFloat width = CGRectGetWidth(self.view.bounds);
     switch (indexPath.section) {
-    case HEMSleepGraphCollectionViewSummarySection:
-        return CGSizeMake(width, hasSegments ? HEMSleepSummaryCellHeight : CGRectGetHeight(self.view.bounds));
+        case HEMSleepGraphCollectionViewSummarySection:
+            return CGSizeMake(width, hasSegments ? HEMSleepSummaryCellHeight : CGRectGetHeight(self.view.bounds));
 
-    case HEMSleepGraphCollectionViewSegmentSection: {
-        SENSleepResultSegment* segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
-        CGFloat durationHeight = [self heightForCellWithSegment:segment];
-        if ([self.expandedIndexPath isEqual:indexPath]) {
-            CGFloat height = HEMSleepGraphCollectionViewEventTitleOnlyHeight;
-            NSAttributedString* message = [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
-            NSStringDrawingOptions options = (NSStringDrawingUsesLineFragmentOrigin | NSStringDrawingUsesFontLeading);
-            CGRect textBounds = [message boundingRectWithSize:CGSizeMake(width - HEMEventMessageInset, CGFLOAT_MAX)
-                                                      options:options
-                                                      context:nil];
-            height += ceilf(CGRectGetHeight(textBounds));
-            if (segment.sound)
-                height += HEMEventSoundPlayerHeight + (HEMEventItemSpacing * 2) + HEMEventBottomPadding;
-            else if ([HEMTimelineFeedbackViewController canAdjustTimeForSegment:segment])
-                height += HEMEventAdjustTimeHeight + HEMEventBottomPadding;
-            else if (message.length > 0)
-                height += HEMEventBottomPadding + HEMEventItemSpacing;
-            return CGSizeMake(width, height);
+        case HEMSleepGraphCollectionViewSegmentSection: {
+            SENTimelineSegment *segment = [self.dataSource sleepSegmentForIndexPath:indexPath];
+            CGFloat durationHeight = [self heightForCellWithSegment:segment];
+            if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
+                NSAttributedString *message =
+                    [HEMSleepEventCollectionViewCell attributedMessageFromText:segment.message];
+                NSAttributedString *time = [self.dataSource formattedTextForInlineTimestamp:segment.date];
+                CGSize minSize = [HEMEventBubbleView sizeWithAttributedText:message timeText:time];
+                CGFloat height = MAX(MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight),
+                                     minSize.height + HEMMinimumEventSpacing);
+                return CGSizeMake(width, height);
+            } else {
+                return CGSizeMake(width, MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewMinimumHeight));
+            }
         }
-        else if ([self.dataSource segmentForEventExistsAtIndexPath:indexPath]) {
-            return CGSizeMake(width, MAX(ceilf(durationHeight), HEMSleepGraphCollectionViewEventMinimumHeight));
-        }
-        else {
-            return CGSizeMake(width, ceilf(durationHeight));
-        }
-    }
 
-    default:
-        return CGSizeZero;
+        default:
+            return CGSizeZero;
     }
 }
 
-- (CGFloat)heightForCellWithSegment:(SENSleepResultSegment*)segment
-{
-    return ([segment.duration doubleValue] / 3600) * (CGRectGetHeight([UIScreen mainScreen].bounds)
-                                                         / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
+- (CGFloat)heightForCellWithSegment:(SENTimelineSegment *)segment {
+    return (segment.duration / 3600)
+           * (CGRectGetHeight([UIScreen mainScreen].bounds) / HEMSleepGraphCollectionViewNumberOfHoursOnscreen);
 }
 
-- (CGSize)collectionView:(UICollectionView*)collectionView
-                             layout:(UICollectionViewLayout*)collectionViewLayout
-    referenceSizeForHeaderInSection:(NSInteger)section
-{
-    BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
-    if (!hasSegments || section != HEMSleepGraphCollectionViewSegmentSection)
-        return CGSizeZero;
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                             layout:(UICollectionViewLayout *)collectionViewLayout
+    referenceSizeForHeaderInSection:(NSInteger)section {
 
-    return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMTimelineHeaderCellHeight);
+    CGFloat bWidth = CGRectGetWidth(collectionView.bounds);
+
+    if (section == HEMSleepGraphCollectionViewSummarySection) {
+        return CGSizeMake(bWidth, HEMTimelineTopBarCellHeight);
+    } else if (section == HEMSleepGraphCollectionViewSegmentSection) {
+        if ([self.dataSource numberOfSleepSegments] > 0) {
+            return CGSizeMake(bWidth, HEMTimelineHeaderCellHeight);
+        }
+    }
+
+    return CGSizeZero;
 }
 
-- (CGSize)collectionView:(UICollectionView*)collectionView
-                             layout:(UICollectionViewLayout*)collectionViewLayout
-    referenceSizeForFooterInSection:(NSInteger)section
-{
+- (CGSize)collectionView:(UICollectionView *)collectionView
+                             layout:(UICollectionViewLayout *)collectionViewLayout
+    referenceSizeForFooterInSection:(NSInteger)section {
     BOOL hasSegments = [self.dataSource numberOfSleepSegments] > 0;
     if (!hasSegments || section != HEMSleepGraphCollectionViewSegmentSection)
         return CGSizeZero;
@@ -666,10 +776,9 @@ static CGFloat const HEMAlarmShortcutDefaultBottom = 10.f;
     return CGSizeMake(CGRectGetWidth(self.view.bounds), HEMTimelineFooterCellHeight);
 }
 
-- (CGFloat)collectionView:(UICollectionView*)collectionView
-                                 layout:(UICollectionViewLayout*)collectionViewLayout
-    minimumLineSpacingForSectionAtIndex:(NSInteger)section
-{
+- (CGFloat)collectionView:(UICollectionView *)collectionView
+                                 layout:(UICollectionViewLayout *)collectionViewLayout
+    minimumLineSpacingForSectionAtIndex:(NSInteger)section {
     return 0;
 }
 

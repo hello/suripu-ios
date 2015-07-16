@@ -13,4 +13,6 @@
 @property (nonatomic, weak) IBOutlet UILabel* textLabel;
 @property (nonatomic, weak) IBOutlet UIView* separator;
 
++ (CGFloat)heightWithText:(NSString*)text font:(UIFont*)font cellWidth:(CGFloat)width;
+
 @end

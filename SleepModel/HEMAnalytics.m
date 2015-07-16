@@ -105,7 +105,6 @@ NSString* const kHEMAnalyticsEventPropScreenPillPairing = @"pill_pairing";
 NSString* const kHEMAnalyticsEventAppLaunched = @"App Launched";
 NSString* const kHEMAnalyticsEventAppClosed = @"App Closed";
 NSString* const kHEMAnalyticsEventPropEvent = @"event";
-NSString* const kHEMAnalyticsEventEmailSupport = @"Contact Support";
 NSString* const kHEMAnalyticsEventSettings = @"Settings";
 NSString* const kHEMAnalyticsEventTrends = @"Trends";
 NSString* const kHEMAnalyticsEventCurrentConditions = @"Current Conditions";
@@ -120,6 +119,11 @@ NSString* const kHEMAnalyticsEventPropSensorName = @"sensor_name";
 NSString* const kHEMAnalyticsEventSense = @"Sense Detail";
 NSString* const kHEMAnalyticsEventPill = @"Pill Detail";
 NSString* const HEMAnalyticsEventHealthSync = @"Health app sync";
+
+// support
+NSString* const HEMAnalyticsEventSupport = @"Support";
+NSString* const HEMAnalyticsEventSupportContactUs = @"Contact us";
+NSString* const HEMAnalyticsEventSupportTickets = @"My tickets";
 
 // authentication
 NSString* const kHEMAnalyticsEventSignInStart = @"Sign In Start";
@@ -150,6 +154,9 @@ NSString* const HEMAnalyticsEventTimelineZoomOut = @"Timeline zoomed out";
 NSString* const HEMAnalyticsEventTimelineZoomIn = @"Timeline zoomed in";
 NSString* const HEMAnalyticsEventTimelineAdjustTime = @"Timeline adjust time tapped";
 NSString* const HEMAnalyticsEventTimelineAdjustTimeFailed = @"Timeline adjust time failed";
+NSString* const HEMAnalyticsEventTimelineEventCorrect = @"Timeline event correct";
+NSString* const kHEMAnalyticsEventTimelineAdjustTimeSaved = @"Timeline event time adjust";
+NSString* const HEMAnalyticsEventTimelineEventIncorrect = @"Timeline event incorrect";
 NSString* const HEMAnalyticsEventTimelineDataRequest = @"Timeline data request";
 NSString* const HEMAnalyticsEventTimelineAlarmShortcut = @"Timeline alarm shorcut";
 

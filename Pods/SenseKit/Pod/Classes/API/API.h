@@ -3,7 +3,6 @@
 #import "SENAPIAlarms.h"
 #import "SENAPIClient.h"
 #import "SENAPIDevice.h"
-#import "SENAPIFeedback.h"
 #import "SENAPIInsight.h"
 #import "SENAPINotification.h"
 #import "SENAPIPreferences.h"
@@ -13,3 +12,4 @@
 #import "SENAPITimeZone.h"
 #import "SENAPITrends.h"
 #import "SENAuthorizationService.h"
+#import "SENAPISupport.h"

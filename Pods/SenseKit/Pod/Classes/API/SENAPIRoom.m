@@ -13,9 +13,9 @@ static NSString* const SENAPIRoomSensorScopeDay = @"day";
 static NSString* const SENAPIRoomSensorScopeWeek = @"week";
 static NSString* const SENAPIRoomAllSensorsScopeDay = @"24hours";
 static NSString* const SENAPIRoomAllSensorsScopeWeek = @"week";
-static NSString* const SENAPIRoomSensorPathFormat = @"room/%@/%@";
-static NSString* const SENAPIRoomAllSensorsPathFormat = @"room/all_sensors/%@";
-static NSString* const SENAPIRoomCurrentPath = @"room/current";
+static NSString* const SENAPIRoomSensorPathFormat = @"v1/room/%@/%@";
+static NSString* const SENAPIRoomAllSensorsPathFormat = @"v1/room/all_sensors/%@";
+static NSString* const SENAPIRoomCurrentPath = @"v1/room/current";
 static NSString* const SENAPIRoomSensorParamTimestamp = @"from";
 static NSString* const SENAPIRoomAllSensorsParamTimestamp = @"from_utc";
 static NSString* const SENAPIRoomParamUnit = @"temp_unit";
@@ -23,7 +23,7 @@ static NSString* const SENAPIRoomParamUnit = @"temp_unit";
 + (void)currentWithCompletion:(SENAPIDataBlock)completion
 {
     NSString* unitParam = [SENPreference useCentigrade] ? SENAPIRoomUnitCentigrade : SENAPIRoomUnitFahrenheit;
-    [SENAPIClient GET:@"room/current" parameters:@{SENAPIRoomParamUnit:unitParam} completion:completion];
+    [SENAPIClient GET:SENAPIRoomCurrentPath parameters:@{SENAPIRoomParamUnit:unitParam} completion:completion];
 }
 
 + (void)hourlyHistoricalDataForSensor:(SENSensor*)sensor

@@ -7,6 +7,7 @@
 //
 
 #import "UIFont+HEMStyle.h"
+#import "NSString+HEMUtils.h"
 
 #import "HelloStyleKit.h"
 #import "HEMActionSheetOptionCell.h"
@@ -14,18 +15,24 @@
 static CGFloat const HEMActionSheetOptionLabelSpacing = 4.0f;
 static CGFloat const HEMActionSheetOptionVertMargin = 20.0f;
 static CGFloat const HEMActionSheetOptionHorzMargin = 24.0f;
+static CGFloat const HEMActionSheetOptionTitleToIconSpacing = 20.0f;
+static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
 
 @interface HEMActionSheetOptionCell()
 
+@property (weak, nonatomic) IBOutlet UILabel *optionTitleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *optionDescriptionLabel;
+@property (weak, nonatomic) IBOutlet UIImageView *iconImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewWidth;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *descriptionTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLeadingConstraint;
 
 @end
 
 @implementation HEMActionSheetOptionCell
 
 + (CGFloat)heightWithTitle:(NSString*)title
-               description:(NSString*)description
+               description:(NSString *)description
                   maxWidth:(CGFloat)width {
     
     CGFloat height = HEMActionSheetOptionVertMargin;
@@ -42,7 +49,7 @@ static CGFloat const HEMActionSheetOptionHorzMargin = 24.0f;
     
     height += HEMActionSheetOptionVertMargin;
     
-    return ceilf(height);
+    return MAX(HEMActionSheetOptionMinHeight, ceilf(height));
 }
 
 + (CGFloat)heightForText:(NSString*)text usingFont:(UIFont*)font constrainedToWidth:(CGFloat)width {
@@ -56,19 +63,63 @@ static CGFloat const HEMActionSheetOptionHorzMargin = 24.0f;
 }
 
 - (void)awakeFromNib {
-    [[self titleLabel] setFont:[UIFont actionSheetOptionTitleFont]];
-    [[self descriptionLabel] setFont:[UIFont actionSheetOptionDescriptionFont]];
+    [[self optionTitleLabel] setFont:[UIFont actionSheetOptionTitleFont]];
+    [[self optionDescriptionLabel] setFont:[UIFont actionSheetOptionDescriptionFont]];
+    [[self optionDescriptionLabel] setTextColor:[UIColor colorWithWhite:152.0f/255.0f alpha:1.0f]];
+    [self configureSelectedBackground];
 }
 
 - (void)prepareForReuse {
-    [[self titleLabel] setText:nil];
-    [[self descriptionLabel] setText:nil];
-    [[self descriptionLabel] sizeToFit];
+    [[self optionTitleLabel] setText:nil];
+    [[self optionDescriptionLabel] setText:nil];
+    [[self iconImageView] setImage:nil];
+    [[self imageViewWidth] setConstant:0.0f];
 }
 
-- (void)setDescription:(NSString*)description {
-    [[self descriptionLabel] setText:description];
-    [[self descriptionLabel] sizeToFit];
+- (void)updateConstraints {
+    CGSize imageSize = [[self iconImageView] image].size;
+    CGFloat titleLeftMargin = 0.0f;
+    
+    if (imageSize.width > 0) {
+        titleLeftMargin = HEMActionSheetOptionTitleToIconSpacing;
+    }
+    
+    if ([[[self optionDescriptionLabel] text] length] == 0) {
+        CGFloat bHeight = CGRectGetHeight([self bounds]);
+        CGFloat titleHeight = CGRectGetHeight([[self optionTitleLabel] bounds]);
+        CGFloat titleTopMargin = (bHeight - titleHeight) / 2;
+        [[self titleTopConstraint] setConstant:titleTopMargin];
+    }
+    
+    [[self imageViewWidth] setConstant:imageSize.width];
+    [[self titleLeadingConstraint] setConstant:titleLeftMargin];
+    [super updateConstraints];
+}
+
+- (void)setOptionTitle:(NSString*)title
+             withColor:(UIColor*)titleColor
+                  icon:(UIImage*)icon
+           description:(NSString*)description {
+    
+    [[self optionTitleLabel] setText:title];
+    [[self optionTitleLabel] setTextColor:titleColor];
+    [[self iconImageView] setImage:icon];
+    [[self optionDescriptionLabel] setText:description];
+    
+    UIFont* titleFont = [[self optionTitleLabel] font];
+    CGRect titleFrame = [[self optionTitleLabel] frame];
+    CGFloat titleWidth = CGRectGetWidth(titleFrame);
+    titleFrame.size.height = [title heightBoundedByWidth:titleWidth usingFont:titleFont];
+    [[self optionTitleLabel] setFrame:titleFrame];
+    
+    [self setNeedsUpdateConstraints];
+}
+
+- (void)configureSelectedBackground {
+    UIView* view = [[UIView alloc] initWithFrame:[[self contentView] bounds]];
+    [view setBackgroundColor:[HelloStyleKit actionSheetSelectedColor]];
+    [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
+    [self setSelectedBackgroundView:view];
 }
 
 @end

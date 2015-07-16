@@ -10,7 +10,7 @@
 #import "SENPreference.h"
 #import "SENAPIClient.h"
 
-static NSString* const SENAPIPreferenceResourceName = @"preferences";
+static NSString* const SENAPIPreferenceResourceName = @"v1/preferences";
 
 @implementation SENAPIPreferences
 

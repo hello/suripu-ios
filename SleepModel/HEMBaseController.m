@@ -9,9 +9,7 @@
 #import "HEMBaseController.h"
 #import "HEMAlertViewController.h"
 #import "HEMSupportUtil.h"
-
-CGFloat const kHEMIPhone4Height = 480.0f;
-CGFloat const kHEMIPhone5Height = 568.0f;
+#import "HEMScreenUtils.h"
 
 @interface HEMBaseController()
 
@@ -39,22 +37,12 @@ CGFloat const kHEMIPhone5Height = 568.0f;
 
 #pragma mark - Constraints / Layouts for Devices
 
-- (BOOL)isIPhone4Family {
-    CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
-    return screenHeight == kHEMIPhone4Height;
-}
-
-- (BOOL)isIPhone5Family {
-    CGFloat screenHeight = CGRectGetHeight([[UIScreen mainScreen] bounds]);
-    return screenHeight == kHEMIPhone5Height;
-}
-
 - (void)updateViewConstraints {
     [super updateViewConstraints];
     if (![self adjustedConstraints]) {
-        if ([self isIPhone4Family]) {
+        if (HEMIsIPhone4Family()) {
             [self adjustConstraintsForIPhone4];
-        } else if ([self isIPhone5Family]) {
+        } else if (HEMIsIPhone5Family()) {
             [self adjustConstraintsForIphone5];
         }
         [self setAdjustedConstraints:YES];

@@ -62,7 +62,13 @@
  */
 + (UIColor *)alertSensorColor;
 
+/**
+ *  Condition color for the "UNKNOWN" condition
+ */
++ (UIColor *)unknownSensorColor;
+
 #pragma mark - Sleep state
+
 /**
  *  Color for the "LIGHT" sleep state
  */
@@ -116,7 +122,6 @@
 + (UIColor *)rulerSegmentLightColor;
 + (UIColor *)settingsValueTextColor;
 + (UIColor *)textfieldTextColor;
-+ (UIColor *)unknownSensorColor;
 + (UIColor *)actionButtonTextColor;
 + (UIColor *)alarmSelectionRowColor;
 + (UIColor *)pageControlTintColor;

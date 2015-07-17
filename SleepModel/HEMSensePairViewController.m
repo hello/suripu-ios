@@ -15,7 +15,7 @@
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMSupportUtil.h"
@@ -132,10 +132,6 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 
 #pragma mark - Scanning
 
-- (BOOL)preScannedSensesFound {
-    return [[[HEMOnboardingCache sharedCache] nearbySensesFound] count] > 0;
-}
-
 - (void)scanTimeout {
     [NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(scanTimeout) object:nil];
     DDLogVerbose(@"scanning for Sense timed out, oh no!");
@@ -153,10 +149,10 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 }
 
 - (void)scanWithActivity {
-    
     [self setTimedOut:NO];
     
-    BOOL preScanned = [self preScannedSensesFound];
+    HEMOnboardingService* service = [HEMOnboardingService sharedService];
+    BOOL preScanned = [service foundNearyBySenses];
     
     NSString* activityMessage
         = preScanned
@@ -165,8 +161,8 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
     
     [self showActivityWithMessage:activityMessage completion:^{
         if (preScanned) {
-            [self useSense:[[[HEMOnboardingCache sharedCache] nearbySensesFound] firstObject]];
-            [[HEMOnboardingCache sharedCache] clearPreScannedSenses];
+            [self useSense:[service nearestSense]];
+            [service clearNearBySensesCache];
         } else {
             [self startScan];
         }
@@ -256,7 +252,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         }
         case HEMSensePairStateForceDataUpload: {
             if ([self delegate] == nil) {
-                [[HEMOnboardingCache sharedCache] startPollingSensorData];
+                [[HEMOnboardingService sharedService] startPollingSensorData];
                 [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointSenseDone];
             }
             [self finish];
@@ -306,7 +302,8 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         [[strongSelf senseManager] pair:^(id response) {
             DDLogVerbose(@"paired!");
             if (![strongSelf isTimedOut]) {
-                [[HEMOnboardingCache sharedCache] setSenseManager:[strongSelf senseManager]];
+                HEMOnboardingService* service = [HEMOnboardingService sharedService];
+                [service replaceCurrentSenseManagerWith:[strongSelf senseManager]];
                 [strongSelf setPairing:NO];
                 [strongSelf setCurrentState:HEMSensePairStateSensePaired];
                 [strongSelf executeNextStep];
@@ -529,7 +526,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
         [self performSegueWithIdentifier:segueId sender:self];
     } else {
         if ([self detectedSSID] != nil) {
-            [HEMOnboardingCache clearCache];
+            [[HEMOnboardingService sharedService] clear];
             [[self delegate] didPairSenseUsing:[self senseManager] from:self];
         } else {
             [self performSegueWithIdentifier:[HEMOnboardingStoryboard wifiSegueIdentifier]

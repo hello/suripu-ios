@@ -16,7 +16,6 @@
 #import "HEMSupportUtil.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingUtils.h"
-#import "HEMOnboardingCache.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HelloStyleKit.h"
 #import "HEMURLImageView.h"

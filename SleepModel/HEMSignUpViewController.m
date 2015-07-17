@@ -11,14 +11,13 @@
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBaseController+Protected.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMBluetoothUtils.h"
 
 @interface HEMSignUpViewController () <UITextFieldDelegate>
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UITextField* emailAddressField;
 @property (weak, nonatomic) IBOutlet UITextField* passwordField;
 @property (weak, nonatomic) IBOutlet UITextField* nameField;
@@ -78,66 +77,36 @@
         NSString* password = self.passwordField.text;
         NSString* name = [self.nameField.text trim];
         
-        __weak typeof(self) weakSelf = self;
-        [SENAPIAccount createAccountWithName:name
-                                emailAddress:emailAddress
-                                    password:password
-                                  completion:^(SENAccount* account, NSError* error) {
-                                      __strong typeof(weakSelf) strongSelf = weakSelf;
-                                      
-                                      if (error) {
-                                          [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
-                                          [strongSelf stopActivity:^{
-                                              NSString* title = NSLocalizedString(@"sign-up.failed.title", nil);
-                                              [HEMOnboardingUtils showAlertForHTTPError:error
-                                                                              withTitle:title
-                                                                                   from:strongSelf];
-                                          } enableControls:YES];
-                                          
-                                          return;
-                                      }
-                                      // cache the account as that is needed post sign up
-                                      // to update the account with further information
-                                      [[HEMOnboardingCache sharedCache] setAccount:account];
-                                      [strongSelf authenticate:emailAddress password:password rety:YES];
-                                      
-                                      // save a checkpoint so that user does not have to try and create
-                                      // another account
-                                      [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountCreated];
-                                  }];
-    }];
-}
-
-- (void)authenticate:(NSString*)email password:(NSString*)password rety:(BOOL)retry {
-    NSString* userName = [self.nameField.text trim];
-    __weak typeof(self) weakSelf = self;
-    [SENAuthorizationService authorizeWithUsername:email password:password callback:^(NSError *signInError) {
-        __strong typeof(weakSelf) strongSelf = weakSelf;
+        void(^creationBlock)(SENAccount* account) = ^(SENAccount* account) {
+            [HEMAnalytics trackSignUpWithName:[account name]];
+            // checkpoint must be made here so that upon completion, user is not
+            // pushed in to the app
+            [HEMOnboardingUtils saveOnboardingCheckpoint:HEMOnboardingCheckpointAccountCreated];
+        };
         
-        if (signInError) {
-            [strongSelf stopActivity:^{
-                if (!retry) {
-                    // TODO: what should happen if we land in this case?
-                    DDLogInfo(@"authentication failed post sign up %@", signInError);
-                    [SENAnalytics trackError:signInError withEventName:kHEMAnalyticsEventError];
-                    NSString* errTitle = NSLocalizedString(@"sign-up.failed.title", nil);
-                    [HEMOnboardingUtils showAlertForHTTPError:signInError
-                                                    withTitle:errTitle
+        __weak typeof(self) weakSelf = self;
+        void(^doneBlock)(SENAccount* account, NSError* error) = ^(SENAccount* account, NSError* error) {
+            __strong typeof(weakSelf) strongSelf = weakSelf;
+            if (error) {
+                [SENAnalytics trackError:error withEventName:kHEMAnalyticsEventError];
+                [strongSelf stopActivity:^{
+                    NSString* title = NSLocalizedString(@"sign-up.failed.title", nil);
+                    [HEMOnboardingUtils showAlertForHTTPError:error
+                                                    withTitle:title
                                                          from:strongSelf];
-                    return;
-                } else { // retry once
-                    [SENAnalytics trackError:signInError withEventName:kHEMAnalyticsEventError];
-                    DDLogInfo(@"retrying authentication post sign up %@", signInError);
-                    [strongSelf authenticate:email password:password rety:NO];
-                    return;
-                }
-            } enableControls:YES];
-        } else {
-            [HEMAnalytics trackSignUpWithName:userName];
+                } enableControls:YES];
+                return;
+            }
+
             [strongSelf next];
-        }
-
-
+        };
+        
+        HEMOnboardingService* service = [HEMOnboardingService sharedService];
+        [service createAccountWithName:name
+                                 email:emailAddress
+                                  pass:password
+                     onAccountCreation:creationBlock
+                            completion:doneBlock];
     }];
 }
 

@@ -15,7 +15,7 @@
 #import "HEMSetupAnotherPillViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingUtils.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
 
 @interface HEMSetupAnotherPillViewController ()
@@ -44,7 +44,7 @@
 - (IBAction)setupAnother:(UIButton *)sender {
     __weak typeof(self) weakSelf = self;
     
-    SENSenseManager* manager = [[HEMOnboardingCache sharedCache] senseManager];
+    SENSenseManager* manager = [[HEMOnboardingService sharedService] currentSenseManager];
     [manager enablePairingMode:YES success:^(id response) {
         __strong typeof(weakSelf) strongSelf = weakSelf;
         if (strongSelf) {
@@ -60,12 +60,12 @@
 }
 
 - (IBAction)skip:(id)sender {
-    [[[HEMOnboardingCache sharedCache] senseManager] disconnectFromSense];
+    [[HEMOnboardingService sharedService] disconnectCurrentSense];
     [HEMOnboardingUtils finisOnboardinghWithMessageFrom:self];
 }
 
 - (void)getApp {
-    [[[HEMOnboardingCache sharedCache] senseManager] disconnectFromSense];
+    [[HEMOnboardingService sharedService] disconnectCurrentSense];
     [self performSegueWithIdentifier:[HEMOnboardingStoryboard getAppSegueIdentifier]
                               sender:self];
 }

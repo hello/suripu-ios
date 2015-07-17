@@ -12,7 +12,7 @@
 #import "UIColor+HEMStyle.h"
 #import "HEMOnboardingUtils.h"
 #import "HelloStyleKit.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMAlertViewController.h"
 #import "HEMActivityCoverView.h"
@@ -214,7 +214,7 @@ static NSString* const HEMOnboardingErrorResponseMessage = @"message";
 + (void)finisOnboardinghWithMessageFrom:(UIViewController*)controller {
     [SENAnalytics track:HEMAnalyticsEventOnbEnd];
     
-    [HEMOnboardingCache clearCache];
+    [[HEMOnboardingService sharedService] clear];
     
     // if you call this method, you want to leave onboarding so make sure it's set
     [self saveOnboardingCheckpoint:HEMOnboardingCheckpointPillDone];

@@ -13,7 +13,7 @@
 #import "HEMBaseController+Protected.h"
 #import "HEMSupportUtil.h"
 #import "HEMActivityCoverView.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMOnboardingUtils.h"
 #import "HEMScreenUtils.h"
 #import "UIFont+HEMStyle.h"
@@ -207,8 +207,7 @@
 }
 
 - (SENSenseManager*)manager {
-    SENSenseManager* manager = [[SENServiceDevice sharedService] senseManager];
-    return manager ? manager : [[HEMOnboardingCache sharedCache] senseManager];
+    return [[HEMOnboardingService sharedService] currentSenseManager];
 }
 
 #pragma mark - Activity

@@ -8,13 +8,13 @@
 #import <MessageUI/MessageUI.h>
 
 #import <SenseKit/SENAuthorizationService.h>
-#import <SenseKit/SENServiceDevice.h>
+#import <SenseKit/SENSenseManager.h>
 
 #import "HEMDebugController.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMSupportUtil.h"
 #import "HEMOnboardingUtils.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMStyledNavigationViewController.h"
 #import "HEMMainStoryboard.h"
@@ -168,12 +168,7 @@
         __strong typeof(weakSelf) strongSelf = weakSelf;
         [strongSelf setLedOptionController:nil];
         [strongSelf setSupportOptionController:nil];
-        
-        if ([[HEMOnboardingCache sharedCache] senseManager] != nil) {
-            [[[HEMOnboardingCache sharedCache] senseManager] setLED:ledState completion:nil];
-        } else {
-            [[SENServiceDevice sharedService] setLEDState:ledState completion:nil];
-        }
+        [[[HEMOnboardingService sharedService] currentSenseManager] setLED:ledState completion:nil];
     }];
 }
 

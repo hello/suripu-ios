@@ -17,7 +17,7 @@
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMWifiUtils.h"
 #import "HEMSimpleLineTextField.h"
 #import "HEMOnboardingUtils.h"
@@ -475,7 +475,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
     // it as soon as onboarding is done and 2, later step will check
     // sensor data
     if (![self haveDelegates]) {
-        [[HEMOnboardingCache sharedCache] startPollingSensorData];
+        [[HEMOnboardingService sharedService] startPollingSensorData];
     }
     
     __weak typeof(self) weakSelf = self;
@@ -485,7 +485,7 @@ static CGFloat const kHEMWifiSecurityLabelDefaultWidth = 50.0f;
         [HEMOnboardingUtils notifyOfSensePairingChange:[strongSelf manager]];
         
         if ([strongSelf delegate] != nil) {
-            [HEMOnboardingCache clearCache];
+            [[HEMOnboardingService sharedService] clear];
             [[strongSelf delegate] didConfigureWiFiTo:[strongSelf ssidConfigured] from:strongSelf];
         } else if ([strongSelf sensePairDelegate] != nil) {
             [[strongSelf sensePairDelegate] didSetupWiFiForPairedSense:[strongSelf manager] from:strongSelf];

@@ -4,7 +4,7 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMGenderPickerViewController.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
@@ -13,7 +13,6 @@
 
 @interface HEMGenderPickerViewController ()
 
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UIView *selectorContainer;
 @property (weak, nonatomic) IBOutlet UIView *selectorDivider;
 @property (weak, nonatomic) IBOutlet UIButton *femaleSelectorButton;
@@ -130,7 +129,8 @@
     if ([self delegate] != nil) {
         [[self delegate] didSelectGender:[self selectedGender] from:self];
     } else {
-        [[[HEMOnboardingCache sharedCache] account] setGender:[self selectedGender]];
+        SENAccount* account = [[HEMOnboardingService sharedService] currentAccount];
+        [account setGender:[self selectedGender]];
         [self next];
     }
 }

@@ -18,7 +18,7 @@
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmViewController.h"
 #import "HEMOnboardingStoryboard.h"
-#import "HEMOnboardingCache.h"
+#import "HEMOnboardingService.h"
 
 @interface HEMOnboardAlarmViewController() <HEMAlarmControllerDelegate>
 
@@ -38,11 +38,11 @@
 - (void)next {
     // if there are less than 2 accounts paired to Sense, ask if user wants to
     // set up another Pill (another account), otherwise just finish onboarding
-    if ([[[HEMOnboardingCache sharedCache] pairedAccountsToSense] integerValue] < 2) {
+    if ([[[HEMOnboardingService sharedService] pairedAccountsToSense] integerValue] < 2) {
         [self performSegueWithIdentifier:[HEMOnboardingStoryboard alarmToAnotherPillSegueIdentifier]
                                   sender:self];
     } else {
-        [[[HEMOnboardingCache sharedCache] senseManager] disconnectFromSense];
+        [[HEMOnboardingService sharedService] disconnectCurrentSense];
         [HEMOnboardingUtils finisOnboardinghWithMessageFrom:self];
     }
 }

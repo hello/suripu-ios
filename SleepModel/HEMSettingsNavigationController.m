@@ -91,7 +91,7 @@
 #pragma mark - Drawer cover handling
 
 - (BOOL)shouldShowDrawerPane {
-    NSInteger const HEMNavMaximumControllersVisible = 2;
+    NSInteger const HEMNavMaximumControllersVisible = 1;
     return self.viewControllers.count <= HEMNavMaximumControllersVisible;
 }
 

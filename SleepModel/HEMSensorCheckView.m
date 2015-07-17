@@ -110,7 +110,7 @@ static CGFloat const HEMSensorCheckDigitDisplayDelay = 0.3f;
     };
     
     UILabel* label = [[UILabel alloc] initWithFrame:frame];
-    [label setTextColor:[UIColor senseBlueColor]];
+    [label setTextColor:[UIColor tintColor]];
     [label setText:[title uppercaseString]];
     [label setNumberOfLines:1];
     [label setAlpha:0.0f];

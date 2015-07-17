@@ -295,7 +295,7 @@ static NSString* const HEMDevicesFooterReuseIdentifier = @"footer";
 }
 
 - (void)updateMissingDeviceForCell:(HEMNoDeviceCollectionViewCell*)cell atIndexPath:(NSIndexPath*)indexPath {
-    UIColor* actionButtonColor = [UIColor senseBlueColor];
+    UIColor* actionButtonColor = [UIColor tintColor];
     
     switch ([indexPath row]) {
         case HEMDeviceRowSense:

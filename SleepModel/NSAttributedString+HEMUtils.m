@@ -26,7 +26,7 @@
     [hyperlink addAttributes:@{
         NSLinkAttributeName : url,
         NSFontAttributeName : [UIFont settingsHelpFont],
-        NSForegroundColorAttributeName : [UIColor senseBlueColor]
+        NSForegroundColorAttributeName : [UIColor tintColor]
     } range:NSMakeRange(0, [hyperlink length])];
 
     return hyperlink;

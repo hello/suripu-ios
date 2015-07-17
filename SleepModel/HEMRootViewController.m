@@ -313,7 +313,7 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
     if (controller != nil) {
         UINavigationController* onboardingNav
             = [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];
-        [[onboardingNav navigationBar] setTintColor:[UIColor senseBlueColor]];
+        [[onboardingNav navigationBar] setTintColor:[UIColor tintColor]];
 
         [self presentViewController:onboardingNav animated:animated completion:^{
             [self showStatusBar];

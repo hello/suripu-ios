@@ -16,11 +16,11 @@
     [self setBackgroundColor:[UIColor clearColor]];
     
     [[self answerLabel] setBackgroundColor:[UIColor clearColor]];
-    [[self answerLabel] setTextColor:[UIColor senseBlueColor]];
+    [[self answerLabel] setTextColor:[UIColor tintColor]];
     [[self answerLabel] setTextAlignment:NSTextAlignmentCenter];
     [[self answerLabel] setFont:[UIFont questionAnswerFont]];
     
-    [[self separator] setBackgroundColor:[[UIColor senseBlueColor]
+    [[self separator] setBackgroundColor:[[UIColor tintColor]
                                           colorWithAlphaComponent:0.5f]];
 }
 
@@ -35,7 +35,7 @@
     UIColor* color
         = selected
         ? [UIColor questionAnswerSelectedTextColor]
-        : [UIColor senseBlueColor];
+        : [UIColor tintColor];
     [[self answerLabel] setTextColor:color];
 }
 

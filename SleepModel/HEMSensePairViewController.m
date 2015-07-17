@@ -74,7 +74,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 - (void)configureButtons {
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropSensePairing];
-    [[self notGlowingButton] setTitleColor:[UIColor senseBlueColor]
+    [[self notGlowingButton] setTitleColor:[UIColor tintColor]
                                   forState:UIControlStateNormal];
     [[[self notGlowingButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     

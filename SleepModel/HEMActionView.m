@@ -177,7 +177,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     [container addSubview:cancelButton];
     
     NSString* okText = [NSLocalizedString(@"actions.ok", nil) uppercaseString];
-    UIColor* okColor = [UIColor senseBlueColor];
+    UIColor* okColor = [UIColor tintColor];
     CGFloat x = CGRectGetMaxX([cancelButton frame])+HEMActionButtonDividerWidth;
     UIButton* okButton = [self actionButtonWithText:okText color:okColor andXOrigin:x];
     [container addSubview:okButton];
@@ -230,7 +230,7 @@ static CGFloat const HEMActionViewAnimationDuration = 0.25f;
     cancelFrame.size.width += okWidth;
     [[self cancelButton] setFrame:cancelFrame];
     
-    [[self cancelButton] setTitleColor:[UIColor senseBlueColor] forState:UIControlStateNormal];
+    [[self cancelButton] setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     
     [[self okButton] setHidden:YES];
     

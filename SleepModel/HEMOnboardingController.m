@@ -157,7 +157,7 @@
                                     action:@selector(help:)];
     [item setTitlePositionAdjustment:UIOffsetMake(-10.0f, 0.0f)
                        forBarMetrics:UIBarMetricsDefault];
-    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor senseBlueColor],
+    [item setTitleTextAttributes:@{NSForegroundColorAttributeName : [UIColor tintColor],
                                    NSFontAttributeName : [UIFont helpButtonTitleFont]
                                    }
                         forState:UIControlStateNormal];
@@ -254,7 +254,7 @@
               withDelegate:(BOOL)hasDelegate {
     
     [[secondaryButton titleLabel] setFont:[UIFont secondaryButtonFont]];
-    [secondaryButton setTitleColor:[UIColor senseBlueColor]
+    [secondaryButton setTitleColor:[UIColor tintColor]
                           forState:UIControlStateNormal];
 
     if (hasDelegate) {

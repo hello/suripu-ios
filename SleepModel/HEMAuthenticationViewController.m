@@ -42,7 +42,7 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
 }
 
 - (void)configureForgotPassword {
-    [[self forgotPassButton] setTitleColor:[UIColor senseBlueColor]
+    [[self forgotPassButton] setTitleColor:[UIColor tintColor]
                                   forState:UIControlStateNormal];
     [[[self forgotPassButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
     [[self forgotPassButton] setTitle:NSLocalizedString(@"authorization.forgot-pass", nil)

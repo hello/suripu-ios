@@ -33,8 +33,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 
-    [self setSelectedColor:[[UIColor senseBlueColor] colorWithAlphaComponent:0.05f]];
-    [self setSelectedBorderColor:[[UIColor senseBlueColor] colorWithAlphaComponent:0.4f]];
+    [self setSelectedColor:[[UIColor tintColor] colorWithAlphaComponent:0.05f]];
+    [self setSelectedBorderColor:[[UIColor tintColor] colorWithAlphaComponent:0.4f]];
     [self configureButtons];
     [self configureGenderSelectors];
     [self trackAnalyticsEvent:HEMAnalyticsEventGender];

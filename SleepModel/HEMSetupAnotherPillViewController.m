@@ -37,7 +37,7 @@
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.pill-setup-another", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropPillAnother];
     [[[self setupButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
-    [[self setupButton] setTitleColor:[UIColor senseBlueColor]
+    [[self setupButton] setTitleColor:[UIColor tintColor]
                              forState:UIControlStateNormal];
 }
 

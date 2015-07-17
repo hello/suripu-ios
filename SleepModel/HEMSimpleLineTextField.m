@@ -17,7 +17,7 @@ static CGFloat const HEMSimpleLineHeight = 1.0f;
     if (self = [super initWithCoder:aDecoder]) {
         self.backgroundColor = [UIColor clearColor];
         [self setBorderStyle:UITextBorderStyleNone];
-        [self setTintColor:[UIColor senseBlueColor]];
+        [self setTintColor:[UIColor tintColor]];
         [self setFont:[UIFont textfieldTextFont]];
         [self setTextColor:[UIColor textfieldTextColor]];
         [self setFocus:NO];
@@ -44,7 +44,7 @@ static CGFloat const HEMSimpleLineHeight = 1.0f;
     
     UIColor* lineColor
         = [self isFirstResponder]
-        ? [UIColor senseBlueColor]
+        ? [UIColor tintColor]
         : [UIColor separatorColor];
 
     CGContextSetStrokeColorWithColor(context, [lineColor CGColor]);

@@ -95,7 +95,6 @@
 + (UIColor *)backViewBackgroundColor;
 + (UIColor *)backViewNavTitleColor;
 + (UIColor *)backViewTextColor;
-+ (UIColor *)senseBlueColor;
 + (UIColor *)backViewTintColor;
 + (UIColor *)barButtonDisabledColor;
 + (UIColor *)actionViewTitleTextColor;

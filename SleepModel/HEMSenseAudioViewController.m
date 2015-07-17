@@ -33,7 +33,7 @@
     [self enableBackButton:NO];
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.enhanced-audio", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropAudio];
-    [[self skipButton] setTitleColor:[UIColor senseBlueColor]
+    [[self skipButton] setTitleColor:[UIColor tintColor]
                             forState:UIControlStateNormal];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
 }

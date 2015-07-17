@@ -44,7 +44,7 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 
 - (void)setDefaults {
     self.layer.cornerRadius = CGRectGetHeight([self bounds])/2;
-    self.backgroundColor = [UIColor senseBlueColor];
+    self.backgroundColor = [UIColor tintColor];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [self setTitleColor:[UIColor actionButtonTextColor]
                forState:UIControlStateDisabled];
@@ -53,7 +53,7 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 }
 
 - (void)setEnabled:(BOOL)enabled {
-    UIColor* color = [UIColor senseBlueColor];
+    UIColor* color = [UIColor tintColor];
     if (!enabled) {
         color = [color colorWithAlphaComponent:kHEMActionDisabledAlpha];
     }

@@ -122,9 +122,6 @@ static UIColor *_tintColor = nil;
 + (UIColor *)backViewTextColor {
     return [UIColor colorWithHex:0x4D4D4D alpha:1.f];
 }
-+ (UIColor *)senseBlueColor {
-    return [UIColor colorWithHex:0x009AFF alpha:1.f];
-}
 + (UIColor *)backViewTintColor {
     return [UIColor whiteColor];
 }

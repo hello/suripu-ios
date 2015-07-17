@@ -265,7 +265,7 @@ static CGFloat const kHEMDialogButtonSpacing = 10.0f;
     [button setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
     [button setTranslatesAutoresizingMaskIntoConstraints:YES];
     [button setTitle:title forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor senseBlueColor] forState:UIControlStateNormal];
+    [button setTitleColor:[UIColor tintColor] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(customAction:) forControlEvents:UIControlEventTouchUpInside];
     [button setFrame:buttonFrame];
     

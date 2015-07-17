@@ -106,7 +106,7 @@ static NSString* const HEMBeforeSleepDescKeyFormat = @"onboarding.before-sleep.%
     [[self nextImageView] setImage:[self imageNameForScreen:2]];
     [[self nextImageView] setAlpha:0.0f];
     [[self dots] setNumberOfPages:HEMBeforeSleepNumberOfScreens];
-    [[self dots] setCurrentPageIndicatorTintColor:[UIColor senseBlueColor]];
+    [[self dots] setCurrentPageIndicatorTintColor:[UIColor tintColor]];
     [[self dots] setPageIndicatorTintColor:[UIColor pageControlTintColor]];
     [[self dots] setUserInteractionEnabled:NO];
     [[self dots] setCurrentPage:0];

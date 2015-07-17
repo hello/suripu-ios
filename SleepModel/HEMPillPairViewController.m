@@ -57,7 +57,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)configureActivity {
-    [[self activityLabel] setTextColor:[UIColor senseBlueColor]];
+    [[self activityLabel] setTextColor:[UIColor tintColor]];
     [[self activityLabel] setText:nil];
     
     NSString* text = NSLocalizedString(@"pairing.activity.waiting-for-sense", nil);
@@ -65,7 +65,7 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 }
 
 - (void)configureButtons {
-    [[self skipButton] setTitleColor:[UIColor senseBlueColor]
+    [[self skipButton] setTitleColor:[UIColor tintColor]
                             forState:UIControlStateNormal];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     
@@ -84,11 +84,11 @@ static NSInteger const kHEMPillPairMaxBleChecks = 10;
 - (void)showRetryButtonAsRetrying:(BOOL)retrying {
     if (retrying) {
         [[self retryButton] setBackgroundColor:[UIColor clearColor]];
-        [[self retryButton] setTitleColor:[UIColor senseBlueColor]
+        [[self retryButton] setTitleColor:[UIColor tintColor]
                                  forState:UIControlStateNormal];
         [[self retryButton] showActivityWithWidthConstraint:[self retryButtonWidthConstraint]];
     } else {
-        [[self retryButton] setBackgroundColor:[UIColor senseBlueColor]];
+        [[self retryButton] setBackgroundColor:[UIColor tintColor]];
         [[self retryButton] setTitleColor:[UIColor actionButtonTextColor]
                                  forState:UIControlStateNormal];
         [[self retryButton] stopActivity];

@@ -109,7 +109,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
         actionBlock = ^{};
     }
     
-    [[self options] setValue:@{HEMActionSheetOptionColor : color ?: [UIColor senseBlueColor],
+    [[self options] setValue:@{HEMActionSheetOptionColor : color ?: [UIColor tintColor],
                                HEMActionSheetOptionDescription : description ?: @"",
                                HEMActionSheetOptionActionBlock : actionBlock,
                                HEMActionSheetOptionImage : imageName ?: @"" }

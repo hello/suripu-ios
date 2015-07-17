@@ -129,7 +129,7 @@ static NSString* const HEMSupportLogFileType = @"text/plain";
     [navBar setShadowImage:nil];
     
     UIToolbar* toolBar = [webViewController toolbar];
-    [toolBar setTintColor:[UIColor senseBlueColor]];
+    [toolBar setTintColor:[UIColor tintColor]];
     [toolBar setTranslucent:NO];
     
     [controller presentViewController:webViewController animated:YES completion:nil];

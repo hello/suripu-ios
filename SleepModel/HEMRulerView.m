@@ -7,7 +7,7 @@
 //
 
 #import "HEMRulerView.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 CGFloat const HEMRulerSegmentSpacing = 15.0f;
 CGFloat const HEMRulerSegmentWidth = 1.0f;
@@ -58,8 +58,8 @@ static NSInteger const HEMRulerSegmentLongSegmentInterval = 5;
     
     UIColor* lineColor
         = longSegment
-        ? [HelloStyleKit rulerSegmentDarkColor]
-        : [HelloStyleKit rulerSegmentLightColor];
+        ? [UIColor rulerSegmentDarkColor]
+        : [UIColor rulerSegmentLightColor];
     
     CGFloat width = CGRectGetWidth([self bounds]);
     CGFloat height = CGRectGetHeight([self bounds]);

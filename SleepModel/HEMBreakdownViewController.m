@@ -8,7 +8,7 @@
 #import <SenseKit/SenseKit.h>
 #import <AttributedMarkdown/markdown_peg.h>
 
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMBreakdownViewController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMMarkdown.h"
@@ -46,7 +46,7 @@ const CGFloat BreakdownButtonAreaHeight = 80.f;
     if (self = [super initWithCoder:aDecoder]) {
         // use same tint as the tutorial dialogs
         _backgroundImage = [[HEMRootViewController rootViewControllerForKeyWindow]
-                                .view blurredSnapshotWithTint:[HelloStyleKit tutorialBackgroundColor]];
+                                .view blurredSnapshotWithTint:[UIColor tutorialBackgroundColor]];
     }
     return self;
 }

@@ -7,11 +7,10 @@
 //
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMSettingsNavigationController.h"
 #import "HEMRootViewController.h"
 #import "HEMSnazzBarController.h"
-#import "HelloStyleKit.h"
 
 @interface HEMSettingsNavigationController()
 
@@ -24,7 +23,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[self view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
+    [[self view] setBackgroundColor:[UIColor backViewBackgroundColor]];
     
     [self configureNavigationBar];
     
@@ -33,7 +32,7 @@
 }
 
 - (void)configureNavigationBar {
-    [[self navigationBar] setBarTintColor:[HelloStyleKit backViewTintColor]];
+    [[self navigationBar] setBarTintColor:[UIColor backViewTintColor]];
     [[self navigationBar] setTranslucent:NO];
     [[self navigationBar] setClipsToBounds:NO];
     [[self navigationBar] setShadowImage:nil];
@@ -41,7 +40,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
     self.interactivePopGestureRecognizer.enabled = NO;
-    [[viewController view] setBackgroundColor:[HelloStyleKit backViewBackgroundColor]];
+    [[viewController view] setBackgroundColor:[UIColor backViewBackgroundColor]];
     [super pushViewController:viewController animated:animated];
     [self updateTopBarVisibilityAnimated:animated];
 }

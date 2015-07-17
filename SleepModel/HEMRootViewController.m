@@ -15,11 +15,11 @@
 #import "UIFont+HEMStyle.h"
 #import "UIView+HEMSnapshot.h"
 #import "UIView+HEMMotionEffects.h"
+#import "UIColor+HEMStyle.h"
 
 #import "HEMRootViewController.h"
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMSleepSummarySlideViewController.h"
-#import "HelloStyleKit.h"
 #import "HEMSnazzBarController.h"
 #import "HEMMainStoryboard.h"
 #import "HEMDebugController.h"
@@ -313,7 +313,7 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
     if (controller != nil) {
         UINavigationController* onboardingNav
             = [[HEMStyledNavigationViewController alloc] initWithRootViewController:controller];
-        [[onboardingNav navigationBar] setTintColor:[HelloStyleKit senseBlueColor]];
+        [[onboardingNav navigationBar] setTintColor:[UIColor senseBlueColor]];
 
         [self presentViewController:onboardingNav animated:animated completion:^{
             [self showStatusBar];

@@ -7,7 +7,7 @@
 //
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMSettingsTableViewCell.h"
 #import "HEMMathUtil.h"
 #import "HelloStyleKit.h"
@@ -36,11 +36,11 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
     [self addSeparator];
 
     [[self titleLabel] setFont:[UIFont settingsTableCellFont]];
-    [[self titleLabel] setTextColor:[HelloStyleKit backViewTextColor]];
+    [[self titleLabel] setTextColor:[UIColor backViewTextColor]];
     [[self titleLabel] setBackgroundColor:[UIColor clearColor]];
 
     [[self valueLabel] setFont:[UIFont settingsTableCellDetailFont]];
-    [[self valueLabel] setTextColor:[HelloStyleKit settingsValueTextColor]];
+    [[self valueLabel] setTextColor:[UIColor settingsValueTextColor]];
     [[self valueLabel] setBackgroundColor:[UIColor clearColor]];
     [[self valueLabel] setTextAlignment:NSTextAlignmentRight];
 }
@@ -59,7 +59,7 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
     [self setContentLayer:layer];
     [[self layer] insertSublayer:layer atIndex:0];
     CAShapeLayer *borderLyer = [CAShapeLayer layer];
-    [borderLyer setFillColor:[[HelloStyleKit cardBorderColor] CGColor]];
+    [borderLyer setFillColor:[[UIColor cardBorderColor] CGColor]];
     self.borderLayer = borderLyer;
     [self.layer insertSublayer:borderLyer atIndex:0];
 }
@@ -77,7 +77,7 @@ static CGFloat const HEMSettingsCellMargins = 16.0f;
         = { x, CGRectGetHeight([self bounds]) - HEMSettingsCellSeparatorSize,
             CGRectGetWidth([self bounds]) - HEMSettingsCellMargins - x, HEMSettingsCellSeparatorSize };
     UIView *separator = [[UIView alloc] initWithFrame:separatorFrame];
-    [separator setBackgroundColor:[HelloStyleKit separatorColor]];
+    [separator setBackgroundColor:[UIColor separatorColor]];
     [separator setAutoresizingMask:UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleTopMargin];
     [self setSeparator:separator];
     [[self contentView] addSubview:separator];

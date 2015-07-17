@@ -9,8 +9,7 @@
 #import <SenseKit/SENPreference.h>
 
 #import "UIFont+HEMStyle.h"
-
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMSenseAudioViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
@@ -34,7 +33,7 @@
     [self enableBackButton:NO];
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.enhanced-audio", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropAudio];
-    [[self skipButton] setTitleColor:[HelloStyleKit senseBlueColor]
+    [[self skipButton] setTitleColor:[UIColor senseBlueColor]
                             forState:UIControlStateNormal];
     [[[self skipButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
 }

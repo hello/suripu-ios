@@ -8,7 +8,7 @@
 #import "HEMAuthenticationViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingUtils.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActivityCoverView.h"
 #import "HEMNotificationHandler.h"
@@ -42,7 +42,7 @@ NSString* const HEMAuthenticationNotificationDidSignIn = @"HEMAuthenticationNoti
 }
 
 - (void)configureForgotPassword {
-    [[self forgotPassButton] setTitleColor:[HelloStyleKit senseBlueColor]
+    [[self forgotPassButton] setTitleColor:[UIColor senseBlueColor]
                                   forState:UIControlStateNormal];
     [[[self forgotPassButton] titleLabel] setFont:[UIFont navButtonTitleFont]];
     [[self forgotPassButton] setTitle:NSLocalizedString(@"authorization.forgot-pass", nil)

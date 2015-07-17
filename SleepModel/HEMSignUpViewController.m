@@ -6,12 +6,11 @@
 #import "NSString+HEMUtils.h"
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMSignUpViewController.h"
 #import "HEMActionButton.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMBaseController+Protected.h"
-#import "HelloStyleKit.h"
 #import "HEMOnboardingCache.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMOnboardingUtils.h"

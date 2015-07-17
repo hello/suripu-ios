@@ -6,11 +6,10 @@
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
-#import "NSString+HEMUtils.h"
-
-#import "HelloStyleKit.h"
 #import "HEMActionSheetOptionCell.h"
+#import "NSString+HEMUtils.h"
+#import "UIColor+HEMStyle.h"
+#import "UIFont+HEMStyle.h"
 
 static CGFloat const HEMActionSheetOptionLabelSpacing = 4.0f;
 static CGFloat const HEMActionSheetOptionVertMargin = 20.0f;
@@ -117,7 +116,7 @@ static CGFloat const HEMActionSheetOptionMinHeight = 72.0f;
 
 - (void)configureSelectedBackground {
     UIView* view = [[UIView alloc] initWithFrame:[[self contentView] bounds]];
-    [view setBackgroundColor:[HelloStyleKit actionSheetSelectedColor]];
+    [view setBackgroundColor:[UIColor actionSheetSelectedColor]];
     [view setAutoresizingMask:UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth];
     [self setSelectedBackgroundView:view];
 }

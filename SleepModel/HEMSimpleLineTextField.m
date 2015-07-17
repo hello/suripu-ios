@@ -2,7 +2,7 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMSimpleLineTextField.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 static CGFloat const HEMSimpleLineHeight = 1.0f;
 
@@ -17,9 +17,9 @@ static CGFloat const HEMSimpleLineHeight = 1.0f;
     if (self = [super initWithCoder:aDecoder]) {
         self.backgroundColor = [UIColor clearColor];
         [self setBorderStyle:UITextBorderStyleNone];
-        [self setTintColor:[HelloStyleKit senseBlueColor]];
+        [self setTintColor:[UIColor senseBlueColor]];
         [self setFont:[UIFont textfieldTextFont]];
-        [self setTextColor:[HelloStyleKit textfieldTextColor]];
+        [self setTextColor:[UIColor textfieldTextColor]];
         [self setFocus:NO];
     }
     return self;
@@ -44,8 +44,8 @@ static CGFloat const HEMSimpleLineHeight = 1.0f;
     
     UIColor* lineColor
         = [self isFirstResponder]
-        ? [HelloStyleKit senseBlueColor]
-        : [HelloStyleKit separatorColor];
+        ? [UIColor senseBlueColor]
+        : [UIColor separatorColor];
 
     CGContextSetStrokeColorWithColor(context, [lineColor CGColor]);
     CGContextSetLineWidth(context, HEMSimpleLineHeight);
@@ -62,8 +62,8 @@ static CGFloat const HEMSimpleLineHeight = 1.0f;
 - (void)setFocus:(BOOL)focus {
     UIColor* placeholderColor
         = [self isFirstResponder]
-        ? [HelloStyleKit textfieldPlaceholderFocusedColor]
-        : [HelloStyleKit textfieldPlaceholderColor];
+        ? [UIColor textfieldPlaceholderFocusedColor]
+        : [UIColor textfieldPlaceholderColor];
     
     NSDictionary* placeHolderAttrs = @{
         NSFontAttributeName : [UIFont textfieldPlaceholderFont],

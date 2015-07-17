@@ -10,11 +10,11 @@
 
 #import "UIView+HEMSnapshot.h"
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 #import "HEMOnboardAlarmViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMOnboardingUtils.h"
-#import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAlarmViewController.h"
 #import "HEMOnboardingStoryboard.h"

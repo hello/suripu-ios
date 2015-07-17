@@ -9,7 +9,7 @@
 #import "HEMOnboardingUtils.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMRulerView.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMMathUtil.h"
 
 CGFloat const HEMHeightPickerCentimetersPerInch = 2.54f;
@@ -70,7 +70,7 @@ static NSInteger const HEMHeightDefaultInch = 8;
     [[self scrollView] addSubview:[self ruler]];
     [[self scrollView] setBackgroundColor:[UIColor clearColor]];
     
-    [[self currentMarkerView] setBackgroundColor:[HelloStyleKit senseBlueColor]];
+    [[self currentMarkerView] setBackgroundColor:[UIColor senseBlueColor]];
     
     // pre iOS 8, there are mystery default insets so this needs to be adjusted
     if (![[self ruler] respondsToSelector:@selector(layoutMarginsDidChange)]) {

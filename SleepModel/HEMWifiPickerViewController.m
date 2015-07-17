@@ -9,7 +9,7 @@
 #import <SenseKit/SENSenseMessage.pb.h>
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMWiFiDataSource.h"

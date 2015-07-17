@@ -7,13 +7,13 @@
 //
 
 #import "HEMSwitchControl.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 @implementation HEMSwitchControl
 
 - (void)awakeFromNib {
-    self.onTintColor = [HelloStyleKit tintColor];
-    self.backgroundColor = [HelloStyleKit switchOffBackgroundColor];
+    self.onTintColor = [UIColor tintColor];
+    self.backgroundColor = [UIColor switchOffBackgroundColor];
     self.layer.cornerRadius = ceilf(CGRectGetHeight(self.bounds) / 2);
 }
 

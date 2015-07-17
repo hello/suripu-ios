@@ -2,7 +2,6 @@
 #import <SenseKit/SenseKit.h>
 #import <UIImageEffects/UIImage+ImageEffects.h>
 
-#import "HelloStyleKit.h"
 #import "HEMActionSheetViewController.h"
 #import "HEMAlertViewController.h"
 #import "HEMAudioCache.h"

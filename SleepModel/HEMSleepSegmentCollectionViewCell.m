@@ -1,6 +1,7 @@
 
 #import "HEMSleepSegmentCollectionViewCell.h"
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 #import "NSAttributedString+HEMUtils.h"
 #import "HelloStyleKit.h"
 
@@ -27,7 +28,7 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
 - (void)awakeFromNib {
     self.opaque = YES;
     self.timeViews = [NSMutableArray new];
-    self.backgroundColor = [HelloStyleKit timelineGradientColor];
+    self.backgroundColor = [UIColor timelineGradientColor];
 }
 
 - (void)prepareForReuse {
@@ -76,12 +77,12 @@ static CGFloat const HEMSegmentBorderWidth = 1.f;
                                   size.width, HEMSegmentTimeLabelHeight);
     UILabel *timeLabel = [[UILabel alloc] initWithFrame:labelRect];
     timeLabel.attributedText = text;
-    timeLabel.textColor = [HelloStyleKit tintColor];
+    timeLabel.textColor = [UIColor tintColor];
     [[self contentView] addSubview:timeLabel];
     CGRect lineRect = CGRectMake(0, lineYOffset, CGRectGetMinX(labelRect) - HEMTimeLabelLineOffset,
                                  HEMSegmentBorderWidth);
     UIImageView *lineView = [[UIImageView alloc] initWithFrame:lineRect];
-    lineView.image = [self lineBorderImageWithColor:[[HelloStyleKit tintColor] colorWithAlphaComponent:0.25f]];
+    lineView.image = [self lineBorderImageWithColor:[[UIColor tintColor] colorWithAlphaComponent:0.25f]];
     [[self contentView] insertSubview:lineView atIndex:0];
     [self.timeViews addObject:lineView];
     [self.timeViews addObject:timeLabel];

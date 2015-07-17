@@ -14,7 +14,6 @@
 #import "HEMSleepQuestionsViewController.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMActionButton.h"
-#import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 #import "HEMAnimationUtils.h"
 #import "HEMSleepQuestionsDataSource.h"

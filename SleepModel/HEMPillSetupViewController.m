@@ -10,7 +10,7 @@
 #import <SenseKit/SENServiceDevice.h>
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMPillSetupViewController.h"
 #import "HEMActionButton.h"
 #import "HEMSupportUtil.h"
@@ -109,7 +109,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
         _attributedTitle =
             [[NSAttributedString alloc] initWithString:NSLocalizedString(@"onboarding.pill-setup.title", nil)
                                             attributes:@{NSFontAttributeName : [UIFont onboardingTitleFont],
-                                                         NSForegroundColorAttributeName : [HelloStyleKit onboardingTitleColor]}];
+                                                         NSForegroundColorAttributeName : [UIColor onboardingTitleColor]}];
     }
     return _attributedTitle;
 }
@@ -121,7 +121,7 @@ static CGFloat const HEMPillSetupLayoutMinLineSpacing = 8.0f;
         _attributedDescription =
             [[NSAttributedString alloc] initWithString:NSLocalizedString(@"onboarding.pill-setup.description", nil)
                                             attributes:@{NSFontAttributeName : [UIFont onboardingDescriptionFont],
-                                                         NSForegroundColorAttributeName : [HelloStyleKit onboardingDescriptionColor],
+                                                         NSForegroundColorAttributeName : [UIColor onboardingDescriptionColor],
                                                          NSParagraphStyleAttributeName : style}];
     }
     return _attributedDescription;

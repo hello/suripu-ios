@@ -20,7 +20,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMBaseController+Protected.h"
 #import "HEMAlertViewController.h"
-#import "HelloStyleKit.h"
 #import "HEMWiFiConfigurationDelegate.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMOnboardingStoryboard.h"

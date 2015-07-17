@@ -9,12 +9,12 @@
 
 #import "UIFont+HEMStyle.h"
 #import "NSDate+HEMRelative.h"
+#import "UIColor+HEMStyle.h"
 
 #import "HEMDevicesViewController.h"
 #import "HEMPillViewController.h"
 #import "HEMSenseViewController.h"
 #import "HEMMainStoryboard.h"
-#import "HelloStyleKit.h"
 #import "HEMCardFlowLayout.h"
 #import "HEMDeviceCollectionViewCell.h"
 #import "HEMNoDeviceCollectionViewCell.h"

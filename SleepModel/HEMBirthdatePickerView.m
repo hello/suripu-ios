@@ -9,7 +9,7 @@
 #import "UIFont+HEMStyle.h"
 
 #import "HEMBirthdatePickerView.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 CGFloat const kHEMBirthdateValueHeight = 50.0f;
 
@@ -160,7 +160,7 @@ static NSInteger const kHEMBirthdateNumberOfMonths = 12;
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
-    CGContextSetStrokeColorWithColor(context, [[HelloStyleKit senseBlueColor] CGColor]);
+    CGContextSetStrokeColorWithColor(context, [[UIColor senseBlueColor] CGColor]);
     CGContextSetLineWidth(context, lineWidth);
     
     CGFloat padding = 10.0f;

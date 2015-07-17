@@ -10,7 +10,7 @@
 #import <SenseKit/SENAPITimeZone.h>
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMSensePairViewController.h"
 #import "HEMOnboardingStoryboard.h"
 #import "HEMActionButton.h"
@@ -18,7 +18,6 @@
 #import "HEMOnboardingCache.h"
 #import "HEMSettingsTableViewController.h"
 #import "HEMOnboardingUtils.h"
-#import "HelloStyleKit.h"
 #import "HEMSupportUtil.h"
 #import "HEMWifiPickerViewController.h"
 #import "HEMAlertViewController.h"
@@ -75,7 +74,7 @@ static NSUInteger const HEMSensePairAttemptsBeforeWiFiChangeOption = 2;
 - (void)configureButtons {
     [self showHelpButtonForPage:NSLocalizedString(@"help.url.slug.sense-pairing", nil)
            andTrackWithStepName:kHEMAnalyticsEventPropSensePairing];
-    [[self notGlowingButton] setTitleColor:[HelloStyleKit senseBlueColor]
+    [[self notGlowingButton] setTitleColor:[UIColor senseBlueColor]
                                   forState:UIControlStateNormal];
     [[[self notGlowingButton] titleLabel] setFont:[UIFont secondaryButtonFont]];
     

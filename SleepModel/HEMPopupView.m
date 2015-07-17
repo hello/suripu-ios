@@ -8,7 +8,7 @@
 
 #import <AttributedMarkdown/markdown_peg.h>
 #import "HEMPopupView.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 #import "HEMMarkdown.h"
 #import "NSAttributedString+HEMUtils.h"
 
@@ -48,7 +48,7 @@ static CGFloat const HEMPopupShadowBlur = 2.f;
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     CGContextSaveGState(ctx);
     CGContextSetShadowWithColor(ctx, CGSizeZero, HEMPopupShadowBlur,
-                                [[[HelloStyleKit tintColor] colorWithAlphaComponent:0.25f] CGColor]);
+                                [[[UIColor tintColor] colorWithAlphaComponent:0.25f] CGColor]);
     CGContextBeginTransparencyLayer(ctx, NULL);
     CGFloat inset = floorf(HEMPopupMargin / 4);
     CGRect fill = CGRectInset(rect, HEMPopupShadowBlur, inset);

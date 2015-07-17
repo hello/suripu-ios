@@ -8,7 +8,7 @@
 
 #import "NSAttributedString+HEMUtils.h"
 #import "UIFont+HEMStyle.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 @implementation NSAttributedString (HEMUtils)
 
@@ -26,7 +26,7 @@
     [hyperlink addAttributes:@{
         NSLinkAttributeName : url,
         NSFontAttributeName : [UIFont settingsHelpFont],
-        NSForegroundColorAttributeName : [HelloStyleKit senseBlueColor]
+        NSForegroundColorAttributeName : [UIColor senseBlueColor]
     } range:NSMakeRange(0, [hyperlink length])];
 
     return hyperlink;

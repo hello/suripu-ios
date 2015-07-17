@@ -7,7 +7,7 @@
 //
 
 #import "HEMDeviceActionCollectionViewCell.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 static CGFloat const HEMDeviceActionSeparatorSize = 0.5f;
 static CGFloat const HEMDeviceActionSeparatorIndentation = 16.0f;
@@ -30,7 +30,7 @@ static CGFloat const HEMDeviceActionSeparatorIndentation = 16.0f;
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);
     
-    CGContextSetStrokeColorWithColor(context, [[HelloStyleKit separatorColor] CGColor]);
+    CGContextSetStrokeColorWithColor(context, [[UIColor separatorColor] CGColor]);
     CGContextSetLineWidth(context, HEMDeviceActionSeparatorSize);
     
     // add a separator after every action button that is configured, as long as

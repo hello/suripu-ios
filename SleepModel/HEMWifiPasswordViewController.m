@@ -12,7 +12,7 @@
 #import <SenseKit/SENServiceDevice.h>
 
 #import "UIFont+HEMStyle.h"
-
+#import "UIColor+HEMStyle.h"
 #import "HEMWifiPasswordViewController.h"
 #import "HEMActionButton.h"
 #import "HEMBaseController+Protected.h"
@@ -21,7 +21,6 @@
 #import "HEMWifiUtils.h"
 #import "HEMSimpleLineTextField.h"
 #import "HEMOnboardingUtils.h"
-#import "HelloStyleKit.h"
 
 typedef NS_ENUM(NSUInteger, HEMWiFiSetupStep) {
     HEMWiFiSetupStepNone = 0,

@@ -1,8 +1,8 @@
 
 #import "HEMActionButton.h"
-#import "HelloStyleKit.h"
 
 #import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
 
 static CGFloat const kHEMActionDisabledAlpha = 0.3f;
 static CGFloat const kHEMActionTitleTopOffset = 3.0f;
@@ -44,16 +44,16 @@ static CGFloat const kHEMActionTitleTopOffset = 3.0f;
 
 - (void)setDefaults {
     self.layer.cornerRadius = CGRectGetHeight([self bounds])/2;
-    self.backgroundColor = [HelloStyleKit senseBlueColor];
+    self.backgroundColor = [UIColor senseBlueColor];
     [self setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
-    [self setTitleColor:[HelloStyleKit actionButtonTextColor]
+    [self setTitleColor:[UIColor actionButtonTextColor]
                forState:UIControlStateDisabled];
     [self.titleLabel setFont:[UIFont primaryButtonFont]];
     [self setTitleEdgeInsets:UIEdgeInsetsMake(kHEMActionTitleTopOffset, 0.0f, 0.0f, 0.0f)];
 }
 
 - (void)setEnabled:(BOOL)enabled {
-    UIColor* color = [HelloStyleKit senseBlueColor];
+    UIColor* color = [UIColor senseBlueColor];
     if (!enabled) {
         color = [color colorWithAlphaComponent:kHEMActionDisabledAlpha];
     }

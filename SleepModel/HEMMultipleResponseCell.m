@@ -8,7 +8,7 @@
 
 #import "HEMMultipleResponseCell.h"
 #import "UIFont+HEMStyle.h"
-#import "HelloStyleKit.h"
+#import "UIColor+HEMStyle.h"
 
 @interface HEMMultipleResponseCell()
 

@@ -1,7 +1,6 @@
 
 #import <UICountingLabel/UICountingLabel.h>
 #import "HEMSleepScoreGraphView.h"
-#import "HelloStyleKit.h"
 #import "UIColor+HEMStyle.h"
 
 @interface HEMSleepScoreGraphView ()
@@ -46,12 +45,12 @@ CGFloat const arcOffsetY = 80.f;
                                                         clockwise:YES];
     self.backgroundLayer.path = arcPath.CGPath;
     self.backgroundLayer.fillColor = fillColor.CGColor;
-    self.backgroundLayer.strokeColor = [HelloStyleKit sleepScoreOvalColor].CGColor;
+    self.backgroundLayer.strokeColor = [UIColor sleepScoreOvalColor].CGColor;
     self.backgroundLayer.lineWidth = 1.f;
     self.backgroundLayer.frame = self.bounds;
     self.loadingLayer.fillColor = fillColor.CGColor;
     self.loadingLayer.path = arcPath.CGPath;
-    self.loadingLayer.strokeColor = [HelloStyleKit tintColor].CGColor;
+    self.loadingLayer.strokeColor = [UIColor tintColor].CGColor;
     self.loadingLayer.lineWidth = 1.f;
     self.loadingLayer.frame = self.bounds;
     self.backgroundLayer.opacity = 1;
@@ -109,9 +108,9 @@ CGFloat const arcOffsetY = 80.f;
 }
 
 - (CAAnimation *)strokeColorAnimationWithScoreEndValue:(CGFloat)value {
-    CGColorRef alertColor = [HelloStyleKit alertSensorColor].CGColor;
-    CGColorRef warningColor = [HelloStyleKit warningSensorColor].CGColor;
-    CGColorRef idealColor = [HelloStyleKit idealSensorColor].CGColor;
+    CGColorRef alertColor = [UIColor alertSensorColor].CGColor;
+    CGColorRef warningColor = [UIColor warningSensorColor].CGColor;
+    CGColorRef idealColor = [UIColor idealSensorColor].CGColor;
     NSMutableArray *values = [NSMutableArray arrayWithObjects:(__bridge id)alertColor, nil];
     CGColorRef targetColor = [UIColor colorForCondition:self.condition].CGColor;
     if (!CGColorEqualToColor(targetColor, alertColor)) {
@@ -132,11 +131,11 @@ CGFloat const arcOffsetY = 80.f;
 }
 
 - (void)animateScoreLabelTo:(CGFloat)value {
-    self.scoreValueLabel.textColor = [HelloStyleKit alertSensorColor];
+    self.scoreValueLabel.textColor = [UIColor alertSensorColor];
     self.scoreValueLabel.alpha = 1.f;
     UIColor *targetColor = [UIColor colorForCondition:self.condition];
-    UIColor *idealColor = [HelloStyleKit idealSensorColor];
-    UIColor *warnColor = [HelloStyleKit warningSensorColor];
+    UIColor *idealColor = [UIColor idealSensorColor];
+    UIColor *warnColor = [UIColor warningSensorColor];
     if (![targetColor isEqual:self.scoreValueLabel.textColor]) {
         int64_t delay = (int64_t)((HEMSleepScoreAnimationDuration / 3) * NSEC_PER_SEC);
         __weak typeof(self) weakSelf = self;

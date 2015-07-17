@@ -9,7 +9,6 @@
 #import <BEMSimpleLineGraph/BEMSimpleLineGraphView.h>
 #import <SenseKit/SENTrend.h>
 #import "HEMTrendCollectionViewCell.h"
-#import "HelloStyleKit.h"
 #import "HEMScopePickerView.h"
 #import "HEMGraphSectionOverlayView.h"
 #import "HEMBarGraphView.h"
@@ -73,8 +72,8 @@
         [self.lineGraphView setNeedsUpdateConstraints];
     }
     CGFloat topRed, topGreen, topBlue, bottomRed, bottomGreen, bottomBlue, alpha;
-    [[HelloStyleKit trendGraphTopColor] getRed:&topRed green:&topGreen blue:&topBlue alpha:&alpha];
-    [[HelloStyleKit trendGraphBottomColor] getRed:&bottomRed green:&bottomGreen blue:&bottomBlue alpha:&alpha];
+    [[UIColor trendGraphTopColor] getRed:&topRed green:&topGreen blue:&topBlue alpha:&alpha];
+    [[UIColor trendGraphBottomColor] getRed:&bottomRed green:&bottomGreen blue:&bottomBlue alpha:&alpha];
     CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
     size_t num_locations = 2;
     CGFloat locations[2] = { 0.0, 1.0 };
@@ -89,7 +88,7 @@
     self.lineGraphView.delegate = self;
     self.lineGraphView.sizePoint = 5.f;
     self.lineGraphView.colorTop = [UIColor clearColor];
-    self.lineGraphView.colorLine = [[HelloStyleKit tintColor] colorWithAlphaComponent:0.4f];
+    self.lineGraphView.colorLine = [[UIColor tintColor] colorWithAlphaComponent:0.4f];
     self.lineGraphView.colorBottom = [UIColor whiteColor];
     self.lineGraphView.gradientBottom = gradient;
     self.lineGraphView.enableBezierCurve = YES;
@@ -282,9 +281,9 @@
         NSArray* headers = [self sectionIndexValuesOfType:self.topLabelType];
         NSArray* footers = [self sectionIndexValuesOfType:self.bottomLabelType];
         if (self.bottomLabelType == HEMTrendCellGraphLabelTypeHourValue) {
-            self.overlayView.bottomLabelColor = [HelloStyleKit lightTintColor];
+            self.overlayView.bottomLabelColor = [UIColor lightTintColor];
         } else {
-            self.overlayView.bottomLabelColor = [HelloStyleKit trendTextColor];
+            self.overlayView.bottomLabelColor = [UIColor trendTextColor];
         }
         self.overlayView.bottomLabelFont = [UIFont trendBottomLabelFont];
         [self.overlayView setSectionFooters:footers headers:headers];

@@ -15,7 +15,6 @@
 #import "HEMMainStoryboard.h"
 #import "HEMSleepSummaryPagingDataSource.h"
 #import "HEMRootViewController.h"
-#import "HelloStyleKit.h"
 
 @interface HEMSleepSummarySlideViewController ()
 

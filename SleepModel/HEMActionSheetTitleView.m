@@ -5,11 +5,10 @@
 //  Created by Jimmy Lu on 7/1/15.
 //  Copyright (c) 2015 Hello. All rights reserved.
 //
-#import "UIFont+HEMStyle.h"
-#import "NSString+HEMUtils.h"
-
 #import "HEMActionSheetTitleView.h"
-#import "HelloStyleKit.h"
+#import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
+#import "NSString+HEMUtils.h"
 
 static CGFloat HEMActionSheetTitleHorzPadding = 24.0f;
 static CGFloat HEMActionSheetTitleVertPadding = 22.0f;
@@ -90,7 +89,7 @@ static CGFloat HEMActionSheetTitleSeparatorHeight = 0.5f;
 }
 
 - (void)drawRect:(CGRect)rect {
-    UIColor* lineColor = [HelloStyleKit actionSheetSeparatorColor];
+    UIColor* lineColor = [UIColor actionSheetSeparatorColor];
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSaveGState(context);

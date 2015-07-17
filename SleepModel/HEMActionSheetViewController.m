@@ -6,12 +6,11 @@
 //  Copyright (c) 2014 Hello, Inc. All rights reserved.
 //
 
-#import "UIFont+HEMStyle.h"
-#import "NSString+HEMUtils.h"
-
 #import "HEMActionSheetViewController.h"
+#import "UIFont+HEMStyle.h"
+#import "UIColor+HEMStyle.h"
+#import "NSString+HEMUtils.h"
 #import "HEMActionSheetOptionCell.h"
-#import "HelloStyleKit.h"
 #import "HEMMainStoryboard.h"
 
 static NSString* const HEMActionSheetOptionColor = @"color";
@@ -69,7 +68,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
         [self setModalPresentationStyle:UIModalPresentationOverCurrentContext];
     }
     [self setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
-    [[self optionTableView] setSeparatorColor:[HelloStyleKit actionSheetSeparatorColor]];
+    [[self optionTableView] setSeparatorColor:[UIColor actionSheetSeparatorColor]];
     [[self optionTableView] setTableFooterView:[[UIView alloc] init]];
 }
 
@@ -110,7 +109,7 @@ static NSString* const HEMAlertControllerButtonActionKey = @"action";
         actionBlock = ^{};
     }
     
-    [[self options] setValue:@{HEMActionSheetOptionColor : color ?: [HelloStyleKit senseBlueColor],
+    [[self options] setValue:@{HEMActionSheetOptionColor : color ?: [UIColor senseBlueColor],
                                HEMActionSheetOptionDescription : description ?: @"",
                                HEMActionSheetOptionActionBlock : actionBlock,
                                HEMActionSheetOptionImage : imageName ?: @"" }

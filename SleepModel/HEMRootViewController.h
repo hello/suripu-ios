@@ -40,8 +40,7 @@ extern NSString* const HEMRootDrawerDidCloseNotification;
 - (void)toggleSettingsDrawer;
 
 /**
- *  Hide the top edge of the pane view, showing the drawer
- *  entirely
+ *  From the open state, toggle the top edge of the pane view
  *
  *  @param visible  the top edge of the pane is shown when YES
  *  @param animated the transition is animated when YES

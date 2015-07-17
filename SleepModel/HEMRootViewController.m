@@ -412,7 +412,9 @@ static NSString* const HEMRootErrorDomain = @"is.hello.sense.root";
 - (void)setPaneVisible:(BOOL)visible animated:(BOOL)animated {
     MSDynamicsDrawerPaneState state = visible
         ? MSDynamicsDrawerPaneStateOpen : MSDynamicsDrawerPaneStateOpenWide;
-    if (state == self.drawerViewController.paneState || [self isAnimatingPaneState])
+    if (state == self.drawerViewController.paneState
+        || self.drawerViewController.paneState == MSDynamicsDrawerPaneStateClosed
+        || [self isAnimatingPaneState])
         return;
     self.animatingPaneState = YES;
     __weak typeof(self) weakSelf = self;

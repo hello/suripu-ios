@@ -108,9 +108,9 @@ CGFloat const arcOffsetY = 80.f;
 }
 
 - (CAAnimation *)strokeColorAnimationWithScoreEndValue:(CGFloat)value {
-    CGColorRef alertColor = [UIColor alertSensorColor].CGColor;
-    CGColorRef warningColor = [UIColor warningSensorColor].CGColor;
-    CGColorRef idealColor = [UIColor idealSensorColor].CGColor;
+    CGColorRef alertColor = [UIColor conditionAlertColor].CGColor;
+    CGColorRef warningColor = [UIColor conditionWarningColor].CGColor;
+    CGColorRef idealColor = [UIColor conditionIdealColor].CGColor;
     NSMutableArray *values = [NSMutableArray arrayWithObjects:(__bridge id)alertColor, nil];
     CGColorRef targetColor = [UIColor colorForCondition:self.condition].CGColor;
     if (!CGColorEqualToColor(targetColor, alertColor)) {
@@ -131,11 +131,11 @@ CGFloat const arcOffsetY = 80.f;
 }
 
 - (void)animateScoreLabelTo:(CGFloat)value {
-    self.scoreValueLabel.textColor = [UIColor alertSensorColor];
+    self.scoreValueLabel.textColor = [UIColor conditionAlertColor];
     self.scoreValueLabel.alpha = 1.f;
     UIColor *targetColor = [UIColor colorForCondition:self.condition];
-    UIColor *idealColor = [UIColor idealSensorColor];
-    UIColor *warnColor = [UIColor warningSensorColor];
+    UIColor *idealColor = [UIColor conditionIdealColor];
+    UIColor *warnColor = [UIColor conditionWarningColor];
     if (![targetColor isEqual:self.scoreValueLabel.textColor]) {
         int64_t delay = (int64_t)((HEMSleepScoreAnimationDuration / 3) * NSEC_PER_SEC);
         __weak typeof(self) weakSelf = self;

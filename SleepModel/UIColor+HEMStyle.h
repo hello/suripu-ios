@@ -50,44 +50,44 @@
 /**
  *  Condition color for the "WARNING" condition
  */
-+ (UIColor *)warningSensorColor;
++ (UIColor *)conditionWarningColor;
 
 /**
  *  Condition color for the "IDEAL" condition
  */
-+ (UIColor *)idealSensorColor;
++ (UIColor *)conditionIdealColor;
 
 /**
  *  Condition color for the "ALERT" condition
  */
-+ (UIColor *)alertSensorColor;
++ (UIColor *)conditionAlertColor;
 
 /**
  *  Condition color for the "UNKNOWN" condition
  */
-+ (UIColor *)unknownSensorColor;
++ (UIColor *)conditionUnknownColor;
 
 #pragma mark - Sleep state
 
 /**
  *  Color for the "LIGHT" sleep state
  */
-+ (UIColor *)lightSleepColor;
++ (UIColor *)sleepStateLightColor;
 
 /**
  *  Color for the "MEDIUM" sleep state
  */
-+ (UIColor *)intermediateSleepColor;
++ (UIColor *)sleepStateMediumColor;
 
 /**
  *  Color for the "SOUND" sleep state
  */
-+ (UIColor *)deepSleepColor;
++ (UIColor *)sleepStateSoundColor;
 
 /**
  *  Color for the "AWAKE" sleep state
  */
-+ (UIColor *)awakeSleepColor;
++ (UIColor *)sleepStateAwakeColor;
 
 #pragma mark - UI Elements
 
